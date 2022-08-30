@@ -96,6 +96,18 @@ provision () {
     fi
 }
 
+# Run the quickstart script
+quickstart() {
+  if type qvm-run &> /dev/null; then
+    qvm-run --pass-io personal "curl -sSL https://install.doctor/qubes" > "$HOME/setup.sh" && bash "$HOME/setup.sh"
+  elif [ -d '/Applications' ] && [ -d '/Users' ] && [ -d '/Library' ]; then
+    curl -sSL https://install.doctor/quickstart > "$HOME/setup.sh" && bash "$HOME/setup.sh"
+  elif [ -f '/etc/os-release' ]; then
+    curl -sSL https://install.doctor/quickstart > "$HOME/setup.sh" && bash "$HOME/setup.sh"
+  fi
+  rm -f "$HOME/setup.sh"
+}
+
 # Generate a random string of X length
 randomstring() {
     if [ -z "$1" ]; then
