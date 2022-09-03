@@ -14,7 +14,7 @@ if [ -f '/etc/qubes-release' ]; then
   tar -xzf "$HOME/dotfiles.tar.gz" -C "$HOME"
   rm -f "$HOME/dotfiles.tar.gz"
   sudo rm -rf /usr/src/professor-dotfiles
-  sudo cp -rf "$HOME/dotfiles-master/dotfiles" /usr/src/professor-dotfiles
+  sudo cp -rf "$HOME/dotfiles-master" /usr/src/professor-dotfiles
 
   # Delete DispVM
   qvm-shutdown --force dom-dotfiles &> /dev/null || EXIT_CODE=$?
