@@ -46,7 +46,7 @@ done < <(find /usr/src/professor-dotfiles/dotfiles -maxdepth 1 -mindepth 1 -type
 # Ensure .local/bin contents are executable
 while read LOCAL_BIN; do
   chmod +x "${LOCAL_BIN}"
-done < <(find "$HOME/.local/bin" -type f -maxdepth 1)
+done < <(find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f)
 
 # Firefox theme
 if [ ! -f ~/.mozilla/firefox ] && [ ! -f '/etc/qubes-release' ]; then
