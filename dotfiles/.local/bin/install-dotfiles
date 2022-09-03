@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+if [ -f '/etc/qubes-release' ]; then
+  # Qubes dom0
+  if qvm-check dom-dotfiles &> /dev/null; then
+    qvm-shutdown --force dom-dotfiles &> /dev/null || EXIT_CODE=$?
+    sleep 1
+    qvm-remove --force dom-dotfiles &> /dev/null || EXIT_CODE=$?
+    sleep 1
+  fi
+  qvm-create --label red --template debian-11 dom-dotfiles
+  qvm-run dom-dotfiles 'curl -sSL https://gitlab.com/megabyte-labs/dotfiles/-/archive/master/dotfiles-master.tar.gz > dotfiles.tar.gz'
+  qvm-run --pass-io dom-dotfiles "cat dotfiles.tar.gz" > "$HOME/dotfiles.tar.gz"
+  tar -xzf "$HOME/dotfiles.tar.gz" -C "$HOME"
+  rm -f "$HOME/dotfiles.tar.gz"
+  sudo rm -rf /usr/src/dotfiles
+  sudo cp -rf "$HOME/dotfiles" /usr/src/dotfiles
+
+  # Delete DispVM
+  qvm-shutdown --force dom-dotfiles &> /dev/null || EXIT_CODE=$?
+  sleep 1
+  qvm-remove --force dom-dotfiles &> /dev/null || EXIT_CODE=$?
+else
+  if [ -d /usr/src/dotfiles/.git ]; then
+    cd /usr/src/dotfiles
+    git pull origin master
+    cd ~/
+  else
+    sudo git clone https://gitlab.com/megabyte-labs/dotfiles.git /usr/src/dotfiles
+  fi
+fi
+
+# Copy dotfile folders
+while read DOTFILE_FOLDER; do
+  BASENAME_FOLDER="$(basename "$DOTFILE_FOLDER")"
+  cp -rf "$DOTFILE_FOLDER/" "$HOME/$BASENAME_FOLDER"
+done < <(find /usr/src/dotfiles/dotfiles -type d -maxdepth 1)
+
+# Copy dotfile files
+while read DOTFILE_FILE; do
+  BASENAME_FILE="$(basename "$DOTFILE_FILE")"
+  cp "$DOTFILE_FILE" "$HOME/$BASENAME_FILE"
+  chmod 600 "$HOME/$BASENAME_FILE"
+done < <(find /usr/src/dotfiles/dotfiles -type f -maxdepth 1)
+
+# Ensure .local/bin contents are executable
+while read LOCAL_BIN; do
+  chmod +x "${LOCAL_BIN}"
+done < <(find "$HOME/.local/bin" -type f -maxdepth 1)
+
+# Firefox theme
+if [ ! -f ~/.mozilla/firefox ] && [ ! -f '/etc/qubes-release' ]; then
+  git clone https://github.com/EliverLara/firefox-sweet-theme /tmp/firefox-sweet-theme
+  bash /tmp/firefox-sweet-theme/scripts/install.sh
+fi
+
+# grep -q QT_QPA_PLATFORMTHEME=qt5ct /etc/environment || echo QT_QPA_PLATFORMTHEME=qt5ct | sudo tee -a /etc/environment
+# sudo cp -rv "$HOME/.local/share/qt5ct" /usr/share

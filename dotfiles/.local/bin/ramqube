@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# Creates a Qube on RAM disk and opens Firefox if the Qube does not already exist.
+# If the Qube already exists, then running this will delete it.
+# Source: https://github.com/unman/stuff/blob/main/ramqube.sh
+# Source: https://github.com/unman/stuff/blob/main/rmram.sh
+
+if [ -f '/home/user/RQube' ]; then
+  mkdir /home/user/RQube
+  sudo mount -t tmpfs -o size=2G rqube /home/user/RQube/
+  qvm-pool --add rqubepool file -o revisions_to_keep=1,dir_path=/home/user/RQube/
+  qvm-create rqube -P rqubepool -t debian-11 -l purple --property netvm=tor
+  qvm-run rqube firefox-esr
+else
+  read -p "RAM Qube alredy exists. Press ENTER to delete."
+  qvm-kill rqube
+  qvm-remove -f rqube
+  qvm-pool -r rqubepool
+  sudo umount rqube
+  rm -rf /home/user/RQube
+  sudo rm -rf /var/log/libvirt/libxl/new.log
+  sudo rm -rf /var/log/libvirt/libxl/new.log
+  sudo rm -rf /var/log/qubes/vm-new.log
+  sudo rm -rf /var/log/guid/new.log
+  sudo rm -rf /var/log/qrexec.new.log
+  sudo rm -rf /var/log/pacat.new.log
+  sudo rm -rf /var/log/qubesdb.new.log
+fi
