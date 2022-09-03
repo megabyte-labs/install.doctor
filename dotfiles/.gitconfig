@@ -1,19 +1,54 @@
-[user]
-	email = 
-	name = 
-
+[alias]
+  c = commit
+  ca = commit -a
+  cm = commit -m
+  cam = commit -am
+  d = diff
+  dc = diff --cached
+  l = log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit
+  master = !git add --all && git commit -am 'Quick commit.' -n && git push origin master
 [color]
-	diff = auto
-	status = auto
-	branch = auto
-	interactive = auto
-	ui = true
-	pager = true
-[credential]
-	helper = cache --timeout=3600
-[pull]
-	rebase = true
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = true
+  pager = true
 [core]
-	attributesfile = ~/.gitattributes
+  editor = vi
+  excludesfile = ~/.gitignore
+  autocrlf = input
+  attributesfile = ~/.gitattributes
+[diff]
+  ignoresubmodules = dirty
 [diff "image"]
-	command = compare $2 $1 png:- | montage -geometry +4+4 $2 - $1 png:- | display -title \"$1\" -
+  command = compare $2 $1 png:- | montage -geometry +4+4 $2 - $1 png:- | display -title \"$1\" -
+[difftool]
+  prompt = false
+[credential]
+  helper = cache --timeout=3600
+[merge]
+  tool = kdiff3
+[pull]
+  rebase = true
+[sendemail]
+  smtpserver = smtp.gmail.com 
+  smtpuser = 
+  smtpencryption = tls
+  smtpserverport = 587
+  smtpPass = 
+# smtpserver = {{ user.git_email_smtp_server | default('smtp.gmail.com') }}
+# smtpuser = {{ user.git_email_smtp_user | default('') }}
+# smtpencryption = {{ user.git_email_smtp_encryption | default('tls') }}
+# smtpserverport = {{ user.git_email_smtp_port | default('587') }}
+# smtpPass = {{ user.git_email_app_password | default('') }}
+[status]
+  submoduleSummary = true
+[user]
+  email = 
+  name = 
+# name = {{ user.git_user_name | default('') }}
+# email = {{ user.git_user_email | default('') }}
+[web]
+  browser = google-chrome
+# browser = {{ user.git_browser | default('google-chrome') }}
