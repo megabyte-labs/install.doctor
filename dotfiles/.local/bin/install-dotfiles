@@ -13,20 +13,20 @@ if [ -f '/etc/qubes-release' ]; then
   qvm-run --pass-io dom-dotfiles "cat dotfiles.tar.gz" > "$HOME/dotfiles.tar.gz"
   tar -xzf "$HOME/dotfiles.tar.gz" -C "$HOME"
   rm -f "$HOME/dotfiles.tar.gz"
-  sudo rm -rf /usr/src/dotfiles
-  sudo cp -rf "$HOME/dotfiles" /usr/src/dotfiles
+  sudo rm -rf /usr/src/professor-dotfiles
+  sudo cp -rf "$HOME/dotfiles-master/dotfiles" /usr/src/professor-dotfiles
 
   # Delete DispVM
   qvm-shutdown --force dom-dotfiles &> /dev/null || EXIT_CODE=$?
   sleep 1
   qvm-remove --force dom-dotfiles &> /dev/null || EXIT_CODE=$?
 else
-  if [ -d /usr/src/dotfiles/.git ]; then
-    cd /usr/src/dotfiles
+  if [ -d /usr/src/professor-dotfiles/.git ]; then
+    cd /usr/src/professor-dotfiles
     git pull origin master
     cd ~/
   else
-    sudo git clone https://gitlab.com/megabyte-labs/dotfiles.git /usr/src/dotfiles
+    sudo git clone https://gitlab.com/megabyte-labs/dotfiles.git /usr/src/professor-dotfiles
   fi
 fi
 
@@ -34,14 +34,14 @@ fi
 while read DOTFILE_FOLDER; do
   BASENAME_FOLDER="$(basename "$DOTFILE_FOLDER")"
   cp -rf "$DOTFILE_FOLDER/" "$HOME/$BASENAME_FOLDER"
-done < <(find /usr/src/dotfiles/dotfiles -type d -maxdepth 1)
+done < <(find /usr/src/professor-dotfiles/dotfiles -type d -maxdepth 1)
 
 # Copy dotfile files
 while read DOTFILE_FILE; do
   BASENAME_FILE="$(basename "$DOTFILE_FILE")"
   cp "$DOTFILE_FILE" "$HOME/$BASENAME_FILE"
   chmod 600 "$HOME/$BASENAME_FILE"
-done < <(find /usr/src/dotfiles/dotfiles -type f -maxdepth 1)
+done < <(find /usr/src/professor-dotfiles/dotfiles -type f -maxdepth 1)
 
 # Ensure .local/bin contents are executable
 while read LOCAL_BIN; do
