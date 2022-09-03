@@ -2,24 +2,13 @@
 
 if [ -f '/etc/qubes-release' ]; then
   # Qubes dom0
-  if qvm-check dom-dotfiles &> /dev/null; then
-    qvm-shutdown --force dom-dotfiles &> /dev/null || EXIT_CODE=$?
-    sleep 1
-    qvm-remove --force dom-dotfiles &> /dev/null || EXIT_CODE=$?
-    sleep 1
-  fi
-  qvm-create --label red --template debian-11 dom-dotfiles
-  qvm-run dom-dotfiles 'curl -sSL https://gitlab.com/megabyte-labs/dotfiles/-/archive/master/dotfiles-master.tar.gz > dotfiles.tar.gz'
-  qvm-run --pass-io dom-dotfiles "cat dotfiles.tar.gz" > "$HOME/dotfiles.tar.gz"
+  qvm-create --label red --template debian-11-dvm download-vm &> /dev/null || EXIT_CODE=$?
+  qvm-run download-vm 'curl -sSL https://gitlab.com/megabyte-labs/dotfiles/-/archive/master/dotfiles-master.tar.gz > dotfiles.tar.gz'
+  qvm-run --pass-io download-vm "cat dotfiles.tar.gz" > "$HOME/dotfiles.tar.gz"
   tar -xzf "$HOME/dotfiles.tar.gz" -C "$HOME"
   rm -f "$HOME/dotfiles.tar.gz"
   sudo rm -rf /usr/src/professor-dotfiles
   sudo cp -rf "$HOME/dotfiles-master" /usr/src/professor-dotfiles
-
-  # Delete DispVM
-  qvm-shutdown --force dom-dotfiles &> /dev/null || EXIT_CODE=$?
-  sleep 1
-  qvm-remove --force dom-dotfiles &> /dev/null || EXIT_CODE=$?
 else
   if [ -d /usr/src/professor-dotfiles/.git ]; then
     cd /usr/src/professor-dotfiles
