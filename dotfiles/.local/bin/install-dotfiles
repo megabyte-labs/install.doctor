@@ -36,7 +36,7 @@ while read DOTFILE_FOLDER; do
   if [ ! -d "$HOME/$BASENAME_FOLDER" ]; then
     mkdir -p "$HOME/$BASENAME_FOLDER"
   fi
-  cp -rf "$DOTFILE_FOLDER/*" "$HOME/$BASENAME_FOLDER"
+  cp -rf "$DOTFILE_FOLDER/"* "$HOME/$BASENAME_FOLDER"
 done < <(find /usr/src/professor-dotfiles/dotfiles -maxdepth 1 -mindepth 1 -type d)
 
 # Copy dotfile files
