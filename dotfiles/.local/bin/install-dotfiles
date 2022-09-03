@@ -33,15 +33,15 @@ fi
 # Copy dotfile folders
 while read DOTFILE_FOLDER; do
   BASENAME_FOLDER="$(basename "$DOTFILE_FOLDER")"
-  cp -rf "$DOTFILE_FOLDER/" "$HOME/$BASENAME_FOLDER"
-done < <(find /usr/src/professor-dotfiles/dotfiles -type d -maxdepth 1)
+  cp -rf "$DOTFILE_FOLDER" "$HOME/$BASENAME_FOLDER"
+done < <(find /usr/src/professor-dotfiles/dotfiles -maxdepth 1 -mindepth 1 -type d)
 
 # Copy dotfile files
 while read DOTFILE_FILE; do
   BASENAME_FILE="$(basename "$DOTFILE_FILE")"
   cp "$DOTFILE_FILE" "$HOME/$BASENAME_FILE"
   chmod 600 "$HOME/$BASENAME_FILE"
-done < <(find /usr/src/professor-dotfiles/dotfiles -type f -maxdepth 1)
+done < <(find /usr/src/professor-dotfiles/dotfiles -maxdepth 1 -mindepth 1 -type f)
 
 # Ensure .local/bin contents are executable
 while read LOCAL_BIN; do
