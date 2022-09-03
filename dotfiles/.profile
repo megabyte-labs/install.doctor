@@ -282,7 +282,9 @@ alias wget="wget --hsts-file ~/.config/.wget-hsts"
 export PATH="$PATH:$HOME/.local/bin"
 
 ### Cargo
-. "$HOME/.cargo/env"
+if [ -f "$HOME/.cargo/env" ]; then
+  . "$HOME/.cargo/env"
+fi
 
 if type brew &> /dev/null; then
     ### Go
