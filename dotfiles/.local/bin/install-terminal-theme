@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
+# @file ~/.local/bin/install-terminal-theme
+# @brief Applies the Sweet KDE (Betelgeuse) theme [found here](https://store.kde.org/p/1297008/)
+# @description
+#   This script will create the necessary color profile for the Betelgeuse theme
+#   to any terminal. Before applying the theme, it will display the color palette
+#   in the terminal and prompt for whether or not it should be applied. It might
+#   also be necessary to apply the terminal theme which should be available in the
+#   terminals settings after it is generated.
 
-# Flat Remix Theme
+
 export COLOR_01="#282C34"           # Black
 export COLOR_02="#ED254E"           # Red
 export COLOR_03="#71F79F"           # Green
@@ -19,10 +27,10 @@ export COLOR_14="#EB71AD"           # Light Magenta
 export COLOR_15="#24E5FF"           # Light Cyan
 export COLOR_16="#FFFFFF"           # White
 
-export BACKGROUND_COLOR="#B1880B"   # Background Color
+export BACKGROUND_COLOR="#161925"   # Background Color
 export FOREGROUND_COLOR="#C3C7D1"   # Foreground Color (text)
 export CURSOR_COLOR="$FOREGROUND_COLOR" # Cursor color
-export PROFILE_NAME="Flat Remix"
+export PROFILE_NAME="Betelgeuse"
 
 # |
 # | Early pre-requisites check
