@@ -75,7 +75,62 @@ fi
 PROMPT_COMMAND="PROMPT_COMMAND=echo"
 
 # Prompt
-PS1='\[\033[;32m\]┌──(\[\033[1;34m\]\u@\h\[\033[;32m\])-[\[\033[0;1m\]\w\[\033[;32m\]]\n\[\033[;32m\]└─\[\033[1;34m\]\$\[\033[0m\] '
+if [ -f /etc/os-release ]; then
+  source /etc/os-release
+  if [ -d /Applications ] && [ -d /Library ] && [ -d /System ]; then
+	# macOS
+	OS_ICON=
+  elif [[ "$ID" == 'alpine' ]]; then
+    OS_ICON=
+  elif [[ "$ID" == 'archlinux' ]]; then
+  	OS_ICON=
+  elif [[ "$ID" == 'centos' ]]; then
+    OS_ICON=
+  elif [[ "$ID" == 'coreos' ]]; then
+	OS_ICON=
+  elif [[ "$ID" == 'debian' ]]; then
+    OS_ICON=
+  elif [[ "$ID" == 'deepin' ]]; then
+	OS_ICON=
+  elif [[ "$ID" == 'elementary' ]]; then
+	OS_ICON=
+  elif [[ "$ID" == 'endeavour' ]]; then
+    OS_ICON=
+  elif [[ "$ID" == 'freebsd' ]]; then
+	OS_ICON=
+  elif [[ "$ID" == 'gentoo' ]]; then
+	OS_ICON=
+  elif [[ "$ID" == 'kali' ]]; then
+    OS_ICON=
+  elif [[ "$ID" == 'linuxmint' ]]; then
+    OS_ICON=
+  elif [[ "$ID" == 'manjaro' ]]; then
+	OS_ICON=
+  elif [[ "$ID" == 'nixos' ]]; then
+	OS_ICON=
+  elif [[ "$ID" == 'openbsd' ]]; then
+	OS_ICON=
+  elif [[ "$ID" == 'opensuse' ]]; then
+	OS_ICON=
+  elif [[ "$ID" == 'parrot' ]]; then
+    OS_ICON=
+  elif [[ "$ID" == 'pop_os' ]]; then
+  	OS_ICON=
+  elif [[ "$ID" == 'raspberry_pi' ]]; then
+	OS_ICON=
+  elif [[ "$ID" == 'redhat' ]]; then
+	OS_ICON=
+  elif [[ "$ID" == 'fedora' ]]; then
+    OS_ICON=
+  elif [[ "$ID" == 'ubuntu' ]]; then
+    OS_ICON=
+  else
+    OS_ICON=
+  fi
+else
+  OS_ICON=
+fi
+PS1="\n \[\033[0;34m\]╭─\[\033[0;31m\]\[\033[0;37m\]\[\033[41m\] $OS_ICON \u \[\033[0m\]\[\033[0;31m\]\[\033[44m\]\[\033[0;34m\]\[\033[44m\]\[\033[0;30m\]\[\033[44m\] \w \[\033[0m\]\[\033[0;34m\] \n \[\033[0;34m\]╰ \[\033[1;36m\]\$ \[\033[0m\]"
 
 ### Miscellaneous
 export VISUAL=vim
