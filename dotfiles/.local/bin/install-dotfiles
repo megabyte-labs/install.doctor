@@ -3,20 +3,21 @@
 if [ -f '/etc/qubes-release' ]; then
   # Qubes dom0
   qvm-create --label red --template debian-11 provision &> /dev/null || EXIT_CODE=$?
-  qvm-run --pass-io provision 'curl -sSL https://gitlab.com/megabyte-labs/dotfiles/-/archive/master/dotfiles-master.tar.gz > ~/Downloads/dotfiles.tar.gz'
-  qvm-run --pass-io provision "cat ~/Downloads/dotfiles.tar.gz" > "$HOME/dotfiles.tar.gz"
-  tar -xzf "$HOME/dotfiles.tar.gz" -C "$HOME"
-  rm -f "$HOME/dotfiles.tar.gz"
-  sudo rm -rf /usr/src/professor-dotfiles
-  sudo mv "$HOME/dotfiles-master" /usr/src/professor-dotfiles
+  qvm-run --pass-io provision 'if [ -d ~/Downloads/professor-dotfiles ]; then cd ~/Downloads/professor-dotfiles && git config pull.rebase false && git pull origin master; else git clone https://gitlab.com/megabyte-labs/dotfiles.git ~/Downloads/professor-dotfiles; fi; tar -zcvf /tmp/professor-dotfiles.tar.gz ~/Downloads/professor-dotfiles'
+  qvm-run --pass-io provision "cat /tmp/professor-dotfiles.tar.gz" > "/tmp/dotfiles.tar.gz"
+  tar -xzf "/tmp/dotfiles.tar.gz" -C "$HOME"
+  rm -f "/tmp/dotfiles.tar.gz"
+  sudo rm -rf /usr/local/src/professor-dotfiles
+  sudo mv "$HOME/professor-dotfiles" /usr/local/src/professor-dotfiles
 else
-  if [ -d /usr/src/professor-dotfiles/.git ]; then
-    cd /usr/src/professor-dotfiles
+  if [ -d /usr/local/src/professor-dotfiles/.git ]; then
+    cd /usr/local/src/professor-dotfiles
+    sudo git config pull.rebase false
     sudo git pull origin master
     cd ~/
   else
-    sudo rm -rf /usr/src/professor-dotfiles
-    sudo git clone https://gitlab.com/megabyte-labs/dotfiles.git /usr/src/professor-dotfiles
+    sudo rm -rf /usr/local/src/professor-dotfiles
+    sudo git clone https://gitlab.com/megabyte-labs/dotfiles.git /usr/local/src/professor-dotfiles
   fi
 fi
 
@@ -27,14 +28,14 @@ while read DOTFILE_FOLDER; do
     mkdir -p "$HOME/$BASENAME_FOLDER"
   fi
   cp -rf "$DOTFILE_FOLDER/"* "$HOME/$BASENAME_FOLDER"
-done < <(find /usr/src/professor-dotfiles/dotfiles -maxdepth 1 -mindepth 1 -type d)
+done < <(find /usr/local/src/professor-dotfiles/dotfiles -maxdepth 1 -mindepth 1 -type d)
 
 # Copy dotfile files
 while read DOTFILE_FILE; do
   BASENAME_FILE="$(basename "$DOTFILE_FILE")"
   cp "$DOTFILE_FILE" "$HOME/$BASENAME_FILE"
   chmod 600 "$HOME/$BASENAME_FILE"
-done < <(find /usr/src/professor-dotfiles/dotfiles -maxdepth 1 -mindepth 1 -type f)
+done < <(find /usr/local/src/professor-dotfiles/dotfiles -maxdepth 1 -mindepth 1 -type f)
 
 # Ensure .local/bin contents are executable
 while read LOCAL_BIN; do
@@ -43,8 +44,13 @@ done < <(find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f)
 
 # Firefox theme
 if [ ! -f ~/.mozilla/firefox ] && [ ! -f '/etc/qubes-release' ]; then
-  git clone https://github.com/EliverLara/firefox-sweet-theme /tmp/firefox-sweet-theme
-  bash /tmp/firefox-sweet-theme/scripts/install.sh
+  if [ -d /usr/local/src/firefox-sweet-theme/.git ]; then
+    sudo git config pull.rebase false
+    cd /usr/local/src/firefox-sweet-theme && git pull origin master
+  else
+    sudo git clone https://github.com/EliverLara/firefox-sweet-theme /usr/local/src/firefox-sweet-theme
+  fi
+  bash /usr/local/src/firefox-sweet-theme/scripts/install.sh
 fi
 
 # grep -q QT_QPA_PLATFORMTHEME=qt5ct /etc/environment || echo QT_QPA_PLATFORMTHEME=qt5ct | sudo tee -a /etc/environment
