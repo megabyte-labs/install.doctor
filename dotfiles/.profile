@@ -141,19 +141,6 @@ resetdocker() {
     docker system prune -a --force
 }
 
-# Source: https://itnext.io/bash-aliases-are-awesome-8a76aecc96ab
-# Type ".. 5" to cd .. 5 times
-..() {
-    N=$(($1))
-    if [ $N -lt 1 ]; then
-        N=1
-    fi
-    while ((N)); do
-        cd ..
-        let N-=1
-        done;
-}
-
 ### Aliases
 
 # Create an Authelia password hash
