@@ -74,7 +74,7 @@ HISTFILESIZE=5000
 HISTFILE=~/.bash_history
 
 # Bash Completion
-if [ "$0" == 'bash' ]; then
+if [ "$0" = 'bash' ]; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
 	  . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
@@ -83,7 +83,7 @@ if [ "$0" == 'bash' ]; then
 fi
 
 # Prompt (on bash only)
-if [ "$0" == 'bash' ]; then
+if [ "$0" = 'bash' ]; then
   # Add new line before prompt
   PROMPT_COMMAND="PROMPT_COMMAND=echo"
   if [ -f /etc/os-release ]; then
@@ -91,49 +91,49 @@ if [ "$0" == 'bash' ]; then
     if [ -d /Applications ] && [ -d /Library ] && [ -d /System ]; then
   	  # macOS
   	  OS_ICON=
-    elif [ "$ID" == 'alpine' ]; then
+    elif [ "$ID" = 'alpine' ]; then
       OS_ICON=
-    elif [ "$ID" == 'archlinux' ]; then
+    elif [ "$ID" = 'archlinux' ]; then
     	OS_ICON=
-    elif [ "$ID" == 'centos' ]; then
+    elif [ "$ID" = 'centos' ]; then
       OS_ICON=
-    elif [ "$ID" == 'coreos' ]; then
+    elif [ "$ID" = 'coreos' ]; then
   	OS_ICON=
-    elif [ "$ID" == 'debian' ]; then
+    elif [ "$ID" = 'debian' ]; then
       OS_ICON=
-    elif [ "$ID" == 'deepin' ]; then
+    elif [ "$ID" = 'deepin' ]; then
   	OS_ICON=
-    elif [ "$ID" == 'elementary' ]; then
+    elif [ "$ID" = 'elementary' ]; then
   	OS_ICON=
-    elif [ "$ID" == 'endeavour' ]; then
+    elif [ "$ID" = 'endeavour' ]; then
       OS_ICON=
-    elif [ "$ID" == 'freebsd' ]; then
+    elif [ "$ID" = 'freebsd' ]; then
   	OS_ICON=
-    elif [ "$ID" == 'gentoo' ]; then
+    elif [ "$ID" = 'gentoo' ]; then
   	OS_ICON=
-    elif [ "$ID" == 'kali' ]; then
+    elif [ "$ID" = 'kali' ]; then
       OS_ICON=
-    elif [ "$ID" == 'linuxmint' ]; then
+    elif [ "$ID" = 'linuxmint' ]; then
       OS_ICON=
-    elif [ "$ID" == 'manjaro' ]; then
+    elif [ "$ID" = 'manjaro' ]; then
   	OS_ICON=
-    elif [ "$ID" == 'nixos' ]; then
+    elif [ "$ID" = 'nixos' ]; then
   	OS_ICON=
-    elif [ "$ID" == 'openbsd' ]; then
+    elif [ "$ID" = 'openbsd' ]; then
   	OS_ICON=
-    elif [ "$ID" == 'opensuse' ]; then
+    elif [ "$ID" = 'opensuse' ]; then
   	OS_ICON=
-    elif [ "$ID" == 'parrot' ]; then
+    elif [ "$ID" = 'parrot' ]; then
       OS_ICON=
-    elif [ "$ID" == 'pop_os' ]; then
+    elif [ "$ID" = 'pop_os' ]; then
     	OS_ICON=
-    elif [ "$ID" == 'raspberry_pi' ]; then
+    elif [ "$ID" = 'raspberry_pi' ]; then
   	OS_ICON=
-    elif [ "$ID" == 'redhat' ]; then
+    elif [ "$ID" = 'redhat' ]; then
   	OS_ICON=
-    elif [ "$ID" == 'fedora' ]; then
+    elif [ "$ID" = 'fedora' ]; then
       OS_ICON=
-    elif [ "$ID" == 'ubuntu' ]; then
+    elif [ "$ID" = 'ubuntu' ]; then
       OS_ICON=
     else
       OS_ICON=
