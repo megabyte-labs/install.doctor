@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+if [ -f '/etc/qubes-release' ]; then
+  # Qubes dom0
+  qvm-create --label red --template debian-11 provision &> /dev/null || EXIT_CODE=$?
+  qvm-run --pass-io provision 'if [ -d ~/Downloads/rofi ]; then cd ~/Downloads/rofi && git config pull.rebase false && git pull origin master; else git clone https://github.com/adi1090x/rofi.git ~/Downloads/rofi; fi; tar -zcvf /tmp/rofi.tar.gz ~/Downloads/rofi'
+  qvm-run --pass-io provision "cat /tmp/rofi.tar.gz" > "/tmp/rofi.tar.gz"
+  tar -xvf "/tmp/rofi.tar.gz" -C "$HOME"
+  rm -f "/tmp/rofi.tar.gz"
+  cd "$HOME/rofi" && bash setup.sh
+  rm -rf "$HOME/rofi"
+else
+  if [ -d /usr/local/src/rofi-theme/.git ]; then
+    cd /usr/local/src/rofi-theme
+    sudo git config pull.rebase false
+    sudo git pull origin master
+    cd ~/
+  else
+    sudo rm -rf /usr/local/src/rofi-theme
+    sudo git clone https://github.com/adi1090x/rofi.git /usr/local/src/rofi-theme
+  fi
+fi
