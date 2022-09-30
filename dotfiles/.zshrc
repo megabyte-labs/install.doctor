@@ -341,7 +341,7 @@ find() {
 ### Antigen
 [[ ! -f ~/.local/antigen.zsh ]] || source ~/.local/antigen.zsh
 
-if type antigen &> /dev/null; then
+if command -v antigen > /dev/null; then
     antigen use oh-my-zsh
     antigen bundle git
     antigen bundle bundler
@@ -362,7 +362,7 @@ fi
 [ -f ~/.local/fzf.zsh ] && source ~/.local/fzf.zsh
 
 ### Google Cloud SDK
-if type brew &> /dev/null; then
+if command -v brew > /dev/null; then
     [[ ! -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc" ]] || source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
     [[ ! -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc" ]] || source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 fi
@@ -372,7 +372,7 @@ fpath+=~/.zfunc
 
 ### zoxide
 # TODO: Ensure zoxide.vim is installed
-type zoxide &> /dev/null && eval "$(zoxide init zsh)"
+command -v zoxide > /dev/null && eval "$(zoxide init zsh)"
 
 ### Fig
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"

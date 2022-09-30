@@ -229,13 +229,13 @@ export MCFLY_KEY_SCHEME=vim
 [ -f ~/.local/fzf.bash ] && source ~/.local/fzf.bash
 
 ### Google Cloud SDK
-if type brew &> /dev/null; then
+if command -v brew > /dev/null; then
     [[ ! -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc" ]] || source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
     [[ ! -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc" ]] || source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
 fi
 
 ### zoxide
-type zoxide &> /dev/null && eval "$(zoxide init bash)"
+command -v zoxide > /dev/null && eval "$(zoxide init bash)"
 
 ### Fig
 [[ -f "$HOME/.fig/shell/bashrc.post.bash" ]] && . "$HOME/.fig/shell/bashrc.post.bash"

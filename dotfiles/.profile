@@ -61,10 +61,10 @@ down4me() {
 
 # GAM - a command-line tool for Google Workspace. This alias will run gam or install gam if it is not already installed.
 gam() {
-  if type gam &> /dev/null; then
+  if command -v gam > /dev/null; then
     gam "$@"
   else
-    bash <(curl -s -S -L https://git.io/install-gam)
+    TMP="$(mktemp)" && curl -sSL https://git.io/install-gam > "$TMP" && bash "$TMP"
   fi
 }
 
@@ -98,7 +98,7 @@ provision () {
 
 # Run the quickstart script
 quickstart() {
-  if type qvm-run &> /dev/null; then
+  if command -v qvm-run > /dev/null; then
     qvm-run --pass-io personal "curl -sSL https://install.doctor/qubes" > "$HOME/setup.sh" && bash "$HOME/setup.sh"
   elif [ -d '/Applications' ] && [ -d '/Users' ] && [ -d '/Library' ]; then
     curl -sSL https://install.doctor/quickstart > "$HOME/setup.sh" && bash "$HOME/setup.sh"
@@ -118,7 +118,7 @@ randomstring() {
 }
 
 # Launch rclone admin GUI
-rclone-gui() {
+rclonegui() {
   rclone rcd --rc-web-gui --rc-user=admin --rc-pass=pass --rc-serve
 }
 
@@ -273,7 +273,7 @@ if [ -f "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
 fi
 
-if type brew &> /dev/null; then
+if command -v brew > /dev/null; then
     ### Go
     export GOPATH="${HOME}/.local/go"
     export GOROOT="$(brew --prefix golang)/libexec"
