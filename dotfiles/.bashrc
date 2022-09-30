@@ -74,70 +74,80 @@ HISTFILESIZE=5000
 HISTFILE=~/.bash_history
 
 # Bash Completion
-if [ -f /usr/share/bash-completion/bash_completion ]; then
-	. /usr/share/bash-completion/bash_completion
-elif [ -f /etc/bash_completion ]; then
-	. /etc/bash_completion
+if [ "$0" == 'bash' ]; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+	  . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+	  . /etc/bash_completion
+  fi
 fi
 
-# Add new line before prompt
-PROMPT_COMMAND="PROMPT_COMMAND=echo"
-
-# Prompt
-if [ -f /etc/os-release ]; then
-  . /etc/os-release
-  if [ -d /Applications ] && [ -d /Library ] && [ -d /System ]; then
-	  # macOS
-	  OS_ICON=
-  elif [ "$ID" == 'alpine' ]; then
-    OS_ICON=
-  elif [ "$ID" == 'archlinux' ]; then
-  	OS_ICON=
-  elif [ "$ID" == 'centos' ]; then
-    OS_ICON=
-  elif [ "$ID" == 'coreos' ]; then
-	OS_ICON=
-  elif [ "$ID" == 'debian' ]; then
-    OS_ICON=
-  elif [ "$ID" == 'deepin' ]; then
-	OS_ICON=
-  elif [ "$ID" == 'elementary' ]; then
-	OS_ICON=
-  elif [ "$ID" == 'endeavour' ]; then
-    OS_ICON=
-  elif [ "$ID" == 'freebsd' ]; then
-	OS_ICON=
-  elif [ "$ID" == 'gentoo' ]; then
-	OS_ICON=
-  elif [ "$ID" == 'kali' ]; then
-    OS_ICON=
-  elif [ "$ID" == 'linuxmint' ]; then
-    OS_ICON=
-  elif [ "$ID" == 'manjaro' ]; then
-	OS_ICON=
-  elif [ "$ID" == 'nixos' ]; then
-	OS_ICON=
-  elif [ "$ID" == 'openbsd' ]; then
-	OS_ICON=
-  elif [ "$ID" == 'opensuse' ]; then
-	OS_ICON=
-  elif [ "$ID" == 'parrot' ]; then
-    OS_ICON=
-  elif [ "$ID" == 'pop_os' ]; then
-  	OS_ICON=
-  elif [ "$ID" == 'raspberry_pi' ]; then
-	OS_ICON=
-  elif [ "$ID" == 'redhat' ]; then
-	OS_ICON=
-  elif [ "$ID" == 'fedora' ]; then
-    OS_ICON=
-  elif [ "$ID" == 'ubuntu' ]; then
-    OS_ICON=
+# Prompt (on bash only)
+if [ "$0" == 'bash' ]; then
+  # Add new line before prompt
+  PROMPT_COMMAND="PROMPT_COMMAND=echo"
+  if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    if [ -d /Applications ] && [ -d /Library ] && [ -d /System ]; then
+  	  # macOS
+  	  OS_ICON=
+    elif [ "$ID" == 'alpine' ]; then
+      OS_ICON=
+    elif [ "$ID" == 'archlinux' ]; then
+    	OS_ICON=
+    elif [ "$ID" == 'centos' ]; then
+      OS_ICON=
+    elif [ "$ID" == 'coreos' ]; then
+  	OS_ICON=
+    elif [ "$ID" == 'debian' ]; then
+      OS_ICON=
+    elif [ "$ID" == 'deepin' ]; then
+  	OS_ICON=
+    elif [ "$ID" == 'elementary' ]; then
+  	OS_ICON=
+    elif [ "$ID" == 'endeavour' ]; then
+      OS_ICON=
+    elif [ "$ID" == 'freebsd' ]; then
+  	OS_ICON=
+    elif [ "$ID" == 'gentoo' ]; then
+  	OS_ICON=
+    elif [ "$ID" == 'kali' ]; then
+      OS_ICON=
+    elif [ "$ID" == 'linuxmint' ]; then
+      OS_ICON=
+    elif [ "$ID" == 'manjaro' ]; then
+  	OS_ICON=
+    elif [ "$ID" == 'nixos' ]; then
+  	OS_ICON=
+    elif [ "$ID" == 'openbsd' ]; then
+  	OS_ICON=
+    elif [ "$ID" == 'opensuse' ]; then
+  	OS_ICON=
+    elif [ "$ID" == 'parrot' ]; then
+      OS_ICON=
+    elif [ "$ID" == 'pop_os' ]; then
+    	OS_ICON=
+    elif [ "$ID" == 'raspberry_pi' ]; then
+  	OS_ICON=
+    elif [ "$ID" == 'redhat' ]; then
+  	OS_ICON=
+    elif [ "$ID" == 'fedora' ]; then
+      OS_ICON=
+    elif [ "$ID" == 'ubuntu' ]; then
+      OS_ICON=
+    else
+      OS_ICON=
+    fi
   else
     OS_ICON=
   fi
-else
-  OS_ICON=
+
+  # Set styled terminal prompt
+  case "$TERM" in
+  xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
+  	PS1="\n \[\033[0;34m\]╭─\[\033[0;31m\]\[\033[0;37m\]\[\033[41m\] $OS_ICON \u \[\033[0m\]\[\033[0;31m\]\[\033[44m\]\[\033[0;34m\]\[\033[44m\]\[\033[0;30m\]\[\033[44m\] \w \[\033[0m\]\[\033[0;34m\] \n \[\033[0;34m\]╰ \[\033[1;36m\]\$ \[\033[0m\]"
+  	;;
+  esac
 fi
 
 ### Miscellaneous
@@ -159,13 +169,6 @@ export LESSHISTFILE=-
 
 # colorize ls
 [ -x /usr/bin/dircolors ] && eval "$(dircolors -b)"
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
-	PS1="\n \[\033[0;34m\]╭─\[\033[0;31m\]\[\033[0;37m\]\[\033[41m\] $OS_ICON \u \[\033[0m\]\[\033[0;31m\]\[\033[44m\]\[\033[0;34m\]\[\033[44m\]\[\033[0;30m\]\[\033[44m\] \w \[\033[0m\]\[\033[0;34m\] \n \[\033[0;34m\]╰ \[\033[1;36m\]\$ \[\033[0m\]"
-	;;
-esac
 
 ### Functions
 glog() {
