@@ -57,9 +57,11 @@ command -v bashtop > /dev/null && alias top='bashtop'
 command -v bpytop > /dev/null && alias top='bpytop'
 
 ### Settings
-shopt -s globstar
-shopt -s histappend
-shopt -s checkwinsize
+if command -v shopt > /dev/null; then
+  shopt -s globstar
+  shopt -s histappend
+  shopt -s checkwinsize
+fi
 
 HISTCONTROL=ignoreboth
 HISTSIZE=5000
@@ -67,12 +69,10 @@ HISTFILESIZE=5000
 HISTFILE=~/.bash_history
 
 # Bash Completion
-if [ -f /usr/share/bash-completion/bash_completion ]
-then
-	source /usr/share/bash-completion/bash_completion
-elif [ -f /etc/bash_completion ]
-then
-	source /etc/bash_completion
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+	. /usr/share/bash-completion/bash_completion
+elif [ -f /etc/bash_completion ]; then
+	. /etc/bash_completion
 fi
 
 # Add new line before prompt
@@ -80,10 +80,10 @@ PROMPT_COMMAND="PROMPT_COMMAND=echo"
 
 # Prompt
 if [ -f /etc/os-release ]; then
-  source /etc/os-release
+  . /etc/os-release
   if [ -d /Applications ] && [ -d /Library ] && [ -d /System ]; then
-	# macOS
-	OS_ICON=
+	  # macOS
+	  OS_ICON=
   elif [ "$ID" == 'alpine' ]; then
     OS_ICON=
   elif [ "$ID" == 'archlinux' ]; then
