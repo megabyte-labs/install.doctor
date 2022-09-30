@@ -1,86 +1,86 @@
 
 
-
+  
   if &background == 'dark'
-
-  let s:guishade0 = "#222323"
-  let s:guishade1 = "#3d3e3e"
-  let s:guishade2 = "#575858"
-  let s:guishade3 = "#727373"
-  let s:guishade4 = "#8d8d8d"
-  let s:guishade5 = "#a8a8a8"
-  let s:guishade6 = "#c2c2c2"
-  let s:guishade7 = "#dddddd"
-  let s:guiaccent0 = "#ff5257"
-  let s:guiaccent1 = "#f7821c"
-  let s:guiaccent2 = "#fbb927"
-  let s:guiaccent3 = "#62ba46"
-  let s:guiaccent4 = "#00c7a3"
-  let s:guiaccent5 = "#007aff"
-  let s:guiaccent6 = "#a550a7"
-  let s:guiaccent7 = "#f74f9e"
-  let s:ctermshade0 = 235
-  let s:ctermshade1 = 237
-  let s:ctermshade2 = 240
-  let s:ctermshade3 = 243
-  let s:ctermshade4 = 245
-  let s:ctermshade5 = 248
-  let s:ctermshade6 = 251
-  let s:ctermshade7 = 253
-  let s:ctermaccent0 = 210
-  let s:ctermaccent1 = 215
-  let s:ctermaccent2 = 221
-  let s:ctermaccent3 = 113
-  let s:ctermaccent4 = 43
-  let s:ctermaccent5 = 33
-  let s:ctermaccent6 = 139
-  let s:ctermaccent7 = 211
-
+    
+  let s:guishade0 = "#161925"
+  let s:guishade1 = "#2f323e"
+  let s:guishade2 = "#474b56"
+  let s:guishade3 = "#60646f"
+  let s:guishade4 = "#797c87"
+  let s:guishade5 = "#9295a0"
+  let s:guishade6 = "#aaaeb8"
+  let s:guishade7 = "#c3c7d1"
+  let s:guiaccent0 = "#ed254e"
+  let s:guiaccent1 = "#dcdfe4"
+  let s:guiaccent2 = "#f9dc5c"
+  let s:guiaccent3 = "#71f79f"
+  let s:guiaccent4 = "#00c1e4"
+  let s:guiaccent5 = "#7cb7ff"
+  let s:guiaccent6 = "#c3c7d1"
+  let s:guiaccent7 = "#c74d89"
+  let s:ctermshade0 = 234
+  let s:ctermshade1 = 59
+  let s:ctermshade2 = 239
+  let s:ctermshade3 = 102
+  let s:ctermshade4 = 244
+  let s:ctermshade5 = 145
+  let s:ctermshade6 = 249
+  let s:ctermshade7 = 188
+  let s:ctermaccent0 = 204
+  let s:ctermaccent1 = 254
+  let s:ctermaccent2 = 222
+  let s:ctermaccent3 = 121
+  let s:ctermaccent4 = 44
+  let s:ctermaccent5 = 117
+  let s:ctermaccent6 = 188
+  let s:ctermaccent7 = 175
+  
   endif
+  
 
-
-
+  
   if &background == 'light'
-
+    
   let s:guishade0 = "#ffffff"
-  let s:guishade1 = "#e0e0e0"
-  let s:guishade2 = "#c1c1c1"
-  let s:guishade3 = "#a2a2a2"
-  let s:guishade4 = "#848484"
-  let s:guishade5 = "#656565"
-  let s:guishade6 = "#464646"
-  let s:guishade7 = "#272727"
-  let s:guiaccent0 = "#e0383e"
-  let s:guiaccent1 = "#f7821c"
-  let s:guiaccent2 = "#fbb927"
-  let s:guiaccent3 = "#62ba46"
-  let s:guiaccent4 = "#10b9a6"
-  let s:guiaccent5 = "#007aff"
-  let s:guiaccent6 = "#953d96"
-  let s:guiaccent7 = "#f74f9e"
+  let s:guishade1 = "#e5e6e7"
+  let s:guishade2 = "#cccdcf"
+  let s:guishade3 = "#b2b4b7"
+  let s:guishade4 = "#999ba0"
+  let s:guishade5 = "#7f8288"
+  let s:guishade6 = "#666970"
+  let s:guishade7 = "#4c5058"
+  let s:guiaccent0 = "#ff4972"
+  let s:guiaccent1 = "#dcdfe4"
+  let s:guiaccent2 = "#ffff80"
+  let s:guiaccent3 = "#95ffc3"
+  let s:guiaccent4 = "#24e5ff"
+  let s:guiaccent5 = "#a0dbff"
+  let s:guiaccent6 = "#4c5058"
+  let s:guiaccent7 = "#eb71ad"
   let s:ctermshade0 = 231
   let s:ctermshade1 = 254
-  let s:ctermshade2 = 250
-  let s:ctermshade3 = 247
-  let s:ctermshade4 = 244
-  let s:ctermshade5 = 102
-  let s:ctermshade6 = 238
-  let s:ctermshade7 = 235
-  let s:ctermaccent0 = 167
-  let s:ctermaccent1 = 215
-  let s:ctermaccent2 = 221
-  let s:ctermaccent3 = 113
-  let s:ctermaccent4 = 43
-  let s:ctermaccent5 = 33
-  let s:ctermaccent6 = 133
+  let s:ctermshade2 = 15
+  let s:ctermshade3 = 249
+  let s:ctermshade4 = 247
+  let s:ctermshade5 = 244
+  let s:ctermshade6 = 242
+  let s:ctermshade7 = 239
+  let s:ctermaccent0 = 204
+  let s:ctermaccent1 = 254
+  let s:ctermaccent2 = 229
+  let s:ctermaccent3 = 158
+  let s:ctermaccent4 = 81
+  let s:ctermaccent5 = 153
+  let s:ctermaccent6 = 239
   let s:ctermaccent7 = 211
-
+  
   endif
-
+  
 
   highlight clear
   syntax reset
-  let g:colors_name = "ThemerVim"
+  let g:colors_name = "Betelgeuse"
 
   """"""""""
   " Normal "
