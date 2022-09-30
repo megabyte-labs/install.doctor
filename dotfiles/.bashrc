@@ -10,11 +10,6 @@ fi
 
 COLOR_SCHEME=dark # dark/light
 
-echo $0
-echo $0
-echo $0
-echo $0
-
 alias ..='cd ..'
 alias cp='cp -v'
 alias rm='rm -I'
