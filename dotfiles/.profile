@@ -301,7 +301,9 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 
 ### SDKMan
 export SDKMAN_DIR="$HOME/.local/sdkman"
-[[ -s "$HOME/.local/sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.local/sdkman/bin/sdkman-init.sh"
+if [ -s "$HOME/.local/sdkman/bin/sdkman-init.sh" ]; then
+  . "$HOME/.local/sdkman/bin/sdkman-init.sh"
+fi
 
 # Running this will update GPG to point to the current YubiKey
 alias yubikey-gpg-stub='gpg-connect-agent "scd serialno" "learn --force" /bye'

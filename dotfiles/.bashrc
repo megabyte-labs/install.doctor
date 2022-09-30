@@ -1,8 +1,12 @@
 ### Fig
-[[ -f "$HOME/.fig/shell/bashrc.pre.bash" ]] && . "$HOME/.fig/shell/bashrc.pre.bash"
+if [ -f "$HOME/.fig/shell/bashrc.pre.bash" ]; then
+  . "$HOME/.fig/shell/bashrc.pre.bash"
+fi
 
 ### ~/.profile
-[[ -f "$HOME/.profile" ]] && . "$HOME/.profile"
+if [ -f "$HOME/.profile" ]; then
+  . "$HOME/.profile"
+fi
 
 COLOR_SCHEME=dark # dark/light
 
@@ -80,49 +84,49 @@ if [ -f /etc/os-release ]; then
   if [ -d /Applications ] && [ -d /Library ] && [ -d /System ]; then
 	# macOS
 	OS_ICON=
-  elif [[ "$ID" == 'alpine' ]]; then
+  elif [ "$ID" == 'alpine' ]; then
     OS_ICON=
-  elif [[ "$ID" == 'archlinux' ]]; then
+  elif [ "$ID" == 'archlinux' ]; then
   	OS_ICON=
-  elif [[ "$ID" == 'centos' ]]; then
+  elif [ "$ID" == 'centos' ]; then
     OS_ICON=
-  elif [[ "$ID" == 'coreos' ]]; then
+  elif [ "$ID" == 'coreos' ]; then
 	OS_ICON=
-  elif [[ "$ID" == 'debian' ]]; then
+  elif [ "$ID" == 'debian' ]; then
     OS_ICON=
-  elif [[ "$ID" == 'deepin' ]]; then
+  elif [ "$ID" == 'deepin' ]; then
 	OS_ICON=
-  elif [[ "$ID" == 'elementary' ]]; then
+  elif [ "$ID" == 'elementary' ]; then
 	OS_ICON=
-  elif [[ "$ID" == 'endeavour' ]]; then
+  elif [ "$ID" == 'endeavour' ]; then
     OS_ICON=
-  elif [[ "$ID" == 'freebsd' ]]; then
+  elif [ "$ID" == 'freebsd' ]; then
 	OS_ICON=
-  elif [[ "$ID" == 'gentoo' ]]; then
+  elif [ "$ID" == 'gentoo' ]; then
 	OS_ICON=
-  elif [[ "$ID" == 'kali' ]]; then
+  elif [ "$ID" == 'kali' ]; then
     OS_ICON=
-  elif [[ "$ID" == 'linuxmint' ]]; then
+  elif [ "$ID" == 'linuxmint' ]; then
     OS_ICON=
-  elif [[ "$ID" == 'manjaro' ]]; then
+  elif [ "$ID" == 'manjaro' ]; then
 	OS_ICON=
-  elif [[ "$ID" == 'nixos' ]]; then
+  elif [ "$ID" == 'nixos' ]; then
 	OS_ICON=
-  elif [[ "$ID" == 'openbsd' ]]; then
+  elif [ "$ID" == 'openbsd' ]; then
 	OS_ICON=
-  elif [[ "$ID" == 'opensuse' ]]; then
+  elif [ "$ID" == 'opensuse' ]; then
 	OS_ICON=
-  elif [[ "$ID" == 'parrot' ]]; then
+  elif [ "$ID" == 'parrot' ]; then
     OS_ICON=
-  elif [[ "$ID" == 'pop_os' ]]; then
+  elif [ "$ID" == 'pop_os' ]; then
   	OS_ICON=
-  elif [[ "$ID" == 'raspberry_pi' ]]; then
+  elif [ "$ID" == 'raspberry_pi' ]; then
 	OS_ICON=
-  elif [[ "$ID" == 'redhat' ]]; then
+  elif [ "$ID" == 'redhat' ]; then
 	OS_ICON=
-  elif [[ "$ID" == 'fedora' ]]; then
+  elif [ "$ID" == 'fedora' ]; then
     OS_ICON=
-  elif [[ "$ID" == 'ubuntu' ]]; then
+  elif [ "$ID" == 'ubuntu' ]; then
     OS_ICON=
   else
     OS_ICON=
@@ -230,12 +234,18 @@ export MCFLY_KEY_SCHEME=vim
 
 ### Google Cloud SDK
 if command -v brew > /dev/null; then
-    [[ ! -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc" ]] || source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
-    [[ ! -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc" ]] || source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+    if [ -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc" ]; then
+      . "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+    fi
+    if [ -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc" ]; then
+      . "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+    fi
 fi
 
 ### zoxide
 command -v zoxide > /dev/null && eval "$(zoxide init bash)"
 
 ### Fig
-[[ -f "$HOME/.fig/shell/bashrc.post.bash" ]] && . "$HOME/.fig/shell/bashrc.post.bash"
+if [ -f "$HOME/.fig/shell/bashrc.post.bash" ]; then
+  . "$HOME/.fig/shell/bashrc.post.bash"
+fi
