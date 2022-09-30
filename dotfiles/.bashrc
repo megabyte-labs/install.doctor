@@ -98,39 +98,39 @@ if [ "$0" = 'bash' ]; then
     elif [ "$ID" = 'centos' ]; then
       OS_ICON=
     elif [ "$ID" = 'coreos' ]; then
-  	OS_ICON=
+  	  OS_ICON=
     elif [ "$ID" = 'debian' ]; then
       OS_ICON=
     elif [ "$ID" = 'deepin' ]; then
-  	OS_ICON=
+  	  OS_ICON=
     elif [ "$ID" = 'elementary' ]; then
-  	OS_ICON=
+  	  OS_ICON=
     elif [ "$ID" = 'endeavour' ]; then
       OS_ICON=
     elif [ "$ID" = 'freebsd' ]; then
-  	OS_ICON=
+  	  OS_ICON=
     elif [ "$ID" = 'gentoo' ]; then
-  	OS_ICON=
+  	  OS_ICON=
     elif [ "$ID" = 'kali' ]; then
       OS_ICON=
     elif [ "$ID" = 'linuxmint' ]; then
       OS_ICON=
     elif [ "$ID" = 'manjaro' ]; then
-  	OS_ICON=
+  	  OS_ICON=
     elif [ "$ID" = 'nixos' ]; then
-  	OS_ICON=
+  	  OS_ICON=
     elif [ "$ID" = 'openbsd' ]; then
-  	OS_ICON=
+  	  OS_ICON=
     elif [ "$ID" = 'opensuse' ]; then
-  	OS_ICON=
+  	  OS_ICON=
     elif [ "$ID" = 'parrot' ]; then
       OS_ICON=
     elif [ "$ID" = 'pop_os' ]; then
     	OS_ICON=
     elif [ "$ID" = 'raspberry_pi' ]; then
-  	OS_ICON=
+  	  OS_ICON=
     elif [ "$ID" = 'redhat' ]; then
-  	OS_ICON=
+  	  OS_ICON=
     elif [ "$ID" = 'fedora' ]; then
       OS_ICON=
     elif [ "$ID" = 'ubuntu' ]; then
@@ -202,7 +202,7 @@ find() {
 	fi
 }
 
-rga-fzf() {
+rgafzf() {
   RG_PREFIX="rga --files-with-matches"
   local file
   file="$(
@@ -216,43 +216,46 @@ rga-fzf() {
   xdg-open "$file"
 }
 
-### fd
-[ -e /usr/local/src/fd/fd ] && source /usr/local/src/fd/autocomplete/fd.bash-completion
+# Bash completions
+if [ "$0" = 'bash' ]; then
+  ### fd
+  [ -e /usr/local/src/fd/fd ] && source /usr/local/src/fd/autocomplete/fd.bash-completion
 
-### Hyperfine
-[ -e /usr/local/src/hyperfine/hyperfine ] && source /usr/local/src/hyperfine/autocomplete/hyperfine.bash-completion
+  ### Hyperfine
+  [ -e /usr/local/src/hyperfine/hyperfine ] && source /usr/local/src/hyperfine/autocomplete/hyperfine.bash-completion
 
-### mcfly
-export MCFLY_KEY_SCHEME=vim
-[ -e /usr/local/src/mcfly/mcfly ] && eval "$(mcfly init bash)"
+  ### mcfly
+  export MCFLY_KEY_SCHEME=vim
+  [ -e /usr/local/src/mcfly/mcfly ] && eval "$(mcfly init bash)"
 
-### wp-cli
-[ -e /usr/local/bin/wp ] && source /usr/local/src/wp-cli/wp-completion.bash
+  ### wp-cli
+  [ -e /usr/local/bin/wp ] && source /usr/local/src/wp-cli/wp-completion.bash
 
-### direnv
-[ -e /usr/local/bin/direnv ] && eval "$(direnv hook bash)"
+  ### direnv
+  [ -e /usr/local/bin/direnv ] && eval "$(direnv hook bash)"
 
-### Googler
-[ -e /usr/local/bin/googler ] && source /usr/local/src/googler/googler-completion.bash
-[ -e /usr/local/bin/googler ] && source /usr/local/src/googler/googler_at
+  ### Googler
+  [ -e /usr/local/bin/googler ] && source /usr/local/src/googler/googler-completion.bash
+  [ -e /usr/local/bin/googler ] && source /usr/local/src/googler/googler_at
 
-### FZF
-[ -f ~/.local/fzf.bash ] && source ~/.local/fzf.bash
+  ### FZF
+  [ -f ~/.local/fzf.bash ] && source ~/.local/fzf.bash
 
-### Google Cloud SDK
-if command -v brew > /dev/null; then
-    if [ -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc" ]; then
-      . "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
-    fi
-    if [ -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc" ]; then
-      . "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
-    fi
-fi
+  ### Google Cloud SDK
+  if command -v brew > /dev/null; then
+      if [ -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc" ]; then
+        . "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+      fi
+      if [ -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc" ]; then
+        . "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+      fi
+  fi
 
-### zoxide
-command -v zoxide > /dev/null && eval "$(zoxide init bash)"
+  ### zoxide
+  command -v zoxide > /dev/null && eval "$(zoxide init bash)"
 
-### Fig
-if [ -f "$HOME/.fig/shell/bashrc.post.bash" ]; then
-  . "$HOME/.fig/shell/bashrc.post.bash"
+  ### Fig
+  if [ -f "$HOME/.fig/shell/bashrc.post.bash" ]; then
+    . "$HOME/.fig/shell/bashrc.post.bash"
+  fi
 fi
