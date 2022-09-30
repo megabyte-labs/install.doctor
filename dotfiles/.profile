@@ -117,11 +117,6 @@ randomstring() {
     fi
 }
 
-# Rclone GUI
-rcloneui() {
-  rclone rcd --rc-web-gui --rc-user=admin --rc-pass=pass --rc-serve
-}
-
 # Reset Docker to factory settings
 resetdocker() {
     set +e
@@ -206,7 +201,7 @@ alias ports='sudo netstat -tulanp'
 alias poweroff='sudo /sbin/poweroff'
 
 # Open the Rclone web GUI
-alias rclonegui='rclone rcd --rc-web-gui'
+alias rclonegui='rclone rcd --rc-web-gui --rc-user=admin --rc-pass=pass --rc-serve'
 
 # Reboot the computer
 alias reboot='sudo /sbin/reboot'
