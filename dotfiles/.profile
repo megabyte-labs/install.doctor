@@ -117,8 +117,8 @@ randomstring() {
     fi
 }
 
-# Launch rclone admin GUI
-rclonegui() {
+# Rclone GUI
+rcloneui() {
   rclone rcd --rc-web-gui --rc-user=admin --rc-pass=pass --rc-serve
 }
 
