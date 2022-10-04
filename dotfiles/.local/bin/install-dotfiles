@@ -3,7 +3,7 @@
 if [ -f '/etc/qubes-release' ]; then
   # Qubes dom0
   qvm-create --label red --template debian-11 provision &> /dev/null || EXIT_CODE=$?
-  qvm-run --pass-io provision 'if [ -d ~/Downloads/professor-dotfiles ]; then cd ~/Downloads/professor-dotfiles && git config pull.rebase false && git pull origin master; else git clone https://gitlab.com/megabyte-labs/dotfiles.git ~/Downloads/professor-dotfiles; fi; tar -zcvf /tmp/professor-dotfiles.tar.gz ~/Downloads/professor-dotfiles'
+  qvm-run --pass-io provision 'if [ -d ~/Downloads/professor-dotfiles ]; then cd ~/Downloads/professor-dotfiles && git config pull.rebase false && git pull origin master; else git clone https://gitlab.com/megabyte-labs/dotfiles.git ~/Downloads/professor-dotfiles; fi; cd ~/Downloads; tar -zcvf /tmp/professor-dotfiles.tar.gz professor-dotfiles'
   qvm-run --pass-io provision "cat /tmp/professor-dotfiles.tar.gz" > "/tmp/dotfiles.tar.gz"
   tar -xzf "/tmp/dotfiles.tar.gz" -C "$HOME"
   rm -f "/tmp/dotfiles.tar.gz"
