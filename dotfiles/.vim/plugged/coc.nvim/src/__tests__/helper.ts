@@ -1,0 +1,367 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import { Buffer, Neovim, Window } from '@chemzqm/neovim'
+import * as cp from 'child_process'
+import { EventEmitter } from 'events'
+import fs from 'fs'
+import os from 'os'
+import path from 'path'
+import util from 'util'
+import { v4 as uuid } from 'uuid'
+import { Disposable } from 'vscode-languageserver-protocol'
+import attach from '../attach'
+import type { Completion } from '../completion'
+import events from '../events'
+import type Document from '../model/document'
+import type Plugin from '../plugin'
+import { ProviderResult } from '../provider'
+import { ExtendedCompleteItem, OutputChannel, VimCompleteItem } from '../types'
+import { equals } from '../util/object'
+import { terminate } from '../util/processes'
+import { Workspace } from '../workspace'
+
+export interface CursorPosition {
+  bufnum: number
+  lnum: number
+  col: number
+}
+
+const nullChannel: OutputChannel = {
+  content: '',
+  show: () => {},
+  dispose: () => {},
+  name: 'null',
+  append: () => {},
+  appendLine: () => {},
+  clear: () => {},
+  hide: () => {}
+}
+
+process.on('uncaughtException', err => {
+  let msg = 'Uncaught exception: ' + err.stack
+  console.error(msg)
+})
+
+export class Helper extends EventEmitter {
+  public nvim: Neovim
+  public proc: cp.ChildProcess
+  public plugin: Plugin
+
+  constructor() {
+    super()
+    this.setMaxListeners(99)
+  }
+
+  public get workspace(): Workspace {
+    if (!this.plugin || !this.plugin.workspace) throw new Error('helper not attached')
+    return this.plugin.workspace
+  }
+
+  public get completion(): Completion {
+    if (!this.plugin || !this.plugin.completion) throw new Error('helper not attached')
+    return this.plugin.completion
+  }
+
+  public setup(): Promise<void> {
+    const vimrc = path.resolve(__dirname, 'vimrc')
+    let proc = this.proc = cp.spawn('nvim', ['-u', vimrc, '-i', 'NONE', '--embed'], {
+      cwd: __dirname
+    })
+    let plugin = this.plugin = attach({ proc })
+    this.nvim = plugin.nvim
+    this.nvim.uiAttach(160, 80, {}).catch(e => {
+      console.error(e)
+    })
+    this.nvim.on('notification', (method, args) => {
+      if (method == 'redraw') {
+        for (let arg of args) {
+          let event = arg[0]
+          this.emit(event, arg.slice(1))
+          if (event == 'put') {
+            let arr = arg.slice(1).map(o => o[0])
+            let line = arr.join('').trim()
+            if (line.length > 3) {
+              // console.log(line)
+            }
+          }
+        }
+      }
+    })
+    return new Promise(resolve => {
+      plugin.once('ready', resolve)
+    })
+  }
+
+  public async shutdown(): Promise<void> {
+    if (this.plugin) this.plugin.dispose()
+    await this.nvim.quit()
+    this.nvim = null
+    if (this.proc) {
+      this.proc.unref()
+      terminate(this.proc)
+      this.proc = null
+    }
+    await this.wait(60)
+  }
+
+  public async waitPopup(): Promise<void> {
+    let visible = await this.nvim.call('coc#pum#visible')
+    if (visible) return
+    let res = await events.race(['MenuPopupChanged'], 3000)
+    if (!res) throw new Error('wait pum timeout after 3s')
+  }
+
+  public async waitPreviewWindow(): Promise<void> {
+    for (let i = 0; i < 40; i++) {
+      await this.wait(50)
+      let has = await this.nvim.call('coc#list#has_preview')
+      if (has > 0) return
+    }
+    throw new Error('timeout after 2s')
+  }
+
+  public async waitPrompt(): Promise<void> {
+    for (let i = 0; i < 60; i++) {
+      await this.wait(30)
+      let prompt = await this.nvim.call('coc#prompt#activated')
+      if (prompt) return
+    }
+    throw new Error('Wait prompt timeout after 2s')
+  }
+
+  public async waitFloat(): Promise<number> {
+    for (let i = 0; i < 50; i++) {
+      await this.wait(20)
+      let winid = await this.nvim.call('GetFloatWin')
+      if (winid) return winid
+    }
+    throw new Error('timeout after 2s')
+  }
+
+  public async confirmCompletion(idx: number): Promise<void> {
+    await this.nvim.call('coc#pum#select', [idx, 1, 1])
+  }
+
+  public async doAction(method: string, ...args: any[]): Promise<any> {
+    return await this.plugin.cocAction(method, ...args)
+  }
+
+  public async synchronize(): Promise<void> {
+    let doc = await this.workspace.document
+    doc.forceSync()
+  }
+
+  public async reset(): Promise<void> {
+    let mode = await this.nvim.mode
+    if (mode.blocking && mode.mode == 'r') {
+      await this.nvim.input('<cr>')
+    } else if (mode.mode != 'n' || mode.blocking) {
+      await this.nvim.call('feedkeys', [String.fromCharCode(27), 'in'])
+    }
+    this.completion.stop(true)
+    this.workspace.reset()
+    await this.nvim.command('silent! %bwipeout!')
+    await this.nvim.command('setl nopreviewwindow')
+    await this.wait(30)
+    await this.workspace.document
+  }
+
+  public async pumvisible(): Promise<boolean> {
+    let res = await this.nvim.call('coc#pum#visible', []) as number
+    return res == 1
+  }
+
+  public wait(ms = 30): Promise<void> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve()
+      }, ms)
+    })
+  }
+
+  public async visible(word: string, source?: string): Promise<boolean> {
+    await this.waitPopup()
+    let items = this.completion.activeItems
+    if (!items) return false
+    let item = items.find(o => o.word == word)
+    if (!item) return false
+    if (source && item.source != source) return false
+    return true
+  }
+
+  public async notVisible(word: string): Promise<boolean> {
+    let items = await this.getItems()
+    return items.findIndex(o => o.word == word) == -1
+  }
+
+  public async getItems(): Promise<ReadonlyArray<ExtendedCompleteItem>> {
+    let visible = await this.pumvisible()
+    if (!visible) return []
+    return this.completion.activeItems.slice()
+  }
+
+  public async edit(file?: string): Promise<Buffer> {
+    if (!file || !path.isAbsolute(file)) {
+      file = path.join(__dirname, file ? file : `${uuid()}`)
+    }
+    let escaped = await this.nvim.call('fnameescape', file) as string
+    await this.nvim.command(`edit ${escaped}`)
+    let doc = await this.workspace.document
+    return doc.buffer
+  }
+
+  public async createDocument(name?: string): Promise<Document> {
+    let buf = await this.edit(name)
+    let doc = this.workspace.getDocument(buf.id)
+    if (!doc) return await this.workspace.document
+    return doc
+  }
+
+  public async listInput(input: string): Promise<void> {
+    await events.fire('InputChar', ['list', input, 0])
+  }
+
+  public async getMarkers(bufnr: number, ns: number): Promise<[number, number, number][]> {
+    return await this.nvim.call('nvim_buf_get_extmarks', [bufnr, ns, 0, -1, {}]) as [number, number, number][]
+  }
+
+  public async getCmdline(): Promise<string> {
+    let str = ''
+    for (let i = 1, l = 70; i < l; i++) {
+      let ch = await this.nvim.call('screenchar', [79, i])
+      if (ch == -1) break
+      str += String.fromCharCode(ch)
+    }
+    return str.trim()
+  }
+
+  // row, startCol, endCol, highlight
+  public async getExtMarks(buf: Buffer, ns_id: number): Promise<[number, number, number, string][]> {
+    let markers = await buf.getExtMarks(ns_id, 0, -1, { details: true })
+    return markers.map(o => [o[1], o[2], o[3].end_col, o[3].hl_group])
+  }
+
+  public updateConfiguration(key: string, value: any): () => void {
+    let curr = this.workspace.getConfiguration(key)
+    let { configurations } = this.workspace
+    configurations.updateMemoryConfig({ [key]: value })
+    return () => {
+      configurations.updateMemoryConfig({ [key]: curr })
+    }
+  }
+
+  public async mockFunction(name: string, result: string | number | any): Promise<void> {
+    let content = `
+    function! ${name}(...)
+      return ${typeof result == 'number' ? result : JSON.stringify(result)}
+    endfunction`
+    await this.nvim.exec(content)
+  }
+
+  public async items(): Promise<VimCompleteItem[]> {
+    return this.completion?.activeItems.slice()
+  }
+
+  public async screenLine(line: number): Promise<string> {
+    let res = ''
+    for (let i = 1; i <= 80; i++) {
+      let ch = await this.nvim.call('screenchar', [line, i])
+      res = res + String.fromCharCode(ch)
+    }
+    return res
+  }
+
+  public async getWinLines(winid: number): Promise<string[]> {
+    return await this.nvim.eval(`getbufline(winbufnr(${winid}), 1, '$')`) as string[]
+  }
+
+  public async getFloat(kind?: string): Promise<Window> {
+    if (!kind) {
+      let ids = await this.nvim.call('coc#float#get_float_win_list')
+      return ids.length ? this.nvim.createWindow(ids[0]) : undefined
+    } else {
+      let id = await this.nvim.call('coc#float#get_float_by_kind', [kind])
+      return id ? this.nvim.createWindow(id) : undefined
+    }
+  }
+
+  public async getLines(winid: number): Promise<string[]> {
+    let buf = await (this.nvim.createWindow(winid)).buffer
+    return await buf.lines
+  }
+
+  public async getFloats(): Promise<Window[]> {
+    let ids = await this.nvim.call('coc#float#get_float_win_list', [])
+    if (!ids) return []
+    return ids.map(id => this.nvim.createWindow(id))
+  }
+
+  public async getExtmarkers(bufnr: number, ns: number): Promise<[number, number, number, number, string][]> {
+    let res = await this.nvim.call('nvim_buf_get_extmarks', [bufnr, ns, 0, -1, { details: true }]) as any
+    return res.map(o => {
+      return [o[1], o[2], o[3].end_row, o[3].end_col, o[3].hl_group]
+    })
+  }
+
+  public async waitFor<T>(method: string, args: any[], value: T): Promise<void> {
+    let find = false
+    for (let i = 0; i < 40; i++) {
+      await this.wait(50)
+      let res = await this.nvim.call(method, args) as T
+      if (equals(res, value) || (value instanceof RegExp && value.test(res.toString()))) {
+        find = true
+        break
+      }
+    }
+    if (!find) {
+      throw new Error(`waitFor ${value} timeout`)
+    }
+  }
+
+  public async waitValue<T>(fn: () => ProviderResult<T>, value: T): Promise<void> {
+    let find = false
+    for (let i = 0; i < 50; i++) {
+      await this.wait(20)
+      let res = await Promise.resolve(fn())
+      if (equals(res, value)) {
+        find = true
+        break
+      }
+    }
+    if (!find) {
+      throw new Error(`waitValue ${value} timeout`)
+    }
+  }
+
+  public createNullChannel(): OutputChannel {
+    return nullChannel
+  }
+}
+
+export async function createTmpFile(content: string, disposables?: Disposable[]): Promise<string> {
+  let tmpFolder = path.join(os.tmpdir(), `coc-${process.pid}`)
+  if (!fs.existsSync(tmpFolder)) {
+    fs.mkdirSync(tmpFolder)
+  }
+  let fsPath = path.join(tmpFolder, uuid())
+  await util.promisify(fs.writeFile)(fsPath, content, 'utf8')
+  if (disposables) {
+    disposables.push(Disposable.create(() => {
+      if (fs.existsSync(fsPath)) fs.unlinkSync(fsPath)
+    }))
+  }
+  return fsPath
+}
+
+export function makeLine(length) {
+  let result = ''
+  let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 (){};,\\<>+=`^*!@#$%[]:"/?'
+  let charactersLength = characters.length
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() *
+      charactersLength))
+  }
+  return result
+}
+
+export default new Helper()
