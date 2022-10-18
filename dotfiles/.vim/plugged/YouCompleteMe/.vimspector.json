@@ -1,0 +1,60 @@
+{
+  "$schema": "https://puremourning.github.io/vimspector/schema/vimspector.schema.json",
+  "configurations": {
+    "Python: Attach To Vim": {
+      "variables": {
+        "port": "5678",
+        "host": "localhost"
+      },
+      "adapter": "multi-session",
+      "configuration": {
+        "request": "attach"
+      }
+    },
+    "python - launch pytest": {
+      "adapter": "debugpy",
+      "variables": [
+        {
+          "python": {
+            "shell": "/bin/bash -c 'if [ -z \"${dollar}VIRTUAL_ENV\" ]; then echo $$(which python3); else echo \"${dollar}VIRTUAL_ENV/bin/python\"; fi'"
+          }
+        },
+        {
+          "python_path": {
+            "shell": [
+              "${python}",
+              "${workspaceRoot}/run_tests.py",
+              "--dump-path"
+            ]
+          }
+        }
+      ],
+      "configuration": {
+        "name": "Python run test",
+        "type": "debugpy",
+        "request": "launch",
+
+        "cwd": "${workspaceRoot}",
+        "stopOnEntry": false,
+        "console": "integratedTerminal",
+        "justMyCode": true,
+        "logToFile": true,
+        "showReturnValue": true,
+
+        "debugOptions": [],
+
+        "module": "unittest",
+        "python": "${python}",
+        "args": [
+          "-v",
+          "${Test}"
+        ],
+        "env": {
+          "PYTHONPATH": "${python_path}",
+          "LD_LIBRARY_PATH": "${workspaceRoot}/third_party/ycmd/third_party/clang/lib",
+          "YCM_TEST_NO_RETRY": "1"
+        }
+      }
+    }
+  }
+}

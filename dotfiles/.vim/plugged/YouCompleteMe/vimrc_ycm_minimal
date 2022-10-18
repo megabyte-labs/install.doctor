@@ -1,0 +1,26 @@
+" windows default encoding is not supported
+set encoding=utf-8
+
+" If you using neovim and python isn't loading, copy your python setup from your
+" vimrc here:
+"
+" let g:python3_host_prog = '/path/to/python3/with/neovim/module'
+"
+" But remember that neovim is not officially supported, so please reproduce in
+" Vim.
+
+" Enable debugging
+let g:ycm_keep_logfiles = 1
+let g:ycm_log_level = 'debug'
+
+" If you're on an arm mac, uncomment the following line
+" let g:ycm_clangd_binary_path=trim(system('brew --prefix llvm')).'/bin/clangd'
+
+" If the base settings don't repro, paste your existing config for YCM only,
+" here:
+" let g:ycm_....
+
+" Load YCM (only)
+let &rtp .= ',' . expand( '<sfile>:p:h' )
+filetype plugin indent on
+
