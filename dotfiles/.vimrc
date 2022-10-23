@@ -1,6 +1,5 @@
 call plug#begin()
 Plug '~/.vim/plugged/typescript-vim'
-Plug '~/.vim/plugged/vim-colors-solarized'
 Plug '~/.vim/plugged/vim-airline'
 Plug '~/.vim/plugged/lightline.vim'
 Plug '~/.vim/plugged/vim-javascript'
@@ -26,10 +25,8 @@ Plug '~/.vim/plugged/syntastic'
 Plug '~/.vim/plugged/vim-devicons'
 Plug '~/.vim/plugged/zoxide.vim'
 Plug '~/.vim/plugged/vim-go'
-Plug '~/.vim/plugged/YouCompleteMe'
 Plug '~/.vim/plugged/ansible-vim', {'do': './UltiSnips/generate.sh'}
 
-" Settings for plugin https://github.com/altercation/vim-colors-solarized.git
 syntax enable
 set background=dark
 colorscheme betelgeuse
