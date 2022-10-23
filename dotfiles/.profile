@@ -235,10 +235,13 @@ if command -v brew > /dev/null; then
     ### Go
     export GOPATH="${HOME}/.local/go"
     export GOROOT="$(brew --prefix golang)/libexec"
+    export GO111MODULE=on
     export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
     ### ASDF
-    . $(brew --prefix asdf)/libexec/asdf.sh
+    if [ -f "$(brew --prefix asdf)/libexec/asdf.sh" ]; then
+      . $(brew --prefix asdf)/libexec/asdf.sh
+    fi
 fi
 
 ### Android Studio

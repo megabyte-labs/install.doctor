@@ -171,8 +171,7 @@ _source_plugin() {
 _source_plugin zsh-autosuggestions && ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
 
 # ZSH Syntax Highlighting
-if _source_plugin zsh-syntax-highlighting
-then
+if _source_plugin zsh-syntax-highlighting; then
 	ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 	ZSH_HIGHLIGHT_STYLES[default]=none
 	ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=white,underline
