@@ -44,16 +44,6 @@ cl() {
         ls -F --color=auto
 }
 
-# Open bash with local Docker file
-dockerssh() {
-    if [ -z "$1" ]; then
-        echo "Supply a Docker container name in order for this command to work."
-        echo "Usage: dockerssh <container_name>"
-    else
-        docker exec -it $1 /bin/bash
-    fi
-}
-
 # Checks status of a website on downforeveryoneorjustme.com
 down4me() {
   curl -s "http://www.downforeveryoneorjustme.com/$1" | sed '/just you/!d;s/<[^>]*>//g';
@@ -76,24 +66,6 @@ gitopen() {
 # Open Mac OS X desktop on a Linux machine
 macosx() {
     docker run -it --device /dev/kvm -p 50922:10022 -v /tmp/.X11-unix:/tmp/.X11-unix -e "DISPLAY=${DISPLAY:-:0.0}" sickcodes/docker-osx:big-sur
-}
-
-# Used to provision machines using Ansible
-provision () {
-    if [ -z "$1" ]; then
-        # Display usage if no parameters are given
-        echo "Usage: provision <ansible_inventory_name>"
-        echo "If an inventory name of 'test' is provided then the inventory should exist in inventories/test.yml"
-        return 1
-    else
-        cd ~/Playbooks
-        ansible-galaxy install -r requirements.yml
-        if [ -z "$2" ]; then
-            ansible-playbook --ask-vault-pass -i inventories/"$1".yml main.yml
-        else
-            ansible-playbook --ask-vault-pass -i inventories/"$1".yml "$2".yml
-        fi
-    fi
 }
 
 # Run the quickstart script
@@ -144,9 +116,6 @@ alias autheliapassword='docker run authelia/authelia:latest authelia hash-passwo
 # Shows IP addresses that are currently banned by fail2ban
 alias banned='sudo zgrep "Ban" /var/log/fail2ban.log*'
 
-# Removes all Ansible roles saved in ~/.ansible
-alias clearroles='rm -rf ~/.ansible/roles/*'
-
 alias connections='nm-connection-editor'
 
 # Make copy command verbose
@@ -154,9 +123,6 @@ alias cp='cp -v'
 
 # Copies with a progress bar
 alias cpv='rsync -ah --info=progress2'
-
-# Reload docker-compose.yml
-alias docker-reboot='docker-compose stop && docker-compose up -d'
 
 # Download a file
 alias download='curl --continue-at - --location --progress-bar --remote-name --remote-time'
@@ -226,9 +192,6 @@ alias sshconfig='${EDITOR:code} ~/.ssh/config'
 
 # Pastebin
 alias sprunge='curl -F "sprunge=<-" http://sprunge.us'
-
-# Alias for sudo vim
-alias svim='sudo vim'
 
 # Disable Tor for current shell
 alias toroff='source torsocks off'
