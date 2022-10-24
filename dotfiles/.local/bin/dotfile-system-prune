@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Clean up macOS-specific files if they are present
+if [ -d /Library ] && [ -d /System ]; then
+  # System is macOS
+else
+  if [ -d ~/Library ]; then
+    rm -rf ~/Library
+  fi
+fi
