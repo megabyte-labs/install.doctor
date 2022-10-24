@@ -231,6 +231,16 @@ if [ -f "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
 fi
 
+### Homebrew
+if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then
+  export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+  export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+  export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+  export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}"
+  export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
+  export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
+fi
+
 if command -v brew > /dev/null; then
     ### Go
     export GOPATH="${HOME}/.local/go"
@@ -250,14 +260,30 @@ export PATH="$PATH:~/Library/Android/sdk/platform-tools"
 export PATH="$PATH:~/Library/Android/sdk/tools/bin"
 export PATH="$PATH:~/Library/Android/sdk/tools"
 
+### Git
+export GIT_MERGE_AUTOEDIT=no
+
 ### gitfuzzy
 export PATH="/usr/local/src/gitfuzzy/bin:$PATH"
 
 ### Poetry
-export PATH="$HOME/.poetry/bin:$PATH"
+export POETRY_HOME="$HOME/.local/poetry"
+if [ ! -d "$POETRY_HOME" ]; then
+  mkdir -p "$POETRY_HOME"
+fi
+export PATH="$POETRY_HOME/bin:$PATH"
+
+### Ruby
+export GEM_HOME="$HOME/.local/gems"
+if [ ! -d "$GEM_HOME" ]; then
+  mkdir -p "$GEM_HOME"
+fi
 
 ### Volta
-export VOLTA_HOME="$HOME/.volta"
+export VOLTA_HOME="$HOME/.local/volta"
+if [ ! -d "$HOME/.local/volta" ]; then
+  mkdir -p "$HOME/.local/volta"
+fi
 export PATH="$VOLTA_HOME/bin:$PATH"
 
 ### SDKMan
@@ -270,4 +296,5 @@ fi
 alias yubikey-gpg-stub='gpg-connect-agent "scd serialno" "learn --force" /bye'
 
 ### Vagrant
+export VAGRANT_DEFAULT_PROVIDER=virtualbox
 export VAGRANT_HOME="$HOME/.local/vagrant.d"
