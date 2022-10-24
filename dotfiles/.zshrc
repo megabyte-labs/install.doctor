@@ -357,8 +357,15 @@ fi
 ## TODO
 # source /Users/bzalewski/.config/broot/launcher/bash/br
 
-### fzf
-[ -f ~/.local/fzf.zsh ] && source ~/.local/fzf.zsh
+### FZF
+if [ -e fzf ]; then
+  if [ -f ~/.local/fzf/completion.zsh ]; then
+    source ~/.local/fzf/completion.zsh 2> /dev/null
+  fi
+  if [ -f ~/.local/fzf/key-bindings.zsh ]; then
+    source ~/.local/fzf/key-bindings.zsh
+  fi
+fi
 
 ### Google Cloud SDK
 if command -v brew > /dev/null; then

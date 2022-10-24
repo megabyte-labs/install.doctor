@@ -280,6 +280,11 @@ export PATH="$PATH:~/Library/Android/sdk/platform-tools"
 export PATH="$PATH:~/Library/Android/sdk/tools/bin"
 export PATH="$PATH:~/Library/Android/sdk/tools"
 
+### fzf
+if [ -d /usr/local/opt/fzf/bin ]; then
+  PATH="$PATH:/usr/local/opt/fzf/bin"
+fi
+
 ### Git
 export GIT_MERGE_AUTOEDIT=no
 

@@ -234,7 +234,14 @@ if [ "$0" = 'bash' ]; then
   [ -e /usr/local/bin/googler ] && source /usr/local/src/googler/googler_at
 
   ### FZF
-  [ -f ~/.local/fzf.bash ] && source ~/.local/fzf.bash
+  if [ -e fzf ]; then
+    if [ -f ~/.local/fzf/completion.bash ]; then
+      source ~/.local/fzf/completion.bash 2> /dev/null
+    fi
+    if [ -f ~/.local/fzf/key-bindings.bash ]; then
+      source ~/.local/fzf/key-bindings.bash
+    fi
+  fi
 
   ### Google Cloud SDK
   if command -v brew > /dev/null; then
