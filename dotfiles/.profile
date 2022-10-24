@@ -231,6 +231,10 @@ if [ -f "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
 fi
 
+### GTK
+export XDG_CONFIG_HOME="$HOME/.config"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+
 ### Homebrew
 if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then
   export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
