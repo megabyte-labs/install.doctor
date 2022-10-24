@@ -302,3 +302,6 @@ alias yubikey-gpg-stub='gpg-connect-agent "scd serialno" "learn --force" /bye'
 ### Vagrant
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
 export VAGRANT_HOME="$HOME/.local/vagrant.d"
+
+### wget
+export WGETRC="$HOME/.config/wgetrc"
