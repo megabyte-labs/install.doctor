@@ -223,6 +223,22 @@ alias weather='curl -A curl wttr.in'
 # Change .wget-hsts file location
 alias wget="wget --hsts-file ~/.config/.wget-hsts"
 
+# vim as default
+export EDITOR="vim"
+
+# Don’t clear the screen after quitting a manual page
+export MANPAGER="less -X"
+
+# Prefer US English and use UTF-8
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US"
+
+# https://github.com/trapd00r/LS_COLORS
+command -v gdircolors >/dev/null 2>&1 || alias gdircolors="dircolors"
+if which gdircolors > /dev/null && [ -f "$HOME/.config/dircolors" ]; then
+	eval "$(gdircolors -b "$HOME/.config/dircolors)"
+fi
+
 ### .local/bin
 export PATH="$PATH:$HOME/.local/bin"
 
