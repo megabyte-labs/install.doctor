@@ -33,6 +33,11 @@ export FOREGROUND_COLOR="#C3C7D1"   # Foreground Color (text)
 export CURSOR_COLOR="$FOREGROUND_COLOR" # Cursor color
 export PROFILE_NAME="Betelgeuse"
 
+if [ ! -e gconftool-2 ] && [ -f /etc/debian_version ]; then
+  sudo apt-get update
+  sudo apt-get install -y gconf2
+fi
+
 # |
 # | Early pre-requisites check
 # | ===========================================
