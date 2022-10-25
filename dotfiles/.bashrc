@@ -69,7 +69,7 @@ HISTFILESIZE=5000
 HISTFILE=~/.bash_history
 
 # Bash Completion
-if [ "$0" = 'bash' ]; then
+if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
 	  . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
@@ -78,7 +78,7 @@ if [ "$0" = 'bash' ]; then
 fi
 
 # Prompt (on bash only)
-if [ "$0" = 'bash' ]; then
+if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   # Add new line before prompt
   PROMPT_COMMAND="PROMPT_COMMAND=echo"
   if [ -f /etc/os-release ]; then
@@ -212,7 +212,7 @@ rgafzf() {
 }
 
 # Bash completions
-if [ "$0" = 'bash' ]; then
+if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   ### fd
   [ -e /usr/local/src/fd/fd ] && source /usr/local/src/fd/autocomplete/fd.bash-completion
 
