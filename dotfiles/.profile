@@ -235,7 +235,7 @@ export LANG="en_US"
 
 # https://github.com/trapd00r/LS_COLORS
 command -v gdircolors >/dev/null 2>&1 || alias gdircolors="dircolors"
-if which gdircolors > /dev/null && [ -f "$HOME/.config/dircolors" ]; then
+if type gdircolors &> /dev/null && [ -f "$HOME/.config/dircolors" ]; then
 	eval "$(gdircolors -b "$HOME/.config/dircolors")"
 fi
 
