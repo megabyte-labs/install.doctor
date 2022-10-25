@@ -230,7 +230,9 @@ export EDITOR="vim"
 export MANPAGER="less -X"
 
 # Prefer US English and use UTF-8
-export LC_ALL="en_US.UTF-8"
+if type locale-gen &> /dev/null; then
+  export LC_ALL="en_US.UTF-8"
+fi
 export LANG="en_US"
 
 # https://github.com/trapd00r/LS_COLORS
