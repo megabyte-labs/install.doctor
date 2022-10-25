@@ -26,6 +26,7 @@ Plug '~/.vim/plugged/vim-devicons'
 Plug '~/.vim/plugged/zoxide.vim'
 Plug '~/.vim/plugged/vim-go'
 Plug '~/.vim/plugged/ansible-vim', {'do': './UltiSnips/generate.sh'}
+call plug#end()
 
 syntax enable
 set background=dark
