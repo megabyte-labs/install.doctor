@@ -229,17 +229,8 @@ export EDITOR="vim"
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
 
-# Prefer US English and use UTF-8
-if [ -e locale-gen ]; then
-  export LC_ALL="en_US.UTF-8"
-fi
+# Set language
 export LANG="en_US"
-
-# https://github.com/trapd00r/LS_COLORS
-command -v gdircolors >/dev/null 2>&1 || alias gdircolors="dircolors"
-if type gdircolors &> /dev/null && [ -f "$HOME/.config/dircolors" ]; then
-	eval "$(gdircolors -b "$HOME/.config/dircolors")"
-fi
 
 ### .local/bin
 export PATH="$PATH:$HOME/.local/bin"
@@ -264,16 +255,16 @@ if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then
 fi
 
 if command -v brew > /dev/null; then
-    ### Go
-    export GOPATH="${HOME}/.local/go"
-    export GOROOT="$(brew --prefix golang)/libexec"
-    export GO111MODULE=on
-    export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+  ### Go
+  export GOPATH="${HOME}/.local/go"
+  export GOROOT="$(brew --prefix golang)/libexec"
+  export GO111MODULE=on
+  export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
-    ### ASDF
-    if [ -f "$(brew --prefix asdf)/libexec/asdf.sh" ]; then
-      . $(brew --prefix asdf)/libexec/asdf.sh
-    fi
+  ### ASDF
+  if [ -f "$(brew --prefix asdf)/libexec/asdf.sh" ]; then
+    . $(brew --prefix asdf)/libexec/asdf.sh
+  fi
 fi
 
 ### Android Studio

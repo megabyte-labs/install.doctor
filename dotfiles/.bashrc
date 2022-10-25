@@ -143,6 +143,15 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   	PS1="\n \[\033[0;34m\]╭─\[\033[0;31m\]\[\033[0;37m\]\[\033[41m\] $OS_ICON \u \[\033[0m\]\[\033[0;31m\]\[\033[44m\]\[\033[0;34m\]\[\033[44m\]\[\033[0;30m\]\[\033[44m\] \w \[\033[0m\]\[\033[0;34m\] \n \[\033[0;34m\]╰ \[\033[1;36m\]\$ \[\033[0m\]"
   	;;
   esac
+
+  # https://github.com/trapd00r/LS_COLORS
+  command -v gdircolors >/dev/null 2>&1 || alias gdircolors="dircolors"
+  if type gdircolors &> /dev/null && [ -f "$HOME/.config/dircolors" ]; then
+	  eval "$(gdircolors -b "$HOME/.config/dircolors")"
+  fi
+
+  # Prefer US English
+  export LC_ALL="en_US.UTF-8"
 fi
 
 ### Miscellaneous
