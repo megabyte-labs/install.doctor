@@ -144,9 +144,6 @@ export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 export LESSHISTFILE=-
 
-# colorize ls
-[ -x /usr/bin/dircolors ] && eval "$(dircolors -b)"
-
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
