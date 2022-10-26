@@ -9,8 +9,8 @@ if [ -f ~/.config/autostart/first-boot.desktop ]; then
 fi
 
 if type qvm-run &> /dev/null; then
-  qvm-create --label red --template debian-11 provision &> /dev/null || EXIT_CODE=$?
-  qvm-run --pass-io provision "mkdir -p ~/.local && curl -sSL https://install.doctor/qubes" > "$HOME/.local/setup.sh" && bash "$HOME/.local/setup.sh"
+  mkdir -p "$HOME/.local"
+  qvm-run --pass-io sys-firewall 'curl -sSL https://install.doctor/qubes' > "$HOME/.local/setup.sh" && bash "$HOME/.local/setup.sh"
 elif [ -d '/Applications' ] && [ -d '/Users' ] && [ -d '/Library' ]; then
   mkdir -p "$HOME/.local"
   curl -sSL https://install.doctor/quickstart > "$HOME/.local/setup.sh" && bash "$HOME/.local/setup.sh"
