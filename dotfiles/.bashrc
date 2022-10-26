@@ -1,6 +1,8 @@
 ### Fig
-if [ -f "$HOME/.fig/shell/bashrc.pre.bash" ]; then
-  . "$HOME/.fig/shell/bashrc.pre.bash"
+if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
+  if [ -f "$HOME/.fig/shell/bashrc.pre.bash" ]; then
+    . "$HOME/.fig/shell/bashrc.pre.bash"
+  fi
 fi
 
 ### ~/.profile
@@ -262,11 +264,6 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   ### zoxide
   command -v zoxide > /dev/null && eval "$(zoxide init bash)"
 
-  ### Fig
-  if [ -f "$HOME/.fig/shell/bashrc.post.bash" ]; then
-    . "$HOME/.fig/shell/bashrc.post.bash"
-  fi
-
   ### MOTD
   if ([ -n "$SSH_CONNECTION" ] && [ "$SHLVL" -eq 1 ] && [[ $- == *i* ]]) || [ -e qubes-vmexec ] || [ -e qubes-dom0-update ]; then
     if [ -z "$MOTD" ] || [ "$MOTD" -ne 0 ]; then
@@ -281,5 +278,10 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
           bash_motd --processor --updates
         fi
     fi
+  fi
+
+  ### Fig
+  if [ -f "$HOME/.fig/shell/bashrc.post.bash" ]; then
+    . "$HOME/.fig/shell/bashrc.post.bash"
   fi
 fi
