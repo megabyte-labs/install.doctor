@@ -266,4 +266,20 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   if [ -f "$HOME/.fig/shell/bashrc.post.bash" ]; then
     . "$HOME/.fig/shell/bashrc.post.bash"
   fi
+
+  ### MOTD
+  if ([ -n "$SSH_CONNECTION" ] && [ "$SHLVL" -eq 1 ] && [[ $- == *i* ]]) || [ -e qubes-vmexec ] || [ -e qubes-dom0-update ]; then
+    if [ -z "$MOTD" ] || [ "$MOTD" -ne 0 ]; then
+        . "$HOME/.local/motd.sh"
+
+        # TODO - -- services
+        if [ -n "$SSH_CONNECTION" ]; then
+          bash_motd --banner --processor --memory --diskspace --services --docker --updates --letsencrypt --login
+        elif [ -e qubes-vmexec ]; then
+          bash_motd --banner --memory --diskspace --docker --updates
+        elif [ -e qubes-dom0-update ]; then
+          bash_motd --processor --updates
+        fi
+    fi
+  fi
 fi
