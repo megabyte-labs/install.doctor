@@ -3,10 +3,12 @@
 
 # Prefer US English
 export LANG="en_US"
-export LC_ALL="en_US.UTF-8"
 
-### Fig
+### Fig / LC_ALL
 if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
+  if [[ "$(hostname)" != *'-minimal' ]]; then
+    export LC_ALL="en_US.UTF-8"
+  fi
   if [ -f "$HOME/.fig/shell/bashrc.pre.bash" ]; then
     . "$HOME/.fig/shell/bashrc.pre.bash"
   fi
@@ -17,7 +19,7 @@ if [ -f "$HOME/.profile" ]; then
   . "$HOME/.profile"
 fi
 
-COLOR_SCHEME=dark # dark/light
+COLOR_SCHEME=dark
 
 alias ..='cd ..'
 alias cp='cp -v'
@@ -240,7 +242,7 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
 
   ### MOTD
   if [ -f "$HOME/.local/motd.sh" ] && { [ -n "$SSH_CONNECTION" ] && [ "$SHLVL" -eq 1 ] && [[ $- == *i* ]]; } || type qubes-vmexec &>/dev/null || type qubes-dom0-update &>/dev/null; then
-    if [ -z "$MOTD" ] || [ "$MOTD" -ne 0 ]; then
+    if { [ -z "$MOTD" ] || [ "$MOTD" -ne 0 ]; } && [[ "$(hostname)" != *'-minimal' ]]; then
       . "$HOME/.local/motd.sh"
 
       # TODO - -- services
