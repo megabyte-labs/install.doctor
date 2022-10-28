@@ -87,56 +87,56 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
     . /etc/os-release
     if [ -d /Applications ] && [ -d /Library ] && [ -d /System ]; then
   	  # macOS
-  	  OS_ICON=
+  	  OS_ICON=""
     elif [ "$ID" = 'alpine' ]; then
-      OS_ICON=
+      OS_ICON=""
     elif [ "$ID" = 'archlinux' ]; then
-    	OS_ICON=
+    	OS_ICON=""
     elif [ "$ID" = 'centos' ]; then
-      OS_ICON=
+      OS_ICON=""
     elif [ "$ID" = 'coreos' ]; then
-  	  OS_ICON=
+  	  OS_ICON=""
     elif [ "$ID" = 'debian' ]; then
-      OS_ICON=
+      OS_ICON=""
     elif [ "$ID" = 'deepin' ]; then
-  	  OS_ICON=
+  	  OS_ICON=""
     elif [ "$ID" = 'elementary' ]; then
-  	  OS_ICON=
+  	  OS_ICON=""
     elif [ "$ID" = 'endeavour' ]; then
-      OS_ICON=
+      OS_ICON=""
     elif [ "$ID" = 'freebsd' ]; then
-  	  OS_ICON=
+  	  OS_ICON=""
     elif [ "$ID" = 'gentoo' ]; then
-  	  OS_ICON=
+  	  OS_ICON=""
     elif [ "$ID" = 'kali' ]; then
-      OS_ICON=
+      OS_ICON=""
     elif [ "$ID" = 'linuxmint' ]; then
-      OS_ICON=
+      OS_ICON=""
     elif [ "$ID" = 'manjaro' ]; then
-  	  OS_ICON=
+  	  OS_ICON=""
     elif [ "$ID" = 'nixos' ]; then
-  	  OS_ICON=
+  	  OS_ICON=""
     elif [ "$ID" = 'openbsd' ]; then
-  	  OS_ICON=
+  	  OS_ICON=""
     elif [ "$ID" = 'opensuse' ]; then
-  	  OS_ICON=
+  	  OS_ICON=""
     elif [ "$ID" = 'parrot' ]; then
-      OS_ICON=
+      OS_ICON=""
     elif [ "$ID" = 'pop_os' ]; then
-    	OS_ICON=
+    	OS_ICON=""
     elif [ "$ID" = 'raspberry_pi' ]; then
-  	  OS_ICON=
+  	  OS_ICON=""
     elif [ "$ID" = 'redhat' ]; then
-  	  OS_ICON=
+  	  OS_ICON=""
     elif [ "$ID" = 'fedora' ]; then
-      OS_ICON=
+      OS_ICON=""
     elif [ "$ID" = 'ubuntu' ]; then
-      OS_ICON=
+      OS_ICON=""
     else
-      OS_ICON=
+      OS_ICON=""
     fi
   else
-    OS_ICON=
+    OS_ICON=""
   fi
 
   # Set styled terminal prompt
@@ -265,17 +265,17 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   command -v zoxide > /dev/null && eval "$(zoxide init bash)"
 
   ### MOTD
-  if ([ -n "$SSH_CONNECTION" ] && [ "$SHLVL" -eq 1 ] && [[ $- == *i* ]]) || [ -e qubes-vmexec ] || [ -e qubes-dom0-update ]; then
+  if ([ -n "$SSH_CONNECTION" ] && [ "$SHLVL" -eq 1 ] && [[ $- == *i* ]]) || type qubes-vmexec &> /dev/null || type qubes-dom0-update &> /dev/null; then
     if [ -z "$MOTD" ] || [ "$MOTD" -ne 0 ]; then
         . "$HOME/.local/motd.sh"
 
         # TODO - -- services
         if [ -n "$SSH_CONNECTION" ]; then
           bash_motd --banner --processor --memory --diskspace --services --docker --updates --letsencrypt --login
-        elif [ -e qubes-vmexec ]; then
+        elif type qubes-vmexec &> /dev/null; then
           bash_motd --banner --memory --diskspace --docker --updates
-        elif [ -e qubes-dom0-update ]; then
-          bash_motd --processor --updates
+        elif type qubes-dom0-update &> /dev/null; then
+          bash_motd --processor --updates --login
         fi
     fi
   fi
