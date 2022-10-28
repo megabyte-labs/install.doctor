@@ -2,7 +2,6 @@
 
 # Prefer US English
 export LANG="en_US"
-export LC_ALL="en_US.UTF-8"
 
 chmod +x ~/.local/bin/*
 
