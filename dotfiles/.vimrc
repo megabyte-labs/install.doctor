@@ -20,7 +20,9 @@ Plug '~/.vim/plugged/vim-multiple-cursors'
 Plug '~/.vim/plugged/ale'
 Plug '~/.vim/plugged/fzf'
 Plug '~/.vim/plugged/fzf.vim'
-Plug '~/.vim/plugged/coc.nvim'
+if executable('node')
+  Plug '~/.vim/plugged/coc.nvim'
+endif
 Plug '~/.vim/plugged/syntastic'
 Plug '~/.vim/plugged/vim-devicons'
 Plug '~/.vim/plugged/zoxide.vim'
