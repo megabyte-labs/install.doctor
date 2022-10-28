@@ -1,4 +1,4 @@
-call plug#begin()
+call plug#begin(silent!)
 Plug '~/.vim/plugged/typescript-vim'
 Plug '~/.vim/plugged/vim-airline'
 Plug '~/.vim/plugged/lightline.vim'
