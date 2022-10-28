@@ -80,7 +80,7 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
 fi
 
 # Prompt (on bash only)
-if [ "false" = "true" ] && ([ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]); then
+if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   # Add new line before prompt
   PROMPT_COMMAND="PROMPT_COMMAND=echo"
   if [ -f /etc/os-release ]; then
@@ -153,7 +153,7 @@ if [ "false" = "true" ] && ([ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]); then
   fi
 
   # Prefer US English
-  export LC_ALL="en_US.UTF-8"
+  # export LC_ALL="en_US.UTF-8"
 fi
 
 ### Miscellaneous
@@ -265,7 +265,7 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   command -v zoxide > /dev/null && eval "$(zoxide init bash)"
 
   ### MOTD
-  if ([ -n "$SSH_CONNECTION" ] && [ "$SHLVL" -eq 1 ] && [[ $- == *i* ]]) || type qubes-vmexec &> /dev/null || type qubes-dom0-update &> /dev/null; then
+  if [ -f "$HOME/.local/motd.sh" ] && (([ -n "$SSH_CONNECTION" ] && [ "$SHLVL" -eq 1 ] && [[ $- == *i* ]]) || type qubes-vmexec &> /dev/null || type qubes-dom0-update &> /dev/null); then
     if [ -z "$MOTD" ] || [ "$MOTD" -ne 0 ]; then
         . "$HOME/.local/motd.sh"
 
