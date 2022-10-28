@@ -323,7 +323,7 @@ print_swap() {
 }
 
 print_diskspace() {
-  if type jq > /dev/null; then
+  if command -v jq > /dev/null; then
     printf "\\n"
     printf "    \\033[1;37mDiskspace:\\033[0m\\n"
 
@@ -399,7 +399,7 @@ print_services() {
 }
 
 print_podman() {
-  if type jq > /dev/null; then
+  if command -v jq > /dev/null; then
     printf "\\n"
     printf "    \\033[1;37mPodman:\\033[0m\\n"
 
@@ -441,7 +441,7 @@ print_podman() {
 }
 
 print_docker() {
-  if type jq > /dev/null && [ "$(systemctl is-active docker.service)" = "active" ]; then
+  if command -v jq > /dev/null && [ "$(systemctl is-active docker.service)" = "active" ]; then
     printf "\\n"
     printf "    \\033[1;37mDocker:\\033[0m\\n"
 
