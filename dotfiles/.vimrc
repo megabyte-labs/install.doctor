@@ -31,7 +31,7 @@ call plug#end()
 syntax enable
 set background=dark
 colorscheme betelgeuse
-set g:lightline = { 'colorscheme': 'ThemerVimLightline' }
+" set g:lightline = { 'colorscheme': 'ThemerVimLightline' }
 
 " Settings for plugin https://github.com/neoclide/coc.nvim.git
 autocmd FileType json syntax match Comment +\/\/.\+$+
