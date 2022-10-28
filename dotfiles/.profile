@@ -1,60 +1,74 @@
+# shellcheck disable=SC1090,SC1091
+
 #  Easy file sharing from the command line, using transfer.sh
 transfer() {
   if [ $# -eq 0 ]; then
-    echo -e "No arguments specified.\nUsage:\n  transfer <file|directory>\n  ... | transfer <file_name>">&2;
-    return 1;
-  fi;
-  if tty -s;then
-    file="$1";
-    file_name=$(basename "$file");
-    if [ ! -e "$file" ];then
-      echo "$file: No such file or directory">&2;
-      return 1;
-    fi;
-    if [ -d "$file" ];then
-      file_name="$file_name.zip" ,;
-      (cd "$file"&&zip -r -q - .)|curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null,;
+    echo -e "No arguments specified.\nUsage:\n  transfer <file|directory>\n  ... | transfer <file_name>" >&2
+    return 1
+  fi
+  if tty -s; then
+    file="$1"
+    file_name=$(basename "$file")
+    if [ ! -e "$file" ]; then
+      echo "$file: No such file or directory" >&2
+      return 1
+    fi
+    if [ -d "$file" ]; then
+      file_name="$file_name.zip"
+      (cd "$file" && zip -r -q - .) | curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name" | tee /dev/null,
     else
-      cat "$file"|curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null;
-    fi;
+      curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name" <"$file" | tee /dev/null
+    fi
   else
-    file_name=$1;
-    curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null;
-  fi;
+    file_name=$1
+    curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name" | tee /dev/null
+  fi
 }
 
 # Install WebDriverAgent on iOS device
 appiumwebdriver() {
-    read -p "Enter the UDID of the device you wish to install WebDriverAgent on: " UDID_INPUT
-    mkdir -p Resources/WebDriverAgent.bundle
-    bash ./Scripts/bootstrap.sh -d
-    cd /Applications/Appium.app/Contents/Resources/app/node_modules/appium/node_modules/appium-webdriveragent
-    xcodebuild -project WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination 'id=${UDID_INPUT}' test
+  # read -r "Enter the UDID of the device you wish to install WebDriverAgent on: " UDID_INPUT
+  mkdir -p Resources/WebDriverAgent.bundle
+  bash ./Scripts/bootstrap.sh -d
+  cd /Applications/Appium.app/Contents/Resources/app/node_modules/appium/node_modules/appium-webdriveragent || return
+  xcodebuild -project WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination "id=${UDID_INPUT}" test
 }
 
 # Change directories and view contents at the same time
 cl() {
-    DIR="$*";
-        # if no DIR given, go home
-        if [ $# -lt 1 ]; then
-                DIR=$HOME;
-    fi;
-    builtin cd "${DIR}" && \
+  DIR="$*"
+  # if no DIR given, go home
+  if [ $# -lt 1 ]; then
+    DIR=$HOME
+  fi
+  builtin cd "${DIR}" &&
     # use your preferred ls command
-        ls -F --color=auto
+    ls -F --color=auto
 }
 
 # Checks status of a website on downforeveryoneorjustme.com
 down4me() {
-  curl -s "http://www.downforeveryoneorjustme.com/$1" | sed '/just you/!d;s/<[^>]*>//g';
+  curl -s "http://www.downforeveryoneorjustme.com/$1" | sed '/just you/!d;s/<[^>]*>//g'
 }
 
-# GAM - a command-line tool for Google Workspace. This alias will run gam or install gam if it is not already installed.
-gam() {
-  if command -v gam > /dev/null; then
-    gam "$@"
+# GAM - a command-line tool for Google Workspace. This alias will run gam or install gam if it is not already installed. Includes type check in case gam is aliased for git.
+if ! type gam &>/dev/null; then
+  gam() {
+    if command -v gam >/dev/null; then
+      gam "$@"
+    else
+      TMP="$(mktemp)" && curl -sSL https://git.io/install-gam >"$TMP" && bash "$TMP"
+      gam "$"
+    fi
+  }
+fi
+
+find() {
+  if [ $# = 1 ]; then
+    # shellcheck disable=SC2145
+    command find . -iname "*$@*"
   else
-    TMP="$(mktemp)" && curl -sSL https://git.io/install-gam > "$TMP" && bash "$TMP"
+    command find "$@"
   fi
 }
 
@@ -63,49 +77,71 @@ gitopen() {
   git remote -v | head -n 1 | awk -F "@" '{print $2}' | awk -F " " '{print $1}' | sed 's/:/\//g' | sed 's/.git//g' | awk '{print "http://"$1}' | xargs open
 }
 
+glog() {
+  setterm -linewrap off 2>/dev/null
+
+  git --no-pager log --all --color=always --graph --abbrev-commit --decorate --date-order \
+    --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' "$@" |
+    sed -E \
+      -e 's/\|(\x1b\[[0-9;]*m)+\\(\x1b\[[0-9;]*m)+ /├\1─╮\2/' \
+      -e 's/(\x1b\[[0-9;]+m)\|\x1b\[m\1\/\x1b\[m /\1├─╯\x1b\[m/' \
+      -e 's/\|(\x1b\[[0-9;]*m)+\\(\x1b\[[0-9;]*m)+/├\1╮\2/' \
+      -e 's/(\x1b\[[0-9;]+m)\|\x1b\[m\1\/\x1b\[m/\1├╯\x1b\[m/' \
+      -e 's/╮(\x1b\[[0-9;]*m)+\\/╮\1╰╮/' \
+      -e 's/╯(\x1b\[[0-9;]*m)+\//╯\1╭╯/' \
+      -e 's/(\||\\)\x1b\[m   (\x1b\[[0-9;]*m)/╰╮\2/' \
+      -e 's/(\x1b\[[0-9;]*m)\\/\1╮/g' \
+      -e 's/(\x1b\[[0-9;]*m)\//\1╯/g' \
+      -e 's/^\*|(\x1b\[m )\*/\1⎬/g' \
+      -e 's/(\x1b\[[0-9;]*m)\|/\1│/g' |
+    command less -r "$([ $# -eq 0 ] && echo "+/[^/]HEAD")"
+
+  setterm -linewrap on 2>/dev/null
+}
+
 # Open Mac OS X desktop on a Linux machine
 macosx() {
-    docker run -it --device /dev/kvm -p 50922:10022 -v /tmp/.X11-unix:/tmp/.X11-unix -e "DISPLAY=${DISPLAY:-:0.0}" sickcodes/docker-osx:big-sur
+  docker run -it --device /dev/kvm -p 50922:10022 -v /tmp/.X11-unix:/tmp/.X11-unix -e "DISPLAY=${DISPLAY:-:0.0}" sickcodes/docker-osx:big-sur
 }
 
 # Run the quickstart script
 quickstart() {
-  if command -v qvm-run > /dev/null; then
-    qvm-run --pass-io personal "curl -sSL https://install.doctor/qubes" > "$HOME/setup.sh" && bash "$HOME/setup.sh"
+  if command -v qvm-run >/dev/null; then
+    qvm-run --pass-io personal "curl -sSL https://install.doctor/qubes" >"$HOME/setup.sh" && bash "$HOME/setup.sh"
   elif [ -d '/Applications' ] && [ -d '/Users' ] && [ -d '/Library' ]; then
-    curl -sSL https://install.doctor/quickstart > "$HOME/setup.sh" && bash "$HOME/setup.sh"
+    curl -sSL https://install.doctor/quickstart >"$HOME/setup.sh" && bash "$HOME/setup.sh"
   elif [ -f '/etc/os-release' ]; then
-    curl -sSL https://install.doctor/quickstart > "$HOME/setup.sh" && bash "$HOME/setup.sh"
+    curl -sSL https://install.doctor/quickstart >"$HOME/setup.sh" && bash "$HOME/setup.sh"
   fi
   rm -f "$HOME/setup.sh"
 }
 
 # Generate a random string of X length
 randomstring() {
-    if [ -z "$1" ]; then
-        head /dev/urandom | tr -dc A-Za-z0-9 | head -c $1 ; echo ''
-    else
-        echo "Pass the number of characters you would like the string to be. Example: randomstring 14"
-    fi
+  if [ -z "$1" ]; then
+    head /dev/urandom | tr -dc A-Za-z0-9 | head -c "$1"
+  else
+    echo "Pass the number of characters you would like the string to be. Example: randomstring 14"
+  fi
 }
 
 # Reset Docker to factory settings
 resetdocker() {
-    set +e
-    CONTAINER_COUNT=$(docker ps -a -q | wc -l)
-    if [ "$CONTAINER_COUNT" -gt 0 ]; then
-        docker stop $(docker ps -a -q)
-        docker rm $(docker ps -a -q)
-    fi
-    VOLUME_COUNT=$(docker volume ls -q | wc -l)
-    if [ "$VOLUME_COUNT" -gt 0 ]; then
-        docker volume rm $(docker volume ls -q)
-    fi
-    NETWORK_COUNT=$(docker network ls -q | wc -l)
-    if [ "$NETWORK_COUNT" -gt 0 ]; then
-        docker network rm $(docker network ls -q)
-    fi
-    docker system prune -a --force
+  set +e
+  CONTAINER_COUNT="$(docker ps -a -q | wc -l)"
+  if [ "$CONTAINER_COUNT" -gt 0 ]; then
+    docker stop "$(docker ps -a -q)"
+    docker rm "$(docker ps -a -q)"
+  fi
+  VOLUME_COUNT="$(docker volume ls -q | wc -l)"
+  if [ "$VOLUME_COUNT" -gt 0 ]; then
+    docker volume rm "$(docker volume ls -q)"
+  fi
+  NETWORK_COUNT="$(docker network ls -q | wc -l)"
+  if [ "$NETWORK_COUNT" -gt 0 ]; then
+    docker network rm "$(docker network ls -q)"
+  fi
+  docker system prune -a --force
 }
 
 ### Aliases
@@ -254,16 +290,17 @@ if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then
   export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
 fi
 
-if command -v brew > /dev/null; then
+if command -v brew >/dev/null; then
   ### Go
   export GOPATH="${HOME}/.local/go"
-  export GOROOT="$(brew --prefix golang)/libexec"
+  GOROOT="$(brew --prefix golang)/libexec"
+  export GOROOT
   export GO111MODULE=on
   export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
   ### ASDF
   if [ -f "$(brew --prefix asdf)/libexec/asdf.sh" ]; then
-    . $(brew --prefix asdf)/libexec/asdf.sh
+    . "$(brew --prefix asdf)/libexec/asdf.sh"
   fi
 fi
 

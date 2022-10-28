@@ -1,3 +1,6 @@
+#!/usr/bin/env zsh
+# shellcheck disable=SC1090,SC1091,SC2034,SC2154,SC2296
+
 ### Powerline
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -104,6 +107,7 @@ zstyle ':completion:*' rehash true
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
+# shellcheck disable=SC2016
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # Key bindings
@@ -147,7 +151,9 @@ export LESSHISTFILE=-
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
-	precmd() { print -Pnr -- $'\e]0;%n@%m: %~\a' }
+  	precmd() {
+    	print -Pnr -- $'\e]0;%n@%m: %~\a'
+  	}
 	;;
 esac
 
@@ -164,8 +170,7 @@ export LC_ALL="en_US.UTF-8"
 # Plugin source helper
 _source_plugin() {
 	local plugin_name="$1"
-	for basedir in /usr/share/zsh/plugins /usr/share
-	do
+	for basedir in /usr/share/zsh/plugins /usr/share; do
 		plugin="$basedir/$plugin_name/$plugin_name.zsh"
 		[ -f "$plugin" ] && source "$plugin" && return 0
 	done
@@ -227,8 +232,7 @@ unset -f _source_plugin
 # POWERLEVEL
 if ! [[ $(tty) = /dev/tty* ]]
 then
-	if source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme 2> /dev/null
-	then
+	if source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme 2> /dev/null; then
 		s=' ' # fix too wide icons
 		POWERLEVEL9K_MODE=nerdfont-complete
 		POWERLEVEL9K_SHORTEN_STRATEGY=truncate_beginning
@@ -236,6 +240,7 @@ then
 		POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 		POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
 		POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
+    # shellcheck disable=SC2016
 		POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='${P9K_CONTENT} $(whoami | grep -v "^root\$")'
 		POWERLEVEL9K_OS_ICON_BACKGROUND=red
 		POWERLEVEL9K_OS_ICON_FOREGROUND=white
@@ -310,54 +315,21 @@ switch_powerlevel_multiline_prompt(){
 zle -N switch_powerlevel_multiline_prompt
 bindkey ^P switch_powerlevel_multiline_prompt
 
-
-# -------------------------------- FUNCTIONS ---------------------------------
-glog() {
-	setterm -linewrap off 2> /dev/null
-
-	git --no-pager log --all --color=always --graph --abbrev-commit --decorate --date-order \
-		--format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' "$@" \
-		| sed -E \
-			-e 's/\|(\x1b\[[0-9;]*m)+\\(\x1b\[[0-9;]*m)+ /├\1─╮\2/' \
-			-e 's/(\x1b\[[0-9;]+m)\|\x1b\[m\1\/\x1b\[m /\1├─╯\x1b\[m/' \
-			-e 's/\|(\x1b\[[0-9;]*m)+\\(\x1b\[[0-9;]*m)+/├\1╮\2/' \
-			-e 's/(\x1b\[[0-9;]+m)\|\x1b\[m\1\/\x1b\[m/\1├╯\x1b\[m/' \
-			-e 's/╮(\x1b\[[0-9;]*m)+\\/╮\1╰╮/' \
-			-e 's/╯(\x1b\[[0-9;]*m)+\//╯\1╭╯/' \
-			-e 's/(\||\\)\x1b\[m   (\x1b\[[0-9;]*m)/╰╮\2/' \
-			-e 's/(\x1b\[[0-9;]*m)\\/\1╮/g' \
-			-e 's/(\x1b\[[0-9;]*m)\//\1╯/g' \
-			-e 's/^\*|(\x1b\[m )\*/\1⎬/g' \
-			-e 's/(\x1b\[[0-9;]*m)\|/\1│/g' \
-		| command less -r $([ $# -eq 0 ] && echo "+/[^/]HEAD")
-
-	setterm -linewrap on 2> /dev/null
-}
-
-find() {
-	if [ $# = 1 ]
-	then
-		command find . -iname "*$@*"
-	else
-		command find "$@"
-	fi
-}
-
 ### Antigen
 [[ ! -f ~/.local/antigen.zsh ]] || source ~/.local/antigen.zsh
 
 if command -v antigen > /dev/null; then
-    antigen use oh-my-zsh
-    antigen bundle git
-    antigen bundle bundler
-    antigen bundle dotenv
-    antigen bundle macos
-    antigen bundle rake
-    antigen bundle rbenv
-    antigen bundle ruby
-    antigen bundle k
-    antigen bundle marlonrichert/zsh-autocomplete
-    antigen apply
+  antigen use oh-my-zsh
+  antigen bundle git
+  antigen bundle bundler
+  antigen bundle dotenv
+  antigen bundle macos
+  antigen bundle rake
+  antigen bundle rbenv
+  antigen bundle ruby
+  antigen bundle k
+  antigen bundle marlonrichert/zsh-autocomplete
+  antigen apply
 fi
 
 ## TODO
@@ -375,15 +347,14 @@ fi
 
 ### Google Cloud SDK
 if command -v brew > /dev/null; then
-    [[ ! -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc" ]] || source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-    [[ ! -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc" ]] || source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+  [[ ! -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc" ]] || source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+  [[ ! -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc" ]] || source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 fi
 
 ## TODO: What is this line?
 fpath+=~/.zfunc
 
 ### zoxide
-# TODO: Ensure zoxide.vim is installed
 command -v zoxide > /dev/null && eval "$(zoxide init zsh)"
 
 ### Fig
