@@ -203,10 +203,12 @@ generate_bar_disk() {
 }
 
 print_banner() {
-  if [ -e lolcat ]; then
+  if command -v lolcat > /dev/null && command -v figlet > /dev/null; then
     /usr/bin/env figlet "$(hostname)" | /usr/bin/env lolcat -f
-  else
+  elif command -v figlet > /dev/null; then
     printf "\\n%s\\n" "$(figlet -t -f "$BANNER_FONTPATH" " $BANNER_TEXT")"
+  else
+    printf "    \\033[1;37m$(hostname)\\033[0m\\n"
   fi
 
   if [ -f /etc/os-release ]; then
