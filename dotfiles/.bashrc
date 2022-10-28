@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1090,SC1091
+
 ### Fig
 if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   if [ -f "$HOME/.fig/shell/bashrc.pre.bash" ]; then
@@ -18,7 +21,7 @@ alias rm='rm -I'
 alias mv='mv -iv'
 alias ln='ln -sriv'
 alias xclip='xclip -selection c'
-command -v vim > /dev/null && alias vi='vim'
+command -v vim >/dev/null && alias vi='vim'
 
 ### Colorize commands
 alias ls='ls --color=auto'
@@ -33,33 +36,33 @@ alias pacman='pacman --color=auto'
 alias ll='ls -la'
 alias la='ls -A'
 alias l='ls -F'
-command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
-	alias tree='lsd --tree'
-command -v colorls > /dev/null && alias ls='colorls --sd --gs' && \
-	alias tree='colorls --tree'
+command -v lsd >/dev/null && alias ls='lsd --group-dirs first' &&
+  alias tree='lsd --tree'
+command -v colorls >/dev/null && alias ls='colorls --sd --gs' &&
+  alias tree='colorls --tree'
 
 ### CAT & LESS
-command -v bat > /dev/null && \
-	alias bat='bat --theme=ansi' && \
-	alias cat='bat --pager=never' && \
-	alias less='bat'
+command -v bat >/dev/null &&
+  alias bat='bat --theme=ansi' &&
+  alias cat='bat --pager=never' &&
+  alias less='bat'
 # in debian the command is batcat
-command -v batcat > /dev/null && \
-	alias batcat='batcat --theme=ansi' && \
-	alias cat='batcat --pager=never' && \
-	alias less='batcat'
+command -v batcat >/dev/null &&
+  alias batcat='batcat --theme=ansi' &&
+  alias cat='batcat --pager=never' &&
+  alias less='batcat'
 
 ### TOP
-command -v htop > /dev/null && alias top='htop'
-command -v gotop > /dev/null && alias top='gotop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
-command -v ytop > /dev/null && alias top='ytop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
-command -v btm > /dev/null && alias top='btm $([ "$COLOR_SCHEME" = "light" ] && echo "--color default-light")'
+command -v htop >/dev/null && alias top='htop'
+command -v gotop >/dev/null && alias top='gotop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
+command -v ytop >/dev/null && alias top='ytop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
+command -v btm >/dev/null && alias top='btm $([ "$COLOR_SCHEME" = "light" ] && echo "--color default-light")'
 # themes for light/dark color-schemes inside ~/.config/bashtop; Press ESC to open the menu and change the theme
-command -v bashtop > /dev/null && alias top='bashtop'
-command -v bpytop > /dev/null && alias top='bpytop'
+command -v bashtop >/dev/null && alias top='bashtop'
+command -v bpytop >/dev/null && alias top='bpytop'
 
 ### Settings
-if command -v shopt > /dev/null; then
+if command -v shopt >/dev/null; then
   shopt -s globstar
   shopt -s histappend
   shopt -s checkwinsize
@@ -73,9 +76,9 @@ HISTFILE=~/.bash_history
 # Bash Completion
 if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
-	  . /usr/share/bash-completion/bash_completion
+    . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
-	  . /etc/bash_completion
+    . /etc/bash_completion
   fi
 fi
 
@@ -86,48 +89,48 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   if [ -f /etc/os-release ]; then
     . /etc/os-release
     if [ -d /Applications ] && [ -d /Library ] && [ -d /System ]; then
-  	  # macOS
-  	  OS_ICON=""
+      # macOS
+      OS_ICON=""
     elif [ "$ID" = 'alpine' ]; then
       OS_ICON=""
     elif [ "$ID" = 'archlinux' ]; then
-    	OS_ICON=""
+      OS_ICON=""
     elif [ "$ID" = 'centos' ]; then
       OS_ICON=""
     elif [ "$ID" = 'coreos' ]; then
-  	  OS_ICON=""
+      OS_ICON=""
     elif [ "$ID" = 'debian' ]; then
       OS_ICON=""
     elif [ "$ID" = 'deepin' ]; then
-  	  OS_ICON=""
+      OS_ICON=""
     elif [ "$ID" = 'elementary' ]; then
-  	  OS_ICON=""
+      OS_ICON=""
     elif [ "$ID" = 'endeavour' ]; then
       OS_ICON=""
     elif [ "$ID" = 'freebsd' ]; then
-  	  OS_ICON=""
+      OS_ICON=""
     elif [ "$ID" = 'gentoo' ]; then
-  	  OS_ICON=""
+      OS_ICON=""
     elif [ "$ID" = 'kali' ]; then
       OS_ICON=""
     elif [ "$ID" = 'linuxmint' ]; then
       OS_ICON=""
     elif [ "$ID" = 'manjaro' ]; then
-  	  OS_ICON=""
+      OS_ICON=""
     elif [ "$ID" = 'nixos' ]; then
-  	  OS_ICON=""
+      OS_ICON=""
     elif [ "$ID" = 'openbsd' ]; then
-  	  OS_ICON=""
+      OS_ICON=""
     elif [ "$ID" = 'opensuse' ]; then
-  	  OS_ICON=""
+      OS_ICON=""
     elif [ "$ID" = 'parrot' ]; then
       OS_ICON=""
     elif [ "$ID" = 'pop_os' ]; then
-    	OS_ICON=""
+      OS_ICON=""
     elif [ "$ID" = 'raspberry_pi' ]; then
-  	  OS_ICON=""
+      OS_ICON=""
     elif [ "$ID" = 'redhat' ]; then
-  	  OS_ICON=""
+      OS_ICON=""
     elif [ "$ID" = 'fedora' ]; then
       OS_ICON=""
     elif [ "$ID" = 'ubuntu' ]; then
@@ -141,15 +144,15 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
 
   # Set styled terminal prompt
   case "$TERM" in
-  xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
-  	PS1="\n \[\033[0;34m\]╭─\[\033[0;31m\]\[\033[0;37m\]\[\033[41m\] $OS_ICON \u \[\033[0m\]\[\033[0;31m\]\[\033[44m\]\[\033[0;34m\]\[\033[44m\]\[\033[0;30m\]\[\033[44m\] \w \[\033[0m\]\[\033[0;34m\] \n \[\033[0;34m\]╰ \[\033[1;36m\]\$ \[\033[0m\]"
-  	;;
+  xterm* | rxvt* | Eterm | aterm | kterm | gnome* | alacritty)
+    PS1="\n \[\033[0;34m\]╭─\[\033[0;31m\]\[\033[0;37m\]\[\033[41m\] $OS_ICON \u \[\033[0m\]\[\033[0;31m\]\[\033[44m\]\[\033[0;34m\]\[\033[44m\]\[\033[0;30m\]\[\033[44m\] \w \[\033[0m\]\[\033[0;34m\] \n \[\033[0;34m\]╰ \[\033[1;36m\]\$ \[\033[0m\]"
+    ;;
   esac
 
   # https://github.com/trapd00r/LS_COLORS
-  command -v gdircolors >/dev/null 2>&1 || alias gdircolors="dircolors"
-  if type gdircolors &> /dev/null && [ -f "$HOME/.config/dircolors" ]; then
-	  eval "$(gdircolors -b "$HOME/.config/dircolors")"
+  command -v gdircolors >/dev/null 2>&1 || gdircolors() { dircolors "$@"; }
+  if type gdircolors &>/dev/null && [ -f "$HOME/.config/dircolors" ]; then
+    eval "$(gdircolors -b "$HOME/.config/dircolors")"
   fi
 
   # Prefer US English
@@ -161,7 +164,7 @@ export VISUAL=vim
 export EDITOR=$VISUAL
 
 # enable terminal linewrap
-setterm -linewrap on 2> /dev/null
+setterm -linewrap on 2>/dev/null
 
 # colorize man pages
 export LESS_TERMCAP_mb=$'\e[1;32m'
@@ -175,34 +178,34 @@ export LESSHISTFILE=-
 
 ### Functions
 glog() {
-	setterm -linewrap off 2> /dev/null
+  setterm -linewrap off 2>/dev/null
 
-	git --no-pager log --all --color=always --graph --abbrev-commit --decorate --date-order \
-		--format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' "$@" \
-		| sed -E \
-			-e 's/\|(\x1b\[[0-9;]*m)+\\(\x1b\[[0-9;]*m)+ /├\1─╮\2/' \
-			-e 's/(\x1b\[[0-9;]+m)\|\x1b\[m\1\/\x1b\[m /\1├─╯\x1b\[m/' \
-			-e 's/\|(\x1b\[[0-9;]*m)+\\(\x1b\[[0-9;]*m)+/├\1╮\2/' \
-			-e 's/(\x1b\[[0-9;]+m)\|\x1b\[m\1\/\x1b\[m/\1├╯\x1b\[m/' \
-			-e 's/╮(\x1b\[[0-9;]*m)+\\/╮\1╰╮/' \
-			-e 's/╯(\x1b\[[0-9;]*m)+\//╯\1╭╯/' \
-			-e 's/(\||\\)\x1b\[m   (\x1b\[[0-9;]*m)/╰╮\2/' \
-			-e 's/(\x1b\[[0-9;]*m)\\/\1╮/g' \
-			-e 's/(\x1b\[[0-9;]*m)\//\1╯/g' \
-			-e 's/^\*|(\x1b\[m )\*/\1⎬/g' \
-			-e 's/(\x1b\[[0-9;]*m)\|/\1│/g' \
-		| command less -r $([ $# -eq 0 ] && echo "+/[^/]HEAD")
+  git --no-pager log --all --color=always --graph --abbrev-commit --decorate --date-order \
+    --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' "$@" |
+    sed -E \
+      -e 's/\|(\x1b\[[0-9;]*m)+\\(\x1b\[[0-9;]*m)+ /├\1─╮\2/' \
+      -e 's/(\x1b\[[0-9;]+m)\|\x1b\[m\1\/\x1b\[m /\1├─╯\x1b\[m/' \
+      -e 's/\|(\x1b\[[0-9;]*m)+\\(\x1b\[[0-9;]*m)+/├\1╮\2/' \
+      -e 's/(\x1b\[[0-9;]+m)\|\x1b\[m\1\/\x1b\[m/\1├╯\x1b\[m/' \
+      -e 's/╮(\x1b\[[0-9;]*m)+\\/╮\1╰╮/' \
+      -e 's/╯(\x1b\[[0-9;]*m)+\//╯\1╭╯/' \
+      -e 's/(\||\\)\x1b\[m   (\x1b\[[0-9;]*m)/╰╮\2/' \
+      -e 's/(\x1b\[[0-9;]*m)\\/\1╮/g' \
+      -e 's/(\x1b\[[0-9;]*m)\//\1╯/g' \
+      -e 's/^\*|(\x1b\[m )\*/\1⎬/g' \
+      -e 's/(\x1b\[[0-9;]*m)\|/\1│/g' |
+    command less -r "$([ $# -eq 0 ] && echo "+/[^/]HEAD")"
 
-	setterm -linewrap on 2> /dev/null
+  setterm -linewrap on 2>/dev/null
 }
 
 find() {
-	if [ $# = 1 ]
-	then
-		command find . -iname "*$@*"
-	else
-		command find "$@"
-	fi
+  if [ $# = 1 ]; then
+    # shellcheck disable=SC2145
+    command find . -iname "*$@*"
+  else
+    command find "$@"
+  fi
 }
 
 rgafzf() {
@@ -211,12 +214,12 @@ rgafzf() {
   file="$(
     FZF_DEFAULT_COMMAND="$RG_PREFIX '$1'" \
       fzf --sort --preview="[[ ! -z {} ]] && rga --pretty --context 5 {q} {}" \
-        --phony -q "$1" \
-        --bind "change:reload:$RG_PREFIX {q}" \
-        --preview-window="70%:wrap"
+      --phony -q "$1" \
+      --bind "change:reload:$RG_PREFIX {q}" \
+      --preview-window="70%:wrap"
   )" &&
-  echo "opening $file" &&
-  xdg-open "$file"
+    echo "opening $file" &&
+    xdg-open "$file"
 }
 
 # Bash completions
@@ -244,7 +247,7 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   ### FZF
   if [ -e fzf ]; then
     if [ -f ~/.local/fzf/completion.bash ]; then
-      source ~/.local/fzf/completion.bash 2> /dev/null
+      source ~/.local/fzf/completion.bash 2>/dev/null
     fi
     if [ -f ~/.local/fzf/key-bindings.bash ]; then
       source ~/.local/fzf/key-bindings.bash
@@ -252,31 +255,31 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   fi
 
   ### Google Cloud SDK
-  if command -v brew > /dev/null; then
-      if [ -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc" ]; then
-        . "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
-      fi
-      if [ -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc" ]; then
-        . "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
-      fi
+  if command -v brew >/dev/null; then
+    if [ -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc" ]; then
+      . "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+    fi
+    if [ -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc" ]; then
+      . "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+    fi
   fi
 
   ### zoxide
-  command -v zoxide > /dev/null && eval "$(zoxide init bash)"
+  command -v zoxide >/dev/null && eval "$(zoxide init bash)"
 
   ### MOTD
-  if [ -f "$HOME/.local/motd.sh" ] && (([ -n "$SSH_CONNECTION" ] && [ "$SHLVL" -eq 1 ] && [[ $- == *i* ]]) || type qubes-vmexec &> /dev/null || type qubes-dom0-update &> /dev/null); then
+  if [ -f "$HOME/.local/motd.sh" ] && { [ -n "$SSH_CONNECTION" ] && [ "$SHLVL" -eq 1 ] && [[ $- == *i* ]]; } || type qubes-vmexec &>/dev/null || type qubes-dom0-update &>/dev/null; then
     if [ -z "$MOTD" ] || [ "$MOTD" -ne 0 ]; then
-        . "$HOME/.local/motd.sh"
+      . "$HOME/.local/motd.sh"
 
-        # TODO - -- services
-        if [ -n "$SSH_CONNECTION" ]; then
-          bash_motd --banner --processor --memory --diskspace --services --docker --updates --letsencrypt --login
-        elif type qubes-vmexec &> /dev/null; then
-          bash_motd --banner --memory --diskspace --docker --updates
-        elif type qubes-dom0-update &> /dev/null; then
-          bash_motd --processor --updates --login
-        fi
+      # TODO - -- services
+      if [ -n "$SSH_CONNECTION" ]; then
+        bash_motd --banner --processor --memory --diskspace --services --docker --updates --letsencrypt --login
+      elif type qubes-vmexec &>/dev/null; then
+        bash_motd --banner --memory --diskspace --docker --updates
+      elif type qubes-dom0-update &>/dev/null; then
+        bash_motd --processor --updates --login
+      fi
     fi
   fi
 
