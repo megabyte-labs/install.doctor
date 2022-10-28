@@ -80,7 +80,7 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
 fi
 
 # Prompt (on bash only)
-if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
+if [ "false" = "true" ] && ([ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]); then
   # Add new line before prompt
   PROMPT_COMMAND="PROMPT_COMMAND=echo"
   if [ -f /etc/os-release ]; then
