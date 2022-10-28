@@ -156,7 +156,7 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   fi
 
   # Prefer US English
-  # export LC_ALL="en_US.UTF-8"
+  export LC_ALL="en_US.UTF-8"
 fi
 
 ### Miscellaneous
