@@ -1,6 +1,10 @@
 #!/usr/bin/env zsh
 # shellcheck disable=SC1090,SC1091,SC2034,SC2154,SC2296
 
+# Prefer US English
+export LANG="en_US"
+export LC_ALL="en_US.UTF-8"
+
 ### Powerline
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -162,9 +166,6 @@ command -v gdircolors >/dev/null 2>&1 || alias gdircolors="dircolors"
 if type gdircolors &> /dev/null && [ -f "$HOME/.config/dircolors" ]; then
 	eval "$(gdircolors -b "$HOME/.config/dircolors")"
 fi
-
-# Prefer US English
-export LC_ALL="en_US.UTF-8"
 
 # ------------------------------- ZSH PLUGINS ---------------------------------
 # Plugin source helper

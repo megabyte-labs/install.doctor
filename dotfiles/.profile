@@ -265,9 +265,6 @@ export EDITOR="vim"
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
 
-# Set language
-# export LANG="en_US.UTF-8"
-
 ### .local/bin
 export PATH="$PATH:$HOME/.local/bin"
 
