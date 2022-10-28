@@ -249,7 +249,9 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
       elif type qubes-vmexec &>/dev/null; then
         bash_motd --banner --memory --diskspace --docker --updates
       elif type qubes-dom0-update &>/dev/null; then
-        bash_motd --processor --updates --login
+        bash_motd --banner --memory --updates --login
+      else
+        bash_motd --banner --processor --memory --diskspace --services --docker --updates --letsencrypt --login
       fi
     fi
   fi
