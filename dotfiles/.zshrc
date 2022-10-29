@@ -258,6 +258,7 @@ if [ -f "$HOME/.local/antigen.zsh" ]; then
 fi
 if command -v antigen > /dev/null; then
   antigen use oh-my-zsh
+  antigen bundle marlonrichert/zsh-autocomplete@main
   antigen bundle git
   antigen bundle bundler
   antigen bundle dotenv
@@ -266,7 +267,6 @@ if command -v antigen > /dev/null; then
   antigen bundle rbenv
   antigen bundle ruby
   antigen bundle k
-  antigen bundle marlonrichert/zsh-autocomplete
   antigen apply
 fi
 
