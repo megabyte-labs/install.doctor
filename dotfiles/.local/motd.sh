@@ -227,10 +227,24 @@ print_banner() {
       banner_distro_name="Fedora"
       banner_distro_version=$VERSION_ID
     else
-      banner_distro_icon="?"
+      banner_distro_icon="$OS_ICON"
       banner_distro_color="0"
-      banner_distro_name="Unknown"
-      banner_distro_version="?"
+      if [ -n "$NAME" ]; then
+        banner_distro_name="$NAME"
+      elif [ -n "$PRETTY_NAME" ]; then
+        banner_distro_name="$PRETTY_NAME"
+      else
+        banner_distro_name="Linux"
+      fi
+      if [ -n "$VERSION" ]; then
+        banner_distro_version="$VERSION"
+      elif [ -n "$VERSION_ID" ]; then
+        banner_distro_version="$VERSION_ID"
+      elif [ -n "$BUILD_ID" ]; then
+        banner_distro_version="$BUILD_ID"
+      else
+        banner_distro_version="Version Unknown"
+      fi
     fi
 
     banner_distro_space=$(generate_space "$banner_distro_name" 13)
