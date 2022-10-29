@@ -327,14 +327,14 @@ if command -v antigen > /dev/null; then
 fi
 
 ### Deno
-if command -v deno > /dev/null; then
-  eval "$(deno completions zsh)"
-fi
+#if command -v deno > /dev/null; then
+#  eval "$(deno completions zsh)"
+#fi
 
 ### Helm
-if command -v helm > /dev/null; then
-  eval "$(helm completion zsh)"
-fi
+#if command -v helm > /dev/null; then
+#  eval "$(helm completion zsh)"
+#fi
 
 ### Hyperfine
 if command -v hyperfine > /dev/null && [ -f /usr/local/src/hyperfine/autocomplete/hyperfine.zsh-completion ]; then
@@ -353,14 +353,14 @@ if command -v mcfly > /dev/null; then
 fi
 
 ### Poetry
-if command -v poetry > /dev/null; then
-  eval "$(poetry completions zsh)"
-fi
+#if command -v poetry > /dev/null; then
+#  eval "$(poetry completions zsh)"
+#fi
 
 ### Volta
-if command -v volta > /dev/null; then
-  eval "$(volta completions zsh)"
-fi
+#if command -v volta > /dev/null; then
+#  eval "$(volta completions zsh)"
+#fi
 
 ### Fig
 if [ -f "$HOME/.fig/shell/zshrc.post.zsh" ]; then
