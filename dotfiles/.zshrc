@@ -275,7 +275,7 @@ if command -v antigen > /dev/null; then
   antigen bundle dotenv
   antigen bundle encode64
   antigen bundle fd
-  antigen bundle fig
+  # antigen bundle fig
   antigen bundle fzf
   antigen bundle gcloud
   # antigen bundle gh
@@ -329,6 +329,11 @@ fi
 ### Deno
 if command -v deno > /dev/null; then
   eval "$(deno completions zsh)"
+fi
+
+### Fig
+if command -v fig > /dev/null; then
+  eval "$(fig completion zsh)"
 fi
 
 ### gh

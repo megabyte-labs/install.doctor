@@ -15,6 +15,11 @@ if command -v fd > /dev/null && [ -f /usr/local/src/fd/autocomplete/fd.bash-comp
   cp /usr/local/src/fd/autocomplete/fd.bash-completion "$HOME/.local/share/bash-completion/completions/fd.bash"
 fi
 
+### fig
+if command -v fig > /dev/null; then
+  fig completion bash > "$HOME/.local/share/bash-completion/completions/fig.bash"
+fi
+
 ### gh
 if command -v gh > /dev/null; then
   gh completion -s bash > "$HOME/.local/share/bash-completion/completions/gh.bash"
