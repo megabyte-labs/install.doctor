@@ -338,12 +338,12 @@ fi
 
 ### gh
 if command -v gh > /dev/null; then
-  eval "$(gh completion -s zsh)"
+  eval $(gh completion -s zsh)
 fi
 
 ### Helm
 if command -v helm > /dev/null; then
-  eval "$(helm completion zsh)"
+  eval $(helm completion zsh)
 fi
 
 ### Hyperfine
@@ -358,7 +358,7 @@ fi
 
 ### kubectl
 if command -v kubectl > /dev/null; then
-  eval "$(kubectl completion zsh)"
+  eval $(kubectl completion zsh)
 fi
 
 ### mcfly
@@ -374,7 +374,7 @@ fi
 
 ### Volta
 if command -v volta > /dev/null; then
-  eval "$(volta completions zsh)"
+  eval $(volta completions zsh)
 fi
 
 ### Fig
