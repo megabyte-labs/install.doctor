@@ -369,7 +369,7 @@ fi
 
 ### Poetry
 if command -v poetry > /dev/null; then
-  eval "$(poetry completions zsh)"
+  eval $(poetry completions zsh)
 fi
 
 ### Volta
