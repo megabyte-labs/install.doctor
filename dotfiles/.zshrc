@@ -352,6 +352,11 @@ if command -v brew > /dev/null; then
   [[ ! -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc" ]] || source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 fi
 
+### Java (asdf)
+if [ -f "$HOME/.asdf/plugins/java/set-java-home.zsh" ]; then
+  . "$HOME/.asdf/plugins/java/set-java-home.zsh"
+fi
+
 ## TODO: What is this line?
 fpath+=~/.zfunc
 

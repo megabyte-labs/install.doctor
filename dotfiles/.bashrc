@@ -237,6 +237,11 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
     fi
   fi
 
+  ### Java (asdf)
+  if [ -f "$HOME/.asdf/plugins/java/set-java-home.bash" ]; then
+    . "$HOME/.asdf/plugins/java/set-java-home.bash"
+  fi
+
   ### zoxide
   command -v zoxide >/dev/null && eval "$(zoxide init bash)"
 

@@ -273,15 +273,25 @@ if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then
   export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
 fi
 
+### Go
+export GOPATH="${HOME}/.local/go"
+export GO111MODULE=on
+export PATH="$PATH:${GOPATH}/bin"
+
 if command -v brew >/dev/null; then
   ### Go
-  export GOPATH="${HOME}/.local/go"
   GOROOT="$(brew --prefix golang)/libexec"
   export GOROOT
-  export GO111MODULE=on
-  export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+  export PATH="$PATH:${GOROOT}/bin"
 
   ### ASDF
+  export ASDF_CONFIG_FILE="$HOME/.config/asdf/asdfrc"
+  export ASDF_DIR="$HOME/.local/asdf"
+  export ASDF_DATA_DIR="$HOME/.local/asdf"
+  export ASDF_CRATE_DEFAULT_PACKAGES_FILE="$HOME/.config/asdf/default-cargo-pkgs
+  export ASDF_GEM_DEFAULT_PACKAGES_FILE="$HOME/.config/asdf/default-ruby-pkgs
+  export ASDF_GOLANG_DEFAULT_PACKAGES_FILE="$HOME/.config/asdf/default-golang-pkgs
+  export ASDF_PYTHON_DEFAULT_PACKAGES_FILE="$HOME/.config/asdf/default-python-pkgs
   if [ -f "$(brew --prefix asdf)/libexec/asdf.sh" ]; then
     . "$(brew --prefix asdf)/libexec/asdf.sh"
   fi
