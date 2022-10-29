@@ -43,7 +43,12 @@ while read LOCAL_BIN; do
 done < <(find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f)
 
 if [ -d /Applications ] && [ -d /System ]; then
-  sudo cp -rf "$HOME/.local/share/fonts/" "/Library/Fonts/"
+  mkdir -p ~/Library/Fonts
+  sudo cp -rf "$HOME/.local/share/fonts/" "~/Library/Fonts/"
+  theme=$(<$HOME/.local/theme/Betelgeuse.macOS.terminal)
+  plutil -replace Window\ Settings.Betelgeuse -xml "$theme" ~/Library/Preferences/com.apple.Terminal.plist
+  defaults write com.apple.Terminal "Default Window Settings" -string "Betelgeuse"
+  defaults write com.apple.Terminal "Startup Window Settings" -string "Betelgeuse"
 fi
 
 # Firefox theme
