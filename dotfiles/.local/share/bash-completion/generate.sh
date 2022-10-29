@@ -15,6 +15,11 @@ if command -v fd > /dev/null && [ -f /usr/local/src/fd/autocomplete/fd.bash-comp
   cp /usr/local/src/fd/autocomplete/fd.bash-completion "$HOME/.local/share/bash-completion/completions/fd.bash"
 fi
 
+### gh
+if command -v gh > /dev/null; then
+  gh completion -s bash > "$HOME/.local/share/bash-completion/completions/gh.bash"
+fi
+
 ### Google Cloud SDK
 if command -v brew >/dev/null; then
   if [ -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc" ]; then
@@ -40,6 +45,11 @@ fi
 ### Hyperfine
 if command -v hyperfine > /dev/null && [ -f /usr/local/src/hyperfine/autocomplete/hyperfine.bash-completion ]; then
   cp /usr/local/src/hyperfine/autocomplete/hyperfine.bash-completion "$HOME/.local/share/bash-completion/completions/hyperfine.bash"
+fi
+
+### kubectl
+if command -v kubectl > /dev/null; then
+  kubectl completion bash > "$HOME/.local/share/bash-completion/completions/kubectl.bash"
 fi
 
 ### mcfly

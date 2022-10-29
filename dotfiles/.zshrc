@@ -278,19 +278,19 @@ if command -v antigen > /dev/null; then
   antigen bundle fig
   antigen bundle fzf
   antigen bundle gcloud
-  antigen bundle gh
+  # antigen bundle gh
   antigen bundle git
   antigen bundle git-auto-fetch
   antigen bundle gnu-utils
   antigen bundle golang
   antigen bundle gpg-agent
   antigen bundle gradle
-  antigen bundle helm
+  # antigen bundle helm
   antigen bundle heroku
   antigen bundle httpie
   antigen bundle ionic
   antigen bundle keychain
-  antigen bundle kubectl
+  # antigen bundle kubectl
   antigen bundle macos
   antigen bundle macports
   antigen bundle magic-enter
@@ -327,14 +327,19 @@ if command -v antigen > /dev/null; then
 fi
 
 ### Deno
-#if command -v deno > /dev/null; then
-#  eval "$(deno completions zsh)"
-#fi
+if command -v deno > /dev/null; then
+  eval "$(deno completions zsh)"
+fi
+
+### gh
+if command -v gh > /dev/null; then
+  eval "$(gh completion -s zsh)"
+fi
 
 ### Helm
-#if command -v helm > /dev/null; then
-#  eval "$(helm completion zsh)"
-#fi
+if command -v helm > /dev/null; then
+  eval "$(helm completion zsh)"
+fi
 
 ### Hyperfine
 if command -v hyperfine > /dev/null && [ -f /usr/local/src/hyperfine/autocomplete/hyperfine.zsh-completion ]; then
@@ -346,6 +351,11 @@ if [ -f "$HOME/.local/asdf/plugins/java/set-java-home.zsh" ]; then
   . "$HOME/.local/asdf/plugins/java/set-java-home.zsh"
 fi
 
+### kubectl
+if command -v kubectl > /dev/null; then
+  eval "$(kubectl completion zsh)"
+fi
+
 ### mcfly
 export MCFLY_KEY_SCHEME=vim
 if command -v mcfly > /dev/null; then
@@ -353,14 +363,14 @@ if command -v mcfly > /dev/null; then
 fi
 
 ### Poetry
-#if command -v poetry > /dev/null; then
-#  eval "$(poetry completions zsh)"
-#fi
+if command -v poetry > /dev/null; then
+  eval "$(poetry completions zsh)"
+fi
 
 ### Volta
-#if command -v volta > /dev/null; then
-#  eval "$(volta completions zsh)"
-#fi
+if command -v volta > /dev/null; then
+  eval "$(volta completions zsh)"
+fi
 
 ### Fig
 if [ -f "$HOME/.fig/shell/zshrc.post.zsh" ]; then
