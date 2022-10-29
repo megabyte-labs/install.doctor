@@ -16,7 +16,7 @@ PROMPT_EOL_MARK=
 TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
 
 ### Antigen
-export ADOTDIR="$HOME/.local/antigen"
+#export ADOTDIR="$HOME/.local/antigen"
 
 ### Powerline
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
