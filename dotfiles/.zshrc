@@ -383,6 +383,9 @@ if [ -f "$HOME/.fig/shell/zshrc.post.zsh" ]; then
 fi
 
 ### Powerline
+if [ -f "$HOME/.local/antigen/bundles/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh" ]; then
+	source "$HOME/.local/antigen/bundles/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
+fi
 if [ -f ~/.local/p10k.zsh ]; then
 	source ~/.local/p10k.zsh
 fi
