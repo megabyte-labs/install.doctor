@@ -51,18 +51,6 @@ down4me() {
   curl -s "http://www.downforeveryoneorjustme.com/$1" | sed '/just you/!d;s/<[^>]*>//g'
 }
 
-# GAM - a command-line tool for Google Workspace. This alias will run gam or install gam if it is not already installed. Includes type check in case gam is aliased for git.
-if ! type gam &>/dev/null; then
-  gam() {
-    if command -v gam >/dev/null; then
-      gam "$@"
-    else
-      TMP="$(mktemp)" && curl -sSL https://git.io/install-gam >"$TMP" && bash "$TMP"
-      gam "$"
-    fi
-  }
-fi
-
 find() {
   if [ $# = 1 ]; then
     # shellcheck disable=SC2145
@@ -79,7 +67,6 @@ gitopen() {
 
 glog() {
   setterm -linewrap off 2>/dev/null
-
   git --no-pager log --all --color=always --graph --abbrev-commit --decorate --date-order \
     --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' "$@" |
     sed -E \
@@ -95,7 +82,6 @@ glog() {
       -e 's/^\*|(\x1b\[m )\*/\1⎬/g' \
       -e 's/(\x1b\[[0-9;]*m)\|/\1│/g' |
     command less -r "$([ $# -eq 0 ] && echo "+/[^/]HEAD")"
-
   setterm -linewrap on 2>/dev/null
 }
 
