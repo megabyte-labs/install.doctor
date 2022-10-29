@@ -1,5 +1,111 @@
 # shellcheck disable=SC1090,SC1091
 
+### Miscellaneous
+export VISUAL=vim
+export EDITOR=$VISUAL
+
+### Theme
+COLOR_SCHEME=dark
+
+### Colorize man pages
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
+export LESSHISTFILE=-
+
+### Line Wrap
+setterm -linewrap on 2>/dev/null
+
+### Bash / ZSH
+if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ] || [ "$SHELL" = '/bin/bash' ] || [ "$0" = 'zsh' ] || [ "$0" = '/bin/zsh' ] || [ "$SHELL" = '/bin/zsh' ]; then
+  ### OS Detection
+  if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    if [ "$ID" = 'alpine' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'archlinux' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'centos' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'coreos' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'debian' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'deepin' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'elementary' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'endeavour' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'freebsd' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'gentoo' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'kali' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'linuxmint' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'manjaro' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'nixos' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'openbsd' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'opensuse' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'parrot' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'pop_os' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'raspberry_pi' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'redhat' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'fedora' ]; then
+      OS_ICON=""
+    elif [ "$ID" = 'ubuntu' ]; then
+      OS_ICON=""
+    else
+      OS_ICON=""
+    fi
+  else
+    if [ -d /Applications ] && [ -d /Library ] && [ -d /System ]; then
+      # macOS
+      OS_ICON=""
+    else
+      OS_ICON=""
+    fi
+  fi
+
+  ### MOTD
+  if [ -f "$HOME/.local/motd.sh" ] && { [ -n "$SSH_CONNECTION" ] && [ "$SHLVL" -eq 1 ] && [[ $- == *i* ]]; } || command -v qubes-vmexec > /dev/null || command -v qubes-dom0-update > /dev/null || { [ -d /Applications ] && [ -d /System ]; }; then
+    if { [ -z "$MOTD" ] || [ "$MOTD" -ne 0 ]; } && [[ "$(hostname)" != *'-minimal' ]]; then
+      . "$HOME/.local/motd.sh"
+
+      # TODO - -- services
+      if [ -n "$SSH_CONNECTION" ]; then
+        # SSH
+        bash_motd --banner --processor --memory --diskspace --services --docker --updates --letsencrypt --login
+      elif command -v qubes-vmexec > /dev/null; then
+        # Qubes AppVM
+        bash_motd --banner --memory --diskspace --docker
+      elif command -v qubes-dom0-update > /dev/null; then
+        # Qubes dom0
+        bash_motd --banner --updates
+      elif [ -d /Applications ] && [ -d /System ]; then
+        # macOS
+        bash_motd --banner
+      else
+        bash_motd --banner --processor --memory --diskspace --services --docker --updates --letsencrypt --login
+      fi
+    fi
+  fi
+fi
+
 #  Easy file sharing from the command line, using transfer.sh
 transfer() {
   if [ $# -eq 0 ]; then
@@ -111,6 +217,52 @@ resetdocker() {
 }
 
 ### Aliases
+
+### Colorize
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias diff='diff --color=auto'
+alias ip='ip --color=auto'
+alias pacman='pacman --color=auto'
+
+### Aliases
+alias cp='cp -v'
+alias rm='rm -I'
+alias mv='mv -iv'
+alias ln='ln -sriv'
+alias xclip='xclip -selection c'
+command -v vim > /dev/null && alias vi='vim'
+
+### LS & TREE
+alias ll='ls -la'
+alias la='ls -A'
+alias l='ls -F'
+command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
+	alias tree='lsd --tree'
+command -v colorls > /dev/null && alias ls='colorls --sd --gs' && \
+	alias tree='colorls --tree'
+
+### CAT & LESS
+command -v bat > /dev/null && \
+	alias bat='bat --theme=ansi' && \
+	alias cat='bat --pager=never' && \
+	alias less='bat'
+# in debian the command is batcat
+command -v batcat > /dev/null && \
+	alias batcat='batcat --theme=ansi' && \
+	alias cat='batcat --pager=never' && \
+	alias less='batcat'
+
+### TOP
+command -v htop > /dev/null && alias top='htop'
+command -v gotop > /dev/null && alias top='gotop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
+command -v ytop > /dev/null && alias top='ytop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
+command -v btm > /dev/null && alias top='btm $([ "$COLOR_SCHEME" = "light" ] && echo "--color default-light")'
+# themes for light/dark color-schemes inside ~/.config/bashtop; Press ESC to open the menu and change the theme
+command -v bashtop > /dev/null && alias top='bashtop'
+command -v bpytop > /dev/null && alias top='bpytop'
 
 # Create an Authelia password hash
 alias autheliapassword='docker run authelia/authelia:latest authelia hash-password'
