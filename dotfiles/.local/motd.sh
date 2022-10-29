@@ -252,6 +252,14 @@ print_banner() {
     printf "       \\033[%sm%s   %s\\033[0m%s%s\\n" "$banner_distro_color" "$banner_distro_icon" "$banner_distro_name" "$banner_distro_space" "$banner_distro_version"
     printf "       \\033[%sm%s   Linux\\033[0m         %s\\n\\n" "$BANNER_KERNEL_COLOR" "$BANNER_KERNEL_ICON" "$(cut -d ' ' -f 3 < /proc/version)"
     printf "       \\033[%sm%s   Uptime\\033[0m        %s\\n" "$BANNER_UPTIME_COLOR" "$BANNER_UPTIME_ICON" "$(uptime -p | cut -d ' ' -f 2-)"
+  else
+    if [ -d /Applications ] && [ -d /System ]; then
+      printf "       \\033[%sm%s   %s\\033[0m%s%s\\n" "$banner_distro_color" "$banner_distro_icon" "$banner_distro_name" "$banner_distro_space" "$banner_distro_version"
+      printf "       \\033[%sm%s   OS\\033[0m         %s\\n\\n" "$BANNER_KERNEL_COLOR" "$BANNER_KERNEL_ICON" "macOS $(sw_vers -productVersion) / Build $(sw_vers -buildVersion)"
+      printf "       \\033[%sm%s   UUID\\033[0m         %s\\n\\n" "$BANNER_KERNEL_COLOR" "$BANNER_KERNEL_ICON" "$(ioreg -d2 -c IOPlatformExpertDevice | awk -F\" '/IOPlatformUUID/{print $(NF-1)}')"
+      printf "       \\033[%sm%s   LAN Address\\033[0m         %s\\n\\n" "$BANNER_KERNEL_COLOR" "$BANNER_KERNEL_ICON" "$(ifconfig en0 2>/dev/null | grep 'inet ' | cut -d ' ' -f 2)"
+      printf "       \\033[%sm%s   Public Address\\033[0m         %s\\n\\n" "$BANNER_KERNEL_COLOR" "$BANNER_KERNEL_ICON" "$(curl ifconfig.me)"
+    fi
   fi
 }
 
