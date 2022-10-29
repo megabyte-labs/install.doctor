@@ -42,6 +42,10 @@ while read LOCAL_BIN; do
   chmod +x "${LOCAL_BIN}"
 done < <(find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f)
 
+if [ -d /Applications ] && [ -d /System ]; then
+  sudo cp -rf "$HOME/.local/share/fonts/" "/Library/Fonts/"
+fi
+
 # Firefox theme
 # if [ ! -f ~/.mozilla/firefox ] && [ ! -f '/etc/qubes-release' ]; then
 #   if [ -d /usr/local/src/firefox-sweet-theme/.git ]; then

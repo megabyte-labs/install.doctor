@@ -287,6 +287,9 @@ alias downloadsite='wget --mirror -p --convert-links -P'
 # Flush DNS
 alias flushdns='sudo systemd-resolve --flush-caches && sudo systemd-resolve --statistics'
 
+# FontBook for macOS
+alias fontbook="open -b com.apple.FontBook"
+
 # Get the possible GRUB resolutions
 alias grubresolutions='sudo hwinfo --framebuffer'
 
