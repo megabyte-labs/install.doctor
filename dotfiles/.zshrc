@@ -16,7 +16,7 @@ PROMPT_EOL_MARK=
 TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
 
 ### Antigen
-#export ADOTDIR="$HOME/.local/antigen"
+export ADOTDIR="$HOME/.local/antigen"
 
 ### Powerline
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -254,10 +254,6 @@ if [ -f "$HOME/.local/antigen.zsh" ]; then
 fi
 if command -v antigen > /dev/null; then
   antigen use oh-my-zsh
-  antigen theme romkatv/powerlevel10k
-  antigen bundle zsh-users/zsh-completions
-  antigen bundle zsh-users/zsh-autosuggestions
-  antigen bundle zsh-users/zsh-syntax-highlighting
   antigen bundle adb
   antigen bundle ansible
   antigen bundle asdf
@@ -323,6 +319,10 @@ if command -v antigen > /dev/null; then
   antigen bundle yarn
   antigen bundle zoxide
   antigen bundle k
+  antigen bundle zsh-users/zsh-completions
+  antigen bundle zsh-users/zsh-autosuggestions
+  antigen bundle zsh-users/zsh-syntax-highlighting
+  antigen theme romkatv/powerlevel10k
   antigen apply
 fi
 
