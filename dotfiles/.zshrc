@@ -328,13 +328,13 @@ fi
 
 ### Deno
 if command -v deno > /dev/null; then
-  eval "$(deno completions zsh)"
+  eval $(deno completions zsh)
 fi
 
 ### Fig
-if command -v fig > /dev/null; then
-  eval "$(fig completion zsh)"
-fi
+#if command -v fig > /dev/null; then
+#  eval $(fig completion zsh)
+#fi
 
 ### gh
 if command -v gh > /dev/null; then
@@ -383,8 +383,8 @@ if [ -f "$HOME/.fig/shell/zshrc.post.zsh" ]; then
 fi
 
 ### Powerline
-if [ -f "$HOME/.local/antigen/bundles/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh" ]; then
-	source "$HOME/.local/antigen/bundles/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
+if [ -f "$HOME/.local/antigen/bundles/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+	source "$HOME/.local/antigen/bundles/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi
 if [ -f ~/.local/p10k.zsh ]; then
 	source ~/.local/p10k.zsh
