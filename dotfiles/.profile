@@ -65,26 +65,6 @@ gitopen() {
   git remote -v | head -n 1 | awk -F "@" '{print $2}' | awk -F " " '{print $1}' | sed 's/:/\//g' | sed 's/.git//g' | awk '{print "http://"$1}' | xargs open
 }
 
-glog() {
-  setterm -linewrap off 2>/dev/null
-  git --no-pager log --all --color=always --graph --abbrev-commit --decorate --date-order \
-    --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' "$@" |
-    sed -E \
-      -e 's/\|(\x1b\[[0-9;]*m)+\\(\x1b\[[0-9;]*m)+ /├\1─╮\2/' \
-      -e 's/(\x1b\[[0-9;]+m)\|\x1b\[m\1\/\x1b\[m /\1├─╯\x1b\[m/' \
-      -e 's/\|(\x1b\[[0-9;]*m)+\\(\x1b\[[0-9;]*m)+/├\1╮\2/' \
-      -e 's/(\x1b\[[0-9;]+m)\|\x1b\[m\1\/\x1b\[m/\1├╯\x1b\[m/' \
-      -e 's/╮(\x1b\[[0-9;]*m)+\\/╮\1╰╮/' \
-      -e 's/╯(\x1b\[[0-9;]*m)+\//╯\1╭╯/' \
-      -e 's/(\||\\)\x1b\[m   (\x1b\[[0-9;]*m)/╰╮\2/' \
-      -e 's/(\x1b\[[0-9;]*m)\\/\1╮/g' \
-      -e 's/(\x1b\[[0-9;]*m)\//\1╯/g' \
-      -e 's/^\*|(\x1b\[m )\*/\1⎬/g' \
-      -e 's/(\x1b\[[0-9;]*m)\|/\1│/g' |
-    command less -r "$([ $# -eq 0 ] && echo "+/[^/]HEAD")"
-  setterm -linewrap on 2>/dev/null
-}
-
 # Open Mac OS X desktop on a Linux machine
 macosx() {
   docker run -it --device /dev/kvm -p 50922:10022 -v /tmp/.X11-unix:/tmp/.X11-unix -e "DISPLAY=${DISPLAY:-:0.0}" sickcodes/docker-osx:big-sur
