@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+### Deno
+if command -v deno > /dev/null; then
+  deno completions bash > "$HOME/.local/share/bash-completion/completions/deno.bash"
+fi
+
 ### direnv
 if command -v direnv > /dev/null; then
   direnv hook bash > "$HOME/.local/share/bash-completion/completions/direnv.bash"
@@ -27,6 +32,11 @@ if command -v googler > /dev/null; then
   fi
 fi
 
+### Helm
+if command -v helm > /dev/null; then
+  helm completion bash > "$HOME/.local/share/bash-completion/completions/helm.bash"
+fi
+
 ### Hyperfine
 if command -v hyperfine > /dev/null && [ -f /usr/local/src/hyperfine/autocomplete/hyperfine.bash-completion ]; then
   cp /usr/local/src/hyperfine/autocomplete/hyperfine.bash-completion "$HOME/.local/share/bash-completion/completions/hyperfine.bash"
@@ -35,7 +45,17 @@ fi
 ### mcfly
 export MCFLY_KEY_SCHEME=vim
 if command -v mcfly > /dev/null; then
-  echo "$(mcfly init bash)" > "$HOME/.local/share/bash-completion/completions/mcfly.bash"
+  mcfly init bash > "$HOME/.local/share/bash-completion/completions/mcfly.bash"
+fi
+
+### Poetry
+if command -v poetry > /dev/null; then
+  poetry completions bash > "$HOME/.local/share/bash-completion/completions/poetry.bash"
+fi
+
+### Volta
+if command -v volta > /dev/null; then
+  volta completions bash > "$HOME/.local/share/bash-completion/completions/volta.bash"
 fi
 
 ### wp-cli (only bash available)
@@ -45,5 +65,5 @@ fi
 
 ### zoxide
 if command -v zoxide >/dev/null; then
-  echo "$(zoxide init bash)" > "$HOME/.local/share/bash-completion/completions/zoxide.bash"
+  zoxide init bash > "$HOME/.local/share/bash-completion/completions/zoxide.bash"
 fi

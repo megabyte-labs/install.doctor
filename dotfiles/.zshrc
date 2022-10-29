@@ -122,7 +122,6 @@ if command -v antigen > /dev/null; then
   antigen bundle command-not-found
   antigen bundle copyfile
   antigen bundle copybuffer
-  antigen bundle cp
   antigen bundle deno
   antigen bundle docker
   antigen bundle docker-compose
@@ -180,6 +179,16 @@ if command -v antigen > /dev/null; then
   antigen apply
 fi
 
+### Deno
+if command -v deno > /dev/null; then
+  eval "$(deno completions zsh)"
+fi
+
+### Helm
+if command -v helm > /dev/null; then
+  eval "$(helm completion zsh)"
+fi
+
 ### Hyperfine
 if command -v hyperfine > /dev/null && [ -f /usr/local/src/hyperfine/autocomplete/hyperfine.zsh-completion ]; then
   source /usr/local/src/hyperfine/autocomplete/hyperfine.zsh-completion
@@ -194,6 +203,16 @@ fi
 export MCFLY_KEY_SCHEME=vim
 if command -v mcfly > /dev/null; then
   eval "$(mcfly init zsh)"
+fi
+
+### Poetry
+if command -v poetry > /dev/null; then
+  eval "$(poetry completions zsh)"
+fi
+
+### Volta
+if command -v volta > /dev/null; then
+  eval "$(volta completions zsh)"
 fi
 
 ### Fig
