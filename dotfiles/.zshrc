@@ -100,9 +100,6 @@ _source_plugin() {
 # ZSH Autosuggestions
 _source_plugin zsh-autosuggestions && ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
 
-# ZSH Completions
-_source_plugin zsh-completions
-
 # ZSH Syntax Highlighting
 if _source_plugin zsh-syntax-highlighting; then
 	ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
@@ -371,9 +368,9 @@ if command -v mcfly > /dev/null; then
 fi
 
 ### Poetry
-if command -v poetry > /dev/null; then
-  eval $(poetry completions zsh)
-fi
+#if command -v poetry > /dev/null; then
+#  eval $(poetry completions zsh)
+#fi
 
 ### Volta
 if command -v volta > /dev/null; then
