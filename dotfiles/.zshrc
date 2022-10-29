@@ -47,7 +47,6 @@ setopt NUMERIC_GLOB_SORT
 setopt PROMPT_SUBST
 setopt SHARE_HISTORY
 
-
 # ZSH completion system
 autoload -Uz compinit
 compinit -d ~/.cache/zcompdump
@@ -91,7 +90,7 @@ RPROMPT=$'%(?.. %? %F{red}%Bx%b%F{reset})%(1j. %j %F{yellow}%Bbg %b%F{reset}.)'
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
-  	precmd() {
+	precmd() {
     	print -Pnr -- $'\e]0;%n@%m: %~\a'
   	}
 	;;
@@ -167,8 +166,7 @@ fi
 unset -f _source_plugin
 
 # POWERLEVEL
-if ! [[ $(tty) = /dev/tty* ]]
-then
+if ! [[ $(tty) = /dev/tty* ]]; then
 	if source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme 2> /dev/null; then
 		s=' ' # fix too wide icons
 		POWERLEVEL9K_MODE=nerdfont-complete
@@ -240,7 +238,6 @@ else
 	echo
 	echo
 fi
-
 
 switch_powerlevel_multiline_prompt(){
 	[ $POWERLEVEL9K_PROMPT_ON_NEWLINE = true ] \
@@ -317,6 +314,6 @@ if [ -f "$HOME/.fig/shell/zshrc.post.zsh" ]; then
 fi
 
 ### Powerline
-if [ -f ~/.config/p10k.zsh ]; then
-	source ~/.config/p10k.zsh
+if [ -f ~/.local/p10k.zsh ]; then
+	source ~/.local/p10k.zsh
 fi
