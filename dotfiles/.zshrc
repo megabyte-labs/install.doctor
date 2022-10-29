@@ -89,7 +89,7 @@ bindkey ' ' magic-space
 # Plugin source helper
 _source_plugin() {
 	local plugin_name="$1"
-	for basedir in /usr/share/zsh/plugins /usr/share; do
+	for basedir in "$HOME/.local/antigen/bundles/zsh-users"; do
 		plugin="$basedir/$plugin_name/$plugin_name.zsh"
 		[ -f "$plugin" ] && source "$plugin" && return 0
 	done
@@ -99,6 +99,9 @@ _source_plugin() {
 
 # ZSH Autosuggestions
 _source_plugin zsh-autosuggestions && ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
+
+# ZSH Completions
+_source_plugin zsh-completions
 
 # ZSH Syntax Highlighting
 if _source_plugin zsh-syntax-highlighting; then
@@ -150,7 +153,7 @@ unset -f _source_plugin
 
 # POWERLEVEL
 if ! [[ $(tty) = /dev/tty* ]]; then
-	if source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme 2> /dev/null; then
+	if source "$HOME/.local/antigen/bundles/romkatv/powerlevel10k/powerlevel10k.zsh-theme" 2> /dev/null; then
 		s=' ' # fix too wide icons
 		POWERLEVEL9K_MODE=nerdfont-complete
 		POWERLEVEL9K_SHORTEN_STRATEGY=truncate_beginning
@@ -383,9 +386,6 @@ if [ -f "$HOME/.fig/shell/zshrc.post.zsh" ]; then
 fi
 
 ### Powerline
-if [ -f "$HOME/.local/antigen/bundles/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
-	source "$HOME/.local/antigen/bundles/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-fi
 if [ -f ~/.local/p10k.zsh ]; then
 	source ~/.local/p10k.zsh
 fi
