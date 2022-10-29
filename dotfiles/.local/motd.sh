@@ -371,22 +371,19 @@ print_diskspace() {
 
       diskspace_disk_size="$(echo "$diskspace_partitions" | grep "$diskspace_disk_name " | awk '{ print $2 }')"
       diskspace_disk_used="$(echo "$diskspace_partitions" | grep "$diskspace_disk_name " | awk '{ print $3 }')"
-
-      if [ -z "$diskspace_disk_size" ]; then
-        diskspace_disk_size="$(echo "$diskspace_partitions" | grep "$diskspace_disk_mount" | awk '{ print $2 }')"
+      if [[ "$diskspace_disk_mount" != '/var/lib/snapd/snap'* ]]; then
+        if [ -z "$diskspace_disk_size" ]; then
+          diskspace_disk_size="$(echo "$diskspace_partitions" | grep "$diskspace_disk_mount" | awk '{ print $2 }')"
+        fi
+        if [ -z "$diskspace_disk_used" ]; then
+          diskspace_disk_used="$(echo "$diskspace_partitions" | grep "$diskspace_disk_mount" | awk '{ print $3 }')"
+        fi
+        if [ "$diskspace_index" -ne 0 ]; then
+          printf "\\n"
+        fi
+        diskspace_index=$((diskspace_index + 1))
+        generate_bar_disk "$DISKSPACE_ICON" "$diskspace_disk_size" "$diskspace_disk_used" "$diskspace_disk_mount"
       fi
-
-      if [ -z "$diskspace_disk_used" ]; then
-        diskspace_disk_used="$(echo "$diskspace_partitions" | grep "$diskspace_disk_mount" | awk '{ print $3 }')"
-      fi
-
-      if [ "$diskspace_index" -ne 0 ]; then
-        printf "\\n"
-      fi
-
-      diskspace_index=$((diskspace_index + 1))
-
-      generate_bar_disk "$DISKSPACE_ICON" "$diskspace_disk_size" "$diskspace_disk_used" "$diskspace_disk_mount"
     done
   fi
 }
