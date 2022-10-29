@@ -43,8 +43,8 @@ while read LOCAL_BIN; do
 done < <(find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f)
 
 if [ -d /Applications ] && [ -d /System ]; then
-  mkdir -p ~/Library/Fonts
-  sudo cp -rf "$HOME/.local/share/fonts/" "~/Library/Fonts/"
+  mkdir -p "$HOME/Library/Fonts"
+  cp "$HOME/.local/share/fonts/Hack Bold Nerd Font Complete.ttf" "$HOME/Library/Fonts/Hack Bold Nerd Font Complete.ttf"
   theme=$(<$HOME/.local/theme/Betelgeuse.macOS.terminal)
   plutil -replace Window\ Settings.Betelgeuse -xml "$theme" ~/Library/Preferences/com.apple.Terminal.plist
   defaults write com.apple.Terminal "Default Window Settings" -string "Betelgeuse"
