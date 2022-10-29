@@ -49,6 +49,10 @@ if [ -d /Applications ] && [ -d /System ]; then
   plutil -replace Window\ Settings.Betelgeuse -xml "$theme" ~/Library/Preferences/com.apple.Terminal.plist
   defaults write com.apple.Terminal "Default Window Settings" -string "Betelgeuse"
   defaults write com.apple.Terminal "Startup Window Settings" -string "Betelgeuse"
+
+  # Desktop background
+  curl -sSL https://gitlab.com/megabyte-labs/misc/betelgeuse/-/raw/master/share/wallpapers/Next/contents/source.jpg > "$HOME/.local/theme/background.jpg"
+  osascript -e 'tell application "Finder" to set desktop picture to POSIX file "$HOME/.local/theme/background.jpg"'
 fi
 
 # Firefox theme
