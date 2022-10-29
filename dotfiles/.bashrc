@@ -249,9 +249,9 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
       if [ -n "$SSH_CONNECTION" ]; then
         bash_motd --banner --processor --memory --diskspace --services --docker --updates --letsencrypt --login
       elif type qubes-vmexec &>/dev/null; then
-        bash_motd --banner --memory --diskspace --docker --updates
+        bash_motd --banner --memory --diskspace --docker
       elif type qubes-dom0-update &>/dev/null; then
-        bash_motd --banner --memory --updates --login
+        bash_motd --banner --updates
       else
         bash_motd --banner --processor --memory --diskspace --services --docker --updates --letsencrypt --login
       fi
