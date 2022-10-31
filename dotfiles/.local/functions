@@ -101,6 +101,6 @@ transfer() {
 dnf() {
   command dnf "$@"
   mkdir -p "$HOME/.local/labs" > /dev/null
-  dnf updateinfo list --security --available | grep '/Sec. ' | wc -l > "$HOME/.local/labs/dnf-updates-sec" &
-  dnf list updates | grep updates | wc -l > "$HOME/.local/labs/dnf-updates-reg" &
+  command dnf updateinfo list --security --available | grep '/Sec. ' | wc -l > "$HOME/.local/labs/dnf-updates-sec" &
+  command dnf list updates | grep updates | wc -l > "$HOME/.local/labs/dnf-updates-reg" &
 }
