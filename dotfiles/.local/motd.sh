@@ -541,8 +541,8 @@ print_updates() {
     printf "    \\033[1;37mUpdates:\\033[0m\\n"
 
     mkdir -p "$HOME/.local/labs" > /dev/null
-    dnf list updates | grep updates | wc -l > "$HOME/.local/labs/dnf-updates-reg" &
-    dnf updateinfo list --security --available | grep '/Sec. ' | wc -l > "$HOME/.local/labs/dnf-updates-sec" &
+    command dnf list updates | grep updates | wc -l > "$HOME/.local/labs/dnf-updates-reg" &
+    command dnf updateinfo list --security --available | grep '/Sec. ' | wc -l > "$HOME/.local/labs/dnf-updates-sec" &
     updates_count_security="0"
     updates_count_reg="0"
     if [ -f "$HOME/.local/labs/dnf-updates-sec" ]; then
