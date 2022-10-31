@@ -99,8 +99,8 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ] || [ "$SHELL" = '/bin/bash' ] || 
 
   ### MOTD
   # Add file named .hushlogin in the user's home directory to disable the MOTD
-  if [ ! -f ~/.hushlogin ]; then
-    if [ -f "$HOME/.local/motd.sh" ] && { [ -n "$SSH_CONNECTION" ] && [ "$SHLVL" -eq 1 ] && [[ $- == *i* ]]; } || command -v qubes-vmexec > /dev/null || command -v qubes-dom0-update > /dev/null || { [ -d /Applications ] && [ -d /System ]; }; then
+  if [ ! -f ~/.hushlogin ] && [ "$SHLVL" -eq 1 ]; then
+    if [ -f "$HOME/.local/motd.sh" ] && { [ -n "$SSH_CONNECTION" ] && [[ $- == *i* ]]; } || command -v qubes-vmexec > /dev/null || command -v qubes-dom0-update > /dev/null || { [ -d /Applications ] && [ -d /System ]; }; then
       if { [ -z "$MOTD" ] || [ "$MOTD" -ne 0 ]; } && [[ "$(hostname)" != *'-minimal' ]]; then
         . "$HOME/.local/motd.sh"
         # TODO - -- services
