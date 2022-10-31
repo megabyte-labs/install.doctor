@@ -32,7 +32,7 @@ HISTFILESIZE=5000
 HISTFILE=~/.local/bash_history
 
 # Prompt (on bash only)
-if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ] || [ "$SHELL" = '/bin/bash' ]; then
+if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   if [[ "$(hostname)" != *'-minimal' ]]; then
     # Add new line before prompt
     PROMPT_COMMAND="PROMPT_COMMAND=echo"
@@ -53,7 +53,7 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ] || [ "$SHELL" = '/bin/bash' ]; th
 fi
 
 ### Bash Completions
-if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ] || [ "$SHELL" = '/bin/bash' ]; then
+if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   ### Google Cloud SDK
   if command -v brew >/dev/null; then
     if [ -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc" ]; then
