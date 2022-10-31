@@ -532,7 +532,7 @@ print_updates() {
     else
       updates_icon=$UPDATES_ZERO_ICON
       updates_color=$UPDATES_ZERO_COLOR
-      updates_message="Everything is up to date!"
+      updates_message="The system apt packages are up-to-date!"
     fi
 
     printf "       \\033[%sm%s\\033[0m   %s\\n" "$updates_color" "$updates_icon" "$updates_message"
@@ -565,7 +565,7 @@ print_updates() {
     else
       updates_icon=$UPDATES_ZERO_ICON
       updates_color=$UPDATES_ZERO_COLOR
-      updates_message="Everything is up to date!"
+      updates_message="The system dnf packages are up-to-date!"
     fi
 
     printf "       \\033[%sm%s\\033[0m   %s\\n" "$updates_color" "$updates_icon" "$updates_message"
@@ -574,11 +574,14 @@ print_updates() {
     running_services_count="$(systemctl --type=service | grep '.service' | wc -l)"
     failed_services_count="$(systemctl --type=service | grep 'failed' | wc -l)"
 
-    printf "       %-4s \\033[%sm%s\\033[0m services are are currently running\\n" "$running_services_count" "32" ""
-    if [ "$failed_services_count" -eq 1 ]; then
-      printf "       1   \\033[%sm%s\\033[0m service failed to start (%s)\\n" "31" "" "$(systemctl --type=service | grep 'failed' | sed 's/..\([^ ]*\).service.*/\1/')"
+    if [ "$failed_services_count" -eq 0 ]; then
+      printf "       \\033[%sm%s\\033[0m   All enabled services are running!\\n" "32" ""
+    elif [ "$failed_services_count" -eq 1 ]; then
+      printf "       %-4s \\033[%sm%s\\033[0m services are are currently running\\n" "$running_services_count" "32" ""
+      printf "       \\033[%sm%s\\033[0m   1 service failed to start (%s)\\n" "31" "" "$(systemctl --type=service | grep 'failed' | sed 's/..\([^ ]*\).service.*/\1/')"
     elif [ "$failed_services_count" -gt 1 ]; then
-      printf "       %-4s \\033[%sm%s\\033[0m services failed to start (see `systemctl --type=service`)\\n" "$failed_services_count" "31" ""
+      printf "       %-4s \\033[%sm%s\\033[0m services are are currently running\\n" "$running_services_count" "32" ""
+      printf "       \\033[%sm%s\\033[0m%-3s %s services failed to start (see `systemctl --type=service`)\\n" "31" "" "" "$failed_services_count"
     fi
   fi
 }
