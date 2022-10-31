@@ -570,16 +570,16 @@ print_updates() {
   fi
   if command -v systemctl > /dev/null; then
     running_services_count="$(systemctl --type=service --plain | grep 'active running' | wc -l)"
-    failed_services_count="$(systemctl --type=service --plain | grep 'failed' | wc -l)"
+    failed_services_count="$(systemctl --type=service --failed | grep 'failed failed' | wc -l)"
 
     if [ "$failed_services_count" -eq 0 ]; then
       printf "       \\033[%sm%s\\033[0m   All enabled services are running!\\n" "32" ""
     elif [ "$failed_services_count" -eq 1 ]; then
       printf "       \\033[%sm%s\\033[0m   %s services are are currently running\\n" "32" "" "$running_services_count"
-      printf "       \\033[%sm%s\\033[0m   1 service failed to start (%s)\\n" "31" "" "$(systemctl --type=service | grep 'failed' | sed 's/..\([^ ]*\).service.*/\1/')"
+      printf "       \\033[%sm%s\\033[0m   1 service failed to start (%s)\\n" "31" "" "$(systemctl --type=service --failed | grep 'failed failed' | sed 's/..\([^ ]*\).service.*/\1/')"
     elif [ "$failed_services_count" -gt 1 ]; then
       printf "       \\033[%sm%s\\033[0m   %s services are are currently running\\n" "32" "" "$running_services_count"
-      printf "       \\033[%sm%s\\033[0m   %s services failed to start (see `systemctl --type=service`)\\n" "31" "" "$failed_services_count"
+      printf "       \\033[%sm%s\\033[0m   %s services failed to start (see \`systemctl --type=service\`)\\n" "31" "" "$failed_services_count"
     fi
   fi
 }
