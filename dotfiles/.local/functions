@@ -96,3 +96,11 @@ transfer() {
     curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name" | tee /dev/null
   fi
 }
+
+### Helpers for MOTD
+dnf() {
+  command dnf "$@"
+  mkdir -p "$HOME/.local/labs" > /dev/null
+  dnf updateinfo list --security --available | grep '/Sec. ' | wc -l > "$HOME/.local/labs/dnf-updates-sec" &
+  dnf list updates | grep updates | wc -l > "$HOME/.local/labs/dnf-updates-reg" &
+}

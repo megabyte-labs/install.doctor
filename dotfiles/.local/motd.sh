@@ -395,20 +395,6 @@ print_diskspace() {
 }
 
 print_services() {
-  if command -v systemctl > /dev/null; then
-    running_services_count="$(systemctl --type=service | grep '.service' | wc -l)"
-    failed_services_count="$(systemctl --type=service | grep 'failed' | wc -l)"
-
-    systemctl --type=service | grep 'failed' | sed 's/..\([^ ]*\).service.*/\1/'
-    printf "\\n"
-    printf "    \\033[1;37mServices:\\033[0m\\n"
-    printf "       \\033[42m\\033[0m %s are are currently running\\n" "$running_services_count"
-    if [ "$failed_services_count" = 1 ]; then
-      printf "       \\033[41m\\033[0m 1 service failed to start (%s)\\n" "$(systemctl --type=service | grep 'failed' | sed 's/..\([^ ]*\).service.*/\1/')"
-    elif [ "$failed_services_count" != '0' ]; then
-      printf "       \\033[41m\\033[0m %s services failed to start (see `systemctl --type=service`)\\n" "$failed_services_count"
-    fi
-  fi
   if [ -f $SERVICES_FILE ] && [ "$(wc -l <$SERVICES_FILE)" != 0 ]; then
     printf "\\n"
     printf "    \\033[1;37mServices:\\033[0m                              \\033[1;37mVersion:\\033[0m\\n"
@@ -528,7 +514,7 @@ print_docker() {
 print_updates() {
   if [ -f /usr/bin/apt ]; then
     printf "\\n"
-    printf "    \\033[1;37mUpdates:\\033[0m\\n"
+    printf "    \\033[1;37mStatus:\\033[0m\\n"
 
     updates_count_regular=$(apt-get -qq -y --ignore-hold --allow-change-held-packages --allow-unauthenticated -s dist-upgrade | grep ^Inst | grep -c -v Security)
     updates_count_security=$(apt-get -qq -y --ignore-hold --allow-change-held-packages --allow-unauthenticated -s dist-upgrade | grep ^Inst | grep -c Security)
@@ -554,19 +540,27 @@ print_updates() {
     printf "\\n"
     printf "    \\033[1;37mUpdates:\\033[0m\\n"
 
-    updates_count=$(dnf updateinfo -C -q --list)
-    updates_count_regular=$(echo "$updates_count" | wc -l)
-    updates_count_security=$(echo "$updates_count" | grep -c "Important/Sec")
+    mkdir -p "$HOME/.local/labs" > /dev/null
+    dnf list updates | grep updates | wc -l > "$HOME/.local/labs/dnf-updates-reg"
+    dnf updateinfo list --security --available | grep '/Sec. ' | wc -l > "$HOME/.local/labs/dnf-updates-sec"
+    updates_count_security="0"
+    updates_count_reg="0"
+    if [ -f "$HOME/.local/labs/dnf-updates-sec" ]; then
+      updates_count_security="$(cat "$HOME/.local/labs/dnf-updates-sec")"
+    fi
+    if [ -f "$HOME/.local/labs/dnf-updates-reg" ]; then
+      updates_count_reg="$(cat "$HOME/.local/labs/dnf-updates-reg")"
+    fi
 
     if [ -n "$updates_count_regular" ] && [ "$updates_count_regular" -ne 0 ]; then
       if [ -n "$updates_count_security" ] && [ "$updates_count_security" -ne 0 ]; then
         updates_icon=$UPDATES_SECURITY_ICON
         updates_color=$UPDATES_SECURITY_COLOR
-        updates_message="$updates_count_regular packages can be updated, $updates_count_security are security updates."
+        updates_message="$(generate_space "$updates_count_regular" 5) packages can be updated, $updates_count_security are security updates."
       else
         updates_icon=$UPDATES_AVAILIABLE_ICON
         updates_color=$UPDATES_AVAILIABLE_COLOR
-        updates_message="$updates_count_regular packages can be updated."
+        updates_message="$(generate_space "$bar_disk_used" 5) packages can be updated."
       fi
     else
       updates_icon=$UPDATES_ZERO_ICON
@@ -575,6 +569,18 @@ print_updates() {
     fi
 
     printf "       \\033[%sm%s\\033[0m   %s\\n" "$updates_color" "$updates_icon" "$updates_message"
+  fi
+  if command -v systemctl > /dev/null; then
+    running_services_count="$(systemctl --type=service | grep '.service' | wc -l)"
+    failed_services_count="$(systemctl --type=service | grep 'failed' | wc -l)"
+
+    systemctl --type=service | grep 'failed' | sed 's/..\([^ ]*\).service.*/\1/'
+    printf "       \\033[42m%s\\033[0m  are are currently running\\n" "$(generate_space "$running_services_count" 5)"
+    if [ "$failed_services_count" -eq 1 ]; then
+      printf "       \\033[41m1\\033[0m  service failed to start (%s)\\n" "$(generate_space "$(systemctl --type=service | grep 'failed' | sed 's/..\([^ ]*\).service.*/\1/')" 5)"
+    elif [ "$failed_services_count" -gt 1 ]; then
+      printf "       \\033[41m\\033[0m  services failed to start (see `systemctl --type=service`)\\n" "$(generate_space "$failed_services_count" 5)"
+    fi
   fi
 }
 
