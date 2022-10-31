@@ -533,7 +533,7 @@ print_updates() {
       updates_message="The system apt packages are up-to-date!"
     fi
 
-    printf "       \\033[%sm%s\\033[0m   %s\\n" "$updates_color" "$updates_icon" "$updates_message"
+    printf "       \\033[%sm%s \\033[0m  %s\\n" "$updates_color" "$updates_icon" "$updates_message"
   elif [ -f /usr/bin/dnf ]; then
     printf "\\n"
     printf "    \\033[1;37mHealth:\\033[0m\\n"
@@ -566,7 +566,7 @@ print_updates() {
       updates_message="The system dnf packages are up-to-date!"
     fi
 
-    printf "       \\033[%sm%s\\033[0m   %s\\n" "$updates_color" "$updates_icon" "$updates_message"
+    printf "       \\033[%sm%s \\033[0m  %s\\n" "$updates_color" "$updates_icon" "$updates_message"
   fi
   if command -v systemctl > /dev/null; then
     running_services_count="$(systemctl --type=service --plain | grep 'active running' | wc -l)"
