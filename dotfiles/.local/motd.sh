@@ -261,7 +261,7 @@ print_banner() {
     else
       printf "       \\033[%sm%s   %s\\033[0m%s%s\\n" "$banner_distro_color" "$banner_distro_icon" "$banner_distro_name" "$banner_distro_space" "$banner_distro_version"
     fi
-    printf "       \\033[%sm%s   Linux\\033[0m         %s\\n\\n" "$BANNER_KERNEL_COLOR" "$BANNER_KERNEL_ICON" "$(cut -d ' ' -f 3 </proc/version)"
+    printf "       \\033[%sm%s   Linux\\033[0m         %s\\n" "$BANNER_KERNEL_COLOR" "$BANNER_KERNEL_ICON" "$(cut -d ' ' -f 3 </proc/version)"
     printf "       \\033[%sm%s   Uptime\\033[0m        %s\\n" "$BANNER_UPTIME_COLOR" "$BANNER_UPTIME_ICON" "$(uptime -p | cut -d ' ' -f 2-)"
   else
     if [ -d '/Applications' ] && [ -d '/System' ]; then
