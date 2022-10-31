@@ -204,10 +204,12 @@ generate_bar_disk() {
 
 print_banner() {
   if command -v lolcat > /dev/null && command -v figlet > /dev/null; then
-    if [ -f "$HOME/.local/term-welcome-anim" ]; then
-      /usr/bin/env figlet "$(hostname)" | /usr/bin/env lolcat -f
+    if [ -f "$HOME/.local/labs/term-welcome-anim" ]; then
+      figlet "$(hostname)" | lolcat -f
     else
-      /usr/bin/env figlet "Manhattan" | /usr/bin/env lolcat -a -f
+      figlet "Manhattan" | lolcat -a -f
+      mkdir -p "$HOME/.local/labs"
+      touch "$HOME/.local/labs/term-welcome-anim"
     fi
   elif command -v figlet > /dev/null; then
     printf "\\n%s\\n" "$(figlet -t -f "$BANNER_FONTPATH" " $BANNER_TEXT")"
@@ -251,10 +253,10 @@ print_banner() {
       fi
     fi
 
-    banner_distro_space=$(generate_space "$banner_distro_name" 13)
+    banner_distro_space="$(generate_space "$banner_distro_name" 13)"
     if [ "$(hostname)" = 'dom0' ]; then
       # Qubes dom0
-      banner_distro_space=$(generate_space "$NAME" 13)
+      banner_distro_space="$(generate_space "$NAME" 13)"
       printf "       \\033[%sm%s   %s\\033[0m%s%s\\n" "$banner_distro_color" "" "$NAME" "$banner_distro_space" "$VERSION"
     else
       printf "       \\033[%sm%s   %s\\033[0m%s%s\\n" "$banner_distro_color" "$banner_distro_icon" "$banner_distro_name" "$banner_distro_space" "$banner_distro_version"
@@ -591,19 +593,19 @@ print_letsencrypt() {
 }
 
 print_login() {
-  login_last=$(last -n 2 -a -d --time-format iso "$(whoami)" | head -n 2 | tail -n 1)
+  login_last="$(last -n 2 -a -d --time-format iso "$(whoami)" | head -n 2 | tail -n 1)"
 
   if [ "$(echo "$login_last" | awk '{ print $1 }')" = "$(whoami)" ]; then
-    login_ip=$(echo "$login_last" | awk '{ print $7 }')
+    login_ip="$(echo "$login_last" | awk '{ print $7 }')"
 
-    login_login=$(date -d "$(echo "$login_last" | awk '{ print $3 }' | cut -d '+' -f 1 | sed "s/T/ /")" "+%a, %d.%m.%y %H:%M")
+    login_login="$(date -d "$(echo "$login_last" | awk '{ print $3 }' | cut -d '+' -f 1 | sed "s/T/ /")" "+%a, %d.%m.%y %H:%M")"
 
     login_space=$(generate_space "$login_login" 25)
 
     if [ "$(echo "$login_last" | awk '{ print $4 }')" = "still" ]; then
       login_logout="still connected"
     else
-      login_logout=$(date -d "$(echo "$login_last" | awk '{ print $5 }' | cut -d '+' -f 1 | sed "s/T/ /")" "+%a, %d.%m.%y %H:%M")
+      login_logout="$(date -d "$(echo "$login_last" | awk '{ print $5 }' | cut -d '+' -f 1 | sed "s/T/ /")" "+%a, %d.%m.%y %H:%M")"
     fi
 
     printf "\\n"
