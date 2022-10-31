@@ -267,7 +267,6 @@ print_banner() {
     printf "       \\033[%sm%s   Uptime\\033[0m        %s\\n" "$BANNER_UPTIME_COLOR" "$BANNER_UPTIME_ICON" "$(uptime -p | cut -d ' ' -f 2-)"
   else
     if [ -d '/Applications' ] && [ -d '/System' ]; then
-      printf "\\033[%sm%s   %s\\033[0m%s%s" "$banner_distro_color" "$banner_distro_icon" "$banner_distro_name" "$banner_distro_space" "$banner_distro_version"
       printf "       \\033[%sm%s   OS       \\033[0m         %s\\n" "$UPDATES_ZERO_COLOR" "" "macOS $(sw_vers -productVersion) / Build $(sw_vers -buildVersion)"
       printf "       \\033[%sm%s   UUID     \\033[0m         %s\\n" "$PODMAN_RUNNING_COLOR" "" "$(ioreg -d2 -c IOPlatformExpertDevice | awk -F\" '/IOPlatformUUID/{print $(NF-1)}')"
       printf "       \\033[%sm%s   LAN IP   \\033[0m         %s\\n" "$BANNER_KERNEL_COLOR" "ﯱ" "$(ifconfig en0 2>/dev/null | grep 'inet ' | cut -d ' ' -f 2)"
