@@ -569,8 +569,8 @@ print_updates() {
     printf "       \\033[%sm%s\\033[0m   %s\\n" "$updates_color" "$updates_icon" "$updates_message"
   fi
   if command -v systemctl > /dev/null; then
-    running_services_count="$(systemctl --type=service | grep 'active running' | wc -l)"
-    failed_services_count="$(systemctl --type=service | grep 'failed' | wc -l)"
+    running_services_count="$(systemctl --type=service --plain | grep 'active running' | wc -l)"
+    failed_services_count="$(systemctl --type=service --plain | grep 'failed' | wc -l)"
 
     if [ "$failed_services_count" -eq 0 ]; then
       printf "       \\033[%sm%s\\033[0m   All enabled services are running!\\n" "32" ""
