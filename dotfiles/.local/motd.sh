@@ -204,7 +204,11 @@ generate_bar_disk() {
 
 print_banner() {
   if command -v lolcat > /dev/null && command -v figlet > /dev/null; then
-    /usr/bin/env figlet "$(hostname)" | /usr/bin/env lolcat -f
+    if [ -f "$HOME/.local/term-welcome-anim" ]; then
+      /usr/bin/env figlet "$(hostname)" | /usr/bin/env lolcat -f
+    else
+      /usr/bin/env figlet "Manhattan" | /usr/bin/env lolcat -a -f
+    fi
   elif command -v figlet > /dev/null; then
     printf "\\n%s\\n" "$(figlet -t -f "$BANNER_FONTPATH" " $BANNER_TEXT")"
   else
