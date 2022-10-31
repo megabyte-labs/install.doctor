@@ -125,7 +125,6 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ] || [ "$SHELL" = '/bin/bash' ] || 
 fi
 
 ### Colorize
-alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
@@ -142,6 +141,7 @@ alias xclip='xclip -selection c'
 command -v vim > /dev/null && alias vi='vim'
 
 ### LS & TREE
+alias ls='ls --color=auto'
 alias ll='ls -la'
 alias la='ls -A'
 alias l='ls -F'

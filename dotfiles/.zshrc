@@ -154,7 +154,7 @@ if ! [[ $(tty) = /dev/tty* ]]; then
 		s=' ' # fix too wide icons
 		POWERLEVEL9K_MODE=nerdfont-complete
 		POWERLEVEL9K_SHORTEN_STRATEGY=truncate_beginning
-		POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+		POWERLEVEL9K_PROMPT_ADD_NEWLINE=false
 		POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 		POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
 		POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
@@ -325,6 +325,10 @@ if command -v antigen > /dev/null; then
   antigen theme romkatv/powerlevel10k
   antigen apply
 fi
+
+# oh-my-zsh might be overwriting the ls command so placing it here as well as fix
+command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
+	alias tree='lsd --tree'
 
 ### Deno
 if command -v deno > /dev/null; then
