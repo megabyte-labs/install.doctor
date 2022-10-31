@@ -11,18 +11,18 @@ if [ -f '/etc/qubes-release' ]; then
   sudo mv "$HOME/professor-dotfiles" /usr/local/src/professor-dotfiles
 else
   if [ ! -w /usr/local/src/professor-dotfiles ]; then
-    SUDO_PREFIX="sudo "
+    SUDO_PREFIX="sudo"
   fi
   if [ -d /usr/local/src/professor-dotfiles/.git ]; then
     cd /usr/local/src/professor-dotfiles
-    ${SUDO_PREFIX}git config pull.rebase false
-    ${SUDO_PREFIX}git pull origin master
-    ${SUDO_PREFIX}chown -Rf "$USER":"$(id -g -n)" /usr/local/src/professor-dotfiles
+    "${SUDO_PREFIX}" git config pull.rebase false
+    "${SUDO_PREFIX}" git pull origin master
+    "${SUDO_PREFIX}" chown -Rf "$USER":"$(id -g -n)" /usr/local/src/professor-dotfiles
     cd ~/
   else
-    ${SUDO_PREFIX}sudo rm -rf /usr/local/src/professor-dotfiles
-    ${SUDO_PREFIX}sudo git clone https://gitlab.com/megabyte-labs/dotfiles.git /usr/local/src/professor-dotfiles
-    ${SUDO_PREFIX}chown -Rf "$USER":"$(id -g -n)" /usr/local/src/professor-dotfiles
+    "${SUDO_PREFIX}" rm -rf /usr/local/src/professor-dotfiles
+    "${SUDO_PREFIX}" git clone https://gitlab.com/megabyte-labs/dotfiles.git /usr/local/src/professor-dotfiles
+    "${SUDO_PREFIX}" chown -Rf "$USER":"$(id -g -n)" /usr/local/src/professor-dotfiles
   fi
 fi
 
