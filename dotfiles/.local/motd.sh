@@ -204,12 +204,12 @@ generate_bar_disk() {
 
 print_banner() {
   if command -v lolcat >/dev/null && command -v figlet >/dev/null; then
-    if [ -f "$HOME/.local/labs/term-welcome-anim" ]; then
+    if [[ "${#HOSTNAME}" -lt 14 ]]; then
       figlet "$(hostname)" | lolcat -f
     else
-      figlet "Manhattan" | lolcat -a -f
-      mkdir -p "$HOME/.local/labs" > /dev/null
-      touch "$HOME/.local/labs/term-welcome-anim"
+      printf "\\n"
+      printf "    \\033[1;37mHostname:\\033[0m %s\\n" "$(hostname)"
+      printf "\\n"
     fi
   elif command -v figlet >/dev/null; then
     printf "\\n%s\\n" "$(figlet -t -f "$BANNER_FONTPATH" " $BANNER_TEXT")"
