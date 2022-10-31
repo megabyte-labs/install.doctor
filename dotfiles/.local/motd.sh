@@ -510,10 +510,9 @@ print_docker() {
 }
 
 print_updates() {
+  printf "\\n"
+  printf "    \\033[1;37mHealth:\\033[0m\\n"
   if [ -f /usr/bin/apt ]; then
-    printf "\\n"
-    printf "    \\033[1;37mHealth:\\033[0m\\n"
-
     updates_count_regular=$(apt-get -qq -y --ignore-hold --allow-change-held-packages --allow-unauthenticated -s dist-upgrade | grep ^Inst | grep -c -v Security)
     updates_count_security=$(apt-get -qq -y --ignore-hold --allow-change-held-packages --allow-unauthenticated -s dist-upgrade | grep ^Inst | grep -c Security)
 
@@ -535,9 +534,6 @@ print_updates() {
 
     printf "       \\033[%sm%s \\033[0m  %s\\n" "$updates_color" "$updates_icon" "$updates_message"
   elif [ -f /usr/bin/dnf ]; then
-    printf "\\n"
-    printf "    \\033[1;37mHealth:\\033[0m\\n"
-
     mkdir -p "$HOME/.local/labs" > /dev/null
     (command dnf list updates | grep updates | wc -l > "$HOME/.local/labs/dnf-updates-reg" &)
     (command dnf updateinfo list --security --available | grep '/Sec. ' | wc -l > "$HOME/.local/labs/dnf-updates-sec" &)
