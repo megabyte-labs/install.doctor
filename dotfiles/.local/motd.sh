@@ -270,7 +270,7 @@ print_banner() {
       printf "       \\033[%sm%s   LAN IP   \\033[0m         %s\\n" "$BANNER_KERNEL_COLOR" "ﯱ" "$(ifconfig en0 2>/dev/null | grep 'inet ' | cut -d ' ' -f 2)"
       IP_ADDR_PUB="$(timeout 1 sh -c 'curl -sSL ifconfig.me')"
       if [ -n "$IP_ADDR_PUB" ]; then
-        printf "       \\033[%sm%s   Public IP\\033[0m         %s\\n" "$UPDATES_SECURITY_COLOR" "" "$IP_ADDR_PUB"
+        printf "       \\033[%sm%s   Public IP\\033[0m         %s" "$UPDATES_SECURITY_COLOR" "" "$IP_ADDR_PUB"
       fi
     fi
   fi
