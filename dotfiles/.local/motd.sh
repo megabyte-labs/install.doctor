@@ -209,14 +209,12 @@ print_banner() {
     else
       printf "\\n"
       printf "    \\033[1;37mHostname:\\033[0m %s\\n" "$(hostname)"
-      printf "\\n"
     fi
   elif command -v figlet >/dev/null; then
     printf "\\n%s\\n" "$(figlet -t -f "$BANNER_FONTPATH" " $BANNER_TEXT")"
   else
     printf "\\n"
     printf "    \\033[1;37mHostname:\\033[0m %s\\n" "$(hostname)"
-    printf "\\n"
   fi
 
   if [ -f /etc/os-release ]; then

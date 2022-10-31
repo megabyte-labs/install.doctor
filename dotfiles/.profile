@@ -106,18 +106,18 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ] || [ "$0" = 'zsh' ] || [ "$0" = '
         # TODO - -- services
         if [ -n "$SSH_CONNECTION" ]; then
           # SSH
-          bash_motd --banner --processor --memory --diskspace --services --docker --updates --letsencrypt --login
+          bash_motd --banner --processor --memory --diskspace --docker --updates --letsencrypt --login
         elif command -v qubes-vmexec > /dev/null; then
           # Qubes AppVM
-          bash_motd --banner --memory --diskspace --docker --updates --services
+          bash_motd --banner --memory --diskspace --docker --updates
         elif command -v qubes-dom0-update > /dev/null; then
           # Qubes dom0
-          bash_motd --banner --updates --services
+          bash_motd --banner --updates
         elif [ -d /Applications ] && [ -d /System ]; then
           # macOS
           bash_motd --banner
         else
-          bash_motd --banner --processor --memory --diskspace --services --docker --updates --letsencrypt --login
+          bash_motd --banner --processor --memory --diskspace --docker --updates --letsencrypt --login
         fi
       fi
     fi
