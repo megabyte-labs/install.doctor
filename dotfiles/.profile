@@ -4,6 +4,14 @@
 export VISUAL=vim
 export EDITOR=$VISUAL
 
+### Clean Up
+# May cause issues but too many dotfiles are stressful :|
+if [ -d /usr/local/src/professor-dotfiles ]; then
+  if [ -f ~/.gtkrc-2.0-kde4 ]; then
+    rm -f ~/.gtkrc-2.0-kde4
+  fi
+fi
+
 ### Theme
 COLOR_SCHEME=dark
 
