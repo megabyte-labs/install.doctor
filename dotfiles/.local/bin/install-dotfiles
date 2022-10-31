@@ -10,14 +10,19 @@ if [ -f '/etc/qubes-release' ]; then
   sudo rm -rf /usr/local/src/professor-dotfiles
   sudo mv "$HOME/professor-dotfiles" /usr/local/src/professor-dotfiles
 else
+  if [ ! -w /usr/local/src/professor-dotfiles ]; then
+    SUDO_PREFIX="sudo "
+  fi
   if [ -d /usr/local/src/professor-dotfiles/.git ]; then
     cd /usr/local/src/professor-dotfiles
-    sudo git config pull.rebase false
-    sudo git pull origin master
+    ${SUDO_PREFIX}git config pull.rebase false
+    ${SUDO_PREFIX}git pull origin master
+    ${SUDO_PREFIX}chown -Rf "$USER":"$(id -g -n)" /usr/local/src/professor-dotfiles
     cd ~/
   else
-    sudo rm -rf /usr/local/src/professor-dotfiles
-    sudo git clone https://gitlab.com/megabyte-labs/dotfiles.git /usr/local/src/professor-dotfiles
+    ${SUDO_PREFIX}sudo rm -rf /usr/local/src/professor-dotfiles
+    ${SUDO_PREFIX}sudo git clone https://gitlab.com/megabyte-labs/dotfiles.git /usr/local/src/professor-dotfiles
+    ${SUDO_PREFIX}chown -Rf "$USER":"$(id -g -n)" /usr/local/src/professor-dotfiles
   fi
 fi
 
@@ -43,7 +48,6 @@ while read LOCAL_BIN; do
 done < <(find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f)
 
 if [ -d /Applications ] && [ -d /System ]; then
-  chown -Rf "$USER":"$(id -g -n)" /usr/local/src/professor-dotfiles
   mkdir -p "$HOME/Library/Fonts"
   cp "$HOME/.local/share/fonts/Hack Bold Nerd Font Complete.ttf" "$HOME/Library/Fonts/Hack Bold Nerd Font Complete.ttf"
   theme=$(<$HOME/.local/theme/Betelgeuse.macOS.terminal)
