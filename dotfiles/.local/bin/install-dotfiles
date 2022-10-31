@@ -43,7 +43,7 @@ while read LOCAL_BIN; do
 done < <(find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f)
 
 if [ -d /Applications ] && [ -d /System ]; then
-  chown -Rf "$USER":"$USER" /usr/local/src/professor-dotfiles
+  chown -Rf "$USER":"$(id -g -n)" /usr/local/src/professor-dotfiles
   mkdir -p "$HOME/Library/Fonts"
   cp "$HOME/.local/share/fonts/Hack Bold Nerd Font Complete.ttf" "$HOME/Library/Fonts/Hack Bold Nerd Font Complete.ttf"
   theme=$(<$HOME/.local/theme/Betelgeuse.macOS.terminal)
