@@ -50,10 +50,15 @@ if [ -d /Applications ] && [ -d /System ]; then
   plutil -replace Window\ Settings.Betelgeuse -xml "$theme" ~/Library/Preferences/com.apple.Terminal.plist
   defaults write com.apple.Terminal "Default Window Settings" -string "Betelgeuse"
   defaults write com.apple.Terminal "Startup Window Settings" -string "Betelgeuse"
+  /usr/libexec/PlistBuddy -c "Delete :Window\ Settings:Betelgeuse:columnCount" ~/Library/Preferences/com.apple.Terminal.plist
+  /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Betelgeuse:columnCount integer 35" ~/Library/Preferences/com.apple.Terminal.plist
+  /usr/libexec/PlistBuddy -c "Delete :Window\ Settings:Betelgeuse:rowCount" ~/Library/Preferences/com.apple.Terminal.plist
+  /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Betelgeuse:rowCount integer 124" ~/Library/Preferences/com.apple.Terminal.plist
 
   # Desktop background
   curl -sSL https://gitlab.com/megabyte-labs/misc/betelgeuse/-/raw/master/share/wallpapers/Next/contents/source.jpg > "$HOME/.local/theme/background.jpg"
-  osascript -e 'tell application "Finder" to set desktop picture to POSIX file "$HOME/.local/theme/background.jpg"'
+  # TODO: set desktop image or set desktop picture
+  osascript -e ‘tell application “Finder” to set desktop image to POSIX file "~/.local/theme/background.jpg"'
 fi
 
 # Firefox theme
