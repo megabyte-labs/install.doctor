@@ -203,6 +203,7 @@ generate_bar_disk() {
 }
 
 print_banner() {
+  printf "Heyoo"
   if command -v lolcat >/dev/null && command -v figlet >/dev/null; then
     if [ -f "$HOME/.local/labs/term-welcome-anim" ]; then
       figlet "$(hostname)" | lolcat -f
