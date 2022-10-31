@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # shellcheck disable=SC1090,SC1091
 
 BAR_ELEMENT="-"
@@ -191,10 +191,10 @@ generate_bar_disk() {
 
   bar_disk_mount="$4$(generate_space "$4" 10)"
 
-  bar_disk_used=$(generate_unit_byte "$3")
+  bar_disk_used="$(generate_unit_byte "$3")"
   bar_disk_used="$(generate_space "$bar_disk_used" 5)$bar_disk_used used"
 
-  bar_disk_available=$(($2 - $3))
+  bar_disk_available="$(($2 - $3))"
   bar_disk_available="$(generate_unit_byte "$bar_disk_available") available"
 
   printf "           %s%s / %s\\n" "$bar_disk_mount" "$bar_disk_used" "$bar_disk_available"
@@ -203,7 +203,7 @@ generate_bar_disk() {
 }
 
 print_banner() {
-  if command -v lolcat > /dev/null && command -v figlet > /dev/null; then
+  if command -v lolcat >/dev/null && command -v figlet >/dev/null; then
     if [ -f "$HOME/.local/labs/term-welcome-anim" ]; then
       figlet "$(hostname)" | lolcat -f
     else
@@ -211,11 +211,11 @@ print_banner() {
       mkdir -p "$HOME/.local/labs"
       touch "$HOME/.local/labs/term-welcome-anim"
     fi
-  elif command -v figlet > /dev/null; then
+  elif command -v figlet >/dev/null; then
     printf "\\n%s\\n" "$(figlet -t -f "$BANNER_FONTPATH" " $BANNER_TEXT")"
   else
     printf "\\n"
-    printf "    \\033[1;37mHostname:\\033[0m $(hostname)\\n"
+    printf "    \\033[1;37mHostname:\\033[0m %s\\n" "$(hostname)"
     printf "\\n"
   fi
 
@@ -223,15 +223,15 @@ print_banner() {
     . /etc/os-release
 
     if [ "$ID" = "debian" ]; then
-      banner_distro_icon=$BANNER_DEBIAN_ICON
-      banner_distro_color=$BANNER_DEBIAN_COLOR
+      banner_distro_icon="$BANNER_DEBIAN_ICON"
+      banner_distro_color="$BANNER_DEBIAN_COLOR"
       banner_distro_name="Debian"
-      banner_distro_version=$(cat /etc/debian_version)
+      banner_distro_version="$(cat /etc/debian_version)"
     elif [ "$ID" = "fedora" ]; then
-      banner_distro_icon=$BANNER_FEDORA_ICON
-      banner_distro_color=$BANNER_FEDORA_COLOR
+      banner_distro_icon="$BANNER_FEDORA_ICON"
+      banner_distro_color="$BANNER_FEDORA_COLOR"
       banner_distro_name="Fedora"
-      banner_distro_version=$VERSION_ID
+      banner_distro_version="$VERSION_ID"
     else
       banner_distro_icon="$OS_ICON"
       banner_distro_color="0"
@@ -261,17 +261,17 @@ print_banner() {
     else
       printf "       \\033[%sm%s   %s\\033[0m%s%s\\n" "$banner_distro_color" "$banner_distro_icon" "$banner_distro_name" "$banner_distro_space" "$banner_distro_version"
     fi
-    printf "       \\033[%sm%s   Linux\\033[0m         %s\\n\\n" "$BANNER_KERNEL_COLOR" "$BANNER_KERNEL_ICON" "$(cut -d ' ' -f 3 < /proc/version)"
+    printf "       \\033[%sm%s   Linux\\033[0m         %s\\n\\n" "$BANNER_KERNEL_COLOR" "$BANNER_KERNEL_ICON" "$(cut -d ' ' -f 3 </proc/version)"
     printf "       \\033[%sm%s   Uptime\\033[0m        %s\\n" "$BANNER_UPTIME_COLOR" "$BANNER_UPTIME_ICON" "$(uptime -p | cut -d ' ' -f 2-)"
   else
-    if [ -d /Applications ] && [ -d /System ]; then
-      printf "       \\033[%sm%s   %s\\033[0m%s%s\" "$banner_distro_color" "$banner_distro_icon" "$banner_distro_name" "$banner_distro_space" "$banner_distro_version"
-      printf "       \\033[%sm%s   OS       \\033[0m         %s\\n\" "$UPDATES_ZERO_COLOR" "" "macOS $(sw_vers -productVersion) / Build $(sw_vers -buildVersion)"
-      printf "       \\033[%sm%s   UUID     \\033[0m         %s\\n\" "$PODMAN_RUNNING_COLOR" "" "$(ioreg -d2 -c IOPlatformExpertDevice | awk -F\" '/IOPlatformUUID/{print $(NF-1)}')"
-      printf "       \\033[%sm%s   LAN IP   \\033[0m         %s\\n\" "$BANNER_KERNEL_COLOR" "ﯱ" "$(ifconfig en0 2>/dev/null | grep 'inet ' | cut -d ' ' -f 2)"
+    if [ -d '/Applications' ] && [ -d '/System' ]; then
+      printf "       \\033[%sm%s   %s\\033[0m%s%s" "$banner_distro_color" "$banner_distro_icon" "$banner_distro_name" "$banner_distro_space" "$banner_distro_version"
+      printf "       \\033[%sm%s   OS       \\033[0m         %s\\n" "$UPDATES_ZERO_COLOR" "" "macOS $(sw_vers -productVersion) / Build $(sw_vers -buildVersion)"
+      printf "       \\033[%sm%s   UUID     \\033[0m         %s\\n" "$PODMAN_RUNNING_COLOR" "" "$(ioreg -d2 -c IOPlatformExpertDevice | awk -F\" '/IOPlatformUUID/{print $(NF-1)}')"
+      printf "       \\033[%sm%s   LAN IP   \\033[0m         %s\\n" "$BANNER_KERNEL_COLOR" "ﯱ" "$(ifconfig en0 2>/dev/null | grep 'inet ' | cut -d ' ' -f 2)"
       IP_ADDR_PUB="$(timeout 1 sh -c 'curl -sSL ifconfig.me')"
       if [ -n "$IP_ADDR_PUB" ]; then
-        printf "       \\033[%sm%s   Public IP\\033[0m         %s\\n\" "$UPDATES_SECURITY_COLOR" "" "$(echo "$IP_ADDR_PUB")"
+        printf "       \\033[%sm%s   Public IP\\033[0m         %s\\n" "$UPDATES_SECURITY_COLOR" "" "$IP_ADDR_PUB"
       fi
     fi
   fi
@@ -281,13 +281,13 @@ print_processor() {
   printf "\\n"
   printf "    \\033[1;37mProcessor:\\033[0m\\n"
 
-  processor_loadavg="$(cut -d " " -f 1,2,3 < /proc/loadavg)"
+  processor_loadavg="$(cut -d " " -f 1,2,3 </proc/loadavg)"
   if [ "$(echo "$processor_loadavg" | cut -d "." -f 1)" -ge "$PROCESSOR_LOADAVG_CRITICAL_THRESHOLD" ]; then
-    processor_loadavg_color=$PROCESSOR_LOADAVG_CRITICAL_COLOR
+    processor_loadavg_color="$PROCESSOR_LOADAVG_CRITICAL_COLOR"
   elif [ "$(echo "$processor_loadavg" | cut -d "." -f 1)" -ge "$PROCESSOR_LOADAVG_WARNING_THRESHOLD" ]; then
-    processor_loadavg_color=$PROCESSOR_LOADAVG_WARNING_COLOR
+    processor_loadavg_color="$PROCESSOR_LOADAVG_WARNING_COLOR"
   else
-    processor_loadavg_color=$PROCESSOR_LOADAVG_HEALTHY_COLOR
+    processor_loadavg_color="$PROCESSOR_LOADAVG_HEALTHY_COLOR"
   fi
 
   processor_info=$(cat /proc/cpuinfo)
@@ -317,12 +317,13 @@ print_processor() {
     processor_threads=0
   fi
 
-  processor_model=$(echo "$processor_model" | sed "s/(R)//g")
-  processor_model=$(echo "$processor_model" | sed "s/(tm)//g")
-  processor_model=$(echo "$processor_model" | sed "s/ @/,/")
-  processor_model=$(echo "$processor_model" | sed "s/ CPU//")
-  processor_model=$(echo "$processor_model" | sed "s/  / /")
-  processor_model=$(echo "$processor_model" | sed "s/^ //g")
+  processor_model="${processor_model//\(R\)/}"
+  processor_model="${processor_model//\(tm\)/}"
+  processor_model="${processor_model// @/,}"
+  processor_model="${processor_model// CPU/}"
+  processor_model="${processor_model//  / }"
+  # shellcheck disable=SC2001
+  processor_model="$(echo "$processor_model" | sed "s/^ //g")"
 
   processor_cores=$((processor_cores * processor_count))
 
@@ -363,7 +364,7 @@ print_swap() {
 }
 
 print_diskspace() {
-  if command -v jq > /dev/null; then
+  if command -v jq >/dev/null; then
     printf "\\n"
     printf "    \\033[1;37mDiskspace:\\033[0m\\n"
 
@@ -395,7 +396,7 @@ print_diskspace() {
 }
 
 print_services() {
-  if [ -f $SERVICES_FILE ] && [ "$(wc -l < $SERVICES_FILE)" != 0 ]; then
+  if [ -f $SERVICES_FILE ] && [ "$(wc -l <$SERVICES_FILE)" != 0 ]; then
     printf "\\n"
     printf "    \\033[1;37mServices:\\033[0m                              \\033[1;37mVersion:\\033[0m\\n"
 
@@ -408,11 +409,11 @@ print_services() {
 
       if [ -n "$service_description" ] && [ -n "$service_name" ]; then
         if systemctl is-active --quiet "$service_name".service; then
-          service_icon=$SERVICES_UP_ICON
-          service_color=$SERVICES_UP_COLOR
+          service_icon="$SERVICES_UP_ICON"
+          service_color="$SERVICES_UP_COLOR"
         else
-          service_icon=$SERVICES_DOWN_ICON
-          service_color=$SERVICES_DOWN_COLOR
+          service_icon="$SERVICES_DOWN_ICON"
+          service_color="$SERVICES_DOWN_COLOR"
         fi
 
         service_space=$(generate_space "$service_description" 34)
@@ -431,18 +432,18 @@ print_services() {
       fi
 
       printf "       \\033[%sm%s\\033[0m   %s%s%s\\n" "$service_color" "$service_icon" "$service_description" "$service_space" "$package_version"
-    done < $SERVICES_FILE | grep -v '#'
+    done <"$SERVICES_FILE" | grep -v '#'
   fi
 }
 
 print_podman() {
-  if command -v jq > /dev/null; then
+  if command -v jq >/dev/null; then
     printf "\\n"
     printf "    \\033[1;37mPodman:\\033[0m\\n"
 
-    podman_version=$(sudo podman version --format json | jq -r '.Client.Version')
-    podman_space=$(generate_space "$podman_version" 23)
-    podman_images=$(sudo podman images --format json | jq '. | length')
+    podman_version="$(sudo podman version --format json | jq -r '.Client.Version')"
+    podman_space="$(generate_space "$podman_version" 23)"
+    podman_images="$(sudo podman images --format json | jq '. | length')"
 
     printf "       %s   Version %s%s%s  %s Images\\n\\n" "$PODMAN_VERSION_ICON" "$podman_version" "$podman_space" "$PODMAN_IMAGES_ICON" "$podman_images"
 
@@ -478,7 +479,7 @@ print_podman() {
 }
 
 print_docker() {
-  if command -v jq > /dev/null && [ "$(systemctl is-active docker.service)" = "active" ]; then
+  if command -v jq >/dev/null && [ "$(systemctl is-active docker.service)" = "active" ]; then
     printf "\\n"
     printf "    \\033[1;37mDocker:\\033[0m\\n"
 
@@ -571,7 +572,7 @@ print_letsencrypt() {
     cert_list=$(sudo find $LETSENCRYPT_CERTPATH -name cert.pem)
 
     for cert_file in $cert_list; do
-      sudo openssl x509 -checkend $((25 * 86400)) -noout -in "$cert_file" >> /dev/null
+      sudo openssl x509 -checkend $((25 * 86400)) -noout -in "$cert_file" >>/dev/null
       result=$?
 
       cert_name=$(echo "$cert_file" | rev | cut -d '/' -f 2 | rev)
@@ -579,7 +580,7 @@ print_letsencrypt() {
       if [ "$result" -eq 0 ]; then
         printf "       \\033[%sm%s\\033[0m   %s\\n" "$LETSENCRYPT_VALID_COLOR" "$LETSENCRYPT_VALID_ICON" "$cert_name"
       else
-        sudo openssl x509 -checkend $((0 * 86400)) -noout -in "$cert_file" >> /dev/null
+        sudo openssl x509 -checkend $((0 * 86400)) -noout -in "$cert_file" >>/dev/null
         result=$?
 
         if [ "$result" -eq 0 ]; then
@@ -647,6 +648,5 @@ bash_motd() {
       print_include
     fi
   done
-
   printf "\\n"
 }
