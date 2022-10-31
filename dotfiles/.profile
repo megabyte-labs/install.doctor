@@ -33,7 +33,7 @@ if [ -f "$HOME/.local/aliases" ]; then
   . "$HOME/.local/aliases"
 fi
 if [ -f "$HOME/.local/functions" ]; then
-  . "$HOME/.local/functions
+  . "$HOME/.local/functions"
 fi
 
 ### Bash / ZSH
