@@ -577,9 +577,9 @@ print_updates() {
     systemctl --type=service | grep 'failed' | sed 's/..\([^ ]*\).service.*/\1/'
     printf "       \\033[42m%s\\033[0m  are are currently running\\n" "$(generate_space "$running_services_count" 5)"
     if [ "$failed_services_count" -eq 1 ]; then
-      printf "       \\033[41m1\\033[0m  service failed to start (%s)\\n" "$(generate_space "$(systemctl --type=service | grep 'failed' | sed 's/..\([^ ]*\).service.*/\1/')" 5)"
+      printf "        \\033[41m1\\033[0m service failed to start (%s)\\n" "$(systemctl --type=service | grep 'failed' | sed 's/..\([^ ]*\).service.*/\1/')"
     elif [ "$failed_services_count" -gt 1 ]; then
-      printf "       \\033[41m\\033[0m  services failed to start (see `systemctl --type=service`)\\n" "$(generate_space "$failed_services_count" 5)"
+      printf "        \\033[41m%s\\033[0m services failed to start (see `systemctl --type=service`)\\n" "$(generate_space "$failed_services_count" 5)"
     fi
   fi
 }
