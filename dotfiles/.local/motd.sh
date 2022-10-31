@@ -208,7 +208,7 @@ print_banner() {
       figlet "$(hostname)" | lolcat -f
     else
       figlet "Manhattan" | lolcat -a -f
-      mkdir -p "$HOME/.local/labs"
+      mkdir -p "$HOME/.local/labs" > /dev/null
       touch "$HOME/.local/labs/term-welcome-anim"
     fi
   elif command -v figlet >/dev/null; then
@@ -490,23 +490,24 @@ print_docker() {
 
     docker_images=$(echo "$docker_info" | jq -r '.Images')
 
-    printf "       %s   Version %s%s%s  %s Images\\n\\n" "$DOCKER_VERSION_ICON" "$docker_version" "$docker_space" "$DOCKER_IMAGES_ICON" "$docker_images"
+    printf "       %s   Version %s%s%s  %s Images\\n" "$DOCKER_VERSION_ICON" "$docker_version" "$docker_space" "$DOCKER_IMAGES_ICON" "$docker_images"
 
-    docker_list=$(sudo curl -sf --unix-socket /var/run/docker.sock "http://v1.40/containers/json?all=true" | jq -c ' .[]')
+    docker_list_curl="$(sudo curl -sf --unix-socket /var/run/docker.sock "http://v1.40/containers/json?all=true")"
+    docker_list_curl_length="$(echo "$docker_list_curl" | jq -c '. | length')"
+    docker_list="$(echo "$docker_list_curl" | jq -c ' .[]')"
 
-    echo "$docker_list" | while read -r line; do
-      container_name="$(echo "$line" | jq -r '.Names[]' | sed 's/\///')"
-
-      container_status="$(echo "$line" | jq -r '.Status' | sed 's/.*/\l&/')"
-
-      container_space=$(generate_space "$container_name" 34)
-
-      if [ "$(echo "$line" | jq -r '.State')" = "running" ]; then
-        printf "       \\033[%um%s\\033[0m   %s%s%s\\n" "$DOCKER_RUNNING_COLOR" "$DOCKER_RUNNING_ICON" "$container_name" "$container_space" "$container_status"
-      else
-        printf "       \\033[%um%s\\033[0m   \\033[%um%s\\033[0m%s\\033[%um%s\\033[0m\\n" "$DOCKER_OTHER_COLOR" "$DOCKER_OTHER_ICON" "$DOCKER_OTHER_COLOR" "$container_name" "$container_space" "$DOCKER_OTHER_COLOR" "$container_status"
-      fi
-    done
+    if [ "$docker_list_curl_length" != '0' ]; then
+      echo "$docker_list" | while read -r line; do
+        container_name="$(echo "$line" | jq -r '.Names[]' | sed 's/\///')"
+        container_status="$(echo "$line" | jq -r '.Status' | sed 's/.*/\l&/')"
+        container_space=$(generate_space "$container_name" 34)
+        if [ "$(echo "$line" | jq -r '.State')" = "running" ]; then
+          printf "       \\033[%um%s\\033[0m   %s%s%s\\n" "$DOCKER_RUNNING_COLOR" "$DOCKER_RUNNING_ICON" "$container_name" "$container_space" "$container_status"
+        else
+          printf "       \\033[%um%s\\033[0m   \\033[%um%s\\033[0m%s\\033[%um%s\\033[0m\\n" "$DOCKER_OTHER_COLOR" "$DOCKER_OTHER_ICON" "$DOCKER_OTHER_COLOR" "$container_name" "$container_space" "$DOCKER_OTHER_COLOR" "$container_status"
+        fi
+      done
+    fi
   fi
 }
 

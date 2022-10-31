@@ -43,7 +43,7 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ] || [ "$0" = 'zsh' ] || [ "$0" = '
     . /etc/os-release
     if [ "$ID" = 'alpine' ]; then
       OS_ICON=""
-    elif [ "$ID" = 'archlinux' ]; then
+    elif [ "$ID" = 'arch' ]; then
       OS_ICON=""
     elif [ "$ID" = 'centos' ]; then
       OS_ICON=""
