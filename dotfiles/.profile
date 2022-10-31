@@ -37,6 +37,8 @@ if [ -f "$HOME/.local/functions" ]; then
 fi
 
 ### Bash / ZSH
+echo "$0"
+echo "$SHELL"
 if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ] || [ "$SHELL" = '/bin/bash' ] || [ "$0" = 'zsh' ] || [ "$0" = '/bin/zsh' ] || [ "$SHELL" = '/bin/zsh' ]; then
   ### OS Detection
   if [ -f /etc/os-release ]; then
