@@ -109,10 +109,10 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ] || [ "$0" = 'zsh' ] || [ "$0" = '
           bash_motd --banner --processor --memory --diskspace --services --docker --updates --letsencrypt --login
         elif command -v qubes-vmexec > /dev/null; then
           # Qubes AppVM
-          bash_motd --banner --memory --diskspace --docker
+          bash_motd --banner --memory --diskspace --docker --updates --services
         elif command -v qubes-dom0-update > /dev/null; then
           # Qubes dom0
-          bash_motd --banner --updates
+          bash_motd --banner --updates --services
         elif [ -d /Applications ] && [ -d /System ]; then
           # macOS
           bash_motd --banner
