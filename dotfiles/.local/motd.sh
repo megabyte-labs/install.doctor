@@ -395,6 +395,20 @@ print_diskspace() {
 }
 
 print_services() {
+  if command -v systemctl > /dev/null; then
+    running_services_count="$(systemctl --type=service | grep '.service' | wc -l)"
+    failed_services_count="$(systemctl --type=service | grep 'failed' | wc -l)"
+
+    systemctl --type=service | grep 'failed' | sed 's/..\([^ ]*\).service.*/\1/'
+    printf "\\n"
+    printf "    \\033[1;37mServices:\\033[0m\\n"
+    printf "       \\033[42m\\033[0m %s are are currently running\\n" "$running_services_count"
+    if [ "$failed_services_count" = 1 ]; then
+      printf "       \\033[41m\\033[0m 1 service failed to start (%s)\\n" "$(systemctl --type=service | grep 'failed' | sed 's/..\([^ ]*\).service.*/\1/')"
+    elif [ "$failed_services_count" != '0' ]; then
+      printf "       \\033[41m\\033[0m %s services failed to start (see `systemctl --type=service`)\\n" "$failed_services_count"
+    fi
+  fi
   if [ -f $SERVICES_FILE ] && [ "$(wc -l <$SERVICES_FILE)" != 0 ]; then
     printf "\\n"
     printf "    \\033[1;37mServices:\\033[0m                              \\033[1;37mVersion:\\033[0m\\n"
