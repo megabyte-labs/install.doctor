@@ -1,0 +1,115 @@
+# Create an Authelia password hash
+alias autheliapassword='docker run authelia/authelia:latest authelia hash-password'
+
+# Shows IP addresses that are currently banned by fail2ban
+alias banned='sudo zgrep "Ban" /var/log/fail2ban.log*'
+
+alias connections='nm-connection-editor'
+
+# Make copy command verbose
+alias cp='cp -v'
+
+# Copies with a progress bar
+alias cpv='rsync -ah --info=progress2'
+
+# Download a file
+alias download='curl --continue-at - --location --progress-bar --remote-name --remote-time'
+
+# Download a website
+alias downloadsite='wget --mirror -p --convert-links -P'
+
+# Flush DNS
+alias flushdns='sudo systemd-resolve --flush-caches && sudo systemd-resolve --statistics'
+
+# FontBook for macOS
+alias fontbook="open -b com.apple.FontBook"
+
+# Get the possible GRUB resolutions
+alias grubresolutions='sudo hwinfo --framebuffer'
+
+# Execute git command with sudo priviledges while retaining .gitconfig
+alias gsudo='sudo git -c "include.path="${XDG_CONFIG_DIR:-$HOME/.config}/git/config\" -c \"include.path=$HOME/.gitconfig\"'
+
+# Create hashed password for Ansible user creation
+alias hashpassword='mkpasswd --method=sha-512'
+
+# Show full output when using ls
+alias ls='ls -AlhF --color=auto'
+
+# Create parent directories automatically
+alias mkdir='mkdir -pv'
+
+# Make mount command output readable
+alias mount='mount | column -t'
+
+# Make mv command verbose
+alias mv='mv -v'
+
+# Show IP address
+alias myip='curl http://ipecho.net/plain; echo'
+
+# Shows local IP addresses
+alias mylocalip="ifconfig | grep -Eo 'inet (addr:|adr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
+
+# Show open ports
+alias ports='sudo netstat -tulanp'
+
+# Shuts down the computer, skipping the shutdown scripts
+alias poweroff='sudo /sbin/poweroff'
+
+# Open the Rclone web GUI
+alias rclonegui='rclone rcd --rc-web-gui --rc-user=admin --rc-pass=pass --rc-serve'
+
+# Reboot the computer
+alias reboot='sudo /sbin/reboot'
+
+# Make rm command verbose
+alias rm='rm -vi'
+
+# Launch the Python Simple HTTP Server
+alias serve='python -m SimpleHTTPServer'
+
+# Generate a SHA1 digest
+alias sha1='openssl sha1'
+
+# Shutdown the computer
+alias shutdown='sudo /sbin/shutdown'
+
+# Speed test
+alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
+
+# Shortcut for config file
+alias sshconfig='${EDITOR:code} ~/.ssh/config'
+
+# Pastebin
+alias sprunge='curl -F "sprunge=<-" http://sprunge.us'
+
+# Disable Tor for current shell
+alias toroff='source torsocks off'
+
+# Enable Tor for current shell
+alias toron='source torsocks on'
+
+# Test Tor connection
+alias tortest='curl --socks5-hostname 127.0.0.1:9050 --silent https://check.torproject.org/  | head -25'
+
+# Unban IP address (e.g. unban 10.14.24.14)
+alias unban='sudo fail2ban-client set sshd unbanip'
+
+# Recursively encrypts files using Ansible Vault
+alias unvaultdir='find . -type f -printf "%h/\"%f\" " | xargs ansible-vault decrypt'
+
+# Alias for updating software
+alias update='sudo apt-get update && sudo apt-get upgrade'
+
+# Sets v as an alias for vim
+alias v='vim'
+
+# Recursively encrypts files using Ansible Vault
+alias vaultdir='find . -type f -printf "%h/\"%f\" " | xargs ansible-vault encrypt'
+
+# Shows nice looking report of weather
+alias weather='curl -A curl wttr.in'
+
+# Change .wget-hsts file location
+alias wget="wget --hsts-file ~/.config/.wget-hsts"
