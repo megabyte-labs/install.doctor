@@ -366,7 +366,7 @@ print_diskspace() {
     printf "    \\033[1;37mDiskspace:\\033[0m\\n"
 
     diskspace_devices=$(lsblk -Jlo NAME,MOUNTPOINT | jq -c '.blockdevices | sort_by(.mountpoint) | .[] | select( .mountpoint != null and .mountpoint != "[SWAP]" )')
-    diskspace_partitions=$(df -B M | sed -e "s/M//g")
+    diskspace_partitions=$(df -B M 2> /dev/null | sed -e "s/M//g")
 
     diskspace_index=0
     echo "$diskspace_devices" | while read -r line; do
@@ -375,7 +375,7 @@ print_diskspace() {
 
       diskspace_disk_size="$(echo "$diskspace_partitions" | grep "$diskspace_disk_name " | awk '{ print $2 }')"
       diskspace_disk_used="$(echo "$diskspace_partitions" | grep "$diskspace_disk_name " | awk '{ print $3 }')"
-      if [[ "$diskspace_disk_mount" != '/var/lib/snapd/snap'* ]]; then
+      if [[ "$diskspace_disk_mount" != '/var/lib/snapd/snap'* ]] && [[ "$diskspace_disk_mount" != '/snap/'* ]]; then
         if [ -z "$diskspace_disk_size" ]; then
           diskspace_disk_size="$(echo "$diskspace_partitions" | grep "$diskspace_disk_mount" | awk '{ print $2 }')"
         fi
