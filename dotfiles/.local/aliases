@@ -51,6 +51,9 @@ alias myip='curl http://ipecho.net/plain; echo'
 # Shows local IP addresses
 alias mylocalip="ifconfig | grep -Eo 'inet (addr:|adr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
 
+# Link pip to pip3
+alias pip='pip3'
+
 # Show open ports
 alias ports='sudo netstat -tulanp'
 
