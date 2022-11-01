@@ -35,7 +35,7 @@ HISTFILE=~/.local/bash_history
 if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   if [[ "$(hostname)" != *'-minimal' ]]; then
     # Add new line before prompt
-    PROMPT_COMMAND="PROMPT_COMMAND=echo"
+    # PROMPT_COMMAND="PROMPT_COMMAND=echo"
 
     ### Styled Terminal
     case "$TERM" in

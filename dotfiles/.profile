@@ -215,7 +215,7 @@ export PATH="$PATH:~/Library/Android/sdk/tools/bin"
 export PATH="$PATH:~/Library/Android/sdk/tools"
 
 ### ASDF
-if command -v asdf > /dev/null; then
+if [ -f "$HOME/.local/asdf/asdf.sh" ]; then
   export ASDF_CONFIG_FILE="$HOME/.config/asdf/asdfrc"
   export ASDF_DIR="$HOME/.local/asdf"
   export ASDF_DATA_DIR="$HOME/.local/asdf-data"
@@ -223,9 +223,7 @@ if command -v asdf > /dev/null; then
   export ASDF_GEM_DEFAULT_PACKAGES_FILE="$HOME/.config/asdf/default-ruby-pkgs
   export ASDF_GOLANG_DEFAULT_PACKAGES_FILE="$HOME/.config/asdf/default-golang-pkgs
   export ASDF_PYTHON_DEFAULT_PACKAGES_FILE="$HOME/.config/asdf/default-python-pkgs
-  if [ -f "$HOME/.local/asdf/asdf.sh" ]; then
-    . "$HOME/.local/asdf/asdf.sh"
-  fi
+  . "$HOME/.local/asdf/asdf.sh"
 fi
 
 ### fzf
