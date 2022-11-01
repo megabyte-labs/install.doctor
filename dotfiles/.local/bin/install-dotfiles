@@ -27,7 +27,7 @@ else
     ${SUDO_PREFIX} git clone https://github.com/asdf-vm/asdf.git /usr/local/src/professor-dotfiles/dotfiles/.local/asdf --branch v0.10.2
     ${SUDO_PREFIX} chown -Rf "$USER":"$(id -g -n)" /usr/local/src/professor-dotfiles
   fi
-  if [ -n "$CREATE_PACKAGE"" ]; then
+  if [ -n "$CREATE_PACKAGE" ]; then
     cd /usr/local/src
     ${SUDO_PREFIX} tar -zcvf /tmp/professor-dotfiles.tar.gz professor-dotfiles
     cd ~/
