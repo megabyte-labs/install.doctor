@@ -64,8 +64,8 @@ if [ -d /Applications ] && [ -d /System ]; then
   defaults write com.apple.Terminal "Startup Window Settings" -string "Betelgeuse"
   /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Betelgeuse:columnCount integer 124" ~/Library/Preferences/com.apple.Terminal.plist
   /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Betelgeuse:rowCount integer 35" ~/Library/Preferences/com.apple.Terminal.plist
-  /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Betelgeuse\ (Bash):columnCount integer 124" ~/Library/Preferences/com.apple.Terminal.plist
-  /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Betelgeuse\ (Bash):rowCount integer 35" ~/Library/Preferences/com.apple.Terminal.plist
+  /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Betelgeuse\ \(Bash\):columnCount integer 124" ~/Library/Preferences/com.apple.Terminal.plist
+  /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Betelgeuse\ \(Bash\):rowCount integer 35" ~/Library/Preferences/com.apple.Terminal.plist
 
   # Desktop background
   curl -sSL https://gitlab.com/megabyte-labs/misc/betelgeuse/-/raw/master/share/wallpapers/Next/contents/source.jpg > "$HOME/.local/theme/background.jpg"
