@@ -533,7 +533,8 @@ print_updates() {
     fi
 
     printf "       \\033[%sm%s \\033[0m  %s\\n" "$updates_color" "$updates_icon" "$updates_message"
-  elif [ -f /usr/bin/dnf ]; then
+  elif [ -f /usr/bin/dnf_TODO ]; then
+    # TODO - Find way of quickly acquiring details
     mkdir -p "$HOME/.local/labs" > /dev/null
     (command dnf list updates | grep updates | wc -l > "$HOME/.local/labs/dnf-updates-reg" &)
     (command dnf updateinfo list --security --available | grep '/Sec. ' | wc -l > "$HOME/.local/labs/dnf-updates-sec" &)
