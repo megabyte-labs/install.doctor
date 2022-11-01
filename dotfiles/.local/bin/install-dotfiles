@@ -24,6 +24,11 @@ else
     ${SUDO_PREFIX} git clone https://gitlab.com/megabyte-labs/dotfiles.git /usr/local/src/professor-dotfiles
     ${SUDO_PREFIX} chown -Rf "$USER":"$(id -g -n)" /usr/local/src/professor-dotfiles
   fi
+  if [ -n "$CREATE_PACKAGE"" ]; then
+    cd /usr/local/src
+    ${SUDO_PREFIX} tar -zcvf /tmp/professor-dotfiles.tar.gz professor-dotfiles
+    cd ~/
+  fi
 fi
 
 # Copy dotfile folders
