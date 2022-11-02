@@ -320,7 +320,7 @@ if command -v antigen > /dev/null; then
   #antigen bundle ProfessorManhattan/zsh-completions src
   antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle zsh-users/zsh-syntax-highlighting
-  antigen bundle marlonrichert/zsh-autocomplete
+  antigen bundle marlonrichert/zsh-autocomplete@main
   antigen theme romkatv/powerlevel10k
   antigen apply
 fi
