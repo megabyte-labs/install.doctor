@@ -185,16 +185,14 @@ fi
 export GOPATH="${HOME}/.local/go"
 export GO111MODULE=on
 export PATH="$PATH:${GOPATH}/bin"
-if which go | grep -q 'asdf'; then
-  if command -v asdf > /dev/null; then
-    GOROOT="$(asdf where golang)/go"
-    export GOROOT
-    export PATH="$PATH:${GOROOT}/bin"
-  elif command -v brew > /dev/null; then
-    GOROOT="$(brew --prefix go)/libexec"
-    export GOROOT
-    export "$PATH:${GOROOT}/bin"
-  fi
+if which go | grep -q 'asdf' && command -v asdf > /dev/null; then
+  GOROOT="$(asdf where golang)/go"
+  export GOROOT
+  export PATH="$PATH:${GOROOT}/bin"
+elif command -v brew > /dev/null; then
+  GOROOT="$(brew --prefix go)/libexec"
+  export GOROOT
+  export "$PATH:${GOROOT}/bin"
 fi
 
 ### Android Studio
