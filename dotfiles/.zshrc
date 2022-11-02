@@ -261,7 +261,7 @@ if command -v antigen > /dev/null; then
   antigen use oh-my-zsh
   antigen bundle adb
   antigen bundle ansible
-  antigen bundle asdf
+  # antigen bundle asdf
   antigen bundle aws
   antigen bundle bundler
   antigen bundle colored-man-pages
