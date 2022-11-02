@@ -1,5 +1,8 @@
 # shellcheck disable=SC1090,SC1091,SC2034,SC2154,SC2296
 
+### Profiling Support (via `zprof`)
+zmodload zsh/zprof
+
 ### Language / Fonts
 export LANG="en_US"
 export LC_ALL="en_US.UTF-8"
@@ -347,14 +350,15 @@ if command -v deno > /dev/null; then
   _evalcache deno completions zsh
 fi
 
+### direnv
+if command -v direnv > /dev/null; then
+	_evalcache direnv hook zsh
+fi
+
 ### Fig
 #if command -v fig > /dev/null; then
 #  eval $(fig completion zsh)
 #fi
-
-### fzf
-export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 ### gh
 if command -v gh > /dev/null; then

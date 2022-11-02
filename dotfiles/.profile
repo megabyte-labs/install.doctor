@@ -228,8 +228,9 @@ if [ -f "$HOME/.local/asdf/asdf.sh" ]; then
 fi
 
 ### fzf
-if [ -d /usr/local/opt/fzf/bin ]; then
-  PATH="$PATH:/usr/local/opt/fzf/bin"
+if command -v fzf > /dev/null && command -v fd > /dev/null; then
+  export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
 
 ### Git
@@ -237,6 +238,15 @@ export GIT_MERGE_AUTOEDIT=no
 
 ### gitfuzzy
 export PATH="/usr/local/src/gitfuzzy/bin:$PATH"
+
+### nnn
+if command -v nnn > /dev/null; then
+  alias ls='nnn -de'
+  alias N='sudo -E nnn -dH'
+  alias nnn-install-plugins='curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh'
+  export NNN_RCLONE='rclone mount --read-only --no-checksum'
+  export NNN_SSHFS='sshfs -o reconnect,idmap=user,cache_timeout=3600'
+fi
 
 ### Poetry
 export POETRY_HOME="$HOME/.local/poetry"

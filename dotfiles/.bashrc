@@ -54,6 +54,11 @@ fi
 
 ### Bash Completions
 if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
+  ### direnv
+  if command -v direnv; then
+    direnv hook bash
+  fi
+
   ### Google Cloud SDK
   if command -v brew >/dev/null; then
     if [ -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc" ]; then
