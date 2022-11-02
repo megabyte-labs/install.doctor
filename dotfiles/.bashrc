@@ -56,13 +56,6 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
     eval "$(direnv hook bash)"
   fi
 
-  ### Google Cloud SDK
-  if command -v brew >/dev/null; then
-    if [ -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc" ]; then
-      . "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
-    fi
-  fi
-
   ### Java (asdf)
   if [ -f "$HOME/.local/asdf/plugins/java/set-java-home.bash" ]; then
     . "$HOME/.local/asdf/plugins/java/set-java-home.bash"
