@@ -66,6 +66,11 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
     . "$HOME/.local/asdf/plugins/java/set-java-home.bash"
   fi
 
+  ### zoxide
+  if command -v zoxide > /dev/null; then
+    eval "$(zoxide init --cmd cd zsh)"
+  fi
+
   ### Fig
   if [ -f "$HOME/.fig/shell/bashrc.post.bash" ]; then
     . "$HOME/.fig/shell/bashrc.post.bash"

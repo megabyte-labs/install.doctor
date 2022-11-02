@@ -321,9 +321,17 @@ if command -v antigen > /dev/null; then
   antigen bundle ProfessorManhattan/zsh-completions src
   antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle zsh-users/zsh-syntax-highlighting
+  antigen bundle marlonrichert/zsh-autocomplete
   antigen theme romkatv/powerlevel10k
   antigen apply
 fi
+
+### ZSH Autocomplete
+zstyle ':autocomplete:*' list-lines 14
+zstyle ':autocomplete:history-search:*' list-lines 14
+zstyle ':autocomplete:history-incremental-search-*:*' list-lines 14
+zstyle ':autocomplete:*' fzf-completion yes
+zstyle ':autocomplete:recent-dirs' backend zoxide
 
 # oh-my-zsh might be overwriting the ls command so placing it here as well as fix
 command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
@@ -378,6 +386,11 @@ fi
 ### Volta
 if command -v volta > /dev/null; then
   eval $(volta completions zsh)
+fi
+
+### zoxide
+if command -v zoxide > /dev/null; then
+	eval "$(zoxide init --cmd cd zsh)"
 fi
 
 ### Fig
