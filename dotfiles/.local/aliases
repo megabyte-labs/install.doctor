@@ -116,3 +116,6 @@ alias weather='curl -A curl wttr.in'
 
 # Change .wget-hsts file location
 alias wget="wget --hsts-file ~/.config/.wget-hsts"
+
+# Running this will update GPG to point to the current YubiKey
+alias yubikey-gpg-stub='gpg-connect-agent "scd serialno" "learn --force" /bye'

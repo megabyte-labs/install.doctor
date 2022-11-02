@@ -34,9 +34,6 @@ HISTFILE=~/.local/bash_history
 # Prompt (on bash only)
 if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   if [[ "$(hostname)" != *'-minimal' ]]; then
-    # Add new line before prompt
-    # PROMPT_COMMAND="PROMPT_COMMAND=echo"
-
     ### Styled Terminal
     case "$TERM" in
     xterm* | rxvt* | Eterm | aterm | kterm | gnome* | alacritty)
@@ -45,19 +42,19 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
     esac
 
     ### Directory Colors (https://github.com/trapd00r/LS_COLORS)
-    command -v gdircolors > /dev/null 2>&1 || gdircolors() { dircolors "$@"; }
-    if command -v gdircolors > /dev/null && [ -f "$HOME/.config/dircolors" ]; then
-      eval "$(gdircolors -b "$HOME/.config/dircolors")"
-    fi
+    # command -v gdircolors > /dev/null 2>&1 || gdircolors() { dircolors "$@"; }
+    # if command -v gdircolors > /dev/null && [ -f "$HOME/.config/dircolors" ]; then
+    #   eval "$(gdircolors -b "$HOME/.config/dircolors")"
+    # fi
   fi
 fi
 
 ### Bash Completions
 if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   ### direnv
-  #if command -v direnv; then
-  #  direnv hook bash
-  #fi
+  if command -v direnv; then
+    eval "$(direnv hook bash)"
+  fi
 
   ### Google Cloud SDK
   if command -v brew >/dev/null; then

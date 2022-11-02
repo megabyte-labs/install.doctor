@@ -22,9 +22,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-### evalcache
-ZSH_EVALCACHE_DIR="$HOME/.local/zsh-evalcache"
-
 ### Fig
 [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
 
@@ -245,10 +242,10 @@ xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
 esac
 
 # https://github.com/trapd00r/LS_COLORS
-command -v gdircolors >/dev/null 2>&1 || alias gdircolors="dircolors"
-if type gdircolors &> /dev/null && [ -f "$HOME/.config/dircolors" ]; then
-	eval "$(gdircolors -b "$HOME/.config/dircolors")"
-fi
+#command -v gdircolors >/dev/null 2>&1 || alias gdircolors="dircolors"
+#if type gdircolors &> /dev/null && [ -f "$HOME/.config/dircolors" ]; then
+#	eval "$(gdircolors -b "$HOME/.config/dircolors")"
+#fi
 
 ### Antigen
 if [ -f "$HOME/.local/antigen.zsh" ]; then
@@ -256,9 +253,9 @@ if [ -f "$HOME/.local/antigen.zsh" ]; then
 fi
 if command -v antigen > /dev/null; then
   antigen use oh-my-zsh
-  #antigen bundle adb
+  antigen bundle adb
   #antigen bundle ansible
-  # antigen bundle asdf
+  #antigen bundle asdf
   #antigen bundle aws
   #antigen bundle bundler
   #antigen bundle colored-man-pages
@@ -267,28 +264,28 @@ if command -v antigen > /dev/null; then
   #antigen bundle command-not-found
   #antigen bundle copyfile
   #antigen bundle copybuffer
-  # antigen bundle deno
+  #antigen bundle deno
   #antigen bundle docker
   #antigen bundle docker-compose
   #antigen bundle dotenv
   #antigen bundle encode64
   #antigen bundle fd
-  # antigen bundle fig
+  #antigen bundle fig
   #antigen bundle fzf
   #antigen bundle gcloud
-  # antigen bundle gh
+  #antigen bundle gh
   #antigen bundle git
   #antigen bundle git-auto-fetch
   #antigen bundle gnu-utils
   #antigen bundle golang
   #antigen bundle gpg-agent
   #antigen bundle gradle
-  # antigen bundle helm
+  #antigen bundle helm
   #antigen bundle heroku
   #antigen bundle httpie
   #antigen bundle ionic
   #antigen bundle keychain
-  # antigen bundle kubectl
+  #antigen bundle kubectl
   #antigen bundle macos
   #antigen bundle macports
   #antigen bundle magic-enter
@@ -299,9 +296,8 @@ if command -v antigen > /dev/null; then
   #antigen bundle pass
   #antigen bundle pip
   #antigen bundle pm2
-  # antigen bundle poetry
+  #antigen bundle poetry
   #antigen bundle rake
-  #antigen bundle rbenv
   #antigen bundle repo
   #antigen bundle ripgrep
   #antigen bundle ruby
@@ -319,13 +315,12 @@ if command -v antigen > /dev/null; then
   #antigen bundle volta
   #antigen bundle wp-cli
   #antigen bundle yarn
-  #antigen bundle zoxide
   #antigen bundle k
   #antigen bundle mroth/evalcache
   #antigen bundle ProfessorManhattan/zsh-completions src
-  #antigen bundle zsh-users/zsh-autosuggestions
-  #antigen bundle zsh-users/zsh-syntax-highlighting
-  #antigen bundle marlonrichert/zsh-autocomplete
+  antigen bundle zsh-users/zsh-autosuggestions
+  antigen bundle zsh-users/zsh-syntax-highlighting
+  antigen bundle marlonrichert/zsh-autocomplete
   antigen theme romkatv/powerlevel10k
   antigen apply
 fi
@@ -339,38 +334,12 @@ zstyle ':autocomplete:recent-dirs' backend zoxide
 
 
 # oh-my-zsh might be overwriting the ls command so placing it here as well as fix
-command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
-	alias tree='lsd --tree'
-
-### Deno
-if command -v deno > /dev/null; then
-  # _evalcache deno completions zsh
-  eval "$(deno completions zsh)"
-fi
+# command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
+#	alias tree='lsd --tree'
 
 ### direnv
-#if command -v direnv > /dev/null; then
-#	_evalcache direnv hook zsh
-#fi
-
-### Fig
-#if command -v fig > /dev/null; then
-#  eval $(fig completion zsh)
-#fi
-
-### gh
-if command -v gh > /dev/null; then
-  # _evalcache gh completion -s zsh
-fi
-
-### Helm
-if command -v helm > /dev/null; then
-  # _evalcache helm completion zsh
-fi
-
-### Hyperfine
-if command -v hyperfine > /dev/null && [ -f /usr/local/src/hyperfine/autocomplete/hyperfine.zsh-completion ]; then
-  # source /usr/local/src/hyperfine/autocomplete/hyperfine.zsh-completion
+if command -v direnv > /dev/null; then
+	eval "$(direnv hook zsh)"
 fi
 
 ### Java (asdf)
@@ -378,32 +347,15 @@ if [ -f "$HOME/.local/asdf/plugins/java/set-java-home.zsh" ]; then
   # . "$HOME/.local/asdf/plugins/java/set-java-home.zsh"
 fi
 
-### kubectl
-if command -v kubectl > /dev/null; then
-  # _evalcache kubectl completion zsh
-fi
-
 ### mcfly
-export MCFLY_KEY_SCHEME=vim
 if command -v mcfly > /dev/null; then
-  # _evalcache mcfly init zsh
-  eval "$(mcfly init zsh)"
-fi
-
-### Poetry
-#if command -v poetry > /dev/null; then
-#  _evalcache poetry completions zsh
-#fi
-
-### Volta
-if command -v volta > /dev/null; then
-  # _evalcache volta completions zsh
+	eval "$(mcfly init zsh)"
 fi
 
 ### zoxide
-#if command -v zoxide > /dev/null; then
-#	_evalcache zoxide init --cmd cd zsh
-#fi
+if command -v zoxide > /dev/null; then
+	eval "$(zoxide init --cmd cd zsh)"
+fi
 
 ### Fig
 if [ -f "$HOME/.fig/shell/zshrc.post.zsh" ]; then

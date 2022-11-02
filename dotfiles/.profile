@@ -4,15 +4,6 @@
 export VISUAL=vim
 export EDITOR=$VISUAL
 
-### Clean Up
-# Too many dotfiles are stressful :|
-if [ -d /usr/local/src/professor-dotfiles ]; then
-  if [ -f ~/.gtkrc-2.0-kde4 ]; then
-    mkdir -p ~/.config > /dev/null
-    mv -f ~/.gtkrc-2.0-kde4 ~/.config/gtkrc-2.0-kde4.bak > /dev/null
-  fi
-fi
-
 ### Theme
 COLOR_SCHEME=dark
 
@@ -141,27 +132,6 @@ alias ln='ln -sriv'
 alias xclip='xclip -selection c'
 command -v vim > /dev/null && alias vi='vim'
 
-### LS & TREE
-alias ls='ls --color=auto'
-alias ll='ls -la'
-alias la='ls -A'
-alias l='ls -F'
-command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
-	alias tree='lsd --tree'
-command -v colorls > /dev/null && alias ls='colorls --sd --gs' && \
-	alias tree='colorls --tree'
-
-### CAT & LESS
-command -v bat > /dev/null && \
-	alias bat='bat --theme=ansi' && \
-	alias cat='bat --pager=never' && \
-	alias less='bat'
-# In Debian the command is batcat
-command -v batcat > /dev/null && \
-	alias batcat='batcat --theme=ansi' && \
-	alias cat='batcat --pager=never' && \
-	alias less='batcat'
-
 ### TOP
 command -v htop > /dev/null && alias top='htop'
 command -v gotop > /dev/null && alias top='gotop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
@@ -202,7 +172,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 
 ### Homebrew
-if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then
+if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
   export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
   export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
   export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
@@ -212,28 +182,36 @@ if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then
 fi
 
 ### Go
-if command -v brew >/dev/null && command -v go > /dev/null; then
-  export GOPATH="${HOME}/.local/go"
-  export GO111MODULE=on
-  export PATH="$PATH:${GOPATH}/bin"
-  # Setting GOROOT was causing issues with Homebrew Go / ASDF Go version mismatching
-  # GOROOT="$(brew --prefix golang)/libexec"
-  # export GOROOT
-  # export PATH="$PATH:${GOROOT}/bin"
+export GOPATH="${HOME}/.local/go"
+export GO111MODULE=on
+export PATH="$PATH:${GOPATH}/bin"
+if which go | grep -q 'asdf'; then
+  if command -v asdf > /dev/null; then
+    GOROOT="$(asdf where golang)/go"
+    export GOROOT
+    export PATH="$PATH:${GOROOT}/bin"
+  elif command -v brew > /dev/null; then
+    GOROOT="$(brew --prefix go)/libexec"
+    export GOROOT
+    export "$PATH:${GOROOT}/bin"
+  fi
 fi
 
 ### Android Studio
-export PATH="$PATH:~/Library/Android/sdk/cmdline-tools/latest/bin"
-export PATH="$PATH:~/Library/Android/sdk/platform-tools"
-export PATH="$PATH:~/Library/Android/sdk/tools/bin"
-export PATH="$PATH:~/Library/Android/sdk/tools"
+if [ -d ~/Library/Android ]; then
+  export PATH="$PATH:~/Library/Android/sdk/cmdline-tools/latest/bin"
+  export PATH="$PATH:~/Library/Android/sdk/platform-tools"
+  export PATH="$PATH:~/Library/Android/sdk/tools/bin"
+  export PATH="$PATH:~/Library/Android/sdk/tools"
+fi
 
 ### bat
+export BAT_CONFIG_PATH="$HOME/.config/batrc"
 if command -v bat > /dev/null; then
-  export BAT_CONFIG_PATH="$HOME/.config/batrc"
-  alias cat='bat --paging=never'
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
   alias bathelp='bat --plain --language=help'
+  alias cat='bat --paging=never'
+  alias less='bat'
   help() {
     "$@" --help 2>&1 | bathelp
   }
@@ -250,12 +228,11 @@ fi
 ### exa
 if command -v exa > /dev/null; then
   alias ls='exa --long --all --color auto --icons --sort=type'
-  alias lx='ls -lbhHigUmuSa@'
   alias tree='exa --tree'
 fi
 
 ### fzf
-if command -v fzf > /dev/null && command -v fd > /dev/null; then
+if command -v fd > /dev/null; then
   export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
@@ -264,19 +241,21 @@ fi
 export GIT_MERGE_AUTOEDIT=no
 
 ### gitfuzzy
-export PATH="/usr/local/src/gitfuzzy/bin:$PATH"
-export GF_PREFERRED_PAGER="delta --theme=gruvbox --highlight-removed -w __WIDTH__"
 export GF_BAT_STYLE=changes
 export GF_BAT_THEME=zenbur
 export GF_SNAPSHOT_DIRECTORY="$HOME/.local/git-fuzzy-snapshots"
+if command -v delta > /dev/null; then
+  export GF_PREFERRED_PAGER="delta --theme=gruvbox --highlight-removed -w __WIDTH__"
+fi
 
 ### McFly
 export MCFLY_FUZZY=2
 export MCFLY_RESULTS=14
+export MCFLY_KEY_SCHEME=vim
 
 ### nnn
 if command -v nnn > /dev/null; then
-  alias ls='nnn -de'
+  alias n='nnn -de'
   alias N='sudo -E nnn -dH'
   alias nnn-install-plugins='curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh'
   export NNN_RCLONE='rclone mount --read-only --no-checksum'
@@ -285,9 +264,6 @@ fi
 
 ### Poetry
 export POETRY_HOME="$HOME/.local/poetry"
-if [ ! -d "$POETRY_HOME" ]; then
-  mkdir -p "$POETRY_HOME"
-fi
 export PATH="$POETRY_HOME/bin:$PATH"
 
 ### Rear
@@ -298,25 +274,16 @@ export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
 
 ### Ruby
 export GEM_HOME="$HOME/.local/gems"
-if [ ! -d "$GEM_HOME" ]; then
-  mkdir -p "$GEM_HOME"
-fi
 
 ### Volta
 export VOLTA_HOME="$HOME/.local/volta"
-if [ ! -d "$HOME/.local/volta" ]; then
-  mkdir -p "$HOME/.local/volta"
-fi
 export PATH="$VOLTA_HOME/bin:$PATH"
 
 ### SDKMan
 export SDKMAN_DIR="$HOME/.local/sdkman"
-if [ -s "$HOME/.local/sdkman/bin/sdkman-init.sh" ]; then
+if [ -f "$HOME/.local/sdkman/bin/sdkman-init.sh" ]; then
   . "$HOME/.local/sdkman/bin/sdkman-init.sh"
 fi
-
-# Running this will update GPG to point to the current YubiKey
-alias yubikey-gpg-stub='gpg-connect-agent "scd serialno" "learn --force" /bye'
 
 ### Vagrant
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
