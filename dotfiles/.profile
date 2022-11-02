@@ -5,10 +5,11 @@ export VISUAL=vim
 export EDITOR=$VISUAL
 
 ### Clean Up
-# May cause issues but too many dotfiles are stressful :|
+# Too many dotfiles are stressful :|
 if [ -d /usr/local/src/professor-dotfiles ]; then
   if [ -f ~/.gtkrc-2.0-kde4 ]; then
-    rm -f ~/.gtkrc-2.0-kde4
+    mkdir -p ~/.config > /dev/null
+    mv -f ~/.gtkrc-2.0-kde4 ~/.config/gtkrc-2.0-kde4.bak > /dev/null
   fi
 fi
 
