@@ -227,6 +227,25 @@ if [ -f "$HOME/.local/asdf/asdf.sh" ]; then
   . "$HOME/.local/asdf/asdf.sh"
 fi
 
+### bat
+if command -v bat > /dev/null; then
+  export BAT_CONFIG_PATH="$HOME/.config/batrc"
+  alias cat='bat --paging=never'
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+  alias bathelp='bat --plain --language=help'
+  help() {
+    "$@" --help 2>&1 | bathelp
+  }
+fi
+
+### BitWarden
+# https://bitwarden.com/help/cli/#using-an-api-key
+# BW_CLIENTID	client_id
+# BW_CLIENTSECRET
+
+### Elastic Agent
+# https://www.elastic.co/guide/en/fleet/current/agent-environment-variables.html#env-common-vars
+
 ### fzf
 if command -v fzf > /dev/null && command -v fd > /dev/null; then
   export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
@@ -254,6 +273,12 @@ if [ ! -d "$POETRY_HOME" ]; then
   mkdir -p "$POETRY_HOME"
 fi
 export PATH="$POETRY_HOME/bin:$PATH"
+
+### Rear
+# https://github.com/rear/rear/blob/master/doc/user-guide/03-configuration.adoc
+
+### ripgrep
+export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
 
 ### Ruby
 export GEM_HOME="$HOME/.local/gems"

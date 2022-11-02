@@ -1,3 +1,5 @@
+[include]
+  path = ~/.local/delta/themes.gitconfig
 [advice]
   detachedHead = false
 [alias]
@@ -21,7 +23,28 @@
   excludesfile = ~/.gitignore
   autocrlf = input
   attributesfile = ~/.gitattributes
+  pager = delta
+[delta]
+  decorations = true
+  features = side-by-side decorations hyperlinks interactive navigate unobtrusive-line-numbers woolly-mammoth zebra-dark
+  hyperlinks = true
+  interactive = true
+  map-styles = bold purple => syntax magenta, bold cyan => syntax blue
+  navigate = true
+  side-by-side = true
+  unobtrusive-line-numbers = true
+[delta "interactive"]
+  keep-plus-minus-markers = false
+[delta "decorations"]
+  commit-decoration-style = blue ol
+  commit-style = raw
+  file-style = omit
+  hunk-header-decoration-style = blue box
+  hunk-header-file-style = red
+  hunk-header-line-number-style = "#067a00"
+  hunk-header-style = file line-number syntax
 [diff]
+  colorMoved = default
   ignoresubmodules = dirty
 [diff "image"]
   command = compare $2 $1 png:- | montage -geometry +4+4 $2 - $1 png:- | display -title \"$1\" -
@@ -29,7 +52,10 @@
   prompt = false
 [credential]
   helper = cache --timeout=3600
+[interactive]
+  diffFilter = delta --color-only --features=interactive
 [merge]
+  conflictstyle = diff3
   tool = kdiff3
 [pull]
   rebase = true
