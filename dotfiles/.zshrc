@@ -322,7 +322,7 @@ if command -v antigen > /dev/null; then
   #antigen bundle volta
   #antigen bundle wp-cli
   #antigen bundle yarn
-  #antigen bundle zoxide
+  antigen bundle zoxide
   #antigen bundle k
   antigen bundle mroth/evalcache
   antigen bundle ProfessorManhattan/zsh-completions src
@@ -402,9 +402,9 @@ if command -v volta > /dev/null; then
 fi
 
 ### zoxide
-if command -v zoxide > /dev/null; then
-	_evalcache zoxide init --cmd cd zsh
-fi
+#if command -v zoxide > /dev/null; then
+#	_evalcache zoxide init --cmd cd zsh
+#fi
 
 ### Fig
 if [ -f "$HOME/.fig/shell/zshrc.post.zsh" ]; then
