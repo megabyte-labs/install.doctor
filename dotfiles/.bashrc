@@ -55,9 +55,9 @@ fi
 ### Bash Completions
 if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   ### direnv
-  if command -v direnv; then
-    direnv hook bash
-  fi
+  #if command -v direnv; then
+  #  direnv hook bash
+  #fi
 
   ### Google Cloud SDK
   if command -v brew >/dev/null; then
