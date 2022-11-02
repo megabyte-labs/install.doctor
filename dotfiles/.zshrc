@@ -322,7 +322,7 @@ if command -v antigen > /dev/null; then
   #antigen bundle volta
   #antigen bundle wp-cli
   #antigen bundle yarn
-  antigen bundle zoxide
+  #antigen bundle zoxide
   #antigen bundle k
   antigen bundle mroth/evalcache
   antigen bundle ProfessorManhattan/zsh-completions src
