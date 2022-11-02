@@ -259,71 +259,71 @@ if [ -f "$HOME/.local/antigen.zsh" ]; then
 fi
 if command -v antigen > /dev/null; then
   antigen use oh-my-zsh
-  antigen bundle adb
-  antigen bundle ansible
+  #antigen bundle adb
+  #antigen bundle ansible
   # antigen bundle asdf
-  antigen bundle aws
-  antigen bundle bundler
-  antigen bundle colored-man-pages
-  antigen bundle codeclimate
-  antigen bundle colorize
-  antigen bundle command-not-found
-  antigen bundle copyfile
-  antigen bundle copybuffer
+  #antigen bundle aws
+  #antigen bundle bundler
+  #antigen bundle colored-man-pages
+  #antigen bundle codeclimate
+  #antigen bundle colorize
+  #antigen bundle command-not-found
+  #antigen bundle copyfile
+  #antigen bundle copybuffer
   # antigen bundle deno
-  antigen bundle docker
-  antigen bundle docker-compose
-  antigen bundle dotenv
-  antigen bundle encode64
-  antigen bundle fd
+  #antigen bundle docker
+  #antigen bundle docker-compose
+  #antigen bundle dotenv
+  #antigen bundle encode64
+  #antigen bundle fd
   # antigen bundle fig
-  antigen bundle fzf
-  antigen bundle gcloud
+  #antigen bundle fzf
+  #antigen bundle gcloud
   # antigen bundle gh
-  antigen bundle git
-  antigen bundle git-auto-fetch
-  antigen bundle gnu-utils
-  antigen bundle golang
-  antigen bundle gpg-agent
-  antigen bundle gradle
+  #antigen bundle git
+  #antigen bundle git-auto-fetch
+  #antigen bundle gnu-utils
+  #antigen bundle golang
+  #antigen bundle gpg-agent
+  #antigen bundle gradle
   # antigen bundle helm
-  antigen bundle heroku
-  antigen bundle httpie
-  antigen bundle ionic
-  antigen bundle keychain
+  #antigen bundle heroku
+  #antigen bundle httpie
+  #antigen bundle ionic
+  #antigen bundle keychain
   # antigen bundle kubectl
-  antigen bundle macos
-  antigen bundle macports
-  antigen bundle magic-enter
-  antigen bundle microk8s
-  antigen bundle minikube
-  antigen bundle multipass
-  antigen bundle npm
-  antigen bundle pass
-  antigen bundle pip
-  antigen bundle pm2
+  #antigen bundle macos
+  #antigen bundle macports
+  #antigen bundle magic-enter
+  #antigen bundle microk8s
+  #antigen bundle minikube
+  #antigen bundle multipass
+  #antigen bundle npm
+  #antigen bundle pass
+  #antigen bundle pip
+  #antigen bundle pm2
   # antigen bundle poetry
-  antigen bundle rake
-  antigen bundle rbenv
-  antigen bundle repo
-  antigen bundle ripgrep
-  antigen bundle ruby
-  antigen bundle salt
-  antigen bundle safe-paste
-  antigen bundle shell-proxy
-  antigen bundle ssh-agent
-  antigen bundle sudo
-  antigen bundle terraform
-  antigen bundle tmux
-  antigen bundle transfer
-  antigen bundle ubuntu
-  antigen bundle ufw
-  antigen bundle vagrant
-  # antigen bundle volta
-  antigen bundle wp-cli
-  antigen bundle yarn
-  antigen bundle zoxide
-  antigen bundle k
+  #antigen bundle rake
+  #antigen bundle rbenv
+  #antigen bundle repo
+  #antigen bundle ripgrep
+  #antigen bundle ruby
+  #antigen bundle salt
+  #antigen bundle safe-paste
+  #antigen bundle shell-proxy
+  #antigen bundle ssh-agent
+  #antigen bundle sudo
+  #antigen bundle terraform
+  #antigen bundle tmux
+  #antigen bundle transfer
+  #antigen bundle ubuntu
+  #antigen bundle ufw
+  #antigen bundle vagrant
+  #antigen bundle volta
+  #antigen bundle wp-cli
+  #antigen bundle yarn
+  #antigen bundle zoxide
+  #antigen bundle k
   antigen bundle mroth/evalcache
   antigen bundle ProfessorManhattan/zsh-completions src
   antigen bundle zsh-users/zsh-autosuggestions
@@ -352,7 +352,7 @@ fi
 
 ### direnv
 if command -v direnv > /dev/null; then
-	eval "$(direnv hook zsh)"
+	_evalcache direnv hook zsh
 fi
 
 ### Fig
