@@ -200,13 +200,14 @@ if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then
 fi
 
 ### Go
-export GOPATH="${HOME}/.local/go"
-export GO111MODULE=on
-export PATH="$PATH:${GOPATH}/bin"
 if command -v brew >/dev/null && command -v go > /dev/null; then
-  GOROOT="$(brew --prefix golang)/libexec"
-  export GOROOT
-  export PATH="$PATH:${GOROOT}/bin"
+  export GOPATH="${HOME}/.local/go"
+  export GO111MODULE=on
+  export PATH="$PATH:${GOPATH}/bin"
+  # Setting GOROOT was causing issues with Homebrew Go / ASDF Go version mismatching
+  # GOROOT="$(brew --prefix golang)/libexec"
+  # export GOROOT
+  # export PATH="$PATH:${GOROOT}/bin"
 fi
 
 ### Android Studio
