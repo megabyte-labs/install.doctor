@@ -329,9 +329,12 @@ fi
 zstyle ':autocomplete:*' list-lines 14
 zstyle ':autocomplete:history-search:*' list-lines 14
 zstyle ':autocomplete:history-incremental-search-*:*' list-lines 14
-zstyle ':autocomplete:*' fzf-completion yes
-zstyle ':autocomplete:recent-dirs' backend zoxide
-
+if command -v fzf > /dev/null; then
+	zstyle ':autocomplete:*' fzf-completion yes
+fi
+if command -v zoxide > /dev/null; then
+	zstyle ':autocomplete:recent-dirs' backend zoxide
+fi
 
 # oh-my-zsh might be overwriting the ls command so placing it here as well as fix
 # command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
