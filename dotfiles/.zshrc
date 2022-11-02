@@ -347,7 +347,8 @@ command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
 
 ### Deno
 if command -v deno > /dev/null; then
-  _evalcache deno completions zsh
+  # _evalcache deno completions zsh
+  eval "$(deno completions zsh)"
 fi
 
 ### direnv
@@ -362,33 +363,34 @@ fi
 
 ### gh
 if command -v gh > /dev/null; then
-  _evalcache gh completion -s zsh
+  # _evalcache gh completion -s zsh
 fi
 
 ### Helm
 if command -v helm > /dev/null; then
-  _evalcache helm completion zsh
+  # _evalcache helm completion zsh
 fi
 
 ### Hyperfine
 if command -v hyperfine > /dev/null && [ -f /usr/local/src/hyperfine/autocomplete/hyperfine.zsh-completion ]; then
-  source /usr/local/src/hyperfine/autocomplete/hyperfine.zsh-completion
+  # source /usr/local/src/hyperfine/autocomplete/hyperfine.zsh-completion
 fi
 
 ### Java (asdf)
 if [ -f "$HOME/.local/asdf/plugins/java/set-java-home.zsh" ]; then
-  . "$HOME/.local/asdf/plugins/java/set-java-home.zsh"
+  # . "$HOME/.local/asdf/plugins/java/set-java-home.zsh"
 fi
 
 ### kubectl
 if command -v kubectl > /dev/null; then
-  _evalcache kubectl completion zsh
+  # _evalcache kubectl completion zsh
 fi
 
 ### mcfly
 export MCFLY_KEY_SCHEME=vim
 if command -v mcfly > /dev/null; then
-  _evalcache mcfly init zsh
+  # _evalcache mcfly init zsh
+  eval "$(mcfly init zsh)"
 fi
 
 ### Poetry
@@ -398,7 +400,7 @@ fi
 
 ### Volta
 if command -v volta > /dev/null; then
-  _evalcache volta completions zsh
+  # _evalcache volta completions zsh
 fi
 
 ### zoxide
