@@ -325,7 +325,7 @@ if command -v antigen > /dev/null; then
   #antigen bundle zoxide
   #antigen bundle k
   #antigen bundle mroth/evalcache
-  antigen bundle ProfessorManhattan/zsh-completions src
+  #antigen bundle ProfessorManhattan/zsh-completions src
   antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle zsh-users/zsh-syntax-highlighting
   antigen bundle marlonrichert/zsh-autocomplete
