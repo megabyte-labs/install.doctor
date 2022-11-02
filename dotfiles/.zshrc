@@ -352,7 +352,7 @@ fi
 
 ### direnv
 if command -v direnv > /dev/null; then
-	_evalcache direnv hook zsh
+	eval "$(direnv hook zsh)"
 fi
 
 ### Fig
