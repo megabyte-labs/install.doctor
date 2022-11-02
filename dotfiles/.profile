@@ -246,6 +246,13 @@ fi
 ### Elastic Agent
 # https://www.elastic.co/guide/en/fleet/current/agent-environment-variables.html#env-common-vars
 
+### exa
+if command -v exa > /dev/null; then
+  alias ls='exa --long --all --color auto --icons --sort=type'
+  alias lx='ls -lbhHigUmuSa@'
+  alias tree='exa --tree'
+fi
+
 ### fzf
 if command -v fzf > /dev/null && command -v fd > /dev/null; then
   export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
@@ -257,6 +264,14 @@ export GIT_MERGE_AUTOEDIT=no
 
 ### gitfuzzy
 export PATH="/usr/local/src/gitfuzzy/bin:$PATH"
+export GF_PREFERRED_PAGER="delta --theme=gruvbox --highlight-removed -w __WIDTH__"
+export GF_BAT_STYLE=changes
+export GF_BAT_THEME=zenbur
+export GF_SNAPSHOT_DIRECTORY="$HOME/.local/git-fuzzy-snapshots"
+
+### McFly
+export MCFLY_FUZZY=2
+export MCFLY_RESULTS=14
 
 ### nnn
 if command -v nnn > /dev/null; then
