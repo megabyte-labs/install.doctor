@@ -180,6 +180,18 @@ export MANPAGER="less -X"
 ### .local/bin
 export PATH="$PATH:$HOME/.local/bin"
 
+### ASDF
+if [ -f "$HOME/.local/asdf/asdf.sh" ]; then
+  export ASDF_CONFIG_FILE="$HOME/.config/asdf/asdfrc"
+  export ASDF_DIR="$HOME/.local/asdf"
+  export ASDF_DATA_DIR="$HOME/.local/asdf-data"
+  export ASDF_CRATE_DEFAULT_PACKAGES_FILE="$HOME/.config/asdf/default-cargo-pkgs
+  export ASDF_GEM_DEFAULT_PACKAGES_FILE="$HOME/.config/asdf/default-ruby-pkgs
+  export ASDF_GOLANG_DEFAULT_PACKAGES_FILE="$HOME/.config/asdf/default-golang-pkgs
+  export ASDF_PYTHON_DEFAULT_PACKAGES_FILE="$HOME/.config/asdf/default-python-pkgs
+  . "$HOME/.local/asdf/asdf.sh"
+fi
+
 ### Cargo
 if [ -f "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
@@ -215,18 +227,6 @@ export PATH="$PATH:~/Library/Android/sdk/cmdline-tools/latest/bin"
 export PATH="$PATH:~/Library/Android/sdk/platform-tools"
 export PATH="$PATH:~/Library/Android/sdk/tools/bin"
 export PATH="$PATH:~/Library/Android/sdk/tools"
-
-### ASDF
-if [ -f "$HOME/.local/asdf/asdf.sh" ]; then
-  export ASDF_CONFIG_FILE="$HOME/.config/asdf/asdfrc"
-  export ASDF_DIR="$HOME/.local/asdf"
-  export ASDF_DATA_DIR="$HOME/.local/asdf-data"
-  export ASDF_CRATE_DEFAULT_PACKAGES_FILE="$HOME/.config/asdf/default-cargo-pkgs
-  export ASDF_GEM_DEFAULT_PACKAGES_FILE="$HOME/.config/asdf/default-ruby-pkgs
-  export ASDF_GOLANG_DEFAULT_PACKAGES_FILE="$HOME/.config/asdf/default-golang-pkgs
-  export ASDF_PYTHON_DEFAULT_PACKAGES_FILE="$HOME/.config/asdf/default-python-pkgs
-  . "$HOME/.local/asdf/asdf.sh"
-fi
 
 ### bat
 if command -v bat > /dev/null; then
