@@ -73,7 +73,7 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
 
   ### zoxide
   if command -v zoxide > /dev/null; then
-    eval "$(zoxide init --cmd cd zsh)"
+    eval "$(zoxide init --cmd cd bash)"
   fi
 
   ### Fig
