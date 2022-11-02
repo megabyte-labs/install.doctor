@@ -351,9 +351,9 @@ if command -v deno > /dev/null; then
 fi
 
 ### direnv
-if command -v direnv > /dev/null; then
-	_evalcache direnv hook zsh
-fi
+#if command -v direnv > /dev/null; then
+#	_evalcache direnv hook zsh
+#fi
 
 ### Fig
 #if command -v fig > /dev/null; then
