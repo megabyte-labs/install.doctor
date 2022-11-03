@@ -185,11 +185,11 @@ fi
 export GOPATH="${HOME}/.local/go"
 export GO111MODULE=on
 export PATH="$PATH:${GOPATH}/bin"
-if which go | grep -q 'asdf' > /dev/null && command -v asdf > /dev/null; then
+if command -v go > /dev/null && which go | grep -q 'asdf' > /dev/null && command -v asdf > /dev/null; then
   GOROOT="$(asdf where golang)/go"
   export GOROOT
   export PATH="$PATH:${GOROOT}/bin"
-elif command -v brew > /dev/null; then
+elif command -v go > /dev/null && command -v brew > /dev/null; then
   GOROOT="$(brew --prefix go)/libexec"
   export GOROOT
   export "$PATH:${GOROOT}/bin"
