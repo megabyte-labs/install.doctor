@@ -185,7 +185,7 @@ fi
 export GOPATH="${HOME}/.local/go"
 export GO111MODULE=on
 export PATH="$PATH:${GOPATH}/bin"
-if which go | grep -q 'asdf' && command -v asdf > /dev/null; then
+if which go | grep -q 'asdf' > /dev/null && command -v asdf > /dev/null; then
   GOROOT="$(asdf where golang)/go"
   export GOROOT
   export PATH="$PATH:${GOROOT}/bin"
