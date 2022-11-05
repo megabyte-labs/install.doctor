@@ -272,6 +272,7 @@ export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
 
 ### Ruby
 export GEM_HOME="$HOME/.local/gems"
+export PATH="$PATH:$GEM_HOME/bin"
 
 ### Volta
 export VOLTA_HOME="$HOME/.local/volta"
