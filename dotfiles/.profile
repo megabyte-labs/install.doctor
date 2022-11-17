@@ -192,7 +192,7 @@ if command -v go > /dev/null && which go | grep -q 'asdf' > /dev/null && command
 elif command -v go > /dev/null && command -v brew > /dev/null; then
   GOROOT="$(brew --prefix go)/libexec"
   export GOROOT
-  export "$PATH:${GOROOT}/bin"
+  export PATH="$PATH:${GOROOT}/bin"
 fi
 
 ### Android Studio
