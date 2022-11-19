@@ -46,6 +46,9 @@ brew "yq"
 if OS.mac?
     brew "coreutils"
 end
+if OS.mac?
+  brew "m-cli"
+end
 brew "zoxide"
 brew "autorestic"
 brew "restic"
