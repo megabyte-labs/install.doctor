@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Install Homebrew
+if ! type brew &> /dev/null; then
+  if type sudo &> /dev/null && sudo -n true; then
+    echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  else
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+fi
+
+# Install Homebrew bundle
+brew tap Homebrew/bundle
+

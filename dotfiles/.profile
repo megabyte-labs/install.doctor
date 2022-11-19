@@ -144,7 +144,7 @@ alias ln='ln -sriv'
 alias xclip='xclip -selection c'
 command -v vim > /dev/null && alias vi='vim'
 
-### TOP
+### TOP - order based on preference of "top" application (last item will always be chosen if installed, e.g. glances)
 command -v htop > /dev/null && alias top='htop'
 command -v gotop > /dev/null && alias top='gotop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
 command -v ytop > /dev/null && alias top='ytop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
@@ -152,6 +152,7 @@ command -v btm > /dev/null && alias top='btm $([ "$COLOR_SCHEME" = "light" ] && 
 # themes for light/dark color-schemes inside ~/.config/bashtop; Press ESC to open the menu and change the theme
 command -v bashtop > /dev/null && alias top='bashtop'
 command -v bpytop > /dev/null && alias top='bpytop'
+command -v glances > /dev/null && alias top='glances'
 
 # vim as default
 export EDITOR="vim"
