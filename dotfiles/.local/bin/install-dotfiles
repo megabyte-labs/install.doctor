@@ -73,16 +73,5 @@ if [ -d /Applications ] && [ -d /System ]; then
   fi
 fi
 
-# Firefox theme
-# if [ ! -f ~/.mozilla/firefox ] && [ ! -f '/etc/qubes-release' ]; then
-#   if [ -d /usr/local/src/firefox-sweet-theme/.git ]; then
-#     sudo git config pull.rebase false
-#     cd /usr/local/src/firefox-sweet-theme && git pull origin master
-#   else
-#     sudo git clone https://github.com/EliverLara/firefox-sweet-theme /usr/local/src/firefox-sweet-theme
-#   fi
-#   bash /usr/local/src/firefox-sweet-theme/scripts/install.sh
-# fi
-
 # grep -q QT_QPA_PLATFORMTHEME=qt5ct /etc/environment || echo QT_QPA_PLATFORMTHEME=qt5ct | sudo tee -a /etc/environment
 # sudo cp -rv "$HOME/.local/share/qt5ct" /usr/share
