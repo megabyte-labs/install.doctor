@@ -10,8 +10,13 @@ if ! type brew &> /dev/null; then
 fi
 
 # Install Homebrew bundle and go-task
-brew tap Homebrew/bundle
 brew install go-task/tap/go-task
 
 # Use run alias to invoke the `$HOME/.local/Taskfile.yml`
-run localhost:provision:terminal
+chmod +x $HOME/.local/bin/*
+install-dotfiles &
+install-terminal-theme &
+update-local-betelgeuse &
+update-taskfiles &
+wait
+run localhost:provision
