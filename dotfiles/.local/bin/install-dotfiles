@@ -1,19 +1,30 @@
 #!/usr/bin/env bash
 
+# Alias logg function to true if it is not available
+if ! command -v logg > /dev/null; then
+  alias logg='true'
+fi
+
 if [ -f '/etc/qubes-release' ]; then
   # Qubes dom0
+  logg info 'Ensuring provision VM is present'
   qvm-create --label red --template debian-11 provision &> /dev/null || EXIT_CODE=$?
+  logg info 'Downloading dotfile assets with provision VM'
   qvm-run --pass-io provision 'if [ -d ~/Downloads/professor-dotfiles ]; then cd ~/Downloads/professor-dotfiles && git config pull.rebase false && rm -rf dotfiles/.local/asdf && rm -rf dotfiles/.local/shared-common && git pull origin master && git clone https://github.com/asdf-vm/asdf.git dotfiles/.local/asdf --branch v0.10.2 && git clone https://gitlab.com/megabyte-labs/common/shared.git dotfiles/.local/shared-common; else git clone https://gitlab.com/megabyte-labs/dotfiles.git ~/Downloads/professor-dotfiles; cd ~/Downloads/professor-dotfiles/dotfiles/.local && git clone https://github.com/asdf-vm/asdf.git asdf --branch v0.10.2 && git clone https://gitlab.com/megabyte-labs/common/shared.git shared-common; fi; cd ~/Downloads; tar -zcvf /tmp/professor-dotfiles.tar.gz professor-dotfiles'
+  logg info 'Transferring dotfiles to dom0 from provision VM'
   qvm-run --pass-io provision "cat /tmp/professor-dotfiles.tar.gz" > "/tmp/dotfiles.tar.gz"
+  logg info 'Unpacking dotfile assets to /usr/local/src/professor-dotfiles'
   tar -xzf "/tmp/dotfiles.tar.gz" -C "$HOME"
   rm -f "/tmp/dotfiles.tar.gz"
   sudo rm -rf /usr/local/src/professor-dotfiles
   sudo mv "$HOME/professor-dotfiles" /usr/local/src/professor-dotfiles
 else
   if [ ! -w /usr/local/src/professor-dotfiles ]; then
+    logg info 'Using sudo because /usr/local/src/professor-dotfiles is not writable'
     SUDO_PREFIX="sudo"
   fi
   if [ -d /usr/local/src/professor-dotfiles/.git ]; then
+    logg info 'Updating dotfiles already present in /usr/local/src/professor-dotfiles'
     cd /usr/local/src/professor-dotfiles
     ${SUDO_PREFIX} git config pull.rebase false
     ${SUDO_PREFIX} rm -rf dotfiles/.local/asdf
@@ -24,6 +35,7 @@ else
     ${SUDO_PREFIX} chown -Rf "$USER":"$(id -g -n)" /usr/local/src/professor-dotfiles
     cd ~/
   else
+    logg info 'Cloning new dotfiles to /usr/local/src/professor-dotfiles'
     ${SUDO_PREFIX} rm -rf /usr/local/src/professor-dotfiles
     ${SUDO_PREFIX} git clone https://gitlab.com/megabyte-labs/dotfiles.git /usr/local/src/professor-dotfiles
     ${SUDO_PREFIX} git clone https://github.com/asdf-vm/asdf.git /usr/local/src/professor-dotfiles/dotfiles/.local/asdf --branch v0.10.2
@@ -31,11 +43,14 @@ else
     ${SUDO_PREFIX} chown -Rf "$USER":"$(id -g -n)" /usr/local/src/professor-dotfiles
   fi
   if [ -n "$CREATE_PACKAGE" ]; then
+    logg info 'Creating /tmp/professor-dotfiles.tar.gz'
     cd /usr/local/src
     ${SUDO_PREFIX} tar -zcvf /tmp/professor-dotfiles.tar.gz professor-dotfiles
     cd ~/
   fi
 fi
+
+logg info 'Copying dotfiles'
 
 # Copy dotfile folders
 while read DOTFILE_FOLDER; do
@@ -55,12 +70,15 @@ done < <(find /usr/local/src/professor-dotfiles/dotfiles -maxdepth 1 -mindepth 1
 
 # Ensure .local/bin contents are executable
 while read LOCAL_BIN; do
+  logg info 'Ensuring programs in ~/.local/bin are executable'
   chmod +x "${LOCAL_BIN}"
 done < <(find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f)
 
 if [ -d /Applications ] && [ -d /System ]; then
+  logg info 'Adding Hack font to ~/Library/Fonts'
   mkdir -p "$HOME/Library/Fonts"
   cp "$HOME/.local/share/fonts/Hack Bold Nerd Font Complete.ttf" "$HOME/Library/Fonts/Hack Bold Nerd Font Complete.ttf"
+  logg info 'Configuring the Terminal.app'
   theme=$(<$HOME/.local/theme/Betelgeuse.macOS.terminal)
   plutil -replace Window\ Settings.Betelgeuse -xml "$theme" ~/Library/Preferences/com.apple.Terminal.plist
   defaults write com.apple.Terminal "Default Window Settings" -string "Betelgeuse"
@@ -72,12 +90,14 @@ if [ -d /Applications ] && [ -d /System ]; then
 
   # macOS desktop background
   if command -v m > /dev/null; then
+    logg info 'Updating desktop wallpaper'
     m wallpaper "/Users/$(whoami)/.local/theme/background.jpg"
   fi
 fi
 
 # Update local Betelgeuse theme files (if not on macOS system)
 if [ ! -d /Applications ] && [ ! -d /Library ]; then
+  logg info 'Updating Betelgeuse theme files'
   if [ -f '/etc/qubes-release' ]; then
     # Qubes dom0
     qvm-create --label red --template debian-11 provision &> /dev/null || EXIT_CODE=$?
