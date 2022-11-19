@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -ex
-
 if [ -f '/etc/qubes-release' ]; then
   # Qubes dom0
   qvm-create --label red --template debian-11 provision &> /dev/null || EXIT_CODE=$?
