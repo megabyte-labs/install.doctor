@@ -207,6 +207,10 @@ if [ -d ~/Library/Android ]; then
   export PATH="$PATH:~/Library/Android/sdk/tools/bin"
   export PATH="$PATH:~/Library/Android/sdk/tools"
 fi
+export ANDROID_SDK_HOME="$HOME/.local/android-sdk"
+
+### Azure CLI
+export AZURE_CONFIG_DIR="$HOME/.config/azure"
 
 ### bat
 export BAT_CONFIG_PATH="$HOME/.config/batrc"
