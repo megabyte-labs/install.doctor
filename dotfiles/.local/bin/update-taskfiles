@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-curl -sSL https://gitlab.com/megabyte-labs/common/shared/-/archive/master/shared-master.tar.gz > shared-master.tar.gz
-tar -xzf shared-master.tar.gz > /dev/null
-rm shared-master.tar.gz
-rm -rf "$HOME/.local/taskfiles"
-mv shared-master/common/.config/taskfiles "$HOME/.local/taskfiles"
-mv shared-master/Taskfile.yml "$HOME/.local/Taskfile.yml"
-rm -rf shared-master

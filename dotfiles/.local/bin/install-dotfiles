@@ -3,7 +3,7 @@
 if [ -f '/etc/qubes-release' ]; then
   # Qubes dom0
   qvm-create --label red --template debian-11 provision &> /dev/null || EXIT_CODE=$?
-  qvm-run --pass-io provision 'if [ -d ~/Downloads/professor-dotfiles ]; then cd ~/Downloads/professor-dotfiles && git config pull.rebase false && rm -rf dotfiles/.local/asdf && git pull origin master && git clone https://github.com/asdf-vm/asdf.git dotfiles/.local/asdf --branch v0.10.2; else git clone https://gitlab.com/megabyte-labs/dotfiles.git ~/Downloads/professor-dotfiles; cd ~/Downloads/professor-dotfiles/dotfiles/.local && git clone https://github.com/asdf-vm/asdf.git asdf --branch v0.10.2; fi; cd ~/Downloads; tar -zcvf /tmp/professor-dotfiles.tar.gz professor-dotfiles'
+  qvm-run --pass-io provision 'if [ -d ~/Downloads/professor-dotfiles ]; then cd ~/Downloads/professor-dotfiles && git config pull.rebase false && rm -rf dotfiles/.local/asdf && rm -rf dotfiles/.local/shared-common && git pull origin master && git clone https://github.com/asdf-vm/asdf.git dotfiles/.local/asdf --branch v0.10.2 && git clone https://gitlab.com/megabyte-labs/common/shared.git dotfiles/.local/shared-common; else git clone https://gitlab.com/megabyte-labs/dotfiles.git ~/Downloads/professor-dotfiles; cd ~/Downloads/professor-dotfiles/dotfiles/.local && git clone https://github.com/asdf-vm/asdf.git asdf --branch v0.10.2 && git clone https://gitlab.com/megabyte-labs/common/shared.git shared-common; fi; cd ~/Downloads; tar -zcvf /tmp/professor-dotfiles.tar.gz professor-dotfiles'
   qvm-run --pass-io provision "cat /tmp/professor-dotfiles.tar.gz" > "/tmp/dotfiles.tar.gz"
   tar -xzf "/tmp/dotfiles.tar.gz" -C "$HOME"
   rm -f "/tmp/dotfiles.tar.gz"
@@ -17,14 +17,17 @@ else
     cd /usr/local/src/professor-dotfiles
     ${SUDO_PREFIX} git config pull.rebase false
     ${SUDO_PREFIX} rm -rf dotfiles/.local/asdf
+    ${SUDO_PREFIX} rm -rf dotfiles/.local/shared-common
     ${SUDO_PREFIX} git pull origin master
     ${SUDO_PREFIX} git clone https://github.com/asdf-vm/asdf.git dotfiles/.local/asdf --branch v0.10.2
+    ${SUDO_PREFIX} git clone https://gitlab.com/megabyte-labs/common/shared.git dotfiles/.local/shared-common
     ${SUDO_PREFIX} chown -Rf "$USER":"$(id -g -n)" /usr/local/src/professor-dotfiles
     cd ~/
   else
     ${SUDO_PREFIX} rm -rf /usr/local/src/professor-dotfiles
     ${SUDO_PREFIX} git clone https://gitlab.com/megabyte-labs/dotfiles.git /usr/local/src/professor-dotfiles
     ${SUDO_PREFIX} git clone https://github.com/asdf-vm/asdf.git /usr/local/src/professor-dotfiles/dotfiles/.local/asdf --branch v0.10.2
+    ${SUDO_PREFIX} git clone https://gitlab.com/megabyte-labs/common/shared.git /usr/local/src/professor-dotfiles/dotfiles/.local/shared-common
     ${SUDO_PREFIX} chown -Rf "$USER":"$(id -g -n)" /usr/local/src/professor-dotfiles
   fi
   if [ -n "$CREATE_PACKAGE" ]; then
