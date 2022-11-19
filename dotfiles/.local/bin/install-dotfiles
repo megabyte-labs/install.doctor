@@ -41,7 +41,7 @@ while read DOTFILE_FOLDER; do
     mkdir -p "$HOME/$BASENAME_FOLDER"
   fi
   cp -rf "$DOTFILE_FOLDER/"* "$HOME/$BASENAME_FOLDER"
-done < <(command find /usr/local/src/professor-dotfiles/dotfiles -maxdepth 1 -mindepth 1 -type d)
+done < <(find /usr/local/src/professor-dotfiles/dotfiles -maxdepth 1 -mindepth 1 -type d)
 
 # Copy dotfile files
 while read DOTFILE_FILE; do
