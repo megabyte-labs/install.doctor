@@ -51,9 +51,8 @@ else
   fi
 fi
 
-logg info 'Copying dotfiles to user $HOME directory'
-
 # Copy dotfile folders
+logg info 'Copying dotfiles folders to user $HOME directory'
 while read DOTFILE_FOLDER; do
   BASENAME_FOLDER="$(basename "$DOTFILE_FOLDER")"
   if [ ! -d "$HOME/$BASENAME_FOLDER" ]; then
@@ -63,6 +62,7 @@ while read DOTFILE_FOLDER; do
 done < <(find /usr/local/src/professor-dotfiles/dotfiles -maxdepth 1 -mindepth 1 -type d)
 
 # Copy dotfile files
+logg info 'Copying dotfiles files to user $HOME directory'
 while read DOTFILE_FILE; do
   BASENAME_FILE="$(basename "$DOTFILE_FILE")"
   cp "$DOTFILE_FILE" "$HOME/$BASENAME_FILE"
@@ -70,8 +70,8 @@ while read DOTFILE_FILE; do
 done < <(find /usr/local/src/professor-dotfiles/dotfiles -maxdepth 1 -mindepth 1 -type f)
 
 # Ensure .local/bin contents are executable
+logg info 'Ensuring programs in ~/.local/bin are executable'
 while read LOCAL_BIN; do
-  logg info 'Ensuring programs in ~/.local/bin are executable'
   chmod +x "${LOCAL_BIN}"
 done < <(find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f)
 
