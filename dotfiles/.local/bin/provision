@@ -12,11 +12,9 @@ fi
 # Install Homebrew bundle and go-task
 brew install go-task/tap/go-task
 
-# Use run alias to invoke the `$HOME/.local/Taskfile.yml`
+# Run dotfiles install scripts
 chmod +x $HOME/.local/bin/*
-install-dotfiles &
-install-terminal-theme &
-update-local-betelgeuse &
-update-taskfiles &
-wait
+install-dotfiles
+
+# Use run alias to invoke the `$HOME/.local/Taskfile.yml`
 run localhost:provision
