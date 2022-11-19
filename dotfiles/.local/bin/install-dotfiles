@@ -54,7 +54,7 @@ done < <(find /usr/local/src/professor-dotfiles/dotfiles -maxdepth 1 -mindepth 1
 while read LOCAL_BIN; do
   chmod +x "${LOCAL_BIN}"
 done < <(find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f)
-set -ex
+
 if [ -d /Applications ] && [ -d /System ]; then
   mkdir -p "$HOME/Library/Fonts"
   cp "$HOME/.local/share/fonts/Hack Bold Nerd Font Complete.ttf" "$HOME/Library/Fonts/Hack Bold Nerd Font Complete.ttf"
@@ -67,10 +67,10 @@ if [ -d /Applications ] && [ -d /System ]; then
   /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Betel-Bash:columnCount integer 124" ~/Library/Preferences/com.apple.Terminal.plist
   /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Betel-Bash:rowCount integer 35" ~/Library/Preferences/com.apple.Terminal.plist
 
-  # Desktop background
-  curl -sSL https://gitlab.com/megabyte-labs/misc/betelgeuse/-/raw/master/share/wallpapers/Next/contents/source.jpg > "$HOME/.local/theme/background.jpg"
-  # TODO: set desktop image or set desktop picture
-  osascript -e 'tell application "Finder" to set desktop image to POSIX file "~/.local/theme/background.jpg"'
+  # macOS desktop background
+  if command -v m > /dev/null; then
+    m wallpaper "/Users/$(whoami)/.local/theme/background.jpg"
+  fi
 fi
 
 # Firefox theme
