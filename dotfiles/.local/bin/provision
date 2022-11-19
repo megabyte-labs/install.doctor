@@ -14,9 +14,17 @@ brew install go-task/tap/go-task
 brew install jq
 brew install yq
 
-# Run dotfiles install scripts
-chmod +x "$HOME/.local/bin/install-dotfiles"
-install-dotfiles
+# Ensure dotfiles are present
+if [ ! -f "$HOME/.local/bin/install-dotfiles" ]; then
+  bash <(curl -sSL https://gitlab.com/megabyte-labs/misc/dotfiles/-/raw/master/dotfiles/.local/bin/install-dotfiles)
+else
+  chmod +x "$HOME/.local/bin/install-dotfiles"
+  install-dotfiles
+fi
 
 # Use run alias to invoke the `$HOME/.local/Taskfile.yml`
-run localhost:provision
+if [ -z "$1" ]; then
+  run localhost:provision
+else
+  run "localhost:provision:$1"
+fi
