@@ -1,0 +1,19 @@
+---
+version: '3'
+
+tasks:
+  provision:dev:
+    deps:
+      - provision:terminal
+    cmds:
+      - brew bundle --file "$HOME/.local/Brewfile.dev"
+
+  provision:full:
+    deps:
+      - provision:dev
+    cmds:
+      - brew bundle --file "$HOME/.local/Brewfile.full"
+
+  provision:terminal:
+    cmds:
+      - brew bundle --file "$HOME/.local/Brewfile.terminal"

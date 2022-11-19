@@ -9,8 +9,9 @@ if ! type brew &> /dev/null; then
   fi
 fi
 
-# Install Homebrew bundle
+# Install Homebrew bundle and go-task
 brew tap Homebrew/bundle
+brew install go-task/tap/go-task
 
-pipx install ansibleconnect
-pipx install asciinema
+# Use run alias to invoke the `$HOME/.local/Taskfile.yml`
+run localhost:provision:terminal
