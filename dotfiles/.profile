@@ -180,7 +180,11 @@ if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
   export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}"
   export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
   export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
+  export WHALEBREW_INSTALL_PATH="/home/linuxbrew/.linuxbrew/whalebrew"
 fi
+
+### Whalebrew
+export WHALEBREW_CONFIG_DIR="$HOME/.config/whalebrew"
 
 ### Go
 export GOPATH="${HOME}/.local/go"
@@ -221,6 +225,11 @@ fi
 # BW_CLIENTID	client_id
 # BW_CLIENTSECRET
 
+### curlie
+if command -v curlie; then
+  alias curl='curlie'
+fi
+
 ### Elastic Agent
 # https://www.elastic.co/guide/en/fleet/current/agent-environment-variables.html#env-common-vars
 
@@ -245,6 +254,12 @@ export GF_BAT_THEME=zenbur
 export GF_SNAPSHOT_DIRECTORY="$HOME/.local/git-fuzzy-snapshots"
 if command -v delta > /dev/null; then
   export GF_PREFERRED_PAGER="delta --theme=gruvbox --highlight-removed -w __WIDTH__"
+fi
+
+### gping
+# Replacement for ping that includes graph
+if command -v gping > /dev/null; then
+  alias ping='gping'
 fi
 
 ### McFly
@@ -280,9 +295,12 @@ export VOLTA_HOME="$HOME/.local/volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
 ### SDKMan
-export SDKMAN_DIR="$HOME/.local/sdkman"
-if [ -f "$HOME/.local/sdkman/bin/sdkman-init.sh" ]; then
-  . "$HOME/.local/sdkman/bin/sdkman-init.sh"
+if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
+  export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"
+  . "$SDKMAN_DIR/bin/sdkman-init.sh"
+elif [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
+  export SDKMAN_DIR="$HOME/.local/sdkman"
+  . "$SDKMAN_DIR/bin/sdkman-init.sh"
 fi
 
 ### Vagrant

@@ -1,3 +1,8 @@
+# Brewfile.dev contains terminal-improvement utilities and developer tools. It contains
+# software that should be included in a .devcontainer-type environment (i.e. a Docker container
+# running VSCode on GitHub or elsewhere in the cloud). It is geared towards including all the software required for work with
+# any of the repository types included in the [Megabyte Labs eco-system](https://gitlab.com/megabyte-labs).
+
 # Standard Homebrew taps
 tap "homebrew/cask"
 tap "homebrew/core"
@@ -18,6 +23,9 @@ brew "azure-cli"
 brew "bat"
 # @brew [bitwarden-cli](https://github.com/bitwarden/cli) - Access and manage a BitWarden instance via CLI
 brew "bitwarden-cli"
+# @brew [bun](https://github.com/oven-sh/bun) - Incredibly fast JavaScript runtime, bundler, transpiler and package manager
+tap "oven-sh/bun"
+brew "bun"
 # @brew [codeclimate](https://github.com/codeclimate/codeclimate) - Interact with CodeClimate via CLI
 tap "codeclimate/formulae"
 brew "codeclimate"
@@ -25,6 +33,8 @@ brew "codeclimate"
 brew "croc"
 # @brew [curl](https://curl.se) - An HTTP command-line tool
 brew "curl"
+# @cask [curlie](https://curlie.io/) - Replacement for curl
+cask "curlie"
 # @brew [dasel](https://github.com/TomWright/dasel) - Select, put, and delete data from JSON, TOML, YAML, XML and CSV files
 brew "dasel"
 # @brew [direnv](https://github.com/direnv/direnv) - Loads and unloads environment variables based on the directory you are in
@@ -108,10 +118,15 @@ brew "poetry"
 brew "pup"
 # @brew [python](https://www.python.org/) - Interpreted, interactive, object-oriented programming language
 brew "python@3.10"
+# @brew [ripgrep](https://github.com/BurntSushi/ripgrep) - A fast recursive file search utility
+brew "ripgrep"
 # @brew [rsync](https://rsync.samba.org/) - Tool to do fast, incremental file transfers
 brew "rsync"
 # @brew [ruby](https://www.ruby-lang.org/) - Powerful, clean, object-oriented scripting language
 brew "ruby"
+# @brew [sdkman](https://sdkman.io/) - Version manager for Java frameworks
+tap "sdkman/tap"
+brew "sdkman/tapsdkman-cli"
 # @brew [sshpass](https://github.com/hudochenkov/homebrew-sshpass) - Library that allows Ansible to connect over SSH with a password
 tap "hudochenkov/sshpass"
 brew "hudochenkov/sshpass/sshpass"
@@ -131,6 +146,8 @@ tap "aquasecurity/trivy"
 brew "aquasecurity/trivy/trivy"
 # @brew [up](https://github.com/akavel/up) - Write Linux pipes with an instant live preview
 brew "up"
+# @brew [volta](https://volta.sh/) - Node version manager
+brew "volta"
 # @brew [waypoint](https://www.waypointproject.io/) - Tool to build, deploy, and release any application on any platform
 tap "hashicorp/tap"
 brew "hashicorp/tap/waypoint"
@@ -146,6 +163,20 @@ brew "yq"
 if OS.mac?
     brew "coreutils"
 end
+### Unsorted
+brew "restic"
+brew "yank"
+brew "zoxide"
+brew "autorestic"
+brew "git-delta"
+brew "gist"
+brew "nmap"
+brew "nb"
+brew "zsh"
+brew "pnpm"
+brew "rclone"
+brew "goofys"
+brew "bandwich"
 
 # Homebrew Casks (only available on macOS)
 # e.g. `brew install --cask <program>`

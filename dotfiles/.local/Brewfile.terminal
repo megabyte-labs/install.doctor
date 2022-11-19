@@ -1,0 +1,116 @@
+# Brewfile.terminal contains basic utilities that work congruently with the dotfiles in
+# the terminal. It is geared toward supporting the basic settings required for
+# TypeScript / terminal users.
+
+# Standard Homebrew taps
+tap "homebrew/core"
+tap "homebrew/bundle"
+tap "homebrew/services"
+
+# Homebrew Formulae
+# e.g. `brew install <program>`
+# @brew [asdf](https://github.com/asdf-vm/asdf) - Version manager with support for many languages
+brew "asdf"
+# @brew [bat](https://github.com/sharkdp/bat) - Clone of cat with syntax highlighting and Git integration
+brew "bat"
+# @brew [direnv](https://github.com/direnv/direnv) - Loads and unloads environment variables based on the directory you are in
+brew "direnv"
+# @brew [bitwarden-cli](https://github.com/bitwarden/cli) - Access and manage a BitWarden instance via CLI
+brew "bitwarden-cli"
+# @cask [curlie](https://curlie.io/) - Replacement for curl
+cask "curlie"
+# @brew [exa](https://github.com/ogham/exa) - Modern replacement for ls
+brew "exa"
+# @brew [ffsend](https://github.com/timvisee/ffsend) - Fully featured Firefox Send client that makes sharing files easy
+brew "ffsend"
+# @brew [fzf](https://github.com/junegunn/fzf) - Command-line fuzzy finder that integrates with many tools
+brew "fzf"
+# @brew [glances](https://github.com/nicolargo/glances) - Better replacement for htop
+brew "glances"
+# @brew [jq](https://stedolan.github.io/jq/) - Lightweight and flexible command-line JSON processor
+brew "jq"
+# @brew [node](https://nodejs.org/) - A JavaScript engine, based on the ultra fast V8-engine
+brew "node"
+# @brew [task](https://github.com/go-task/homebrew-tap) - A parallel task runner
+tap "go-task/tap"
+brew "go-task/tap/go-task"
+# @brew [ripgrep](https://github.com/BurntSushi/ripgrep) - A fast recursive file search utility
+brew "ripgrep"
+# @brew [rsync](https://rsync.samba.org/) - Tool to do fast, incremental file transfers
+brew "rsync"
+# @brew [volta](https://volta.sh/) - Node version manager
+brew "volta"
+# @brew [yq](https://github.com/mikefarah/yq) - Process and manipulate YAML documents
+brew "yq"
+# @brew [coreutils](https://www.gnu.org/software/coreutils) - A suite of basic UNIX tools published to improve compatibility between Linux and macOS scripts
+if OS.mac?
+    brew "coreutils"
+end
+brew "zoxide"
+brew "autorestic"
+brew "restic"
+brew "git-delta"
+brew "gist"
+brew "git-secret"
+brew "nmap"
+brew "nb"
+brew "zsh"
+brew "pnpm"
+brew "rclone"
+brew "goofys"
+brew "bandwich"
+brew "cloudflared"
+brew "croc"
+brew "ctop"
+brew "dasel"
+brew "duf"
+brew "fd"
+brew "glow"
+brew "gping"
+brew "grex"
+brew "gron"
+brew "nnn"
+brew "pass"
+brew "procs"
+brew "peco"
+brew "pup"
+brew "fq"
+brew "fselect"
+brew "hexyl"
+brew "hey"
+brew "hyperfine"
+brew "jo"
+brew "mkcert"
+brew "rm-improved"
+brew "sd"
+brew "sysbench"
+brew "teller"
+brew "up"
+brew "ssh-vault"
+brew "automake"
+brew "fx"
+brew "zx"
+brew "pywhat"
+brew "mycli"
+brew "litecli"
+brew "aria2"
+brew "chezmoi"
+brew "cheat"
+brew "cmake"
+brew "choose"
+brew "difftastic"
+brew "gitui"
+brew "gomplate"
+brew "gum"
+brew "deno"
+brew "sqlite"
+brew "vault"
+brew "dust"
+brew "imagemagick"
+brew "shellcheck"
+brew "sops"
+brew "tmux"
+brew "watchexec"
+brew "yj"
+brew "vim"
+brew "whalebrew"
