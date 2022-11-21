@@ -261,8 +261,8 @@ if command -v antigen > /dev/null; then
   antigen bundle command-not-found
   antigen bundle copyfile
   antigen bundle copybuffer
-  antigen bundle docker
-  antigen bundle docker-compose
+  # antigen bundle docker
+  # antigen bundle docker-compose
   antigen bundle encode64
   # antigen bundle gcloud
   antigen bundle git
@@ -285,7 +285,7 @@ if command -v antigen > /dev/null; then
   antigen bundle vagrant
   ### antigen bundle volta
   # antigen bundle wp-cli
-  antigen bundle zsh-users/zsh-completions src
+  # antigen bundle zsh-users/zsh-completions src
   antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle zsh-users/zsh-syntax-highlighting
   antigen bundle marlonrichert/zsh-autocomplete@main
