@@ -255,10 +255,10 @@ if [ -f "$HOME/.local/antigen.zsh" ]; then
   source "$HOME/.local/antigen.zsh"
 fi
 if command -v antigen > /dev/null; then
-  alias alias=true
   antigen use oh-my-zsh
   # zsh-autosuggestions should be at top so that specific-settings override
   antigen bundle zsh-users/zsh-autosuggestions
+  alias alias=true
   antigen bundle adb
   antigen bundle colored-man-pages
   antigen bundle command-not-found
@@ -297,6 +297,7 @@ if command -v antigen > /dev/null; then
   antigen bundle vagrant
   # antigen bundle web-search
   antigen bundle yarn
+  unalias alias
   antigen bundle zsh-interactive-cd
   # antigen bundle zsh-navigation-tools
   antigen bundle zsh-users/zsh-completions src
@@ -305,7 +306,6 @@ if command -v antigen > /dev/null; then
   antigen bundle marlonrichert/zsh-autocomplete@main
   antigen theme romkatv/powerlevel10k
   antigen apply
-  unalias alias
 fi
 
 ### ZSH Autocomplete
