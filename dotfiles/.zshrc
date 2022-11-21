@@ -247,6 +247,9 @@ esac
 #	eval "$(gdircolors -b "$HOME/.config/dircolors")"
 #fi
 
+### Backup aliases (so oh-my-zsh does not apply any aliases)
+save_aliases=$(alias -L)
+
 ### Antigen
 if [ -f "$HOME/.local/antigen.zsh" ]; then
   source "$HOME/.local/antigen.zsh"
@@ -254,76 +257,49 @@ fi
 if command -v antigen > /dev/null; then
   antigen use oh-my-zsh
   antigen bundle adb
-  #antigen bundle ansible
-  #antigen bundle asdf
-  #antigen bundle aws
-  #antigen bundle bundler
-  #antigen bundle colored-man-pages
-  #antigen bundle codeclimate
-  #antigen bundle colorize
-  #antigen bundle command-not-found
-  #antigen bundle copyfile
-  #antigen bundle copybuffer
-  #antigen bundle deno
-  #antigen bundle docker
-  #antigen bundle docker-compose
-  #antigen bundle dotenv
-  #antigen bundle encode64
-  #antigen bundle fd
-  #antigen bundle fig
-  #antigen bundle fzf
-  #antigen bundle gcloud
-  #antigen bundle gh
-  #antigen bundle git
-  #antigen bundle git-auto-fetch
-  #antigen bundle gnu-utils
-  #antigen bundle golang
-  #antigen bundle gpg-agent
-  #antigen bundle gradle
-  #antigen bundle helm
-  #antigen bundle heroku
-  #antigen bundle httpie
-  #antigen bundle ionic
-  #antigen bundle keychain
-  #antigen bundle kubectl
-  #antigen bundle macos
-  #antigen bundle macports
-  #antigen bundle magic-enter
-  #antigen bundle microk8s
-  #antigen bundle minikube
-  #antigen bundle multipass
-  #antigen bundle npm
-  #antigen bundle pass
-  #antigen bundle pip
-  #antigen bundle pm2
-  #antigen bundle poetry
-  #antigen bundle rake
-  #antigen bundle repo
-  #antigen bundle ripgrep
-  #antigen bundle ruby
-  #antigen bundle salt
-  #antigen bundle safe-paste
-  #antigen bundle shell-proxy
-  #antigen bundle ssh-agent
-  #antigen bundle sudo
-  #antigen bundle terraform
-  #antigen bundle tmux
-  #antigen bundle transfer
-  #antigen bundle ubuntu
-  #antigen bundle ufw
-  #antigen bundle vagrant
-  #antigen bundle volta
-  #antigen bundle wp-cli
-  #antigen bundle yarn
-  #antigen bundle k
-  #antigen bundle mroth/evalcache
-  #antigen bundle ProfessorManhattan/zsh-completions src
+  antigen bundle colored-man-pages
+  antigen bundle command-not-found
+  antigen bundle copyfile
+  antigen bundle copybuffer
+  antigen bundle deno
+  antigen bundle docker
+  antigen bundle docker-compose
+  antigen bundle encode64
+  antigen bundle fd
+  # antigen bundle gcloud
+  antigen bundle gh
+  antigen bundle git
+  antigen bundle git-auto-fetch
+  antigen bundle gnu-utils
+  antigen bundle golang
+  antigen bundle helm
+  antigen bundle kubectl
+  antigen bundle macos
+  antigen bundle magic-enter
+  antigen bundle npm
+  antigen bundle pip
+  antigen bundle ripgrep
+  antigen bundle safe-paste
+  # antigen bundle shell-proxy
+  # antigen bundle ssh-agent
+  antigen bundle sudo
+  # antigen bundle terraform
+  # antigen bundle tmux
+  # antigen bundle ufw
+  antigen bundle vagrant
+  ### antigen bundle volta
+  # antigen bundle wp-cli
+  antigen bundle zsh-users/zsh-completions src
   antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle zsh-users/zsh-syntax-highlighting
   antigen bundle marlonrichert/zsh-autocomplete@main
   antigen theme romkatv/powerlevel10k
   antigen apply
 fi
+
+### Clear oh-my-zsh aliases
+eval $save_aliases
+unset save_aliases
 
 ### ZSH Autocomplete
 zstyle ':autocomplete:*' list-lines 14
