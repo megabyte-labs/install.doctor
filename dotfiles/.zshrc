@@ -285,7 +285,7 @@ if command -v antigen > /dev/null; then
   antigen bundle pm2
   antigen bundle redis-cli
   antigen bundle ripgrep
-  antigen bundle rust
+  # antigen bundle rust
   antigen bundle safe-paste
   antigen bundle salt
   # antigen bundle shell-proxy
