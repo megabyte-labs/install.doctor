@@ -2,6 +2,7 @@
 preference:
   - flatpak
   - snap
+  - whalebrew
   - apt
   - dnf
   - pacman
@@ -47,6 +48,7 @@ alternatives:
     apt: wget
     brew: rsync
     dnf: wget
+    whalebrew: whalebrew/wget
 
 preinstall:
   example-package: |
