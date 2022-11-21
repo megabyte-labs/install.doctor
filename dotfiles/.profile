@@ -230,7 +230,7 @@ fi
 # BW_CLIENTSECRET
 
 ### curlie
-if command -v curlie; then
+if command -v curlie > /dev/null; then
   alias curl='curlie'
 fi
 

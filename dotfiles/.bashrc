@@ -52,7 +52,7 @@ fi
 ### Bash Completions
 if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   ### direnv
-  if command -v direnv; then
+  if command -v direnv > /dev/null; then
     eval "$(direnv hook bash)"
   fi
 
