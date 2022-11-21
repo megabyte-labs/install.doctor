@@ -261,19 +261,16 @@ if command -v antigen > /dev/null; then
   antigen bundle command-not-found
   antigen bundle copyfile
   antigen bundle copybuffer
-  antigen bundle deno
   antigen bundle docker
   antigen bundle docker-compose
   antigen bundle encode64
   antigen bundle fd
   # antigen bundle gcloud
-  antigen bundle gh
   antigen bundle git
   antigen bundle git-auto-fetch
   antigen bundle gnu-utils
   antigen bundle golang
   antigen bundle helm
-  antigen bundle kubectl
   antigen bundle macos
   antigen bundle magic-enter
   antigen bundle npm
