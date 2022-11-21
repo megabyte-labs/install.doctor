@@ -256,35 +256,21 @@ if [ -f "$HOME/.local/antigen.zsh" ]; then
 fi
 if command -v antigen > /dev/null; then
   antigen use oh-my-zsh
-  antigen bundle adb
   antigen bundle colored-man-pages
   antigen bundle command-not-found
   antigen bundle copyfile
   antigen bundle copybuffer
-  # antigen bundle docker
-  # antigen bundle docker-compose
   antigen bundle encode64
-  # antigen bundle gcloud
-  antigen bundle git
   antigen bundle git-auto-fetch
   antigen bundle gnu-utils
-  antigen bundle golang
-  # antigen bundle helm
   antigen bundle macos
   antigen bundle magic-enter
-  antigen bundle npm
-  antigen bundle pip
-  antigen bundle ripgrep
   antigen bundle safe-paste
   # antigen bundle shell-proxy
   # antigen bundle ssh-agent
   antigen bundle sudo
-  # antigen bundle terraform
-  # antigen bundle tmux
-  # antigen bundle ufw
   antigen bundle vagrant
   ### antigen bundle volta
-  # antigen bundle wp-cli
   # antigen bundle zsh-users/zsh-completions src
   antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle zsh-users/zsh-syntax-highlighting
