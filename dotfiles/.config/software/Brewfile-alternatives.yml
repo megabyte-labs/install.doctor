@@ -1,0 +1,59 @@
+---
+version: '3'
+
+preference:
+  - flatpak
+  - snap
+  - apt
+  - dnf
+  - pacman
+  - apk
+  - brew
+  - yay
+  - choco
+  - scoop
+  - winget
+  - go
+  - cargo
+
+alternatives:
+  delta:
+    brew:
+      - git-delta
+      - example-package
+    scoop: delta
+  git-lfs:
+    brew: git-lfs
+    scoop: git-lfs
+  nb:
+    brew: nb
+  rsync:
+    apt: rsync
+    brew: rsync
+    choco: rsync
+    dnf: rsync
+  shotcut:
+    choco: shotcut
+    flatpak: org.shotcut.Shotcut
+    snap: shotcut
+  volta:
+    brew: volta
+    scoop: volta
+  wget:
+    apk: wget
+    apt: wget
+    brew: rsync
+    dnf: wget
+
+preinstall:
+  example-package: |
+    echo "preinstall routine"
+
+postinstall:
+  git-lfs: |
+    git lfs install
+  nb: |
+    nb completions install
+  volta: |
+    volta setup
+    volta install node@latest
