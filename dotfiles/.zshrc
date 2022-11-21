@@ -273,7 +273,7 @@ if command -v antigen > /dev/null; then
   # antigen bundle ssh-agent
   antigen bundle sudo
   antigen bundle vagrant
-  # antigen bundle zsh-users/zsh-completions src
+  antigen bundle zsh-users/zsh-completions src
   antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle zsh-users/zsh-syntax-highlighting
   antigen bundle marlonrichert/zsh-autocomplete@main
