@@ -86,6 +86,8 @@ fi
 ### wp-cli (only bash available)
 if command -v wp > /dev/null && [ -f /usr/local/src/wp-cli/wp-completion.bash ]; then
   cp /usr/local/src/wp-cli/wp-completion.bash "$HOME/.local/share/bash-completion/completions/wp.bash"
+elif command -v wp > /dev/null; then
+  curl -sSL https://raw.githubusercontent.com/wp-cli/wp-cli/v2.7.1/utils/wp-completion.bash > "$HOME/.local/share/bash-completion/completions/wp.bash"
 fi
 
 ### zoxide

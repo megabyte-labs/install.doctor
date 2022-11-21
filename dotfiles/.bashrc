@@ -70,4 +70,9 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   if [ -f "$HOME/.fig/shell/bashrc.post.bash" ]; then
     . "$HOME/.fig/shell/bashrc.post.bash"
   fi
+
+  ### Vault
+  if command -v vault > /dev/null; then
+    complete -C vault vault
+  fi
 fi
