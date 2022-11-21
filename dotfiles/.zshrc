@@ -288,6 +288,7 @@ if command -v antigen > /dev/null; then
   antigen bundle multipass
   antigen bundle ng
   antigen bundle nomad
+  antigen bundle npm
   antigen bundle pip
   antigen bundle pm2
   antigen bundle poetry
@@ -312,7 +313,6 @@ if command -v antigen > /dev/null; then
   antigen bundle zsh-users/zsh-syntax-highlighting
   antigen bundle marlonrichert/zsh-autocomplete@main
   antigen theme romkatv/powerlevel10k
-  antigen bundle npm
   antigen apply
 fi
 
