@@ -5,6 +5,17 @@ if ! command -v logg > /dev/null; then
   alias logg='true'
 fi
 
+# Clear ZSH cached stuff
+if [ -f "$HOME/.zshrc.zwc" ]; then
+  rm -f "$HOME/.zshrc.zwc"
+fi
+if [ -d "$HOME/.local/antigen" ]; then
+  rm -rf "$HOME/.local/antigen"
+fi
+if [ -d "$HOME/.zsh_sessions" ]; then
+  rm -rf "$HOME/.zsh_sessions"
+fi
+
 if [ -f '/etc/qubes-release' ]; then
   # Qubes dom0
   logg info 'Ensuring provision VM is present'
