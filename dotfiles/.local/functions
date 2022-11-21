@@ -19,6 +19,11 @@ cl() {
     ls -F --color=auto
 }
 
+# Safer cp with progress bar and backup to /tmp
+cpv() {
+  rsync -pogbr -hhh --backup-dir="/tmp/rsync-${USERNAME}" -e /dev/null --progress "$@"
+}
+
 # Checks status of a website on downforeveryoneorjustme.com
 down4me() {
   curl -s "http://www.downforeveryoneorjustme.com/$1" | sed '/just you/!d;s/<[^>]*>//g'

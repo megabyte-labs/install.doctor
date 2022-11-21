@@ -250,21 +250,18 @@ esac
 #	eval "$(gdircolors -b "$HOME/.config/dircolors")"
 #fi
 
-### Backup aliases (so oh-my-zsh does not apply any aliases)
-save_aliases=$(alias -L)
-
 ### Antigen
 if [ -f "$HOME/.local/antigen.zsh" ]; then
   source "$HOME/.local/antigen.zsh"
 fi
 if command -v antigen > /dev/null; then
+  alias alias=true
   antigen use oh-my-zsh
   antigen bundle adb
   antigen bundle colored-man-pages
   antigen bundle command-not-found
   antigen bundle copyfile
   antigen bundle copybuffer
-  antigen bundle cp
   antigen bundle docker
   antigen bundle docker-compose
   antigen bundle encode64
@@ -306,11 +303,8 @@ if command -v antigen > /dev/null; then
   antigen bundle marlonrichert/zsh-autocomplete@main
   antigen theme romkatv/powerlevel10k
   antigen apply
+  unalias alias
 fi
-
-### Clear oh-my-zsh aliases
-eval $save_aliases
-unset save_aliases
 
 ### ZSH Autocomplete
 zstyle ':autocomplete:*' list-lines 14
