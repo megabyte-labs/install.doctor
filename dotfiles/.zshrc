@@ -256,8 +256,6 @@ if [ -f "$HOME/.local/antigen.zsh" ]; then
 fi
 if command -v antigen > /dev/null; then
   antigen use oh-my-zsh
-  # zsh-autosuggestions should be at top so that specific-settings override
-  antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle adb
   antigen bundle colored-man-pages
   antigen bundle command-not-found
@@ -301,11 +299,12 @@ if command -v antigen > /dev/null; then
   antigen bundle yarn
   # unalias alias
 
-  antigen bundle zsh-interactive-cd
+  # antigen bundle zsh-interactive-cd
   # antigen bundle zsh-navigation-tools
   antigen bundle zsh-users/zsh-completions src
   antigen bundle zsh-users/zsh-syntax-highlighting
   antigen bundle npm
+  antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle marlonrichert/zsh-autocomplete@main
   antigen theme romkatv/powerlevel10k
   antigen apply
