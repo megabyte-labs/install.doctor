@@ -68,6 +68,11 @@ if command -v mcfly > /dev/null; then
   mcfly init bash > "$HOME/.local/share/bash-completion/completions/mcfly.bash"
 fi
 
+### npm
+if command -v npm > /dev/null; then
+  npm completion > "$HOME/.local/share/bash-completion/completions/npm.bash"
+fi
+
 ### Poetry
 if command -v poetry > /dev/null; then
   poetry completions bash > "$HOME/.local/share/bash-completion/completions/poetry.bash"

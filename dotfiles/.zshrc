@@ -67,6 +67,9 @@ zstyle ':completion:*' verbose true
 # shellcheck disable=SC2016
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
+### For Debugging (clears completion cache each time)
+zstyle ":completion:*:commands" rehash 1
+
 # Key bindings
 bindkey -e
 bindkey '^U' backward-kill-line
