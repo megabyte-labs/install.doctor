@@ -42,6 +42,11 @@ if command -v googler > /dev/null; then
   fi
 fi
 
+### Gradle
+if command -v gradle > /dev/null; then
+  curl -sSL https://raw.githubusercontent.com/eriwen/gradle-completion/master/gradle-completion.bash > "$HOME/.local/share/bash-completion/completions/gradle.bash"
+fi
+
 ### Helm
 if command -v helm > /dev/null; then
   helm completion bash > "$HOME/.local/share/bash-completion/completions/helm.bash"
