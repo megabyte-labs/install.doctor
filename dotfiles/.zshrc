@@ -303,10 +303,10 @@ if command -v antigen > /dev/null; then
   # antigen bundle zsh-navigation-tools
   antigen bundle zsh-users/zsh-completions src
   antigen bundle zsh-users/zsh-syntax-highlighting
-  antigen bundle npm
   antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle marlonrichert/zsh-autocomplete@main
   antigen theme romkatv/powerlevel10k
+  antigen bundle npm
   antigen apply
 fi
 
