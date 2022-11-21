@@ -265,21 +265,16 @@ if command -v antigen > /dev/null; then
   antigen bundle copyfile
   antigen bundle copybuffer
   antigen bundle cp
-  antigen bundle deno
   antigen bundle docker
   antigen bundle docker-compose
   antigen bundle encode64
   antigen bundle fd
   antigen bundle gem
-  antigen bundle gh
   antigen bundle git-auto-fetch
-  antigen bundle gradle
   antigen bundle gnu-utils
-  antigen bundle helm
   antigen bundle heroku
   antigen bundle ionic
   # antigen bundle keychain
-  antigen bundle kubectl
   antigen bundle kubectx
   antigen bundle macos
   antigen bundle magic-enter
@@ -288,10 +283,8 @@ if command -v antigen > /dev/null; then
   antigen bundle multipass
   antigen bundle ng
   antigen bundle nomad
-  antigen bundle npm
   antigen bundle pip
   antigen bundle pm2
-  antigen bundle poetry
   antigen bundle redis-cli
   antigen bundle ripgrep
   antigen bundle rust
@@ -303,7 +296,6 @@ if command -v antigen > /dev/null; then
   antigen bundle terraform
   antigen bundle ufw
   antigen bundle vagrant
-  antigen bundle volta
   # antigen bundle web-search
   antigen bundle yarn
   antigen bundle zsh-interactive-cd
