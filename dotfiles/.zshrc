@@ -270,7 +270,7 @@ if command -v antigen > /dev/null; then
   antigen bundle git-auto-fetch
   antigen bundle gnu-utils
   antigen bundle golang
-  antigen bundle helm
+  # antigen bundle helm
   antigen bundle macos
   antigen bundle magic-enter
   antigen bundle npm
