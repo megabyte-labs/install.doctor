@@ -264,7 +264,6 @@ if command -v antigen > /dev/null; then
   antigen bundle docker
   antigen bundle docker-compose
   antigen bundle encode64
-  antigen bundle fd
   # antigen bundle gcloud
   antigen bundle git
   antigen bundle git-auto-fetch
