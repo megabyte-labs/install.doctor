@@ -15,28 +15,14 @@ tap "homebrew/services"
 brew "act"
 # @brew [appium](https://appium.io/) - A framework focused on native Android/iOS testing
 brew "appium"
-# @brew [asdf](https://github.com/asdf-vm/asdf) - Version manager with support for many languages
-brew "asdf"
 # @brew [azure-cli](https://docs.microsoft.com/en-us/cli/azure/) - The official CLI for interacting with Microsoft Azure
 brew "azure-cli"
-# @brew [bat](https://github.com/sharkdp/bat) - Clone of cat with syntax highlighting and Git integration
-brew "bat"
-# @brew [bitwarden-cli](https://github.com/bitwarden/cli) - Access and manage a BitWarden instance via CLI
-brew "bitwarden-cli"
 # @brew [bun](https://github.com/oven-sh/bun) - Incredibly fast JavaScript runtime, bundler, transpiler and package manager
 tap "oven-sh/bun"
 brew "bun"
 # @brew [codeclimate](https://github.com/codeclimate/codeclimate) - Interact with CodeClimate via CLI
 tap "codeclimate/formulae"
 brew "codeclimate"
-# @brew [croc](https://github.com/schollz/croc) - A sharing tool that helps transfer files from one computer to another
-brew "croc"
-# @brew [curl](https://curl.se) - An HTTP command-line tool
-brew "curl"
-# @brew [dasel](https://github.com/TomWright/dasel) - Select, put, and delete data from JSON, TOML, YAML, XML and CSV files
-brew "dasel"
-# @brew [direnv](https://github.com/direnv/direnv) - Loads and unloads environment variables based on the directory you are in
-brew "direnv"
 # @brew [dive](https://github.com/wagoodman/dive) - Tool for exploring layer in a Docker image
 brew "dive"
 # @brew [docker](https://www.docker.com/) - A powerful toolchain for developing containerized applications
@@ -45,21 +31,15 @@ if OS.linux?
 end
 # @brew [docker-slim](https://github.com/docker-slim/docker-slim) - A tool that shrinks Docker images and makes them more secure
 brew "docker-slim"
-# @brew [exa](https://github.com/ogham/exa) - Modern replacement for ls
-brew "exa"
 # @brew [Dockle](https://github.com/goodwithtech/dockle) - A container image security scanner
 tap "goodwithtech/r"
 brew "goodwithtech/r/dockle"
 # @brew [exiftool](https://exiftool.org) - A library for reading and writing EXIF data to files
 brew "exiftool"
-# @brew [ffsend](https://github.com/timvisee/ffsend) - Fully featured Firefox Send client that makes sharing files easy
-brew "ffsend"
 # @brew [fzf](https://github.com/junegunn/fzf) - Command-line fuzzy finder that integrates with many tools
 brew "fzf"
 # @brew [gh](https://github.com/cli/cli) - The official GitHub command line tool
 brew "gh"
-# @brew [git](https://git-scm.com) - Tool for interacting with git repositories
-brew "git"
 # @brew [gitlab-runner](https://docs.gitlab.com/runner/) - Test GitLab CI configurations and add self-hosted runners
 brew "gitlab-runner"
 # @brew [gitleaks](https://github.com/zricethezav/gitleaks) - Scans git repos for secrets
@@ -68,22 +48,12 @@ brew "gitleaks"
 brew "git-subrepo"
 # @brew [glab](https://glab.readthedocs.io/) - Open-source GitLab CLI
 brew "glab"
-# @brew [glances](https://github.com/nicolargo/glances) - Better replacement for htop
-brew "glances"
 # @brew [go](https://go.dev) - Open source programming language
 brew "go"
-# @brew [grex](https://github.com/pemistahl/grex) - Generate regular expressions by providing target matches
-brew "grex"
 # @brew [helm](https://helm.sh/) - The self-proclaimed package manager for Kubernetes
 brew "helm"
 # @brew [htmlq](https://github.com/mgdm/htmlq) - Use CSS to extract content from HTML via a CLI
 brew "htmlq"
-# @brew [hyperfine](https://github.com/sharkdp/hyperfine) - Command-line benchmarking tool
-brew "hyperfine"
-# @brew [jo](https://github.com/jpmens/jo) - JSON output from scripts
-brew "jo"
-# @brew [jq](https://stedolan.github.io/jq/) - Lightweight and flexible command-line JSON processor
-brew "jq"
 # @brew [kubectx](https://github.com/ahmetb/kubectx) - A tool for switching between Kubernetes clusters and namespaces
 brew "kubectx"
 # @brew [kubernetes-cli](https://kubernetes.io/docs/reference/kubectl/kubectl/) - The CLI for Kubernetes (also known as kubectl)
@@ -91,33 +61,14 @@ brew "kubernetes-cli"
 # @brew [mc](https://github.com/minio/mc) - Replacement for ls, cp and other commands that are compatible with file-system-mounted S3 buckets
 tap "minio/stable"
 brew "minio/stable/mc"
-# @brew [mcfly](https://github.com/cantino/mcfly) - Terminal history navigator accessible via CTRL+R
-tap "cantino/mcfly"
-brew "cantino/mcfly/mcfly"
-# @brew [mkcert](https://github.com/FiloSottile/mkcert) - Simple tool to make locally trusted development certificates
-brew "mkcert"
-# @brew [nnn](https://github.com/jarun/nnn) - A more interactive version of ls
-brew "nnn"
-# @brew [node](https://nodejs.org/) - A JavaScript engine, based on the ultra fast V8-engine
-brew "node"
-# @brew [openssh](https://www.openssh.com/) - OpenBSD freely-licensed SSH connectivity tools
-brew "openssh"
-# @brew [ots](https://ots.sniptt.com) - Share end-to-end encrypted secrets with others via a one-time URL
-brew "ots"
 # @brew [oq](https://blacksmoke16.github.io/oq) - Performant, and portable jq wrapper that supports formats other than JSON
 brew "oq"
 # @brew [php](https://www.php.net/) - General-purpose scripting language
 # brew "php", restart_service: false
 # @brew [poetry](https://python-poetry.org/) - A Python project package management tool and more
 brew "poetry"
-# @brew [pup](https://github.com/EricChiang/pup) - Parse HTML with a CLI
-brew "pup"
 # @brew [python](https://www.python.org/) - Interpreted, interactive, object-oriented programming language
 brew "python@3.10"
-# @brew [ripgrep](https://github.com/BurntSushi/ripgrep) - A fast recursive file search utility
-brew "ripgrep"
-# @brew [rsync](https://rsync.samba.org/) - Tool to do fast, incremental file transfers
-brew "rsync"
 # @brew [ruby](https://www.ruby-lang.org/) - Powerful, clean, object-oriented scripting language
 brew "ruby"
 # @brew [sdkman](https://sdkman.io/) - Version manager for Java frameworks
@@ -126,11 +77,6 @@ brew "sdkman/tapsdkman-cli"
 # @brew [sshpass](https://github.com/hudochenkov/homebrew-sshpass) - Library that allows Ansible to connect over SSH with a password
 tap "hudochenkov/sshpass"
 brew "hudochenkov/sshpass/sshpass"
-# @brew [sysbench](https://github.com/akopytov/sysbench) - System performance benchmark tool
-brew "sysbench"
-# @brew [task](https://github.com/go-task/homebrew-tap) - A parallel task runner
-tap "go-task/tap"
-brew "go-task/tap/go-task"
 # @brew [teleport](https://github.com/bbatsche/homebrew-teleport) - An identity-aware SSH client for teams
 brew "teleport"
 # @brew [terraform](https://www.terraform.io/) - An infrastructure-as-code tool that allows you to define both cloud and on-prem resources
@@ -140,10 +86,6 @@ brew "tokei"
 # @brew [trivy](https://aquasecurity.github.io/trivy/v0.18.3/) - Scan images for vulnerabilities
 tap "aquasecurity/trivy"
 brew "aquasecurity/trivy/trivy"
-# @brew [up](https://github.com/akavel/up) - Write Linux pipes with an instant live preview
-brew "up"
-# @brew [volta](https://volta.sh/) - Node version manager
-brew "volta"
 # @brew [waypoint](https://www.waypointproject.io/) - Tool to build, deploy, and release any application on any platform
 tap "hashicorp/tap"
 brew "hashicorp/tap/waypoint"
@@ -153,31 +95,13 @@ if OS.linux?
 end
 # @brew [yarn](https://yarnpkg.com/) - JavaScript package manager from Facebook
 brew "yarn"
-# @brew [yq](https://github.com/mikefarah/yq) - Process and manipulate YAML documents
-brew "yq"
-# @brew [coreutils](https://www.gnu.org/software/coreutils) - A suite of basic UNIX tools published to improve compatibility between Linux and macOS scripts
-if OS.mac?
-    brew "coreutils"
-end
 ### Unsorted
-brew "restic"
 brew "yank"
-brew "zoxide"
-brew "autorestic"
-brew "git-delta"
-brew "gist"
-brew "nmap"
-brew "nb"
-brew "zsh"
-brew "pnpm"
-brew "rclone"
 brew "goofys"
-brew "bandwich"
 brew "awscli"
 brew "azure-cli"
 brew "consul-template"
 brew "yank"
-brew "yarn"
 brew "wkhtmltopdf"
 brew "waypoint"
 brew "watchman"
