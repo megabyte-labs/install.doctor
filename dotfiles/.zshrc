@@ -265,7 +265,6 @@ if command -v antigen > /dev/null; then
   antigen bundle gnu-utils
   antigen bundle macos
   antigen bundle magic-enter
-  antigen bundle npm
   antigen bundle safe-paste
   # antigen bundle shell-proxy
   # antigen bundle ssh-agent
@@ -276,6 +275,7 @@ if command -v antigen > /dev/null; then
   antigen bundle zsh-users/zsh-syntax-highlighting
   antigen bundle marlonrichert/zsh-autocomplete@main
   antigen theme romkatv/powerlevel10k
+  antigen bundle npm
   antigen apply
 fi
 
