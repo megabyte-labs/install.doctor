@@ -280,6 +280,7 @@ if command -v antigen > /dev/null; then
   antigen bundle multipass
   antigen bundle ng
   antigen bundle nomad
+  antigen bundle npm
   antigen bundle pip
   antigen bundle pm2
   antigen bundle redis-cli
