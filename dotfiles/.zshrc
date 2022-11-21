@@ -257,6 +257,8 @@ fi
 if command -v antigen > /dev/null; then
   alias alias=true
   antigen use oh-my-zsh
+  # zsh-autosuggestions should be at top so that specific-settings override
+  antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle adb
   antigen bundle colored-man-pages
   antigen bundle command-not-found
@@ -280,6 +282,7 @@ if command -v antigen > /dev/null; then
   antigen bundle multipass
   antigen bundle ng
   antigen bundle nomad
+  antigen bundle npm
   antigen bundle pip
   antigen bundle pm2
   antigen bundle redis-cli
@@ -298,11 +301,9 @@ if command -v antigen > /dev/null; then
   antigen bundle zsh-interactive-cd
   # antigen bundle zsh-navigation-tools
   antigen bundle zsh-users/zsh-completions src
-  antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle zsh-users/zsh-syntax-highlighting
   antigen bundle marlonrichert/zsh-autocomplete@main
   antigen theme romkatv/powerlevel10k
-  antigen bundle npm
   antigen apply
   unalias alias
 fi
