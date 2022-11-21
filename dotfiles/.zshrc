@@ -258,32 +258,23 @@ if command -v antigen > /dev/null; then
   antigen use oh-my-zsh
   # zsh-autosuggestions should be at top so that specific-settings override
   antigen bundle zsh-users/zsh-autosuggestions
-  alias alias=true
   antigen bundle adb
   antigen bundle colored-man-pages
   antigen bundle command-not-found
   antigen bundle copyfile
   antigen bundle copybuffer
-  antigen bundle docker
-  antigen bundle docker-compose
   antigen bundle encode64
   antigen bundle fd
-  antigen bundle gem
   antigen bundle git-auto-fetch
   antigen bundle gnu-utils
   antigen bundle heroku
-  antigen bundle ionic
   # antigen bundle keychain
   antigen bundle kubectx
   antigen bundle macos
   antigen bundle magic-enter
-  antigen bundle microk8s
   antigen bundle minikube
-  antigen bundle multipass
   antigen bundle ng
   antigen bundle nomad
-  antigen bundle pip
-  antigen bundle pm2
   antigen bundle redis-cli
   antigen bundle ripgrep
   # antigen bundle rust
@@ -292,12 +283,24 @@ if command -v antigen > /dev/null; then
   # antigen bundle shell-proxy
   # antigen bundle ssh-agent
   antigen bundle sudo
-  antigen bundle terraform
   antigen bundle ufw
-  antigen bundle vagrant
   # antigen bundle web-search
+
+  ### Disable plugin alias
+  # alias alias=true
+  antigen bundle docker
+  antigen bundle docker-compose
+  antigen bundle gem
+  antigen bundle ionic
+  antigen bundle microk8s
+  antigen bundle multipass
+  antigen bundle pip
+  antigen bundle pm2
+  antigen bundle terraform
+  antigen bundle vagrant
   antigen bundle yarn
-  unalias alias
+  # unalias alias
+
   antigen bundle zsh-interactive-cd
   # antigen bundle zsh-navigation-tools
   antigen bundle zsh-users/zsh-completions src
