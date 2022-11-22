@@ -104,7 +104,9 @@ alternatives:
     scoop: nodejs
   oh-my-posh:
     brew: jandedobbeleer/oh-my-posh/oh-my-posh
-    scoop: https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json
+    scoop:
+      - clink
+      - https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json
   pipx:
     brew: pipx
   python:
@@ -176,6 +178,8 @@ postinstall:
       sudo snap alias gdu-disk-usage-analyzer.gdu gdu
   git-lfs: git lfs install
   nb: nb completions install
+  oh-my-posh:
+    scoop: clink autorun install
   pipx:
     brew: pipx ensurepath
   python:
