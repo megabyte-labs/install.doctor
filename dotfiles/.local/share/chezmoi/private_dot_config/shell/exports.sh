@@ -69,10 +69,10 @@ export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
 
 ### Azure CLI
-export AZURE_CONFIG_DIR="$HOME/.config/azure"
+export AZURE_CONFIG_DIR="$XDG_CONFIG_HOME/azure"
 
 ### bat
-export BAT_CONFIG_PATH="$HOME/.config/batrc"
+export BAT_CONFIG_PATH="$XDG_CONFIG_HOME/batrc"
 
 ### Cargo
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
@@ -207,7 +207,7 @@ export REDISCLI_HISTFILE="$XDG_DATA_HOME/redis/rediscli_history"
 export REDISCLI_RCFILE="$XDG_CONFIG_HOME/redis/redisclirc"
 
 ### ripgrep
-export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/config"
+export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 
 ### Ruby
 export GEM_HOME="$XDG_DATA_HOME/gems"
@@ -232,7 +232,7 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
 
 ### Whalebrew
-export WHALEBREW_CONFIG_DIR="$HOME/.config/whalebrew"
+export WHALEBREW_CONFIG_DIR="$XDG_CONFIG_HOME/whalebrew"
 
 ### Man pages
 export LESS_TERMCAP_mb=$'\e[1;32m'
