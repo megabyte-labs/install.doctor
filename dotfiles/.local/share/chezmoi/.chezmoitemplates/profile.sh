@@ -1,7 +1,7 @@
 # shellcheck disable=SC1090,SC1091
 
 ### Miscellaneous
-export VISUAL=vim
+export VISUAL="code --wait"
 export EDITOR=$VISUAL
 
 ### Theme

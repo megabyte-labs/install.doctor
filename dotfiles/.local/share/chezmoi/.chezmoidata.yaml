@@ -1,0 +1,77 @@
+---
+preference:
+  - flatpak
+  - snap
+  - whalebrew
+  - apt
+  - dnf
+  - pacman
+  - apk
+  - brew
+  - yay
+  - choco
+  - scoop
+  - winget
+  - cask
+  - go
+  - cargo
+  - binary
+
+alternatives:
+  delta:
+    brew:
+      - git-delta
+      - example-dependency
+    scoop: delta
+  git:
+    apk: git
+    apt: git
+    brew: git
+    dnf: git
+  git-lfs:
+    brew: git-lfs
+    scoop: git-lfs
+  nb:
+    brew: nb
+  # :debian is defined so nothing will be installed on Debian for nb
+  nb:debian:
+    brew: []
+  rsync:
+    apt: rsync
+    brew: rsync
+    choco: rsync
+    dnf: rsync
+  shotcut:
+    choco: shotcut
+    flatpak: org.shotcut.Shotcut
+    snap: shotcut
+  volta:
+    brew: volta
+    scoop: volta
+  wget:
+    apk: wget
+    apt: wget
+    brew: rsync
+    dnf: wget
+    whalebrew: whalebrew/wget
+
+dependencies:
+  git-lfs:
+    - git
+
+preinstall:
+  example-package: |
+    echo "preinstall routine"
+
+postinstall:
+  git-lfs: |
+    git lfs install
+  git-lfs:darwin: |
+    echo ":darwin is defined so this step will be used on Darwin with PowerShell"
+  git-lfs:windows: |
+    echo ":windows is defined so this step will be used on Windows with PowerShell"
+  nb: |
+    nb completions install
+  volta: |
+    volta setup
+    volta install node@latest

@@ -49,3 +49,6 @@ let g:syntastic_check_on_wq = 0
 
 " Settings for plugin https://github.com/ryanoasis/vim-devicons.git
 set encoding=UTF-8
+
+" Automatically apply with Chezmoi anytime a source file is modified
+autocmd BufWritePost ~/.local/share/chezmoi/* ! chezmoi apply --source-path "%"
