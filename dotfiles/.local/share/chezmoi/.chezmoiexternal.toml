@@ -1,7 +1,9 @@
+{{- $refreshPeriod := "140h" }}
+{{-}}
 [".vim/plugged/ale"]
     type = "git-repo"
     url = "https://github.com/dense-analysis/ale.git"
-    refreshPeriod = "140h"
+    refreshPeriod = "{{ $refreshPeriod }}"
     [".vim/plugged/ale".pull]
         args = ["--ff-only"]
 [".vim/plugged/ale"]
@@ -29,30 +31,62 @@
     [".vim/plugged/ale".pull]
         args = ["--ff-only"]
 
+### Hack Nerd Font Download
+{{- if not .host.headless }}
 
+{{-   $fontDir := "" }}
+{{-   $fontUrlBase := "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack"}}
+{{-   if eq .host.distro.family "darwin" }}
+{{-     $fontDir = "Library/Fonts" }}
+{{-   else if eq .host.distro.family "linux" }}
+{{-     $fontDir = ".local/share/fonts" }}
+{{-   else if eq .host.distro.family "windows" }}
+{{-     $fontDir = "Windows/Fonts" }}
+{{-   end }}
 
-https://github.com/pearofducks/ansible-vim.git
-https://github.com/neoclide/coc.nvim.git
-https://github.com/ekalinin/dockerfile.vim.git
-https://github.com/editorconfig/editorconfig-vim.git
-https://github.com/junegunn/fzf.git
-https://github.com/junegunn/fzf.vim.git
-https://github.com/itchyny/lightline.vim.git
-https://github.com/scrooloose/nerdtree.git
-https://github.com/stanangeloff/php.vim.git
-https://github.com/hdima/python-syntax.git
-https://github.com/vim-syntastic/syntastic.git
-https://github.com/vim-airline/vim-airline.git
-https://github.com/kristijanhusak/vim-carbon-now-sh.git
-https://github.com/ryanoasis/vim-devicons.git
-https://github.com/tpope/vim-fugitive.git
-https://github.com/airblade/vim-gitgutter.git
-https://github.com/fatih/vim-go.git
-https://github.com/pangloss/vim-javascript.git
-https://github.com/mxw/vim-jsx.git
-https://github.com/plasticboy/vim-markdown.git
-https://github.com/terryma/vim-multiple-cursors.git
-https://github.com/prettier/vim-prettier.git
-https://github.com/tpope/vim-sensible.git
-https://github.com/tpope/vim-surround.git
-https://github.com/nanotee/zoxide.vim.git
+["{{ $fontDir }}/Hack-Regular-Nerd-Font.ttf"]
+    type = "file"
+{{- if eq .host.distro.family "windows" }}
+    url = "{{ $fontUrlBase }}/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete%20Windows%20Compatible.ttf"
+{{- else }}
+    url = "{{ $fontUrlBase }}/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf"
+{{- end }}
+    refreshPeriod = "{{ $refreshPeriod }}"
+
+["{{ $fontDir }}/Hack-Bold-Nerd-Font.ttf"]
+    type = "file"
+{{- if eq .host.distro.family "windows" }}
+    url = "{{ $fontUrlBase }}/Bold/complete/Hack%20Bold%20Nerd%20Font%20Complete%20Windows%20Compatible.ttf"
+{{- else }}
+    url = "{{ $fontUrlBase }}/Bold/complete/Hack%20Bold%20Nerd%20Font%20Complete.ttf"
+{{- end }}
+    refreshPeriod = "{{ $refreshPeriod }}"
+
+["{{ $fontDir }}/Hack-Italic-Nerd-Font.ttf"]
+    type = "file"
+{{- if eq .host.distro.family "windows" }}
+    url = "{{ $fontUrlBase }}/Italic/complete/Hack%20Italic%20Nerd%20Font%20Complete%20Windows%20Compatible.ttf"
+{{- else }}
+    url = "{{ $fontUrlBase }}/Italic/complete/Hack%20Italic%20Nerd%20Font%20Complete.ttf"
+{{- end }}
+    refreshPeriod = "{{ $refreshPeriod }}"
+
+["{{ $fontDir }}/Hack-Bold-Italic-Nerd-Font.ttf"]
+    type = "file"
+{{- if eq .host.distro.family "windows" }}
+    url = "{{ $fontUrlBase }}/BoldItalic/complete/Hack%20Bold%20Italic%20Nerd%20Font%20Complete%20Windows%20Compatible.ttf"
+{{- else }}
+    url = "{{ $fontUrlBase }}/BoldItalic/complete/Hack%20Bold%20Italic%20Nerd%20Font%20Complete.ttf"
+{{- end }}
+    refreshPeriod = "{{ $refreshPeriod }}"
+
+### ZillaSlab Font Download
+{{-   $fontUrlBase := "https://github.com/typotheque/zilla-slab/raw/master/fonts_TTF"}}
+{{-   $fonts := list "ZillaSlab-Bold.ttf" "ZillaSlab-BoldItalic.ttf" "ZillaSlab-Italic.ttf" "ZillaSlab-Light.ttf" "ZillaSlab-LightItalic.ttf" "ZillaSlab-Medium.ttf" "ZillaSlab-MediumItalic.ttf" "ZillaSlab-Regular.ttf" "ZillaSlab-SemiBold.ttf" "ZillaSlab-SemiBoldItalic.ttf" "ZillaSlabHighlight-Bold.ttf" "ZillaSlabHighlight-Regular.ttf" }}
+{{-   range $font := $fonts }}
+["{{ $fontDir }}/{{ $font }}"]
+    type = "file"
+    url = "{{ $fontUrlBase }}/{{ $font }}"
+    refreshPeriod = "{{ $refreshPeriod }}"
+{{-   end }}
+{{- end }}

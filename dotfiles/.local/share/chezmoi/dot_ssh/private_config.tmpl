@@ -1,0 +1,21 @@
+Host *+*
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking=no
+    ProxyCommand ssh -v $(echo %h | sed -e 's/+[^+]*$//; s/\([^+=]*\)=\([^+]*\)$/\2 -l \1/; s/^\([^+:]*\):\([0-9]*\)+/-p \2 \1+/' ) -W $(echo %h | sed -e 's/^.*+//; s/:.*$//;'):$(echo %h | sed -e ' s/^.*+//; /:/!s/^.*/22/; s/^.*://' ;)
+Host *
+    User {{ .user.login }}
+    Compression yes
+    GSSAPIAuthentication no
+    ServerAliveInterval 600
+{{- if ne .host.distro.family "windows" }}
+    ControlMaster auto
+    ControlPath /tmp/ssh-%r@%h:%p
+    ControlPersist 5
+{{- end }}
+{{- if eq .host.distro.family "darwin" }}
+    AddKeysToAgent yes
+    UseKeychain yes
+{{- end }}
+    ExitOnForwardFailure yes
+    ForwardAgent yes
+    ForwardX11 no
