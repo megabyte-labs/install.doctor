@@ -64,6 +64,11 @@ fi
 
 ### Bash Initialization Hooks
 if [ "$BASH_SUPPORT" = 'true' ]; then
+  ### Bash Completion
+  if [ -f "/usr/local/etc/profile.d/bash_completion.sh" ]; then
+    . "/usr/local/etc/profile.d/bash_completion.sh"
+  fi
+
   ### direnv
   if command -v direnv > /dev/null; then
     eval "$(direnv hook bash)"

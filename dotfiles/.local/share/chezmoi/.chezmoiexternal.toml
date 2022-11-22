@@ -1,3 +1,4 @@
+### VIM
 {{- $refreshPeriod := "140h" }}
 {{- $vimPlugins := .plugins.vim }}
 {{- range $vimPlugin := $vimPlugins }}
@@ -10,6 +11,11 @@
         args = ["--ff-only"]
 {{- end }}
 
+### Shell
+[".config/shell/lscolors.sh"]
+    type = "fil"
+    url = "https://raw.githubusercontent.com/trapd00r/LS_COLORS/master/lscolors.sh"
+    refreshPeriod = "{{ $refreshPeriod }}"
 [".local/antigen.zsh"]
     type = "file"
     url = "https://raw.githubusercontent.com/zsh-users/antigen/develop/bin/antigen.zsh"
@@ -30,6 +36,14 @@
     type = "file"
     url = "https://raw.githubusercontent.com/dandavison/delta/master/themes.gitconfig"
     refreshPeriod = "{{ $refreshPeriod }}"
+
+### Neovim
+[".config/nvim"]
+    type = "git-repo"
+    url = "https://github.com/AstroNvim/AstroNvim.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    [".config/nvim".pull]
+        args = ["--ff-only"]
 
 {{- if not .host.headless }}
 ### Hack Nerd Font Download
@@ -83,10 +97,14 @@
 ### Miscellaneous Fonts Download
 ["{{ $fontDir }}/FontAwesome.ttf"]
     type = "file"
-    url = "https://github.com/VermiumSifell/dotfiles/raw/main/dot_local/share/fonts/fontawesome.ttf"
+    # Source URL
+    # url = "https://github.com/VermiumSifell/dotfiles/raw/main/dot_local/share/fonts/fontawesome.ttf"
+    url = "https://gitlab.com/megabyte-labs/misc/dotfiles/-/raw/master/dotfiles/.local/share/chezmoi/dot_local/share/fonts/FontAwesome.ttf"
     refreshPeriod = "{{ $refreshPeriod }}"
 ["{{ $fontDir }}/Weather-Icons.ttf"]
     type = "file"
-    url = "https://github.com/VermiumSifell/dotfiles/raw/main/dot_local/share/fonts/weathericons.ttf"
+    # Source URL
+    # url = "https://github.com/VermiumSifell/dotfiles/raw/main/dot_local/share/fonts/weathericons.ttf"
+    url = "https://gitlab.com/megabyte-labs/misc/dotfiles/-/raw/master/dotfiles/.local/share/chezmoi/dot_local/share/fonts/Weather-Icons.ttf"
     refreshPeriod = "{{ $refreshPeriod }}"
 {{- end }}

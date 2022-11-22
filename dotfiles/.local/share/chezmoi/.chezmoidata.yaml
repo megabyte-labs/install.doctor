@@ -26,9 +26,21 @@ preference:
   - binary
 
 alternatives:
+  astronvim:
+    _deps:
+      - bottom
+      - gdu
+      - lazygit
+      - neovim
+      - node
+      - python
+      - ripgrep
+      - tree-sitter-cli
   delta:
     brew: git-delta
     scoop: delta
+  bash-completion:
+    brew: bash-completion
   bottom:
     brew: bottom
     pacman: bottom
@@ -148,6 +160,8 @@ alternatives:
     whalebrew: whalebrew/wget
 
 postinstall:
+  astronvim: |
+    nvim --headless -c 'autocmd User PackerComplete quitall'
   bottom:
     snap: |
       sudo snap connect bottom:mount-observe
