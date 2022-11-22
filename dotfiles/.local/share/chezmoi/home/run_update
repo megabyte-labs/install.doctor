@@ -1,0 +1,16 @@
+{{ if eq .chezmoi.os "linux" }}
+#!/bin/sh
+
+rm -rf ~/AppData
+rm -rf ~/Library
+
+{{ else if .chezmoi.os "darwin" }}
+#!/bin/sh
+
+rm -rf ~/AppData
+
+{{ else if chezmoi.os "windows" }}
+
+Remove-Item -LiteralPath "$env:HOMEPATH\Library" -Force -Recurse
+
+{{ end }}
