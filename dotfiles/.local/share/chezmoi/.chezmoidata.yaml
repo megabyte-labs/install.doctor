@@ -46,6 +46,9 @@ alternatives:
     pacman: bottom
     scoop: bottom
     snap: bottom
+  bw:
+    choco: bitwarden-cli
+    snap: bw
   gdu:
     brew: gdu
     go: github.com/dundee/gdu/v5/cmd/gdu@latest
@@ -63,6 +66,17 @@ alternatives:
       - git
     brew: git-lfs
     scoop: git-lfs
+  gnu:
+    brew:
+      - coreutils
+      - findutils
+      - gawk
+      - gnu-getopt
+      - gnu-indent
+      - gnu-tar
+      - gnu-sed
+      - gnutls
+      - grep
   lazygit:
     brew: lazygit
     choco: lazygit
@@ -149,6 +163,12 @@ alternatives:
     choco: shotcut
     flatpak: org.shotcut.Shotcut
     snap: shotcut
+  tmux:
+    brew:
+      - awk
+      - gnu-sed
+      - perl
+      - tmux
   tree-sitter-cli:
     cargo: tree-sitter-cli
   volta:

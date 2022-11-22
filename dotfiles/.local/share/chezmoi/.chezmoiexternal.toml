@@ -16,6 +16,13 @@
     type = "file"
     url = "https://raw.githubusercontent.com/trapd00r/LS_COLORS/master/lscolors.sh"
     refreshPeriod = "{{ $refreshPeriod }}"
+[".config/tmux/tmux.conf"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".config/tmux/tmux.conf.local"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf.local"
 [".local/antigen.zsh"]
     type = "file"
     url = "https://raw.githubusercontent.com/zsh-users/antigen/develop/bin/antigen.zsh"
