@@ -1,95 +1,138 @@
+[include]
+  path = ${XDG_DATA_HOME}/delta/themes.gitconfig
+  path = ${XDG_CONFIG_HOME}/git/local.toml
+[advice]
+  detachedHead = false
+[alias]
+  c = commit
+  ca = commit -a
+  cm = commit -m
+  cam = commit -am
+  d = diff
+  dc = diff --cached
+  l = log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit
+  master = !git add --all && git commit -am 'Quick commit.' -n && git push origin master
 [branch]
-    autosetuprebase = always
+  autosetuprebase = always
 [color]
-    ui = auto
-    diff = auto
-    status = auto
-    branch = auto
-    interactive = auto
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = true
+  pager = true
 [color "branch"]
-    current = yellow reverse
-    local = yellow
-    remote = green
+  current = yellow reverse
+  local = yellow
+  remote = green
 [color "diff"]
-    meta = yellow bold
-    frag = magenta bold
-    old = red bold
-    new = green bold
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
 [color "status"]
-    added = yellow
-    changed = green
-    untracked = cyan
+  added = yellow
+  changed = green
+  untracked = cyan
+[commit]
+  template = ${XDG_CONFIG_HOME}/git/commit-template
 [core]
-    autocrlf = false
-    safecrlf = warn
-    pager = delta -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}
-    editor = code --wait
-    whitespace = trailing-space,space-before-tab
-[diff]
-    renamelimit = 0
-    mnemonicprefix = true
-    renames = copies
-[fetch]
-    prune = true
-[help]
-    autocorrect = 1
-[init]
-    defaultBranch = main
-[interactive]
-    diffFilter = delta --color-only
-[merge]
-    ff = only
-    renamelimit = 0
-    summary = true
-    stat = true
-    conflictstyle = diff3
-    tool = vscode
-[mergetool "vscode"]
-    cmd = code --wait $MERGED
-[pack]
-    threads = 0
-[pull]
-    rebase = true
-[push]
-    autoSetupRemote = true
-    default = upstream
-    followTags = true
-[rebase]
-    autosquash = true
-[rerere]
-    enabled = true
-    autoupdate = true
-[transfer]
-    fsckobjects = true
-[status]
-    showUntrackedFiles = all
-
-[delta]
-    features = side-by-side line-numbers decorations
-    syntax-theme = Dracula
-    plus-style = syntax "#003800"
-    minus-style = syntax "#3f0001"
-
-[delta "decorations"]
-    commit-decoration-style = bold yellow box ul
-    file-style = bold yellow ul
-    file-decoration-style = none
-    hunk-header-decoration-style = cyan box ul
-
-[delta "line-numbers"]
-    line-numbers-left-style = cyan
-    line-numbers-right-style = cyan
-    line-numbers-minus-style = 124
-    line-numbers-plus-style = 28
-
-[user]
-    name = "{{ .user.name }}"
-    email = "{{ .user.email }}"
-
+  editor = vi
+  excludesfile = ~/.gitignore
+  autocrlf = input
+  attributesfile = ~/.gitattributes
+  editor = code --wait
+  pager = delta -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}
+  safecrlf = warn
+  whitespace = trailing-space,space-before-tab
+[credential]
+  helper = cache --timeout=3600
 [credential "https://github.com"]
 	helper = !gh auth git-credential
 [credential "https://gist.github.com"]
 	helper = !gh auth git-credential
-
-[include]
-    path = ~/.config/git/local.toml
+[delta]
+  decorations = true
+  features = side-by-side decorations hyperlinks interactive navigate unobtrusive-line-numbers woolly-mammoth zebra-dark
+  hyperlinks = true
+  interactive = true
+  map-styles = bold purple => syntax magenta, bold cyan => syntax blue
+  navigate = true
+  side-by-side = true
+  unobtrusive-line-numbers = true
+  plus-style = syntax "#003800"
+  minus-style = syntax "#3f0001"
+[delta "interactive"]
+  keep-plus-minus-markers = false
+[delta "decorations"]
+  commit-decoration-style = blue ol
+  commit-style = raw
+  file-style = omit
+  hunk-header-decoration-style = blue box
+  hunk-header-file-style = red
+  hunk-header-line-number-style = "#067a00"
+  hunk-header-style = file line-number syntax
+[delta "line-numbers"]
+  line-numbers-left-style = cyan
+  line-numbers-right-style = cyan
+  line-numbers-minus-style = 124
+  line-numbers-plus-style = 28
+[diff]
+  colorMoved = default
+  ignoresubmodules = dirty
+  renamelimit = 0
+  mnemonicprefix = true
+  renames = copies
+[diff "image"]
+  command = compare $2 $1 png:- | montage -geometry +4+4 $2 - $1 png:- | display -title \"$1\" -
+[difftool]
+  prompt = false
+[fetch]
+  prune = true
+[help]
+  autocorrect = 20
+[init]
+  defaultBranch = master
+  templatedir = /Users/bzalewski/.local/git-templates
+[interactive]
+  diffFilter = delta --color-only --features=interactive
+[merge]
+  conflictstyle = diff3
+  ff = only
+  renamelimit = 0
+  summary = true
+  stat = true
+  tool = vscode
+[mergetool "vscode"]
+  cmd = code --wait $MERGED
+[pack]
+  threads = 0
+[pull]
+  rebase = true
+[push]
+  autoSetupRemote = true
+  default = upstream
+  followTags = true
+[rebase]
+  autosquash = true
+[rerere]
+  enabled = true
+  autoupdate = true
+[sendemail]
+  smtpserver = smtp.gmail.com
+  smtpuser = {{ .user.gmailAddress }}
+  smtpencryption = tls
+  smtpserverport = 587
+  smtpPass = {{ .user.gmailAddressAppPassword }}
+[status]
+  showUntrackedFiles = all
+  submoduleSummary = true
+[transfer]
+  fsckobjects = true
+[url "https://"]
+  insteadOf = git://
+[user]
+  email = {{ .user.email }}
+  name = {{ .user.name }}
+[web]
+  browser = google-chrome

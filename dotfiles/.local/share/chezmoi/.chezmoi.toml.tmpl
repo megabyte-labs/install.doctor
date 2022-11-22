@@ -1,6 +1,10 @@
 {{- $codespaces:= env "CODESPACES" | not | not -}}
-{{- $email := promptStringOnce . "email" "Email address" -}}
-{{- $name := promptStringOnce . "name" "Full name" -}}
+{{- if $codespaces | not }}
+{{-   $email := promptStringOnce . "email" "Primary e-mail address" -}}
+{{-   $name := promptStringOnce . "name" "Full name" -}}
+{{-   $gmailAddress := promptStringOnce "Gmail address" -}}
+{{-   $gmailAddressAppPassword := promptStringOnce "Gmail app password" -}}
+{{- end }}
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
 [data]
@@ -8,9 +12,13 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
     headless = {{ $headless }}
 {{- if $codespaces }}
     email = "help@megabyte.space"
+    gmailAddress = ""
+    gmailAddressAppPassword = ""
     name = "Megabyte Labs"
 {{- else }}
     email = {{ $email | quote }}
+    gmailAddress = {{ $gmailAddress | quote }}
+    gmailAddressAppPassword = {{ $gmailAddressAppPassword | quote }}
     name = {{ $name | quote }}
 {{- end }}
 

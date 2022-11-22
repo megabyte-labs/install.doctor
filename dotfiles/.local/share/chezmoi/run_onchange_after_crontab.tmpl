@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+# {{ output "sha256sum" (joinPath .chezmoi.sourceDir "private_dot_config/crontab/config")  }}
+
+crontab < "$XDG_CONFIG_HOME/crontab/config"
