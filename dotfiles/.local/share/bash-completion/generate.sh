@@ -46,7 +46,7 @@ fi
 if command -v gcloud > /dev/null && command -v brew > /dev/null; then
   if [ -f "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc" ]; then
     cat "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc" > "$COMPLETION_DIR/google-cloud-sdk.bash"
-  elif command -v 
+  elif command -v
 fi
 
 ### Googler
