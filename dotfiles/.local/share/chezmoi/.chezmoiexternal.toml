@@ -1,35 +1,19 @@
 {{- $refreshPeriod := "140h" }}
-{{-}}
-[".vim/plugged/ale"]
+{{- $vimPlugins := .plugins.vim }}
+{{- range $vimPlugin := $vimPlugins }}
+{{-   $folderName :=  trimSuffix ".git" (last (splitList "/" $vimPlugin)) }}
+[".vim/plugged/{{ $folderName }}"]
     type = "git-repo"
-    url = "https://github.com/dense-analysis/ale.git"
+    url = "{{ $vimPlugin }}"
     refreshPeriod = "{{ $refreshPeriod }}"
-    [".vim/plugged/ale".pull]
+    [".vim/plugged/{{ $folderName }}".pull]
         args = ["--ff-only"]
-[".vim/plugged/ale"]
-    type = "git-repo"
-    url = "https://github.com/pearofducks/ansible-vim.git"
-    refreshPeriod = "140h"
-    [".vim/plugged/ale".pull]
-        args = ["--ff-only"]
-[".vim/plugged/ale"]
-    type = "git-repo"
-    url = "https://github.com/dense-analysis/ale.git"
-    refreshPeriod = "140h"
-    [".vim/plugged/ale".pull]
-        args = ["--ff-only"]
-[".vim/plugged/ale"]
-    type = "git-repo"
-    url = "https://github.com/dense-analysis/ale.git"
-    refreshPeriod = "140h"
-    [".vim/plugged/ale".pull]
-        args = ["--ff-only"]
-[".vim/plugged/ale"]
-    type = "git-repo"
-    url = "https://github.com/dense-analysis/ale.git"
-    refreshPeriod = "140h"
-    [".vim/plugged/ale".pull]
-        args = ["--ff-only"]
+{{- end }}
+
+[".local/share/delta//themes.gitconfig"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/dandavison/delta/master/themes.gitconfig"
+    refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Hack Nerd Font Download
 {{- if not .host.headless }}
