@@ -1,7 +1,7 @@
 # shellcheck disable=SC1090,SC1091
 
 ### Miscellaneous
-export VISUAL=vim
+export VISUAL="code --wait"
 export EDITOR=$VISUAL
 
 ### Theme
@@ -217,8 +217,8 @@ export BAT_CONFIG_PATH="$HOME/.config/batrc"
 if command -v bat > /dev/null; then
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
   alias bathelp='bat --plain --language=help'
-  alias cat='bat -pp'
-  alias less='bat --paging=always'
+  alias cat='bat --paging=never'
+  alias less='bat'
   help() {
     "$@" --help 2>&1 | bathelp
   }
@@ -241,8 +241,6 @@ fi
 if command -v exa > /dev/null; then
   alias ls='exa --long --all --color auto --icons --sort=type'
   alias tree='exa --tree'
-  alias la='ls -la'
-  alias lt='ls --tree --level=2'
 fi
 
 ### fzf
@@ -291,9 +289,6 @@ export PATH="$POETRY_HOME/bin:$PATH"
 
 ### ripgrep
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
-if command -v rg &> /dev/null; then
-  alias grep='rg'
-fi
 
 ### Ruby
 export GEM_HOME="$HOME/.local/gems"

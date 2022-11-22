@@ -1,0 +1,19 @@
+{{- $codespaces:= env "CODESPACES" | not | not -}}
+{{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $name := promptStringOnce . "name" "Full name" -}}
+sourceDir = {{ .chezmoi.sourceDir | quote }}
+
+[data]
+    codespaces = {{ $codespaces }}
+    headless = {{ $headless }}
+{{- if $codespaces }}
+    email = "help@megabyte.space"
+    name = "Megabyte Labs"
+{{- else }}
+    email = {{ $email | quote }}
+    name = {{ $name | quote }}
+{{- end }}
+
+[git]
+    autoCommit = true
+    autoPush = true
