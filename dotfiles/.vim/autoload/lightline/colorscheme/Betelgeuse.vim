@@ -1,8 +1,8 @@
 
 
-  
+
   if &background == 'dark'
-    
+
   let s:guishade0 = "#161925"
   let s:guishade1 = "#2f323e"
   let s:guishade2 = "#474b56"
@@ -35,13 +35,13 @@
   let s:accent5 = 117
   let s:accent6 = 188
   let s:accent7 = 175
-  
-  endif
-  
 
-  
+  endif
+
+
+
   if &background == 'light'
-    
+
   let s:guishade0 = "#ffffff"
   let s:guishade1 = "#e5e6e7"
   let s:guishade2 = "#cccdcf"
@@ -74,9 +74,9 @@
   let s:accent5 = 153
   let s:accent6 = 239
   let s:accent7 = 211
-  
+
   endif
-  
+
 
   let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
   let s:p.normal.left = [ [ s:guishade1, s:guiaccent5, s:shade1, s:accent5 ], [ s:guishade7, s:guishade2, s:shade7, s:shade2 ] ]
@@ -95,4 +95,4 @@
   let s:p.normal.error = [ [ s:guiaccent0, s:guishade0, s:accent0, s:shade0 ] ]
   let s:p.normal.warning = [ [ s:guiaccent2, s:guishade1, s:accent2, s:shade1 ] ]
 
-  let g:lightline#colorscheme#ThemerVimLightline#palette = lightline#colorscheme#fill(s:p)
+  let g:lightline#colorscheme#Betelgeuse#palette = lightline#colorscheme#fill(s:p)
