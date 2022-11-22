@@ -1,3 +1,9 @@
+# Fix for auto expansion (source: https://wiki.archlinux.org/title/Sudo#Passing_aliases)
+alias sudo='sudo '
+
+# Reload current shell
+alias reload="exec ${SHELL} -l"
+
 # Create an Authelia password hash
 alias autheliapassword='docker run authelia/authelia:latest authelia hash-password'
 
