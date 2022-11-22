@@ -1,18 +1,10 @@
 # set PowerShell to UTF-8
 [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 
-Install-Module posh-git -Scope CurrentUser
-Install-Module oh-my-posh -Scope CurrentUser
-Install-Module -Name PSReadLine -AllowPrerelease -Scope CurrentUser -Force -SkipPublisherCheck
-Set-Prompt
+### Oh My Posh
+oh-my-posh init pwsh --config "$env:HOME/.config/oh-my-posh/Betelgeuse.omp.json" | Invoke-Expression
 
-Import-Module posh-git
-Import-Module oh-my-posh
-$omp_config = Join-Path $PSScriptRoot ".\takuya.omp.json"
-oh-my-posh --init --shell pwsh --config $omp_config | Invoke-Expression
-Set-Theme Paradox
-
-Import-Module -Name Terminal-Icons
+# Import-Module -Name Terminal-Icons
 
 # PSReadLine
 Set-PSReadLineOption -EditMode Vim

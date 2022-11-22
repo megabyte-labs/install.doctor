@@ -7,35 +7,97 @@ preference:
   - dnf
   - pacman
   - apk
+  - nix
+  - pkg
+  - zypper
   - brew
+  - port
   - yay
   - choco
   - scoop
   - winget
-  - cask
   - go
   - cargo
+  - npm
+  - pipx
+  - gem
+  - cask
+  - appimage
   - binary
 
 alternatives:
   delta:
-    brew:
-      - git-delta
-      - example-dependency
+    brew: git-delta
     scoop: delta
+  bottom:
+    brew: bottom
+    pacman: bottom
+    scoop: bottom
+    snap: bottom
+  gdu:
+    brew: gdu
+    go: github.com/dundee/gdu/v5/cmd/gdu@latest
+    pacman: gdu
+    snap: gdu-disk-usage-analyzer
+  gdu:debian:
+    apt: gdu
   git:
     apk: git
     apt: git
     brew: git
     dnf: git
   git-lfs:
+    _deps:
+      - git
     brew: git-lfs
     scoop: git-lfs
+  lazygit:
+    brew: lazygit
+    choco: lazygit
+    go: github.com/jesseduffield/lazygit@latest
+    pacman: lazygit
+    scoop: lazygit
   nb:
     brew: nb
   # :debian is defined so nothing will be installed on Debian for nb
   nb:debian:
     brew: []
+  node:
+    brew: node
+    scoop: nodejs
+  oh-my-posh:
+    brew: jandedobbeleer/oh-my-posh/oh-my-posh
+    scoop: https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json
+  pipx:
+    brew: pipx
+  python:
+    apt: python3-pip
+    brew: python
+    dnf: python3-pip
+    pacman: python-pip
+    scoop: python
+  ripgrep:
+    apt: ripgrep
+    brew: ripgrep
+    cargo: ripgrep
+    choco: ripgrep
+    dnf: ripgrep
+    nix: ripgrep
+    pacman: ripgrep
+    pkg: ripgrep
+    port: ripgrep
+    scoop: ripgrep
+    zypper: ripgrep
+  ripgrep-all:
+    brew:
+      - ffmpeg
+      - pandoc
+      - poppler
+      - rga
+      - tesseract
+    choco: ripgrep-all
+    nix: ripgrep-all
+    pacman: ripgrep-all
   rsync:
     apt: rsync
     brew: rsync
@@ -45,6 +107,8 @@ alternatives:
     choco: shotcut
     flatpak: org.shotcut.Shotcut
     snap: shotcut
+  tree-sitter-cli:
+    cargo: tree-sitter-cli
   volta:
     brew: volta
     scoop: volta
@@ -55,23 +119,27 @@ alternatives:
     dnf: wget
     whalebrew: whalebrew/wget
 
-dependencies:
-  git-lfs:
-    - git
-
-preinstall:
-  example-package: |
-    echo "preinstall routine"
-
 postinstall:
-  git-lfs: |
-    git lfs install
-  git-lfs:darwin: |
-    echo ":darwin is defined so this step will be used on Darwin with PowerShell"
-  git-lfs:windows: |
-    echo ":windows is defined so this step will be used on Windows with PowerShell"
-  nb: |
-    nb completions install
+  bottom:
+    snap: |
+      sudo snap connect bottom:mount-observe
+      sudo snap connect bottom:hardware-observe
+      sudo snap connect bottom:system-observe
+      sudo snap connect bottom:process-control
+  gdu:
+    brew: brew link --overwrite gdu
+    snap: |
+      sudo snap connect gdu-disk-usage-analyzer:mount-observe :mount-observe
+      sudo snap connect gdu-disk-usage-analyzer:system-backup :system-backup
+      sudo snap alias gdu-disk-usage-analyzer.gdu gdu
+  git-lfs: git lfs install
+  nb: nb completions install
+  pipx:
+    brew: pipx ensurepath
+  python:
+    brew: |
+      python3 -m pip install --upgrade setuptools
+      python3 -m pip install --upgrade pip
   volta: |
     volta setup
     volta install node@latest

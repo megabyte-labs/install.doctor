@@ -1,3 +1,12 @@
 {{- if (eq .host.distro.family "darwin") -}}
 {{- includeTemplate "darwin/brewfile" . -}}
 {{- end -}}
+
+cask "1password" unless File.directory?('/Applications/1Password.app')
+cask "google-chrome" unless File.directory?('/Applications/Google Chrome.app')
+cask "visual-studio-code" unless File.directory?('/Applications/Visual Studio Code.app')
+cask "iterm2" unless File.directory?('/Applications/iTerm.app')
+cask 'docker' unless File.directory?('/Applications/Docker.app')
+
+# Fonts
+    cask "font-hack-nerd-font"

@@ -18,13 +18,13 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   fi
 fi
 
-### ~/.profile
-if [ -f "$HOME/.profile" ]; then
-  . "$HOME/.profile"
+### Import Common Settings
+if [ -f "$HOME/.config/shell/profile" ]; then
+  . "$HOME/.config/shell/profile"
 fi
 
 ### Settings
-if command -v shopt >/dev/null; then
+if command -v shopt > /dev/null; then
   shopt -s globstar
   shopt -s histappend
   shopt -s checkwinsize
@@ -45,13 +45,13 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
 
     ### Directory Colors (https://github.com/trapd00r/LS_COLORS)
     command -v gdircolors > /dev/null 2>&1 || gdircolors() { dircolors "$@"; }
-    if command -v gdircolors > /dev/null && [ -f "$HOME/.config/dircolors" ]; then
-      eval "$(gdircolors -b "$HOME/.config/dircolors")"
+    if command -v gdircolors > /dev/null && [ -f "$XDG_CONFIG_HOME/dircolors" ]; then
+      eval "$(gdircolors -b "$XDG_CONFIG_HOME/dircolors")"
     fi
   fi
 fi
 
-### Bash Completions
+### Bash Initialization Hooks
 if [ "$BASH_SUPPORT" = 'true' ]; then
   ### direnv
   if command -v direnv > /dev/null; then
