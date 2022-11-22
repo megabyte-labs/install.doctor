@@ -56,6 +56,7 @@
     url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     refreshPeriod = "{{ $refreshPeriod }}"
 
+{{- if (not .host.headless) and (ne .chezmoi.os "windows") }}
 ### Neovim
 [".config/nvim"]
     type = "git-repo"
@@ -63,6 +64,34 @@
     refreshPeriod = "{{ $refreshPeriod }}"
     [".config/nvim".pull]
         args = ["--ff-only"]
+{{- end }}
+
+{{- if (eq .chezmoi.os "linux") and (not .host.headless) }}
+### Rofi
+[".local/share/fonts/GrapeNuts-Regular.ttf"]
+    type = "file"
+    url = "https://github.com/adi1090x/rofi/raw/master/fonts/GrapeNuts-Regular.ttf"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/share/fonts/Icomoon-Feather.ttf"]
+    type = "file"
+    url = "https://github.com/adi1090x/rofi/raw/master/fonts/Icomoon-Feather.ttf"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/share/fonts/Iosevka-Nerd-Font-Complete.ttf"]
+    type = "file"
+    url = "https://github.com/adi1090x/rofi/raw/master/fonts/Iosevka-Nerd-Font-Complete.ttf"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/share/fonts/JetBrains-Mono-Nerd-Font-Complete.ttf"]
+    type = "file"
+    url = "https://github.com/adi1090x/rofi/raw/master/fonts/JetBrains-Mono-Nerd-Font-Complete.ttf"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".config/rofi"]
+    type = "archive"
+    url = "https://github.com/adi1090x/rofi/archive/refs/heads/master.tar.gz"
+    exact = true
+    stripComponents = 2
+    refreshPeriod = "{{ $refreshPeriod }}"
+    include = ["applets/**", "colors/**", "images/**", "launchers/**", "powermenu/**", "scripts/**", "config.rasi"]
+{{- end }}
 
 {{- if not .host.headless }}
 ### Hack Nerd Font Download
