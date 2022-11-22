@@ -4,6 +4,8 @@
 {{-   $name := promptStringOnce . "name" "Full name" -}}
 {{-   $gmailAddress := promptStringOnce "Gmail address" -}}
 {{-   $gmailAddressAppPassword := promptStringOnce "Gmail app password" -}}
+{{-   $ngrokAuthToken := promptStringOnce "Ngrok authentication token" -}}
+{{-   $slackApiToken := promptStringOnce "Slack API token" -}}
 {{- end }}
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
@@ -20,6 +22,11 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
     gmailAddress = {{ $gmailAddress | quote }}
     gmailAddressAppPassword = {{ $gmailAddressAppPassword | quote }}
     name = {{ $name | quote }}
+    GITHUB_TOKEN = {{ $githubToken | quote }}
+    GITLAB_TOKEN = {{ $gitlabToken | quote }}
+    NGROK_AUTH_TOKEN = {{ $ngrokAuthToken | quote }}
+    SLACK_API_TOKEN = {{ $slackApiToken | quote }}
+    TABBY_SYNC_TOKEN = "196a3118cc7be31cd13d2862d7e33c122357fd9fa36c2f149e8b018b82c260ab6b72169f4c411a6bedd2b8b4124c3540daa57778f20a28cfe2c797776f9a616c"
 {{- end }}
 
 [diff]

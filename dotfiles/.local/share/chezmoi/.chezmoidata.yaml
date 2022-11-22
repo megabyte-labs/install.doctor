@@ -1,5 +1,5 @@
 ---
-preference:
+installerPreference:
   - flatpak
   - snap
   - whalebrew
@@ -25,7 +25,7 @@ preference:
   - appimage
   - binary
 
-alternatives:
+installerMap:
   altair:
     cask: altair-graphql-client
     choco: altair-graphql
@@ -193,7 +193,7 @@ alternatives:
     dnf: wget
     whalebrew: whalebrew/wget
 
-postinstall:
+installerPostInstallScripts:
   astronvim: |
     nvim --headless -c 'autocmd User PackerComplete quitall'
   bottom:
@@ -222,7 +222,7 @@ postinstall:
     volta setup
     volta install node@latest
 
-plugins:
+softwarePlugins:
   vim:
     - https://github.com/dense-analysis/ale.git
     - https://github.com/pearofducks/ansible-vim.git
