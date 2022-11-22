@@ -245,8 +245,8 @@ xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
 esac
 
 ### Antigen
-if [ -f "$HOME/.local/antigen.zsh" ]; then
-  source "$HOME/.local/antigen.zsh"
+if [ -f "$HOME/.local/scripts/antigen.zsh" ]; then
+  source "$HOME/.local/scripts/antigen.zsh"
 fi
 if command -v antigen > /dev/null; then
   antigen use oh-my-zsh
@@ -341,8 +341,8 @@ if [ -f "$HOME/.fig/shell/zshrc.post.zsh" ]; then
 fi
 
 ### Powerline
-if [ -f "$HOME/.local/p10k.zsh" ]; then
-	source "$HOME/.local/p10k.zsh"
+if [ -f "$HOME/.local/scripts/p10k.zsh" ]; then
+	source "$HOME/.local/scripts/p10k.zsh"
 fi
 
 ### Bash Completions
