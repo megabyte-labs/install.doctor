@@ -51,8 +51,9 @@ setopt SHARE_HISTORY
 
 # ZSH completion system
 autoload -Uz compinit
-compinit -d ~/.cache/zcompdump
+compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
 zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' auto-description 'specify: %d'
