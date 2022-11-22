@@ -10,14 +10,30 @@
         args = ["--ff-only"]
 {{- end }}
 
-[".local/share/delta//themes.gitconfig"]
+[".local/antigen.zsh"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/zsh-users/antigen/develop/bin/antigen.zsh"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/docker-functions.bash"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/jessfraz/dotfiles/master/.dockerfunc"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/fzf-git.bash"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/junegunn/fzf-git.sh/main/fzf-git.sh"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/fzf-tmux.bash"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/share/delta/themes.gitconfig"]
     type = "file"
     url = "https://raw.githubusercontent.com/dandavison/delta/master/themes.gitconfig"
     refreshPeriod = "{{ $refreshPeriod }}"
 
-### Hack Nerd Font Download
 {{- if not .host.headless }}
-
+### Hack Nerd Font Download
+{{-   $refreshPeriod := "4800h" }}
 {{-   $fontDir := "" }}
 {{-   $fontUrlBase := "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack"}}
 {{-   if eq .host.distro.family "darwin" }}
@@ -27,50 +43,50 @@
 {{-   else if eq .host.distro.family "windows" }}
 {{-     $fontDir = "Windows/Fonts" }}
 {{-   end }}
-
 ["{{ $fontDir }}/Hack-Regular-Nerd-Font.ttf"]
     type = "file"
-{{- if eq .host.distro.family "windows" }}
-    url = "{{ $fontUrlBase }}/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete%20Windows%20Compatible.ttf"
-{{- else }}
-    url = "{{ $fontUrlBase }}/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf"
-{{- end }}
+    url = "{{ $fontUrlBase }}/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete{{if eq .host.distro.family "windows"}}%20Windows%20Compatible{{end}}.ttf"
     refreshPeriod = "{{ $refreshPeriod }}"
-
 ["{{ $fontDir }}/Hack-Bold-Nerd-Font.ttf"]
     type = "file"
-{{- if eq .host.distro.family "windows" }}
-    url = "{{ $fontUrlBase }}/Bold/complete/Hack%20Bold%20Nerd%20Font%20Complete%20Windows%20Compatible.ttf"
-{{- else }}
-    url = "{{ $fontUrlBase }}/Bold/complete/Hack%20Bold%20Nerd%20Font%20Complete.ttf"
-{{- end }}
+    url = "{{ $fontUrlBase }}/Bold/complete/Hack%20Bold%20Nerd%20Font%20Complete{{if eq .host.distro.family "windows"}}%20Windows%20Compatible{{end}}.ttf"
     refreshPeriod = "{{ $refreshPeriod }}"
-
 ["{{ $fontDir }}/Hack-Italic-Nerd-Font.ttf"]
     type = "file"
-{{- if eq .host.distro.family "windows" }}
-    url = "{{ $fontUrlBase }}/Italic/complete/Hack%20Italic%20Nerd%20Font%20Complete%20Windows%20Compatible.ttf"
-{{- else }}
-    url = "{{ $fontUrlBase }}/Italic/complete/Hack%20Italic%20Nerd%20Font%20Complete.ttf"
-{{- end }}
+    url = "{{ $fontUrlBase }}/Italic/complete/Hack%20Italic%20Nerd%20Font%20Complete{{if eq .host.distro.family "windows"}}%20Windows%20Compatible{{end}}.ttf"
     refreshPeriod = "{{ $refreshPeriod }}"
-
 ["{{ $fontDir }}/Hack-Bold-Italic-Nerd-Font.ttf"]
     type = "file"
-{{- if eq .host.distro.family "windows" }}
-    url = "{{ $fontUrlBase }}/BoldItalic/complete/Hack%20Bold%20Italic%20Nerd%20Font%20Complete%20Windows%20Compatible.ttf"
-{{- else }}
-    url = "{{ $fontUrlBase }}/BoldItalic/complete/Hack%20Bold%20Italic%20Nerd%20Font%20Complete.ttf"
-{{- end }}
+    url = "{{ $fontUrlBase }}/BoldItalic/complete/Hack%20Bold%20Italic%20Nerd%20Font%20Complete{{if eq .host.distro.family "windows"}}%20Windows%20Compatible{{end}}.ttf"
     refreshPeriod = "{{ $refreshPeriod }}"
 
-### ZillaSlab Font Download
-{{-   $fontUrlBase := "https://github.com/typotheque/zilla-slab/raw/master/fonts_TTF"}}
-{{-   $fonts := list "ZillaSlab-Bold.ttf" "ZillaSlab-BoldItalic.ttf" "ZillaSlab-Italic.ttf" "ZillaSlab-Light.ttf" "ZillaSlab-LightItalic.ttf" "ZillaSlab-Medium.ttf" "ZillaSlab-MediumItalic.ttf" "ZillaSlab-Regular.ttf" "ZillaSlab-SemiBold.ttf" "ZillaSlab-SemiBoldItalic.ttf" "ZillaSlabHighlight-Bold.ttf" "ZillaSlabHighlight-Regular.ttf" }}
+### Montserrat Font Download
+{{-   $fontUrlBase := "https://github.com/JulietaUla/Montserrat/raw/master/fonts/ttf/Montserrat-"}}
+{{-   $fonts := list "Black" "BlackItalic" "Bold" "BoldItalic" "ExtraBold" "ExtraBoldItalic" "ExtraLight" "ExtraLightItalic" "Italic" "Light" "LightItalic" "Medium" "MediumItalic" "Regular" "SemiBold" "SemiBoldItalic" "Thin" "ThinItalic" }}
 {{-   range $font := $fonts }}
-["{{ $fontDir }}/{{ $font }}"]
+["{{ $fontDir }}/Montserrat-{{ $font }}.ttf"]
     type = "file"
-    url = "{{ $fontUrlBase }}/{{ $font }}"
+    url = "{{ $fontUrlBase }}{{ $font }}.ttf"
     refreshPeriod = "{{ $refreshPeriod }}"
 {{-   end }}
+
+### ZillaSlab Font Download
+{{-   $fontUrlBase := "https://github.com/typotheque/zilla-slab/raw/master/fonts_TTF/ZillaSlab"}}
+{{-   $fonts := list "-Bold" "-BoldItalic" "-Italic" "-Light" "-LightItalic" "-Medium" "-MediumItalic" "-Regular" "-SemiBold" "-SemiBoldItalic" "Highlight-Bold" "Highlight-Regular" }}
+{{-   range $font := $fonts }}
+["{{ $fontDir }}/ZillaSlab{{ $font }}.ttf"]
+    type = "file"
+    url = "{{ $fontUrlBase }}{{ $font }}.ttf"
+    refreshPeriod = "{{ $refreshPeriod }}"
+{{-   end }}
+
+### Miscellaneous Fonts Download
+["{{ $fontDir }}/FontAwesome.ttf"]
+    type = "file"
+    url = "https://github.com/VermiumSifell/dotfiles/raw/main/dot_local/share/fonts/fontawesome.ttf"
+    refreshPeriod = "{{ $refreshPeriod }}"
+["{{ $fontDir }}/Weather-Icons.ttf"]
+    type = "file"
+    url = "https://github.com/VermiumSifell/dotfiles/raw/main/dot_local/share/fonts/weathericons.ttf"
+    refreshPeriod = "{{ $refreshPeriod }}"
 {{- end }}
