@@ -1,11 +1,14 @@
 # shellcheck disable=SC1090,SC1091
 
-# Aliases / Functions
-if [ -f "$HOME/.local/aliases" ]; then
-  . "$HOME/.local/aliases"
+# Aliases / Functions / Exports
+if [ -f "$XDG_CONFIG_HOME/shell/exports" ]; then
+  . "$XDG_CONFIG_HOME/shell/exports"
 fi
-if [ -f "$HOME/.local/functions" ]; then
-  . "$HOME/.local/functions"
+if [ -f "$XDG_CONFIG_HOME/shell/aliases" ]; then
+  . "$XDG_CONFIG_HOME/shell/aliases"
+fi
+if [ -f "$XDG_CONFIG_HOME/shell/functions" ]; then
+  . "$XDG_CONFIG_HOME/shell/functions"
 fi
 
 ### Bash / ZSH
@@ -71,7 +74,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
 
   ### ASDF
   if [ -f "$ASDF_DIR/asdf.sh" ]; then
-    . "$HOME/.local/asdf/asdf.sh"
+    . "$ASDF_DIR/asdf.sh"
   fi
 fi
 
@@ -102,8 +105,8 @@ command -v bpytop > /dev/null && alias top='bpytop'
 command -v glances > /dev/null && alias top='glances'
 
 ### Cargo
-if [ -f "$HOME/.cargo/env" ]; then
-  . "$HOME/.cargo/env"
+if [ -f "$CARGO_HOME/env" ]; then
+  . "$CARGO_HOME/env"
 fi
 
 ### SDKMan

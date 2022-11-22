@@ -1,0 +1,250 @@
+#!/usr/bin/env sh
+
+### Theme
+export COLOR_SCHEME=dark
+
+### XDG
+# Source: # https://wiki.archlinux.org/index.php/XDG_Base_Directory
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
+export XDG_RUNTIME_DIR=
+{{- if eq .host.distro.family "darwin" -}}
+  "$TMPDIR"
+{{- else if not .host.headless -}}
+  "/run/user/$(id -u)"
+{{- else -}}
+  "/tmp"
+{{- end }}
+{{- if not .host.headless }}
+export XDG_MUSIC_DIR="$HOME/Music"
+export XDG_VIDEOS_DIR="$HOME/Videos"
+export XDG_DESKTOP_DIR="$HOME/Desktop"
+export XDG_PICTURES_DIR="$HOME/Pictures"
+export XDG_DOWNLOAD_DIR="$HOME/Downloads"
+export XDG_DOCUMENTS_DIR="$HOME/Documents"
+export XDG_TEMPLATES_DIR="$HOME/Templates"
+export XDG_PUBLICSHARE_DIR="$HOME/Public"
+{{- end }}
+
+### ASDF
+export ASDF_CONFIG_FILE="$XDG_CONFIG_HOME/asdf/asdfrc"
+export ASDF_DIR="$XDG_DATA_HOME/asdf"
+export ASDF_DATA_DIR="$ASDF_DIR"
+export ASDF_CRATE_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-cargo-pkgs
+export ASDF_GEM_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-ruby-pkgs
+export ASDF_GOLANG_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-golang-pkgs
+export ASDF_NPM_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-npm-packages"
+export ASDF_PYTHON_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-python-pkgs
+
+### Cargo
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+
+### Go
+export GOPATH="$XDG_DATA_HOME/go"
+
+### Homebrew
+export HOMEBREW_BUNDLE_FILE="$XDG_CONFIG_HOME/Brewfile"
+{{- if (and (eq .host.distro.family "darwin") (.host.restricted)) }}
+export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
+{{- end }}
+
+### HTTPie
+export HTTPIE_CONFIG_DIR="$XDG_CONFIG_HOME/httpie"
+
+### NPM
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+
+### Rustup
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
+
+### wget
+export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
+
+### Colorize man pages
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
+export LESSHISTFILE=-
+
+### Line Wrap
+setterm -linewrap on 2>/dev/null
+
+### History
+export HISTCONTROL=ignoreboth
+export HISTSIZE=5000
+export HIST_STAMPS=mm/dd/yyyy
+export SAVEHIST=5000
+
+### Editor
+{{- if not .host.headless }}
+if command -v code > /dev/null; then
+  export EDITOR='code --wait'
+else
+  # Source: https://unix.stackexchange.com/questions/4859/visual-vs-editor-what-s-the-difference
+  export EDITOR='vi -e'
+fi
+{{- else -}}
+export EDITOR='vi -e'
+{{- end -}}
+export VISUAL="$EDITOR"
+
+{{- if eq .host.type "wsl" }}
+### WSL
+export LIBGL_ALWAYS_INDIRECT="1"
+export BROWSER='/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe'
+
+{{- end }}
+### PATH
+PATH="$PATH:$HOME/.local/bin:$CARGO_HOME/bin"
+
+
+# Don’t clear the screen after quitting a manual page
+export MANPAGER="less -X"
+### GTK
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+
+### Homebrew
+if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
+  export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+  export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+  export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+  export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}"
+  export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
+  export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
+  export WHALEBREW_INSTALL_PATH="/home/linuxbrew/.linuxbrew/whalebrew"
+fi
+
+### Whalebrew
+export WHALEBREW_CONFIG_DIR="$HOME/.config/whalebrew"
+
+### Go
+export GOPATH="${HOME}/.local/go"
+export GO111MODULE=on
+export PATH="$PATH:${GOPATH}/bin"
+if command -v go > /dev/null && which go | grep -q 'asdf' > /dev/null && command -v asdf > /dev/null; then
+  GOROOT="$(asdf where golang)/go"
+  export GOROOT
+  export PATH="$PATH:${GOROOT}/bin"
+elif command -v go > /dev/null && command -v brew > /dev/null; then
+  GOROOT="$(brew --prefix go)/libexec"
+  export GOROOT
+  export PATH="$PATH:${GOROOT}/bin"
+fi
+
+### Android Studio
+if [ -d ~/Library/Android ]; then
+  export PATH="$PATH:~/Library/Android/sdk/cmdline-tools/latest/bin"
+  export PATH="$PATH:~/Library/Android/sdk/platform-tools"
+  export PATH="$PATH:~/Library/Android/sdk/tools/bin"
+  export PATH="$PATH:~/Library/Android/sdk/tools"
+fi
+export ANDROID_SDK_HOME="$HOME/.local/android-sdk"
+
+### Azure CLI
+export AZURE_CONFIG_DIR="$HOME/.config/azure"
+
+### bat
+export BAT_CONFIG_PATH="$HOME/.config/batrc"
+if command -v bat > /dev/null; then
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+  alias bathelp='bat --plain --language=help'
+  alias cat='bat -pp'
+  alias less='bat --paging=always'
+  help() {
+    "$@" --help 2>&1 | bathelp
+  }
+fi
+
+### BitWarden
+# https://bitwarden.com/help/cli/#using-an-api-key
+# BW_CLIENTID	client_id
+# BW_CLIENTSECRET
+
+### curlie
+if command -v curlie > /dev/null; then
+  alias curl='curlie'
+fi
+
+### Elastic Agent
+# https://www.elastic.co/guide/en/fleet/current/agent-environment-variables.html#env-common-vars
+
+### exa
+if command -v exa > /dev/null; then
+  alias ls='exa --long --all --color auto --icons --sort=type'
+  alias tree='exa --tree'
+  alias la='ls -la'
+  alias lt='ls --tree --level=2'
+fi
+
+### fzf
+if command -v fd > /dev/null; then
+  export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+fi
+
+### Git
+export GIT_MERGE_AUTOEDIT=no
+
+### gitfuzzy
+export GF_BAT_STYLE=changes
+export GF_BAT_THEME=zenbur
+export GF_SNAPSHOT_DIRECTORY="$HOME/.local/git-fuzzy-snapshots"
+if command -v delta > /dev/null; then
+  export GF_PREFERRED_PAGER="delta --theme=gruvbox --highlight-removed -w __WIDTH__"
+fi
+
+### gping
+# Replacement for ping that includes graph
+if command -v gping > /dev/null; then
+  alias ping='gping'
+fi
+
+### McFly
+export MCFLY_FUZZY=2
+export MCFLY_RESULTS=14
+export MCFLY_KEY_SCHEME=vim
+
+### nnn
+if command -v nnn > /dev/null; then
+  alias n='nnn -de'
+  alias N='sudo -E nnn -dH'
+  alias nnn-install-plugins='curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh'
+  export NNN_RCLONE='rclone mount --read-only --no-checksum'
+  export NNN_SSHFS='sshfs -o reconnect,idmap=user,cache_timeout=3600'
+fi
+
+### Poetry
+export POETRY_HOME="$HOME/.local/poetry"
+export PATH="$POETRY_HOME/bin:$PATH"
+
+### Rear
+# https://github.com/rear/rear/blob/master/doc/user-guide/03-configuration.adoc
+
+### ripgrep
+export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
+if command -v rg &> /dev/null; then
+  alias grep='rg'
+fi
+
+### Ruby
+export GEM_HOME="$HOME/.local/gems"
+export PATH="$PATH:$GEM_HOME/bin"
+
+### Volta
+export VOLTA_HOME="$HOME/.local/volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+### SDKMan
+export SDKMAN_DIR="$HOME/.local/sdkman"
+
+### Vagrant
+export VAGRANT_DEFAULT_PROVIDER=virtualbox
+export VAGRANT_HOME="$HOME/.local/vagrant.d"
+
+### wget
+export WGETRC="$HOME/.config/wgetrc"
