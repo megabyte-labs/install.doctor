@@ -13,7 +13,7 @@
 
 ### Shell
 [".config/shell/lscolors.sh"]
-    type = "fil"
+    type = "file"
     url = "https://raw.githubusercontent.com/trapd00r/LS_COLORS/master/lscolors.sh"
     refreshPeriod = "{{ $refreshPeriod }}"
 [".local/antigen.zsh"]
@@ -35,6 +35,14 @@
 [".local/share/delta/themes.gitconfig"]
     type = "file"
     url = "https://raw.githubusercontent.com/dandavison/delta/master/themes.gitconfig"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/share/zsh/site-functions/fzf.zsh"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/share/zsh/site-functions/fzf-key-bindings.zsh"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh"
     refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Neovim

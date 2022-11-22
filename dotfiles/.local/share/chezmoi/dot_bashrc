@@ -48,12 +48,6 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
         ;;
       esac
     fi
-
-    ### Directory Colors (https://github.com/trapd00r/LS_COLORS)
-    command -v gdircolors > /dev/null 2>&1 || gdircolors() { dircolors "$@"; }
-    if command -v gdircolors > /dev/null && [ -f "$XDG_CONFIG_HOME/dircolors" ]; then
-      eval "$(gdircolors -b "$XDG_CONFIG_HOME/dircolors")"
-    fi
   else
     # Minimal session
     if command -v oh-my-posh > /dev/null; then

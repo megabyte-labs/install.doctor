@@ -11,6 +11,32 @@ if [ -f "$XDG_CONFIG_HOME/shell/functions" ]; then
   . "$XDG_CONFIG_HOME/shell/functions"
 fi
 
+### Colorize
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias diff='diff --color=auto'
+alias ip='ip --color=auto'
+alias pacman='pacman --color=auto'
+
+### Aliases (better defaults for simple commands)
+alias cp='cp -v'
+alias rm='rm -I'
+alias mv='mv -iv'
+alias ln='ln -sriv'
+alias xclip='xclip -selection c'
+command -v vim > /dev/null && alias vi='vim'
+
+### TOP - order based on preference of "top" application (last item will always be chosen if installed, e.g. glances)
+command -v htop > /dev/null && alias top='htop'
+command -v gotop > /dev/null && alias top='gotop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
+command -v ytop > /dev/null && alias top='ytop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
+command -v btm > /dev/null && alias top='btm $([ "$COLOR_SCHEME" = "light" ] && echo "--color default-light")'
+# themes for light/dark color-schemes inside ~/.config/bashtop; Press ESC to open the menu and change the theme
+command -v bashtop > /dev/null && alias top='bashtop'
+command -v bpytop > /dev/null && alias top='bpytop'
+command -v glances > /dev/null && alias top='glances'
+
 ### Bash / ZSH
 if [ "$BASH_SUPPORT" = 'true' ]; then
   ### OS Detection
@@ -78,35 +104,21 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   fi
 
   ### Directory Colors
-  if [ -f "$]
-  . "~/.local/share/lscolors.sh"
+  if [ -f "$XDG_CONFIG_HOME/shell/lscolors.sh" ]; then
+    . "$XDG_CONFIG_HOME/shell/lscolors.sh"
+  fi
+
+  ### Directory Colors (https://github.com/trapd00r/LS_COLORS)
+  command -v gdircolors >/dev/null 2>&1 || alias gdircolors="dircolors"
+  if type gdircolors &> /dev/null && [ -f "$XDG_CONFIG_HOME/dircolors" ]; then
+	  eval "$(gdircolors -b "$XDG_CONFIG_HOME/dircolors")"
+  fi
+
+  ### MOTD
+  if [ -f "$XDG_CONFIG_HOME/shell/motd" ]; then
+    . "$XDG_CONFIG_HOME/shell/motd"
+  fi
 fi
-
-### Colorize
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-alias diff='diff --color=auto'
-alias ip='ip --color=auto'
-alias pacman='pacman --color=auto'
-
-### Aliases (better defaults for simple commands)
-alias cp='cp -v'
-alias rm='rm -I'
-alias mv='mv -iv'
-alias ln='ln -sriv'
-alias xclip='xclip -selection c'
-command -v vim > /dev/null && alias vi='vim'
-
-### TOP - order based on preference of "top" application (last item will always be chosen if installed, e.g. glances)
-command -v htop > /dev/null && alias top='htop'
-command -v gotop > /dev/null && alias top='gotop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
-command -v ytop > /dev/null && alias top='ytop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
-command -v btm > /dev/null && alias top='btm $([ "$COLOR_SCHEME" = "light" ] && echo "--color default-light")'
-# themes for light/dark color-schemes inside ~/.config/bashtop; Press ESC to open the menu and change the theme
-command -v bashtop > /dev/null && alias top='bashtop'
-command -v bpytop > /dev/null && alias top='bpytop'
-command -v glances > /dev/null && alias top='glances'
 
 ### Cargo
 if [ -f "$CARGO_HOME/env" ]; then

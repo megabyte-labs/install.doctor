@@ -7,8 +7,10 @@ export LC_ALL="en_US.UTF-8"
 ### Advanced Bash-features are supported
 export BASH_SUPPORT=true
 
-### ~/.profile
-[[ -f "$HOME/.profile" ]] && . "$HOME/.profile"
+### Import Common Settings
+if [ -f "$HOME/.config/shell/profile" ]; then
+  . "$HOME/.config/shell/profile"
+fi
 
 ### Misc.
 export HISTFILE="$XDG_STATE_HOME/zsh/history"
@@ -31,7 +33,7 @@ fi
 # --------------------------------- SETTINGS ----------------------------------
 setopt AUTO_CD
 setopt BEEP
-#setopt CORRECT
+setopt CORRECT
 setopt HIST_BEEP
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_FIND_NO_DUPS
@@ -242,12 +244,6 @@ xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
 	;;
 esac
 
-# https://github.com/trapd00r/LS_COLORS
-command -v gdircolors >/dev/null 2>&1 || alias gdircolors="dircolors"
-if type gdircolors &> /dev/null && [ -f "$HOME/.config/dircolors" ]; then
-	eval "$(gdircolors -b "$HOME/.config/dircolors")"
-fi
-
 ### Antigen
 if [ -f "$HOME/.local/antigen.zsh" ]; then
   source "$HOME/.local/antigen.zsh"
@@ -271,6 +267,7 @@ if command -v antigen > /dev/null; then
   antigen bundle minikube
   antigen bundle ng
   antigen bundle nomad
+  antigen bundle npm
   antigen bundle redis-cli
   antigen bundle ripgrep
   # antigen bundle rust
@@ -304,7 +301,6 @@ if command -v antigen > /dev/null; then
   antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle marlonrichert/zsh-autocomplete@main
   antigen theme romkatv/powerlevel10k
-  antigen bundle npm
   antigen apply
 fi
 
@@ -325,8 +321,8 @@ if command -v direnv > /dev/null; then
 fi
 
 ### Java (asdf)
-if [ -f "$HOME/.local/asdf/plugins/java/set-java-home.zsh" ]; then
-  # . "$HOME/.local/asdf/plugins/java/set-java-home.zsh"
+if [ -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ]; then
+  # . "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
 fi
 
 ### mcfly
@@ -345,8 +341,8 @@ if [ -f "$HOME/.fig/shell/zshrc.post.zsh" ]; then
 fi
 
 ### Powerline
-if [ -f ~/.local/p10k.zsh ]; then
-	source ~/.local/p10k.zsh
+if [ -f "$HOME/.local/p10k.zsh" ]; then
+	source "$HOME/.local/p10k.zsh"
 fi
 
 ### Bash Completions
