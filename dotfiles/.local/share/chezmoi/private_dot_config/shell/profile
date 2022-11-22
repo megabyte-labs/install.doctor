@@ -108,12 +108,6 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     . "$XDG_CONFIG_HOME/shell/lscolors.sh"
   fi
 
-  ### Directory Colors (https://github.com/trapd00r/LS_COLORS)
-  command -v gdircolors >/dev/null 2>&1 || alias gdircolors="dircolors"
-  if type gdircolors &> /dev/null && [ -f "$XDG_CONFIG_HOME/dircolors" ]; then
-	  eval "$(gdircolors -b "$XDG_CONFIG_HOME/dircolors")"
-  fi
-
   ### MOTD
   if [ -f "$XDG_CONFIG_HOME/shell/motd" ]; then
     . "$XDG_CONFIG_HOME/shell/motd"
