@@ -1,5 +1,6 @@
 _python_argcomplete() {
-    local IFS=''
+    local IFS='
+               '
     local prefix=
     typeset -i n
     (( lastw=${#COMP_WORDS[@]} -1))
