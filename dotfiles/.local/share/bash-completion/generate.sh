@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+### Initialize
+mkdir -p "$HOME/.local/share/bash-completion/completions"
+
 ### Deno
 if command -v deno > /dev/null; then
   deno completions bash > "$HOME/.local/share/bash-completion/completions/deno.bash"
@@ -53,8 +56,10 @@ if command -v helm > /dev/null; then
 fi
 
 ### Hyperfine
-if command -v hyperfine > /dev/null && [ -f /usr/local/src/hyperfine/autocomplete/hyperfine.bash-completion ]; then
-  cp /usr/local/src/hyperfine/autocomplete/hyperfine.bash-completion "$HOME/.local/share/bash-completion/completions/hyperfine.bash"
+if command -v hyperfine > /dev/null && command -v brew > /dev/null && [ -f "$(brew --prefix hyperfine)/etc/bash_completion.d/hyperfine.bash" ]; then
+  cp "$(brew --prefix hyperfine)/etc/bash_completion.d/hyperfine.bash" "$HOME/.local/share/bash-completion/completions/hyperfine.bash"
+elif command -v hyperfine > /dev/null; then
+  
 fi
 
 ### kubectl
