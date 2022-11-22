@@ -1,0 +1,95 @@
+[branch]
+    autosetuprebase = always
+[color]
+    ui = auto
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+[core]
+    autocrlf = false
+    safecrlf = warn
+    pager = delta -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}
+    editor = code --wait
+    whitespace = trailing-space,space-before-tab
+[diff]
+    renamelimit = 0
+    mnemonicprefix = true
+    renames = copies
+[fetch]
+    prune = true
+[help]
+    autocorrect = 1
+[init]
+    defaultBranch = main
+[interactive]
+    diffFilter = delta --color-only
+[merge]
+    ff = only
+    renamelimit = 0
+    summary = true
+    stat = true
+    conflictstyle = diff3
+    tool = vscode
+[mergetool "vscode"]
+    cmd = code --wait $MERGED
+[pack]
+    threads = 0
+[pull]
+    rebase = true
+[push]
+    autoSetupRemote = true
+    default = upstream
+    followTags = true
+[rebase]
+    autosquash = true
+[rerere]
+    enabled = true
+    autoupdate = true
+[transfer]
+    fsckobjects = true
+[status]
+    showUntrackedFiles = all
+
+[delta]
+    features = side-by-side line-numbers decorations
+    syntax-theme = Dracula
+    plus-style = syntax "#003800"
+    minus-style = syntax "#3f0001"
+
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
+    hunk-header-decoration-style = cyan box ul
+
+[delta "line-numbers"]
+    line-numbers-left-style = cyan
+    line-numbers-right-style = cyan
+    line-numbers-minus-style = 124
+    line-numbers-plus-style = 28
+
+[user]
+    name = "{{ .user.name }}"
+    email = "{{ .user.email }}"
+
+[credential "https://github.com"]
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = !gh auth git-credential
+
+[include]
+    path = ~/.config/git/local.toml

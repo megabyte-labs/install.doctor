@@ -3,8 +3,13 @@
 # Prefer US English
 export LANG="en_US"
 
-### Fig / LC_ALL
+# Detect support for advanced terminal features
 if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
+  export BASH_SUPPORT=true
+fi
+
+### Fig / LC_ALL
+if [ "$BASH_SUPPORT" = 'true' ]; then
   if [[ "$(hostname)" != *'-minimal' ]]; then
     export LC_ALL="en_US.UTF-8"
   fi
@@ -26,13 +31,10 @@ if command -v shopt >/dev/null; then
 fi
 
 ### History
-HISTCONTROL=ignoreboth
-HISTSIZE=5000
-HISTFILESIZE=5000
-HISTFILE=~/.local/bash_history
+export HISTFILE="$XDG_STATE_HOME/bash/history"
 
 # Prompt (on bash only)
-if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
+if [ "$BASH_SUPPORT" = 'true' ]; then
   if [[ "$(hostname)" != *'-minimal' ]]; then
     ### Styled Terminal
     case "$TERM" in
@@ -42,15 +44,15 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
     esac
 
     ### Directory Colors (https://github.com/trapd00r/LS_COLORS)
-    # command -v gdircolors > /dev/null 2>&1 || gdircolors() { dircolors "$@"; }
-    # if command -v gdircolors > /dev/null && [ -f "$HOME/.config/dircolors" ]; then
-    #   eval "$(gdircolors -b "$HOME/.config/dircolors")"
-    # fi
+    command -v gdircolors > /dev/null 2>&1 || gdircolors() { dircolors "$@"; }
+    if command -v gdircolors > /dev/null && [ -f "$HOME/.config/dircolors" ]; then
+      eval "$(gdircolors -b "$HOME/.config/dircolors")"
+    fi
   fi
 fi
 
 ### Bash Completions
-if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
+if [ "$BASH_SUPPORT" = 'true' ]; then
   ### direnv
   if command -v direnv > /dev/null; then
     eval "$(direnv hook bash)"

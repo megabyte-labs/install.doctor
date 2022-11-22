@@ -1,6 +1,11 @@
 # Prefer US English
 export LANG="en_US"
 
+# Detect support for advanced terminal features
+if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
+  export BASH_SUPPORT=true
+fi
+
 chmod +x ~/.local/bin/*
 
 ### Clean Up

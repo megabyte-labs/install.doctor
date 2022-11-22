@@ -4,15 +4,15 @@
 export LANG="en_US"
 export LC_ALL="en_US.UTF-8"
 
+### Advanced Bash-features are supported
+export BASH_SUPPORT=true
+
 ### Misc.
-HISTFILE=~/.local/zsh_history
-HIST_STAMPS=mm/dd/yyyy
-HISTSIZE=5000
-SAVEHIST=5000
-ZLE_RPROMPT_INDENT=0
-WORDCHARS=${WORDCHARS//\/}
-PROMPT_EOL_MARK=
-TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
+export HISTFILE=~/.local/zsh_history
+export ZLE_RPROMPT_INDENT=0
+export WORDCHARS=${WORDCHARS//\/}
+export PROMPT_EOL_MARK=
+export TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
 
 ### Antigen
 export ADOTDIR="$HOME/.local/antigen"
@@ -66,9 +66,6 @@ zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 # shellcheck disable=SC2016
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-
-### For Debugging (clears completion cache each time)
-zstyle ":completion:*:commands" rehash 1
 
 # Key bindings
 bindkey -e
@@ -245,10 +242,10 @@ xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
 esac
 
 # https://github.com/trapd00r/LS_COLORS
-#command -v gdircolors >/dev/null 2>&1 || alias gdircolors="dircolors"
-#if type gdircolors &> /dev/null && [ -f "$HOME/.config/dircolors" ]; then
-#	eval "$(gdircolors -b "$HOME/.config/dircolors")"
-#fi
+command -v gdircolors >/dev/null 2>&1 || alias gdircolors="dircolors"
+if type gdircolors &> /dev/null && [ -f "$HOME/.config/dircolors" ]; then
+	eval "$(gdircolors -b "$HOME/.config/dircolors")"
+fi
 
 ### Antigen
 if [ -f "$HOME/.local/antigen.zsh" ]; then
@@ -320,10 +317,6 @@ fi
 if command -v zoxide > /dev/null; then
 	zstyle ':autocomplete:recent-dirs' backend zoxide
 fi
-
-# oh-my-zsh might be overwriting the ls command so placing it here as well as fix
-# command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
-#	alias tree='lsd --tree'
 
 ### direnv
 if command -v direnv > /dev/null; then
