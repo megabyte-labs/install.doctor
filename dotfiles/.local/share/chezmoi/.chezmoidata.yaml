@@ -62,6 +62,31 @@ alternatives:
   # :debian is defined so nothing will be installed on Debian for nb
   nb:debian:
     brew: []
+  neovim:
+    apk: neovim
+    apt:
+      - neovim
+      - python3-neovim
+    brew: neovim
+    choco: neovim
+    dnf:
+      - neovim
+      - python3-neovim
+    flatpak: io.neovim.nvim
+    nix: neovim
+    pacman:
+      - neovim
+      - python-pynvim
+    pkg:
+      - neovim
+      - py27-pynvim
+      - py36-pynvim
+    port: neovim
+    winget: Neovim.Neovim
+    zypper:
+      - neovim
+      - python-neovim
+      - python3-neovim
   node:
     brew: node
     scoop: nodejs
@@ -103,6 +128,9 @@ alternatives:
     brew: rsync
     choco: rsync
     dnf: rsync
+  sad:
+    brew: ms-jpq/sad/sad
+    pacman: sad
   shotcut:
     choco: shotcut
     flatpak: org.shotcut.Shotcut

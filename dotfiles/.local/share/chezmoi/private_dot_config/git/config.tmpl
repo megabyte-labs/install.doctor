@@ -12,6 +12,21 @@
   dc = diff --cached
   l = log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit
   master = !git add --all && git commit -am 'Quick commit.' -n && git push origin master
+  sub  = submodule update --init --recursive
+  # Find commits by source code.
+  cc = "!f() { \
+    git log --pretty=custom --decorate --date=short -S\"$1\"; \
+  }; f"
+  # Find commits by commit message.
+  cm = "!f() { \
+    git log --pretty=custom --decorate --date=short --grep=\"$1\"; \
+  }; f"
+  # Credit an author on the latest commit.
+  credit = "!f() { \
+    if [ -n \"$1\" ] && [ -n \"$2\" ]; then \
+      git commit --amend --author \"$1 <$2>\" -C HEAD; \
+    fi \
+  }; f"
 [branch]
   autosetuprebase = always
 [color]
@@ -38,10 +53,12 @@
   template = ${XDG_CONFIG_HOME}/git/commit-template
 [core]
   editor = vi
-  excludesfile = ~/.gitignore
+  excludesfile = ${XDG_CONFIG_HOME}/git/ignore
   autocrlf = input
-  attributesfile = ~/.gitattributes
+  attributesfile = ${XDG_CONFIG_HOME}/git/attributes
   editor = code --wait
+  eol = lf
+  fileMode = false
   pager = delta -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}
   safecrlf = warn
   whitespace = trailing-space,space-before-tab
@@ -83,6 +100,8 @@
   renamelimit = 0
   mnemonicprefix = true
   renames = copies
+[diff "bin"]
+  textconv = hexdump -v -C
 [diff "image"]
   command = compare $2 $1 png:- | montage -geometry +4+4 $2 - $1 png:- | display -title \"$1\" -
 [difftool]
@@ -107,6 +126,8 @@
   cmd = code --wait $MERGED
 [pack]
   threads = 0
+[pretty]
+  custom = "%C(magenta)%h%C(red)%d %C(yellow)%ar %C(green)%s %C(yellow)(%an)"
 [pull]
   rebase = true
 [push]

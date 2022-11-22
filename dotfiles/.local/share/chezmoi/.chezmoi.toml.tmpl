@@ -22,6 +22,10 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
     name = {{ $name | quote }}
 {{- end }}
 
+[diff]
+    format = "git"
+    pager = "delta"
+
 [git]
     autoCommit = true
     autoPush = true
