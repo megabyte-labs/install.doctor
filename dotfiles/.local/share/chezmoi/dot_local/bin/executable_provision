@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Install Homebrew
+if ! type brew &> /dev/null; then
+  if type sudo &> /dev/null && sudo -n true; then
+    echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  else
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+fi
+
+# Install Homebrew bundle and go-task
+brew install go-task/tap/go-task
+brew install jq
+brew install yq
+
+# Ensure dotfiles are present
+if [ ! -f "$HOME/.local/bin/install-dotfiles" ]; then
+  bash <(curl -sSL https://gitlab.com/megabyte-labs/misc/dotfiles/-/raw/master/dotfiles/.local/bin/install-dotfiles)
+else
+  chmod +x "$HOME/.local/bin/install-dotfiles"
+  install-dotfiles
+fi
+
+# Use run alias to invoke the `$HOME/.local/Taskfile.yml`
+if [ -z "$1" ]; then
+  run localhost:provision
+else
+  run "localhost:provision:$1"
+fi

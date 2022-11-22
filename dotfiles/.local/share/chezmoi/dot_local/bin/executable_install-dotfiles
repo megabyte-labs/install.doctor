@@ -1,0 +1,133 @@
+#!/usr/bin/env bash
+
+# Alias logg function to true if it is not available
+if ! command -v logg > /dev/null; then
+  alias logg='true'
+fi
+
+# Clear ZSH cached stuff
+if [ -f "$HOME/.zshrc.zwc" ]; then
+  rm -f "$HOME/.zshrc.zwc"
+fi
+if [ -d "$HOME/.local/antigen" ]; then
+  rm -rf "$HOME/.local/antigen"
+fi
+if [ -d "$HOME/.zsh_sessions" ]; then
+  rm -rf "$HOME/.zsh_sessions"
+fi
+
+if [ -f '/etc/qubes-release' ]; then
+  # Qubes dom0
+  logg info 'Ensuring provision VM is present'
+  qvm-create --label red --template debian-11 provision &> /dev/null || EXIT_CODE=$?
+  logg info 'Downloading dotfile assets with provision VM'
+  qvm-run --pass-io provision 'if [ -d ~/Downloads/professor-dotfiles ]; then cd ~/Downloads/professor-dotfiles && git config pull.rebase false && rm -rf dotfiles/.local/asdf && rm -rf dotfiles/.local/common/shared && git pull origin master && git clone https://github.com/asdf-vm/asdf.git dotfiles/.local/asdf --branch v0.10.2 && mkdir -p dotfiles/.local/common/shared && git clone https://gitlab.com/megabyte-labs/common/shared.git dotfiles/.local/common/shared; else git clone https://gitlab.com/megabyte-labs/dotfiles.git ~/Downloads/professor-dotfiles; cd ~/Downloads/professor-dotfiles/dotfiles/.local && git clone https://github.com/asdf-vm/asdf.git asdf --branch v0.10.2 && mkdir common && git clone https://gitlab.com/megabyte-labs/common/shared.git common/shared; fi; cd ~/Downloads; tar -zcvf /tmp/professor-dotfiles.tar.gz professor-dotfiles'
+  logg info 'Transferring dotfiles to dom0 from provision VM'
+  qvm-run --pass-io provision "cat /tmp/professor-dotfiles.tar.gz" > "/tmp/dotfiles.tar.gz"
+  logg info 'Unpacking dotfile assets to /usr/local/src/professor-dotfiles'
+  tar -xzf "/tmp/dotfiles.tar.gz" -C "$HOME"
+  rm -f "/tmp/dotfiles.tar.gz"
+  sudo rm -rf /usr/local/src/professor-dotfiles
+  sudo mv "$HOME/professor-dotfiles" /usr/local/src/professor-dotfiles
+else
+  if [ ! -w /usr/local/src/professor-dotfiles ]; then
+    logg info 'Using sudo because /usr/local/src/professor-dotfiles is not writable'
+    SUDO_PREFIX="sudo"
+  fi
+  if [ -d /usr/local/src/professor-dotfiles/.git ]; then
+    logg info 'Updating dotfiles already present in /usr/local/src/professor-dotfiles'
+    cd /usr/local/src/professor-dotfiles
+    ${SUDO_PREFIX} git config pull.rebase false
+    ${SUDO_PREFIX} rm -rf dotfiles/.local/asdf
+    ${SUDO_PREFIX} rm -rf dotfiles/.local/common/shared
+    ${SUDO_PREFIX} git pull origin master
+    ${SUDO_PREFIX} git clone https://github.com/asdf-vm/asdf.git dotfiles/.local/asdf --branch v0.10.2
+    ${SUDO_PREFIX} git clone https://gitlab.com/megabyte-labs/common/shared.git dotfiles/.local/common/shared
+    ${SUDO_PREFIX} chown -Rf "$USER":"$(id -g -n)" /usr/local/src/professor-dotfiles
+    cd ~/
+  else
+    logg info 'Cloning new dotfiles to /usr/local/src/professor-dotfiles'
+    ${SUDO_PREFIX} rm -rf /usr/local/src/professor-dotfiles
+    ${SUDO_PREFIX} git clone https://gitlab.com/megabyte-labs/dotfiles.git /usr/local/src/professor-dotfiles
+    ${SUDO_PREFIX} git clone https://github.com/asdf-vm/asdf.git /usr/local/src/professor-dotfiles/dotfiles/.local/asdf --branch v0.10.2
+    ${SUDO_PREFIX} mkdir -p /usr/local/src/professor-dotfiles/dotfiles/.local/common/shared
+    ${SUDO_PREFIX} git clone https://gitlab.com/megabyte-labs/common/shared.git /usr/local/src/professor-dotfiles/dotfiles/.local/common/shared
+    ${SUDO_PREFIX} chown -Rf "$USER":"$(id -g -n)" /usr/local/src/professor-dotfiles
+  fi
+  if [ -n "$CREATE_PACKAGE" ]; then
+    logg info 'Creating /tmp/professor-dotfiles.tar.gz'
+    cd /usr/local/src
+    ${SUDO_PREFIX} tar -zcvf /tmp/professor-dotfiles.tar.gz professor-dotfiles
+    cd ~/
+  fi
+fi
+
+# Copy dotfile folders
+logg info 'Copying dotfiles folders to user $HOME directory'
+while read DOTFILE_FOLDER; do
+  BASENAME_FOLDER="$(basename "$DOTFILE_FOLDER")"
+  if [ ! -d "$HOME/$BASENAME_FOLDER" ]; then
+    mkdir -p "$HOME/$BASENAME_FOLDER"
+  fi
+  cp -rf "$DOTFILE_FOLDER/"* "$HOME/$BASENAME_FOLDER"
+done < <(find /usr/local/src/professor-dotfiles/dotfiles -maxdepth 1 -mindepth 1 -type d)
+
+# Copy dotfile files
+logg info 'Copying dotfiles files to user $HOME directory'
+while read DOTFILE_FILE; do
+  BASENAME_FILE="$(basename "$DOTFILE_FILE")"
+  cp "$DOTFILE_FILE" "$HOME/$BASENAME_FILE"
+  chmod 600 "$HOME/$BASENAME_FILE"
+done < <(find /usr/local/src/professor-dotfiles/dotfiles -maxdepth 1 -mindepth 1 -type f)
+
+# Ensure .local/bin contents are executable
+logg info 'Ensuring programs in ~/.local/bin are executable'
+while read LOCAL_BIN; do
+  chmod +x "${LOCAL_BIN}"
+done < <(find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f)
+
+if [ -d /Applications ] && [ -d /System ]; then
+  logg info 'Adding Hack font to ~/Library/Fonts'
+  mkdir -p "$HOME/Library/Fonts"
+  cp "$HOME/.local/share/fonts/Hack Bold Nerd Font Complete.ttf" "$HOME/Library/Fonts/Hack Bold Nerd Font Complete.ttf"
+  logg info 'Configuring the Terminal.app'
+  theme=$(<$HOME/.local/theme/Betelgeuse.macOS.terminal)
+  plutil -replace Window\ Settings.Betelgeuse -xml "$theme" ~/Library/Preferences/com.apple.Terminal.plist
+  defaults write com.apple.Terminal "Default Window Settings" -string "Betelgeuse"
+  defaults write com.apple.Terminal "Startup Window Settings" -string "Betelgeuse"
+  /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Betelgeuse:columnCount integer 124" ~/Library/Preferences/com.apple.Terminal.plist
+  /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Betelgeuse:rowCount integer 35" ~/Library/Preferences/com.apple.Terminal.plist
+  /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Betel-Bash:columnCount integer 124" ~/Library/Preferences/com.apple.Terminal.plist
+  /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Betel-Bash:rowCount integer 35" ~/Library/Preferences/com.apple.Terminal.plist
+
+  # macOS desktop background
+  if command -v m > /dev/null; then
+    logg info 'Updating desktop wallpaper'
+    m wallpaper "/Users/$(whoami)/.local/theme/background.jpg"
+  fi
+fi
+
+# Update local Betelgeuse theme files (if not on macOS system)
+if [ ! -d /Applications ] && [ ! -d /Library ]; then
+  logg info 'Updating Betelgeuse theme files'
+  if [ -f '/etc/qubes-release' ]; then
+    # Qubes dom0
+    qvm-create --label red --template debian-11 provision &> /dev/null || EXIT_CODE=$?
+    qvm-run --pass-io provision 'rm -f ~/Downloads/betelgeuse-master.tar.gz && curl -sSL https://gitlab.com/megabyte-labs/misc/betelgeuse/-/archive/master/betelgeuse-master.tar.gz > /tmp/betelgeuse-master.tar.gz'
+    qvm-run --pass-io provision "cat /tmp/betelgeuse-master.tar.gz" > "/tmp/betelgeuse-master.tar.gz"
+    cd /tmp
+    tar -xvf betelgeuse-master.tar.gz > /dev/null
+    rm betelgeuse-master.tar.gz
+    cp -rf betelgeuse-master/share/ "$HOME/.local/share"
+    rm -rf betelgeuse-master
+  else
+    curl -sSL https://gitlab.com/megabyte-labs/misc/betelgeuse/-/archive/master/betelgeuse-master.tar.gz > betelgeuse-master.tar.gz
+    tar -xzf betelgeuse-master.tar.gz > /dev/null
+    rm betelgeuse-master.tar.gz
+    cp -rf betelgeuse-master/share/ "$HOME/.local/share"
+    rm -rf betelgeuse-master
+  fi
+fi
+
+# grep -q QT_QPA_PLATFORMTHEME=qt5ct /etc/environment || echo QT_QPA_PLATFORMTHEME=qt5ct | sudo tee -a /etc/environment
+# sudo cp -rv "$HOME/.local/share/qt5ct" /usr/share
