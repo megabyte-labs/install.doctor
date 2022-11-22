@@ -108,6 +108,11 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     . "$XDG_CONFIG_HOME/shell/lscolors.sh"
   fi
 
+  ### fzf-git
+  if [ -f "$HOME/.local/scripts/fzf-git.bash" ]; then
+    . "$HOME/.local/scripts/fzf-git.bash"
+  fi
+
   ### MOTD
   if [ -f "$XDG_CONFIG_HOME/shell/motd" ]; then
     . "$XDG_CONFIG_HOME/shell/motd"
@@ -117,6 +122,16 @@ fi
 ### Cargo
 if [ -f "$CARGO_HOME/env" ]; then
   . "$CARGO_HOME/env"
+fi
+
+### Docker Functions / Aliases
+if [ -f "$HOME/.local/scripts/docker-functions.bash" ]; then
+  . "$HOME/.local/scripts/docker-functions.bash"
+fi
+
+### fzf-tmux
+if [ -f "$HOME/.local/scripts/fzf-tmux.bash" ]; then
+  . "$HOME/.local/scripts/fzf-tmux.bash"
 fi
 
 ### SDKMan
