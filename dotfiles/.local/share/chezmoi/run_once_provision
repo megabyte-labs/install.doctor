@@ -6,7 +6,7 @@
 {{ if (hasKey $packageMap "_deps") }}
 {{   $deps := (get $packageMap "_deps") }}
 {{   range index $deps }}
-{{      }}
+{{   end }}
 {{ end }}
 
 {{ if (eq .chezmoi.os "windows") }}
@@ -21,22 +21,22 @@
 {{ else if (eq .chezmoi.os "android") }}
 {{ $managers := (list "apk") }}
 
-{{ else if (eq .chezmoi.os "linux") and (eq .chezmoi.osRelease "arch") }}
+{{ else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease "arch") }}
 {{ $managers := (list "flatpak" "snap" "whalebrew" "pacman" "brew" "yay" "go" "cargo" "npm" "pipx" "gem" "appimage" "binary") }}
 
-{{ else if (eq .chezmoi.os "linux") and (eq .chezmoi.osRelease "centos") }}
+{{ else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease "centos") }}
 {{ $managers := (list "flatpak" "snap" "whalebrew" "dnf" "brew" "go" "cargo" "npm" "pipx" "gem" "appimage" "binary") }}
 
-{{ else if (eq .chezmoi.os "linux") and (eq .chezmoi.osRelease "debian") }}
+{{ else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease "debian") }}
 {{ $managers := (list "flatpak" "snap" "whalebrew" "apt" "brew" "go" "cargo" "npm" "pipx" "gem" "appimage" "binary") }}
 
-{{ else if (eq .chezmoi.os "linux") and (eq .chezmoi.osRelease "fedora") }}
+{{ else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease "fedora") }}
 {{ $managers := (list "flatpak" "snap" "whalebrew" "dnf" "brew" "go" "cargo" "npm" "pipx" "gem" "appimage" "binary") }}
 
-{{ else if (eq .chezmoi.os "linux") and (eq .chezmoi.osRelease "opensuse") }}
+{{ else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease "opensuse") }}
 {{ $managers := (list "flatpak" "snap" "whalebrew" "zypper" "brew" "go" "cargo" "npm" "pipx" "gem" "appimage" "binary") }}
 
-{{ else if (eq .chezmoi.os "linux") and (eq .chezmoi.osRelease "ubuntu") }}
+{{ else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease "ubuntu") }}
 {{ $managers := (list "flatpak" "snap" "whalebrew" "apt" "brew" "go" "cargo" "npm" "pipx" "gem" "appimage" "binary") }}
 
 {{ end }}
