@@ -8,8 +8,9 @@ export LC_ALL="en_US.UTF-8"
 export BASH_SUPPORT=true
 
 ### Import Common Settings
+export XDG_CONFIG_HOME="$HOME/.config"
 if [ -f "$HOME/.config/shell/profile" ]; then
-  . "$HOME/.config/shell/profile"
+  . "$XDG_CONFIG_HOME/shell/profile"
 fi
 
 ### Misc.
