@@ -56,6 +56,19 @@
     url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     refreshPeriod = "{{ $refreshPeriod }}"
 
+### Taskfiles
+[".local"]
+    type = "archive"
+    url = "https://gitlab.com/megabyte-labs/common/shared/-/archive/master/shared-master.tar.gz"
+    exact = true
+    stripComponents = 3
+    refreshPeriod = "{{ $refreshPeriod }}"
+    include = ["taskfiles/**"]
+["Taskfile.yml"]
+    type = "file"
+    url = "https://gitlab.com/megabyte-labs/common/shared/-/raw/master/Taskfile.yml"
+    refreshPeriod = "{{ $refreshPeriod }}"
+
 {{- if (not .host.headless) and (ne .chezmoi.os "windows") }}
 ### Neovim
 [".config/nvim"]
