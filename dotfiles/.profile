@@ -1,6 +1,8 @@
 # shellcheck disable=SC1090,SC1091
 
 # Aliases / Functions / Exports
+if [ -f "$HOME/.config/shell/exports" ]; then
+
 if [ -f "$XDG_CONFIG_HOME/shell/exports" ]; then
   . "$XDG_CONFIG_HOME/shell/exports"
 fi
