@@ -1,18 +1,91 @@
-{{- $codespaces:= env "CODESPACES" | not | not -}}
-{{- if $codespaces | not }}
-{{-   $email := promptStringOnce . "email" "Primary e-mail address" -}}
-{{-   $name := promptStringOnce . "name" "Full name" -}}
-{{-   $gmailAddress := promptStringOnce "Gmail address" -}}
-{{-   $gmailAddressAppPassword := promptStringOnce "Gmail app password" -}}
-{{-   $ngrokAuthToken := promptStringOnce "Ngrok authentication token" -}}
-{{-   $slackApiToken := promptStringOnce "Slack API token" -}}
+{{- $headless := false -}}
+{{- $ephemeral := false -}}
+{{- $restricted := false -}}
+{{- $work := false -}}
+{{- $ephemeralEnvOrUsername := or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") (eq .chezmoi.username "root" "ubuntu" "vagrant" "vscode" "devcontainer") -}}
+{{- $ephemeralCgroup := and (stat "/proc/1/cgroup") (output "cat" "/proc/1/cgroup" | regexMatch "(docker|lxc)") -}}
+{{- if or $ephemeralEnvOrUsername $ephemeralCgroup -}}
+{{-   $headless = true -}}
+{{-   $ephemeral = true -}}
+{{-   writeToStdout "Chezmoi is running in a container.\n" -}}
+{{- end -}}
+
+{{- $toolchains := list "cloud" "docker" "iac" "java" "kubernetes" "node" "python" "rust" "extra" }}
+{{- $data := . }}
+{{- $_ := set $data "host" (default (dict) (get $data "host")) -}}
+{{- $_ := set $data "user" (default (dict) (get $data "user")) -}}
+{{- $_ := set $data "toolchains" (default (dict) (get $data "toolchains")) -}}
+
+{{- $distro := dict "family" .chezmoi.os "id" (get .chezmoi.osRelease "id" | default .chezmoi.os) -}}
+{{- if or (eq $distro.id "arch") (eq $distro.id "archarm") -}}
+{{- $_ := set $distro "id" "archlinux" -}}
+{{- end -}}
+
+{{- $chassisType := "desktop" }}
+{{- if $ephemeral -}}
+{{-   $chassisType = "ephemeral" }}
+{{- else if eq .chezmoi.os "linux" }}
+{{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+{{-     $chassisType = "wsl" }}
+{{-   else -}}
+{{-     $chassisType = (output "hostnamectl" "--json=short" | mustFromJson).Chassis }}
+{{-   end -}}
+{{- else if eq .chezmoi.os "darwin" }}
+{{-   if contains "MacBook" (output "sysctl" "-n" "hw.model") }}
+{{-     $chassisType = "laptop" }}
+{{-   else }}
+{{-     $chassisType = "desktop" }}
+{{-   end }}
+{{- else if eq .chezmoi.os "windows" }}
+{{-   $chassisType = (output "powershell.exe" "-noprofile" "-command" "if (Get-WmiObject -Class win32_battery -ComputerName localhost) { echo laptop } else { echo desktop }") }}
 {{- end }}
+
+{{- $toolchainsEnabled := dict }}
+{{- range $toolchain := $toolchains }}
+    {{- $withoutToolchains := env "WITHOUT_TOOLCHAINS" -}}
+    {{- $withoutToolchain := env (list "WITHOUT" (upper $toolchain) | join "_") -}}
+    {{- $withToolchain := env (list "WITH" (upper $toolchain) | join "_") -}}
+    {{- if and (or $withoutToolchains $withoutToolchain) (not $withToolchain) -}}
+      {{- writeToStdout (list "Disabled" $toolchain "toolchain.\n" | join " ")  -}}
+      {{- $_ := set $toolchainsEnabled $toolchain false }}
+    {{- else }}
+      {{- $_ := set $toolchainsEnabled $toolchain true }}
+    {{- end}}
+{{- end }}
+
+{{- if stdinIsATTY -}}
+
+{{- $work = promptBoolOnce $data.host "work" "Work Environment" $work -}}
+{{- $restricted = promptBoolOnce $data.host "restricted" "Restricted Environment (no sudo access)" $restricted -}}
+{{- $name = promptStringOnce $data.user "name" "Your Name" $name -}}
+{{- $email = promptStringOnce $data.user "email" "Your Email" $email -}}
+{{- $gmailAddress := promptStringOnce . "G-mail address" -}}
+{{- $gmailAddressAppPassword := promptStringOnce . "G-mail app password" -}}
+{{- $ngrokAuthToken := promptStringOnce . "Ngrok authentication token" -}}
+{{- $slackApiToken := promptStringOnce . "Slack API token" -}}
+{{- range $toolchain := $toolchains }}
+    {{- $enabled := promptBoolOnce $data.toolchains $toolchain (list "Enable" $toolchain "toolchain" | join " ") (get $toolchainsEnabled $toolchain) -}}
+    {{- if and (eq $toolchain "kubernetes") $enabled (not $toolchainsEnabled.docker)  -}}
+    {{- $_ := set $toolchainsEnabled "docker" $enabled }}
+    {{-   writeToStdout "Enabled Docker toolchain to support Kubernetes.\n" -}}
+    {{- end -}}
+    {{- $_ := set $toolchainsEnabled $toolchain $enabled }}
+{{- end }}
+{{- writeToStdout "💡 Tip: you can re-enter your name and email with `chezmoi init --data=false`.\n" -}}
+
+{{- else -}}
+
+{{-   $headless = true -}}
+{{-   writeToStdout "Chezmoi is running in headless environment.\n" -}}
+
+{{- end -}}
+
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
 [data]
     codespaces = {{ $codespaces }}
     headless = {{ $headless }}
-{{- if $codespaces }}
+{{- if $ephemeral }}
     email = "help@megabyte.space"
     gmailAddress = ""
     gmailAddressAppPassword = ""
@@ -36,6 +109,3 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
 [git]
     autoCommit = true
     autoPush = true
-
-[host]
-    restricted = false
