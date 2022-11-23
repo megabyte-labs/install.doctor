@@ -34,7 +34,8 @@ installerMap:
   astronvim:
     _deps:
       - bottom
-      - gdu
+      # Conflicts with coreutils binary on macOS
+      # - gdu
       - lazygit
       - neovim
       - node
