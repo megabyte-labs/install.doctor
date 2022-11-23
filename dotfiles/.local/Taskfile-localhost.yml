@@ -2,6 +2,42 @@
 version: '3'
 
 tasks:
+  browser:profile:save:brave:
+    vars:
+      BrowserProfile: >
+        {{if eq OS "darwin"}}~/Library/Application\ Support/BraveSoftware/Brave-Browser/Default{{end}}
+        {{if eq OS "linux"}}{{end}}
+        {{if eq OS "windows"}}{{end}}
+    cmds:
+      - tar -czpf ~/brave-profile.tar.gz  {{.BrowserProfile}}
+
+  browser:profile:save:chrome:
+    vars:
+      BrowserProfile: >
+        {{if eq OS "darwin"}}~/Library/Application\ Support/BraveSoftware/Brave-Browser/Default{{end}}
+        {{if eq OS "linux"}}{{end}}
+        {{if eq OS "windows"}}{{end}}
+    cmds:
+      - tar -czpf ~/brave-profile.tar.gz  {{.BrowserProfile}}
+
+  browser:profile:save:edge:
+    vars:
+      BrowserProfile: >
+        {{if eq OS "darwin"}}~/Library/Application\ Support/BraveSoftware/Brave-Browser/Default{{end}}
+        {{if eq OS "linux"}}{{end}}
+        {{if eq OS "windows"}}{{end}}
+    cmds:
+      - tar -czpf ~/brave-profile.tar.gz  {{.BrowserProfile}}
+
+  browser:profile:save:firefox:
+    vars:
+      BrowserProfile: >
+        {{if eq OS "darwin"}}~/Library/Application\ Support/BraveSoftware/Brave-Browser/Default{{end}}
+        {{if eq OS "linux"}}{{end}}
+        {{if eq OS "windows"}}{{end}}
+    cmds:
+      - tar -czpf ~/brave-profile.tar.gz  {{.BrowserProfile}}
+
   provision:
     desc: Provision the environment
     summary: |

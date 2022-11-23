@@ -55,10 +55,10 @@
 
 {{- if stdinIsATTY -}}
 
-{{- $work = promptBoolOnce $data.host "work" "Work Environment" $work -}}
+{{- $work = promptBoolOnce $data.host "work" "Work environment" $work -}}
 {{- $restricted = promptBoolOnce $data.host "restricted" "Restricted Environment (no sudo access)" $restricted -}}
-{{- $name = promptStringOnce $data.user "name" "Your Name" $name -}}
-{{- $email = promptStringOnce $data.user "email" "Your Email" $email -}}
+{{- $name = promptStringOnce $data.user "name" "Your full name" $name -}}
+{{- $email = promptStringOnce $data.user "email" "Your primary e-mail" $email -}}
 {{- $gmailAddress := promptStringOnce . "G-mail address" -}}
 {{- $gmailAddressAppPassword := promptStringOnce . "G-mail app password" -}}
 {{- $ngrokAuthToken := promptStringOnce . "Ngrok authentication token" -}}
@@ -83,6 +83,8 @@
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
 [data]
+    work = {{ $work | quote }}
+    restricted = {{ $restricted | quote }}
     codespaces = {{ $codespaces }}
     headless = {{ $headless }}
 {{- if $ephemeral }}
@@ -95,11 +97,13 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
     gmailAddress = {{ $gmailAddress | quote }}
     gmailAddressAppPassword = {{ $gmailAddressAppPassword | quote }}
     name = {{ $name | quote }}
+    DOCKERHUB_TOKEN = 
     GITHUB_TOKEN = {{ $githubToken | quote }}
     GITLAB_TOKEN = {{ $gitlabToken | quote }}
     NGROK_AUTH_TOKEN = {{ $ngrokAuthToken | quote }}
     SLACK_API_TOKEN = {{ $slackApiToken | quote }}
     TABBY_SYNC_TOKEN = "196a3118cc7be31cd13d2862d7e33c122357fd9fa36c2f149e8b018b82c260ab6b72169f4c411a6bedd2b8b4124c3540daa57778f20a28cfe2c797776f9a616c"
+    VAGRANT_CLOUD_TOKEN = 
 {{- end }}
 
 [diff]
