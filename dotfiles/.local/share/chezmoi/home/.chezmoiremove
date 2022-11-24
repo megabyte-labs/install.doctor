@@ -18,3 +18,18 @@ Brewfile
 .zlogout
 .zprofile
 .zshrc.zwc
+.chezmoiscripts
+!.chezmoiscripts/{{ .host.distro.id }}
+
+{{- if and (ne .host.distro.id "darwin") (ne .host.distro.id "linux") }}
+!.chezmoiscripts/universal
+{{- end }}
+
+{{- if ne .host.distro.id "darwin" }}
+!.chezmoiscripts/universal
+Library
+{{- end }}
+
+{{- if ne .host.distro.id "windows" }}
+AppData/
+{{- end }}

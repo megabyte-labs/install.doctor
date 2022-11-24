@@ -2,12 +2,6 @@
 {{ if or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") }}
 
 source "$HOME/.config/shell/exports"
-echo 'Cleaning up unnecessary artifacts'
-
-rm -rf ~/AppData
-{{ if or (eq .chezmoi.os "linux") }}
-rm -rf ~/Library
-{{ end }}
 
 logg 'Ensuring Taskfiles are linked properly'
 if [ -d "$HOME/.local/shared-common" ]; then
