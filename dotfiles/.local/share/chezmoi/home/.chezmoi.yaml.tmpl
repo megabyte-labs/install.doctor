@@ -84,7 +84,7 @@
 {{ if not $headless -}}
 age:
   identity: "{{ .chezmoi.homeDir }}/.config/age/key.txt"
-  recipient: "age16kxd4ljclq9ksnxvl2ee7a5xnj744kwyv04p04ka0n3rzxdpl5nsq52svl" # pragma: allowlist secret
+  recipient: "age16kxd4ljclq9ksnxvl2ee7a5xnj744kwyv04p04ka0n3rzxdpl5nsq52svl"
 {{- end }}
 
 {{- if stdinIsATTY -}}
@@ -107,37 +107,37 @@ age:
 
 sourceDir: {{ .chezmoi.sourceDir }}
 data:
-    host:
-        arch: "{{ .chezmoi.arch }}"
-        distro:
-            family: "{{ .chezmoi.os }}"
-            id: "{{ get .chezmoi.osRelease "id" | default .chezmoi.os }}"
-        home: "{{ .chezmoi.homeDir }}"
-        type: "{{ $chassisType }}"
-        work: {{ $work }}
-        restricted: {{ $restricted }}
-        headless: {{ $headless }}
-    toolchains:
-    {{- range $toolchain, $enabled := $toolchainsEnabled }}
-      {{ $toolchain}}: {{ $enabled }}
-    {{- end }}
-    user:
-        email: {{ $email }}
-        name: {{ $name }}
-        domain: {{ $domain }}
-        gmailAddress: {{ $gmailAddress }}
-        gmailAddressAppPassword: {{ $gmailAddressAppPassword }}
-        GITHUB_TOKEN: {{ $githubToken }}
-        GITLAB_TOKEN: {{ $gitlabToken }}
-        NGROK_AUTH_TOKEN: {{ $ngrokAuthToken }}
-        SLACK_API_TOKEN: {{ $slackApiToken }}
-        TABBY_SYNC_TOKEN: {{ $tabbySyncToken }}
+  host:
+    arch: "{{ .chezmoi.arch }}"
+    distro:
+      family: "{{ .chezmoi.os }}"
+      id: "{{ get .chezmoi.osRelease "id" | default .chezmoi.os }}"
+    home: "{{ .chezmoi.homeDir }}"
+    type: "{{ $chassisType }}"
+    work: {{ $work }}
+    restricted: {{ $restricted }}
+    headless: {{ $headless }}
+  toolchains:
+  {{- range $toolchain, $enabled := $toolchainsEnabled }}
+    {{ $toolchain}}: {{ $enabled }}
+  {{- end }}
+  user:
+    email: {{ $email }}
+    name: {{ $name }}
+    domain: {{ $domain }}
+    gmailAddress: {{ $gmailAddress }}
+    gmailAddressAppPassword: {{ $gmailAddressAppPassword }}
+    GITHUB_TOKEN: {{ $githubToken }}
+    GITLAB_TOKEN: {{ $gitlabToken }}
+    NGROK_AUTH_TOKEN: {{ $ngrokAuthToken }}
+    SLACK_API_TOKEN: {{ $slackApiToken }}
+    TABBY_SYNC_TOKEN: {{ $tabbySyncToken }}
 diff:
-    format: git
-    pager: delta
+  format: git
+  pager: delta
 git:
-    autoCommit: true
-    autoPush: true
+  autoCommit: true
+  autoPush: true
 textconv:
   - pattern: "**/*.plist"
     command: "plutil"
