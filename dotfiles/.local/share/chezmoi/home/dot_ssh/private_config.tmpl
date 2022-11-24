@@ -3,7 +3,7 @@ Host *+*
     StrictHostKeyChecking=no
     ProxyCommand ssh -v $(echo %h | sed -e 's/+[^+]*$//; s/\([^+=]*\)=\([^+]*\)$/\2 -l \1/; s/^\([^+:]*\):\([0-9]*\)+/-p \2 \1+/' ) -W $(echo %h | sed -e 's/^.*+//; s/:.*$//;'):$(echo %h | sed -e ' s/^.*+//; /:/!s/^.*/22/; s/^.*://' ;)
 Host *
-    User {{ .user.login }}
+    User {{ .user.username }}
     Compression yes
     GSSAPIAuthentication no
     ServerAliveInterval 600
