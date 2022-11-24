@@ -77,7 +77,13 @@
 [".local/src/shared-common"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/common/shared.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+### CookieCutter Template
+[".config/git/template"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/templates/cookiecutter.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
