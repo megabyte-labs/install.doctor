@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-{{- if eq .host.distro.id "centos" }}
 
 # Required for styled logging
 {{- includeTemplate "universal/logg" }}
@@ -12,5 +11,3 @@ logg "Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}"
 
 ### Install base dependencies
 sudo dnf install -y {{ $packages | sortAlpha | uniq | join " " -}}
-
-{{- end }}
