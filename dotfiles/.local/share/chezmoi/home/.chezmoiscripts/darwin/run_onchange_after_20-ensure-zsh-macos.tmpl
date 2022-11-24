@@ -1,14 +1,10 @@
 #!/usr/bin/env bash
-{{- if eq .host.distro.id "darwin" }}
-
-set -eufo pipefail
 
 # Required for PATHs (including logging)
 source "$HOME/.config/shell/exports"
 
-logg 'Ensuring ZSH is set as the default shell'
-
 {{- if (not .host.restricted) }}
+logg 'Ensuring ZSH is set as the default shell'
 if ! grep -qc "/usr/local/bin/zsh" /etc/shells; then
   echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells > /dev/null
 fi
@@ -17,6 +13,5 @@ fi
 if [[ ! -e /usr/local/bin/zsh ]]; then
   sudo ln -sf /opt/homebrew/bin/zsh /usr/local/bin/zsh
 fi
-{{- end -}}
 {{- end -}}
 {{- end }}

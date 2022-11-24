@@ -5,7 +5,7 @@ set -x
 # Required for PATHs (including logging)
 source "$HOME/.config/shell/exports"
 
-logg 'Applying power user optimized macOS settings'
+logg 'Applying optimized macOS settings'
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
@@ -937,4 +937,5 @@ for app in "Activity Monitor" \
 	killall "${app}" &> /dev/null
 done
 
-logg success "Done. Note that some of these changes require a logout/restart to take effect."
+logg 'Done applying macOS settings'
+logg info 'Some of these changes  may require a logout/restart to take effect'
