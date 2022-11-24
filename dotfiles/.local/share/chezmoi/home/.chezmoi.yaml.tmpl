@@ -92,10 +92,10 @@
 {{- end }}
 
 {{- $domain = promptStringOnce $data.user "domain" "Domain" $domain -}}
-{{- $cloudflareUsername = promptStringOnce $data.email "cloudflareUsername" "CloudFlare E-Mail" $cloudflareUsername -}}
-{{- $cloudflareToken = promptStringOnce $data.cloudflareToken "cloudflareToken" "CloudFlare API Token" $cloudflareToken -}}
-{{- $gitlabReadToken = promptStringOnce $data.gitlabReadToken "gitlabReadToken" "GitLab read-only token (See: https://github.com/gabrie30/ghorg#scm-provider-setup)" $gitlabReadToken }}
-{{- $githubReadToken = promptStringOnce $data.githubReadToken "githubReadToken" "GitHub read-only token (See: https://github.com/gabrie30/ghorg#scm-provider-setup)" $githubReadToken }}
+{{- $cloudflareUsername = promptStringOnce $data.user "cloudflareUsername" "CloudFlare E-Mail" $email -}}
+{{- $cloudflareToken = promptStringOnce $data.user "cloudflareToken" "CloudFlare API Token" $cloudflareToken -}}
+{{- $gitlabReadToken = promptStringOnce $data.user "gitlabReadToken" "GitLab read-only token (See: https://github.com/gabrie30/ghorg#scm-provider-setup)" $gitlabReadToken }}
+{{- $githubReadToken = promptStringOnce $data.user "githubReadToken" "GitHub read-only token (See: https://github.com/gabrie30/ghorg#scm-provider-setup)" $githubReadToken }}
 {{- $gmailAddress = promptStringOnce $data.user "gmailAddress" "G-mail address" $gmailAddress -}}
 {{- $gmailAddressAppPassword = promptStringOnce $data.user "gmailAddressAppPassword" "G-mail app password" $gmailAddressAppPassword -}}
 {{- $ngrokAuthToken = promptStringOnce $data.user "ngrokAuthToken" "Ngrok authentication token" $ngrokAuthToken -}}
