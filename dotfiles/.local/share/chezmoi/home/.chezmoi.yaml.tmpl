@@ -1,8 +1,8 @@
-{{- $name := "Brian Zalewski" -}}
-{{- $email := "brian@megabyte.space" -}}
+{{- $name := "Megabyte Labs" -}}
+{{- $email := "noreply@megabyte.space" -}}
 {{- $restricted := false -}}
 {{- $work := false -}}
-{{- $gmailAddress := "" }}
+{{- $gmailAddress := "noreply@gmail.com" }}
 {{- $gmailAddressAppPassword := "" }}
 {{- $domain := "megabyte.space" }}
 {{- $githubToken := "" }}
@@ -122,8 +122,8 @@ data:
       {{ $toolchain}}: {{ $enabled }}
     {{- end }}
     user:
-        email: {{ if $ephemeral }}noreply@megabyte.space{{ else }}{{ $email }}{{ end }}
-        name: {{ if $ephemeral }}Ephemeral{{ else }}{{ $name }}{{ end }}
+        email: {{ $email }}
+        name: {{ $name }}
         domain: {{ $domain }}
         gmailAddress: {{ $gmailAddress }}
         gmailAddressAppPassword: {{ $gmailAddressAppPassword }}
