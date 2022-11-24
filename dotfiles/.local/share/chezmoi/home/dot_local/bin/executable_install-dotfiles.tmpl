@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Exclude dom0 since it has no internet access to download Gum / Glow
-if [ ! -f '/etc/qubes-release' ]; then
+if [ ! -f '/etc/qubes-release' ] && ! command -v logg > /dev/null; then
   # Required for styled logging
   {{- includeTemplate "universal/logg" }}
 else
