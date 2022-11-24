@@ -76,19 +76,6 @@
     {{- $_ := set $toolchainsEnabled $toolchain $enabled }}
 {{- end }}
 
-{{- else -}}
-{{-   $headless = true -}}
-{{-   writeToStdout "Chezmoi is running in headless environment.\n" -}}
-{{- end -}}
-
-{{ if not $headless -}}
-age:
-  identity: "{{ .chezmoi.homeDir }}/.config/age/key.txt"
-  recipient: "age16kxd4ljclq9ksnxvl2ee7a5xnj744kwyv04p04ka0n3rzxdpl5nsq52svl"
-{{- end }}
-
-{{- if stdinIsATTY -}}
-
 {{- $domain = promptStringOnce $data.user "domain" "Domain" $domain -}}
 {{- $gmailAddress = promptStringOnce $data.user "gmailAddress" "G-mail address" $gmailAddress -}}
 {{- $gmailAddressAppPassword = promptStringOnce $data.user "gmailAddressAppPassword" "G-mail app password" $gmailAddressAppPassword -}}
@@ -96,15 +83,16 @@ age:
 {{- $slackApiToken = promptStringOnce $data.user "slackApiToken" "Slack API token" $slackApiToken -}}
 {{- $tabbySyncToken = promptStringOnce $data.user "tabbySyncToken" "Tabby Sync Token" $tabbySyncToken -}}
 
-{{- writeToStdout "💡 Tip: you can re-enter your name and email with `chezmoi init --data=false`.\n" -}}
-
 {{- else -}}
-
 {{-   $headless = true -}}
 {{-   writeToStdout "Chezmoi is running in headless environment.\n" -}}
-
 {{- end -}}
 
+{{- if not $headless -}}
+age:
+  identity: "{{ .chezmoi.homeDir }}/.config/age/key.txt"
+  recipient: "age16kxd4ljclq9ksnxvl2ee7a5xnj744kwyv04p04ka0n3rzxdpl5nsq52svl"
+{{- end }}
 data:
   host:
     arch: "{{ .chezmoi.arch }}"
