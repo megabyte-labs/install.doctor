@@ -122,7 +122,7 @@ logger() {
   if [ "$1" == 'error' ]; then
     "$GUM_PATH" style --border="thick" "$("$GUM_PATH" style --foreground="#ff0000" "✖") $("$GUM_PATH" style --bold --background="#ff0000" --foreground="#ffffff"  " ERROR ") $("$GUM_PATH" style --bold "$(format "$2")")"
   elif [ "$1" == 'info' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ffff" "○") $2"
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ffff" "○") $("$GUM_PATH" style --faint "$(formatFaint "$2")")"
   elif [ "$1" == 'md' ]; then
     # @description Ensure glow is installed
     if [ "${container:=}" != 'docker' ]; then
@@ -162,11 +162,26 @@ logger() {
 
 format() {
   # shellcheck disable=SC2001,SC2016
-  ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`/\1\\u001b[47;30m \2 \\e[39m/')"
+  ANSI_STR_FORMATTED="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`.*/\1\\u001b[47;30m \2 \\e[49;m/')"
+  ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`\(.*\)$/\3/')"
   if [[ $ANSI_STR == *'`'*'`'* ]]; then
-    ANSI_STR="$(format "$ANSI_STR")"
+    ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$(format "$("$GUM_PATH" style --bold "$ANSI_STR")")"
+  else
+    ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$("$GUM_PATH" style --bold "$ANSI_STR")"
   fi
-  echo -e "$ANSI_STR"
+  echo -e "$ANSI_STR_FORMATTED"
+}
+
+formatFaint() {
+  # shellcheck disable=SC2001,SC2016
+  ANSI_STR_FORMATTED="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`.*/\1\\u001b[47;30m \2 \\e[49;m/')"
+  ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`\(.*\)$/\3/')"
+  if [[ $ANSI_STR == *'`'*'`'* ]]; then
+    ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$(formatFaint "$("$GUM_PATH" style --faint "$ANSI_STR")")"
+  else
+    ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$("$GUM_PATH" style --faint "$ANSI_STR")"
+  fi
+  echo -e "$ANSI_STR_FORMATTED"
 }
 
 # @description Display prompt that allows you to choose between options

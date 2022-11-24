@@ -87,11 +87,26 @@ fi
 
 format() {
   # shellcheck disable=SC2001,SC2016
-  ANSI_STR="$(echo "$MSG" | sed 's/^\([^`]*\)`\([^`]*\)`/\1\\u001b[47;30m \2 \\e[39m/')"
+  ANSI_STR_FORMATTED="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`.*/\1\\u001b[47;30m \2 \\e[49;m/')"
+  ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`\(.*\)$/\3/')"
   if [[ $ANSI_STR == *'`'*'`'* ]]; then
-    ANSI_STR="$(format "$ANSI_STR")"
+    ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$(format "$("$GUM_PATH" style --bold "$ANSI_STR")")"
+  else
+    ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$("$GUM_PATH" style --bold "$ANSI_STR")"
   fi
-  echo -e "$ANSI_STR"
+  echo -e "$ANSI_STR_FORMATTED"
+}
+
+formatFaint() {
+  # shellcheck disable=SC2001,SC2016
+  ANSI_STR_FORMATTED="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`.*/\1\\u001b[47;30m \2 \\e[49;m/')"
+  ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`\(.*\)$/\3/')"
+  if [[ $ANSI_STR == *'`'*'`'* ]]; then
+    ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$(formatFaint "$("$GUM_PATH" style --faint "$ANSI_STR")")"
+  else
+    ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$("$GUM_PATH" style --faint "$ANSI_STR")"
+  fi
+  echo -e "$ANSI_STR_FORMATTED"
 }
 
 # @description Logs using Node.js
@@ -142,5 +157,51 @@ logg() {
     "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --background="#ffff00" --foreground="#000000"  " WARNING ") $("$GUM_PATH" style --bold --italic "$(format "$MSG")")"
   else
     "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$MSG")")"
+  fi
+}
+
+# @description Logs using Node.js
+# @example logger info "An informative log"
+logg() {
+  TYPE="$1"
+  MSG="$2"
+  if [ "$TYPE" == 'error' ]; then
+    "$GUM_PATH" style --border="thick" "$("$GUM_PATH" style --foreground="#ff0000" "✖") $("$GUM_PATH" style --bold --background="#ff0000" --foreground="#ffffff"  " ERROR ") $("$GUM_PATH" style --bold "$(format "$MSG")")"
+  elif [ "$TYPE" == 'info' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ffff" "○") $("$GUM_PATH" style --faint "$(formatFaint "$MSG")")"
+  elif [ "$TYPE" == 'md' ]; then
+    # @description Ensure glow is installed
+    if [ "${container:=}" != 'docker' ]; then
+      if type glow &> /dev/null; then
+        GLOW_PATH="$(which glow)"
+      elif [ -f "$HOME/.local/bin/glow" ]; then
+        GLOW_PATH="$HOME/.local/bin/glow"
+      elif [ -f "$(dirname "${BASH_SOURCE[0]}")/glow" ]; then
+        GLOW_PATH="$(dirname "${BASH_SOURCE[0]}")/glow"
+      elif type brew &> /dev/null; then
+        brew install glow
+        GLOW_PATH="$(which glow)"
+      else
+        installGlow
+      fi
+
+      if [ -n "$GLOW_PATH" ]; then
+        chmod +x "$GLOW_PATH"
+        ENHANCED_LOGGING=true
+      fi
+    fi
+    "$GLOW_PATH" "$MSG"
+  elif [ "$TYPE" == 'prompt' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00008b" "▶") $("$GUM_PATH" style --bold "$(format "$MSG")")"
+  elif [ "$TYPE" == 'star' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --underline "$(format "$MSG")")"
+  elif [ "$TYPE" == 'start' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$MSG")")"
+  elif [ "$TYPE" == 'success' ]; then
+    "$GUM_PATH" style "$("$GUM_PATH" style --foreground="#00ff00" "✔")  $("$GUM_PATH" style --bold "$(format "$MSG")")"
+  elif [ "$TYPE" == 'warn' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --background="#ffff00" --foreground="#000000"  " WARNING ") $("$GUM_PATH" style --bold --italic "$(format "$MSG")")"
+  else
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$TYPE")")"
   fi
 }
