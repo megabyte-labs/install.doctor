@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-{{- if eq .host.distro.id "windows" }}
-{{ $supportedManagers := (list "whalebrew" "choco" "scoop" "winget" "go" "cargo" "npm" "pipx" "gem" "binary") }}
-
-{{- end }}

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 {{- if eq .host.distro.id "darwin" }}
-{{- $supportedManagers := (list "whalebrew" "brew" "port" "go" "cargo" "npm" "pipx" "gem" "cask" "binary") }}
+{{- $supportedManagers := list "whalebrew" "brew" "port" "go" "cargo" "npm" "pipx" "gem" "cask" "binary" }}
 {{- $packageMap := (get .installerMap $packageName) }}
 {{- if (hasKey $packageMap "_deps") }}
 {{-   $deps := (get $packageMap "_deps") }}
