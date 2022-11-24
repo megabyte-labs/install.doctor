@@ -1,4 +1,4 @@
-{{- if eq .host.distro.id "ubuntu" }}
+{{- if eq .host.distro.id "windows" }}
 {{ $supportedManagers := (list "whalebrew" "choco" "scoop" "winget" "go" "cargo" "npm" "pipx" "gem" "binary") }}
 
 {{- end -}}

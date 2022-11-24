@@ -1,4 +1,4 @@
-{{- if eq .host.distro.id "freebsd" }}
+{{- if eq .host.distro.id "opensuse" }}
 #!/usr/bin/env bash
 
 # Required for styled logging
@@ -7,11 +7,10 @@
 {{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}
 # TODO - Add Python dependencies like in ubuntu/archlinux
 
-logg 'Installing common dependencies using pkg'
+logg 'Installing common dependencies using zypper'
 logg "Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}"
 
 ### Install base dependencies
-sudo pkg install -y {{ $packages | sortAlpha | uniq | join " " -}}
+sudo zypper install -y {{ $packages | sortAlpha | uniq | join " " -}}
 
 {{- end -}}
-
