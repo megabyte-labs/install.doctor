@@ -2,17 +2,17 @@
 {{- $email := "noreply@megabyte.space" -}}
 {{- $restricted := false -}}
 {{- $work := false -}}
-{{- $gmailAddress := "noreply@gmail.com" }}
-{{- $gmailAddressAppPassword := "" }}
-{{- $domain := "megabyte.space" }}
-{{- $cloudflareUsername := "noreply@megabyte.space" }}
-{{- $cloudflareToken := "" }}
-{{- $githubReadToken := "" }}
-{{- $gitlabReadToken := "" }}
-{{- $ngrokAuthToken := "" }}
-{{- $slackApiToken := "" }}
-{{- $tabbySyncToken := "" }}
-{{- $toolchains := list "docker" "iac" "java" "kubernetes" "node" "python" "rust" "extra" }}
+{{- $gmailAddress := "noreply@gmail.com" -}}
+{{- $gmailAddressAppPassword := "" -}}
+{{- $domain := "megabyte.space" -}}
+{{- $cloudflareUsername := "noreply@megabyte.space" -}}
+{{- $cloudflareToken := "" -}}
+{{- $githubReadToken := "" -}}
+{{- $gitlabReadToken := "" -}}
+{{- $ngrokAuthToken := "" -}}
+{{- $slackApiToken := "" -}}
+{{- $tabbySyncToken := "" -}}
+{{- $toolchains := list "docker" "iac" "java" "kubernetes" "node" "python" "rust" "extra" -}}
 
 {{- $data := . }}
 {{- $_ := set $data "host" (default (dict) (get $data "host")) -}}
@@ -92,7 +92,7 @@
 {{- end }}
 
 {{- $domain = promptStringOnce $data.user "domain" "Domain" $domain -}}
-{{- $cloudflareUsername = promptStringOnce $data.cloudflareUsername "cloudflareUsername" "CloudFlare E-Mail" $email -}}
+{{- $cloudflareUsername = promptStringOnce $data.email "cloudflareUsername" "CloudFlare E-Mail" $cloudflareUsername -}}
 {{- $cloudflareToken = promptStringOnce $data.cloudflareToken "cloudflareToken" "CloudFlare API Token" $cloudflareToken -}}
 {{- $gitlabReadToken = promptStringOnce $data.gitlabReadToken "gitlabReadToken" "GitLab read-only token (See: https://github.com/gabrie30/ghorg#scm-provider-setup)" $gitlabReadToken }}
 {{- $githubReadToken = promptStringOnce $data.githubReadToken "githubReadToken" "GitHub read-only token (See: https://github.com/gabrie30/ghorg#scm-provider-setup)" $githubReadToken }}
