@@ -1,24 +1,21 @@
-{{- $headless := false -}}
-{{- $ephemeral := false -}}
 {{- $restricted := false -}}
 {{- $work := false -}}
+{{- $toolchains := list "docker" "iac" "java" "kubernetes" "node" "python" "rust" "extra" }}
+
+{{- $data := . }}
+{{- $_ := set $data "host" (default (dict) (get $data "host")) -}}
+{{- $_ := set $data "user" (default (dict) (get $data "user")) -}}
+{{- $_ := set $data "toolchains" (default (dict) (get $data "toolchains")) -}}
+
+{{- $headless := false -}}
+{{- $ephemeral := false -}}
+{{/* detect GitHub codespaces, VSCode remote containers, Docker containers, Multipass VMs, and Vagrant boxes */}}
 {{- $ephemeralEnvOrUsername := or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") (eq .chezmoi.username "root" "ubuntu" "vagrant" "vscode" "devcontainer") -}}
 {{- $ephemeralCgroup := and (stat "/proc/1/cgroup") (output "cat" "/proc/1/cgroup" | regexMatch "(docker|lxc)") -}}
 {{- if or $ephemeralEnvOrUsername $ephemeralCgroup -}}
 {{-   $headless = true -}}
 {{-   $ephemeral = true -}}
 {{-   writeToStdout "Chezmoi is running in a container.\n" -}}
-{{- end -}}
-
-{{- $toolchains := list "cloud" "docker" "iac" "java" "kubernetes" "node" "python" "rust" "extra" }}
-{{- $data := . }}
-{{- $_ := set $data "host" (default (dict) (get $data "host")) -}}
-{{- $_ := set $data "user" (default (dict) (get $data "user")) -}}
-{{- $_ := set $data "toolchains" (default (dict) (get $data "toolchains")) -}}
-
-{{- $distro := dict "family" .chezmoi.os "id" (get .chezmoi.osRelease "id" | default .chezmoi.os) -}}
-{{- if or (eq $distro.id "arch") (eq $distro.id "archarm") -}}
-{{- $_ := set $distro "id" "archlinux" -}}
 {{- end -}}
 
 {{- $chassisType := "desktop" }}
@@ -55,15 +52,11 @@
 
 {{- if stdinIsATTY -}}
 
-{{- $work = promptBoolOnce $data.host "work" "Work environment" $work -}}
+{{- $work = promptBoolOnce $data.host "work" "Work Environment" $work -}}
 {{- $restricted = promptBoolOnce $data.host "restricted" "Restricted Environment (no sudo access)" $restricted -}}
-{{- $name = promptStringOnce $data.user "name" "Your full name" $name -}}
-{{- $email = promptStringOnce $data.user "email" "Your primary e-mail" $email -}}
-{{- $domain = promptStringOnce $data.domain "domain" "Domain" $domain -}}
-{{- $gmailAddress := promptStringOnce . "G-mail address" -}}
-{{- $gmailAddressAppPassword := promptStringOnce . "G-mail app password" -}}
-{{- $ngrokAuthToken := promptStringOnce . "Ngrok authentication token" -}}
-{{- $slackApiToken := promptStringOnce . "Slack API token" -}}
+{{- $name = promptStringOnce $data.user "name" "Your Name" $name -}}
+{{- $email = promptStringOnce $data.user "email" "Your Email" $email -}}
+
 {{- range $toolchain := $toolchains }}
     {{- $enabled := promptBoolOnce $data.toolchains $toolchain (list "Enable" $toolchain "toolchain" | join " ") (get $toolchainsEnabled $toolchain) -}}
     {{- if and (eq $toolchain "kubernetes") $enabled (not $toolchainsEnabled.docker)  -}}
@@ -72,6 +65,27 @@
     {{- end -}}
     {{- $_ := set $toolchainsEnabled $toolchain $enabled }}
 {{- end }}
+
+{{- else -}}
+{{-   $headless = true -}}
+{{-   writeToStdout "Chezmoi is running in headless environment.\n" -}}
+{{- end -}}
+
+{{ if not $headless -}}
+age:
+  identity: "{{ $.chezmoi.homeDir }}/.config/age/key.txt"
+  recipient: "age16kxd4ljclq9ksnxvl2ee7a5xnj744kwyv04p04ka0n3rzxdpl5nsq52svl" # pragma: allowlist secret
+{{- end }}
+
+{{- if stdinIsATTY -}}
+
+{{- $domain = promptStringOnce $data.user "domain" "Domain" $domain -}}
+{{- $gmailAddress := promptStringOnce $data.user "G-mail address" -}}
+{{- $gmailAddressAppPassword := promptStringOnce $data.user "G-mail app password" -}}
+{{- $ngrokAuthToken := promptStringOnce $data.user "Ngrok authentication token" -}}
+{{- $slackApiToken := promptStringOnce $data.user "Slack API token" -}}
+{{- $tabbySyncToken := promptStringOnce $data.user "Tabby Sync Token" -}}
+
 {{- writeToStdout "💡 Tip: you can re-enter your name and email with `chezmoi init --data=false`.\n" -}}
 
 {{- else -}}
@@ -81,37 +95,40 @@
 
 {{- end -}}
 
-sourceDir = {{ .chezmoi.sourceDir | quote }}
-
-[data]
-    work = {{ $work | quote }}
-    restricted = {{ $restricted | quote }}
-    codespaces = {{ $codespaces }}
-    headless = {{ $headless }}
-{{- if $ephemeral }}
-    email = "help@megabyte.space"
-    gmailAddress = ""
-    gmailAddressAppPassword = ""
-    name = "Megabyte Labs"
-{{- else }}
-    email = {{ $email | quote }}
-    gmailAddress = {{ $gmailAddress | quote }}
-    gmailAddressAppPassword = {{ $gmailAddressAppPassword | quote }}
-    name = {{ $name | quote }}
-    domain = {{ $domain | quote }}
-    # DOCKERHUB_TOKEN = 
-    GITHUB_TOKEN = {{ $githubToken | quote }}
-    GITLAB_TOKEN = {{ $gitlabToken | quote }}
-    NGROK_AUTH_TOKEN = {{ $ngrokAuthToken | quote }}
-    SLACK_API_TOKEN = {{ $slackApiToken | quote }}
-    TABBY_SYNC_TOKEN = "196a3118cc7be31cd13d2862d7e33c122357fd9fa36c2f149e8b018b82c260ab6b72169f4c411a6bedd2b8b4124c3540daa57778f20a28cfe2c797776f9a616c"
-    # VAGRANT_CLOUD_TOKEN = 
-{{- end }}
-
-[diff]
-    format = "git"
-    pager = "delta"
-
-[git]
-    autoCommit = true
-    autoPush = true
+sourceDir: {{ .chezmoi.sourceDir }}
+data:
+    host:
+        arch: "{{ chezmoi.arch }}"
+        distro:
+            family: "{{ chezmoi.os }}"
+            id: "{{ get .chezmoi.osRelease "id" | default .chezmoi.os }}"
+        home: "{{ .chezmoi.homeDir }}"
+        type: "{{ $chassisType }}"
+        work: {{ $work }}
+        restricted: {{ $restricted }}
+        headless: {{ $headless }}
+    toolchains:
+    {{- range $toolchain, $enabled := $toolchainsEnabled }}
+      {{ $toolchain}}: {{ $enabled }}
+    {{- end }}
+    user:
+        {{- if $ephemeral }}
+        email: noreply@megabyte.space
+        name: Ephemeral
+        {{- else }}
+        email: {{ $email}}
+        gmailAddress: {{ $gmailAddress }}
+        gmailAddressAppPassword: {{ $gmailAddressAppPassword }}
+        name: {{ $name }}
+        domain: {{ $domain }}
+        GITHUB_TOKEN: {{ $githubToken }}
+        GITLAB_TOKEN: {{ $gitlabToken }}
+        NGROK_AUTH_TOKEN: {{ $ngrokAuthToken }}
+        SLACK_API_TOKEN: {{ $slackApiToken }}
+        TABBY_SYNC_TOKEN: {{ $tabbySyncToken }}
+diff:
+    format: git
+    pager: delta
+git:
+    autoCommit: true
+    autoPush: true
