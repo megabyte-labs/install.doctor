@@ -11,6 +11,13 @@
         args = ["--ff-only"]
 {{- end }}
 
+### Betelgeuse Theme
+[".local/share"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/misc/betelgeuse.git"
+    [".local/share".pull]
+        args = ["--ff-only"]
+
 ### Shell
 [".config/desktop/gnome.yml"]
     type = "file"
