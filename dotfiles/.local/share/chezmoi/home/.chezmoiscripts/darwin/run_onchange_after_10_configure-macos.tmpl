@@ -3,7 +3,8 @@
 
 set -x
 
-{{- includeTemplate "universal/logg" }}
+# Required for PATHs (including logging)
+source "$HOME/.config/shell/exports"
 
 logg 'Applying optimized macOS-specific settings'
 

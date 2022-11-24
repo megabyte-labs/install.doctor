@@ -3,7 +3,8 @@
 
 set -eufo pipefail
 
-{{- includeTemplate "universal/logg" }}
+# Required for PATHs (including logging)
+source "$HOME/.config/shell/exports"
 
 logg 'Ensuring ZSH is set as the default shell'
 

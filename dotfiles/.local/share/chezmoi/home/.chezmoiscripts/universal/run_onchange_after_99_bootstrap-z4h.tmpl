@@ -1,7 +1,10 @@
 {{- if and false .host.headless -}}
 #!/usr/bin/env bash
 
-{{- includeTemplate "universal/logg" }}
+# Required for PATHs (including logging)
+source "$HOME/.config/shell/exports"
+
+logg 'Bootstrapping Z4H'
 
 Z4H_BOOTSTRAPPING=1 exec zsh && exit 0
 {{- end -}}

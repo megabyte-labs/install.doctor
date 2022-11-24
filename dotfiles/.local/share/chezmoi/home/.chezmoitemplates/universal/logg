@@ -85,14 +85,9 @@ if [ "${container:=}" != 'docker' ]; then
   fi
 fi
 
-# @description Disable logging for Semantic Release because it tries to parse it as JSON
-if [ -n "$SEMANTIC_RELEASE" ]; then
-  NO_LOGGING=true
-fi
-
 # @description Logs using Node.js
 # @example logger info "An informative log"
-logger() {
+logg() {
   if [ "$1" == 'error' ]; then
     "$GUM_PATH" style --border="thick" "$("$GUM_PATH" style --foreground="#ff0000" "✖") $("$GUM_PATH" style --bold --background="#ff0000" --foreground="#ffffff"  " ERROR ") $("$GUM_PATH" style --bold "$(format "$2")")"
   elif [ "$1" == 'info' ]; then

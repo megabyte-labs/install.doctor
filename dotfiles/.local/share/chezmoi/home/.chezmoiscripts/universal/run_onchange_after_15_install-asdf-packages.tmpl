@@ -1,10 +1,9 @@
 {{- if or (eq .host.distro.id "darwin") (eq .host.distro.family "linux") }}
 #!/usr/bin/env bash
 
-{{- includeTemplate "universal/logg" }}
-
 # dot_tool-versions.tmpl hash: {{ include "dot_tool-versions.tmpl" | sha256sum }}
 
+# Required for PATHs (including logging)
 source "$HOME/.config/shell/exports"
 
 if [ -f "$ASDF_DIR/asdf.sh" ] && [ -f ~/.tool-versions ]; then

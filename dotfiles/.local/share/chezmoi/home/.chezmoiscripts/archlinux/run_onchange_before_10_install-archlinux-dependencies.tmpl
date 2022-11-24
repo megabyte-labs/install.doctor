@@ -1,6 +1,7 @@
 {{- if eq .host.distro.id "arch" }}
 #!/usr/bin/env bash
 
+# Required for styled logging
 {{- includeTemplate "universal/logg" }}
 
 {{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}
@@ -19,7 +20,7 @@ logg 'Installing common dependencies using pacman'
 logg "Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}"
 
 ### Install base dependencies
-sudo packan -Sy --noconfirm --needed {{ $packages | sortAlpha | uniq | join " " -}}
+sudo pacman -Sy --noconfirm --needed {{ $packages | sortAlpha | uniq | join " " -}}
 
 ### Install yay
 if ! command -v yay > /dev/null; then
