@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# Required for styled logging
-{{- includeTemplate "universal/logg" }}
-
 # Clear ZSH cached stuff
 if [ -f "$HOME/.zshrc.zwc" ]; then
   rm -f "$HOME/.zshrc.zwc"
