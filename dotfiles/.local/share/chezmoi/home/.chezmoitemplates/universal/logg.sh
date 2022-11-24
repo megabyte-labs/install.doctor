@@ -87,7 +87,7 @@ fi
 
 format() {
   # shellcheck disable=SC2001,SC2016
-  ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`/\1\\u001b[47;30m \2 \\e[39m/')"
+  ANSI_STR="$(echo "$MSG" | sed 's/^\([^`]*\)`\([^`]*\)`/\1\\u001b[47;30m \2 \\e[39m/')"
   if [[ $ANSI_STR == *'`'*'`'* ]]; then
     ANSI_STR="$(format "$ANSI_STR")"
   fi
@@ -97,11 +97,18 @@ format() {
 # @description Logs using Node.js
 # @example logger info "An informative log"
 logg() {
-  if [ "$0" == 'error' ]; then
-    "$GUM_PATH" style --border="thick" "$("$GUM_PATH" style --foreground="#ff0000" "✖") $("$GUM_PATH" style --bold --background="#ff0000" --foreground="#ffffff"  " ERROR ") $("$GUM_PATH" style --bold "$(format "$1")")"
-  elif [ "$0" == 'info' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ffff" "○") $1"
-  elif [ "$0" == 'md' ]; then
+  if echo "$0" | grep -Eq "log.$"; then
+    TYPE="$1"
+    MSG="$2"
+  else
+    TYPE="$0"
+    MSG="$1"
+  fi
+  if [ "$TYPE" == 'error' ]; then
+    "$GUM_PATH" style --border="thick" "$("$GUM_PATH" style --foreground="#ff0000" "✖") $("$GUM_PATH" style --bold --background="#ff0000" --foreground="#ffffff"  " ERROR ") $("$GUM_PATH" style --bold "$(format "$MSG")")"
+  elif [ "$TYPE" == 'info' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ffff" "○") $MSG"
+  elif [ "$TYPE" == 'md' ]; then
     # @description Ensure glow is installed
     if [ "${container:=}" != 'docker' ]; then
       if type glow &> /dev/null; then
@@ -122,18 +129,18 @@ logg() {
         ENHANCED_LOGGING=true
       fi
     fi
-    "$GLOW_PATH" "$1"
-  elif [ "$0" == 'prompt' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00008b" "▶") $("$GUM_PATH" style --bold "$(format "$1")")"
-  elif [ "$0" == 'star' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --underline "$(format "$1")")"
-  elif [ "$0" == 'start' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$1")")"
-  elif [ "$0" == 'success' ]; then
-    "$GUM_PATH" style "$("$GUM_PATH" style --foreground="#00ff00" "✔")  $("$GUM_PATH" style --bold "$(format "$1")")"
-  elif [ "$0" == 'warn' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --background="#ffff00" --foreground="#000000"  " WARNING ") $("$GUM_PATH" style --bold --italic "$(format "$1")")"
+    "$GLOW_PATH" "$MSG"
+  elif [ "$TYPE" == 'prompt' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00008b" "▶") $("$GUM_PATH" style --bold "$(format "$MSG")")"
+  elif [ "$TYPE" == 'star' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --underline "$(format "$MSG")")"
+  elif [ "$TYPE" == 'start' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$MSG")")"
+  elif [ "$TYPE" == 'success' ]; then
+    "$GUM_PATH" style "$("$GUM_PATH" style --foreground="#00ff00" "✔")  $("$GUM_PATH" style --bold "$(format "$MSG")")"
+  elif [ "$TYPE" == 'warn' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --background="#ffff00" --foreground="#000000"  " WARNING ") $("$GUM_PATH" style --bold --italic "$(format "$MSG")")"
   else
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$1")")"
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$MSG")")"
   fi
 }
