@@ -2,6 +2,7 @@
 !.chezmoiscripts/{{ .host.distro.id }}/**/*
 
 {{- if ne .host.distro.id "windows" }}
+!.chezmoiscripts/_universal/**/*
 !.chezmoiscripts/universal/**/*
 {{- end }}
 

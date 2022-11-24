@@ -59,6 +59,8 @@ softwarePackages:
     port: bat
     scoop: bat
     zypper: bat
+  blockinfile:
+    go: github.com/ProfessorManhattan/blockinfile@latest
   bundler:
     gem: bundler
   delta:
@@ -395,6 +397,15 @@ softwarePackages:
     port: pywhat
   ramda:
     npm: ramda-cli
+  rclone:
+    apt: rclone
+    brew: rclone
+    choco:
+      - rclone
+      - winfsp
+      - nssm
+    dnf: rclone
+    pacman: rclone
   ripgrep:
     _bin: rg
     apt: ripgrep

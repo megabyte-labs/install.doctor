@@ -7,6 +7,10 @@
 {{- $domain := "megabyte.space" -}}
 {{- $cloudflareUsername := "noreply@megabyte.space" -}}
 {{- $cloudflareToken := "" -}}
+{{- $cloudflareAccessKeyId := "" -}}
+{{- $cloudflareSecretAccessKey := "" -}}
+{{- $cloudflareR2AccountId := "" -}}
+{{- $digitalOceanSpacesAccessKeyId
 {{- $githubReadToken := "" -}}
 {{- $gitlabReadToken := "" -}}
 {{- $ngrokAuthToken := "" -}}
@@ -151,6 +155,9 @@ git:
   autoCommit: true
   autoPush: true
 scriptEnv:
+  CLOUDFLARE_ACCESS_KEY_ID: "{{ $cloudflareAccessKeyId }}"
+  CLOUDFLARE_SECRET_ACCESS_KEY: "{{ $cloudflareSecretAccessKey }}"
+  CLOUDFLARE_R2_ACCOUNT_ID: "{{ $cloudflareR2AccountId }}"
   LEXICON_CLOUDFLARE_USERNAME: "{{ $cloudflareUsername }}"
   LEXICON_CLOUDFLARE_TOKEN: "{{ $cloudflareToken }}"
 textconv:
