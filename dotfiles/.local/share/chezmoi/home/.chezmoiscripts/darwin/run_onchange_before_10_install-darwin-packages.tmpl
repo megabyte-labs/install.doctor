@@ -18,7 +18,11 @@ eval $(/opt/homebrew/bin/brew shellenv)
 eval $(/usr/local/bin/brew shellenv)
 {{- end }}
 
-# brew bundle --verbose --no-lock --file=/dev/stdin <<EOF
-# includeTemplate "darwin/brewfile" . }}
-# EOF
+logg 'Installing base dependencies for macOS using `brew bundle`'
+logg 'Dependencies: asdf jq node go-task/tap/go-task volta yq m-cli zx'
+logg 'Additional dependencies for GNU compatibility: coreutils findutils gawk gnu-getopt gnu-indent gnu-tar gnu-sed gnutls grep'
+
+brew bundle --verbose --no-lock --file=/dev/stdin <<EOF
+{{ includeTemplate "darwin/Brewfile" . }}
+EOF
 {{- end -}}

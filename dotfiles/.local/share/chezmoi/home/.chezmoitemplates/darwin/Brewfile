@@ -1,0 +1,38 @@
+# Base dependencies required for deploying on macOS. Defined like this because Homebrew
+# is a requirement on macOS.
+
+# Standard Homebrew taps
+tap "homebrew/core"
+tap "homebrew/bundle"
+
+# @brew [asdf](https://github.com/asdf-vm/asdf) - Version manager with support for many languages
+brew "asdf"
+# @brew [jq](https://stedolan.github.io/jq/) - Lightweight and flexible command-line JSON processor
+brew "jq"
+# @brew [node](https://nodejs.org/) - A JavaScript engine, based on the ultra fast V8-engine
+brew "node"
+# @brew [task](https://github.com/go-task/homebrew-tap) - A parallel task runner
+tap "go-task/tap"
+brew "go-task/tap/go-task"
+# @brew [volta](https://volta.sh/) - Node version manager
+brew "volta"
+# @brew [yq](https://github.com/mikefarah/yq) - Process and manipulate YAML documents
+brew "yq"
+# @brew [coreutils](https://www.gnu.org/software/coreutils) - A suite of basic UNIX tools published to improve compatibility between Linux and macOS scripts
+if OS.mac?
+  brew "coreutils"
+  brew "findutils"
+  brew "gawk"
+  brew "gnu-getopt"
+  brew "gnu-indent"
+  brew "gnu-tar"
+  brew "gnu-sed"
+  brew "gnutls"
+  brew "grep"
+  brew "m-cli"
+end
+# Required for logging (already installed but installing again so Homebrew can manage them)
+brew "glow"
+brew "gum"
+# Required for improved, customizable installer map defined in `.chezmoidata.yaml`
+brew "zx"
