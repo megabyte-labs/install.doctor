@@ -7,8 +7,8 @@
 {{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}
 # TODO - Add Python dependencies like in ubuntu/archlinux
 
-logg 'Installing common dependencies using zypper'
-logg "Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}"
+logg 'Installing common dependencies using `zypper`'
+logg info 'Dependencies: `{{ $packages | sortAlpha | uniq | join "` `" -}}`'
 
 ### Install base dependencies
 sudo zypper install -y {{ $packages | sortAlpha | uniq | join " " -}}

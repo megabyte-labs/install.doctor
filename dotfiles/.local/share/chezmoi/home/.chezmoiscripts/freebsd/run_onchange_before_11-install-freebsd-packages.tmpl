@@ -7,8 +7,8 @@
 {{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}
 # TODO - Add Python dependencies like in ubuntu/archlinux
 
-logg 'Installing common dependencies using pkg'
-logg "Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}"
+logg 'Installing common dependencies using `pkg`'
+logg info 'Dependencies: `{{ $packages | sortAlpha | uniq | join "` `" -}}`'
 
 ### Install base dependencies
 sudo pkg install -y {{ $packages | sortAlpha | uniq | join " " -}}

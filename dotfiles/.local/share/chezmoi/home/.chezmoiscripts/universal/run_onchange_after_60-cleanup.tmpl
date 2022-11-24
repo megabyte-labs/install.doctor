@@ -14,7 +14,7 @@ fi
 if command -v gsed > /dev/null; then
   gsed -i 's/\.\/\.config\/taskfiles/taskfiles/g' ~/.local/Taskfile.yml
 else
-  logg 'Unable to fix `~/.local/Taskfile.yml` because gsed GNU compatibility tool is not installed.'
+  logg warn 'Unable to fix `~/.local/Taskfile.yml` because gsed GNU compatibility tool is not installed.'
 fi
 {{- end }}
 

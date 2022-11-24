@@ -15,8 +15,8 @@
 {{- $packages = concat $packages $pyenvDependencies -}}
 {{- end }}
 
-logg 'Installing common dependencies using pacman'
-logg "Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}"
+logg 'Installing common dependencies using `pacman`'
+logg info 'Dependencies: `{{ $packages | sortAlpha | uniq | join "` `" -}}`'
 
 ### Install base dependencies
 sudo pacman -Sy --noconfirm --needed {{ $packages | sortAlpha | uniq | join " " -}}

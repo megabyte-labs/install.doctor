@@ -11,6 +11,6 @@ if [ -f "$ASDF_DIR/asdf.sh" ] && [ -f ~/.tool-versions ]; then
   . ${ASDF_DIR}/asdf.sh
   asdf install || true
 else
-  logg 'The `$ASDF_DIR/asdf.sh` or `~/.tool-versions` file is not present'
+  logg warn 'The `$ASDF_DIR/asdf.sh` or `~/.tool-versions` file is not present'
 fi
 {{- end }}

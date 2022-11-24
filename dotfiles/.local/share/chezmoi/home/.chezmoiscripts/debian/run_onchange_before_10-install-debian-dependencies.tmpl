@@ -30,8 +30,8 @@
 
 source "$HOME/.config/shell/exports"
 
-logg 'Installing common dependencies using apt-get'
-logg "Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}"
+logg 'Installing common dependencies using `apt-get`'
+logg info 'Dependencies: `{{ $packages | sortAlpha | uniq | join "` `" -}}`'
 
 sudo apt-get update
 sudo apt-get install -y --no-install-recommends {{ $packages | sortAlpha | uniq | join " " -}}
