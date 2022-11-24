@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-{{- if or (eq .host.distro.id "darwin") (eq .host.distro.family "linux") }}
 
 # {{ output "sha256sum" (joinPath .chezmoi.sourceDir ".chezmoidata.yaml")  }}
 
@@ -168,4 +167,3 @@ if command -v zoxide >/dev/null; then
 elif [ -f "$COMPLETION_DIR/zoxide.bash" ]; then
   rm "$COMPLETION_DIR/zoxide.bash"
 fi
-{{- end }}

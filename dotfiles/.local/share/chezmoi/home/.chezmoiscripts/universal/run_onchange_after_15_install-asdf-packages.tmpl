@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-{{- if or (eq .host.distro.id "darwin") (eq .host.distro.family "linux") }}
 
 # dot_tool-versions.tmpl hash: {{ include "dot_tool-versions.tmpl" | sha256sum }}
 
@@ -13,4 +12,3 @@ if [ -f "$ASDF_DIR/asdf.sh" ] && [ -f ~/.tool-versions ]; then
 else
   logg warn 'The `$ASDF_DIR/asdf.sh` or `~/.tool-versions` file is not present'
 fi
-{{- end }}

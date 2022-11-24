@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-{{- if eq .host.distro.id "darwin" }}
 {{- $supportedManagers := list "whalebrew" "brew" "port" "go" "cargo" "npm" "pipx" "gem" "cask" "binary" }}
 #{- $packageMap := (get .installerMap $packageName) }}
 #{- if (hasKey $packageMap "_deps") }}
@@ -10,4 +9,3 @@
 
 # Examples of /etc/os-release values https://gist.github.com/natefoo/814c5bf936922dad97ff
 # Example fromJson with include from file https://github.com/twpayne/chezmoi/issues/1369
-{{- end }}

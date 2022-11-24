@@ -16,7 +16,7 @@
 {{- end }}
 
 logg 'Installing common dependencies using `pacman`'
-logg info 'Dependencies: `{{ $packages | sortAlpha | uniq | join "` `" -}}`'
+logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 
 ### Install base dependencies
 sudo pacman -Sy --noconfirm --needed {{ $packages | sortAlpha | uniq | join " " -}}

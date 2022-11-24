@@ -7,7 +7,7 @@
 # TODO - Add Python dependencies like in ubuntu/archlinux
 
 logg 'Installing common dependencies using `dnf`'
-logg info 'Dependencies: `{{ $packages | sortAlpha | uniq | join "` `" -}}`'
+logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 
 ### Install base dependencies
 sudo dnf install -y {{ $packages | sortAlpha | uniq | join " " -}}

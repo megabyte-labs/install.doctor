@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-{{- if eq .host.distro.id "ubuntu" }}
 
 # Required for styled logging
 {{- includeTemplate "universal/logg" }}
@@ -31,8 +30,7 @@
 source "$HOME/.config/shell/exports"
 
 logg 'Installing common dependencies using `apt-get`'
-logg info 'Dependencies: `{{ $packages | sortAlpha | uniq | join "` `" -}}`'
+logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 
 sudo apt-get update
 sudo apt-get install -y --no-install-recommends {{ $packages | sortAlpha | uniq | join " " -}}
-{{- end }}
