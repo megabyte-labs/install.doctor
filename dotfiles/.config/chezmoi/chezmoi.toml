@@ -1,8 +1,0 @@
-[diff]
-  pager = "delta"
-[git]
-  autoPush = true
-[[textconv]]
-  pattern = "**/*.plist"
-  command = "plutil"
-  args = ["-convert", "xml1", "-o", "-", "-"]
