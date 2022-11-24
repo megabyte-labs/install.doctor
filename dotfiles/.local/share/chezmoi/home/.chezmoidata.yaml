@@ -1374,6 +1374,9 @@ softwarePackages:
   xurls:
     go: mvdan.cc/xurls/v2/cmd/xurls@latest
     github: github.com/mvdan/xurls
+  ykman:
+    brew: ykman
+    pipx: yubikey-manager
   # @cli [yq](https://github.com/mikefarah/yq) - Process YAML documents from the CLI
   yq:
     brew: yq
@@ -1382,6 +1385,22 @@ softwarePackages:
     github: github.com/stedolan/jq
     go: github.com/mikefarah/yq/v4@latest
     snap: yq
+  yubikey-authenticator:
+    ansible:darwin: professormanhattan.yubikey
+    choco: yubico-authenticator
+    flatpak: com.yubico.yubioath
+  yubikey-manager:
+    brew: ykman
+    dnf: yubikey-manager
+    pacman: yubikey-manager
+    pipx: yubikey-manager
+  yubikey-manager-qt:
+    ansible:darwin: professormanhattan.yubikey
+    appimage: https://developers.yubico.com/yubikey-manager-qt/Releases/yubikey-manager-qt-1.2.4b-linux.AppImage
+    choco: yubikey-manager
+    dnf: yubikey-manager-qt
+    pacman: yubikey-manager-qt
+    scoop: yubikey-manager-qt
 
 installerPostInstallScripts:
   astronvim: |
@@ -1416,6 +1435,31 @@ softwarePlugins:
   dotnet:
     plugins:
       - Microsoft.CST.AttackSurfaceAnalyzer.CLI
+  quicklook:
+    plugins:
+      - plugin: apparency
+        corporate: false
+      - provisionql
+      - qlcolorcode
+      - qlimagesize
+      - qlmarkdown
+      - qlstephen
+      - qlvideo
+      - quicklook-json
+      - quicklookapk
+      - plugin: suspicious-package
+        corporate: false
+      - webpquicklook
+  vagrant:
+    plugins:
+      - vagrant-bindfs
+      - vagrant-digitalocean
+      - vagrant-google
+      - vagrant-libvirt
+      - vagrant-parallels
+      - vagrant-share
+      - vagrant-vmware-desktop
+      - vagrant-vbguest
   vim:
     plugins:
       - https://github.com/dense-analysis/ale.git
