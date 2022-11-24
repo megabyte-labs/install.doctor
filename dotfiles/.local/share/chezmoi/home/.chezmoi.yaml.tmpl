@@ -2,6 +2,14 @@
 {{- $email := "brian@megabyte.space" -}}
 {{- $restricted := false -}}
 {{- $work := false -}}
+{{- $gmailAddress := "" }}
+{{- $gmailAddressAppPassword := "" }}
+{{- $domain := "megabyte.space" }}
+{{- $githubToken := "" }}
+{{- $gitlabToken := "" }}
+{{- $ngrokAuthToken := "" }}
+{{- $slackApiToken := "" }}
+{{- $tabbySyncToken := "" }}
 {{- $toolchains := list "docker" "iac" "java" "kubernetes" "node" "python" "rust" "extra" }}
 
 {{- $data := . }}
@@ -114,15 +122,11 @@ data:
       {{ $toolchain}}: {{ $enabled }}
     {{- end }}
     user:
-        {{- if $ephemeral }}
-        email: noreply@megabyte.space
-        name: Ephemeral
-        {{- else }}
-        email: {{ $email}}
+        email: {{ if $ephemeral }}noreply@megabyte.space{{ else }}{{ $email }}{{ end }}
+        name: {{ if $ephemeral }}Ephemeral{{ else }}{{ $name }}{{ end }}
+        domain: {{ $domain }}
         gmailAddress: {{ $gmailAddress }}
         gmailAddressAppPassword: {{ $gmailAddressAppPassword }}
-        name: {{ $name }}
-        domain: {{ $domain }}
         GITHUB_TOKEN: {{ $githubToken }}
         GITLAB_TOKEN: {{ $gitlabToken }}
         NGROK_AUTH_TOKEN: {{ $ngrokAuthToken }}
