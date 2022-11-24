@@ -121,19 +121,19 @@ data:
     {{ $toolchain}}: {{ $enabled }}
   {{- end }}
   user:
-    email: {{ $email }}
-    name: {{ $name }}
-    domain: {{ $domain }}
-    gmailAddress: {{ $gmailAddress }}
-    gmailAddressAppPassword: {{ $gmailAddressAppPassword }}
-    GITHUB_TOKEN: {{ $githubToken }}
-    GITLAB_TOKEN: {{ $gitlabToken }}
-    NGROK_AUTH_TOKEN: {{ $ngrokAuthToken }}
-    SLACK_API_TOKEN: {{ $slackApiToken }}
-    TABBY_SYNC_TOKEN: {{ $tabbySyncToken }}
+    email: "{{ $email }}"
+    name: "{{ $name }}"
+    domain: "{{ $domain }}"
+    gmailAddress: "{{ $gmailAddress }}"
+    gmailAddressAppPassword: "{{ $gmailAddressAppPassword }}"
+    GITHUB_TOKEN: "{{ $githubToken }}"
+    GITLAB_TOKEN: "{{ $gitlabToken }}"
+    NGROK_AUTH_TOKEN: "{{ $ngrokAuthToken }}"
+    SLACK_API_TOKEN: "{{ $slackApiToken }}"
+    TABBY_SYNC_TOKEN: "{{ $tabbySyncToken }}"
 diff:
-  format: git
-  pager: delta
+  format: "git"
+  pager: "delta"
 git:
   autoCommit: true
   autoPush: true
