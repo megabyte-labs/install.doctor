@@ -1,3 +1,4 @@
+{{ if eq .host.distro.id "arch" }}
 #!/usr/bin/env bash
 
 {{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}
@@ -13,3 +14,4 @@
 {{- end }}
 
 sudo packan -Sy --noconfirm --needed {{ $packages | sortAlpha | uniq | join " " -}}
+{{ end }}
