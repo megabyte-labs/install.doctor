@@ -138,3 +138,12 @@ diff:
 git:
     autoCommit: true
     autoPush: true
+textconv:
+  - pattern: "**/*.plist"
+    command: "plutil"
+    args:
+      - "-convert"
+      - "xml1"
+      - "-o"
+      - "-",
+      - "-"
