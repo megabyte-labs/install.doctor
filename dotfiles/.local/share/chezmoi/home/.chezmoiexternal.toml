@@ -1,6 +1,6 @@
 ### VIM
 {{- $refreshPeriod := "140h" }}
-{{- $vimPlugins := .plugins.vim }}
+{{- $vimPlugins := .softwarePlugins.vim.plugins }}
 {{- range $vimPlugin := $vimPlugins }}
 {{-   $folderName :=  trimSuffix ".git" (last (splitList "/" $vimPlugin)) }}
 [".vim/plugged/{{ $folderName }}"]
