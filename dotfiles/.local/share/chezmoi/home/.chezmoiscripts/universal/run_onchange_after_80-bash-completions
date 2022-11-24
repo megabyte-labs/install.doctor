@@ -1,8 +1,13 @@
+{{- if or (eq .host.distro.id "darwin") (eq .host.distro.family "linux") }}
 #!/usr/bin/env bash
 
 # {{ output "sha256sum" (joinPath .chezmoi.sourceDir ".chezmoidata.yaml")  }}
 
-echo "Run onchange after bash completions hook"
+{{- includeTemplate "universal/logg" }}
+
+source "$HOME/.config/shell/exports"
+
+logg 'Updating the `~/.local/share/bash-completion/completions` folder based on the installed applications'
 
 ### Initialize
 COMPLETION_DIR="$HOME/.local/share/bash-completion/completions"
@@ -164,3 +169,4 @@ if command -v zoxide >/dev/null; then
 elif [ -f "$COMPLETION_DIR/zoxide.bash" ]; then
   rm "$COMPLETION_DIR/zoxide.bash"
 fi
+{{- end -}}

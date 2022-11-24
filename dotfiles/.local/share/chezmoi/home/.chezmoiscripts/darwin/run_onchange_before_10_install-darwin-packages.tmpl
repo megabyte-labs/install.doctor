@@ -1,10 +1,13 @@
 {{- if eq .host.distro.id "darwin" }}
 #!/usr/bin/env bash
 
+{{- includeTemplate "universal/logg" }}
+
+logg 'Ensuring `xcode-select` is installed'
 xcode-select -p >/dev/null 2>&1 || xcode-select --install
 
 if ! command -v brew >/dev/null 2>&1; then
-  echo "Installing Homebrew..."
+  logg 'Installing Homebrew'
   /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 

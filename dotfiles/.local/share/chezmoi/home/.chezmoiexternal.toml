@@ -1,5 +1,5 @@
 ### VIM
-{{- $refreshPeriod := "140h" }}
+{{- $refreshPeriod := "240h" }}
 {{- $vimPlugins := .softwarePlugins.vim.plugins }}
 {{- range $vimPlugin := $vimPlugins }}
 {{-   $folderName :=  trimSuffix ".git" (last (splitList "/" $vimPlugin)) }}
@@ -7,24 +7,24 @@
     type = "git-repo"
     url = "{{ $vimPlugin }}"
     refreshPeriod = "{{ $refreshPeriod }}"
-    [".vim/plugged/{{ $folderName }}".pull]
-        args = ["--ff-only"]
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 {{- end }}
 
 ### Betelgeuse Theme
-[".local/share/betelgeuse"]
+[".local/src/betelgeuse"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/misc/betelgeuse.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
 ### Shell
 [".config/desktop/gnome.yml"]
     type = "file"
     url = "https://gitlab.com/megabyte-labs/gas-station/-/raw/master/environments/prod/group_vars/all/defaults.yml"
-    refreshPeriod = "{{ $refreshPeriod }}"
 [".config/desktop/settings.yml"]
     type = "file"
     url = "https://gitlab.com/megabyte-labs/gas-station/-/raw/master/roles/system/theme/vars/main.yml"
-    refreshPeriod = "{{ $refreshPeriod }}"
 [".config/helm/config.yml"]
     type = "file"
     url = "https://gitlab.com/megabyte-labs/gas-station/-/raw/master/environments/prod/group_vars/all/helm.yml"
@@ -74,22 +74,21 @@
     refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Taskfiles
-[".local/shared-common"]
-    type = "archive"
-    url = "https://gitlab.com/megabyte-labs/common/shared/-/archive/master/shared-master.tar.gz"
-    exact = true
-    stripComponents = 3
+[".local/src/shared-common"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/common/shared.git"
     refreshPeriod = "{{ $refreshPeriod }}"
-    include = ["taskfiles/**"]
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
 {{- if and (not .host.headless) (ne .chezmoi.os "windows") }}
 ### Neovim
 [".config/nvim"]
     type = "git-repo"
-    url = "https://github.com/AstroNvim/AstroNvim.git"
+    url = "https://github.com/NvChad/NvChad.git"
     refreshPeriod = "{{ $refreshPeriod }}"
-    [".config/nvim".pull]
-        args = ["--ff-only"]
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 {{- end }}
 
 {{- if and (eq .chezmoi.os "linux") (not .host.headless) }}

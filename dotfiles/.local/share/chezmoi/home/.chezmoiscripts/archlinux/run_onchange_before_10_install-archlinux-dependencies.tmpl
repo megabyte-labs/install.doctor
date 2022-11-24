@@ -1,6 +1,8 @@
 {{- if eq .host.distro.id "arch" }}
 #!/usr/bin/env bash
 
+{{- includeTemplate "universal/logg" }}
+
 {{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}
 {{- $pyenvDependencies := list
 "base-devel"
@@ -13,13 +15,18 @@
 {{- $packages = concat $packages $pyenvDependencies -}}
 {{- end }}
 
+logg 'Installing common dependencies using pacman'
+logg "Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}"
+
 ### Install base dependencies
 sudo packan -Sy --noconfirm --needed {{ $packages | sortAlpha | uniq | join " " -}}
 
 ### Install yay
 if ! command -v yay > /dev/null; then
+  logg 'Cloning yay from `https://aur.archlinux.org/yay.git` to `/usr/local/src/yay`'
   git clone https://aur.archlinux.org/yay.git /usr/local/src/yay
   cd /usr/local/src/yay
+  logg 'Installing yay'
   makepkg -si
 fi
 {{- end -}}

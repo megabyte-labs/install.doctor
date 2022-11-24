@@ -1,20 +1,17 @@
+{{- if or (eq .host.distro.id "darwin") (eq .host.distro.family "linux") }}
 #!/usr/bin/env bash
 
-source $HOME/.config/shell/exports.sh
+{{- includeTemplate "universal/logg" }}
 
 # dot_tool-versions.tmpl hash: {{ include "dot_tool-versions.tmpl" | sha256sum }}
 
-[ ! -d $ASDF_DIR ] && git clone https://github.com/asdf-vm/asdf.git "${ASDF_DIR}"
-. ${ASDF_DIR}/asdf.sh
+source "$HOME/.config/shell/exports"
 
-{{- if or .toolchains.java }}
-asdf plugin-add java
-asdf plugin-add maven
-{{- end }}
-{{- if or .toolchains.node }}
-asdf plugin-add nodejs
-{{- end }}
-{{- if or .toolchains.python }}
-asdf plugin-add python
-{{- end }}
-asdf install || true
+if [ -f "$ASDF_DIR/asdf.sh" ] && [ -f ~/.tool-versions ]; then
+  logg 'Installing ASDF dependencies derived from `~/.tool-versions`'
+  . ${ASDF_DIR}/asdf.sh
+  asdf install || true
+else
+  logg 'The `$ASDF_DIR/asdf.sh` or `~/.tool-versions` file is not present'
+fi
+{{- end -}}

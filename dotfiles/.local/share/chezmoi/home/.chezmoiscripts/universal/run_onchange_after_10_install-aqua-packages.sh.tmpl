@@ -2,6 +2,8 @@
 #!/usr/bin/env bash
 set -eufo pipefail
 
+{{- includeTemplate "universal/logg" }}
+
 source "$HOME/.config/shell/exports"
 
 {{- $files := list -}}

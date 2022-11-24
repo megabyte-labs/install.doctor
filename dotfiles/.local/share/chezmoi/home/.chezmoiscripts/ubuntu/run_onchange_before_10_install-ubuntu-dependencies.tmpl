@@ -1,6 +1,8 @@
 {{- if eq .host.distro.id "ubuntu" }}
 #!/usr/bin/env bash
 
+{{- includeTemplate "universal/logg" }}
+
 {{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) -}}
 {{- $pyenvDependencies := list
 "make"
@@ -25,6 +27,10 @@
 {{- $packages = concat $packages $pyenvDependencies -}}
 {{- end }}
 
+source "$HOME/.config/shell/exports"
+
+logg 'Installing common dependencies using apt-get'
+logg "Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}"
 
 sudo apt-get update
 sudo apt-get install -y --no-install-recommends {{ $packages | sortAlpha | uniq | join " " -}}

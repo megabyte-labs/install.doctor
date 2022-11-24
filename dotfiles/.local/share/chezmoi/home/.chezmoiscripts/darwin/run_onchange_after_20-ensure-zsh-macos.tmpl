@@ -3,6 +3,10 @@
 
 set -eufo pipefail
 
+{{- includeTemplate "universal/logg" }}
+
+logg 'Ensuring ZSH is set as the default shell'
+
 {{- if (not .host.restricted) }}
 if ! grep -qc "/usr/local/bin/zsh" /etc/shells; then
   echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells > /dev/null
