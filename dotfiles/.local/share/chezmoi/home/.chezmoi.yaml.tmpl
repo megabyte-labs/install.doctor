@@ -98,7 +98,7 @@ age:
 sourceDir: {{ .chezmoi.sourceDir }}
 data:
     host:
-        arch: "{{ chezmoi.arch }}"
+        arch: "{{ .chezmoi.arch }}"
         distro:
             family: "{{ chezmoi.os }}"
             id: "{{ get .chezmoi.osRelease "id" | default .chezmoi.os }}"
