@@ -5,8 +5,10 @@
 {{- $gmailAddress := "noreply@gmail.com" }}
 {{- $gmailAddressAppPassword := "" }}
 {{- $domain := "megabyte.space" }}
-{{- $githubToken := "" }}
-{{- $gitlabToken := "" }}
+{{- $cloudflareUsername := "noreply@megabyte.space" }}
+{{- $cloudflareToken := "" }}
+{{- $githubReadToken := "" }}
+{{- $gitlabReadToken := "" }}
 {{- $ngrokAuthToken := "" }}
 {{- $slackApiToken := "" }}
 {{- $tabbySyncToken := "" }}
@@ -90,6 +92,10 @@
 {{- end }}
 
 {{- $domain = promptStringOnce $data.user "domain" "Domain" $domain -}}
+{{- $cloudflareUsername = promptStringOnce $data.cloudflareUsername "cloudflareUsername" "CloudFlare E-Mail" $email -}}
+{{- $cloudflareToken = promptStringOnce $data.cloudflareToken "cloudflareToken" "CloudFlare API Token" $cloudflareToken -}}
+{{- $gitlabReadToken = promptStringOnce $data.gitlabReadToken "gitlabReadToken" "GitLab read-only token (See: https://github.com/gabrie30/ghorg#scm-provider-setup)" $gitlabReadToken }}
+{{- $githubReadToken = promptStringOnce $data.githubReadToken "githubReadToken" "GitHub read-only token (See: https://github.com/gabrie30/ghorg#scm-provider-setup)" $githubReadToken }}
 {{- $gmailAddress = promptStringOnce $data.user "gmailAddress" "G-mail address" $gmailAddress -}}
 {{- $gmailAddressAppPassword = promptStringOnce $data.user "gmailAddressAppPassword" "G-mail app password" $gmailAddressAppPassword -}}
 {{- $ngrokAuthToken = promptStringOnce $data.user "ngrokAuthToken" "Ngrok authentication token" $ngrokAuthToken -}}
@@ -132,8 +138,9 @@ data:
     gmailAddressAppPassword: "{{ $gmailAddressAppPassword }}"
     locale: "en_US"
     timezone: "America/New_York"
-    GITHUB_TOKEN: "{{ $githubToken }}"
-    GITLAB_TOKEN: "{{ $gitlabToken }}"
+    CLOUDFLARE_USERNAME: "{{ $cloudflareUsername }}"
+    GITHUB_READ_TOKEN: "{{ $githubReadToken }}"
+    GITLAB_READ_TOKEN: "{{ $gitlabReadToken }}"
     NGROK_AUTH_TOKEN: "{{ $ngrokAuthToken }}"
     SLACK_API_TOKEN: "{{ $slackApiToken }}"
     TABBY_SYNC_TOKEN: "{{ $tabbySyncToken }}"
@@ -143,6 +150,9 @@ diff:
 git:
   autoCommit: true
   autoPush: true
+scriptEnv:
+  LEXICON_CLOUDFLARE_USERNAME: "{{ $cloudflareUsername }}"
+  LEXICON_CLOUDFLARE_TOKEN: "{{ $cloudflareToken }}"
 textconv:
   - pattern: "**/*.plist"
     command: "plutil"

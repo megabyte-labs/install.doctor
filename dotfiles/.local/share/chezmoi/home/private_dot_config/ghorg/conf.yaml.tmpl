@@ -149,7 +149,7 @@ GHORG_EXIT_CODE_ON_CLONE_ISSUES: 1
 
 # Add your GitHub token
 # flag (--token, -t) eg: --token=bGVhdmUgYSBjb21tZW50IG9uIGlzc3VlIDY2
-GHORG_GITHUB_TOKEN: {{ .user.GITHUB_TOKEN }}
+GHORG_GITHUB_TOKEN: {{ .user.GITHUB_READ_TOKEN }}
 
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 # |G|I|T|L|A|B| |S|P|E|C|I|F|I|C|
@@ -157,7 +157,7 @@ GHORG_GITHUB_TOKEN: {{ .user.GITHUB_TOKEN }}
 
 # Add your GitLab token
 # flag (--token, -t) eg: --token=bGVhdmUgYSBjb21tZW50IG9uIGlzc3VlIDY2
-GHORG_GITLAB_TOKEN: {{ .user.GITLAB_TOKEN }}
+GHORG_GITLAB_TOKEN: {{ .user.GITLAB_READ_TOKEN }}
 
 # clones repos in a directory structure that matches gitlab namespaces eg company/unit/subunit/app would clone into ghorg/org/unit/subunit/app
 # flag (--preserve-dir)
