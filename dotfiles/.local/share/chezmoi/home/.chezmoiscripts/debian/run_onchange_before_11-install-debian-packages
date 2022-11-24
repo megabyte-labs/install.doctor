@@ -1,0 +1,5 @@
+{{- if eq .host.distro.id "debian" }}
+{{ $supportedManagers := (list "flatpak" "snap" "whalebrew" "apt" "brew" "go" "cargo" "npm" "pipx" "gem" "appimage" "binary") }}
+#!/usr/bin/env bash
+{{- end -}}
+

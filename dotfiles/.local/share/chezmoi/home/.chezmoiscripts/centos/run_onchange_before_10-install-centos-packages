@@ -1,0 +1,4 @@
+{{- if eq .host.distro.id "centos" }}
+{{ $supportedManagers := (list "flatpak" "snap" "whalebrew" "dnf" "brew" "go" "cargo" "npm" "pipx" "gem" "appimage" "binary") }}
+#!/usr/bin/env bash
+{{- end -}}

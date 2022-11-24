@@ -1,0 +1,16 @@
+{{- if eq .host.distro.id "centos" }}
+#!/usr/bin/env bash
+
+# Required for styled logging
+{{- includeTemplate "universal/logg" }}
+
+{{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}
+# TODO - Add Python dependencies like in ubuntu/archlinux
+
+logg 'Installing common dependencies using dnf'
+logg "Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}"
+
+### Install base dependencies
+sudo dnf install -y {{ $packages | sortAlpha | uniq | join " " -}}
+
+{{- end -}}

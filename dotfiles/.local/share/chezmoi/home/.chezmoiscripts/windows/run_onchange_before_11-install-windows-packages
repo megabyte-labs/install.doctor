@@ -1,0 +1,4 @@
+{{- if eq .host.distro.id "ubuntu" }}
+{{ $supportedManagers := (list "whalebrew" "choco" "scoop" "winget" "go" "cargo" "npm" "pipx" "gem" "binary") }}
+
+{{- end -}}

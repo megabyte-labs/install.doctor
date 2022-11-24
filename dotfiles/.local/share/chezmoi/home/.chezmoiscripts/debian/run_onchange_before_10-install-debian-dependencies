@@ -1,0 +1,38 @@
+{{- if eq .host.distro.id "ubuntu" }}
+#!/usr/bin/env bash
+
+# Required for styled logging
+{{- includeTemplate "universal/logg" }}
+
+{{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) -}}
+{{- $pyenvDependencies := list
+"make"
+"build-essential"
+"libssl-dev"
+"zlib1g-dev"
+"libbz2-dev"
+"libreadline-dev"
+"libsqlite3-dev"
+"wget"
+"curl"
+"llvm"
+"libncursesw5-dev"
+"xz-utils"
+"tk-dev"
+"libxml2-dev"
+"libxmlsec1-dev"
+"libffi-dev"
+"liblzma-dev"
+-}}
+{{- if .toolchains.python }}
+{{- $packages = concat $packages $pyenvDependencies -}}
+{{- end }}
+
+source "$HOME/.config/shell/exports"
+
+logg 'Installing common dependencies using apt-get'
+logg "Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}"
+
+sudo apt-get update
+sudo apt-get install -y --no-install-recommends {{ $packages | sortAlpha | uniq | join " " -}}
+{{- end -}}
