@@ -55,3 +55,10 @@ https://hackjutsu.com/Lepton/
 # goofys
 # tfenv
 # shc
+
+
+{{ if not $headless -}}
+age:
+  identity: "{{ .chezmoi.homeDir }}/.config/age/key.txt"
+  recipient: "age16kxd4ljclq9ksnxvl2ee7a5xnj744kwyv04p04ka0n3rzxdpl5nsq52svl"
+{{- end }}
