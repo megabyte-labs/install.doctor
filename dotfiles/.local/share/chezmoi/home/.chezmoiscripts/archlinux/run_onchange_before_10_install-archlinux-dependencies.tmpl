@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-{{- if eq .host.distro.id "arch" }}
 
 # Required for styled logging
 {{- includeTemplate "universal/logg" }}
@@ -30,4 +29,3 @@ if ! command -v yay > /dev/null; then
   logg 'Installing yay'
   makepkg -si
 fi
-{{- end }}
