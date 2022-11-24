@@ -88,7 +88,7 @@
     url = "https://gitlab.com/megabyte-labs/common/shared/-/raw/master/Taskfile.yml"
     refreshPeriod = "{{ $refreshPeriod }}"
 
-{{- if (not .host.headless) and (ne .chezmoi.os "windows") }}
+{{- if and (not .host.headless) (ne .chezmoi.os "windows") }}
 ### Neovim
 [".config/nvim"]
     type = "git-repo"
@@ -98,7 +98,7 @@
         args = ["--ff-only"]
 {{- end }}
 
-{{- if (eq .chezmoi.os "linux") and (not .host.headless) }}
+{{- if and (eq .chezmoi.os "linux") (not .host.headless) }}
 ### Rofi
 [".local/share/fonts/GrapeNuts-Regular.ttf"]
     type = "file"

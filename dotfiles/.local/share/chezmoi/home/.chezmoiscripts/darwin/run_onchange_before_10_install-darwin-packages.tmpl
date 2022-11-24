@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+xcode-select -p >/dev/null 2>&1 || xcode-select --install
+
+if ! command -v brew >/dev/null 2>&1; then
+  echo "Installing Homebrew..."
+  /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+{{ if eq .host.arch "arm64" -}}
+eval $(/opt/homebrew/bin/brew shellenv)
+{{- else }}
+eval $(/usr/local/bin/brew shellenv)
+{{- end }}
+
+brew bundle --verbose --no-lock --file=/dev/stdin <<EOF
+{{ includeTemplate "darwin/brewfile" . }}
+EOF

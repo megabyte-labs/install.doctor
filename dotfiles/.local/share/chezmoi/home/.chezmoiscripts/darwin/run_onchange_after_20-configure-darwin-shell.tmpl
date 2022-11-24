@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -eufo pipefail
+
+{{- if (not .host.restricted) }}
+if ! grep -qc "/usr/local/bin/zsh" /etc/shells; then
+  echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells > /dev/null
+fi
+
+{{- if eq .host.arch "arm64" }}
+if [[ ! -e /usr/local/bin/zsh ]]; then
+  sudo ln -sf /opt/homebrew/bin/zsh /usr/local/bin/zsh
+fi
+{{- end -}}
+{{- end -}}

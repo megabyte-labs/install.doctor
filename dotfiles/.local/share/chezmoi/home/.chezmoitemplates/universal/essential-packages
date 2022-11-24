@@ -1,0 +1,18 @@
+{{- $packages := list
+  "age"
+  "bash"
+  "coreutils"
+  "curl"
+  "exa"
+  "git"
+  "gnupg"
+  "htop"
+  "httpie"
+  "jq"
+  "neovim"
+  "ripgrep"
+  "tmux"
+  "wget"
+  "zsh"
+-}}
+{{- $packages | join " " -}}

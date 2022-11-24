@@ -1,0 +1,40 @@
+{{- if .toolchains.extra -}}
+#!/usr/bin/env bash
+
+source $HOME/.config/shell/exports.sh
+if [[ ! -e $KREW_ROOT/bin/kubectl-krew ]]; then
+    (
+    set -x; cd "$(mktemp -d)" &&
+    OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+    ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+    KREW="krew-${OS}_${ARCH}" &&
+    curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+    tar zxvf "${KREW}.tar.gz" &&
+    ./"${KREW}" install krew
+    )
+fi
+
+krew_plugins=(
+  access-matrix
+  datree
+  deprecations
+  get-all
+  konfig
+  modify-secret
+  neat
+  node-shell
+  resource-capacity
+  score
+  sniff
+  tree
+  tunnel
+  view-allocations
+  who-can
+)
+
+for plugin in "${krew_plugins[@]}"
+do
+    echo Installing Krew plugin \"$plugin\"
+    $KREW_ROOT/bin/kubectl-krew install $plugin 2>/dev/null || true
+done
+{{- end -}}

@@ -7,6 +7,12 @@ appiumwebdriver() {
   xcodebuild -project WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination "id=${UDID_INPUT}" test
 }
 
+asdf-update () {
+  asdf update > /dev/null 2>&1
+  asdf plugin update --all > /dev/null 2>&1
+  diff <(cat ~/.tool-versions | awk '{print $1}' | xargs -I {} bash -c 'echo {} $(asdf latest {})') <(cat ~/.tool-versions)
+}
+
 # Change directories and view contents at the same time
 cl() {
   DIR="$*"
@@ -115,4 +121,18 @@ transfer() {
     file_name=$1
     curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name" | tee /dev/null
   fi
+}
+
+update-all() {
+  brew update
+  brew upgrade
+  brew upgrade --cask --greedy
+  brew cleanup --prune=1
+  asdf update || true
+  asdf plugin-update --all
+  rustup self update || true
+  rustup update || true
+  npm update -g || true
+  chezmoi upgrade
+  z4h update
 }

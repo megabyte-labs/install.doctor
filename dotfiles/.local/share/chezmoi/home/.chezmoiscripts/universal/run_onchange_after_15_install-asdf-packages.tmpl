@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+source $HOME/.config/shell/exports.sh
+
+# dot_tool-versions.tmpl hash: {{ include "dot_tool-versions.tmpl" | sha256sum }}
+
+[ ! -d $ASDF_DIR ] && git clone https://github.com/asdf-vm/asdf.git "${ASDF_DIR}"
+. ${ASDF_DIR}/asdf.sh
+
+asdf plugin-add direnv
+{{- if or .toolchains.java }}
+asdf plugin-add java
+asdf plugin-add maven
+{{- end }}
+{{- if or .toolchains.node }}
+asdf plugin-add nodejs
+{{- end }}
+{{- if or .toolchains.python }}
+asdf plugin-add python
+{{- end }}
+asdf install || true

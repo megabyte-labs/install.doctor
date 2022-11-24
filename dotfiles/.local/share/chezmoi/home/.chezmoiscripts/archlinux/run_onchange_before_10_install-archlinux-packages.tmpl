@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+{{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}
+{{- $pyenvDependencies := list
+"base-devel"
+"openssl"
+"zlib"
+"xz"
+"tk"
+}}
+{{- if .toolchains.python }}
+{{- $packages = concat $packages $pyenvDependencies -}}
+{{- end }}
+
+sudo packan -Sy --noconfirm --needed {{ $packages | sortAlpha | uniq | join " " -}}

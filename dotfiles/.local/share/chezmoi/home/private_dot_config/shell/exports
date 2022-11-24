@@ -61,6 +61,9 @@ fi
 {{- end }}
 export ANDROID_SDK_HOME="$XDG_DATA_HOME/android-sdk"
 
+### Aqua
+export PATH="${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin:$PATH"
+
 ### ASDF
 export ASDF_CONFIG_FILE="$XDG_CONFIG_HOME/asdf/asdfrc"
 export ASDF_DIR="$XDG_DATA_HOME/asdf"

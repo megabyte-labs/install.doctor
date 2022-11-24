@@ -1,0 +1,15 @@
+{{- if .toolchains.extra -}}
+#!/usr/bin/env bash
+
+source $HOME/.config/shell/exports.sh
+helm_plugins=(
+  https://github.com/databus23/helm-diff
+  https://github.com/jkroepke/helm-secrets
+)
+
+for plugin in "${helm_plugins[@]}"
+do
+    echo Installing Helm plugin \"$plugin\"
+    helm plugin install $plugin 2>/dev/null|| true
+done
+{{- end -}}
