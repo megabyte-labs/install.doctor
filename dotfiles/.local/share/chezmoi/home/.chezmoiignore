@@ -1,28 +1,28 @@
-.chezmoiscripts
-!.chezmoiscripts/{{ .host.distro.id }}
+.chezmoiscripts/**/*
+!.chezmoiscripts/{{ .host.distro.id }}/**/*
 
-{{- if and (ne .host.distro.id "darwin") (ne .host.distro.id "linux") }}
-!.chezmoiscripts/universal
+{{- if ne .host.distro.id "windows" }}
+!.chezmoiscripts/universal/**/*
 {{- end }}
 
 {{- if ne .host.distro.family "linux" }}
-private_dot_config/Kvantum
-private_dot_config/bashtop
-private_dot_config/desktop
-private_dot_config/firejail
-private_dot_config/fontconfig
-private_dot_config/gtk-1.0
-private_dot_config/gtk-2.0
-private_dot_config/gtk-3.0
-private_dot_config/rofi
-private_dot_config/xfce4
-private_dot_config/xsettingsd
-private_dot_config/gtkrc
-private_dot_config/k*
-private_dot_config/mimeapps.list
-private_dot_config/plasma*
-dot_local/konsole
-dot_Xresources
+.config/Kvantum
+.config/bashtop
+.config/desktop
+.config/firejail
+.config/fontconfig
+.config/gtk-1.0
+.config/gtk-2.0
+.config/gtk-3.0
+.config/rofi
+.config/xfce4
+.config/xsettingsd
+.config/gtkrc
+.config/k*
+.config/mimeapps.list
+.config/plasma*
+.local/konsole
+.Xresources
 {{- end }}
 
 {{- if ne .host.distro.id "darwin" }}
