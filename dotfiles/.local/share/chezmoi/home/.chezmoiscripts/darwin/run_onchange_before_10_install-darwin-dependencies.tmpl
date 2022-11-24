@@ -10,6 +10,8 @@ xcode-select -p >/dev/null 2>&1 || xcode-select --install
 if ! command -v brew >/dev/null 2>&1; then
   logg 'Installing Homebrew'
   /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+  logg 'Homebrew is already installed'
 fi
 
 {{ if eq .host.arch "arm64" -}}
