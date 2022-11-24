@@ -156,8 +156,7 @@ logger() {
   elif [ "$1" == 'warn' ]; then
     "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --background="#ffff00" --foreground="#000000"  " WARNING ") $("$GUM_PATH" style --bold --italic "$(format "$2")")"
   else
-    echo "WARNING: Unknown log type"
-    echo "$2"
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$2")")"
   fi
 }
 
