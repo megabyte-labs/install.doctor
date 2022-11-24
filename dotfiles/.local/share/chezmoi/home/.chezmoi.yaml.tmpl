@@ -100,7 +100,7 @@ data:
     host:
         arch: "{{ .chezmoi.arch }}"
         distro:
-            family: "{{ chezmoi.os }}"
+            family: "{{ .chezmoi.os }}"
             id: "{{ get .chezmoi.osRelease "id" | default .chezmoi.os }}"
         home: "{{ .chezmoi.homeDir }}"
         type: "{{ $chassisType }}"
