@@ -62,6 +62,8 @@ fi
 export ANDROID_SDK_HOME="$XDG_DATA_HOME/android-sdk"
 
 ### Aqua
+export AQUA_ROOT_DIR="$XDG_DATA_HOME/aqua"
+export AQUA_GLOBAL_CONFIG="$XDG_CONFIG_HOME/aqua/aqua.yaml"
 export PATH="${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin:$PATH"
 
 ### ASDF
@@ -165,6 +167,13 @@ export KDEHOME="$XDG_CONFIG_HOME/kde"
 ### Kodi
 export KODI_DATA="$XDG_DATA_HOME/kodi"
 
+### Krew
+export KREW_ROOT="$XDG_DATA_HOME/krew"
+
+### Maven
+export MAVEN_CONFIG="$XDG_CONFIG_HOME/maven/settings.xml"
+alias mvn="mvn -s $MAVEN_CONFIG"
+
 ### McFly
 export MCFLY_FUZZY=2
 export MCFLY_RESULTS=14
@@ -267,18 +276,27 @@ export SAVEHIST=5000
 {{- if not .host.headless }}
 if command -v code > /dev/null; then
   export EDITOR='code --wait'
+  export VISUAL="$EDITOR"
 else
   # Source: https://unix.stackexchange.com/questions/4859/visual-vs-editor-what-s-the-difference
   export EDITOR='vi -e'
+  if command -v nvim > /dev/null; then
+    export VISUAL='nvim -e'
+  else
+    export VISUAL="$EDITOR"
+  fi
 fi
 {{- else -}}
 export EDITOR='vi -e'
+if command -v nvim > /dev/null; then
+  export VISUAL='nvim -e'
+else
+  export VISUAL="$EDITOR"
+fi
 {{- end -}}
-export VISUAL="$EDITOR"
 
 {{- if eq .host.type "wsl" }}
 ### WSL
 export LIBGL_ALWAYS_INDIRECT="1"
 export BROWSER='/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe'
-
 {{- end }}

@@ -1,4 +1,4 @@
-{{- if .host.headless -}}
+{{- if and false .host.headless -}}
 #!/usr/bin/env bash
 
 Z4H_BOOTSTRAPPING=1 exec zsh && exit 0

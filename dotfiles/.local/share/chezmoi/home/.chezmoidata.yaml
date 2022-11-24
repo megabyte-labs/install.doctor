@@ -1437,6 +1437,27 @@ softwarePlugins:
   dotnet:
     plugins:
       - Microsoft.CST.AttackSurfaceAnalyzer.CLI
+  helm:
+    plugins:
+      - https://github.com/databus23/helm-diff
+      - https://github.com/jkroepke/helm-secrets
+  krew:
+    plugins:
+      - access-matrix
+      - datree
+      - deprecations
+      - get-all
+      - konfig
+      - modify-secret
+      - neat
+      - node-shell
+      - resource-capacity
+      - score
+      - sniff
+      - tree
+      - tunnel
+      - view-allocations
+      - who-can
   quicklook:
     plugins:
       - plugin: apparency

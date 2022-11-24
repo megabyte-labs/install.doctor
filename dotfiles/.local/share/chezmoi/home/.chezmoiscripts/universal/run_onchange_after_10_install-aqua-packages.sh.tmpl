@@ -1,8 +1,8 @@
-{{ if .enableAquaInstall }}
+{{- if false }}
 #!/usr/bin/env bash
 set -eufo pipefail
 
-source $HOME/.config/shell/exports.sh
+source "$HOME/.config/shell/exports"
 
 {{- $files := list -}}
 {{- range $path := glob (list .chezmoi.sourceDir "private_dot_config/aqua/**/*.yaml.tmpl" | join "/") }}
@@ -16,4 +16,4 @@ fi
 
 aqua update-aqua
 aqua install -a
-{{ end }}
+{{- end -}}

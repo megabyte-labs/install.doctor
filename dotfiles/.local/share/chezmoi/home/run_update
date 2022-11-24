@@ -1,23 +1,26 @@
-{{ if eq .chezmoi.os "linux" }}
+{{ if or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") }}
 #!/bin/sh
 
 echo "Run update hook"
 
 rm -rf ~/AppData
+{{ if or (eq .chezmoi.os "linux") }}
 rm -rf ~/Library
+{{ end }}
 
-sed -i 's/\.\/\.config\/taskfiles/taskfiles/g' ~/.local/Taskfile.yml
+if [ -d "$HOME/.local/shared-common" ]; then
+  cp ~/.local/shared-common/Taskfile.yml ~/.local/Taskfile.yml
+  sed -i 's/\.\/\.config\/taskfiles/taskfiles/g' ~/.local/Taskfile.yml
+  ln -s ~/.local/taskfiles ~/.local/shared-common/common/.config/taskfiles
+fi
 
-{{ else if .chezmoi.os "darwin" }}
-#!/bin/sh
-
-rm -rf ~/AppData
-
+{{ if (eq .chezmoi.os "darwin") }}
 if command -v gsed > /dev/null; then
   gsed -i 's/\.\/\.config\/taskfiles/taskfiles/g' ~/.local/Taskfile.yml
 else
   echo "Unable to fix ~/.local/Taskfile.yml because gsed GNU compatibility tool is not installed."
 fi
+{{ end }}
 
 {{ else if chezmoi.os "windows" }}
 

@@ -1,3 +1,4 @@
+{{- if eq .host.distro.id "darwin" }}
 #!/usr/bin/env bash
 
 xcode-select -p >/dev/null 2>&1 || xcode-select --install
@@ -13,6 +14,7 @@ eval $(/opt/homebrew/bin/brew shellenv)
 eval $(/usr/local/bin/brew shellenv)
 {{- end }}
 
-brew bundle --verbose --no-lock --file=/dev/stdin <<EOF
-{{ includeTemplate "darwin/brewfile" . }}
-EOF
+# brew bundle --verbose --no-lock --file=/dev/stdin <<EOF
+# includeTemplate "darwin/brewfile" . }}
+# EOF
+{{- end -}}

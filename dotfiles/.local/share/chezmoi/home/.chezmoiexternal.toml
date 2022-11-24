@@ -12,7 +12,7 @@
 {{- end }}
 
 ### Betelgeuse Theme
-[".local/share"]
+[".local/share/betelgeuse"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/misc/betelgeuse.git"
     [".local/share".pull]
@@ -76,17 +76,13 @@
     refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Taskfiles
-[".local"]
+[".local/shared-common"]
     type = "archive"
     url = "https://gitlab.com/megabyte-labs/common/shared/-/archive/master/shared-master.tar.gz"
     exact = true
     stripComponents = 3
     refreshPeriod = "{{ $refreshPeriod }}"
     include = ["taskfiles/**"]
-["Taskfile.yml"]
-    type = "file"
-    url = "https://gitlab.com/megabyte-labs/common/shared/-/raw/master/Taskfile.yml"
-    refreshPeriod = "{{ $refreshPeriod }}"
 
 {{- if and (not .host.headless) (ne .chezmoi.os "windows") }}
 ### Neovim

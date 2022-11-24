@@ -7,7 +7,6 @@ source $HOME/.config/shell/exports.sh
 [ ! -d $ASDF_DIR ] && git clone https://github.com/asdf-vm/asdf.git "${ASDF_DIR}"
 . ${ASDF_DIR}/asdf.sh
 
-asdf plugin-add direnv
 {{- if or .toolchains.java }}
 asdf plugin-add java
 asdf plugin-add maven

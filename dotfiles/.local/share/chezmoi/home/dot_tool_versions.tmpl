@@ -1,0 +1,23 @@
+{{- if .toolchains.go }}
+golang system
+{{- end -}}
+{{- if .toolchains.java }}
+java openjdk-17
+{{- end -}}
+{{- if .toolchains.node }}
+deno system
+nodejs system
+{{- end -}}
+{{- if .toolchains.php }}
+php 8.1.12
+{{- end -}}
+{{- if .toolchains.python }}
+poetry system
+python system
+{{- end -}}
+{{- if .toolchains.ruby }}
+ruby 3.1.1
+{{- end -}}
+{{- if .toolchains.rust }}
+rust system
+{{- end -}}

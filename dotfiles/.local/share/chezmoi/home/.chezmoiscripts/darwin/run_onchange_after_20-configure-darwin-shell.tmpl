@@ -1,3 +1,4 @@
+{{- if eq .host.distro.id "darwin" }}
 #!/usr/bin/env bash
 
 set -eufo pipefail
@@ -11,5 +12,6 @@ fi
 if [[ ! -e /usr/local/bin/zsh ]]; then
   sudo ln -sf /opt/homebrew/bin/zsh /usr/local/bin/zsh
 fi
+{{- end -}}
 {{- end -}}
 {{- end -}}
