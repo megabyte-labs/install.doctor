@@ -85,6 +85,15 @@ if [ "${container:=}" != 'docker' ]; then
   fi
 fi
 
+format() {
+  # shellcheck disable=SC2001,SC2016
+  ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`/\1\\u001b[47;1;30m \2 \\e[0;39m/')"
+  if [[ $ANSI_STR == *'`'*'`'* ]]; then
+    ANSI_STR="$(format "$ANSI_STR")"
+  fi
+  echo -e "$ANSI_STR"
+}
+
 # @description Logs using Node.js
 # @example logger info "An informative log"
 logg() {
