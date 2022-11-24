@@ -1,13 +1,23 @@
 {{ if eq .chezmoi.os "linux" }}
 #!/bin/sh
 
+echo "Run update hook"
+
 rm -rf ~/AppData
 rm -rf ~/Library
+
+sed -i 's/\.\/\.config\/taskfiles/taskfiles/g' ~/.local/Taskfile.yml
 
 {{ else if .chezmoi.os "darwin" }}
 #!/bin/sh
 
 rm -rf ~/AppData
+
+if command -v gsed > /dev/null; then
+  gsed -i 's/\.\/\.config\/taskfiles/taskfiles/g' ~/.local/Taskfile.yml
+else
+  echo "Unable to fix ~/.local/Taskfile.yml because gsed GNU compatibility tool is not installed."
+fi
 
 {{ else if chezmoi.os "windows" }}
 

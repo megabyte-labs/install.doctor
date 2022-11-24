@@ -2,6 +2,8 @@
 
 # {{ output "sha256sum" (joinPath .chezmoi.sourceDir ".chezmoidata.yaml")  }}
 
+echo "Run onchange after bash completions hook"
+
 ### Initialize
 COMPLETION_DIR="$HOME/.local/share/bash-completion/completions"
 mkdir -p "$COMPLETION_DIR"

@@ -2,4 +2,6 @@
 
 # {{ output "sha256sum" (joinPath .chezmoi.sourceDir "private_dot_config/crontab/config")  }}
 
+echo "Run onchange after crontab hook"
+
 crontab < "$XDG_CONFIG_HOME/crontab/config"

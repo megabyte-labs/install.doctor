@@ -1,8 +1,5 @@
 {{- if eq .chezmoi.os "darwin" -}}
 #!/bin/bash
 
-brew bundle --no-lock --file=/dev/stdin <<EOF
-brew "git"
-cask "google-chrome"
-EOF
+echo "Run once before install software hook"
 {{ end -}}

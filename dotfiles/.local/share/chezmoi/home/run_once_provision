@@ -2,6 +2,8 @@
 # Examples of /etc/os-release values https://gist.github.com/natefoo/814c5bf936922dad97ff
 # Example fromJson with include from file https://github.com/twpayne/chezmoi/issues/1369
 
+echo "Run once provision hook"
+
 {{ $packageMap := (get .installerMap $packageName) }}
 {{ if (hasKey $packageMap "_deps") }}
 {{   $deps := (get $packageMap "_deps") }}
