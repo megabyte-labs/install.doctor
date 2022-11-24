@@ -90,11 +90,11 @@ age:
 {{- if stdinIsATTY -}}
 
 {{- $domain = promptStringOnce $data.user "domain" "Domain" $domain -}}
-{{- $gmailAddress = promptStringOnce $data.user "G-mail address" $gmailAddress -}}
-{{- $gmailAddressAppPassword = promptStringOnce $data.user "G-mail app password" $gmailAddressAppPassword -}}
-{{- $ngrokAuthToken = promptStringOnce $data.user "Ngrok authentication token" $ngrokAuthToken -}}
-{{- $slackApiToken = promptStringOnce $data.user "Slack API token" $slackApiToken -}}
-{{- $tabbySyncToken = promptStringOnce $data.user "Tabby Sync Token" $tabbySyncToken -}}
+{{- $gmailAddress = promptStringOnce $data.user "gmailAddress" "G-mail address" $gmailAddress -}}
+{{- $gmailAddressAppPassword = promptStringOnce $data.user "gmailAddressAppPassword" "G-mail app password" $gmailAddressAppPassword -}}
+{{- $ngrokAuthToken = promptStringOnce $data.user "ngrokAuthToken" "Ngrok authentication token" $ngrokAuthToken -}}
+{{- $slackApiToken = promptStringOnce $data.user "slackApiToken" "Slack API token" $slackApiToken -}}
+{{- $tabbySyncToken = promptStringOnce $data.user "tabbySyncToken" "Tabby Sync Token" $tabbySyncToken -}}
 
 {{- writeToStdout "💡 Tip: you can re-enter your name and email with `chezmoi init --data=false`.\n" -}}
 
