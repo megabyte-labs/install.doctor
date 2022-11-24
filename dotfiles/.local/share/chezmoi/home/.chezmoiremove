@@ -29,7 +29,7 @@ Brewfile
 Library
 {{- end }}
 
-{{-if ne .host.distro.family "linux" }}
+{{- if ne .host.distro.family "linux" }}
 .config/Kvantum
 .config/bashtop
 .config/desktop
