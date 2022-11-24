@@ -1,4 +1,4 @@
+#!/usr/bin/env bash
 {{- if eq .host.distro.id "opensuse" }}
 {{ $supportedManagers := (list "flatpak" "snap" "whalebrew" "zypper" "brew" "go" "cargo" "npm" "pipx" "gem" "appimage" "binary") }}
-#!/usr/bin/env bash
 {{- end -}}

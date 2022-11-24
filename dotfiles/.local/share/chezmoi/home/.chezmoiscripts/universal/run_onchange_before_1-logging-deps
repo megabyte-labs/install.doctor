@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+{{- if or (eq .host.distro.id "darwin") (eq .host.distro.family "linux") }}
 
 # @description Installs glow (a markdown renderer) from GitHub releases
 # @example installGlow
@@ -68,3 +69,4 @@ echo "Ensuring Gum and Glow are installed (for logging)"
 installGlow &
 installGum &
 wait
+{{- end -}}

@@ -1,5 +1,5 @@
-{{- if eq .host.distro.id "freebsd" }}
 #!/usr/bin/env bash
+{{- if eq .host.distro.id "freebsd" }}
 
 # Required for styled logging
 {{- includeTemplate "universal/logg" }}

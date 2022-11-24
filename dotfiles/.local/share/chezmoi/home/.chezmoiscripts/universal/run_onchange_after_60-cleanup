@@ -1,5 +1,5 @@
+#!/usr/bin/env bash
 {{ if or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") }}
-#!/bin/sh
 
 source "$HOME/.config/shell/exports"
 echo 'Cleaning up unnecessary artifacts'

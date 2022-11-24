@@ -1,5 +1,5 @@
-{{- if eq .host.distro.id "darwin" }}
 #!/usr/bin/env bash
+{{- if eq .host.distro.id "darwin" }}
 
 # Required for styled logging
 {{- includeTemplate "universal/logg" }}

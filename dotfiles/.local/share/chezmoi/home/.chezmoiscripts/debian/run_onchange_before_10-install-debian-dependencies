@@ -1,5 +1,5 @@
-{{- if eq .host.distro.id "ubuntu" }}
 #!/usr/bin/env bash
+{{- if eq .host.distro.id "ubuntu" }}
 
 # Required for styled logging
 {{- includeTemplate "universal/logg" }}
