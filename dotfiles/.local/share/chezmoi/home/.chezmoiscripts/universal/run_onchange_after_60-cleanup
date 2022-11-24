@@ -22,10 +22,10 @@ if command -v gsed > /dev/null; then
 else
   logg 'Unable to fix `~/.local/Taskfile.yml` because gsed GNU compatibility tool is not installed.'
 fi
-{{ end }}
+{{- end }}
 
 {{ else if chezmoi.os "windows" }}
 
 Remove-Item -LiteralPath "$env:HOMEPATH\Library" -Force -Recurse
 
-{{ end }}
+{{- end }}

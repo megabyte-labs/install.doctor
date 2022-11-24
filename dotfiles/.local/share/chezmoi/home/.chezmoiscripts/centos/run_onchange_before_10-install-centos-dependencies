@@ -13,4 +13,4 @@ logg "Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}"
 ### Install base dependencies
 sudo dnf install -y {{ $packages | sortAlpha | uniq | join " " -}}
 
-{{- end -}}
+{{- end }}
