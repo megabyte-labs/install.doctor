@@ -1,12 +1,10 @@
 {{- $bwAuthenticated = eq (fromJson (output "bw" "status")).status "authenticated" }}
 {{- if $bwAuthenticated -}}
-{{-   writeToStdout "BitWarden is authenticated!" -}}
 {{-   (bitwarden "item" "dev.betelgeuse.ssh.personal.id_rsa.private").notes -}}
 {{- else -}}
 {{- $sshLocation = (joinPath .chezmoi.homeDir ".ssh" "id_rsa") -}}
 {{- if not (stat $sshLocation) -}}
 {{-   $sshKeygen = (output "ssh-keygen" "-b" "4096" "-t" "rsa" "-f" $sshLocation "-q" "-N" }}
-{{-   writeToStdout "Generated new SSH key since none were present and could not connect to BitWarden. It will be encrypted and included in your source." -}}
 {{- end -}}
 {{- include $sshLocation }}
 {{ end }}
