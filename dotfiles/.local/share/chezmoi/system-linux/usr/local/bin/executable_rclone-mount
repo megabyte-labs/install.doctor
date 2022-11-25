@@ -37,6 +37,10 @@ fi
 if [ ! -d "$MOUNT_PATH" ]; then
   mkdir -p "$MOUNT_PATH"
 fi
+RCLONE_IGNORE="$CONFIG_FOLDER/rcloneignore"
+if [ ! -f "$RCLONE_IGNORE" ] && [ -f "/etc/rcloneignore" ]; then
+  RCLONE_IGNORE='etc/rcloneignore'
+fi
 
 ### Mount
  /usr/bin/rclone --config="$CONFIG_FOLDER/rclone.conf" \
@@ -56,5 +60,5 @@ fi
   --dir-cache-time=60m \
   --vfs-cache-mode full \
   --cache-info-age=60m \
-  --filter-from="$CONFIG_FOLDER/rcloneignore"
+  --filter-from="$RCLONE_IGNORE"
   "$MOUNT":/ "$MOUNT_PATH"
