@@ -98,7 +98,6 @@
 {{- end }}
 
 {{- $domain = promptStringOnce $data.user "domain" "Domain" $domain -}}
-{{- $locale = promptStringOnce $data.user "locale" "locale" "Locale" $locale -}}
 {{- $timezone = promptStringOnce $data.user "timezone" "Timezone" $timezone -}}
 {{- $cloudflareUsername = promptStringOnce $data.user "cloudflareUsername" "CloudFlare E-Mail" $email -}}
 {{- $cloudflareToken = promptStringOnce $data.user "cloudflareToken" "CloudFlare API Token" $cloudflareToken -}}
@@ -143,7 +142,7 @@ data:
   user:
     email: "{{ $email }}"
     name: "{{ $name }}"
-    username: "{{ output ("echo" "$USER") }}
+    username: "{{ output "echo" "$USER" }}
     domain: "{{ $domain }}"
     gmailAddress: "{{ $gmailAddress }}"
     gmailAddressAppPassword: "{{ $gmailAddressAppPassword }}"
