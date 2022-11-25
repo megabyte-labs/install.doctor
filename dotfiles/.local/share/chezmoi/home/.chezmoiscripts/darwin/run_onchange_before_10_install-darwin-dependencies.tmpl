@@ -20,7 +20,7 @@ eval $(/usr/local/bin/brew shellenv)
 {{- end }}
 
 logg 'Installing base dependencies for macOS using `brew bundle`'
-logg info 'Dependencies: asdf jq node go-task/tap/go-task volta yq m-cli zx'
+logg info 'Dependencies: age asdf jq node go-task/tap/go-task volta yq m-cli zx'
 logg info 'GNU compatibility dependencies: coreutils findutils gawk gnu-getopt gnu-indent gnu-tar gnu-sed gnutls grep'
 
 brew bundle --verbose --no-lock --file=/dev/stdin <<EOF
