@@ -5,7 +5,9 @@ if [ ! -f "$HOME/.config/age/headless.txt" ]; then
   age-keygen > "$HOME/.config/age/headless.txt"
 fi
 
-if [ ! -f "$HOME/.config/age/key.txt" ]; then
-    age --decrypt --output "$HOME/.config/age/key.txt" "{{ .chezmoi.sourceDir }}/key.txt.age"
-    chmod 600 "${HOME}/key.txt"
+if [ -f "{{ .chezmoi.sourceDir }}/key.txt.age" ]; then
+  # TODO
+  logg 'Decrypting'
+  age --decrypt --output "$HOME/.config/age/key.txt" "{{ .chezmoi.sourceDir }}/key.txt.age"
+  chmod 600 "$HOME/.config/age/key.txt"
 fi
