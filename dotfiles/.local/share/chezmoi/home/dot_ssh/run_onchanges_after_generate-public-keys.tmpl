@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 
-{{ $sshFiles = (output "find" "$HOME/.ssh" "-type" "f") }}
-{{ range $sshFile := $sshFiles }}
-# .ssh hash: {{ include ".ssh" | sha256sum }}
-# {{ $sshFile }} hash: {{ include $sshFile | sha256sum }}
-{{ end }}
+{{ $sshFiles := (output "find" (joinPath .chezmoi.homeDir ".ssh") "-type" "f") -}}
+{{- range $sshFile := splitList "\n" $sshFiles -}}
+{{- if ne $sshFile "" -}}
+# {{ $sshFile }} hash: {{ $sshFile | sha256sum }}
+{{ end -}}
+{{- end }}
 
+source "$HOME/.config/shell/exports"
 logg 'Ensuring RSA public keys are present'
+
 find "$HOME/.ssh" -type f | while read FILE; do
   if [ ! -f "${FILE}" ] && cat "$FILE" | grep 'BEGIN RSA PRIVATE KEY'; then
     logg 'Generating missing public key for `'"$FILE"'`'

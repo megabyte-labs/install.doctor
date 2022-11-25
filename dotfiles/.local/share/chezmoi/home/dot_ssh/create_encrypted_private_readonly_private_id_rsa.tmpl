@@ -1,5 +1,7 @@
-{{- if ( bitwarden "item" "dev.betelgeuse.ssh.personal.id_rsa.private" ).notes -}}
-{{- ( bitwarden "item" "dev.betelgeuse.ssh.personal.id_rsa.private" ).notes -}}
+{{- $bwAuthenticated = eq (fromJson (output "bw" "status")).status "authenticated" }}
+{{- if $bwAuthenticated -}}
+{{-   writeToStdout "BitWarden is authenticated!" -}}
+{{-   (bitwarden "item" "dev.betelgeuse.ssh.personal.id_rsa.private").notes -}}
 {{- else -}}
 {{- $sshLocation = (joinPath .chezmoi.homeDir ".ssh" "id_rsa") -}}
 {{- if not (stat $sshLocation) -}}
