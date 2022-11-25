@@ -48,17 +48,17 @@ if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
   export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
   export WHALEBREW_INSTALL_PATH="/home/linuxbrew/.linuxbrew/whalebrew"
 fi
+{{ end }}
 
-{{- end }}
+{{- if eq .host.distro.id "darwin" }}
 ### Android Studio
-{{- if eq .host.distro.family "darwin" -}}
 if [ -d ~/Library/Android ]; then
   export PATH="$PATH:~/Library/Android/sdk/cmdline-tools/latest/bin"
   export PATH="$PATH:~/Library/Android/sdk/platform-tools"
   export PATH="$PATH:~/Library/Android/sdk/tools/bin"
   export PATH="$PATH:~/Library/Android/sdk/tools"
 fi
-{{- end }}
+{{ end }}
 export ANDROID_SDK_HOME="$XDG_DATA_HOME/android-sdk"
 
 ### Aqua
@@ -145,9 +145,9 @@ export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
 
 ### Homebrew
 export HOMEBREW_BUNDLE_FILE="$XDG_CONFIG_HOME/Brewfile"
-{{- if (and (eq .host.distro.family "darwin") (.host.restricted)) }}
+{{ if (and (eq .host.distro.family "darwin") (.host.restricted)) }}
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
-{{- end }}
+{{ end }}
 
 ### HTTPie
 export HTTPIE_CONFIG_DIR="$XDG_CONFIG_HOME/httpie"
@@ -273,7 +273,7 @@ export HIST_STAMPS=mm/dd/yyyy
 export SAVEHIST=5000
 
 ### Editor
-{{- if not .host.headless }}
+{{ if not .host.headless }}
 if command -v code > /dev/null; then
   export EDITOR='code --wait'
   export VISUAL="$EDITOR"
@@ -286,17 +286,17 @@ else
     export VISUAL="$EDITOR"
   fi
 fi
-{{- else -}}
+{{ else }}
 export EDITOR='vi -e'
 if command -v nvim > /dev/null; then
   export VISUAL='nvim -e'
 else
   export VISUAL="$EDITOR"
 fi
-{{- end -}}
+{{ end }}
 
-{{- if eq .host.type "wsl" }}
+{{ if eq .host.type "wsl" }}
 ### WSL
 export LIBGL_ALWAYS_INDIRECT="1"
 export BROWSER='/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe'
-{{- end }}
+{{ end }}
