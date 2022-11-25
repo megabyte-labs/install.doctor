@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ ! -f "$HOME/.config/age/headless.txt" ]; then
+  logg 'Generating age public key under `~/.config/age/key.txt`'
+  age-keygen > "$HOME/.config/age/headless.txt"
+fi
+
+if [ ! -f "$HOME/.config/age/key.txt" ]; then
+    age --decrypt --output "$HOME/.config/age/key.txt" "{{ .chezmoi.sourceDir }}/key.txt.age"
+    chmod 600 "${HOME}/key.txt"
+fi
