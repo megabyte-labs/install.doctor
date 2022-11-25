@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+{{ $sshFiles = (output "find" "$HOME/.ssh" "-type" "f") }}
+{{ range $sshFile := $sshFiles }}
+# .ssh hash: {{ include ".ssh" | sha256sum }}
+# {{ $sshFile }} hash: {{ include $sshFile | sha256sum }}
+{{ end }}
+
+logg 'Ensuring RSA public keys are present'
+find "$HOME/.ssh" -type f | while read FILE; do
+  if [ ! -f "${FILE}" ] && cat "$FILE" | grep 'BEGIN RSA PRIVATE KEY'; then
+    logg 'Generating missing public key for `'"$FILE"'`'
+    ssh-keygen -f "$FILE" -y > "${FILE}.pub"
+  fi
+done

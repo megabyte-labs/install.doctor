@@ -13,9 +13,11 @@
 {{- $githubUsername := "ProfessorManhattan" -}}
 {{- $githubReadToken := "" -}}
 {{- $gitlabReadToken := "" -}}
+{{- $locale := (output ("echo" "$LANG")) }}
 {{- $ngrokAuthToken := "" -}}
 {{- $slackApiToken := "" -}}
 {{- $tabbySyncToken := "" -}}
+{{- $timezone := "" -}}
 {{- $toolchains := list "docker" "iac" "java" "kubernetes" "node" "python" "rust" "extra" -}}
 
 {{- $data := . }}
@@ -96,6 +98,8 @@
 {{- end }}
 
 {{- $domain = promptStringOnce $data.user "domain" "Domain" $domain -}}
+{{- $locale = promptStringOnce $data.user "locale" "locale" "Locale" $locale -}}
+{{- $timezone = promptStringOnce $data.user "timezone" "Timezone" $timezone -}}
 {{- $cloudflareUsername = promptStringOnce $data.user "cloudflareUsername" "CloudFlare E-Mail" $email -}}
 {{- $cloudflareToken = promptStringOnce $data.user "cloudflareToken" "CloudFlare API Token" $cloudflareToken -}}
 {{- $gitlabReadToken = promptStringOnce $data.user "gitlabReadToken" "GitLab read-only token (See: https://github.com/gabrie30/ghorg#scm-provider-setup)" $gitlabReadToken }}
@@ -127,6 +131,7 @@ data:
       family: "{{ .chezmoi.os }}"
       id: "{{ get .chezmoi.osRelease "id" | default .chezmoi.os }}"
     home: "{{ .chezmoi.homeDir }}"
+    homeParentFolder: "{{ if eq .chezmoi.os "linux" }}/home{{ else if eq .chezmoi.os "darwin" }}/Users{{ else }}C:\Users{{ end }}"
     type: "{{ $chassisType }}"
     work: {{ $work }}
     restricted: {{ $restricted }}
@@ -138,14 +143,17 @@ data:
   user:
     email: "{{ $email }}"
     name: "{{ $name }}"
-    username: 'Betelgeuse'
+    username: "{{ output ("echo" "$USER") }}
     domain: "{{ $domain }}"
     gmailAddress: "{{ $gmailAddress }}"
     gmailAddressAppPassword: "{{ $gmailAddressAppPassword }}"
     githubUsername: "{{ $githubUsername }}"
-    locale: "en_US"
-    timezone: "America/New_York"
+    locale: "{{ $locale }}"
+    timezone: "{{ $timezone }}"
     CLOUDFLARE_USERNAME: "{{ $cloudflareUsername }}"
+    CLOUDFLARE_ACCESS_KEY_ID: "{{ $cloudflareAccessKeyId }}"
+    CLOUDFLARE_SECRET_ACCESS_KEY: "{{ $cloudflareSecretAccessKey }}"
+    CLOUDFLARE_R2_ACCOUNT_ID: "{{ $cloudflareR2AccountId }}"
     GITHUB_READ_TOKEN: "{{ $githubReadToken }}"
     GITLAB_READ_TOKEN: "{{ $gitlabReadToken }}"
     NGROK_AUTH_TOKEN: "{{ $ngrokAuthToken }}"
@@ -158,9 +166,6 @@ git:
   autoCommit: true
   autoPush: true
 scriptEnv:
-  CLOUDFLARE_ACCESS_KEY_ID: "{{ $cloudflareAccessKeyId }}"
-  CLOUDFLARE_SECRET_ACCESS_KEY: "{{ $cloudflareSecretAccessKey }}"
-  CLOUDFLARE_R2_ACCOUNT_ID: "{{ $cloudflareR2AccountId }}"
   LEXICON_CLOUDFLARE_USERNAME: "{{ $cloudflareUsername }}"
   LEXICON_CLOUDFLARE_TOKEN: "{{ $cloudflareToken }}"
 textconv:
