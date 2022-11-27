@@ -20,7 +20,7 @@
 {{- $tabbyConfigId := "" -}}
 {{- $tabbySyncToken := "" -}}
 {{- $timezone := "" -}}
-{{- $toolchains := list "docker" "iac" "java" "kubernetes" "node" "python" "rust" "extra" -}}
+{{- $toolchains := list "docker" "iac" "java" "kubernetes" "node" "python" "rust" "extra" "gpg" -}}
 
 {{- $data := . }}
 {{- $_ := set $data "host" (default (dict) (get $data "host")) -}}
