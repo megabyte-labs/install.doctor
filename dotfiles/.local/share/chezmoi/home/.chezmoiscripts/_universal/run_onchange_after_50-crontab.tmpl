@@ -3,8 +3,8 @@
 
 # {{ output "sha256sum" (joinPath .chezmoi.sourceDir "private_dot_config/crontab/config")  }}
 
-# Required for PATHs (including logging)
-source "$HOME/.config/shell/exports"
+{{- includeTemplate "universal/profile" }}
+{{- includeTemplate "universal/logg" }}
 
 logg 'Installing crontab jobs'
 crontab < "$XDG_CONFIG_HOME/crontab/config"

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# Required for styled logging
 {{- includeTemplate "universal/logg" }}
 
 {{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}

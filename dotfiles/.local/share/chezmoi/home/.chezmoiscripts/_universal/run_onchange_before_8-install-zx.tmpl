@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+{{- includeTemplate "universal/profile" }}
+{{- includeTemplate "universal/logg" }}
+
+### Ensure zx is installed
 if ! command -v zx > /dev/null; then
   if command -v volta > /dev/null; then
     logg 'Installing `zx` via `volta`'

@@ -37,7 +37,6 @@ export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 export PATH="$PATH:$HOME/.local/bin"
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
-{{ if eq .host.distro.family "linux" }}
 ### Homebrew
 if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
   export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
@@ -47,8 +46,11 @@ if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
   export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
   export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
   export WHALEBREW_INSTALL_PATH="/home/linuxbrew/.linuxbrew/whalebrew"
+elif [ -f /opt/homebrew/bin/brew ]; then
+  eval $(/opt/homebrew/bin/brew shellenv)
+elif [ -f /usr/local/bin/brew ]; then
+  eval $(/usr/local/bin/brew shellenv)
 fi
-{{ end }}
 
 {{ if eq .host.distro.id "darwin" }}
 ### Android Studio

@@ -2,8 +2,8 @@
 
 # dot_tool-versions.tmpl hash: {{ include "dot_tool-versions.tmpl" | sha256sum }}
 
-# Required for PATHs (including logging)
-source "$HOME/.config/shell/exports"
+{{- includeTemplate "universal/profile" }}
+{{- includeTemplate "universal/logg" }}
 
 if [ -f "$ASDF_DIR/asdf.sh" ] && [ -f ~/.tool-versions ]; then
   logg 'Installing ASDF dependencies derived from `~/.tool-versions`'

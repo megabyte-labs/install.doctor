@@ -2,8 +2,8 @@
 
 # {{ output "sha256sum" (joinPath .chezmoi.sourceDir ".chezmoidata.yaml")  }}
 
-# Required for PATHs (including logging)
-source "$HOME/.config/shell/exports"
+{{- includeTemplate "universal/profile" }}
+{{- includeTemplate "universal/logg" }}
 
 logg 'Updating the `~/.local/share/bash-completion/completions` folder based on the installed applications'
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source "$HOME/.config/shell/exports"
+{{- includeTemplate "universal/profile" }}
+{{- includeTemplate "universal/logg" }}
 
 logg 'Ensuring Taskfiles are linked properly'
 if [ -d "$HOME/.local/shared-common" ]; then

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# Required for styled logging
 {{- includeTemplate "universal/logg" }}
 
 {{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) -}}
@@ -26,8 +25,6 @@
 {{- if .toolchains.python }}
 {{- $packages = concat $packages $pyenvDependencies -}}
 {{- end }}
-
-source "$HOME/.config/shell/exports"
 
 logg 'Installing common dependencies using `apt-get`'
 logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'

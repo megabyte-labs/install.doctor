@@ -3,8 +3,8 @@
 
 set -eufo pipefail
 
-# Required for PATHs (including logging)
-source "$HOME/.config/shell/exports"
+{{- includeTemplate "universal/profile" }}
+{{- includeTemplate "universal/logg" }}
 
 {{- $files := list -}}
 {{- range $path := glob (list .chezmoi.sourceDir "private_dot_config/aqua/**/*.yaml.tmpl" | join "/") }}

@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+{{- includeTemplate "universal/profile" }}
+{{- includeTemplate "universal/logg" }}
+
+### Install Xcode CLI tools on macOS
+if [ -d /Applications ] && [ -d /Library ]; then
+  xcode-select -p >/dev/null 2>&1 || xcode-select --install
+fi
+
+### Install Homebrew
 ensurePackageManagerHomebrew() {
   if ! command -v brew > /dev/null; then
     if command -v sudo > /dev/null && sudo -n true; then
@@ -22,5 +31,4 @@ ensurePackageManagerHomebrew() {
     fi
   fi
 }
-
 ensurePackageManagerHomebrew

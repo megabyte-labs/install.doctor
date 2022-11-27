@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 {{- if and false .host.headless -}}
 
-# Required for PATHs (including logging)
-source "$HOME/.config/shell/exports"
+{{- includeTemplate "universal/profile" }}
+{{- includeTemplate "universal/logg" }}
 
 logg 'Bootstrapping Z4H'
 

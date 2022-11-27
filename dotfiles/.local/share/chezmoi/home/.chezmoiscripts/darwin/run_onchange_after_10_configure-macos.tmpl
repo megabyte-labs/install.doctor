@@ -2,8 +2,8 @@
 
 set -x
 
-# Required for PATHs (including logging)
-source "$HOME/.config/shell/exports"
+{{- includeTemplate "universal/profile" }}
+{{- includeTemplate "universal/logg" }}
 
 logg 'Applying optimized macOS settings'
 

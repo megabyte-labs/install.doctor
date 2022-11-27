@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# Required for styled logging
 {{- includeTemplate "universal/logg" }}
 
 {{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}
@@ -24,8 +23,8 @@ sudo pacman -Sy --noconfirm --needed {{ $packages | sortAlpha | uniq | join " " 
 ### Install yay
 if ! command -v yay > /dev/null; then
   logg 'Cloning yay from `https://aur.archlinux.org/yay.git` to `/usr/local/src/yay`'
-  git clone https://aur.archlinux.org/yay.git /usr/local/src/yay
+  sudo git clone https://aur.archlinux.org/yay.git /usr/local/src/yay
   cd /usr/local/src/yay
-  logg 'Installing yay'
-  makepkg -si
+  logg 'Installing yay via `sudo makepkg -si`'
+  sudo makepkg -si
 fi

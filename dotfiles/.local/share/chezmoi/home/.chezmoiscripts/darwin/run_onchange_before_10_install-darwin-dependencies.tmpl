@@ -1,28 +1,16 @@
 #!/usr/bin/env bash
 
-# Required for styled logging
+{{- includeTemplate "universal/profile" }}
 {{- includeTemplate "universal/logg" }}
 
-logg 'Ensuring `xcode-select` is installed'
-xcode-select -p >/dev/null 2>&1 || xcode-select --install
+if command -v brew > /dev/null; then
+  logg 'Installing base dependencies for macOS using `brew bundle`'
+  logg info 'Dependencies: age asdf jq node go-task/tap/go-task volta yq m-cli zx'
+  logg info 'GNU compatibility dependencies: coreutils findutils gawk gnu-getopt gnu-indent gnu-tar gnu-sed gnutls grep'
 
-if ! command -v brew >/dev/null 2>&1; then
-  logg 'Installing Homebrew'
-  /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  brew bundle --verbose --no-lock --file=/dev/stdin <<EOF
+  {{ includeTemplate "darwin/Brewfile" . }}
+  EOF
 else
-  logg 'Homebrew is already installed'
+  logg error '`brew` was not found in the PATH'
 fi
-
-{{ if eq .host.arch "arm64" -}}
-eval $(/opt/homebrew/bin/brew shellenv)
-{{- else }}
-eval $(/usr/local/bin/brew shellenv)
-{{- end }}
-
-logg 'Installing base dependencies for macOS using `brew bundle`'
-logg info 'Dependencies: age asdf jq node go-task/tap/go-task volta yq m-cli zx'
-logg info 'GNU compatibility dependencies: coreutils findutils gawk gnu-getopt gnu-indent gnu-tar gnu-sed gnutls grep'
-
-brew bundle --verbose --no-lock --file=/dev/stdin <<EOF
-{{ includeTemplate "darwin/Brewfile" . }}
-EOF
