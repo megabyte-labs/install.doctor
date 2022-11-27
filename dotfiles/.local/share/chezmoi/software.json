@@ -1,0 +1,2466 @@
+{
+  "softwarePackages": {
+    "allure": {
+      "_post:binary:darwin": "# TODO\n",
+      "_post:binary:linux": "# TODO - Include hook for unzipping and adding to /usr/local/bin (also Windows support is needed)\n",
+      "_post:binary:windows": "# TODO\n",
+      "binary": "https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.20.1/allure-commandline-2.20.1.zip",
+      "brew": "allure",
+      "scoop": "allure",
+      "yay": "allure"
+    },
+    "altair": {
+      "cask": "altair-graphql-client",
+      "choco": "altair-graphql",
+      "snap": "altair",
+      "yay": "altair"
+    },
+    "android-studio": {
+      "brew": "android-studio",
+      "choco": "androidstudio",
+      "snap": "android-studio",
+      "yay": "android-studio"
+    },
+    "angular-cli": {
+      "_bin": "ng",
+      "brew": "angular-cli",
+      "npm": "@angular/cli"
+    },
+    "ansible-lint": {
+      "pipx": "ansible-lint"
+    },
+    "ansible": {
+      "brew": "ansible",
+      "dnf": "ansible",
+      "pipx": "ansible"
+    },
+    "ansibleconnect": {
+      "_deps": [
+        "sshpass",
+        "tmux"
+      ],
+      "pipx": "ansibleconnect"
+    },
+    "appium": {
+      "brew": "appium",
+      "choco": "appium-desktop"
+    },
+    "assh": {
+      "brew": "assh",
+      "go": "moul.io/assh/v2",
+      "yay": "assh"
+    },
+    "aqua": {
+      "brew": "aquaproj/aqua/aqua"
+    },
+    "asciicinema": {
+      "pipx": "asciicinema"
+    },
+    "astronvim": {
+      "_deps": [
+        "bottom",
+        "lazygit",
+        "neovim",
+        "node",
+        "python",
+        "ripgrep",
+        "tree-sitter"
+      ],
+      "_post": "nvim --headless -c 'autocmd User PackerComplete quitall'"
+    },
+    "auto-install": {
+      "npm": "auto-install"
+    },
+    "autokey": {
+      "apt": "autokey",
+      "choco": "autohotkey",
+      "dnf": "autokey",
+      "yay": "autokey-gtk"
+    },
+    "automake": {
+      "brew": "automake"
+    },
+    "awscli": {
+      "brew": "awscli@2",
+      "choco": "awscli"
+    },
+    "azure-cli": {
+      "brew": "azure-cli",
+      "choco": "azure-cli",
+      "winget": "Microsoft.AzureCLI",
+      "yay": "azure-cli"
+    },
+    "bat": {
+      "apk": "bat",
+      "apt": "bat",
+      "brew": "bat",
+      "cargo": "bat",
+      "choco": "bat",
+      "pacman": "bat",
+      "pkg": "bat",
+      "port": "bat",
+      "scoop": "bat",
+      "zypper": "bat"
+    },
+    "blockinfile": {
+      "go": "github.com/ProfessorManhattan/blockinfile@latest"
+    },
+    "bundler": {
+      "gem": "bundler"
+    },
+    "bash-completion": {
+      "brew": "bash-completion"
+    },
+    "bitly": {
+      "npm": "bitly-cli-client"
+    },
+    "bottom": {
+      "brew": "bottom",
+      "pacman": "bottom",
+      "scoop": "bottom",
+      "snap": "bottom"
+    },
+    "browser-sync": {
+      "npm": "browser-sync"
+    },
+    "bw": {
+      "choco": "bitwarden-cli",
+      "snap": "bw"
+    },
+    "caniuse": {
+      "npm": "caniuse-cmd"
+    },
+    "carbon-now": {
+      "npm": "carbon-now-cli"
+    },
+    "carthage": {
+      "brew:darwin": "carthage"
+    },
+    "chef": {
+      "gem": "chef"
+    },
+    "cfssl": {
+      "brew": "cfssl",
+      "pacman": "cfssl"
+    },
+    "chrome": {
+      "_deps": [
+        "chrome-gnome-shell"
+      ],
+      "apt": "chromium",
+      "brew": "google-chrome",
+      "choco": "googlechrome",
+      "dnf": "chromium",
+      "snap": "chromium",
+      "yay": "google-chrome"
+    },
+    "chrome-cli": {
+      "brew:darwin": "chrome-cli"
+    },
+    "clocker": {
+      "cask": "clocker"
+    },
+    "cookiecutter": {
+      "brew": "cookiecutter",
+      "pipx": "cookiecutter"
+    },
+    "cocoapods": {
+      "brew:darwin": "cocoapods",
+      "gem:darwin": "cocoapods"
+    },
+    "commitizen": {
+      "_bin": "cz",
+      "npm": "commitizen"
+    },
+    "consul": {
+      "apt": "consul",
+      "brew": "consul",
+      "pkg": "consul",
+      "yay": "consul-bin"
+    },
+    "container-structure-test": {
+      "_post:binary:linux": "# TODO\n",
+      "brew": "container-structure-test",
+      "binary:linux": "https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64",
+      "yay": "container-structure-test"
+    },
+    "cordova": {
+      "npm": "cordova"
+    },
+    "delta": {
+      "brew": "git-delta",
+      "cargo": "git-delta",
+      "choco": "delta",
+      "dnf": "git-delta",
+      "pacman": "git-delta",
+      "pkg": "git-delta",
+      "scoop": "delta"
+    },
+    "delve": {
+      "brew": "delve",
+      "go": "github.com/go-delve/delve/cmd/dlv@latest"
+    },
+    "dframe": {
+      "npm": "deviceframe"
+    },
+    "dotenv-linter": {
+      "brew": "dotenv-linter",
+      "cargo": "dotenv-linter",
+      "scoop": "dotenv-linter",
+      "yay": "dotenv-linter"
+    },
+    "dotnet": {
+      "brew": "dotnet",
+      "choco": "dotnet",
+      "yay": "dotnet-sdk-bin"
+    },
+    "dprint": {
+      "_post:binary:windows": "# TODO\n",
+      "brew": "dprint",
+      "binary:windows": "https://github.com/dprint/dprint/releases/latest/download/dprint-x86_64-pc-windows-msvc-installer.exe",
+      "cargo": "dprint",
+      "npm": "dprint",
+      "scoop": "dprint"
+    },
+    "editly": {
+      "npm": "editly"
+    },
+    "electron": {
+      "brew": "electron",
+      "npm": "electron"
+    },
+    "emma": {
+      "npm": "emma-cli"
+    },
+    "emoj": {
+      "npm": "emoj"
+    },
+    "emplace": {
+      "cargo": "emplace",
+      "nix": "emplace",
+      "scoop": "emplace"
+    },
+    "empty-trash": {
+      "npm": "empty-trash-cli"
+    },
+    "eslint": {
+      "brew": "eslint",
+      "npm": "eslint"
+    },
+    "etcher": {
+      "brew": "balenaetcher",
+      "choco": "etcher",
+      "yay": "balena-etcher"
+    },
+    "fastify": {
+      "npm": "fastify-cli"
+    },
+    "feathers": {
+      "npm": "@feathersjs/cli"
+    },
+    "ffmpeg": {
+      "apk": "ffmpeg",
+      "apt": "ffmpeg",
+      "brew": "ffmpeg",
+      "choco": "ffmpeg",
+      "dnf": "ffmpeg",
+      "pacman": "ffmpeg",
+      "scoop": "ffmpeg"
+    },
+    "firebase": {
+      "npm": "firebase-tools"
+    },
+    "flutter": {
+      "brew": "flutter",
+      "choco": "flutter",
+      "snap": "flutter",
+      "yay": "flutter"
+    },
+    "fkill": {
+      "npm": "fkill-cli"
+    },
+    "fonts": {
+      "cask": [
+        "epk/epk/font-sf-mono-nerd-font",
+        "homebrew/cask-fonts/font-hack-nerd-font",
+        "homebrew/cask-fonts/font-meslo-lg-nerd-font"
+      ]
+    },
+    "fpm": {
+      "gem": "fpm"
+    },
+    "gcloud": {
+      "brew": "google-cloud-sdk",
+      "choco": "gcloudsdk",
+      "yay": "google-cloud-sdk"
+    },
+    "gdown": {
+      "pipx": "gdown"
+    },
+    "gdu": {
+      "_post:brew": "brew link --overwrite gdu",
+      "_post:snap": "sudo snap connect gdu-disk-usage-analyzer:mount-observe :mount-observe\nsudo snap connect gdu-disk-usage-analyzer:system-backup :system-backup\nsudo snap alias gdu-disk-usage-analyzer.gdu gdu\n",
+      "brew": "gdu",
+      "go": "github.com/dundee/gdu/v5/cmd/gdu@latest",
+      "pacman": "gdu",
+      "snap": "gdu-disk-usage-analyzer"
+    },
+    "gdu:debian": {
+      "apt": "gdu"
+    },
+    "gfi": {
+      "npm": "google-font-installer"
+    },
+    "git": {
+      "apk": "git",
+      "apt": "git",
+      "brew": "git",
+      "dnf": "git"
+    },
+    "git-filter-repo": {
+      "brew": "git-filter-repo",
+      "pipx": "git-filter-repo"
+    },
+    "git-lfs": {
+      "_deps": [
+        "git"
+      ],
+      "_post": "git lfs install",
+      "brew": "git-lfs",
+      "scoop": "git-lfs"
+    },
+    "git-open": {
+      "npm": "git-open"
+    },
+    "gixy": {
+      "pipx": "gixy"
+    },
+    "glen": {
+      "go": "github.com/lingrino/glen@latest"
+    },
+    "go-outline": {
+      "go": "github.com/ramya-rao-a/go-outline@latest"
+    },
+    "golangci-lint": {
+      "brew": "golangci-lint",
+      "go": "github.com/golangci/golangci-lint/cmd/golangci-lint@latest"
+    },
+    "gomodifytags": {
+      "brew": "gomodifytags",
+      "go": "github.com/fatih/gomodifytags@latest"
+    },
+    "gopkgs": {
+      "go": "github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest"
+    },
+    "gopls": {
+      "brew": "gopls",
+      "go": "golang.org/x/tools/gopls@latest"
+    },
+    "gotests": {
+      "brew": "gotests",
+      "go": "github.com/cweill/gotests/...@latest"
+    },
+    "gphotos-sync": {
+      "pipx": "gphotos-sync"
+    },
+    "gnu:darwin": {
+      "brew": [
+        "coreutils",
+        "findutils",
+        "gawk",
+        "gnu-getopt",
+        "gnu-indent",
+        "gnu-tar",
+        "gnu-sed",
+        "gnutls",
+        "grep"
+      ]
+    },
+    "grype": {
+      "yay": "grype-bin",
+      "choco": "grype",
+      "port": "grype"
+    },
+    "gtop": {
+      "brew": "gtop",
+      "npm": "gtop"
+    },
+    "gulp": {
+      "brew": "gulp",
+      "npm": "gulp"
+    },
+    "hadolint": {
+      "brew": "hadolint",
+      "dnf": "hadolint",
+      "scoop": "hadolint"
+    },
+    "http-prompt": {
+      "brew": "http-prompt",
+      "pipx": "http-prompt"
+    },
+    "httpstat": {
+      "brew": "httpstat",
+      "pipx": "httpstat"
+    },
+    "hub": {
+      "apt": "hub",
+      "brew": "hub",
+      "choco": "hub",
+      "dnf": "hub",
+      "pacman": "hub",
+      "pkg": "hub",
+      "scoop": "hub"
+    },
+    "hyper": {
+      "appimage": "https://releases.hyper.is/download/AppImage",
+      "brew": "hyper",
+      "choco": "hyper",
+      "yay": "hyper"
+    },
+    "ideviceinstaller": {
+      "brew:darwin": "ideviceinstaller"
+    },
+    "imagemagick": {
+      "apk": "imagemagick",
+      "apt": "imagemagick",
+      "brew": "imagemagick",
+      "choco": "imagemagick",
+      "dnf": "imagemagick",
+      "scoop": "imagemagick"
+    },
+    "imgur-uploader": {
+      "npm": "imgur-uploader-cli"
+    },
+    "impl": {
+      "go": "github.com/josharian/impl@latest"
+    },
+    "infracost": {
+      "brew": "infracost",
+      "choco": "infracost",
+      "yay": "infracost"
+    },
+    "intellij-idea-ce": {
+      "brew": "intellij-idea-ce",
+      "choco": "intellijidea-community",
+      "snap": "intellij-idea-community"
+    },
+    "ionic": {
+      "npm": "@ionic/cli"
+    },
+    "ios-deploy": {
+      "brew:darwin": "ios-deploy",
+      "npm:darwin": "ios-deploy"
+    },
+    "ipfs": {
+      "brew": "ipfs",
+      "choco": "go-ifps",
+      "nix": "ipfs",
+      "port": "ipfs",
+      "scoop": "go-ipfs",
+      "snap": "ipfs"
+    },
+    "ipfs-desktop": {
+      "cask": "ipfs",
+      "choco": "ipfs-desktop",
+      "pacman": "ipfs-desktop",
+      "scoop": "ipfs-desktop"
+    },
+    "ipfs-deploy": {
+      "_bin": "ipd",
+      "npm": "ipfs-deploy"
+    },
+    "is-up": {
+      "npm": "is-up-cli"
+    },
+    "jqp": {
+      "brew": "noahgorstein/tap/jqp",
+      "port": "jqp",
+      "yay": "jqp"
+    },
+    "kodi": {
+      "apt": "kodi",
+      "brew": "kodi",
+      "choco": "kodi",
+      "dnf": "kodi",
+      "pacman": "kodi"
+    },
+    "lazygit": {
+      "brew": "lazygit",
+      "choco": "lazygit",
+      "go": "github.com/jesseduffield/lazygit@latest",
+      "pacman": "lazygit",
+      "scoop": "lazygit"
+    },
+    "libimobiledevice": {
+      "brew:darwin": "libimobiledevice"
+    },
+    "localtunnel": {
+      "brew": "localtunnel",
+      "npm": "localtunnel"
+    },
+    "mitmproxy": {
+      "apt": "mitmproxy",
+      "brew": "mitmproxy",
+      "choco": "mitmproxy",
+      "pacman": "mitmproxy"
+    },
+    "mjml": {
+      "cask": "mjml",
+      "npm": "mjml"
+    },
+    "molecule": {
+      "brew": "molecule",
+      "pipx": "molecule"
+    },
+    "nativefier": {
+      "_deps": [
+        "imagemagick"
+      ],
+      "npm": "nativefier"
+    },
+    "ncc": {
+      "brew": "ncc",
+      "npm": "@vercel/ncc"
+    },
+    "netcat": {
+      "apt": "netcat",
+      "brew": "netcat",
+      "choco": "netcat",
+      "dnf": "netcat",
+      "pacman": "netcat",
+      "scoop": "netcat"
+    },
+    "nb": {
+      "_deps": [
+        "bat",
+        "netcat",
+        "pandoc",
+        "rg",
+        "tig",
+        "w3m"
+      ],
+      "_post": "nb completions install",
+      "basher": "xwmx/nb",
+      "bpkg": "xwmx/nb",
+      "brew": "nb",
+      "npm": "nb.sh"
+    },
+    "nectar": {
+      "npm": "nectarjs"
+    },
+    "neovim": {
+      "apk": "neovim",
+      "apt": [
+        "neovim",
+        "python3-neovim"
+      ],
+      "brew": "neovim",
+      "choco": "neovim",
+      "dnf": [
+        "neovim",
+        "python3-neovim"
+      ],
+      "flatpak": "io.neovim.nvim",
+      "nix": "neovim",
+      "pacman": [
+        "neovim",
+        "python-pynvim"
+      ],
+      "pkg": [
+        "neovim",
+        "py27-pynvim",
+        "py36-pynvim"
+      ],
+      "port": "neovim",
+      "winget": "Neovim.Neovim",
+      "zypper": [
+        "neovim",
+        "python-neovim",
+        "python3-neovim"
+      ]
+    },
+    "ngxtop": {
+      "pipx": "ngxtop"
+    },
+    "node": {
+      "brew": "node",
+      "scoop": "nodejs"
+    },
+    "nomad": {
+      "brew": "nomad",
+      "choco": "nomad",
+      "yay": "nomad-git"
+    },
+    "nest": {
+      "npm": "@nestjs/cli"
+    },
+    "newman": {
+      "brew": "newman",
+      "npm": "newman"
+    },
+    "np": {
+      "npm": "np"
+    },
+    "npm-check": {
+      "npm": "npm-check"
+    },
+    "oclif": {
+      "npm": "oclif"
+    },
+    "office": {
+      "apt": "libreoffice",
+      "dnf": "libreoffice",
+      "pacman": "libreoffice"
+    },
+    "oh-my-posh": {
+      "_post:scoop": "clink autorun install",
+      "brew": "jandedobbeleer/oh-my-posh/oh-my-posh",
+      "scoop": [
+        "clink",
+        "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json"
+      ]
+    },
+    "package-size": {
+      "npm": "package-size"
+    },
+    "packer": {
+      "apt": "packer",
+      "brew": "packer",
+      "choco": "packer",
+      "pacman": "packer"
+    },
+    "pageres": {
+      "npm": "pageres-cli"
+    },
+    "pandoc": {
+      "_deps": [
+        "python"
+      ],
+      "apt": "pandoc",
+      "brew": [
+        "pandoc",
+        "librsvg",
+        "homebrew/cask/basictex"
+      ],
+      "choco": [
+        "pandoc",
+        "rsvg-convert",
+        "miktex"
+      ],
+      "crew": "pandoc",
+      "dnf": "pandoc",
+      "nix": "pandoc",
+      "pacman": "pandoc",
+      "winget": "pandoc"
+    },
+    "papertrail": {
+      "gem": "papertrail"
+    },
+    "poetry": {
+      "brew": "poetry",
+      "yay": "python-poetry-git"
+    },
+    "pipx": {
+      "_post:brew": "pipx ensurepath",
+      "brew": "pipx"
+    },
+    "pkg": {
+      "npm": "pkg"
+    },
+    "playwright": {
+      "npm": "playwright"
+    },
+    "plex": {
+      "ansible": "professormanhattan.plex",
+      "cask": [
+        "plex",
+        "plex-media-player",
+        "plex-media-server"
+      ],
+      "choco": [
+        "plex",
+        "plexmediaplayer"
+      ],
+      "snap": "plexmediaserver",
+      "yay": "plex-media-server"
+    },
+    "pm2": {
+      "npm": "pm2"
+    },
+    "pnpm": {
+      "brew": "pnpm",
+      "npm": "pnpm",
+      "scoop": "pnpm",
+      "yay": "pnpm"
+    },
+    "postman": {
+      "brew": "postman",
+      "choco": "postman",
+      "snap": "postman",
+      "yay": "postman-bin"
+    },
+    "pre-commit": {
+      "brew": "pre-commit",
+      "pipx": "pre-commit"
+    },
+    "prettier": {
+      "brew": "prettier",
+      "npm": "prettier"
+    },
+    "proton": {
+      "brew": [
+        "protonvpn",
+        "protonmail-bridge"
+      ],
+      "choco": [
+        "protonvpn",
+        "protonmailbridge"
+      ],
+      "dnf": "protonvpn-cli",
+      "yay": [
+        "protonvpn",
+        "protonmail-bridge"
+      ]
+    },
+    "psi": {
+      "npm": "psi"
+    },
+    "python": {
+      "_post:brew": "python3 -m pip install --upgrade setuptools\npython3 -m pip install --upgrade pip\n",
+      "apt": "python3-pip",
+      "brew": "python",
+      "dnf": "python3-pip",
+      "pacman": "python-pip",
+      "scoop": "python"
+    },
+    "pywhat": {
+      "brew": "pywhat",
+      "pipx": "pywhat",
+      "port": "pywhat"
+    },
+    "ramda": {
+      "npm": "ramda-cli"
+    },
+    "rclone": {
+      "apt": "rclone",
+      "brew": "rclone",
+      "choco": [
+        "rclone",
+        "winfsp",
+        "nssm"
+      ],
+      "dnf": "rclone",
+      "pacman": "rclone"
+    },
+    "remote-desktop": {
+      "apt": [
+        "remmina",
+        "xrdp"
+      ],
+      "brew": "microsoft-remote-desktop",
+      "dnf": [
+        "remmina",
+        "xrdp"
+      ],
+      "pacman": "remmina",
+      "snap": "remmina",
+      "yay": [
+        "remmina-git",
+        "xrdp"
+      ]
+    },
+    "ripgrep": {
+      "_bin": "rg",
+      "apt": "ripgrep",
+      "brew": "ripgrep",
+      "cargo": "ripgrep",
+      "choco": "ripgrep",
+      "dnf": "ripgrep",
+      "nix": "ripgrep",
+      "pacman": "ripgrep",
+      "pkg": "ripgrep",
+      "port": "ripgrep",
+      "scoop": "ripgrep",
+      "zypper": "ripgrep"
+    },
+    "ripgrep-all": {
+      "_bin": "rga",
+      "brew": [
+        "ffmpeg",
+        "pandoc",
+        "poppler",
+        "rga",
+        "tesseract"
+      ],
+      "choco": "ripgrep-all",
+      "nix": "ripgrep-all",
+      "pacman": "ripgrep-all"
+    },
+    "rofi": {
+      "apt": "rofi",
+      "dnf": "rofi",
+      "pacman": "rofi",
+      "pkg": "rofi",
+      "port": "rofi",
+      "zypper": "rofi"
+    },
+    "rsync": {
+      "apt": "rsync",
+      "brew": "rsync",
+      "choco": "rsync",
+      "dnf": "rsync"
+    },
+    "sad": {
+      "brew": "ms-jpq/sad/sad",
+      "pacman": "sad"
+    },
+    "secretive": {
+      "cask": "secretive"
+    },
+    "semantic-release": {
+      "npm": "semantic-release"
+    },
+    "sentry-cli": {
+      "brew": "getsentry/tools/sentry-cli",
+      "github": "github.com/getsentry/sentry-cli",
+      "npm": "@sentry/cli",
+      "scoop": "sentry-cli",
+      "yay": "sentry-cli-bin"
+    },
+    "serve": {
+      "npm": "serve"
+    },
+    "serverless": {
+      "brew": "serverless",
+      "npm": "serverless"
+    },
+    "share": {
+      "npm": "share-cli"
+    },
+    "sharp": {
+      "npm": "sharp-cli"
+    },
+    "shotcut": {
+      "_snapClassic": true,
+      "ansible": "professormanhattan.shotcut",
+      "apt": "shotcut",
+      "cask": "shotcut",
+      "choco": "shotcut",
+      "dnf": "shotcut",
+      "flatpak": "org.shotcut.Shotcut",
+      "snap": "shotcut"
+    },
+    "sloth": {
+      "cask": "stats"
+    },
+    "social-analyzer": {
+      "brew": "social-analyzer",
+      "pipx": "social-analyzer"
+    },
+    "solidity": {
+      "npm": "solc"
+    },
+    "speed-test": {
+      "npm": "speed-test"
+    },
+    "spotdl": {
+      "_deps": [
+        "ffmpeg"
+      ],
+      "pipx": "spotdl"
+    },
+    "sshpass": {
+      "apt": "sshpass",
+      "brew": "hudochenkov/sshpass/sshpass",
+      "dnf": "sshpass"
+    },
+    "starred": {
+      "pipx": "starred"
+    },
+    "statcode": {
+      "pipx": "statcode",
+      "yay": "statcode"
+    },
+    "stats": {
+      "cask": "stats"
+    },
+    "stegcloak": {
+      "npm": "stegcloak"
+    },
+    "supdock": {
+      "npm": "supdock"
+    },
+    "surge": {
+      "npm": "surge"
+    },
+    "svgo": {
+      "brew": "svgo",
+      "npm": "svgo"
+    },
+    "t": {
+      "gem": "t"
+    },
+    "terminalizer": {
+      "npm": "terminalizer"
+    },
+    "termius": {
+      "_post:binary:windows": "# TODO\n",
+      "binary:windows": "https://autoupdate.termius.com/windows/Termius.exe",
+      "brew": "termius",
+      "pipx": "termius",
+      "snap": "termius-app",
+      "yay": "termius"
+    },
+    "terraform": {
+      "apt": "terraform",
+      "brew": "terraform",
+      "choco": "terraform",
+      "pacman": "terraform"
+    },
+    "tig": {
+      "brew": "tig",
+      "nix": "tig",
+      "pkg": "tig"
+    },
+    "tinypng": {
+      "npm": "tinypng-cli"
+    },
+    "tldr": {
+      "brew": "tldr",
+      "npm": "tldr"
+    },
+    "trellis": {
+      "brew": "roots/tap/trellis-cli"
+    },
+    "trufflehog": {
+      "brew": "trufflesecurity/trufflehog/trufflehog"
+    },
+    "tmux": {
+      "apt": "tmux",
+      "brew": [
+        "awk",
+        "gnu-sed",
+        "perl",
+        "tmux"
+      ]
+    },
+    "tree-sitter": {
+      "cargo": "tree-sitter-cli"
+    },
+    "ts2c": {
+      "npm": "ts2c"
+    },
+    "typescript": {
+      "_bin": "tsc",
+      "brew": "typescript",
+      "npm": "tsc"
+    },
+    "upt": {
+      "cargo:": "upt"
+    },
+    "virtualenv": {
+      "brew": "virtualenv",
+      "pipx": "virtualenv"
+    },
+    "visual-studio": {
+      "brew": "visual-studio",
+      "choco": "visualstudio2022community"
+    },
+    "volta": {
+      "_post": "volta setup\nvolta install node@latest\n",
+      "brew": "volta",
+      "scoop": "volta"
+    },
+    "vscode": {
+      "_snapClassic": true,
+      "ansible": "professormanhattan.vscode",
+      "brew": "visual-studio-code",
+      "choco": "vscode",
+      "snap": "code",
+      "yay": "visual-studio-code-bin"
+    },
+    "w3m": {
+      "apt": "w3m",
+      "brew": "w3m",
+      "dnf": "w3m",
+      "pacman": "w3m",
+      "port": "w3m",
+      "zypper": "w3m"
+    },
+    "wget": {
+      "apk": "wget",
+      "apt": "wget",
+      "brew": "rsync",
+      "dnf": "wget",
+      "whalebrew": "whalebrew/wget"
+    },
+    "wifi-password": {
+      "bpkg": "rauchg/wifi-password",
+      "brew": "wifi-password",
+      "npm": "wifi-password-cli"
+    },
+    "wordpressify": {
+      "npm": "wordpressify"
+    },
+    "wrangler": {
+      "npm": "@cloudflare/wrangler"
+    },
+    "yamllint": {
+      "brew": "yamllint",
+      "pipx": "yamllint"
+    },
+    "youtube-dl": {
+      "pipx": "youtube-dl",
+      "port": "youtube-dl",
+      "brew": "youtube-dl"
+    },
+    "zx": {
+      "brew": "zx",
+      "npm": "zx"
+    },
+    "act": {
+      "brew": "act",
+      "choco": "act-cli",
+      "go": "github.com/nektos/act@latest",
+      "ports": "act",
+      "scoop": "act",
+      "yay": "act"
+    },
+    "argocli": {
+      "brew": "argocd",
+      "github": "https://github.com/argoproj/argo-workflows"
+    },
+    "azurefunctions": {
+      "brew": "azure/functions/azure-functions-core-tools@4",
+      "choco": "azure-functions-core-tools",
+      "github": "github.com/Azure/azure-functions-core-tools",
+      "npm": "azure-functions-core-tools@4"
+    },
+    "bandwhich": {
+      "brew": "bandwhich",
+      "github": "github.com/imsnif/bandwhich",
+      "pacman": "bandwhich",
+      "pkg": "bandwhich"
+    },
+    "bane": {
+      "github": "github.com/genuinetools/bane",
+      "go": "github.com/genuinetools/bane@latest"
+    },
+    "betwixt": {
+      "github": "github.com/kdzwinel/betwixt"
+    },
+    "bin": {
+      "github": "github.com/marcosnils/bin",
+      "go": "github.com/marcosnils/bin@latest"
+    },
+    "bitwarden": {
+      "cask": "bitwarden",
+      "choco": "bitwarden",
+      "github": "github.com/bitwarden/desktop",
+      "snap": "bitwarden",
+      "yay": "bitwarden-git"
+    },
+    "bivac": {
+      "github": "github.com/camptocamp/bivac"
+    },
+    "boilr": {
+      "github": "github.com/tmrts/boilr",
+      "go": "github.com/tmrts/boilr@latest"
+    },
+    "budibase-cli": {
+      "github": "github.com/Budibase/budibase",
+      "npm": "@budibase/cli"
+    },
+    "captain": {
+      "github": "github.com/jenssegers/captain"
+    },
+    "cerebro": {
+      "cask": "cerebro",
+      "choco": "cerebro",
+      "github": "github.com/cerebroapp/cerebro",
+      "yay": "cerebro"
+    },
+    "clair": {
+      "brew": "clair",
+      "github": "github.com/quay/clair"
+    },
+    "cloudflared": {
+      "brew": "cloudflare/cloudflare/cloudflared",
+      "github": "github.com/cloudflare/cloudflared"
+    },
+    "cmctl": {
+      "github": "github.com/cert-manager/cert-manager"
+    },
+    "confd": {
+      "brew": "confd",
+      "choco": "confd",
+      "github": "github.com/kelseyhightower/confd",
+      "yay": "confd"
+    },
+    "consul-cli": {
+      "github": "github.com/mantl/consul-cli"
+    },
+    "croc": {
+      "brew": "croc",
+      "choco": "croc",
+      "github": "github.com/schollz/croc",
+      "go": "github.com/schollz/croc/v9@latest",
+      "pacman": "croc",
+      "pkg": "croc",
+      "scoop": "croc"
+    },
+    "ctop": {
+      "brew": "ctop",
+      "github": "github.com/bcicen/ctop",
+      "yay": "ctop-bin"
+    },
+    "cumulus": {
+      "cask": "cumulus",
+      "github": "github.com/gillesdemey/Cumulus"
+    },
+    "curator": {
+      "pip": "elasticsearch-curator"
+    },
+    "dasel": {
+      "brew": "dasel",
+      "github": "github.com/TomWright/dasel",
+      "go": "github.com/tomwright/dasel/cmd/dasel@master"
+    },
+    "dat": {
+      "github": "github.com/dat-ecosystem-archive/dat",
+      "npm": "dat@next"
+    },
+    "dat-desktop": {
+      "cask": "dat",
+      "github": "github.com/datproject/dat-desktop"
+    },
+    "dive": {
+      "_name": "Dive",
+      "_homepage": "https://github.com/wagoodman/dive",
+      "_description": "A tool for exploring each layer in a docker image",
+      "_type": "cli",
+      "brew": "dive",
+      "github": "github.com/wagoodman/dive",
+      "go": "github.com/wagoodman/dive@latest",
+      "yay": "dive"
+    },
+    "desed": {
+      "cargo": "desed",
+      "dnf": "desed",
+      "github": "github.com/SoptikHa2/desed",
+      "pkg": "desed"
+    },
+    "deta": {
+      "github": "github.com/deta/deta-cli"
+    },
+    "direnv": {
+      "apt": "direnv",
+      "brew": "direnv",
+      "github": "github.com/direnv/direnv"
+    },
+    "docker-slim": {
+      "brew": "docker-slim",
+      "dnf": "golang-github-docker-slim",
+      "github": "github.com/docker-slim/docker-slim",
+      "yay": "docker-slim"
+    },
+    "dockle": {
+      "brew": "goodwithtech/r/dockle",
+      "github": "github.com/goodwithtech/dockle",
+      "yay": "dockle-bin"
+    },
+    "doctl": {
+      "brew": "doctl",
+      "github": "github.com/digitalocean/doctl",
+      "pacman": "doctl",
+      "pkg": "doctl",
+      "snap": "doctl"
+    },
+    "dog": {
+      "brew": "dog",
+      "github": "github.com/ogham/dog",
+      "pacman": "dog",
+      "pkg": "dog"
+    },
+    "drone": {
+      "brew": "drone/drone/drone",
+      "github": "github.com/harness/drone-cli",
+      "scoop": "drone"
+    },
+    "duf": {
+      "brew": "duf",
+      "choco": "duf",
+      "github": "github.com/muesli/duf",
+      "pacman": "duf",
+      "pkg": "duf",
+      "scoop": "duf",
+      "snap": "duf-utility"
+    },
+    "dust": {
+      "apk": "dust",
+      "github": "github.com/bootandy/dust",
+      "pacman": "dust"
+    },
+    "envconsul": {
+      "github": "github.com/hashicorp/envconsul"
+    },
+    "etcd": {
+      "apt": "etcd",
+      "brew": "etcd",
+      "choco": "etcd",
+      "dnf": "etcd",
+      "github": "github.com/etcd-io/etcd",
+      "yay": "etcd"
+    },
+    "fd": {
+      "apk": "fd",
+      "apt": "fd-find",
+      "brew": "fd",
+      "cargo": "fd-find",
+      "choco": "fd",
+      "github": "github.com/sharkdp/fd",
+      "pacman": "fd",
+      "pkg": "fd",
+      "scoop": "fd"
+    },
+    "ffsend": {
+      "apk": "ffsend",
+      "brew": "ffsend",
+      "github": "github.com/timvisee/ffsend",
+      "pkg": "ffsend",
+      "scoop": "ffsend",
+      "snap": "ffsend",
+      "yay": "ffsend"
+    },
+    "filebrowser": {
+      "brew": "filebrowser/tap/filebrowser",
+      "github": "github.com/filebrowser/filebrowser"
+    },
+    "fission": {
+      "github": "github.com/fission/fission"
+    },
+    "fly": {
+      "brew": "fly",
+      "github": "https://github.com/concourse/concourse",
+      "yay": "fly-cli"
+    },
+    "fm": {
+      "github": "github.com/knipferrc/fm",
+      "go": "github.com/knipferrc/fm@latest"
+    },
+    "fq": {
+      "apk": "fq",
+      "brew": "wader/tap/fq",
+      "go": "github.com/wader/fq@latest",
+      "github": "github.com/wader/fq",
+      "pacman": "fq",
+      "scoop": "fq"
+    },
+    "fselect": {
+      "brew": "fselect",
+      "choco": "fselect",
+      "cargo": "fselect",
+      "github": "github.com/jhspetersson/fselect",
+      "yay": "fselect"
+    },
+    "fuego": {
+      "github": "github.com/sgarciac/fuego",
+      "snap": "fuego"
+    },
+    "g-assist": {
+      "snap": "g-assist",
+      "github": "github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client"
+    },
+    "gdrive": {
+      "brew": "gdrive",
+      "github": "github.com/prasmussen/gdrive",
+      "yay": "gdrive"
+    },
+    "ghorg": {
+      "github": "github.com/gabrie30/ghorg",
+      "yay": "ghorg"
+    },
+    "gitify": {
+      "_name": "Gitify",
+      "_homepage": "https://github.com/manosim/gitify",
+      "_description": "GitHub notifications on the menu bar",
+      "_github": "https://github.com/manosim/gitify",
+      "_type": "menubar",
+      "cask": "gitify",
+      "github": "github.com/manosim/gitify",
+      "yay": "gitify-bin"
+    },
+    "gitleaks": {
+      "brew": "gitleaks",
+      "dnf": "gitleaks",
+      "github": "github.com/zricethezav/gitleaks",
+      "pkg": "gitleaks",
+      "yay": "gitleaks"
+    },
+    "gitomatic": {
+      "github": "github.com/muesli/gitomatic"
+    },
+    "glab": {
+      "apk": "glab",
+      "brew": "glab",
+      "github": "github.com/profclems/glab",
+      "scoop": "glab",
+      "snap": "glab",
+      "yay": "gitlab-glab-bin"
+    },
+    "glow": {
+      "brew": "glow",
+      "github": "github.com/charmbracelet/glow",
+      "pkg": "glow",
+      "scoop": "glow",
+      "yay": "glow"
+    },
+    "gojq": {
+      "brew": "gojq",
+      "github": "github.com/itchyny/gojq",
+      "go": "github.com/itchyny/gojq@latest"
+    },
+    "go-chromecast": {
+      "github": "github.com/vishen/go-chromecast",
+      "go": "github.com/vishen/go-chromecast@latest"
+    },
+    "gping": {
+      "brew": "gping",
+      "cargo": "gping",
+      "choco": "gping",
+      "github": "github.com/orf/gping",
+      "scoop": "gping",
+      "pacman": "gping"
+    },
+    "grex": {
+      "brew": "grex",
+      "cargo": "grex",
+      "choco": "grex",
+      "github": "github.com/pemistahl/grex",
+      "scoop": "grex"
+    },
+    "gron": {
+      "brew": "gron",
+      "github": "github.com/tomnomnom/gron",
+      "go": "github.com/tomnomnom/gron@latest"
+    },
+    "hclq": {
+      "github": "github.com/mattolenik/hclq",
+      "go": "github.com/mattolenik/hclq@latest"
+    },
+    "hexyl": {
+      "apt": "hexyl",
+      "brew": "hexyl",
+      "cargo": "hexyl",
+      "github": "github.com/sharkdp/hexyl",
+      "pacman": "hexyl",
+      "pkg": "hexyl",
+      "scoop": "hexyl",
+      "snap": "hexyl"
+    },
+    "hey": {
+      "brew": "hey",
+      "github": "github.com/rakyll/hey"
+    },
+    "hostctl": {
+      "brew": "guumaster/tap/hostctl",
+      "github": "github.com/guumaster/hostctl",
+      "scoop": "hostctl",
+      "yay": "hostctl"
+    },
+    "htmlq": {
+      "brew": "htmlq",
+      "cargo": "htmlq",
+      "github": "github.com/mgdm/htmlq"
+    },
+    "jiq": {
+      "github": "github.com/fiatjaf/jiq/cmd/jiq",
+      "go": "github.com/fiatjaf/jiq/cmd/jiq@latest"
+    },
+    "jitsi-meet-electron": {
+      "cask": "jisti-meet",
+      "choco": "jitsi-meet-electron",
+      "github": "github.com/jitsi/jitsi-meet-electron",
+      "pkg": "jisti-meet",
+      "yay": "jitsi-meet-desktop-bin"
+    },
+    "jo": {
+      "brew": "jo",
+      "apt": "jo",
+      "snap": "jo",
+      "github": "github.com/jpmens/jo",
+      "pkg": "jo",
+      "scoop": "jo",
+      "yay": "jo"
+    },
+    "jq": {
+      "brew": "jq",
+      "choco": "jq",
+      "apk": "jq",
+      "apt": "jq",
+      "dnf": "jq",
+      "github": "github.com/stedolan/jq",
+      "pkg": "jq"
+    },
+    "kdash": {
+      "brew": "kdash-rs/kdash/kdash",
+      "cargo": "kdash",
+      "choco": "kdash",
+      "github": "github.com/kdash-rs/kdash",
+      "scoop": "kdash"
+    },
+    "kn": {
+      "brew": "kn",
+      "github": "github.com/knative/client",
+      "yay": "knative-client-bin"
+    },
+    "kubectx": {
+      "_github": "https://github.com/ahmetb/kubectx",
+      "apt": "kubectx",
+      "brew": "kubectx",
+      "choco": [
+        "kubens",
+        "kubectx"
+      ],
+      "krew": [
+        "ctx",
+        "ns"
+      ],
+      "pacman": "kubectx",
+      "port": "kubectx"
+    },
+    "kubenav": {
+      "github": "github.com/kubenav/kubenav",
+      "yay": "kubenav-bin"
+    },
+    "kubernetes-cli": {
+      "_snapClassic": true,
+      "brew": "kubectl",
+      "choco": "kubernetes-cli",
+      "snap": "kubectl"
+    },
+    "kubernetes-helm": {
+      "_snapClassic": true,
+      "brew": "helm",
+      "choco": "kubernetes-helm",
+      "snap": "helm"
+    },
+    "kubernetes-kompose": {
+      "brew": "kompose",
+      "choco": "kubernetes-kompose",
+      "snap": "kompose"
+    },
+    "minikube": {
+      "_post": "minikube config set driver virtualbox",
+      "brew": "minikube",
+      "brew:darwin": [
+        "hyperkit",
+        "minikube"
+      ],
+      "choco": "minikube"
+    },
+    "kubeval": {
+      "_post:binary:darwin": "tar xf kubeval-darwin-amd64.tar.gz\nsudo cp kubeval /usr/local/bin\n",
+      "_post:binary:linux": "tar xf kubeval-linux-amd64.tar.gz\nsudo cp kubeval /usr/local/bin\n",
+      "_pre:scoop": "scoop bucket add instrumenta https://github.com/instrumenta/scoop-instrumenta",
+      "binary:darwin": "https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-darwin-amd64.tar.gz",
+      "binary:linux": "https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz",
+      "brew": "instrumenta/instrumenta/kubeval",
+      "scoop": "kubeval"
+    },
+    "kvm": {
+      "_post:apt": "sudo adduser \"$(id -un)\" kvm\nsudo adduser \"$(id -un)\" libvirt\n",
+      "_post:dnf": "sudo adduser \"$(id -un)\" kvm\nsudo adduser \"$(id -un)\" libvirt\n",
+      "_post:pacman": "sudo adduser \"$(id -un)\" kvm\nsudo adduser \"$(id -un)\" libvirt\n",
+      "apt": [
+        "bridge-utils",
+        "libvirt-clients",
+        "libvirt-daemon-system",
+        "qemu-kvm",
+        "virt-manager",
+        "virtinst"
+      ],
+      "brew": [
+        "libvirt",
+        "qemu"
+      ],
+      "dnf": [
+        "bridge-utils",
+        "libvirt",
+        "qemu-kvm",
+        "virt-install",
+        "virt-manager",
+        "virt-top",
+        "virt-viewer"
+      ],
+      "pacman": [
+        "bridge-utils",
+        "libvirt",
+        "virt-manager"
+      ]
+    },
+    "lepton": {
+      "cask": "lepton",
+      "snap": "lepton"
+    },
+    "license": {
+      "go": "github.com/nishanths/license@latest",
+      "yay": "nishanths-license-git"
+    },
+    "linkerd2": {
+      "brew": "linkerd",
+      "github": "github.com/linkerd/linkerd2",
+      "yay": "linkerd"
+    },
+    "linuxkit": {
+      "brew": "linuxkit/linuxkit/linuxkit",
+      "github": "github.com/linuxkit/linuxkit"
+    },
+    "logcli": {
+      "brew": "logcli",
+      "github": "github.com/grafana/loki",
+      "yay": "logcli-git"
+    },
+    "manta": {
+      "cask": "manta",
+      "github": "github.com/hql287/Manta"
+    },
+    "mark-text": {
+      "cask": "mark-text",
+      "choco": "marktext",
+      "github": "github.com/marktext/marktext",
+      "yay": "marktext"
+    },
+    "masscode": {
+      "cask": "masscode",
+      "github": "github.com/antonreshetov/massCode"
+    },
+    "mc": {
+      "_post:binary:linux": "# TODO\n",
+      "_post:binary:windows": "# TODO\n",
+      "brew": "minio/stable/mc",
+      "binary:linux": "https://dl.min.io/client/mc/release/linux-amd64/mc",
+      "binary:windows": "https://dl.min.io/client/mc/release/windows-amd64/mc.exe",
+      "go": "github.com/minio/mc@latest"
+    },
+    "mergestat": {
+      "brew": "mergestat/mergestat/mergestat",
+      "github": "github.com/mergestat/mergestat"
+    },
+    "mjml-app": {
+      "github": "github.com/mjmlio/mjml-app"
+    },
+    "mkcert": {
+      "brew": "mkcert",
+      "choco": "mkcert",
+      "github": "github.com/FiloSottile/mkcert",
+      "pacman": "mkcert",
+      "scoop": "mkcert"
+    },
+    "mockoon": {
+      "cask": "mockoon",
+      "choco": "mockoon",
+      "github": "github.com/mockoon/mockoon",
+      "snap": "mockoon",
+      "yay": "mockoon-bin"
+    },
+    "mole": {
+      "brew": "davrodpin/homebrew-mole/mole",
+      "github": "github.com/davrodpin/mole",
+      "yay": "mole-bin"
+    },
+    "motrix": {
+      "cask": "motrix",
+      "choco": "motrix",
+      "github": "github.com/agalwood/Motrix",
+      "scoop": "motrix",
+      "yay": "motrix-bin"
+    },
+    "mqttx": {
+      "cask": "mqttx",
+      "github": "github.com/emqx/MQTTX",
+      "snap": "mqttx",
+      "yay": "mqttx-bin"
+    },
+    "muffet": {
+      "brew": "muffet",
+      "github": "github.com/raviqqe/muffet",
+      "go": "github.com/raviqqe/muffet/v2@latest",
+      "yay": "muffet-bin"
+    },
+    "mullvad-vpn": {
+      "cask": "mullvadvpn",
+      "github": "github.com/mullvad/mullvadvpn-app",
+      "yay": "mullvad-vpn"
+    },
+    "nebula": {
+      "github": "github.com/slackhq/nebula",
+      "pacman": "nebula"
+    },
+    "nnn": {
+      "apk": "nnn",
+      "apt": "nnn",
+      "brew": "nnn",
+      "github": "github.com/jarun/nnn",
+      "pacman": "nnn",
+      "pkg": "nnn"
+    },
+    "node-prune": {
+      "github": "github.com/tj/node-prune",
+      "go": "github.com/tj/node-prune@latest"
+    },
+    "nomino": {
+      "cargo": "nomino",
+      "github": "github.com/yaa110/nomino",
+      "yay": "nomino"
+    },
+    "nuclear": {
+      "cask": "nuclear",
+      "choco": "nuclear",
+      "github": "github.com/nukeop/nuclear",
+      "snap": "nuclear",
+      "yay": "nuclear-player-bin"
+    },
+    "osquery": {
+      "cask": "osquery",
+      "choco": "osquery",
+      "github": "github.com/osquery/osquery",
+      "yay": "osquery-git"
+    },
+    "ots": {
+      "brew": "ots",
+      "github": "github.com/sniptt-official/ots",
+      "go": "github.com/sniptt-official/ots@latest"
+    },
+    "oq": {
+      "brew": "oq",
+      "github": "github.com/Blacksmoke16/oq",
+      "snap": "oq",
+      "yay": "oq"
+    },
+    "page-fetch": {
+      "go": "github.com/detectify/page-fetch@latest"
+    },
+    "pass": {
+      "apt": "pass",
+      "brew": "pass",
+      "dnf": "pass",
+      "pacman": "pass",
+      "pkg": "password-store"
+    },
+    "pastel": {
+      "brew": "pastel",
+      "cargo": "pastel",
+      "github": "github.com/sharkdp/pastel",
+      "snap": "pastel",
+      "yay": "pastel"
+    },
+    "peco": {
+      "apt": "peco",
+      "brew": "peco",
+      "choco": "peco",
+      "github": "github.com/peco/peco",
+      "pacman": "peco"
+    },
+    "pony": {
+      "github": "github.com/jessfraz/pony",
+      "go": "github.com/jessfraz/pony@latest"
+    },
+    "pretzel": {
+      "github": "github.com/amiechen/pretzel"
+    },
+    "procs": {
+      "apk": "procs",
+      "brew": "procs",
+      "cargo": "procs",
+      "dnf": "procs",
+      "github": "github.com/dalance/procs",
+      "pacman": "procs",
+      "scoop": "procs",
+      "snap": "procs"
+    },
+    "psu": {
+      "github": "github.com/greenled/portainer-stack-utils"
+    },
+    "pup": {
+      "brew": "pup",
+      "github": "github.com/ericchiang/pup",
+      "go": "github.com/ericchiang/pup@latest"
+    },
+    "q": {
+      "brew": "q",
+      "github": "github.com/harelba/q"
+    },
+    "raindrop": {
+      "cask": "raindropio",
+      "github": "github.com/raindropio/desktop"
+    },
+    "rancher": {
+      "brew": "rancher-cli",
+      "github": "github.com/rancher/cli",
+      "yay": "rancher-cli-bin"
+    },
+    "responsively": {
+      "cask": "responsively",
+      "choco": "responsively",
+      "github": "github.com/responsively-org/responsively-app"
+    },
+    "rip": {
+      "brew": "rm-improved",
+      "cargo": "rm-improved",
+      "github": "github.com/nivekuil/rip",
+      "yay": "rm-improved"
+    },
+    "runjs": {
+      "cask": "runjs",
+      "choco": "runjs",
+      "github": "github.com/lukehaas/RunJS",
+      "yay": "runjs-bin"
+    },
+    "s5cmd": {
+      "brew": "peak/tap/s5cmd",
+      "github": "github.com/peak/s5cmd",
+      "go": "github.com/peak/s5cmd@latest"
+    },
+    "schema": {
+      "go": "github.com/Confbase/schema"
+    },
+    "scrcpy": {
+      "apt": "scrcpy",
+      "brew": "scrcpy",
+      "choco": "scrcpy",
+      "dnf": "scrcpy",
+      "github": "github.com/Genymobile/scrcpy",
+      "pkg": "scrcpy",
+      "snap": "scrcpy",
+      "yay": "scrcpy"
+    },
+    "scrcpy-gui": {
+      "github": "github.com/Tomotoes/scrcpy-gui"
+    },
+    "sd": {
+      "apk": "sd",
+      "brew": "sd",
+      "cargo": "sd",
+      "choco": "sd-cli",
+      "dnf": "sd",
+      "github": "github.com/chmln/sd",
+      "pacman": "sd",
+      "pkg": "sd"
+    },
+    "sftpgo": {
+      "brew": "sftpgo",
+      "choco": "sftpgo",
+      "github": "github.com/drakkan/sftpgo",
+      "pkg": "sftpgo",
+      "yay": "sftpgo-bin"
+    },
+    "shfmt": {
+      "apk": "shfmt",
+      "brew": "shfmt",
+      "github": "github.com/mvdan/sh",
+      "go": "mvdan.cc/sh/v3/cmd/shfmt@latest",
+      "pacman": "shfmt",
+      "pkg": "shfmt",
+      "scoop": "shfmt",
+      "snap": "shfmt"
+    },
+    "skm": {
+      "brew": "timothyye/tap/skm",
+      "github": "github.com/TimothyYe/skm",
+      "go": "github.com/TimothyYe/skm/cmd/skm@latest"
+    },
+    "slack": {
+      "cask": "slack",
+      "choco": "slack",
+      "snap": "slack"
+    },
+    "sqlectron": {
+      "cask": "sqlectron",
+      "github": "github.com/sqlectron/sqlectron-gui",
+      "yay": "sqlectron-gui"
+    },
+    "ssh-vault": {
+      "brew": "ssh-vault",
+      "github": "github.com/ssh-vault/ssh-vault"
+    },
+    "ssl-proxy": {
+      "github": "github.com/suyashkumar/ssl-proxy"
+    },
+    "staticcheck": {
+      "apt": "go-staticcheck",
+      "brew": "staticcheck",
+      "dnf": "golang-honnef-tools",
+      "go": "honnef.co/go/tools/cmd/staticcheck@latest",
+      "pacman": "staticcheck",
+      "port": "staticcheck",
+      "scoop": "staticcheck"
+    },
+    "switchhosts": {
+      "github": "github.com/oldj/SwitchHosts"
+    },
+    "sync-ssh-keys": {
+      "github": "github.com/samber/sync-ssh-keys",
+      "yay": "sync-ssh-keys-bin"
+    },
+    "sysbench": {
+      "apk": "sysbench",
+      "apt": "sysbench",
+      "brew": "sysbench",
+      "dnf": "sysbench",
+      "pacman": "sysbench",
+      "pkg": "sysbench"
+    },
+    "sysget": {
+      "github": "github.com/Eugeny/tabby"
+    },
+    "task": {
+      "brew": "go-task/tap/go-task",
+      "choco": "go-task",
+      "go": "github.com/go-task/task/v3/cmd/task@latest",
+      "github": "github.com/go-task/task",
+      "scoop": "task"
+    },
+    "teleport": {
+      "brew": "teleport",
+      "pkg": "teleport",
+      "yay": "teleport-bin"
+    },
+    "teller": {
+      "brew": "spectralops/tap/teller",
+      "github": "github.com/tellerops/teller"
+    },
+    "tflint": {
+      "brew": "tflint",
+      "choco": "tflint",
+      "github": "github.com/terraform-linters/tflint"
+    },
+    "tilt": {
+      "brew": "tilt",
+      "github": "github.com/tilt-dev/tilt",
+      "yay": "tilt-bin"
+    },
+    "temps": {
+      "github": "github.com/jackd248/temps"
+    },
+    "tokei": {
+      "apk": "tokei",
+      "brew": "tokei",
+      "cargo": "tokei",
+      "dnf": "tokei",
+      "github": "github.com/XAMPPRocky/tokei",
+      "pacman": "tokei",
+      "pkg": "tokei",
+      "scoop": "tokei"
+    },
+    "transfer": {
+      "github": "github.com/rinetd/transfer",
+      "go": "github.com/rinetd/transfer@latest"
+    },
+    "trivy": {
+      "github": "github.com/aquasecurity/trivy",
+      "yay": "trivy-bin"
+    },
+    "up": {
+      "brew": "up",
+      "github": "github.com/akavel/up",
+      "pkg": "up",
+      "yay": "up"
+    },
+    "vault": {
+      "brew": "hashicorp/tap/vault",
+      "yay": "vault-cli"
+    },
+    "vector": {
+      "brew": "vectordotdev/brew/vector"
+    },
+    "velero": {
+      "brew": "velero",
+      "choco": "velero",
+      "github": "github.com/vmware-tanzu/velero",
+      "yay": "velero-bin"
+    },
+    "virtualbox": {
+      "_pre:dnf": ". /etc/os-release\ncat <<EOF | sudo tee /etc/yum.repos.d/virtualbox.repo\n[virtualbox]\nname=Fedora $releasever - $basearch - VirtualBox\nbaseurl=http://download.virtualbox.org/virtualbox/rpm/$ID/$VERSION_ID/\\$basearch\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://www.virtualbox.org/download/oracle_vbox.asc\nEOF\nsudo dnf -y install @development-tools\nsudo dnf -y install kernel-headers kernel-devel dkms elfutils-libelf-devel qt5-qtx11extras\n",
+      "_post:choco": "# TODO\ncd C:/Program Files/Oracle/VirtualBox/\n# TODOFigure out how to get version without Ansible here and download / install the extpack\nwget https://download.virtualbox.org/virtualbox/' + vbox_version + '/Oracle_VM_VirtualBox_Extension_Pack-' + vbox_version + '.vbox-extpack'\necho y | VBoxManage extpack install --replace ./Oracle_VM_VirtualBox_Extension_Pack.vbox-extpack\n",
+      "ansible": "professormanhattan.virtualbox",
+      "choco": "virtualbox",
+      "dnf": "virtualbox-7.0"
+    },
+    "waypoint": {
+      "brew": "hashicorp/tap/waypoint",
+      "scoop": "waypoint"
+    },
+    "websocat": {
+      "brew": "websocat",
+      "cargo": "websocat",
+      "github": "github.com/vi/websocat",
+      "pkg": "websocat",
+      "port": "websocat"
+    },
+    "webtorrent": {
+      "cask": "webtorrent",
+      "choco": "webtorrent-desktop",
+      "github": "github.com/webtorrent/webtorrent-desktop",
+      "yay": "webtorrent-desktop"
+    },
+    "whaler": {
+      "github": "github.com/P3GLEG/Whaler"
+    },
+    "winrm-cli": {
+      "yay": "winrm-cli-git"
+    },
+    "wkhtmltopdf": {
+      "apt": "wkhtmltopdf",
+      "cask": "wkhtmltopdf",
+      "choco": "wkhtmltopdf",
+      "github": "github.com/wkhtmltopdf/wkhtmltopdf",
+      "pacman": "wkhtmltopdf"
+    },
+    "xurls": {
+      "go": "mvdan.cc/xurls/v2/cmd/xurls@latest",
+      "github": "github.com/mvdan/xurls"
+    },
+    "ykman": {
+      "brew": "ykman",
+      "pipx": "yubikey-manager"
+    },
+    "yq": {
+      "brew": "yq",
+      "choco": "yq",
+      "apk": "yq",
+      "github": "github.com/stedolan/jq",
+      "go": "github.com/mikefarah/yq/v4@latest",
+      "snap": "yq"
+    },
+    "yubikey-authenticator": {
+      "ansible:darwin": "professormanhattan.yubikey",
+      "choco": "yubico-authenticator",
+      "flatpak": "com.yubico.yubioath"
+    },
+    "yubikey-manager": {
+      "brew": "ykman",
+      "dnf": "yubikey-manager",
+      "pacman": "yubikey-manager",
+      "pipx": "yubikey-manager"
+    },
+    "yubikey-manager-qt": {
+      "ansible:darwin": "professormanhattan.yubikey",
+      "appimage": "https://developers.yubico.com/yubikey-manager-qt/Releases/yubikey-manager-qt-1.2.4b-linux.AppImage",
+      "choco": "yubikey-manager",
+      "dnf": "yubikey-manager-qt",
+      "pacman": "yubikey-manager-qt",
+      "scoop": "yubikey-manager-"
+    },
+    "balenaetcher": {
+      "ansible": "professormanhattan.etcher",
+      "cask": "balenaetcher",
+      "choco": "etcher"
+    },
+    "brave": {
+      "ansible": "professormanhattan.bravebrowser",
+      "cask": "brave-browser",
+      "choco": "brave",
+      "snap": "brave"
+    },
+    "chrome-gnome-shell": {
+      "_when": "test -f /usr/bin/gnome-session\n",
+      "apt": "chrome-gnome-shell",
+      "dnf": "chrome-gnome-shell",
+      "pacman": "chrome-gnome-shell"
+    },
+    "filezilla": {
+      "ansible": "professormanhattan.filezilla",
+      "apt": "filezilla",
+      "choco": "filezilla",
+      "dnf": "filezilla",
+      "pacman": "filezilla"
+    },
+    "firefox": {
+      "ansible": "professormanhattan.firefox",
+      "apt": "firefox",
+      "apt:debian": "firefox-esr",
+      "cask": "firefox",
+      "choco": "firefox",
+      "dnf": "firefox",
+      "pacman": "firefox"
+    },
+    "gimp": {
+      "ansible": "professormanhattan.gimp",
+      "apt": "gimp",
+      "cask": "gimp",
+      "choco": "gimp",
+      "dnf": "gimp",
+      "pacman": "gimp",
+      "snap": "gimp"
+    },
+    "hyperfine": {
+      "ansible": "professormanhattan.hyperfine",
+      "apk": "hyperfine",
+      "brew": "hyperfine",
+      "cargo": "hyperfine",
+      "cask": "hyperfine",
+      "choco": "hyperfine",
+      "dnf": "hyperfine",
+      "github": "github.com/sharkdp/hyperfine",
+      "pacman": "hyperfine",
+      "pkg": "hyperfine"
+    },
+    "gitkraken": {
+      "_snapClassic": true,
+      "ansible": "professormanhattan.gitkraken",
+      "cask": "gitkraken",
+      "choco": "gitkraken",
+      "snap": "gitkraken"
+    },
+    "inkscape": {
+      "ansible": "professormanhattan.inkscape",
+      "apt": "inkscape",
+      "brew": "inkscape",
+      "choco": "inkscape",
+      "dnf": "inkscape",
+      "pacman": "inkscape",
+      "snap": "inkscape"
+    },
+    "iterm2": {
+      "ansible": "professormanhattan.iterm2",
+      "cask": "iterm2"
+    },
+    "keybase": {
+      "ansible": "professormanhattan.keybase",
+      "brew": "keybase",
+      "choco": "keybase",
+      "pacman": [
+        "keybase",
+        "keybase-gui"
+      ],
+      "yay": "keybase-bin"
+    },
+    "lens": {
+      "_snapClassic": true,
+      "ansible": "professormanhattan.lens",
+      "cask": "lens",
+      "choco": "lens",
+      "snap": "kontena-lens",
+      "yay": "lens"
+    },
+    "libreoffice": {
+      "ansible": "professormanhattan.office",
+      "apt": "libreoffice",
+      "dnf": "libreoffice",
+      "pacman": "libreoffice"
+    },
+    "lollypop": {
+      "ansible": "professormanhattan.lollypop",
+      "apt": "lollypop",
+      "dnf": "lollypop",
+      "pacman": "lollypop",
+      "yay": "lollypop-stable-git"
+    },
+    "mailspring": {
+      "ansible": "professormanhattan.mailspring",
+      "cask": "mailspring",
+      "choco": "mailspring",
+      "snap": "mailspring",
+      "yay": "mailspring"
+    },
+    "microsoft-edge": {
+      "ansible": "professormanhattan.microsoftedge",
+      "cask": "microsoft-edge",
+      "choco": "microsoft-edge",
+      "yay": "microsoft-edge-stable-bin"
+    },
+    "microsoft-todo": {
+      "ansible": "professormanhattan.microsofttodo",
+      "cask": "ao",
+      "snap": "microsoft-todo-unofficial"
+    },
+    "microsoft-office": {
+      "ansible": "professormanhattan.office",
+      "cask": "microsoft-office"
+    },
+    "onionshare": {
+      "ansible": "professormanhattan.onionshare",
+      "apt": "onionshare",
+      "cask": "onionshare",
+      "choco": "onionshare",
+      "dnf": "onionshare",
+      "snap": "onionshare"
+    },
+    "peek": {
+      "_rpmFusion": true,
+      "ansible": "professormanhattan.peek",
+      "apt": [
+        "software-properties-common",
+        "peek"
+      ],
+      "dnf": [
+        "ffmpeg",
+        "gstreamer1-plugins-ugly",
+        "peek"
+      ],
+      "pacman": [
+        "gst-plugins-good",
+        "gst-plugins-ugly",
+        "gifski",
+        "peek"
+      ],
+      "yay": "peek-git"
+    },
+    "qbittorrent": {
+      "ansible": "professormanhattan.qbittorrent",
+      "apt": "qbittorrent",
+      "dnf": "qbittorrent",
+      "cask": "qbittorrent",
+      "choco": "qbittorrent",
+      "pacman": "qbittorrent",
+      "yay": "qbittorrent-git"
+    },
+    "raspberry-pi-imager": {
+      "ansible": "professormanhattan.raspberryimager",
+      "cask": "raspberry-pi-imager",
+      "choco": "rpi-imager",
+      "dnf": "rpi-imager",
+      "snap": "rpi-imager",
+      "yay": "rpi-imager"
+    },
+    "redis-desktop-manager": {
+      "ansible": "professormanhattan.rdm",
+      "snap": "redis-desktop-manager"
+    },
+    "sharex": {
+      "ansible": "professormanhattan.sharex",
+      "choco": "sharex"
+    },
+    "shotwell": {
+      "ansible": "professormanhattan.shotwell",
+      "apt": "shotwell",
+      "dnf": "shotwell",
+      "pacman": "shotwell"
+    },
+    "tabby": {
+      "ansible": "professormanhattan.tabby",
+      "cask": "tabby",
+      "choco": "tabby",
+      "github": "github.com/Eugeny/tabby"
+    },
+    "timeshift": {
+      "apt": "timeshift",
+      "dnf": "timeshift",
+      "yay": "timeshift"
+    },
+    "skype": {
+      "_type": "application",
+      "_name": "Skype",
+      "_homepage": "https://www.skype.com",
+      "_description": "Skype is for connecting with the people that matter most in your life and work",
+      "ansible": "professormanhattan.skype",
+      "cask": "skype",
+      "choco": "skype",
+      "snap": "skype",
+      "yay": "skypeforlinux-stable-bin"
+    },
+    "teams": {
+      "ansible": "professormanhattan.teams",
+      "cask": "microsoft-teams",
+      "choco": "microsoft-teams",
+      "snap": "teams-for-linux",
+      "yay": "teams-for-linux"
+    },
+    "teamviewer": {
+      "ansible": "professormanhattan.teamviewer",
+      "cask": "teamviewer",
+      "choco": "teamviewer",
+      "yay": "teamviewer"
+    },
+    "visualstudio": {
+      "ansible:windows": "professormanhattan.visualstudio",
+      "choco": "visualstudio2019community"
+    },
+    "vlc": {
+      "ansible": "professormanhattan.visualstudio",
+      "apt": "vlc",
+      "cask": "vlc",
+      "choco": "vlc",
+      "snap": "vlc"
+    },
+    "wireshark": {
+      "ansible": "professormanhattan.wireshark",
+      "apt": [
+        "tshark",
+        "wireshark"
+      ],
+      "cask": "zoom",
+      "choco": "zoom",
+      "dnf": [
+        "wireshark",
+        "wireshark-cli"
+      ],
+      "pacman": [
+        "wireshark-cli",
+        "wireshark-qt"
+      ]
+    },
+    "zoom": {
+      "ansible": "professormanhattan.zoom",
+      "cask": "zoom",
+      "choco": "zoom",
+      "snap": "zoom",
+      "yay": "zoom"
+    },
+    "qlplugins": {
+      "cask": [
+        "provisionql",
+        "qlcolorcode",
+        "qlimagesize",
+        "qlmarkdown",
+        "qlstephen",
+        "qlvideo",
+        "quicklook-json",
+        "quicklookapk",
+        "webpquicklook"
+      ]
+    }
+  },
+  "softwarePlugins": {
+    "dotnet": {
+      "cmd": null,
+      "plugins": [
+        "Microsoft.CST.AttackSurfaceAnalyzer.CLI"
+      ]
+    },
+    "gh": {
+      "cmd": "if [ -n \"$GITHUB_TOKEN\" ] && ! gh extension list | grep {PLUGIN}; then\n  gh extension install {PLUGIN}\nfi\n",
+      "plugins": [
+        "dlvhdr/gh-dash",
+        "github/gh-net",
+        "mislav/gh-cp"
+      ]
+    },
+    "helm": {
+      "plugins": [
+        "https://github.com/databus23/helm-diff",
+        "https://github.com/jkroepke/helm-secrets"
+      ]
+    },
+    "krew": {
+      "plugins": [
+        "access-matrix",
+        "datree",
+        "deprecations",
+        "get-all",
+        "konfig",
+        "modify-secret",
+        "neat",
+        "node-shell",
+        "resource-capacity",
+        "score",
+        "sniff",
+        "tree",
+        "tunnel",
+        "view-allocations",
+        "who-can"
+      ]
+    },
+    "vagrant": {
+      "cmd": "if ! vagrant plugin list | grep {PLUGIN}; then\n  vagrant plugin install {PLUGIN}\nfi\n",
+      "plugins": [
+        "vagrant-bindfs",
+        "vagrant-digitalocean",
+        "vagrant-google",
+        "vagrant-libvirt",
+        "vagrant-parallels",
+        "vagrant-share",
+        "vagrant-vmware-desktop",
+        "vagrant-vbguest"
+      ]
+    },
+    "vim": {
+      "plugins": [
+        "https://github.com/dense-analysis/ale.git",
+        "https://github.com/pearofducks/ansible-vim.git",
+        "https://github.com/neoclide/coc.nvim.git",
+        "https://github.com/ekalinin/dockerfile.vim.git",
+        "https://github.com/editorconfig/editorconfig-vim.git",
+        "https://github.com/junegunn/fzf.git",
+        "https://github.com/junegunn/fzf.vim.git",
+        "https://github.com/itchyny/lightline.vim.git",
+        "https://github.com/scrooloose/nerdtree.git",
+        "https://github.com/stanangeloff/php.vim.git",
+        "https://github.com/hdima/python-syntax.git",
+        "https://github.com/vim-syntastic/syntastic.git",
+        "https://github.com/vim-airline/vim-airline.git",
+        "https://github.com/kristijanhusak/vim-carbon-now-sh.git",
+        "https://github.com/ryanoasis/vim-devicons.git",
+        "https://github.com/tpope/vim-fugitive.git",
+        "https://github.com/airblade/vim-gitgutter.git",
+        "https://github.com/fatih/vim-go.git",
+        "https://github.com/pangloss/vim-javascript.git",
+        "https://github.com/mxw/vim-jsx.git",
+        "https://github.com/plasticboy/vim-markdown.git",
+        "https://github.com/terryma/vim-multiple-cursors.git",
+        "https://github.com/prettier/vim-prettier.git",
+        "https://github.com/tpope/vim-sensible.git",
+        "https://github.com/tpope/vim-surround.git",
+        "https://github.com/nanotee/zoxide.vim.git"
+      ]
+    },
+    "vscode": {
+      "cmd": "if test -n \"$(find ~/.vscode/extensions -mindepth 1 -maxdepth 1 -type d -name \"$(echo {PLUGIN} | tr \"[:upper:]\" \"[:lower:]\")*\" -print -quit)\"; then\n  code --install-extension \"$(echo {PLUGIN} | tr \"[:upper:]\" \"[:lower:]\")\"\nfi\n",
+      "plugins": [
+        "Angular.ng-template",
+        "attilabuti.vscode-mjml",
+        "bierner.markdown-emoji",
+        "ChakrounAnas.turbo-console-log",
+        "ChFlick.firecode",
+        "chrmarti.regex",
+        "cweijan.vscode-mysql-client2",
+        "DavidAnson.vscode-markdownlint",
+        "dbaeumer.vscode-eslint",
+        "denoland.vscode-deno",
+        "eamodio.gitlens",
+        "EditorConfig.EditorConfig",
+        "esbenp.prettier-vscode",
+        "ericadamski.carbon-now-sh",
+        "firsttris.vscode-jest-runner",
+        "formulahendry.auto-rename-tag",
+        "formulahendry.code-runner",
+        "GitHub.vscode-pull-request-github",
+        "GitLab.gitlab-workflow",
+        "GoogleCloudTools.cloudcode",
+        "golang.Go",
+        "HashiCorp.terraform",
+        "hediet.vscode-drawio",
+        "IBM.output-colorizer",
+        "Kelvin.vscode-sshfs",
+        "mads-hartmann.bash-ide-vscode",
+        "ms-azuretools.vscode-docker",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "ms-vscode-remote.remote-containers",
+        "ms-vscode-remote.remote-ssh",
+        "ms-vscode-remote.remote-wsl",
+        "ms-python.python",
+        "ms-vscode.PowerShell",
+        "MS-vsliveshare.vsliveshare",
+        "MS-vsliveshare.vsliveshare-audio",
+        "njpwerner.autodocstring",
+        "nrwl.angular-console",
+        "philnash.ngrok-for-vscode",
+        "PKief.material-icon-theme",
+        "pranaygp.vscode-css-peek",
+        "quicktype.quicktype",
+        "rbbit.typescript-hero",
+        "redhat.ansible",
+        "redhat.vscode-yaml",
+        "richie5um2.vscode-sort-json",
+        "Rubymaniac.vscode-paste-and-indent",
+        "salbert.comment-ts",
+        "shd101wyy.markdown-preview-enhanced",
+        "softwaredotcom.swdc-vscode",
+        "steoates.autoimport",
+        "stylelint.vscode-stylelint",
+        "timonwong.shellcheck",
+        "toba.vsfire",
+        "tyriar.sort-lines",
+        "usernamehw.errorlens",
+        "valentjn.vscode-ltex",
+        "VisualStudioExptTeam.vscodeintellicode",
+        "vsciot-vscode.vscode-arduino",
+        "vsls-contrib.codetour",
+        "vsls-contrib.gistfs",
+        "wayou.vscode-todo-highlight",
+        "wix.vscode-import-cost",
+        "yatki.vscode-surround"
+      ]
+    }
+  },
+  "installerPreference": {
+    "apt": [
+      "flatpak",
+      "snap",
+      "whalebrew",
+      "apt",
+      "brew",
+      "go",
+      "cargo",
+      "npm",
+      "pipx",
+      "gem",
+      "appimage",
+      "binary"
+    ],
+    "darwin": [
+      "whalebrew",
+      "brew",
+      "port",
+      "go",
+      "cargo",
+      "npm",
+      "pipx",
+      "gem",
+      "cask",
+      "binary"
+    ],
+    "dnf": [
+      "flatpak",
+      "snap",
+      "whalebrew",
+      "dnf",
+      "brew",
+      "go",
+      "cargo",
+      "npm",
+      "pipx",
+      "gem",
+      "appimage",
+      "binary"
+    ],
+    "freebsd": [
+      "pkg",
+      "go",
+      "cargo",
+      "npm",
+      "gem"
+    ],
+    "pacman": [
+      "flatpak",
+      "snap",
+      "whalebrew",
+      "pacman",
+      "brew",
+      "yay",
+      "go",
+      "cargo",
+      "npm",
+      "pipx",
+      "gem",
+      "appimage",
+      "binary"
+    ],
+    "windows": [
+      "choco",
+      "scoop",
+      "winget",
+      "go",
+      "cargo",
+      "npm",
+      "pipx",
+      "gem",
+      "binary"
+    ],
+    "zypper": [
+      "flatpak",
+      "snap",
+      "whalebrew",
+      "zypper",
+      "brew",
+      "go",
+      "cargo",
+      "npm",
+      "pipx",
+      "gem",
+      "appimage",
+      "binary"
+    ]
+  }
+}
