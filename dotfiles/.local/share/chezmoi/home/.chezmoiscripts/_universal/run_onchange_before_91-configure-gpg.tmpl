@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+{{- includeTemplate "universal/profile" }}
+{{- includeTemplate "universal/logg" }}
+
+KEYID={{ .user.gpg.id }}
+
+if command -v gpg > /dev/null; then
+  if [ -d "$HOME/.gnupg" ]; then
+    logg 'Backing up the current ~/.gnupg to ~/.gnupg.bak'
+    cp -rf "$HOME/.gnupg" "$HOME/.gnupg.bak"
+  fi
+  if [ ! -f "$HOME/.gnupg/gpg.conf ]; then
+    logg 'Downloading hardened gpg.conf file to ~/.gpnupg/gpg.conf'
+    mkdir -p "$HOME/.gnupg
+    curl -sSL {{ .config.gpg }} > "$HOME/.gnupg/gpg.conf"
+    chmod 600 "$HOME/.gnupg/gpg.conf
+  fi
+  logg 'Attempting to download the specified public GPG key ({{ .user.gpg.id }}) from public keyservers'
+  gpg --recv "$KEYID"
+  logg 'Automatically setting the trust of the public GPG key to maximum'
+  echo -e "trust\n5\ny" | gpg --command-fd 0 --edit-key "$KEYID"
+else
+  logg warn '`gpg` is unavailable in the PATH'
+fi

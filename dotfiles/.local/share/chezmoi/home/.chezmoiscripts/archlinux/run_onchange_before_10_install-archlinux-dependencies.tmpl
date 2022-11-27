@@ -3,6 +3,16 @@
 {{- includeTemplate "universal/logg" }}
 
 {{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}
+{{- $gpgDependencies := list
+gnupg2
+gnupg-agent
+gnupg-curl
+scdaemon
+pcscd
+-}}
+{{- if .toolchains.gpg }}
+{{- $packages = concat $packages $gpgDependencies -}}
+{{- end }}
 {{- $pyenvDependencies := list
 "base-devel"
 "openssl"

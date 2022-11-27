@@ -2,6 +2,7 @@
 {{- $email := "noreply@megabyte.space" -}}
 {{- $restricted := false -}}
 {{- $work := false -}}
+{{- $gpgKeyId := "0xF0A300E4199A1C33" -}}
 {{- $gmailAddress := "noreply@gmail.com" -}}
 {{- $gmailAddressAppPassword := "" -}}
 {{- $domain := "megabyte.space" -}}
@@ -98,6 +99,7 @@
     {{- $_ := set $toolchainsEnabled $toolchain $enabled }}
 {{- end }}
 
+{{- $gpgKeyId = promptStringOnce $data.user "gpgKeyId" "Public GPG key ID" $gpgKeyId -}}
 {{- $domain = promptStringOnce $data.user "domain" "Domain" $domain -}}
 {{- $timezone = promptStringOnce $data.user "timezone" "Timezone" $timezone -}}
 {{- $cloudflareUsername = promptStringOnce $data.user "cloudflareUsername" "CloudFlare E-Mail" $email -}}
@@ -117,11 +119,9 @@
 {{-   writeToStdout "Chezmoi is running in headless environment.\n" -}}
 {{- end -}}
 
-{{- if not $headless -}}
-age:
-  identity: "{{ .chezmoi.homeDir }}/.config/age/key.txt"
-  recipient: "age16kxd4ljclq9ksnxvl2ee7a5xnj744kwyv04p04ka0n3rzxdpl5nsq52svl"
-{{- end }}
+encryption: gpg
+gpg:
+  recipient: "..."
 data:
   host:
     arch: "{{ .chezmoi.arch }}"
@@ -147,6 +147,8 @@ data:
     name: "{{ $name }}"
     username: "{{ output "echo" "$USER" }}
     domain: "{{ $domain }}"
+    gpg:
+      id: "{{ $gpgKeyId }}"
     gmailAddress: "{{ $gmailAddress }}"
     gmailAddressAppPassword: "{{ $gmailAddressAppPassword }}"
     githubUsername: "{{ $githubUsername }}"

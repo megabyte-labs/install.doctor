@@ -25,6 +25,16 @@
 {{- if .toolchains.python }}
 {{- $packages = concat $packages $pyenvDependencies -}}
 {{- end }}
+{{- $gpgDependencies := list
+gnupg2
+gnupg-agent
+gnupg-curl
+scdaemon
+pcscd
+-}}
+{{- if .toolchains.gpg }}
+{{- $packages = concat $packages $gpgDependencies -}}
+{{- end }}
 
 logg 'Installing common dependencies using `apt-get`'
 logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'

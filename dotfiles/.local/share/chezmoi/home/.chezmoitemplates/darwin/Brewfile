@@ -31,6 +31,8 @@ if OS.mac?
   brew "grep"
   brew "m-cli"
 end
+# Required for GPG encryption
+brew "gnupg"
 # Required for logging (already installed but installing again so Homebrew can manage them)
 brew "glow"
 brew "gum"

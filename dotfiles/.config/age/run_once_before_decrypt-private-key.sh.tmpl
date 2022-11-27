@@ -7,7 +7,7 @@ fi
 
 if [ -f "{{ .chezmoi.sourceDir }}/key.txt.age" ]; then
   # TODO
-  logg 'Decrypting'
+  logg 'Decrypting age key'
   age --decrypt --output "$HOME/.config/age/key.txt" "{{ .chezmoi.sourceDir }}/key.txt.age"
   chmod 600 "$HOME/.config/age/key.txt"
 fi

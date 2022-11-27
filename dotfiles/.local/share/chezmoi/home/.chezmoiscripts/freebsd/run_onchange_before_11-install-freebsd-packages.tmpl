@@ -4,6 +4,16 @@
 
 {{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}
 # TODO - Add Python dependencies like in ubuntu/archlinux
+{{- $gpgDependencies := list
+gnupg2
+gnupg-agent
+gnupg-curl
+scdaemon
+pcscd
+-}}
+{{- if .toolchains.gpg }}
+{{- $packages = concat $packages $gpgDependencies -}}
+{{- end }}
 
 logg 'Installing common dependencies using `pkg`'
 logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
