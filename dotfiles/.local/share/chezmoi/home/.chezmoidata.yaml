@@ -9,6 +9,8 @@
 # `softwarePackages` map. The installer will check for the presence of the package's key in the PATH. If the package's key
 # does not match the executable's name, then the `_bin` key can be defined so that the installer will look at that instead.
 softwarePackages:
+  __desktop:
+    - zoom
   altair:
     cask: altair-graphql-client
     choco: altair-graphql
@@ -465,10 +467,6 @@ softwarePackages:
     npm: share-cli
   sharp:
     npm: sharp-cli
-  shotcut:
-    choco: shotcut
-    flatpak: org.shotcut.Shotcut
-    snap: shotcut
   sloth:
     cask: stats
   social-analyzer:
@@ -913,16 +911,6 @@ softwarePackages:
     brew: htmlq
     cargo: htmlq
     github: github.com/mgdm/htmlq
-  # @cli [hyperfine](https://github.com/sharkdp/hyperfine) - A command-line benchmarking tool
-  hyperfine:
-    apk: hyperfine
-    brew: hyperfine
-    cargo: hyperfine
-    choco: hyperfine
-    dnf: hyperfine
-    github: github.com/sharkdp/hyperfine
-    pacman: hyperfine
-    pkg: hyperfine
   # @cli [jiq](https://github.com/fiatjaf/jiq) - Create jq queries interactively by leveraging a live reload feature in the terminal
   jiq:
     github: github.com/fiatjaf/jiq/cmd/jiq
@@ -1282,11 +1270,6 @@ softwarePackages:
   # @cli [sysget](https://github.com/emilengler/sysget) -  One package manager to rule them all
   sysget:
     github: github.com/Eugeny/tabby
-  # @application [Tabby](https://github.com/Eugeny/tabby) - A terminal for a more modern age
-  tabby:
-    cask: tabby
-    choco: tabby
-    github: github.com/Eugeny/tabby
   # @cli [Task](https://github.com/go-task/task) - A task runner / simpler Make alternative written in Go
   task:
     brew: go-task/tap/go-task
@@ -1413,7 +1396,212 @@ softwarePackages:
     choco: yubikey-manager
     dnf: yubikey-manager-qt
     pacman: yubikey-manager-qt
-    scoop: yubikey-manager-qt
+    scoop: yubikey-manager-
+  balenaetcher:
+    ansible: professormanhattan.etcher
+    cask: balenaetcher
+    choco: etcher
+  brave:
+    ansible: professormanhattan.bravebrowser
+    cask: brave-browser
+    choco: brave
+    snap: brave
+  chrome:
+    _deps:
+      - chrome-gnome-shell
+    cask: google-chrome
+    choco: googlechrome
+  chrome-gnome-shell:
+    _when: |
+      test -f /usr/bin/gnome-session
+    apt: chrome-gnome-shell
+    dnf: chrome-gnome-shell
+    pacman: chrome-gnome-shell
+  filezilla:
+    ansible: professormanhattan.filezilla
+    apt: filezilla
+    choco: filezilla
+    dnf: filezilla
+    pacman: filezilla
+  firefox:
+    ansible: professormanhattan.firefox
+    apt:debian: firefox-esr
+    apt:ubuntu: firefox
+    cask: firefox
+    choco: firefox
+    dnf: firefox
+    pacman: firefox
+  gimp:
+    ansible: professormanhattan.gimp
+    apt: gimp
+    cask: gimp
+    choco: gimp
+    dnf: gimp
+    pacman: gimp
+  # @cli [hyperfine](https://github.com/sharkdp/hyperfine) - A command-line benchmarking tool
+  hyperfine:
+    ansible: professormanhattan.hyperfine
+    apk: hyperfine
+    brew: hyperfine
+    cargo: hyperfine
+    cask: hyperfine
+    choco: hyperfine
+    dnf: hyperfine
+    github: github.com/sharkdp/hyperfine
+    pacman: hyperfine
+    pkg: hyperfine
+  gitkraken:
+    _snapClassic: true
+    cask: gitkraken
+    choco: gitkraken
+    snap: gitkraken
+  inkscape:
+    ansible: professormanhattan.inkscape
+    cask: inkscape
+    choco: inkscape
+    snap: inkscape
+  iterm2:
+    ansible: professormanhattan.iterm2
+    cask: iterm2
+  keybase:
+    ansible: professormanhattan.keybase
+    cask: keybase
+    choco: keybase
+  lens:
+    _snapClassic: true
+    ansible: professormanhattan.lens
+    cask: lens
+    choco: lens
+    snap: kontena-lens
+  libreoffice:
+    ansible: professormanhattan.office
+    apt: libreoffice
+    dnf: libreoffice
+    pacman: libreoffice
+  lollypop:
+    ansible: professormanhattan.lollypop
+    apt: lollypop
+    dnf: lollypop
+    pacman: lollypop
+  mailspring:
+    ansible: professormanhattan.mailspring
+    cask: mailspring
+    choco: mailspring
+    snap: mailspring
+  microsoft-edge:
+    ansible: professormanhattan.microsoftedge
+    cask: microsoft-edge
+    choco: microsoft-edge
+  microsoft-todo:
+    ansible: professormanhattan.microsofttodo
+    cask: ao
+    snap: microsoft-todo-unofficial
+  microsoft-office:
+    ansible: professormanhattan.office
+    cask: microsoft-office
+  onionshare:
+    ansible: professormanhattan.onionshare
+    cask: onionshare
+    choco: onionshare
+    snap: onionshare
+  peek:
+    _rpmFusion: true
+    ansible: professormanhattan.peek
+    apt:
+      - software-properties-common
+      - peek
+    dnf:
+      - ffmpeg
+      - gstreamer1-plugins-ugly
+      - peek
+    pacman:
+      - gst-plugins-good
+      - gst-plugins-ugly
+      - gifski
+      - peek
+  plex:
+    ansible: professormanhattan.plex
+    cask: plex-media-player
+    choco:
+      - plex
+      - plexmediaplayer
+    snap: plexmediaserver
+  qbittorrent:
+    ansible: professormanhattan.qbittorrent
+    apt: qbittorrent
+    dnf: qbittorrent
+    cask: qbittorrent
+    choco: qbittorrent
+    pacman: qbittorrent
+  raspberry-pi-imager:
+    ansible: professormanhattan.raspberryimager
+    cask: raspberry-pi-imager
+    choco: rpi-imager
+    snap: rpi-imager
+  redis-desktop-manager:
+    ansible: professormanhattan.rdm
+    snap: redis-desktop-manager
+  sharex:
+    ansible: professormanhattan.sharex
+    choco: sharex
+  shotcut:
+    _snapClassic: true
+    ansible: professormanhattan.shotcut
+    choco: shotcut
+    cask: shotcut
+    flatpak: org.shotcut.Shotcut
+    snap: shotcut
+  shotwell:
+    ansible: professormanhattan.shotwell
+    apt: shotwell
+    dnf: shotwell
+    pacman: shotwell
+  # @application [Tabby](https://github.com/Eugeny/tabby) - A terminal for a more modern age
+  tabby:
+    ansible: professormanhattan.tabby
+    cask: tabby
+    choco: tabby
+    github: github.com/Eugeny/tabby
+  skype:
+    ansible: professormanhattan.skype
+    cask: skype
+    choco: skype
+    snap: skype
+  teams:
+    ansible: professormanhattan.teams
+    cask: microsoft-teams
+    choco: microsoft-teams
+    snap: teams-for-linux
+  teamviewer:
+    ansible: professormanhattan.teamviewer
+    cask: teamviewer
+    choco: teamviewer
+  visualstudio:
+    ansible:windows: professormanhattan.visualstudio
+    choco: visualstudio2019community
+  vlc:
+    ansible: professormanhattan.visualstudio
+    cask: vlc
+    choco: vlc
+    snap: vlc
+  wireshark:
+    ansible: professormanhattan.wireshark
+    apt:
+      - tshark
+      - wireshark
+    cask: zoom
+    choco: zoom
+    dnf:
+      - wireshark
+      - wireshark-cli
+    pacman:
+      - wireshark-cli
+      - wireshark-qt
+  zoom:
+    ansible: professormanhattan.zoom
+    cask: zoom
+    choco: zoom
+    snap: zoom
 
 installerPostInstallScripts:
   astronvim: |
