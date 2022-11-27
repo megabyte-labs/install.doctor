@@ -92,7 +92,7 @@ format() {
   if [[ $ANSI_STR == *'`'*'`'* ]]; then
     ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$(format "$("$GUM_PATH" style --bold "$ANSI_STR")")"
   else
-    ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$("$GUM_PATH" style --bold "$ANSI_STR")"
+    ANSI_STR_FORMATTED="$("$GUM_PATH" style --bold "$ANSI_STR")"
   fi
   echo -e "$ANSI_STR_FORMATTED"
 }
