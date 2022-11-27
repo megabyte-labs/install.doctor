@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+{{- includeTemplate "universal/profile" }}
+{{- includeTemplate "universal/logg" }}
+
 # software: {{ join (get .softwareGroups .host.softwareGroup) " " }}
 
 if command -v install-software > /dev/null; then
