@@ -39,7 +39,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     ### Styled Terminal
     if command -v oh-my-posh > /dev/null; then
       # Oh My Posh (See: https://ohmyposh.dev/)
-      eval "$(oh-my-posh init bash --config "$XDG_CONFIG_HOME/oh-my-posh/Betelgeuse.omp.json)"
+      eval "$(oh-my-posh init bash --config "$XDG_CONFIG_HOME/oh-my-posh/Betelgeuse.omp.json")"
     else
       # Basic styled terminal
       case "$TERM" in

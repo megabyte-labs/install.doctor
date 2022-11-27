@@ -119,7 +119,7 @@
 {{-   writeToStdout "Chezmoi is running in headless environment.\n" -}}
 {{- end -}}
 
-encryption: gpg
+encryption: "gpg"
 gpg:
   recipient: "{{ $gpgKeyId }}"
 data:
@@ -146,7 +146,7 @@ data:
   user:
     email: "{{ $email }}"
     name: "{{ $name }}"
-    username: "{{ output "echo" "$USER" }}
+    username: "{{ output "echo" "$USER" }}"
     domain: "{{ $domain }}"
     gpg:
       id: "{{ $gpgKeyId }}"

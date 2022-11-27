@@ -4,7 +4,7 @@
 
 if command -v install-software > /dev/null; then
   logg 'Installing packages defined in .chezmoidata.yaml under the .softwareGroups key'
-  install-software {{ join (get .softwareGroups .host.softwareGroup) " " }}
+  install-software {{ join (index .softwareGroups .host.softwareGroup) " " }}
 else
   logg error '`install-software` is not in the PATH'
 fi
