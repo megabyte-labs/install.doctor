@@ -8,6 +8,54 @@
 # has dependencies, the dependencies are defined under the `_deps` key. All of the `_deps` should also be defined in the
 # `softwarePackages` map. The installer will check for the presence of the package's key in the PATH. If the package's key
 # does not match the executable's name, then the `_bin` key can be defined so that the installer will look at that instead.
+#
+# Full example of a softwarePackage:
+# altair:
+#   _bin: ng               # Instead of checking if the object key (altair) is in the PATH, check if "ng" is in the PATH and only proceed if it is not available
+#   _deps:                 # Any piece of data can be a string or array. _deps will take each dep and run that through the installer first
+#     - angular-cli
+#   _when: |               # Run the script defined with _when and only proceed if it exits with a 0
+#     test -f /usr
+#   _pre: |
+#     echo "_pre allows you to define a script that runs before the installation"
+#   _post:brew:debian: |
+#     echo "_post allows you to define a script that runs after the installation"
+#   apk: altair
+#   appimage: https://developers.yubico.com/yubikey-manager-qt/Releases/yubikey-manager-qt-1.2.4b-linux.AppImage
+#   basher: xwmx/nb
+#   binary:darwin: https://dl.min.io/client/mc/release/darwin/mc            # Any piece of data can have the OS type (darwin, linux, windows) or release ID (arch, debian, ubuntu, centos, fedora) added to the end. The script will try to execute it first before trying to run other items.
+#   binary:linux: https://dl.min.io/client/mc/release/linux-amd64/mc
+#   binary:windows: https://dl.min.io/client/mc/release/windows-amd64/mc.exe
+#   bpkg: xwmx/nb
+#   brew: altair
+#   cargo: tree-sitter-cli
+#   cask: altair-graphql-client
+#   crew: altair
+#   choco: altair-graphql
+#   _rpmFusion: true       # Enable the RPM Fusion Free repository if true
+#   dnf: altair
+#   flatpak: com.yubico.yubioath
+#   gem: altair
+#   go: github.com/ProfessorManhattan/blockinfile@latest
+#   nix: emplace
+#   npm: altair
+#   pacman: altair
+#   pipx: altair
+#   pkg: altair
+#   port: altair
+#   scoop: altair
+#   _snapClassic: true     # Install the snap in classic mode
+#   snap: altair
+#   whalebrew:
+#   winget: Neovim.Neovim
+#   yay: altair
+#   zypper: altair
+# angular-cli:
+#   _bin: ng               # Only install if "ng" is not available in the PATH
+#   npm:
+#     - '@angular/cli'
+#     - gulp
+
 softwarePackages:
   altair:
     cask: altair-graphql-client
@@ -15,6 +63,7 @@ softwarePackages:
     snap: altair
     yay: altair
   angular-cli:
+    _bin: ng
     brew: angular-cli
     npm: '@angular/cli'
   ansible-lint:
@@ -43,6 +92,7 @@ softwarePackages:
       - python
       - ripgrep
       - tree-sitter
+    _post: nvim --headless -c 'autocmd User PackerComplete quitall'
   auto-install:
     npm: auto-install
   automake:
@@ -157,6 +207,11 @@ softwarePackages:
   gdown:
     pipx: gdown
   gdu:
+    _post:brew: brew link --overwrite gdu
+    _post:snap: |
+      sudo snap connect gdu-disk-usage-analyzer:mount-observe :mount-observe
+      sudo snap connect gdu-disk-usage-analyzer:system-backup :system-backup
+      sudo snap alias gdu-disk-usage-analyzer.gdu gdu
     brew: gdu
     go: github.com/dundee/gdu/v5/cmd/gdu@latest
     pacman: gdu
@@ -176,6 +231,7 @@ softwarePackages:
   git-lfs:
     _deps:
       - git
+    _post: git lfs install
     brew: git-lfs
     scoop: git-lfs
   git-open:
@@ -294,6 +350,7 @@ softwarePackages:
       - rg
       - tig
       - w3m
+    _post: nb completions install
     basher: xwmx/nb
     bpkg: xwmx/nb
     brew: nb
@@ -342,6 +399,7 @@ softwarePackages:
   oclif:
     npm: oclif
   oh-my-posh:
+    _post:scoop: clink autorun install
     brew: jandedobbeleer/oh-my-posh/oh-my-posh
     scoop:
       - clink
@@ -370,6 +428,7 @@ softwarePackages:
   papertrail:
     gem: papertrail
   pipx:
+    _post:brew: pipx ensurepath
     brew: pipx
   pkg:
     npm: pkg
@@ -386,6 +445,9 @@ softwarePackages:
   psi:
     npm: psi
   python:
+    _post:brew: |
+      python3 -m pip install --upgrade setuptools
+      python3 -m pip install --upgrade pip
     apt: python3-pip
     brew: python
     dnf: python3-pip
@@ -532,6 +594,9 @@ softwarePackages:
     brew: virtualenv
     pipx: virtualenv
   volta:
+    _post: |
+      volta setup
+      volta install node@latest
     brew: volta
     scoop: volta
   w3m:
@@ -1600,35 +1665,6 @@ softwarePackages:
     cask: zoom
     choco: zoom
     snap: zoom
-
-installerPostInstallScripts:
-  astronvim: |
-    nvim --headless -c 'autocmd User PackerComplete quitall'
-  bottom:
-    snap: |
-      sudo snap connect bottom:mount-observe
-      sudo snap connect bottom:hardware-observe
-      sudo snap connect bottom:system-observe
-      sudo snap connect bottom:process-control
-  gdu:
-    brew: brew link --overwrite gdu
-    snap: |
-      sudo snap connect gdu-disk-usage-analyzer:mount-observe :mount-observe
-      sudo snap connect gdu-disk-usage-analyzer:system-backup :system-backup
-      sudo snap alias gdu-disk-usage-analyzer.gdu gdu
-  git-lfs: git lfs install
-  nb: nb completions install
-  oh-my-posh:
-    scoop: clink autorun install
-  pipx:
-    brew: pipx ensurepath
-  python:
-    brew: |
-      python3 -m pip install --upgrade setuptools
-      python3 -m pip install --upgrade pip
-  volta: |
-    volta setup
-    volta install node@latest
 
 softwarePlugins:
   dotnet:
