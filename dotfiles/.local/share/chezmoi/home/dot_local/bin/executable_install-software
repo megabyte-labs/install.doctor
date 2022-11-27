@@ -1,6 +1,5 @@
 #!/usr/bin/env zx
 
-# Store data in YML file and then generate the data below with:
 # yq e -o=j '.' .chezmoidata.yaml
 let response = await fetch('https://gitlab.com/megabyte-labs/misc/dotfiles/-/raw/master/dotfiles/.local/share/chezmoi/software.json')
 if (response.ok) {
