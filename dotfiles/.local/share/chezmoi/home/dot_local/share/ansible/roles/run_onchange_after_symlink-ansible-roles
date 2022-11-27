@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+{{- includeTemplate "universal/profile" }}
+{{- includeTemplate "universal/logg" }}
+
 {{ $roleDirs := (output "find" (joinPath .chezmoi.homeDir ".local" "src" "gas-station" "roles") "-mindepth" "2" "-maxdepth" "2" "-type" "d") -}}
 {{- range $roleDir := splitList "\n" $roleDirs -}}
 {{- if ne $roleDir "" -}}
@@ -7,7 +10,11 @@
 {{ end -}}
 {{- end }}
 
+logg 'Ensuring Gas Station roles are symlinked to ~/.local/share/ansible/roles'
 find "$HOME/.local/src/gas-station/roles" -mindepth 2 -maxdepth 2 -type d | while read ROLE_PATH; do
   ROLE_FOLDER="professormanhattan.$(echo "$ROLE_PATH" | sed 's/.*\/\([^\/]*\)$/\1/')"
-  ln -s "$ROLE_PATH" "$XDG_DATA_HOME/ansible/roles/$ROLE_FOLDER"
+  if [ ! -d "$XDG_DATA_HOME/ansible/roles/$ROLE_FOLDER" ] || [ "$(readlink -f "$XDG_DATA_HOME/ansible/roles/$ROLE_FOLDER")" != "$ROLE_PATH" ]; then
+    rm -f "$XDG_DATA_HOME/ansible/roles/$ROLE_FOLDER"
+    ln -s "$ROLE_PATH" "$XDG_DATA_HOME/ansible/roles/$ROLE_FOLDER"
+  fi
 fi
