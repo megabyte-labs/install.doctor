@@ -1592,25 +1592,11 @@ softwarePlugins:
 
 # The order which the installer uses to determine which package manager to use while installing
 installerPreference:
-  arch:
+  apt:
     - flatpak
     - snap
     - whalebrew
-    - pacman
-    - brew
-    - yay
-    - go
-    - cargo
-    - npm
-    - pipx
-    - gem
-    - appimage
-    - binary
-  centos:
-    - flatpak
-    - snap
-    - whalebrew
-    - dnf
+    - apt
     - brew
     - go
     - cargo
@@ -1630,20 +1616,7 @@ installerPreference:
     - gem
     - cask
     - binary
-  debian:
-    - flatpak
-    - snap
-    - whalebrew
-    - apt
-    - brew
-    - go
-    - cargo
-    - npm
-    - pipx
-    - gem
-    - appimage
-    - binary
-  fedora:
+  dnf:
     - flatpak
     - snap
     - whalebrew
@@ -1662,25 +1635,13 @@ installerPreference:
     - cargo
     - npm
     - gem
-  opensuse:
+  pacman:
     - flatpak
     - snap
     - whalebrew
-    - zypper
+    - pacman
     - brew
-    - go
-    - cargo
-    - npm
-    - pipx
-    - gem
-    - appimage
-    - binary
-  ubuntu:
-    - flatpak
-    - snap
-    - whalebrew
-    - apt
-    - brew
+    - yay
     - go
     - cargo
     - npm
@@ -1697,4 +1658,17 @@ installerPreference:
     - npm
     - pipx
     - gem
+    - binary
+  zypper:
+    - flatpak
+    - snap
+    - whalebrew
+    - zypper
+    - brew
+    - go
+    - cargo
+    - npm
+    - pipx
+    - gem
+    - appimage
     - binary

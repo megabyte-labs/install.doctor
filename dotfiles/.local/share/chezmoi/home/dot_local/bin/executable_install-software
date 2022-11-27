@@ -1801,368 +1801,445 @@ const installData = {
   ]
 }
 
-### Default installer preference order
-installerPreference = ("flatpak" "snap" "whalebrew" "apt" "dnf" "pacman" "apk" "nix" "pkg" "zypper" "brew" "crew" "port" "yay" "choco" "scoop" "winget" "go" "cargo" "npm" "pipx" "gem" "cask" "bpkg" "basher" "appimage" "binary")
+
+### Creates the installOrders object which maps package managers to arrays of packages to install
+function generateInstallOrders() {
+  const installOrders = {}
+  const packagesToInstall = process.argv.slice(1)
+  const preferenceOrder = installData.installerPreference[OSType()]
+  const softwarePackages = installData.softwarePackages
+  for(let package of packagesToInstall) {
+    if (softwarePackages[package]) {
+      console.log(package + ' found in map')
+      for (let preference of preferenceOrder) {
+        if (softwarePackages[package][preference]) {
+          console.log('Using ' + preference + ' to install ' + package)
+          if (!installOrders[preference]) {
+            installOrders[preference] = []
+          }
+          installOrders[preference].push(package)
+          break
+        }
+      }
+    } else {
+      console.log(package + ' not found in map')
+    }
+  }
+  return installOrders
+}
+
+### Acquire OS type
+async function OSType() {
+  const osType = await $`
+    if [ -d /Applications ] && [ -d /Library ]; then
+      echo 'darwin'
+    elif command -v apt > /dev/null; then
+      echo 'apt'
+    elif command -v dnf > /dev/null; then
+      echo 'dnf'
+    elif command -v pacman > /dev/null; then
+      echo 'pacman'
+    elif command -v zypper > /dev/null; then
+      echo 'zypper'
+    elif command -v pkg > /dev/null; then
+      echo 'freebsd'
+    else
+      echo 'windows'
+    fi
+  `
+  return osType
+}
 
 ### Post-install hook
-afterInstall() {
-  if [ "$1" = 'appimage' ]; then
-  elif [ "$1" = 'apk' ]; then
-  elif [ "$1" = 'apt' ]; then
-  elif [ "$1" = 'basher' ]; then
-  elif [ "$1" = 'binary' ]; then
-  elif [ "$1" = 'bpkg' ]; then
-  elif [ "$1" = 'brew' ]; then
-  elif [ "$1" = 'cargo' ]; then
-  elif [ "$1" = 'cask' ]; then
-  elif [ "$1" = 'choco' ]; then
-  elif [ "$1" = 'crew' ]; then
-  elif [ "$1" = 'dnf' ]; then
-  elif [ "$1" = 'flatpak' ]; then
-  elif [ "$1" = 'gem' ]; then
-  elif [ "$1" = 'go' ]; then
-  elif [ "$1" = 'nix' ]; then
-  elif [ "$1" = 'npm' ]; then
-  elif [ "$1" = 'pacman' ]; then
-  elif [ "$1" = 'pkg' ]; then
-  elif [ "$1" = 'port' ]; then
-  elif [ "$1" = 'scoop' ]; then
-  elif [ "$1" = 'snap' ]; then
-  elif [ "$1" = 'whalebrew' ]; then
-  elif [ "$1" = 'winget' ]; then
-  elif [ "$1" = 'yay' ]; then
-  elif [ "$1" = 'zypper' ]; then
-  fi
+async function afterInstall(packageManager) {
+  const PACKAGE_MANAGER = packageManager
+  await $`
+    if [ "$PACKAGE_MANAGER" = 'appimage' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'apk' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'apt' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'basher' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'binary' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'bpkg' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'brew' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'cargo' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'cask' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'choco' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'crew' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'dnf' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'flatpak' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'gem' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'go' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'nix' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'npm' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'pacman' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'pkg' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'port' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'scoop' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'snap' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'whalebrew' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'winget' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'yay' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'zypper' ]; then
+    fi
+  `
 }
 
 ### Pre-install hook
-beforeInstall() {
-  if [ "$1" = 'appimage' ]; then
-  elif [ "$1" = 'apk' ]; then
-  elif [ "$1" = 'apt' ]; then
-    sudo apt-get update
-  elif [ "$1" = 'basher' ]; then
-  elif [ "$1" = 'binary' ]; then
-  elif [ "$1" = 'bpkg' ]; then
-  elif [ "$1" = 'brew' ]; then
-  elif [ "$1" = 'cargo' ]; then
-  elif [ "$1" = 'cask' ]; then
-  elif [ "$1" = 'choco' ]; then
-  elif [ "$1" = 'crew' ]; then
-  elif [ "$1" = 'dnf' ]; then
-  elif [ "$1" = 'flatpak' ]; then
-  elif [ "$1" = 'gem' ]; then
-  elif [ "$1" = 'go' ]; then
-  elif [ "$1" = 'nix' ]; then
-  elif [ "$1" = 'npm' ]; then
-  elif [ "$1" = 'pacman' ]; then
-  elif [ "$1" = 'pkg' ]; then
-  elif [ "$1" = 'port' ]; then
-  elif [ "$1" = 'scoop' ]; then
-  elif [ "$1" = 'snap' ]; then
-  elif [ "$1" = 'whalebrew' ]; then
-  elif [ "$1" = 'winget' ]; then
-  elif [ "$1" = 'yay' ]; then
-  elif [ "$1" = 'zypper' ]; then
-  fi
+async function beforeInstall(packageManager) {
+  const PACKAGE_MANAGER = packageManager
+  await $`
+    if [ "$PACKAGE_MANAGER" = 'appimage' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'apk' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'apt' ]; then
+      sudo apt-get update
+    elif [ "$PACKAGE_MANAGER" = 'basher' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'binary' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'bpkg' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'brew' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'cargo' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'cask' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'choco' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'crew' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'dnf' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'flatpak' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'gem' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'go' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'nix' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'npm' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'pacman' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'pkg' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'port' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'scoop' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'snap' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'whalebrew' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'winget' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'yay' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'zypper' ]; then
+    fi
+  `
 }
 
 ### Ensure the package manager is available
-ensurePackageManager() {
-  if [ "$1" = 'appimage' ]; then
-    # Do nothing
-  elif [ "$1" = 'apk' ]; then
-    if command -v apk > /dev/null; then
-      logg '`apk` is available'
-    else
-      logg error '`apk` is not installed' && exit 102
-    fi
-  elif [ "$1" = 'apt' ]; then
-    if command -v apt > /dev/null; then
-      logg '`apt` is available'
-    else
-      logg error '`apt` is not installed' && exit 103
-    fi
-  elif [ "$1" = 'basher' ]; then
-    if command -v basher > /dev/null; then
-      logg '`basher` is available'
-    else
-      # TODO - Install basher
-    fi
-  elif [ "$1" = 'binary' ]; then
-    # Do nothing
-  elif [ "$1" = 'bpkg' ]; then
-    if command -v bpkg > /dev/null; then
-      logg '`bpkg` is available'
-    else
-      # TODO - Install bpkg
-    fi
-  elif [ "$1" = 'brew' ] || [ "$1" = 'cask' ]; then
-    if command -v brew > /dev/null; then
-      logg '`brew` is available'
-    else
-      ensurePackageManagerHomebrew
-    fi
-  elif [ "$1" = 'cargo' ]; then
-    if command -v cargo > /dev/null; then
-      logg '`cargo` is available'
-    else
-      # TODO - Install Cargo via Homebrew based method
-    fi
-  elif [ "$1" = 'choco' ]; then
-    if command -v choco > /dev/null; then
-      logg '`choco` is available'
-    else
-      logg 'Installing Chocolatey'
-      powershell "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
-    fi
-  elif [ "$1" = 'crew' ]; then
-    if command -v crew > /dev/null; then
-      logg '`crew` is available'
-    else
-      # Source: https://github.com/chromebrew/chromebrew
-      curl -Ls git.io/vddgY | bash
-    fi
-  elif [ "$1" = 'dnf' ]; then
-    if command -v dnf > /dev/null; then
-      logg '`dnf` is available'
-    elif command -v yum > /dev/null; then
-      logg '`yum` is available'
-    else
-      logg 'Both `dnf` and `yum` are not available' && exit 110
-    fi
-  elif [ "$1" = 'flatpak' ]; then
-    if command -v flatpak > /dev/null; then
-      logg '`flatpak` is available'
-    else
-      ensurePackageManagerHomebrew
-    fi
-  elif [ "$1" = 'gem' ]; then
-    if command -v gem > /dev/null; then
-      logg '`gem` is available'
-    else
-      ensurePackageManagerHomebrew
-      # TODO - is this enough to make `gem install` available?
-      brew install ruby
-    fi
-  elif [ "$1" = 'go' ]; then
-    if command -v go > /dev/null; then
-      logg '`go` is available'
-    else
-      ensurePackageManagerHomebrew
-      brew install go
-    fi
-  elif [ "$1" = 'nix' ]; then
-    if command -v nix > /dev/null; then
-      logg '`nix` is available'
-    elif [ -d /Applications ] && [ -d /Library ]; then
-      # macOS
-      sh <(curl -L https://nixos.org/nix/install)
-    else
-      # Linux
-      sh <(curl -L https://nixos.org/nix/install) --daemon
-    fi
-  elif [ "$1" = 'npm' ]; then
-    if command -v volta > /dev/null && command -v npm > /dev/null && command -v node > /dev/null; then
-      logg '`volta`, `npm`, and `node` are all available'
-    else
-      if ! command -v volta > /dev/null; then
-        ensurePackageManagerHomebrew
-        if ! command -v volta > /dev/null; then
-          logg 'Installing `volta` via `brew`'
-          brew install volta
-        fi
-        logg 'Ensuring `node` and `npm` are installed using `volta`'
-        if [ -z "$VOLTA_HOME" ]; then
-          volta setup
-        fi
-        export PATH="$VOLTA_HOME/bin:$PATH"
-        volta install node
-      fi
-    fi
-  elif [ "$1" = 'pacman' ]; then
-    if command -v pacman > /dev/null; then
-      logg '`pacman` is available'
-    else
-      logg '`pacman` is not installed' && exit 106
-    fi
-  elif [ "$1" = 'pkg' ]; then
-    if command -v pkg > /dev/null; then
-      logg '`pkg` is available'
-    else
-      logg '`pkg` is not installed' && exit 107
-  elif [ "$1" = 'port' ]; then
-    if command -v port > /dev/null; then
-      logg '`port` is available'
-    else
-      # TODO - Install port on macOS
-    fi
-  elif [ "$1" = 'scoop' ]; then
-    if command -v scoop > /dev/null; then
-      logg '`scoop` is available'
-    else
-      # TODO - does this work? can we run PowerShell in a bash script?
-      powershell 'Set-ExecutionPolicy RemoteSigned -Scope CurrentUser'
-      powershell 'irm get.scoop.sh | iex'
-    fi
-  elif [ "$1" = 'snap' ]; then
-    if command -v snap > /dev/null; then
-      logg '`snap` is available'
-    else
-      logg 'Installing `snap` via system package manager'
-      if command -v apt > /dev/null; then
-        # Source: https://snapcraft.io/docs/installing-snap-on-linux-mint
-        if [ -f /etc/apt/preferences.d/nosnap.pref ]; then
-          sudo mv /etc/apt/preferences.d/nosnap.pref /etc/apt/nosnap.pref.bak
-        fi
-        sudo apt install -y snapd
-        # TODO: Following may be required on Kali -> https://snapcraft.io/docs/installing-snap-on-kali
-        # systemctl enable --now snapd apparmor
-      elif command -v dnf > /dev/null; then
-        sudo dnf install -y snapd
-        if [ ! -d /snap ]; then
-          sudo ln -s /var/lib/snapd/snap /snap
-        fi
-      elif command -v yum > /dev/null; then
-        sudo yum install -y snapd
-        sudo systemctl enable --now snapd.socket
-        if [ ! -d /snap ]; then
-          sudo ln -s /var/lib/snapd/snap /snap
-        fi
-      elif command -v pacman > /dev/null; then
-        if [ -f /etc/arch-release ]; then
-          sudo git clone https://aur.archlinux.org/snapd.git /usr/local/src/snapd
-          CURRENT_DIRECTORY="$(pwd)"
-          cd /usr/local/src/snapd
-          sudo makepkg -si
-          cd "$CURRENT_DIRECTORY"
+async function ensurePackageManager(packageManager) {
+  const PACKAGE_MANAGER = packageManager
+  await $`
+    ### Ensures Homebrew is installed
+    ensurePackageManagerHomebrew() {
+      if ! command -v brew > /dev/null; then
+        if type sudo &> /dev/null && sudo -n true; then
+          echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         else
-          sudo pacman -S snapd
+          logg info 'Homebrew is not installed. Password may be required.'
+          bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+          if [ -n "$BREW_EXIT_CODE" ]; then
+            if command -v brew > /dev/null; then
+              logg warn 'Homebrew was installed but part of the installation failed. Attempting to fix..'
+              BREW_DIRS="share/man share/doc share/zsh/site-functions etc/bash_completion.d"
+              for BREW_DIR in $BREW_DIRS; do
+                if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
+                  sudo chown -R "$(whoami)" "$(brew --prefix)/$BREW_DIR"
+                fi
+              done
+              brew update --force --quiet
+            fi
+          fi
+        fi
+      fi
+    }
+
+    if [ "$PACKAGE_MANAGER" = 'appimage' ]; then
+      # Do nothing
+    elif [ "$PACKAGE_MANAGER" = 'apk' ]; then
+      if command -v apk > /dev/null; then
+        logg '`apk` is available'
+      else
+        logg error '`apk` is not installed' && exit 102
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'apt' ]; then
+      if command -v apt > /dev/null; then
+        logg '`apt` is available'
+      else
+        logg error '`apt` is not installed' && exit 103
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'basher' ]; then
+      if command -v basher > /dev/null; then
+        logg '`basher` is available'
+      else
+        # TODO - Install basher
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'binary' ]; then
+      # Do nothing
+    elif [ "$PACKAGE_MANAGER" = 'bpkg' ]; then
+      if command -v bpkg > /dev/null; then
+        logg '`bpkg` is available'
+      else
+        # TODO - Install bpkg
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'brew' ] || [ "$PACKAGE_MANAGER" = 'cask' ]; then
+      if command -v brew > /dev/null; then
+        logg '`brew` is available'
+      else
+        ensurePackageManagerHomebrew
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'cargo' ]; then
+      if command -v cargo > /dev/null; then
+        logg '`cargo` is available'
+      else
+        # TODO - Install Cargo via Homebrew based method
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'choco' ]; then
+      if command -v choco > /dev/null; then
+        logg '`choco` is available'
+      else
+        logg 'Installing Chocolatey'
+        powershell "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'crew' ]; then
+      if command -v crew > /dev/null; then
+        logg '`crew` is available'
+      else
+        # Source: https://github.com/chromebrew/chromebrew
+        curl -Ls git.io/vddgY | bash
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'dnf' ]; then
+      if command -v dnf > /dev/null; then
+        logg '`dnf` is available'
+      elif command -v yum > /dev/null; then
+        logg '`yum` is available'
+      else
+        logg 'Both `dnf` and `yum` are not available' && exit 110
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'flatpak' ]; then
+      if command -v flatpak > /dev/null; then
+        logg '`flatpak` is available'
+      else
+        ensurePackageManagerHomebrew
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'gem' ]; then
+      if command -v gem > /dev/null; then
+        logg '`gem` is available'
+      else
+        ensurePackageManagerHomebrew
+        # TODO - is this enough to make `gem install` available?
+        brew install ruby
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'go' ]; then
+      if command -v go > /dev/null; then
+        logg '`go` is available'
+      else
+        ensurePackageManagerHomebrew
+        brew install go
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'nix' ]; then
+      if command -v nix > /dev/null; then
+        logg '`nix` is available'
+      elif [ -d /Applications ] && [ -d /Library ]; then
+        # macOS
+        sh <(curl -L https://nixos.org/nix/install)
+      else
+        # Linux
+        sh <(curl -L https://nixos.org/nix/install) --daemon
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'npm' ]; then
+      if command -v volta > /dev/null && command -v npm > /dev/null && command -v node > /dev/null; then
+        logg '`volta`, `npm`, and `node` are all available'
+      else
+        if ! command -v volta > /dev/null; then
+          ensurePackageManagerHomebrew
+          if ! command -v volta > /dev/null; then
+            logg 'Installing `volta` via `brew`'
+            brew install volta
+          fi
+          logg 'Ensuring `node` and `npm` are installed using `volta`'
+          if [ -z "$VOLTA_HOME" ]; then
+            volta setup
+          fi
+          export PATH="$VOLTA_HOME/bin:$PATH"
+          volta install node
+        fi
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'pacman' ]; then
+      if command -v pacman > /dev/null; then
+        logg '`pacman` is available'
+      else
+        logg '`pacman` is not installed' && exit 106
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'pkg' ]; then
+      if command -v pkg > /dev/null; then
+        logg '`pkg` is available'
+      else
+        logg '`pkg` is not installed' && exit 107
+    elif [ "$PACKAGE_MANAGER" = 'port' ]; then
+      if command -v port > /dev/null; then
+        logg '`port` is available'
+      else
+        # TODO - Install port on macOS
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'scoop' ]; then
+      if command -v scoop > /dev/null; then
+        logg '`scoop` is available'
+      else
+        # TODO - does this work? can we run PowerShell in a bash script?
+        powershell 'Set-ExecutionPolicy RemoteSigned -Scope CurrentUser'
+        powershell 'irm get.scoop.sh | iex'
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'snap' ]; then
+      if command -v snap > /dev/null; then
+        logg '`snap` is available'
+      else
+        logg 'Installing `snap` via system package manager'
+        if command -v apt > /dev/null; then
+          # Source: https://snapcraft.io/docs/installing-snap-on-linux-mint
+          if [ -f /etc/apt/preferences.d/nosnap.pref ]; then
+            sudo mv /etc/apt/preferences.d/nosnap.pref /etc/apt/nosnap.pref.bak
+          fi
+          sudo apt install -y snapd
+          # TODO: Following may be required on Kali -> https://snapcraft.io/docs/installing-snap-on-kali
+          # systemctl enable --now snapd apparmor
+        elif command -v dnf > /dev/null; then
+          sudo dnf install -y snapd
+          if [ ! -d /snap ]; then
+            sudo ln -s /var/lib/snapd/snap /snap
+          fi
+        elif command -v yum > /dev/null; then
+          sudo yum install -y snapd
           sudo systemctl enable --now snapd.socket
           if [ ! -d /snap ]; then
             sudo ln -s /var/lib/snapd/snap /snap
           fi
-        fi
-      elif command -v zypper > /dev/null; then
-        # TODO: See https://snapcraft.io/docs/installing-snap-on-opensuse
-      else
-        logg 'Could not find a package manager to install `snap` with'
-      fi
-      if command -v snap > /dev/null; then
-        logg 'Ensuring latest `snap` is available by running `sudo snap install core`'
-        sudo snap install core
-      fi
-    fi
-  elif [ "$1" = 'whalebrew' ];
-    if command -v whalebrew > /dev/null; then
-      logg '`whalebrew` is available'
-    else
-      ensurePackageManagerHomebrew
-      logg 'Installing `whalebrew` via `brew`'
-      brew install whalebrew
-    fi
-  elif [ "$1" = 'winget' ]; then
-    # TODO
-  elif [ "$1" = 'yay' ]; then
-    if command -v yay > /dev/null; then
-      logg '`yay` is available'
-    else
-      logg 'Installing `yay` requirements'
-      sudo pacman -S --needed base-devel git
-      if [ -d /usr/local/src ]; then
-        logg 'Cloning `yay` source code to `/usr/local/src/yay`'
-        git clone https://aur.archlinux.org/yay.git /usr/local/src/yay
-        CURRENT_DIRECTORY="$(pwd)"
-        cd /usr/local/src/yay
-        makepkg -si
-        cd "$CURRENT_DIRECTORY"
-        logg '`yay` installed`
-      else
-        logg error '`/usr/local/src` is not present on the system' && exit 105
-      fi
-    fi
-  elif [ "$1" = 'zypper' ]; then
-    if command -v zypper > /dev/null; then
-      logg '`zypper` is available'
-    else
-      logg '`zypper` is not installed' && exit 104
-    fi
-  fi
-}
-
-### Ensure Homebrew is installed
-ensurePackageManagerHomebrew() {
-  if ! command -v brew > /dev/null; then
-    if type sudo &> /dev/null && sudo -n true; then
-      echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    else
-      logg info 'Homebrew is not installed. Password may be required.'
-      bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
-      if [ -n "$BREW_EXIT_CODE" ]; then
-        if command -v brew > /dev/null; then
-          logg warn 'Homebrew was installed but part of the installation failed. Attempting to fix..'
-          BREW_DIRS="share/man share/doc share/zsh/site-functions etc/bash_completion.d"
-          for BREW_DIR in $BREW_DIRS; do
-            if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
-              sudo chown -R "$(whoami)" "$(brew --prefix)/$BREW_DIR"
+        elif command -v pacman > /dev/null; then
+          if [ -f /etc/arch-release ]; then
+            sudo git clone https://aur.archlinux.org/snapd.git /usr/local/src/snapd
+            cd /usr/local/src/snapd
+            sudo makepkg -si
+          else
+            sudo pacman -S snapd
+            sudo systemctl enable --now snapd.socket
+            if [ ! -d /snap ]; then
+              sudo ln -s /var/lib/snapd/snap /snap
             fi
-          done
-          brew update --force --quiet
+          fi
+        elif command -v zypper > /dev/null; then
+          # TODO: See https://snapcraft.io/docs/installing-snap-on-opensuse
+        else
+          logg 'Could not find a package manager to install `snap` with'
+        fi
+        if command -v snap > /dev/null; then
+          logg 'Ensuring latest `snap` is available by running `sudo snap install core`'
+          sudo snap install core
         fi
       fi
+    elif [ "$PACKAGE_MANAGER" = 'whalebrew' ];
+      if command -v whalebrew > /dev/null; then
+        logg '`whalebrew` is available'
+      else
+        ensurePackageManagerHomebrew
+        logg 'Installing `whalebrew` via `brew`'
+        brew install whalebrew
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'winget' ]; then
+      # TODO
+    elif [ "$PACKAGE_MANAGER" = 'yay' ]; then
+      if command -v yay > /dev/null; then
+        logg '`yay` is available'
+      else
+        logg 'Installing `yay` requirements'
+        sudo pacman -S --needed base-devel git
+        if [ -d /usr/local/src ]; then
+          logg 'Cloning `yay` source code to `/usr/local/src/yay`'
+          git clone https://aur.archlinux.org/yay.git /usr/local/src/yay
+          cd /usr/local/src/yay
+          makepkg -si
+          logg '`yay` installed`
+        else
+          logg error '`/usr/local/src` is not present on the system' && exit 105
+        fi
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'zypper' ]; then
+      if command -v zypper > /dev/null; then
+        logg '`zypper` is available'
+      else
+        logg '`zypper` is not installed' && exit 104
+      fi
     fi
-  fi
+  `
 }
 
 ### Installs a list of packages via the specified package manager
-installPackageList() {
-  ensurePackageManager "$1"
-  if [ "$1" = 'appimage' ]; then
-  elif [ "$1" = 'apk' ]; then
-  elif [ "$1" = 'apt' ]; then
-    sudo apt-get install -y $@
-  elif [ "$1" = 'basher' ]; then
-  elif [ "$1" = 'binary' ]; then
-  elif [ "$1" = 'bpkg' ]; then
-  elif [ "$1" = 'brew' ]; then
-  elif [ "$1" = 'cargo' ]; then
-  elif [ "$1" = 'cask' ]; then
-  elif [ "$1" = 'choco' ]; then
-    choco install -y $@
-  elif [ "$1" = 'crew' ]; then
-  elif [ "$1" = 'dnf' ];
-    if command -v dnf > /dev/null; then
-      dnf install -y $@
-    elif command -v yum > /dev/null; then
-      yum install -y $@
-    else
-      logg warn 'Both `dnf` and `yum` are not present on the system'
+async function installPackageList(packageManager, packages) {
+  const PACKAGE_MANAGER = packageManager
+  const PACKAGES = packages
+  await $`
+    logg 'Installing '"${PACKAGES}"' via `'"${PACKAGE_MANAGER}"'`'
+    if [ "$PACKAGE_MANAGER" = 'appimage' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'apk' ]; then
+      sudo apk add ${PACKAGES}
+    elif [ "$PACKAGE_MANAGER" = 'apt' ]; then
+      sudo apt-get install -y ${PACKAGES}
+    elif [ "$PACKAGE_MANAGER" = 'basher' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'binary' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'bpkg' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'brew' ]; then
+      brew install ${PACKAGES}
+    elif [ "$PACKAGE_MANAGER" = 'cargo' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'cask' ]; then
+      brew install --cask ${PACKAGES}
+    elif [ "$PACKAGE_MANAGER" = 'choco' ]; then
+      choco install -y ${choco}
+    elif [ "$PACKAGE_MANAGER" = 'crew' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'dnf' ];
+      if command -v dnf > /dev/null; then
+        dnf install -y ${PACKAGES}
+      elif command -v yum > /dev/null; then
+        yum install -y ${PACKAGES}
+      else
+        logg warn 'Both `dnf` and `yum` are not present on the system'
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'flatpak' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'gem' ]; then
+      gem install ${PACKAGES}
+    elif [ "$PACKAGE_MANAGER" = 'go' ]; then
+      for GO_PACKAGE in ${PACKAGES}; do
+        go install "$GO_PACKAGE"
+    elif [ "$PACKAGE_MANAGER" = 'nix' ]; then
+      # TODO
+    elif [ "$PACKAGE_MANAGER" = 'npm' ]; then
+      volta install ${PACKAGES}
+    elif [ "$PACKAGE_MANAGER" = 'pacman' ]; then
+      sudo pacman -Sy --noconfirm --needed ${PACKAGES}
+    elif [ "$PACKAGE_MANAGER" = 'pkg' ]; then
+      # TODO
+    elif [ "$PACKAGE_MANAGER" = 'port' ]; then
+      sudo port install ${PACKAGES}
+    elif [ "$PACKAGE_MANAGER" = 'scoop' ]; then
+      scoop install ${PACKAGES}
+    elif [ "$PACKAGE_MANAGER" = 'snap' ]; then
+      sudo snap install -y ${PACKAGES}
+    elif [ "$PACKAGE_MANAGER" = 'whalebrew' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'winget' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'yay' ]; then
+    elif [ "$PACKAGE_MANAGER" = 'zypper' ]; then
     fi
-  elif [ "$1" = 'flatpak' ]; then
-  elif [ "$1" = 'gem' ]; then
-    gem install $@
-  elif [ "$1" = 'go' ]; then
-    for GO_PACKAGE in "$@"; do
-      go install "$GO_PACKAGE"
-  elif [ "$1" = 'nix' ]; then
-    # TODO
-  elif [ "$1" = 'npm' ]; then
-    volta install $@
-  elif [ "$1" = 'pacman' ]; then
-    sudo pacman -Sy --noconfirm --needed $@
-  elif [ "$1" = 'pkg' ]; then
-    # TODO
-  elif [ "$1" = 'port' ]; then
-    for PORT_PACKAGE in "$@"; do
-      sudo port install $PORT_PACKAGE
-    done
-  elif [ "$1" = 'scoop' ]; then
-    scoop install $@
-  elif [ "$1" = 'snap' ]; then
-    sudo snap install -y $@
-  elif [ "$1" = 'whalebrew' ]; then
-  elif [ "$1" = 'winget' ]; then
-  elif [ "$1" = 'yay' ]; then
-  elif [ "$1" = 'zypper' ]; then
-  fi
+  `
 }
+
+async function main() {
+  const installOrders = generateInstallOrders()
+  const packageManagers = Object.keys(installOrders)
+  for (const packageManager of packageManagers) {
+    await ensurePackageManager(packageManager)
+  }
+  for (const packageManager of packageManagers) {
+    await beforeInstall(packageManager)
+  }
+  for (const packageManager of packageManagers) {
+    const asyncOrders = []
+    asyncOrders.push(Promise.resolve(installPackageList(packageManager, installOrders[packageManager])))
+    await Promise.all(asyncOrders)
+  }
+  for (const packageManager of packageManagers) {
+    await afterInstall(packageManager)
+  }
+}
+
+main()
