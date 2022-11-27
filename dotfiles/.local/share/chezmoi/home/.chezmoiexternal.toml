@@ -211,7 +211,6 @@
 
 {{- if not .host.headless }}
 ### Hack Nerd Font Download
-{{-   $refreshPeriod := "4800h" }}
 {{-   $fontDir := "" }}
 {{-   $fontUrlBase := "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack"}}
 {{-   if eq .host.distro.family "darwin" }}
