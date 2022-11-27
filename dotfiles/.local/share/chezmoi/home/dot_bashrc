@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # shellcheck disable=SC1090,SC1091
 
 # Prefer US English
@@ -51,7 +52,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   else
     # Minimal session
     if command -v oh-my-posh > /dev/null; then
-      eval "$(oh-my-posh init bash --config "$XDG_CONFIG_HOME/oh-my-posh/Betelgeuse-minimal.omp.json)"
+      eval "$(oh-my-posh init bash --config "$XDG_CONFIG_HOME/oh-my-posh/Betelgeuse-minimal.omp.json")"
     fi
   fi
 fi
