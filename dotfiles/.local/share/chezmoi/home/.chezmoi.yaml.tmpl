@@ -16,6 +16,7 @@
 {{- $locale := (output "echo" "$LANG") }}
 {{- $ngrokAuthToken := "" -}}
 {{- $slackApiToken := "" -}}
+{{- $tabbyConfigId := "" -}}
 {{- $tabbySyncToken := "" -}}
 {{- $timezone := "" -}}
 {{- $toolchains := list "docker" "iac" "java" "kubernetes" "node" "python" "rust" "extra" -}}
@@ -108,6 +109,7 @@
 {{- $gmailAddressAppPassword = promptStringOnce $data.user "gmailAddressAppPassword" "G-mail app password" $gmailAddressAppPassword -}}
 {{- $ngrokAuthToken = promptStringOnce $data.user "ngrokAuthToken" "Ngrok authentication token" $ngrokAuthToken -}}
 {{- $slackApiToken = promptStringOnce $data.user "slackApiToken" "Slack API token" $slackApiToken -}}
+{{- $tabbyConfigId = promptStringOnce $data.user "tabbyConfigId" "Tabby Configuration ID" $tabbyConfigId -}}
 {{- $tabbySyncToken = promptStringOnce $data.user "tabbySyncToken" "Tabby Sync Token" $tabbySyncToken -}}
 
 {{- else -}}
@@ -154,10 +156,15 @@ data:
     CLOUDFLARE_ACCESS_KEY_ID: "{{ $cloudflareAccessKeyId }}"
     CLOUDFLARE_SECRET_ACCESS_KEY: "{{ $cloudflareSecretAccessKey }}"
     CLOUDFLARE_R2_ACCOUNT_ID: "{{ $cloudflareR2AccountId }}"
+    CLOUDSDK_CORE_PROJECT: "megabyte-labs"
+    GCE_CREDENTIALS_FILE: "{{ joinPath .chezmoi.homeDir ".config" "gcp.json" }}"
+    GCE_SERVICE_ACCOUNT_EMAIL: "molecule@megabyte-labs.iam.gserviceaccount.com"
     GITHUB_READ_TOKEN: "{{ $githubReadToken }}"
     GITLAB_READ_TOKEN: "{{ $gitlabReadToken }}"
     NGROK_AUTH_TOKEN: "{{ $ngrokAuthToken }}"
     SLACK_API_TOKEN: "{{ $slackApiToken }}"
+    SNAPCRAFT_EMAIL: "{{ $email }}"
+    TABBY_CONFIG_ID: "{{ $tabbyConfigId }}"
     TABBY_SYNC_TOKEN: "{{ $tabbySyncToken }}"
 diff:
   format: "git"

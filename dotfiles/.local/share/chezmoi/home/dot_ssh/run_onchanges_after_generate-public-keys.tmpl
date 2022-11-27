@@ -7,7 +7,9 @@
 {{ end -}}
 {{- end }}
 
-source "$HOME/.config/shell/exports"
+{{- includeTemplate "universal/profile" }}
+{{- includeTemplate "universal/logg" }}
+
 logg 'Ensuring RSA public keys are present'
 
 find "$HOME/.ssh" -type f | while read FILE; do

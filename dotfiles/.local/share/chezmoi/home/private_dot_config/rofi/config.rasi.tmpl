@@ -42,10 +42,10 @@ window {
     padding:                     0px;
     border:                      0px solid;
     border-radius:               10px; //
-    border-color:                {{ .colors.nord9 }};
+    border-color:                {{ .colors.color9 }};
     cursor:                      "default";
     /* Backgroud Colors */
-    background-color:            {{ .colors.nord1 }}; // nord0
+    background-color:            {{ .colors.color1 }}; // nord0
     /* Backgroud Image */
     //background-image:          url("/path/to/image.png", none);
     /* Simple Linear Gradient */
@@ -64,7 +64,7 @@ mainbox {
     padding:                     20px;
     border:                      0px solid;
     border-radius:               0px 0px 0px 0px;
-    border-color:                {{ .colors.nord9 }};
+    border-color:                {{ .colors.color9 }};
     background-color:            transparent;
     children:                    [ "inputbar", "mode-switcher", "message", "listview" ];
 }
@@ -78,10 +78,10 @@ inputbar {
 //    padding:                     0px;
     border:                      0px solid;
     border-radius:               0px;
-    border-color:                {{ .colors.nord9 }};
-    background-color:            {{ .colors.nord0 }};
+    border-color:                {{ .colors.color9 }};
+    background-color:            {{ .colors.color0 }};
 //    background-color:		 transparent;
-    text-color:                  {{ .colors.nord5 }};
+    text-color:                  {{ .colors.color5 }};
     children:                    [ "textbox-prompt-colon", "entry" ];
 }
 
@@ -151,16 +151,16 @@ listview {
     padding:                     0px;
     border:                      0px solid;
     border-radius:               0px;
-    border-color:                {{ .colors.nord9 }};
+    border-color:                {{ .colors.color9 }};
     background-color:            transparent;
-    text-color:                  {{ .colors.nord5 }};
+    text-color:                  {{ .colors.color5 }};
     cursor:                      "default";
 }
 scrollbar {
     handle-width:                5px ;
-    handle-color:                {{ .colors.nord9 }};
+    handle-color:                {{ .colors.color9 }};
     border-radius:               10px;
-    background-color:            {{ .colors.nord1 }};
+    background-color:            {{ .colors.color1 }};
 }
 
 /*****----- Elements -----*****/
@@ -171,46 +171,46 @@ element {
     padding:                     10px;
     border:                      0px solid;
     border-radius:               8px;
-    border-color:                {{ .colors.nord9 }};
+    border-color:                {{ .colors.color9 }};
     background-color:            transparent;
-    text-color:                  {{ .colors.nord5 }};
+    text-color:                  {{ .colors.color5 }};
     cursor:                      pointer;
 }
 element normal.normal {
-    background-color:            {{ .colors.nord1 }}; // nord0
-    text-color:                  {{ .colors.nord5 }};
+    background-color:            {{ .colors.color1 }}; // nord0
+    text-color:                  {{ .colors.color5 }};
 }
 element normal.urgent {
-    background-color:            {{ .colors.nord11 }};
-    text-color:                  {{ .colors.nord1 }}; // nord0
+    background-color:            {{ .colors.color11 }};
+    text-color:                  {{ .colors.color1 }}; // nord0
 }
 element normal.active {
-    background-color:            {{ .colors.nord14 }};
-    text-color:                  {{ .colors.nord1 }}; // nord0
+    background-color:            {{ .colors.color14 }};
+    text-color:                  {{ .colors.color1 }}; // nord0
 }
 element selected.normal {
-    background-color:            {{ .colors.nord9 }};
-    text-color:                  {{ .colors.nord1 }}; // nord0
+    background-color:            {{ .colors.color9 }};
+    text-color:                  {{ .colors.color1 }}; // nord0
 }
 element selected.urgent {
-    background-color:            {{ .colors.nord14 }};
-    text-color:                  {{ .colors.nord1 }}; // nord0
+    background-color:            {{ .colors.color14 }};
+    text-color:                  {{ .colors.color1 }}; // nord0
 }
 element selected.active {
-    background-color:            {{ .colors.nord11 }};
-    text-color:                  {{ .colors.nord1 }}; // nord0
+    background-color:            {{ .colors.color11 }};
+    text-color:                  {{ .colors.color1 }}; // nord0
 }
 element alternate.normal {
-    background-color:            {{ .colors.nord1 }}; // nord0
-    text-color:                  {{ .colors.nord5 }};
+    background-color:            {{ .colors.color1 }}; // nord0
+    text-color:                  {{ .colors.color5 }};
 }
 element alternate.urgent {
-    background-color:            {{ .colors.nord11 }};
-    text-color:                  {{ .colors.nord1 }}; // nord0
+    background-color:            {{ .colors.color11 }};
+    text-color:                  {{ .colors.color1 }}; // nord0
 }
 element alternate.active {
-    background-color:            {{ .colors.nord14 }};
-    text-color:                  {{ .colors.nord1 }}; // nord0
+    background-color:            {{ .colors.color14 }};
+    text-color:                  {{ .colors.color1 }}; // nord0
 }
 element-icon {
     background-color:            transparent;
@@ -236,22 +236,22 @@ mode-switcher{
     padding:                     0px;
     border:                      0px solid;
     border-radius:               0px;
-    border-color:                {{ .colors.nord9 }};
+    border-color:                {{ .colors.color9 }};
     background-color:            transparent;
-    text-color:                  {{ .colors.nord5 }};
+    text-color:                  {{ .colors.color5 }};
 }
 button {
     padding:                     12px;
     border:                      0px solid;
     border-radius:               8px;
-    border-color:                {{ .colors.nord9 }};
-    background-color:            {{ .colors.nord0 }}; // nord1
+    border-color:                {{ .colors.color9 }};
+    background-color:            {{ .colors.color0 }}; // nord1
     text-color:                  inherit;
     cursor:                      pointer;
 }
 button selected {
-    background-color:            {{ .colors.nord14 }}; // nord9
-    text-color:                  {{ .colors.nord1 }}; // nord0
+    background-color:            {{ .colors.color14 }}; // nord9
+    text-color:                  {{ .colors.color1 }}; // nord0
 }
 
 /*****----- Message -----*****/
@@ -261,21 +261,21 @@ message {
     padding:                     0px;
     border:                      0px solid;
     border-radius:               0px 0px 0px 0px;
-    border-color:                {{ .colors.nord9 }};
+    border-color:                {{ .colors.color9 }};
     background-color:            transparent;
-    text-color:                  {{ .colors.nord5 }};
+    text-color:                  {{ .colors.color5 }};
 }
 textbox {
     padding:                     12px;
     border:                      0px solid;
     border-radius:               8px;
-    border-color:                {{ .colors.nord9 }};
-    background-color:            {{ .colors.nord1 }};
-    text-color:                  {{ .colors.nord5 }};
+    border-color:                {{ .colors.color9 }};
+    background-color:            {{ .colors.color1 }};
+    text-color:                  {{ .colors.color5 }};
     vertical-align:              0.5;
     horizontal-align:            0.0;
     highlight:                   none;
-    placeholder-color:           {{ .colors.nord5 }};
+    placeholder-color:           {{ .colors.color5 }};
     blink:                       true;
     markup:                      true;
 }
@@ -283,7 +283,7 @@ error-message {
     padding:                     0px;
     border:                      2px solid;
     border-radius:               8px;
-    border-color:                {{ .colors.nord9 }};
-    background-color:            {{ .colors.nord1 }}; // nord0
-    text-color:                  {{ .colors.nord5 }};
+    border-color:                {{ .colors.color9 }};
+    background-color:            {{ .colors.color1 }}; // nord0
+    text-color:                  {{ .colors.color5 }};
 }

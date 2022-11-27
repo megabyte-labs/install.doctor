@@ -3,17 +3,8 @@
 {{- includeTemplate "universal/profile" }}
 {{- includeTemplate "universal/logg" }}
 
-logg 'Ensuring Taskfiles are linked properly'
-if [ -d "$HOME/.local/shared-common" ]; then
-  cp ~/.local/shared-common/Taskfile.yml ~/.local/Taskfile.yml
-  sed -i 's/\.\/\.config\/taskfiles/taskfiles/g' ~/.local/Taskfile.yml
-  ln -s ~/.local/taskfiles ~/.local/shared-common/common/.config/taskfiles
+if [ -d "$HOME/.local/src/shared-common" ]; then
+  logg 'Ensuring Taskfiles are linked properly'
+  cp "$HOME/.local/shared-common/Taskfile.yml" "$HOME/.local/Taskfile.yml"
+  ln -s "$HOME/.local/taskfiles" "$HOME/.local/src/shared-common/common/.config/taskfiles"
 fi
-
-{{ if (eq .chezmoi.os "darwin") }}
-if command -v gsed > /dev/null; then
-  gsed -i 's/\.\/\.config\/taskfiles/taskfiles/g' ~/.local/Taskfile.yml
-else
-  logg warn 'Unable to fix `~/.local/Taskfile.yml` because gsed GNU compatibility tool is not installed.'
-fi
-{{- end }}
