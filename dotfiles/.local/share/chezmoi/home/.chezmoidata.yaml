@@ -9,11 +9,21 @@
 # `softwarePackages` map. The installer will check for the presence of the package's key in the PATH. If the package's key
 # does not match the executable's name, then the `_bin` key can be defined so that the installer will look at that instead.
 softwarePackages:
+  allure:
+    binary: https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.20.1/allure-commandline-2.20.1.zip
+    brew: allure
+    scoop: allure
+    yay: allure
   altair:
     cask: altair-graphql-client
     choco: altair-graphql
     snap: altair
     yay: altair
+  android-studio:
+    brew: android-studio
+    choco: androidstudio
+    snap: android-studio
+    yay: android-studio
   angular-cli:
     brew: angular-cli
     npm: '@angular/cli'
@@ -28,6 +38,13 @@ softwarePackages:
       - sshpass
       - tmux
     pipx: ansibleconnect
+  appium:
+    brew: appium
+    choco: appium-desktop
+  assh:
+    brew: assh
+    go: moul.io/assh/v2
+    yay: assh
   aqua:
     brew: aquaproj/aqua/aqua
   asciicinema:
@@ -45,8 +62,21 @@ softwarePackages:
       - tree-sitter
   auto-install:
     npm: auto-install
+  autokey:
+    apt: autokey
+    choco: autohotkey
+    dnf: autokey
+    yay: autokey-gtk
   automake:
     brew: automake
+  awscli:
+    brew: awscli@2
+    choco: awscli
+  azure-cli:
+    brew: azure-cli
+    choco: azure-cli
+    winget: Microsoft.AzureCLI
+    yay: azure-cli
   # @cli [bat](https://github.com/sharkdp/bat) - Clone of cat(1) with syntax highlighting and Git integration
   bat:
     apk: bat
@@ -61,16 +91,12 @@ softwarePackages:
     zypper: bat
   blockinfile:
     go: github.com/ProfessorManhattan/blockinfile@latest
+  brave:
+    brew: brave-browser
+    choco: brave
+    snap: brave
   bundler:
     gem: bundler
-  delta:
-    brew: git-delta
-    cargo: git-delta
-    choco: delta
-    dnf: git-delta
-    pacman: git-delta
-    pkg: git-delta
-    scoop: delta
   bash-completion:
     brew: bash-completion
   bitly:
@@ -82,6 +108,8 @@ softwarePackages:
     snap: bottom
   browser-sync:
     npm: browser-sync
+  bundler:
+    gem: bundler
   bw:
     choco: bitwarden-cli
     snap: bw
@@ -93,6 +121,16 @@ softwarePackages:
     brew:darwin: carthage
   chef:
     gem: chef
+  cfssl:
+    brew: cfssl
+    pacman: cfssl
+  chrome:
+    apt: chromium
+    brew: google-chrome
+    choco: googlechrome
+    dnf: chromium
+    snap: chromium
+    yay: google-chrome
   chrome-cli:
     brew:darwin: chrome-cli
   clocker:
@@ -106,13 +144,45 @@ softwarePackages:
   commitizen:
     _bin: cz
     npm: commitizen
+  consul:
+    apt: consul
+    brew: consul
+    pkg: consul
+    yay: consul-bin
+  container-structure-test:
+    brew: container-structure-test
+    binary:linux: https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
+    yay: container-structure-test
   cordova:
     npm: cordova
+  delta:
+    brew: git-delta
+    cargo: git-delta
+    choco: delta
+    dnf: git-delta
+    pacman: git-delta
+    pkg: git-delta
+    scoop: delta
   delve:
     brew: delve
     go: github.com/go-delve/delve/cmd/dlv@latest
   dframe:
     npm: deviceframe
+  dotenv-linter:
+    brew: dotenv-linter
+    cargo: dotenv-linter
+    scoop: dotenv-linter
+    yay: dotenv-linter
+  dotnet:
+    brew: dotnet
+    choco: dotnet
+    yay: dotnet-sdk-bin
+  dprint:
+    brew: dprint
+    binary:windows: https://github.com/dprint/dprint/releases/latest/download/dprint-x86_64-pc-windows-msvc-installer.exe
+    cargo: dprint
+    npm: dprint
+    scoop: dprint
   editly:
     npm: editly
   electron:
@@ -131,12 +201,14 @@ softwarePackages:
   eslint:
     brew: eslint
     npm: eslint
+  etcher:
+    brew: balenaetcher
+    choco: etcher
+    yay: balena-etcher
   fastify:
     npm: fastify-cli
   feathers:
     npm: '@feathersjs/cli'
-  firebase:
-    npm: firebase-tools
   ffmpeg:
     apk: ffmpeg
     apt: ffmpeg
@@ -145,6 +217,24 @@ softwarePackages:
     dnf: ffmpeg
     pacman: ffmpeg
     scoop: ffmpeg
+  filezilla:
+    apt: filezilla
+    choco: filezilla
+    dnf: filezilla
+    pacman: filezilla
+  firebase:
+    npm: firebase-tools
+  firefox:
+    apt: firefox
+    brew: firefox
+    choco: firefox
+    dnf: firefox
+    pacman: firefox
+  flutter:
+    brew: flutter
+    choco: flutter
+    snap: flutter
+    yay: flutter
   fkill:
     npm: fkill-cli
   fonts:
@@ -154,6 +244,10 @@ softwarePackages:
       - homebrew/cask-fonts/font-meslo-lg-nerd-font
   fpm:
     gem: fpm
+  gcloud:
+    brew: google-cloud-sdk
+    choco: gcloudsdk
+    yay: google-cloud-sdk
   gdown:
     pipx: gdown
   gdu:
@@ -165,6 +259,13 @@ softwarePackages:
     apt: gdu
   gfi:
     npm: google-font-installer
+  gimp:
+    apt: gimp
+    brew: gimp
+    choco: gimp
+    dnf: gimp
+    pacman: gimp
+    snap: gimp
   git:
     apk: git
     apt: git
@@ -180,10 +281,24 @@ softwarePackages:
     scoop: git-lfs
   git-open:
     npm: git-open
+  gitkraken:
+    brew: gitkraken
+    choco: gitkraken
+    snap: gitkraken
+  gitleaks:
+    brew: gitleaks
+    dnf: gitleaks
+    pkg: gitleaks
+    yay: gitleaks
   gixy:
     pipx: gixy
+  glen:
+    go: github.com/lingrino/glen@latest
   go-outline:
     go: github.com/ramya-rao-a/go-outline@latest
+  golangci-lint:
+    brew: golangci-lint
+    go: github.com/golangci/golangci-lint/cmd/golangci-lint@latest
   gomodifytags:
     brew: gomodifytags
     go: github.com/fatih/gomodifytags@latest
@@ -208,18 +323,39 @@ softwarePackages:
       - gnu-sed
       - gnutls
       - grep
+  grype:
+    yay: grype-bin
+    choco: grype
+    port: grype
   gtop:
     brew: gtop
     npm: gtop
   gulp:
     brew: gulp
     npm: gulp
+  hadolint:
+    brew: hadolint
+    dnf: hadolint
+    scoop: hadolint
   http-prompt:
     brew: http-prompt
     pipx: http-prompt
   httpstat:
     brew: httpstat
     pipx: httpstat
+  hub:
+    apt: hub
+    brew: hub
+    choco: hub
+    dnf : hub
+    pacman: hub
+    pkg: hub
+    scoop: hub
+  hyper:
+    appimage: https://releases.hyper.is/download/AppImage
+    brew: hyper
+    choco: hyper
+    yay: hyper
   ideviceinstaller:
     brew:darwin: ideviceinstaller
   imagemagick:
@@ -233,6 +369,21 @@ softwarePackages:
     npm: imgur-uploader-cli
   impl:
     go: github.com/josharian/impl@latest
+  infracost:
+    brew: infracost
+    choco: infracost
+    yay: infracost
+  inkscape:
+    apt: inkscape
+    brew: inkscape
+    choco: inkscape
+    dnf: inkscape
+    pacman: inkscape
+    snap: inkscape
+  intellij-idea-ce:
+    brew: intellij-idea-ce
+    choco: intellijidea-community
+    snap: intellij-idea-community
   ionic:
     npm: '@ionic/cli'
   ios-deploy:
@@ -255,17 +406,62 @@ softwarePackages:
     npm: ipfs-deploy
   is-up:
     npm: is-up-cli
+  iterm2:
+    brew: iterm2
+  jqp:
+    brew: noahgorstein/tap/jqp
+    port: jqp
+    yay: jqp
+  keybase:
+    brew: keybase
+    choco: keybase
+    pacman:
+      - keybase
+      - keybase-gui
+    yay: keybase-bin
+  kodi:
+    apt: kodi
+    brew: kodi
+    choco: kodi
+    dnf: kodi
+    pacman: kodi
   lazygit:
     brew: lazygit
     choco: lazygit
     go: github.com/jesseduffield/lazygit@latest
     pacman: lazygit
     scoop: lazygit
+  lens:
+    brew: lens
+    choco: lens
+    snap: kontena-lens
+    yay: lens
   libimobiledevice:
     brew:darwin: libimobiledevice
   localtunnel:
     brew: localtunnel
     npm: localtunnel
+  lollypop:
+    apt: lollypop
+    dnf: lollypop
+    pacman: lollypop
+    yay: lollypop-stable-git
+  mailspring:
+    brew: mailspring
+    choco: mailspring
+    snap: mailspring
+    yay: mailspring
+  microsoft-edge:
+    brew: microsoft-edge
+    choco: microsoft-edge
+    yay: microsoft-edge-stable-bin
+  microsoft-todo:
+    snap: microsoft-todo-unofficial
+  mitmproxy:
+    apt: mitmproxy
+    brew: mitmproxy
+    choco: mitmproxy
+    pacman: mitmproxy
   mjml:
     cask: mjml
     npm: mjml
@@ -330,6 +526,10 @@ softwarePackages:
   node:
     brew: node
     scoop: nodejs
+  nomad:
+    brew: nomad
+    choco: nomad
+    yay: nomad-git
   nest:
     npm: '@nestjs/cli'
   newman:
@@ -341,13 +541,28 @@ softwarePackages:
     npm: npm-check
   oclif:
     npm: oclif
+  office:
+    apt: libreoffice
+    dnf: libreoffice
+    pacman: libreoffice
   oh-my-posh:
     brew: jandedobbeleer/oh-my-posh/oh-my-posh
     scoop:
       - clink
       - https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json
+  onionshare:
+    apt: onionshare
+    brew: onionshare
+    choco: onionshare
+    dnf: onionshare
+    snap: onionshare
   package-size:
     npm: package-size
+  packer:
+    apt: packer
+    brew: packer
+    choco: packer
+    pacman: packer
   pageres:
     npm: pageres-cli
   pandoc:
@@ -369,20 +584,59 @@ softwarePackages:
     winget: pandoc
   papertrail:
     gem: papertrail
+  peek:
+    apt: peek
+    dnf: peek
+    pacman: peek
+    yay: peek-git
+  poetry:
+    brew: poetry
+    yay: python-poetry-git
   pipx:
     brew: pipx
   pkg:
     npm: pkg
   playwright:
     npm: playwright
+  plex:
+    brew:
+      - plex
+      - plex-media-player
+      - plex-media-server
+    choco:
+      - plex
+      - plexmediaplayer
+    snap: plexmediaserver
+    yay: plex-media-server
   pm2:
     npm: pm2
+  pnpm:
+    brew: pnpm
+    npm: pnpm
+    scoop: pnpm
+    yay: pnpm
+  postman:
+    brew: postman
+    choco: postman
+    snap: postman
+    yay: postman-bin
   pre-commit:
     brew: pre-commit
     pipx: pre-commit
   prettier:
     brew: prettier
     npm: prettier
+  proton:
+    brew:
+      - protonvpn
+      - protonmail-bridge
+    choco:
+      - protonvpn
+      - protonmailbridge
+    dnf: protonvpn-cli
+    yay:
+      - protonvpn
+      - protonmail-bridge
   psi:
     npm: psi
   python:
@@ -395,8 +649,21 @@ softwarePackages:
     brew: pywhat
     pipx: pywhat
     port: pywhat
+  qbittorrent:
+    apt: qbittorrent
+    brew: qbittorrent
+    choco: qbittorrent
+    dnf: qbittorrent
+    pacman: qbittorrent
+    yay: qbittorrent-git
   ramda:
     npm: ramda-cli
+  raspberry-pi-imager:
+    brew: raspberry-pi-imager
+    choco: rpi-imager
+    dnf: rpi-imager
+    snap: rpi-imager
+    yay: rpi-imager
   rclone:
     apt: rclone
     brew: rclone
@@ -406,6 +673,21 @@ softwarePackages:
       - nssm
     dnf: rclone
     pacman: rclone
+  redis-desktop-manager:
+    snap: redis-desktop-manager
+  remote-desktop:
+    apt:
+      - remmina
+      - xrdp
+    brew: microsoft-remote-desktop
+    dnf:
+      - remmina
+      - xrdp
+    pacman: remmina
+    snap: remmina
+    yay:
+      - remmina-git
+      - xrdp
   ripgrep:
     _bin: rg
     apt: ripgrep
@@ -463,13 +745,28 @@ softwarePackages:
     npm: serverless
   share:
     npm: share-cli
+  sharex:
+    choco: sharex
   sharp:
     npm: sharp-cli
+  shotcut:
+    apt: shotcut
+    brew: shotcut
+    choco: shotcut
+    dnf: shotcut
+    flatpak: org.shotcut.Shotcut
+    snap: shotcut
+  shotwell:
+    apt: shotwell
+    dnf: shotwell
+    pacman: shotwell
   sloth:
     cask: stats
   social-analyzer:
     brew: social-analyzer
     pipx: social-analyzer
+  solidity:
+    npm: solc
   speed-test:
     npm: speed-test
   spotdl:
@@ -498,8 +795,28 @@ softwarePackages:
     npm: svgo
   t:
     gem: t
+  teams:
+    brew: microsoft-teams
+    choco: microsoft-teams
+    snap: teams-for-linux
+    yay: teams-for-linux
+  teamviewer:
+    brew: teamviewer
+    choco: teamviewer
+    yay: teamviewer
   terminalizer:
     npm: terminalizer
+  termius:
+    binary:windows: https://autoupdate.termius.com/windows/Termius.exe
+    brew: termius
+    pipx: termius
+    snap: termius-app
+    yay: termius
+  terraform:
+    apt: terraform
+    brew: terraform
+    choco: terraform
+    pacman: terraform
   tig:
     brew: tig
     nix: tig
@@ -528,12 +845,27 @@ softwarePackages:
     _bin: tsc
     brew: typescript
     npm: tsc
+  upt:
+    cargo:: upt
   virtualenv:
     brew: virtualenv
     pipx: virtualenv
+  visual-studio:
+    brew: visual-studio
+    choco: visualstudio2022community
+  vlc:
+    apt: vlc
+    brew: vlc
+    choco: vlc
+    snap: vlc
   volta:
     brew: volta
     scoop: volta
+  vscode:
+    brew: visual-studio-code
+    choco: vscode
+    snap: code
+    yay: visual-studio-code-bin
   w3m:
     apt: w3m
     brew: w3m
@@ -551,6 +883,14 @@ softwarePackages:
     bpkg: rauchg/wifi-password
     brew: wifi-password
     npm: wifi-password-cli
+  wireshark:
+    apt: wireshark
+    brew: wireshark
+    choco: wireshark
+    dnf: wireshark
+    pacman:
+      - wireshark-cli
+      - wireshark-qt
   wordpressify:
     npm: wordpressify
   wrangler:
@@ -562,6 +902,11 @@ softwarePackages:
     pipx: youtube-dl
     port: youtube-dl
     brew: youtube-dl
+  zoom:
+    brew: zoom
+    choco: zoom
+    snap: zoom-client
+    yay: zoom
   zx:
     brew: zx
     npm: zx
@@ -1225,6 +1570,7 @@ softwarePackages:
     cask: skype
     choco: skype
     snap: skype
+    yay: skypeforlinux-stable-bin
   # @application [Slack](https://slack.com/) - Transform the way that you work with one place for everyone and everything that you need to get things done
   slack:
     cask: slack
