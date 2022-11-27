@@ -113,7 +113,7 @@ async function OSType() {
   return osType
 }
 
-### Acquire release ID
+### Acquire release ID (for Linux)
 async function releaseID() {
   const ID = await $`
     . /etc/os-release
