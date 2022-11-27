@@ -1,0 +1,5 @@
+["/etc/nginx"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/cloud/nginx-configs.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]

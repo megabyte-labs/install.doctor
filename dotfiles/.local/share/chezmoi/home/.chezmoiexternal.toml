@@ -87,6 +87,57 @@
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
+### Ansible Roles / Playbook
+[".local/src/gas-station"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/gas-station.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+### Packer
+[".local/src/packer/archlinux"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/packer/archlinux-desktop.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/src/packer/centos"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/packer/centos-desktop.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/src/packer/debian"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/packer/debian-desktop.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/src/packer/fedora"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/packer/fedora-desktop.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/src/packer/macos"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/packer/macos-desktop.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/src/packer/ubuntu"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/packer/ubuntu-desktop.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/src/packer/windows"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/packer/windows-desktop.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+### JumpUSB
+[".local/src/jumpusb"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/jumpusb.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
 {{- if and (not .host.headless) (ne .chezmoi.os "windows") }}
 ### Neovim
 [".config/nvim"]
