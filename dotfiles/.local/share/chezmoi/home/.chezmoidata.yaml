@@ -1592,30 +1592,109 @@ softwarePlugins:
 
 # The order which the installer uses to determine which package manager to use while installing
 installerPreference:
-  - flatpak
-  - snap
-  - whalebrew
-  - apt
-  - dnf
-  - pacman
-  - apk
-  - nix
-  - pkg
-  - zypper
-  - brew
-  - crew
-  - port
-  - yay
-  - choco
-  - scoop
-  - winget
-  - go
-  - cargo
-  - npm
-  - pipx
-  - gem
-  - cask
-  - bpkg
-  - basher
-  - appimage
-  - binary
+  arch:
+    - flatpak
+    - snap
+    - whalebrew
+    - pacman
+    - brew
+    - yay
+    - go
+    - cargo
+    - npm
+    - pipx
+    - gem
+    - appimage
+    - binary
+  centos:
+    - flatpak
+    - snap
+    - whalebrew
+    - dnf
+    - brew
+    - go
+    - cargo
+    - npm
+    - pipx
+    - gem
+    - appimage
+    - binary
+  darwin:
+    - whalebrew
+    - brew
+    - port
+    - go
+    - cargo
+    - npm
+    - pipx
+    - gem
+    - cask
+    - binary
+  debian:
+    - flatpak
+    - snap
+    - whalebrew
+    - apt
+    - brew
+    - go
+    - cargo
+    - npm
+    - pipx
+    - gem
+    - appimage
+    - binary
+  fedora:
+    - flatpak
+    - snap
+    - whalebrew
+    - dnf
+    - brew
+    - go
+    - cargo
+    - npm
+    - pipx
+    - gem
+    - appimage
+    - binary
+  freebsd:
+    - pkg
+    - go
+    - cargo
+    - npm
+    - gem
+  opensuse:
+    - flatpak
+    - snap
+    - whalebrew
+    - zypper
+    - brew
+    - go
+    - cargo
+    - npm
+    - pipx
+    - gem
+    - appimage
+    - binary
+  ubuntu:
+    - flatpak
+    - snap
+    - whalebrew
+    - apt
+    - brew
+    - go
+    - cargo
+    - npm
+    - pipx
+    - gem
+    - appimage
+    - binary
+  windows:
+    - choco
+    - scoop
+    - winget
+    - go
+    - cargo
+    - npm
+    - pipx
+    - gem
+    - binary
