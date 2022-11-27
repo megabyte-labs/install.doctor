@@ -1733,7 +1733,7 @@ softwarePackages:
   virtualbox:
     _pre:dnf: |
       . /etc/os-release
-      cat <<EOF | sudo tee /etc/yum.repos.d/virtualbox.repo 
+      cat <<EOF | sudo tee /etc/yum.repos.d/virtualbox.repo
       [virtualbox]
       name=Fedora $releasever - $basearch - VirtualBox
       baseurl=http://download.virtualbox.org/virtualbox/rpm/$ID/$VERSION_ID/\$basearch
@@ -2094,7 +2094,7 @@ softwarePlugins:
       - vagrant-vmware-desktop
       - vagrant-vbguest
   vim:
-    cmd: 
+    # cmd: Handled by .chezmoiexternal.toml
     plugins:
       - https://github.com/dense-analysis/ale.git
       - https://github.com/pearofducks/ansible-vim.git

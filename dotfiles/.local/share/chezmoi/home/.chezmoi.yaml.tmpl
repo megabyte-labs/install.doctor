@@ -121,7 +121,7 @@
 
 encryption: gpg
 gpg:
-  recipient: "..."
+  recipient: "{{ $gpgKeyId }}"
 data:
   host:
     arch: "{{ .chezmoi.arch }}"
