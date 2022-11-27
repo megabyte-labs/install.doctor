@@ -6,7 +6,7 @@ let response = await fetch('https://gitlab.com/megabyte-labs/misc/dotfiles/-/raw
 if (response.ok) {
     const installData = await response.json()
 } else {
-  await $`logg 'Error acquiring software installation map`
+  await $`logg 'Error acquiring software installation map'`
 }
 
 const installOrders = {}
