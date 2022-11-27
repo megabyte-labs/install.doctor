@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+ensurePackageManagerHomebrew() {
+  if ! command -v brew > /dev/null; then
+    if command -v sudo > /dev/null && sudo -n true; then
+      echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    else
+      logg info 'Homebrew is not installed. Password may be required.'
+      bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+      if [ -n "$BREW_EXIT_CODE" ]; then
+        if command -v brew > /dev/null; then
+          logg warn 'Homebrew was installed but part of the installation failed. Attempting to fix..'
+          BREW_DIRS="share/man share/doc share/zsh/site-functions etc/bash_completion.d"
+          for BREW_DIR in $BREW_DIRS; do
+            if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
+              sudo chown -R "$(whoami)" "$(brew --prefix)/$BREW_DIR"
+            fi
+          done
+          brew update --force --quiet
+        fi
+      fi
+    fi
+  fi
+}
+
+ensurePackageManagerHomebrew

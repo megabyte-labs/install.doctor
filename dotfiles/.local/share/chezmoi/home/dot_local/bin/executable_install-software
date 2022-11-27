@@ -1926,7 +1926,7 @@ async function ensurePackageManager(packageManager) {
     ### Ensures Homebrew is installed
     ensurePackageManagerHomebrew() {
       if ! command -v brew > /dev/null; then
-        if type sudo &> /dev/null && sudo -n true; then
+        if command -v sudo > /dev/null && sudo -n true; then
           echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         else
           logg info 'Homebrew is not installed. Password may be required.'

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-{{ if or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") }}
 
 source "$HOME/.config/shell/exports"
 
@@ -16,10 +15,4 @@ if command -v gsed > /dev/null; then
 else
   logg warn 'Unable to fix `~/.local/Taskfile.yml` because gsed GNU compatibility tool is not installed.'
 fi
-{{- end }}
-
-{{ else if chezmoi.os "windows" }}
-
-Remove-Item -LiteralPath "$env:HOMEPATH\Library" -Force -Recurse
-
 {{- end }}
