@@ -52,12 +52,23 @@
 #   zypper: altair
 # angular-cli:
 #   _bin: ng               # Only install if "ng" is not available in the PATH
+#   _name: Gitify                                             # Pretty name of the package
+#   _homepage: https://angular.io/                            # Homepage if there is one
+#   _description: GitHub notifications on the menu bar        # Short description of the package
+#   _github: https://github.com/manosim/gitify                # GitHub link to the package
+#   _type: menubar                                            # Type of package (either application, cli, or menubar)
 #   npm:
 #     - '@angular/cli'
 #     - gulp
 
 softwarePackages:
   allure:
+    _post:binary:darwin: |
+      # TODO
+    _post:binary:linux: |
+      # TODO - Include hook for unzipping and adding to /usr/local/bin (also Windows support is needed)
+    _post:binary:windows: |
+      # TODO
     binary: https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.20.1/allure-commandline-2.20.1.zip
     brew: allure
     scoop: allure
@@ -141,10 +152,6 @@ softwarePackages:
     zypper: bat
   blockinfile:
     go: github.com/ProfessorManhattan/blockinfile@latest
-  brave:
-    brew: brave-browser
-    choco: brave
-    snap: brave
   bundler:
     gem: bundler
   bash-completion:
@@ -175,6 +182,8 @@ softwarePackages:
     brew: cfssl
     pacman: cfssl
   chrome:
+    _deps:
+      - chrome-gnome-shell
     apt: chromium
     brew: google-chrome
     choco: googlechrome
@@ -200,6 +209,8 @@ softwarePackages:
     pkg: consul
     yay: consul-bin
   container-structure-test:
+    _post:binary:linux: |
+      # TODO
     brew: container-structure-test
     binary:linux: https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
     yay: container-structure-test
@@ -228,6 +239,8 @@ softwarePackages:
     choco: dotnet
     yay: dotnet-sdk-bin
   dprint:
+    _post:binary:windows: |
+      # TODO
     brew: dprint
     binary:windows: https://github.com/dprint/dprint/releases/latest/download/dprint-x86_64-pc-windows-msvc-installer.exe
     cargo: dprint
@@ -267,19 +280,8 @@ softwarePackages:
     dnf: ffmpeg
     pacman: ffmpeg
     scoop: ffmpeg
-  filezilla:
-    apt: filezilla
-    choco: filezilla
-    dnf: filezilla
-    pacman: filezilla
   firebase:
     npm: firebase-tools
-  firefox:
-    apt: firefox
-    brew: firefox
-    choco: firefox
-    dnf: firefox
-    pacman: firefox
   flutter:
     brew: flutter
     choco: flutter
@@ -314,13 +316,6 @@ softwarePackages:
     apt: gdu
   gfi:
     npm: google-font-installer
-  gimp:
-    apt: gimp
-    brew: gimp
-    choco: gimp
-    dnf: gimp
-    pacman: gimp
-    snap: gimp
   git:
     apk: git
     apt: git
@@ -337,15 +332,6 @@ softwarePackages:
     scoop: git-lfs
   git-open:
     npm: git-open
-  gitkraken:
-    brew: gitkraken
-    choco: gitkraken
-    snap: gitkraken
-  gitleaks:
-    brew: gitleaks
-    dnf: gitleaks
-    pkg: gitleaks
-    yay: gitleaks
   gixy:
     pipx: gixy
   glen:
@@ -429,13 +415,6 @@ softwarePackages:
     brew: infracost
     choco: infracost
     yay: infracost
-  inkscape:
-    apt: inkscape
-    brew: inkscape
-    choco: inkscape
-    dnf: inkscape
-    pacman: inkscape
-    snap: inkscape
   intellij-idea-ce:
     brew: intellij-idea-ce
     choco: intellijidea-community
@@ -462,19 +441,10 @@ softwarePackages:
     npm: ipfs-deploy
   is-up:
     npm: is-up-cli
-  iterm2:
-    brew: iterm2
   jqp:
     brew: noahgorstein/tap/jqp
     port: jqp
     yay: jqp
-  keybase:
-    brew: keybase
-    choco: keybase
-    pacman:
-      - keybase
-      - keybase-gui
-    yay: keybase-bin
   kodi:
     apt: kodi
     brew: kodi
@@ -487,32 +457,11 @@ softwarePackages:
     go: github.com/jesseduffield/lazygit@latest
     pacman: lazygit
     scoop: lazygit
-  lens:
-    brew: lens
-    choco: lens
-    snap: kontena-lens
-    yay: lens
   libimobiledevice:
     brew:darwin: libimobiledevice
   localtunnel:
     brew: localtunnel
     npm: localtunnel
-  lollypop:
-    apt: lollypop
-    dnf: lollypop
-    pacman: lollypop
-    yay: lollypop-stable-git
-  mailspring:
-    brew: mailspring
-    choco: mailspring
-    snap: mailspring
-    yay: mailspring
-  microsoft-edge:
-    brew: microsoft-edge
-    choco: microsoft-edge
-    yay: microsoft-edge-stable-bin
-  microsoft-todo:
-    snap: microsoft-todo-unofficial
   mitmproxy:
     apt: mitmproxy
     brew: mitmproxy
@@ -608,12 +557,6 @@ softwarePackages:
     scoop:
       - clink
       - https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json
-  onionshare:
-    apt: onionshare
-    brew: onionshare
-    choco: onionshare
-    dnf: onionshare
-    snap: onionshare
   package-size:
     npm: package-size
   packer:
@@ -642,11 +585,6 @@ softwarePackages:
     winget: pandoc
   papertrail:
     gem: papertrail
-  peek:
-    apt: peek
-    dnf: peek
-    pacman: peek
-    yay: peek-git
   poetry:
     brew: poetry
     yay: python-poetry-git
@@ -658,7 +596,8 @@ softwarePackages:
   playwright:
     npm: playwright
   plex:
-    brew:
+    ansible: professormanhattan.plex
+    cask:
       - plex
       - plex-media-player
       - plex-media-server
@@ -711,21 +650,8 @@ softwarePackages:
     brew: pywhat
     pipx: pywhat
     port: pywhat
-  qbittorrent:
-    apt: qbittorrent
-    brew: qbittorrent
-    choco: qbittorrent
-    dnf: qbittorrent
-    pacman: qbittorrent
-    yay: qbittorrent-git
   ramda:
     npm: ramda-cli
-  raspberry-pi-imager:
-    brew: raspberry-pi-imager
-    choco: rpi-imager
-    dnf: rpi-imager
-    snap: rpi-imager
-    yay: rpi-imager
   rclone:
     apt: rclone
     brew: rclone
@@ -735,8 +661,6 @@ softwarePackages:
       - nssm
     dnf: rclone
     pacman: rclone
-  redis-desktop-manager:
-    snap: redis-desktop-manager
   remote-desktop:
     apt:
       - remmina
@@ -807,21 +731,17 @@ softwarePackages:
     npm: serverless
   share:
     npm: share-cli
-  sharex:
-    choco: sharex
   sharp:
     npm: sharp-cli
   shotcut:
+    _snapClassic: true
+    ansible: professormanhattan.shotcut
     apt: shotcut
-    brew: shotcut
+    cask: shotcut
     choco: shotcut
     dnf: shotcut
     flatpak: org.shotcut.Shotcut
     snap: shotcut
-  shotwell:
-    apt: shotwell
-    dnf: shotwell
-    pacman: shotwell
   sloth:
     cask: stats
   social-analyzer:
@@ -857,18 +777,11 @@ softwarePackages:
     npm: svgo
   t:
     gem: t
-  teams:
-    brew: microsoft-teams
-    choco: microsoft-teams
-    snap: teams-for-linux
-    yay: teams-for-linux
-  teamviewer:
-    brew: teamviewer
-    choco: teamviewer
-    yay: teamviewer
   terminalizer:
     npm: terminalizer
   termius:
+    _post:binary:windows: |
+      # TODO
     binary:windows: https://autoupdate.termius.com/windows/Termius.exe
     brew: termius
     pipx: termius
@@ -915,11 +828,6 @@ softwarePackages:
   visual-studio:
     brew: visual-studio
     choco: visualstudio2022community
-  vlc:
-    apt: vlc
-    brew: vlc
-    choco: vlc
-    snap: vlc
   volta:
     _post: |
       volta setup
@@ -948,14 +856,6 @@ softwarePackages:
     bpkg: rauchg/wifi-password
     brew: wifi-password
     npm: wifi-password-cli
-  wireshark:
-    apt: wireshark
-    brew: wireshark
-    choco: wireshark
-    dnf: wireshark
-    pacman:
-      - wireshark-cli
-      - wireshark-qt
   wordpressify:
     npm: wordpressify
   wrangler:
@@ -967,11 +867,6 @@ softwarePackages:
     pipx: youtube-dl
     port: youtube-dl
     brew: youtube-dl
-  zoom:
-    brew: zoom
-    choco: zoom
-    snap: zoom-client
-    yay: zoom
   zx:
     brew: zx
     npm: zx
@@ -1090,8 +985,11 @@ softwarePackages:
   dat-desktop:
     cask: dat
     github: github.com/datproject/dat-desktop
-  # @cli [dive](https://github.com/wagoodman/dive) - A tool for exploring each layer in a docker image
   dive:
+    _name: Dive
+    _homepage: https://github.com/wagoodman/dive
+    _description: A tool for exploring each layer in a docker image
+    _type: cli
     brew: dive
     github: github.com/wagoodman/dive
     go: github.com/wagoodman/dive@latest
@@ -1232,14 +1130,19 @@ softwarePackages:
   ghorg:
     github: github.com/gabrie30/ghorg
     yay: ghorg
-  # @application @menubar [Gitify](https://github.com/manosim/gitify) - GitHub notifications on the menu bar
   gitify:
+    _name: Gitify
+    _homepage: https://github.com/manosim/gitify
+    _description: GitHub notifications on the menu bar
+    _github: https://github.com/manosim/gitify
+    _type: menubar
     cask: gitify
     github: github.com/manosim/gitify
     yay: gitify-bin
   # @cli [gitleaks](https://github.com/zricethezav/gitleaks) - Extension to scan git repos (or files) for secrets using regex and entropy
   gitleaks:
     brew: gitleaks
+    dnf: gitleaks
     github: github.com/zricethezav/gitleaks
     pkg: gitleaks
     yay: gitleaks
@@ -1398,6 +1301,10 @@ softwarePackages:
     github: github.com/antonreshetov/massCode
   # @cli [mc](https://github.com/minio/mc) - MinIO Client is a replacement for ls, cp, mkdir, diff and rsync commands for filesystems and object storage
   mc:
+    _post:binary:linux: |
+      # TODO
+    _post:binary:windows: |
+      # TODO
     brew: minio/stable/mc
     binary:linux: https://dl.min.io/client/mc/release/linux-amd64/mc
     binary:windows: https://dl.min.io/client/mc/release/windows-amd64/mc.exe
@@ -1630,12 +1537,6 @@ softwarePackages:
     brew: timothyye/tap/skm
     github: github.com/TimothyYe/skm
     go: github.com/TimothyYe/skm/cmd/skm@latest
-  # @application [Skype](https://www.skype.com) - Skype is for connecting with the people that matter most in your life and work
-  skype:
-    cask: skype
-    choco: skype
-    snap: skype
-    yay: skypeforlinux-stable-bin
   # @application [Slack](https://slack.com/) - Transform the way that you work with one place for everyone and everything that you need to get things done
   slack:
     cask: slack
@@ -1815,11 +1716,6 @@ softwarePackages:
     cask: brave-browser
     choco: brave
     snap: brave
-  chrome:
-    _deps:
-      - chrome-gnome-shell
-    cask: google-chrome
-    choco: googlechrome
   chrome-gnome-shell:
     _when: |
       test -f /usr/bin/gnome-session
@@ -1834,8 +1730,8 @@ softwarePackages:
     pacman: filezilla
   firefox:
     ansible: professormanhattan.firefox
+    apt: firefox
     apt:debian: firefox-esr
-    apt:ubuntu: firefox
     cask: firefox
     choco: firefox
     dnf: firefox
@@ -1847,6 +1743,7 @@ softwarePackages:
     choco: gimp
     dnf: gimp
     pacman: gimp
+    snap: gimp
   # @cli [hyperfine](https://github.com/sharkdp/hyperfine) - A command-line benchmarking tool
   hyperfine:
     ansible: professormanhattan.hyperfine
@@ -1861,27 +1758,36 @@ softwarePackages:
     pkg: hyperfine
   gitkraken:
     _snapClassic: true
+    ansible: professormanhattan.gitkraken
     cask: gitkraken
     choco: gitkraken
     snap: gitkraken
   inkscape:
     ansible: professormanhattan.inkscape
-    cask: inkscape
+    apt: inkscape
+    brew: inkscape
     choco: inkscape
+    dnf: inkscape
+    pacman: inkscape
     snap: inkscape
   iterm2:
     ansible: professormanhattan.iterm2
     cask: iterm2
   keybase:
     ansible: professormanhattan.keybase
-    cask: keybase
+    brew: keybase
     choco: keybase
+    pacman:
+      - keybase
+      - keybase-gui
+    yay: keybase-bin
   lens:
     _snapClassic: true
     ansible: professormanhattan.lens
     cask: lens
     choco: lens
     snap: kontena-lens
+    yay: lens
   libreoffice:
     ansible: professormanhattan.office
     apt: libreoffice
@@ -1892,15 +1798,18 @@ softwarePackages:
     apt: lollypop
     dnf: lollypop
     pacman: lollypop
+    yay: lollypop-stable-git
   mailspring:
     ansible: professormanhattan.mailspring
     cask: mailspring
     choco: mailspring
     snap: mailspring
+    yay: mailspring
   microsoft-edge:
     ansible: professormanhattan.microsoftedge
     cask: microsoft-edge
     choco: microsoft-edge
+    yay: microsoft-edge-stable-bin
   microsoft-todo:
     ansible: professormanhattan.microsofttodo
     cask: ao
@@ -1910,8 +1819,10 @@ softwarePackages:
     cask: microsoft-office
   onionshare:
     ansible: professormanhattan.onionshare
+    apt: onionshare
     cask: onionshare
     choco: onionshare
+    dnf: onionshare
     snap: onionshare
   peek:
     _rpmFusion: true
@@ -1928,13 +1839,7 @@ softwarePackages:
       - gst-plugins-ugly
       - gifski
       - peek
-  plex:
-    ansible: professormanhattan.plex
-    cask: plex-media-player
-    choco:
-      - plex
-      - plexmediaplayer
-    snap: plexmediaserver
+    yay: peek-git
   qbittorrent:
     ansible: professormanhattan.qbittorrent
     apt: qbittorrent
@@ -1942,24 +1847,20 @@ softwarePackages:
     cask: qbittorrent
     choco: qbittorrent
     pacman: qbittorrent
+    yay: qbittorrent-git
   raspberry-pi-imager:
     ansible: professormanhattan.raspberryimager
     cask: raspberry-pi-imager
     choco: rpi-imager
+    dnf: rpi-imager
     snap: rpi-imager
+    yay: rpi-imager
   redis-desktop-manager:
     ansible: professormanhattan.rdm
     snap: redis-desktop-manager
   sharex:
     ansible: professormanhattan.sharex
     choco: sharex
-  shotcut:
-    _snapClassic: true
-    ansible: professormanhattan.shotcut
-    choco: shotcut
-    cask: shotcut
-    flatpak: org.shotcut.Shotcut
-    snap: shotcut
   shotwell:
     ansible: professormanhattan.shotwell
     apt: shotwell
@@ -1972,24 +1873,32 @@ softwarePackages:
     choco: tabby
     github: github.com/Eugeny/tabby
   skype:
+    _type: application
+    _name: Skype
+    _homepage: https://www.skype.com
+    _description: Skype is for connecting with the people that matter most in your life and work
     ansible: professormanhattan.skype
     cask: skype
     choco: skype
     snap: skype
+    yay: skypeforlinux-stable-bin
   teams:
     ansible: professormanhattan.teams
     cask: microsoft-teams
     choco: microsoft-teams
     snap: teams-for-linux
+    yay: teams-for-linux
   teamviewer:
     ansible: professormanhattan.teamviewer
     cask: teamviewer
     choco: teamviewer
+    yay: teamviewer
   visualstudio:
     ansible:windows: professormanhattan.visualstudio
     choco: visualstudio2019community
   vlc:
     ansible: professormanhattan.visualstudio
+    apt: vlc
     cask: vlc
     choco: vlc
     snap: vlc
@@ -2011,6 +1920,7 @@ softwarePackages:
     cask: zoom
     choco: zoom
     snap: zoom
+    yay: zoom
 
 softwarePlugins:
   dotnet:
