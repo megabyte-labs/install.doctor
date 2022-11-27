@@ -38,6 +38,9 @@
 #   flatpak: com.yubico.yubioath
 #   gem: altair
 #   go: github.com/ProfessorManhattan/blockinfile@latest
+#   krew:
+#     - ctx
+#     - ns
 #   nix: emplace
 #   npm: altair
 #   pacman: altair
@@ -836,6 +839,8 @@ softwarePackages:
     brew: volta
     scoop: volta
   vscode:
+    _snapClassic: true
+    ansible: professormanhattan.vscode
     brew: visual-studio-code
     choco: vscode
     snap: code
@@ -1264,10 +1269,90 @@ softwarePackages:
     brew: kn
     github: github.com/knative/client
     yay: knative-client-bin
+  kubectx:
+    _github: https://github.com/ahmetb/kubectx
+    apt: kubectx
+    brew: kubectx
+    choco:
+      - kubens
+      - kubectx
+    krew:
+      - ctx
+      - ns
+    pacman: kubectx
+    port: kubectx
   # @cli [kubenav](https://github.com/kubenav/kubenav) - kubenav is the navigator for your Kubernetes clusters right in your pocket
   kubenav:
     github: github.com/kubenav/kubenav
     yay: kubenav-bin
+  kubernetes-cli:
+    _snapClassic: true
+    brew: kubectl
+    choco: kubernetes-cli
+    snap: kubectl
+  kubernetes-helm:
+    _snapClassic: true
+    brew: helm
+    choco: kubernetes-helm
+    snap: helm
+  kubernetes-kompose:
+    brew: kompose
+    choco: kubernetes-kompose
+    snap: kompose
+  minikube:
+    _post: minikube config set driver virtualbox
+    brew: minikube
+    brew:darwin:
+      - hyperkit
+      - minikube
+    choco: minikube
+  kubeval:
+    _post:binary:darwin: |
+      tar xf kubeval-darwin-amd64.tar.gz
+      sudo cp kubeval /usr/local/bin
+    _post:binary:linux: |
+      tar xf kubeval-linux-amd64.tar.gz
+      sudo cp kubeval /usr/local/bin
+    _pre:scoop: scoop bucket add instrumenta https://github.com/instrumenta/scoop-instrumenta
+    binary:darwin: https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-darwin-amd64.tar.gz
+    binary:linux: https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
+    brew: instrumenta/instrumenta/kubeval
+    scoop: kubeval
+  kvm:
+    _post:apt: |
+      sudo adduser "$(id -un)" kvm
+      sudo adduser "$(id -un)" libvirt
+    _post:dnf: |
+      sudo adduser "$(id -un)" kvm
+      sudo adduser "$(id -un)" libvirt
+    _post:pacman: |
+      sudo adduser "$(id -un)" kvm
+      sudo adduser "$(id -un)" libvirt
+    apt:
+      - bridge-utils
+      - libvirt-clients
+      - libvirt-daemon-system
+      - qemu-kvm
+      - virt-manager
+      - virtinst
+    brew:
+      - libvirt
+      - qemu
+    dnf:
+      - bridge-utils
+      - libvirt
+      - qemu-kvm
+      - virt-install
+      - virt-manager
+      - virt-top
+      - virt-viewer
+    pacman:
+      - bridge-utils
+      - libvirt
+      - virt-manager
+  lepton:
+    cask: lepton
+    snap: lepton
   # @cli [license](https://github.com/nishanths/license) - Command-line license text generator
   license:
     go: github.com/nishanths/license@latest
@@ -1647,6 +1732,29 @@ softwarePackages:
     choco: velero
     github: github.com/vmware-tanzu/velero
     yay: velero-bin
+  virtualbox:
+    _pre:dnf: |
+      . /etc/os-release
+      cat <<EOF | sudo tee /etc/yum.repos.d/virtualbox.repo 
+      [virtualbox]
+      name=Fedora $releasever - $basearch - VirtualBox
+      baseurl=http://download.virtualbox.org/virtualbox/rpm/$ID/$VERSION_ID/\$basearch
+      enabled=1
+      gpgcheck=1
+      repo_gpgcheck=1
+      gpgkey=https://www.virtualbox.org/download/oracle_vbox.asc
+      EOF
+      sudo dnf -y install @development-tools
+      sudo dnf -y install kernel-headers kernel-devel dkms elfutils-libelf-devel qt5-qtx11extras
+    _post:choco: |
+      # TODO
+      cd C:/Program Files/Oracle/VirtualBox/
+      # TODOFigure out how to get version without Ansible here and download / install the extpack
+      wget https://download.virtualbox.org/virtualbox/' + vbox_version + '/Oracle_VM_VirtualBox_Extension_Pack-' + vbox_version + '.vbox-extpack'
+      echo y | VBoxManage extpack install --replace ./Oracle_VM_VirtualBox_Extension_Pack.vbox-extpack
+    ansible: professormanhattan.virtualbox
+    choco: virtualbox
+    dnf: virtualbox-7.0
   # @cli [waypoint](https://github.com/hashicorp/waypoint) - A tool to build, deploy, and release any application on any platform
   waypoint:
     brew: hashicorp/tap/waypoint
@@ -1873,6 +1981,10 @@ softwarePackages:
     cask: tabby
     choco: tabby
     github: github.com/Eugeny/tabby
+  timeshift:
+    apt: timeshift
+    dnf: timeshift
+    yay: timeshift
   skype:
     _type: application
     _name: Skype
@@ -1922,11 +2034,32 @@ softwarePackages:
     choco: zoom
     snap: zoom
     yay: zoom
+  qlplugins:
+    cask:
+      - provisionql
+      - qlcolorcode
+      - qlimagesize
+      - qlmarkdown
+      - qlstephen
+      - qlvideo
+      - quicklook-json
+      - quicklookapk
+      - webpquicklook
 
 softwarePlugins:
   dotnet:
+    cmd: # TODO
     plugins:
       - Microsoft.CST.AttackSurfaceAnalyzer.CLI
+  gh:
+    cmd: |
+      if [ -n "$GITHUB_TOKEN" ] && ! gh extension list | grep {PLUGIN}; then
+        gh extension install {PLUGIN}
+      fi
+    plugins:
+      - dlvhdr/gh-dash
+      - github/gh-net
+      - mislav/gh-cp
   helm:
     plugins:
       - https://github.com/databus23/helm-diff
@@ -1948,22 +2081,11 @@ softwarePlugins:
       - tunnel
       - view-allocations
       - who-can
-  quicklook:
-    plugins:
-      - plugin: apparency
-        corporate: false
-      - provisionql
-      - qlcolorcode
-      - qlimagesize
-      - qlmarkdown
-      - qlstephen
-      - qlvideo
-      - quicklook-json
-      - quicklookapk
-      - plugin: suspicious-package
-        corporate: false
-      - webpquicklook
   vagrant:
+    cmd: |
+      if ! vagrant plugin list | grep {PLUGIN}; then
+        vagrant plugin install {PLUGIN}
+      fi
     plugins:
       - vagrant-bindfs
       - vagrant-digitalocean
@@ -1974,6 +2096,7 @@ softwarePlugins:
       - vagrant-vmware-desktop
       - vagrant-vbguest
   vim:
+    cmd: 
     plugins:
       - https://github.com/dense-analysis/ale.git
       - https://github.com/pearofducks/ansible-vim.git
@@ -2003,7 +2126,11 @@ softwarePlugins:
       - https://github.com/nanotee/zoxide.vim.git
   # wget https://gitlab.com/megabyte-labs/gas-station/-/raw/master/environments/prod/group_vars/desktop/vscode-extensions.yml
   # yq e '.vscode_extensions[].name' vscode-extensions.yml
-  visualStudioCode:
+  vscode:
+    cmd: |
+      if test -n "$(find ~/.vscode/extensions -mindepth 1 -maxdepth 1 -type d -name "$(echo {PLUGIN} | tr "[:upper:]" "[:lower:]")*" -print -quit)"; then
+        code --install-extension "$(echo {PLUGIN} | tr "[:upper:]" "[:lower:]")"
+      fi
     plugins:
       - Angular.ng-template
       - attilabuti.vscode-mjml

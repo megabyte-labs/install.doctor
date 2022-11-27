@@ -164,6 +164,7 @@ async function beforeInstall(packageManager) {
     elif [ "$PACKAGE_MANAGER" = 'apk' ]; then
     elif [ "$PACKAGE_MANAGER" = 'apt' ]; then
       sudo apt-get update
+    elif [ "$PACKAGE_MANAGER" = 'ansible' ]; then
     elif [ "$PACKAGE_MANAGER" = 'basher' ]; then
     elif [ "$PACKAGE_MANAGER" = 'binary' ]; then
     elif [ "$PACKAGE_MANAGER" = 'bpkg' ]; then
@@ -179,6 +180,8 @@ async function beforeInstall(packageManager) {
     elif [ "$PACKAGE_MANAGER" = 'nix' ]; then
     elif [ "$PACKAGE_MANAGER" = 'npm' ]; then
     elif [ "$PACKAGE_MANAGER" = 'pacman' ]; then
+      sudo pacman -Syu
+    elif [ "$PACKAGE_MANAGER" = 'pipx' ]; then
     elif [ "$PACKAGE_MANAGER" = 'pkg' ]; then
     elif [ "$PACKAGE_MANAGER" = 'port' ]; then
     elif [ "$PACKAGE_MANAGER" = 'scoop' ]; then
@@ -191,36 +194,32 @@ async function beforeInstall(packageManager) {
   `
 }
 
+let packageManagerInstalled = {}
 ### Ensure the package manager is available
 async function ensurePackageManager(packageManager) {
+  if(packageManagerInstalled[packageManager]) {
+    return
+  } else {
+    packageManagerInstalled[packageManager] = true
+  }
   const PACKAGE_MANAGER = packageManager
+  if(packageManager === 'ansible') {
+    await ensurePackageManager('pipx')
+  }
+  if(packageManager === 'gem' || packageManager === 'go' || packageManager === 'npm' || packageManager === 'pipx' || packageManager === 'whalebrew') {
+    await ensurePackageManager('brew')
+  }
   await $`
-    ### Ensures Homebrew is installed
-    ensurePackageManagerHomebrew() {
-      if ! command -v brew > /dev/null; then
-        if command -v sudo > /dev/null && sudo -n true; then
-          echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        else
-          logg info 'Homebrew is not installed. Password may be required.'
-          bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
-          if [ -n "$BREW_EXIT_CODE" ]; then
-            if command -v brew > /dev/null; then
-              logg warn 'Homebrew was installed but part of the installation failed. Attempting to fix..'
-              BREW_DIRS="share/man share/doc share/zsh/site-functions etc/bash_completion.d"
-              for BREW_DIR in $BREW_DIRS; do
-                if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
-                  sudo chown -R "$(whoami)" "$(brew --prefix)/$BREW_DIR"
-                fi
-              done
-              brew update --force --quiet
-            fi
-          fi
-        fi
-      fi
-    }
-
     if [ "$PACKAGE_MANAGER" = 'appimage' ]; then
       # Do nothing
+    elif [ "$PACKAGE_MANAGER" = 'ansible' ]; then
+      if [ ! -f "$HOME/.cache/megabytelabs/ansible-installed" ] || ! command -v ansible > /dev/null; then
+        pipx install ansible
+        pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
+        touch "$HOME/.cache/megabytelabs/ansible-installed"
+      else
+        logg '`ansible` and its supporting packages appear to be installed'
+      fi
     elif [ "$PACKAGE_MANAGER" = 'apk' ]; then
       if command -v apk > /dev/null; then
         logg '`apk` is available'
@@ -251,7 +250,26 @@ async function ensurePackageManager(packageManager) {
       if command -v brew > /dev/null; then
         logg '`brew` is available'
       else
-        ensurePackageManagerHomebrew
+        if ! command -v brew > /dev/null; then
+          if command -v sudo > /dev/null && sudo -n true; then
+            echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          else
+            logg info 'Homebrew is not installed. Password may be required.'
+            bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+            if [ -n "$BREW_EXIT_CODE" ]; then
+              if command -v brew > /dev/null; then
+                logg warn 'Homebrew was installed but part of the installation failed. Attempting to fix..'
+                BREW_DIRS="share/man share/doc share/zsh/site-functions etc/bash_completion.d"
+                for BREW_DIR in $BREW_DIRS; do
+                  if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
+                    sudo chown -R "$(whoami)" "$(brew --prefix)/$BREW_DIR"
+                  fi
+                done
+                brew update --force --quiet
+              fi
+            fi
+          fi
+        fi
       fi
     elif [ "$PACKAGE_MANAGER" = 'cargo' ]; then
       if command -v cargo > /dev/null; then
@@ -285,13 +303,34 @@ async function ensurePackageManager(packageManager) {
       if command -v flatpak > /dev/null; then
         logg '`flatpak` is available'
       else
-        ensurePackageManagerHomebrew
+        if command -v apk > /dev/null; then
+          sudo apk add flatpak
+        elif command -v apt > /dev/null; then
+          sudo apt install -y flatpak
+          if [ -f /usr/bin/gnome-shell ]; then
+            sudo apt install -y gnome-software-plugin-flatpak
+          fi
+          if [ -f /usr/bin/plasmashell ]; then
+            sudo apt install -y plasmashell
+          fi
+        elif command -v dnf > /dev/null; then
+          sudo dnf install -y flatpak
+        elif command -v yum > /dev/null; then
+          sudo yum install -y flatpak
+        elif command -v pacman > /dev/null; then
+          sudo pacman -S flatpak
+        elif command -v xbps-install > /dev/null; then
+          sudo xbps-install -S flatpak
+        elif command -v zypper > /dev/null; then
+          sudo zypper install -y flatpak
+        fi
+        flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+        logg warn '`flatpak` may require a reboot to work properly'
       fi
     elif [ "$PACKAGE_MANAGER" = 'gem' ]; then
       if command -v gem > /dev/null; then
         logg '`gem` is available'
       else
-        ensurePackageManagerHomebrew
         # TODO - is this enough to make `gem install` available?
         brew install ruby
       fi
@@ -299,7 +338,6 @@ async function ensurePackageManager(packageManager) {
       if command -v go > /dev/null; then
         logg '`go` is available'
       else
-        ensurePackageManagerHomebrew
         brew install go
       fi
     elif [ "$PACKAGE_MANAGER" = 'nix' ]; then
@@ -317,7 +355,6 @@ async function ensurePackageManager(packageManager) {
         logg '`volta`, `npm`, and `node` are all available'
       else
         if ! command -v volta > /dev/null; then
-          ensurePackageManagerHomebrew
           if ! command -v volta > /dev/null; then
             logg 'Installing `volta` via `brew`'
             brew install volta
@@ -335,6 +372,13 @@ async function ensurePackageManager(packageManager) {
         logg '`pacman` is available'
       else
         logg '`pacman` is not installed' && exit 106
+      fi
+    elif [ "$PACKAGE_MANAGER" = 'pipx' ]; then
+      if command -v pipx > /dev/null; then
+        logg '`pipx` is available'
+      else
+        brew install pipx
+        pipx ensurepath
       fi
     elif [ "$PACKAGE_MANAGER" = 'pkg' ]; then
       if command -v pkg > /dev/null; then
@@ -405,7 +449,6 @@ async function ensurePackageManager(packageManager) {
       if command -v whalebrew > /dev/null; then
         logg '`whalebrew` is available'
       else
-        ensurePackageManagerHomebrew
         logg 'Installing `whalebrew` via `brew`'
         brew install whalebrew
       fi
@@ -448,6 +491,7 @@ async function installPackageList(packageManager, packages) {
       sudo apk add ${PACKAGES}
     elif [ "$PACKAGE_MANAGER" = 'apt' ]; then
       sudo apt-get install -y ${PACKAGES}
+    elif [ "$PACKAGE_MANAGER" = 'ansible' ]; then
     elif [ "$PACKAGE_MANAGER" = 'basher' ]; then
     elif [ "$PACKAGE_MANAGER" = 'binary' ]; then
     elif [ "$PACKAGE_MANAGER" = 'bpkg' ]; then
@@ -479,6 +523,7 @@ async function installPackageList(packageManager, packages) {
       volta install ${PACKAGES}
     elif [ "$PACKAGE_MANAGER" = 'pacman' ]; then
       sudo pacman -Sy --noconfirm --needed ${PACKAGES}
+    elif [ "$PACKAGE_MANAGER" = 'pipx' ]; then
     elif [ "$PACKAGE_MANAGER" = 'pkg' ]; then
       # TODO
     elif [ "$PACKAGE_MANAGER" = 'port' ]; then

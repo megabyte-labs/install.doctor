@@ -17,6 +17,20 @@
     url = "https://gitlab.com/megabyte-labs/misc/betelgeuse.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
+[".local/src/yoru"]
+    type = "git-repo"
+    url = "https://github.com/rxyhn/yoru.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/src/dracula"]
+    type = "git-repo"
+    url = "https://github.com/dracula/dracula-theme.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
 ### Shell
 [".config/desktop/gnome.yml"]
@@ -93,6 +107,20 @@
     url = "https://gitlab.com/megabyte-labs/gas-station.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
+[".local/src/ansible-qubes"]
+    type = "git-repo"
+    url = "https://github.com/ProfessorManhattan/ansible-qubes.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/share/ansible/plugins/callback/beautiful_output.py"]
+    type = "file"
+    url = "https://github.com/Townk/ansible-beautiful-output/raw/master/callback_plugins/beautiful_output.py"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/share/ansible/plugins/callback/bitwarden.py"]
+    type = "file"
+    url = "https://github.com/ProfessorManhattan/ansible-modules-bitwarden/raw/master/lookup_plugins/bitwarden.py"
+    refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Packer
 [".local/src/packer/archlinux"]

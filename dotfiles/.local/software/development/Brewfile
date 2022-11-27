@@ -166,20 +166,3 @@ cask "wireshark"
 # Pandoc optional dependency
 cask "basictex"
 
-# Examples below
-# 'brew install --with-rmtp', 'brew services restart' on version changes
-# brew "denji/nginx/nginx-full", args: ["with-rmtp"], restart_service: :changed
-# 'brew install', always 'brew services restart', 'brew link', 'brew unlink mysql' (if it is installed)
-# brew "mysql@5.6", restart_service: true, link: true, conflicts_with: ["mysql"]
-# 'brew install --cask'
-# cask "google-chrome"
-# 'brew install --cask --appdir=~/my-apps/Applications'
-# cask "firefox", args: { appdir: "~/my-apps/Applications" }
-# always upgrade auto-updated or unversioned cask to latest version even if already installed
-# cask "opera", greedy: true
-# 'brew install --cask' only if '/usr/libexec/java_home --failfast' fails
-# cask "java" unless system "/usr/libexec/java_home --failfast"
-# 'mas install'
-# mas "1Password", id: 443987910
-# 'whalebrew install'
-# whalebrew "whalebrew/wget"

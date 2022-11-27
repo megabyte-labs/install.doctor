@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+{{ $roleDirs := (output "find" (joinPath .chezmoi.homeDir ".local" "src" "gas-station" "roles") "-mindepth" "2" "-maxdepth" "2" "-type" "d") -}}
+{{- range $roleDir := splitList "\n" $roleDirs -}}
+{{- if ne $roleDir "" -}}
+# {{ $roleDir }}
+{{ end -}}
+{{- end }}
+
+find "$HOME/.local/src/gas-station/roles" -mindepth 2 -maxdepth 2 -type d | while read ROLE_PATH; do
+  ROLE_FOLDER="professormanhattan.$(echo "$ROLE_PATH" | sed 's/.*\/\([^\/]*\)$/\1/')"
+  ln -s "$ROLE_PATH" "$XDG_DATA_HOME/ansible/roles/$ROLE_FOLDER"
+fi
