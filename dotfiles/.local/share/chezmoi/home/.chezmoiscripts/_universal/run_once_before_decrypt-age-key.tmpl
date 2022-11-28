@@ -1,0 +1,9 @@
+#!/bin/sh
+
+XDG_CONFIG_HOME="$HOME/.config"
+
+if [ ! -f "${XDG_CONFIG_HOME}/age/chezmoi.txt" ]; then
+  mkdir -p "${XDG_CONFIG_HOME}/age"
+  age --decrypt --output "${XDG_CONFIG_HOME}/age/chezmoi.txt" "{{ .chezmoi.sourceDir }}/chezmoi.txt.age"
+  chmod 600 "${XDG_CONFIG_HOME}/age/chezmoi.txt"
+fi
