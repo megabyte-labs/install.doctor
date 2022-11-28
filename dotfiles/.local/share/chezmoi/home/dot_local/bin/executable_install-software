@@ -4,7 +4,7 @@ const execSync = require('child_process').execSync
 
 $.log = (entry) => {
   if (entry.kind === 'cmd' && entry.cmd.substring(0, 4) === 'logg') {
-    return
+    //execSync(entry.cmd, {stdio: 'inherit', shell: true})
   } else {
     log(entry)
   }
@@ -37,8 +37,9 @@ async function downloadInstallData() {
 async function generateInstallOrders() {
   const packagesToInstall = process.argv.slice(3);
   const installerPreference = await OSTypeInstallerKey()
+  await $`logg info 'Installer preference category detected as ${installerPreference}'`
   const preferenceOrder = installData.installerPreference[installerPreference];
-  await $`logg 'Preference order acquired:'`
+  await $`logg info 'Preference order acquired:'`
   console.log(preferenceOrder)
   const softwarePackages = installData.softwarePackages;
   for (let pkg of packagesToInstall) {
@@ -96,7 +97,7 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
   if (!installOrders[preference]) {
     installOrders[preference] = [];
   }
-  await $`logg 'Found a match for the package \`${pkg}\` (${packageKey} via ${scopedPreference})'`
+  await $`logg info 'Found a match for the package \`${pkg}\` (${packageKey} via ${scopedPreference})'`
   const newPackages = packages[scopedPreference];
   installOrders[preference] = installOrders[preference].concat(
     typeof newPackages === "string" ? [newPackages] : newPackages
@@ -177,7 +178,7 @@ async function releaseID() {
 async function afterInstall(packageManager) {
   if (packageManager === 'appimage') {
   } else if (packageManager === 'ansible') {
-    await $`logg 'Ensuring temporary passwordless sudo privileges used by Ansible are removed'`
+    await $`logg info 'Ensuring temporary passwordless sudo privileges used by Ansible are removed'`
     await $`sudo sed -i '/# TEMPORARY FOR ANSIBLE INSTALL/d' /etc/sudoers`
   } else if (packageManager === 'apk') {
   } else if (packageManager === 'apt') {
@@ -213,7 +214,7 @@ async function afterInstall(packageManager) {
 async function beforeInstall(packageManager) {
   if (packageManager === 'appimage') {
   } else if (packageManager === 'ansible') {
-    await $`logg 'Temporarily enabling passwordless sudo for Ansible role installations'`
+    await $`logg info 'Temporarily enabling passwordless sudo for Ansible role installations'`
     await $`sudo echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR ANSIBLE INSTALL" > /etc/sudoers`
   } else if (packageManager === 'apk') {
   } else if (packageManager === 'apt') {
@@ -250,7 +251,7 @@ async function beforeInstall(packageManager) {
 async function ensureInstalled(bin, callback) {
   const installed = which.sync(bin, { nothrow: true })
   if (installed) {
-    await $`logg '\`${bin}\` is available'`
+    await $`logg info '\`${bin}\` is available'`
   } else {
     await $`logg warn '\`${bin}\` is not installed!'`
     if (callback) {
@@ -264,7 +265,7 @@ async function ensureInstalled(bin, callback) {
 // Ensure the package manager is available
 let packageManagerInstalled = {};
 async function ensurePackageManager(packageManager) {
-  await $`logg 'Ensuring \`${packageManager}\` is set up'`
+  await $`logg info 'Ensuring \`${packageManager}\` is set up'`
   if (packageManagerInstalled[packageManager]) {
     return;
   } else {
@@ -290,7 +291,7 @@ async function ensurePackageManager(packageManager) {
         pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
         touch "$HOME/.cache/megabytelabs/ansible-installed"
       else
-        logg '\`ansible\` and its supporting packages appear to be installed'
+        logg info '\`ansible\` and its supporting packages appear to be installed'
       fi
     `
   } else if (packageManager === 'apk') {
@@ -347,16 +348,16 @@ async function ensurePackageManager(packageManager) {
     const dnf = which.sync('dnf', { nothrow: true })
     const yum = which.sync('yum', { nothrow: true })
     if (dnf) {
-      await $`logg '\`dnf\` is available'`
+      await $`logg info '\`dnf\` is available'`
     } else if (yum) {
-      await $`logg '\`yum\` is available'`
+      await $`logg info '\`yum\` is available'`
     } else {
       await $`logg error 'Both \`dnf\` and \`yum\` are not available'`
     }
   } else if (packageManager === 'flatpak') {
     const flatpak = which.sync('flatpak', { nothrow: true })
     if (flatpak) {
-      await $`logg '\`flatpak\` is available'`
+      await $`logg info '\`flatpak\` is available'`
     } else {
       const apk = which.sync('apk', { nothrow: true })
       const apt = which.sync('apt', { nothrow: true })
@@ -391,7 +392,7 @@ async function ensurePackageManager(packageManager) {
       } else {
         await $`logg error '\`flatpak\` failed to install!'`
       }
-      await $`logg '\`flatpak\` was installed. It may require a reboot to function correctly.'`
+      await $`logg info '\`flatpak\` was installed. It may require a reboot to function correctly.'`
     }
   } else if (packageManager === 'gem') {
     await ensureInstalled('gem', `brew install ruby`)
@@ -410,7 +411,7 @@ async function ensurePackageManager(packageManager) {
     const node = which('node', { nothrow: true })
     const volta = which('volta', { nothrow: true })
     if (npm && node && volta) {
-      await $`logg '\`npm\`, \`node\`, and \`volta\` are available'`
+      await $`logg info '\`npm\`, \`node\`, and \`volta\` are available'`
     } else {
       if (!volta) {
         await $`brew install volta`
@@ -597,32 +598,32 @@ async function installPackageList(packageManager, packages) {
     }
   } catch (e) {
     await $`logg error 'Failed to install via \`${packageManager}\`'`
-    await $`logg 'Proceeding with the installation..'`
+    await $`logg info 'Proceeding with the installation..'`
   }
 }
 
 // main process
 async function main() {
-  await $`logg 'Fetching the latest version of the installation map'`
+  await $`logg info 'Fetching the latest version of the installation map'`
   installData = await downloadInstallData();
-  await $`logg 'Calculating the install orders'`
+  await $`logg info 'Calculating the install orders'`
   await generateInstallOrders();
-  await $`logg 'Ensuring any package managers that will be used are installed / configured'`
+  await $`logg info 'Ensuring any package managers that will be used are installed / configured'`
   const packageManagers = Object.keys(installOrders);
   for (const packageManager of packageManagers) {
     await ensurePackageManager(packageManager);
   }
-  await $`logg 'The install orders were generated:'`
+  await $`logg info 'The install orders were generated:'`
   console.log(installOrders)
-  await $`logg 'Running package manager pre-installation steps'`
+  await $`logg info 'Running package manager pre-installation steps'`
   for (const packageManager of packageManagers) {
     await beforeInstall(packageManager);
   }
-  await $`logg 'Running package-specific pre-installation steps'`
+  await $`logg info 'Running package-specific pre-installation steps'`
   for (const script of installOrdersPre) {
     await $`${script}`;
   }
-  await $`logg 'Installing the packages'`
+  await $`logg info 'Installing the packages'`
   for (const packageManager of packageManagers) {
     const asyncOrders = [];
     asyncOrders.push(
@@ -632,11 +633,11 @@ async function main() {
     );
     await Promise.all(asyncOrders);
   }
-  await $`logg 'Running package-specific post-installation steps'`
+  await $`logg info 'Running package-specific post-installation steps'`
   for (const script of installOrdersPost) {
     await $`${script}`;
   }
-  await $`logg 'Running package manager post-installation steps'`
+  await $`logg info 'Running package manager post-installation steps'`
   for (const packageManager of packageManagers) {
     await afterInstall(packageManager);
   }
