@@ -9,7 +9,7 @@ if command -v install-software > /dev/null; then
   if command -v zx > /dev/null; then
     logg 'Installing packages defined in .chezmoidata.yaml under the .softwareGroups key'
     logg 'Installing: {{ index .softwareGroups .host.softwareGroup | join " " }}'
-    zx install-software {{ index .softwareGroups .host.softwareGroup | join " " }}
+    install-software {{ index .softwareGroups .host.softwareGroup | join " " }}
   else
     logg error '`zx` is not available'
   fi
