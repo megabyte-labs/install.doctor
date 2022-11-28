@@ -403,5 +403,7 @@ elif [ -n "$1" ]; then
   # Public functions that can run with only one argument passed to .config/log (i.e. `.config/log password`)
   if [ "$1" == 'write' ] || [ "$1" == 'password' ] || [ "$1" == 'confirm' ] || [ "$1" == 'input' ]; then
     "$1"
+  else
+    info "$1"
   fi
 fi
