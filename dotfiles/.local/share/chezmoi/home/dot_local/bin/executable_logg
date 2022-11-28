@@ -148,13 +148,13 @@ logger() {
   elif [ "$1" == 'prompt' ]; then
     "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00008b" "▶") $("$GUM_PATH" style --bold "$(format "$2")")"
   elif [ "$1" == 'star' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --underline "$(format "$2")")"
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold "$(format "$2")")"
   elif [ "$1" == 'start' ]; then
     "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$2")")"
   elif [ "$1" == 'success' ]; then
     "$GUM_PATH" style "$("$GUM_PATH" style --foreground="#00ff00" "✔")  $("$GUM_PATH" style --bold "$(format "$2")")"
   elif [ "$1" == 'warn' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --background="#ffff00" --foreground="#000000"  " WARNING ") $("$GUM_PATH" style --bold --italic "$(format "$2")")"
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --background="#ffff00" --foreground="#000000"  " WARNING ") $("$GUM_PATH" style --bold "$(format "$2")")"
   else
     "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$2")")"
   fi
@@ -164,10 +164,12 @@ format() {
   # shellcheck disable=SC2001,SC2016
   ANSI_STR_FORMATTED="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`.*/\1\\u001b[47;30m \2 \\e[49;m/')"
   ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`\(.*\)$/\3/')"
-  if [[ $ANSI_STR == *'`'*'`'* ]]; then
-    ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$(format "$("$GUM_PATH" style --bold "$ANSI_STR")")"
-  else
-    ANSI_STR_FORMATTED="$("$GUM_PATH" style --bold "$ANSI_STR")"
+  if [ "$ANSI_STR_FORMATTED" != "$ANSI_STR" ]; then
+    if [[ $ANSI_STR == *'`'*'`'* ]]; then
+      ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$(format "$("$GUM_PATH" style --bold "$ANSI_STR")")"
+    else
+      ANSI_STR_FORMATTED="$("$GUM_PATH" style --bold "$ANSI_STR")"
+    fi
   fi
   echo -e "$ANSI_STR_FORMATTED"
 }
@@ -176,10 +178,12 @@ formatFaint() {
   # shellcheck disable=SC2001,SC2016
   ANSI_STR_FORMATTED="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`.*/\1\\u001b[47;30m \2 \\e[49;m/')"
   ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`\(.*\)$/\3/')"
-  if [[ $ANSI_STR == *'`'*'`'* ]]; then
-    ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$(formatFaint "$("$GUM_PATH" style --faint "$ANSI_STR")")"
-  else
-    ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$("$GUM_PATH" style --faint "$ANSI_STR")"
+  if [ "$ANSI_STR_FORMATTED" != "$ANSI_STR" ]; then
+    if [[ $ANSI_STR == *'`'*'`'* ]]; then
+      ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$(formatFaint "$("$GUM_PATH" style --faint "$ANSI_STR")")"
+    else
+      ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$("$GUM_PATH" style --faint "$ANSI_STR")"
+    fi
   fi
   echo -e "$ANSI_STR_FORMATTED"
 }

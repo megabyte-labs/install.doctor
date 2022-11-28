@@ -116,57 +116,6 @@ formatFaint() {
 # @description Logs using Node.js
 # @example logger info "An informative log"
 logg() {
-  if echo "$0" | grep -Eq "log.$"; then
-    TYPE="$1"
-    MSG="$2"
-  else
-    TYPE="$0"
-    MSG="$1"
-  fi
-  if [ "$TYPE" == 'error' ]; then
-    "$GUM_PATH" style --border="thick" "$("$GUM_PATH" style --foreground="#ff0000" "✖") $("$GUM_PATH" style --bold --background="#ff0000" --foreground="#ffffff"  " ERROR ") $("$GUM_PATH" style --bold "$(format "$MSG")")"
-  elif [ "$TYPE" == 'info' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ffff" "○") $MSG"
-  elif [ "$TYPE" == 'md' ]; then
-    # @description Ensure glow is installed
-    if [ "${container:=}" != 'docker' ]; then
-      if type glow &> /dev/null; then
-        GLOW_PATH="$(which glow)"
-      elif [ -f "$HOME/.local/bin/glow" ]; then
-        GLOW_PATH="$HOME/.local/bin/glow"
-      elif [ -f "$(dirname "${BASH_SOURCE[0]}")/glow" ]; then
-        GLOW_PATH="$(dirname "${BASH_SOURCE[0]}")/glow"
-      elif type brew &> /dev/null; then
-        brew install glow
-        GLOW_PATH="$(which glow)"
-      else
-        installGlow
-      fi
-
-      if [ -n "$GLOW_PATH" ]; then
-        chmod +x "$GLOW_PATH"
-        ENHANCED_LOGGING=true
-      fi
-    fi
-    "$GLOW_PATH" "$MSG"
-  elif [ "$TYPE" == 'prompt' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00008b" "▶") $("$GUM_PATH" style --bold "$(format "$MSG")")"
-  elif [ "$TYPE" == 'star' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --underline "$(format "$MSG")")"
-  elif [ "$TYPE" == 'start' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$MSG")")"
-  elif [ "$TYPE" == 'success' ]; then
-    "$GUM_PATH" style "$("$GUM_PATH" style --foreground="#00ff00" "✔")  $("$GUM_PATH" style --bold "$(format "$MSG")")"
-  elif [ "$TYPE" == 'warn' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --background="#ffff00" --foreground="#000000"  " WARNING ") $("$GUM_PATH" style --bold --italic "$(format "$MSG")")"
-  else
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$MSG")")"
-  fi
-}
-
-# @description Logs using Node.js
-# @example logger info "An informative log"
-logg() {
   TYPE="$1"
   MSG="$2"
   if [ "$TYPE" == 'error' ]; then
@@ -198,13 +147,13 @@ logg() {
   elif [ "$TYPE" == 'prompt' ]; then
     "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00008b" "▶") $("$GUM_PATH" style --bold "$(format "$MSG")")"
   elif [ "$TYPE" == 'star' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --underline "$(format "$MSG")")"
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold "$(format "$MSG")")"
   elif [ "$TYPE" == 'start' ]; then
     "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$MSG")")"
   elif [ "$TYPE" == 'success' ]; then
     "$GUM_PATH" style "$("$GUM_PATH" style --foreground="#00ff00" "✔")  $("$GUM_PATH" style --bold "$(format "$MSG")")"
   elif [ "$TYPE" == 'warn' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --background="#ffff00" --foreground="#000000"  " WARNING ") $("$GUM_PATH" style --bold --italic "$(format "$MSG")")"
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --background="#ffff00" --foreground="#000000"  " WARNING ") $("$GUM_PATH" style --bold "$(format "$MSG")")"
   else
     "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$TYPE")")"
   fi
