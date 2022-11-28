@@ -154,8 +154,6 @@ softwarePackages:
     port: bat
     scoop: bat
     zypper: bat
-  blockinfile:
-    go: github.com/ProfessorManhattan/blockinfile@latest
   bundler:
     gem: bundler
   bash-completion:
@@ -735,6 +733,11 @@ softwarePackages:
     npm: share-cli
   sharp:
     npm: sharp-cli
+  skate:
+    brew: charmbracelet/tap/skate
+    go: github.com/charmbracelet/skate@latest
+    nix: nixpkgs.skate
+    pacman: skate
   shotcut:
     _snapClassic: true
     ansible: professormanhattan.shotcut

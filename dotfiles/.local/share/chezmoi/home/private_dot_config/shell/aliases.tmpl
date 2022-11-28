@@ -114,6 +114,11 @@ if ! command -v pip > /dev/null; then
   alias pip='pip3'
 fi
 
+# Masked sudo password entry
+if command -v gum > /dev/null; then
+  alias please="gum input --password | sudo -nS"
+fi
+
 # Show open ports
 alias ports='sudo netstat -tulanp'
 

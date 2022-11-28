@@ -1,12 +1,12 @@
-{{- $name := "Megabyte Labs" -}}
-{{- $email := "noreply@megabyte.space" -}}
+{{- $name := "Brian Zalewski" -}}
+{{- $email := "brian@megabyte.space" -}}
 {{- $restricted := false -}}
 {{- $work := false -}}
 {{- $gpgKeyId := "0xF0A300E4199A1C33" -}}
-{{- $gmailAddress := "noreply@gmail.com" -}}
+{{- $gmailAddress := "blzalewski@gmail.com" -}}
 {{- $gmailAddressAppPassword := "" -}}
 {{- $domain := "megabyte.space" -}}
-{{- $cloudflareUsername := "" -}}
+{{- $cloudflareUsername := "brian@megabyte.space" -}}
 {{- $cloudflareToken := "" -}}
 {{- $cloudflareAccessKeyId := "" -}}
 {{- $cloudflareSecretAccessKey := "" -}}
@@ -19,7 +19,7 @@
 {{- $slackApiToken := "" -}}
 {{- $tabbyConfigId := "" -}}
 {{- $tabbySyncToken := "" -}}
-{{- $timezone := "" -}}
+{{- $timezone := "America/New_York" -}}
 {{- $toolchains := list "docker" "iac" "java" "kubernetes" "node" "python" "rust" "extra" "gpg" -}}
 
 {{- $data := . }}
@@ -102,11 +102,10 @@
 {{- $gpgKeyId = promptStringOnce $data.user "gpgKeyId" "Public GPG key ID" $gpgKeyId -}}
 {{- $domain = promptStringOnce $data.user "domain" "Domain" $domain -}}
 {{- $timezone = promptStringOnce $data.user "timezone" "Timezone" $timezone -}}
-{{- $cloudflareUsername = promptStringOnce $data.user "cloudflareUsername" "CloudFlare E-Mail" $email -}}
 {{- $cloudflareToken = promptStringOnce $data.user "cloudflareToken" "CloudFlare API Token" $cloudflareToken -}}
+{{- $githubUsername = promptStringOnce $data.user "githubUsername" "GitHub username" $githubUsername -}}
 {{- $gitlabReadToken = promptStringOnce $data.user "gitlabReadToken" "GitLab read-only token (See: https://github.com/gabrie30/ghorg#scm-provider-setup)" $gitlabReadToken }}
 {{- $githubReadToken = promptStringOnce $data.user "githubReadToken" "GitHub read-only token (See: https://github.com/gabrie30/ghorg#scm-provider-setup)" $githubReadToken }}
-{{- $githubUsername = promptStringOnce $data.user "githubUsername" "GitHub username" $githubUsername -}}
 {{- $gmailAddress = promptStringOnce $data.user "gmailAddress" "G-mail address" $gmailAddress -}}
 {{- $gmailAddressAppPassword = promptStringOnce $data.user "gmailAddressAppPassword" "G-mail app password" $gmailAddressAppPassword -}}
 {{- $ngrokAuthToken = promptStringOnce $data.user "ngrokAuthToken" "Ngrok authentication token" $ngrokAuthToken -}}
