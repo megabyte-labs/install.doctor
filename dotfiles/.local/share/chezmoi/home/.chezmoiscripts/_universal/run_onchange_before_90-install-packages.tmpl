@@ -3,7 +3,7 @@
 {{- includeTemplate "universal/profile" }}
 {{- includeTemplate "universal/logg" }}
 
-# software: {{ join (get .softwareGroups .host.softwareGroup) " " }}
+# software: {{ join (index .softwareGroups .host.softwareGroup) " " }}
 
 if command -v install-software > /dev/null; then
   logg 'Installing packages defined in .chezmoidata.yaml under the .softwareGroups key'
