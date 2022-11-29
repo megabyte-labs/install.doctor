@@ -118,7 +118,7 @@
 {{-   writeToStdout "Chezmoi is running in headless environment.\n" -}}
 {{- end -}}
 
-encryption = "age"
+encryption: "age"
 age:
   identity: "{{ .chezmoi.homeDir }}/.config/age/chezmoi.txt"
   recipient: "age1necy24c4lzxheey4p2m8v4q000n442wyv47qc640ulyxx9l8dpesdqv7ey"
