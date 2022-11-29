@@ -17,4 +17,4 @@ find "$HOME/.local/src/gas-station/roles" -mindepth 2 -maxdepth 2 -type d | whil
     rm -f "$XDG_DATA_HOME/ansible/roles/$ROLE_FOLDER"
     ln -s "$ROLE_PATH" "$XDG_DATA_HOME/ansible/roles/$ROLE_FOLDER"
   fi
-fi
+done
