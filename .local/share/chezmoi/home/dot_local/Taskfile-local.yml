@@ -8,3 +8,97 @@ version: '3'
 # because the main Taskfile.yml is a symlinked one. Anyway, try `run local:default`.
 tasks:
   default: echo "Get started on https://taskfile.dev"
+  browser:profile:save:brave:
+    vars:
+      BrowserProfile: >
+        {{if eq OS "darwin"}}~/Library/Application\ Support/BraveSoftware/Brave-Browser/Default{{end}}
+        {{if eq OS "linux"}}{{end}}
+        {{if eq OS "windows"}}{{end}}
+    cmds:
+      - tar -czpf ~/brave-profile.tar.gz  {{.BrowserProfile}}
+
+  browser:profile:save:chrome:
+    vars:
+      BrowserProfile: >
+        {{if eq OS "darwin"}}~/Library/Application\ Support/BraveSoftware/Brave-Browser/Default{{end}}
+        {{if eq OS "linux"}}{{end}}
+        {{if eq OS "windows"}}{{end}}
+    cmds:
+      - tar -czpf ~/brave-profile.tar.gz  {{.BrowserProfile}}
+
+  browser:profile:save:edge:
+    vars:
+      BrowserProfile: >
+        {{if eq OS "darwin"}}~/Library/Application\ Support/BraveSoftware/Brave-Browser/Default{{end}}
+        {{if eq OS "linux"}}{{end}}
+        {{if eq OS "windows"}}{{end}}
+    cmds:
+      - tar -czpf ~/brave-profile.tar.gz  {{.BrowserProfile}}
+
+  browser:profile:save:firefox:
+    vars:
+      BrowserProfile: >
+        {{if eq OS "darwin"}}~/Library/Application\ Support/BraveSoftware/Brave-Browser/Default{{end}}
+        {{if eq OS "linux"}}{{end}}
+        {{if eq OS "windows"}}{{end}}
+    cmds:
+      - tar -czpf ~/brave-profile.tar.gz  {{.BrowserProfile}}
+
+  provision:
+    desc: Provision the environment
+    summary: |
+      # Provision the Environment
+
+      This task will provision the current environment using a variety of tools.
+      It will prompt you for details like what type of environment you are provisioning.
+      Optionally, you can skip the prompt by passing a CLI argument like so:
+
+      **Example:**
+      `run localhost:provision -- terminal`
+
+      The above example will run the `localhost:provision:terminal` task.
+    cmds:
+      - |
+        if [ "{{.CLI_ARGS}}" != "" ]; then
+          run localhost:provision:{{.CLI_ARGS}}
+        else
+          run localhost:provision:prompt
+        fi
+
+  provision:prompt:
+    deps:
+      - :install:software:gum
+    cmds:
+      - logg prompt 'Select the type of environment you would like to provision'
+      - logg prompt '`Terminal` - Installs standard CLI tools that augment the terminal experience'
+      - logg prompt '`Development` - Provisions Terminal and also installs useful tools for development'
+      - logg prompt '`Full` - Provisions with both Terminal and Development and then it installs all the Brewfile-supported software from the Gas Station project (e.g. https://gitlab.com/megabyte-labs/gas-station).'
+      - |
+        CHOICE="$(logg choose "Terminal" "Development" "Full")"
+        if [ "$CHOICE" = 'Development' ]; then
+          run localhost:provision:dev
+        elif [ "$CHOICE" = 'Terminal' ]; then
+          run localhost:provision:terminal
+        elif [ "$CHOICE" = 'Full' ]; then
+          run localhost:provision:full
+        fi
+
+  provision:dev:
+    deps:
+      - :install:software:bundle
+      - provision:terminal
+    cmds:
+      - brew bundle --file "$HOME/.local/Brewfile.dev"
+
+  provision:full:
+    deps:
+      - :install:software:bundle
+      - provision:dev
+    cmds:
+      - brew bundle --file "$HOME/.local/Brewfile.full"
+
+  provision:terminal:
+    deps:
+      - :install:software:bundle
+    cmds:
+      - brew bundle --file "$HOME/.local/Brewfile.terminal"
