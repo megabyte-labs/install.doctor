@@ -117,6 +117,7 @@ if ! command -v curl > /dev/null || ! command -v git > /dev/null; then
     echo "TODO - Add support for Termux"
   elif command -v xbps-install > /dev/null; then
     # Void
+    echo "TODO - Add support for Void"
   elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
     # Windows
     choco install -y curl git node
