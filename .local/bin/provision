@@ -2,42 +2,39 @@
 
 set -eo pipefail
 
-### Qubes dom0 specific code at top
-# The VM name that will manage the Ansible provisioning (for Qubes dom0)
-ANSIBLE_PROVISION_VM="provision"
+### Qubes dom0
+if command -v qubesctl > /dev/null; then
+  # The VM name that will manage the Ansible provisioning (for Qubes dom0)
+  ANSIBLE_PROVISION_VM="provision"
 
-# Ensure sys-whonix is configured (for Qubes dom0)
-CONFIG_WIZARD_COUNT=0
-ENABLE_OBFSC='false'
-function configureWizard() {
-  if xwininfo -root -tree | grep "Anon Connection Wizard"; then
-    WINDOW_ID="$(xwininfo -root -tree | grep "Anon Connection Wizard" | sed 's/^ *\([^ ]*\) .*/\1/')"
-    xdotool windowactivate "$WINDOW_ID" && sleep 1 && xdotool key 'Enter' && sleep 1 && xdotool key 'Tab Tab Enter' && sleep 24 && xdotool windowactivate "$WINDOW_ID" && sleep 1 && xdotool key 'Enter' && sleep 300
-    qvm-shutdown --wait sys-whonix
-    sleep 3
-    qvm-start sys-whonix
-    if xwininfo -root -tree | grep "systemcheck | Whonix" > /dev/null; then
-      WINDOW_ID_SYSCHECK="$(xwininfo -root -tree | grep "systemcheck | Whonix" | sed 's/^ *\([^ ]*\) .*/\1/')"
-      if xdotool windowactivate "$WINDOW_ID_SYS_CHECK"; then
-        sleep 1
-        xdotool key 'Enter'
+  # Ensure sys-whonix is configured (for Qubes dom0)
+  CONFIG_WIZARD_COUNT=0
+  ENABLE_OBFSC='false'
+  function configureWizard() {
+    if xwininfo -root -tree | grep "Anon Connection Wizard"; then
+      WINDOW_ID="$(xwininfo -root -tree | grep "Anon Connection Wizard" | sed 's/^ *\([^ ]*\) .*/\1/')"
+      xdotool windowactivate "$WINDOW_ID" && sleep 1 && xdotool key 'Enter' && sleep 1 && xdotool key 'Tab Tab Enter' && sleep 24 && xdotool windowactivate "$WINDOW_ID" && sleep 1 && xdotool key 'Enter' && sleep 300
+      qvm-shutdown --wait sys-whonix
+      sleep 3
+      qvm-start sys-whonix
+      if xwininfo -root -tree | grep "systemcheck | Whonix" > /dev/null; then
+        WINDOW_ID_SYSCHECK="$(xwininfo -root -tree | grep "systemcheck | Whonix" | sed 's/^ *\([^ ]*\) .*/\1/')"
+        if xdotool windowactivate "$WINDOW_ID_SYS_CHECK"; then
+          sleep 1
+          xdotool key 'Enter'
+        fi
+      fi
+    else
+      sleep 3
+      CONFIG_WIZARD_COUNT=$((CONFIG_WIZARD_COUNT + 1))
+      if [[ "$CONFIG_WIZARD_COUNT" == '4' ]]; then
+        echo "The sys-whonix anon-connection-wizard utility did not open."
+      else
+        echo "Checking for anon-connection-wizard again.."
+        configureWizard
       fi
     fi
-  else
-    sleep 3
-    CONFIG_WIZARD_COUNT=$((CONFIG_WIZARD_COUNT + 1))
-    if [[ "$CONFIG_WIZARD_COUNT" == '4' ]]; then
-      echo "The sys-whonix anon-connection-wizard utility did not open."
-    else
-      echo "Checking for anon-connection-wizard again.."
-      configureWizard
-    fi
-  fi
-}
-
-### Update via system package manager and install Homebrew dependencies
-if command -v qubesctl > /dev/null; then
-  # Qubes dom0
+  }
 
   ### Ensure dom0 is updated
   if [ ! -f /root/dom0-updated ]; then
@@ -82,44 +79,48 @@ if command -v qubesctl > /dev/null; then
   fi
   qvm-run --pass-io "$ANSIBLE_PROVISION_VM" 'curl -sSL https://install.doctor/start > ~/start.sh && bash ~/start.sh'
   exit 0
-elif command -v apt-get > /dev/null; then
-  # Debian / Ubuntu
-  sudo apt-get update
-  sudo apt-get install -y curl git
-elif command -v dnf > /dev/null; then
-  # Fedora
-  sudo dnf install -y curl git
-elif command -v yum > /dev/null; then
-  # CentOS
-  sudo yum install -y curl git
-elif command -v pacman > /dev/null; then
-  # Archlinux
-  sudo pacman update
-  sudo pacman -Sy curl git
-elif command -v zypper > /dev/null; then
-  # OpenSUSE
-  sudo zypper install -y curl git nodejs
-elif command -v apk > /dev/null; then
-  # Alpine
-  apk add curl git
-elif [ -d /Applications ] && [ -d /Library ]; then
-  # macOS
-  sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
-elif command -v nix-env > /dev/null; then
-  # NixOS
-  echo "TODO - Add support for NixOS"
-elif [[ "$OSTYPE" == 'freebsd'* ]]; then
-  # FreeBSD
-  echo "TODO - Add support for FreeBSD"
-elif command -v pkg > /dev/null; then
-  # Termux
-  echo "TODO - Add support for Termux"
-elif command -v xbps-install > /dev/null; then
-  # Void
-  echo "TODO - Add support for Void"
-elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
-  # Windows
-  choco install -y curl git node
+fi
+
+### System package manager update / Homebrew dependencies
+if ! command -v curl > /dev/null || ! command -v git > /dev/null; then
+  if command -v apt-get > /dev/null; then
+    # Debian / Ubuntu
+    sudo apt-get update
+    sudo apt-get install -y curl git
+  elif command -v dnf > /dev/null; then
+    # Fedora
+    sudo dnf install -y curl git
+  elif command -v yum > /dev/null; then
+    # CentOS
+    sudo yum install -y curl git
+  elif command -v pacman > /dev/null; then
+    # Archlinux
+    sudo pacman update
+    sudo pacman -Sy curl git
+  elif command -v zypper > /dev/null; then
+    # OpenSUSE
+    sudo zypper install -y curl git nodejs
+  elif command -v apk > /dev/null; then
+    # Alpine
+    apk add curl git
+  elif [ -d /Applications ] && [ -d /Library ]; then
+    # macOS
+    sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
+  elif command -v nix-env > /dev/null; then
+    # NixOS
+    echo "TODO - Add support for NixOS"
+  elif [[ "$OSTYPE" == 'freebsd'* ]]; then
+    # FreeBSD
+    echo "TODO - Add support for FreeBSD"
+  elif command -v pkg > /dev/null; then
+    # Termux
+    echo "TODO - Add support for Termux"
+  elif command -v xbps-install > /dev/null; then
+    # Void
+  elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
+    # Windows
+    choco install -y curl git node
+  fi
 fi
 
 ### Install Homebrew
