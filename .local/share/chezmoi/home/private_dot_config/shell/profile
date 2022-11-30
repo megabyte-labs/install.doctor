@@ -110,9 +110,9 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   fi
 
   ### fzf-git
-  if [ -f "$HOME/.local/scripts/fzf-git.bash" ]; then
-    . "$HOME/.local/scripts/fzf-git.bash"
-  fi
+  #if [ -f "$HOME/.local/scripts/fzf-git.bash" ]; then
+  #  . "$HOME/.local/scripts/fzf-git.bash"
+  #fi
 
   ### MOTD
   if [ -f "$XDG_CONFIG_HOME/shell/motd" ]; then
@@ -131,9 +131,9 @@ if [ -f "$HOME/.local/scripts/docker-functions.bash" ]; then
 fi
 
 ### fzf-tmux
-if [ -f "$HOME/.local/scripts/fzf-tmux.bash" ]; then
-  . "$HOME/.local/scripts/fzf-tmux.bash"
-fi
+#if [ -f "$HOME/.local/scripts/fzf-tmux.bash" ]; then
+#  . "$HOME/.local/scripts/fzf-tmux.bash"
+#fi
 
 ### SDKMan
 if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
