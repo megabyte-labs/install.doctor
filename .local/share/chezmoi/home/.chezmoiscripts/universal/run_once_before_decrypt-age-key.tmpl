@@ -4,7 +4,7 @@ XDG_CONFIG_HOME="$HOME/.config"
 
 if [ ! -f "${XDG_CONFIG_HOME}/age/chezmoi.txt" ]; then
   mkdir -p "${XDG_CONFIG_HOME}/age"
-  echo "Press CTRL+C if you have not set up your encryption token yet"
+  echo "PRESS ENTER if you have not set up your encryption token yet"
   age --decrypt --output "${XDG_CONFIG_HOME}/age/chezmoi.txt" "{{ .chezmoi.sourceDir }}/key.txt.age" || EXIT_CODE=$?
   if [ -n "$EXIT_CODE" ]; then
     echo "Proceeding without decrypting age encryption key stored at ~/.local/share/chezmoi/home/key.txt.age"
