@@ -8,22 +8,21 @@ chezmoi.txt.age
 {{- end }}
 
 {{- if ne .host.distro.family "linux" }}
-.config/Kvantum
-.config/bashtop
-.config/desktop
-.config/firejail
-.config/fontconfig
-.config/gtk-1.0
-.config/gtk-2.0
-.config/gtk-3.0
-.config/rofi
-.config/xfce4
-.config/xsettingsd
-.config/gtkrc
-.config/k*
-.config/mimeapps.list
-.config/plasma*
-.local/konsole
+dot_config/Kvantum
+dot_config/bashtop
+dot_config/firejail
+dot_config/fontconfig
+dot_config/gtk-1.0
+dot_config/gtk-2.0
+dot_config/gtk-3.0
+dot_config/rofi
+dot_config/xfce4
+dot_config/xsettingsd
+dot_config/gtkrc
+dot_config/k*
+dot_config/mimeapps.list
+dot_config/plasma*
+dot_local/konsole
 dot_VirtualBox
 dot_Xresources
 {{- end }}
