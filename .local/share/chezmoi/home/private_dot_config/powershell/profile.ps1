@@ -1,7 +1,12 @@
-# set PowerShell to UTF-8
+# Env
+$env:EDITOR = 'code --wait'
+$env:GIT_SSH = "C:\Windows\system32\OpenSSH\ssh.exe"
+
+# Set PowerShell to UTF-8
 [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 
 ### Oh My Posh
+Install-Module posh-git
 oh-my-posh init pwsh --config "$env:HOME/.config/oh-my-posh/Betelgeuse.omp.json" | Invoke-Expression
 
 # Import-Module -Name Terminal-Icons
@@ -21,9 +26,6 @@ Invoke-Expression (& {
   $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
   (zoxide init --hook $hook powershell | Out-String)
 })
-
-# Env
-$env:GIT_SSH = "C:\Windows\system32\OpenSSH\ssh.exe"
 
 ### Aliases
 Set-Alias grep findstr
