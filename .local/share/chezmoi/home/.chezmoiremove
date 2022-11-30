@@ -34,23 +34,3 @@ Brewfile
 .zsh_sessions
 .zprofile
 .zshrc.zwc
-
-{{- if ne .host.distro.family "linux" }}
-.config/Kvantum
-.config/bashtop
-.config/firejail
-.config/fontconfig
-.config/gtk-1.0
-.config/gtk-2.0
-.config/gtk-3.0
-.config/rofi
-.config/xfce4
-.config/xsettingsd
-.config/gtkrc
-.config/k*
-.config/mimeapps.list
-.config/plasma*
-.local/konsole
-.VirtualBox
-.Xresources
-{{- end }}
