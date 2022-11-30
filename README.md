@@ -1,6 +1,6 @@
 # Hiawatha
 
-This is a decked out dotfiles repository that leverages a handful of technologies including Chezmoi and Ansible.
+This is a decked out dotfiles repository that leverages a handful of technologies including Chezmoi and Ansible. It is built to support Archlinux, Fedora, CentOS, Debian, Ubuntu, macOS, and Windows but you may see code that suggests other OSes will be supported as well. It includes themeing (most of the credit going to [Sweet](https://github.com/EliverLara/Sweet)) for KDE / GNOME / apps.
 
 To use these dotfiles and provision your computer with prompts (which can be made headless with environment variables):
 
