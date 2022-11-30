@@ -107,12 +107,16 @@ elif [ -d /Applications ] && [ -d /Library ]; then
   sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
 elif command -v nix-env > /dev/null; then
   # NixOS
+  echo "TODO - Add support for NixOS"
 elif [[ "$OSTYPE" == 'freebsd'* ]]; then
   # FreeBSD
+  echo "TODO - Add support for FreeBSD"
 elif command -v pkg > /dev/null; then
   # Termux
+  echo "TODO - Add support for Termux"
 elif command -v xbps-install > /dev/null; then
   # Void
+  echo "TODO - Add support for Void"
 elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
   # Windows
   choco install -y curl git node
