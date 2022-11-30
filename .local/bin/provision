@@ -1,183 +1,30 @@
 #!/usr/bin/env bash
 
-set -eo pipefail
-
-### Qubes dom0 specific code at top
-# The VM name that will manage the Ansible provisioning (for Qubes dom0)
-ANSIBLE_PROVISION_VM="provision"
-
-# Ensure sys-whonix is configured (for Qubes dom0)
-CONFIG_WIZARD_COUNT=0
-ENABLE_OBFSC='false'
-function configureWizard() {
-  if xwininfo -root -tree | grep "Anon Connection Wizard"; then
-    WINDOW_ID="$(xwininfo -root -tree | grep "Anon Connection Wizard" | sed 's/^ *\([^ ]*\) .*/\1/')"
-    xdotool windowactivate "$WINDOW_ID" && sleep 1 && xdotool key 'Enter' && sleep 1 && xdotool key 'Tab Tab Enter' && sleep 24 && xdotool windowactivate "$WINDOW_ID" && sleep 1 && xdotool key 'Enter' && sleep 300
-    qvm-shutdown --wait sys-whonix
-    sleep 3
-    qvm-start sys-whonix
-    if xwininfo -root -tree | grep "systemcheck | Whonix" > /dev/null; then
-      WINDOW_ID_SYSCHECK="$(xwininfo -root -tree | grep "systemcheck | Whonix" | sed 's/^ *\([^ ]*\) .*/\1/')"
-      if xdotool windowactivate "$WINDOW_ID_SYS_CHECK"; then
-        sleep 1
-        xdotool key 'Enter'
-      fi
-    fi
+# Install Homebrew
+if ! type brew &> /dev/null; then
+  if type sudo &> /dev/null && sudo -n true; then
+    echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   else
-    sleep 3
-    CONFIG_WIZARD_COUNT=$((CONFIG_WIZARD_COUNT + 1))
-    if [[ "$CONFIG_WIZARD_COUNT" == '4' ]]; then
-      echo "The sys-whonix anon-connection-wizard utility did not open."
-    else
-      echo "Checking for anon-connection-wizard again.."
-      configureWizard
-    fi
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
-}
-
-### Update via system package manager and install Homebrew dependencies
-if command -v qubesctl > /dev/null; then
-  # Qubes dom0
-
-  ### Ensure dom0 is updated
-  if [ ! -f /root/dom0-updated ]; then
-    sudo qubesctl --show-output state.sls update.qubes-dom0
-    sudo qubes-dom0-update --clean -y
-    touch /root/dom0-updated
-  fi
-
-  ### Ensure sys-whonix is running
-  if ! qvm-check --running sys-whonix; then
-    qvm-start sys-whonix --skip-if-running
-    configureWizard > /dev/null
-  fi
-
-  ### Ensure TemplateVMs are updated
-  if [ ! -f /root/templatevms-updated ]; then
-    # timeout of 10 minutes is added here because the whonix-gw VM does not like to get updated
-    # with this method. Anyone know how to fix this?
-    sudo timeout 600 qubesctl --show-output --skip-dom0 --templates state.sls update.qubes-vm &> /dev/null || EXIT_CODE=$?
-    while read RESTART_VM; do
-      qvm-shutdown --wait "$RESTART_VM"
-    done< <(qvm-ls --all --no-spinner --fields=name,state | grep Running | grep -v sys-net | grep -v sys-firewall | grep -v sys-whonix | grep -v dom0 | awk '{print $1}')
-    sudo touch /root/templatevms-updated
-  fi
-
-  ### Ensure provisioning VM can run commands on any VM
-  echo "/bin/bash" | sudo tee /etc/qubes-rpc/qubes.VMShell
-  sudo chmod 755 /etc/qubes-rpc/qubes.VMShell
-  echo "$ANSIBLE_PROVISION_VM"' dom0 allow' | sudo tee /etc/qubes-rpc/policy/qubes.VMShell
-  echo "$ANSIBLE_PROVISION_VM"' $anyvm allow' | sudo tee -a /etc/qubes-rpc/policy/qubes.VMShell
-  sudo chown "$(whoami):$(whoami)" /etc/qubes-rpc/policy/qubes.VMShell
-  sudo chmod 644 /etc/qubes-rpc/policy/qubes.VMShell
-
-
-  ### Create provisioning VM and initialize the provisioning process from there
-  qvm-create --label red --template debian-11 "$ANSIBLE_PROVISION_VM" &> /dev/null || EXIT_CODE=$?
-  qvm-volume extend "$ANSIBLE_PROVISION_VM:private" "40G"
-  if [ -f ~/.vaultpass ]; then
-    qvm-run "$ANSIBLE_PROVISION_VM" 'rm -f ~/QubesIncoming/dom0/.vaultpass'
-    qvm-copy-to-vm "$ANSIBLE_PROVISION_VM" ~/.vaultpass
-    qvm-run "$ANSIBLE_PROVISION_VM" 'cp ~/QubesIncoming/dom0/.vaultpass ~/.vaultpass'
-  fi
-  qvm-run --pass-io "$ANSIBLE_PROVISION_VM" 'curl -sSL https://install.doctor/start > ~/start.sh && bash ~/start.sh'
-  exit 0
-elif command -v apt-get > /dev/null; then
-  # Debian / Ubuntu
-  sudo apt-get update
-  sudo apt-get install -y curl git
-elif command -v dnf > /dev/null; then
-  # Fedora
-  sudo dnf install -y curl git
-elif command -v yum > /dev/null; then
-  # CentOS
-  sudo yum install -y curl git
-elif command -v pacman > /dev/null; then
-  # Archlinux
-  sudo pacman update
-  sudo pacman -Sy curl git
-elif command -v zypper > /dev/null; then
-  # OpenSUSE
-  sudo zypper install -y curl git nodejs
-elif command -v apk > /dev/null; then
-  # Alpine
-  apk add curl git
-elif [ -d /Applications ] && [ -d /Library ]; then
-  # macOS
-  sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
-elif command -v nix-env > /dev/null; then
-  # NixOS
-elif [[ "$OSTYPE" == 'freebsd'* ]]; then
-  # FreeBSD
-elif command -v pkg > /dev/null; then
-  # Termux
-elif command -v xbps-install > /dev/null; then
-  # Void
-elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
-  # Windows
-  choco install -y curl git node
 fi
 
-### Install Homebrew
-ensurePackageManagerHomebrew() {
-  if ! command -v brew > /dev/null; then
-    if command -v sudo > /dev/null && sudo -n true; then
-      echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    else
-      logg info 'Homebrew is not installed. Password may be required.'
-      bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
-      if [ -n "$BREW_EXIT_CODE" ]; then
-        if command -v brew > /dev/null; then
-          logg warn 'Homebrew was installed but part of the installation failed. Attempting to fix..'
-          BREW_DIRS="share/man share/doc share/zsh/site-functions etc/bash_completion.d"
-          for BREW_DIR in $BREW_DIRS; do
-            if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
-              sudo chown -R "$(whoami)" "$(brew --prefix)/$BREW_DIR"
-            fi
-          done
-          brew update --force --quiet
-        fi
-      fi
-    fi
-  fi
-}
-ensurePackageManagerHomebrew
+# Install Homebrew bundle and go-task
+brew install go-task/tap/go-task
+brew install jq
+brew install yq
 
-### Install installer dependencies via Homebrew
-if command -v brew > /dev/null; then
-  brew install chezmoi go-task/tap/go-task jq node yq zx
-fi
-
-### Ensure source files are present
-if [ -d /usr/local/src/hiawatha ] && [ ! -w /usr/local/src/hiawatha ]; then
-  sudo chown -Rf "$USER":"$(id -g -n)" /usr/local/src/hiawatha
-fi
-if [ -d /usr/local/src/hiawatha/.git ]; then
-  git config pull.rebase false
-  git pull origin master
+# Ensure dotfiles are present
+if [ ! -f "$HOME/.local/bin/install-dotfiles" ]; then
+  bash <(curl -sSL https://gitlab.com/megabyte-labs/misc/dotfiles/-/raw/master/dotfiles/.local/bin/install-dotfiles)
 else
-  rm -rf /usr/local/src/hiawatha
-  sudo git clone https://gitlab.com/megabyte-labs/dotfiles.git /usr/local/src/hiawatha
-  chown -Rf "$USER":"$(id -g -n)" /usr/local/src/hiawatha
+  chmod +x "$HOME/.local/bin/install-dotfiles"
+  install-dotfiles
 fi
 
-### Copy folders
-find /usr/local/src/hiawatha -maxdepth 1 -mindepth 1 -type d | while read FOLDER; do
-  BASENAME="$(basename "$FOLDER")"
-  if [ ! -d "$HOME/$BASENAME" ]; then
-    mkdir -p "$HOME/$BASENAME"
-  fi
-  cp -rf "$FOLDER/"* "$HOME/$BASENAME"
-done
-
-### Copy files
-find /usr/local/src/hiawatha -maxdepth 1 -mindepth 1 -type f | while read FILE; do
-  BASENAME="$(basename "$FILE")"
-  cp "$FILE" "$HOME/$BASENAME"
-  chmod 600 "$HOME/$BASENAME"
-done
-
-### Ensure ~/.local/bin files are executable
-find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f | while read BINFILE; do
-  chmod +x "$BINFILE"
-done
+# Use run alias to invoke the `$HOME/.local/Taskfile.yml`
+if [ -z "$1" ]; then
+  run localhost:provision
+else
+  run "localhost:provision:$1"
+fi

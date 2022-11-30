@@ -94,4 +94,3 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     complete -C vault vault
   fi
 fi
-

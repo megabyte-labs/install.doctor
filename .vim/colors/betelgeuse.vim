@@ -1,8 +1,8 @@
 
 
-  
+
   if &background == 'dark'
-    
+
   let s:guishade0 = "#161925"
   let s:guishade1 = "#2f323e"
   let s:guishade2 = "#474b56"
@@ -35,13 +35,13 @@
   let s:ctermaccent5 = 117
   let s:ctermaccent6 = 188
   let s:ctermaccent7 = 175
-  
-  endif
-  
 
-  
+  endif
+
+
+
   if &background == 'light'
-    
+
   let s:guishade0 = "#ffffff"
   let s:guishade1 = "#e5e6e7"
   let s:guishade2 = "#cccdcf"
@@ -74,9 +74,9 @@
   let s:ctermaccent5 = 153
   let s:ctermaccent6 = 239
   let s:ctermaccent7 = 211
-  
+
   endif
-  
+
 
   highlight clear
   syntax reset
