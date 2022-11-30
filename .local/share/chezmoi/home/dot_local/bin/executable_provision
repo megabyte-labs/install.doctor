@@ -167,6 +167,8 @@ if [ -d /usr/local/src/hiawatha ] && [ ! -w /usr/local/src/hiawatha ]; then
 fi
 if [ -d /usr/local/src/hiawatha/.git ]; then
   git config pull.rebase false
+  git reset --hard HEAD
+  git clean -fxd
   git pull origin master
 else
   rm -rf /usr/local/src/hiawatha
