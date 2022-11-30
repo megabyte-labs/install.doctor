@@ -44,6 +44,16 @@ tasks:
     cmds:
       - tar -czpf ~/brave-profile.tar.gz  {{.BrowserProfile}}
 
+  font-test:
+    cmds:
+      - |
+        echo -en "Regular"
+        echo -en "\e[3m Italic \e[0m"
+        echo -en "\e[1m Bold \e[0m"
+        echo -en "\e[3m\e[1m Bold-Italic \e[0m"
+        echo -en " \e[4mUnderline\e[0m "
+        echo -e " \e[9mStrikethrough\e[0m"
+
   provision:
     desc: Provision the environment
     summary: |
@@ -102,3 +112,25 @@ tasks:
       - :install:software:bundle
     cmds:
       - brew bundle --file "$HOME/.local/Brewfile.terminal"
+
+  squash-symlink:
+    summary: |
+      Example: find . -type l -exec /path/tos/script {} +
+    cmds:
+      - |
+        set -e
+        for link; do
+            test -h "$link" || continue
+            dir=$(dirname "$link")
+            reltarget=$(readlink "$link")
+            case $reltarget in
+                /*) abstarget=$reltarget;;
+                *)  abstarget=$dir/$reltarget;;
+            esac
+            rm -fv "$link"
+            cp -afv "$abstarget" "$link" || {
+                # on failure, restore the symlink
+                rm -rfv "$link"
+                ln -sfv "$reltarget" "$link"
+            }
+        done
