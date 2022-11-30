@@ -2,8 +2,14 @@
 
 XDG_CONFIG_HOME="$HOME/.config"
 
-#if [ ! -f "${XDG_CONFIG_HOME}/age/chezmoi.txt" ]; then
-#  mkdir -p "${XDG_CONFIG_HOME}/age"
-#  age --decrypt --output "${XDG_CONFIG_HOME}/age/chezmoi.txt" "{{ .chezmoi.sourceDir }}/chezmoi.txt.age"
-#  chmod 600 "${XDG_CONFIG_HOME}/age/chezmoi.txt"
-#fi
+if [ ! -f "${XDG_CONFIG_HOME}/age/chezmoi.txt" ]; then
+  mkdir -p "${XDG_CONFIG_HOME}/age"
+  echo "Press CTRL+C if you have not set up your encryption token yet"
+  age --decrypt --output "${XDG_CONFIG_HOME}/age/chezmoi.txt" "{{ .chezmoi.sourceDir }}/key.txt.age" || EXIT_CODE=$?
+  if [ -n "$EXIT_CODE" ]; then
+    echo "Proceeding without decrypting age encryption key stored at ~/.local/share/chezmoi/home/key.txt.age"
+    echo "To have Chezmoi handle your encryption (so you can store your private files publicly) take a look at https://www.chezmoi.io/user-guide/frequently-asked-questions/encryption/#how-do-i-configure-chezmoi-to-encrypt-files-but-only-request-a-passphrase-the-first-time-chezmoi-init-is-run"
+  else
+    chmod 600 "${XDG_CONFIG_HOME}/age/chezmoi.txt"
+  fi
+fi
