@@ -5,14 +5,14 @@
 
 # software: {{ index .softwareGroups .host.softwareGroup | join " " }}
 
-if command -v install-software > /dev/null; then
+if command -v install-program > /dev/null; then
   if command -v zx > /dev/null; then
     logg 'Installing packages defined in .chezmoidata.yaml under the .softwareGroups key'
     logg 'Installing: {{ index .softwareGroups .host.softwareGroup | join " " }}'
-    install-software {{ index .softwareGroups .host.softwareGroup | join " " }}
+    install-program {{ index .softwareGroups .host.softwareGroup | join " " }}
   else
     logg error '`zx` is not available'
   fi
 else
-  logg error '`install-software` is not in the PATH. It should be located in ~/.local/bin.'
+  logg error '`install-program` is not in the PATH. It should be located in ~/.local/bin.'
 fi

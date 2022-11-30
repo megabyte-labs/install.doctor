@@ -190,7 +190,7 @@ done
 find /usr/local/src/hiawatha -maxdepth 1 -mindepth 1 -type f | while read FILE; do
   BASENAME="$(basename "$FILE")"
   # Prevent repository-specific files from being copied over to user's HOME
-  if [[ "$BASENAME" != *'.md' ]] && [[ "$BASENAME" != *'.sh' ]] && [ "$BASENAME" != 'logo.png' ] && [ "$BASENAME" != '.gitlab-ci.yml' ]; then
+  if [[ "$BASENAME" != *'.md' ]] && [[ "$BASENAME" != *'.sh' ]] && [ "$BASENAME" != '.chezmoiroot' ] && [ "$BASENAME" != 'logo.png' ] && [ "$BASENAME" != '.gitlab-ci.yml' ]; then
     cp "$FILE" "$HOME/$BASENAME"
     chmod 600 "$HOME/$BASENAME"
   fi
