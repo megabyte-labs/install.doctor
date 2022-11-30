@@ -150,8 +150,15 @@ ensurePackageManagerHomebrew() {
 ensurePackageManagerHomebrew
 
 ### Install installer dependencies via Homebrew
+installBrewPackage() {
+  if ! command -v "$1" > /dev/null; then
+    brew install "$1"
+  fi
+}
 if command -v brew > /dev/null; then
-  brew install chezmoi go-task/tap/go-task jq node yq zx
+  installBrewPackage chezmoi
+  installBrewPackage node
+  installBrewPackage zx
 fi
 
 ### Ensure source files are present
