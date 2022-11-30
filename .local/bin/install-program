@@ -23,7 +23,7 @@ if(osType === 'linux') {
 // Download the installation map
 async function downloadInstallData() {
   const response = await fetch(
-    "https://gitlab.com/megabyte-labs/misc/dotfiles/-/raw/master/dotfiles/.local/share/chezmoi/software.yml"
+    "https://gitlab.com/megabyte-labs/misc/dotfiles/-/raw/master/.local/share/chezmoi/software.yml"
   );
   if (response.ok) {
     const text = await response.text()
