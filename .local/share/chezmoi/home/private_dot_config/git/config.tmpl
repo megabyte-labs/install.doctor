@@ -141,10 +141,10 @@
   autoupdate = true
 [sendemail]
   smtpserver = smtp.gmail.com
-  smtpuser = {{ .user.gmailAddress }}
+  smtpuser = {{ .user.gmail.email }}
   smtpencryption = tls
   smtpserverport = 587
-  smtpPass = {{ .user.gmailAddressAppPassword }}
+  smtpPass = {{ .user.gmail.password }}
 [status]
   showUntrackedFiles = all
   submoduleSummary = true
