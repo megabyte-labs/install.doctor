@@ -152,8 +152,9 @@ data:
     domain: "{{ $domain }}"
     gpg:
       id: "{{ $gpgKeyId }}"
-    gmailAddress: "{{ $gmailAddress }}"
-    gmailAddressAppPassword: "{{ $gmailAddressAppPassword }}"
+    gmail:
+      email: "{{ $gmailAddress }}"
+      password: "{{ $gmailAddressAppPassword }}"
     githubUsername: "{{ $githubUsername }}"
     locale: "{{ $locale }}"
     timezone: "{{ $timezone }}"
