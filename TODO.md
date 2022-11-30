@@ -1,3 +1,71 @@
+
+
+### Ensure these PATHs are added on Windows
+add to PATH:
+'%ProgramFiles(x86)%\mitmproxy\bin'
+'%ProgramFiles(x86)%\juju'
+
+### POSSIBLY USEFUL SOFTWARE
+https://hackjutsu.com/Lepton/
+
+### WINDOWS MISSING PACKAGES
+# FOLLOWING SOFTWARE IS IN Brewfile.terminal but not in Scoop.terminal or Chocolatey.terminal
+# TODO: Find replacements or alternatives
+# It's possible some are available via other installation methods - please research and figure out which ones
+# we can install via NPM, Go etc.
+# LSD used instead of exa for Windows
+# Glances not on Windows
+# ASDF not on Windows
+# autorestic not on windows
+# gist not on Windows
+# git-secret not on Windows
+# nb not on Windows
+# zsh not on Windows
+# bandwhich
+# nnn not on Windows
+# rm-improved not on Windows
+# hey not on Windows
+# pass not on Windows
+# sysbench not on Windows
+# teller not on Windows
+# ssh-vault not on Windows
+# automake not on windows
+# zx --- needs npm?
+# pywhat --- ???
+# mycli --- ?
+# litecli --- ?
+# yj --- ?
+# choose --- ?
+# tmux not on Windows
+# mcfly
+# t-rec
+# whalebrew
+# ots
+
+
+### WINDOWS MISSING FROM DEV environment
+# bun
+# codeclimate
+# minio mc
+# dockle
+# git-subrepo
+# oq
+# sdkman
+# sshpass
+# goofys
+# tfenv
+# shc
+
+
+{{ if not $headless -}}
+age:
+  identity: "{{ .chezmoi.homeDir }}/.config/age/key.txt"
+  recipient: "age16kxd4ljclq9ksnxvl2ee7a5xnj744kwyv04p04ka0n3rzxdpl5nsq52svl"
+{{- end }}
+
+
+## Figure out where these go
+
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
 
