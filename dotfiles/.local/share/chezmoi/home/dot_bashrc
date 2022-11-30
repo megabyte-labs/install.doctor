@@ -34,6 +34,11 @@ fi
 ### History
 export HISTFILE="$XDG_STATE_HOME/bash/history"
 
+### /etc/bashrc
+if [ -f /etc/bashrc ]; then
+  . /etc/bashrc
+fi
+
 # Prompt (on bash only)
 if [ "$BASH_SUPPORT" = 'true' ]; then
   if [[ "$(hostname)" != *'-minimal' ]]; then
