@@ -166,6 +166,7 @@ if [ -d /usr/local/src/hiawatha ] && [ ! -w /usr/local/src/hiawatha ]; then
   sudo chown -Rf "$USER":"$(id -g -n)" /usr/local/src/hiawatha
 fi
 if [ -d /usr/local/src/hiawatha/.git ]; then
+  cd /usr/local/src/hiawatha
   git config pull.rebase false
   git reset --hard HEAD
   git clean -fxd
