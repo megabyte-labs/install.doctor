@@ -1,6 +1,6 @@
 ---
 # `softwarePackages` is a map of possible package managers to use while installing a program. The installer will
-# look at the `installerPreference` variable (bottom of file) and find the first package manager that is in the package's possible
+# look at the `installerPreference` variable and find the first package manager that is in the package's possible
 # installation method and then use that. It is also sensitive to the type of operating system so a package with
 # only `apt` defined will not install on macOS.
 #
@@ -160,10 +160,16 @@ softwarePackages:
     _post:binary:darwin: |
       # TODO
     _post:binary:linux: |
-      # TODO - Include hook for unzipping and adding to /usr/local/bin (also Windows support is needed)
+      # TODO How to pass the path of the file downloaded in `binary` step? That can replace the `wget` command below
+      mkdir -p /usr/local/share/allure
+      cd /usr/local/share/allure
+      wget https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.20.1/allure-commandline-2.20.1.zip -O /usr/local/share/allure/allure.zip
+      unzip -o allure.zip
+      ln -s /usr/local/share/allure/allure<version>/bin/allure
     _post:binary:windows: |
       # TODO
     binary: https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.20.1/allure-commandline-2.20.1.zip
+      # TODO: Find latest version from https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/maven-metadata.xml and use it in the _binary_ URL
     brew: allure
     scoop: allure
     yay: allure
@@ -228,13 +234,19 @@ softwarePackages:
     ansible: professormanhattan.aptcacherng
   aqua:
     brew: aquaproj/aqua/aqua
+    binary:linux: https://github.com/aquaproj/aqua/releases/download/v2.0.0-0/aqua_linux_amd64.tar.gz
+    binary:windows: https://github.com/aquaproj/aqua/releases/download/v2.0.0-0/aqua_windows_amd64.tar.gz
   argocli:
     _desc: ArgoCD is a declarative GitOps continuous delivery platform.
     _homepage: https://argoproj.github.io
     _name: argo
     _type: cli
     brew: argocd
+    choco: argocd-cli
     github: https://github.com/argoproj/argo-workflows
+    pacman:
+      - argocd
+      - argocd-cli
   aria:
     _desc: '[aria2](https://aria2.github.io/) is a lightweight multi-protocol & multi-source command-line download utility. It supports HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink. [AriaNg](http://ariang.mayswind.net/) is a modern web frontend that makes working with aria2 easier.'
     _docs: https://aria2.github.io/manual/en/html/
@@ -242,8 +254,13 @@ softwarePackages:
     _home: null
     _name: Aria2/AriaNg
     ansible: professormanhattan.aria
-  asciicinema:
-    pipx: asciicinema
+  asciinema:
+    apk: asciinema
+    apt: asciinema
+    brew: asciinema
+    dnf: asciinema
+    pacman: asciinema
+    pipx: asciinema
   asdf:
     _desc: '[asdf](https://asdf-vm.com/#/) is a CLI tool that can manage multiple language runtime versions on a per-project basis or globally. It is like gvm, nvm, rbenv, and pyenv all in one. This role installs asdf on Linux or macOS.'
     _docs: https://asdf-vm.com/guide/introduction.html
@@ -288,7 +305,12 @@ softwarePackages:
     dnf: autokey
     yay: autokey-gtk
   automake:
+    apk: automake
+    apt: automake
     brew: automake
+    dnf: automake
+    pacman: automake
+    pkg: automake
   autorestic:
     _desc: '[Autorestic](https://autorestic.vercel.app/) is a wrapper around [Restic](https://restic.net/). The Restic CLI can be a bit overwhelming and difficult to manage if you have many different location that you want to backup to multiple locations. Autorestic makes managing all your S3 backups easier by making it config / cron driven.'
     _docs: https://autorestic.vercel.app/quick
@@ -304,6 +326,9 @@ softwarePackages:
     _name: AWS CLI
     ansible: professormanhattan.awscli
     brew: awscli@2
+    binary:darwin: https://awscli.amazonaws.com/AWSCLIV2.pkg
+    binary:linux: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    binary:windows: https://awscli.amazonaws.com/AWSCLIV2.msi
     choco: awscli
   awxcli:
     _desc: '[ansible-tower-cli](https://docs.ansible.com/ansible-tower/latest/html/towercli/index.html) is a CLI program that interacts with Ansible Tower or AWX. It is the official command-line client for both Ansible Tower and AWX. It uses naming and structure consistent with the AWX HTTP API, provides consistent output formats with optional machine-parsable formats, and auto-detects API versions, available endpoints, and feature support.'
