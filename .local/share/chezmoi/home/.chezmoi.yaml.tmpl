@@ -27,7 +27,7 @@
 {{- end -}}
 {{- $softwareGroup := (default "Standard" (env "SOFTWARE_GROUP")) -}}
 {{- if $desktopSession -}}
-{{-   $softwareGroup = (join $softwareGroup "-Desktop") -}}
+{{-   $softwareGroup = list $softwareGroup "-Desktop" | join "" -}}
 {{- end -}}
 
 {{- $data := . }}
