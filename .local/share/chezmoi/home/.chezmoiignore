@@ -11,6 +11,10 @@ chezmoi.txt.age
 Library
 {{- end }}
 
+{{- if ne .host.distro.id "linux" }}
+dot_Xresources
+{{- end }}
+
 {{- if ne .host.distro.id "windows" }}
 AppData/
 {{- end }}
