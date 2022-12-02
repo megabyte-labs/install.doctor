@@ -255,7 +255,7 @@ async function ensureInstalled(bin, callback) {
   } else {
     await $`logg warn '\`${bin}\` is not installed!'`
     if (callback) {
-      await $`${callback}`
+      await $`eval ${callback}`
     } else {
       await $`logg error 'There does not appear to be an installation method available for \`${bin}\`'`
     }
@@ -432,7 +432,7 @@ async function ensurePackageManager(packageManager) {
     await ensureInstalled('pkg', false)
   } else if (packageManager === 'port') {
     await ensureInstalled('port', `
-      echo "TODO - script that installs port on macOS here"
+      echo -n "TODO - script that installs port on macOS here"
     `)
   } else if (packageManager === 'scoop') {
     await ensureInstalled('scoop', `
