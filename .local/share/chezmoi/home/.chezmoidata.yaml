@@ -23,7 +23,7 @@ config:
 fonts:
   main: Montserrat Bold
 softwareGroups:
-  basic: &basic
+  Basic: &basic
     - bash-completion
     - bat
     - bitwarden-cli
@@ -57,21 +57,21 @@ softwareGroups:
     - wifi-password
     - zoxide
     - zx
-  basicDesktop: &basicDesktop
+  Basic-Desktop: &basicDesktop
     - *basic
     - brave
     - firefox
     - fonts
     - tabby
     - vscode
-  networkEnabled:
+  Network-Enabled:
     - cloudflared
     - cockpit
     - cups
     - lexicon
     # - maas
     - ngxtop
-  standard: &standard
+  Standard: &standard
     - *basic
     - ansible
     - ansibleconnect
@@ -172,7 +172,7 @@ softwareGroups:
     - yq
     - yubikey-manager
     - zsh
-  standardDesktop: &standardDesktop
+  Standard-Desktop: &standardDesktop
     - *basicDesktop
     - autokey
     - balenaetcher
@@ -224,7 +224,7 @@ softwareGroups:
     - yubikey-authenticator
     - yubikey-manager-qt
     - zoom
-  development: &development
+  Development: &development
     - *standard
     - act
     - allure
@@ -407,7 +407,7 @@ softwareGroups:
     - yamllint
     - yank
     - yarn
-  developmentDesktop: &developmentDesktop
+  Development-Desktop: &developmentDesktop
     - *standardDesktop
     - altair
     - android-studio
@@ -433,7 +433,7 @@ softwareGroups:
     - runjs
     - sqlectron
     - visual-studio
-  experimental: &experimental
+  Experimental: &experimental
     - *development
     - asciicinema
     - assh
@@ -483,7 +483,7 @@ softwareGroups:
     - tflint
     - tilt
     - vector
-  experimentalDesktop: &experimentalDesktop
+  Experimental-Desktop: &experimentalDesktop
     - *developmentDesktop
     - betwixt
     - lens
@@ -492,7 +492,7 @@ softwareGroups:
     - masscode
     - mullvad-vpn
     - powershell
-  kubernetes:
+  Kubernetes:
     - kdash
     - kn
     - kubectx
