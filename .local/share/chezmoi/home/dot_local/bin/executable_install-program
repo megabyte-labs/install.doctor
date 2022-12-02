@@ -288,7 +288,8 @@ async function ensureInstalled(bin, callback) {
 async function ensurePackageManagerAnsible() {
   await $`pipx install ansible`
   await $`pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog`
-  await $`touch "$HOME/.cache/megabytelabs/ansible-installed"`
+  await $`mkdir -p "$HOME/.cache/megabyte-labs"`
+  await $`touch "$HOME/.cache/megabyte-labs/ansible-installed"`
   await $`logg info 'Ansible and its supporting packages are now installed via pipx'`
 }
 
