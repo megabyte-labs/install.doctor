@@ -63,7 +63,7 @@ fi
 
 ### Google Cloud SDK
 if command -v gcloud > /dev/null; then
-  curl -sSL "$FALLBACK_URL/gcloud.bash" > "COMPLETION_DIR/gcloud.bash"
+  curl -sSL "$FALLBACK_URL/gcloud.bash" > "$COMPLETION_DIR/gcloud.bash"
 elif [ -f "$COMPLETION_DIR/gcloud.bash" ]; then
   rm "$COMPLETION_DIR/gcloud.bash"
 fi
