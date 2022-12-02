@@ -62,7 +62,7 @@ alias sudo='sudo '
 alias reload="exec ${SHELL} -l"
 
 # Create an Authelia password hash
-alias autheliapassword='docker run authelia/authelia:latest authelia hash-password'
+alias authelia-password='docker run authelia/authelia:latest authelia hash-password'
 
 # Shows IP addresses that are currently banned by fail2ban
 alias banned='sudo zgrep "Ban" /var/log/fail2ban.log*'
@@ -79,22 +79,28 @@ alias dog="docker run -it --rm dog"
 alias download='curl --continue-at - --location --progress-bar --remote-name --remote-time'
 
 # Download a website
-alias downloadsite='wget --mirror -p --convert-links -P'
+alias download-site='wget --mirror -p --convert-links -P'
 
 # Flush DNS
-alias flushdns='sudo systemd-resolve --flush-caches && sudo systemd-resolve --statistics'
+alias flush-dns='sudo systemd-resolve --flush-caches && sudo systemd-resolve --statistics'
 
 # FontBook for macOS
 alias fontbook="open -b com.apple.FontBook"
 
 # Get the possible GRUB resolutions
-alias grubresolutions='sudo hwinfo --framebuffer'
+alias grub-resolutions='sudo hwinfo --framebuffer'
 
 # Execute git command with sudo priviledges while retaining .gitconfig
 alias gsudo='sudo git -c "include.path="${XDG_CONFIG_DIR:-$HOME/.config}/git/config\" -c \"include.path=$HOME/.gitconfig\"'
 
 # Create hashed password for Ansible user creation
-alias hashpassword='mkpasswd --method=sha-512'
+alias hash-password='mkpasswd --method=sha-512'
+
+# Show IP address
+alias ip-address='curl http://ipecho.net/plain; echo'
+
+# Shows local IP addresses
+alias local-ip-address="ifconfig | grep -Eo 'inet (addr:|adr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
 
 # Create parent directories automatically
 alias mkdir='mkdir -pv'
@@ -104,12 +110,6 @@ alias mount='mount | column -t'
 
 # Make mv command verbose
 alias mv='mv -v'
-
-# Show IP address
-alias myip='curl http://ipecho.net/plain; echo'
-
-# Shows local IP addresses
-alias mylocalip="ifconfig | grep -Eo 'inet (addr:|adr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
 
 # Link pip to pip3
 if ! command -v pip > /dev/null; then
@@ -122,7 +122,7 @@ if command -v gum > /dev/null; then
 fi
 
 # Convert macOS plist to XML (for source control)
-plist-xml='plutil -convert xml1'
+alias plist-xml='plutil -convert xml1'
 
 # Show open ports
 alias ports='sudo netstat -tulanp'
@@ -131,7 +131,7 @@ alias ports='sudo netstat -tulanp'
 alias poweroff='sudo /sbin/poweroff'
 
 # Open the Rclone web GUI
-alias rclonegui='rclone rcd --rc-web-gui --rc-user=admin --rc-pass=pass --rc-serve'
+alias rclone-gui='rclone rcd --rc-web-gui --rc-user=admin --rc-pass=pass --rc-serve'
 
 # Reboot the computer
 alias reboot='sudo /sbin/reboot'
@@ -145,6 +145,9 @@ alias serve='python -m SimpleHTTPServer'
 # Generate a SHA1 digest
 alias sha1='openssl sha1'
 
+# Generate SHA256 digest
+alias sha256='openssl sha256'
+
 # Shutdown the computer
 alias shutdown='sudo /sbin/shutdown'
 
@@ -152,7 +155,7 @@ alias shutdown='sudo /sbin/shutdown'
 alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
 
 # Shortcut for config file
-alias sshconfig='${EDITOR:code} ~/.ssh/config'
+alias ssh-config='${EDITOR:code} ~/.ssh/config'
 
 # Pastebin
 alias sprunge='curl -F "sprunge=<-" http://sprunge.us'
@@ -170,7 +173,7 @@ alias tortest='curl --socks5-hostname 127.0.0.1:9050 --silent https://check.torp
 alias unban='sudo fail2ban-client set sshd unbanip'
 
 # Recursively encrypts files using Ansible Vault
-alias unvaultdir='find . -type f -printf "%h/\"%f\" " | xargs ansible-vault decrypt'
+alias unvault-dir='find . -type f -printf "%h/\"%f\" " | xargs ansible-vault decrypt'
 
 # Alias for updating software
 alias update='sudo apt-get update && sudo apt-get upgrade'
@@ -179,7 +182,7 @@ alias update='sudo apt-get update && sudo apt-get upgrade'
 alias v='vim'
 
 # Recursively encrypts files using Ansible Vault
-alias vaultdir='find . -type f -printf "%h/\"%f\" " | xargs ansible-vault encrypt'
+alias vault-dir='find . -type f -printf "%h/\"%f\" " | xargs ansible-vault encrypt'
 
 # Shows nice looking report of weather
 alias weather='curl -A curl wttr.in'
