@@ -9,6 +9,9 @@ if command -v install-program > /dev/null; then
   if command -v zx > /dev/null; then
     logg info 'Installing packages defined in .chezmoidata.yaml under the .softwareGroups key'
     logg info 'Installing: {{ index .softwareGroups .host.softwareGroup | toString | replace "[" "" | replace "]" "" }}'
+    # Ask for the administrator password upfront
+    logg info 'A sudo password may be required for some of the installations'
+    sudo -v
     install-program {{ index .softwareGroups .host.softwareGroup | toString | replace "[" "" | replace "]" "" }}
   else
     logg error '`zx` is not available'
