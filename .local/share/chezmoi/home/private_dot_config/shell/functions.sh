@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 # Install WebDriverAgent on iOS device
 appiumwebdriver() {
   # read -r "Enter the UDID of the device you wish to install WebDriverAgent on: " UDID_INPUT

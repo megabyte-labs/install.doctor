@@ -1,15 +1,17 @@
+#!/usr/bin/env sh
+
 # shellcheck disable=SC1090,SC1091
 
 # Aliases / Functions / Exports
 export XDG_CONFIG_HOME="$HOME/.config"
-if [ -f "$XDG_CONFIG_HOME/shell/exports" ]; then
-  . "$XDG_CONFIG_HOME/shell/exports"
+if [ -f "$XDG_CONFIG_HOME/shell/exports.sh" ]; then
+  . "$XDG_CONFIG_HOME/shell/exports.sh"
 fi
-if [ -f "$XDG_CONFIG_HOME/shell/aliases" ]; then
-  . "$XDG_CONFIG_HOME/shell/aliases"
+if [ -f "$XDG_CONFIG_HOME/shell/aliases.sh" ]; then
+  . "$XDG_CONFIG_HOME/shell/aliases.sh"
 fi
-if [ -f "$XDG_CONFIG_HOME/shell/functions" ]; then
-  . "$XDG_CONFIG_HOME/shell/functions"
+if [ -f "$XDG_CONFIG_HOME/shell/functions.sh" ]; then
+  . "$XDG_CONFIG_HOME/shell/functions.sh"
 fi
 
 ### Colorize
@@ -115,8 +117,8 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   #fi
 
   ### MOTD
-  if [ -f "$XDG_CONFIG_HOME/shell/motd" ]; then
-    . "$XDG_CONFIG_HOME/shell/motd"
+  if [ -f "$XDG_CONFIG_HOME/shell/motd.sh" ]; then
+    . "$XDG_CONFIG_HOME/shell/motd.sh"
   fi
 fi
 

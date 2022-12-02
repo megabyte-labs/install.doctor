@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 export LEXICON_CLOUDFLARE_USERNAME={{ .user.CLOUDFLARE_USERNAME }}
 

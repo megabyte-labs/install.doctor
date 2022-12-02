@@ -9,6 +9,11 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   export BASH_SUPPORT=true
 fi
 
+### Import Common Settings
+if [ -f "$HOME/.config/shell/profile.sh" ]; then
+  . "$HOME/.config/shell/profile.sh"
+fi
+
 ### Fig / LC_ALL
 if [ "$BASH_SUPPORT" = 'true' ]; then
   if [[ "$(hostname)" != *'-minimal' ]]; then
@@ -17,11 +22,6 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   if [ -f "$HOME/.fig/shell/bashrc.pre.bash" ]; then
     . "$HOME/.fig/shell/bashrc.pre.bash"
   fi
-fi
-
-### Import Common Settings
-if [ -f "$HOME/.config/shell/profile" ]; then
-  . "$HOME/.config/shell/profile"
 fi
 
 ### Settings

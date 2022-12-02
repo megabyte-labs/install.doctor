@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 ### MOTD
 # Add file named .hushlogin in the user's home directory to disable the MOTD
 if [ "$BASH_SUPPORT" = 'true' ] && [ ! -f ~/.hushlogin ] && [ "$SHLVL" -eq 1 ]; then

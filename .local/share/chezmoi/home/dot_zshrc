@@ -9,8 +9,8 @@ export BASH_SUPPORT=true
 
 ### Import Common Settings
 export XDG_CONFIG_HOME="$HOME/.config"
-if [ -f "$HOME/.config/shell/profile" ]; then
-  . "$XDG_CONFIG_HOME/shell/profile"
+if [ -f "$HOME/.config/shell/profile.sh" ]; then
+  . "$XDG_CONFIG_HOME/shell/profile.sh"
 fi
 
 ### Misc.
@@ -251,49 +251,45 @@ if [ -f "$HOME/.local/scripts/antigen.zsh" ]; then
 fi
 if command -v antigen > /dev/null; then
   antigen use oh-my-zsh
-  antigen bundle adb
-  antigen bundle colored-man-pages
-  antigen bundle command-not-found
-  antigen bundle copyfile
-  antigen bundle copybuffer
-  antigen bundle encode64
-  antigen bundle fd
-  antigen bundle git-auto-fetch
-  antigen bundle gnu-utils
-  antigen bundle heroku
+  # antigen bundle adb
+  # antigen bundle colored-man-pages
+  # antigen bundle command-not-found
+  # antigen bundle copyfile
+  # antigen bundle copybuffer
+  # antigen bundle encode64
+  # antigen bundle fd
+  # antigen bundle git-auto-fetch
+  # antigen bundle gnu-utils
+  # antigen bundle heroku
   # antigen bundle keychain
-  antigen bundle kubectx
-  antigen bundle macos
-  antigen bundle magic-enter
-  antigen bundle minikube
-  antigen bundle ng
-  antigen bundle nomad
-  antigen bundle npm
-  antigen bundle redis-cli
-  antigen bundle ripgrep
+  # antigen bundle kubectx
+  # antigen bundle macos
+  # antigen bundle magic-enter
+  # antigen bundle minikube
+  # antigen bundle ng
+  # antigen bundle nomad
+  # antigen bundle npm
+  # antigen bundle redis-cli
+  # antigen bundle ripgrep
   # antigen bundle rust
-  antigen bundle safe-paste
-  antigen bundle salt
+  # antigen bundle safe-paste
+  # antigen bundle salt
   # antigen bundle shell-proxy
   # antigen bundle ssh-agent
-  antigen bundle sudo
-  antigen bundle ufw
+  # antigen bundle sudo
+  # antigen bundle ufw
   # antigen bundle web-search
-
-  ### Disable plugin alias
-  # alias alias=true
-  antigen bundle docker
-  antigen bundle docker-compose
-  antigen bundle gem
-  antigen bundle ionic
-  antigen bundle microk8s
-  antigen bundle multipass
-  antigen bundle pip
-  antigen bundle pm2
-  antigen bundle terraform
-  antigen bundle vagrant
-  antigen bundle yarn
-  # unalias alias
+  # antigen bundle docker
+  # antigen bundle docker-compose
+  # antigen bundle gem
+  # antigen bundle ionic
+  # antigen bundle microk8s
+  # antigen bundle multipass
+  # antigen bundle pip
+  # antigen bundle pm2
+  # antigen bundle terraform
+  # antigen bundle vagrant
+  # antigen bundle yarn
 
   # antigen bundle zsh-interactive-cd
   # antigen bundle zsh-navigation-tools

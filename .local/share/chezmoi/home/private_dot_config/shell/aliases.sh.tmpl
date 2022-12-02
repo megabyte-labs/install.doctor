@@ -1,4 +1,6 @@
-{{- if eq .chezmoi.os "darwin" }}
+#!/usr/bin/env sh
+
+{{ if eq .chezmoi.os "darwin" }}
 ### macOS Polyfills
 if command -v brew > /dev/null; then
   PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
