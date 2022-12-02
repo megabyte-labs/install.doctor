@@ -58,8 +58,7 @@ softwareGroups:
     - wifi-password
     - zoxide
     - zx
-  basicList:
-    << : [*basic]
+  basicList: *basicList
   basicDesktop: &basicDesktop
     - brave
     - firefox
