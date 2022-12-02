@@ -251,7 +251,12 @@ async function afterInstall(packageManager) {
   if (packageManager === 'appimage') {
   } else if (packageManager === 'ansible') {
     log('info', 'Post-Install', `Ensuring temporary passwordless sudo privileges used by Ansible are removed`)
-    await $`sudo sed -i '/# TEMPORARY FOR ANSIBLE INSTALL/d' /etc/sudoers`
+    const gsed = which.sync('gsed', { nothrow: true })
+    if (gsed) {
+      await $`sudo gsed -i '/# TEMPORARY FOR ANSIBLE INSTALL/dg' /etc/sudoers`
+    } else {
+      await $`sudo sed -i '/# TEMPORARY FOR ANSIBLE INSTALL/dg' /etc/sudoers`
+    }
   } else if (packageManager === 'apk') {
   } else if (packageManager === 'apt') {
   } else if (packageManager === 'basher') {
@@ -287,7 +292,7 @@ async function beforeInstall(packageManager) {
   if (packageManager === 'appimage') {
   } else if (packageManager === 'ansible') {
     log('info', 'Pre-Install', `Temporarily enabling passwordless sudo for Ansible role installations`)
-    await $`sudo echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR ANSIBLE INSTALL" > /etc/sudoers`
+    await $`echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR ANSIBLE INSTALL" | sudo tee -a`
   } else if (packageManager === 'apk') {
   } else if (packageManager === 'apt') {
     await $`sudo apt-get update`
