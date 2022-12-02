@@ -11,7 +11,7 @@ if command -v install-program > /dev/null; then
     logg info 'Installing: {{ index .softwareGroups .host.softwareGroup | toString | replace "[" "" | replace "]" "" }}'
     # Ask for the administrator password upfront
     logg info 'A sudo password may be required for some of the installations'
-    sudo -v
+    sudo echo "Sudo access granted."
     install-program {{ index .softwareGroups .host.softwareGroup | toString | replace "[" "" | replace "]" "" }}
   else
     logg error '`zx` is not available'
