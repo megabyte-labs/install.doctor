@@ -2,6 +2,8 @@
 
 set -eox pipefail
 
+{{- includeTemplate "universal/logg" }}
+
 ### Qubes dom0
 if command -v qubesctl > /dev/null; then
   # The VM name that will manage the Ansible provisioning (for Qubes dom0)
@@ -83,6 +85,7 @@ fi
 
 ### System package manager update / Homebrew dependencies
 if ! command -v curl > /dev/null || ! command -v git > /dev/null; then
+  logg 'Ensuring `curl` and `git` are installed via the system package manager'
   if command -v apt-get > /dev/null; then
     # Debian / Ubuntu
     sudo apt-get update
@@ -127,10 +130,11 @@ fi
 ### Install Homebrew
 ensurePackageManagerHomebrew() {
   if ! command -v brew > /dev/null; then
+    logg info 'Installing Homebrew'
     if command -v sudo > /dev/null && sudo -n true; then
       echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     else
-      logg info 'Homebrew is not installed. Password may be required.'
+      logg info 'Looks like the user does not have passwordless sudo privileges. A sudo password may be required.'
       bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
       if [ -n "$BREW_EXIT_CODE" ]; then
         if command -v brew > /dev/null; then
@@ -152,32 +156,39 @@ ensurePackageManagerHomebrew
 ### Install installer dependencies via Homebrew
 installBrewPackage() {
   if ! command -v "$1" > /dev/null; then
+    logg 'Installing `'"$1"'`'
     brew install "$1"
   fi
 }
 if command -v brew > /dev/null; then
   installBrewPackage chezmoi
+  installBrewPackage glow
+  installBrewPackage gum
   installBrewPackage node
   installBrewPackage zx
 fi
 
 ### Ensure source files are present
+logg 'Ensuring /usr/local/src/hiawatha is owned by the user'
 if [ -d /usr/local/src/hiawatha ] && [ ! -w /usr/local/src/hiawatha ]; then
   sudo chown -Rf "$USER":"$(id -g -n)" /usr/local/src/hiawatha
 fi
 if [ -d /usr/local/src/hiawatha/.git ]; then
+  logg info 'Pulling the latest changes from https://gitlab.com/megabyte-labs/dotfiles.git to /usr/local/src/hiawatha'
   cd /usr/local/src/hiawatha
   git config pull.rebase false
   git reset --hard HEAD
   git clean -fxd
   git pull origin master
 else
+  logg info 'Cloning https://gitlab.com/megabyte-labs/dotfiles.git to /usr/local/src/hiawatha'
   rm -rf /usr/local/src/hiawatha
   sudo git clone https://gitlab.com/megabyte-labs/dotfiles.git /usr/local/src/hiawatha
   chown -Rf "$USER":"$(id -g -n)" /usr/local/src/hiawatha
 fi
 
 ### Copy folders
+logg info 'Copying folders from /usr/local/src/hiawatha to the HOME directory'
 find /usr/local/src/hiawatha -maxdepth 1 -mindepth 1 -type d | while read FOLDER; do
   BASENAME="$(basename "$FOLDER")"
   # Prevent initial-scaffolding of OS-specific files since Chezmoi will handle them
@@ -190,6 +201,7 @@ find /usr/local/src/hiawatha -maxdepth 1 -mindepth 1 -type d | while read FOLDER
 done
 
 ### Copy files
+logg info 'Copying files from /usr/local/src/hiawatha to the HOME directory'
 find /usr/local/src/hiawatha -maxdepth 1 -mindepth 1 -type f | while read FILE; do
   BASENAME="$(basename "$FILE")"
   # Prevent repository-specific files from being copied over to user's HOME
@@ -200,9 +212,15 @@ find /usr/local/src/hiawatha -maxdepth 1 -mindepth 1 -type f | while read FILE; 
 done
 
 ### Ensure ~/.local/bin files are executable
+logg info 'Ensuring scripts in ~/.local/bin are executable'
 find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f | while read BINFILE; do
   chmod +x "$BINFILE"
 done
 
 ### Chezmoi
-echo 'Now run `chezmoi init` followed by `chezmoi apply`'
+if [ ! -f "$HOME/.config/chezmoi/chezmoi.yaml" ]; then
+  logg info 'Running `chezmoi init` since the ~/.config/chezmoi/chezmoi.yaml is not present'
+  chezmoi init
+fi
+logg info 'Running `chezmoi apply`'
+chezmoi apply

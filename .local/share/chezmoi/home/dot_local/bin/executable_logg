@@ -101,7 +101,10 @@ if [ "${container:=}" != 'docker' ]; then
     brew install gum
     GUM_PATH="$(which gum)"
   else
-    installGum
+    if ! command -v qubesctl > /dev/null; then
+      # Qubes dom0
+      installGum
+    fi
   fi
 
   # If gum's path was set, then turn on enhanced logging
@@ -136,7 +139,10 @@ logger() {
         brew install glow
         GLOW_PATH="$(which glow)"
       else
-        installGlow
+        if ! command -v qubesctl > /dev/null; then
+          # Qubes dom0
+          installGlow
+        fi
       fi
 
       if [ -n "$GLOW_PATH" ]; then
