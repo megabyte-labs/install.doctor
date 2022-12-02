@@ -24,7 +24,7 @@ config:
 fonts:
   main: Montserrat Bold
 softwareGroups:
-  basic:
+  _basic: &basic
     - bash-completion
     - bat
     - bitwarden-cli
@@ -58,20 +58,24 @@ softwareGroups:
     - wifi-password
     - zoxide
     - zx
-  basicDesktop:
+  basic:
+    << : [*basic]
+  _basicDesktop: &basicDesktop
     - brave
     - firefox
     - fonts
     - tabby
     - vscode
-  networkEnabled:
+  basicDesktop:
+    << : [*basic, *basicDesktop]
+  networkEnabled: &networkEnabled
     - cloudflared
     - cockpit
     - cups
     - lexicon
     # - maas
     - ngxtop
-  standard:
+  _standard: &standard
     - ansible
     - ansibleconnect
     - aria2
@@ -171,7 +175,9 @@ softwareGroups:
     - yq
     - yubikey-manager
     - zsh
-  standardDesktop:
+  standard:
+    << : [*basic, *standard]
+  _standardDesktop: &standardDesktop
     - autokey
     - balenaetcher
     - bitwarden-cli
@@ -222,7 +228,9 @@ softwareGroups:
     - yubikey-authenticator
     - yubikey-manager-qt
     - zoom
-  development:
+  standardDesktop:
+    << : [*basic, *standard, *basicDesktop, *standardDesktop]
+  _development: &development
     - act
     - allure
     - angular-cli
@@ -404,7 +412,9 @@ softwareGroups:
     - yamllint
     - yank
     - yarn
-  developmentDesktop:
+  development:
+    << : [*basic, *standard, *development]
+  _developmentDesktop: &developmentDesktop
     - altair
     - android-studio
     - appium
@@ -429,7 +439,9 @@ softwareGroups:
     - runjs
     - sqlectron
     - visual-studio
-  experimental:
+  developmentDesktop:
+    << : [*basic, *standard, *development, *basicDesktop, *standardDesktop, *developmentDesktop]
+  _experimental: &experimental
     - asciicinema
     - assh
     - astronvim
@@ -478,7 +490,9 @@ softwareGroups:
     - tflint
     - tilt
     - vector
-  experimentalDesktop:
+  experimental:
+    << : [*basic, *standard, *development, *experimental]
+  _experimentalDesktop: &experimentalDesktop
     - betwixt
     - lens
     - manta
@@ -486,6 +500,8 @@ softwareGroups:
     - masscode
     - mullvad-vpn
     - powershell
+  experimentalDesktop:
+    << : [*basic, *standard, *development, *experimental, *basicDesktop, *standardDesktop, *developmentDesktop, *experimentalDesktop]
   kubernetes:
     - kdash
     - kn
