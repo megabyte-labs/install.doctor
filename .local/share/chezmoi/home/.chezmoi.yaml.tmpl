@@ -95,7 +95,7 @@
 
 {{- range $toolchain := $toolchains }}
     {{- $enabled := promptBoolOnce $data.toolchains $toolchain (list "Enable" $toolchain "toolchain" | join " ") (get $toolchainsEnabled $toolchain) -}}
-    {{- if and (eq $toolchain "Kubernetes") $enabled (not $toolchainsEnabled.docker)  -}}
+    {{- if and (eq $toolchain "Kubernetes") $enabled (not $toolchainsEnabled.Docker)  -}}
     {{- $_ := set $toolchainsEnabled "Docker" $enabled }}
     {{-   writeToStdout "Enabled Docker toolchain to support Kubernetes.\n" -}}
     {{- end -}}
