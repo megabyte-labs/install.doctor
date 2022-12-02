@@ -21,13 +21,13 @@
 {{- $tabbySyncToken := (env "TABBY_SYNC_TOKEN") -}}
 {{- $timezone := "America/New_York" -}}
 {{- $toolchains := list "docker" "go" "java" "kubernetes" "python" "rust" "extras" "web" "gpg" -}}
-{{- $softwareGroup := "standard" -}}
 {{- $desktopSession := true -}}
 {{- if and (ne .chezmoi.os "darwin") (ne .chezmoi.os "windows") (not $.Env.DISPLAY) -}}
 {{-   $desktopSession = false -}}
 {{- end -}}
+{{- $softwareGroup := "Standard" -}}
 {{- if $desktopSession -}}
-{{-   $softwareGroup = "standardDesktop" -}}
+{{-   $softwareGroup = "Standard-Desktop" -}}
 {{- end -}}
 
 {{- $data := . }}
