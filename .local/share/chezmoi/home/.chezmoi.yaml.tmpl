@@ -105,22 +105,22 @@
 {{- $work = promptBoolOnce $data.host "work" "Work environment" $work -}}
 {{- $restricted = promptBoolOnce $data.host "restricted" "Restricted environment (i.e. no sudo)" $restricted -}}
 {{- $softwareGroup = promptStringOnce $data.host "softwareGroup" "Software group" $softwareGroup -}}
-{{- $name = promptStringOnce $data.user "name" "Full name:" $name -}}
+{{- $name = promptStringOnce $data.user "name" "Full name" $name -}}
 {{- $email = promptStringOnce $data.user "email" "Primary e-mail address" $email -}}
 {{- $gpgKeyId = promptStringOnce $data.user "gpgKeyId" "Public GPG key ID" $gpgKeyId -}}
 {{- $domain = promptStringOnce $data.user "domain" "Domain name" $domain -}}
 {{- $timezone = promptStringOnce $data.user "timezone" "Timezone" $timezone -}}
 {{- $cloudflareToken = promptStringOnce $data.user "cloudflareToken" "CloudFlare API Token" $cloudflareToken -}}
 {{- $githubUsername = promptStringOnce $data.user "githubUsername" "GitHub username" $githubUsername -}}
-{{- $gitlabReadToken = promptStringOnce $data.user "gitlabReadToken" "GitLab read-only token (See: https://github.com/gabrie30/ghorg#scm-provider-setup)" $gitlabReadToken }}
-{{- $githubReadToken = promptStringOnce $data.user "githubReadToken" "GitHub read-only token (See: https://github.com/gabrie30/ghorg#scm-provider-setup)" $githubReadToken }}
+{{- $gitlabReadToken = promptStringOnce $data.user "gitlabReadToken" "GitLab read-only token" $gitlabReadToken }}
+{{- $githubReadToken = promptStringOnce $data.user "githubReadToken" "GitHub read-only token" $githubReadToken }}
 {{- $gmailAddress = promptStringOnce $data.user "gmailAddress" "G-mail address" $gmailAddress -}}
 {{- $gmailAddressAppPassword = promptStringOnce $data.user "gmailAddressAppPassword" "G-mail app password" $gmailAddressAppPassword -}}
 {{- $ngrokAuthToken = promptStringOnce $data.user "ngrokAuthToken" "Ngrok authentication token" $ngrokAuthToken -}}
 {{- $slackApiToken = promptStringOnce $data.user "slackApiToken" "Slack API token" $slackApiToken -}}
-{{- $tabbyConfigId = promptStringOnce $data.user "tabbyConfigId" "Tabby Configuration ID" $tabbyConfigId -}}
+{{- $tabbyConfigId = promptStringOnce $data.user "tabbyConfigId" "Tabby configuration ID" $tabbyConfigId -}}
 {{- if not (env "TABBY_SYNC_TOKEN")) -}}
-{{-   $tabbySyncToken = promptStringOnce $data.user "tabbySyncToken" "Tabby Sync Token" $tabbySyncToken -}}
+{{-   $tabbySyncToken = promptStringOnce $data.user "tabbySyncToken" "Tabby Sync token" $tabbySyncToken -}}
 {{- end -}}
 
 {{- else -}}
