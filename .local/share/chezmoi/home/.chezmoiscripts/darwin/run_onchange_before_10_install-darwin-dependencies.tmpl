@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# darwin/Brewfile hash: {{ include (joinPath ".chezmoitemplates" "darwin" "Brewfile") | sha256sum }}
+
 {{- includeTemplate "universal/profile" }}
 {{- includeTemplate "universal/logg" }}
 

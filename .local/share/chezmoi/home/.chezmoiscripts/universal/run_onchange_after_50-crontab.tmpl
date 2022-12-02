@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 {{- if false }}
 
-# {{ output "sha256sum" (joinPath .chezmoi.sourceDir "private_dot_config/crontab/config")  }}
+# crontab config hash: {{ include (joinPath .chezmoi.homeDir ".config" "crontab" "config")| sha256sum }}
 
 {{- includeTemplate "universal/profile" }}
 {{- includeTemplate "universal/logg" }}

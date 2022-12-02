@@ -5,7 +5,7 @@
 
 ### Install Xcode CLI tools on macOS
 if [ -d /Applications ] && [ -d /Library ]; then
-  xcode-select -p >/dev/null 2>&1 || xcode-select --install
+  xcode-select -p >/dev/null 2>&1 || sudo xcode-select --install
 fi
 
 ### Install Homebrew

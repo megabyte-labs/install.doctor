@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# {{ output "sha256sum" (joinPath .chezmoi.sourceDir ".chezmoidata.yaml")  }}
+# .chezmoidata.yml hash: {{ include (joinPath .chezmoi.sourceDir ".chezmoidata.yml")| sha256sum }}
+# software.yml hash: {{ include (joinPath .chezmoi.homeDir ".local" "share" "chezmoi" "software.yml")| sha256sum }}
 
 {{- includeTemplate "universal/profile" }}
 {{- includeTemplate "universal/logg" }}
