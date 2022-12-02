@@ -600,7 +600,7 @@ async function installPackageList(packageManager, packages) {
       await $`sudo zypper install -y ${zypPkg}`
     }
   } catch (e) {
-    await $`logg error 'Failed to install via \`${packageManager}\`'`
+    await $`logg error 'Possibly encountered an error while installing via \`${packageManager}\`'`
     await $`logg info 'Proceeding with the installation..'`
   }
 }
