@@ -24,72 +24,114 @@ config:
 fonts:
   main: Montserrat Bold
 softwareGroups:
-  terminal:
+  basic:
+    - bash-completion
+    - bat
+    - bitwarden-cli
+    - chezmoi
+    - curl
+    - curlie
+    - delta
+    - direnv
+    - docker
+    - elasticagent
+    - empty-trash
+    - exa
+    - fd
+    - ffsend
+    - fkill
+    - fzf
+    - glances
+    - glow
+    - gping
+    - gtop
+    - gum
+    - neovim
+    - node
+    - oh-my-posh
+    - skate
+    - speed-test
+    - task
+    - vim
+    - wget
+    - whalebrew
+    - wifi-password
+    - zoxide
+    - zx
+  basicDesktop:
+    - brave
+    - firefox
+    - fonts
+    - tabby
+    - vscode
+  networkEnabled:
+    - cloudflared
+    - cockpit
+    - cups
+    - lexicon
+    # - maas
+    - ngxtop
+  standard:
+    - ansible
+    - ansibleconnect
     - aria2
     - asdf
     - automake
     - autorestic
     - bandwhich
-    - bat
-    - bitwarden-cli
+    - bitly
+    - bottom
+    - broot
     - cheat
-    - chezmoi
-    - cloudflared
-    - cmake
+    - commitizen
     - croc
     - ctop
-    - curl
-    - curlie
     - dasel
-    - delta
+    - dat
     - deno
     - difftastic
-    - direnv
+    - dog
     - duf
     - dust
-    - etcd
-    - exa
-    - fd
-    - ffsend
     - fq
     - fselect
     - fx
-    - fzf
+    - gdrive
     - gist
     - git
     - git-lfs
-    - git-secret
-    - gitui
-    - glances
-    - glow
+    - git-open
+    - glusterfs
     - gnu
+    - go
     - gomplate
     - googler
-    - gping
+    - gphotos-sync
     - grex
     - gron
-    - gum
-    - hexyl
-    - hey
     - htop
     - hyperfine
     - imagemagick
-    - jo
+    - imgur-uploader
+    - is-up
     - jq
-    - jq
-    - litecli
+    - kvm
+    - lxdc
     - m-cli
+    - mas
     - mcfly
     - mkcert
     - mycli
     - nb
+    - netcat
     - nmap
     - nnn
-    - node
     - ots
     - pass
     - peco
+    - pm2
     - pnpm
+    - prettier
     - procs
     - pup
     - pywhat
@@ -101,27 +143,385 @@ softwareGroups:
     - rsync
     - sd
     - shellcheck
-    - skate
+    - serve
+    - share
+    - sharp
+    - spotdl
     - sqlite
     - ssh-vault
     - sysbench
-    - task
     - t-rec
     - teller
+    - tig
+    - tinypng
+    - tldr
     - tmux
+    - translate
     - tree
+    - typescript
     - up
+    - vagrant
     - vault
     - vim
     - volta
     - watchexec
-    - wget
-    - whalebrew
     - yj
+    - ykman
+    - youtube-dl
     - yq
-    - zoxide
+    - yubikey-manager
     - zsh
-    - zx
+  standardDesktop:
+    - autokey
+    - balenaetcher
+    - bitwarden-cli
+    - cerebro
+    - chrome
+    - clocker
+    - cumulus
+    - dat-desktop
+    - g-assist
+    - gimp
+    - inkscape
+    - jitsi-meet-electron
+    - keybase
+    - kodi
+    - ledgerlive
+    - libreoffice
+    - lollypop
+    - mailspring
+    - microsoft-office
+    - microsoft-todo
+    - motrix
+    - nuclear
+    # - onionshare
+    - parallels
+    - peek
+    - plex
+    - portmaster
+    - pretzel
+    - proton
+    - qtbittorrent
+    - qlplugins
+    - remote-desktop
+    - rofi
+    # - secretive
+    - sharex
+    - shotcut
+    - shotwell
+    - skype
+    - slack
+    - stats
+    - teams
+    - teamviewer
+    - temps
+    - timeshift
+    - virtualbox
+    - vlc
+    - webtorrent
+    - yubikey-authenticator
+    - yubikey-manager-qt
+    - zoom
+  development:
+    - act
+    - allure
+    - angular-cli
+    - ansible-lint
+    - aqua
+    - argocli
+    - auto-install
+    - automake
+    - awscli
+    - azurecli
+    - azurefunctions
+    - bane
+    - beets
+    - bin
+    - browser-sync
+    - bundler
+    - caniuse
+    - carbon-now
+    - carthage
+    - clair
+    - cmake
+    - cocoapods
+    - composer
+    - container-structure-test
+    - cookiecutter
+    - cordova
+    - delve
+    - deno
+    - desed
+    - dframe
+    - dive
+    - docker-slim
+    - dockle
+    - dotenv-linter
+    - dotnet
+    - dprint
+    - drone
+    - easyengine
+    - editly
+    - electron
+    - emma
+    - emoj
+    - eslint
+    - etcd
+    - exiftool
+    - fastify
+    - feathers
+    - filebrowser
+    - firebase
+    - flutter
+    - fpm
+    - fq
+    - fuego
+    - fx
+    - gcloud
+    - gdown
+    - gfi
+    - gh
+    - ghorg
+    - git-filter-repo
+    - git-lfs
+    - git-secret
+    - gitui
+    - gitextras
+    - gitfuzzy
+    - gitlabrunner
+    - gitleaks
+    - gitomatic
+    - gitsome
+    - gitstats
+    - gixy
+    - glab
+    - glen
+    - go-chromecast
+    - go-outline
+    - golangci-lint
+    - gomodifytags
+    - gopkgs
+    - gopls
+    - gotests
+    - grype
+    - gulp
+    - hadolint
+    - hclq
+    - heroku
+    - hexyl
+    - hey
+    - hostctl
+    - htmlq
+    - http-prompt
+    - httpie
+    - httpstat
+    - hub
+    - ideviceinstaller
+    - impl
+    - infracost
+    - ionic
+    - ios-deploy
+    - ipfs
+    - ipfs-deploy
+    - jiq
+    - jo
+    - litecli
+    - jqp
+    - juju
+    - libimobiledevice
+    - localtunnel
+    - mc # TODO
+    - mitmproxy
+    - mkcert
+    - mockoon
+    - molecule
+    - mycli
+    - nativefier
+    - ncc
+    - nectar
+    - nest
+    - newman
+    - node-prune
+    - nomad
+    - nomino
+    - np
+    - npm-check
+    - oq
+    - package-size
+    - packer
+    - pageres
+    - pandoc
+    - pastel
+    - pkg
+    - playwright
+    - psi
+    - psu
+    - ramda
+    - rancher
+    - ruby
+    - rust
+    - s5cmd
+    - schema
+    - scrcpy
+    - sdkman
+    - semantic-release
+    - sentry-cli
+    - serverless
+    - shc
+    - shdoc
+    - shfmt
+    - slackterm
+    - sloth
+    - snitch
+    - starred
+    - statcode
+    - staticcheck
+    - stegcloak
+    - surge
+    - svgo
+    - t
+    - t-rec
+    - terminalizer
+    - tokei
+    - trellis
+    - trivy
+    - trufflehog
+    - ts2c
+    - up
+    - upx
+    - virtualenv
+    - watchexec
+    - watchman
+    - waypoint
+    - websocat
+    - whaler
+    - winrm-cli
+    - wireshark
+    - wkhtmltopdf
+    - wordpressify
+    - wrangler
+    - xurls
+    - yamllint
+    - yank
+    - yarn
+  developmentDesktop:
+    - altair
+    - android-studio
+    - appium
+    - fig
+    - filezilla
+    - gitdock
+    - gitify
+    - gitkraken
+    - intellij-idea-ce
+    - ipfs-desktop
+    - iterm2
+    - lepton
+    - microsoft-edge
+    - mjml
+    - mqttx
+    - postman
+    - pre-commit
+    - quasar
+    - raspberry-pi-imager
+    - redis-desktop-manager
+    - responsively
+    - runjs
+    - sqlectron
+    - visual-studio
+  experimental:
+    - asciicinema
+    - assh
+    - astronvim
+    - awxcli
+    - budibase-cli
+    - cfssl
+    - chef
+    - chrome-cli
+    - cointop
+    - confd
+    - consul
+    - curator
+    - deta
+    - difftastic
+    - doctl
+    - envconsul
+    - fission
+    - fly
+    - fm
+    - fselect
+    - gdown
+    - gojq
+    - himalaya
+    - lazygit
+    - linuxkit
+    - logcli
+    - mergestat
+    - minikube
+    - mole
+    - muffet
+    - nebula
+    - osquery
+    - page-fetch
+    - papertrail
+    - poetry
+    - pony
+    - q
+    - sftpgo
+    - skm
+    - social-analyzer
+    - solidity
+    - teleport
+    - teller
+    - termius
+    - tfenv
+    - tflint
+    - tilt
+    - vector
+  experimentalDesktop:
+    - betwixt
+    - lens
+    - manta
+    - mark-text
+    - masscode
+    - mullvad-vpn
+    - powershell
+  kubernetes:
+    - kdash
+    - kn
+    - kubectx
+    - kubenav
+    - kubernetes-cli
+    - kubernetes-helm
+    - kubernetes-kompose
+    - kubeval
+    - linkerd2
+    - velero
+  deprecated:
+    - bivac
+    - boilr
+    - captain
+    - consul-cli
+    - consultemplate
+    - diffsofancy
+    - emplace
+    - htop
+    - hyper
+    - jenv
+    - kitty
+    - license
+    - lpass
+    - lsd
+    - mackup
+    - nvm
+    - pyenv
+    - raindrop
+    - rear
+    - sad
+    - supdock
+    - transfer
+    - ulauncher
+    - upt
 softwarePlugins:
   vim:
     plugins:

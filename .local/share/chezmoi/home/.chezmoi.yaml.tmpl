@@ -12,15 +12,23 @@
 {{- $cloudflareSecretAccessKey := "" -}}
 {{- $cloudflareR2AccountId := "" -}}
 {{- $githubUsername := "ProfessorManhattan" -}}
-{{- $githubReadToken := "" -}}
-{{- $gitlabReadToken := "" -}}
+{{- $githubReadToken := $.Env.GITHUB_READ_TOKEN -}}
+{{- $gitlabReadToken := $.Env.GITLAB_READ_TOKEN -}}
 {{- $locale := (output "echo" "$LANG") }}
-{{- $ngrokAuthToken := "" -}}
-{{- $slackApiToken := "" -}}
-{{- $tabbyConfigId := "" -}}
-{{- $tabbySyncToken := "" -}}
+{{- $ngrokAuthToken := $.Env.NGROK_AUTH_TOKEN -}}
+{{- $slackApiToken := $.Env.SLACK_API_TOKEN -}}
+{{- $tabbyConfigId := $.Env.TABBY_CONFIG_ID -}}
+{{- $tabbySyncToken := $.Env.TABBY_SYNC_TOKEN -}}
 {{- $timezone := "America/New_York" -}}
-{{- $toolchains := list "docker" "iac" "java" "kubernetes" "node" "python" "rust" "extra" "gpg" -}}
+{{- $toolchains := list "docker" "go" "java" "kubernetes" "python" "rust" "extras" "web" "gpg" -}}
+{{- $softwareGroup := "standard" -}}
+{{- $desktopSession := true -}}
+{{- if and (ne .chezmoi.os "darwin") (ne .chezmoi.os "windows") (not $.Env.DISPLAY) -}}
+{{-   $desktopSession = false -}}
+{{- end -}}
+{{- if $desktopSession -}}
+{{-   $softwareGroup = "standardDesktop" -}}
+{{- end -}}
 
 {{- $data := . }}
 {{- $_ := set $data "host" (default (dict) (get $data "host")) -}}
@@ -85,11 +93,6 @@
 
 {{- if stdinIsATTY -}}
 
-{{- $work = promptBoolOnce $data.host "work" "Work Environment" $work -}}
-{{- $restricted = promptBoolOnce $data.host "restricted" "Restricted Environment (no sudo access)" $restricted -}}
-{{- $name = promptStringOnce $data.user "name" "Your Name" $name -}}
-{{- $email = promptStringOnce $data.user "email" "Your Email" $email -}}
-
 {{- range $toolchain := $toolchains }}
     {{- $enabled := promptBoolOnce $data.toolchains $toolchain (list "Enable" $toolchain "toolchain" | join " ") (get $toolchainsEnabled $toolchain) -}}
     {{- if and (eq $toolchain "kubernetes") $enabled (not $toolchainsEnabled.docker)  -}}
@@ -99,8 +102,13 @@
     {{- $_ := set $toolchainsEnabled $toolchain $enabled }}
 {{- end }}
 
+{{- $work = promptBoolOnce $data.host "work" "Work environment" $work -}}
+{{- $restricted = promptBoolOnce $data.host "restricted" "Restricted environment (i.e. no sudo)" $restricted -}}
+{{- $softwareGroup = promptStringOnce $data.host "softwareGroup" "Software group" $softwareGroup -}}
+{{- $name = promptStringOnce $data.user "name" "Full name:" $name -}}
+{{- $email = promptStringOnce $data.user "email" "Primary e-mail address" $email -}}
 {{- $gpgKeyId = promptStringOnce $data.user "gpgKeyId" "Public GPG key ID" $gpgKeyId -}}
-{{- $domain = promptStringOnce $data.user "domain" "Domain" $domain -}}
+{{- $domain = promptStringOnce $data.user "domain" "Domain name" $domain -}}
 {{- $timezone = promptStringOnce $data.user "timezone" "Timezone" $timezone -}}
 {{- $cloudflareToken = promptStringOnce $data.user "cloudflareToken" "CloudFlare API Token" $cloudflareToken -}}
 {{- $githubUsername = promptStringOnce $data.user "githubUsername" "GitHub username" $githubUsername -}}
@@ -130,13 +138,14 @@ data:
     cpu:
       cores: "{{ $cpuCores }}"
       threads: "{{ $cpuThreads }}"
+    desktopSession: "{{ $desktopSession }}"
     distro:
       family: "{{ .chezmoi.os }}"
       id: "{{ get .chezmoi.osRelease "id" | default .chezmoi.os }}"
     home: "{{ .chezmoi.homeDir }}"
     homeParentFolder: "{{ if eq .chezmoi.os "linux" }}/home{{ else if eq .chezmoi.os "darwin" }}/Users{{ else }}C:\Users{{ end }}"
     qubes: {{ ne (stat (joinPath "usr" "bin" "qubes-session")) false }}
-    softwareGroup: "terminal"
+    softwareGroup: "standard"
     type: "{{ $chassisType }}"
     work: {{ $work }}
     restricted: {{ $restricted }}
