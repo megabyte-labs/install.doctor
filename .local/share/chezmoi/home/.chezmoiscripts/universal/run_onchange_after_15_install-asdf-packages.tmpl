@@ -1,5 +1,5 @@
-{{- if (ne .host.distro.family "windows") }}
 #!/usr/bin/env bash
+{{- if (ne .host.distro.family "windows") }}
 
 # dot_tool-versions.tmpl hash: {{ include "dot_tool-versions.tmpl" | sha256sum }}
 
@@ -13,4 +13,5 @@ if [ -f "$ASDF_DIR/asdf.sh" ] && [ -f ~/.tool-versions ]; then
 else
   logg warn 'The `$ASDF_DIR/asdf.sh` or `~/.tool-versions` file is not present'
 fi
+
 {{ end -}}

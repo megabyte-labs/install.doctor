@@ -1,4 +1,3 @@
-{{- if (eq .host.distro.family "darwin") }}
 #!/usr/bin/env bash
 
 {{- includeTemplate "universal/logg" }}
@@ -15,4 +14,3 @@ if [[ ! -e /usr/local/bin/zsh ]]; then
 fi
 {{- end -}}
 {{- end }}
-{{ end -}}

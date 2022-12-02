@@ -1,5 +1,5 @@
-{{- if (eq .host.headless true) }}
 #!/usr/bin/env bash
+{{- if (eq .host.headless true) }}
 
 # .zshrc hash: {{ include (joinPath .chezmoi.homeDir ".zshrc")| sha256sum }}
 
