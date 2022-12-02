@@ -11,7 +11,7 @@
 
 # Default to system open executable on macOS
 if [ -d /Applications ] && [ -d /Library ]; then
-  \open $@
+  /usr/bin/open $@
 fi
 
 # shellcheck disable=SC2124
