@@ -29,6 +29,9 @@ if command -v exa > /dev/null; then
   alias tree='exa --tree'
   alias la='ls -la'
   alias lt='ls --tree --level=2'
+else
+  # Show full output when using ls
+  alias ls='ls -AlhF --color=auto'
 fi
 
 ### gping
@@ -90,9 +93,6 @@ alias gsudo='sudo git -c "include.path="${XDG_CONFIG_DIR:-$HOME/.config}/git/con
 
 # Create hashed password for Ansible user creation
 alias hashpassword='mkpasswd --method=sha-512'
-
-# Show full output when using ls
-alias ls='ls -AlhF --color=auto'
 
 # Create parent directories automatically
 alias mkdir='mkdir -pv'
@@ -186,4 +186,4 @@ alias wget="wget --hsts-file ~/.config/.wget-hsts"
 alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
 
 # Running this will update GPG to point to the current YubiKey
-alias yubikey-gpg-stub='gpg-connect-agent "scd serialno" "learn --force" /bye'
+alias yubi-stub='gpg-connect-agent "scd serialno" "learn --force" /bye'
