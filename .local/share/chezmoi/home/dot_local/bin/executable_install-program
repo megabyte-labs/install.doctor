@@ -285,6 +285,13 @@ async function ensureInstalled(bin, callback) {
   }
 }
 
+async function ensurePackageManagerAnsible() {
+  await $`pipx install ansible`
+  await $`pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog`
+  await $`touch "$HOME/.cache/megabytelabs/ansible-installed"`
+  await $`logg info 'Ansible and its supporting packages are now installed via pipx'`
+}
+
 // Ensure the package manager is available
 let packageManagerInstalled = {};
 async function ensurePackageManager(packageManager) {
@@ -308,15 +315,17 @@ async function ensurePackageManager(packageManager) {
   }
   if (packageManager === 'appimage') {
   } else if (packageManager === 'ansible') {
-    $`
-      if [ ! -f "$HOME/.cache/megabytelabs/ansible-installed" ] || ! command -v ansible > /dev/null; then
-        pipx install ansible
-        pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
-        touch "$HOME/.cache/megabytelabs/ansible-installed"
-      else
-        logg info '\`ansible\` and its supporting packages appear to be installed'
-      fi
-    `
+    try {
+      await $`test -f "$HOME/.cache/megabytelabs/ansible-installed"`
+      const ansible = which.sync('ansible', { nothrow: true })
+      if (ansible) {
+        await $`logg info '\`ansible\` and its supporting packages appear to be installed'`
+      } else {
+        await ensurePackageManagerAnsible()
+      }
+    } catch (e) {
+      await ensurePackageManagerAnsible()
+    }
   } else if (packageManager === 'apk') {
     await ensureInstalled('apk', false)
   } else if (packageManager === 'apt') {
@@ -543,8 +552,8 @@ async function ensurePackageManager(packageManager) {
 
 // Installs a list of packages via the specified package manager
 async function installPackageList(packageManager, packages) {
+  let pkg = packages
   try {
-    let pkg = packages
     if (packageManager === 'appimage') {
     } else if (packageManager === 'ansible') {
       for (const role of packages) {

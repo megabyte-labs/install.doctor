@@ -214,8 +214,17 @@ async function afterInstall(packageManager) {
 async function beforeInstall(packageManager) {
   if (packageManager === 'appimage') {
   } else if (packageManager === 'ansible') {
-    await $`logg info 'Temporarily enabling passwordless sudo for Ansible role installations'`
-    await $`sudo echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR ANSIBLE INSTALL" > /etc/sudoers`
+    try {
+      await $`test -f "$HOME/.cache/megabytelabs/ansible-installed"`
+      const ansible = which.sync('ansible', { nothrow: true })
+      if (ansible) {
+        await $`logg info '\`ansible\` and its supporting packages appear to be installed'`
+      } else {
+        await ensurePackageManagerAnsible()
+      }
+    } catch (e) {
+      await ensurePackageManagerAnsible()
+    }
   } else if (packageManager === 'apk') {
   } else if (packageManager === 'apt') {
     await $`sudo apt-get update`
