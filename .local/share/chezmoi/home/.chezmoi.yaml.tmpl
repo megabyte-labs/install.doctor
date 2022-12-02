@@ -1,33 +1,33 @@
-{{- $name := "Brian Zalewski" -}}
-{{- $email := "brian@megabyte.space" -}}
-{{- $restricted := false -}}
-{{- $work := false -}}
-{{- $gpgKeyId := "0xF0A300E4199A1C33" -}}
-{{- $gmailAddress := "blzalewski@gmail.com" -}}
-{{- $gmailAddressAppPassword := "" -}}
-{{- $domain := "megabyte.space" -}}
-{{- $cloudflareUsername := "brian@megabyte.space" -}}
+{{- $name := (default "Brian Zalewski" (env "FULL_NAME")) -}}
+{{- $email := (default "brian@megabyte.space" (env "PRIMARY_EMAIL")) -}}
+{{- $restricted := (default false (env "WORK_ENVIRONMENT")) -}}
+{{- $work := (default false (env "WORK_ENVIRONMENT") -}}
+{{- $gpgKeyId := (default "0xF0A300E4199A1C33" (env "KEYID")) -}}
+{{- $gmailAddress := (default "blzalewski@gmail.com" (env "GMAIL_ADDRESS")) -}}
+{{- $gmailAddressAppPassword := (default "" (env "GMAIL_APP_PASSWORD")) -}}
+{{- $domain := (default "megabyte.space" (env "PUBLIC_SERVICES_DOMAIN")) -}}
+{{- $cloudflareUsername := (default "brian@megabyte.space" (env "CLOUDFLARE_USERNAME")) -}}
 {{- $cloudflareToken := "" -}}
 {{- $cloudflareAccessKeyId := "" -}}
 {{- $cloudflareSecretAccessKey := "" -}}
 {{- $cloudflareR2AccountId := "" -}}
-{{- $githubUsername := "ProfessorManhattan" -}}
+{{- $githubUsername := (default "ProfessorManhattan" (env "GITHUB_USERNAME")) -}}
 {{- $githubReadToken := (env "GITHUB_READ_TOKEN") -}}
 {{- $gitlabReadToken := (env "GITLAB_READ_TOKEN") -}}
 {{- $locale := (output "echo" "$LANG") }}
-{{- $ngrokAuthToken := (env "NGROK_AUTH_TOKEN") -}}
-{{- $slackApiToken := (env "SLACK_API_TOKEN") -}}
-{{- $tabbyConfigId := (env "TABBY_CONFIG_ID") -}}
-{{- $tabbySyncToken := (env "TABBY_SYNC_TOKEN") -}}
-{{- $timezone := "America/New_York" -}}
+{{- $ngrokAuthToken := (default "" (env "NGROK_AUTH_TOKEN")) -}}
+{{- $slackApiToken := (default "" (env "SLACK_API_TOKEN")) -}}
+{{- $tabbyConfigId := (default "" (env "TABBY_CONFIG_ID")) -}}
+{{- $tabbySyncToken := (default "" (env "TABBY_SYNC_TOKEN")) -}}
+{{- $timezone := (default "America/New_York" (env "TIMEZONE")) -}}
 {{- $toolchains := list "docker" "go" "java" "kubernetes" "python" "rust" "extras" "web" "gpg" -}}
 {{- $desktopSession := true -}}
-{{- if and (ne .chezmoi.os "darwin") (ne .chezmoi.os "windows") (not $.Env.DISPLAY) -}}
+{{- if and (ne .chezmoi.os "darwin") (ne .chezmoi.os "windows") (not (env "DISPLAY")) -}}
 {{-   $desktopSession = false -}}
 {{- end -}}
-{{- $softwareGroup := "Standard" -}}
+{{- $softwareGroup := (default "Standard" (env "SOFTWARE_GROUP")) -}}
 {{- if $desktopSession -}}
-{{-   $softwareGroup = "Standard-Desktop" -}}
+{{-   $softwareGroup = (join $softwareGroup "-Desktop") -}}
 {{- end -}}
 
 {{- $data := . }}
@@ -119,7 +119,9 @@
 {{- $ngrokAuthToken = promptStringOnce $data.user "ngrokAuthToken" "Ngrok authentication token" $ngrokAuthToken -}}
 {{- $slackApiToken = promptStringOnce $data.user "slackApiToken" "Slack API token" $slackApiToken -}}
 {{- $tabbyConfigId = promptStringOnce $data.user "tabbyConfigId" "Tabby Configuration ID" $tabbyConfigId -}}
-{{- $tabbySyncToken = promptStringOnce $data.user "tabbySyncToken" "Tabby Sync Token" $tabbySyncToken -}}
+{{- if not (env "TABBY_SYNC_TOKEN")) -}}
+{{-   $tabbySyncToken = promptStringOnce $data.user "tabbySyncToken" "Tabby Sync Token" $tabbySyncToken -}}
+{{- end -}}
 
 {{- else -}}
 {{-   $headless = true -}}
