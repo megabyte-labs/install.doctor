@@ -602,7 +602,7 @@ async function installPackageList(packageManager, packages) {
     }
   } catch (e) {
     await $`logg error 'Possibly encountered an error while installing via \`${packageManager}\`'`
-    await $`logg info 'Error was encountered while installing: ${pkg}'
+    await $`logg info 'Error was encountered while installing: ${pkg}'`
     await $`logg info 'Proceeding with the installation..'`
   }
 }

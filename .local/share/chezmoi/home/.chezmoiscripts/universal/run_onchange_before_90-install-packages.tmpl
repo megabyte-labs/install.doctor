@@ -3,13 +3,13 @@
 {{- includeTemplate "universal/profile" }}
 {{- includeTemplate "universal/logg" }}
 
-# software: {{ replace (replace (index .softwareGroups .host.softwareGroup | join " ") "[" "") "]" "" }}
+# software: {{ index .softwareGroups .host.softwareGroup | toString | replace "[" "" | replace "]" "" }}
 
 if command -v install-program > /dev/null; then
   if command -v zx > /dev/null; then
-    logg 'Installing packages defined in .chezmoidata.yaml under the .softwareGroups key'
-    logg 'Installing: {{ index .softwareGroups .host.softwareGroup | join " " }}'
-    install-program {{ replace (replace (index .softwareGroups .host.softwareGroup | join " ") "[" "") "]" "" }}
+    logg info 'Installing packages defined in .chezmoidata.yaml under the .softwareGroups key'
+    logg info 'Installing: {{ index .softwareGroups .host.softwareGroup | toString | replace "[" "" | replace "]" "" }}'
+    install-program {{ index .softwareGroups .host.softwareGroup | toString | replace "[" "" | replace "]" "" }}
   else
     logg error '`zx` is not available'
   fi
