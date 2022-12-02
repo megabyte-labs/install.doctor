@@ -214,17 +214,8 @@ async function afterInstall(packageManager) {
 async function beforeInstall(packageManager) {
   if (packageManager === 'appimage') {
   } else if (packageManager === 'ansible') {
-    try {
-      await $`test -f "$HOME/.cache/megabytelabs/ansible-installed"`
-      const ansible = which.sync('ansible', { nothrow: true })
-      if (ansible) {
-        await $`logg info '\`ansible\` and its supporting packages appear to be installed'`
-      } else {
-        await ensurePackageManagerAnsible()
-      }
-    } catch (e) {
-      await ensurePackageManagerAnsible()
-    }
+    await $`logg info 'Temporarily enabling passwordless sudo for Ansible role installations'`
+    await $`sudo echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR ANSIBLE INSTALL" > /etc/sudoers`
   } else if (packageManager === 'apk') {
   } else if (packageManager === 'apt') {
     await $`sudo apt-get update`
@@ -294,6 +285,13 @@ async function ensureInstalled(bin, callback) {
   }
 }
 
+async function ensurePackageManagerAnsible() {
+  await $`pipx install ansible`
+  await $`pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog`
+  await $`touch "$HOME/.cache/megabytelabs/ansible-installed"`
+  await $`logg info 'Ansible and its supporting packages are now installed via pipx'`
+}
+
 // Ensure the package manager is available
 let packageManagerInstalled = {};
 async function ensurePackageManager(packageManager) {
@@ -317,15 +315,17 @@ async function ensurePackageManager(packageManager) {
   }
   if (packageManager === 'appimage') {
   } else if (packageManager === 'ansible') {
-    $`
-      if [ ! -f "$HOME/.cache/megabytelabs/ansible-installed" ] || ! command -v ansible > /dev/null; then
-        pipx install ansible
-        pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
-        touch "$HOME/.cache/megabytelabs/ansible-installed"
-      else
-        logg info '\`ansible\` and its supporting packages appear to be installed'
-      fi
-    `
+    try {
+      await $`test -f "$HOME/.cache/megabytelabs/ansible-installed"`
+      const ansible = which.sync('ansible', { nothrow: true })
+      if (ansible) {
+        await $`logg info '\`ansible\` and its supporting packages appear to be installed'`
+      } else {
+        await ensurePackageManagerAnsible()
+      }
+    } catch (e) {
+      await ensurePackageManagerAnsible()
+    }
   } else if (packageManager === 'apk') {
     await ensureInstalled('apk', false)
   } else if (packageManager === 'apt') {
@@ -342,26 +342,29 @@ async function ensurePackageManager(packageManager) {
       echo "Bash script that installs bpkg here"
     `)
   } else if (packageManager === 'brew' || packageManager === 'cask') {
-    await ensureInstalled('brew', $`
-      if command -v sudo > /dev/null && sudo -n true; then
-        echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      else
-        logg info 'Homebrew is not installed. Password may be required.'
-        bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
-        if [ -n "$BREW_EXIT_CODE" ]; then
-          if command -v brew > /dev/null; then
-            logg warn 'Homebrew was installed but part of the installation failed. Attempting to fix..'
-            BREW_DIRS="share/man share/doc share/zsh/site-functions etc/bash_completion.d"
-            for BREW_DIR in $BREW_DIRS; do
-              if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
-                sudo chown -R "$(whoami)" "$(brew --prefix)/$BREW_DIR"
-              fi
-            done
-            brew update --force --quiet
+    const brew = which.sync('brew', { nothrow: true })
+    if (!brew) {
+      await ensureInstalled('brew', $`
+        if command -v sudo > /dev/null && sudo -n true; then
+          echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        else
+          logg info 'Homebrew is not installed. Password may be required.'
+          bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+          if [ -n "$BREW_EXIT_CODE" ]; then
+            if command -v brew > /dev/null; then
+              logg warn 'Homebrew was installed but part of the installation failed. Attempting to fix..'
+              BREW_DIRS="share/man share/doc share/zsh/site-functions etc/bash_completion.d"
+              for BREW_DIR in $BREW_DIRS; do
+                if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
+                  sudo chown -R "$(whoami)" "$(brew --prefix)/$BREW_DIR"
+                fi
+              done
+              brew update --force --quiet
+            fi
           fi
         fi
-      fi
-    `)
+      `)
+    }
   } else if (packageManager === 'cargo') {
     await ensureInstalled('cargo', $`
       # TODO Bash script that installs cargo
@@ -549,6 +552,7 @@ async function ensurePackageManager(packageManager) {
 
 // Installs a list of packages via the specified package manager
 async function installPackageList(packageManager, packages) {
+  let pkg = packages
   try {
     if (packageManager === 'appimage') {
     } else if (packageManager === 'ansible') {
@@ -566,8 +570,8 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'cask') {
       await $`brew install --cask ${packages}`
     } else if (packageManager === 'cargo') {
-      for (const cargoPkg of packages) {
-        await $`cargo install ${cargoPkg}`
+      for (const pkg of packages) {
+        await $`cargo install ${pkg}`
       }
     } else if (packageManager === 'choco') {
       await $`choco install -y ${packages}`
@@ -581,55 +585,56 @@ async function installPackageList(packageManager, packages) {
         await $`yum install -y ${packages}`
       }
     } else if (packageManager === 'flatpak') {
-      for (const flatPkg of packages) {
-        await $`sudo flatpak install flathub ${flatPkg}`
+      for (let pkg of packages) {
+        await $`sudo flatpak install flathub ${pkg}`
       }
     } else if (packageManager === 'gem') {
-      for (const gem of packages) {
-        await $`gem install ${gem}`
+      for (let pkg of packages) {
+        await $`gem install ${pkg}`
       }
     } else if (packageManager === 'go') {
-      for (const goPkg of packages) {
-        await $`go install ${goPkg}`
+      for (let pkg of packages) {
+        await $`go install ${pkg}`
       }
     } else if (packageManager === 'nix') {
     } else if (packageManager === 'npm') {
-      for (const npmPkg of packages) {
-        await $`volta install ${npmPkg}`
+      for (let pkg of packages) {
+        await $`volta install ${pkg}`
       }
     } else if (packageManager === 'pacman') {
       await $`sudo pacman -Sy --noconfirm --needed ${packages}`
     } else if (packageManager === 'pipx') {
-      for (const pipxPkg of packages) {
-        await $`pipx install ${pipxPkg}`
+      for (let pkg of packages) {
+        await $`pipx install ${pkg}`
       }
     } else if (packageManager === 'pkg') {
     } else if (packageManager === 'port') {
-      for (const portPkg of packages) {
-        // TODO await $`sudo port install ${portPkg}`
+      for (let pkg of packages) {
+        await $`sudo port install ${pkg}`
       }
     } else if (packageManager === 'scoop') {
-      for (const scoopPkg of packages) {
-        await $`scoop install ${scoopPkg}`
+      for (let pkg of packages) {
+        await $`scoop install ${pkg}`
       }
     } else if (packageManager === 'snap') {
-      for (const snapPkg of packages) {
-        await $`sudo snap install -y ${snapPkg}`
+      for (let pkg of packages) {
+        await $`sudo snap install -y ${pkg}`
       }
     } else if (packageManager === 'whalebrew') {
-      for (const whalePkg of packages) {
-        await $`whalebrew install ${snapPkg}`
+      for (let pkg of packages) {
+        await $`whalebrew install ${pkg}`
       }
     } else if (packageManager === 'winget') {
     } else if (packageManager === 'yay') {
-      for (const yayPkg of packages) {
-        await $`yay -Sy --noconfirm --needed ${yayPkg}`
+      for (let pkg of packages) {
+        await $`yay -Sy --noconfirm --needed ${pkg}`
       }
     } else if (packageManager === 'zypper') {
-      await $`sudo zypper install -y ${zypPkg}`
+      await $`sudo zypper install -y ${packages}`
     }
   } catch (e) {
-    await $`logg error 'Failed to install via \`${packageManager}\`'`
+    await $`logg error 'Possibly encountered an error while installing via \`${packageManager}\`'`
+    await $`logg info 'Error was encountered while installing: ${pkg}'`
     await $`logg info 'Proceeding with the installation..'`
   }
 }
