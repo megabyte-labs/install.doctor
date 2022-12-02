@@ -255,7 +255,7 @@ async function ensureInstalled(bin, callback) {
   } else {
     await $`logg warn '\`${bin}\` is not installed!'`
     if (callback) {
-      await $callback
+      await callback
     } else {
       await $`logg error 'There does not appear to be an installation method available for \`${bin}\`'`
     }
@@ -299,18 +299,18 @@ async function ensurePackageManager(packageManager) {
   } else if (packageManager === 'apt') {
     await ensureInstalled('apt', false)
   } else if (packageManager === 'basher') {
-    await ensureInstalled('basher', `
+    await ensureInstalled('basher', $`
       # TODO
       echo "Bash script that installs basher here"
     `)
   } else if (packageManager === 'binary') {
   } else if (packageManager === 'bpkg') {
-    await ensureInstalled('bpkg', `
+    await ensureInstalled('bpkg', $`
       # TODO
       echo "Bash script that installs bpkg here"
     `)
   } else if (packageManager === 'brew' || packageManager === 'cask') {
-    await ensureInstalled('brew', `
+    await ensureInstalled('brew', $`
       if command -v sudo > /dev/null && sudo -n true; then
         echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       else
@@ -331,15 +331,15 @@ async function ensurePackageManager(packageManager) {
       fi
     `)
   } else if (packageManager === 'cargo') {
-    await ensureInstalled('cargo', `
+    await ensureInstalled('cargo', $`
       # TODO Bash script that installs cargo
     `)
   } else if (packageManager === 'choco') {
-    await ensureInstalled('choco', `
+    await ensureInstalled('choco', $`
       powershell "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
     `)
   } else if (packageManager === 'crew') {
-    await ensureInstalled('crew', `
+    await ensureInstalled('crew', $`
       # TODO Bash script that installs crew here
       # Source: https://github.com/chromebrew/chromebrew
       curl -Ls git.io/vddgY | bash
@@ -395,11 +395,11 @@ async function ensurePackageManager(packageManager) {
       await $`logg info '\`flatpak\` was installed. It may require a reboot to function correctly.'`
     }
   } else if (packageManager === 'gem') {
-    await ensureInstalled('gem', `brew install ruby`)
+    await ensureInstalled('gem', $`brew install ruby`)
   } else if (packageManager === 'go') {
-    await ensureInstalled('gem', `brew install go`)
+    await ensureInstalled('gem', $`brew install go`)
   } else if (packageManager === 'nix') {
-    await ensureInstalled('nix', `
+    await ensureInstalled('nix', $`
       if [ -d /Applications ] && [ -d /Library ]; then
         sh <(curl -L https://nixos.org/nix/install)
       else
@@ -427,15 +427,15 @@ async function ensurePackageManager(packageManager) {
   } else if (packageManager === 'pacman') {
     await ensureInstalled('pacman', false)
   } else if (packageManager === 'pipx') {
-    await ensureInstalled('pipx', `brew install pipx && pipx ensurepath`)
+    await ensureInstalled('pipx', $`brew install pipx && pipx ensurepath`)
   } else if (packageManager === 'pkg') {
     await ensureInstalled('pkg', false)
   } else if (packageManager === 'port') {
-    await ensureInstalled('port', `
+    await ensureInstalled('port', $`
       echo -n "TODO - script that installs port on macOS here"
     `)
   } else if (packageManager === 'scoop') {
-    await ensureInstalled('scoop', `
+    await ensureInstalled('scoop', $`
       powershell 'Set-ExecutionPolicy RemoteSigned -Scope CurrentUser'
       powershell 'irm get.scoop.sh | iex
     `)
@@ -495,9 +495,9 @@ async function ensurePackageManager(packageManager) {
         $`sudo snap install core`
       }
   } else if (packageManager === 'whalebrew') {
-    await ensureInstalled('whalebrew', `brew install whalebrew`)
+    await ensureInstalled('whalebrew', $`brew install whalebrew`)
   } else if (packageManager === 'winget') {
-    await ensureInstalled('winget', `
+    await ensureInstalled('winget', $`
       echo "TODO - Script that installs winget here"
     `)
   } else if (packageManager === 'yay') {
