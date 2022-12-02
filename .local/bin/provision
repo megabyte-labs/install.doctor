@@ -181,7 +181,7 @@ fi
 find /usr/local/src/hiawatha -maxdepth 1 -mindepth 1 -type d | while read FOLDER; do
   BASENAME="$(basename "$FOLDER")"
   # Prevent initial-scaffolding of OS-specific files since Chezmoi will handle them
-  if [[ "$BASENAME" != 'AppData' ]] && [[ "$BASENAME" != 'Library' ]]; then
+  if [ "$BASENAME" != 'AppData' ] && [ "$BASENAME" != 'Library' ] && [ "$BASENAME" != '.git' ]; then
     if [ ! -d "$HOME/$BASENAME" ]; then
       mkdir -p "$HOME/$BASENAME"
     fi
@@ -205,4 +205,4 @@ find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f | while read BINFILE; do
 done
 
 ### Chezmoi
-echo "Now run chezmoi init followed by chezmoi apply"
+echo 'Now run `chezmoi init` followed by `chezmoi apply`'
