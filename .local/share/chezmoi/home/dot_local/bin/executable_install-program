@@ -521,6 +521,7 @@ async function ensurePackageManager(packageManager) {
 // Installs a list of packages via the specified package manager
 async function installPackageList(packageManager, packages) {
   try {
+    let pkg = packages
     if (packageManager === 'appimage') {
     } else if (packageManager === 'ansible') {
       for (const role of packages) {
@@ -537,8 +538,8 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'cask') {
       await $`brew install --cask ${packages}`
     } else if (packageManager === 'cargo') {
-      for (const cargoPkg of packages) {
-        await $`cargo install ${cargoPkg}`
+      for (const pkg of packages) {
+        await $`cargo install ${pkg}`
       }
     } else if (packageManager === 'choco') {
       await $`choco install -y ${packages}`
@@ -552,55 +553,56 @@ async function installPackageList(packageManager, packages) {
         await $`yum install -y ${packages}`
       }
     } else if (packageManager === 'flatpak') {
-      for (const flatPkg of packages) {
-        await $`sudo flatpak install flathub ${flatPkg}`
+      for (let pkg of packages) {
+        await $`sudo flatpak install flathub ${pkg}`
       }
     } else if (packageManager === 'gem') {
-      for (const gem of packages) {
-        await $`gem install ${gem}`
+      for (let pkg of packages) {
+        await $`gem install ${pkg}`
       }
     } else if (packageManager === 'go') {
-      for (const goPkg of packages) {
-        await $`go install ${goPkg}`
+      for (let pkg of packages) {
+        await $`go install ${pkg}`
       }
     } else if (packageManager === 'nix') {
     } else if (packageManager === 'npm') {
-      for (const npmPkg of packages) {
-        await $`volta install ${npmPkg}`
+      for (let pkg of packages) {
+        await $`volta install ${pkg}`
       }
     } else if (packageManager === 'pacman') {
       await $`sudo pacman -Sy --noconfirm --needed ${packages}`
     } else if (packageManager === 'pipx') {
-      for (const pipxPkg of packages) {
-        await $`pipx install ${pipxPkg}`
+      for (let pkg of packages) {
+        await $`pipx install ${pkg}`
       }
     } else if (packageManager === 'pkg') {
     } else if (packageManager === 'port') {
-      for (const portPkg of packages) {
-        await $`sudo port install ${portPkg}`
+      for (let pkg of packages) {
+        await $`sudo port install ${pkg}`
       }
     } else if (packageManager === 'scoop') {
-      for (const scoopPkg of packages) {
-        await $`scoop install ${scoopPkg}`
+      for (let pkg of packages) {
+        await $`scoop install ${pkg}`
       }
     } else if (packageManager === 'snap') {
-      for (const snapPkg of packages) {
-        await $`sudo snap install -y ${snapPkg}`
+      for (let pkg of packages) {
+        await $`sudo snap install -y ${pkg}`
       }
     } else if (packageManager === 'whalebrew') {
-      for (const whalePkg of packages) {
-        await $`whalebrew install ${snapPkg}`
+      for (let pkg of packages) {
+        await $`whalebrew install ${pkg}`
       }
     } else if (packageManager === 'winget') {
     } else if (packageManager === 'yay') {
-      for (const yayPkg of packages) {
-        await $`yay -Sy --noconfirm --needed ${yayPkg}`
+      for (let pkg of packages) {
+        await $`yay -Sy --noconfirm --needed ${pkg}`
       }
     } else if (packageManager === 'zypper') {
-      await $`sudo zypper install -y ${zypPkg}`
+      await $`sudo zypper install -y ${packages}`
     }
   } catch (e) {
     await $`logg error 'Possibly encountered an error while installing via \`${packageManager}\`'`
+    await $`logg info 'Error was encountered while installing: ${pkg}'
     await $`logg info 'Proceeding with the installation..'`
   }
 }
