@@ -24,7 +24,7 @@ GHORG_ABSOLUTE_PATH_TO_CLONE_TO: /srv/repos
 # See https://github.com/gabrie30/ghorg#changing-clone-directories for example
 # default: org/user you are cloning, e.g. 'ghorg clone kubernetes' would create a kubernetes directory inside your ghorg directory
 # flag (--output-dir) eg: --output-dir=testing
-GHORG_OUTPUT_DIR: megabyte-labs
+# GHORG_OUTPUT_DIR: 
 
 # Type of entity to clone (user or org)
 # flag (--clone-type, -c) eg: --clone-type=user
@@ -161,7 +161,7 @@ GHORG_GITLAB_TOKEN: {{ .user.GITLAB_READ_TOKEN }}
 
 # clones repos in a directory structure that matches gitlab namespaces eg company/unit/subunit/app would clone into ghorg/org/unit/subunit/app
 # flag (--preserve-dir)
-GHORG_PRESERVE_DIRECTORY_STRUCTURE: false
+GHORG_PRESERVE_DIRECTORY_STRUCTURE: true
 
 # Skip TLS certificate verification for hosted gitlab instances
 # flag (--insecure-gitlab-client)
