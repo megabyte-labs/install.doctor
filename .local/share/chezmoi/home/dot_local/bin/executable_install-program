@@ -255,7 +255,7 @@ async function ensureInstalled(bin, callback) {
   } else {
     await $`logg warn '\`${bin}\` is not installed!'`
     if (callback) {
-      await $`eval ${callback}`
+      await $callback
     } else {
       await $`logg error 'There does not appear to be an installation method available for \`${bin}\`'`
     }
