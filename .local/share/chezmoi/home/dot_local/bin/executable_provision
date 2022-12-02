@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+{{- includeTemplate "universal/logg" }}
+
 set -eox pipefail
 
 ### Qubes dom0
@@ -205,4 +207,4 @@ find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f | while read BINFILE; do
 done
 
 ### Chezmoi
-echo "Now run chezmoi init followed by chezmoi apply"
+logg 'Now run `chezmoi init` followed by `chezmoi apply`'
