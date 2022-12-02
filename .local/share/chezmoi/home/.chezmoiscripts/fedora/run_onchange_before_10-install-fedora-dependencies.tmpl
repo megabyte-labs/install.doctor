@@ -1,4 +1,4 @@
-{{- if .host.distro.id "fedora" }}
+{{- if (eq .host.distro.id "fedora") }}
 #!/usr/bin/env bash
 
 # universal/essential-packages hash: {{ include (joinPath ".chezmoitemplates" "universal" "essential-packages") | sha256sum }}

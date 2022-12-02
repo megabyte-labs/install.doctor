@@ -1,4 +1,4 @@
-{{- if .host.distro.family "darwin" }}
+{{- if (eq .host.distro.family "darwin") }}
 #!/usr/bin/env bash
 
 # Betelgeuse-macOS wallpaper hash: {{ include (joinPath .chezmoi.homeDir ".local" "src" "betelgeuse" "share" "wallpapers" "Betelgeuse-macOS" "contents" "source.png") | sha256sum }}

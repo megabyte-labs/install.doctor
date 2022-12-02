@@ -1,4 +1,4 @@
-{{- if .host.distro.id "ubuntu" }}
+{{- if (eq .host.distro.id "ubuntu") }}
 #!/usr/bin/env bash
 
 # universal/essential-packages hash: {{ include (joinPath ".chezmoitemplates" "universal" "essential-packages") | sha256sum }}

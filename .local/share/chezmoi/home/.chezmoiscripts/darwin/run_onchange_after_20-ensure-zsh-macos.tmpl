@@ -1,4 +1,4 @@
-{{- if .host.distro.family "darwin" }}
+{{- if (eq .host.distro.family "darwin") }}
 #!/usr/bin/env bash
 
 {{- includeTemplate "universal/logg" }}
