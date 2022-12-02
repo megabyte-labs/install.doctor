@@ -24,7 +24,7 @@ config:
 fonts:
   main: Montserrat Bold
 softwareGroups:
-  _basic: &basic
+  basic: &basic
     - bash-completion
     - bat
     - bitwarden-cli
@@ -58,15 +58,15 @@ softwareGroups:
     - wifi-password
     - zoxide
     - zx
-  basic:
+  basicList:
     << : [*basic]
-  _basicDesktop: &basicDesktop
+  basicDesktop: &basicDesktop
     - brave
     - firefox
     - fonts
     - tabby
     - vscode
-  basicDesktop:
+  basicDesktopList:
     << : [*basic, *basicDesktop]
   networkEnabled: &networkEnabled
     - cloudflared
@@ -75,7 +75,7 @@ softwareGroups:
     - lexicon
     # - maas
     - ngxtop
-  _standard: &standard
+  standard: &standard
     - ansible
     - ansibleconnect
     - aria2
@@ -175,9 +175,9 @@ softwareGroups:
     - yq
     - yubikey-manager
     - zsh
-  standard:
+  standardList:
     << : [*basic, *standard]
-  _standardDesktop: &standardDesktop
+  standardDesktop: &standardDesktop
     - autokey
     - balenaetcher
     - bitwarden-cli
@@ -228,9 +228,9 @@ softwareGroups:
     - yubikey-authenticator
     - yubikey-manager-qt
     - zoom
-  standardDesktop:
+  standardDesktopList:
     << : [*basic, *standard, *basicDesktop, *standardDesktop]
-  _development: &development
+  development: &development
     - act
     - allure
     - angular-cli
@@ -412,9 +412,9 @@ softwareGroups:
     - yamllint
     - yank
     - yarn
-  development:
+  developmentList:
     << : [*basic, *standard, *development]
-  _developmentDesktop: &developmentDesktop
+  developmentDesktop: &developmentDesktop
     - altair
     - android-studio
     - appium
@@ -439,9 +439,9 @@ softwareGroups:
     - runjs
     - sqlectron
     - visual-studio
-  developmentDesktop:
+  developmentDesktopList:
     << : [*basic, *standard, *development, *basicDesktop, *standardDesktop, *developmentDesktop]
-  _experimental: &experimental
+  experimental: &experimental
     - asciicinema
     - assh
     - astronvim
@@ -490,9 +490,9 @@ softwareGroups:
     - tflint
     - tilt
     - vector
-  experimental:
+  experimentalList:
     << : [*basic, *standard, *development, *experimental]
-  _experimentalDesktop: &experimentalDesktop
+  experimentalDesktop: &experimentalDesktop
     - betwixt
     - lens
     - manta
@@ -500,7 +500,7 @@ softwareGroups:
     - masscode
     - mullvad-vpn
     - powershell
-  experimentalDesktop:
+  experimentalDesktopList:
     << : [*basic, *standard, *development, *experimental, *basicDesktop, *standardDesktop, *developmentDesktop, *experimentalDesktop]
   kubernetes:
     - kdash
