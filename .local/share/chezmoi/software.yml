@@ -1932,7 +1932,9 @@ softwarePackages:
     brew:darwin: ideviceinstaller
   imagemagick:
     apk: imagemagick
-    apt: imagemagick
+    apt:
+      - imagemagick
+      - libx11-dev
     brew: imagemagick
     choco: imagemagick
     dnf: imagemagick
@@ -3318,10 +3320,14 @@ softwarePackages:
     _home: https://restic.net/
     _name: Restic
     ansible: professormanhattan.restic
-  rip:
+  rm-improved:
+    _bin: rip
+    _docs: https://github.com/nivekuil/rip
+    _home: https://github.com/nivekuil/rip
+    _service: false
     _desc: A safe and ergonomic alternative to rm
     _github: https://github.com/nivekuil/rip
-    _name: rip
+    _name: rip (Rm ImProved)
     _type: cli
     brew: rm-improved
     cargo: rm-improved
@@ -3630,6 +3636,31 @@ softwarePackages:
     choco: skype
     snap: skype
     yay: skypeforlinux-stable-bin
+  shellcheck:
+    _bin: shellcheck
+    _type: cli
+    _desc: A static analysis tool for shell scripts
+    _docs: https://github.com/koalaman/shellcheck/wiki/Directive
+    _docker: docker run --rm -v "$PWD:/mnt" koalaman/shellcheck:stable
+    _github: https://github.com/koalaman/shellcheck
+    _home: https://www.shellcheck.net/
+    _name: Shellcheck
+    _service: false
+    apt: shellcheck
+    cabal: shellcheck
+    choco: shellcheck
+    dnf: shellcheck
+    emerge: shellcheck
+    eopkg: shellcheck
+    nix: nixpkgs.shellcheck
+    pacman: shellcheck
+    pkg-freebsd: shellcheck
+    pkg-openbsd: shellcheck
+    port: shellcheck
+    snap: shellcheck
+    scoop: shellcheck
+    stack: shellcheck
+    zypper: shellcheck
   slack:
     _desc: '[Slack](https://slack.com/) is a proprietary business communication platform developed by American software company Slack Technologies. Slack offers many IRC-style features, including persistent chat rooms organized by topic, private groups, and direct messaging.'
     _docs: https://api.slack.com/docs
@@ -3690,6 +3721,22 @@ softwarePackages:
     cask: sqlectron
     github: github.com/sqlectron/sqlectron-gui
     yay: sqlectron-gui
+  sqlite:
+    _bin: sqlite3
+    _type: cli
+    _desc: SQLite is a C-language library that implements a small, fast, self-contained, high-reliability, full-featured, SQL database engine.
+    _docs: https://sqlite.org/docs.html
+    _github: https://github.com/sqlite/sqlite
+    _home: https://sqlite.org/index.html
+    _name: SQLite
+    _service: false
+    apt: sqlite3
+    brew: sqlite
+    choco: sqlite
+    dnf: sqlite
+    pacman: sqlite
+    port: sqlite3
+    scoop: sqlite
   ssh:
     _desc: On top of tightening up SSH security settings, this role also installs fail2ban on Linux systems. If provided, the role will also populate all your SSH keys and set their permissions appropriately
     _docs: null
@@ -4012,11 +4059,23 @@ softwarePackages:
     _home: null
     _name: Translate Shell
     ansible: professormanhattan.translate
-  trec:
-    _desc: '[t-rec](https://github.com/sassman/t-rec-rs) is a blazingly fast terminal recorder that generates animated gif images for the web written in rust'
-    _docs: null
-    _github: null
-    _home: null
+  t-rec:
+    _bin: t-rec
+    _type: cli
+    _snapClassic: true
+    _deps:cargo:
+      - imagemagick
+    _service: false
+    apk: gomplate
+    brew: t-rec
+    cargo: t-rec
+    port: t-rec
+    snap: t-rec
+    yay: t-rec
+    _desc: '[t-rec](https://github.com/sassman/t-rec-rs) is a blazingly fast terminal recorder that generates animated GIF images for the web written in Rust'
+    _docs: https://crates.io/crates/t-rec
+    _github: https://github.com/sassman/t-rec-rs
+    _home: https://crates.io/crates/t-rec
     _name: t-rec
     ansible: professormanhattan.trec
   tree:
@@ -4225,6 +4284,26 @@ softwarePackages:
     _home: null
     _name: Cloudflare WARP Client
     ansible: professormanhattan.warp
+  watchexec:
+    _bin: watchexec
+    _type: cli
+    _desc: Executes commands in response to file modifications.
+    _docs: https://watchexec.github.io/docs/glob-patterns.html
+    _github: https://github.com/watchexec/watchexec
+    _home: https://watchexec.github.io/
+    _name: Watchexec
+    _service: false
+    apk: watchexec
+    apt: watchexec
+    baulk: watchexec
+    brew: watchexec
+    cargo: watchexec-cli
+    choco: watchexec
+    emerge: watchexec
+    nix: watchexec
+    pacman: watchexec
+    scoop: watchexec
+    xbps: watchexec
   watchman:
     _desc: '[Watchman](https://github.com/facebook/watchman), an open-source Facebook product, can be used to watch files and record when they change. It can also trigger actions when matching files change.'
     _docs: null
@@ -4280,6 +4359,16 @@ softwarePackages:
     brew: rsync
     dnf: wget
     whalebrew: whalebrew/wget
+  whalebrew:
+    _bin: whalebrew
+    _type: cli
+    _desc: Homebrew, but with Docker images
+    _docs: https://github.com/whalebrew/whalebrew
+    _github: https://github.com/whalebrew/whalebrew
+    _home: https://github.com/whalebrew/whalebrew
+    _name: Whalebrew
+    _service: false
+    brew: whalebrew
   whaler:
     _desc: Whaler takes a Docker image and attempts to reverse engineer the Dockerfile that created it
     _github: https://github.com/P3GLEG/Whaler
@@ -4408,6 +4497,18 @@ softwarePackages:
     _home: null
     _name: Yarn
     ansible: professormanhattan.yarn
+  yj:
+    _bin: yj
+    _type: cli
+    _desc: CLI program that allows you to convert between YAML, TOML, JSON, and HCL.
+    _docs: https://github.com/sclevine/yj
+    _docker: docker run sclevine/yj
+    _github: https://github.com/sclevine/yj
+    _home: https://github.com/sclevine/yj
+    _name: YJ
+    _service: false
+    brew: yj
+    go: github.com/sclevine/yj/v5@v5.1.0
   ykman:
     brew: ykman
     pipx: yubikey-manager
