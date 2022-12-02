@@ -14,6 +14,7 @@
 #   _bin: ng                                          # Instead of checking if the object key (altair) is in the PATH, check if "ng" is in the PATH and only proceed if it is not available
 #   _deps:                                            # Any piece of data can be a string or array. _deps will take each dep and run that through the installer first
 #     - angular-cli
+#   _docker: docker run --rm bannmann/docker-cheat    # Command that the _bin value should alias to (similar to Whalebrew)
 #   _when: |                                          # Run the script defined with _when and only proceed if it exits with a 0
 #     test -f /usr
 #   _pre: |
@@ -235,7 +236,7 @@ softwarePackages:
     _type: cli
     brew: argocd
     github: https://github.com/argoproj/argo-workflows
-  aria:
+  aria2:
     _desc: '[aria2](https://aria2.github.io/) is a lightweight multi-protocol & multi-source command-line download utility. It supports HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink. [AriaNg](http://ariang.mayswind.net/) is a modern web frontend that makes working with aria2 easier.'
     _docs: https://aria2.github.io/manual/en/html/
     _github: https://github.com/aria2/aria2
@@ -456,7 +457,7 @@ softwarePackages:
     npm: '@budibase/cli'
   bundler:
     gem: bundler
-  bw:
+  bitwarden-cli:
     _desc: '[Bitwarden CLI](https://github.com/bitwarden/cli) (i.e. bw) is a free and open-source official CLI for the [Bitwarden](https://bitwarden.com/) password manager. bw is available on Linux, macOS, and Microsoft Windows.'
     _docs: https://bitwarden.com/help/
     _github: https://github.com/bitwarden/clients
@@ -499,8 +500,42 @@ softwarePackages:
   cfssl:
     brew: cfssl
     pacman: cfssl
+  cheat:
+    _bin: cheat
+    _desc: Cheat allows you to create and view interactive cheatsheets on the command-line. It was designed to help remind *nix system administrators of options for commands that they use frequently, but not frequently enough to remember.
+    _github: https://github.com/cheat/cheat
+    _docs: https://github.com/cheat/cheat
+    _home: https://github.com/cheat/cheat
+    _service: false
+    _type: cli
+    _docker: docker run --rm bannmann/docker-cheat
+    _name: Cheat
+    brew: cheat
+    go: github.com/cheat/cheat/cmd/cheat@latest
+    nix: nixos.cheat
+    snap: cheat
+    yay: cheat
   chef:
     gem: chef
+  chezmoi:
+    _bin: chezmoi
+    _desc: Manage your dotfiles across multiple diverse machines, securely.
+    _github: https://github.com/twpayne/chezmoi
+    _docs: https://www.chezmoi.io/user-guide/command-overview/
+    _home: https://www.chezmoi.io/
+    _service: false
+    _snapClassic: true
+    _type: cli
+    _name: Chezmoi
+    apk: chezmoi
+    brew: chezmoi
+    choco: chezmoi
+    nix: chezmoi
+    pacman: chezmoi
+    pkg: chezmoi
+    snap: chezmoi
+    xbps: chezmoi
+    zypper: chezmoi
   chrome:
     _deps:
       - chrome-gnome-shell
@@ -550,6 +585,19 @@ softwarePackages:
     ansible: professormanhattan.cloudflared
     brew: cloudflare/cloudflare/cloudflared
     github: github.com/cloudflare/cloudflared
+  cmake:
+    _bin: cmake
+    _desc: CMake is an open-source, cross-platform family of tools designed to build, test and package software.
+    _github: https://github.com/Kitware/CMake
+    _docs: https://cmake.org/documentation/
+    _home: https://cmake.org/
+    _service: false
+    _snapClassic: true
+    _type: cli
+    _name: Chezmoi
+    brew: cmake
+    choco: cmake
+    snap: cmake
   cmctl:
     _desc: A CLI tool that can help you to manage cert-manager resources inside your cluster
     _home: https://cert-manager.io/docs/usage/cmctl/
@@ -681,6 +729,39 @@ softwarePackages:
     _name: curator
     _type: cli
     pip: elasticsearch-curator
+  curl:
+    _bin: curl
+    _desc: cURL is a computer software project providing a library (libcurl) and command-line tool (curl) for transferring data using various network protocols.
+    _github: https://github.com/curl/curl
+    _docs: https://curl.se/docs/
+    _home: https://curl.se/
+    _service: false
+    _type: cli
+    _name: cURL
+    apk: curl
+    apt: curl
+    brew: curl
+    choco: curl
+    dnf: curl
+    pacman: curl
+    pkg: curl
+    scoop: curl
+    xbps: curl
+    zypper: curl
+  curlie:
+    _bin: curlie
+    _desc: Curlie is a frontend to curl that adds the ease of use of httpie, without compromising on features and performance.
+    _github: https://github.com/rs/curlie
+    _docs: https://curlie.io/
+    _home: https://curlie.io/
+    _service: false
+    _type: cli
+    _name: Curlie
+    brew: curlie
+    go: github.com/rs/curlie@latest
+    pkg: curlie
+    port: curlie
+    scoop: curlie
   dasel:
     _desc: Select, put and delete data from JSON, TOML, YAML, XML and CSV files with a single tool
     _github: https://github.com/TomWright/dasel
@@ -718,11 +799,14 @@ softwarePackages:
     _name: Default Browser Setter
     ansible: professormanhattan.defaultbrowser
   delta:
+    _bin: delta
+    _type: cli
     _desc: '[delta](https://github.com/dandavison/delta) is a viewer for git and diff output'
-    _docs: null
-    _github: null
-    _home: null
-    _name: delta
+    _docs: https://dandavison.github.io/delta/
+    _github: https://github.com/dandavison/delta
+    _home: https://github.com/dandavison/delta
+    _name: Delta
+    _service: false
     ansible: professormanhattan.delta
     brew: git-delta
     cargo: git-delta
@@ -772,6 +856,17 @@ softwarePackages:
     _home: null
     _name: diff-so-fancy
     ansible: professormanhattan.diffsofancy
+  difftastic:
+    _bin: difft
+    _desc: Difftastic is a structural diff tool that understands syntax.
+    _github: https://github.com/Wilfred/difftastic
+    _docs: https://difftastic.wilfred.me.uk/git.html
+    _home: https://difftastic.wilfred.me.uk/
+    _service: false
+    _type: cli
+    _name: Difftastic
+    brew: difftastic
+    cargo: difftastic
   direnv:
     _desc: '[direnv](https://direnv.net/) is an extension for your shell. It augments existing shells with a new feature that can load and unload environment variables depending on the current directory.'
     _docs: https://direnv.net/
@@ -1011,6 +1106,23 @@ softwarePackages:
     brew: balenaetcher
     choco: etcher
     yay: balena-etcher
+  exa:
+    _bin: exa
+    _desc: A modern replacement for ls.
+    _github: https://github.com/ogham/exa
+    _docs: https://the.exa.website/introduction
+    _home: https://the.exa.website/
+    _service: false
+    _type: cli
+    _name: Exa
+    apt: exa
+    brew: exa
+    cargo: exa
+    dnf: exa
+    emerge: sys-apps/exa
+    nix: exa
+    pacman: exa
+    zypper: exa
   exiftool:
     _desc: '[exiftool](https://exiftool.org/) is a platform-independent Perl library plus a command-line application for reading, writing and editing meta information in a wide variety of files'
     _docs: null
@@ -1215,6 +1327,21 @@ softwarePackages:
     _home: null
     _name: Fuse
     ansible: professormanhattan.fuse
+  fx:
+    _bin: fx
+    _desc: A terminal JSON viewer.
+    _github: https://github.com/antonmedv/fx
+    _docs: https://github.com/antonmedv/fx/blob/master/doc/doc.md
+    _home: https://github.com/antonmedv/fx
+    _service: false
+    _type: cli
+    _name: FX
+    brew: fx
+    go: github.com/antonmedv/fx@latest
+    pacman: fx
+    pkg: fx
+    scoop: fx
+    snap: fx
   fzf:
     _desc: '[fzf](https://github.com/junegunn/fzf) is a general-purpose command-line fuzzy finder. It''s an interactive Unix filter for command-line that can be used with any list; files, command history, processes, hostnames, bookmarks, git commits, etc.'
     _docs: null
@@ -1406,12 +1533,14 @@ softwarePackages:
     _type: cli
     ansible: professormanhattan.gitomatic
     github: github.com/muesli/gitomatic
-  gitsecret:
+  git-secret:
+    _name: Git Secret
+    _bin: git-secret
     _desc: '[git-secret](https://git-secret.io/) is a bash tool to store your private data inside a git repo. How’s that? Basically, it just encrypts, using GPG, the tracked files with the public keys of all the users that you trust. So everyone of them can decrypt these files using only their personal secret key.'
-    _docs: null
-    _github: null
-    _home: null
-    _name: git-secret
+    _docs: https://git-secret.io/#commands
+    _github: https://github.com/sobolevn/git-secret
+    _home: https://git-secret.io/
+    _service: false
     ansible: professormanhattan.gitsecret
   gitsome:
     _desc: null
@@ -1427,6 +1556,25 @@ softwarePackages:
     _home: null
     _name: git-stats
     ansible: professormanhattan.gitstats
+  gitui:
+    _bin: gitui
+    _type: cli
+    _desc: Blazing fast TUI for git written in Rust
+    _docs: https://github.com/extrawurst/gitui
+    _github: https://github.com/extrawurst/gitui
+    _home: https://github.com/extrawurst/gitui
+    _name: Git UI
+    _service: false
+    brew: gitui
+    cargo: gitui
+    choco: delta
+    dnf: gitui
+    nix: nixpkgs.gitui
+    pacman: gitui
+    pkg: gitui
+    port: gitui
+    scoop: gitui
+    winget: gitui
   gixy:
     pipx: gixy
   glab:
@@ -1466,8 +1614,8 @@ softwarePackages:
     _home: null
     _name: GlusterFS
     ansible: professormanhattan.glusterfs
-  gnu:darwin:
-    brew:
+  gnu:
+    brew:darwin:
       - coreutils
       - findutils
       - gawk
@@ -1507,6 +1655,20 @@ softwarePackages:
   gomodifytags:
     brew: gomodifytags
     go: github.com/fatih/gomodifytags@latest
+  gomplate:
+    _bin: gomplate
+    _type: cli
+    _desc: A flexible commandline tool for template rendering. Supports lots of local and remote datasources.
+    _docker: docker run hairyhenderson/gomplate:stable
+    _docs: https://docs.gomplate.ca/
+    _github: https://github.com/hairyhenderson/gomplate
+    _home: https://gomplate.ca/
+    _name: Gomplate
+    _service: false
+    apk: gomplate
+    brew: gomplate
+    choco: gomplate
+    port: gomplate
   googleassistant:
     _desc: '[Google Assistant for Desktop](https://github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client) is a cross-platform unofficial Google Assistant Client for Desktop.'
     _docs: https://developers.google.com/assistant
@@ -3622,8 +3784,12 @@ softwarePackages:
     _name: Tailscale
     ansible: professormanhattan.tailscale
   task:
+    _bin: task
     _desc: A task runner / simpler Make alternative written in Go
     _github: https://github.com/go-task/task
+    _home: https://taskfile.dev
+    _docs: https://taskfile.dev/usage/
+    _service: false
     _name: Task
     _type: cli
     brew: go-task/tap/go-task
