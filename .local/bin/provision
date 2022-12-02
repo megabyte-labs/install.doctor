@@ -2,6 +2,174 @@
 
 set -eox pipefail
 
+# @description Installs glow (a markdown renderer) from GitHub releases
+# @example installGlow
+installGlow() {
+  # TODO: Add support for other architecture types
+  if [ -d '/Applications' ] && [ -d '/Library' ] && [ -d '/Users' ]; then
+    GLOW_DOWNLOAD_URL="https://github.com/charmbracelet/glow/releases/download/v1.4.1/glow_1.4.1_Darwin_x86_64.tar.gz"
+  elif [ -f '/etc/ubuntu-release' ] || [ -f '/etc/debian_version' ] || [ -f '/etc/redhat-release' ] || [ -f '/etc/SuSE-release' ] || [ -f '/etc/arch-release' ] || [ -f '/etc/alpine-release' ]; then
+    GLOW_DOWNLOAD_URL="https://github.com/charmbracelet/glow/releases/download/v1.4.1/glow_1.4.1_linux_x86_64.tar.gz"
+  fi
+  if type curl &> /dev/null; then
+    if { [ -d '/Applications' ] && [ -d '/Library' ] && [ -d '/Users' ]; } || [ -f '/etc/ubuntu-release' ] || [ -f '/etc/debian_version' ] || [ -f '/etc/redhat-release' ] || [ -f '/etc/SuSE-release' ] || [ -f '/etc/arch-release' ] || [ -f '/etc/alpine-release' ]; then
+      TMP="$(mktemp)"
+      TMP_DIR="$(dirname "$TMP")"
+      curl -sSL "$GLOW_DOWNLOAD_URL" > "$TMP"
+      tar -xzf "$TMP" -C "$TMP_DIR"
+      if [ -n "$HOME" ]; then
+        if mkdir -p "$HOME/.local/bin" && mv "$TMP_DIR/glow" "$HOME/.local/bin/glow"; then
+          GLOW_PATH="$HOME/.local/bin/glow"
+        else
+          GLOW_PATH="$(dirname "${BASH_SOURCE[0]}")/glow"
+          mv "$TMP_DIR/gum" "$GLOW_PATH"
+        fi
+        chmod +x "$GLOW_PATH"
+      else
+        echo "WARNING: The HOME environment variable is not set! (Glow)"
+      fi
+    else
+      echo "WARNING: Unable to detect system type. (Glow)"
+    fi
+  fi
+}
+
+# @description Installs gum (a logging CLI) from GitHub releases
+# @example installGum
+installGum() {
+  # TODO: Add support for other architecture types
+  if [ -d '/Applications' ] && [ -d '/Library' ] && [ -d '/Users' ]; then
+    GUM_DOWNLOAD_URL="https://github.com/charmbracelet/gum/releases/download/v0.4.0/gum_0.4.0_Darwin_x86_64.tar.gz"
+  elif [ -f '/etc/ubuntu-release' ] || [ -f '/etc/debian_version' ] || [ -f '/etc/redhat-release' ] || [ -f '/etc/SuSE-release' ] || [ -f '/etc/arch-release' ] || [ -f '/etc/alpine-release' ]; then
+    GUM_DOWNLOAD_URL="https://github.com/charmbracelet/gum/releases/download/v0.4.0/gum_0.4.0_linux_x86_64.tar.gz"
+  fi
+  if type curl &> /dev/null; then
+    if { [ -d '/Applications' ] && [ -d '/Library' ] && [ -d '/Users' ]; } || [ -f '/etc/ubuntu-release' ] || [ -f '/etc/debian_version' ] || [ -f '/etc/redhat-release' ] || [ -f '/etc/SuSE-release' ] || [ -f '/etc/arch-release' ] || [ -f '/etc/alpine-release' ]; then
+      TMP="$(mktemp)"
+      TMP_DIR="$(dirname "$TMP")"
+      curl -sSL "$GUM_DOWNLOAD_URL" > "$TMP"
+      tar -xzf "$TMP" -C "$TMP_DIR"
+      if [ -n "$HOME" ]; then
+        if mkdir -p "$HOME/.local/bin" && mv "$TMP_DIR/gum" "$HOME/.local/bin/gum"; then
+          GUM_PATH="$HOME/.local/bin/gum"
+        else
+          GUM_PATH="$(dirname "${BASH_SOURCE[0]}")/gum"
+          mv "$TMP_DIR/gum" "$GLOW_PATH"
+        fi
+        chmod +x "$GUM_PATH"
+      else
+        echo "WARNING: The HOME environment variable is not set! (Gum)"
+      fi
+    else
+      echo "WARNING: Unable to detect system type. (Gum)"
+    fi
+  fi
+}
+
+# @description Configure the logger to use echo or gum
+if [ "${container:=}" != 'docker' ]; then
+  # Acquire gum's path or attempt to install it
+  if type gum &> /dev/null; then
+    GUM_PATH="$(which gum)"
+  elif [ -f "$HOME/.local/bin/gum" ]; then
+    GUM_PATH="$HOME/.local/bin/gum"
+  elif [ -f "$(dirname "${BASH_SOURCE[0]}")/gum" ]; then
+    GUM_PATH="$(dirname "${BASH_SOURCE[0]}")/gum"
+  elif type brew &> /dev/null; then
+    brew install gum
+    GUM_PATH="$(which gum)"
+  else
+    if ! command -v qubesctl > /dev/null; then
+      # Qubes dom0
+      installGum
+    fi
+  fi
+
+  # If gum's path was set, then turn on enhanced logging
+  if [ -n "$GUM_PATH" ]; then
+    chmod +x "$GUM_PATH"
+    ENHANCED_LOGGING=true
+  fi
+fi
+
+format() {
+  # shellcheck disable=SC2001,SC2016
+  ANSI_STR_FORMATTED="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`.*/\1\\u001b[47;30m \2 \\e[49;m/')"
+  ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`\(.*\)$/\3/')"
+  if [ "$ANSI_STR_FORMATTED" != "$ANSI_STR" ]; then
+    if [[ $ANSI_STR == *'`'*'`'* ]]; then
+      ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$(format "$("$GUM_PATH" style --bold "$ANSI_STR")")"
+    else
+      ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$("$GUM_PATH" style --bold "$ANSI_STR")"
+    fi
+  fi
+  echo -e "$ANSI_STR_FORMATTED"
+}
+
+formatFaint() {
+  # shellcheck disable=SC2001,SC2016
+  ANSI_STR_FORMATTED="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`.*/\1\\u001b[47;30m \2 \\e[49;m/')"
+  ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`\(.*\)$/\3/')"
+  if [ "$ANSI_STR_FORMATTED" != "$ANSI_STR" ]; then
+    if [[ $ANSI_STR == *'`'*'`'* ]]; then
+      ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$(formatFaint "$("$GUM_PATH" style --faint "$ANSI_STR")")"
+    else
+      ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$("$GUM_PATH" style --faint "$ANSI_STR")"
+    fi
+  fi
+  echo -e "$ANSI_STR_FORMATTED"
+}
+
+# @description Logs using Node.js
+# @example logger info "An informative log"
+logg() {
+  TYPE="$1"
+  MSG="$2"
+  if [ "$TYPE" == 'error' ]; then
+    "$GUM_PATH" style --border="thick" "$("$GUM_PATH" style --foreground="#ff0000" "✖") $("$GUM_PATH" style --bold --background="#ff0000" --foreground="#ffffff"  " ERROR ") $("$GUM_PATH" style --bold "$(format "$MSG")")"
+  elif [ "$TYPE" == 'info' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ffff" "○") $("$GUM_PATH" style --faint "$(formatFaint "$MSG")")"
+  elif [ "$TYPE" == 'md' ]; then
+    # @description Ensure glow is installed
+    if [ "${container:=}" != 'docker' ]; then
+      if type glow &> /dev/null; then
+        GLOW_PATH="$(which glow)"
+      elif [ -f "$HOME/.local/bin/glow" ]; then
+        GLOW_PATH="$HOME/.local/bin/glow"
+      elif [ -f "$(dirname "${BASH_SOURCE[0]}")/glow" ]; then
+        GLOW_PATH="$(dirname "${BASH_SOURCE[0]}")/glow"
+      elif type brew &> /dev/null; then
+        brew install glow
+        GLOW_PATH="$(which glow)"
+      else
+        if ! command -v qubesctl > /dev/null; then
+          # Qubes dom0
+          installGlow
+        fi
+      fi
+
+      if [ -n "$GLOW_PATH" ]; then
+        chmod +x "$GLOW_PATH"
+        ENHANCED_LOGGING=true
+      fi
+    fi
+    "$GLOW_PATH" "$MSG"
+  elif [ "$TYPE" == 'prompt' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00008b" "▶") $("$GUM_PATH" style --bold "$(format "$MSG")")"
+  elif [ "$TYPE" == 'star' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold "$(format "$MSG")")"
+  elif [ "$TYPE" == 'start' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$MSG")")"
+  elif [ "$TYPE" == 'success' ]; then
+    "$GUM_PATH" style "$("$GUM_PATH" style --foreground="#00ff00" "✔")  $("$GUM_PATH" style --bold "$(format "$MSG")")"
+  elif [ "$TYPE" == 'warn' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --background="#ffff00" --foreground="#000000"  " WARNING ") $("$GUM_PATH" style --bold "$(format "$MSG")")"
+  else
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$TYPE")")"
+  fi
+}
+
+
 ### Qubes dom0
 if command -v qubesctl > /dev/null; then
   # The VM name that will manage the Ansible provisioning (for Qubes dom0)
@@ -83,6 +251,7 @@ fi
 
 ### System package manager update / Homebrew dependencies
 if ! command -v curl > /dev/null || ! command -v git > /dev/null; then
+  logg 'Ensuring `curl` and `git` are installed via the system package manager'
   if command -v apt-get > /dev/null; then
     # Debian / Ubuntu
     sudo apt-get update
@@ -127,10 +296,11 @@ fi
 ### Install Homebrew
 ensurePackageManagerHomebrew() {
   if ! command -v brew > /dev/null; then
+    logg info 'Installing Homebrew'
     if command -v sudo > /dev/null && sudo -n true; then
       echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     else
-      logg info 'Homebrew is not installed. Password may be required.'
+      logg info 'Looks like the user does not have passwordless sudo privileges. A sudo password may be required.'
       bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
       if [ -n "$BREW_EXIT_CODE" ]; then
         if command -v brew > /dev/null; then
@@ -152,32 +322,39 @@ ensurePackageManagerHomebrew
 ### Install installer dependencies via Homebrew
 installBrewPackage() {
   if ! command -v "$1" > /dev/null; then
+    logg 'Installing `'"$1"'`'
     brew install "$1"
   fi
 }
 if command -v brew > /dev/null; then
   installBrewPackage chezmoi
+  installBrewPackage glow
+  installBrewPackage gum
   installBrewPackage node
   installBrewPackage zx
 fi
 
 ### Ensure source files are present
+logg 'Ensuring /usr/local/src/hiawatha is owned by the user'
 if [ -d /usr/local/src/hiawatha ] && [ ! -w /usr/local/src/hiawatha ]; then
   sudo chown -Rf "$USER":"$(id -g -n)" /usr/local/src/hiawatha
 fi
 if [ -d /usr/local/src/hiawatha/.git ]; then
+  logg info 'Pulling the latest changes from https://gitlab.com/megabyte-labs/dotfiles.git to /usr/local/src/hiawatha'
   cd /usr/local/src/hiawatha
   git config pull.rebase false
   git reset --hard HEAD
   git clean -fxd
   git pull origin master
 else
+  logg info 'Cloning https://gitlab.com/megabyte-labs/dotfiles.git to /usr/local/src/hiawatha'
   rm -rf /usr/local/src/hiawatha
   sudo git clone https://gitlab.com/megabyte-labs/dotfiles.git /usr/local/src/hiawatha
   chown -Rf "$USER":"$(id -g -n)" /usr/local/src/hiawatha
 fi
 
 ### Copy folders
+logg info 'Copying folders from /usr/local/src/hiawatha to the HOME directory'
 find /usr/local/src/hiawatha -maxdepth 1 -mindepth 1 -type d | while read FOLDER; do
   BASENAME="$(basename "$FOLDER")"
   # Prevent initial-scaffolding of OS-specific files since Chezmoi will handle them
@@ -190,6 +367,7 @@ find /usr/local/src/hiawatha -maxdepth 1 -mindepth 1 -type d | while read FOLDER
 done
 
 ### Copy files
+logg info 'Copying files from /usr/local/src/hiawatha to the HOME directory'
 find /usr/local/src/hiawatha -maxdepth 1 -mindepth 1 -type f | while read FILE; do
   BASENAME="$(basename "$FILE")"
   # Prevent repository-specific files from being copied over to user's HOME
@@ -200,9 +378,140 @@ find /usr/local/src/hiawatha -maxdepth 1 -mindepth 1 -type f | while read FILE; 
 done
 
 ### Ensure ~/.local/bin files are executable
+logg info 'Ensuring scripts in ~/.local/bin are executable'
 find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f | while read BINFILE; do
   chmod +x "$BINFILE"
 done
 
 ### Chezmoi
-echo 'Now run `chezmoi init` followed by `chezmoi apply`'
+if [ ! -f "$HOME/.config/chezmoi/chezmoi.yaml" ]; then
+  logg info 'Running `chezmoi init` since the ~/.config/chezmoi/chezmoi.yaml is not present'
+  chezmoi init
+fi
+logg info 'Running `chezmoi apply`'
+cat <<EOF >> /tmp/chezmoi-intro
+# User / Environment Variables
+
+This script will automatically set up a handful of different configurations
+should you decide to add your information. Below you can find a description of what
+each piece of information is used for as well as the name of the environment variable
+you can specify to bypass the prompt.
+
+## Work Environment
+
+Set to true if you are setting up a work environment where things like Tor should
+not be installed.
+
+* Environment variable: `WORK_ENVIRONMENT`
+
+## Restricted Environment
+
+Set to true if you are setting up an environment that should not use sudo / administrator
+privileges. This is a WIP.
+
+* Environment variable: `RESTRICTED_ENVIRONMENT`
+
+## Software Group
+
+The category you select for software group will determine which list of software should be
+installed. The lists are configurable by modifying `~/.local/share/chezmoi/software.yml`.
+
+* Environment variable: `SOFTWARE_GROUP`
+
+## Name
+
+Enter your full name as you would like it to appear in configuration files such as the Git
+configuration.
+
+* Environment variable: `FULL_NAME`
+
+## E-mail
+
+Enter your primary e-mail address.
+
+* Environment variable: `PRIMARY_EMAIL`
+
+## Public GPG Key ID
+
+If you have a public GPG key available on the Ubuntu or MIT keyservers, then you can enter it
+so that it is automatically imported.
+
+* Environment variable: `KEYID`
+
+## Timezone
+
+Enter your timezone in the format of `America/New_York`. It should be available in the TZ database.
+
+* Environment variable: `TIMEZONE`
+
+## Domain
+
+The domain address you would like to use for any part of the deployment that involves launching
+a publicly web service.
+
+* Environment variable: `PUBLIC_SERVICES_DOMAIN`
+
+## CloudFlare API Token
+
+The API token is used to automatically configure various web services that rely on public DNS
+records.
+
+* Environment variable: `CLOUDFLARE_API_TOKEN`
+
+## GitHub Read-Only Token
+
+Pass in a GitHub read-only token linked to your account to automatically save a backup of your
+GitHub repositories.
+
+* Environment variable: `GITHUB_READ_TOKEN`
+
+## GitLab Read-Only Token
+
+Pass in a GitLab read-only token linked to your account to automatically save a backup of your
+GitLab repositories.
+
+* Environment variable: `GITLAB_READ_TOKEN`
+
+## G-mail Address
+
+Add a G-mail address which you would like to use as the handler for outgoing SMTP mail.
+
+* Environment variable: `GMAIL_ADDRESS`
+
+## G-mail App Password
+
+Add the app password to your G-mail address so that outgoing mail can be handled by G-mail.
+
+* Environment variable: `GMAIL_APP_PASSWORD`
+
+## Ngrok Authentication Token
+
+Add your Ngrok authentication token so that the configuration file can be automatically
+generated.
+
+* Environment Variable: `NGROK_AUTH_TOKEN`
+
+## Slack API Token
+
+Add your Slack API token so that `slackterm` can be automatically set up.
+
+* Environment Variable: `SLACK_API_TOKEN`
+
+## Tabby Configuration ID
+
+Add your Tabby configuration ID to automatically sync Tabby settings.
+
+* Environment Variable: `TABBY_CONFIG_ID`
+
+## Tabby Sync Token
+
+Add your Tabby sync token to automatically sync Tabby settings. This works in conjunction with
+the Tabby Configuration ID mentioned above.
+
+* Environment Variable: `TABBY_SYNC_TOKEN`
+## 
+EOF
+glow /tmp/chezmoi-intro
+logg prompt 'Select the software group you would like to install. If your environment is a macOS, Windows, or environment with the DISPLAY environment variable then desktop software will be installed too. The software groups are in the ~/.local/share/chezmoi/home/.chezmoidata.yaml file.'
+SOFTWARE_GROUP="$(gum choose "Basic" "Standard" "Development" "Experimental")"
+chezmoi apply
