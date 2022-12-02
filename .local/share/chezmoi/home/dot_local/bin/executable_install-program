@@ -558,7 +558,7 @@ async function installPackageList(packageManager, packages) {
     if (packageManager === 'appimage') {
     } else if (packageManager === 'ansible') {
       for (const role of packages) {
-        await $`ansible localhost -m include_role -a name=${role}`
+        await $`ansible localhost -m setup -m include_role -a name=${role} -e ansible_user="$USER"`
       }
     } else if (packageManager === 'apk') {
       await $`sudo apk add ${packages}`
