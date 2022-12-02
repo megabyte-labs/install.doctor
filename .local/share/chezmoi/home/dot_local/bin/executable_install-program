@@ -139,10 +139,10 @@ async function OSTypeInstallerKey() {
   } else if (freebsd) {
     return 'freebsd'
   } else {
-    const macOS = await $`test -d /Applications && test -d Library`
-    if (macOS.exitCode === 0) {
+    try {
+      await $`test -d /Applications && test -d /Library`
       return 'darwin'
-    } else {
+    } catch (e) {
       return 'windows'
     }
   }
