@@ -121,6 +121,9 @@ if command -v gum > /dev/null; then
   alias please="gum input --password | sudo -nS"
 fi
 
+# Convert macOS plist to XML (for source control)
+plist-xml='plutil -convert xml1'
+
 # Show open ports
 alias ports='sudo netstat -tulanp'
 
