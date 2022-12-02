@@ -606,7 +606,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'pkg') {
     } else if (packageManager === 'port') {
       for (const portPkg of packages) {
-        await $`sudo port install ${portPkg}`
+        // TODO await $`sudo port install ${portPkg}`
       }
     } else if (packageManager === 'scoop') {
       for (const scoopPkg of packages) {
