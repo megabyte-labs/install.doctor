@@ -1,5 +1,4 @@
 ---
-# The original .chezmoidata.yaml was moved one directory up to software.yml
 colors:
   background: '#161925'
   color0: '#161925'
@@ -59,13 +58,13 @@ softwareGroups:
     - zoxide
     - zx
   basicDesktop: &basicDesktop
-    << :*basic
+    - *basic
     - brave
     - firefox
     - fonts
     - tabby
     - vscode
-  networkEnabled: &networkEnabled
+  networkEnabled:
     - cloudflared
     - cockpit
     - cups
@@ -73,7 +72,7 @@ softwareGroups:
     # - maas
     - ngxtop
   standard: &standard
-    << :*basic
+    - *basic
     - ansible
     - ansibleconnect
     - aria2
@@ -174,6 +173,7 @@ softwareGroups:
     - yubikey-manager
     - zsh
   standardDesktop: &standardDesktop
+    - *basicDesktop
     - autokey
     - balenaetcher
     - bitwarden-cli
@@ -225,6 +225,7 @@ softwareGroups:
     - yubikey-manager-qt
     - zoom
   development: &development
+    - *standard
     - act
     - allure
     - angular-cli
@@ -407,6 +408,7 @@ softwareGroups:
     - yank
     - yarn
   developmentDesktop: &developmentDesktop
+    - *standardDesktop
     - altair
     - android-studio
     - appium
@@ -432,6 +434,7 @@ softwareGroups:
     - sqlectron
     - visual-studio
   experimental: &experimental
+    - *development
     - asciicinema
     - assh
     - astronvim
@@ -481,6 +484,7 @@ softwareGroups:
     - tilt
     - vector
   experimentalDesktop: &experimentalDesktop
+    - *developmentDesktop
     - betwixt
     - lens
     - manta
