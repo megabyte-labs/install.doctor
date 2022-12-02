@@ -7,7 +7,7 @@
 {{- $gmailAddressAppPassword := (default "" (env "GMAIL_APP_PASSWORD")) -}}
 {{- $domain := (default "megabyte.space" (env "PUBLIC_SERVICES_DOMAIN")) -}}
 {{- $cloudflareUsername := (default "brian@megabyte.space" (env "CLOUDFLARE_USERNAME")) -}}
-{{- $cloudflareToken := "" -}}
+{{- $cloudflareToken := (default "" (env "CLOUDFLARE_API_TOKEN")) -}}
 {{- $cloudflareAccessKeyId := "" -}}
 {{- $cloudflareSecretAccessKey := "" -}}
 {{- $cloudflareR2AccountId := "" -}}
