@@ -181,7 +181,7 @@ data:
     home: "{{ .chezmoi.homeDir }}"
     homeParentFolder: "{{ if eq .chezmoi.os "linux" }}/home{{ else if eq .chezmoi.os "darwin" }}/Users{{ else }}C:\Users{{ end }}"
     qubes: {{ ne (stat (joinPath "usr" "bin" "qubes-session")) false }}
-    softwareGroup: "standard"
+    softwareGroup: "{{ $softwareGroup }}"
     type: "{{ $chassisType }}"
     work: {{ $work }}
     restricted: {{ $restricted }}
