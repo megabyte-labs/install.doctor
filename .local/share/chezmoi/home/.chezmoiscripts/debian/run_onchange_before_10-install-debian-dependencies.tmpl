@@ -1,3 +1,4 @@
+{{- if .host.distro.id "debian" }}
 #!/usr/bin/env bash
 
 # universal/essential-packages hash: {{ include (joinPath ".chezmoitemplates" "universal" "essential-packages") | sha256sum }}
@@ -43,3 +44,4 @@ logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 
 sudo apt-get update
 sudo apt-get install -y --no-install-recommends {{ $packages | sortAlpha | uniq | join " " -}}
+{{ end -}}

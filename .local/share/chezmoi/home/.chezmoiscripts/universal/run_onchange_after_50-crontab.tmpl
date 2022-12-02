@@ -1,5 +1,5 @@
-#!/usr/bin/env sh
 {{- if false }}
+#!/usr/bin/env sh
 
 # crontab config hash: {{ include (joinPath .chezmoi.homeDir ".config" "crontab" "config")| sha256sum }}
 
@@ -8,5 +8,4 @@
 
 logg 'Installing crontab jobs'
 crontab < "$XDG_CONFIG_HOME/crontab/config"
-{{- end }}
-# TODO
+{{ end -}}

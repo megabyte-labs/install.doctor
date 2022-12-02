@@ -1,3 +1,4 @@
+{{- if .host.distro.id "archlinux" }}
 #!/usr/bin/env bash
 
 # universal/essential-packages hash: {{ include (joinPath ".chezmoitemplates" "universal" "essential-packages") | sha256sum }}
@@ -40,3 +41,4 @@ if ! command -v yay > /dev/null; then
   logg 'Installing yay via `sudo makepkg -si`'
   sudo makepkg -si
 fi
+{{ end -}}

@@ -1,3 +1,4 @@
+{{- if (ne .host.distro.family "windows") }}
 #!/usr/bin/env bash
 
 {{- includeTemplate "universal/profile" }}
@@ -49,3 +50,4 @@ if ! command -v zx > /dev/null; then
 else
   logg '`zx` is already installed'
 fi
+{{ end -}}

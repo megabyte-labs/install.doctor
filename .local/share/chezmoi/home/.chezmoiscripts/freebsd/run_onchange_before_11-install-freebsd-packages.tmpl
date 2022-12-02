@@ -1,3 +1,4 @@
+{{- if .host.distro.id "freebsd" }}
 #!/usr/bin/env bash
 
 # universal/essential-packages hash: {{ include (joinPath ".chezmoitemplates" "universal" "essential-packages") | sha256sum }}
@@ -22,3 +23,4 @@ logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 
 ### Install base dependencies
 sudo pkg install -y {{ $packages | sortAlpha | uniq | join " " -}}
+{{ end -}}

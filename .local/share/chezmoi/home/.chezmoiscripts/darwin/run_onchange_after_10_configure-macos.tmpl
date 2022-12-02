@@ -1,3 +1,4 @@
+{{- if .host.distro.family "darwin" }}
 #!/usr/bin/env bash
 
 set -x
@@ -938,3 +939,4 @@ done
 
 logg 'Done applying macOS settings'
 logg info 'Some of these changes  may require a logout/restart to take effect'
+{{ end -}}

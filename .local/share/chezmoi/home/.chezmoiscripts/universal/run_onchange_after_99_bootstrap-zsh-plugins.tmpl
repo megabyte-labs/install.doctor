@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
 {{- if eq .host.headless true }}
+#!/usr/bin/env bash
 
 # .zshrc hash: {{ include (joinPath .chezmoi.homeDir ".zshrc")| sha256sum }}
 
@@ -8,7 +8,7 @@
 
 ### Initialize ZSH so plugin bootstrap process is done ahead of time
 if command -v zsh > /dev/null; then
-  logg 'Bootstrapping ZSH plugin system'
+  # logg 'Bootstrapping ZSH plugin system'
   exec zsh && exit 0
 fi
-{{- end -}}
+{{ end -}}
