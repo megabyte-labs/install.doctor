@@ -317,7 +317,7 @@ async function ensurePackageManager(packageManager) {
   if (packageManager === 'appimage') {
   } else if (packageManager === 'ansible') {
     try {
-      await $`test -f "$HOME/.cache/megabytelabs/ansible-installed"`
+      await $`test -f "$HOME/.cache/megabyte-labs/ansible-installed"`
       const ansible = which.sync('ansible', { nothrow: true })
       if (ansible) {
         await $`logg info '\`ansible\` and its supporting packages appear to be installed'`
