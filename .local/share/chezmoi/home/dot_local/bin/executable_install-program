@@ -242,6 +242,22 @@ async function beforeInstall(packageManager) {
   } else if (packageManager === 'flatpak') {
   } else if (packageManager === 'snap') {
   } else if (packageManager === 'whalebrew') {
+    if (osType === 'darwin') {
+      await $`
+        if ! docker run --rm hello-world; then
+          logg warn 'The command `docker run --rm hello-world` failed'
+          if [ -f '/Applications/Docker.app' ]; then
+            logg info 'Attempting to open `Applications/Docker.app` (Docker Desktop for macOS)'
+            open /Applications/Docker.app
+            if command -v gum > /dev/null; then
+              gum spin --spinner dot --title "Waiting for Docker Desktop to open and start the Docker daemon" -- sleep 30
+            else
+              sleep 30
+            fi
+          fi
+        fi
+      `
+    }
   } else if (packageManager === 'winget') {
   } else if (packageManager === 'yay') {
   } else if (packageManager === 'zypper') {
