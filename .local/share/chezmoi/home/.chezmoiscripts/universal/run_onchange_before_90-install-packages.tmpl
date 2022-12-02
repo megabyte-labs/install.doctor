@@ -3,7 +3,7 @@
 {{- includeTemplate "universal/profile" }}
 {{- includeTemplate "universal/logg" }}
 
-# software: {{ index .softwareGroups .host.softwareGroup | join " " }}
+# software: {{ fromYaml (index .softwareGroups .host.softwareGroup) | join " " }}
 
 if command -v install-program > /dev/null; then
   if command -v zx > /dev/null; then
