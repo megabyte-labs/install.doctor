@@ -242,26 +242,26 @@ async function beforeInstall(packageManager) {
   } else if (packageManager === 'flatpak') {
   } else if (packageManager === 'snap') {
   } else if (packageManager === 'whalebrew') {
-if (osType === 'darwin') {
-      const docker = await which('docker')
+    if (osType === 'darwin') {
+      const docker = which.sync('docker', { nothrow: true })
       if (!docker) {
         await $`brew install --cask docker`
       }
       try {
         await $`docker run --rm hello-world`
       } catch (e) {
-        await $`logg warn 'The command \`docker run --rm hello-world\` failed`
+        await $`logg warn 'The command \`docker run --rm hello-world\` failed'`
         try {
-          await $`test -f /Applications/Docker.app`
-          await $`logg info 'Attempting to open \`Applications/Docker.app\` (Docker Desktop for macOS). This should take about 30 seconds.'`
-          const gum = await which('gum')
+          const promises = [$`test -d /Applications/Docker.app`, $`logg info 'Attempting to open \`/Applications/Docker.app\` (Docker Desktop for macOS). This should take about 30 seconds.'`, $`open /Applications/Docker.app`]
+          await Promise.all(promises)
+          const gum = which.sync('gum', { nothrow: true })
           if (gum) {
-            await $`gum spin --spinner dot --title "Waiting for Docker Desktop to start up.." -- sleep 30`
+            execSync('gum spin --spinner dot --title "Waiting for Docker Desktop to start up.." -- sleep 30', {stdio: 'inherit', shell: true})
           } else {
             await $`sleep 30`
           }
         } catch (e) {
-          await $`logg warn 'Docker Desktop appears to not be installed!`
+          await $`logg warn 'Docker Desktop appears to not be installed!'`
         }
       }
     }
