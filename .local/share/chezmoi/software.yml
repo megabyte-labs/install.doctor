@@ -46,7 +46,8 @@
 #   npm: altair
 #   pacman: altair
 #   pipx: altair
-#   pkg: altair
+#   pkg-freebsd: altair
+#   pkg-termux: altair
 #   port: altair
 #   scoop: altair
 #   _snapClassic: true                                # Install the snap in classic mode
@@ -1763,6 +1764,21 @@ softwarePackages:
     _home: https://gvisor.dev/
     _name: gVisor
     ansible: professormanhattan.gvisor
+  gum:
+    _bin: gum
+    _type: cli
+    _desc: A tool for glamorous shell scripts. Provides styling and fancy prompts.
+    _docs: https://github.com/charmbracelet/gum
+    _github: https://github.com/charmbracelet/gum
+    _home: https://charm.sh/
+    _name: Gum
+    _service: false
+    apk: gum
+    brew: gum
+    go: github.com/charmbracelet/gum@latest
+    nix: nixpkgs.gum
+    pacman: gum
+    pkg-termux: gum
   gvm:
     _desc: '[gvm](https://github.com/moovweb/gvm) lets you manage Go environments and switch between Go versions.'
     _docs: null
@@ -2269,6 +2285,18 @@ softwarePackages:
     _type: cli
     brew: linuxkit/linuxkit/linuxkit
     github: github.com/linuxkit/linuxkit
+  litecli:
+    _bin: litecli
+    _type: cli
+    _desc: CLI for SQLite Databases with auto-completion and syntax highlighting
+    _docs: https://litecli.com/features/
+    _github: https://github.com/dbcli/litecli
+    _home: https://litecli.com/
+    _name: LiteCLI
+    _service: false
+    brew: litecli
+    pipx: litecli
+    yay: litecli
   localtunnel:
     brew: localtunnel
     npm: localtunnel
@@ -2314,6 +2342,16 @@ softwarePackages:
     _home: null
     _name: LXDC
     ansible: professormanhattan.lxdc
+  m-cli:
+    _bin: m
+    _type: cli
+    _desc: Swiss Army Knife for macOS. A wrapper for many types of macOS-specific commands.
+    _docs: https://github.com/rgcr/m-cli
+    _github: https://github.com/rgcr/m-cli
+    _home: https://github.com/rgcr/m-cli
+    _name: m-cli
+    _service: false
+    brew:darwin: m-cli
   maas:
     _desc: '[MAAS](https://maas.io/) allows very fast server provisioning for your data centre. It allows self-service, remote installation of Windows, CentOS, ESXi and Ubuntu on real servers. It turns your data centre into a bare metal cloud.'
     _docs: https://maas.io/docs
@@ -2540,6 +2578,18 @@ softwarePackages:
     _home: null
     _name: Multipass
     ansible: professormanhattan.multipass
+  mycli:
+    _github: https://github.com/dbcli/mycli
+    _docs: https://www.mycli.net/docs
+    _home: https://www.mycli.net/
+    _service: false
+    _bin: mycli
+    _type: cli
+    _desc: A terminal client for MySQL with auto-completion and syntax highlighting.
+    _name: MyCLI
+    apt: mycli
+    brew: mycli
+    pipx: mycli
   nativefier:
     _deps:
       - imagemagick
