@@ -58,15 +58,13 @@ softwareGroups:
     - wifi-password
     - zoxide
     - zx
-  basicList: *basic
   basicDesktop: &basicDesktop
+    << : *basic
     - brave
     - firefox
     - fonts
     - tabby
     - vscode
-  basicDesktopList:
-    << : [*basic, *basicDesktop]
   networkEnabled: &networkEnabled
     - cloudflared
     - cockpit
@@ -75,6 +73,7 @@ softwareGroups:
     # - maas
     - ngxtop
   standard: &standard
+    << : *basic
     - ansible
     - ansibleconnect
     - aria2
@@ -174,8 +173,6 @@ softwareGroups:
     - yq
     - yubikey-manager
     - zsh
-  standardList:
-    << : [*basic, *standard]
   standardDesktop: &standardDesktop
     - autokey
     - balenaetcher
@@ -227,8 +224,6 @@ softwareGroups:
     - yubikey-authenticator
     - yubikey-manager-qt
     - zoom
-  standardDesktopList:
-    << : [*basic, *standard, *basicDesktop, *standardDesktop]
   development: &development
     - act
     - allure
@@ -411,8 +406,6 @@ softwareGroups:
     - yamllint
     - yank
     - yarn
-  developmentList:
-    << : [*basic, *standard, *development]
   developmentDesktop: &developmentDesktop
     - altair
     - android-studio
@@ -438,8 +431,6 @@ softwareGroups:
     - runjs
     - sqlectron
     - visual-studio
-  developmentDesktopList:
-    << : [*basic, *standard, *development, *basicDesktop, *standardDesktop, *developmentDesktop]
   experimental: &experimental
     - asciicinema
     - assh
@@ -489,8 +480,6 @@ softwareGroups:
     - tflint
     - tilt
     - vector
-  experimentalList:
-    << : [*basic, *standard, *development, *experimental]
   experimentalDesktop: &experimentalDesktop
     - betwixt
     - lens
@@ -499,8 +488,6 @@ softwareGroups:
     - masscode
     - mullvad-vpn
     - powershell
-  experimentalDesktopList:
-    << : [*basic, *standard, *development, *experimental, *basicDesktop, *standardDesktop, *developmentDesktop, *experimentalDesktop]
   kubernetes:
     - kdash
     - kn
