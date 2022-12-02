@@ -1,4 +1,3 @@
-{{- if true -}}
+{{- if (eq .host.qubes true) -}}
 {{ .host.home }}/.local/src/ansible-qubes/bin/bombshell-client
 {{- end -}}
-

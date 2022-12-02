@@ -7,14 +7,20 @@ chezmoi.txt.age
 !.chezmoiscripts/universal/**/*
 {{- end }}
 
-{{- if ne .host.distro.id "darwin" }}
+{{- if ne .host.distro.family "darwin" }}
 Library
 {{- end }}
 
-{{- if ne .host.distro.id "linux" }}
+{{- if ne .host.distro.family "linux" }}
+dot_local/bin/executable_install-gnome-extensions
+dot_local/bin/executable_kde-wallpaper
 dot_Xresources
 {{- end }}
 
-{{- if ne .host.distro.id "windows" }}
+{{- if ne .host.qubes true }}
+dot_local/bin/executable_ramqube
+{{- end }}
+
+{{- if ne .host.distro.family "windows" }}
 AppData/
 {{- end }}
