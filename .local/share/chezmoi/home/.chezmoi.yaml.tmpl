@@ -123,37 +123,37 @@
 {{- if not (env "PUBLIC_SERVICES_DOMAIN") -}}
 {{-   $domain = promptStringOnce $data.user "domain" "Domain name" $domain -}}
 {{- end -}}
-{{- if not (env "TIMEZONE")) -}}
+{{- if not (env "TIMEZONE") -}}
 {{-   $timezone = promptStringOnce $data.user "timezone" "Timezone" $timezone -}}
 {{- end -}}
-{{- if not (env "CLOUDFLARE_TOKEN")) -}}
+{{- if not (env "CLOUDFLARE_TOKEN") -}}
 {{-   $cloudflareToken = promptStringOnce $data.user "cloudflareToken" "CloudFlare API Token" $cloudflareToken -}}
 {{- end -}}
-{{- if not (env "GITHUB_USERNAME")) -}}
+{{- if not (env "GITHUB_USERNAME") -}}
 {{-   $githubUsername = promptStringOnce $data.user "githubUsername" "GitHub username" $githubUsername -}}
 {{- end -}}
-{{- if not (env "GITLAB_READ_TOKEN")) -}}
+{{- if not (env "GITLAB_READ_TOKEN") -}}
 {{-   $gitlabReadToken = promptStringOnce $data.user "gitlabReadToken" "GitLab read-only token" $gitlabReadToken }}
 {{- end -}}
-{{- if not (env "GITHUB_READ_TOKEN")) -}}
+{{- if not (env "GITHUB_READ_TOKEN") -}}
 {{-   $githubReadToken = promptStringOnce $data.user "githubReadToken" "GitHub read-only token" $githubReadToken }}
 {{- end -}}
-{{- if not (env "GMAIL_ADDRESS")) -}}
+{{- if not (env "GMAIL_ADDRESS") -}}
 {{-   $gmailAddress = promptStringOnce $data.user "gmailAddress" "G-mail address" $gmailAddress -}}
 {{- end -}}
-{{- if not (env "GMAIL_APP_PASSWORD")) -}}
+{{- if not (env "GMAIL_APP_PASSWORD") -}}
 {{-   $gmailAddressAppPassword = promptStringOnce $data.user "gmailAddressAppPassword" "G-mail app password" $gmailAddressAppPassword -}}
 {{- end -}}
-{{- if not (env "NGROK_AUTH_TOKEN")) -}}
+{{- if not (env "NGROK_AUTH_TOKEN") -}}
 {{-   $ngrokAuthToken = promptStringOnce $data.user "ngrokAuthToken" "Ngrok authentication token" $ngrokAuthToken -}}
 {{- end -}}
-{{- if not (env "SLACK_API_TOKEN")) -}}
+{{- if not (env "SLACK_API_TOKEN") -}}
 {{-   $slackApiToken = promptStringOnce $data.user "slackApiToken" "Slack API token" $slackApiToken -}}
 {{- end -}}
-{{- if not (env "TABBY_CONFIG_ID")) -}}
+{{- if not (env "TABBY_CONFIG_ID") -}}
 {{-   $tabbyConfigId = promptStringOnce $data.user "tabbyConfigId" "Tabby configuration ID" $tabbyConfigId -}}
 {{- end -}}
-{{- if not (env "TABBY_SYNC_TOKEN")) -}}
+{{- if not (env "TABBY_SYNC_TOKEN") -}}
 {{-   $tabbySyncToken = promptStringOnce $data.user "tabbySyncToken" "Tabby Sync token" $tabbySyncToken -}}
 {{- end -}}
 
