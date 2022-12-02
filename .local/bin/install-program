@@ -242,6 +242,29 @@ async function beforeInstall(packageManager) {
   } else if (packageManager === 'flatpak') {
   } else if (packageManager === 'snap') {
   } else if (packageManager === 'whalebrew') {
+    if (osType === 'darwin') {
+      const docker = await which('docker')
+      if (!docker) {
+        await $`brew install --cask docker`
+      }
+      try {
+        await $`docker run --rm hello-world`
+      } catch (e) {
+        await $`logg warn 'The command \`docker run --rm hello-world\` failed`
+        try {
+          await $`test -f /Applications/Docker.app`
+          await $`logg info 'Attempting to open \`Applications/Docker.app\` (Docker Desktop for macOS). This should take about 30 seconds.'`
+          const gum = await which('gum')
+          if (gum) {
+            await $`gum spin --spinner dot --title "Waiting for Docker Desktop to start up.." -- sleep 30`
+          } else {
+            await $`sleep 30`
+          }
+        } catch (e) {
+          await $`logg warn 'Docker Desktop appears to not be installed!`
+        }
+      }
+    }
   } else if (packageManager === 'winget') {
   } else if (packageManager === 'yay') {
   } else if (packageManager === 'zypper') {
