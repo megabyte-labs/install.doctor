@@ -1844,6 +1844,9 @@ softwarePackages:
     choco: firefox
     dnf: firefox
     pacman: firefox
+  firefox:darwin:
+    _when: '! test -d "/Applications/'
+    cask: firefox
   firewall:
     _bin: null
     _desc: This role is intended to be used with the ProfessorManhattan playbook. It integrates tightly with the other roles included with the playbook.
