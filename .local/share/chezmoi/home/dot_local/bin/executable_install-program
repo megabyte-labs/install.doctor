@@ -645,8 +645,11 @@ async function installPackageList(packageManager, packages) {
       console.log(packages)
       for (let pkg of packages) {
         console.log(pkg)
-        //execSync('gum spin --spinner dot --title "Installing ' + pkg + ' via Ansible" -- ansible localhost --skip-tags brew -m setup -m include_role -a name=' + pkg + ' -e ansible_user=' + process.env.USER, {stdio: 'inherit', shell: true})
-        await $`ansible localhost --skip-tags brew -m setup -m include_role -a name=${pkg} -e ansible_user=${process.env.USER}`
+        try {
+          execSync(`gum spin --spinner dot --title "Installing ${pkg} via Ansible" -- ansible localhost -m setup -m include_role -a name=${pkg} -e ansible_user=${process.env.USER} -e include_homebrew_install=false, {stdio: 'inherit', shell: true})
+        } catch (e) {
+          await $`ansible localhost -m setup -m include_role -a name=${pkg} -e ansible_user=${process.env.USER} -e include_homebrew_install=false`
+        }
       }
     } else if (packageManager === 'apk') {
       for (let pkg of packages) {
