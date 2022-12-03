@@ -819,7 +819,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.chrome
     apt: chromium
-    brew: google-chrome
+    cask: google-chrome
     choco: googlechrome
     dnf: chromium
     snap: chromium
@@ -6364,7 +6364,7 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
-    brew: visual-studio
+    cask: visual-studio
     choco: visualstudio2022community
   visualstudio:
     _bin: null
@@ -6432,10 +6432,13 @@ softwarePackages:
     _service: null
     _snapClassic: true
     ansible: professormanhattan.vscode
-    brew: visual-studio-code
+    cask: visual-studio-code
     choco: vscode
     snap: code
     yay: visual-studio-code-bin
+  vscode:darwin:
+    _when: '! test -d "/Applications"'
+    cask: visual-studio-code
   w3m:
     _bin: null
     _desc: null
