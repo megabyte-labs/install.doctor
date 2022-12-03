@@ -514,6 +514,9 @@ softwarePackages:
     _name: null
     _service: null
     brew: bash-completion
+  bash-completion:darwin:
+    _when: '! brew list bash-completion'
+    brew: bash-completion
   bat:
     _bin: bat
     _desc: '[bat](https://github.com/sharkdp/bat) is a cat(1) clone with syntax highlighting and Git integration.'
@@ -2390,7 +2393,11 @@ softwarePackages:
     _home: null
     _name: Glances
     _service: null
+    _post:pipx: pipx inject glances glances[all]
     ansible: professormanhattan.glances
+    brew: glances
+    pipx: glances
+    port: glances
   glen:
     _bin: null
     _desc: null
@@ -2966,11 +2973,14 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.inkscape
     apt: inkscape
-    brew: inkscape
+    cask: inkscape
     choco: inkscape
     dnf: inkscape
     pacman: inkscape
     snap: inkscape
+  inkscape:darwin:
+    _when: '! test -d "/Applications/Inkscape.app"'
+    cask: inkscape
   installer:
     _bin: null
     _desc: This role helps install Software from GitHub on nearly any platform.
@@ -3193,12 +3203,15 @@ softwarePackages:
     _name: Keybase
     _service: null
     ansible: professormanhattan.keybase
-    brew: keybase
+    cask: keybase
     choco: keybase
     pacman:
       - keybase
       - keybase-gui
     yay: keybase-bin
+  keybase:darwin:
+    _when: '! test -d /Applications/Keybase.app'
+    cask: keybase
   kitty:
     _bin: null
     _desc: '[KiTTY](https://sw.kovidgoyal.net/kitty/) is designed for power keyboard users. To that end all its controls work with the keyboard (although it fully supports mouse interactions as well). Its configuration is a simple, human editable, single file for easy reproducibility.'
@@ -3230,10 +3243,13 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.kodi
     apt: kodi
-    brew: kodi
+    cask: kodi
     choco: kodi
     dnf: kodi
     pacman: kodi
+  kodi:darwin:
+    _when: '! test -d /Applications/Kodi.app'
+    cask: kodi
   kubectx:
     _bin: null
     _desc: null
@@ -4712,16 +4728,20 @@ softwarePackages:
     _name: Proton
     _service: null
     ansible: professormanhattan.proton
-    brew:
-      - protonvpn
-      - protonmail-bridge
-    choco:
-      - protonvpn
-      - protonmailbridge
+    cask: protonvpn
+    choco: protonvpn
     dnf: protonvpn-cli
-    yay:
-      - protonvpn
-      - protonmail-bridge
+    yay: protonvpn
+  proton:darwin:
+    _when: '! test -d /Applications/ProtonVPN.app'
+    cask: protonvpn
+  protonmail-bridge:
+    cask: protonmail-bridge
+    choco: protonmailbridge
+    yay: protonmail-bridge
+  protonmail-bridge:darwin:
+    _when: '! test -d "/Applications/Proton Mail Bridge.app"'
+    cask: protonmail-bridge
   psi:
     _bin: null
     _desc: null
@@ -4983,7 +5003,7 @@ softwarePackages:
     apt:
       - remmina
       - xrdp
-    brew: microsoft-remote-desktop
+    cask: microsoft-remote-desktop
     dnf:
       - remmina
       - xrdp
@@ -4992,6 +5012,9 @@ softwarePackages:
     yay:
       - remmina-git
       - xrdp
+  remote-desktop:darwin:
+    _when: '! test -d "/Applications/Microsoft Remote Desktop.app"'
+    cask: microsoft-remote-desktop
   remotedesktop:
     _bin: null
     _desc: '[Remmina](https://remmina.org/) is a remote desktop client for POSIX-based computer operating systems. It supports the Remote Desktop Protocol, VNC, NX, XDMCP, SPICE and SSH protocols. [GNOME Boxes](https://wiki.gnome.org/Apps/Boxes) is an application of the GNOME Desktop Environment, used to access remote or virtual systems. Boxes uses the QEMU, KVM, and libvirt virtualization technologies. GNOME Boxes requires the CPU to support some form of hardware-assisted virtualization.'
