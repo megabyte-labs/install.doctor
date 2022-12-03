@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+### Ensure user has group of same name
+echo y | sudo dseditgroup -o create "$USER"

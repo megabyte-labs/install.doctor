@@ -392,7 +392,8 @@ softwarePackages:
     _home: https://code.google.com/archive/p/autokey/
     _name: Autokey
     _service: null
-    ansible: professormanhattan.autokey
+    ansible:linux: professormanhattan.autokey
+    ansible:windows: professormanhattan.autokey
     apt: autokey
     choco: autohotkey
     dnf: autokey
@@ -3539,7 +3540,7 @@ softwarePackages:
     _home: https://wiki.gnome.org/Apps/Lollypop
     _name: Lollypop
     _service: null
-    ansible: professormanhattan.lollypop
+    ansible:linux: professormanhattan.lollypop
     apt: lollypop
     dnf: lollypop
     pacman: lollypop
@@ -4467,7 +4468,7 @@ softwarePackages:
     _name: Peek
     _rpmFusion: true
     _service: null
-    ansible: professormanhattan.peek
+    ansible:linux: professormanhattan.peek
     apt:
       - software-properties-common
       - peek
@@ -4624,7 +4625,8 @@ softwarePackages:
     _home: https://safing.io/
     _name: portmaster
     _service: null
-    ansible: professormanhattan.portmaster
+    ansible:linux: professormanhattan.portmaster
+    ansible:windows: professormanhattan.portmaster
   portout:
     _bin: null
     _desc: ''
@@ -5372,7 +5374,7 @@ softwarePackages:
     _name: null
     _service: null
     npm: share-cli
-  sharex:
+  sharex:windows:
     _bin: null
     _desc: '[ShareX](https://getsharex.com/) is a free and open source program that lets you capture or record any area of your screen and share it with a single press of a key. It also allows uploading images, text or other types of files to many supported destinations you can choose from.'
     _docs: https://getsharex.com/docs/faq
@@ -5477,7 +5479,7 @@ softwarePackages:
     _home: https://wiki.gnome.org/Apps/Shotwell
     _name: Shotwell
     _service: null
-    ansible: professormanhattan.shotwell
+    ansible:linux: professormanhattan.shotwell
     apt: shotwell
     dnf: shotwell
     pacman: shotwell
@@ -6090,7 +6092,7 @@ softwarePackages:
     _home: null
     _name: Timeshift
     _service: null
-    ansible: professormanhattan.timeshift
+    ansible:linux: professormanhattan.timeshift
     apt: timeshift
     dnf: timeshift
     yay: timeshift
