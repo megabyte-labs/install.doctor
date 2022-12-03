@@ -2011,17 +2011,22 @@ softwarePackages:
     _name: fzf
     _service: null
     ansible: professormanhattan.fzf
-  g-assist:
+  google-assistant:
     _bin: null
-    _desc: A cross-platform unofficial Google Assistant Client for Desktop
+    _desc: '[Google Assistant for Desktop](https://github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client) is a cross-platform unofficial Google Assistant Client for Desktop.'
     _docs: null
     _github: https://github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client
     _home: null
-    _name: Google Assistant Unofficial Desktop Client
+    _name: Google Assistant for Desktop
     _service: true
     _type: application
     github: github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client
     snap: g-assist
+  google-assistant:darwin:
+    _when: '! test -d /Applications/Google Assistant.app'
+    ansible: professormanhattan.googleassistant
+  google-assistant:windows:
+    ansible: professormanhattan.googleassistant
   gcloud:
     _bin: null
     _desc: null
@@ -2505,15 +2510,6 @@ softwarePackages:
     brew: gomplate
     choco: gomplate
     port: gomplate
-  googleassistant:
-    _bin: null
-    _desc: '[Google Assistant for Desktop](https://github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client) is a cross-platform unofficial Google Assistant Client for Desktop.'
-    _docs: https://developers.google.com/assistant
-    _github: null
-    _home: https://assistant.google.com/
-    _name: Google Assistant for Desktop
-    _service: null
-    ansible: professormanhattan.googleassistant
   googlecloudsdk:
     _bin: null
     _desc: '[Google Cloud SDK](https://cloud.google.com/sdk) includes tools and libraries for interacting with Google Cloud products and services. With it, you can orchestrate virtual machine instances directly from your command line, manage Compute Engine networks/firewalls/disks, simulate Pub/Sub locally, and much more.'

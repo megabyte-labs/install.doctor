@@ -114,7 +114,22 @@ async function generateInstallOrders() {
       if (bin) {
         const alreadyInstalled = which.sync(bin, { nothrow: true })
         if (alreadyInstalled) {
+          log('info', 'Skipping Package', `${bin} is already in the PATH`)
           continue pkgFor
+        }
+      }
+    }
+    const whens = [
+      softwarePackages[pkg + ":" + osID] && softwarePackages[pkg + ":" + osID]['_when'],
+      softwarePackages[pkg + ":" + osType] && softwarePackages[pkg + ":" + osType]['_when'],
+      softwarePackages[pkg] && softwarePackages[pkg]['_when']
+    ]
+    for (const when of whens) {
+      if (when) {
+        try {
+          await $`${when}`
+        } catch (e) {
+          log('info', 'Skipping Package', `${pkg} is being skipped because of the _when condition`)
         }
       }
     }
