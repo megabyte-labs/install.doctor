@@ -646,7 +646,7 @@ async function installPackageList(packageManager, packages) {
       for (let pkg of packages) {
         console.log(pkg)
         try {
-          execSync(`gum spin --spinner dot --title "Installing ${pkg} via Ansible" -- ansible localhost -m setup -m include_role -a name=${pkg} -e ansible_user=${process.env.USER} -e include_homebrew_install=false, {stdio: 'inherit', shell: true})
+          execSync(`gum spin --spinner dot --title "Installing ${pkg} via Ansible" -- ansible localhost -m setup -m include_role -a name=${pkg} -e ansible_user=${process.env.USER} -e include_homebrew_install=false`, {stdio: 'inherit', shell: true})
         } catch (e) {
           await $`ansible localhost -m setup -m include_role -a name=${pkg} -e ansible_user=${process.env.USER} -e include_homebrew_install=false`
         }
