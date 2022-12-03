@@ -62,7 +62,7 @@ function log(type, label, msg) {
     icon = `${chalk.yellowBright(figures.lozenge)} ${chalk.bold.black.bgYellowBright(' WARNING ')}`
     message = chalk.yellowBright(msg)
   } else if (type === 'error') {
-    icon = `${chalk.redBright(figures.cross)} ${chalk.black.bold.bgRedBright(' ERROR ')} + '  '}`
+    icon = `${chalk.redBright(figures.cross)} ${chalk.black.bold.bgRedBright(' ERROR ')}`
     message = chalk.redBright(msg)
   }
   const outputMessage = `${icon} ${chalk.bold(label)} ${message}`
@@ -255,9 +255,9 @@ async function afterInstall(packageManager) {
     log('info', logStage, `Ensuring temporary passwordless sudo privileges used by Ansible are removed`)
     const gsed = which.sync('gsed', { nothrow: true })
     if (gsed) {
-      await $`sudo gsed -i '/# TEMPORARY FOR ANSIBLE INSTALL/dg' /etc/sudoers`
+      await $`sudo gsed -i '/# TEMPORARY FOR ANSIBLE INSTALL/d' /etc/sudoers`
     } else {
-      await $`sudo sed -i '/# TEMPORARY FOR ANSIBLE INSTALL/dg' /etc/sudoers`
+      await $`sudo sed -i '/# TEMPORARY FOR ANSIBLE INSTALL/d' /etc/sudoers`
     }
   } else if (packageManager === 'apk') {
   } else if (packageManager === 'apt') {
