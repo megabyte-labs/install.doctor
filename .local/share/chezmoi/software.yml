@@ -159,7 +159,7 @@ installerPreference:
 
 softwarePackages:
   act:
-    _bin: null
+    _bin: act
     _desc: null
     _docs: null
     _github: null
@@ -173,7 +173,7 @@ softwarePackages:
     scoop: act
     yay: act
   allure:
-    _bin: null
+    _bin: allure
     _desc: null
     _docs: null
     _github: null
@@ -204,27 +204,19 @@ softwarePackages:
     yay: altair
   android-studio:
     _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
-    brew: android-studio
-    choco: androidstudio
-    snap: android-studio
-    yay: android-studio
-  androidstudio:
-    _bin: null
     _desc: >-
       [Android Studio](https://developer.android.com/studio) is the official integrated development environment for Google's Android operating system, built on JetBrains' IntelliJ IDEA software and designed specifically for Android development. This role installs Android Studio on nearly any operating system and also ensures a configurable list of command-line tools and SDKs are installed and seamlessly integrated with the system (i.e. the role adds the appropriate items to the `PATH` environment
       variable).
     _docs: https://developer.android.com/docs
-    _github: Not open-source
+    _github: null
     _home: https://developer.android.com/studio
     _name: Android Studio
     _service: null
     ansible: professormanhattan.androidstudio
+    brew: android-studio
+    choco: androidstudio
+    snap: android-studio
+    yay: android-studio
   angular-cli:
     _bin: ng
     _desc: null
@@ -236,7 +228,7 @@ softwarePackages:
     brew: angular-cli
     npm: '@angular/cli'
   ansible:
-    _bin: null
+    _bin: ansible
     _desc: null
     _docs: null
     _github: null
@@ -247,7 +239,7 @@ softwarePackages:
     dnf: ansible
     pipx: ansible
   ansible-lint:
-    _bin: null
+    _bin: ansible-lint
     _desc: null
     _docs: null
     _github: null
@@ -256,7 +248,7 @@ softwarePackages:
     _service: null
     pipx: ansible-lint
   ansibleconnect:
-    _bin: null
+    _bin: ansibleconnect
     _deps:
       - sshpass
       - tmux
@@ -338,7 +330,7 @@ softwarePackages:
     _service: null
     pipx: asciicinema
   asdf:
-    _bin: null
+    _bin: asdf
     _desc: '[asdf](https://asdf-vm.com/#/) is a CLI tool that can manage multiple language runtime versions on a per-project basis or globally. It is like gvm, nvm, rbenv, and pyenv all in one. This role installs asdf on Linux or macOS.'
     _docs: https://asdf-vm.com/guide/introduction.html
     _github: https://github.com/asdf-vm/asdf
@@ -523,7 +515,7 @@ softwarePackages:
     _service: null
     brew: bash-completion
   bat:
-    _bin: null
+    _bin: bat
     _desc: '[bat](https://github.com/sharkdp/bat) is a cat(1) clone with syntax highlighting and Git integration.'
     _docs: null
     _github: https://github.com/sharkdp/bat
@@ -3132,7 +3124,7 @@ softwarePackages:
     snap: jo
     yay: jo
   jq:
-    _bin: null
+    _bin: jq
     _desc: '[jq](https://github.com/stedolan/jq) is like sed for JSON data. You can use it to slice and filter and map and transform structured data with the same ease that sed, awk, grep and friends let you play with text.'
     _docs: null
     _github: https://github.com/stedolan/jq
@@ -3926,12 +3918,12 @@ softwarePackages:
     _service: null
     npm: nativefier
   nb:
-    _bin: null
+    _bin: nb
     _deps:
       - bat
       - netcat
       - pandoc
-      - rg
+      - ripgrep
       - tig
       - w3m
     _desc: '[nb](https://xwmx.github.io/nb) is a command line and local web note‑taking, bookmarking, archiving, and knowledge base application with plain text data storage, encryption, filtering, pinning, #tagging,  search, Git-backed versioning and syncing, Pandoc-backed conversion and many more features.'
@@ -6042,7 +6034,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.theme
   tig:
-    _bin: null
+    _bin: tig
     _desc: null
     _docs: null
     _github: null
