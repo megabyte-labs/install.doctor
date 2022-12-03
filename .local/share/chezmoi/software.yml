@@ -1361,11 +1361,19 @@ softwarePackages:
     _docs: https://docs.docker.com/
     _github: https://github.com/docker/cli
     _home: https://www.docker.com/
+    _post:apt: sudo systemctl start docker
+    _post:pacman: sudo systemctl start docker
     _name: Docker
     _service: null
     ansible: professormanhattan.docker
+    # apt:
+    #   - docker.io
+    #   - docker-compose
+    # cask: docker
+    # brew: docker
+    # pacman: docker
   docker-slim:
-    _bin: null
+    _bin: docker-slim
     _desc: Extension to minify and secure Docker images
     _docs: null
     _github: https://github.com/docker-slim/docker-slim
@@ -1396,7 +1404,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.dockerslim
   dockle:
-    _bin: null
+    _bin: dockle
     _desc: Container Image Linter for Security, Helping build the Best-Practice Docker Image, Easy to start
     _docs: null
     _github: https://github.com/goodwithtech/dockle
@@ -1638,7 +1646,7 @@ softwarePackages:
     brew: eslint
     npm: eslint
   etcd:
-    _bin: null
+    _bin: etcd
     _desc: Distributed reliable key-value store for the most critical data of a distributed system
     _docs: null
     _github: https://github.com/etcd-io/etcd
