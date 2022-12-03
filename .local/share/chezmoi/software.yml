@@ -2020,9 +2020,11 @@ softwarePackages:
     _name: Google Assistant for Desktop
     _service: true
     _type: application
+    ansible: professormanhattan.googleassistant
     github: github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client
     snap: g-assist
   google-assistant:darwin:
+    _note: When google-assistant:darwin or google-assistant:linux-distro-id (e.g. google:assistant:ubuntu is present, it takes precedence over the regular google-assistant entry)
     _when: '! test -d /Applications/Google Assistant.app'
     ansible: professormanhattan.googleassistant
   google-assistant:windows:
