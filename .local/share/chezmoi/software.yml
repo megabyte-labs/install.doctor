@@ -1843,9 +1843,10 @@ softwarePackages:
     cask: firefox
     choco: firefox
     dnf: firefox
+    flatpak: org.mozilla.firefox
     pacman: firefox
   firefox:darwin:
-    _when: '! test -d "/Applications/'
+    _when: '! test -d "/Applications/Firefox.app'
     cask: firefox
   firewall:
     _bin: null
