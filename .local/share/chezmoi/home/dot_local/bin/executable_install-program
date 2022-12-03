@@ -652,46 +652,65 @@ async function ensurePackageManager(packageManager) {
 // Installs a list of packages via the specified package manager
 async function installPackageList(packageManager, packages) {
   const logStage = 'Package Install'
-  let pkg = packages
   try {
     if (packageManager === 'appimage') {
     } else if (packageManager === 'ansible') {
-      console.log(packageManager)
-      console.log(packages)
       for (let pkg of packages) {
-        console.log(pkg)
         try {
-          execSync(`gum spin --spinner dot --title "Installing ${pkg} via Ansible" -- ansible localhost -m setup -m include_role -a name=${pkg} -e ansible_user=${process.env.USER} -e include_homebrew_install=false`, {stdio: 'inherit', shell: true})
+          await $`ansible localhost -m setup -m include_role -a name=${pkg} -e ansible_user=${process.env.USER} -e include_homebrew_install=false`
         } catch (e) {
-          log('error', 'Ansible Role Failure', 'There was an error installing ' + pkg)
-          console.log(e)
+          log('error', 'Ansible Role Failure', `There was an error installing ${pkg} with Ansible`)
         }
       }
     } else if (packageManager === 'apk') {
       for (let pkg of packages) {
-        await $`sudo apk add ${packages}`
+        try {
+          await $`sudo apk add ${pkg}`
+        } catch (e) {
+          log('error', 'APK Install Failure', `There was an error installing ${pkg} with apk`)
+        }
       }
     } else if (packageManager === 'apt') {
       for (let pkg of packages) {
-        await $`sudo apt-get install -y ${pkg}`
+        try {
+          await $`sudo apt-get install -y ${pkg}`
+        } catch (e) {
+          log('error', 'apt-get Failure', `There was an error installing ${pkg} with apt-get`)
+        }
       }
     } else if (packageManager === 'basher') {
     } else if (packageManager === 'binary') {
     } else if (packageManager === 'brew') {
       for (let pkg of packages) {
-        await $`brew install ${pkg}`
+        try {
+          await $`brew install ${pkg}`
+        } catch (e) {
+          log('error', 'Homebrew Failure', `There was an error installing ${pkg} with brew`)
+        }
       }
     } else if (packageManager === 'cask') {
       for (let pkg of packages) {
-        await $`brew install --cask ${pkg}`
+        try {
+          await $`brew install --cask ${pkg}`
+        } catch(e) {
+          log('error', 'Homebrew Cask Failure', `There was an error installing ${pkg} with Homebrew Cask`)
+        }
       }
     } else if (packageManager === 'cargo') {
       for (const pkg of packages) {
-        await $`cargo install ${pkg}`
+        try {
+          await $`cargo install ${pkg}`
+        } catch (e) {
+          log('error', 'Cargo Failure', `There was an error installing ${pkg} with Cargo`)
+        }
       }
     } else if (packageManager === 'choco') {
       for (let pkg of packages) {
-        await $`choco install -y ${pkg}`
+        try {
+          await $`choco install -y ${pkg}`
+        } catch (e) {
+          log('error', 'Chocolatey Failure', `There was an error installing ${pkg} with Chocolatey`)
+        }
       }
     } else if (packageManager === 'crew') {
     } else if (packageManager === 'dnf') {
@@ -699,63 +718,120 @@ async function installPackageList(packageManager, packages) {
       const yum = which.sync('yum', { nothrow: true })
       if (dnf) {
         for (let pkg of packages) {
-          await $`sudo dnf install -y ${pkg}`
+          try {
+            await $`sudo dnf install -y ${pkg}`
+          } catch (e) {
+            log('error', 'dnf Failure', `There was an error installing ${pkg} with dnf`)
+          }
         }
       } else if (yum) {
         for (let pkg of packages) {
-          await $`sudo yum install -y ${pkg}`
+          try {
+            await $`sudo yum install -y ${pkg}`
+          } catch(e) {
+            log('error', 'yum Failure', `There was an error installing ${pkg} with yum`)
+          }
         }
       }
     } else if (packageManager === 'flatpak') {
       for (let pkg of packages) {
-        await $`sudo flatpak install flathub ${pkg}`
+        try {
+          await $`sudo flatpak install flathub ${pkg}`
+        } catch(e) {
+          log('error', 'Flatpak Failure', `There was an error installing ${pkg} with flatpak`)
+        }
       }
     } else if (packageManager === 'gem') {
       for (let pkg of packages) {
-        await $`gem install ${pkg}`
+        try {
+          await $`gem install ${pkg}`
+        } catch (e) {
+          log('error', 'Gem Failure', `There was an error installing ${pkg} with gem`)
+        }
       }
     } else if (packageManager === 'go') {
       for (let pkg of packages) {
-        await $`go install ${pkg}`
+        try {
+          await $`go install ${pkg}`
+        } catch(e) {
+          log('error', 'Go Failure', `There was an error installing ${pkg} with go`)
+        }
       }
     } else if (packageManager === 'nix') {
     } else if (packageManager === 'npm') {
       for (let pkg of packages) {
-        await $`volta install ${pkg}`
+        try {
+          await $`volta install ${pkg}`
+        } catch(e) {
+          log('error', 'Volta Failure', `There was an error installing ${pkg} with volta`)
+        }
       }
     } else if (packageManager === 'pacman') {
       for (let pkg of packages) {
-        await $`sudo pacman -Sy --noconfirm --needed ${pkg}`
+        try {
+          await $`sudo pacman -Sy --noconfirm --needed ${pkg}`
+        } catch(e) {
+          log('error', 'Pacman Failure', `There was an error installing ${pkg} with pacman`)
+        }
       }
     } else if (packageManager === 'pipx') {
       for (let pkg of packages) {
-        await $`pipx install ${pkg}`
+        try {
+          await $`pipx install ${pkg}`
+        } catch(e) {
+          log('error', 'PIPX Failure', `There was an error installing ${pkg} with pipx`)
+        }
       }
     } else if (packageManager === 'pkg') {
     } else if (packageManager === 'port') {
       for (let pkg of packages) {
-        await $`sudo port install ${pkg}`
+        try {
+          await $`sudo port install ${pkg}`
+        } catch(e) {
+          log('error', 'Port Failure', `There was an error installing ${pkg} with port`)
+        }
       }
     } else if (packageManager === 'scoop') {
       for (let pkg of packages) {
-        await $`scoop install ${pkg}`
+        try {
+          await $`scoop install ${pkg}`
+        } catch(e) {
+          log('error', 'Scoop Failure', `There was an error installing ${pkg} with scoop`)
+        }
       }
     } else if (packageManager === 'snap') {
       for (let pkg of packages) {
-        await $`sudo snap install -y ${pkg}`
+        // TODO _snapClassic
+        try {
+          await $`sudo snap install -y ${pkg}`
+        } catch(e) {
+          log('error', 'Snap Failure', `There was an error installing ${pkg} with snap`)
+        }
       }
     } else if (packageManager === 'whalebrew') {
       for (let pkg of packages) {
-        await $`whalebrew install ${pkg}`
+        try {
+          await $`whalebrew install ${pkg}`
+        } catch(e) {
+          log('error', 'Whalebrew Failure', `There was an error installing ${pkg} with whalebrew`)
+        }
       }
     } else if (packageManager === 'winget') {
     } else if (packageManager === 'yay') {
       for (let pkg of packages) {
-        await $`yay -Sy --noconfirm --needed ${pkg}`
+        try {
+          await $`yay -Sy --noconfirm --needed ${pkg}`
+        } catch(e) {
+          log('error', 'Yay Failure', `There was an error installing ${pkg} with yay`)
+        }
       }
     } else if (packageManager === 'zypper') {
       for (let pkg of packages) {
-        await $`sudo zypper install -y ${packages}`
+        try {
+          await $`sudo zypper install -y ${packages}`
+        } catch(e) {
+          log('error', 'Zypper Failure', `There was an error installing ${pkg} with zypper`)
+        }
       }
     }
   } catch (e) {
