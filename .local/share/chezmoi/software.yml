@@ -481,6 +481,9 @@ softwarePackages:
     ansible: professormanhattan.etcher
     cask: balenaetcher
     choco: etcher
+  balenaetcher:darwin:
+    _when: '! test -d /Applications/balenaEtcher.app'
+    cask: balenaetcher
   bandwhich:
     _bin: null
     _desc: '[Bandwhich](https://github.com/imsnif/bandwhich) is a CLI utility for displaying current network utilization by process, connection and remote IP/hostname.'
@@ -638,19 +641,7 @@ softwarePackages:
     pacman: bottom
     scoop: bottom
     snap: bottom
-  brave:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
-    ansible: professormanhattan.bravebrowser
-    cask: brave-browser
-    choco: brave
-    snap: brave
-  bravebrowser:
+  brave-browser:
     _bin: null
     _desc: '[Brave Browser](https://brave.com/) is a free and open-source web browser developed by Brave Software, Inc. based on the Chromium web browser. It includes the ability to access Tor websites and has a built-in plugin that replaces ads and pays you to surf the web. It is a privacy-focused browser, which automatically blocks online advertisements and website trackers in its default settings. It also supports Chrome extensions.'
     _docs: https://support.brave.com/hc/en-us/articles/360035410812-Quickstart-guide-New-to-Brave-Start-here-
@@ -659,6 +650,12 @@ softwarePackages:
     _name: Brave Browser
     _service: null
     ansible: professormanhattan.bravebrowser
+    cask: brave-browser
+    choco: brave
+    snap: brave
+  brave-browser:darwin:
+    _when: '! test -d "/Applications/Brave Browser.app"'
+    cask: brave-browser
   broot:
     _bin: null
     _desc: '[broot](https://dystroy.org/broot/) offers a new way to see and navigate directory trees.'
@@ -747,6 +744,9 @@ softwarePackages:
     choco: cerebro
     github: github.com/cerebroapp/cerebro
     yay: cerebro
+  cerebro:darwin:
+    _when: '! test -d /Applications/Cerebro.app'
+    cask: cerebro
   certbot:
     _bin: null
     _desc: >-
@@ -5910,6 +5910,9 @@ softwarePackages:
     cask: tabby
     choco: tabby
     github: github.com/Eugeny/tabby
+  tabby:darwin:
+    _when: '! test -d /Applications/Tabby.app'
+    cask: tabby
   tailscale:
     _bin: null
     _desc: '[Tailscale](https://tailscale.com/) lets you easily manage access to private resources, quickly SSH into devices on your network, and work securely from anywhere in the world.'
