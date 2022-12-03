@@ -862,6 +862,7 @@ softwarePackages:
     brew: clair
     github: github.com/quay/clair
   clocker:
+    _when: '! test -d /Applications/Clocker.app'
     _bin: null
     _desc: null
     _docs: null
@@ -1084,6 +1085,7 @@ softwarePackages:
     github: github.com/bcicen/ctop
     yay: ctop-bin
   cumulus:
+    _when: '! test -d /Applications/Cumulus.app'
     _bin: null
     _desc: A SoundCloud player that lives in the menubar
     _docs: null
@@ -1170,6 +1172,7 @@ softwarePackages:
     github: github.com/dat-ecosystem-archive/dat
     npm: dat@next
   dat-desktop:
+    _when: '! test -d "/Applications/Dat Desktop.app"'
     _bin: null
     _desc: Peer to peer data syncronization
     _docs: null
@@ -2140,6 +2143,9 @@ softwarePackages:
     dnf: gimp
     pacman: gimp
     snap: gimp
+  gimp:darwin:
+    _when: '! test -d /Applications/GIMP-2.10.app'
+    cask: gimp
   gist:
     _bin: null
     _desc: '[gist](https://github.com/defunkt/gist) provides a command that you can use from your terminal to upload content to https://gist.github.com/. This role will optionally set up a dotfile that handles authentication if you pass the appropriate configuration.'
@@ -6422,6 +6428,9 @@ softwarePackages:
     cask: vlc
     choco: vlc
     snap: vlc
+  vlc:darwin:
+    _when: '! test -d /Applications/VLC.app'
+    cask: vlc
   vmware:
     _bin: null
     _desc: '[VMWare Workstation](https://www.vmware.com/products/workstation-pro.html) (or [VMWare Fusion](https://www.vmware.com/products/fusion.html) in the case of macOS) is a hosted hypervisor that runs on x64 versions of Windows and Linux operating systems. It enables users to set up virtual machines on a single physical machine and use them simultaneously along with the host machine. It is similar to [VirtualBox](https://gitlab.com/megabyte-labs/ansible-roles/virtualbox).'
