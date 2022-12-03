@@ -3452,14 +3452,15 @@ softwarePackages:
     brew:darwin: libimobiledevice
   libreoffice:
     _bin: null
-    _desc: null
+    _desc: '[LibreOffice](https://www.libreoffice.org/) is a free and open-source office productivity software suite, a project of The Document Foundation. It was forked in 2010 from OpenOffice.org, which was an open-sourced version of the earlier StarOffice.
     _docs: null
     _github: null
     _home: null
     _name: null
     _service: null
-    ansible: professormanhattan.office
     apt: libreoffice
+    cask: libreoffice
+    choco: libreoffice-fresh
     dnf: libreoffice
     pacman: libreoffice
   license:
@@ -3708,14 +3709,14 @@ softwarePackages:
     yay: microsoft-edge-stable-bin
   microsoft-office:
     _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
     _service: null
-    ansible: professormanhattan.office
+    _desc: '[Microsoft Office](https://www.microsoft.com/en-us/microsoft-365/microsoft-office), or simply Office, is a family of client software, server software, and services developed by Microsoft.'
+    _docs: https://docs.microsoft.com/en-us/microsoft-365/?view=o365-worldwide
+    _github: Not open-source
+    _home: https://www.office.com/
+    _name: Office
     cask: microsoft-office
+    choco: office365business
   microsoft-todo:
     _bin: null
     _desc: null
@@ -4255,17 +4256,7 @@ softwarePackages:
     _service: null
     npm: oclif
   office:
-    _bin: null
-    _desc: '[Microsoft Office](https://www.microsoft.com/en-us/microsoft-365/microsoft-office), or simply Office, is a family of client software, server software, and services developed by Microsoft. [LibreOffice](https://www.libreoffice.org/) is a free and open-source office productivity software suite, a project of The Document Foundation. It was forked in 2010 from OpenOffice.org, which was an open-sourced version of the earlier StarOffice.'
-    _docs: https://docs.microsoft.com/en-us/microsoft-365/?view=o365-worldwide
-    _github: Not open-source
-    _home: https://www.office.com/
-    _name: Office
-    _service: null
-    ansible: professormanhattan.office
-    apt: libreoffice
-    dnf: libreoffice
-    pacman: libreoffice
+
   oh-my-posh:
     _bin: oh-my-posh
     _desc: null

@@ -13,8 +13,13 @@
 logg 'Ensuring Gas Station roles are symlinked to ~/.local/share/ansible/roles'
 find "$HOME/.local/src/gas-station/roles" -mindepth 2 -maxdepth 2 -type d | while read ROLE_PATH; do
   ROLE_FOLDER="professormanhattan.$(echo "$ROLE_PATH" | sed 's/.*\/\([^\/]*\)$/\1/')"
+  ALT_ROLE_FOLDER="$(echo "$ROLE_PATH" | sed 's/.*\/\([^\/]*\)$/\1/')"
   if [ ! -d "$XDG_DATA_HOME/ansible/roles/$ROLE_FOLDER" ] || [ "$(readlink -f "$XDG_DATA_HOME/ansible/roles/$ROLE_FOLDER")" != "$ROLE_PATH" ]; then
     rm -f "$XDG_DATA_HOME/ansible/roles/$ROLE_FOLDER"
     ln -s "$ROLE_PATH" "$XDG_DATA_HOME/ansible/roles/$ROLE_FOLDER"
+  fi
+  if [ ! -d "$XDG_DATA_HOME/ansible/roles/$ALT_ROLE_FOLDER" ] || [ "$(readlink -f "$XDG_DATA_HOME/ansible/roles/$ALT_ROLE_FOLDER")" != "$ROLE_PATH" ]; then
+    rm -f "$XDG_DATA_HOME/ansible/roles/$ALT_ROLE_FOLDER"
+    ln -s "$ROLE_PATH" "$XDG_DATA_HOME/ansible/roles/$ALT_ROLE_FOLDER"
   fi
 done
