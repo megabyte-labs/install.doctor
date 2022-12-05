@@ -784,12 +784,17 @@ async function installPackageList(packageManager, packages) {
       }
     } else if (packageManager === 'pkg') {
     } else if (packageManager === 'port') {
-      for (let pkg of packages) {
-        try {
-          await $`sudo port install ${pkg}`
-        } catch(e) {
-          log('error', 'Port Failure', `There was an error installing ${pkg} with port`)
+      const port = which.sync('port', { nothrow: true })
+      if (port) {
+        for (let pkg of packages) {
+          try {
+            await $`sudo port install ${pkg}`
+          } catch(e) {
+            log('error', 'Port Failure', `There was an error installing ${pkg} with port`)
+          }
         }
+      } else {
+        log('error', 'Port Not Installed', `Unable to install ${pkg} because port is not installed.`)
       }
     } else if (packageManager === 'scoop') {
       for (let pkg of packages) {
