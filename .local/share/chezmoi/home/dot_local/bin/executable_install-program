@@ -966,7 +966,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === "ansible") {
       for (let pkg of packages) {
         try {
-          await $`ansible localhost -m setup -m include_role -a name=${pkg} -e ansible_user=${process.env.USER} -e include_homebrew_install=False`;
+          await $`ansible localhost -vvvvv -m setup -m include_role -a name=${pkg} -e ansible_user=${process.env.USER} -e include_homebrew_install=False`;
         } catch (e) {
           log(
             "error",
