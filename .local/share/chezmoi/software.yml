@@ -504,12 +504,10 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
+    _when:cask: '! test -d /Applications/balenaEtcher.app'
     ansible: professormanhattan.etcher
     cask: balenaetcher
     choco: etcher
-  balenaetcher:darwin:
-    _when: '! test -d /Applications/balenaEtcher.app'
-    cask: balenaetcher
   bandwhich:
     _bin: null
     _desc: '[Bandwhich](https://github.com/imsnif/bandwhich) is a CLI utility for displaying current network utilization by process, connection and remote IP/hostname.'
@@ -543,10 +541,8 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
-    brew: bash-completion
-  bash-completion:darwin:
-    _when: '! brew list bash-completion'
-    brew: bash-completion
+    _when:darwin: '! brew list bash-completion'
+    brew:darwin: bash-completion
   bat:
     _bin: bat
     _desc: '[bat](https://github.com/sharkdp/bat) is a cat(1) clone with syntax highlighting and Git integration.'
@@ -675,13 +671,11 @@ softwarePackages:
     _home: https://brave.com/
     _name: Brave Browser
     _service: null
+    _when:cask: '! test -d "/Applications/Brave Browser.app"'
     ansible: professormanhattan.bravebrowser
     cask: brave-browser
     choco: brave
     snap: brave
-  brave-browser:darwin:
-    _when: '! test -d "/Applications/Brave Browser.app"'
-    cask: brave-browser
   broot:
     _bin: null
     _desc: '[broot](https://dystroy.org/broot/) offers a new way to see and navigate directory trees.'
@@ -766,13 +760,11 @@ softwarePackages:
     _name: Cerebro
     _service: true
     _type: application
+    _when:cask: '! test -d /Applications/Cerebro.app'
     cask: cerebro
     choco: cerebro
     github: github.com/cerebroapp/cerebro
     yay: cerebro
-  cerebro:darwin:
-    _when: '! test -d /Applications/Cerebro.app'
-    cask: cerebro
   certbot:
     _bin: null
     _desc: >-
@@ -837,7 +829,7 @@ softwarePackages:
     snap: chezmoi
     xbps: chezmoi
     zypper: chezmoi
-  chrome:
+  google-chrome:
     _bin: null
     _deps:
       - chrome-gnome-shell
@@ -847,6 +839,7 @@ softwarePackages:
     _home: https://www.google.com/chrome/
     _name: Google Chrome
     _service: null
+    _when:cask: '! test -d "/Applications/Google Chrome.app"'
     ansible: professormanhattan.chrome
     apt: chromium
     cask: google-chrome
@@ -1870,6 +1863,7 @@ softwarePackages:
     _home: https://www.mozilla.org/en-US/firefox/new/
     _name: Mozilla Firefox
     _service: null
+    _when:cask: '! test -d "/Applications/Firefox.app"'
     ansible: professormanhattan.firefox
     apt: firefox
     apt:debian: firefox-esr
@@ -1878,9 +1872,6 @@ softwarePackages:
     dnf: firefox
     flatpak: org.mozilla.firefox
     pacman: firefox
-  firefox:darwin:
-    _when: '! test -d "/Applications/Firefox.app'
-    cask: firefox
   firewall:
     _bin: null
     _desc: This role is intended to be used with the ProfessorManhattan playbook. It integrates tightly with the other roles included with the playbook.
@@ -2062,7 +2053,7 @@ softwarePackages:
     snap: g-assist
   google-assistant:darwin:
     _note: When google-assistant:darwin or google-assistant:linux-distro-id (e.g. google:assistant:ubuntu is present, it takes precedence over the regular google-assistant entry)
-    _when: '! test -d /Applications/Google Assistant.app'
+    _when: '! test -d "/Applications/Google Assistant.app"'
     ansible: professormanhattan.googleassistant
   google-assistant:windows:
     ansible: professormanhattan.googleassistant
@@ -2162,6 +2153,7 @@ softwarePackages:
     _home: https://www.gimp.org/
     _name: GIMP
     _service: null
+    _when:cask: '! test -d /Applications/GIMP-2.10.app'
     ansible: professormanhattan.gimp
     apt: gimp
     cask: gimp
@@ -2169,9 +2161,6 @@ softwarePackages:
     dnf: gimp
     pacman: gimp
     snap: gimp
-  gimp:darwin:
-    _when: '! test -d /Applications/GIMP-2.10.app'
-    cask: gimp
   gist:
     _bin: null
     _desc: '[gist](https://github.com/defunkt/gist) provides a command that you can use from your terminal to upload content to https://gist.github.com/. This role will optionally set up a dotfile that handles authentication if you pass the appropriate configuration.'
@@ -3004,6 +2993,7 @@ softwarePackages:
     _home: https://inkscape.org
     _name: Inkscape
     _service: null
+    _when:cask: '! test -d "/Applications/Inkscape.app"'
     ansible: professormanhattan.inkscape
     apt: inkscape
     cask: inkscape
@@ -3011,9 +3001,6 @@ softwarePackages:
     dnf: inkscape
     pacman: inkscape
     snap: inkscape
-  inkscape:darwin:
-    _when: '! test -d "/Applications/Inkscape.app"'
-    cask: inkscape
   installer:
     _bin: null
     _desc: This role helps install Software from GitHub on nearly any platform.
@@ -3154,6 +3141,7 @@ softwarePackages:
     _name: Jitsi Meet Electron
     _service: null
     _type: application
+    _when:cask: '! test -d "/Applications/Jitsi Meet.app"'
     cask: jitsi-meet
     choco: jitsi-meet-electron
     github: github.com/jitsi/jitsi-meet-electron
@@ -3235,6 +3223,7 @@ softwarePackages:
     _home: https://keybase.io/
     _name: Keybase
     _service: null
+    _when:cask: '! test -d /Applications/Keybase.app'
     ansible: professormanhattan.keybase
     cask: keybase
     choco: keybase
@@ -3242,9 +3231,6 @@ softwarePackages:
       - keybase
       - keybase-gui
     yay: keybase-bin
-  keybase:darwin:
-    _when: '! test -d /Applications/Keybase.app'
-    cask: keybase
   kitty:
     _bin: null
     _desc: '[KiTTY](https://sw.kovidgoyal.net/kitty/) is designed for power keyboard users. To that end all its controls work with the keyboard (although it fully supports mouse interactions as well). Its configuration is a simple, human editable, single file for easy reproducibility.'
@@ -3274,15 +3260,13 @@ softwarePackages:
     _home: https://kodi.tv/
     _name: Kodi
     _service: null
+    _when:cask: '! test -d /Applications/Kodi.app'
     ansible: professormanhattan.kodi
     apt: kodi
     cask: kodi
     choco: kodi
     dnf: kodi
     pacman: kodi
-  kodi:darwin:
-    _when: '! test -d /Applications/Kodi.app'
-    cask: kodi
   kubectx:
     _bin: null
     _desc: null
@@ -3491,6 +3475,7 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
+    _when:cask: '! test -d /Applications/LibreOffice.app'
     apt: libreoffice
     cask: libreoffice
     choco: libreoffice-fresh
@@ -3642,6 +3627,7 @@ softwarePackages:
     _home: https://getmailspring.com/
     _name: Mailspring
     _service: null
+    _when:cask: '! test -d /Applications/Mailspring.app'
     ansible: professormanhattan.mailspring
     cask: mailspring
     choco: mailspring
@@ -3748,6 +3734,7 @@ softwarePackages:
     _github: Not open-source
     _home: https://www.office.com/
     _name: Office
+    _when:cask: '! test -d "/Applications/Microsoft Word.app"'
     cask: microsoft-office
     choco: office365business
   microsoft-todo:
@@ -3758,6 +3745,7 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
+    _when:cask: '! test -d /Applications/Ao.app'
     ansible: professormanhattan.microsofttodo
     cask: ao
     snap: microsoft-todo-unofficial
@@ -4265,6 +4253,7 @@ softwarePackages:
     _name: Nuclear
     _service: null
     _type: application
+    _when:cask: '! test -d /Applications/nuclear.app'
     cask: nuclear
     choco: nuclear
     github: github.com/nukeop/nuclear
@@ -4754,21 +4743,17 @@ softwarePackages:
     _home: https://protonmail.com/
     _name: Proton
     _service: null
+    _when:cask: '! test -d /Applications/ProtonVPN.app'
     ansible: professormanhattan.proton
     cask: protonvpn
     choco: protonvpn
     dnf: protonvpn-cli
     yay: protonvpn
-  proton:darwin:
-    _when: '! test -d /Applications/ProtonVPN.app'
-    cask: protonvpn
   protonmail-bridge:
+    _when:cask: '! test -d "/Applications/Proton Mail Bridge.app"'
     cask: protonmail-bridge
     choco: protonmailbridge
     yay: protonmail-bridge
-  protonmail-bridge:darwin:
-    _when: '! test -d "/Applications/Proton Mail Bridge.app"'
-    cask: protonmail-bridge
   psi:
     _bin: null
     _desc: null
@@ -5027,6 +5012,7 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
+    _when:cask: '! test -d "/Applications/Microsoft Remote Desktop.app"'
     apt:
       - remmina
       - xrdp
@@ -5039,9 +5025,6 @@ softwarePackages:
     yay:
       - remmina-git
       - xrdp
-  remote-desktop:darwin:
-    _when: '! test -d "/Applications/Microsoft Remote Desktop.app"'
-    cask: microsoft-remote-desktop
   remotedesktop:
     _bin: null
     _desc: '[Remmina](https://remmina.org/) is a remote desktop client for POSIX-based computer operating systems. It supports the Remote Desktop Protocol, VNC, NX, XDMCP, SPICE and SSH protocols. [GNOME Boxes](https://wiki.gnome.org/Apps/Boxes) is an application of the GNOME Desktop Environment, used to access remote or virtual systems. Boxes uses the QEMU, KVM, and libvirt virtualization technologies. GNOME Boxes requires the CPU to support some form of hardware-assisted virtualization.'
@@ -5496,6 +5479,7 @@ softwarePackages:
     _name: Shotcut
     _service: null
     _snapClassic: true
+    _when:cask: '! test -d /Applications/Shotcut.app'
     ansible: professormanhattan.shotcut
     apt: shotcut
     cask: shotcut
@@ -5549,6 +5533,7 @@ softwarePackages:
     _name: Skype
     _service: null
     _type: application
+    _when:cask: '! test -d /Applications/Skype.app'
     ansible: professormanhattan.skype
     cask: skype
     choco: skype
@@ -5563,6 +5548,7 @@ softwarePackages:
     _name: Slack
     _service: null
     _type: application
+    _when:cask: '! test -d /Applications/Slack.app'
     ansible: professormanhattan.slack
     cask: slack
     choco: slack
@@ -5798,6 +5784,7 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
+    _when:cask: '! test -d /Applications/Stats.app'
     cask: stats
   stegcloak:
     _bin: null
@@ -5937,13 +5924,11 @@ softwarePackages:
     _name: Tabby
     _service: null
     _type: application
+    _when:cask: '! test -d /Applications/Tabby.app'
     ansible: professormanhattan.tabby
     cask: tabby
     choco: tabby
     github: github.com/Eugeny/tabby
-  tabby:darwin:
-    _when: '! test -d /Applications/Tabby.app'
-    cask: tabby
   tailscale:
     _bin: null
     _desc: '[Tailscale](https://tailscale.com/) lets you easily manage access to private resources, quickly SSH into devices on your network, and work securely from anywhere in the world.'
@@ -5975,14 +5960,12 @@ softwarePackages:
     _home: null
     _name: Microsoft Teams
     _service: null
+    _when:cask: '! test -d "/Applications/Microsoft Teams.app"'
     ansible: professormanhattan.teams
     cask: microsoft-teams
     choco: microsoft-teams
     snap: teams-for-linux
     yay: teams-for-linux
-  microsoft-teams:darwin:
-    _when: '! test -d "/Applications/Microsoft Teams.app"'
-    cask: microsoft-teams
   teamviewer:
     _bin: null
     _desc: '[TeamViewer](https://www.teamviewer.com/en-us/) is a proprietary software for remote access to as well as remote control and maintenance of computers and other devices, which was first released in 2005. The functionality has been expanded step by step, most recently for example through the integration of TeamViewer Meeting.'
@@ -5991,13 +5974,11 @@ softwarePackages:
     _home: https://www.teamviewer.com/en-us/
     _name: TeamViewer
     _service: null
+    _when:cask: '! test -d /Applications/TeamViewer.app'
     ansible: professormanhattan.teamviewer
     cask: teamviewer
     choco: teamviewer
     yay: teamviewer
-  teamviewer:darwin:
-    _when: '! test -d /Applications/TeamViewer.app'
-    cask: teamviewer
   teleport:
     _bin: null
     _desc: '[Teleport](https://goteleport.com/) is a free and open-source tool that allows engineers and security professionals to unify access for SSH servers, Kubernetes clusters, web applications, and databases across all environments. It is an identity-aware, multi-protocol access proxy which understands SSH, HTTPS, Kubernetes API, MySQL and PostgreSQL wire protocols.'
@@ -6454,14 +6435,12 @@ softwarePackages:
     _home: https://www.videolan.org/vlc/
     _name: VLC Media Player
     _service: null
+    _when:cask: '! test -d /Applications/VLC.app'
     ansible: professormanhattan.vlc
     apt: vlc
     cask: vlc
     choco: vlc
     snap: vlc
-  vlc:darwin:
-    _when: '! test -d /Applications/VLC.app'
-    cask: vlc
   vmware:
     _bin: null
     _desc: '[VMWare Workstation](https://www.vmware.com/products/workstation-pro.html) (or [VMWare Fusion](https://www.vmware.com/products/fusion.html) in the case of macOS) is a hosted hypervisor that runs on x64 versions of Windows and Linux operating systems. It enables users to set up virtual machines on a single physical machine and use them simultaneously along with the host machine. It is similar to [VirtualBox](https://gitlab.com/megabyte-labs/ansible-roles/virtualbox).'
@@ -6503,14 +6482,12 @@ softwarePackages:
     _name: Visual Studio Code
     _service: null
     _snapClassic: true
+    _when:cask: '! test -d "/Applications/Visual Studio Code.app"'
     ansible: professormanhattan.vscode
     cask: visual-studio-code
     choco: vscode
     snap: code
     yay: visual-studio-code-bin
-  vscode:darwin:
-    _when: '! test -d "/Applications"'
-    cask: visual-studio-code
   w3m:
     _bin: null
     _desc: null

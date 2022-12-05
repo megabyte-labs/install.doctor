@@ -1,36 +1,38 @@
 #!/usr/bin/env zx
 
-const execSync = require('child_process').execSync
+declare let chalk, process, require, which, YAML, $;
+
+const execSync = require("child_process").execSync;
 
 // Log symbols
 const figuresDefault = {
-  bullet: '●',
-  circle: '◯',
-  cross: '✖',
-  lozenge: '◆',
-  play: '▶',
-  pointer: '❯',
-  square: '◼',
-  star: '★',
-  tick: '✔'
-}
+  bullet: "●",
+  circle: "◯",
+  cross: "✖",
+  lozenge: "◆",
+  play: "▶",
+  pointer: "❯",
+  square: "◼",
+  star: "★",
+  tick: "✔",
+};
 
 const figuresFallback = {
-  bullet: '■',
-  circle: '□',
-  cross: '×',
-  lozenge: '♦',
-  play: '►',
-  pointer: '>',
-  square: '■',
-  star: '✶',
-  tick: '√'
-}
+  bullet: "■",
+  circle: "□",
+  cross: "×",
+  lozenge: "♦",
+  play: "►",
+  pointer: ">",
+  square: "■",
+  star: "✶",
+  tick: "√",
+};
 
 function isUnicodeSupported() {
-  if (process.platform !== 'win32') {
+  if (process.platform !== "win32") {
     // Linux console (kernel)
-    return process.env.TERM !== 'linux'
+    return process.env.TERM !== "linux";
   }
 
   return (
@@ -38,46 +40,46 @@ function isUnicodeSupported() {
     // Windows Terminal
     Boolean(process.env.WT_SESSION) ||
     // ConEmu and cmder
-    process.env.ConEmuTask === '{cmd::Cmder}' ||
-    process.env.TERM_PROGRAM === 'vscode' ||
-    process.env.TERM === 'xterm-256color' ||
-    process.env.TERM === 'alacritty'
-  )
+    process.env.ConEmuTask === "{cmd::Cmder}" ||
+    process.env.TERM_PROGRAM === "vscode" ||
+    process.env.TERM === "xterm-256color" ||
+    process.env.TERM === "alacritty"
+  );
 }
 
-const figures = isUnicodeSupported() ? figuresDefault : figuresFallback
+const figures = isUnicodeSupported() ? figuresDefault : figuresFallback;
 
 function log(type, label, msg) {
-  let icon, message
-  if (type === 'info') {
-    icon = chalk.cyanBright(figures.pointer)
-    message = chalk.gray.bold(msg)
-  } else if (type === 'star') {
-    icon = chalk.yellowBright(figures.star)
-    message = chalk.bold(msg)
-  } else if (type === 'success') {
-    icon = chalk.greenBright(figures.play)
-    message = chalk.bold(msg)
-  } else if (type === 'warn') {
-    icon = `${chalk.yellowBright(figures.lozenge)} ${chalk.bold.black.bgYellowBright(' WARNING ')}`
-    message = chalk.yellowBright(msg)
-  } else if (type === 'error') {
-    icon = `${chalk.redBright(figures.cross)} ${chalk.black.bold.bgRedBright(' ERROR ')}`
-    message = chalk.redBright(msg)
+  let icon, message;
+  if (type === "info") {
+    icon = chalk.cyanBright(figures.pointer);
+    message = chalk.gray.bold(msg);
+  } else if (type === "star") {
+    icon = chalk.yellowBright(figures.star);
+    message = chalk.bold(msg);
+  } else if (type === "success") {
+    icon = chalk.greenBright(figures.play);
+    message = chalk.bold(msg);
+  } else if (type === "warn") {
+    icon = `${chalk.yellowBright(
+      figures.lozenge
+    )} ${chalk.bold.black.bgYellowBright(" WARNING ")}`;
+    message = chalk.yellowBright(msg);
+  } else if (type === "error") {
+    icon = `${chalk.redBright(figures.cross)} ${chalk.black.bold.bgRedBright(
+      " ERROR "
+    )}`;
+    message = chalk.redBright(msg);
   }
-  const outputMessage = `${icon} ${chalk.bold(label)} ${message}`
-  console.log(outputMessage)
+  const outputMessage = `${icon} ${chalk.bold(label)} ${message}`;
+  console.log(outputMessage);
 }
 
-let installData
+let installData;
 const installOrders = {};
 const installOrdersPre = [];
 const installOrdersPost = [];
-const osType = await OSType();
-let osID = osType
-if(osType === 'linux') {
-  osID = await realeaseID()
-}
+let osType, osID;
 
 // Download the installation map
 async function downloadInstallData() {
@@ -85,87 +87,342 @@ async function downloadInstallData() {
     "https://gitlab.com/megabyte-labs/misc/dotfiles/-/raw/master/.local/share/chezmoi/software.yml"
   );
   if (response.ok) {
-    const text = await response.text()
-    return YAML.parse(text)
+    const text = await response.text();
+    return YAML.parse(text);
   } else {
-    log('error', 'Catalog Download', `Failed to download the installation map`)
+    log("error", "Catalog Download", `Failed to download the installation map`);
   }
 }
 
 // Creates the installOrders object which maps package managers to arrays of packages to install
 async function generateInstallOrders() {
-  const logStage = 'Install Orders'
+  const logStage = "Install Orders";
   const packagesToInstall = process.argv.slice(3);
-  const installerPreference = await OSTypeInstallerKey()
-  log('info', logStage, `Installer preference category detected as ${installerPreference}`)
+  const installerPreference = await OSTypeInstallerKey();
+  log(
+    "info",
+    logStage,
+    `Installer preference category detected as ${installerPreference}`
+  );
   const preferenceOrder = installData.installerPreference[installerPreference];
-  log('info', logStage, `Preference order acquired:`)
-  console.log(preferenceOrder)
+  log("info", logStage, `Preference order acquired:`);
+  console.log(preferenceOrder);
   const softwarePackages = installData.softwarePackages;
-  pkgFor:
-  for (let pkg of packagesToInstall) {
+  pkgFor: for (let pkg of packagesToInstall) {
     let packageKey;
-    const bins = [
-      softwarePackages[pkg + ":" + osID] && softwarePackages[pkg + ":" + osID]['_bin'],
-      softwarePackages[pkg + ":" + osType] && softwarePackages[pkg + ":" + osType]['_bin'],
-      softwarePackages[pkg] && softwarePackages[pkg]['_bin']
-    ]
-    for (const bin of bins) {
-      if (bin) {
-        const alreadyInstalled = which.sync(bin, { nothrow: true })
-        if (alreadyInstalled) {
-          log('info', 'Skipping Package', `${bin} is already in the PATH`)
-          continue pkgFor
-        }
-      }
-    }
-    const whens = [
-      softwarePackages[pkg + ":" + osID] && softwarePackages[pkg + ":" + osID]['_when'],
-      softwarePackages[pkg + ":" + osType] && softwarePackages[pkg + ":" + osType]['_when'],
-      softwarePackages[pkg] && softwarePackages[pkg]['_when']
-    ]
-    for (const when of whens) {
-      if (when) {
-        try {
-          await $when
-        } catch (e) {
-          log('info', 'Skipping Package', `${pkg} is being skipped because of the _when condition`)
-          continue pkgFor
-        }
-      }
-    }
     if (softwarePackages[pkg + ":" + osID]) {
       packageKey = pkg + ":" + osID;
     } else if (softwarePackages[pkg + ":" + osType]) {
       packageKey = pkg + ":" + osType;
     } else if (softwarePackages[pkg]) {
-      packageKey = pkg
+      packageKey = pkg;
     } else {
-      log('warn', logStage, `The package \`${pkg}\` was not found in the installation map`)
-      continue
+      log(
+        "warn",
+        logStage,
+        `The package \`${pkg}\` was not found in the installation map`
+      );
+      continue;
     }
     for (let preference of preferenceOrder) {
-      if (softwarePackages[packageKey][preference + ":" + osID]) {
-        await updateInstallMaps(
-          preference,
-          softwarePackages[packageKey],
-          preference + ":" + osID,
-          pkg,
-          packageKey
-        );
-        break
-      } else if (softwarePackages[packageKey][preference + ":" + osType]) {
-        await updateInstallMaps(
-          preference,
-          softwarePackages[packageKey],
-          preference + ":" + osType,
-          pkg,
-          packageKey
-        );
-        break
-      } else if (softwarePackages[packageKey][preference]) {
-        await updateInstallMaps(preference, softwarePackages[packageKey], preference, pkg, packageKey);
-        break
+      let currentSelector,
+        doubleScoped,
+        scopedPkgManager,
+        scopedSystem,
+        normalCheck;
+      if (
+        softwarePackages[packageKey][preference + ":" + osID] ||
+        softwarePackages[packageKey][preference + ":" + osType] ||
+        softwarePackages[packageKey][preference]
+      ) {
+        let currentPkgRef;
+        if (softwarePackages[packageKey][preference + ":" + osID]) {
+          currentPkgRef = preference + ":" + osID;
+        } else if (softwarePackages[packageKey][preference + ":" + osType]) {
+          currentPkgRef = preference + ":" + osType;
+        } else if (softwarePackages[packageKey][preference]) {
+          currentPkgRef = preference;
+        }
+
+        // Handle the _when attribute
+        currentSelector = "when";
+        doubleScoped =
+          (softwarePackages[currentPkgRef] &&
+            softwarePackages[currentPkgRef][
+              "_" + currentSelector + ":" + preference + ":" + osID
+            ]) ||
+          (softwarePackages[currentPkgRef] &&
+            softwarePackages[currentPkgRef][
+              "_" + currentSelector + ":" + osID + ":" + preference
+            ]) ||
+          (softwarePackages[currentPkgRef] &&
+            softwarePackages[currentPkgRef][
+              "_" + currentSelector + ":" + preference + ":" + osType
+            ]) ||
+          (softwarePackages[currentPkgRef] &&
+            softwarePackages[currentPkgRef][
+              "_" + currentSelector + ":" + osType + ":" + preference
+            ]);
+        scopedPkgManager =
+          softwarePackages[currentPkgRef] &&
+          softwarePackages[currentPkgRef][
+            "_" + currentSelector + ":" + preference
+          ];
+        scopedSystem =
+          (softwarePackages[currentPkgRef] &&
+            softwarePackages[currentPkgRef][
+              "_" + currentSelector + ":" + osID
+            ]) ||
+          (softwarePackages[currentPkgRef] &&
+            softwarePackages[currentPkgRef][
+              "_" + currentSelector + ":" + osType
+            ]);
+        normalCheck =
+          softwarePackages[currentPkgRef] &&
+          softwarePackages[currentPkgRef]["_" + currentSelector];
+        if (doubleScoped) {
+          try {
+            await $(doubleScoped);
+          } catch (e) {
+            let pref;
+            if (
+              softwarePackages[currentPkgRef][
+                "_" + currentSelector + ":" + preference + ":" + osID
+              ]
+            ) {
+              pref = preference + ":" + osID;
+            } else if (
+              softwarePackages[currentPkgRef][
+                "_" + currentSelector + ":" + preference + ":" + osType
+              ]
+            ) {
+              pref = preference + ":" + osType;
+            } else if (
+              softwarePackages[currentPkgRef][
+                "_" + currentSelector + ":" + osID + ":" + preference
+              ]
+            ) {
+              pref = osID + ":" + preference;
+            } else if (
+              softwarePackages[currentPkgRef][
+                "_" + currentSelector + ":" + osType + ":" + preference
+              ]
+            ) {
+              pref = osType + ":" + preference;
+            }
+            log(
+              "info",
+              "Skipping Package",
+              `${pkg} is being skipped because of the _when:${pref} condition`
+            );
+            continue pkgFor;
+          }
+        } else if (scopedPkgManager) {
+          try {
+            await $(scopedPkgManager);
+          } catch (e) {
+            const pref = preference;
+            log(
+              "info",
+              "Skipping Package",
+              `${pkg} is being skipped because of the _when:${pref} condition`
+            );
+            continue pkgFor;
+          }
+        } else if (scopedSystem) {
+          try {
+            await $(scopedSystem);
+          } catch (e) {
+            let pref;
+            if (
+              softwarePackages[currentPkgRef][
+                "_" + currentSelector + ":" + osID
+              ]
+            ) {
+              pref = osID;
+            } else if (
+              softwarePackages[currentPkgRef][
+                "_" + currentSelector + ":" + osType
+              ]
+            ) {
+              pref = osType;
+            }
+            log(
+              "info",
+              "Skipping Package",
+              `${pkg} is being skipped because of the _when:${pref} condition`
+            );
+            continue pkgFor;
+          }
+        } else if (normalCheck) {
+          try {
+            await $(normalCheck);
+          } catch (e) {
+            log(
+              "info",
+              "Skipping Package",
+              `${pkg} is being skipped because of the _when condition`
+            );
+            continue pkgFor;
+          }
+        }
+
+        // Handle the _bin attribute
+        currentSelector = "bin";
+        doubleScoped =
+          (softwarePackages[currentPkgRef] &&
+            softwarePackages[currentPkgRef][
+              "_" + currentSelector + ":" + preference + ":" + osID
+            ]) ||
+          (softwarePackages[currentPkgRef] &&
+            softwarePackages[currentPkgRef][
+              "_" + currentSelector + ":" + osID + ":" + preference
+            ]) ||
+          (softwarePackages[currentPkgRef] &&
+            softwarePackages[currentPkgRef][
+              "_" + currentSelector + ":" + preference + ":" + osType
+            ]) ||
+          (softwarePackages[currentPkgRef] &&
+            softwarePackages[currentPkgRef][
+              "_" + currentSelector + ":" + osType + ":" + preference
+            ]);
+        scopedPkgManager =
+          softwarePackages[currentPkgRef] &&
+          softwarePackages[currentPkgRef][
+            "_" + currentSelector + ":" + preference
+          ];
+        scopedSystem =
+          (softwarePackages[currentPkgRef] &&
+            softwarePackages[currentPkgRef][
+              "_" + currentSelector + ":" + osID
+            ]) ||
+          (softwarePackages[currentPkgRef] &&
+            softwarePackages[currentPkgRef][
+              "_" + currentSelector + ":" + osType
+            ]);
+        normalCheck =
+          softwarePackages[currentPkgRef] &&
+          softwarePackages[currentPkgRef]["_" + currentSelector];
+        if (doubleScoped) {
+          const bin = which.sync(doubleScoped, { nothrow: true });
+          if (!bin) {
+            let pref;
+            if (
+              softwarePackages[currentPkgRef] &&
+              softwarePackages[currentPkgRef][
+                "_" + currentSelector + ":" + preference + ":" + osID
+              ]
+            ) {
+              pref = preference + ":" + osID;
+            } else if (
+              softwarePackages[currentPkgRef] &&
+              softwarePackages[currentPkgRef][
+                "_" + currentSelector + ":" + preference + ":" + osType
+              ]
+            ) {
+              pref = preference + ":" + osType;
+            } else if (
+              softwarePackages[currentPkgRef] &&
+              softwarePackages[currentPkgRef][
+                "_" + currentSelector + ":" + osID + ":" + preference
+              ]
+            ) {
+              pref = osID + ":" + preference;
+            } else if (
+              softwarePackages[currentPkgRef] &&
+              softwarePackages[currentPkgRef][
+                "_" + currentSelector + ":" + osType + ":" + preference
+              ]
+            ) {
+              pref = osType + ":" + preference;
+            }
+            log(
+              "info",
+              "Skipping Package",
+              `${pkg} is being skipped because of the _bin:${pref} condition`
+            );
+            log("info", "Skipping Package", `${bin} is already in the PATH`);
+            continue pkgFor;
+          }
+        } else if (scopedPkgManager) {
+          const bin = which.sync(scopedPkgManager, { nothrow: true });
+          if (!bin) {
+            const pref = preference;
+            log(
+              "info",
+              "Skipping Package",
+              `${pkg} is being skipped because of the _bin:${pref} condition`
+            );
+            log("info", "Skipping Package", `${bin} is already in the PATH`);
+            continue pkgFor;
+          }
+        } else if (scopedSystem) {
+          const bin = which.sync(scopedSystem, { nothrow: true });
+          if (!bin) {
+            let pref;
+            if (
+              softwarePackages[currentPkgRef] &&
+              softwarePackages[currentPkgRef][
+                "_" + currentSelector + ":" + osID
+              ]
+            ) {
+              pref = osID;
+            } else if (
+              softwarePackages[currentPkgRef] &&
+              softwarePackages[currentPkgRef][
+                "_" + currentSelector + ":" + osType
+              ]
+            ) {
+              pref = osType;
+            }
+            log(
+              "info",
+              "Skipping Package",
+              `${pkg} is being skipped because of the _bin:${pref} condition`
+            );
+            log("info", "Skipping Package", `${bin} is already in the PATH`);
+            continue pkgFor;
+          }
+        } else if (normalCheck) {
+          const bin = which.sync(normalCheck, { nothrow: true });
+          if (!bin) {
+            log(
+              "info",
+              "Skipping Package",
+              `${pkg} is being skipped because of the _bin condition`
+            );
+            log("info", "Skipping Package", `${bin} is already in the PATH`);
+            continue pkgFor;
+          }
+        }
+        if (softwarePackages[packageKey][preference + ":" + osID]) {
+          await updateInstallMaps(
+            preference,
+            softwarePackages[packageKey],
+            preference + ":" + osID,
+            pkg,
+            packageKey
+          );
+          break;
+        } else if (softwarePackages[packageKey][preference + ":" + osType]) {
+          await updateInstallMaps(
+            preference,
+            softwarePackages[packageKey],
+            preference + ":" + osType,
+            pkg,
+            packageKey
+          );
+          break;
+        } else if (softwarePackages[packageKey][preference]) {
+          await updateInstallMaps(
+            preference,
+            softwarePackages[packageKey],
+            preference,
+            pkg,
+            packageKey
+          );
+          break;
+        }
       }
     }
   }
@@ -173,7 +430,13 @@ async function generateInstallOrders() {
 }
 
 // Update install, pre-hook, and post-hook objects
-async function updateInstallMaps(preference, packages, scopedPreference, pkg, packageKey) {
+async function updateInstallMaps(
+  preference,
+  packages,
+  scopedPreference,
+  pkg,
+  packageKey
+) {
   const preHook = getHook(packages, "pre", scopedPreference, preference);
   if (preHook) {
     installOrdersPre.concat(typeof preHook === "string" ? [preHook] : preHook);
@@ -187,9 +450,13 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
   if (!installOrders[preference]) {
     installOrders[preference] = [];
   }
-  log('info', 'Install Orders', `Found a match for the package \`${pkg}\` (${packageKey} via ${scopedPreference})`)
+  log(
+    "info",
+    "Install Orders",
+    `Found a match for the package \`${pkg}\` (${packageKey} via ${scopedPreference})`
+  );
   const newPackages = packages[scopedPreference];
-  const newPkgs = typeof newPackages === "string" ? [newPackages] : newPackages
+  const newPkgs = typeof newPackages === "string" ? [newPackages] : newPackages;
   installOrders[preference] = installOrders[preference].concat(newPkgs);
 }
 
@@ -211,28 +478,28 @@ function getHook(packages, hook, scopedPreference, preference) {
 
 // Acquire OS type installer key (for the installerPreference data key)
 async function OSTypeInstallerKey() {
-  const apt = which.sync('apt-get', { nothrow: true })
-  const dnf = which.sync('dnf', { nothrow: true })
-  const freebsd = which.sync('pkg', { nothrow: true })
-  const pacman = which.sync('pacman', { nothrow: true })
-  const yum = which.sync('yum', { nothrow: true })
-  const zypper = which.sync('zypper', { nothrow: true })
+  const apt = which.sync("apt-get", { nothrow: true });
+  const dnf = which.sync("dnf", { nothrow: true });
+  const freebsd = which.sync("pkg", { nothrow: true });
+  const pacman = which.sync("pacman", { nothrow: true });
+  const yum = which.sync("yum", { nothrow: true });
+  const zypper = which.sync("zypper", { nothrow: true });
   if (apt) {
-    return 'apt'
+    return "apt";
   } else if (dnf || yum) {
-    return 'dnf'
-  } else if(pacman) {
-    return 'pacman'
-  } else if(zypper) {
-    return 'zypper'
+    return "dnf";
+  } else if (pacman) {
+    return "pacman";
+  } else if (zypper) {
+    return "zypper";
   } else if (freebsd) {
-    return 'freebsd'
+    return "freebsd";
   } else {
     try {
-      await $`test -d /Applications && test -d /Library`
-      return 'darwin'
+      await $`test -d /Applications && test -d /Library`;
+      return "darwin";
     } catch (e) {
-      return 'windows'
+      return "windows";
     }
   }
 }
@@ -240,14 +507,14 @@ async function OSTypeInstallerKey() {
 // Acquire OS type
 async function OSType() {
   try {
-    await $`test -d /Applications && test -d /Library`
-    return 'darwin'
-  } catch(e) {
+    await $`test -d /Applications && test -d /Library`;
+    return "darwin";
+  } catch (e) {
     try {
-      await $`test -f /etc/os-release`
-      return 'linux'
+      await $`test -f /etc/os-release`;
+      return "linux";
     } catch (e) {
-      return 'windows'
+      return "windows";
     }
   }
 }
@@ -265,154 +532,188 @@ async function releaseID() {
 
 // Post-install hook
 async function afterInstall(packageManager) {
-  const logStage = 'Post-Install Package Manager'
-  if (packageManager === 'appimage') {
-  } else if (packageManager === 'ansible') {
-    log('info', logStage, `Ensuring temporary passwordless sudo privileges used by Ansible are removed`)
-    const gsed = which.sync('gsed', { nothrow: true })
+  const logStage = "Post-Install Package Manager";
+  if (packageManager === "appimage") {
+  } else if (packageManager === "ansible") {
+    log(
+      "info",
+      logStage,
+      `Ensuring temporary passwordless sudo privileges used by Ansible are removed`
+    );
+    const gsed = which.sync("gsed", { nothrow: true });
     if (gsed) {
-      await $`sudo gsed -i '/# TEMPORARY FOR ANSIBLE INSTALL/d' /etc/sudoers`
+      await $`sudo gsed -i '/# TEMPORARY FOR ANSIBLE INSTALL/d' /etc/sudoers`;
     } else {
-      await $`sudo sed -i '/# TEMPORARY FOR ANSIBLE INSTALL/d' /etc/sudoers`
+      await $`sudo sed -i '/# TEMPORARY FOR ANSIBLE INSTALL/d' /etc/sudoers`;
     }
-  } else if (packageManager === 'apk') {
-  } else if (packageManager === 'apt') {
-  } else if (packageManager === 'basher') {
-  } else if (packageManager === 'binary') {
-  } else if (packageManager === 'brew' || packageManager === 'cask') {
-  } else if (packageManager === 'cargo') {
-  } else if (packageManager === 'choco') {
-  } else if (packageManager === 'crew') {
-  } else if (packageManager === 'dnf') {
-  } else if (packageManager === 'flatpak') {
-  } else if (packageManager === 'gem') {
-  } else if (packageManager === 'go') {
-  } else if (packageManager === 'nix') {
-  } else if (packageManager === 'npm') {
-  } else if (packageManager === 'pacman') {
-  } else if (packageManager === 'pipx') {
-  } else if (packageManager === 'pkg') {
-  } else if (packageManager === 'port') {
-  } else if (packageManager === 'scoop') {
-  } else if (packageManager === 'snap') {
-  } else if (packageManager === 'whalebrew') {
-  } else if (packageManager === 'winget') {
-  } else if (packageManager === 'yay') {
-  } else if (packageManager === 'zypper') {
+  } else if (packageManager === "apk") {
+  } else if (packageManager === "apt") {
+  } else if (packageManager === "basher") {
+  } else if (packageManager === "binary") {
+  } else if (packageManager === "brew" || packageManager === "cask") {
+  } else if (packageManager === "cargo") {
+  } else if (packageManager === "choco") {
+  } else if (packageManager === "crew") {
+  } else if (packageManager === "dnf") {
+  } else if (packageManager === "flatpak") {
+  } else if (packageManager === "gem") {
+  } else if (packageManager === "go") {
+  } else if (packageManager === "nix") {
+  } else if (packageManager === "npm") {
+  } else if (packageManager === "pacman") {
+  } else if (packageManager === "pipx") {
+  } else if (packageManager === "pkg") {
+  } else if (packageManager === "port") {
+  } else if (packageManager === "scoop") {
+  } else if (packageManager === "snap") {
+  } else if (packageManager === "whalebrew") {
+  } else if (packageManager === "winget") {
+  } else if (packageManager === "yay") {
+  } else if (packageManager === "zypper") {
   }
 }
 
 // Pre-install hook
 async function beforeInstall(packageManager) {
-  const logStage = 'Pre-Install Package Manager'
-  if (packageManager === 'appimage') {
-  } else if (packageManager === 'ansible') {
-    log('info', logStage, `Temporarily enabling passwordless sudo for Ansible role installations`)
-    await $`echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR ANSIBLE INSTALL" | sudo tee -a`
-  } else if (packageManager === 'apk') {
-    await $`sudo apk update`
-  } else if (packageManager === 'apt') {
-    await $`sudo apt-get update`
-  } else if (packageManager === 'basher') {
-  } else if (packageManager === 'binary') {
-  } else if (packageManager === 'brew' || packageManager === 'cask') {
-    await $`brew update`
-  } else if (packageManager === 'cargo') {
-  } else if (packageManager === 'choco') {
-  } else if (packageManager === 'crew') {
-     await $`crew update`
-  } else if (packageManager === 'dnf') {
-    const dnf = which.sync('dnf', { nothrow: true })
-    const yum = which.sync('yum', { nothrow: true })
+  const logStage = "Pre-Install Package Manager";
+  if (packageManager === "appimage") {
+  } else if (packageManager === "ansible") {
+    log(
+      "info",
+      logStage,
+      `Temporarily enabling passwordless sudo for Ansible role installations`
+    );
+    await $`echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR ANSIBLE INSTALL" | sudo tee -a`;
+  } else if (packageManager === "apk") {
+    await $`sudo apk update`;
+  } else if (packageManager === "apt") {
+    await $`sudo apt-get update`;
+  } else if (packageManager === "basher") {
+  } else if (packageManager === "binary") {
+  } else if (packageManager === "brew" || packageManager === "cask") {
+    await $`brew update`;
+  } else if (packageManager === "cargo") {
+  } else if (packageManager === "choco") {
+  } else if (packageManager === "crew") {
+    await $`crew update`;
+  } else if (packageManager === "dnf") {
+    const dnf = which.sync("dnf", { nothrow: true });
+    const yum = which.sync("yum", { nothrow: true });
     if (dnf) {
-      await $`dnf check-update`
+      await $`dnf check-update`;
     } else if (yum) {
-      await $`yum check-update`
+      await $`yum check-update`;
     }
-  } else if (packageManager === 'flatpak') {
-    await $`sudo flatpak update`
-  } else if (packageManager === 'gem') {
-  } else if (packageManager === 'go') {
-  } else if (packageManager === 'nix') {
-     await $`nix-channel --update`
-  } else if (packageManager === 'npm') {
-  } else if (packageManager === 'pacman') {
-    await $`sudo pacman -Syu`
-  } else if (packageManager === 'pipx') {
-  } else if (packageManager === 'pkg') {
-    await $`sudo pkg upgrade`
-  } else if (packageManager === 'port') {
-    const port = which.sync('port', { nothrow: true })
+  } else if (packageManager === "flatpak") {
+    await $`sudo flatpak update`;
+  } else if (packageManager === "gem") {
+  } else if (packageManager === "go") {
+  } else if (packageManager === "nix") {
+    await $`nix-channel --update`;
+  } else if (packageManager === "npm") {
+  } else if (packageManager === "pacman") {
+    await $`sudo pacman -Syu`;
+  } else if (packageManager === "pipx") {
+  } else if (packageManager === "pkg") {
+    await $`sudo pkg upgrade`;
+  } else if (packageManager === "port") {
+    const port = which.sync("port", { nothrow: true });
     if (port) {
-      await $`sudo port sync`
+      await $`sudo port sync`;
     } else {
-      log('error', 'Port Not Installed', 'Skipping sudo port sync step because port is not installed')
+      log(
+        "error",
+        "Port Not Installed",
+        "Skipping sudo port sync step because port is not installed"
+      );
     }
-  } else if (packageManager === 'scoop') {
-    await $`scoop update`
-  } else if (packageManager === 'snap') {
-    await $`sudo snap refresh`
-  } else if (packageManager === 'whalebrew') {
-    if (osType === 'darwin') {
-      const docker = which.sync('docker', { nothrow: true })
+  } else if (packageManager === "scoop") {
+    await $`scoop update`;
+  } else if (packageManager === "snap") {
+    await $`sudo snap refresh`;
+  } else if (packageManager === "whalebrew") {
+    if (osType === "darwin") {
+      const docker = which.sync("docker", { nothrow: true });
       if (!docker) {
-        await $`brew install --cask docker`
+        await $`brew install --cask docker`;
       }
       try {
-        await $`docker run --rm hello-world`
+        await $`docker run --rm hello-world`;
       } catch (e) {
-        log('warn', logStage, `The command \`docker run --rm hello-world\` failed`)
+        log(
+          "warn",
+          logStage,
+          `The command \`docker run --rm hello-world\` failed`
+        );
         try {
-          log('info', logStage, 'Attempting to open \`/Applications/Docker.app\` (Docker Desktop for macOS). This should take about 30 seconds.')
-          const promises = [$`test -d /Applications/Docker.app`, $`open /Applications/Docker.app`]
-          await Promise.all(promises)
-          const gum = which.sync('gum', { nothrow: true })
+          log(
+            "info",
+            logStage,
+            "Attempting to open `/Applications/Docker.app` (Docker Desktop for macOS). This should take about 30 seconds."
+          );
+          const promises = [
+            $`test -d /Applications/Docker.app`,
+            $`open /Applications/Docker.app`,
+          ];
+          await Promise.all(promises);
+          const gum = which.sync("gum", { nothrow: true });
           if (gum) {
-            execSync('gum spin --spinner dot --title "Waiting for Docker Desktop to start up.." -- sleep 30', {stdio: 'inherit', shell: true})
+            execSync(
+              'gum spin --spinner dot --title "Waiting for Docker Desktop to start up.." -- sleep 30',
+              { stdio: "inherit", shell: true }
+            );
           } else {
-            await $`sleep 30`
+            await $`sleep 30`;
           }
         } catch (e) {
-          log('warn', logStage, `Docker Desktop appears to not be installed!`)
+          log("warn", logStage, `Docker Desktop appears to not be installed!`);
         }
       }
     }
-  } else if (packageManager === 'winget') {
-    await $`winget source update`
-  } else if (packageManager === 'yay') {
-  } else if (packageManager === 'zypper') {
-    await $`sudo zypper update`
+  } else if (packageManager === "winget") {
+    await $`winget source update`;
+  } else if (packageManager === "yay") {
+  } else if (packageManager === "zypper") {
+    await $`sudo zypper update`;
   }
 }
 
 async function ensureInstalled(bin, callback) {
-  const logStage = 'Package Manager Install'
-  const installed = which.sync(bin, { nothrow: true })
+  const logStage = "Package Manager Install";
+  const installed = which.sync(bin, { nothrow: true });
   if (installed) {
-    log('info', logStage, `\`${bin}\` is available`)
+    log("info", logStage, `\`${bin}\` is available`);
   } else {
-    log('warn', logStage, `\`${bin}\` is not installed!`)
+    log("warn", logStage, `\`${bin}\` is not installed!`);
     if (callback) {
-      await callback
+      await callback;
     } else {
-      log('error', logStage, `There does not appear to be an installation method available for \`${bin}\``)
+      log(
+        "error",
+        logStage,
+        `There does not appear to be an installation method available for \`${bin}\``
+      );
     }
   }
 }
 
 async function ensurePackageManagerAnsible() {
-  await $`pipx install ansible`
-  await $`pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog`
-  await $`mkdir -p "$HOME/.cache/megabyte-labs"`
-  await $`touch "$HOME/.cache/megabyte-labs/ansible-installed"`
-  log('info', 'Package Manager Install', `Ansible and its supporting packages are now installed via pipx`)
+  await $`pipx install ansible`;
+  await $`pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog`;
+  await $`mkdir -p "$HOME/.cache/megabyte-labs"`;
+  await $`touch "$HOME/.cache/megabyte-labs/ansible-installed"`;
+  log(
+    "info",
+    "Package Manager Install",
+    `Ansible and its supporting packages are now installed via pipx`
+  );
 }
 
 // Ensure the package manager is available
 let packageManagerInstalled = {};
 async function ensurePackageManager(packageManager) {
-  const logStage = 'Package Manager Install'
-  log('info', logStage, `Ensuring \`${packageManager}\` is set up`)
+  const logStage = "Package Manager Install";
+  log("info", logStage, `Ensuring \`${packageManager}\` is set up`);
   if (packageManagerInstalled[packageManager]) {
     return;
   } else {
@@ -430,38 +731,50 @@ async function ensurePackageManager(packageManager) {
   ) {
     await ensurePackageManager("brew");
   }
-  if (packageManager === 'appimage') {
-  } else if (packageManager === 'ansible') {
+  if (packageManager === "appimage") {
+  } else if (packageManager === "ansible") {
     try {
-      await $`test -f "$HOME/.cache/megabyte-labs/ansible-installed"`
-      const ansible = which.sync('ansible', { nothrow: true })
+      await $`test -f "$HOME/.cache/megabyte-labs/ansible-installed"`;
+      const ansible = which.sync("ansible", { nothrow: true });
       if (ansible) {
-        log('info', logStage, `\`ansible\` and its supporting packages appear to be installed`)
+        log(
+          "info",
+          logStage,
+          `\`ansible\` and its supporting packages appear to be installed`
+        );
       } else {
-        await ensurePackageManagerAnsible()
+        await ensurePackageManagerAnsible();
       }
     } catch (e) {
-      await ensurePackageManagerAnsible()
+      await ensurePackageManagerAnsible();
     }
-  } else if (packageManager === 'apk') {
-    await ensureInstalled('apk', false)
-  } else if (packageManager === 'apt') {
-    await ensureInstalled('apt', false)
-  } else if (packageManager === 'basher') {
-    await ensureInstalled('basher', $`
+  } else if (packageManager === "apk") {
+    await ensureInstalled("apk", false);
+  } else if (packageManager === "apt") {
+    await ensureInstalled("apt", false);
+  } else if (packageManager === "basher") {
+    await ensureInstalled(
+      "basher",
+      $`
       # TODO
       echo "Bash script that installs basher here"
-    `)
-  } else if (packageManager === 'binary') {
-  } else if (packageManager === 'bpkg') {
-    await ensureInstalled('bpkg', $`
+    `
+    );
+  } else if (packageManager === "binary") {
+  } else if (packageManager === "bpkg") {
+    await ensureInstalled(
+      "bpkg",
+      $`
       # TODO
       echo "Bash script that installs bpkg here"
-    `)
-  } else if (packageManager === 'brew' || packageManager === 'cask') {
-    const brew = which.sync('brew', { nothrow: true })
+    `
+    );
+  } else if (packageManager === "brew" || packageManager === "cask") {
+    const brew = which.sync("brew", { nothrow: true });
     if (!brew) {
-      await ensureInstalled('brew', $`
+      await ensureInstalled(
+        "brew",
+        $`
         if command -v sudo > /dev/null && sudo -n true; then
           echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         else
@@ -480,46 +793,56 @@ async function ensurePackageManager(packageManager) {
             fi
           fi
         fi
-      `)
+      `
+      );
     }
-  } else if (packageManager === 'cargo') {
-    await ensureInstalled('cargo', $`
+  } else if (packageManager === "cargo") {
+    await ensureInstalled(
+      "cargo",
+      $`
       # TODO Bash script that installs cargo
-    `)
-  } else if (packageManager === 'choco') {
-    await ensureInstalled('choco', $`
+    `
+    );
+  } else if (packageManager === "choco") {
+    await ensureInstalled(
+      "choco",
+      $`
       powershell "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
-    `)
-  } else if (packageManager === 'crew') {
-    await ensureInstalled('crew', $`
+    `
+    );
+  } else if (packageManager === "crew") {
+    await ensureInstalled(
+      "crew",
+      $`
       # TODO Bash script that installs crew here
       # Source: https://github.com/chromebrew/chromebrew
       curl -Ls git.io/vddgY | bash
-    `)
-  } else if (packageManager === 'dnf') {
-    const dnf = which.sync('dnf', { nothrow: true })
-    const yum = which.sync('yum', { nothrow: true })
+    `
+    );
+  } else if (packageManager === "dnf") {
+    const dnf = which.sync("dnf", { nothrow: true });
+    const yum = which.sync("yum", { nothrow: true });
     if (dnf) {
-      log('info', logStage, `\`dnf\` is available`)
+      log("info", logStage, `\`dnf\` is available`);
     } else if (yum) {
-      log('info', logStage, `\`yum\` is available`)
+      log("info", logStage, `\`yum\` is available`);
     } else {
-      log('error', logStage, `Both \`dnf\` and \`yum\` are not available`)
+      log("error", logStage, `Both \`dnf\` and \`yum\` are not available`);
     }
-  } else if (packageManager === 'flatpak') {
-    const flatpak = which.sync('flatpak', { nothrow: true })
+  } else if (packageManager === "flatpak") {
+    const flatpak = which.sync("flatpak", { nothrow: true });
     if (flatpak) {
-      log('info', logStage, `\`flatpak\` is available`)
+      log("info", logStage, `\`flatpak\` is available`);
     } else {
-      const apk = which.sync('apk', { nothrow: true })
-      const apt = which.sync('apt', { nothrow: true })
-      const dnf = which.sync('dnf', { nothrow: true })
-      const yum = which.sync('yum', { nothrow: true })
-      const pacman = which.sync('pacman', { nothrow: true })
-      const zypper = which.sync('zypper', { nothrow: true })
+      const apk = which.sync("apk", { nothrow: true });
+      const apt = which.sync("apt", { nothrow: true });
+      const dnf = which.sync("dnf", { nothrow: true });
+      const yum = which.sync("yum", { nothrow: true });
+      const pacman = which.sync("pacman", { nothrow: true });
+      const zypper = which.sync("zypper", { nothrow: true });
       if (apk) {
-        $`sudo apk add flatpak`
-      } else if(apt) {
+        $`sudo apk add flatpak`;
+      } else if (apt) {
         $`
           sudo apt install -y flatpak
           if [ -f /usr/bin/gnome-shell ]; then
@@ -528,45 +851,52 @@ async function ensurePackageManager(packageManager) {
           if [ -f /usr/bin/plasmashell ]; then
             sudo apt install -y plasmashell
           fi
-        `
-      } else if(dnf) {
-        await $`sudo dnf install -y flatpak`
-      } else if(yum) {
-        await $`sudo yum install -y flatpak`
+        `;
+      } else if (dnf) {
+        await $`sudo dnf install -y flatpak`;
+      } else if (yum) {
+        await $`sudo yum install -y flatpak`;
       } else if (pacman) {
-        await $`sudo pacman -Sy flatpak`
+        await $`sudo pacman -Sy flatpak`;
       } else if (zypper) {
-        await $`sudo zypper install -y flatpak`
+        await $`sudo zypper install -y flatpak`;
       }
-      const flatpakPost = which.sync('flatpak', { nothrow: true })
+      const flatpakPost = which.sync("flatpak", { nothrow: true });
       if (flatpakPost) {
-        await $`flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo`
+        await $`flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo`;
       } else {
-        log('error', logStage, `\`flatpak\` failed to install!`)
+        log("error", logStage, `\`flatpak\` failed to install!`);
       }
-      log('info', logStage, `\`flatpak\` was installed. It may require a reboot to function correctly.`)
+      log(
+        "info",
+        logStage,
+        `\`flatpak\` was installed. It may require a reboot to function correctly.`
+      );
     }
-  } else if (packageManager === 'gem') {
-    await ensureInstalled('gem', $`brew install ruby`)
-  } else if (packageManager === 'go') {
-    await ensureInstalled('gem', $`brew install go`)
-  } else if (packageManager === 'nix') {
-    await ensureInstalled('nix', $`
+  } else if (packageManager === "gem") {
+    await ensureInstalled("gem", $`brew install ruby`);
+  } else if (packageManager === "go") {
+    await ensureInstalled("gem", $`brew install go`);
+  } else if (packageManager === "nix") {
+    await ensureInstalled(
+      "nix",
+      $`
       if [ -d /Applications ] && [ -d /Library ]; then
         sh <(curl -L https://nixos.org/nix/install)
       else
         sh <(curl -L https://nixos.org/nix/install) --daemon
       fi
-    `)
-  } else if (packageManager === 'npm') {
-    const npm = which('npm', { nothrow: true })
-    const node = which('node', { nothrow: true })
-    const volta = which('volta', { nothrow: true })
+    `
+    );
+  } else if (packageManager === "npm") {
+    const npm = which("npm", { nothrow: true });
+    const node = which("node", { nothrow: true });
+    const volta = which("volta", { nothrow: true });
     if (npm && node && volta) {
-      log('info', logStage, `\`npm\`, \`node\`, and \`volta\` are available`)
+      log("info", logStage, `\`npm\`, \`node\`, and \`volta\` are available`);
     } else {
       if (!volta) {
-        await $`brew install volta`
+        await $`brew install volta`;
       }
       await $`
         if [ -z "$VOLTA_HOME" ]; then
@@ -574,56 +904,62 @@ async function ensurePackageManager(packageManager) {
         fi
         export PATH="$VOLTA_HOME/bin:$PATH"
         volta install node
-      `
+      `;
     }
-  } else if (packageManager === 'pacman') {
-    await ensureInstalled('pacman', false)
-  } else if (packageManager === 'pipx') {
-    await ensureInstalled('pipx', $`brew install pipx && pipx ensurepath`)
-  } else if (packageManager === 'pkg') {
-    await ensureInstalled('pkg', false)
-  } else if (packageManager === 'port') {
-    await ensureInstalled('port', $`
+  } else if (packageManager === "pacman") {
+    await ensureInstalled("pacman", false);
+  } else if (packageManager === "pipx") {
+    await ensureInstalled("pipx", $`brew install pipx && pipx ensurepath`);
+  } else if (packageManager === "pkg") {
+    await ensureInstalled("pkg", false);
+  } else if (packageManager === "port") {
+    await ensureInstalled(
+      "port",
+      $`
       echo -n "TODO - script that installs port on macOS here"
-    `)
-  } else if (packageManager === 'scoop') {
-    await ensureInstalled('scoop', $`
+    `
+    );
+  } else if (packageManager === "scoop") {
+    await ensureInstalled(
+      "scoop",
+      $`
       powershell 'Set-ExecutionPolicy RemoteSigned -Scope CurrentUser'
       powershell 'irm get.scoop.sh | iex
-    `)
-  } else if (packageManager === 'snap') {
-      const apk = which.sync('apk', { nothrow: true })
-      const apt = which.sync('apt-get', { nothrow: true })
-      const dnf = which.sync('dnf', { nothrow: true })
-      const yum = which.sync('yum', { nothrow: true })
-      const pacman = which.sync('pacman', { nothrow: true })
-      const zypper = which.sync('zypper', { nothrow: true })
-      if (apt) {
-        await $`
+    `
+    );
+  } else if (packageManager === "snap") {
+    const apk = which.sync("apk", { nothrow: true });
+    const apt = which.sync("apt-get", { nothrow: true });
+    const dnf = which.sync("dnf", { nothrow: true });
+    const yum = which.sync("yum", { nothrow: true });
+    const pacman = which.sync("pacman", { nothrow: true });
+    const zypper = which.sync("zypper", { nothrow: true });
+    if (apt) {
+      await $`
           if [ -f /etc/apt/preferences.d/nosnap.pref ]; then
             sudo mv /etc/apt/preferences.d/nosnap.pref /etc/apt/nosnap.pref.bak
           fi
           sudo apt install -y snapd
-        `
-        // TODO Following may be required on Kali -> https://snapcraft.io/docs/installing-snap-on-kali
-        // systemctl enable --now snapd apparmor
-      } else if (dnf) {
-        await $`
+        `;
+      // TODO Following may be required on Kali -> https://snapcraft.io/docs/installing-snap-on-kali
+      // systemctl enable --now snapd apparmor
+    } else if (dnf) {
+      await $`
           sudo dnf install -y snapd
           if [ ! -d /snap ]; then
             sudo ln -s /var/lib/snapd/snap /snap
           fi
-        `
-      } else if (yum) {
-        await $`
+        `;
+    } else if (yum) {
+      await $`
           sudo yum install -y snapd
           sudo systemctl enable --now snapd.socket
           if [ ! -d /snap ]; then
             sudo ln -s /var/lib/snapd/snap /snap
           fi
-        `
-      } else if (pacman) {
-        await $`
+        `;
+    } else if (pacman) {
+      await $`
           if [ -f /etc/arch-release ]; then
             sudo git clone https://aur.archlinux.org/snapd.git /usr/local/src/snapd
             cd /usr/local/src/snapd
@@ -635,289 +971,419 @@ async function ensurePackageManager(packageManager) {
               sudo ln -s /var/lib/snapd/snap /snap
             fi
           fi
-        `
-      } else if (zypper) {
-        // TODO See https://snapcraft.io/docs/installing-snap-on-opensuse
-        await $`
+        `;
+    } else if (zypper) {
+      // TODO See https://snapcraft.io/docs/installing-snap-on-opensuse
+      await $`
          echo "TODO - Bash script that installs snap w/ zypper"
-        `
-      }
-      const snap = which.sync('snap', { nothrow: true })
-      if (snap) {
-        $`sudo snap install core`
-      }
-  } else if (packageManager === 'whalebrew') {
-    await ensureInstalled('whalebrew', $`brew install whalebrew`)
-  } else if (packageManager === 'winget') {
-    await ensureInstalled('winget', $`
+        `;
+    }
+    const snap = which.sync("snap", { nothrow: true });
+    if (snap) {
+      $`sudo snap install core`;
+    }
+  } else if (packageManager === "whalebrew") {
+    await ensureInstalled("whalebrew", $`brew install whalebrew`);
+  } else if (packageManager === "winget") {
+    await ensureInstalled(
+      "winget",
+      $`
       echo "TODO - Script that installs winget here"
-    `)
-  } else if (packageManager === 'yay') {
-    const yay = which.sync('yay', { nothrow: true })
-    await $`sudo pacman -S --needed base-devel git`
+    `
+    );
+  } else if (packageManager === "yay") {
+    const yay = which.sync("yay", { nothrow: true });
+    await $`sudo pacman -S --needed base-devel git`;
     await $`
       if [ -d /usr/local/src ]; then
         git clone https://aur.archlinux.org/yay.git /usr/local/src/yay
         cd /usr/local/src/yay
         makepkg -si
       fi
-    `
-  } else if (packageManager === 'zypper') {
-    await ensureInstalled('zypper', false)
+    `;
+  } else if (packageManager === "zypper") {
+    await ensureInstalled("zypper", false);
   }
 }
 
 // Installs a list of packages via the specified package manager
 async function installPackageList(packageManager, packages) {
-  const logStage = 'Package Install'
+  const logStage = "Package Install";
   try {
-    if (packageManager === 'appimage') {
-    } else if (packageManager === 'ansible') {
+    if (packageManager === "appimage") {
+    } else if (packageManager === "ansible") {
       for (let pkg of packages) {
         try {
-          await $`ansible localhost -m setup -m include_role -a name=${pkg} -e ansible_user=${process.env.USER} -e include_homebrew_install=False`
+          await $`ansible localhost -m setup -m include_role -a name=${pkg} -e ansible_user=${process.env.USER} -e include_homebrew_install=False`;
         } catch (e) {
-          log('error', 'Ansible Role Failure', `There was an error installing ${pkg} with Ansible`)
+          log(
+            "error",
+            "Ansible Role Failure",
+            `There was an error installing ${pkg} with Ansible`
+          );
         }
       }
-    } else if (packageManager === 'apk') {
+    } else if (packageManager === "apk") {
       for (let pkg of packages) {
         try {
-          await $`sudo apk add ${pkg}`
+          await $`sudo apk add ${pkg}`;
         } catch (e) {
-          log('error', 'APK Install Failure', `There was an error installing ${pkg} with apk`)
+          log(
+            "error",
+            "APK Install Failure",
+            `There was an error installing ${pkg} with apk`
+          );
         }
       }
-    } else if (packageManager === 'apt') {
+    } else if (packageManager === "apt") {
       for (let pkg of packages) {
         try {
-          await $`sudo apt-get install -y ${pkg}`
+          await $`sudo apt-get install -y ${pkg}`;
         } catch (e) {
-          log('error', 'apt-get Failure', `There was an error installing ${pkg} with apt-get`)
+          log(
+            "error",
+            "apt-get Failure",
+            `There was an error installing ${pkg} with apt-get`
+          );
         }
       }
-    } else if (packageManager === 'basher') {
+    } else if (packageManager === "basher") {
       for (let pkg of packages) {
         try {
-          await $`basher install ${pkg}`
-        } catch(e) {
-          log('error', 'Basher Failure', `There was an error installing ${pkg} with basher`)
-        }
-      }
-    } else if (packageManager === 'binary') {
-    } else if (packageManager === 'brew') {
-      for (let pkg of packages) {
-        try {
-          await $`brew install ${pkg}`
+          await $`basher install ${pkg}`;
         } catch (e) {
-          log('error', 'Homebrew Failure', `There was an error installing ${pkg} with brew`)
+          log(
+            "error",
+            "Basher Failure",
+            `There was an error installing ${pkg} with basher`
+          );
         }
       }
-    } else if (packageManager === 'cask') {
+    } else if (packageManager === "binary") {
+    } else if (packageManager === "brew") {
       for (let pkg of packages) {
         try {
-          await $`brew install --cask ${pkg}`
-        } catch(e) {
-          log('error', 'Homebrew Cask Failure', `There was an error installing ${pkg} with Homebrew Cask`)
+          await $`brew install ${pkg}`;
+        } catch (e) {
+          log(
+            "error",
+            "Homebrew Failure",
+            `There was an error installing ${pkg} with brew`
+          );
         }
       }
-    } else if (packageManager === 'cargo') {
+    } else if (packageManager === "cask") {
+      for (let pkg of packages) {
+        try {
+          await $`brew install --cask ${pkg}`;
+        } catch (e) {
+          log(
+            "error",
+            "Homebrew Cask Failure",
+            `There was an error installing ${pkg} with Homebrew Cask`
+          );
+        }
+      }
+    } else if (packageManager === "cargo") {
       for (const pkg of packages) {
         try {
-          await $`cargo install ${pkg}`
+          await $`cargo install ${pkg}`;
         } catch (e) {
-          log('error', 'Cargo Failure', `There was an error installing ${pkg} with Cargo`)
+          log(
+            "error",
+            "Cargo Failure",
+            `There was an error installing ${pkg} with Cargo`
+          );
         }
       }
-    } else if (packageManager === 'choco') {
+    } else if (packageManager === "choco") {
       for (let pkg of packages) {
         try {
-          await $`choco install -y ${pkg}`
+          await $`choco install -y ${pkg}`;
         } catch (e) {
-          log('error', 'Chocolatey Failure', `There was an error installing ${pkg} with Chocolatey`)
+          log(
+            "error",
+            "Chocolatey Failure",
+            `There was an error installing ${pkg} with Chocolatey`
+          );
         }
       }
-    } else if (packageManager === 'crew') {
-    } else if (packageManager === 'dnf') {
-      const dnf = which.sync('dnf', { nothrow: true })
-      const yum = which.sync('yum', { nothrow: true })
+    } else if (packageManager === "crew") {
+    } else if (packageManager === "dnf") {
+      const dnf = which.sync("dnf", { nothrow: true });
+      const yum = which.sync("yum", { nothrow: true });
       if (dnf) {
         for (let pkg of packages) {
           try {
-            await $`sudo dnf install -y ${pkg}`
+            await $`sudo dnf install -y ${pkg}`;
           } catch (e) {
-            log('error', 'dnf Failure', `There was an error installing ${pkg} with dnf`)
+            log(
+              "error",
+              "dnf Failure",
+              `There was an error installing ${pkg} with dnf`
+            );
           }
         }
       } else if (yum) {
         for (let pkg of packages) {
           try {
-            await $`sudo yum install -y ${pkg}`
-          } catch(e) {
-            log('error', 'yum Failure', `There was an error installing ${pkg} with yum`)
+            await $`sudo yum install -y ${pkg}`;
+          } catch (e) {
+            log(
+              "error",
+              "yum Failure",
+              `There was an error installing ${pkg} with yum`
+            );
           }
         }
       }
-    } else if (packageManager === 'flatpak') {
+    } else if (packageManager === "flatpak") {
       for (let pkg of packages) {
         try {
-          await $`sudo flatpak install flathub ${pkg}`
-        } catch(e) {
-          log('error', 'Flatpak Failure', `There was an error installing ${pkg} with flatpak`)
-        }
-      }
-    } else if (packageManager === 'gem') {
-      for (let pkg of packages) {
-        try {
-          await $`gem install ${pkg}`
+          await $`sudo flatpak install flathub ${pkg}`;
         } catch (e) {
-          log('error', 'Gem Failure', `There was an error installing ${pkg} with gem`)
+          log(
+            "error",
+            "Flatpak Failure",
+            `There was an error installing ${pkg} with flatpak`
+          );
         }
       }
-    } else if (packageManager === 'go') {
+    } else if (packageManager === "gem") {
       for (let pkg of packages) {
         try {
-          await $`go install ${pkg}`
-        } catch(e) {
-          log('error', 'Go Failure', `There was an error installing ${pkg} with go`)
+          await $`gem install ${pkg}`;
+        } catch (e) {
+          log(
+            "error",
+            "Gem Failure",
+            `There was an error installing ${pkg} with gem`
+          );
         }
       }
-    } else if (packageManager === 'nix') {
-    } else if (packageManager === 'npm') {
+    } else if (packageManager === "go") {
       for (let pkg of packages) {
         try {
-          await $`volta install ${pkg}`
-        } catch(e) {
-          log('error', 'Volta Failure', `There was an error installing ${pkg} with volta`)
+          await $`go install ${pkg}`;
+        } catch (e) {
+          log(
+            "error",
+            "Go Failure",
+            `There was an error installing ${pkg} with go`
+          );
         }
       }
-    } else if (packageManager === 'pacman') {
+    } else if (packageManager === "nix") {
+    } else if (packageManager === "npm") {
       for (let pkg of packages) {
         try {
-          await $`sudo pacman -Sy --noconfirm --needed ${pkg}`
-        } catch(e) {
-          log('error', 'Pacman Failure', `There was an error installing ${pkg} with pacman`)
+          await $`volta install ${pkg}`;
+        } catch (e) {
+          log(
+            "error",
+            "Volta Failure",
+            `There was an error installing ${pkg} with volta`
+          );
         }
       }
-    } else if (packageManager === 'pipx') {
+    } else if (packageManager === "pacman") {
       for (let pkg of packages) {
         try {
-          await $`pipx install ${pkg}`
-        } catch(e) {
-          log('error', 'PIPX Failure', `There was an error installing ${pkg} with pipx`)
+          await $`sudo pacman -Sy --noconfirm --needed ${pkg}`;
+        } catch (e) {
+          log(
+            "error",
+            "Pacman Failure",
+            `There was an error installing ${pkg} with pacman`
+          );
         }
       }
-    } else if (packageManager === 'pkg') {
-    } else if (packageManager === 'port') {
-      const port = which.sync('port', { nothrow: true })
+    } else if (packageManager === "pipx") {
+      for (let pkg of packages) {
+        try {
+          await $`pipx install ${pkg}`;
+        } catch (e) {
+          log(
+            "error",
+            "PIPX Failure",
+            `There was an error installing ${pkg} with pipx`
+          );
+        }
+      }
+    } else if (packageManager === "pkg") {
+    } else if (packageManager === "port") {
+      const port = which.sync("port", { nothrow: true });
       if (port) {
         for (let pkg of packages) {
           try {
-            await $`sudo port install ${pkg}`
-          } catch(e) {
-            log('error', 'Port Failure', `There was an error installing ${pkg} with port`)
+            await $`sudo port install ${pkg}`;
+          } catch (e) {
+            log(
+              "error",
+              "Port Failure",
+              `There was an error installing ${pkg} with port`
+            );
           }
         }
       } else {
-        log('error', 'Port Not Installed', `Unable to install ${pkg} because port is not installed.`)
+        log(
+          "error",
+          "Port Not Installed",
+          `Unable to install with port because it is not installed. Skipping installation of ${packages}`
+        );
       }
-    } else if (packageManager === 'scoop') {
+    } else if (packageManager === "scoop") {
       for (let pkg of packages) {
         try {
-          await $`scoop install ${pkg}`
-        } catch(e) {
-          log('error', 'Scoop Failure', `There was an error installing ${pkg} with scoop`)
+          await $`scoop install ${pkg}`;
+        } catch (e) {
+          log(
+            "error",
+            "Scoop Failure",
+            `There was an error installing ${pkg} with scoop`
+          );
         }
       }
-    } else if (packageManager === 'snap') {
+    } else if (packageManager === "snap") {
       for (let pkg of packages) {
         // TODO _snapClassic
         try {
-          await $`sudo snap install -y ${pkg}`
-        } catch(e) {
-          log('error', 'Snap Failure', `There was an error installing ${pkg} with snap`)
+          await $`sudo snap install -y ${pkg}`;
+        } catch (e) {
+          log(
+            "error",
+            "Snap Failure",
+            `There was an error installing ${pkg} with snap`
+          );
         }
       }
-    } else if (packageManager === 'whalebrew') {
+    } else if (packageManager === "whalebrew") {
       for (let pkg of packages) {
         try {
-          await $`whalebrew install ${pkg}`
-        } catch(e) {
-          log('error', 'Whalebrew Failure', `There was an error installing ${pkg} with whalebrew`)
+          await $`whalebrew install ${pkg}`;
+        } catch (e) {
+          log(
+            "error",
+            "Whalebrew Failure",
+            `There was an error installing ${pkg} with whalebrew`
+          );
         }
       }
-    } else if (packageManager === 'winget') {
+    } else if (packageManager === "winget") {
       for (let pkg of packages) {
         try {
-          await $`winget install ${pkg}`
-        } catch(e) {
-          log('error', 'Winget Failure', `There was an error installing ${pkg} with winget`)
+          await $`winget install ${pkg}`;
+        } catch (e) {
+          log(
+            "error",
+            "Winget Failure",
+            `There was an error installing ${pkg} with winget`
+          );
         }
       }
-    } else if (packageManager === 'yay') {
+    } else if (packageManager === "yay") {
       for (let pkg of packages) {
         try {
-          await $`yay -Sy --noconfirm --needed ${pkg}`
-        } catch(e) {
-          log('error', 'Yay Failure', `There was an error installing ${pkg} with yay`)
+          await $`yay -Sy --noconfirm --needed ${pkg}`;
+        } catch (e) {
+          log(
+            "error",
+            "Yay Failure",
+            `There was an error installing ${pkg} with yay`
+          );
         }
       }
-    } else if (packageManager === 'zypper') {
+    } else if (packageManager === "zypper") {
       for (let pkg of packages) {
         try {
-          await $`sudo zypper install -y ${packages}`
-        } catch(e) {
-          log('error', 'Zypper Failure', `There was an error installing ${pkg} with zypper`)
+          await $`sudo zypper install -y ${packages}`;
+        } catch (e) {
+          log(
+            "error",
+            "Zypper Failure",
+            `There was an error installing ${pkg} with zypper`
+          );
         }
       }
     }
   } catch (e) {
-    log('error', logStage, `Possibly encountered an error while installing via \`${packageManager}\``)
-    log('info', logStage, `Proceeding with the installation..`)
+    log(
+      "error",
+      logStage,
+      `Possibly encountered an error while installing via \`${packageManager}\``
+    );
+    log("info", logStage, `Proceeding with the installation..`);
   }
 }
 
 // main process
 async function main() {
-  log('info', 'Catalog Download', `Fetching the latest version of the installation map`)
+  osType = await OSType();
+  osID = osType;
+  if (osType === "linux") {
+    osID = await releaseID();
+  }
+  log(
+    "info",
+    "Catalog Download",
+    `Fetching the latest version of the installation map`
+  );
   installData = await downloadInstallData();
-  log('info', 'Install Orders', `Calculating the install orders`)
+  log("info", "Install Orders", `Calculating the install orders`);
   await generateInstallOrders();
-  log('info', 'Ensure Package Manager Installed', `Ensuring any package managers that will be used are installed / configured`)
+  log(
+    "info",
+    "Ensure Package Manager Installed",
+    `Ensuring any package managers that will be used are installed / configured`
+  );
   const packageManagers = Object.keys(installOrders);
   for (const packageManager of packageManagers) {
     await ensurePackageManager(packageManager);
   }
-  log('info', 'Install Orders', `The install orders were generated:`)
-  console.log(installOrders)
-  log('info', 'Package Manager Pre-Install', `Running package manager pre-installation steps`)
+  log("info", "Install Orders", `The install orders were generated:`);
+  console.log(installOrders);
+  log(
+    "info",
+    "Package Manager Pre-Install",
+    `Running package manager pre-installation steps`
+  );
   for (const packageManager of packageManagers) {
     await beforeInstall(packageManager);
   }
-  log('info', 'Package Pre-Install', `Running package-specific pre-installation steps`)
+  log(
+    "info",
+    "Package Pre-Install",
+    `Running package-specific pre-installation steps`
+  );
   for (const script of installOrdersPre) {
     await $`${script}`;
   }
-  log('info', 'Package Install', `Installing the packages`)
+  log("info", "Package Install", `Installing the packages`);
   for (const packageManager of packageManagers) {
-    const asyncOrders = [];
+    const asyncOrders: Promise<any>[] = [];
     asyncOrders.push(
-      Promise.resolve(
-        installPackageList(packageManager, installOrders[packageManager])
-      )
+      installPackageList(packageManager, installOrders[packageManager])
     );
     await Promise.all(asyncOrders);
   }
-  log('info', 'Package Post-Install', `Running package-specific post-installation steps`)
+  log(
+    "info",
+    "Package Post-Install",
+    `Running package-specific post-installation steps`
+  );
   for (const script of installOrdersPost) {
     await $`${script}`;
   }
-  log('info', 'Package Manager Post-Install', `Running package manager post-installation steps`)
+  log(
+    "info",
+    "Package Manager Post-Install",
+    `Running package manager post-installation steps`
+  );
   for (const packageManager of packageManagers) {
     await afterInstall(packageManager);
   }
-  log('success', 'Installation Complete', `Done!`)
+  log("success", "Installation Complete", `Done!`);
 }
 
 // Start the main process
-await main();
+main();
