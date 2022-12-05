@@ -264,7 +264,7 @@ async function generateInstallOrders() {
         normalCheck = softwarePackages[packageKey]["_" + currentSelector];
         if (doubleScoped) {
           const bin = which.sync(doubleScoped, { nothrow: true });
-          if (!bin) {
+          if (bin) {
             let pref;
             if (
               softwarePackages[packageKey][
@@ -301,7 +301,7 @@ async function generateInstallOrders() {
           }
         } else if (scopedPkgManager) {
           const bin = which.sync(scopedPkgManager, { nothrow: true });
-          if (!bin) {
+          if (bin) {
             const pref = preference;
             log(
               "info",
@@ -313,7 +313,7 @@ async function generateInstallOrders() {
           }
         } else if (scopedSystem) {
           const bin = which.sync(scopedSystem, { nothrow: true });
-          if (!bin) {
+          if (bin) {
             let pref;
             if (
               softwarePackages[packageKey]["_" + currentSelector + ":" + osID]
@@ -334,7 +334,7 @@ async function generateInstallOrders() {
           }
         } else if (normalCheck) {
           const bin = which.sync(normalCheck, { nothrow: true });
-          if (!bin) {
+          if (bin) {
             log(
               "info",
               "Skipping Package",
