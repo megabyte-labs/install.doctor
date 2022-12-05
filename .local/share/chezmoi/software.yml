@@ -3851,6 +3851,7 @@ softwarePackages:
     _name: Mockoon
     _service: null
     _type: application
+    _when:cask: '! test -d /Applications/Mockoon.app'
     cask: mockoon
     choco: mockoon
     github: github.com/mockoon/mockoon
