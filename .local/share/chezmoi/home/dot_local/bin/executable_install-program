@@ -89,6 +89,9 @@ async function downloadInstallData() {
     return YAML.parse(text);
   } else {
     log("error", "Catalog Download", `Failed to download the installation map`);
+    log("info", "Catalog Download", `Falling back to local version of software.yml`);
+    const text = fs.readFileSync(process.env.HOME + "/.local/share/chezmoi/software.yml");
+    return YAML.parse(text);
   }
 }
 
