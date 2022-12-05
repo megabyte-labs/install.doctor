@@ -222,12 +222,6 @@ if command -v glow > /dev/null; then
   glow "$HOME/.local/share/chezmoi/docs/CHEZMOI-INTRO.md"
 fi
 
-### Chezmoi
-if [ ! -f "$HOME/.config/chezmoi/chezmoi.yaml" ]; then
-  logg info 'Running `chezmoi init` since the ~/.config/chezmoi/chezmoi.yaml is not present'
-  chezmoi init
-fi
-
 ### Prompt for variables
 if command -v gum > /dev/null; then
   if [ -z "$SOFTWARE_GROUP" ]; then
@@ -236,6 +230,16 @@ if command -v gum > /dev/null; then
   fi
 fi
 
+### Run chezmoi init
+if [ ! -f "$HOME/.config/chezmoi/chezmoi.yaml" ]; then
+  logg info 'Running `chezmoi init` since the ~/.config/chezmoi/chezmoi.yaml is not present'
+  chezmoi init
+fi
+
 ### Run chezmoi apply
 logg info 'Running `chezmoi apply`'
-chezmoi apply
+if [ -n "$FORCE_CHEZMOI" ]; then
+  chezmoi apply --force
+else
+  chezmoi apply
+fi
