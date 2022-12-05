@@ -276,49 +276,29 @@ async function afterInstall(packageManager) {
       await $`sudo sed -i '/# TEMPORARY FOR ANSIBLE INSTALL/d' /etc/sudoers`
     }
   } else if (packageManager === 'apk') {
-    await $`sudo apk update`
   } else if (packageManager === 'apt') {
-    await $`sudo apt-get update`
   } else if (packageManager === 'basher') {
   } else if (packageManager === 'binary') {
   } else if (packageManager === 'brew' || packageManager === 'cask') {
-    await $`brew update`
   } else if (packageManager === 'cargo') {
   } else if (packageManager === 'choco') {
   } else if (packageManager === 'crew') {
-     await $`crew update`
   } else if (packageManager === 'dnf') {
-    const dnf = which.sync('dnf', { nothrow: true })
-    const yum = which.sync('yum', { nothrow: true })
-    if (dnf) {
-      await $`dnf check-update`
-    } else if (yum) {
-      await $`yum check-update`
-    }
   } else if (packageManager === 'flatpak') {
-    await $`sudo flatpak update`
   } else if (packageManager === 'gem') {
   } else if (packageManager === 'go') {
   } else if (packageManager === 'nix') {
-     await $`nix-channel --update`
   } else if (packageManager === 'npm') {
   } else if (packageManager === 'pacman') {
-    await $`sudo pacman -Syu`
   } else if (packageManager === 'pipx') {
   } else if (packageManager === 'pkg') {
-    await $`sudo pkg upgrade`
   } else if (packageManager === 'port') {
-    await $`sudo port sync`
   } else if (packageManager === 'scoop') {
-    await $`scoop update`
   } else if (packageManager === 'snap') {
-    await $`sudo snap refresh`
   } else if (packageManager === 'whalebrew') {
   } else if (packageManager === 'winget') {
-    await $`winget source update`
   } else if (packageManager === 'yay') {
   } else if (packageManager === 'zypper') {
-    await $`sudo zypper update`
   }
 }
 
@@ -362,7 +342,12 @@ async function beforeInstall(packageManager) {
   } else if (packageManager === 'pkg') {
     await $`sudo pkg upgrade`
   } else if (packageManager === 'port') {
-    await $`sudo port sync`
+    const port = which.sync('port', { nothrow: true })
+    if (port) {
+      await $`sudo port sync`
+    } else {
+      log('error', 'Port Not Installed', 'Skipping sudo port sync step because port is not installed')
+    }
   } else if (packageManager === 'scoop') {
     await $`scoop update`
   } else if (packageManager === 'snap') {
