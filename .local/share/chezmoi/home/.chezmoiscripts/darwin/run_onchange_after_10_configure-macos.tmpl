@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-set -x
-
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
 logg 'Applying optimized macOS settings'
+
+set -x
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
@@ -936,6 +936,8 @@ for app in "Activity Monitor" \
 	"iCal"; do
 	killall "${app}" &> /dev/null
 done
+
+set +x
 
 logg 'Done applying macOS settings'
 logg info 'Some of these changes  may require a logout/restart to take effect'
