@@ -1,7 +1,5 @@
 #!/usr/bin/env zx
 
-declare let chalk, which, YAML, $;
-
 const execSync = require("child_process").execSync;
 
 // Log symbols
@@ -180,9 +178,11 @@ async function generateInstallOrders() {
         normalCheck =
           softwarePackages[currentPkgRef] &&
           softwarePackages[currentPkgRef]["_" + currentSelector];
+        console.log('NorMIE')
+        console.log(normalCheck)
         if (doubleScoped) {
           try {
-            await $(doubleScoped);
+            await $doubleScoped;
           } catch (e) {
             let pref;
             if (
@@ -219,7 +219,7 @@ async function generateInstallOrders() {
           }
         } else if (scopedPkgManager) {
           try {
-            await $(scopedPkgManager);
+            await $scopedPkgManager;
           } catch (e) {
             const pref = preference;
             log(
@@ -231,7 +231,7 @@ async function generateInstallOrders() {
           }
         } else if (scopedSystem) {
           try {
-            await $(scopedSystem);
+            await $scopedSystem;
           } catch (e) {
             let pref;
             if (
@@ -255,6 +255,7 @@ async function generateInstallOrders() {
             continue pkgFor;
           }
         } else if (normalCheck) {
+          console.log('NORMAL CHECK')
           try {
             await $(normalCheck);
           } catch (e) {
@@ -1360,7 +1361,7 @@ async function main() {
   }
   log("info", "Package Install", `Installing the packages`);
   for (const packageManager of packageManagers) {
-    const asyncOrders: Promise<any>[] = [];
+    const asyncOrders = [];
     asyncOrders.push(
       installPackageList(packageManager, installOrders[packageManager])
     );
