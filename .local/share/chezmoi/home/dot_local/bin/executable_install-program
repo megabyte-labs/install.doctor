@@ -127,7 +127,7 @@ async function generateInstallOrders() {
     for (const when of whens) {
       if (when) {
         try {
-          await ${when}
+          await $`${when}`
         } catch (e) {
           log('info', 'Skipping Package', `${pkg} is being skipped because of the _when condition`)
         }
