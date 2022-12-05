@@ -5967,7 +5967,7 @@ softwarePackages:
     github: github.com/go-task/task
     go: github.com/go-task/task/v3/cmd/task@latest
     scoop: task
-  teams:
+  microsoft-teams:
     _bin: null
     _desc: '[Microsoft Teams](https://www.microsoft.com/en-us/microsoft-teams/group-chat-software) is a proprietary business communication platform developed by Microsoft, as part of the Microsoft 365 family of products. Teams primarily competes with the similar service Slack, offering workspace chat and videoconferencing, file storage, and application integration.'
     _docs: null
@@ -5980,6 +5980,9 @@ softwarePackages:
     choco: microsoft-teams
     snap: teams-for-linux
     yay: teams-for-linux
+  microsoft-teams:darwin:
+    _when: '! test -d "/Applications/Microsoft Teams.app"'
+    cask: microsoft-teams
   teamviewer:
     _bin: null
     _desc: '[TeamViewer](https://www.teamviewer.com/en-us/) is a proprietary software for remote access to as well as remote control and maintenance of computers and other devices, which was first released in 2005. The functionality has been expanded step by step, most recently for example through the integration of TeamViewer Meeting.'
