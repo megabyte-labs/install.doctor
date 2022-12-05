@@ -3,7 +3,7 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-logg 'Applying optimized macOS settings'
+logg info 'Applying optimized macOS settings'
 
 # Ask for the administrator password upfront
 logg info 'A sudo password is required to apply some of the macOS optimizations.'
@@ -939,5 +939,5 @@ done
 
 set +x
 
-logg 'Done applying macOS settings'
+logg success 'Done applying macOS settings'
 logg info 'Some of these changes  may require a logout/restart to take effect'
