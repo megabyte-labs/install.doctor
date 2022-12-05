@@ -10,11 +10,11 @@
 {{- includeTemplate "universal/profile" }}
 {{- includeTemplate "universal/logg" }}
 
-logg 'Ensuring RSA public keys are present'
+logg info 'Ensuring RSA public keys are present'
 
 find "$HOME/.ssh" -type f | while read FILE; do
   if [ ! -f "${FILE}" ] && cat "$FILE" | grep 'BEGIN RSA PRIVATE KEY'; then
-    logg 'Generating missing public key for `'"$FILE"'`'
+    logg info 'Generating missing public key for `'"$FILE"'`'
     ssh-keygen -f "$FILE" -y > "${FILE}.pub"
   fi
 done
