@@ -867,12 +867,27 @@ async function ensurePackageManager(packageManager) {
   } else if (packageManager === "pkg") {
     await ensureInstalled("pkg", false);
   } else if (packageManager === "port") {
-    await ensureInstalled(
-      "port",
-      $`
-      echo -n "TODO - script that installs port on macOS here"
-    `
-    );
+    const port = which.sync('port', { nothrow: true })
+    if (!port) {
+      log('info', logStage, `Installing ${packageManager}`)
+      await ensureInstalled(
+        "port",
+        $`
+          sudo mkdir -p /opt/mports
+          cd /opt/mports
+          sudo git clone https://github.com/macports/macports-base.git
+          cd macports-base
+          sudo git checkout v2.8.0
+          ./configure --enable-readline
+          make
+          sudo make install
+          make distclean
+        `
+      );
+      log('info', logStage, `${packageManager} is now installed`)
+    } else {
+      log("info", logStage, `\`port\` is available`);
+    }
   } else if (packageManager === "scoop") {
     await ensureInstalled(
       "scoop",
