@@ -3434,7 +3434,7 @@ softwarePackages:
     _home: null
     _name: Ledger Live
     _service: null
-    _when:cask:: '! test -d "/Applications/Ledger Live.app"'
+    _when:cask: '! test -d "/Applications/Ledger Live.app"'
     ansible: professormanhattan.ledgerlive
     cask: ledger-live
     choco: ledger-live
@@ -6905,6 +6905,7 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
+    _when:darwin: '! test -d "/Applications/Yubico Authenticator.app"'
     ansible:darwin: professormanhattan.yubikey
     choco: yubico-authenticator
     flatpak: com.yubico.yubioath
@@ -6928,6 +6929,7 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
+    _when:darwin: '! test -d "/Applications/YubiKey Manager.app"'
     ansible:darwin: professormanhattan.yubikey
     appimage: https://developers.yubico.com/yubikey-manager-qt/Releases/yubikey-manager-qt-1.2.4b-linux.AppImage
     choco: yubikey-manager
