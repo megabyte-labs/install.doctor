@@ -3422,6 +3422,7 @@ softwarePackages:
     _home: null
     _name: Ledger Live
     _service: null
+    _when:cask:: '! test -d "/Applications/Ledger Live.app"'
     ansible: professormanhattan.ledgerlive
     cask: ledger-live
     choco: ledger-live
@@ -3891,6 +3892,7 @@ softwarePackages:
     _name: Motrix
     _service: null
     _type: application
+    _when:cask: '! test -d /Applications/Motrix.app'
     ansible: professormanhattan.motrix
     cask: motrix
     choco: motrix
@@ -4436,6 +4438,7 @@ softwarePackages:
     _home: https://www.parallels.com/
     _name: Parallels
     _service: null
+    _when: '! test -d "/Applications/Parallels Desktop.app"'
     ansible: professormanhattan.parallels
   pass:
     _bin: null
@@ -4584,6 +4587,7 @@ softwarePackages:
     _home: https://www.plex.tv/
     _name: Plex
     _service: null
+    _when:cask: '! test -d /Applications/Plex.app'
     ansible: professormanhattan.plex
     cask:
       - plex
@@ -4841,6 +4845,7 @@ softwarePackages:
     _home: https://www.qbittorrent.org/
     _name: qBittorrent
     _service: null
+    _when:cask: '! test -d /Applications/qBittorrent.app'
     ansible: professormanhattan.qbittorrent
     apt: qbittorrent
     cask: qbittorrent
@@ -5389,7 +5394,7 @@ softwarePackages:
     _name: null
     _service: null
     npm: share-cli
-  sharex:windows:
+  sharex:
     _bin: null
     _desc: '[ShareX](https://getsharex.com/) is a free and open source program that lets you capture or record any area of your screen and share it with a single press of a key. It also allows uploading images, text or other types of files to many supported destinations you can choose from.'
     _docs: https://getsharex.com/docs/faq
@@ -5397,7 +5402,7 @@ softwarePackages:
     _home: https://getsharex.com/
     _name: ShareX
     _service: null
-    ansible: professormanhattan.sharex
+    ansible:windows: professormanhattan.sharex
     choco: sharex
   sharp:
     _bin: null
@@ -6593,6 +6598,7 @@ softwarePackages:
     _name: WebTorrent Desktop
     _service: null
     _type: application
+    _when:cask: '! test -d /Applications/WebTorrent.app'
     cask: webtorrent
     choco: webtorrent-desktop
     github: github.com/webtorrent/webtorrent-desktop
@@ -6932,6 +6938,7 @@ softwarePackages:
     _home: https://zoom.us/
     _name: Zoom
     _service: null
+    _when:cask: '! test -d /Applications/zoom.us.app'
     ansible: professormanhattan.zoom
     cask: zoom
     choco: zoom
