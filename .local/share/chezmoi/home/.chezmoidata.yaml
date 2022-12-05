@@ -46,6 +46,8 @@ softwareGroups:
     - gping
     - gtop
     - gum
+    - m-cli
+    - mas
     - neovim
     - node
     - oh-my-posh
@@ -112,7 +114,6 @@ softwareGroups:
     - jq
     - kvm
     - lxdc
-    - m-cli
     - mas
     - mcfly
     - mkcert
@@ -479,8 +480,10 @@ softwareGroups:
     - android-studio
   Ansible: &Ansible
     - ansible
+    - ansible-lint
     - ansibleconnect
     - awxcli
+    - molecule
   Backup:
     - autorestic
     - ghorg
@@ -491,6 +494,7 @@ softwareGroups:
     - google-chrome
     - chrome-cli
     - firefox
+    - microsoft-edge
   CI: &CI
     - act
     - argo-cli
@@ -523,6 +527,18 @@ softwareGroups:
     - gping
     - gum
     - hyperfine
+    - jq
+    - mc
+    - mcfly
+    - nb
+    - neovim
+    - netcat
+    - nmap
+    - nnn
+    - node
+    - oh-my-posh
+    - pass
+    - procs
   CLI-Extras:
     - bin
     - bitly
@@ -540,6 +556,16 @@ softwareGroups:
     - httpstat
     - imgur-uploader
     - is-up
+    - jiq
+    - jqp
+    - litecli
+    - mycli
+    - nomino
+    - normit
+    - pastel
+    - peco
+    - pgcli
+    - pywhat
   Cloud:
     - awscli
     - azure-cli
@@ -553,12 +579,21 @@ softwareGroups:
     - fly
     - gcloud
     - heroku
+    - juju
+    - lexicon
+    - logcli
+    - psu
   Cloud-Storage:
     - gdrive
     - gphotos-sync
-  Connectivity:
-    - cloudflared
-    - glusterfs
+  Crypto:
+  Crypto-Desktop:
+    - *Crypto
+    - keybase
+    - ledger-live
+    - monero
+    # - onionshare
+    - onlykey
   Data:
     - dasel
     - fq
@@ -567,12 +602,23 @@ softwareGroups:
     - gojq
     - hclq
     - htmlq
+    - jo
+    - jq
+    - oq
+    - osquery
+    - pup
+    - q
   E-mail:
     - himalaya
+  E-mail-Desktop:
+    - mailspring
+    - protonmail-bridge
   Desktop:
     - cerebro
     - clocker
     - cumulus
+    - jitsi-meet
+    - pretzel
   Development-Tools:
     - aqua
     - asdf
@@ -587,8 +633,15 @@ softwareGroups:
     - gradle
     - ideviceinstaller
     - ios-deploy
+    - java
+    - libimobiledevice
+    - php
   Development-Tools-Desktop: &Development-Tools-Desktop
     - intellij-idea-ce
+    - iterm2
+    - lepton # snippet manager
+    - masscode # snippet manager
+    - powershell
   DNS:
     - hostctl
   Docker:
@@ -604,6 +657,8 @@ softwareGroups:
     - gvisor
   Finance:
     - infracost
+  Finance-Desktop:
+    - manta
   Git: &Git
     - commitizen
     - gh
@@ -621,6 +676,8 @@ softwareGroups:
     - gitui
     - glab
     - hub
+    - lazygit
+    - mergestat
   Git-Desktop:
     - *Git
     - gitdock
@@ -645,17 +702,23 @@ softwareGroups:
     - gitleaks
     - golangci-lint
     - hadolint
+    - pre-commit
   Logging:
     - fuego
+    - papertrail
   NGINX:
     - certbot
     - cfssl
     - gixy
+    - mkcert
+    - nginx
+    - ngxtop
   Package-Management:
     - homebrew
   Testing: &Testing
     - allure
     - appium
+    - molecule
   Testing-Desktop: &Testing-Desktop
     - *Testing
   Kubernetes: &Kubernetes
@@ -669,6 +732,7 @@ softwareGroups:
     - kubernetes-kompose
     - kubeval
     - linkerd2
+    - minikube
     - velero
   Kubernetes-Desktop: &Kubernetes-Desktop
     - *Kubernetes
@@ -683,24 +747,50 @@ softwareGroups:
   Media-Desktop:
     - gimp
     - inkscape
+    - kodi
+    - lollypop
+    - nuclear
+    - plex
   Networking:
     - etcd
+    - cloudflared
+    - glusterfs
+    - mole
+    - nebula
+    - ngrok
   PHP:
     - composer
+  Productivity:
+    - libreoffice
+    - microsoft-office
+    - microsoft-todo
+  Python:
+    - poetry
+    - python
   Recording:
     - asciinema
     - carbon-now
     - dframe
+  Recording-Desktop: &Recording-Desktop
+    - peek
   Security: &Security
     - bitwarden-cli
+    - pony
   Security-Desktop: &Security-Desktop
     - *Security
     - bitwarden
+    - mullvad-vpn
+    - nordvpn
+    - portmaster
+    - protonvpn
   Server:
     - cockpit
     - consul
     - cups
     - elastic-agent
+    - netdata
+  Specialty:
+    - maas
   SSH:
     - assh
   Sys-Admin:
@@ -716,15 +806,27 @@ softwareGroups:
     - dat
     - ffsend
     - gdown
+    - ots
+  Misc-Tools:
+    - nomad
+    - pandoc
+    - pm2
   Transfer-Desktop:
     - dat-desktop
     - filezilla
-  Virtualization: &Virtualization
+    - motrix
+  Utilities:
+    - nativefier
+  Virtualization: &
+    - kvm
+    - linuxkit
     - lxdc
+    - multipass
     - packer
     - vagrant
   Virtualization-Desktop: &Virtualization-Desktop
     - *Virtualization
+    - parallels
     - vmware
   Web-Development: &Web-Development
     - angular-cli
@@ -744,11 +846,35 @@ softwareGroups:
     - hey
     - ionic
     - ipfs
+    - ipfs-deploy
+    - localtunnel
+    - mitmproxy
+    - muffet
+    - ncc
+    - nectar
+    - nest
+    - newman
+    - ngrok
+    - node-prune
+    - np
+    - npm-check
+    - oclif
+    - package-size
+    - page-fetch
+    - pageres
+    - pkg
+    - playwright
+    - pnpm
+    - psi
   Web-Development-Desktop: &Web-Development-Desktop
     - *Web-Development
     - altair
     - betwixt
     - ipfs-desktop
+    - mjml
+    - mockoon
+    - mqttx
+    - postman
   deprecated:
     - bivac
     - boilr
