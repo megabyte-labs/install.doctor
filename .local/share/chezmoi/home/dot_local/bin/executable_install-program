@@ -155,10 +155,7 @@ async function generateInstallOrders() {
         scopedSystem =
           softwarePackages[packageKey]["_" + currentSelector + ":" + osID] ||
           softwarePackages[packageKey]["_" + currentSelector + ":" + osType];
-        normalCheck = softwarePackages[currentPkgRef]["_" + currentSelector];
-        console.log("NorMIE");
-        console.log(currentPkgRef);
-        console.log(normalCheck);
+        normalCheck = softwarePackages[packageKey]["_" + currentSelector];
         if (doubleScoped) {
           try {
             await $doubleScoped;
