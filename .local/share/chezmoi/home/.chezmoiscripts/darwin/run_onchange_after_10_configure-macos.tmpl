@@ -5,15 +5,15 @@
 
 logg 'Applying optimized macOS settings'
 
+# Ask for the administrator password upfront
+logg info 'A sudo password is required to apply some of the macOS optimizations.'
+sudo echo "Sudo access granted."
+
 set -x
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
 osascript -e 'tell application "System Preferences" to quit'
-
-# Ask for the administrator password upfront
-logg info 'A sudo password is required to apply some of the macOS optimizations.'
-sudo echo "Sudo access granted."
 
 # Keep-alive: update existing `sudo` time stamp until `.macos` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
