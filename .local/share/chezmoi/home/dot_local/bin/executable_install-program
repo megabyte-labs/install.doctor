@@ -133,78 +133,57 @@ async function generateInstallOrders() {
         softwarePackages[packageKey][preference + ":" + osType] ||
         softwarePackages[packageKey][preference]
       ) {
-        let currentPkgRef;
-        if (softwarePackages[packageKey][preference + ":" + osID]) {
-          currentPkgRef = preference + ":" + osID;
-        } else if (softwarePackages[packageKey][preference + ":" + osType]) {
-          currentPkgRef = preference + ":" + osType;
-        } else if (softwarePackages[packageKey][preference]) {
-          currentPkgRef = preference;
-        }
-
         // Handle the _when attribute
         currentSelector = "when";
         doubleScoped =
-          (softwarePackages[currentPkgRef] &&
-            softwarePackages[currentPkgRef][
-              "_" + currentSelector + ":" + preference + ":" + osID
-            ]) ||
-          (softwarePackages[currentPkgRef] &&
-            softwarePackages[currentPkgRef][
-              "_" + currentSelector + ":" + osID + ":" + preference
-            ]) ||
-          (softwarePackages[currentPkgRef] &&
-            softwarePackages[currentPkgRef][
-              "_" + currentSelector + ":" + preference + ":" + osType
-            ]) ||
-          (softwarePackages[currentPkgRef] &&
-            softwarePackages[currentPkgRef][
-              "_" + currentSelector + ":" + osType + ":" + preference
-            ]);
+          softwarePackages[packageKey][
+            "_" + currentSelector + ":" + preference + ":" + osID
+          ] ||
+          softwarePackages[packageKey][
+            "_" + currentSelector + ":" + osID + ":" + preference
+          ] ||
+          softwarePackages[packageKey][
+            "_" + currentSelector + ":" + preference + ":" + osType
+          ] ||
+          softwarePackages[packageKey][
+            "_" + currentSelector + ":" + osType + ":" + preference
+          ];
         scopedPkgManager =
-          softwarePackages[currentPkgRef] &&
-          softwarePackages[currentPkgRef][
+          softwarePackages[packageKey][
             "_" + currentSelector + ":" + preference
           ];
         scopedSystem =
-          (softwarePackages[currentPkgRef] &&
-            softwarePackages[currentPkgRef][
-              "_" + currentSelector + ":" + osID
-            ]) ||
-          (softwarePackages[currentPkgRef] &&
-            softwarePackages[currentPkgRef][
-              "_" + currentSelector + ":" + osType
-            ]);
-        normalCheck =
-          softwarePackages[currentPkgRef] &&
-          softwarePackages[currentPkgRef]["_" + currentSelector];
-        console.log('NorMIE')
-        console.log(normalCheck)
+          softwarePackages[packageKey]["_" + currentSelector + ":" + osID] ||
+          softwarePackages[packageKey]["_" + currentSelector + ":" + osType];
+        normalCheck = softwarePackages[currentPkgRef]["_" + currentSelector];
+        console.log("NorMIE");
+        console.log(currentPkgRef);
+        console.log(normalCheck);
         if (doubleScoped) {
           try {
             await $doubleScoped;
           } catch (e) {
             let pref;
             if (
-              softwarePackages[currentPkgRef][
+              softwarePackages[packageKey][
                 "_" + currentSelector + ":" + preference + ":" + osID
               ]
             ) {
               pref = preference + ":" + osID;
             } else if (
-              softwarePackages[currentPkgRef][
+              softwarePackages[packageKey][
                 "_" + currentSelector + ":" + preference + ":" + osType
               ]
             ) {
               pref = preference + ":" + osType;
             } else if (
-              softwarePackages[currentPkgRef][
+              softwarePackages[packageKey][
                 "_" + currentSelector + ":" + osID + ":" + preference
               ]
             ) {
               pref = osID + ":" + preference;
             } else if (
-              softwarePackages[currentPkgRef][
+              softwarePackages[packageKey][
                 "_" + currentSelector + ":" + osType + ":" + preference
               ]
             ) {
@@ -235,15 +214,11 @@ async function generateInstallOrders() {
           } catch (e) {
             let pref;
             if (
-              softwarePackages[currentPkgRef][
-                "_" + currentSelector + ":" + osID
-              ]
+              softwarePackages[packageKey]["_" + currentSelector + ":" + osID]
             ) {
               pref = osID;
             } else if (
-              softwarePackages[currentPkgRef][
-                "_" + currentSelector + ":" + osType
-              ]
+              softwarePackages[packageKey]["_" + currentSelector + ":" + osType]
             ) {
               pref = osType;
             }
@@ -255,7 +230,6 @@ async function generateInstallOrders() {
             continue pkgFor;
           }
         } else if (normalCheck) {
-          console.log('NORMAL CHECK')
           try {
             await $(normalCheck);
           } catch (e) {
@@ -271,67 +245,50 @@ async function generateInstallOrders() {
         // Handle the _bin attribute
         currentSelector = "bin";
         doubleScoped =
-          (softwarePackages[currentPkgRef] &&
-            softwarePackages[currentPkgRef][
-              "_" + currentSelector + ":" + preference + ":" + osID
-            ]) ||
-          (softwarePackages[currentPkgRef] &&
-            softwarePackages[currentPkgRef][
-              "_" + currentSelector + ":" + osID + ":" + preference
-            ]) ||
-          (softwarePackages[currentPkgRef] &&
-            softwarePackages[currentPkgRef][
-              "_" + currentSelector + ":" + preference + ":" + osType
-            ]) ||
-          (softwarePackages[currentPkgRef] &&
-            softwarePackages[currentPkgRef][
-              "_" + currentSelector + ":" + osType + ":" + preference
-            ]);
+          softwarePackages[packageKey][
+            "_" + currentSelector + ":" + preference + ":" + osID
+          ] ||
+          softwarePackages[packageKey][
+            "_" + currentSelector + ":" + osID + ":" + preference
+          ] ||
+          softwarePackages[packageKey][
+            "_" + currentSelector + ":" + preference + ":" + osType
+          ] ||
+          softwarePackages[packageKey][
+            "_" + currentSelector + ":" + osType + ":" + preference
+          ];
         scopedPkgManager =
-          softwarePackages[currentPkgRef] &&
-          softwarePackages[currentPkgRef][
+          softwarePackages[packageKey][
             "_" + currentSelector + ":" + preference
           ];
         scopedSystem =
-          (softwarePackages[currentPkgRef] &&
-            softwarePackages[currentPkgRef][
-              "_" + currentSelector + ":" + osID
-            ]) ||
-          (softwarePackages[currentPkgRef] &&
-            softwarePackages[currentPkgRef][
-              "_" + currentSelector + ":" + osType
-            ]);
-        normalCheck =
-          softwarePackages[currentPkgRef] &&
-          softwarePackages[currentPkgRef]["_" + currentSelector];
+          softwarePackages[packageKey]["_" + currentSelector + ":" + osID] ||
+          softwarePackages[packageKey]["_" + currentSelector + ":" + osType];
+        normalCheck = softwarePackages[packageKey]["_" + currentSelector];
         if (doubleScoped) {
           const bin = which.sync(doubleScoped, { nothrow: true });
           if (!bin) {
             let pref;
             if (
-              softwarePackages[currentPkgRef] &&
-              softwarePackages[currentPkgRef][
+              softwarePackages[packageKey][
                 "_" + currentSelector + ":" + preference + ":" + osID
               ]
             ) {
               pref = preference + ":" + osID;
             } else if (
-              softwarePackages[currentPkgRef] &&
-              softwarePackages[currentPkgRef][
+              softwarePackages[packageKey][
                 "_" + currentSelector + ":" + preference + ":" + osType
               ]
             ) {
               pref = preference + ":" + osType;
             } else if (
-              softwarePackages[currentPkgRef] &&
-              softwarePackages[currentPkgRef][
+              softwarePackages[packageKey][
                 "_" + currentSelector + ":" + osID + ":" + preference
               ]
             ) {
               pref = osID + ":" + preference;
             } else if (
-              softwarePackages[currentPkgRef] &&
-              softwarePackages[currentPkgRef][
+              softwarePackages[packageKey][
                 "_" + currentSelector + ":" + osType + ":" + preference
               ]
             ) {
@@ -362,17 +319,11 @@ async function generateInstallOrders() {
           if (!bin) {
             let pref;
             if (
-              softwarePackages[currentPkgRef] &&
-              softwarePackages[currentPkgRef][
-                "_" + currentSelector + ":" + osID
-              ]
+              softwarePackages[packageKey]["_" + currentSelector + ":" + osID]
             ) {
               pref = osID;
             } else if (
-              softwarePackages[currentPkgRef] &&
-              softwarePackages[currentPkgRef][
-                "_" + currentSelector + ":" + osType
-              ]
+              softwarePackages[packageKey]["_" + currentSelector + ":" + osType]
             ) {
               pref = osType;
             }
