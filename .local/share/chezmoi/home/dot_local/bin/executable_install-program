@@ -536,6 +536,8 @@ async function beforeInstall(packageManager) {
       `Temporarily enabling passwordless sudo for Ansible role installations`
     );
     await $`echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR ANSIBLE INSTALL" | sudo tee -a`;
+    log('info', logStage, 'Running Ansible setup task so facts are cached')
+    await $`ansible localhost -m setup -e ansible_user=${process.env.USER}`;
   } else if (packageManager === "apk") {
     await $`sudo apk update`;
   } else if (packageManager === "apt") {
@@ -966,7 +968,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === "ansible") {
       for (let pkg of packages) {
         try {
-          await $`ansible localhost -vvvvv -m setup -m include_role -a name=${pkg} -e ansible_user=${process.env.USER} -e include_homebrew_install=False`;
+          await $`ansible localhost -vvvvv -m include_role -a name=${pkg} -e ansible_user=${process.env.USER} -e include_homebrew_install=False`;
         } catch (e) {
           log(
             "error",
