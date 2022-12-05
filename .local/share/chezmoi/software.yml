@@ -440,6 +440,7 @@ softwarePackages:
     _name: Autorestic
     _service: null
     ansible: professormanhattan.autorestic
+    brew: autorestic
   awscli:
     _bin: null
     _desc: The [AWS CLI](https://aws.amazon.com/cli/) is a unified tool to manage your AWS services. With just one tool to download and configure, you can control multiple AWS services from the command line and automate them through scripts.
@@ -499,16 +500,17 @@ softwarePackages:
     npm: azure-functions-core-tools@4
   balenaetcher:
     _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
+    _desc: '[balenaEtcher](https://www.balena.io/etcher/) is a powerful OS image flasher built with web technologies to ensure flashing an SDCard or USB drive is a pleasant and safe experience. It protects from accidentally writing to hard-drives, ensures every byte of data was written correctly, and much more. It can also directly flash Raspberry Pi devices that support USB device boot mode. It will run on any platform officially supported by Electron.'
+    _docs: https://www.balena.io/docs/learn/welcome/introduction/
+    _github: https://github.com/balena-io/etcher
+    _home: https://www.balena.io/etcher/
+    _name: balenaEtcher
+    _service: false
     _when:cask: '! test -d /Applications/balenaEtcher.app'
     ansible: professormanhattan.etcher
     cask: balenaetcher
     choco: etcher
+    yay: balena-etcher
   bandwhich:
     _bin: null
     _desc: '[Bandwhich](https://github.com/imsnif/bandwhich) is a CLI utility for displaying current network utilization by process, connection and remote IP/hostname.'
@@ -1239,37 +1241,38 @@ softwarePackages:
     pkg: git-delta
     scoop: delta
   delve:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
+    _bin: dlv
+    _desc: Delve is a debugger for the Go programming language.
+    _docs: https://github.com/go-delve/delve/tree/master/Documentation
+    _github: https://github.com/go-delve/delve
+    _home: https://github.com/go-delve/delve
+    _name: Delve
+    _service: false
     brew: delve
     go: github.com/go-delve/delve/cmd/dlv@latest
   deno:
-    _bin: null
+    _bin: deno
     _desc: '[Deno](https://deno.land/) is a modern runtime for JavaScript and TypeScript. It is advertised as a simple runtime that uses V8 and Rust. It is boasted as secure-by-default because there is no file, network, or environment access unless explicitly enabled. Deno compiles apps into single executables. An app made with Deno generally specifies its dependencies as URLs mainly hosted in the [Deno standard module repository](https://deno.land/std).'
     _docs: https://deno.land/manual
     _github: https://github.com/denoland/deno
     _home: https://deno.land/
     _name: Deno
-    _service: null
+    _service: false
     ansible: professormanhattan.deno
   desed:
-    _bin: null
+    _bin: desed
     _desc: Debugger for sed used to demystify and debug the sed scripts, from comfort of terminal
-    _docs: null
+    _docs: https://github.com/SoptikHa2/desed#controls
     _github: https://github.com/SoptikHa2/desed
-    _home: null
+    _home: https://github.com/SoptikHa2/desed
     _name: desed
-    _service: null
+    _service: false
     _type: cli
     cargo: desed
     dnf: desed
     github: github.com/SoptikHa2/desed
     pkg: desed
+    xbps-freebsd: desed
   desktop:
     _bin: null
     _desc: This role is essentially the place where all desktop-specific tasks that are substantial enough for their own role are placed.
@@ -1401,13 +1404,14 @@ softwarePackages:
     # pacman: docker
   docker-slim:
     _bin: docker-slim
-    _desc: Extension to minify and secure Docker images
-    _docs: null
+    _desc: '[DockerSlim](https://dockersl.im/) will optimize and secure your containers by understanding your application and what it needs using various analysis techniques. It will throw away what you don''t need, reducing the attack surface of your container. What if you need some of those extra things to debug your container? You can use dedicated debugging side-car containers for that.'
+    _docs: https://github.com/docker-slim/docker-slim#basic-usage-info
     _github: https://github.com/docker-slim/docker-slim
-    _home: null
-    _name: docker-slim
-    _service: null
+    _home: https://dockersl.im/
+    _name: Docker Slim
+    _service: false
     _type: cli
+    ansible: professormanhattan.dockerslim
     brew: docker-slim
     dnf: golang-github-docker-slim
     github: github.com/docker-slim/docker-slim
@@ -1421,15 +1425,6 @@ softwarePackages:
     _name: docker-pushrm
     _service: null
     ansible: professormanhattan.dockerpushrm
-  dockerslim:
-    _bin: null
-    _desc: '[DockerSlim](https://dockersl.im/) will optimize and secure your containers by understanding your application and what it needs using various analysis techniques. It will throw away what you don''t need, reducing the attack surface of your container. What if you need some of those extra things to debug your container? You can use dedicated debugging side-car containers for that.'
-    _docs: null
-    _github: https://github.com/docker-slim/docker-slim
-    _home: https://dockersl.im/
-    _name: Dockerslim
-    _service: null
-    ansible: professormanhattan.dockerslim
   dockle:
     _bin: dockle
     _desc: Container Image Linter for Security, Helping build the Best-Practice Docker Image, Easy to start
@@ -1516,7 +1511,7 @@ softwarePackages:
     cargo: dprint
     npm: dprint
     scoop: dprint
-  drone:
+  drone-cli:
     _bin: null
     _desc: The Drone command line tools are used to interact with the Drone from the command line, and provide important utilities for managing users and repository settings
     _docs: null
@@ -1576,15 +1571,15 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.easyengine
   editly:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
+    _bin: editly
+    _desc: Editly is a tool and framework for declarative NLE (non-linear video editing) using Node.js and ffmpeg. Editly allows you to easily and programmatically create a video from a set of clips, images, audio and titles, with smooth transitions and music overlaid.
+    _docs: https://github.com/mifi/editly#usage-command-line-video-editor
+    _github: https://github.com/mifi/editly
+    _home: https://github.com/mifi/editly
+    _name: Editly
+    _service: false
     npm: editly
-  elasticagent:
+  elastic-agent:
     _bin: null
     _desc: >-
       [Elastic Agent](https://www.elastic.co/guide/en/fleet/current/elastic-agent-installation-configuration.html) is a single, unified way to add monitoring for logs, metrics, and other types of data to each host. A single agent makes it easier and faster to deploy monitoring across your infrastructure. The agent’s single, unified policy makes it easier to add integrations for new data sources. You can use Elastic Agent with Fleet.
@@ -1596,7 +1591,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.elasticagent
   electron:
-    _bin: null
+    _bin: electron
     _desc: null
     _docs: null
     _github: null
@@ -1606,13 +1601,13 @@ softwarePackages:
     brew: electron
     npm: electron
   emma:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
+    _bin: emma
+    _desc: Advanced package search for NPM
+    _docs: https://www.npmjs.com/package/emma-cli#example
+    _github: https://github.com/maticzav/emma-cli
+    _home: https://www.npmjs.com/package/emma-cli
+    _name: Emma
+    _service: false
     npm: emma-cli
   emoj:
     _bin: null
@@ -1687,18 +1682,6 @@ softwarePackages:
     dnf: etcd
     github: github.com/etcd-io/etcd
     yay: etcd
-  etcher:
-    _bin: null
-    _desc: '[balenaEtcher](https://www.balena.io/etcher/) is a powerful OS image flasher built with web technologies to ensure flashing an SDCard or USB drive is a pleasant and safe experience. It protects from accidentally writing to hard-drives, ensures every byte of data was written correctly, and much more. It can also directly flash Raspberry Pi devices that support USB device boot mode. It will run on any platform officially supported by Electron.'
-    _docs: https://www.balena.io/docs/learn/welcome/introduction/
-    _github: https://github.com/balena-io/etcher
-    _home: https://www.balena.io/etcher/
-    _name: Etcher
-    _service: null
-    ansible: professormanhattan.etcher
-    brew: balenaetcher
-    choco: etcher
-    yay: balena-etcher
   exa:
     _bin: exa
     _desc: A modern replacement for ls.
@@ -1999,7 +1982,7 @@ softwarePackages:
     yay: fselect
   fuego:
     _bin: null
-    _desc: Fuego is a command line client for the firestore database
+    _desc: Fuego is a command line client for the Firestore database
     _docs: null
     _github: https://github.com/sgarciac/fuego
     _home: null
@@ -2073,12 +2056,13 @@ softwarePackages:
     ansible: professormanhattan.googleassistant
   gcloud:
     _bin: null
-    _desc: null
+    _desc: '[Google Cloud SDK](https://cloud.google.com/sdk) includes tools and libraries for interacting with Google Cloud products and services. With it, you can orchestrate virtual machine instances directly from your command line, manage Compute Engine networks/firewalls/disks, simulate Pub/Sub locally, and much more.'
     _docs: null
     _github: null
     _home: null
-    _name: null
-    _service: null
+    _name: Google Cloud SDK
+    _service: false
+    ansible: professormanhattan.googlecloudsdk
     brew: google-cloud-sdk
     choco: gcloudsdk
     yay: google-cloud-sdk
@@ -2198,25 +2182,27 @@ softwarePackages:
     dnf: git
   git-filter-repo:
     _bin: null
-    _desc: null
+    _desc: '[gitfilterrepo](https://github.com/newren/git-filter-repo) is a versatile tool for rewriting history'
     _docs: null
     _github: null
     _home: null
     _name: null
     _service: null
+    ansible: professormanhattan.gitfilterrepo
     brew: git-filter-repo
     pipx: git-filter-repo
   git-lfs:
     _bin: null
     _deps:
       - git
-    _desc: null
+    _desc: Git LFS (Large File Storage) replaces large files such as audio samples, videos, datasets, and graphics with text pointers inside Git, while storing the file contents on a remote server like GitHub.com or GitHub Enterprise.
     _docs: null
     _github: null
     _home: null
-    _name: null
+    _name: Git LFS
     _post: git lfs install
     _service: null
+    ansible: professormanhattan.gitlfs
     brew: git-lfs
     scoop: git-lfs
   git-open:
@@ -2255,7 +2241,7 @@ softwarePackages:
     _name: GitDocker
     _service: null
     ansible: professormanhattan.gitdocker
-  gitextras:
+  git-extras:
     _bin: null
     _desc: '[Git Extras](https://github.com/tj/git-extras) includes extra git utilities that include repo summary, repl, changelog population, author commit percentages, and more.'
     _docs: null
@@ -2264,16 +2250,7 @@ softwarePackages:
     _name: git-extras
     _service: null
     ansible: professormanhattan.gitextras
-  gitfilterrepo:
-    _bin: null
-    _desc: '[gitfilterrepo](https://github.com/newren/git-filter-repo) is a versatile tool for rewriting history'
-    _docs: null
-    _github: null
-    _home: null
-    _name: gitfilterrepo
-    _service: null
-    ansible: professormanhattan.gitfilterrepo
-  gitfuzzy:
+  git-fuzzy:
     _bin: null
     _desc: '[git-fuzzy](https://github.com/bigH/git-fuzzy) is an interactive `git` that is built on the shoulders of [`fzf`](https://gitlab.com/megabyte-labs/ansible-roles/fzf).'
     _docs: null
@@ -2317,7 +2294,7 @@ softwarePackages:
     cask: gitkraken
     choco: gitkraken
     snap: gitkraken
-  gitlabrunner:
+  gitlab-runner:
     _bin: null
     _desc: '[GitLab Runner](https://docs.gitlab.com/runner/) is an application that works with GitLab CI/CD to run jobs in a pipeline.'
     _docs: https://docs.gitlab.com/runner/
@@ -2340,15 +2317,6 @@ softwarePackages:
     github: github.com/zricethezav/gitleaks
     pkg: gitleaks
     yay: gitleaks
-  gitlfs:
-    _bin: null
-    _desc: Git LFS (Large File Storage) replaces large files such as audio samples, videos, datasets, and graphics with text pointers inside Git, while storing the file contents on a remote server like GitHub.com or GitHub Enterprise.
-    _docs: null
-    _github: null
-    _home: null
-    _name: Git LFS
-    _service: null
-    ansible: professormanhattan.gitlfs
   gitomatic:
     _bin: null
     _desc: '[git-o-matic](https://github.com/muesli/gitomatic) is a tool to monitor git repositories and automatically pull & push changes'
@@ -2361,7 +2329,7 @@ softwarePackages:
     ansible: professormanhattan.gitomatic
     github: github.com/muesli/gitomatic
   gitsome:
-    _bin: null
+    _bin: gitsome
     _desc: null
     _docs: null
     _github: https://github.com/donnemartin/gitsome
@@ -2369,15 +2337,17 @@ softwarePackages:
     _name: null
     _service: null
     ansible: professormanhattan.gitsome
-  gitstats:
-    _bin: null
+    pipx: gitsome
+  git-stats:
+    _bin: git-stats
     _desc: '[gitstats](https://github.com/IonicaBizau/git-stats) can track and display local git statistics. It includes the capability of displaying a GitHub-like contributions calendar in the terminal.'
     _docs: null
-    _github: null
+    _github: https://github.com/IonicaBizau/git-stats
     _home: null
     _name: git-stats
     _service: null
     ansible: professormanhattan.gitstats
+    npm: git-stats
   gitui:
     _bin: gitui
     _desc: Blazing fast TUI for git written in Rust
@@ -2398,16 +2368,16 @@ softwarePackages:
     scoop: gitui
     winget: gitui
   gixy:
-    _bin: null
+    _bin: gixy
     _desc: null
     _docs: null
-    _github: null
+    _github: https://github.com/yandex/gixy
     _home: null
     _name: null
     _service: null
     pipx: gixy
   glab:
-    _bin: null
+    _bin: glab
     _desc: An open-source GitLab command line tool bringing GitLab's cool features to your command line
     _docs: null
     _github: https://github.com/profclems/glab
@@ -2559,15 +2529,6 @@ softwarePackages:
     brew: gomplate
     choco: gomplate
     port: gomplate
-  googlecloudsdk:
-    _bin: null
-    _desc: '[Google Cloud SDK](https://cloud.google.com/sdk) includes tools and libraries for interacting with Google Cloud products and services. With it, you can orchestrate virtual machine instances directly from your command line, manage Compute Engine networks/firewalls/disks, simulate Pub/Sub locally, and much more.'
-    _docs: null
-    _github: null
-    _home: null
-    _name: Google Cloud SDK
-    _service: null
-    ansible: professormanhattan.googlecloudsdk
   googler:
     _bin: null
     _desc: '[googler](https://github.com/jarun/googler) is a power tool to Google (web, news, videos and site search) from the command-line. It shows the title, URL and abstract for each result, which can be directly opened in a browser from the terminal. Results are fetched in pages (with page navigation). It supports sequential searches in a single googler instance.'
@@ -2667,13 +2628,14 @@ softwarePackages:
     github: github.com/tomnomnom/gron
     go: github.com/tomnomnom/gron@latest
   grype:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
+    _bin: grype
+    _desc: A vulnerability scanner for container images and filesystems
+    _docs: https://github.com/anchore/grype#getting-started
+    _github: https://github.com/anchore/grype
+    _home: https://github.com/anchore/grype
+    _name: Grype
+    _service: false
+    brew: anchore/grype/grype
     choco: grype
     port: grype
     yay: grype-bin
@@ -3024,7 +2986,7 @@ softwarePackages:
     _name: Installer
     _service: null
     ansible: professormanhattan.installer
-  intellij:
+  intellij-idea-ce:
     _bin: null
     _desc: '[IntelliJ IDEA](https://www.jetbrains.com/idea/) is an integrated development environment written in Java for developing computer software. It is developed by JetBrains, and is available as an Apache 2 Licensed community edition, and in a proprietary commercial edition. Both can be used for commercial development.'
     _docs: https://www.jetbrains.com/help/
@@ -3033,14 +2995,6 @@ softwarePackages:
     _name: IntelliJ IDEA (CE)
     _service: null
     ansible: professormanhattan.intellij
-  intellij-idea-ce:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
     brew: intellij-idea-ce
     choco: intellijidea-community
     snap: intellij-idea-community
@@ -3146,7 +3100,7 @@ softwarePackages:
     _type: cli
     github: github.com/fiatjaf/jiq/cmd/jiq
     go: github.com/fiatjaf/jiq/cmd/jiq@latest
-  jitsi-meet-electron:
+  jitsi-meet:
     _bin: null
     _desc: Desktop application for Jitsi Meet built with Electron
     _docs: null
@@ -3196,13 +3150,13 @@ softwarePackages:
     github: github.com/stedolan/jq
     pkg: jq
   jqp:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
+    _bin: jqp
+    _desc: A TUI playground to experiment with jq
+    _docs: https://github.com/noahgorstein/jqp#usage
+    _github: https://github.com/noahgorstein/jqp
+    _home: https://github.com/noahgorstein/jqp
+    _name: jqp
+    _service: false
     brew: noahgorstein/tap/jqp
     port: jqp
     yay: jqp
@@ -3310,17 +3264,6 @@ softwarePackages:
     _type: cli
     github: github.com/kubenav/kubenav
     yay: kubenav-bin
-  kubernetes:
-    _bin: null
-    _desc: >-
-      [Kubernetes](https://kubernetes.io/) is an open-source container-orchestration system for automating computer application deployment, scaling, and management. It was originally designed by Google and is now maintained by the Cloud Native Computing Foundation. [Kompose](https://kompose.io/) is a conversion tool for Docker Compose to container orchestrators such as Kubernetes (or OpenShift). [Helm](https://helm.sh/) helps you manage Kubernetes applications — Helm Charts help you define,
-      install, and upgrade even the most complex Kubernetes application. [Minikube](https://minikube.sigs.k8s.io/docs/), which is also included in this role, is a local developement tool that allows you to test Kubernetes stacks on your personal computer.
-    _docs: https://kubernetes.io/docs/home/
-    _github: https://github.com/kubernetes/kubernetes
-    _home: https://kubernetes.io/
-    _name: Kubernetes
-    _service: null
-    ansible: professormanhattan.kubernetes
   kubernetes-cli:
     _bin: null
     _desc: null
@@ -3417,18 +3360,21 @@ softwarePackages:
       - virt-manager
   lazygit:
     _bin: null
-    _desc: null
+    _desc: Simple terminal UI for git commands
     _docs: null
-    _github: null
+    _github: https://github.com/jesseduffield/lazygit
     _home: null
     _name: null
     _service: null
     brew: lazygit
     choco: lazygit
+    eopkg: lazygit
     go: github.com/jesseduffield/lazygit@latest
     pacman: lazygit
+    port: lazygit
     scoop: lazygit
-  ledgerlive:
+    xbps: lazygit
+  ledger-live:
     _bin: null
     _desc: '[Ledger Live](https://www.ledger.com/ledger-live) is a new generation wallet desktop application providing a unique interface to maintain multiple cryptocurrencies for your Ledger Nano S / Blue. Manage your device, create accounts, receive and send cryptoassets and many more.'
     _docs: null
@@ -3456,7 +3402,7 @@ softwarePackages:
     yay: lens
   lepton:
     _bin: null
-    _desc: null
+    _desc: Cross-platform snippet manager
     _docs: null
     _github: null
     _home: null
@@ -3731,11 +3677,11 @@ softwarePackages:
     github: github.com/mergestat/mergestat
   microsoft-edge:
     _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
+    _desc: '[Microsoft Edge](https://www.microsoft.com/en-us/edge) is a cross-platform web browser developed by Microsoft. It was first released for Windows 10 and Xbox One in 2015, then for Android and iOS in 2017, for macOS in 2019, and as a preview for Linux in October 2020.'
+    _docs: https://docs.microsoft.com/en-us/microsoft-edge/
+    _github: false
+    _home: https://www.microsoft.com/en-us/edge
+    _name: Microsoft Edge
     _service: null
     ansible: professormanhattan.microsoftedge
     cask: microsoft-edge
@@ -3746,7 +3692,7 @@ softwarePackages:
     _service: null
     _desc: '[Microsoft Office](https://www.microsoft.com/en-us/microsoft-365/microsoft-office), or simply Office, is a family of client software, server software, and services developed by Microsoft.'
     _docs: https://docs.microsoft.com/en-us/microsoft-365/?view=o365-worldwide
-    _github: Not open-source
+    _github: false
     _home: https://www.office.com/
     _name: Office
     _when:cask: '! test -d "/Applications/Microsoft Word.app"'
@@ -3754,34 +3700,16 @@ softwarePackages:
     choco: office365business
   microsoft-todo:
     _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
+    _desc: '[Microsoft To Do](https://todo.microsoft.com/tasks/) is a productivity application developed by Microsoft. It lets you create to do lists, reminders, and notes for any purpose. Sync lists across devices and Microsoft 365 accounts to access daily planner and task manager features anywhere.'
+    _docs: https://support.microsoft.com/en-us/todo
+    _github: false
+    _home: https://todo.microsoft.com/tasks/
+    _name: Microsoft To-Do
     _service: null
     _when:cask: '! test -d /Applications/Ao.app'
     ansible: professormanhattan.microsofttodo
     cask: ao
     snap: microsoft-todo-unofficial
-  microsoftedge:
-    _bin: null
-    _desc: '[Microsoft Edge](https://www.microsoft.com/en-us/edge) is a cross-platform web browser developed by Microsoft. It was first released for Windows 10 and Xbox One in 2015, then for Android and iOS in 2017, for macOS in 2019, and as a preview for Linux in October 2020.'
-    _docs: https://docs.microsoft.com/en-us/microsoft-edge/
-    _github: Not open-source
-    _home: https://www.microsoft.com/en-us/edge
-    _name: Microsoft Edge
-    _service: null
-    ansible: professormanhattan.microsoftedge
-  microsofttodo:
-    _bin: null
-    _desc: '[Microsoft To Do](https://todo.microsoft.com/tasks/) is a productivity application developed by Microsoft. It lets you create to do lists, reminders, and notes for any purpose. Sync lists across devices and Microsoft 365 accounts to access daily planner and task manager features anywhere.'
-    _docs: https://support.microsoft.com/en-us/todo
-    _github: Not open-source
-    _home: https://todo.microsoft.com/tasks/
-    _name: Microsoft To Do
-    _service: null
-    ansible: professormanhattan.microsofttodo
   minikube:
     _bin: null
     _desc: null
@@ -4175,12 +4103,13 @@ softwarePackages:
     pkg: nnn
   node:
     _bin: node
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
+    _desc: '[Node.js](https://nodejs.org/en/) is an open-source, cross-platform, back-end JavaScript runtime environment that runs on the V8 engine and executes JavaScript code outside a web browser.'
+    _docs: https://nodejs.org/en/docs/
+    _github: https://github.com/nodejs/node
+    _home: https://nodejs.org/en/
+    _name: Node.js
     _service: null
+    ansible: professormanhattan.nodejs
     brew: node
     scoop: nodejs
   node-prune:
@@ -4194,15 +4123,6 @@ softwarePackages:
     _type: cli
     github: github.com/tj/node-prune
     go: github.com/tj/node-prune@latest
-  nodejs:
-    _bin: null
-    _desc: '[Node.js](https://nodejs.org/en/) is an open-source, cross-platform, back-end JavaScript runtime environment that runs on the V8 engine and executes JavaScript code outside a web browser.'
-    _docs: https://nodejs.org/en/docs/
-    _github: https://github.com/nodejs/node
-    _home: https://nodejs.org/en/
-    _name: Node.js
-    _service: null
-    ansible: professormanhattan.nodejs
   nomad:
     _bin: null
     _desc: '[HashiCorp Nomad](https://www.nomadproject.io/) is a simple and flexible scheduler and workload orchestrator to deploy and manage containers and non-containerized applications across on-prem and clouds at scale.'
@@ -4296,8 +4216,6 @@ softwarePackages:
     _name: null
     _service: null
     npm: oclif
-  office:
-
   oh-my-posh:
     _bin: oh-my-posh
     _desc: null
@@ -4406,9 +4324,9 @@ softwarePackages:
     go: github.com/detectify/page-fetch@latest
   pageres:
     _bin: null
-    _desc: null
+    _desc: Capture website screenshots
     _docs: null
-    _github: null
+    _github: https://github.com/sindresorhus/pageres-cli
     _home: null
     _name: null
     _service: null
@@ -4756,7 +4674,7 @@ softwarePackages:
     pacman: procs
     scoop: procs
     snap: procs
-  proton:
+  protonvpn:
     _bin: null
     _desc: '[Proton](https://www.proton.org/) is a free and open-source raster graphics editor used for image manipulation and image editing, free-form drawing, transcoding between different image file formats, and more specialized tasks. Proton is released under GPLv3+ license and is available for Linux, macOS, and Microsoft Windows.'
     _docs: https://protonmail.com/support/
