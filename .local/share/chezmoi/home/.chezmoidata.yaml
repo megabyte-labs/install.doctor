@@ -227,9 +227,6 @@ softwareGroups:
     - zoom
   Development: &development
     - *standard
-    - act
-    - allure
-    - angular-cli
     - ansible-lint
     - aqua
     - argocli
@@ -487,17 +484,20 @@ softwareGroups:
   Experimental-Desktop: &experimentalDesktop
     - *developmentDesktop
     - betwixt
-    - lens
     - manta
     - mark-text
     - masscode
     - mullvad-vpn
     - powershell
-  CI:
+  CI: &CI
     - act
-  Misc-Dev-Tools:
+  CI-Desktop: &CI-Desktop
+    - *CI
+  Testing: &Testing
     - allure
-  Kubernetes:
+  Testing-Desktop: &Testing-Desktop
+    - *Testing
+  Kubernetes: &Kubernetes
     - kdash
     - kn
     - kubectx
@@ -508,8 +508,21 @@ softwareGroups:
     - kubeval
     - linkerd2
     - velero
-  Virtualization:
+  Kubernetes-Desktop: &Kubernetes-Desktop
+    - *Kubernetes
+    - lens
+  Virtualization: &Virtualization
+    - lxdc
+    - packer
+    - vagrant
+  Virtualization-Desktop: &Virtualization-Desktop
+    - *Virtualization
     - vmware
+  Web-Development: &Web-Development
+    - altair
+    - angular-cli
+  Web-Development-Desktop: &Web-Development-Desktop
+    - *Web-Development
   deprecated:
     - bivac
     - boilr
