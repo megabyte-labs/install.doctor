@@ -24,6 +24,7 @@ fonts:
   main: Montserrat Bold
 softwareGroups:
   Basic: &basic
+    - aria2
     - bash-completion
     - bat
     - bitwarden-cli
@@ -73,12 +74,6 @@ softwareGroups:
     - ngxtop
   Standard: &standard
     - *basic
-    - ansible
-    - aria2
-    - asdf
-    - automake
-    - autorestic
-    - bandwhich
     - bitly
     - bottom
     - broot
@@ -171,8 +166,6 @@ softwareGroups:
     - yq
     - yubikey-manager
     - zsh
-  CLI-Extras:
-    - ansibleconnect
   Standard-Desktop: &standardDesktop
     - *basicDesktop
     - autokey
@@ -227,15 +220,6 @@ softwareGroups:
     - zoom
   Development: &development
     - *standard
-    - ansible-lint
-    - aqua
-    - argocli
-    - auto-install
-    - automake
-    - awscli
-    - azurecli
-    - azurefunctions
-    - bane
     - beets
     - bin
     - browser-sync
@@ -489,15 +473,193 @@ softwareGroups:
     - masscode
     - mullvad-vpn
     - powershell
+  Android: &Android
+  Android-Desktop: &Android-Desktop
+    - *Android
+    - android-studio
+  Ansible: &Ansible
+    - ansible
+    - ansibleconnect
+    - awxcli
+  Backup:
+    - autorestic
+    - ghorg
+  Basicz:
+    - curl
+  Browsers:
+    - brave-browser
+    - google-chrome
+    - chrome-cli
+    - firefox
   CI: &CI
     - act
-  CI-Desktop: &CI-Desktop
-    - *CI
+    - argo-cli
+    - drone-cli
+    - fpm
+    - gitlab-runner
+    - glen
+  CLI:
+    - bash-completion
+    - bandwhich
+    - bat
+    - bottom
+    - broot
+    - cheat
+    - chezmoi
+    - curlie
+    - delta
+    - direnv
+    - dog
+    - duf
+    - dust
+    - empty-trash
+    - exa
+    - fd
+    - fkill
+    - fzf
+    - glances
+    - glow
+    - gnu
+    - gping
+    - gum
+    - hyperfine
+  CLI-Extras:
+    - bin
+    - bitly
+    - cointop
+    - desed
+    - emoj
+    - fig
+    - filebrowser
+    - googler
+    - grex
+    - gron
+    - hexyl
+    - http-prompt
+    - httpie
+    - httpstat
+    - imgur-uploader
+    - is-up
+  Cloud:
+    - awscli
+    - azure-cli
+    - azurefunctions
+    - budibase-cli
+    - consul-cli
+    - curator
+    - doctl
+    - envconsul
+    - fission
+    - fly
+    - gcloud
+    - heroku
+  Cloud-Storage:
+    - gdrive
+    - gphotos-sync
+  Connectivity:
+    - cloudflared
+    - glusterfs
+  Data:
+    - dasel
+    - fq
+    - fselect
+    - fx
+    - gojq
+    - hclq
+    - htmlq
+  E-mail:
+    - himalaya
+  Desktop:
+    - cerebro
+    - clocker
+    - cumulus
+  Development-Tools:
+    - aqua
+    - asdf
+    # - astronvim
+    - automake
+    - bundler
+    - carthage
+    - chef
+    - cmake
+    - cocoapods
+    - dotnet
+    - gradle
+    - ideviceinstaller
+    - ios-deploy
+  Development-Tools-Desktop: &Development-Tools-Desktop
+    - intellij-idea-ce
+  DNS:
+    - hostctl
+  Docker:
+    - bane
+    - clair
+    - container-structure-test
+    - dive
+    - docker
+    - docker-slim
+    - dockerpushrm
+    - dockle
+    - grype
+    - gvisor
+  Finance:
+    - infracost
+  Git: &Git
+    - commitizen
+    - gh
+    - gist
+    - git
+    - git-extras
+    - git-filter-repo
+    - git-fuzzy
+    - git-lfs
+    - git-open
+    - git-secret
+    - gitomatic
+    - gitsome
+    - git-stats
+    - gitui
+    - glab
+    - hub
+  Git-Desktop:
+    - *Git
+    - gitdock
+    - gitify
+    - gitkraken
+  Go:
+    - delve
+    - go
+    - go-outline
+    - gomodifytags
+    - gopkgs
+    - gopls
+    - gotests
+    - impl
+  Home:
+    - go-chromecast
+  Linting:
+    - ansible-lint
+    - dotenv-linter
+    - dprint
+    - eslint
+    - gitleaks
+    - golangci-lint
+    - hadolint
+  Logging:
+    - fuego
+  NGINX:
+    - certbot
+    - cfssl
+    - gixy
+  Package-Management:
+    - homebrew
   Testing: &Testing
     - allure
+    - appium
   Testing-Desktop: &Testing-Desktop
     - *Testing
   Kubernetes: &Kubernetes
+    - cmctl
     - kdash
     - kn
     - kubectx
@@ -511,6 +673,52 @@ softwareGroups:
   Kubernetes-Desktop: &Kubernetes-Desktop
     - *Kubernetes
     - lens
+  Media:
+    - balenaetcher
+    - beets
+    - editly
+    - exiftool
+    - ffmpeg
+    - imagemagick
+  Media-Desktop:
+    - gimp
+    - inkscape
+  Networking:
+    - etcd
+  PHP:
+    - composer
+  Recording:
+    - asciinema
+    - carbon-now
+    - dframe
+  Security: &Security
+    - bitwarden-cli
+  Security-Desktop: &Security-Desktop
+    - *Security
+    - bitwarden
+  Server:
+    - cockpit
+    - consul
+    - cups
+    - elastic-agent
+  SSH:
+    - assh
+  Sys-Admin:
+    - ctop
+    - gtop
+    - htop
+  Templates:
+    - confd
+    - cookiecutter
+    - gomplate
+  Transfer:
+    - croc
+    - dat
+    - ffsend
+    - gdown
+  Transfer-Desktop:
+    - dat-desktop
+    - filezilla
   Virtualization: &Virtualization
     - lxdc
     - packer
@@ -519,18 +727,37 @@ softwareGroups:
     - *Virtualization
     - vmware
   Web-Development: &Web-Development
-    - altair
     - angular-cli
+    - auto-install
+    - browser-sync
+    - caniuse
+    - cordova
+    - deno
+    - electron
+    - emma
+    - fastify
+    - feathers
+    - firebase
+    - flutter
+    - gfi
+    - gulp
+    - hey
+    - ionic
+    - ipfs
   Web-Development-Desktop: &Web-Development-Desktop
     - *Web-Development
+    - altair
+    - betwixt
+    - ipfs-desktop
   deprecated:
     - bivac
     - boilr
     - captain
-    - consul-cli
     - consultemplate
     - diffsofancy
+    - difftastic
     - emplace
+    - gvm
     - htop
     - hyper
     - jenv
