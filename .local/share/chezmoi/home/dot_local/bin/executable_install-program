@@ -127,9 +127,10 @@ async function generateInstallOrders() {
     for (const when of whens) {
       if (when) {
         try {
-          await $`${when}`
+          await $when
         } catch (e) {
           log('info', 'Skipping Package', `${pkg} is being skipped because of the _when condition`)
+          continue pkgFor
         }
       }
     }
@@ -897,7 +898,7 @@ async function main() {
   installData = await downloadInstallData();
   log('info', 'Install Orders', `Calculating the install orders`)
   await generateInstallOrders();
-  log('info', `Ensuring any package managers that will be used are installed / configured`)
+  log('info', 'Ensure Package Manager Installed', `Ensuring any package managers that will be used are installed / configured`)
   const packageManagers = Object.keys(installOrders);
   for (const packageManager of packageManagers) {
     await ensurePackageManager(packageManager);
