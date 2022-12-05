@@ -7,8 +7,13 @@
 {{- includeTemplate "universal/logg" }}
 
 if [ -f "$ASDF_DIR/asdf.sh" ] && [ -f ~/.tool-versions ]; then
-  logg 'Installing ASDF dependencies derived from `~/.tool-versions`'
+  logg info 'Sourcing asdf.sh'
   . ${ASDF_DIR}/asdf.sh
+  cat .tool-versions | while read TOOL; do
+    logg info 'Installing ASDF plugin `'"$TOOL"'`'
+    asdf plugin add "$(echo "$TOOL" | sed 's/ .*//')"
+  done
+  logg info 'Installing ASDF dependencies derived from `~/.tool-versions` via `asdf install`'
   asdf install || true
 else
   logg warn 'The `$ASDF_DIR/asdf.sh` or `~/.tool-versions` file is not present'
