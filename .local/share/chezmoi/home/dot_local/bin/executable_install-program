@@ -1,6 +1,6 @@
 #!/usr/bin/env zx
 
-declare let chalk, process, require, which, YAML, $;
+declare let chalk, which, YAML, $;
 
 const execSync = require("child_process").execSync;
 
@@ -1386,4 +1386,4 @@ async function main() {
 }
 
 // Start the main process
-main();
+await main();
