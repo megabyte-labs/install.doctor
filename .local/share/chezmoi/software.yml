@@ -2031,14 +2031,26 @@ softwarePackages:
     scoop: fx
     snap: fx
   fzf:
-    _bin: null
+    _bin: fzf
     _desc: '[fzf](https://github.com/junegunn/fzf) is a general-purpose command-line fuzzy finder. It''s an interactive Unix filter for command-line that can be used with any list; files, command history, processes, hostnames, bookmarks, git commits, etc.'
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://github.com/junegunn/fzf#usage
+    _github: https://github.com/junegunn/fzf
+    _home: https://github.com/junegunn/fzf
     _name: fzf
-    _service: null
+    _service: false
     ansible: professormanhattan.fzf
+    apk: fzf
+    apt: fzf
+    brew: fzf
+    dnf: fzf
+    nix: nixpkgs.fzf
+    pacman: fzf
+    pkgin: fzf
+    pkg-freebsd: fzf
+    pkg-openbsd:
+    port: fzf
+    xbps: fzf
+    zypper: fzf
   google-assistant:
     _bin: null
     _desc: '[Google Assistant for Desktop](https://github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client) is a cross-platform unofficial Google Assistant Client for Desktop.'
