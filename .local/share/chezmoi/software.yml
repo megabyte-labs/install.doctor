@@ -160,25 +160,26 @@ installerPreference:
 softwarePackages:
   act:
     _bin: act
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
+    _desc: Run GitHub actions locally
+    _docs: https://github.com/nektos/act#example-commands
+    _github: https://github.com/nektos/act
+    _home: https://github.com/nektos/act
+    _name: Act
+    _service: false
     brew: act
     choco: act-cli
-    go: github.com/nektos/act@latest
-    ports: act
+    go: github.com/nektos/act@
+    nix: nixpkgs.act
+    port: act
     scoop: act
     yay: act
   allure:
     _bin: allure
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
+    _desc: Allure Report is a flexible, lightweight multi-language test reporting tool. It provides clear graphical reports and allows everyone involved in the development process to extract the maximum of information from the everyday testing process.
+    _docs: https://docs.qameta.io/allure-report/
+    _github: https://github.com/allure-framework/allure2
+    _home: https://docs.qameta.io/allure-testops/
+    _name: Allure
     _post:binary:darwin: |
       # TODO
     _post:binary:linux: |
@@ -190,7 +191,7 @@ softwarePackages:
       ln -s /usr/local/share/allure/allure<version>/bin/allure
     _post:binary:windows: |
       # TODO
-    _service: null
+    _service: false
     binary: https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.20.1/allure-commandline-2.20.1.zip
       # TODO: Find latest version from https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/maven-metadata.xml and use it in the _binary_ URL
     brew: allure
@@ -198,12 +199,12 @@ softwarePackages:
     yay: allure
   altair:
     _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
+    _desc: A beautiful feature-rich GraphQL Client for all platforms.
+    _docs: https://altairgraphql.dev/docs/
+    _github: https://github.com/altair-graphql/altair
+    _home: https://altairgraphql.dev/
+    _name: Altair GraphQL Client
+    _service: false
     cask: altair-graphql-client
     choco: altair-graphql
     snap: altair
