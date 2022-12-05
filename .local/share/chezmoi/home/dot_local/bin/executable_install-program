@@ -275,32 +275,49 @@ async function afterInstall(packageManager) {
       await $`sudo sed -i '/# TEMPORARY FOR ANSIBLE INSTALL/d' /etc/sudoers`
     }
   } else if (packageManager === 'apk') {
+    await $`sudo apk update`
   } else if (packageManager === 'apt') {
+    await $`sudo apt-get update`
   } else if (packageManager === 'basher') {
   } else if (packageManager === 'binary') {
   } else if (packageManager === 'brew' || packageManager === 'cask') {
+    await $`brew update`
   } else if (packageManager === 'cargo') {
   } else if (packageManager === 'choco') {
   } else if (packageManager === 'crew') {
+     await $`crew update`
   } else if (packageManager === 'dnf') {
+    const dnf = which.sync('dnf', { nothrow: true })
+    const yum = which.sync('yum', { nothrow: true })
+    if (dnf) {
+      await $`dnf check-update`
+    } else if (yum) {
+      await $`yum check-update`
+    }
   } else if (packageManager === 'flatpak') {
+    await $`sudo flatpak update`
   } else if (packageManager === 'gem') {
   } else if (packageManager === 'go') {
   } else if (packageManager === 'nix') {
+     await $`nix-channel --update`
   } else if (packageManager === 'npm') {
   } else if (packageManager === 'pacman') {
+    await $`sudo pacman -Syu`
   } else if (packageManager === 'pipx') {
   } else if (packageManager === 'pkg') {
+    await $`sudo pkg upgrade`
   } else if (packageManager === 'port') {
+    await $`sudo port sync`
   } else if (packageManager === 'scoop') {
-  } else if (packageManager === 'crew') {
-  } else if (packageManager === 'dnf') {
-  } else if (packageManager === 'flatpak') {
+    await $`scoop update`
   } else if (packageManager === 'snap') {
+    await $`sudo snap refresh`
   } else if (packageManager === 'whalebrew') {
   } else if (packageManager === 'winget') {
+    await $`winget source update`
   } else if (packageManager === 'yay') {
   } else if (packageManager === 'zypper') {
+    await $`sudo zypper update`
   }
 }
 
@@ -312,30 +329,43 @@ async function beforeInstall(packageManager) {
     log('info', logStage, `Temporarily enabling passwordless sudo for Ansible role installations`)
     await $`echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR ANSIBLE INSTALL" | sudo tee -a`
   } else if (packageManager === 'apk') {
+    await $`sudo apk update`
   } else if (packageManager === 'apt') {
     await $`sudo apt-get update`
   } else if (packageManager === 'basher') {
   } else if (packageManager === 'binary') {
   } else if (packageManager === 'brew' || packageManager === 'cask') {
+    await $`brew update`
   } else if (packageManager === 'cargo') {
   } else if (packageManager === 'choco') {
   } else if (packageManager === 'crew') {
+     await $`crew update`
   } else if (packageManager === 'dnf') {
+    const dnf = which.sync('dnf', { nothrow: true })
+    const yum = which.sync('yum', { nothrow: true })
+    if (dnf) {
+      await $`dnf check-update`
+    } else if (yum) {
+      await $`yum check-update`
+    }
   } else if (packageManager === 'flatpak') {
+    await $`sudo flatpak update`
   } else if (packageManager === 'gem') {
   } else if (packageManager === 'go') {
   } else if (packageManager === 'nix') {
+     await $`nix-channel --update`
   } else if (packageManager === 'npm') {
   } else if (packageManager === 'pacman') {
     await $`sudo pacman -Syu`
   } else if (packageManager === 'pipx') {
   } else if (packageManager === 'pkg') {
+    await $`sudo pkg upgrade`
   } else if (packageManager === 'port') {
+    await $`sudo port sync`
   } else if (packageManager === 'scoop') {
-  } else if (packageManager === 'crew') {
-  } else if (packageManager === 'dnf') {
-  } else if (packageManager === 'flatpak') {
+    await $`scoop update`
   } else if (packageManager === 'snap') {
+    await $`sudo snap refresh`
   } else if (packageManager === 'whalebrew') {
     if (osType === 'darwin') {
       const docker = which.sync('docker', { nothrow: true })
@@ -362,8 +392,10 @@ async function beforeInstall(packageManager) {
       }
     }
   } else if (packageManager === 'winget') {
+    await $`winget source update`
   } else if (packageManager === 'yay') {
   } else if (packageManager === 'zypper') {
+    await $`sudo zypper update`
   }
 }
 
@@ -679,6 +711,13 @@ async function installPackageList(packageManager, packages) {
         }
       }
     } else if (packageManager === 'basher') {
+      for (let pkg of packages) {
+        try {
+          await $`basher install ${pkg}`
+        } catch(e) {
+          log('error', 'Basher Failure', `There was an error installing ${pkg} with basher`)
+        }
+      }
     } else if (packageManager === 'binary') {
     } else if (packageManager === 'brew') {
       for (let pkg of packages) {
@@ -822,6 +861,13 @@ async function installPackageList(packageManager, packages) {
         }
       }
     } else if (packageManager === 'winget') {
+      for (let pkg of packages) {
+        try {
+          await $`winget install ${pkg}`
+        } catch(e) {
+          log('error', 'Winget Failure', `There was an error installing ${pkg} with winget`)
+        }
+      }
     } else if (packageManager === 'yay') {
       for (let pkg of packages) {
         try {
