@@ -887,7 +887,6 @@ async function installPackageList(packageManager, packages) {
     }
   } catch (e) {
     log('error', logStage, `Possibly encountered an error while installing via \`${packageManager}\``)
-    log('info', logStage, `Error was encountered while installing: ${pkg}`)
     log('info', logStage, `Proceeding with the installation..`)
   }
 }
