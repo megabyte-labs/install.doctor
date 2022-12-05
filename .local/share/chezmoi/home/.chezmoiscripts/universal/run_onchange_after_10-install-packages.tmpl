@@ -4,6 +4,7 @@
 {{- includeTemplate "universal/logg" }}
 
 # software: {{ index .softwareGroups .host.softwareGroup | toString | replace "[" "" | replace "]" "" }}
+# software map: {{ include (joinPath .chezmoi.homeDir ".local" "share" "chezmoi" "software.yml") | sha256sum }}
 
 if command -v install-program > /dev/null; then
   if command -v zx > /dev/null; then
