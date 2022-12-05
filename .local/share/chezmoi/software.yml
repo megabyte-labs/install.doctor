@@ -541,7 +541,7 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
-    _when:darwin: '! brew list bash-completion'
+    _when:darwin: '! (brew list bash-completion | grep bash-completion)'
     brew:darwin: bash-completion
   bat:
     _bin: bat
@@ -4873,6 +4873,7 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
+    _when: '! ((brew list provisionql | grep ProvisionQL) && (brew list qlcolorcode | grep QLColorCode) && (brew list qlimagesize | grep qlImageSize) && (brew list qlmarkdown | grep QLMarkdown) && (brew list qlstephen | grep QLStephen) && (brew list qlvideo | grep QLVideo) && (brew list quicklook-json | grep QuickLookJSON) && (brew list quicklookapk | grep QuickLookAPK) && (brew list webpquicklook | grep WebpQuickLook))'
     cask:
       - provisionql
       - qlcolorcode
@@ -5123,7 +5124,7 @@ softwarePackages:
     github: github.com/nivekuil/rip
     yay: rm-improved
   rofi:
-    _bin: null
+    _bin: rofi
     _desc: null
     _docs: null
     _github: null
