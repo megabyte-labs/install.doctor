@@ -1952,6 +1952,7 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
+    _when:cask: '! ((brew list font-sf-mono-nerd-font | grep SFMono) && (brew list font-hack-nerd-font | grep Hack) && (brew list font-meslo-lg-nerd-font | grep Meslo))'
     cask:
       - epk/epk/font-sf-mono-nerd-font
       - homebrew/cask-fonts/font-hack-nerd-font
