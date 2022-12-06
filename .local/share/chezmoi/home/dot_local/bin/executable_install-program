@@ -879,17 +879,14 @@ async function ensurePackageManager(packageManager) {
       await ensureInstalled(
         "port",
         $`
-          set -ex
           sudo mkdir -p /opt/mports
           cd /opt/mports
           sudo rm -rf macports-base
           sudo git clone https://github.com/macports/macports-base.git
           cd macports-base
           sudo git checkout v2.8.0
-          sudo ./configure --enable-readline
-          sudo bash --noprofile --norc -c 'make && make install && make distclean'
-          sudo bash --noprofile --norc -c 'make install'
-          sudo bash --noprofile --norc -c 'make distclean'
+          sudo bash --noprofile --norc -c './configure --enable-readline && make && make install && make distclean'
+          sudo port selfupdate
         `
       );
       log('info', logStage, `${packageManager} is now installed`)
