@@ -730,15 +730,15 @@ softwareGroups:
     - *Virtualization-Desktop
     - *Web-Development-Desktop
   __base-basic-tmpl:
-    - *Basic
-    - *Basic-Desktop
-  __base-docker-tmpl:
-    - *Basic
-    - *Basic-Desktop
+    - *_Basic
+    - *_Basic-Desktop
+  __base-standard-tmpl:
+    - *_Basic
+    - *_Basic-Desktop
     - *Docker
   __base-full-tmpl:
-    - *Full
-    - *Full-Desktop
+    - *_Full
+    - *_Full-Desktop
   __anon-tmpl:
     - *Anon
   __crypto-tmpl:
