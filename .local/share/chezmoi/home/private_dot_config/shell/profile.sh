@@ -90,6 +90,11 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   #  . "$HOME/.local/scripts/fzf-git.bash"
   #fi
 
+  ### git-fuzzy
+  if [ -d "$HOME/.local/src/git-fuzzy/bin" ]; then
+    export PATH="$HOME/.local/src/git-fuzzy/bin:$PATH"
+  fi
+
   ### MOTD
   if [ -f "$XDG_CONFIG_HOME/shell/motd.sh" ]; then
     . "$XDG_CONFIG_HOME/shell/motd.sh"

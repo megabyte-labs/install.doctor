@@ -121,6 +121,14 @@
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
+### Git Fuzzy
+[".local/src/git-fuzzy"]
+    type = "git-repo"
+    url = "https://github.com/bigH/git-fuzzy.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
 ### Ansible Roles / Playbook
 [".local/src/gas-station"]
     type = "git-repo"
