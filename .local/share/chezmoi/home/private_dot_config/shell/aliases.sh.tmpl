@@ -69,6 +69,7 @@ fi
 
 alias xclip='xclip -selection c'
 command -v vim > /dev/null && alias vi='vim'
+command -v vim > /dev/null && alias v='vim'
 
 ### mitmproxy / mitmweb
 if command -v mitmproxy > /dev/null; then
@@ -210,9 +211,6 @@ else
     alias upgrade='sudo apt-get update && sudo apt-get upgrade'
   fi
 fi
-
-# Sets v as an alias for vim
-alias v='vim'
 
 # Recursively encrypts files using Ansible Vault
 alias vault-dir='find . -type f -printf "%h/\"%f\" " | xargs ansible-vault encrypt'

@@ -3,7 +3,7 @@
 {{- $vimPlugins := .softwarePlugins.vim.plugins }}
 {{- range $vimPlugin := $vimPlugins }}
 {{-   $folderName :=  trimSuffix ".git" (last (splitList "/" $vimPlugin)) }}
-[".config/vim/plugged/{{ $folderName }}"]
+[".vim/plugged/{{ $folderName }}"]
     type = "git-repo"
     url = "{{ $vimPlugin }}"
     refreshPeriod = "{{ $refreshPeriod }}"
