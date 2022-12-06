@@ -2118,15 +2118,11 @@ softwarePackages:
     _name: Google Assistant for Desktop
     _service: true
     _type: application
-    ansible: professormanhattan.googleassistant
+    ansible:windows: professormanhattan.googleassistant
+    cask: google-assistant
     github: github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client
     snap: g-assist
-  google-assistant:darwin:
-    _note: When google-assistant:darwin or google-assistant:linux-distro-id (e.g. google:assistant:ubuntu is present, it takes precedence over the regular google-assistant entry)
-    _when: '! test -d "/Applications/Google Assistant.app"'
-    ansible: professormanhattan.googleassistant
-  google-assistant:windows:
-    ansible: professormanhattan.googleassistant
+    winget: g-assist
   gcloud:
     _bin: null
     _desc: '[Google Cloud SDK](https://cloud.google.com/sdk) includes tools and libraries for interacting with Google Cloud products and services. With it, you can orchestrate virtual machine instances directly from your command line, manage Compute Engine networks/firewalls/disks, simulate Pub/Sub locally, and much more.'
@@ -5832,6 +5828,16 @@ softwarePackages:
     _name: null
     _service: null
     npm: stegcloak
+  stubby:
+    _bin: stubby
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: Stubby
+    _service: true
+    _post:brew:darwin: bash "$(brew --prefix stubby)/sbin/stubby-setdns-macos.sh" && brew services start stubby
+    brew:darwin: stubby
   supdock:
     _bin: null
     _desc: null
