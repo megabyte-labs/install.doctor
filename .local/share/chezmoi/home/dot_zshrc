@@ -250,6 +250,8 @@ if [ -f "$HOME/.local/scripts/antigen.zsh" ]; then
   source "$HOME/.local/scripts/antigen.zsh"
 fi
 if command -v antigen > /dev/null; then
+  # Fix for oh-my-zsh overriding exa aliases
+  export DISABLE_LS_COLORS=true
   antigen use oh-my-zsh
   # antigen bundle adb
   # antigen bundle colored-man-pages

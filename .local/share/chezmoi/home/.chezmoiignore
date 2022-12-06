@@ -13,6 +13,7 @@ Library
 {{- end }}
 
 {{- if ne .host.distro.family "linux" }}
+dot_VirtualBox
 dot_local/bin/executable_install-gnome-extensions
 dot_local/bin/executable_kde-wallpaper
 dot_Xresources

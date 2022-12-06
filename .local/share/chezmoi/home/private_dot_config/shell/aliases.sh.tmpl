@@ -42,6 +42,13 @@ if command -v gping > /dev/null; then
   alias ping='gping'
 fi
 
+# Make copy command verbose
+alias cp='cp -v'
+# Make mv command verbose
+alias mv='mv -v'
+# Make rm command verbose
+alias rm='rm -vi'
+
 ### mitmproxy / mitmweb
 if command -v mitmproxy > /dev/null; then
   alias mitmproxy="mitmproxy --set confdir=$XDG_CONFIG_HOME/mitmproxy"
@@ -74,11 +81,10 @@ alias banned='sudo zgrep "Ban" /var/log/fail2ban.log*'
 
 alias connections='nm-connection-editor'
 
-# Make copy command verbose
-alias cp='cp -v'
-
 # Command-line DNS utility
-alias dog="docker run -it --rm dog"
+if ! command -v dog > /dev/null; then
+  alias dog="docker run -it --rm dog"
+fi
 
 # Download a file
 alias download='curl --continue-at - --location --progress-bar --remote-name --remote-time'
@@ -113,9 +119,6 @@ alias mkdir='mkdir -pv'
 # Make mount command output readable
 alias mount='mount | column -t'
 
-# Make mv command verbose
-alias mv='mv -v'
-
 # Link pip to pip3
 if ! command -v pip > /dev/null; then
   alias pip='pip3'
@@ -140,9 +143,6 @@ alias rclone-gui='rclone rcd --rc-web-gui --rc-user=admin --rc-pass=pass --rc-se
 
 # Reboot the computer
 alias reboot='sudo /sbin/reboot'
-
-# Make rm command verbose
-alias rm='rm -vi'
 
 # Launch the Python Simple HTTP Server
 alias serve='python -m SimpleHTTPServer'
