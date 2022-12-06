@@ -875,13 +875,14 @@ async function ensurePackageManager(packageManager) {
         $`
           sudo mkdir -p /opt/mports
           cd /opt/mports
+          sudo rm -rf macports-base
           sudo git clone https://github.com/macports/macports-base.git
           cd macports-base
           sudo git checkout v2.8.0
-          ./configure --enable-readline
-          make
+          sudo ./configure --enable-readline
+          sudo make
           sudo make install
-          make distclean
+          sudo make distclean
         `
       );
       log('info', logStage, `${packageManager} is now installed`)

@@ -510,7 +510,7 @@ softwarePackages:
     choco: etcher
     yay: balena-etcher
   bandwhich:
-    _bin: null
+    _bin: bandwhich
     _desc: '[Bandwhich](https://github.com/imsnif/bandwhich) is a CLI utility for displaying current network utilization by process, connection and remote IP/hostname.'
     _docs: null
     _github: https://github.com/imsnif/bandwhich
@@ -612,6 +612,7 @@ softwarePackages:
     _name: BitWarden
     _service: null
     _type: application
+    _when:cask: '! test -d /Applications/Bitwarden.app'
     cask: bitwarden
     choco: bitwarden
     github: github.com/bitwarden/desktop
@@ -653,7 +654,7 @@ softwarePackages:
     github: github.com/tmrts/boilr
     go: github.com/tmrts/boilr@latest
   bottom:
-    _bin: null
+    _bin: bottom
     _desc: null
     _docs: null
     _github: null
@@ -678,7 +679,7 @@ softwarePackages:
     choco: brave
     snap: brave
   broot:
-    _bin: null
+    _bin: br
     _desc: '[broot](https://dystroy.org/broot/) offers a new way to see and navigate directory trees.'
     _docs: https://dystroy.org/broot/documentation/usage/
     _github: https://github.com/Canop/broot
@@ -1384,7 +1385,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.dnsmasq
   docker:
-    _bin: null
+    _bin: docker
     _desc: '[Docker](https://www.docker.com/) is a set of platform-as-a-service products that use OS-level virtualization to deliver software in packages called containers. Containers are isolated from one another and bundle their own software, libraries and configuration files; they can communicate with each other through well-defined channels.'
     _docs: https://docs.docker.com/
     _github: https://github.com/docker/cli
@@ -1450,7 +1451,7 @@ softwarePackages:
     pkg: doctl
     snap: doctl
   dog:
-    _bin: null
+    _bin: dog
     _desc: A command-line DNS client
     _docs: null
     _github: https://github.com/ogham/dog
@@ -1531,7 +1532,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.droplets
   duf:
-    _bin: null
+    _bin: duf
     _desc: '[duf](https://github.com/muesli/duf) is a Disk Usage/Free Utility - a better ''df'' alternative. It displays a chart within your terminal that gives you an overview of hard-drive usage statistics.'
     _docs: null
     _github: https://github.com/muesli/duf
@@ -2167,7 +2168,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.gist
   git:
-    _bin: null
+    _bin: git
     _desc: null
     _docs: null
     _github: null
@@ -2442,6 +2443,7 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
+    _when:brew:darwin: '(! brew list coreutils | grep coreutils) || (! brew list findutils | grep findutils) || (! brew list gawk | grep gawk) || (! brew list gnu-getopt | grep gnu-getopt) || (! brew list gnu-indent | grep gnu-indent) || (! brew list gnu-tar | grep gnu-tar) || (! brew list gnu-sed | grep gnu-sed) || (! brew list gnutls | grep gnutls) || (! brew list grep | grep grep)'
     brew:darwin:
       - coreutils
       - findutils
@@ -2887,7 +2889,7 @@ softwarePackages:
     choco: hyper
     yay: hyper
   hyperfine:
-    _bin: null
+    _bin: hyperfine
     _desc: '[hyperfine](https://github.com/sharkdp/hyperfine) is a cross-platform command-line benchmarking tool that can be used to determine the performance of shell commands.'
     _docs: https://docs.rs/crate/hyperfine/1.2.0
     _github: https://github.com/sharkdp/hyperfine
@@ -3637,7 +3639,7 @@ softwarePackages:
     cask: masscode
     github: github.com/antonreshetov/massCode
   mc:
-    _bin: null
+    _bin: mc
     _desc: MinIO Client is a replacement for ls, cp, mkdir, diff and rsync commands for filesystems and object storage
     _docs: null
     _github: https://github.com/minio/mc
@@ -3654,7 +3656,7 @@ softwarePackages:
     brew: minio/stable/mc
     go: github.com/minio/mc@latest
   mcfly:
-    _bin: null
+    _bin: mcfly
     _desc: '[McFly](https://github.com/cantino/mcfly) replaces your default CTRL-r shell history search with an intelligent search engine that takes into account your working directory and the context of recently executed commands. McFly''s suggestions are prioritized in real time with a small neural network.'
     _docs: null
     _github: null
@@ -4005,7 +4007,7 @@ softwarePackages:
     _service: null
     npm: '@nestjs/cli'
   netcat:
-    _bin: null
+    _bin: netcat
     _desc: null
     _docs: null
     _github: null
@@ -4074,7 +4076,7 @@ softwarePackages:
     _service: null
     pipx: ngxtop
   nmap:
-    _bin: null
+    _bin: nmap
     _desc: >-
       [Nmap](https://github.com/nmap/nmap) (short for Network Mapper) is a free and open source utility for network discovery and security auditing. Many systems and network administrators also find it useful for tasks such as network inventory, managing service upgrade schedules, and monitoring host or service uptime. Nmap uses raw IP packets in novel ways to determine what hosts are available on the network, what services those hosts are offering, what operating systems they are running, what
       type of packet filters/firewalls are in use, and dozens of other characteristics. It was designed to rapidly scan large networks, but works fine against single hosts. Nmap runs on all major operating systems.
@@ -4085,7 +4087,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.nmap
   nnn:
-    _bin: null
+    _bin: nnn
     _desc: A full-featured terminal file manager
     _docs: null
     _github: https://github.com/jarun/nnn
@@ -4374,7 +4376,7 @@ softwarePackages:
     _when: '! test -d "/Applications/Parallels Desktop.app"'
     ansible: professormanhattan.parallels
   pass:
-    _bin: null
+    _bin: pass
     _desc: Password manager
     _docs: null
     _github: https://www.passwordstore.org/
@@ -4627,7 +4629,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.prepare
   prettier:
-    _bin: null
+    _bin: prettier
     _desc: null
     _docs: null
     _github: null
@@ -4647,7 +4649,7 @@ softwarePackages:
     _type: menubar
     github: github.com/amiechen/pretzel
   procs:
-    _bin: null
+    _bin: procs
     _desc: A modern replacement for ps written in Rust
     _docs: null
     _github: https://github.com/dalance/procs
@@ -4845,6 +4847,7 @@ softwarePackages:
     _home: https://www.raspberrypi.com/software/
     _name: Raspberry Pi Imager
     _service: false
+    _when:cask: '! test -d "/Applications/Raspberry Pi Imager.app"'
     ansible: professormanhattan.raspberryimager
     cask: raspberry-pi-imager
     choco: rpi-imager
@@ -4897,7 +4900,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.reboot
   recoverpy:
-    _bin: null
+    _bin: recoverpy
     _desc: '[RecoverPy](https://eugeny.github.io/recoverpy/) is a highly configurable terminal emulator, SSH and serial client for Windows, macOS and Linux.'
     _docs: null
     _github: null
@@ -5165,7 +5168,7 @@ softwarePackages:
     _type: application
     github: github.com/Tomotoes/scrcpy-gui
   sd:
-    _bin: null
+    _bin: sd
     _desc: Intuitive find & replace CLI (sed alternative)
     _docs: null
     _github: https://github.com/chmln/sd
@@ -5207,6 +5210,7 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
+    _when:cask: '! test -d /Applications/Secretive.app'
     cask: secretive
   security:
     _bin: null
@@ -5465,7 +5469,7 @@ softwarePackages:
     _service: null
     cask: sloth
   snapd:
-    _bin: null
+    _bin: snap
     _desc: '[Snap](https://snapcraft.io/) is a software packaging and deployment system developed by Canonical for operating systems that use the Linux kernel. The packages, called snaps, and the tool for using them, snapd, work across a range of Linux distributions and allow upstream software developers to distribute their applications directly to users. Snaps are self-contained applications running in a sandbox with mediated access to the host system.'
     _docs: null
     _github: null
@@ -6021,7 +6025,7 @@ softwarePackages:
     brew: tldr
     npm: tldr
   tmux:
-    _bin: null
+    _bin: tmux
     _desc: '[Tmux](https://github.com/tmux/tmux/wiki) is a terminal multiplexer. It enables a number of terminals to be created, accessed, and controlled from a single screen. Tmux may be detached from a screen and continue running in the background, then later reattached.'
     _docs: null
     _github: null
@@ -6053,7 +6057,7 @@ softwarePackages:
     pkg: tokei
     scoop: tokei
   tor:
-    _bin: null
+    _bin: toron
     _desc: '[Tor](https://www.torproject.org/) is free and open-source software for enabling anonymous communication by directing Internet traffic through a free, worldwide, volunteer overlay network consisting of more than seven thousand relays in order to conceal a user''s location and usage from anyone conducting network surveillance or traffic analysis. On Linux you can combine Tor with [Privoxy](https://www.privoxy.org/) which allows you to tunnel all of your traffic through the Tor network.'
     _docs: https://tb-manual.torproject.org/
     _github: https://github.com/TheTorProject
@@ -6073,7 +6077,7 @@ softwarePackages:
     github: github.com/rinetd/transfer
     go: github.com/rinetd/transfer@latest
   translate:
-    _bin: null
+    _bin: trans
     _desc: '[Translate Shell](https://github.com/soimort/translate-shell) (formerly Google Translate CLI) is a command-line translator powered by Google Translate (default), Bing Translator, Yandex.Translate, and Apertium. It gives you easy access to these translation engines in your terminal. It is feature-rich and, although there is some overlap, it complements [Normit](https://gitlab.com/megabyte-labs/ansible-roles/normit) well.'
     _docs: null
     _github: null
@@ -6082,7 +6086,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.translate
   tree:
-    _bin: null
+    _bin: tree
     _desc: '[tree-cli](https://github.com/MrRaindrop/tree-cli) is a recursive directory listing program that produces a depth indented listing of files. With no arguments, tree lists the files in the current directory. When directory arguments are given, tree lists all the files and/or directories found in the given directories each in turn. Upon completion of listing all files/directories found, tree returns the total number of files and/or directories listed.'
     _docs: null
     _github: null
@@ -6323,9 +6327,10 @@ softwarePackages:
     _home: https://www.vmware.com/
     _name: VMWare
     _service: null
+    _when:darwin: '! test -d "/Applications/VMware Fusion.app"'
     ansible: professormanhattan.vmware
   volta:
-    _bin: null
+    _bin: volta
     _desc: '[Volta](https://volta.sh/) is a hassle-free Javascript Tool Manager. It is a fast, reliable and universal tool manager. It supports multiple package managers and provides extensibility hooks for site-specific customization.'
     _docs: https://docs.volta.sh/
     _github: https://github.com/volta-cli/volta
@@ -6393,6 +6398,7 @@ softwarePackages:
     _home: null
     _name: Cloudflare WARP Client
     _service: null
+    _when:darwin: '! test -d "/Applications/Cloudflare WARP.app"'
     ansible: professormanhattan.warp
   watchexec:
     _bin: watchexec
@@ -6415,7 +6421,7 @@ softwarePackages:
     scoop: watchexec
     xbps: watchexec
   watchman:
-    _bin: null
+    _bin: watchman
     _desc: '[Watchman](https://github.com/facebook/watchman), an open-source Facebook product, can be used to watch files and record when they change. It can also trigger actions when matching files change.'
     _docs: null
     _github: null
@@ -6727,7 +6733,7 @@ softwarePackages:
     pipx: youtube-dl
     port: youtube-dl
   yq:
-    _bin: null
+    _bin: yq
     _desc: '[yq](https://github.com/mikefarah/yq) is a free, open-source command-line YAML processor. It aims to be like [jq](https://gitlab.com/megabyte-labs/ansible-roles/jq) except for YAML files. It can read and write values to YAML files.'
     _docs: https://mikefarah.gitbook.io/yq/how-it-works
     _github: https://github.com/mikefarah/yq
@@ -6824,7 +6830,7 @@ softwarePackages:
     ansible: professormanhattan.zoxide
     brew: zoxide
   zsh:
-    _bin: null
+    _bin: zsh
     _desc: '[Oh My Zsh](https://ohmyz.sh/) is a delightful, open source, community-driven framework for managing your Zsh configurations. It comes bundled with thousands of helpful functions, helpers, plugins, themes, and a few things that make you shout oh my zsh! This role also installs some CLI tools that accompany Oh My Zsh! to make it even more amazing.'
     _docs: null
     _github: null
