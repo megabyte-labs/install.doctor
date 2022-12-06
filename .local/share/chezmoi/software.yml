@@ -901,6 +901,26 @@ softwarePackages:
     _type: cli
     brew: clair
     github: github.com/quay/clair
+  clamav:
+    _bin: null
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: ClamAV
+    _post: freshclam
+    _service: true
+    _systemd: clamav-freshclam
+    _systemd:dnf: clamd-freshclam
+    _type: cli
+    apt:
+      - clamav
+      - clamdscan
+    brew: clamav
+    dnf:
+      - clamav
+      - clamav-update
+    pacman: clamav
   clocker:
     _when: '! test -d /Applications/Clocker.app'
     _bin: null
@@ -1144,7 +1164,16 @@ softwarePackages:
     _home: null
     _name: CUPS
     _service: null
+    _systemd: smbd
     ansible: professormanhattan.cups
+    apt:
+      - avahi-daemon
+      - cups
+    brew: cups
+    dnf: cups
+    pacman:
+      - avahi-daemon
+      - cups
   curator:
     _bin: null
     _desc: Elasticsearch Curator helps you curate, or manage, your Elasticsearch indices and snapshots
@@ -3680,6 +3709,16 @@ softwarePackages:
     _name: mackup
     _service: null
     ansible: professormanhattan.mackup
+  malwarebytes:
+    _bin: null
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: Malwarebytes
+    _service: true
+    cask: malwarebytes
+    choco: malwarebytes
   mailspring:
     _bin: null
     _desc: '[Mailspring](https://getmailspring.com/) comes packed with powerful features like Unified Inbox, Snooze, Send Later, Mail Rules, Templates and more. Mailspring Pro, which you can unlock with a monthly subscription, adds even more features for people who send a ton of email: link tracking, read receipts, mailbox analytics, contact and company profiles. All of these features run in the client - Mailspring does not send your email credentials to the cloud.'
@@ -5136,6 +5175,24 @@ softwarePackages:
     choco: ripgrep-all
     nix: ripgrep-all
     pacman: ripgrep-all
+  rkhunter:
+    _bin: rkhunter
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: rkhunter
+    _post: rkhunter --propupd && rkhunter --update
+    _service: true
+    _systemd:pacman: cronie
+    _type: cli
+    apt: rkhunter
+    brew: rkhunter
+    dnf: rkhunter
+    pacman:
+      - cronie
+      - rkhunter
+      - s-nail
   rm-improved:
     _bin: rip
     _desc: A safe and ergonomic alternative to rm
