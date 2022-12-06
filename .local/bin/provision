@@ -249,7 +249,7 @@ fi
 
 ### System package manager update / Homebrew dependencies
 if ! command -v curl > /dev/null || ! command -v git > /dev/null; then
-  logg 'Ensuring `curl` and `git` are installed via the system package manager'
+  logg info 'Ensuring `curl` and `git` are installed via the system package manager'
   if command -v apt-get > /dev/null; then
     # Debian / Ubuntu
     sudo apt-get update
@@ -392,7 +392,7 @@ if [ ! -f "$HOME/.config/chezmoi/chezmoi.yaml" ]; then
   if command -v gum > /dev/null; then
     if [ -z "$SOFTWARE_GROUP" ]; then
       logg prompt 'Select the software group you would like to install. If your environment is a macOS, Windows, or environment with the DISPLAY environment variable then desktop software will be installed too. The software groups are in the ~/.local/share/chezmoi/home/.chezmoidata.yaml file.'
-      SOFTWARE_GROUP="$(gum choose "Basic" "Standard" "Development" "Experimental")"
+      SOFTWARE_GROUP="$(gum choose "Basic" "Standard" "Full")"
     fi
   fi
 
