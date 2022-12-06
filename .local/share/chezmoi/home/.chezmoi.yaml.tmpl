@@ -180,6 +180,7 @@ data:
       id: "{{ get .chezmoi.osRelease "id" | default .chezmoi.os }}"
     home: "{{ .chezmoi.homeDir }}"
     homeParentFolder: "{{ if eq .chezmoi.os "linux" }}/home{{ else if eq .chezmoi.os "darwin" }}/Users{{ else }}C:\Users{{ end }}"
+    hostname: "Betelgeuse"
     qubes: {{ ne (stat (joinPath "usr" "bin" "qubes-session")) false }}
     softwareGroup: "{{ $softwareGroup }}"
     type: "{{ $chassisType }}"
