@@ -41,6 +41,12 @@
     type = "file"
     url = "https://gitlab.com/megabyte-labs/gas-station/-/raw/master/environments/prod/group_vars/all/helm.yml"
     refreshPeriod = "{{ $refreshPeriod }}"
+[".local/bash_it"]
+    type = "git-repo"
+    url = "https://github.com/Bash-it/bash-it.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 [".config/shell/lscolors.sh"]
     type = "file"
     url = "https://raw.githubusercontent.com/trapd00r/LS_COLORS/master/lscolors.sh"
