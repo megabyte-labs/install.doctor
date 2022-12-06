@@ -543,7 +543,7 @@ async function beforeInstall(packageManager) {
     );
     await $`echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR ANSIBLE INSTALL" | sudo tee -a`;
     log('info', logStage, 'Running Ansible setup task so facts are cached')
-    await $`ansible localhost -e ansible_user=${process.env.USER} -m setup`;
+    await $`ansible 127.0.0.1 -e '{ ansible_connection: "local", ansible_user: "${process.env.USER}", install_homebrew: False }' -m setup`;
   } else if (packageManager === "apk") {
     await $`sudo apk update`;
   } else if (packageManager === "apt") {
@@ -988,7 +988,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === "ansible") {
       for (let pkg of packages) {
         try {
-          await $`ansible localhost -vvvvv -m include_role -a name=${pkg} -e ansible_user=${process.env.USER} -e include_homebrew_install=false`;
+          await $`ansible 127.0.0.1 -e '{ ansible_connection: "local", ansible_user: "${process.env.USER}", install_homebrew: False }' -m include_role -a name=${pkg}`;
         } catch (e) {
           log(
             "error",
