@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if command -v task > /dev/null; then
+  if [ -f Taskfile.yml ]; then
+    task $@
+  else
+    task --taskfile "$HOME/.local/src/shared-common/common/Taskfile.yml" $@
+  fi
+else
+  echo 'task is not installed.' && exit 1
+fi
