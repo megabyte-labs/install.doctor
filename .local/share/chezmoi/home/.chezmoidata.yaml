@@ -745,7 +745,6 @@ softwareGroups:
     - *_Basic-Desktop
     - *Docker
   __base-full-tmpl:
-    - *_Full
     - *_Full-Desktop
   __anon-tmpl:
     - *Anon
@@ -753,7 +752,7 @@ softwareGroups:
     - *Crypto
     - *Crypto-Desktop
   __dev-tmpl:
-    - *Full-Desktop
+    - *_Full-Desktop
   __gpg-tmpl: []
   __kubernetes-tmpl:
     - *Kubernetes
