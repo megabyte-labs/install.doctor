@@ -887,10 +887,9 @@ async function ensurePackageManager(packageManager) {
           cd macports-base
           sudo git checkout v2.8.0
           sudo ./configure --enable-readline
-          # * asciidoc, xsltproc (port libxslt) and docbook-xsl-nons are required to generate man pages from source.
           sudo make
-          make install
-          make distclean
+          sudo make install
+          sudo make distclean
         `
       );
       log('info', logStage, `${packageManager} is now installed`)
