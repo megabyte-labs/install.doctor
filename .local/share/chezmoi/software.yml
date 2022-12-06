@@ -2908,7 +2908,7 @@ softwarePackages:
     _type: cli
     github: github.com/mattolenik/hclq
     go: github.com/mattolenik/hclq@latest
-  heroku:
+  heroku-cli:
     _bin: null
     _desc: '[Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) lets you create and manage Heroku apps directly from the terminal. It’s an essential part of using Heroku.'
     _docs: null
@@ -2917,6 +2917,11 @@ softwarePackages:
     _name: heroku
     _service: null
     ansible: professormanhattan.heroku
+    brew: heroku/brew/heroku
+    choco: heroku-cli
+    npm: heroku
+    scoop: heroku-cli
+    yay: heroku-cli
   hexyl:
     _bin: null
     _desc: '[hexyl](https://github.com/sharkdp/hexyl) is a simple hex viewer for the terminal. It uses a colored output to distinguish different categories of bytes (NULL bytes, printable ASCII characters, ASCII whitespace characters, other ASCII characters and non-ASCII).'
@@ -5785,7 +5790,7 @@ softwarePackages:
     cask: slack
     choco: slack
     snap: slack
-  slackterm:
+  slack-term:
     _bin: null
     _desc: '[slack-term](https://github.com/erroneousboat/slack-term) features a colorful interface as well as keyboard shortcuts. It is one of, if not the, most well-received [Slack](https://slack.com/) client available on GitHub.'
     _docs: null
@@ -5794,6 +5799,7 @@ softwarePackages:
     _name: slack-term
     _service: null
     ansible: professormanhattan.slackterm
+    go: github.com/erroneousboat/slack-term@latest
   sloth:
     _bin: null
     _desc: Mac app that shows all open files, directories, sockets, pipes and devices in use by all running processes. Nice GUI for lsof.
@@ -7048,6 +7054,17 @@ softwarePackages:
     _name: yank
     _service: null
     ansible: professormanhattan.yank
+    apt: yank
+    brew: yank
+    choco: win32yank
+    dnf: yank
+    nix: yank
+    pacman: yank
+    pkg-freebsd: yank
+    pkg-openbsd: yank
+    port: yank
+    scoop: win32yank
+    zypper: yank
   yarn:
     _bin: null
     _desc: '[Yarn](https://yarnpkg.com/) is a relatively new and open source JavaScript package manager developed by Facebook. Yarn is fully compatible with the npm registry (i.e. [npmjs.com](https://www.npmjs.com/)) and can work alongside npm, but it''s aim it to be a safer, more secure and more reliable alternative.'
