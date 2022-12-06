@@ -1041,7 +1041,10 @@ softwarePackages:
     _home: https://cointop.sh/
     _name: Cointop
     _service: null
-    ansible: professormanhattan.cointop
+    ansible:darwin: professormanhattan.cointop
+    ansible:linux: professormanhattan.cointop
+    brew: cointop
+    port: cointop
   commitizen:
     _bin: cz
     _desc: null
@@ -2276,14 +2279,20 @@ softwarePackages:
     _service: null
     npm: google-font-installer
   gh:
-    _bin: null
+    _bin: gh
     _desc: '[gh](https://cli.github.com/) is GitHub on the command line. It brings pull requests, issues, and other GitHub concepts to the terminal next to where you are already working with git and your code.'
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://cli.github.com/manual/
+    _github: https://github.com/cli/cli
+    _home: https://cli.github.com/
     _name: Github CLI
-    _service: null
+    _service: false
     ansible: professormanhattan.gh
+    apt: gh
+    brew: gh
+    choco: gh
+    port: gh
+    scoop: gh
+    winget: GitHub.cli
   ghorg:
     _bin: null
     _desc: '[ghorg](https://github.com/gabrie30/ghorg) allows you to quickly clone all of an org''s, or user''s repositories into a single directory.'
@@ -2618,6 +2627,8 @@ softwarePackages:
     _name: GlusterFS
     _service: null
     ansible: professormanhattan.glusterfs
+    dnf: glusterfs-server
+    pacman: glusterfs
   gnu:
     _bin: null
     _desc: null
@@ -2960,6 +2971,8 @@ softwarePackages:
     _name: Himalaya
     _service: null
     ansible: professormanhattan.himalaya
+    brew: himalaya
+    scoop: himalaya
   homebrew:
     _bin: null
     _desc: '[Homebrew](https://brew.sh/) is a free and open-source software package management system that simplifies the installation of software on Apple''s operating system macOS as well as Linux. The name is intended to suggest the idea of building software on the Mac depending on the user''s taste.'
@@ -3365,7 +3378,11 @@ softwarePackages:
     _home: null
     _name: Juju
     _service: null
+    _snapClassic: true
     ansible: professormanhattan.juju
+    brew: juju
+    choco: juju
+    snap: juju
   kdash:
     _bin: null
     _desc: A simple and fast dashboard for Kubernetes
@@ -6073,6 +6090,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.swarm
   switchhosts:
+    _appimageName: SwitchHosts.AppImage
     _bin: null
     _desc: '[SwitchHosts](https://github.com/oldj/SwitchHosts) is an application for managing the etc hosts file. It allows you to easily switch between different etc hosts file configurations.'
     _docs: null
@@ -6082,7 +6100,11 @@ softwarePackages:
     _service: null
     _type: application
     ansible: professormanhattan.switchhosts
+    appimage: https://github.com/oldj/SwitchHosts/releases/download/v4.1.2/SwitchHosts_linux_x86_64_4.1.2.6086.AppImage
+    cask: switchhosts
+    choco: switchhosts
     github: github.com/oldj/SwitchHosts
+    scoop: switchhosts
   sync-ssh-keys:
     _bin: null
     _desc: Sync public ssh keys to ~/.ssh/authorized_keys, based on Github/Gitlab organization membership
