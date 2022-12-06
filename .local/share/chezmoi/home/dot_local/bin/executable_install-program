@@ -543,7 +543,7 @@ async function beforeInstall(packageManager) {
     );
     await $`echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR ANSIBLE INSTALL" | sudo tee -a`;
     log('info', logStage, 'Running Ansible setup task so facts are cached')
-    await $`ansible localhost -m setup -e ansible_user=${process.env.USER}`;
+    await $`ansible localhost -e ansible_user=${process.env.USER} -m setup`;
   } else if (packageManager === "apk") {
     await $`sudo apk update`;
   } else if (packageManager === "apt") {

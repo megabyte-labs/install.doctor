@@ -2,14 +2,38 @@
 
 {{ if eq .chezmoi.os "darwin" }}
 ### macOS Polyfills
-# Conflicts with Mac Port installation
-# if command -v brew > /dev/null; then
-#   PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
-#   PATH="$(brew --prefix)/opt/gnu-indent/libexec/gnubin:$PATH"
-#   PATH="$(brew --prefix)/opt/gnu-sed/libexec/gnubin:$PATH"
-# fi
+# Note: May cause conflicts
+if command -v brew > /dev/null; then
+  PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
+  PATH="$(brew --prefix)/opt/gnu-indent/libexec/gnubin:$PATH"
+  PATH="$(brew --prefix)/opt/gnu-sed/libexec/gnubin:$PATH"
+fi
 
 {{- end }}
+# Basic command aliases for verbosity / simplicity
+alias cp='cp -v'
+alias ln='ln -sriv'
+alias mv='mv -vi'
+alias rm='rm -vi'
+
+### Colorize
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias diff='diff --color=auto'
+alias ip='ip --color=auto'
+alias pacman='pacman --color=auto'
+
+### TOP - order based on preference of "top" application (last item will always be chosen if installed, e.g. glances)
+command -v htop > /dev/null && alias top='htop'
+command -v gotop > /dev/null && alias top='gotop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
+command -v ytop > /dev/null && alias top='ytop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
+command -v btm > /dev/null && alias top='btm $([ "$COLOR_SCHEME" = "light" ] && echo "--color default-light")'
+# themes for light/dark color-schemes inside ~/.config/bashtop; Press ESC to open the menu and change the theme
+command -v bashtop > /dev/null && alias top='bashtop'
+command -v bpytop > /dev/null && alias top='bpytop'
+command -v glances > /dev/null && alias top='glances'
+
 ### bat
 if command -v bat > /dev/null; then
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
@@ -43,12 +67,8 @@ if command -v gping > /dev/null; then
   alias ping='gping'
 fi
 
-# Make copy command verbose
-alias cp='cp -v'
-# Make mv command verbose
-alias mv='mv -v'
-# Make rm command verbose
-alias rm='rm -vi'
+alias xclip='xclip -selection c'
+command -v vim > /dev/null && alias vi='vim'
 
 ### mitmproxy / mitmweb
 if command -v mitmproxy > /dev/null; then
@@ -60,7 +80,7 @@ fi
 
 ### ripgrep
 if command -v rg &> /dev/null; then
-  alias grep='rg'
+  alias grep='rg --color=auto'
 fi
 
 ### supdock
@@ -182,7 +202,14 @@ alias unban='sudo fail2ban-client set sshd unbanip'
 alias unvault-dir='find . -type f -printf "%h/\"%f\" " | xargs ansible-vault decrypt'
 
 # Alias for updating software
-alias update='sudo apt-get update && sudo apt-get upgrade'
+if command -v sysget > /dev/null; then
+  alias upgrade='sudo sysget update && sudo sysget upgrade'
+else
+  # TODO - Add other package managers
+  if command -v apt-get > /dev/null; then
+    alias upgrade='sudo apt-get update && sudo apt-get upgrade'
+  fi
+fi
 
 # Sets v as an alias for vim
 alias v='vim'
