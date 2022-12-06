@@ -24,48 +24,14 @@ fonts:
   main: Montserrat Bold
 softwareGroups:
   Basic: &basic
-    - aria2
-    - bash-completion
-    - bat
-    - bitwarden-cli
-    - chezmoi
-    - curl
-    - curlie
-    - delta
-    - direnv
-    - docker
-    - elasticagent
-    - empty-trash
-    - exa
-    - fd
-    - ffsend
-    - fkill
-    - fzf
-    - glances
-    - glow
-    - gping
-    - gtop
-    - gum
-    - m-cli
-    - mas
-    - neovim
-    - node
-    - oh-my-posh
-    - skate
-    - speed-test
-    - task
-    - vim
-    - wget
-    - whalebrew
-    - wifi-password
-    - zoxide
-    - zx
+    - *CLI
   Basic-Desktop: &basicDesktop
     - *basic
     - brave-browser
     - firefox
     - fonts
     - tabby
+    - vlc
     - vscode
   Network-Enabled:
     - cloudflared
@@ -457,7 +423,6 @@ softwareGroups:
     - q
     - sftpgo
     - skm
-    - social-analyzer
     - solidity
     - teleport
     - teller
@@ -475,21 +440,28 @@ softwareGroups:
     - mullvad-vpn
     - powershell
   Android: &Android
+    - scrcpy
   Android-Desktop: &Android-Desktop
     - *Android
-    - android-studio
+    - android-
+    - scrcpy-gui
   Ansible: &Ansible
     - ansible
     - ansible-lint
     - ansibleconnect
     - awxcli
     - molecule
-  Backup:
+    - winrm-cli
+  Backup: &Backup
     - autorestic
     - ghorg
-  Basicz:
-    - curl
-  Browsers:
+    - restic
+    - sanoid
+  Backup-Desktop: &Backup-Desktop
+    - timeshift
+  Browsers: &Browsers
+    - w3m
+  Browsers-Desktop: &Browsers-Desktop
     - brave-browser
     - google-chrome
     - chrome-cli
@@ -502,7 +474,7 @@ softwareGroups:
     - fpm
     - gitlab-runner
     - glen
-  CLI:
+  CLI: &CLI
     - bash-completion
     - bandwhich
     - bat
@@ -510,6 +482,7 @@ softwareGroups:
     - broot
     - cheat
     - chezmoi
+    - curl
     - curlie
     - delta
     - direnv
@@ -539,10 +512,33 @@ softwareGroups:
     - oh-my-posh
     - pass
     - procs
-  CLI-Extras:
+    - prettier
+    - recoverpy
+    - ripgrep
+    - ripgrep-all
+    - rm-improved
+    - rsync
+    - sd
+    - snapd
+    - task
+    - tmux
+    - tor
+    - translate
+    - tree
+    - vim
+    - volta
+    - watchexec # file watcher
+    - watchman # file watcher
+    - wget
+    - whalebrew
+    - wifi-password
+    - yq
+    - zoxide
+    - zsh
+    - zx
+  CLI-Extras: &CLI-Extras
     - bin
     - bitly
-    - cointop
     - desed
     - emoj
     - fig
@@ -566,7 +562,15 @@ softwareGroups:
     - peco
     - pgcli
     - pywhat
-  Cloud:
+    - slackterm
+    - social-analyzer
+    - speed-test
+    - statcode
+    - stegcloak
+    - tldr
+    - up
+    - yank
+  Cloud: &Cloud
     - awscli
     - azure-cli
     - azurefunctions
@@ -583,18 +587,22 @@ softwareGroups:
     - lexicon
     - logcli
     - psu
-  Cloud-Storage:
+    - rancher-cli
+  Cloud-Storage: &Cloud-Storage
     - gdrive
     - gphotos-sync
-  Crypto:
-  Crypto-Desktop:
+    - rclone
+    - s5cmd
+  Crypto: &Crypto
+    - cointop
+  Crypto-Desktop: &Crypto-Desktop
     - *Crypto
     - keybase
     - ledger-live
     - monero
     # - onionshare
     - onlykey
-  Data:
+  Data-Manipulation: &Data-Manipulation
     - dasel
     - fq
     - fselect
@@ -608,20 +616,75 @@ softwareGroups:
     - osquery
     - pup
     - q
-  E-mail:
+    - ramda
+    - schema
+    - transfer
+    - xurls
+    - yj
+    - yq
+  E-mail: &E-mail
     - himalaya
-  E-mail-Desktop:
+  E-mail-Desktop: &E-mail-Desktop
     - mailspring
     - protonmail-bridge
-  Desktop:
+  Database: &Database
+    - sqlite
+  Database-Desktop: &Database-Desktop
+    - sqlectron
+  Misc-Desktop: &Desktop
     - cerebro
     - clocker
     - cumulus
-    - jitsi-meet
     - pretzel
-  Development-Tools:
+    - qlplugins
+    - remote-desktop
+    - rofi
+    - secretive
+    - stats
+    - temps
+    - teamviewer
+  Essentials-Desktop: &Desktop-Essential
+    - tabby
+    - vscode
+  Ansible-Roles:
+    - ssh
+    - swarm
+    - vpn
+    - wsl
+    - yubikey
+    - antivirus
+    - common
+    - connect
+    - debloat
+    - defaultbrowser
+    - desktop
+    - disks
+    - dns
+    - dnsmasq
+    - easyengine
+    - environment
+    - extensions
+    - finish
+    - firewall
+    - fuse
+    - guacamole
+    - hosthomepage
+    - hosts
+    - motd
+    - pfsense
+    - pihole
+    - pip
+    - prepare
+    - security
+    - ssh
+    - swarm
+    - maas
+  Social-Networking: &Social-Networking
+    - social-analyzer
+    - t
+  Misc-Development-Tools: &Misc-Development-Tools
     - aqua
-    - asdf
+    # - asdf # Handled by dotfiles
     # - astronvim
     - automake
     - bundler
@@ -636,15 +699,32 @@ softwareGroups:
     - java
     - libimobiledevice
     - php
+    - ruby
+    - rust
+    - sdkman
+    - solidity
+    - upx
+    - windows-adk
+    - windows-admin-center
+    - windows-power-toys
+  Shell-Scripting: &Shell-Scripting
+    - shc
+    - shdoc
+    - shellcheck
+    - shfmt
   Development-Tools-Desktop: &Development-Tools-Desktop
     - intellij-idea-ce
     - iterm2
     - lepton # snippet manager
     - masscode # snippet manager
     - powershell
-  DNS:
+    - redis-desktop-manager
+    - visual-studio
+    - xcode
+  DNS: &DNS
     - hostctl
-  Docker:
+    - switchhosts
+  Docker: &Docker
     - bane
     - clair
     - container-structure-test
@@ -655,9 +735,13 @@ softwareGroups:
     - dockle
     - grype
     - gvisor
-  Finance:
+    - supdock
+    - trivy
+    - trufflehog
+    - whaler
+  Finance: &Finance
     - infracost
-  Finance-Desktop:
+  Finance-Desktop: &Finance-Desktop
     - manta
   Git: &Git
     - commitizen
@@ -678,12 +762,20 @@ softwareGroups:
     - hub
     - lazygit
     - mergestat
-  Git-Desktop:
+    - starred
+    - tig
+  Communication-Desktop: &Communication-Desktop
+    - microsoft-teams
+    - jitsi-meet
+    - skype
+    - slack
+    - zoom
+  Git-Desktop: &Git-Desktop
     - *Git
     - gitdock
     - gitify
     - gitkraken
-  Go:
+  Go: &Go
     - delve
     - go
     - go-outline
@@ -692,9 +784,11 @@ softwareGroups:
     - gopls
     - gotests
     - impl
-  Home:
+    - staticcheck
+    - wails
+  Home: &Home
     - go-chromecast
-  Linting:
+  Linting: &Linting
     - ansible-lint
     - dotenv-linter
     - dprint
@@ -703,18 +797,26 @@ softwareGroups:
     - golangci-lint
     - hadolint
     - pre-commit
-  Logging:
+    - shellcheck
+    - shfmt
+    - tflint
+    - tokei
+    - yamllint
+  Logging: &Logging
     - fuego
     - papertrail
-  NGINX:
+    - sentry-cli
+  NGINX: &NGINX
     - certbot
     - cfssl
     - gixy
     - mkcert
     - nginx
     - ngxtop
-  Package-Management:
+  Package-Management: &Package-Management
     - homebrew
+    - whalebrew
+    - zap
   Testing: &Testing
     - allure
     - appium
@@ -733,49 +835,76 @@ softwareGroups:
     - kubeval
     - linkerd2
     - minikube
+    - tilt
     - velero
   Kubernetes-Desktop: &Kubernetes-Desktop
     - *Kubernetes
     - lens
-  Media:
-    - balenaetcher
+  Media: &Media
     - beets
     - editly
     - exiftool
     - ffmpeg
     - imagemagick
-  Media-Desktop:
+    - pandoc
+    - sharp
+    - spotdl
+    - svgo
+    - tinypng
+    - wkhtmltopdf
+    - youtube-dl
+  Media-Desktop: &Media-Desktop
+    - balenaetcher
     - gimp
     - inkscape
     - kodi
     - lollypop
     - nuclear
     - plex
-  Networking:
+    - raspberry-pi-imager
+    - shotcut
+    - shotwell
+    - vlc
+  Networking: &Networking
     - etcd
     - cloudflared
     - glusterfs
     - mole
     - nebula
     - ngrok
-  PHP:
+    - ssl-proxy
+    - tailscale
+    - warp
+  PHP: &PHP
     - composer
-  Productivity:
+    - php
+  Productivity-Desktop: &Productivity-Desktop
     - libreoffice
     - microsoft-office
     - microsoft-todo
-  Python:
+  Python: &Python
     - poetry
     - python
-  Recording:
+    - virtualenv
+  Recording: &Recording
     - asciinema
     - carbon-now
     - dframe
+    - t-rec
+  Ruby: &Ruby
+    - ruby
   Recording-Desktop: &Recording-Desktop
     - peek
+    - sharex
   Security: &Security
     - bitwarden-cli
     - pony
+    - skate
+    - ssh-vault
+    - teller
+    - vault
+    - ykman
+    - yubikey-manager
   Security-Desktop: &Security-Desktop
     - *Security
     - bitwarden
@@ -783,41 +912,71 @@ softwareGroups:
     - nordvpn
     - portmaster
     - protonvpn
-  Server:
+    - santa
+    - yubikey-authenticator
+    - yubikey-manager-qt
+  Server: &Server
     - cockpit
     - consul
     - cups
     - elastic-agent
     - netdata
-  Specialty:
-    - maas
-  SSH:
+    - samba
+    - sftpgo
+    - vector
+    - wazuh
+  SSH: &SSH
     - assh
-  Sys-Admin:
+    - skm
+    - ssh-vault
+    - sshpass
+    - ssh-tarpit
+    - sync-ssh-keys
+    - teleport
+  Sys-Admin: &Sys-Admin
     - ctop
     - gtop
     - htop
-  Templates:
+    - sysbench
+    - sysdig
+    - sysget # universal package-management
+    - upt # universal package-management
+    - winrm-cli
+    - wireshark-cli
+  Sys-Admin-Desktop: &Sys-Admin-Desktop
+    - quasar
+    - sloth
+    - snitch
+    - wireshark
+  Templates: &Templates
     - confd
     - cookiecutter
     - gomplate
-  Transfer:
+  Transfer: &Transfer
+    - aria2
     - croc
     - dat
     - ffsend
     - gdown
     - ots
-  Misc-Tools:
+    - share
+  Misc-Tools: &Misc-Tools
     - nomad
-    - pandoc
     - pm2
-  Transfer-Desktop:
+    - waypoint
+  Transfer-Desktop: &Transfer-Desktop
     - dat-desktop
     - filezilla
     - motrix
-  Utilities:
+    - qbittorrent
+    - webtorrent
+  Terraform: &Terraform
+    - terraform
+    - tfenv
+    - tflint
+  Utilities: &Utilities
     - nativefier
-  Virtualization: &
+  Virtualization: &Virtualization
     - kvm
     - linuxkit
     - lxdc
@@ -827,6 +986,7 @@ softwareGroups:
   Virtualization-Desktop: &Virtualization-Desktop
     - *Virtualization
     - parallels
+    - virtualbox
     - vmware
   Web-Development: &Web-Development
     - angular-cli
@@ -866,6 +1026,18 @@ softwareGroups:
     - playwright
     - pnpm
     - psi
+    - semantic-release
+    - serve
+    - serverless
+    - surge
+    - trellis
+    - ts2c
+    - websocat
+    - wordpressify
+    - wp-cli
+    - wrangler
+    - wrk
+    - yarn
   Web-Development-Desktop: &Web-Development-Desktop
     - *Web-Development
     - altair
@@ -875,11 +1047,14 @@ softwareGroups:
     - mockoon
     - mqttx
     - postman
+    - responsively
+    - runjs
   deprecated:
+    - apt-cacher-ng
     - bivac
     - boilr
     - captain
-    - consultemplate
+    - consul-template
     - diffsofancy
     - difftastic
     - emplace
@@ -894,10 +1069,14 @@ softwareGroups:
     - mackup
     - nvm
     - pyenv
+    - s3filesystem
+    - starship
     - raindrop
     - rear
+    - rvm
     - sad
     - supdock
+    - termius
     - transfer
     - ulauncher
     - upt

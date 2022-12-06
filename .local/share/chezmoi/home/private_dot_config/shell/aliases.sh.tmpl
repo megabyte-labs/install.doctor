@@ -55,6 +55,11 @@ if command -v rg &> /dev/null; then
   alias grep='rg'
 fi
 
+### supdock
+if command -v supdock > /dev/null; then
+  alias docker='supdock'
+fi
+
 # Fix for auto expansion (source: https://wiki.archlinux.org/title/Sudo#Passing_aliases)
 alias sudo='sudo '
 
