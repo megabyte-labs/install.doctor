@@ -308,4 +308,6 @@ fi
 ### WSL
 export LIBGL_ALWAYS_INDIRECT="1"
 export BROWSER='/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe'
+{{ else }}
+export BROWSER=google-chrome
 {{ end }}

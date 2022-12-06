@@ -12,9 +12,11 @@
 # Full example of a softwarePackage:
 # altair:
 #   _bin: ng                                          # Instead of checking if the object key (altair) is in the PATH, check if "ng" is in the PATH and only proceed if it is not available
-#   _deps:                                            # Any piece of data can be a string or array. _deps will take each dep and run that through the installer first
+#   _deps:                                            # Any piece of data can be a string or array. _deps will take each dep and run that through the installer first. If you need to just install dependencies with apt (for instance), you can also set the _deps equals to [altair:deps] and then define the apt dependencies like that instead of creating a new entry for each apt dependency.
 #     - angular-cli
 #   _docker: docker run --rm bannmann/docker-cheat    # Command that the _bin value should alias to (similar to Whalebrew)
+#   _groups:                                          # Groups that should be created / user added to
+#     - docker
 #   _when: |                                          # Run the script defined with _when and only proceed if it exits with a 0
 #     test -f /usr
 #   _pre: |
@@ -54,6 +56,7 @@
 #   snap: altair
 #   whalebrew:
 #   winget: Neovim.Neovim
+#   xbps: altair
 #   yay: altair
 #   zypper: altair
 # angular-cli:
@@ -332,6 +335,15 @@ softwarePackages:
     _name: Aria2/AriaNg
     _service: null
     ansible: professormanhattan.aria
+    apt: aria2
+    brew: aria2
+    choco: aria2
+    dnf: aria2
+    pacman: aria2
+    port: aria2
+    scoop: aria2
+  ariang:
+    cask: ariang
   asciinema:
     _bin: null
     _desc: null
@@ -573,6 +585,7 @@ softwarePackages:
     _name: Beets
     _service: null
     ansible: professormanhattan.beets
+    pipx: beets
   betwixt:
     _bin: null
     _desc: Web Debugging Proxy based on Chrome DevTools Network panel
@@ -1416,12 +1429,11 @@ softwarePackages:
     _name: Docker Slim
     _service: false
     _type: cli
-    ansible: professormanhattan.dockerslim
     brew: docker-slim
     dnf: golang-github-docker-slim
     github: github.com/docker-slim/docker-slim
     yay: docker-slim
-  dockerpushrm:
+  docker-pushrm:
     _bin: null
     _desc: '[docker-pushrm](https://github.com/christian-korneck/docker-pushrm) is a Docker CLI plugin that adds a new docker pushrm command to Docker. The command pushes the README file from the current working directory to a container registry server. When using it with DockerHub, you can programmatically upload your README so that it shows up on your containers landing page.'
     _docs: null
@@ -1643,8 +1655,41 @@ softwarePackages:
     _name: Empty Trash CLI
     _service: false
     npm: empty-trash-cli
+  envchain:
+    _deps:
+      - envchain:deps
+    _bin: envchain
+    _desc: Environment variables meet macOS Keychain and gnome-keyring
+    _docs: https://github.com/sorah/envchain#usage
+    _github: https://github.com/sorah/envchain
+    _home: https://github.com/sorah/envchain
+    _name: envconsul
+    _service: false
+    _type: cli
+    brew: envchain
+    github: github.com/sorah/envchain
+  envchain:deps:
+    apt:
+      - gnome-keyring
+      - gcc
+      - gnome-keyring
+      - libsecret-1-dev
+      - make
+      - libreadline-dev
+    dnf:
+      - gcc
+      - gnome-keyring
+      - libsecret-devel
+      - make
+      - readline-devel
+    pacman:
+      - gcc
+      - gnome-keyring
+      - libsecret
+      - make
+      - readline
   envconsul:
-    _bin: null
+    _bin: envconsul
     _desc: Launch a subprocess with environment variables using data from @hashicorp Consul and Vault
     _docs: null
     _github: https://github.com/hashicorp/envconsul
@@ -1652,6 +1697,8 @@ softwarePackages:
     _name: envconsul
     _service: null
     _type: cli
+    ansible: professormanhattan.envconsul
+    brew: envconsul
     github: github.com/hashicorp/envconsul
   environment:
     _bin: null
@@ -1801,6 +1848,7 @@ softwarePackages:
     _name: Fig
     _service: null
     ansible: professormanhattan.fig
+    cask: fig
   filebrowser:
     _bin: null
     _desc: '[File Browser](https://filebrowser.org/) is a tool that lets you browse and edit files on any mounting point in the operating system.'
@@ -1948,6 +1996,8 @@ softwarePackages:
       - homebrew/cask-fonts/font-meslo-lg-nerd-font
   fpm:
     _bin: null
+    _deps:
+      - fpm:deps
     _desc: '[fpm](https://github.com/jordansissel/fpm) (short for Effing package management) allows you to build packages for multiple platforms with great ease. The source of your package can be a gem, Python module, pear, directory, .tar.gz, rpm, deb, Node.js package, or pacman package. The target packages it supports are deb, rpm, solaris, freebsd, tar, directory, Mac OS X .pkg file, or pacman package.'
     _docs: null
     _github: null
@@ -1956,6 +2006,23 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.fpm
     gem: fpm
+  fpm:deps:
+    apt:
+      - build-essential
+      - ruby-dev
+      - rubygems
+    brew:
+      - gnu-tar
+    dnf:
+      - gcc
+      - libffi-devel
+      - make
+      - rpm-build
+      - ruby-devel
+      - rubygems
+    pacman:
+      - base-devel
+      - gcc
   fq:
     _bin: null
     _desc: jq for binary formats
@@ -1996,7 +2063,7 @@ softwarePackages:
     _type: cli
     github: github.com/sgarciac/fuego
     snap: fuego
-  fuse:
+  macfuse:
     _bin: null
     _desc: '[macFUSE](https://osxfuse.github.io/) allows you to extend macOS via third party file systems.'
     _docs: null
@@ -2005,6 +2072,7 @@ softwarePackages:
     _name: Fuse
     _service: null
     ansible: professormanhattan.fuse
+    cask: macfuse
   fx:
     _bin: fx
     _desc: A terminal JSON viewer.
@@ -2068,8 +2136,9 @@ softwarePackages:
     _name: Google Cloud SDK
     _service: false
     ansible: professormanhattan.googlecloudsdk
-    brew: google-cloud-sdk
+    cask: google-cloud-sdk
     choco: gcloudsdk
+    snap: google-cloud-sdk
     yay: google-cloud-sdk
   gdown:
     _bin: null
@@ -2146,7 +2215,9 @@ softwarePackages:
     _service: null
     _type: cli
     ansible: professormanhattan.ghorg
+    brew: gabrie30/utils/ghorg
     github: github.com/gabrie30/ghorg
+    go: github.com/gabrie30/ghorg@latest
     yay: ghorg
   gimp:
     _bin: null
@@ -2173,6 +2244,7 @@ softwarePackages:
     _name: gist
     _service: null
     ansible: professormanhattan.gist
+    gem: gist
   git:
     _bin: git
     _desc: null
@@ -2254,7 +2326,11 @@ softwarePackages:
     _home: null
     _name: git-extras
     _service: null
-    ansible: professormanhattan.gitextras
+    ansible:windows: professormanhattan.gitextras
+    apt: git-extras
+    brew: git-extras
+    dnf: git-extras
+    pacman: git-extras
   git-fuzzy:
     _bin: null
     _desc: '[git-fuzzy](https://github.com/bigH/git-fuzzy) is an interactive `git` that is built on the shoulders of [`fzf`](https://gitlab.com/megabyte-labs/ansible-roles/fzf).'
@@ -2406,7 +2482,28 @@ softwarePackages:
     _service: null
     _post:pipx: pipx inject glances glances[all]
     ansible: professormanhattan.glances
+    apt:
+      - python3-dev
+      - python3-jinja2
+      - python3-pip
+      - python3-psutil
+      - python3-setuptools
+      - gcc
+      - glances
+      - lm-sensors
+      - wireless-tools
     brew: glances
+    dnf:
+      - gcc
+      - glances
+      - lm_sensors
+      - python3-devel
+      - python3-pip
+    pacman:
+      - glances
+      - python
+      - lm_sensors
+      - wireless_tools
     pipx: glances
     port: glances
   glen:
@@ -3425,6 +3522,7 @@ softwarePackages:
     _name: Lexicon
     _service: null
     ansible: professormanhattan.lexicon
+    pipx: dns-lexicon[full]
   libimobiledevice:
     _bin: null
     _desc: null
@@ -3850,6 +3948,21 @@ softwarePackages:
     github: github.com/agalwood/Motrix
     scoop: motrix
     yay: motrix-bin
+  mpg123:
+    _bin: null
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: mpg123
+    _service: null
+    apt: mpg123
+    brew: mpg123
+    choco: mpg123
+    dnf: mpg123
+    pacman: mpg123
+    port: mpg123
+    scoop: mpg123
   mqttx:
     _bin: null
     _desc: MQTT X - Elegant Cross-platform MQTT 5.0 Desktop Client
@@ -3896,7 +4009,12 @@ softwarePackages:
     _home: null
     _name: Multipass
     _service: null
+    _post:cask: multipass set local.driver=virtualbox
+    _post:choco: multipass set local.driver=virtualbox
     ansible: professormanhattan.multipass
+    cask: multipass
+    choco: multipass
+    snap: multipass
   mycli:
     _bin: mycli
     _desc: A terminal client for MySQL with auto-completion and syntax highlighting.
@@ -4072,6 +4190,9 @@ softwarePackages:
     _name: Ngrok
     _service: null
     ansible: professormanhattan.ngrok
+    cask: ngrok
+    choco: ngrok
+    snap: ngrok
   ngxtop:
     _bin: null
     _desc: null
@@ -4164,6 +4285,8 @@ softwarePackages:
     ansible: professormanhattan.nordvpn
   normit:
     _bin: null
+    _deps:
+      - mpg123
     _desc: '[Normit](https://github.com/pawurb/normit) allows you to easily translate any text from one language to another. It also includes the ability to generate audio through speech synthesis as well.'
     _docs: null
     _github: null
@@ -4171,6 +4294,7 @@ softwarePackages:
     _name: Normit
     _service: null
     ansible: professormanhattan.normit
+    npm: normit
   np:
     _bin: null
     _desc: null
@@ -4256,8 +4380,15 @@ softwarePackages:
     _github: null
     _home: null
     _name: onlykey
+    _post:snap: |
+      sudo curl -sSL https://raw.githubusercontent.com/trustcrypto/trustcrypto.github.io/pages/49-onlykey.rules -o /etc/udev/rules.d/49-onlykey.rules
+      sudo chmod 644 /etc/udev/rules.d/49-onlykey.rules
+      sudo udevadm control --reload-rules
+      sudo udevadm trigger
     _service: null
     ansible: professormanhattan.onlykey
+    choco: onlykey
+    snap: onlykey-app
   oq:
     _bin: null
     _desc: A performant, and portable jq wrapper to facilitate the consumption and output of formats other than JSON; using jq filters to transform the data
@@ -4614,7 +4745,10 @@ softwarePackages:
     _home: null
     _name: Powershell
     _service: null
+    _snapClassic: true
     ansible: professormanhattan.powershell
+    cask: powershell
+    snap: powershell
   pre-commit:
     _bin: null
     _desc: null
@@ -5126,6 +5260,15 @@ softwarePackages:
     _name: Sanoid
     _service: null
     ansible: professormanhattan.sanoid
+    apt:
+      - libcapture-tiny-perl
+      - libconfig-inifiles-perl
+      - libdata-dump-perl
+      - lzop
+      - mbuffer
+      - mhash2
+      - pv
+      - sanoid
   santa:
     _bin: null
     _desc: A binary authorization system for MacOS (santa) role is a daemon that makes execution decisions based on the contents of a local database, a GUI agent that notifies the user in case of a block decision and a command-line utility for managing the system and synchronizing the database with a server.
@@ -5768,10 +5911,16 @@ softwarePackages:
     _desc: '[sysdig](https://www.sysdig.com/) is a simple tool for deep system visibility, exploration and troubleshooting, with native support for containers.'
     _docs: null
     _github: null
+    _groups:
+      - sysdig
     _home: null
     _name: sysdig
     _service: null
     ansible: professormanhattan.sysdig
+    brew: sysdig
+    pacman:
+      - sysdig
+      - sysdig-dkms
   sysget:
     _bin: null
     _desc: One package manager to rule them all
@@ -6396,6 +6545,7 @@ softwarePackages:
     _name: Wails
     _service: null
     ansible: professormanhattan.wails
+    go: github.com/wailsapp/wails/cmd/wails@latest
   warp:
     _bin: null
     _desc: '[Cloudflare WARP Client](https://cloudflarewarp.com/) is a free app that makes your Internet safer'
@@ -6406,6 +6556,7 @@ softwarePackages:
     _service: null
     _when:darwin: '! test -d "/Applications/Cloudflare WARP.app"'
     ansible: professormanhattan.warp
+    cask: cloudflare-warp
   watchexec:
     _bin: watchexec
     _desc: Executes commands in response to file modifications.
@@ -6435,6 +6586,10 @@ softwarePackages:
     _name: Watchman
     _service: null
     ansible: professormanhattan.watchman
+    brew: watchman
+    choco: watchman
+    port: watchman
+    scoop: watchman
   waypoint:
     _bin: null
     _desc: '[HashiCorp Waypoint](https://www.waypointproject.io/) allows developers to deploy, manage, and observe their applications through a consistent abstraction of underlying infrastructure. Waypoint works with Kubernetes, ECS and many other platforms.'

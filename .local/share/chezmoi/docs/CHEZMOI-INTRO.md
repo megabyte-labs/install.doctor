@@ -67,6 +67,12 @@ records.
 
 * Environment variable: `CLOUDFLARE_API_TOKEN`
 
+### GitHub Gist Token
+
+Pass in a GitHub token with the `gist` scope to be able to use the `gist` CLI tool without having to authenticate.
+
+* Environment variable: `GITHUB_GIST_TOKEN`
+
 ### GitHub Read-Only Token
 
 Pass in a GitHub read-only token linked to your account to automatically save a backup of your

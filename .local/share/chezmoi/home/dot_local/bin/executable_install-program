@@ -500,6 +500,12 @@ async function afterInstall(packageManager) {
     }
   } else if (packageManager === "apk") {
   } else if (packageManager === "apt") {
+    try {
+      await $`sudo apt-get autoclean`
+      await $`sudo apt-get autoremove`
+    } catch (e) {
+      log("error", logStage, 'Error cleaning up apt')
+    }
   } else if (packageManager === "basher") {
   } else if (packageManager === "binary") {
   } else if (packageManager === "brew" || packageManager === "cask") {

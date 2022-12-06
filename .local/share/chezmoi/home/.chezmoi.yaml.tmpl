@@ -12,6 +12,7 @@
 {{- $cloudflareSecretAccessKey := "" -}}
 {{- $cloudflareR2AccountId := "" -}}
 {{- $githubUsername := (default "ProfessorManhattan" (env "GITHUB_USERNAME")) -}}
+{{- $githubGistToken := (default "" (env "GITHUB_GIST_TOKEN")) -}}
 {{- $githubReadToken := (env "GITHUB_READ_TOKEN") -}}
 {{- $gitlabReadToken := (env "GITLAB_READ_TOKEN") -}}
 {{- $locale := (output "echo" "$LANG") }}
@@ -132,6 +133,9 @@
 {{- if not (env "GITHUB_USERNAME") -}}
 {{-   $githubUsername = promptStringOnce $data.user "githubUsername" "GitHub username" $githubUsername -}}
 {{- end -}}
+{{- if not (env "GITHUB_GIST_TOKEN") -}}
+{{-   $githubGistToken = promptStringOnce $data.user "githubGistToken" "GitHub Gist token" $githubGistToken -}}
+{{- end -}}
 {{- if not (env "GITLAB_READ_TOKEN") -}}
 {{-   $gitlabReadToken = promptStringOnce $data.user "gitlabReadToken" "GitLab read-only token" $gitlabReadToken }}
 {{- end -}}
@@ -212,6 +216,7 @@ data:
     CLOUDSDK_CORE_PROJECT: "megabyte-labs"
     GCE_CREDENTIALS_FILE: "{{ joinPath .chezmoi.homeDir ".config" "gcp.json" }}"
     GCE_SERVICE_ACCOUNT_EMAIL: "molecule@megabyte-labs.iam.gserviceaccount.com"
+    GITHUB_GIST_TOKEN: "{{ $githubGistToken }}"
     GITHUB_READ_TOKEN: "{{ $githubReadToken }}"
     GITLAB_READ_TOKEN: "{{ $gitlabReadToken }}"
     NGROK_AUTH_TOKEN: "{{ $ngrokAuthToken }}"
