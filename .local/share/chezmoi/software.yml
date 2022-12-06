@@ -475,6 +475,7 @@ softwarePackages:
     _name: AWX CLI
     _service: null
     ansible: professormanhattan.awxcli
+    pipx: https://releases.ansible.com/ansible-tower/cli/ansible-tower-cli-latest.tar.gz
   azure-cli:
     _bin: null
     _desc: null
@@ -2719,7 +2720,9 @@ softwarePackages:
     _home: null
     _name: googler
     _service: null
-    ansible: professormanhattan.googler
+    ansible:darwin: professormanhattan.googler
+    ansible:linux: professormanhattan.googler
+    brew: googler
   gopkgs:
     _bin: null
     _desc: null
@@ -3024,7 +3027,7 @@ softwarePackages:
     brew: http-prompt
     pipx: http-prompt
   httpie:
-    _bin: null
+    _bin: httpie
     _desc: '[HTTPie](https://httpie.io/) is a terminal-based, user-friendly command-line HTTP client for the API era. It comes with JSON support, syntax highlighting, persistent sessions, wget-like downloads, plugins, and more.'
     _docs: null
     _github: null
@@ -3032,6 +3035,13 @@ softwarePackages:
     _name: HTTPie
     _service: null
     ansible: professormanhattan.httpie
+    brew: httpie
+    choco: httpie
+    dnf: httpie
+    pacman: httpie
+    pipx: httpie
+    port: httpie
+    snap: httpie
   httpstat:
     _bin: null
     _desc: null
@@ -4683,7 +4693,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.pfsense
   pgcli:
-    _bin: null
+    _bin: pgcli
     _desc: '[pgcli](https://github.com/dbcli/pgcli) is a free and open-source CLI for Postgres that does auto-completion and syntax highlighting.'
     _docs: null
     _github: null
@@ -4691,6 +4701,10 @@ softwarePackages:
     _name: pgcli
     _service: null
     ansible: professormanhattan.pgcli
+    brew: pgcli
+    choco: pgcli
+    pipx: pgcli
+    port: pgcli
   php:
     _bin: null
     _desc: '[PHP](https://www.php.net/) is a general-purpose scripting language especially suited to web development. It was originally created by Danish-Canadian programmer Rasmus Lerdorf in 1994. The PHP reference implementation is now produced by The PHP Group.'
@@ -5431,7 +5445,7 @@ softwarePackages:
     _home: null
     _name: Sanoid
     _service: null
-    ansible: professormanhattan.sanoid
+    ansible:linux: professormanhattan.sanoid
     apt:
       - libcapture-tiny-perl
       - libconfig-inifiles-perl
