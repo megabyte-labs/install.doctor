@@ -227,6 +227,7 @@ if [ ! -f "$HOME/.config/chezmoi/chezmoi.yaml" ]; then
     if [ -z "$SOFTWARE_GROUP" ]; then
       logg prompt 'Select the software group you would like to install. If your environment is a macOS, Windows, or environment with the DISPLAY environment variable then desktop software will be installed too. The software groups are in the ~/.local/share/chezmoi/home/.chezmoidata.yaml file.'
       SOFTWARE_GROUP="$(gum choose "Basic" "Standard" "Full")"
+      export SOFTWARE_GROUP
     fi
   fi
 
