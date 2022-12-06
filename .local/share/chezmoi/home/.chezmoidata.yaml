@@ -289,6 +289,10 @@ softwareGroups:
     - tabby
     - vlc
     - vscode
+  File-System: &File-System
+    - catfs
+    - glusterfs
+    - goofys
   Finance: &Finance
     - infracost
   Finance-Desktop: &Finance-Desktop
@@ -678,6 +682,7 @@ softwareGroups:
     - *Database
     - *Docker
     - *E-mail
+    - *File-System
     - *Finance
     - *Git
     - *Go

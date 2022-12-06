@@ -5081,12 +5081,24 @@ softwarePackages:
   restic:
     _bin: null
     _desc: '[Restic](https://restic.net/) is a modern backup program that can back up your files from Linux, BSD, Mac and Windows to many different storage types, including self-hosted and online services. It is a single executable that you can run without a server or complex setup. It can be used to only back-up the parts of files that actually changed. It uses cryptography in every part of the process. Restic is entirely free to use and completely open source.'
-    _docs: https://restic.readthedocs.io/en/stable/
+    _docs: https://restic.readthedocs.io/en/latest/
     _github: https://github.com/restic/restic
     _home: https://restic.net/
     _name: Restic
     _service: null
     ansible: professormanhattan.restic
+    apk: restic
+    apt: restic
+    brew: restic
+    dnf: restic
+    eopkg: restic
+    nix: restic
+    pacman: restic
+    pkg-freebsd: restic
+    pkg-openbsd: restic
+    port: restic
+    scoop: restic
+    zypper: restic
   ripgrep:
     _bin: rg
     _desc: '[ripgrep](https://github.com/BurntSushi/ripgrep) is a line-oriented search tool that recursively searches your current directory for a regex pattern. By default, ripgrep will respect your .gitignore and automatically skip hidden files/directories and binary files. This role also installs ripgrep-all. [ripgrep-all](https://github.com/phiresky/ripgrep-all) is just like ripgrep except it also searches in PDFs, E-Books, Office documents, zip, tar.gz, etc.'
@@ -5204,17 +5216,29 @@ softwarePackages:
     _name: rvm
     _service: null
     ansible: professormanhattan.rvm
-  s3filesystem:
-    _bin: null
-    _desc: >-
-      [Catfs](https://github.com/kahing/catfs) allows you to have cached access to another (possibly remote) filesystem. Caching semantic is read-ahead and write-through. [Goofys](https://github.com/kahing/goofys) is a high-performance, POSIX-ish Amazon S3 file system written in Go, which allows you to mount an S3 bucket as a filey system. It's a Filey System instead of a File System because goofys strives for performance first and POSIX second. Combining catfs and goofys (and possibly a fast
-      internet connection), you can mount a folder that is automatically synced with an S3 bucket that is also performant.
-    _docs: https://s3fs.readthedocs.io/en/latest/
-    _github: https://github.com/fsspec/s3fs
-    _home: null
-    _name: Goofys/Catfs
-    _service: null
+  goofys:
+    _bin: goofys
+    _deps:
+      - macfuse
+    _desc: A high-performance, POSIX-ish Amazon S3 file system written in Go
+    _docs: https://github.com/kahing/goofys#usage
+    _github: https://github.com/kahing/goofys
+    _home: https://github.com/kahing/goofys
+    _name: Goofys
+    _service: true
+    ansible: professormanhattan.goofys
+    brew:darwin: goofys
+    go: github.com/kahing/goofys@latest
+  catfs:
+    _bin: catfs
+    _desc: Cache anything filesystem written in Rust
+    _docs: https://github.com/kahing/catfs#usage
+    _github: https://github.com/kahing/catfs
+    _home: https://github.com/kahing/catfs
+    _name: Catfs
+    _service: true
     ansible: professormanhattan.s3filesystem
+    cargo: catfs
   s5cmd:
     _bin: null
     _desc: '[s5cmd](https://github.com/peak/s5cmd) is a very fast S3 and local filesystem execution tool. It comes with support for a multitude of operations including tab completion and wildcard support for files, which can be very handy for your object storage workflow while working with large number of files. s5cmd is the fastest way of interacting with S3 buckets because it can utilize multiple threads unlike similar tools.'
@@ -5631,6 +5655,7 @@ softwarePackages:
     _name: OpenSnitch/Little Snitch
     _service: null
     ansible: professormanhattan.snitch
+    cask: little-snitch
   social-analyzer:
     _bin: null
     _desc: null
