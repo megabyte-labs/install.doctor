@@ -1,0 +1,54 @@
+silent! call plug#begin()
+Plug '~/.config/vim/plugged/typescript-vim'
+Plug '~/.config/vim/plugged/vim-airline'
+Plug '~/.config/vim/plugged/lightline.vim'
+Plug '~/.config/vim/plugged/vim-javascript'
+Plug '~/.config/vim/plugged/vim-jsx'
+Plug '~/.config/vim/plugged/vim-markdown'
+Plug '~/.config/vim/plugged/dockerfile.vim'
+Plug '~/.config/vim/plugged/php.vim'
+Plug '~/.config/vim/plugged/python-syntax'
+Plug '~/.config/vim/plugged/nerdtree'
+Plug '~/.config/vim/plugged/vim-five'
+Plug '~/.config/vim/plugged/vim-prettier'
+Plug '~/.config/vim/plugged/vim-sensible'
+Plug '~/.config/vim/plugged/editorconfig-vim'
+Plug '~/.config/vim/plugged/vimgutter'
+Plug '~/.config/vim/plugged/vim-surround'
+Plug '~/.config/vim/plugged/vim-carbon-now-sh'
+Plug '~/.config/vim/plugged/vim-multiple-cursors'
+Plug '~/.config/vim/plugged/ale'
+Plug '~/.config/vim/plugged/fzf'
+Plug '~/.config/vim/plugged/fzf.vim'
+if executable('node')
+  Plug '~/.config/vim/plugged/coc.nvim'
+endif
+Plug '~/.config/vim/plugged/syntastic'
+Plug '~/.config/vim/plugged/vim-devicons'
+Plug '~/.config/vim/plugged/zoxide.vim'
+Plug '~/.config/vim/plugged/vim-go'
+Plug '~/.config/vim/plugged/ansible-vim', {'do': './UltiSnips/generate.sh'}
+call plug#end()
+
+syntax enable
+set background=dark
+colorscheme Betelgeuse
+" set g:lightline = { 'colorscheme': 'Betelgeuse' }
+
+" Settings for plugin https://github.com/neoclide/coc.nvim.git
+autocmd FileType json syntax match Comment +\/\/.\+$+
+
+" Settings for plugin https://github.com/vim-syntastic/syntastic.git
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" Settings for plugin https://github.com/ryanoasis/vim-devicons.git
+set encoding=UTF-8
+
+" Automatically apply with Chezmoi anytime a source file is modified
+autocmd BufWritePost ~/.local/share/chezmoi/* ! chezmoi apply --source-path "%"
