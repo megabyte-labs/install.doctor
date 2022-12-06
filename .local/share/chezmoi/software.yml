@@ -288,7 +288,7 @@ softwarePackages:
     ansible: professormanhattan.appium
     brew: appium
     choco: appium-desktop
-  aptcacherng:
+  apt-cacher-ng:
     _bin: null
     _desc: '[Apt-Cacher-NG](https://wiki.debian.org/AptCacherNg) is a caching proxy server (or apt proxy) for Debian based distributions like Ubuntu, Kubuntu, Xubuntu, Edubuntu, Linux Mint, etc, which is used to cache the downloaded packages locally on your server.'
     _docs: null
@@ -325,8 +325,6 @@ softwarePackages:
       - argocd
       - argocd-cli
   aria2:
-    _bin: null
-  aria:
     _desc: '[aria2](https://aria2.github.io/) is a lightweight multi-protocol & multi-source command-line download utility. It supports HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink. [AriaNg](http://ariang.mayswind.net/) is a modern web frontend that makes working with aria2 easier.'
     _docs: https://aria2.github.io/manual/en/html/
     _github: https://github.com/aria2/aria2
@@ -1037,7 +1035,7 @@ softwarePackages:
     _service: null
     _type: cli
     github: github.com/mantl/consul-cli
-  consultemplate:
+  consul-template:
     _bin: null
     _desc: '[Consul-Template](https://github.com/hashicorp/consul-template) provides a convenient way to populate values from [Consul](https://www.consul.io/) into the file system using the consul-template daemon. It was created by [HashiCorp](https://www.hashicorp.com/) (the creators of Consul).'
     _docs: https://learn.hashicorp.com/tutorials/consul/consul-template
@@ -1301,7 +1299,7 @@ softwarePackages:
     _name: null
     _service: null
     npm: deviceframe
-  diffsofancy:
+  diff-so-fancy:
     _bin: null
     _desc: '[diff-so-fancy](https://github.com/so-fancy/diff-so-fancy) strives to make your diffs human readable instead of machine readable. This helps improve code quality and helps you spot defects faster.'
     _docs: null
@@ -4587,15 +4585,6 @@ softwarePackages:
     _service: null
     ansible:linux: professormanhattan.portmaster
     ansible:windows: professormanhattan.portmaster
-  portout:
-    _bin: null
-    _desc: ''
-    _docs: https://os.mbed.com/docs/mbed-os/v6.15/apis/portout.html
-    _github: Not open-source
-    _home: https://os.mbed.com/handbook/PortOut
-    _name: Portout
-    _service: null
-    ansible: professormanhattan.portout
   postman:
     _bin: null
     _desc: '[Postman](https://www.postman.com/) is a collaboration platform for API development. Postman''s features simplify each step of building an API and streamline collaboration so you can create better APIs — faster.'
@@ -4816,17 +4805,6 @@ softwarePackages:
     _name: Quasar
     _service: null
     ansible: professormanhattan.quasar
-  qubes:
-    _bin: null
-    _desc: >-
-      [Qubes](https://www.qubes-os.org/) is a Linux distribution that introduces some radically new concepts that basically boil down to running everything inside of a VM. It is touted by security professionals as one of (if not, the most) secure desktop operating system. In Qubes, the base namespace is called dom0 which is more or less the control point for all the other VMs that you would run applications in. This role updates dom0 and then sets up a configurable list of features into dom0
-      including setting up sys-usb (a VM for all your USB devices), adding YubiKey integration, forcing system updates over Tor, and a handful of other additions every Qubes user should have as part of their stack.
-    _docs: https://www.qubes-os.org/doc/
-    _github: https://github.com/QubesOS/qubes-issues
-    _home: https://www.qubes-os.org/
-    _name: Qubes
-    _service: null
-    ansible: professormanhattan.qubes
   raindrop:
     _bin: null
     _desc: All-in-one bookmark manager
@@ -4839,15 +4817,15 @@ softwarePackages:
     cask: raindropio
     github: github.com/raindropio/desktop
   ramda:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
+    _bin: ramda
+    _desc: A CLI tool for processing data with functional pipelines
+    _docs: https://github.com/raine/ramda-cli#synopsis
+    _github: https://github.com/raine/ramda-cli
+    _home: https://github.com/raine/ramda-cli
+    _name: Ramda
+    _service: false
     npm: ramda-cli
-  rancher:
+  rancher-cli:
     _bin: null
     _desc: The Rancher Command Line Interface (CLI) is a unified tool for interacting with your Rancher Server
     _docs: null
@@ -4861,27 +4839,18 @@ softwarePackages:
     yay: rancher-cli-bin
   raspberry-pi-imager:
     _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
+    _desc: '[Raspberry Pi Imager](https://www.raspberrypi.org/software/) is the quick and easy way to install Raspberry Pi OS and other operating systems to a microSD card, ready to use with your Raspberry Pi.'
+    _docs: https://www.raspberrypi.com/documentation/computers/getting-started.html
+    _github: https://github.com/raspberrypi/rpi-imager
+    _home: https://www.raspberrypi.com/software/
+    _name: Raspberry Pi Imager
+    _service: false
     ansible: professormanhattan.raspberryimager
     cask: raspberry-pi-imager
     choco: rpi-imager
     dnf: rpi-imager
     snap: rpi-imager
     yay: rpi-imager
-  raspberryimager:
-    _bin: null
-    _desc: '[Raspberry Pi Imager](https://www.raspberrypi.org/software/) is the quick and easy way to install Raspberry Pi OS and other operating systems to a microSD card, ready to use with your Raspberry Pi.'
-    _docs: https://www.raspberrypi.com/documentation/computers/getting-started.html
-    _github: https://github.com/raspberrypi/rpi-imager
-    _home: https://www.raspberrypi.com/software/
-    _name: Raspberry Pi Imager
-    _service: null
-    ansible: professormanhattan.raspberryimager
   rclone:
     _bin: null
     _desc: '[Rclone](https://rclone.org/) is an open source, multi threaded, command line computer program to manage content on cloud and other high latency storage. Its capabilities include sync, transfer, crypt, cache, union, compress and mount. The rclone website lists [fifty supported backends](https://rclone.org/overview/) including S3 services and Google Drive.'
@@ -4899,7 +4868,7 @@ softwarePackages:
       - nssm
     dnf: rclone
     pacman: rclone
-  rdm:
+  redis-desktop-manager:
     _bin: null
     _desc: '[Redis Desktop Manager](https://rdm.dev/) is an open source cross-platform Desktop Manager for Redis based on Qt 5.'
     _docs: https://docs.rdm.dev/en/docs-fix-edit-url/
@@ -4908,6 +4877,7 @@ softwarePackages:
     _name: Redis Desktop Manager
     _service: null
     ansible: professormanhattan.rdm
+    snap: redis-desktop-manager
   rear:
     _bin: null
     _desc: '[Relax-and-Recover](http://relax-and-recover.org/) is the leading Open Source bare metal disaster recovery and system migration solution. It is a modular framework with many ready-to-go workflows for common situations. It is a setup-and-forget Linux bare metal disaster recovery solution. It is easy to set up and requires no maintenance so there is no excuse for not using it.'
@@ -4935,25 +4905,16 @@ softwarePackages:
     _name: RecoverPy
     _service: null
     ansible: professormanhattan.recoverpy
-  redis-desktop-manager:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
-    ansible: professormanhattan.rdm
-    snap: redis-desktop-manager
   remote-desktop:
     _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
+    _desc: '[Remmina](https://remmina.org/) is a remote desktop client for POSIX-based computer operating systems. It supports the Remote Desktop Protocol, VNC, NX, XDMCP, SPICE and SSH protocols. [GNOME Boxes](https://wiki.gnome.org/Apps/Boxes) is an application of the GNOME Desktop Environment, used to access remote or virtual systems. Boxes uses the QEMU, KVM, and libvirt virtualization technologies. GNOME Boxes requires the CPU to support some form of hardware-assisted virtualization.'
+    _docs: https://gitlab.com/Remmina/Remmina/-/wikis/Usage/Remmina-User's-guide
+    _github: https://github.com/FreeRDP/Remmina
+    _home: https://remmina.org/
+    _name: Remote Desktop
+    _service: true
     _when:cask: '! test -d "/Applications/Microsoft Remote Desktop.app"'
+    ansible: professormanhattan.remotedesktop
     apt:
       - remmina
       - xrdp
@@ -4966,15 +4927,6 @@ softwarePackages:
     yay:
       - remmina-git
       - xrdp
-  remotedesktop:
-    _bin: null
-    _desc: '[Remmina](https://remmina.org/) is a remote desktop client for POSIX-based computer operating systems. It supports the Remote Desktop Protocol, VNC, NX, XDMCP, SPICE and SSH protocols. [GNOME Boxes](https://wiki.gnome.org/Apps/Boxes) is an application of the GNOME Desktop Environment, used to access remote or virtual systems. Boxes uses the QEMU, KVM, and libvirt virtualization technologies. GNOME Boxes requires the CPU to support some form of hardware-assisted virtualization.'
-    _docs: https://gitlab.com/Remmina/Remmina/-/wikis/Usage/Remmina-User's-guide
-    _github: https://github.com/FreeRDP/Remmina
-    _home: https://remmina.org/
-    _name: Remote Desktop
-    _service: null
-    ansible: professormanhattan.remotedesktop
   responsively:
     _bin: null
     _desc: A modified web browser that helps in responsive web development
@@ -5341,7 +5293,7 @@ softwarePackages:
     ansible:windows: professormanhattan.sharex
     choco: sharex
   sharp:
-    _bin: null
+    _bin: sharp
     _desc: null
     _docs: null
     _github: null
@@ -5350,13 +5302,13 @@ softwarePackages:
     _service: null
     npm: sharp-cli
   shc:
-    _bin: null
-    _desc: '[shc](https://github.com/mptre/shc) is a terminal agnostic solution which allows copying output from Termial easily, without the need to use Terminal multiplexers.'
-    _docs: null
-    _github: null
-    _home: null
+    _bin: shc
+    _desc: Shell script compiler
+    _docs: https://github.com/neurobin/shc
+    _github: https://github.com/neurobin/shc
+    _home: https://neurobin.org/projects/softwares/unix/shc/
     _name: shc
-    _service: null
+    _service: false
     ansible: professormanhattan.shc
   shdoc:
     _bin: null
@@ -5505,13 +5457,13 @@ softwarePackages:
     ansible: professormanhattan.slackterm
   sloth:
     _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
+    _desc: Mac app that shows all open files, directories, sockets, pipes and devices in use by all running processes. Nice GUI for lsof.
+    _docs: https://github.com/sveinbjornt/Sloth
+    _github: https://github.com/sveinbjornt/Sloth
+    _home: https://sveinbjorn.org/sloth
+    _name: Sloth
     _service: null
-    cask: stats
+    cask: sloth
   snapd:
     _bin: null
     _desc: '[Snap](https://snapcraft.io/) is a software packaging and deployment system developed by Canonical for operating systems that use the Linux kernel. The packages, called snaps, and the tool for using them, snapd, work across a range of Linux distributions and allow upstream software developers to distribute their applications directly to users. Snaps are self-contained applications running in a sandbox with mediated access to the host system.'
@@ -5617,13 +5569,13 @@ softwarePackages:
     ansible: professormanhattan.ssh
   ssh-vault:
     _bin: null
-    _desc: Encrypt/decrypt using ssh keys
-    _docs: null
+    _desc: '[sshvault](https://ssh-vault.com/) lets you encrypt/decrypt using SSH private keys. It is written in Go and the documentation can be read in under a minute.'
+    _docs: https://ssh-vault.com/post/how-it-works/
     _github: https://github.com/ssh-vault/ssh-vault
-    _home: null
+    _home: https://ssh-vault.com/
     _name: ssh-vault
     _service: null
-    _type: cli
+    ansible: professormanhattan.sshvault
     brew: ssh-vault
     github: github.com/ssh-vault/ssh-vault
   sshpass:
@@ -5637,7 +5589,7 @@ softwarePackages:
     apt: sshpass
     brew: hudochenkov/sshpass/sshpass
     dnf: sshpass
-  sshtarpit:
+  ssh-tarpit:
     _bin: null
     _desc: '[Endlessh](https://github.com/skeeto/endlessh) is an SSH tarpit that very slowly sends an endless, random SSH banner. It keeps SSH clients locked up for hours or even days at a time. The purpose is to put your real SSH server on another port and then let the script kiddies get stuck in this tarpit instead of bothering a real server.'
     _docs: null
@@ -5646,15 +5598,6 @@ softwarePackages:
     _name: Endlessh
     _service: null
     ansible: professormanhattan.sshtarpit
-  sshvault:
-    _bin: null
-    _desc: '[sshvault](https://ssh-vault.com/) lets you encrypt/decrypt using SSH private keys. It is written in Go and the documentation can be read in under a minute.'
-    _docs: https://ssh-vault.com/post/how-it-works/
-    _github: https://github.com/ssh-vault/ssh-vault
-    _home: https://ssh-vault.com/
-    _name: sshvault
-    _service: null
-    ansible: professormanhattan.sshvault
   ssl-proxy:
     _bin: null
     _desc: Simple zero-config SSL reverse proxy with real autogenerated certificates
@@ -5695,8 +5638,8 @@ softwarePackages:
   statcode:
     _bin: null
     _desc: null
-    _docs: null
-    _github: null
+    _docs: Man pages for HTTP status codes
+    _github: https://github.com/shobrook/statcode
     _home: null
     _name: null
     _service: null
@@ -6228,10 +6171,10 @@ softwarePackages:
     pkg: up
     yay: up
   upt:
-    _bin: null
-    _desc: null
+    _bin: upt
+    _desc: Universal package-management tool for Windows, macOS and Linux
     _docs: null
-    _github: null
+    _github: https://github.com/sigoden/upt
     _home: null
     _name: null
     _service: null
@@ -6270,7 +6213,7 @@ softwarePackages:
     _bin: null
     _desc: Vector is a lightweight, ultra-fast tool for building observability pipelines that lets you collect, transform, and route all your logs and metrics with one simple tool.
     _docs: null
-    _github: null
+    _github: https://github.com/vectordotdev/vector
     _home: https://vector.dev/
     _name: Vector
     _service: null
@@ -6349,25 +6292,15 @@ softwarePackages:
     pipx: virtualenv
   visual-studio:
     _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
-    cask: visual-studio
-    choco: visualstudio2022community
-  visualstudio:
-    _bin: null
     _desc: '[Microsoft Visual Studio](https://visualstudio.microsoft.com/) is an integrated development environment from Microsoft. It is used to develop computer programs, as well as websites, web apps, web services and mobile apps.'
     _docs: https://docs.microsoft.com/en-us/visualstudio/windows/?view=vs-2022
     _github: Not open-source
     _home: https://visualstudio.microsoft.com/
     _name: Visual Studio
     _service: null
-    ansible: professormanhattan.visualstudio
     ansible:windows: professormanhattan.visualstudio
-    choco: visualstudio2019community
+    cask: visual-studio
+    choco: visualstudio2022community
   vlc:
     _bin: null
     _desc: '[VLC](https://www.videolan.org/) media player is a free and open-source, portable, cross-platform media player software, and streaming media server developed by the VideoLAN project. VLC is available for desktop operating systems, and mobile platforms, such as Android, iOS, iPadOS, Tizen, Windows 10 Mobile, and Windows Phone.'
@@ -6584,7 +6517,7 @@ softwarePackages:
     bpkg: rauchg/wifi-password
     brew: wifi-password
     npm: wifi-password-cli
-  windowsadk:
+  windows-adk:
     _bin: null
     _desc: >-
       [Windows ADK](https://www.microsoft.com/en-us/windows-server/windows-admin-center) was unveiled by Microsoft on September 14, 2017 as the necessary evolution of the Windows Server graphical user interface. Windows ADK offers a flexible, locally-deployed, browser-based management platform and tools. The idea behind this project is to help simplify the management of servers by placing a majority of the frequently referenced tools used by system administrators in one spot. You can run it on
@@ -6595,7 +6528,7 @@ softwarePackages:
     _name: Windows ADK
     _service: null
     ansible: professormanhattan.windowsadk
-  windowsadmincenter:
+  windows-admin-center:
     _bin: null
     _desc: >-
       [Windows Admin Center](https://www.microsoft.com/en-us/windows-server/windows-admin-center) was unveiled by Microsoft on September 14, 2017 as the necessary evolution of the Windows Server graphical user interface. Windows Admin Center offers a flexible, locally-deployed, browser-based management platform and tools. The idea behind this project is to help simplify the management of servers by placing a majority of the frequently referenced tools used by system administrators in one spot. You
@@ -6606,7 +6539,7 @@ softwarePackages:
     _name: Windows Admin Center
     _service: null
     ansible: professormanhattan.windowsadmincenter
-  windowspowertoys:
+  windows-power-toys:
     _bin: null
     _desc: '[Microsoft PowerToys](https://docs.microsoft.com/en-us/windows/powertoys/) is a set of utilities for Windows power-users to tune and streamline their Windows 10 experience for greater productivity. It includes tools like a Color Picker, File Explorer add-ons, Keyboard Manager, Shortcut Guide, and more.'
     _docs: null
@@ -6625,6 +6558,19 @@ softwarePackages:
     _service: null
     _type: cli
     yay: winrm-cli-git
+  wireshark-cli:
+    _bin: null
+    _desc: null
+    _docs: null
+    _github: null
+    _home: https://tshark.dev/
+    _name: Wireshark
+    _service: null
+    ansible: professormanhattan.wireshark
+    apt: tshark
+    brew: wireshark
+    dnf: wireshark-cli
+    pacman: wireshark-cli
   wireshark:
     _bin: null
     _desc: '[Wireshark](https://www.wireshark.org/) is a free and open-source packet analyzer. It is used for network troubleshooting, analysis, software and communications protocol development, and education. Originally named Ethereal, the project was renamed Wireshark in May 2006 due to trademark issues.'
@@ -6633,18 +6579,11 @@ softwarePackages:
     _home: https://www.wireshark.org/
     _name: Wireshark
     _service: null
-    ansible: professormanhattan.wireshark
-    apt:
-      - tshark
-      - wireshark
-    cask: zoom
-    choco: zoom
-    dnf:
-      - wireshark
-      - wireshark-cli
-    pacman:
-      - wireshark-cli
-      - wireshark-qt
+    apt: wireshark
+    cask: wireshark
+    choco: wireshark
+    dnf: wireshark
+    pacman: wireshark-qt
   wkhtmltopdf:
     _bin: null
     _desc: '[wkhtmltopdf](https://github.com/wkhtmltopdf/wkhtmltopdf) is a command line tool to render HTML into PDF and various image formats using the QT Webkit rendering engine.'
@@ -6669,7 +6608,7 @@ softwarePackages:
     _name: null
     _service: null
     npm: wordpressify
-  wpcli:
+  wp-cli:
     _bin: null
     _desc: '[WP-CLI](https://wp-cli.org/) is the command-line interface for [WordPress](https://wordpress.org/). You can update plugins, configure multisite installations and much more. You can do all this without using a web browser.'
     _docs: null
@@ -6786,7 +6725,7 @@ softwarePackages:
     brew: youtube-dl
     pipx: youtube-dl
     port: youtube-dl
-  youtubedl:
+  youtube-dl:
     _bin: null
     _desc: '[youtube-dl](https://github.com/ytdl-org/youtube-dl) is an open-source download manager for video and audio from YouTube and over 1000 other video hosting websites. It is released under the Unlicense software license and is one of the most popular projects on GitHub.'
     _docs: https://github.com/ytdl-org/youtube-dl/blob/master/README.md#readme
@@ -6861,9 +6800,9 @@ softwarePackages:
     scoop: yubikey-manager-qt
   zap:
     _bin: null
-    _desc: null
+    _desc: Delightful AppImage package manager
     _docs: null
-    _github: null
+    _github: https://github.com/srevinsaju/zap
     _home: null
     _name: null
     _service: null
