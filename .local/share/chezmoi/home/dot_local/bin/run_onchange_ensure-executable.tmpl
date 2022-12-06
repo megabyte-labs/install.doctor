@@ -10,7 +10,7 @@
 {{ end -}}
 {{- end }}
 
-logg 'Ensuring all files in ~/.local/bin are executable'
+logg info 'Ensuring all files in ~/.local/bin are executable'
 find "$HOME/.local/bin" -mindepth 1 -maxdepth 1 -type f | while read EXE_FILE; do
   chmod +x "$EXE_FILE"
 done
