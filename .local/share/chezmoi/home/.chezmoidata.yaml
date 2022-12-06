@@ -28,6 +28,8 @@ softwareGroups:
   Android-Desktop: &Android-Desktop
     - android-studio
     - scrcpy-gui
+  Anon: &Anon
+    - onionshare
   Ansible: &Ansible
     - ansible
     - ansible-lint
@@ -213,16 +215,15 @@ softwareGroups:
   Communication-Desktop: &Communication-Desktop
     - microsoft-teams
     - jitsi-meet
+    - keybase
     - skype
     - slack
     - zoom
   Crypto: &Crypto
     - cointop
   Crypto-Desktop: &Crypto-Desktop
-    - keybase
     - ledger-live
     - monero
-    # - onionshare
     - onlykey
   DNS: &DNS
     - hostctl
@@ -728,6 +729,63 @@ softwareGroups:
     - *Transfer-Desktop
     - *Virtualization-Desktop
     - *Web-Development-Desktop
+  __base-basic-tmpl:
+    - *Basic
+    - *Basic-Desktop
+  __base-docker-tmpl:
+    - *Basic
+    - *Basic-Desktop
+    - *Docker
+  __base-full-tmpl:
+    - *Full
+    - *Full-Desktop
+  __anon-tmpl:
+    - *Anon
+  __crypto-tmpl:
+    - *Crypto
+    - *Crypto-Desktop
+  __dev-tmpl:
+    - *Full-Desktop
+  __gpg-tmpl: []
+  __kubernetes-tmpl:
+    - *Kubernetes
+    - *Kubernetes-Desktop
+    - *Networking
+  __media-tmpl:
+    - *Media
+    - *Media-Desktop
+  __office-tmpl:
+    - *Communication-Desktop
+    - *Productivity-Desktop
+  __personal-tmpl: []
+  __provision-tmpl: []
+  __remote-tmpl:
+    - *Networking
+    - filezilla
+    - remote-desktop
+    - teamviewer
+  __swarm-tmpl:
+    - *Backup
+    - *Docker
+    - *Networking
+    - swarm
+  __util-tmpl: []
+  __vault-tmpl:
+    - onlykey
+    - yubikey
+  __vpn-pritunl-tmpl: []
+  __vpn-proton-tmpl:
+    - protonvpn
+  __vpn-random-tmpl:
+    - vpn
+  __vpn-tailscale-tmpl:
+    - tailscale
+  __vpn-warp-tmpl:
+    - warp
+  __vpn-tmpl: []
+  __web-tmpl:
+    - *Browsers-Desktop
+  __work-tmpl: []
   deprecated:
     - apt-cacher-ng
     - bivac
