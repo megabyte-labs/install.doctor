@@ -644,7 +644,8 @@ softwareGroups:
     - *Cloud-Storage
     - bitwarden-cli
   _Standard-Desktop: &_Standard-Desktop
-    << [*_Basic-Desktop, *Backup-Desktop]
+    - *_Basic-Desktop
+    - *Backup-Desktop
     - *Communication-Desktop
     - *Media-Desktop
     - *Misc-Desktop
