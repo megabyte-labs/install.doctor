@@ -2652,14 +2652,22 @@ softwarePackages:
       - gnutls
       - grep
   go:
-    _bin: null
+    _bin: go
     _desc: '[Go](https://golang.org/) is a statically typed, compiled programming language designed at Google by Robert Griesemer, Rob Pike, and Ken Thompson. Go is syntactically similar to C, but with memory safety, garbage collection, structural typing, and CSP-style concurrency.'
     _docs: https://go.dev/doc/
     _github: https://github.com/golang/go
     _home: https://go.dev/
     _name: Go
-    _service: null
+    _service: false
+    _snapClassic: true
     ansible: professormanhattan.go
+    apt: golang-go
+    brew: go
+    choco: golang
+    pacman: go
+    port: go
+    scoop: go
+    snap: go
   go-chromecast:
     _bin: null
     _desc: CLI for Google Chromecast, Home devices and Cast Groups
