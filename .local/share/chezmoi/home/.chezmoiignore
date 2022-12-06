@@ -1,6 +1,7 @@
 chezmoi.txt.age
 .chezmoiscripts/**/*
 !.chezmoiscripts/{{ .host.distro.id }}/**/*
+!.chezmoiscripts/{{ .host.distro.family }}/**/*
 
 {{- if ne .host.distro.id "windows" }}
 !.chezmoiscripts/_universal/**/*
