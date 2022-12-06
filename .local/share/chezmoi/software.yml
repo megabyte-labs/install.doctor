@@ -23,6 +23,7 @@
 #     echo "_pre allows you to define a script that runs before the installation"
 #   _post:brew:debian: |
 #     echo "_post allows you to define a script that runs after the installation"
+#   _systemd: smbd                                    # System service to enable, restart, and/or start (can also be an array).
 #   ansible: professormanhattan.docker
 #   apk: altair
 #   appimage: https://developers.yubico.com/yubikey-manager-qt/Releases/yubikey-manager-qt-1.2.4b-linux.AppImage
@@ -89,8 +90,8 @@ installerPreference:
     - binary
   darwin:
     - whalebrew
-    - brew
     - cask
+    - brew
     - port
     - go
     - cargo
@@ -517,7 +518,7 @@ softwarePackages:
     _name: balenaEtcher
     _service: false
     _when:cask: '! test -d /Applications/balenaEtcher.app'
-    ansible: professormanhattan.etcher
+    ansible:linux: professormanhattan.etcher
     cask: balenaetcher
     choco: etcher
     yay: balena-etcher
@@ -982,8 +983,44 @@ softwarePackages:
     _github: https://github.com/cockpit-project/cockpit
     _home: https://cockpit-project.org/
     _name: Cockpit
+    _post: sudo usermod -a -G libvirtdbus libvirt
     _service: null
-    ansible: professormanhattan.cockpit
+    _systemd: cockpit
+    _systemd:pacman: cockpit.socket
+    ansible:linux: professormanhattan.cockpit
+    apt:
+      - 389-ds-base
+      - cockpit
+      - cockpit-389-ds
+      - cockpit-docker
+      - cockpit-machines
+      - cockpit-networkmanager
+      - cockpit-packagekit
+      - cockpit-podman
+      - cockpit-storaged
+      - libvirt-dbus
+    dnf:
+      - 389-ds-base
+      - cockpit
+      - cockpit-389-ds
+      - cockpit-docker
+      - cockpit-machines
+      - cockpit-networkmanager
+      - cockpit-packagekit
+      - cockpit-podman
+      - cockpit-storaged
+      - libvirt-dbus
+    pacman:
+      - 389-ds-base
+      - cockpit
+      - cockpit-389-ds
+      - cockpit-docker
+      - cockpit-machines
+      - cockpit-networkmanager
+      - cockpit-packagekit
+      - cockpit-podman
+      - cockpit-storaged
+      - libvirt-dbus
   cocoapods:
     _bin: null
     _desc: '[CocoaPods](https://cocoapods.org/) is an application level dependency manager for Objective-C, Swift and any other languages that run on the Objective-C runtime, such as RubyMotion, that provides a standard format for managing external libraries.'
@@ -1424,14 +1461,19 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.dns
   dnsmasq:
-    _bin: null
+    _bin: dnsmasq
     _desc: '[Dnsmasq](https://wiki.debian.org/dnsmasq) is free software providing Domain Name System caching, a Dynamic Host Configuration Protocol server, router advertisement and network boot features, intended for small computer networks.'
     _docs: https://thekelleys.org.uk/dnsmasq/docs/dnsmasq-man.html
     _github: https://github.com/imp/dnsmasq
     _home: null
     _name: dnsmasq
-    _service: null
+    _service: true
     ansible: professormanhattan.dnsmasq
+    apt: dnsmasq
+    brew: dnsmasq
+    dnf: dnsmasq
+    pacman: dnsmasq
+    port: dnsmasq
   docker:
     _bin: docker
     _desc: '[Docker](https://www.docker.com/) is a set of platform-as-a-service products that use OS-level virtualization to deliver software in packages called containers. Containers are isolated from one another and bundle their own software, libraries and configuration files; they can communicate with each other through well-defined channels.'
@@ -1898,7 +1940,7 @@ softwarePackages:
     _home: https://filezilla-project.org/
     _name: FileZilla
     _service: null
-    ansible: professormanhattan.filezilla
+    ansible:darwin: professormanhattan.filezilla
     apt: filezilla
     choco: filezilla
     dnf: filezilla
@@ -2409,6 +2451,7 @@ softwarePackages:
     _name: Gitlab Runner
     _service: null
     ansible: professormanhattan.gitlabrunner
+    brew: gitlab-runner
   gitleaks:
     _bin: null
     _desc: Extension to scan git repos (or files) for secrets using regex and entropy
@@ -3503,6 +3546,7 @@ softwarePackages:
     scoop: lazygit
     xbps: lazygit
   ledger-live:
+    _appimageName: 'Ledger Live.AppImage'
     _bin: null
     _desc: '[Ledger Live](https://www.ledger.com/ledger-live) is a new generation wallet desktop application providing a unique interface to maintain multiple cryptocurrencies for your Ledger Nano S / Blue. Manage your device, create accounts, receive and send cryptoassets and many more.'
     _docs: null
@@ -3512,6 +3556,7 @@ softwarePackages:
     _service: null
     _when:cask: '! test -d "/Applications/Ledger Live.app"'
     ansible: professormanhattan.ledgerlive
+    appimage: https://download.live.ledger.com/latest/linux
     cask: ledger-live
     choco: ledger-live
   lens:
@@ -3958,6 +4003,10 @@ softwarePackages:
     _name: Monero
     _service: null
     ansible: professormanhattan.monero
+    brew: monero
+    cask: monero-wallet
+    choco: monero
+    flatpak: org.getmonero.Monero
   motd:
     _bin: null
     _desc: This Message of the Day (motd) role is used to display an informative system overview when launching a terminal shell.
@@ -5084,27 +5133,61 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.recoverpy
   remote-desktop:
+    _deps:
+      - gnome-boxes
+      - microsoft-remote-desktop
+      - remmina
+      - xrdp
+  gnome-boxes:
     _bin: null
-    _desc: '[Remmina](https://remmina.org/) is a remote desktop client for POSIX-based computer operating systems. It supports the Remote Desktop Protocol, VNC, NX, XDMCP, SPICE and SSH protocols. [GNOME Boxes](https://wiki.gnome.org/Apps/Boxes) is an application of the GNOME Desktop Environment, used to access remote or virtual systems. Boxes uses the QEMU, KVM, and libvirt virtualization technologies. GNOME Boxes requires the CPU to support some form of hardware-assisted virtualization.'
-    _docs: https://gitlab.com/Remmina/Remmina/-/wikis/Usage/Remmina-User's-guide
-    _github: https://github.com/FreeRDP/Remmina
-    _home: https://remmina.org/
-    _name: Remote Desktop
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: GNOME Boxes
     _service: true
-    _when:cask: '! test -d "/Applications/Microsoft Remote Desktop.app"'
-    ansible: professormanhattan.remotedesktop
-    apt:
-      - remmina
-      - xrdp
-    cask: microsoft-remote-desktop
-    dnf:
-      - remmina
-      - xrdp
+    apt: gnome-boxes
+    dnf: gnome-boxes
+    pacman: gnome-boxes
+  remmina:
+    _bin: null
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: Remmina
+    _service: true
+    apt: remmina
+    dnf: remmina
     pacman: remmina
     snap: remmina
-    yay:
-      - remmina-git
+    yay: remmina-git
+  microsoft-remote-desktop:
+    _bin: null
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: Microsoft Remote Desktop
+    _service: true
+    _when:cask: '! test -d "/Applications/Microsoft Remote Desktop.app"'
+    cask: microsoft-remote-desktop
+  xrdp:
+    _bin: null
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: xrdp
+    _service: true
+    _systemd: xrdp
+    _systemd:yay:
       - xrdp
+      - xrdp-sesman
+    _note: Should work like professormanhattan.remotedesktop
+    apt: xrdp
+    dnf: xrdp
+    yay: xrdp
   responsively:
     _bin: null
     _desc: A modified web browser that helps in responsive web development
@@ -6056,7 +6139,7 @@ softwarePackages:
     _service: null
     _type: application
     _when:cask: '! test -d /Applications/Tabby.app'
-    ansible: professormanhattan.tabby
+    ansible:linux: professormanhattan.tabby
     cask: tabby
     choco: tabby
     github: github.com/Eugeny/tabby
@@ -6106,7 +6189,7 @@ softwarePackages:
     _name: TeamViewer
     _service: null
     _when:cask: '! test -d /Applications/TeamViewer.app'
-    ansible: professormanhattan.teamviewer
+    ansible:linux: professormanhattan.teamviewer
     cask: teamviewer
     choco: teamviewer
     yay: teamviewer
