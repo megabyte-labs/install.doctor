@@ -633,14 +633,25 @@ softwareGroups:
     - responsively
     - runjs
   _Basic: &_Basic
-    << : [*CLI, *Essentials]
+    - *CLI
+    - *Essentials
   _Basic-Desktop: &_Basic-Desktop
-    << : [*_Basic, *Essentials-Desktop]
+    - *_Basic
+    - *Essentials-Desktop
   _Standard: &_Standard
-    << : [*_Basic, *Backup, *Cloud-Storage]
+    - *_Basic
+    - *Backup
+    - *Cloud-Storage
     - bitwarden-cli
   _Standard-Desktop: &_Standard-Desktop
-    << : [*_Basic-Desktop, *Backup-Desktop, *Communication-Desktop, *Media-Desktop, *Misc-Desktop, *Productivity-Desktop, *Recording-Desktop, *Virtualization-Desktop]
+    << *_Basic-Desktop
+    - *Backup-Desktop
+    - *Communication-Desktop
+    - *Media-Desktop
+    - *Misc-Desktop
+    - *Productivity-Desktop
+    - *Recording-Desktop
+    - *Virtualization-Desktop
     - bitwarden
     - brave-browser
     - mailspring
@@ -648,9 +659,75 @@ softwareGroups:
     - tailscale
     - warp
   _Full: &_Development
-    << : [*_Standard, *Android, *Ansible, *Backup, *Browsers, *CI, *CLI-Extras, *Cloud, *Cloud-Storage, *Crypto, *DNS, *Data-Manipulation, *Database, *Docker, *E-mail, *Finance, *Git, *Go, *Home, *Kubernetes, *Linting, *Logging, *Media, *Misc-Development-Tools, *NGINX, *Network-Enabled, *Networking, *Orchestration, *PHP, *Package-Management, *Python, *Recording, *Ruby, *SSH, *Security, *Server, *Shell-Scripting, *Social-Networking, *Sys-Admin, *Terraform, *Templates, *Testing, *Transfer, *Utilities, *Virtualization, *Web-Development]
+    - *_Standard
+    - *Android
+    - *Ansible
+    - *Backup
+    - *Browsers
+    - *CI
+    - *CLI-Extras
+    - *Cloud
+    - *Cloud-Storage
+    - *Crypto
+    - *DNS
+    - *Data-Manipulation
+    - *Database
+    - *Docker
+    - *E-mail
+    - *Finance
+    - *Git
+    - *Go
+    - *Home
+    - *Kubernetes
+    - *Linting
+    - *Logging
+    - *Media
+    - *Misc-Development-Tools
+    - *NGINX
+    - *Network-Enabled
+    - *Networking
+    - *Orchestration
+    - *PHP
+    - *Package-Management
+    - *Python
+    - *Recording
+    - *Ruby
+    - *SSH
+    - *Security
+    - *Server
+    - *Shell-Scripting
+    - *Social-Networking
+    - *Sys-Admin
+    - *Terraform
+    - *Templates
+    - *Testing
+    - *Transfer
+    - *Utilities
+    - *Virtualization
+    - *Web-Development
   _Full-Desktop: &_Development-Desktop
-    << : [*_Full, *_Standard-Desktop, *Android-Desktop, *Backup-Desktop, *Browsers-Desktop, *Communication-Desktop, *Crypto-Desktop, *Database-Desktop, *Development-Tools-Desktop, *E-mail-Desktop, *Finance-Desktop, *Git-Desktop, *Kubernetes-Desktop, *Media-Desktop, *Misc-Desktop, *Productivity-Desktop, *Recording-Desktop, *Security-Desktop, *Sys-Admin-Desktop, *Transfer-Desktop, *Virtualization-Desktop, *Web-Development-Desktop]
+    - *_Full
+    - *_Standard-Desktop
+    - *Android-Desktop
+    - *Backup-Desktop
+    - *Browsers-Desktop
+    - *Communication-Desktop
+    - *Crypto-Desktop
+    - *Database-Desktop
+    - *Development-Tools-Desktop
+    - *E-mail-Desktop
+    - *Finance-Desktop
+    - *Git-Desktop
+    - *Kubernetes-Desktop
+    - *Media-Desktop
+    - *Misc-Desktop
+    - *Productivity-Desktop
+    - *Recording-Desktop
+    - *Security-Desktop
+    - *Sys-Admin-Desktop
+    - *Transfer-Desktop
+    - *Virtualization-Desktop
+    - *Web-Development-Desktop
   deprecated:
     - apt-cacher-ng
     - bivac
