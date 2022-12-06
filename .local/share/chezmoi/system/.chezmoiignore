@@ -1,0 +1,13 @@
+.chezmoiscripts/**/*
+!.chezmoiscripts/{{ .host.distro.id }}/**/*
+!.chezmoiscripts/universal/**/*
+
+{{- if ne .host.distro.id "qubes" }}
+boot/efi/EFI/qubes
+etc/qubes
+etc/yum.repos.d/qubes-dom0.repo
+{{- end }}
+
+{{- if eq .host.distro.family "windows" }}
+usr/local/bin/executable_squash-symlink
+{{- end }}
