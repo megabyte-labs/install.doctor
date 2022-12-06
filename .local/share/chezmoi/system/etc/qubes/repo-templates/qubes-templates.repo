@@ -1,0 +1,41 @@
+[qubes-templates-itl]
+name = Qubes Templates repository
+#baseurl = https://yum.qubes-os.org/r$releasever/templates-itl
+#baseurl = http://yum.qubesosfasa4zl44o4tws22di6kepyzfeqv3tg4e3ztknltfxqrymdad.onion/r$releasever/templates-itl
+metalink = https://yum.qubes-os.org/r$releasever/templates-itl/repodata/repomd.xml.metalink
+enabled = 1
+fastestmirror = 1
+metadata_expire = 7d
+gpgcheck = 1
+gpgkey = file:///etc/qubes/repo-templates/keys/RPM-GPG-KEY-qubes-$releasever-primary
+
+[qubes-templates-itl-testing]
+name = Qubes Templates repository
+#baseurl = https://yum.qubes-os.org/r$releasever/templates-itl-testing
+#baseurl = http://yum.qubesosfasa4zl44o4tws22di6kepyzfeqv3tg4e3ztknltfxqrymdad.onion/r$releasever/templates-itl-testing
+metalink = https://yum.qubes-os.org/r$releasever/templates-itl-testing/repodata/repomd.xml.metalink
+enabled = 1
+fastestmirror = 1
+gpgcheck = 1
+gpgkey = file:///etc/qubes/repo-templates/keys/RPM-GPG-KEY-qubes-$releasever-primary
+
+[qubes-templates-community]
+name = Qubes Community Templates repository
+#baseurl = https://yum.qubes-os.org/r$releasever/templates-community
+#baseurl = http://yum.qubesosfasa4zl44o4tws22di6kepyzfeqv3tg4e3ztknltfxqrymdad.onion/r$releasever/templates-community
+metalink = https://yum.qubes-os.org/r$releasever/templates-community/repodata/repomd.xml.metalink
+enabled = 1
+fastestmirror = 1
+metadata_expire = 7d
+gpgcheck = 1
+gpgkey = file:///etc/qubes/repo-templates/keys/RPM-GPG-KEY-qubes-$releasever-templates-community
+
+[qubes-templates-community-testing]
+name = Qubes Community Templates repository
+#baseurl = https://yum.qubes-os.org/r$releasever/templates-community-testing
+#baseurl = http://yum.qubesosfasa4zl44o4tws22di6kepyzfeqv3tg4e3ztknltfxqrymdad.onion/r$releasever/templates-community-testing
+metalink = https://yum.qubes-os.org/r$releasever/templates-community-testing/repodata/repomd.xml.metalink
+enabled = 1
+fastestmirror = 1
+gpgcheck = 1
+gpgkey = file:///etc/qubes/repo-templates/keys/RPM-GPG-KEY-qubes-$releasever-templates-community

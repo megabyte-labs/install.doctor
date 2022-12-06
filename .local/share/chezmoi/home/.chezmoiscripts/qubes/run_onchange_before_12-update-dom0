@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+### Update dom0
+logg info 'Updating dom0 via `qubesctl`'
+sudo qubesctl --show-output state.sls update.qubes-dom0
+logg info 'Updating dom0 via `qubes-dom0-update`'
+sudo qubes-dom0-update --clean -y
+
+### Ensure sys-whonix is running
+logg info 'Ensuring `sys-whonix` is running'
+qvm-start sys-whonix --skip-if-running

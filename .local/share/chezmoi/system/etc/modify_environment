@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+### Ensure QT_STYLE_OVERRIDE is set in /etc/environment
+logg info 'Ensuring QT_STYLE_OVERRIDE is set in /etc/environment'
+if cat /etc/environment | grep QT_STYLE_OVERRIDE; then
+  sudo sed -i '/.*QT_STYLE_OVERRIDE.*/export QT_STYLE_OVERRIDE=kvantum-dark/' /etc/environment
+else
+  echo 'export QT_STYLE_OVERRIDE=kvantum-dark' | sudo tee -a /etc/environment
+fi

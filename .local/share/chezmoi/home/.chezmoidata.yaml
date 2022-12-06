@@ -846,3 +846,27 @@ softwarePlugins:
       - https://github.com/tpope/vim-sensible.git
       - https://github.com/tpope/vim-surround.git
       - https://github.com/nanotee/zoxide.vim.git
+qubes:
+  mirageUrl: https://github.com/mirage/qubes-mirage-firewall/releases/latest/download/mirage-firewall.tar.bz2
+  promptKeyboards: false
+  provisionVM: provision
+  templates:
+    # - centos-8
+    # - centos-8-minimal
+    # - debian-10
+    - debian-11
+    - debian-11-minimal
+    - fedora-32
+    - fedora-36
+    - fedora-36-minimal
+    - fedora-36-xfce
+    - fedora-37
+    # - gentoo
+    # - gentoo-minimal
+    # - kali
+    - whonix-gw-16
+    - whonix-ws-16
+  templatesUnofficial:
+    - https://qubes.3isec.org/Templates_4.1/qubes-template-archlinux-4.0.6-202204171510.noarch.rpm
+    - https://qubes.3isec.org/Templates_4.1/qubes-template-debian-12-4.0.6-202208292254.noarch.rpm
+    - https://qubes.3isec.org/Templates_4.1/qubes-template-jammy-4.0.6-202205012228.noarch.rpm
