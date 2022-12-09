@@ -447,7 +447,7 @@ softwarePackages:
     pacman: automake
     pkg: automake
   autorestic:
-    _bin: null
+    _bin: autorestic
     _desc: '[Autorestic](https://autorestic.vercel.app/) is a wrapper around [Restic](https://restic.net/). The Restic CLI can be a bit overwhelming and difficult to manage if you have many different location that you want to backup to multiple locations. Autorestic makes managing all your S3 backups easier by making it config / cron driven.'
     _docs: https://autorestic.vercel.app/quick
     _github: https://github.com/cupcakearmy/autorestic/
@@ -2268,16 +2268,20 @@ softwarePackages:
     _service: null
     pipx: gdown
   gdrive:
-    _bin: null
+    _bin: gdrive
     _desc: Google Drive CLI Client
-    _docs: null
+    _docs: https://github.com/prasmussen/gdrive#usage
     _github: https://github.com/prasmussen/gdrive
-    _home: null
+    _home: https://github.com/prasmussen/gdrive
     _name: gdrive
-    _service: null
+    _service: false
     _type: cli
     brew: gdrive
+    choco: gdrive
     github: github.com/prasmussen/gdrive
+    go: github.com/prasmussen/gdrive@latest
+    port: gdrive
+    scoop: gdrive
     yay: gdrive
   gdu:
     _bin: null
@@ -2330,7 +2334,7 @@ softwarePackages:
     scoop: gh
     winget: GitHub.cli
   ghorg:
-    _bin: null
+    _bin: ghorg
     _desc: '[ghorg](https://github.com/gabrie30/ghorg) allows you to quickly clone all of an org''s, or user''s repositories into a single directory.'
     _docs: null
     _github: https://github.com/gabrie30/ghorg
@@ -5414,7 +5418,7 @@ softwarePackages:
     choco: responsively
     github: github.com/responsively-org/responsively-app
   restic:
-    _bin: null
+    _bin: restic
     _desc: '[Restic](https://restic.net/) is a modern backup program that can back up your files from Linux, BSD, Mac and Windows to many different storage types, including self-hosted and online services. It is a single executable that you can run without a server or complex setup. It can be used to only back-up the parts of files that actually changed. It uses cryptography in every part of the process. Restic is entirely free to use and completely open source.'
     _docs: https://restic.readthedocs.io/en/latest/
     _github: https://github.com/restic/restic
