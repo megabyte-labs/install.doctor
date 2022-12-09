@@ -250,6 +250,7 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
+    _post:pipx: pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
     brew: ansible
     dnf: ansible
     pipx: ansible
@@ -4110,13 +4111,14 @@ softwarePackages:
     github: github.com/davrodpin/mole
     yay: mole-bin
   molecule:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
+    _bin: molecule
+    _desc: Molecule aids in the development and testing of Ansible roles
+    _docs: https://molecule.readthedocs.io/en/latest/getting-started.html
+    _github: https://github.com/ansible-community/molecule
+    _home: https://molecule.readthedocs.io/en/latest/
+    _name: Ansible Molecule
+    _service: false
+    _post:pipx: pipx inject molecule ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog apache-libcloud gcloud junit-xml molecule-docker molecule-gce molecule-vagrant pycrypto
     brew: molecule
     pipx: molecule
   monero:
@@ -5622,7 +5624,7 @@ softwarePackages:
     ansible: professormanhattan.s3filesystem
     cargo: catfs
   s5cmd:
-    _bin: null
+    _bin: s5cmd
     _desc: '[s5cmd](https://github.com/peak/s5cmd) is a very fast S3 and local filesystem execution tool. It comes with support for a multitude of operations including tab completion and wildcard support for files, which can be very handy for your object storage workflow while working with large number of files. s5cmd is the fastest way of interacting with S3 buckets because it can utilize multiple threads unlike similar tools.'
     _docs: null
     _github: https://github.com/peak/s5cmd
@@ -5702,7 +5704,7 @@ softwarePackages:
     _type: cli
     go: github.com/Confbase/schema
   scrcpy:
-    _bin: null
+    _bin: scrcpy
     _desc: '[scrcpy](https://github.com/Genymobile/scrcpy) is a free and open-source application that provides display of Android devices connected on USB (or over TCP/IP). It also allows you to control the Android device. It does not require any root access.'
     _docs: null
     _github: https://github.com/Genymobile/scrcpy
