@@ -1686,7 +1686,7 @@ softwarePackages:
     _service: false
     npm: editly
   elastic-agent:
-    _bin: null
+    _bin: elastic-agent
     _desc: >-
       [Elastic Agent](https://www.elastic.co/guide/en/fleet/current/elastic-agent-installation-configuration.html) is a single, unified way to add monitoring for logs, metrics, and other types of data to each host. A single agent makes it easier and faster to deploy monitoring across your infrastructure. The agent’s single, unified policy makes it easier to add integrations for new data sources. You can use Elastic Agent with Fleet.
       [Fleet](https://www.elastic.co/guide/en/kibana/current/fleet.html) is a Kibana service that allows you to add and manage integrations for popular services and platforms, as well as manage Elastic Agent installations.
@@ -1694,7 +1694,7 @@ softwarePackages:
     _github: https://github.com/elastic/elastic-agent
     _home: https://www.elastic.co/
     _name: Elastic Agent
-    _service: null
+    _service: true
     ansible: professormanhattan.elasticagent
   electron:
     _bin: electron
@@ -2216,6 +2216,21 @@ softwarePackages:
     port: fzf
     xbps: fzf
     zypper: fzf
+  gawk:
+    _bin: gawk
+    _desc: An implementation of the AWK programming language
+    _docs: https://www.gnu.org/software/gawk/manual/
+    _github: false
+    _home: https://www.gnu.org/software/gawk/
+    _name: gawk
+    _service: false
+    apt: gawk
+    brew: gawk
+    choco: gawk
+    dnf: gawk
+    pacman: gawk
+    port: gawk
+    scoop: gawk
   google-assistant:
     _bin: null
     _desc: '[Google Assistant for Desktop](https://github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client) is a cross-platform unofficial Google Assistant Client for Desktop.'
@@ -3055,14 +3070,20 @@ softwarePackages:
     cargo: htmlq
     github: github.com/mgdm/htmlq
   htop:
-    _bin: null
+    _bin: htop
     _desc: '[htop](https://htop.dev/) is an interactive system-monitor process-viewer and process-manager. It is designed as an alternative to the Unix program top. It shows a frequently updated list of the processes running on a computer, normally ordered by the amount of CPU usage.'
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://www.man7.org/linux/man-pages/man1/htop.1.html
+    _github: https://github.com/htop-dev/htop
+    _home: https://htop.dev/
     _name: htop
-    _service: null
-    ansible: professormanhattan.htop
+    _service: false
+    ansible:darwin: professormanhattan.htop
+    ansible:linux: professormanhattan.htop
+    apt: htop
+    brew: htop
+    dnf: htop
+    pacman: htop
+    port: htop
   http-prompt:
     _bin: null
     _desc: null
@@ -3796,15 +3817,35 @@ softwarePackages:
     _name: LSD (LSDeluxe)
     _service: null
     ansible: professormanhattan.lsd
-  lxdc:
+  lxc:
+    _bin: lxc
+    _desc: Linux Containers is an operating-system-level virtualization method for running multiple isolated Linux systems on a control host using a single Linux kernel.
+    _docs: https://linuxcontainers.org/lxc/documentation/
+    _github: https://github.com/lxc/lxc
+    _home: https://linuxcontainers.org/lxc/
+    _name: LXC
+    _service: true
+    _systemd: lxc
+    apt: lxc
+    brew: lxc
+    dnf: lxc
+    pacman: lxc
+  lxd:
     _bin: null
     _desc: '[LXD](https://linuxcontainers.org) is a next generation system container manager. It offers a user experience similar to virtual machines but using Linux containers instead'
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://linuxcontainers.org/lxd/docs/master/
+    _github: https://github.com/lxc/lxd
+    _groups:
+      - lxd
+    _home: https://linuxcontainers.org/lxd/
     _name: LXDC
-    _service: null
+    _service: false
     ansible: professormanhattan.lxdc
+    snap: lxd
+  lxdc:
+    _deps:
+      - lxc
+      - lxd
   m-cli:
     _bin: m
     _desc: Swiss Army Knife for macOS. A wrapper for many types of macOS-specific commands.
@@ -4308,14 +4349,18 @@ softwarePackages:
     pacman: netcat
     scoop: netcat
   netdata:
-    _bin: null
+    _bin: netdata
     _desc: '[Netdata](https://www.netdata.cloud/) is an open source tool designed to collect real-time metrics, such as CPU usage, disk activity, bandwidth usage, website visits, etc., and then display them in live, easy-to-interpret charts.'
     _docs: https://learn.netdata.cloud/docs/
     _github: https://github.com/netdata/netdata
     _home: https://www.netdata.cloud/
     _name: Netdata
-    _service: null
+    _service: true
     ansible: professormanhattan.netdata
+    brew: netdata
+    pacman: netdata
+    port: netdata
+    script: curl https://my-netdata.io/kickstart.sh > /tmp/netdata-kickstart.sh && sh /tmp/netdata-kickstart.sh
   newman:
     _bin: null
     _desc: null
@@ -5592,14 +5637,24 @@ softwarePackages:
     brew: ms-jpq/sad/sad
     pacman: sad
   samba:
-    _bin: null
+    _bin: samba
     _desc: '[Samba](https://www.samba.org/) is a free and open-source software that allows files to be shared across Windows and Linux systems simply and easily. To be exact, it is an open-source implementation of the SMB/CIFS protocol.'
     _docs: https://www.samba.org/samba/docs/
     _github: https://github.com/samba-team/samba
+    _groups:
+      - sambausers
     _home: https://www.samba.org/
     _name: Samba
-    _service: null
-    ansible: professormanhattan.samba
+    _service: true
+    _systemd: smbd
+    _systemd:dnf: smb
+    ansible:darwin: professormanhattan.samba
+    ansible:linux: professormanhattan.samba
+    apt: samba
+    brew: samba
+    dnf: samba
+    pacman: samba
+    port: samba4
   sanoid:
     _bin: null
     _desc: '[Sanoid](https://github.com/jimsalterjrs/sanoid/) is a free and open source snapshot management tool. Sanoid is a policy-driven snapshot management tool for ZFS filesystems. When combined with the Linux KVM hypervisor, you can use it to make your systems functionally immortal.'
@@ -5814,14 +5869,18 @@ softwarePackages:
     _service: false
     ansible: professormanhattan.shc
   shdoc:
-    _bin: null
+    _deps:script:
+      - gawk
+    _bin: shdoc
     _desc: '[shdoc](https://github.com/reconquest/shdoc) is a tool to generate Documentation for shell scripts (bash, sh, zsh)'
     _docs: null
-    _github: null
+    _github: https://github.com/reconquest/shdoc
     _home: null
     _name: shdoc
     _service: null
     ansible: professormanhattan.shdoc
+    script: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install
+    yay: shdoc-git
   shellcheck:
     _bin: shellcheck
     _desc: A static analysis tool for shell scripts
@@ -6095,14 +6154,16 @@ softwarePackages:
     brew: hudochenkov/sshpass/sshpass
     dnf: sshpass
   ssh-tarpit:
-    _bin: null
+    _bin: endlessh
     _desc: '[Endlessh](https://github.com/skeeto/endlessh) is an SSH tarpit that very slowly sends an endless, random SSH banner. It keeps SSH clients locked up for hours or even days at a time. The purpose is to put your real SSH server on another port and then let the script kiddies get stuck in this tarpit instead of bothering a real server.'
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://github.com/skeeto/endlessh
+    _github: https://github.com/skeeto/endlessh
+    _home: https://github.com/skeeto/endlessh
     _name: Endlessh
-    _service: null
+    _service: true
     ansible: professormanhattan.sshtarpit
+    apt: endlessh
+    dnf: endlessh
   ssl-proxy:
     _bin: null
     _desc: Simple zero-config SSL reverse proxy with real autogenerated certificates
@@ -6469,14 +6530,17 @@ softwarePackages:
     choco: terraform
     pacman: terraform
   tfenv:
-    _bin: null
+    _bin: tfenv
     _desc: '[tfenv](https://github.com/tfutils/tfenv) is a Terraform version manager inspired by [rbenv](https://github.com/rbenv/rbenv). It supports macOS, Linux, and Windows.'
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://github.com/tfutils/tfenv#usage
+    _github: https://github.com/tfutils/tfenv
+    _home: https://github.com/tfutils/tfenv
     _name: tfenv
-    _service: null
-    ansible: professormanhattan.tfenv
+    _service: false
+    ansible:darwin: professormanhattan.tfenv
+    ansible:linux: professormanhattan.tfenv
+    brew: tfenv
+    port: tfenv
   tflint:
     _bin: null
     _desc: '[tflint](https://github.com/terraform-linters/tflint) is a framework that can help in finding possible errors for major cloud providers, warn about deprecated syntax and unused declarations and enforce best practices. This role installs tflint on nearly any platform.'
@@ -6735,8 +6799,14 @@ softwarePackages:
     _github: https://github.com/hashicorp/vagrant
     _home: https://www.vagrantup.com/
     _name: Vagrant
-    _service: null
+    _service: false
+    _snapClassic: true
     ansible: professormanhattan.vagrant
+    choco: vagrant
+    dnf: vagrant
+    pacman: vagrant
+    scoop: vagrant
+    snap: vagrant
   vault:
     _bin: null
     _desc: '[HashiCorp Vault](https://www.vaultproject.io/) secures, stores, and tightly controls access to tokens, passwords, certificates, API keys, and other secrets. Basically, it is a tool for managing any data that you want to tightly control access to. It also has some advanced integrations with systems like AWS.'
@@ -6984,14 +7054,15 @@ softwarePackages:
     brew: hashicorp/tap/waypoint
     scoop: waypoint
   wazuh:
-    _bin: null
+    _bin: wazuh
     _desc: '[Wazuh](https://wazuh.com/) is a free, open source and enterprise-ready security monitoring solution for threat detection, integrity monitoring, incident response and compliance.'
     _docs: https://documentation.wazuh.com/current/index.html
     _github: https://github.com/wazuh/wazuh
     _home: https://wazuh.com/
     _name: Wazuh
-    _service: null
+    _service: true
     ansible: professormanhattan.wazuh
+    choco: wazuh-agent
   websocat:
     _bin: null
     _desc: CLI for interacting with web sockets
@@ -7170,14 +7241,20 @@ softwarePackages:
     _service: null
     npm: '@cloudflare/wrangler'
   wrk:
-    _bin: null
+    _bin: wrk
     _desc: '[wrk](https://github.com/reconquest/wrk) is a modern HTTP benchmarking tool capable of generating significant load when run on a single multi-core CPU. It combines a multithreaded design with scalable event notification systems such as epoll and kqueue'
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://github.com/blangel/wrk
+    _github: https://github.com/wg/wrk
+    _home: https://github.com/blangel/wrk
     _name: wrk
-    _service: null
+    _service: false
     ansible: professormanhattan.wrk
+    apt: wrk
+    brew: wrk
+    dnf: wrk
+    pacman: wrk
+    port: wrk
+    xbps: wrk
   wsl:
     _bin: null
     _desc: For example, this role sets the timezone, sets the hostname, sets up the swap space, ensures auto-login is either disabled or enabled, and customizes GRUB (on Linux). It also ensures that specified groups are present on the system. On Windows, the role ensures all the available updates are installed, ensures [Scoop](https://scoop.sh/) is installed, and ensures common dependencies like [Bandizip](https://en.bandisoft.com/bandizip/) (a compressed-file manager) are installed.

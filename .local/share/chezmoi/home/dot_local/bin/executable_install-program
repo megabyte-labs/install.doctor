@@ -97,9 +97,9 @@ async function downloadInstallData() {
 }
 
 // Creates the installOrders object which maps package managers to arrays of packages to install
-async function generateInstallOrders() {
+async function generateInstallOrders(pkgsToInstall) {
   const logStage = "Install Orders";
-  const packagesToInstall = process.argv.slice(3);
+  const packagesToInstall = pkgsToInstall;
   const installerPreference = await OSTypeInstallerKey();
   log(
     "info",
@@ -348,6 +348,88 @@ async function generateInstallOrders() {
             continue pkgFor;
           }
         }
+
+        // Handle the _deps attribute
+        currentSelector = "deps";
+        doubleScoped =
+          softwarePackages[packageKey][
+            "_" + currentSelector + ":" + preference + ":" + osID
+          ] ||
+          softwarePackages[packageKey][
+            "_" + currentSelector + ":" + osID + ":" + preference
+          ] ||
+          softwarePackages[packageKey][
+            "_" + currentSelector + ":" + preference + ":" + osType
+          ] ||
+          softwarePackages[packageKey][
+            "_" + currentSelector + ":" + osType + ":" + preference
+          ];
+        scopedPkgManager =
+          softwarePackages[packageKey][
+            "_" + currentSelector + ":" + preference
+          ];
+        scopedSystem =
+          softwarePackages[packageKey]["_" + currentSelector + ":" + osID] ||
+          softwarePackages[packageKey]["_" + currentSelector + ":" + osType];
+        normalCheck = softwarePackages[packageKey]["_" + currentSelector];
+        if (doubleScoped) {
+          let pref;
+          if (
+            softwarePackages[packageKey][
+              "_" + currentSelector + ":" + preference + ":" + osID
+            ]
+          ) {
+            pref = preference + ":" + osID;
+            log("info", "Installing Dependencies", `Installing dependencies for ${packageKey}.${pref}`);
+            await installSoftware(softwarePackages[packageKey][pref])
+          } else if (
+            softwarePackages[packageKey][
+              "_" + currentSelector + ":" + preference + ":" + osType
+            ]
+          ) {
+            pref = preference + ":" + osType;
+            log("info", "Installing Dependencies", `Installing dependencies for ${packageKey}.${pref}`);
+            await installSoftware(softwarePackages[packageKey][pref])
+          } else if (
+            softwarePackages[packageKey][
+              "_" + currentSelector + ":" + osID + ":" + preference
+            ]
+          ) {
+            pref = osID + ":" + preference;
+            log("info", "Installing Dependencies", `Installing dependencies for ${packageKey}.${pref}`);
+            await installSoftware(softwarePackages[packageKey][pref])
+          } else if (
+            softwarePackages[packageKey][
+              "_" + currentSelector + ":" + osType + ":" + preference
+            ]
+          ) {
+            pref = osType + ":" + preference;
+            log("info", "Installing Dependencies", `Installing dependencies for ${packageKey}.${pref}`);
+            await installSoftware(softwarePackages[packageKey][pref])
+          }
+        } else if (scopedPkgManager) {
+          const pref = preference;
+          log("info", "Installing Dependencies", `Installing dependencies for ${packageKey}.${pref}`);
+          await installSoftware(softwarePackages[packageKey][pref])
+        } else if (scopedSystem) {
+          let pref;
+          if (
+            softwarePackages[packageKey]["_" + currentSelector + ":" + osID]
+          ) {
+            pref = osID;
+            log("info", "Installing Dependencies", `Installing dependencies for ${packageKey}.${pref}`);
+            await installSoftware(softwarePackages[packageKey][pref])
+          } else if (
+            softwarePackages[packageKey]["_" + currentSelector + ":" + osType]
+          ) {
+            pref = osType;
+            log("info", "Installing Dependencies", `Installing dependencies for ${packageKey}.${pref}`);
+            await installSoftware(softwarePackages[packageKey][pref])
+          }
+        } else if (normalCheck) {
+          log("info", "Installing Dependencies", `Installing dependencies for ${packageKey}.deps`);
+          await installSoftware(softwarePackages[packageKey]['_deps'])
+        }
         if (softwarePackages[packageKey][preference + ":" + osID]) {
           await updateInstallMaps(
             preference,
@@ -550,10 +632,9 @@ async function afterInstall(packageManager) {
   }
 }
 
-async function ensureCurl() {
-  const curl = which.sync('curl', { nothrow: true })
-  if (!curl) {
-    log("warn", "Ensure curl", `Installing curl because it is required for the binary install method`)
+async function ensurePackage(dep) {
+  const target = which.sync(dep, { nothrow: true })
+  if (!target) {
     if (osType === 'linux') {
       const apk = which.sync("apk", { nothrow: true });
       const apt = which.sync("apt", { nothrow: true });
@@ -562,43 +643,43 @@ async function ensureCurl() {
       const pacman = which.sync("pacman", { nothrow: true });
       const zypper = which.sync("zypper", { nothrow: true });
       if (apk) {
-        $`sudo apk add curl`;
+        $`sudo apk add ${dep}`;
       } else if (apt) {
         if (updateDone[packageManager] !== true) {
           await beforeInstall('apt-get')
         }
-        await $`sudo apt-get install -y curl`;
+        await $`sudo apt-get install -y ${dep}`;
       } else if (dnf) {
         if (updateDone[packageManager] !== true) {
           await beforeInstall('dnf')
         }
-        await $`sudo dnf install -y curl`;
+        await $`sudo dnf install -y ${dep}`;
       } else if (yum) {
         if (updateDone[packageManager] !== true) {
           await beforeInstall('dnf')
         }
-        await $`sudo yum install -y curl`;
+        await $`sudo yum install -y ${dep}`;
       } else if (pacman) {
         if (updateDone[packageManager] !== true) {
           await beforeInstall('pacman')
         }
-        await $`sudo pacman -Sy curl`;
+        await $`sudo pacman -Sy ${dep}`;
       } else if (zypper) {
         if (updateDone[packageManager] !== true) {
           await beforeInstall('zypper')
         }
-      await $`sudo zypper install -y curl`;
+      await $`sudo zypper install -y ${dep}`;
       }
     } else if (osType === 'darwin') {
       if (updateDone['brew'] !== true) {
         await beforeInstall('brew')
       }
-      await $`brew install curl`
+      await $`brew install ${dep}`
     } else if (osType === 'windows') {
       if (updateDone['choco'] !== true) {
         await beforeInstall('choco')
       }
-      await `choco install -y curl`
+      await `choco install -y ${dep}`
     }
   }
 }
@@ -780,7 +861,7 @@ async function ensurePackageManager(packageManager) {
     const zap = which.sync('zap', { nothrow: true })
     if (!zap) {
       log("info", "Zap Installation", 'Installing Zap to handle AppImage installation')
-      await ensureCurl()
+      await ensurePackage('curl')
       await $`sudo curl -sSL https://github.com/srevinsaju/zap/releases/download/continuous/zap-amd64 > /usr/local/bin/zap`
     }
   } else if (packageManager === "ansible") {
@@ -812,7 +893,7 @@ async function ensurePackageManager(packageManager) {
     `
     );
   } else if (packageManager === "binary") {
-    await ensureCurl()
+    await ensurePackage('curl')
   } else if (packageManager === "bpkg") {
     await ensureInstalled(
       "bpkg",
@@ -1447,7 +1528,7 @@ async function updateSystemd(service) {
 }
 
 // main process
-async function main() {
+async function installSoftware(pkgsToInstall) {
   osType = await OSType();
   osID = osType;
   if (osType === "linux") {
@@ -1460,7 +1541,7 @@ async function main() {
   );
   installData = await downloadInstallData();
   log("info", "Install Orders", `Calculating the install orders`);
-  await generateInstallOrders();
+  await generateInstallOrders(pkgsToInstall ? pkgsToInstall : process.argv.slice(3));
   log(
     "info",
     "Ensure Package Manager Installed",
@@ -1519,4 +1600,4 @@ async function main() {
 }
 
 // Start the main process
-await main();
+await installSoftware(false);
