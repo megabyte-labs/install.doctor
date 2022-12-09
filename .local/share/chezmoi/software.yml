@@ -5483,15 +5483,21 @@ softwarePackages:
     choco: rsync
     dnf: rsync
   ruby:
-    _bin: null
-    _desc: |
-      Ruby is an interpreted, high-level, general-purpose programming language which supports multiple programming paradigms. It was designed with an emphasis on programming productivity and simplicity. In Ruby, everything is an object, including primitive data types. It was developed in the mid-1990s in Japan.
+    _bin: ruby
+    _desc: Ruby is an interpreted, high-level, general-purpose programming language which supports multiple programming paradigms. It was designed with an emphasis on programming productivity and simplicity. In Ruby, everything is an object, including primitive data types. It was developed in the mid-1990s in Japan.
     _docs: https://www.ruby-lang.org/en/documentation/
     _github: https://github.com/ruby/ruby
     _home: https://www.ruby-lang.org/en/
     _name: Ruby
-    _service: null
+    _service: false
     ansible: professormanhattan.ruby
+    apt: ruby-full
+    brew: ruby
+    choco: ruby
+    dnf: ruby
+    pacman: ruby
+    port: ruby
+    scoop: ruby
   runjs:
     _bin: null
     _desc: A JavaScript playground that auto-evaluates as you type
