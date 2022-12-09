@@ -6886,10 +6886,13 @@ softwarePackages:
       EOF
       sudo dnf -y install @development-tools
       sudo dnf -y install kernel-headers kernel-devel dkms elfutils-libelf-devel qt5-qtx11extras
-    _service: null
+    _service: false
     ansible: professormanhattan.virtualbox
+    apt: virtualbox
+    cask: virtualbox
     choco: virtualbox
-    dnf: virtualbox-7.0
+    dnf: virtualbox
+    pacman: virtualbox
   virtualenv:
     _bin: null
     _desc: null
@@ -7315,14 +7318,21 @@ softwarePackages:
     scoop: win32yank
     zypper: yank
   yarn:
-    _bin: null
+    _bin: yarn
     _desc: '[Yarn](https://yarnpkg.com/) is a relatively new and open source JavaScript package manager developed by Facebook. Yarn is fully compatible with the npm registry (i.e. [npmjs.com](https://www.npmjs.com/)) and can work alongside npm, but it''s aim it to be a safer, more secure and more reliable alternative.'
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://yarnpkg.com/getting-started
+    _github: https://github.com/yarnpkg/berry
+    _home: https://yarnpkg.com/
     _name: Yarn
-    _service: null
+    _service: false
     ansible: professormanhattan.yarn
+    brew: yarn
+    choco: yarn
+    npm: yarn
+    pacman: yarn
+    port: yarn
+    scoop: yarn
+    script: curl -o- -L https://yarnpkg.com/install.sh | bash
   yj:
     _bin: yj
     _desc: CLI program that allows you to convert between YAML, TOML, JSON, and HCL.
