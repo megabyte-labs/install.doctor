@@ -2993,7 +2993,7 @@ softwarePackages:
     scoop: heroku-cli
     yay: heroku-cli
   hexyl:
-    _bin: null
+    _bin: hexyl
     _desc: '[hexyl](https://github.com/sharkdp/hexyl) is a simple hex viewer for the terminal. It uses a colored output to distinguish different categories of bytes (NULL bytes, printable ASCII characters, ASCII whitespace characters, other ASCII characters and non-ASCII).'
     _docs: null
     _github: https://github.com/sharkdp/hexyl
@@ -3005,11 +3005,16 @@ softwarePackages:
     apt: hexyl
     brew: hexyl
     cargo: hexyl
+    dnf: hexyl
     github: github.com/sharkdp/hexyl
+    nix: hexyl
     pacman: hexyl
-    pkg: hexyl
+    pkg-freebsd: hexyl
+    pkg-termux: hexyl
+    port: hexyl
     scoop: hexyl
     snap: hexyl
+    xbps: hexyl
   hey:
     _bin: null
     _desc: HTTP load generator, ApacheBench (ab) replacement, formerly known as rakyll/boom
