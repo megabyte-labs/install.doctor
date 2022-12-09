@@ -1827,14 +1827,21 @@ softwarePackages:
     pacman: exa
     zypper: exa
   exiftool:
-    _bin: null
+    _bin: exiftool
     _desc: '[exiftool](https://exiftool.org/) is a platform-independent Perl library plus a command-line application for reading, writing and editing meta information in a wide variety of files'
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://exiftool.org/exiftool_pod.html
+    _github: https://github.com/exiftool/exiftool
+    _home: https://exiftool.org/
     _name: exiftool
-    _service: null
+    _service: false
     ansible: professormanhattan.exiftool
+    apt: libimage-exiftool-perl
+    brew: exiftool
+    choco: exiftool
+    dnf: perl-Image-ExifTool.noarch
+    pacman: perl-image-exiftool
+    port: exiftool
+    scoop: exiftool
   extensions:
     _bin: null
     _desc: This role acts as a catch-all for extensions for various system software.
@@ -2800,14 +2807,20 @@ softwarePackages:
     pacman: gping
     scoop: gping
   gradle:
-    _bin: null
+    _bin: gradle
     _desc: '[Gradle](https://gradle.org/) is a build automation tool for multi-language software development. It controls the development process in the tasks of compilation and packaging to testing, deployment, and publishing. Supported languages include Java, C/C++, JavaScript.'
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://docs.gradle.org/current/userguide/userguide.html
+    _github: https://github.com/gradle/gradle
+    _home: https://gradle.org/
     _name: Gradle
-    _service: null
+    _service: false
+    _snapClassic: true
     ansible: professormanhattan.gradle
+    brew: gradle
+    choco: gradle
+    port: gradle
+    scoop: gradle
+    snap: gradle
   grex:
     _bin: null
     _desc: A command-line tool and library for generating regular expressions from user-provided test cases
@@ -3293,14 +3306,21 @@ softwarePackages:
     ansible: professormanhattan.iterm2
     cask: iterm2
   java:
-    _bin: null
+    _bin: java
     _desc: '[Java](https://www.java.com/en/) is a class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.'
     _docs: https://docs.oracle.com/en/cloud/paas/nosql-cloud/index.html
     _github: https://github.com/oracle/nosql-java-sdk
     _home: https://www.java.com/en/
     _name: Java
-    _service: null
+    _service: false
     ansible: professormanhattan.java
+    apt: openjdk-11-jdk
+    brew: java
+    choco: jdk11
+    dnf: java-11-openjdk-devel.x86_64
+    pacman: jdk-openjdk
+    port: openjdk11
+    scoop: openjdk11
   jenv:
     _bin: null
     _desc: '[jenv](https://www.jenv.be/) lets you switch between Java versions. It sets JAVA_HOME inside your shell, in a way that can be set globally, local to the current working directory or per shell.'
