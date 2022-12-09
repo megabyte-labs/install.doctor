@@ -318,14 +318,13 @@ softwarePackages:
     binary:linux: https://github.com/aquaproj/aqua/releases/download/v2.0.0-0/aqua_linux_amd64.tar.gz
     binary:windows: https://github.com/aquaproj/aqua/releases/download/v2.0.0-0/aqua_windows_amd64.tar.gz
   argo-cli:
-    _bin: null
+    _bin: argocd
     _desc: ArgoCD is a declarative GitOps continuous delivery platform.
-    _docs: null
-    _github: null
-    _home: null
-    _homepage: https://argoproj.github.io
+    _docs: https://argoproj.github.io/argo-workflows/walk-through/argo-cli/
+    _github: https://github.com/argoproj/argo-cd
+    _home: https://argo-cd.readthedocs.io/en/stable/
     _name: argo
-    _service: null
+    _service: false
     _type: cli
     brew: argocd
     choco: argocd-cli
