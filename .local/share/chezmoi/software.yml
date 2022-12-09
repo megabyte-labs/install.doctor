@@ -5418,14 +5418,27 @@ softwarePackages:
     github: github.com/lukehaas/RunJS
     yay: runjs-bin
   rust:
-    _bin: null
+    _bin: rustc
     _desc: '[Rust](https://www.rust-lang.org/) is a multi-paradigm programming language designed for performance and safety, especially safe concurrency.'
     _docs: https://www.rust-lang.org/learn
     _github: https://github.com/rust-lang/rust
     _home: https://www.rust-lang.org/
     _name: Rust
-    _service: null
+    _service: false
     ansible: professormanhattan.rust
+    apt:
+      - cargo
+      - rustc
+    brew: rust
+    choco: rust
+    dnf:
+      - cargo
+      - rust
+    pacman: rust
+    port:
+      - cargo
+      - rust
+    scoop: rust
   rvm:
     _bin: null
     _desc: '[rvm](https://rvm.io/) lets you manage Ruby environments and switch between them.'
@@ -5573,7 +5586,7 @@ softwarePackages:
     pacman: sd
     pkg: sd
   sdkman:
-    _bin: null
+    _bin: sdkman
     _desc: '[SDKMAN](https://sdkman.io/) is a tool for managing multiple versions of various Software Development Kits (SDKs) for the JVM on any UNIX-based system. It provides a convenient command line interface for installing, switching, removing and listing candidates. With SDKMAN, you can install and manage dependencies like Java, Groovy, Scala, Kotlin, and Ceylon. You can also use it to manage Ant, Gradle, Grails, Maven, SBT, Spark, Spring Boot, Vert.x, and many [other SDKs](https://sdkman.io/sdks).'
     _docs: https://sdkman.io/install
     _github: https://github.com/sdkman/sdkman-cli

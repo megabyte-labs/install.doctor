@@ -20,6 +20,7 @@
 {{- $slackApiToken := (default "" (env "SLACK_API_TOKEN")) -}}
 {{- $tabbyConfigId := (default "" (env "TABBY_CONFIG_ID")) -}}
 {{- $tabbySyncToken := (default "" (env "TABBY_SYNC_TOKEN")) -}}
+{{- $tailscaleAuthKey := (default "" (env "TAILSCALE_AUTH_KEY")) -}}
 {{- $timezone := (default "America/New_York" (env "TIMEZONE")) -}}
 {{- $toolchains := list "CLI-Extras" "Docker" "Go" "Kubernetes" "Web-Development" -}}
 {{- $desktopSession := true -}}
@@ -160,6 +161,9 @@
 {{- if not (env "TABBY_SYNC_TOKEN") -}}
 {{-   $tabbySyncToken = promptStringOnce $data.user "tabbySyncToken" "Tabby Sync token" $tabbySyncToken -}}
 {{- end -}}
+{{- if not (env "TAILSCALE_AUTH_KEY") -}}
+{{-   $tailscaleAuthKey = promptStringOnce $data.user "tailscaleAuthKey" "Tailscale authentication key" $tailscaleAuthKey -}}
+{{- end -}}
 
 {{- else -}}
 {{-   $headless = true -}}
@@ -224,6 +228,7 @@ data:
     SNAPCRAFT_EMAIL: "{{ $email }}"
     TABBY_CONFIG_ID: "{{ $tabbyConfigId }}"
     TABBY_SYNC_TOKEN: "{{ $tabbySyncToken }}"
+    TAILSCALE_AUTH_KEY: "{{ $tailscaleAuthKey }}"
     TINYPNG_API_KEY: "g355tx7dxG5yJfl0RXJnpQlQqk88dJBv"
 diff:
   format: "git"
