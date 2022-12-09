@@ -2506,15 +2506,19 @@ softwarePackages:
     choco: gitkraken
     snap: gitkraken
   gitlab-runner:
-    _bin: null
+    _bin: gitlab-runner
     _desc: '[GitLab Runner](https://docs.gitlab.com/runner/) is an application that works with GitLab CI/CD to run jobs in a pipeline.'
     _docs: https://docs.gitlab.com/runner/
     _github: https://github.com/gitlabhq/gitlab-runner
     _home: https://gitlab.com/gitlab-org/gitlab-runner
     _name: Gitlab Runner
-    _service: null
+    _service: true
     ansible: professormanhattan.gitlabrunner
     brew: gitlab-runner
+    choco: gitlab-runner
+    pacman: gitlab-runner
+    port: gitlab-runner
+    scoop: gitlab-runner
   gitleaks:
     _bin: null
     _desc: Extension to scan git repos (or files) for secrets using regex and entropy
