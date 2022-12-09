@@ -789,7 +789,7 @@ softwarePackages:
     github: github.com/cerebroapp/cerebro
     yay: cerebro
   certbot:
-    _bin: null
+    _bin: certbot
     _desc: >-
       [Certbot](https://certbot.eff.org/) is part of EFF’s effort to encrypt the entire Internet. Secure communication over the Web relies on HTTPS, which requires the use of a digital certificate that lets browsers verify the identity of web servers (e.g., is that really google.com?). Web servers obtain their certificates from trusted third parties called certificate authorities (CAs). Certbot is an easy-to-use client that fetches a certificate from [Let’s Encrypt](https://letsencrypt.org/)—an
       open certificate authority launched by the EFF, Mozilla, and others—and deploys it to a web server.
@@ -797,8 +797,12 @@ softwarePackages:
     _github: https://github.com/certbot/certbot
     _home: https://certbot.eff.org/
     _name: CertBot
-    _service: null
+    _service: true
+    _snapClassic: true
     ansible: professormanhattan.certbot
+    brew: certbot
+    port: certbot
+    snap: certbot
   cfssl:
     _bin: null
     _desc: null
@@ -2629,13 +2633,13 @@ softwarePackages:
     scoop: glow
     yay: glow
   glusterfs:
-    _bin: null
+    _bin: gluster
     _desc: '[Gluster](https://www.gluster.org/) is a free and open source software scalable network filesystem. Gluster is a software defined distributed storage that can scale to several petabytes. It provides interfaces for object, block and file storage.'
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://docs.gluster.org/en/latest/
+    _github: https://github.com/gluster/glusterfs
+    _home: https://www.gluster.org/
     _name: GlusterFS
-    _service: null
+    _service: true
     ansible: professormanhattan.glusterfs
     dnf: glusterfs-server
     pacman: glusterfs
@@ -4331,14 +4335,21 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.nextcloud
   nginx:
-    _bin: null
+    _bin: nginx
     _desc: It also generates sites-enabled proxies using YML configurations. Easter eggs included. [Nginx](https://www.nginx.com/), stylized as NGINX, nginx or NginX, is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache. The software was created by Igor Sysoev and publicly released in 2004. Nginx is free and open-source software, released under the terms of the 2-clause BSD license.
     _docs: https://nginx.org/en/docs/
     _github: https://github.com/nginx/nginx
     _home: https://nginx.org/
     _name: NGINX
-    _service: null
+    _service: true
     ansible: professormanhattan.nginx
+    apt: nginx
+    brew: nginx
+    choco: nginx
+    dnf: nginx
+    pacman: nginx
+    port: nginx
+    scoop: nginx
   ngrok:
     _bin: null
     _desc: '[Ngrok](https://ngrok.com/) exposes local servers behind NATs and firewalls to the public internet over secure tunnels. Ngrok also provides a real-time web UI where you can introspect all HTTP traffic running over your tunnels. You can replay any request against your tunnels with one click. The main feature is the ability to generate an internet-accessible URL that directs traffic to your local web server even if it is behind a firewall or proxy.'
@@ -5593,7 +5604,8 @@ softwarePackages:
     _home: https://sdkman.io/
     _name: SDKMAN
     _service: null
-    ansible: professormanhattan.sdkman
+    _note: SDKMan is installed via .chezmoiscripts
+    # ansible: professormanhattan.sdkman
   seconion:
     _bin: null
     _desc: '[Security Onion](https://securityonionsolutions.com/) is a free and open source Linux distribution for threat hunting, enterprise security monitoring, and log management. It includes Elasticsearch, Logstash, Kibana, Snort, Suricata, Bro, Wazuh, Sguil, Squert, NetworkMiner, and many other security tools. The easy-to-use Setup wizard allows you to build an army of distributed sensors for your enterprise in minutes! This role takes it a step further and automates the whole setup process.'
@@ -6242,14 +6254,21 @@ softwarePackages:
     choco: tabby
     github: github.com/Eugeny/tabby
   tailscale:
-    _bin: null
+    _bin: tailscale
     _desc: '[Tailscale](https://tailscale.com/) lets you easily manage access to private resources, quickly SSH into devices on your network, and work securely from anywhere in the world.'
     _docs: https://tailscale.com/kb/
     _github: https://github.com/tailscale/tailscale
     _home: https://tailscale.com/
     _name: Tailscale
-    _service: null
+    _post: sudo tailscale up
+    _service: true
+    _systemd:pacman: tailscaled
     ansible: professormanhattan.tailscale
+    brew: tailscale
+    cask: tailscale
+    choco: tailscale
+    pacman: tailscale
+    port: tailscale
   task:
     _bin: task
     _desc: A task runner / simpler Make alternative written in Go
@@ -6608,16 +6627,23 @@ softwarePackages:
     _service: null
     'cargo:': upt
   upx:
-    _bin: null
+    _bin: upx
     _desc: '[UPX](https://upx.github.io/) is an advanced executable file compressor. UPX will typically reduce the file size of programs and DLLs by around 50%-70%, thus reducing disk space, network load times, download times and other distribution and storage costs. It supports compressing a wide variety of binary-like files. Surprisingly, it even compresses executables better than WinZip. Best of all, it is free and open source.'
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://github.com/upx/upx
+    _github: https://github.com/upx/upx
+    _home: https://upx.github.io/
     _name: UPX
-    _service: null
+    _service: false
     ansible: professormanhattan.upx
+    apt: upx
+    brew: upx
+    choco: upx
+    dnf: upx
+    pacman: upx
+    port: upx
+    scoop: upx
   vagrant:
-    _bin: null
+    _bin: vagrant
     _desc: '[Vagrant](https://www.vagrantup.com/) is an open-source software product for building and maintaining portable virtual software development environments (e.g., for VirtualBox, KVM, Hyper-V, Docker containers, VMware, and AWS).'
     _docs: https://www.vagrantup.com/docs
     _github: https://github.com/hashicorp/vagrant
@@ -6958,32 +6984,36 @@ softwarePackages:
     _desc: >-
       [Windows ADK](https://www.microsoft.com/en-us/windows-server/windows-admin-center) was unveiled by Microsoft on September 14, 2017 as the necessary evolution of the Windows Server graphical user interface. Windows ADK offers a flexible, locally-deployed, browser-based management platform and tools. The idea behind this project is to help simplify the management of servers by placing a majority of the frequently referenced tools used by system administrators in one spot. You can run it on
       both Windows 10 and Windows Server.
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://learn.microsoft.com/en-us/windows-hardware/get-started/adk-install
+    _github: false
+    _home: https://learn.microsoft.com/en-us/windows-hardware/get-started/adk-install
     _name: Windows ADK
     _service: null
-    ansible: professormanhattan.windowsadk
+    ansible:windows: professormanhattan.windowsadk
+    choco: windows-adk
   windows-admin-center:
     _bin: null
     _desc: >-
       [Windows Admin Center](https://www.microsoft.com/en-us/windows-server/windows-admin-center) was unveiled by Microsoft on September 14, 2017 as the necessary evolution of the Windows Server graphical user interface. Windows Admin Center offers a flexible, locally-deployed, browser-based management platform and tools. The idea behind this project is to help simplify the management of servers by placing a majority of the frequently referenced tools used by system administrators in one spot. You
       can run it on both Windows 10 and Windows Server.
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://github.com/MicrosoftDocs/windowsserverdocs/blob/main/WindowsServerDocs/manage/windows-admin-center/overview.md
+    _github: false
+    _home: https://www.microsoft.com/en-us/windows-server/windows-admin-center
     _name: Windows Admin Center
     _service: null
-    ansible: professormanhattan.windowsadmincenter
+    ansible:windows: professormanhattan.windowsadmincenter
+    choco: windows-admin-center
   windows-power-toys:
     _bin: null
     _desc: '[Microsoft PowerToys](https://docs.microsoft.com/en-us/windows/powertoys/) is a set of utilities for Windows power-users to tune and streamline their Windows 10 experience for greater productivity. It includes tools like a Color Picker, File Explorer add-ons, Keyboard Manager, Shortcut Guide, and more.'
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://learn.microsoft.com/en-us/windows/powertoys/
+    _github: https://github.com/microsoft/PowerToys
+    _home: https://learn.microsoft.com/en-us/windows/powertoys/
     _name: Microsoft PowerToys
     _service: null
-    ansible: professormanhattan.windowspowertoys
+    ansible:windows: professormanhattan.windowspowertoys
+    choco: powertoys
+    scoop: powertoys
   winrm-cli:
     _bin: null
     _desc: Command-line tool to remotely execute commands on Windows machines through WinRM

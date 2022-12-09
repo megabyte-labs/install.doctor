@@ -77,7 +77,8 @@ let installData;
 const installOrders = {};
 const installOrdersPre = [];
 const installOrdersPost = [];
-let osType, osID;
+const installOrdersSystemd = [];
+let brewUpdated, osType, osID, snapRefreshed;
 
 // Download the installation map
 async function downloadInstallData() {
@@ -353,7 +354,8 @@ async function generateInstallOrders() {
             softwarePackages[packageKey],
             preference + ":" + osID,
             pkg,
-            packageKey
+            packageKey,
+            softwarePackages
           );
           break;
         } else if (softwarePackages[packageKey][preference + ":" + osType]) {
@@ -362,7 +364,8 @@ async function generateInstallOrders() {
             softwarePackages[packageKey],
             preference + ":" + osType,
             pkg,
-            packageKey
+            packageKey,
+            softwarePackages
           );
           break;
         } else if (softwarePackages[packageKey][preference]) {
@@ -371,7 +374,8 @@ async function generateInstallOrders() {
             softwarePackages[packageKey],
             preference,
             pkg,
-            packageKey
+            packageKey,
+            softwarePackages
           );
           break;
         }
@@ -387,7 +391,8 @@ async function updateInstallMaps(
   packages,
   scopedPreference,
   pkg,
-  packageKey
+  packageKey,
+  softwarePackages
 ) {
   const preHook = getHook(packages, "pre", scopedPreference, preference);
   if (preHook) {
@@ -397,6 +402,12 @@ async function updateInstallMaps(
   if (postHook) {
     installOrdersPost.concat(
       typeof postHook === "string" ? [postHook] : postHook
+    );
+  }
+  const systemdHook = getHook(packages, "systemd", scopedPreference, preference)
+  if (systemdHook) {
+    installOrdersSystemd.concat(
+      typeof systemdHook === "string" ? [systemdHook] : systemdHook
     );
   }
   if (!installOrders[preference]) {
@@ -409,7 +420,14 @@ async function updateInstallMaps(
   );
   const newPackages = packages[scopedPreference];
   const newPkgs = typeof newPackages === "string" ? [newPackages] : newPackages;
-  installOrders[preference] = installOrders[preference].concat(newPkgs);
+  if (preference === 'snap' && softwarePackages["_snapClassic"] === true) {
+    if (!installOrders[preference + '-classic']) {
+      installOrders[preference + '-classic'] = [];
+    }
+    installOrders[preference + '-classic'] = installOrders[preference].concat(newPkgs);
+  } else {
+    installOrders[preference] = installOrders[preference].concat(newPkgs);
+  }
 }
 
 // Get pre / post install hooks
@@ -556,7 +574,10 @@ async function beforeInstall(packageManager) {
   } else if (packageManager === "basher") {
   } else if (packageManager === "binary") {
   } else if (packageManager === "brew" || packageManager === "cask") {
-    await $`brew update`;
+    if (!brewUpdated) {
+      brewUpdated = true
+      await $`brew update`;
+    }
   } else if (packageManager === "cargo") {
   } else if (packageManager === "choco") {
   } else if (packageManager === "crew") {
@@ -594,8 +615,11 @@ async function beforeInstall(packageManager) {
     }
   } else if (packageManager === "scoop") {
     await $`scoop update`;
-  } else if (packageManager === "snap") {
-    await $`sudo snap refresh`;
+  } else if (packageManager === "snap" || packageManager === "snap-classic") {
+    if (!snapRefreshed) {
+      snapRefreshed = true
+      await $`sudo snap refresh`;
+    }
   } else if (packageManager === "whalebrew") {
     if (osType === "darwin") {
       const docker = which.sync("docker", { nothrow: true });
@@ -960,6 +984,8 @@ async function ensurePackageManager(packageManager) {
     const snap = which.sync("snap", { nothrow: true });
     if (snap) {
       $`sudo snap install core`;
+    } else {
+      log("warn", logStage, 'Snap installation sequence completed but the snap bin is still not available')
     }
   } else if (packageManager === "whalebrew") {
     await ensureInstalled("whalebrew", $`brew install whalebrew`);
@@ -1241,6 +1267,14 @@ async function installPackageList(packageManager, packages) {
           );
         }
       }
+    } else if (packageManager === "snap-classic") {
+      for (let pkg of packages) {
+        try {
+          await $`sudo snap install --classic -y ${pkg}`
+        } catch(e) {
+          log("error", "Snap Failure", `There was an error installing ${pkg} with snap in classic mode`)
+        }
+      }
     } else if (packageManager === "whalebrew") {
       for (let pkg of packages) {
         try {
@@ -1300,6 +1334,23 @@ async function installPackageList(packageManager, packages) {
   }
 }
 
+async function updateSystemd(service) {
+  const logStage = 'Systemd Service'
+  if(osType === 'linux') {
+    const systemd = which.sync('systemctl', { nothrow: true })
+    if (systemd) {
+      try {
+        log("info", logStage, `Starting / enabling the ${service} service`)
+        await $`sudo systemctl enable --now ${service}`
+      } catch (e) {
+        log("error", logStage, `There was an error starting / enabling the ${service} service`)
+      }
+    } else {
+      log("warn", logStage, `The systemctl command is not available so applications with services cannot be started / enabled`)
+    }
+  }
+}
+
 // main process
 async function main() {
   osType = await OSType();
@@ -1355,6 +1406,9 @@ async function main() {
     "Package Post-Install",
     `Running package-specific post-installation steps`
   );
+  for (const service of installOrdersSystemd) {
+    await updateSystemd(service);
+  }
   for (const script of installOrdersPost) {
     await $`${script}`;
   }
