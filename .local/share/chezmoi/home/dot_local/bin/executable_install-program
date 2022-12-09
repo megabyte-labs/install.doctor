@@ -541,6 +541,7 @@ async function afterInstall(packageManager) {
   } else if (packageManager === "pkg") {
   } else if (packageManager === "port") {
   } else if (packageManager === "scoop") {
+  } else if (packageManager === "script") {
   } else if (packageManager === "snap") {
   } else if (packageManager === "whalebrew") {
   } else if (packageManager === "winget") {
@@ -549,8 +550,63 @@ async function afterInstall(packageManager) {
   }
 }
 
+async function ensureCurl() {
+  const curl = which.sync('curl', { nothrow: true })
+  if (!curl) {
+    log("warn", "Ensure curl", `Installing curl because it is required for the binary install method`)
+    if (osType === 'linux') {
+      const apk = which.sync("apk", { nothrow: true });
+      const apt = which.sync("apt", { nothrow: true });
+      const dnf = which.sync("dnf", { nothrow: true });
+      const yum = which.sync("yum", { nothrow: true });
+      const pacman = which.sync("pacman", { nothrow: true });
+      const zypper = which.sync("zypper", { nothrow: true });
+      if (apk) {
+        $`sudo apk add curl`;
+      } else if (apt) {
+        if (updateDone[packageManager] !== true) {
+          await beforeInstall('apt-get')
+        }
+        await $`sudo apt-get install -y curl`;
+      } else if (dnf) {
+        if (updateDone[packageManager] !== true) {
+          await beforeInstall('dnf')
+        }
+        await $`sudo dnf install -y curl`;
+      } else if (yum) {
+        if (updateDone[packageManager] !== true) {
+          await beforeInstall('dnf')
+        }
+        await $`sudo yum install -y curl`;
+      } else if (pacman) {
+        if (updateDone[packageManager] !== true) {
+          await beforeInstall('pacman')
+        }
+        await $`sudo pacman -Sy curl`;
+      } else if (zypper) {
+        if (updateDone[packageManager] !== true) {
+          await beforeInstall('zypper')
+        }
+      await $`sudo zypper install -y curl`;
+      }
+    } else if (osType === 'darwin') {
+      if (updateDone['brew'] !== true) {
+        await beforeInstall('brew')
+      }
+      await $`brew install curl`
+    } else if (osType === 'windows') {
+      if (updateDone['choco'] !== true) {
+        await beforeInstall('choco')
+      }
+      await `choco install -y curl`
+    }
+  }
+}
+
 // Pre-install hook
+const updateDone = {}
 async function beforeInstall(packageManager) {
+  updateDone[packageManager] = true
   const logStage = "Pre-Install Package Manager";
   if (packageManager === "appimage") {
   } else if (packageManager === "ansible") {
@@ -721,6 +777,12 @@ async function ensurePackageManager(packageManager) {
     await ensurePackageManager("brew");
   }
   if (packageManager === "appimage") {
+    const zap = which.sync('zap', { nothrow: true })
+    if (!zap) {
+      log("info", "Zap Installation", 'Installing Zap to handle AppImage installation')
+      await ensureCurl()
+      await $`sudo curl -sSL https://github.com/srevinsaju/zap/releases/download/continuous/zap-amd64 > /usr/local/bin/zap`
+    }
   } else if (packageManager === "ansible") {
     try {
       await $`test -f "$HOME/.cache/megabyte-labs/ansible-installed"`;
@@ -750,6 +812,7 @@ async function ensurePackageManager(packageManager) {
     `
     );
   } else if (packageManager === "binary") {
+    await ensureCurl()
   } else if (packageManager === "bpkg") {
     await ensureInstalled(
       "bpkg",
@@ -987,6 +1050,7 @@ async function ensurePackageManager(packageManager) {
     } else {
       log("warn", logStage, 'Snap installation sequence completed but the snap bin is still not available')
     }
+  } else if (packageManager === "script") {
   } else if (packageManager === "whalebrew") {
     await ensureInstalled("whalebrew", $`brew install whalebrew`);
   } else if (packageManager === "winget") {
@@ -1016,6 +1080,22 @@ async function installPackageList(packageManager, packages) {
   const logStage = "Package Install";
   try {
     if (packageManager === "appimage") {
+      for (let pkg of packages) {
+        try {
+          if (pkg.substring(0, 3) === 'http' && pkg.slice(-8) === 'AppImage') {
+            log("info", "AppImage Install", `Installing ${pkg} from its URL`)
+            await $`zap install --from ${pkg}`
+          } else if (pkg.includes("/")) {
+            log("info", "AppImage Install", `Installing ${pkg} from a GitHub Release`)
+            await $`zap install --github --from ${pkg}`
+          } else {
+            log("info", "AppImage Install", `Installing ${pkg} using the AppImage Catalog`)
+            await $`zap install ${pkg}`
+          }
+        } catch (e) {
+          log("error", "AppImage / Zap Failure", `There was an error using Zap to install ${pkg}`)
+        }
+      }
     } else if (packageManager === "ansible") {
       for (let pkg of packages) {
         try {
@@ -1070,6 +1150,13 @@ async function installPackageList(packageManager, packages) {
         }
       }
     } else if (packageManager === "binary") {
+      for (let pkg of packages) {
+        try {
+          await $`TMP="$(mktemp)" && curl -sSL ${pkg} > "$TMP" && sudo mv "$TMP" /usr/local/src/${binName} && chmod +x /usr/local/src/${binName}`
+        } catch (e) {
+          log("error", "Binary Release Install", `There was an error installing the binary release for ${pkg}`)
+        }
+      }
     } else if (packageManager === "brew") {
       for (let pkg of packages) {
         try {
@@ -1265,6 +1352,14 @@ async function installPackageList(packageManager, packages) {
             "Snap Failure",
             `There was an error installing ${pkg} with snap`
           );
+        }
+      }
+    } else if (packageManager === "script") {
+      for (let pkg of packages) {
+        try {
+          await $`${pkg}`
+        } catch(e) {
+          log("error", "Script Install Failure", `There was an error running the script installation method for ${pkg}`)
         }
       }
     } else if (packageManager === "snap-classic") {

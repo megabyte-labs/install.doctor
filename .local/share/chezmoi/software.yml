@@ -53,6 +53,10 @@
 #   pkg-termux: altair
 #   port: altair
 #   scoop: altair
+#   script >-
+#     curl -sS https://getcomposer.org/installer | php
+#     sudo mv composer.phar /usr/local/bin/composer  
+#     sudo chmod +x /usr/local/bin/composer  
 #   _snapClassic: true                                # Install the snap in classic mode
 #   snap: altair
 #   whalebrew:
@@ -1068,14 +1072,20 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.common
   composer:
-    _bin: null
+    _bin: composer
     _desc: '[Composer](https://getcomposer.org/) is an application-level package manager for the PHP programming language that provides a standard format for managing dependencies of PHP software and required libraries. It was developed by Nils Adermann and Jordi Boggiano, who continue to manage the project.'
     _docs: https://getcomposer.org/doc/
     _github: https://github.com/composer/composer
     _home: https://getcomposer.org/
     _name: Composer
-    _service: null
+    _service: false
     ansible: professormanhattan.composer
+    brew: composer
+    choco: composer
+    pacman: composer
+    scoop: composer
+    script:darwin: cd ~ && curl -sS https://getcomposer.org/installer | php && sudo mv composer.phar /usr/local/bin/composer &&  sudo chmod +x /usr/local/bin/composer
+    script:linux: cd ~ && curl -sS https://getcomposer.org/installer | php && sudo mv composer.phar /usr/local/bin/composer &&  sudo chmod +x /usr/local/bin/composer
   confd:
     _bin: null
     _desc: Manage local application configuration files using templates and data from etcd or consul
@@ -3001,15 +3011,6 @@ softwarePackages:
     ansible: professormanhattan.himalaya
     brew: himalaya
     scoop: himalaya
-  homebrew:
-    _bin: null
-    _desc: '[Homebrew](https://brew.sh/) is a free and open-source software package management system that simplifies the installation of software on Apple''s operating system macOS as well as Linux. The name is intended to suggest the idea of building software on the Mac depending on the user''s taste.'
-    _docs: null
-    _github: null
-    _home: null
-    _name: Homebrew
-    _service: null
-    ansible: professormanhattan.homebrew
   hostctl:
     _bin: null
     _desc: This tool gives more control over the use of hosts file
@@ -4770,14 +4771,90 @@ softwarePackages:
     pipx: pgcli
     port: pgcli
   php:
-    _bin: null
+    _deps:
+      - php-extensions
+    _bin: php
     _desc: '[PHP](https://www.php.net/) is a general-purpose scripting language especially suited to web development. It was originally created by Danish-Canadian programmer Rasmus Lerdorf in 1994. The PHP reference implementation is now produced by The PHP Group.'
     _docs: https://www.php.net/docs.php
     _github: https://github.com/php/php-src
     _home: https://www.php.net/
     _name: PHP
-    _service: null
+    _service: false
     ansible: professormanhattan.php
+    apt: php
+    brew: php
+    choco: php
+    dnf: php
+    pacman: php
+    port: php
+    scoop: php
+  php-extensions:
+    _name: PHP Extensions
+    _service: false
+    _note: Needs testing
+    apt:
+      - libpcre3-dev
+      - php-apache
+      - php-apcu
+      - php-cgi
+      - php-cli
+      - php-common
+      - php-curl
+      - php-dev
+      - php-fpm
+      - php-gd
+      - php-embed
+      - php-intl
+      - php-imap
+      - php-json
+      - php-mbstring
+      - php-opcache
+      - php-redis
+      - php-snmp
+      - php-sqlite3
+      - php-xml
+    dnf:
+      - libpcre3-dev
+      - php-apache
+      - php-apcu
+      - php-cgi
+      - php-cli
+      - php-common
+      - php-curl
+      - php-dev
+      - php-fpm
+      - php-gd
+      - php-embed
+      - php-intl
+      - php-imap
+      - php-json
+      - php-mbstring
+      - php-opcache
+      - php-redis
+      - php-snmp
+      - php-sqlite3
+      - php-xml
+    pacman:
+      - libpcre3-dev
+      - php-apache
+      - php-apcu
+      - php-cgi
+      - php-cli
+      - php-common
+      - php-curl
+      - php-dev
+      - php-fpm
+      - php-gd
+      - php-embed
+      - php-intl
+      - php-imap
+      - php-json
+      - php-mbstring
+      - php-opcache
+      - php-redis
+      - php-snmp
+      - php-sqlite3
+      - php-xml
   pihole:
     _bin: null
     _desc: '[Pi-hole](https://pi-hole.net/) is a Linux network-level advertisement and Internet tracker blocking application which acts as a DNS sinkhole and optionally a DHCP server, intended for use on a private network. It is designed for low-power embedded devices with network capability, such as the Raspberry Pi, but supports any Linux machines.'
@@ -5435,7 +5512,9 @@ softwarePackages:
     _github: https://github.com/rust-lang/rust
     _home: https://www.rust-lang.org/
     _name: Rust
+    _post:snap: rustup toolchain install stable
     _service: false
+    _snapClassic: true
     ansible: professormanhattan.rust
     apt:
       - cargo
@@ -5450,6 +5529,7 @@ softwarePackages:
       - cargo
       - rust
     scoop: rust
+    snap: rustup
   rvm:
     _bin: null
     _desc: '[rvm](https://rvm.io/) lets you manage Ruby environments and switch between them.'
@@ -6948,16 +7028,6 @@ softwarePackages:
     brew: wget
     dnf: wget
     # whalebrew: whalebrew/wget # Temporarily commentted out for debugging
-  whalebrew:
-    _bin: whalebrew
-    _desc: Homebrew, but with Docker images
-    _docs: https://github.com/whalebrew/whalebrew
-    _github: https://github.com/whalebrew/whalebrew
-    _home: https://github.com/whalebrew/whalebrew
-    _name: Whalebrew
-    _service: false
-    _type: cli
-    brew: whalebrew
   whaler:
     _bin: null
     _desc: Whaler takes a Docker image and attempts to reverse engineer the Dockerfile that created it
@@ -7269,14 +7339,16 @@ softwarePackages:
     pacman: yubikey-manager-qt
     scoop: yubikey-manager-qt
   zap:
-    _bin: null
+    _bin: zap
     _desc: Delightful AppImage package manager
-    _docs: null
+    _docs: https://zap.srev.in/
     _github: https://github.com/srevinsaju/zap
-    _home: null
-    _name: null
-    _service: null
-    ansible: professormanhattan.zap
+    _home: https://zap.srev.in/
+    _name: Zap
+    _service: false
+    ansible:linux: professormanhattan.zap
+    binary:linux: https://github.com/srevinsaju/zap/releases/download/continuous/zap-amd64
+    script:linux: curl https://raw.githubusercontent.com/srevinsaju/zap/main/install.sh | sudo bash -s
   zoom:
     _bin: null
     _desc: '[Zoom](https://zoom.us/) is a videotelephony software program developed by Zoom Video Communications. This role installs Zoom on nearly any platform. The Zoom free plan provides a video chatting service that allows up to 100 participants concurrently, with a 40-minute time restriction.'
