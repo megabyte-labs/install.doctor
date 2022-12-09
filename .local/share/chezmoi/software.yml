@@ -1972,10 +1972,10 @@ softwarePackages:
     _bin: null
     _desc: '[FileZilla](https://filezilla-project.org/) is a free software, cross-platform FTP application, consisting of FileZilla Client and FileZilla Server. Client binaries are available for Windows, Linux, and macOS, server binaries are available for Windows only.'
     _docs: https://wiki.filezilla-project.org/Documentation
-    _github: null
+    _github: https://svn.filezilla-project.org/filezilla/
     _home: https://filezilla-project.org/
     _name: FileZilla
-    _service: null
+    _service: false
     ansible:darwin: professormanhattan.filezilla
     apt: filezilla
     choco: filezilla
@@ -2427,12 +2427,13 @@ softwarePackages:
   gitdock:
     _bin: null
     _desc: '[GitDock](https://gitlab.com/mvanremmerden/gitdock) is an app that displays all your GitLab activities in one place. Instead of the GitLab typical project- or group-centric approach, it collects all your information from a user-centric perspective.'
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://gitlab.com/mvanremmerden/gitdock#how-to-use-gitdock-%EF%B8%8F
+    _github: https://gitlab.com/mvanremmerden/gitdock
+    _home: https://gitlab.com/mvanremmerden/gitdock
     _name: GitDock
-    _service: null
+    _service: true
     ansible: professormanhattan.gitdock
+    cask: gitdock
   gitdocker:
     _bin: null
     _desc: It will clone and start up projects that have not been initialized and backup projects that are already running. It also uses git instead of Wasabi for anything that is not a volume (i.e. folder mounts).
@@ -5236,12 +5237,12 @@ softwarePackages:
   quasar:
     _bin: null
     _desc: '[Quasar](https://github.com/quasar/Quasar) is a fast and light-weight remote administration tool coded in C#. The usage ranges from user support through day-to-day administrative work to employee monitoring. Providing high stability and an easy-to-use user interface, Quasar is the perfect remote administration solution for you.'
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://github.com/quasar/Quasar/wiki
+    _github: https://github.com/quasar/Quasar
+    _home: https://github.com/quasar/Quasar
     _name: Quasar
-    _service: null
-    ansible: professormanhattan.quasar
+    _service: false
+    ansible:windows: professormanhattan.quasar
   raindrop:
     _bin: null
     _desc: All-in-one bookmark manager
@@ -5313,8 +5314,9 @@ softwarePackages:
     _github: https://github.com/uglide/RedisDesktopManager
     _home: https://resp.app/
     _name: Redis Desktop Manager
-    _service: null
-    ansible: professormanhattan.rdm
+    _service: false
+    ansible:linux: professormanhattan.rdm
+    flatpak: app.resp.RESP
     snap: redis-desktop-manager
   rear:
     _bin: null
@@ -5674,14 +5676,15 @@ softwarePackages:
       - pv
       - sanoid
   santa:
-    _bin: null
+    _bin: santactl
     _desc: A binary authorization system for MacOS (santa) role is a daemon that makes execution decisions based on the contents of a local database, a GUI agent that notifies the user in case of a block decision and a command-line utility for managing the system and synchronizing the database with a server.
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://santa.dev/
+    _github: https://github.com/google/santa
+    _home: https://santa.dev/
     _name: A binary authorization system for MacOS
-    _service: null
-    ansible: professormanhattan.santa
+    _service: true
+    ansible:darwin: professormanhattan.santa
+    cask: santa
   schema:
     _bin: null
     _desc: A tool to infer and instantiate schemas and translate between data formats
@@ -7268,13 +7271,13 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.wsl
   xcode:
-    _bin: null
+    _bin: xcodebuild
     _desc: '[Xcode](https://developer.apple.com/xcode/) is Apple''s integrated development environment for macOS, used to develop software for macOS, iOS, iPadOS, watchOS, and tvOS.'
     _docs: https://developer.apple.com/documentation/xcode
-    _github: Not open-source
+    _github: false
     _home: https://developer.apple.com/xcode/
     _name: XCode
-    _service: null
+    _service: false
     ansible: professormanhattan.xcode
   xurls:
     _bin: null
