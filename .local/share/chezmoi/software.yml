@@ -471,13 +471,13 @@ softwarePackages:
     binary:windows: https://awscli.amazonaws.com/AWSCLIV2.msi
     choco: awscli
   awxcli:
-    _bin: null
+    _bin: awx
     _desc: '[ansible-tower-cli](https://docs.ansible.com/ansible-tower/latest/html/towercli/index.html) is a CLI program that interacts with Ansible Tower or AWX. It is the official command-line client for both Ansible Tower and AWX. It uses naming and structure consistent with the AWX HTTP API, provides consistent output formats with optional machine-parsable formats, and auto-detects API versions, available endpoints, and feature support.'
-    _docs: null
-    _github: https://github.com/marcredhat/awxcli
-    _home: null
+    _docs: https://docs.ansible.com/ansible-tower/latest/html/towercli/index.html
+    _github: https://github.com/ansible/awx
+    _home: https://docs.ansible.com/automation.html
     _name: AWX CLI
-    _service: null
+    _service: false
     ansible: professormanhattan.awxcli
     pipx: https://releases.ansible.com/ansible-tower/cli/ansible-tower-cli-latest.tar.gz
   azure-cli:
@@ -2102,12 +2102,12 @@ softwarePackages:
       - homebrew/cask-fonts/font-hack-nerd-font
       - homebrew/cask-fonts/font-meslo-lg-nerd-font
   fpm:
-    _bin: null
+    _bin: fpm
     _deps:
       - fpm:deps
     _desc: '[fpm](https://github.com/jordansissel/fpm) (short for Effing package management) allows you to build packages for multiple platforms with great ease. The source of your package can be a gem, Python module, pear, directory, .tar.gz, rpm, deb, Node.js package, or pacman package. The target packages it supports are deb, rpm, solaris, freebsd, tar, directory, Mac OS X .pkg file, or pacman package.'
     _docs: null
-    _github: null
+    _github: https://github.com/jordansissel/fpm
     _home: null
     _name: fpm
     _service: null
@@ -2820,13 +2820,14 @@ softwarePackages:
     brew: gotests
     go: github.com/cweill/gotests/...@latest
   gphotos-sync:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
+    _bin: gphotos-sync
+    _desc: Google Photos Sync is a backup tool for your Google Photos cloud storage.
+    _docs: https://gilesknap.github.io/gphotos-sync/main/index.html
+    _github: https://github.com/gilesknap/gphotos-sync
+    _home: https://gilesknap.github.io/gphotos-sync/main/index.html
+    _name: Google Photos Sync
+    _service: false
+    pacman: gphotos-sync
     pipx: gphotos-sync
   gping:
     _bin: gping
@@ -6222,7 +6223,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.startmenu
   statcode:
-    _bin: null
+    _bin: statcode
     _desc: null
     _docs: Man pages for HTTP status codes
     _github: https://github.com/shobrook/statcode
