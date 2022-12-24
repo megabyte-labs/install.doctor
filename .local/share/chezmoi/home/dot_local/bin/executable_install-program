@@ -267,7 +267,7 @@ async function generateInstallOrders(pkgsToInstall) {
           softwarePackages[packageKey]["_" + currentSelector + ":" + osType];
         normalCheck = softwarePackages[packageKey]["_" + currentSelector];
         if (doubleScoped) {
-          const bin = which.sync(doubleScoped, { nothrow: true });
+          const bin = typeof doubleScoped === 'string' ? which.sync(doubleScoped, { nothrow: true }) : doubleScoped.map(x => which.sync(x, { nothrow: true})).every(y => !!y);
           if (bin) {
             let pref;
             if (
@@ -304,7 +304,7 @@ async function generateInstallOrders(pkgsToInstall) {
             continue pkgFor;
           }
         } else if (scopedPkgManager) {
-          const bin = which.sync(scopedPkgManager, { nothrow: true });
+          const bin = typeof scopedPkgManager === 'string' ? which.sync(scopedPkgManager, { nothrow: true }) : scopedPkgManager.map(x => which.sync(x, { nothrow: true})).every(y => !!y);
           if (bin) {
             const pref = preference;
             log(
@@ -316,7 +316,7 @@ async function generateInstallOrders(pkgsToInstall) {
             continue pkgFor;
           }
         } else if (scopedSystem) {
-          const bin = which.sync(scopedSystem, { nothrow: true });
+          const bin = typeof scopedSystem === 'string' ? which.sync(scopedSystem, { nothrow: true }) : scopedSystem.map(x => which.sync(x, { nothrow: true})).every(y => !!y);
           if (bin) {
             let pref;
             if (
@@ -337,7 +337,7 @@ async function generateInstallOrders(pkgsToInstall) {
             continue pkgFor;
           }
         } else if (normalCheck) {
-          const bin = which.sync(normalCheck, { nothrow: true });
+          const bin = typeof normalCheck === 'string' ? which.sync(normalCheck, { nothrow: true }) : normalCheck.map(x => which.sync(x, { nothrow: true})).every(y => !!y);
           if (bin) {
             log(
               "info",
