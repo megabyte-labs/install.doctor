@@ -4567,7 +4567,8 @@ softwarePackages:
       sudo udevadm control --reload-rules
       sudo udevadm trigger
     _service: null
-    ansible: professormanhattan.onlykey
+    _when:ansible:darwin: '! test -d "/Applications/OnlyKey App.app"'
+    ansible:darwin: professormanhattan.onlykey
     choco: onlykey
     snap: onlykey-app
   oq:
