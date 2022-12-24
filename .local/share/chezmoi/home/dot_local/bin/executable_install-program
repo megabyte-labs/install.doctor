@@ -532,7 +532,8 @@ function getHook(packages, hook, scopedPreference, preference) {
 async function OSTypeInstallerKey() {
   const apt = which.sync("apt-get", { nothrow: true });
   const dnf = which.sync("dnf", { nothrow: true });
-  const freebsd = which.sync("pkg", { nothrow: true });
+  const freebsdPkg = which.sync("pkg", { nothrow: true });
+  const freebsdVersion = which.sync("freebsd-version", { nothrow: true })
   const pacman = which.sync("pacman", { nothrow: true });
   const yum = which.sync("yum", { nothrow: true });
   const zypper = which.sync("zypper", { nothrow: true });
@@ -544,7 +545,7 @@ async function OSTypeInstallerKey() {
     return "pacman";
   } else if (zypper) {
     return "zypper";
-  } else if (freebsd) {
+  } else if (freebsdPkg && freebsdVersion) {
     return "freebsd";
   } else {
     try {
