@@ -214,6 +214,7 @@ softwarePackages:
     _home: https://altairgraphql.dev/
     _name: Altair GraphQL Client
     _service: false
+    _when:cask: '! test -d "/Applications/Altair GraphQL Client.app"'
     cask: altair-graphql-client
     choco: altair-graphql
     snap: altair
@@ -228,8 +229,9 @@ softwarePackages:
     _home: https://developer.android.com/studio
     _name: Android Studio
     _service: null
+    _when:cask: '! test -d "/Applications/Android Studio.app"'
     ansible: professormanhattan.androidstudio
-    brew: android-studio
+    cask: android-studio
     choco: androidstudio
     snap: android-studio
     yay: android-studio
@@ -288,7 +290,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.antivirus
   appium:
-    _bin: null
+    _bin: appium
     _desc: '[Appium](https://appium.io/) is an open source automation tool for running scripts and testing native applications, mobile-web applications and hybrid applications on Android or iOS using a webdriver.'
     _docs: https://appium.io/docs/en/about-appium/intro/
     _github: https://github.com/appium/appium
@@ -334,6 +336,7 @@ softwarePackages:
       - argocd
       - argocd-cli
   aria2:
+    _bin: aria2c
     _desc: '[aria2](https://aria2.github.io/) is a lightweight multi-protocol & multi-source command-line download utility. It supports HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink. [AriaNg](http://ariang.mayswind.net/) is a modern web frontend that makes working with aria2 easier.'
     _docs: https://aria2.github.io/manual/en/html/
     _github: https://github.com/aria2/aria2
@@ -401,7 +404,7 @@ softwarePackages:
     _post: nvim --headless -c 'autocmd User PackerComplete quitall'
     _service: null
   auto-install:
-    _bin: null
+    _bin: auto-install
     _desc: null
     _docs: null
     _github: null
@@ -696,7 +699,7 @@ softwarePackages:
     pkgin: broot
     port: broot
   browser-sync:
-    _bin: null
+    _bin: browser-sync
     _desc: null
     _docs: null
     _github: null
@@ -725,7 +728,7 @@ softwarePackages:
     _service: null
     gem: bundler
   caniuse:
-    _bin: null
+    _bin: caniuse
     _desc: null
     _docs: null
     _github: null
@@ -862,7 +865,7 @@ softwarePackages:
     snap: chromium
     yay: google-chrome
   chrome-cli:
-    _bin: null
+    _bin: chrome-cli
     _desc: null
     _docs: null
     _github: null
@@ -1093,7 +1096,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.connect
   consul:
-    _bin: null
+    _bin: consul
     _desc: null
     _docs: null
     _github: null
@@ -1104,16 +1107,6 @@ softwarePackages:
     brew: consul
     pkg: consul
     yay: consul-bin
-  consul-cli:
-    _bin: null
-    _desc: Command line interface to Consul HTTP API
-    _docs: null
-    _github: https://github.com/mantl/consul-cli
-    _home: null
-    _name: consul-cli
-    _service: null
-    _type: cli
-    github: github.com/mantl/consul-cli
   consul-template:
     _bin: null
     _desc: '[Consul-Template](https://github.com/hashicorp/consul-template) provides a convenient way to populate values from [Consul](https://www.consul.io/) into the file system using the consul-template daemon. It was created by [HashiCorp](https://www.hashicorp.com/) (the creators of Consul).'
@@ -1137,7 +1130,7 @@ softwarePackages:
     brew: container-structure-test
     yay: container-structure-test
   cookiecutter:
-    _bin: null
+    _bin: cookiecutter
     _desc: null
     _docs: null
     _github: null
@@ -1147,7 +1140,7 @@ softwarePackages:
     brew: cookiecutter
     pipx: cookiecutter
   cordova:
-    _bin: null
+    _bin: cordova
     _desc: null
     _docs: null
     _github: null
@@ -1269,7 +1262,7 @@ softwarePackages:
     github: github.com/TomWright/dasel
     go: github.com/tomwright/dasel/cmd/dasel@master
   dat:
-    _bin: null
+    _bin: dat
     _desc: Peer-to-peer sharing & live syncronization of files via command line
     _docs: null
     _github: https://github.com/datproject/dat
@@ -1869,7 +1862,7 @@ softwarePackages:
     pkg: fd
     scoop: fd
   feathers:
-    _bin: null
+    _bin: feathers
     _desc: null
     _docs: null
     _github: null
@@ -1940,6 +1933,7 @@ softwarePackages:
     _home: https://filezilla-project.org/
     _name: FileZilla
     _service: false
+    _when:ansible:darwin: '! test -d /Applications/FileZilla.app'
     ansible:darwin: professormanhattan.filezilla
     apt: filezilla
     choco: filezilla
@@ -1955,7 +1949,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.finish
   firebase:
-    _bin: null
+    _bin: firebase
     _desc: null
     _docs: null
     _github: null
@@ -2009,7 +2003,7 @@ softwarePackages:
     _service: null
     npm: fkill-cli
   flutter:
-    _bin: null
+    _bin: flutter
     _desc: null
     _docs: null
     _github: null
@@ -2225,7 +2219,7 @@ softwarePackages:
     snap: google-cloud-sdk
     yay: google-cloud-sdk
   gdown:
-    _bin: null
+    _bin: gdown
     _desc: null
     _docs: null
     _github: null
@@ -2276,7 +2270,7 @@ softwarePackages:
     _service: null
     apt: gdu
   gfi:
-    _bin: null
+    _bin: gfi
     _desc: null
     _docs: null
     _github: null
@@ -2402,7 +2396,8 @@ softwarePackages:
     _home: https://gitlab.com/mvanremmerden/gitdock
     _name: GitDock
     _service: true
-    ansible: professormanhattan.gitdock
+    _when:cask: '! test -d /Applications/GitDock.app'
+    ansible:darwin: professormanhattan.gitdock
     cask: gitdock
   gitdocker:
     _bin: null
@@ -2455,6 +2450,7 @@ softwarePackages:
     _name: Gitify
     _service: null
     _type: menubar
+    _when:cask: '! test -d /Applications/Gitify.app'
     cask: gitify
     github: github.com/manosim/gitify
     yay: gitify-bin
@@ -2467,6 +2463,7 @@ softwarePackages:
     _name: GitKraken
     _service: null
     _snapClassic: true
+    _when:cask: '! test -d /Applications/GitKraken.app'
     ansible: professormanhattan.gitkraken
     cask: gitkraken
     choco: gitkraken
@@ -2875,14 +2872,15 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.guacamole
   gulp:
-    _bin: null
+    _bin: gulp
     _desc: null
     _docs: null
     _github: null
     _home: null
     _name: null
     _service: null
-    brew: gulp
+    # Brew gulp is deprecated
+    # brew: gulp
     npm: gulp
   gum:
     _bin: gum
@@ -2977,7 +2975,7 @@ softwarePackages:
     snap: hexyl
     xbps: hexyl
   hey:
-    _bin: null
+    _bin: hey
     _desc: HTTP load generator, ApacheBench (ab) replacement, formerly known as rakyll/boom
     _docs: null
     _github: https://github.com/rakyll/hey
@@ -3226,12 +3224,13 @@ softwarePackages:
     _home: https://www.jetbrains.com/idea/
     _name: IntelliJ IDEA (CE)
     _service: null
+    _when:cask: '! test -d "/Applications/IntelliJ IDEA CE.app"'
     ansible: professormanhattan.intellij
-    brew: intellij-idea-ce
+    cask: intellij-idea-ce
     choco: intellijidea-community
     snap: intellij-idea-community
   ionic:
-    _bin: null
+    _bin: ionic
     _desc: null
     _docs: null
     _github: null
@@ -3250,7 +3249,7 @@ softwarePackages:
     brew:darwin: ios-deploy
     npm:darwin: ios-deploy
   ipfs:
-    _bin: null
+    _bin: ipfs
     _desc: null
     _docs: null
     _github: null
@@ -3280,6 +3279,7 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
+    _when:cask: '! test -d "/Applications/IPFS Desktop.app"'
     cask: ipfs
     choco: ipfs-desktop
     pacman: ipfs-desktop
@@ -3301,7 +3301,8 @@ softwarePackages:
     _home: https://iterm2.com/
     _name: iTerm2
     _service: null
-    ansible: professormanhattan.iterm2
+    _when:cask: '! test -d /Applications/iTerm.app'
+    ansible:darwin: professormanhattan.iterm2
     cask: iterm2
   java:
     _bin: java
@@ -3640,6 +3641,7 @@ softwarePackages:
     _name: Lens
     _service: null
     _snapClassic: true
+    _when:cask: '! test -d /Applications/Lens.app'
     ansible: professormanhattan.lens
     cask: lens
     choco: lens
@@ -3653,6 +3655,7 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
+    _when:cask: '! test -d /Applications/Lepton.app'
     cask: lepton
     snap: lepton
   lexicon:
@@ -3713,7 +3716,7 @@ softwarePackages:
     github: github.com/linkerd/linkerd2
     yay: linkerd
   linuxkit:
-    _bin: null
+    _bin: linuxkit
     _desc: A toolkit for building secure, portable and lean operating systems for containers
     _docs: null
     _github: https://github.com/linuxkit/linuxkit
@@ -3880,6 +3883,7 @@ softwarePackages:
     _name: Manta
     _service: null
     _type: application
+    _when:cask: '! test -d /Applications/Manta.app'
     cask: manta
     github: github.com/hql287/Manta
   mark-text:
@@ -3913,6 +3917,7 @@ softwarePackages:
     _name: MassCode
     _service: null
     _type: application
+    _when:cask: '! test -d /Applications/massCode.app'
     cask: masscode
     github: github.com/antonreshetov/massCode
   mc:
@@ -3960,6 +3965,7 @@ softwarePackages:
     _home: https://www.microsoft.com/en-us/edge
     _name: Microsoft Edge
     _service: null
+    _when:cask: '! test -d "/Applications/Microsoft Edge.app"'
     ansible: professormanhattan.microsoftedge
     cask: microsoft-edge
     choco: microsoft-edge
@@ -4002,7 +4008,7 @@ softwarePackages:
       - minikube
     choco: minikube
   mitmproxy:
-    _bin: null
+    _bin: mitmproxy
     _desc: '[mitmproxy](https://github.com/mitmproxy/mitmproxy) is an interactive, SSL/TLS-capable intercepting proxy with a console interface for HTTP/1, HTTP/2, and WebSockets. It also includes mitmweb which is a web-based interface for mitmproxy.'
     _docs: null
     _github: null
@@ -4016,24 +4022,17 @@ softwarePackages:
     pacman: mitmproxy
   mjml:
     _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
-    cask: mjml
-    npm: mjml
-  mjml-app:
-    _bin: null
     _desc: The desktop app for MJML
-    _docs: null
+    _docs: https://documentation.mjml.io/
     _github: https://github.com/mjmlio/mjml-app
-    _home: null
+    _home: https://mjmlio.github.io/mjml-app/
     _name: MJML App
-    _service: null
+    _service: false
     _type: application
+    _when:cask: '! test -d /Applications/MJML.app'
+    cask: mjml
     github: github.com/mjmlio/mjml-app
+    npm: mjml
   mkcert:
     _bin: mkcert
     _desc: A simple zero-config tool to make locally trusted development certificates with any names
@@ -4096,6 +4095,7 @@ softwarePackages:
     _home: https://www.getmonero.org/
     _name: Monero
     _service: null
+    _when:cask: '! test -d /Applications/monero-wallet-gui.app'
     ansible: professormanhattan.monero
     brew: monero
     cask: monero-wallet
@@ -4150,12 +4150,13 @@ softwarePackages:
     _name: MQTT X
     _service: null
     _type: application
+    _when:cask: '! test -d /Applications/MQTTX.app'
     cask: mqttx
     github: github.com/emqx/MQTTX
     snap: mqttx
     yay: mqttx-bin
   muffet:
-    _bin: null
+    _bin: muffet
     _desc: Fast website link checker in Go
     _docs: null
     _github: https://github.com/raviqqe/muffet
@@ -4176,6 +4177,7 @@ softwarePackages:
     _name: Mullvad VPN
     _service: null
     _type: application
+    _when:cask: '! test -d "/Applications/Mullvad VPN.app"'
     cask: mullvadvpn
     github: github.com/mullvad/mullvadvpn-app
     yay: mullvad-vpn
@@ -4189,6 +4191,7 @@ softwarePackages:
     _service: null
     _post:cask: multipass set local.driver=virtualbox
     _post:choco: multipass set local.driver=virtualbox
+    _when:cask: '! test -d /Applications/Multipass.app'
     ansible: professormanhattan.multipass
     cask: multipass
     choco: multipass
@@ -4206,7 +4209,7 @@ softwarePackages:
     brew: mycli
     pipx: mycli
   nativefier:
-    _bin: null
+    _bin: nativefier
     _deps:
       - imagemagick
     _desc: null
@@ -4238,7 +4241,7 @@ softwarePackages:
     brew: nb
     npm: nb.sh
   ncc:
-    _bin: null
+    _bin: ncc
     _desc: null
     _docs: null
     _github: null
@@ -4259,7 +4262,7 @@ softwarePackages:
     github: github.com/slackhq/nebula
     pacman: nebula
   nectar:
-    _bin: null
+    _bin: nectar
     _desc: null
     _docs: null
     _github: null
@@ -4336,7 +4339,7 @@ softwarePackages:
     port: netdata
     script: curl https://my-netdata.io/kickstart.sh > /tmp/netdata-kickstart.sh && sh /tmp/netdata-kickstart.sh
   newman:
-    _bin: null
+    _bin: newman
     _desc: null
     _docs: null
     _github: null
@@ -4429,7 +4432,7 @@ softwarePackages:
     brew: node
     scoop: nodejs
   node-prune:
-    _bin: null
+    _bin: node-prune
     _desc: Extension to remove unnecessary files from node_modules
     _docs: null
     _github: https://github.com/tj/node-prune
@@ -4485,7 +4488,7 @@ softwarePackages:
     ansible: professormanhattan.normit
     npm: normit
   np:
-    _bin: null
+    _bin: np
     _desc: null
     _docs: null
     _github: null
@@ -4494,7 +4497,7 @@ softwarePackages:
     _service: null
     npm: np
   npm-check:
-    _bin: null
+    _bin: npm-check
     _desc: null
     _docs: null
     _github: null
@@ -4518,7 +4521,7 @@ softwarePackages:
     snap: nuclear
     yay: nuclear-player-bin
   oclif:
-    _bin: null
+    _bin: oclif
     _desc: null
     _docs: null
     _github: null
@@ -4609,7 +4612,7 @@ softwarePackages:
     github: github.com/sniptt-official/ots
     go: github.com/sniptt-official/ots@latest
   package-size:
-    _bin: null
+    _bin: package-size
     _desc: null
     _docs: null
     _github: null
@@ -4631,7 +4634,7 @@ softwarePackages:
     choco: packer
     pacman: packer
   page-fetch:
-    _bin: null
+    _bin: page-fetch
     _desc: Fetch web pages using headless Chrome, storing all fetched resources including JavaScript files
     _docs: null
     _github: https://github.com/detectify/page-fetch
@@ -4641,7 +4644,7 @@ softwarePackages:
     _type: cli
     go: github.com/detectify/page-fetch@latest
   pageres:
-    _bin: null
+    _bin: pageres
     _desc: Capture website screenshots
     _docs: null
     _github: https://github.com/sindresorhus/pageres-cli
@@ -4895,7 +4898,7 @@ softwarePackages:
     _service: null
     brew: pipx
   pkg:
-    _bin: null
+    _bin: pkg
     _desc: null
     _docs: null
     _github: null
@@ -4904,7 +4907,7 @@ softwarePackages:
     _service: null
     npm: pkg
   playwright:
-    _bin: null
+    _bin: playwright
     _desc: null
     _docs: null
     _github: null
@@ -4993,8 +4996,9 @@ softwarePackages:
     _home: https://www.postman.com/
     _name: Postman
     _service: null
+    _when:cask: '! test -d /Applications/Postman.app'
     ansible: professormanhattan.postman
-    brew: postman
+    cask: postman
     choco: postman
     snap: postman
     yay: postman-bin
@@ -5007,6 +5011,7 @@ softwarePackages:
     _name: Powershell
     _service: null
     _snapClassic: true
+    _when:cask: '! test -d /Applications/PowerShell.app'
     ansible: professormanhattan.powershell
     cask: powershell
     snap: powershell
@@ -5086,7 +5091,7 @@ softwarePackages:
     choco: protonmailbridge
     yay: protonmail-bridge
   psi:
-    _bin: null
+    _bin: psi
     _desc: null
     _docs: null
     _github: null
@@ -5339,6 +5344,7 @@ softwarePackages:
     _name: Responsively
     _service: null
     _type: application
+    _when:cask: '! test -d /Applications/ResponsivelyApp.app'
     cask: responsively
     choco: responsively
     github: github.com/responsively-org/responsively-app
@@ -5560,7 +5566,8 @@ softwarePackages:
     brew: ms-jpq/sad/sad
     pacman: sad
   samba:
-    _bin: samba
+    _bin: smbd
+    _bin:dnf: smb
     _desc: '[Samba](https://www.samba.org/) is a free and open-source software that allows files to be shared across Windows and Linux systems simply and easily. To be exact, it is an open-source implementation of the SMB/CIFS protocol.'
     _docs: https://www.samba.org/samba/docs/
     _github: https://github.com/samba-team/samba
@@ -5700,7 +5707,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.security
   semantic-release:
-    _bin: null
+    _bin: semantic-release
     _desc: null
     _docs: null
     _github: null
@@ -5723,7 +5730,7 @@ softwarePackages:
     scoop: sentry-cli
     yay: sentry-cli-bin
   serve:
-    _bin: null
+    _bin: serve
     _desc: null
     _docs: null
     _github: null
@@ -5732,7 +5739,7 @@ softwarePackages:
     _service: null
     npm: serve
   serverless:
-    _bin: null
+    _bin: serverless
     _desc: null
     _docs: null
     _github: null
@@ -5742,13 +5749,13 @@ softwarePackages:
     brew: serverless
     npm: serverless
   sftpgo:
-    _bin: null
+    _bin: sftpgo
     _desc: Fully featured and highly configurable SFTP server with optional HTTP/S, FTP/S and WebDAV support - S3, Google Cloud Storage, Azure Blob
     _docs: null
     _github: https://github.com/drakkan/sftpgo
     _home: null
     _name: sftpgo
-    _service: null
+    _service: true
     _type: cli
     brew: sftpgo
     choco: sftpgo
@@ -5756,7 +5763,7 @@ softwarePackages:
     pkg: sftpgo
     yay: sftpgo-bin
   share:
-    _bin: null
+    _bin: share
     _desc: null
     _docs: null
     _github: null
@@ -5950,6 +5957,7 @@ softwarePackages:
     _home: https://sveinbjorn.org/sloth
     _name: Sloth
     _service: null
+    _when:cask: '! test -d /Applications/Sloth.app'
     cask: sloth
   snapd:
     _bin: snap
@@ -5968,6 +5976,7 @@ softwarePackages:
     _home: null
     _name: OpenSnitch/Little Snitch
     _service: null
+    _when:cask: '! test -d "/Applications/Little Snitch.app"'
     ansible: professormanhattan.snitch
     cask: little-snitch
   social-analyzer:
@@ -6026,6 +6035,7 @@ softwarePackages:
     _name: SQLectron
     _service: null
     _type: application
+    _when:cask: '! test -d /Applications/sqlectron.app'
     cask: sqlectron
     github: github.com/sqlectron/sqlectron-gui
     yay: sqlectron-gui
@@ -6188,7 +6198,7 @@ softwarePackages:
     _service: null
     npm: supdock
   surge:
-    _bin: null
+    _bin: surge
     _desc: null
     _docs: null
     _github: null
@@ -6244,7 +6254,7 @@ softwarePackages:
     github: github.com/samber/sync-ssh-keys
     yay: sync-ssh-keys-bin
   sysbench:
-    _bin: null
+    _bin: sysbench
     _desc: System performance benchmark tool
     _docs: null
     _github: https://github.com/akopytov/sysbench
@@ -6259,7 +6269,7 @@ softwarePackages:
     pacman: sysbench
     pkg: sysbench
   sysdig:
-    _bin: null
+    _bin: sysdig
     _desc: '[sysdig](https://www.sysdig.com/) is a simple tool for deep system visibility, exploration and troubleshooting, with native support for containers.'
     _docs: null
     _github: null
@@ -6283,7 +6293,7 @@ softwarePackages:
     _service: null
     _type: cli
   t:
-    _bin: null
+    _bin: t
     _desc: null
     _docs: null
     _github: null
@@ -6395,7 +6405,7 @@ softwarePackages:
     pkg: teleport
     yay: teleport-bin
   teller:
-    _bin: null
+    _bin: teller
     _desc: Cloud native secrets management for developers - never leave your command line for secrets
     _docs: null
     _github: https://github.com/tellerops/teller
@@ -6442,17 +6452,8 @@ softwarePackages:
     snap: termius-app
     yay: termius
   terraform:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
-    apt: terraform
-    brew: terraform
-    choco: terraform
-    pacman: terraform
+    _deps:
+      - tfenv
   tfenv:
     _bin: tfenv
     _desc: '[tfenv](https://github.com/tfutils/tfenv) is a Terraform version manager inspired by [rbenv](https://github.com/rbenv/rbenv). It supports macOS, Linux, and Windows.'
@@ -6460,6 +6461,7 @@ softwarePackages:
     _github: https://github.com/tfutils/tfenv
     _home: https://github.com/tfutils/tfenv
     _name: tfenv
+    _post: if ! command -v terraform; then tfenv use latest; fi
     _service: false
     ansible:darwin: professormanhattan.tfenv
     ansible:linux: professormanhattan.tfenv
@@ -6610,7 +6612,7 @@ softwarePackages:
     _service: null
     cargo: tree-sitter-cli
   trellis:
-    _bin: null
+    _bin: trellis
     _desc: null
     _docs: null
     _github: null
@@ -6639,7 +6641,7 @@ softwarePackages:
     _service: null
     brew: trufflesecurity/trufflehog/trufflehog
   ts2c:
-    _bin: null
+    _bin: ts2c
     _desc: null
     _docs: null
     _github: null
@@ -6721,7 +6723,7 @@ softwarePackages:
     scoop: vagrant
     snap: vagrant
   vault:
-    _bin: null
+    _bin: vault
     _desc: '[HashiCorp Vault](https://www.vaultproject.io/) secures, stores, and tightly controls access to tokens, passwords, certificates, API keys, and other secrets. Basically, it is a tool for managing any data that you want to tightly control access to. It also has some advanced integrations with systems like AWS.'
     _docs: null
     _github: null
@@ -6733,7 +6735,7 @@ softwarePackages:
     brew: hashicorp/tap/vault
     yay: vault-cli
   vector:
-    _bin: null
+    _bin: vector
     _desc: Vector is a lightweight, ultra-fast tool for building observability pipelines that lets you collect, transform, and route all your logs and metrics with one simple tool.
     _docs: null
     _github: https://github.com/vectordotdev/vector
@@ -6980,7 +6982,7 @@ softwarePackages:
     ansible: professormanhattan.wazuh
     choco: wazuh-agent
   websocat:
-    _bin: null
+    _bin: websocat
     _desc: CLI for interacting with web sockets
     _docs: null
     _github: https://github.com/vi/websocat
@@ -7099,7 +7101,7 @@ softwarePackages:
     _type: cli
     yay: winrm-cli-git
   wireshark-cli:
-    _bin: null
+    _bin: wireshark
     _desc: null
     _docs: null
     _github: null
@@ -7119,6 +7121,7 @@ softwarePackages:
     _home: https://www.wireshark.org/
     _name: Wireshark
     _service: null
+    _when:cask: '! test -d /Applications/Wireshark.app'
     apt: wireshark
     cask: wireshark
     choco: wireshark
@@ -7141,7 +7144,7 @@ softwarePackages:
     github: github.com/wkhtmltopdf/wkhtmltopdf
     pacman: wkhtmltopdf
   wordpressify:
-    _bin: null
+    _bin: wordpressify
     _desc: null
     _docs: null
     _github: null
@@ -7150,17 +7153,18 @@ softwarePackages:
     _service: null
     npm: wordpressify
   wp-cli:
-    _bin: null
+    _bin: wp
     _desc: '[WP-CLI](https://wp-cli.org/) is the command-line interface for [WordPress](https://wordpress.org/). You can update plugins, configure multisite installations and much more. You can do all this without using a web browser.'
     _docs: null
     _github: null
     _home: null
     _name: WP-CLI
     _service: null
-    ansible: professormanhattan.wpcli
+    ansible:darwin: professormanhattan.wpcli
+    ansible:linux: professormanhattan.wpcli
     brew: wp-cli
   wrangler:
-    _bin: null
+    _bin: wrangler
     _desc: null
     _docs: null
     _github: null
@@ -7271,7 +7275,7 @@ softwarePackages:
     brew: yj
     go: github.com/sclevine/yj/v5@v5.1.0
   ykman:
-    _bin: null
+    _bin: ykman
     _desc: null
     _docs: null
     _github: null
