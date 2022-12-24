@@ -1483,6 +1483,9 @@ softwarePackages:
     _home: https://hub.docker.com/r/chko/docker-pushrm
     _name: docker-pushrm
     _service: null
+    _when:darwin: '! test -f /Applications/Docker.app/Contents/Resources/cli-plugins/docker-pushrm'
+    _when:linux: '! test -f /usr/libexec/docker/cli-plugins/docker-pushrm'
+    _when:windows: '! test -f %ProgramData%\Docker\cli-plugins\docker-pushrm.exe'
     ansible: professormanhattan.dockerpushrm
   dockle:
     _bin: dockle
@@ -1634,6 +1637,8 @@ softwarePackages:
     _service: false
     npm: editly
   elastic-agent:
+    # Elastic Agent performs some security measures that make it so that checking the bin only works
+    # with sudo. So the _when condition is added to account for this circumstance.
     _bin: elastic-agent
     _desc: >-
       [Elastic Agent](https://www.elastic.co/guide/en/fleet/current/elastic-agent-installation-configuration.html) is a single, unified way to add monitoring for logs, metrics, and other types of data to each host. A single agent makes it easier and faster to deploy monitoring across your infrastructure. The agent’s single, unified policy makes it easier to add integrations for new data sources. You can use Elastic Agent with Fleet.
@@ -1643,6 +1648,7 @@ softwarePackages:
     _home: https://www.elastic.co/
     _name: Elastic Agent
     _service: true
+    _when: '! sudo which elastic-agent > /dev/null'
     ansible: professormanhattan.elasticagent
   electron:
     _bin: electron
@@ -2629,7 +2635,7 @@ softwarePackages:
     _home: https://www.gluster.org/
     _name: GlusterFS
     _service: true
-    ansible: professormanhattan.glusterfs
+    ansible:linux: professormanhattan.glusterfs
     dnf: glusterfs-server
     pacman: glusterfs
   gnu:
@@ -2907,7 +2913,8 @@ softwarePackages:
     _home: https://gvisor.dev/
     _name: gVisor
     _service: null
-    ansible: professormanhattan.gvisor
+    _when: '! test -f /usr/local/bin/runsc || ! test -f /usr/local/bin/containerd-shim-runsc-v1'
+    ansible:linux: professormanhattan.gvisor
   gvm:
     _bin: null
     _desc: '[gvm](https://github.com/moovweb/gvm) lets you manage Go environments and switch between Go versions.'
@@ -6973,13 +6980,17 @@ softwarePackages:
     brew: hashicorp/tap/waypoint
     scoop: waypoint
   wazuh:
-    _bin: wazuh
+    # TODO: Add logic to .chezmoiscripts that ensures the proper Wazuh settings are in place
+    # _bin: wazuh-agent
     _desc: '[Wazuh](https://wazuh.com/) is a free, open source and enterprise-ready security monitoring solution for threat detection, integrity monitoring, incident response and compliance.'
     _docs: https://documentation.wazuh.com/current/index.html
     _github: https://github.com/wazuh/wazuh
     _home: https://wazuh.com/
     _name: Wazuh
     _service: true
+    _when:darwin: '! test -f /Library/Ossec/bin/agent-auth'
+    _when:linux: '! test -f /var/ossec/bin/agent-auth'
+    _when:windows: '! test -f "C:\Program Files (x86)\ossec-agent\agent-auth.exe"'
     ansible: professormanhattan.wazuh
     choco: wazuh-agent
   websocat:
