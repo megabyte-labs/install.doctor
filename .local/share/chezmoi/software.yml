@@ -4960,7 +4960,7 @@ softwarePackages:
     snap: plexmediaserver
     yay: plex-media-server
   pm2:
-    _bin: null
+    _bin: pm2
     _desc: null
     _docs: null
     _github: null
@@ -4969,7 +4969,7 @@ softwarePackages:
     _service: null
     npm: pm2
   pnpm:
-    _bin: null
+    _bin: pnpm
     _desc: '[pnpm](https://github.com/pnpm/pnpm) is a fast, disk space efficient package manager'
     _docs: https://pnpm.io/motivation
     _github: https://github.com/pnpm/pnpm
@@ -4982,7 +4982,7 @@ softwarePackages:
     scoop: pnpm
     yay: pnpm
   poetry:
-    _bin: null
+    _bin: poetry
     _desc: '[Poetry](https://python-poetry.org) helps you declare, manage and install dependencies of Python projects, ensuring you have the right stack everywhere.'
     _docs: null
     _github: null
@@ -4993,7 +4993,7 @@ softwarePackages:
     brew: poetry
     yay: python-poetry-git
   pony:
-    _bin: null
+    _bin: pony
     _desc: Local file-based password, API key, secret, recovery code store backed by GPG
     _docs: null
     _github: https://github.com/jessfraz/pony
@@ -5145,15 +5145,6 @@ softwarePackages:
     brew: pup
     github: github.com/ericchiang/pup
     go: github.com/ericchiang/pup@latest
-  pyenv:
-    _bin: null
-    _desc: '[pyenv](https://github.com/pyenv/pyenv) lets you switch between multiple versions of Python. It''s simple, unobtrusive, and follows the UNIX tradition of single-purpose tools that do one thing well.'
-    _docs: null
-    _github: https://github.com/pyenv/pyenv
-    _home: null
-    _name: pyenv
-    _service: null
-    ansible: professormanhattan.pyenv
   python:
     _bin: python3
     _desc: null
@@ -5236,17 +5227,6 @@ softwarePackages:
     _name: Quasar
     _service: false
     ansible:windows: professormanhattan.quasar
-  raindrop:
-    _bin: null
-    _desc: All-in-one bookmark manager
-    _docs: null
-    _github: https://raindrop.io
-    _home: null
-    _name: raindrop
-    _service: null
-    _type: application
-    cask: raindropio
-    github: github.com/raindropio/desktop
   ramda:
     _bin: ramda
     _desc: A CLI tool for processing data with functional pipelines
@@ -5313,24 +5293,6 @@ softwarePackages:
     ansible:linux: professormanhattan.rdm
     flatpak: app.resp.RESP
     snap: redis-desktop-manager
-  rear:
-    _bin: null
-    _desc: '[Relax-and-Recover](http://relax-and-recover.org/) is the leading Open Source bare metal disaster recovery and system migration solution. It is a modular framework with many ready-to-go workflows for common situations. It is a setup-and-forget Linux bare metal disaster recovery solution. It is easy to set up and requires no maintenance so there is no excuse for not using it.'
-    _docs: null
-    _github: null
-    _home: null
-    _name: Relax-and-Recover
-    _service: null
-    ansible: professormanhattan.rear
-  reboot:
-    _bin: null
-    _desc: ''
-    _docs: null
-    _github: null
-    _home: null
-    _name: Reboot
-    _service: null
-    ansible: professormanhattan.reboot
   recoverpy:
     _bin: recoverpy
     _desc: '[RecoverPy](https://eugeny.github.io/recoverpy/) is a highly configurable terminal emulator, SSH and serial client for Windows, macOS and Linux.'
@@ -5578,15 +5540,6 @@ softwarePackages:
       - rust
     scoop: rust
     snap: rustup
-  rvm:
-    _bin: null
-    _desc: '[rvm](https://rvm.io/) lets you manage Ruby environments and switch between them.'
-    _docs: https://rvm.io/rvm/basics
-    _github: https://github.com/rvm/rvm
-    _home: https://rvm.io/
-    _name: rvm
-    _service: null
-    ansible: professormanhattan.rvm
   goofys:
     _bin: goofys
     _deps:
@@ -6456,7 +6409,7 @@ softwarePackages:
     choco: teamviewer
     yay: teamviewer
   teleport:
-    _bin: null
+    _bin: teleport
     _desc: '[Teleport](https://goteleport.com/) is a free and open-source tool that allows engineers and security professionals to unify access for SSH servers, Kubernetes clusters, web applications, and databases across all environments. It is an identity-aware, multi-protocol access proxy which understands SSH, HTTPS, Kubernetes API, MySQL and PostgreSQL wire protocols.'
     _docs: null
     _github: https://github.com/gravitational/teleport
