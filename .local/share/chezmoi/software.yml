@@ -1095,7 +1095,7 @@ softwarePackages:
     _name: null
     _service: null
     ansible: professormanhattan.connect
-  consul:
+  consul-cli:
     _bin: consul
     _desc: null
     _docs: null
@@ -3563,21 +3563,17 @@ softwarePackages:
     brew: instrumenta/instrumenta/kubeval
     scoop: kubeval
   kvm:
-    _bin: null
+    _bin:brew:
+      - libvirtd
+      - qemu-img
     _desc: Kernel-based Virtual Machine (or [KVM](https://www.linux-kvm.org/page/Main_Page)) is a virtualization module in the Linux kernel that allows the kernel to function as a hypervisor. It was merged into the Linux kernel mainline in kernel version 2.6.20, which was released on February 5, 2007.
     _docs: https://www.linux-kvm.org/page/Documents
     _github: Not open-source
+    _groups:
+      - kvm
+      - libvirt
     _home: https://www.linux-kvm.org/page/Main_Page
     _name: KVM
-    _post:apt: |
-      sudo adduser "$(id -un)" kvm
-      sudo adduser "$(id -un)" libvirt
-    _post:dnf: |
-      sudo adduser "$(id -un)" kvm
-      sudo adduser "$(id -un)" libvirt
-    _post:pacman: |
-      sudo adduser "$(id -un)" kvm
-      sudo adduser "$(id -un)" libvirt
     _service: null
     ansible: professormanhattan.kvm
     apt:

@@ -1526,6 +1526,16 @@ async function updateSystemd(service) {
     } else {
       log("warn", logStage, `The systemctl command is not available so applications with services cannot be started / enabled`)
     }
+  } else if (osType === 'darwin') {
+    const brew = which.sync('brew', { nothrow: true })
+    if (brew) {
+      try {
+        log("info", logStage, `Starting / enabling the ${service} service with Homebrew`)
+        await $`brew services start ${service}`
+      }
+    } else {
+      log("warn", logStage, `Homebrew is not available - skipping service start command`)
+    }
   }
 }
 
@@ -1552,6 +1562,9 @@ async function installSoftware(pkgsToInstall) {
   const packageManagers = Object.keys(installOrders);
   for (const packageManager of packageManagers) {
     await ensurePackageManager(packageManager);
+  }
+  for (const key in installOrders) {
+    installOrders[key] = [...new Set(installOrders[key])];
   }
   log("info", "Install Orders", `The install orders were generated:`);
   console.log(installOrders);
