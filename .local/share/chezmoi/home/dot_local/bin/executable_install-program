@@ -1522,6 +1522,7 @@ async function updateSystemd(service) {
         await $`sudo systemctl enable --now ${service}`
       } catch (e) {
         log("error", logStage, `There was an error starting / enabling the ${service} service`)
+        console.error(e)
       }
     } else {
       log("warn", logStage, `The systemctl command is not available so applications with services cannot be started / enabled`)
@@ -1532,6 +1533,9 @@ async function updateSystemd(service) {
       try {
         log("info", logStage, `Starting / enabling the ${service} service with Homebrew`)
         await $`brew services start ${service}`
+      } catch (e) {
+        log("error", logStage, `There was an error starting / enabling the ${service} Homebrew service`)
+        console.error(e)
       }
     } else {
       log("warn", logStage, `Homebrew is not available - skipping service start command`)
