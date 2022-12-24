@@ -1185,7 +1185,8 @@ async function installPackageList(packageManager, packages) {
           if (unbuffer) {
             unbufferPrefix = 'unbuffer'
           }
-          await $`${unbufferPrefix} ansible 127.0.0.1 -vvv -e '{ ansible_connection: "local", ansible_user: "${process.env.USER}", install_homebrew: False }' -m include_role -a name=${pkg}`;
+          const verboseMode = process.env.DEBUG_MODE === 'on' ? 'v' : ''
+          await $`${unbufferPrefix} ansible 127.0.0.1 -vv${verboseMode} -e '{ ansible_connection: "local", ansible_user: "${process.env.USER}", install_homebrew: False }' -m include_role -a name=${pkg}`;
         } catch (e) {
           log(
             "error",
