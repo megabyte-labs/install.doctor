@@ -370,7 +370,8 @@ softwareGroups:
     - sentry-cli
   Media: &Media
     - beets
-    - editly
+    # editly NPM package is failing to install on macOS - attempts to compile with node-gyp
+    # - editly
     - exiftool
     - ffmpeg
     - imagemagick
@@ -586,6 +587,7 @@ softwareGroups:
     - caniuse
     - cordova
     - deno
+    - deta
     - electron
     - emma
     - fastify

@@ -1369,15 +1369,18 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.desktop
   deta:
-    _bin: null
+    _bin: deta
     _desc: Command line interface for managing Deta micros and deployments
-    _docs: null
+    _docs: https://docs.deta.sh/docs/cli/install
     _github: https://github.com/deta/deta-cli
-    _home: null
+    _home: https://www.deta.sh/
     _name: deta
-    _service: null
+    _service: false
     _type: cli
     github: github.com/deta/deta-cli
+    script:darwin: curl -fsSL https://get.deta.dev/cli.sh | sh
+    script:linux: curl -fsSL https://get.deta.dev/cli.sh | sh
+    script:windows: iwr https://get.deta.dev/cli.ps1 -useb | iex
   dframe:
     _bin: dframe
     _desc: null
@@ -1420,15 +1423,6 @@ softwarePackages:
     apt: direnv
     brew: direnv
     github: github.com/direnv/direnv
-  disks:
-    _bin: null
-    _desc: If you know in advance the IDs of your various hard disks then you can use this role to customize their mounting point and labels, for instance.
-    _docs: null
-    _github: null
-    _home: null
-    _name: Disks
-    _service: null
-    ansible: professormanhattan.disks
   dive:
     _bin: dive
     _desc: '[dive](https://github.com/wagoodman/dive) is a tool for exploring a docker image, layer contents, and discovering ways to shrink the size of the Docker/OCI image.'
@@ -1444,15 +1438,6 @@ softwarePackages:
     github: github.com/wagoodman/dive
     go: github.com/wagoodman/dive@latest
     yay: dive
-  dmginstall:
-    _bin: null
-    _desc: ''
-    _docs: null
-    _github: null
-    _home: null
-    _name: DMG Install
-    _service: null
-    ansible: professormanhattan.dmginstall
   dns:
     _bin: null
     _desc: This role ensures that DNS requests are encrypted if you supply it the appropriate configuration. It uses systemd on Linux. On macOS/Windows, it installs and configures [Stubby](https://github.com/getdnsapi/stubby).
@@ -1566,15 +1551,6 @@ softwarePackages:
     cargo: dotenv-linter
     scoop: dotenv-linter
     yay: dotenv-linter
-  dotfiles:
-    _bin: null
-    _desc: This role is the culmination of looking through many different dotfile configurations on GitHub.
-    _docs: null
-    _github: null
-    _home: null
-    _name: Dotfiles
-    _service: null
-    ansible: professormanhattan.dotfiles
   dotnet:
     _bin: dotnet
     _desc: null
@@ -1625,11 +1601,11 @@ softwarePackages:
   duf:
     _bin: duf
     _desc: '[duf](https://github.com/muesli/duf) is a Disk Usage/Free Utility - a better ''df'' alternative. It displays a chart within your terminal that gives you an overview of hard-drive usage statistics.'
-    _docs: null
+    _docs: https://github.com/muesli/duf#usage
     _github: https://github.com/muesli/duf
-    _home: null
+    _home: https://github.com/muesli/duf
     _name: duf
-    _service: null
+    _service: false
     _type: cli
     ansible: professormanhattan.duf
     brew: duf
@@ -1640,26 +1616,30 @@ softwarePackages:
     scoop: duf
     snap: duf-utility
   dust:
-    _bin: null
+    _bin: dust
     _desc: A more intuitive version of du in rust
-    _docs: null
+    _docs: https://github.com/bootandy/dust#usage
     _github: https://github.com/bootandy/dust
-    _home: null
+    _home: https://github.com/bootandy/dust
     _name: dust
-    _service: null
+    _service: false
     _type: cli
     apk: dust
+    brew:darwin: dust
+    brew:linux: tgotwig/linux-dust/dust
+    cargo: du-dust
     github: github.com/bootandy/dust
     pacman: dust
   easyengine:
-    _bin: null
+    _bin: ee
     _desc: '[EasyEngine](https://easyengine.io/) is a command-line control panel for Nginx to manage WordPress sites running on Nginx, PHP, MySQL, and Let''s Encrypt.'
     _docs: https://easyengine.io/handbook/
     _github: https://github.com/EasyEngine/easyengine
     _home: https://easyengine.io/
     _name: EasyEngine
-    _service: null
-    ansible: professormanhattan.easyengine
+    _service: true
+    ansible:darwin: professormanhattan.easyengine
+    ansible:linux: professormanhattan.easyengine
   editly:
     _bin: editly
     _desc: Editly is a tool and framework for declarative NLE (non-linear video editing) using Node.js and ffmpeg. Editly allows you to easily and programmatically create a video from a set of clips, images, audio and titles, with smooth transitions and music overlaid.
