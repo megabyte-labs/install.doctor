@@ -308,7 +308,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.aptcacherng
   aqua:
-    _bin: null
+    _bin: aqua
     _desc: null
     _docs: null
     _github: null
@@ -351,7 +351,7 @@ softwarePackages:
   ariang:
     cask: ariang
   asciinema:
-    _bin: null
+    _bin: asciinema
     _desc: null
     _docs: null
     _github: null
@@ -374,7 +374,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.asdf
   assh:
-    _bin: null
+    _bin: assh
     _desc: null
     _docs: null
     _github: null
@@ -716,7 +716,7 @@ softwarePackages:
     github: github.com/Budibase/budibase
     npm: '@budibase/cli'
   bundler:
-    _bin: null
+    _bin: bundler
     _desc: null
     _docs: null
     _github: null
@@ -744,7 +744,7 @@ softwarePackages:
     _type: cli
     github: github.com/jenssegers/captain
   carbon-now:
-    _bin: null
+    _bin: carbon-now
     _desc: null
     _docs: null
     _github: null
@@ -791,7 +791,7 @@ softwarePackages:
     port: certbot
     snap: certbot
   cfssl:
-    _bin: null
+    _bin: cfssl
     _desc: null
     _docs: null
     _github: null
@@ -1195,7 +1195,7 @@ softwarePackages:
     cask: cumulus
     github: github.com/gillesdemey/Cumulus
   cups:
-    _bin: null
+    _bin: cupsctl
     _desc: '[CUPS](https://www.cups.org/) is a modular printing system for Unix-like computer operating systems which allows a computer to act as a print server. A computer running CUPS is a host that can accept print jobs from client computers, process them, and send them to the appropriate printer.'
     _docs: null
     _github: null
@@ -1378,7 +1378,7 @@ softwarePackages:
     _type: cli
     github: github.com/deta/deta-cli
   dframe:
-    _bin: null
+    _bin: dframe
     _desc: null
     _docs: null
     _github: null
@@ -2531,16 +2531,6 @@ softwarePackages:
     github: github.com/muesli/gitomatic
     pacman: gitomatic
     scoop: gitomatic
-  gitsome:
-    _bin: gitsome
-    _desc: null
-    _docs: null
-    _github: https://github.com/donnemartin/gitsome
-    _home: null
-    _name: null
-    _service: null
-    ansible: professormanhattan.gitsome
-    pipx: gitsome
   git-stats:
     _bin: git-stats
     _desc: '[gitstats](https://github.com/IonicaBizau/git-stats) can track and display local git statistics. It includes the capability of displaying a GitHub-like contributions calendar in the terminal.'
@@ -3169,7 +3159,7 @@ softwarePackages:
     pacman: hyperfine
     pkg: hyperfine
   ideviceinstaller:
-    _bin: null
+    _bin: ideviceinstaller
     _desc: null
     _docs: null
     _github: null
@@ -3269,7 +3259,7 @@ softwarePackages:
     _service: null
     npm: '@ionic/cli'
   ios-deploy:
-    _bin: null
+    _bin: ios-deploy
     _desc: null
     _docs: null
     _github: null
@@ -3702,6 +3692,7 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
+    _when: '! test -d /usr/local/Cellar/libimobiledevice'
     brew:darwin: libimobiledevice
   libreoffice:
     _bin: null
@@ -4063,7 +4054,7 @@ softwarePackages:
     _type: application
     github: github.com/mjmlio/mjml-app
   mkcert:
-    _bin: null
+    _bin: mkcert
     _desc: A simple zero-config tool to make locally trusted development certificates with any names
     _docs: null
     _github: https://github.com/FiloSottile/mkcert
@@ -4094,7 +4085,7 @@ softwarePackages:
     winget: mockoon
     yay: mockoon-bin
   mole:
-    _bin: null
+    _bin: mole
     _desc: CLI application to create ssh tunnels focused on resiliency and user experience
     _docs: null
     _github: https://github.com/davrodpin/mole
@@ -4399,7 +4390,7 @@ softwarePackages:
     port: nginx
     scoop: nginx
   ngrok:
-    _bin: null
+    _bin: ngrok
     _desc: '[Ngrok](https://ngrok.com/) exposes local servers behind NATs and firewalls to the public internet over secure tunnels. Ngrok also provides a real-time web UI where you can introspect all HTTP traffic running over your tunnels. You can replay any request against your tunnels with one click. The main feature is the ability to generate an internet-accessible URL that directs traffic to your local web server even if it is behind a firewall or proxy.'
     _docs: null
     _github: null
@@ -4411,7 +4402,7 @@ softwarePackages:
     choco: ngrok
     snap: ngrok
   ngxtop:
-    _bin: null
+    _bin: ngxtop
     _desc: null
     _docs: null
     _github: null
@@ -5918,7 +5909,7 @@ softwarePackages:
     nix: nixpkgs.skate
     pacman: skate
   skm:
-    _bin: null
+    _bin: skm
     _desc: A simple and powerful SSH keys manager
     _docs: null
     _github: https://github.com/TimothyYe/skm
@@ -6007,7 +5998,7 @@ softwarePackages:
     _service: null
     pipx: social-analyzer
   solidity:
-    _bin: null
+    _bin: solcjs
     _desc: null
     _docs: null
     _github: null
@@ -6034,7 +6025,7 @@ softwarePackages:
     _service: null
     npm: speed-test
   spotdl:
-    _bin: null
+    _bin: spotdl
     _deps:
       - ffmpeg
     _desc: null
@@ -6082,7 +6073,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.ssh
   ssh-vault:
-    _bin: null
+    _bin: ssh-vault
     _desc: '[sshvault](https://ssh-vault.com/) lets you encrypt/decrypt using SSH private keys. It is written in Go and the documentation can be read in under a minute.'
     _docs: https://ssh-vault.com/post/how-it-works/
     _github: https://github.com/ssh-vault/ssh-vault
@@ -6093,7 +6084,7 @@ softwarePackages:
     brew: ssh-vault
     github: github.com/ssh-vault/ssh-vault
   sshpass:
-    _bin: null
+    _bin: sshpass
     _desc: null
     _docs: null
     _github: null
@@ -6224,7 +6215,7 @@ softwarePackages:
     _service: null
     npm: surge
   svgo:
-    _bin: null
+    _bin: svgo
     _desc: null
     _docs: null
     _github: null
@@ -6550,7 +6541,7 @@ softwarePackages:
     dnf: timeshift
     yay: timeshift
   tinypng:
-    _bin: null
+    _bin: tinypng
     _desc: null
     _docs: null
     _github: null
@@ -6985,7 +6976,7 @@ softwarePackages:
     port: watchman
     scoop: watchman
   waypoint:
-    _bin: null
+    _bin: waypoint
     _desc: '[HashiCorp Waypoint](https://www.waypointproject.io/) allows developers to deploy, manage, and observe their applications through a consistent abstraction of underlying infrastructure. Waypoint works with Kubernetes, ECS and many other platforms.'
     _docs: null
     _github: https://github.com/hashicorp/waypoint
@@ -7160,6 +7151,7 @@ softwarePackages:
     _name: wkhtmltopdf
     _service: null
     _type: cli
+    _when:cask: '! test -d /usr/local/Caskroom/wkhtmltopdf'
     ansible: professormanhattan.wkhtmltopdf
     apt: wkhtmltopdf
     cask: wkhtmltopdf
