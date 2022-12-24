@@ -10,6 +10,13 @@
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 {{- end }}
+### coc.nvim VIM plugin requires custom branch "release"
+[".vim/plugged/coc.nvim"]
+    type = "git-repo"
+    url = "https://github.com/neoclide/coc.nvim.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--branch", "release", "--depth", "1"]
+    pull.args = ["--ff-only"]
 
 ### Betelgeuse Theme
 [".local/src/betelgeuse"]
