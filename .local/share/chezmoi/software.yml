@@ -1659,10 +1659,21 @@ softwarePackages:
     _docs: null
     _github: null
     _home: null
-    _name: null
+    _name: Electron CLI
     _service: null
-    brew: electron
     npm: electron
+  electron-app:
+    # TODO: Figure out if this app is necessary and add description that describes the difference between
+    # this and the regular Electron CLI installed via NPM.
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: Electron Desktop App
+    _service: null
+    _when:cask: '! test -d /Applications/Electron.app'
+    cask: electron
+    choco: electron
   emma:
     _bin: emma
     _desc: Advanced package search for NPM
@@ -1823,7 +1834,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.extensions
   fastify:
-    _bin: null
+    _bin: fastify
     _desc: null
     _docs: null
     _github: null
@@ -4299,7 +4310,7 @@ softwarePackages:
       - python-neovim
       - python3-neovim
   nest:
-    _bin: null
+    _bin: nest
     _desc: null
     _docs: null
     _github: null
