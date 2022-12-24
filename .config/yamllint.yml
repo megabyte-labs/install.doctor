@@ -1,0 +1,53 @@
+---
+ignore: |
+  .autodoc/
+  .cache/
+  .common/
+  .config/
+  .git/
+  .husky/
+  .modules/
+  .npm/
+  .pnpm-store/
+  .shared/
+  .task/
+  .venv/
+  .vscode/
+  .tox
+  .travis.yml
+  *.hbs.yml
+  build/
+  dist/
+  node_modules/
+  pnpm-lock.yaml
+  roles/
+  testdata/
+  test/output-example/
+  venv/
+
+extends: default
+
+rules:
+  braces:
+    level: error
+    max-spaces-inside: 1
+  brackets:
+    level: error
+    max-spaces-inside: 1
+  comments:
+    min-spaces-from-content: 1
+  document-start:
+    ignore: |
+      environments/prod/
+  indentation:
+    indent-sequences: consistent
+    level: error
+  line-length:
+    level: error
+    max: 160
+    ignore: |
+      .config/taskfiles/
+      common/.config/taskfiles/
+  truthy:
+    # eslint-disable-next-line yml/plain-scalar
+    allowed-values: ['false', 'on', 'true']

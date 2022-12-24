@@ -1,0 +1,50 @@
+---
+version: '2'
+
+plugins:
+  ansible-lint:
+    enabled: true
+  editorconfig:
+    enabled: true
+  eslint:
+    enabled: true
+  jscpd:
+    enabled: true
+  shellcheck:
+    enabled: true
+  yamllint:
+    enabled: true
+
+exclude_patterns:
+  - _generated_/
+  - .common/
+  - .config/
+  - .git/
+  - .go/
+  - .modules/
+  - .npm/
+  - .pnpm-store/
+  - .task/
+  - .travis.yml
+  - .venv/
+  - .vscode/
+  - '*.hbs.yml'
+  - '**/*_test.go'
+  - '**/*.d.ts'
+  - '**/node_modules/'
+  - '**/spec/'
+  - '**/test/'
+  - '**/tests/'
+  - '**/vendor/'
+  - build/
+  - config/
+  - db/
+  - deprecated/
+  - dist/
+  - features/
+  - pnpm-lock.yaml
+  - roles/
+  - script/
+  - test-output/
+  - testdata/
+  - Tests/

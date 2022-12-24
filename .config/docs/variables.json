@@ -1,0 +1,592 @@
+{
+  "SPACE": "",
+  "alt_badge_style": "flat-square",
+  "author": {
+    "email": "brian@megabyte.space",
+    "name": "Brian Zalewski"
+  },
+  "autodoc_actions_description": "",
+  "autodoc_tags_description": "",
+  "autodoc_todo_description": "",
+  "autodoc_variables_description": "",
+  "badge_style": "for-the-badge",
+  "blueprint_requirements": [
+    ["Variable Name", "Variable Description"],
+    [
+      "`description`",
+      "Short description of the role, worded in such a way that it makes sense by itself and with 'An Ansible role that ' prepended to it"
+    ],
+    ["`group`", "This should always be set to 'ansible' for Ansible roles"],
+    [
+      "`name`",
+      "This should be the official name for the product that the role installs/configures. It is used in the title of the repository and throughout the documentation to refer to the product."
+    ],
+    [
+      "`overview`",
+      "This variable should be a description of what the role installs. You can usually find a good description by Googling, \"What is Android Studio,\" for example if you were populating this variable for the [Android Studio role]({{ repository.group.ansible_roles }}/androidstudio). This text is shown at the top of the README, right below the header section and before the table of contents. Whenever possible, key products/terms should be linked to using markdown. You can see an example of us hyperlinking in this variable by checking out the [Android Studio role]({{ repository.group.ansible_roles }}/androidstudio). The idea is to make it as easy as possible for our users to figure out exactly what the role does."
+    ],
+    ["`repository.github`", "The HTTPS URL of the GitHub mirror"],
+    ["`repository.gitlab`", "The HTTPS URL of the GitLab repository"],
+    [
+      "`slug`",
+      "This should generally be the ending slug of the GitHub mirror. It is used for things like filling in the package.json name."
+    ],
+    ["`subgroup`", "This should always be set to 'role' for Ansible roles"],
+    ["`title`", "The title of the README.md"]
+  ],
+  "commit_help_url": "https://megabyte.space/docs/contributing/commit-guidelines",
+  "company": "Megabyte LLC",
+  "copyright": "2020-2021",
+  "description_emojis": "👨🏻‍💻 🩺",
+  "docker_label_authors": "Brian Zalewski <brian@megabyte.space>",
+  "docs": {
+    "header_description_post": "<i></i>",
+    "header_description_pre": "<i></i>",
+    "header_title_post": "<i></i>",
+    "header_title_pre": "<i></i>",
+    "link": "https://megabyte.space/docs/common/ansible"
+  },
+  "downloadLinks": {
+    "fedora": "https://download.fedoraproject.org/pub/fedora/linux/releases/35/Workstation/x86_64/iso/Fedora-Workstation-Live-x86_64-35-1.2.iso",
+    "kali": "https://cdimage.kali.org/kali-2022.1/kali-linux-2022.1-installer-amd64.iso",
+    "qubes": "https://ftp.qubes-os.org/iso/Qubes-R4.1.0-x86_64.iso",
+    "tails": "https://ftp.osuosl.org/pub/tails/stable/tails-amd64-4.29/tails-amd64-4.29.iso",
+    "ubuntu": "https://mirror.arizona.edu/ubuntu-releases/21.10/ubuntu-21.10-desktop-amd64.iso",
+    "windows": "https://software.download.prss.microsoft.com/db/Win11_English_x64.iso?t=c15e0cba-9c8d-4984-b30f-43c42425733d&e=1650582458&h=960d57d2c6a0243e32d3106c0d8f82387966ddf9a9bfce82f89e66866457c014"
+  },
+  "email": {
+    "help": "help@megabyte.space"
+  },
+  "emoji_beginnings": ["🚀 ", "🔥👉 ", "👉 ", "😉 ", "🆓 ", "🐴 ", "👀 ", "🎉 ", "", "", "", "", "", "", "", ""],
+  "emoji_endings": [" 🚀", " 🔥🔥🔥", " 👏", " 😉", " 🐙", " 🐴", " 👀", " 🎟", " 🎉🎉", "", "", "", "", "", "", ""],
+  "github_prefix": "<i></i>",
+  "gitlab_pipelines": [
+    {
+      "active": true,
+      "cron": "0 5 1 * *",
+      "description": "Monthly Repository Update",
+      "ref": "synchronize",
+      "variable": {
+        "REPOSITORY_UPDATE": true
+      }
+    }
+  ],
+  "gomodProxy": true,
+  "group": "ansible",
+  "groups": {
+    "angular": ["app", "website"],
+    "ansible": ["playbook", "role"],
+    "docker": ["ansible-molecule", "app", "ci-pipeline", "codeclimate", "software"],
+    "go": ["cli", "library"],
+    "npm": ["app", "cli", "config", "library", "plugin"],
+    "packer": ["desktop", "server"],
+    "python": ["cli", "library"]
+  },
+  "homebrew": {
+    "folder": "Formula",
+    "name": "homebrew-tap",
+    "owner": "installdoc"
+  },
+  "hostapp_var_chart": [
+    ["App", "Description", "GitHub&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"],
+    [
+      "**[Authelia](https://www.authelia.com/)**",
+      "An authentication portal that supports SSO and 2FA (_[Homepage](https://www.authelia.com/) | [Documentation](https://www.authelia.com/docs/)_)",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/authelia/authelia?style=social)](https://github.com/authelia/authelia)"
+    ],
+    [
+      "**[Homer](https://github.com/bastienwirtz/homer)**",
+      "A very simple homepage which is customized by the playbook to automatically include links to the Docker containers you choose to host on the computer (_[Demo](https://homer-demo.netlify.app/)_)",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/bastienwirtz/homer?style=social)](https://github.com/bastienwirtz/homer)"
+    ],
+    [
+      "**[Portainer](https://www.portainer.io/)**",
+      "A Docker management tool (_[Homepage](https://www.portainer.io/) | [Documentation](https://docs.portainer.io/) | [Demo](https://github.com/portainer/portainer#demo)_)",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/portainer/portainer?style=social)](https://github.com/portainer/portainer)"
+    ],
+    [
+      "**[Serve](https://github.com/vercel/serve)**",
+      "Simple interface for viewing files located or symlinked to in the `/var/www/` folder of the machine",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/vercel/serve?style=social)](https://github.com/vercel/serve)"
+    ]
+  ],
+  "htpc_var_chart": [
+    ["App", "Description", "GitHub&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"],
+    [
+      "**[WireGuard](https://docs.linuxserver.io/images/docker-wireguard)**",
+      "Dedicated WireGuard VPN for the HTPC applications which is configured in *our docker-compose.yml* file to be used as the internet connection for all the containers (_[Homepage](https://www.wireguard.com/)_)",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/linuxserver/docker-wireguard?style=social)](https://github.com/linuxserver/docker-wireguard)"
+    ],
+    [
+      "**[Bazarr](https://docs.linuxserver.io/images/docker-bazarr)**",
+      "Manages and automatically downloads subtitles (_[Homepage](https://www.bazarr.media/) | [Documentation](https://wiki.bazarr.media/)_)",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/morpheus65535/bazarr?style=social)](https://github.com/morpheus65535/bazarr)"
+    ],
+    [
+      "**[Heimdall](https://docs.linuxserver.io/images/docker-heimdall)**",
+      "Simple start page for all the HTPC apps (_[Homepage](https://heimdall.site/)_)",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/linuxserver/Heimdall?style=social)](https://github.com/linuxserver/Heimdall)"
+    ],
+    [
+      "**[Jackett](https://docs.linuxserver.io/images/docker-jackett)**",
+      "Request proxy server for Radarr and Sonarr which helps speed things up",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/Jackett/Jackett?style=social)](https://github.com/Jackett/Jackett)"
+    ],
+    [
+      "**[Kodi Headless](https://hub.docker.com/r/linuxserver/kodi-headless)**",
+      "Backend for Kodi used to host a centralized database for Kodi instances (_[Homepage](https://kodi.tv/) | [Documentation](https://kodi.wiki/view/Main_Page)_)",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/xbmc/xbmc?style=social)](https://github.com/xbmc/xbmc)"
+    ],
+    [
+      "**[Lidarr](https://docs.linuxserver.io/images/docker-lidarr)**",
+      "Music collection manager that automatically downloads from BitTorrent and Usenet (_[Homepage](https://lidarr.audio/) | [Documentation](https://wiki.servarr.com/en/lidarr)_)",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/Lidarr/Lidarr?style=social)](https://github.com/Lidarr/Lidarr)"
+    ],
+    [
+      "**[NZBGet](https://docs.linuxserver.io/images/docker-nzbget)**",
+      "NZBGet is a Usenet download manager used to download from NewsGroups which are supposedly more secure than torrents. **NOTE: Viruses are still prevalent on both NewsGroups and torrents - make sure you don't run anything with admin / sudo privileges.** (_[Homepage](https://nzbget.net/) | [Documentation](https://nzbget.net/documentation)_)",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/nzbget/nzbget?style=social)](https://github.com/nzbget/nzbget)"
+    ],
+    [
+      "**[Ombi](https://docs.linuxserver.io/images/docker-ombi)**",
+      "Plex media request and user management system which can be used to allow users who use your HTPC server to request movies, TV shows, and other media (_[Homepage](https://ombi.io/) | [Documentation](https://docs.ombi.app/) | [Demo](https://app.ombi.io/)_)",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/Ombi-app/Ombi?style=social)](https://github.com/Ombi-app/Ombi)"
+    ],
+    [
+      "**[Organizr](https://docs.linuxserver.io/images/docker-htpcmanager)**",
+      "Front end for HTPC web applications with a full-featured user interface that is full of eye candy (_[Homepage](https://organizr.app/) | [Documentation](https://docs.organizr.app/) | [Demo](https://docs.organizr.app/)_)",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/causefx/Organizr?style=social)](https://github.com/causefx/Organizr)"
+    ],
+    [
+      "**[Radarr](https://docs.linuxserver.io/images/docker-radarr)**",
+      "Automatic movie downloader that can even be configured to download lists including the Top 250 IMBD movies (_[Homepage](https://radarr.video/) | [Documentation](https://wiki.servarr.com/radarr)_)",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/Radarr/Radarr?style=social)](https://github.com/Radarr/Radarr)"
+    ],
+    [
+      "**[Sonarr](https://docs.linuxserver.io/images/docker-sonarr)**",
+      "Automatic TV show downloader with tons of ways to easily and automatically download TV shows (_[Homepage](https://sonarr.tv/) | [Documentation](https://wiki.servarr.com/en/sonarr)_)",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/Sonarr/Sonarr?style=social)](https://github.com/Sonarr/Sonarr)"
+    ],
+    [
+      "**[Tautulli](https://docs.linuxserver.io/images/docker-tautulli)**",
+      "Metrics and monitoring dashboard for Plex (_[Homepage](https://tautulli.com/) | [Documentation](https://wiki.bazarr.media/)_)",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/Tautulli/Tautulli?style=social)](https://github.com/Tautulli/Tautulli)"
+    ],
+    [
+      "**[Transmission](https://docs.linuxserver.io/images/docker-transmission)**",
+      "BitTorrent client that can be used in conjunction with or as an alternative to using NewsGroups via NZBGet (_[Homepage](https://transmissionbt.com/) | [Documentation](https://github.com/transmission/transmission/blob/main/docs/README.md)_)",
+      "[![GitHub Repo stars](https://img.shields.io/github/stars/transmission/transmission?style=social)](https://github.com/transmission/transmission)"
+    ]
+  ],
+  "idPost": "megabyte.space",
+  "json_top_keys": "",
+  "license": "MIT",
+  "link": {
+    "chat": "https://app.slack.com/client/T01ABCG4NK1/C01NN74H0LW/details/",
+    "docker_role": "https://github.com/ProfessorManhattan/ansible-docker",
+    "docs": "https://megabyte.space/docs",
+    "gitter": "https://gitter.im/megabyte-labs/community",
+    "home": "https://megabyte.space",
+    "installdoctor": "https://install.doctor",
+    "mod_ansible_autodoc": "https://pypi.org/project/mod-ansible-autodoc/",
+    "privacy": "https://megabyte.space/privacy",
+    "shield": "https://shields.io",
+    "terms": "https://megabyte.space/terms"
+  },
+  "misc": {
+    "appnest": "https://github.com/andreasbm/readme",
+    "husky": "https://www.npmjs.com/package/husky",
+    "tinypng": "https://tinypng.com/"
+  },
+  "molecule_descriptions": [
+    ["Scenario", "Description"],
+    ["`default`", "Uses VirtualBox to run tests for all platforms in parallel."],
+    ["`docker`", "Uses Docker to run tests for all Linux platforms and versions in parallel."],
+    [
+      "`docker-snap`",
+      "The same as the `docker` scenario except it excludes platforms that have trouble installing snap packages on Docker."
+    ],
+    ["`archlinux-desktop`", "Runs the test on the latest version of Archlinux desktop using VirtualBox."],
+    ["`centos-desktop`", "Runs the test on the latest version of CentOS desktop using VirtualBox."],
+    ["`debian-desktop`", "Runs the test on the latest version of Debian desktop using VirtualBox."],
+    ["`fedora-desktop`", "Runs the test on the latest version of Fedora desktop using VirtualBox."],
+    ["`macos-desktop`", "Runs the test on the latest version of macOS desktop using VirtualBox."],
+    ["`ubuntu-desktop`", "Runs the test on the latest version of Ubuntu desktop using VirtualBox."],
+    ["`windows-desktop`", "Runs the test on the latest version of Windows desktop using VirtualBox."],
+    ["`ci-docker-archlinux`", "Uses Docker to test Archlinux."],
+    ["`ci-docker-centos`", "Uses Docker to test multiple versions of CentOS."],
+    ["`ci-docker-debian`", "Uses Docker to test multiple versions of Debian."],
+    [
+      "`ci-docker-debian-snap`",
+      "Uses Docker to test Debian just like `ci-docker-debian` except it excludes versions that cannot install snap packages."
+    ],
+    ["`ci-docker-fedora`", "Uses Docker to test multiple versions of Fedora."],
+    ["`ci-docker-ubuntu`", "Uses Docker to test multiple versions of Ubuntu."]
+  ],
+  "name": "[[ package.json .blueprint.name - See CONTRIBUTING.md ]]",
+  "newProjectTemplates": {
+    "angular-app": {
+      "group": "angular",
+      "subgroup": "app",
+      "title": "Angular App"
+    },
+    "angular-website": {
+      "group": "angular",
+      "subgroup": "website",
+      "title": "Angular Website"
+    },
+    "ansible-role": {
+      "group": "ansible",
+      "subgroup": "role",
+      "title": "Ansible Role"
+    },
+    "docker-app": {
+      "group": "docker",
+      "subgroup": "app",
+      "title": "Dockerfile (App)"
+    },
+    "docker-ci-pipeline": {
+      "group": "docker",
+      "subgroup": "ci-pipeline",
+      "title": "CI/CD Pipeline Dockerfile"
+    },
+    "docker-codeclimate": {
+      "group": "docker",
+      "subgroup": "codeclimate",
+      "title": "CodeClimate Engine / Linter Dockerfile"
+    },
+    "docker-docker-compose": {
+      "group": "docker",
+      "subgroup": "docker-compose",
+      "title": "Docker Compose"
+    },
+    "go-cli": {
+      "group": "go",
+      "subgroup": "cli",
+      "title": "Go CLI"
+    },
+    "go-library": {
+      "group": "go",
+      "subgroup": "library",
+      "title": "Go Library"
+    },
+    "misc": {
+      "group": "misc",
+      "subgroup": "misc",
+      "title": "Miscellaneous project"
+    },
+    "npm-app": {
+      "group": "npm",
+      "subgroup": "app",
+      "title": "Node.js App"
+    },
+    "npm-cli": {
+      "group": "npm",
+      "subgroup": "cli",
+      "title": "Node.js CLI"
+    },
+    "npm-configs": {
+      "group": "npm",
+      "subgroup": "configs",
+      "title": "NPM Config Package"
+    },
+    "npm-library": {
+      "group": "npm",
+      "subgroup": "library",
+      "title": "Node.js Library"
+    },
+    "npm-plugin": {
+      "group": "npm",
+      "subgroup": "plugin",
+      "title": "NPM Plugin"
+    },
+    "npm-web-component": {
+      "group": "npm",
+      "subgroup": "web-component",
+      "title": "Web Component"
+    },
+    "packer-desktop": {
+      "group": "packer",
+      "subgroup": "desktop",
+      "title": "Packer (Desktop)"
+    },
+    "packer-server": {
+      "group": "packer",
+      "subgroup": "server",
+      "title": "Packer (Server)"
+    },
+    "python-cli": {
+      "group": "python",
+      "subgroup": "cli",
+      "title": "Python CLI"
+    },
+    "python-library": {
+      "group": "python",
+      "subgroup": "library",
+      "title": "Python Library"
+    },
+    "website": {
+      "group": "npm",
+      "subgroup": "website",
+      "title": "Website"
+    }
+  },
+  "npm_publish_config_access": "public",
+  "npm_standard_version_prerelease": "git add --all",
+  "npm_type": "module",
+  "organization": "Megabyte Labs",
+  "overview": "[[ This is a new repository without the details filled in yet. Look for the section about blueprint data in the CONTRIBUTING.md to set up the project. ]]",
+  "playbook_path": "megabyte-labs/gas-station",
+  "profile": {
+    "dockerHubUser": "professormanhattan",
+    "dockerhub": "megabytelabs",
+    "galaxy": "professormanhattan",
+    "github": "ProfessorManhattan",
+    "githubOrg": "megabyte-labs",
+    "linkedin": "blzalewski",
+    "npmjs": "thisismyfirstday",
+    "npmjs_organization": "installdoc",
+    "opencollective": "megabytelabs",
+    "patreon": "ProfessorManhattan",
+    "pypi": "ProfessorManhattan",
+    "replit": "ProfessorMegaby",
+    "stackblitz": "ProfessorManhattan",
+    "twitter": "MegabyteLabs",
+    "vagrant": "ProfessorManhattan"
+  },
+  "profile_link": {
+    "dockerhub": "https://hub.docker.com/u",
+    "galaxy": "https://galaxy.ansible.com",
+    "github": "https://github.com",
+    "linkedin": "https://www.linkedin.com/in/",
+    "npmjs": "https://www.npmjs.com/~",
+    "opencollective": "https://opencollective.com",
+    "patreon": "https://www.patreon.com",
+    "pypi": "https://pypi.org/user",
+    "replit": "https://repl.it/@",
+    "stackblitz": "https://stackblitz.com/@",
+    "twitter": "MegabyteLabs",
+    "vagrant": "https://app.vagrantup.com"
+  },
+  "python_role_dependencies": [
+    ["Package", "Description", "Required"],
+    [
+      "<b><a href=\"https://pypi.org/project/ansible/\" title=\"ansible on pypi.org\" target=\"_blank\">ansible</a></b>",
+      "A configuration management system that can remotely configure computers",
+      "<div align=\"center\">✔️</div>"
+    ],
+    [
+      "<b><a href=\"https://pypi.org/project/docker/\" title=\"docker on pypi.org\" target=\"_blank\">docker</a></b>",
+      "Enables the capability of provisioning Docker containers with Ansible",
+      "<div align=\"center\">✔️</div>"
+    ],
+    [
+      "<b><a href=\"https://pypi.org/project/python-vagrant/\" title=\"python-vagrant on pypi.org\" target=\"_blank\">python-vagrant</a></b>",
+      "Required for provisioning Vagrant VMs",
+      "<div align=\"center\">✔️</div>"
+    ],
+    [
+      "<b><a href=\"https://pypi.org/project/pywinrm/\" title=\"pywinrm on pypi.org\" target=\"_blank\">pywinrm</a></b>",
+      "Required for provisioning Windows machines that are using WinRM",
+      "<div align=\"center\">✔️</div>"
+    ],
+    [
+      "<b><a href=\"https://pypi.org/project/ansible-lint/\" title=\"ansible-lint on pypi.org\" target=\"_blank\">ansible-lint</a></b>",
+      "Linting tool for Ansible files",
+      ""
+    ],
+    [
+      "<b><a href=\"https://pypi.org/project/ansibler/\" title=\"ansibler on pypi.org\" target=\"_blank\">ansibler</a></b>",
+      "Custom tool used to generate advanced documentation (e.g. it generates the compatibility chart and some other charts)",
+      ""
+    ],
+    [
+      "<b><a href=\"https://pypi.org/project/black/\" title=\"black on pypi.org\" target=\"_blank\">black</a></b>",
+      "Python file auto-formatter included in case project utilizes Python test scripts",
+      ""
+    ],
+    [
+      "<b><a href=\"https://pypi.org/project/blocklint/\" title=\"blocklint on pypi.org\" target=\"_blank\">blocklint</a></b>",
+      "Linting tool that prevents certain words from entering the code base",
+      ""
+    ],
+    [
+      "<b><a href=\"https://pypi.org/project/flake8/\" title=\"flake8 on pypi.org\" target=\"_blank\">flake8</a></b>",
+      "Python linter that reports Python syntax and style errors",
+      ""
+    ],
+    [
+      "<b><a href=\"https://pypi.org/project/mod-ansible-autodoc/\" title=\"mod-ansible-autodoc on pypi.org\" target=\"_blank\">mod-ansible-autodoc</a></b>",
+      "Custom fork of [ansible-autodoc](https://pypi.org/project/ansible-autodoc/0.5.1.1/) which allows us to auto-generate documentation based on comments in the role's YAML files",
+      ""
+    ],
+    [
+      "<b><a href=\"https://pypi.org/project/molecule/\" title=\"molecule on pypi.org\" target=\"_blank\">molecule</a></b>",
+      "Test framework for Ansible",
+      ""
+    ],
+    [
+      "<b><a href=\"https://pypi.org/project/molecule-docker/\" title=\"molecule-docker on pypi.org\" target=\"_blank\">molecule-docker</a></b>",
+      "Molecule plugin for provisioning Docker containers",
+      ""
+    ],
+    [
+      "<b><a href=\"https://pypi.org/project/molecule-vagrant/\" title=\"molecule-vagrant on pypi.org\" target=\"_blank\">molecule-vagrant</a></b>",
+      "Molecule plugin for provisioning Vagrant VMs",
+      ""
+    ],
+    [
+      "<b><a href=\"https://pypi.org/project/pre-commit-hooks/\" title=\"pre-commit-hooks on pypi.org\" target=\"_blank\">pre-commit-hooks</a></b>",
+      "Suite of tools useful for linting",
+      ""
+    ],
+    [
+      "<b><a href=\"https://pypi.org/project/proselint/\" title=\"proselint on pypi.org\" target=\"_blank\">proselint</a></b>",
+      "Linter used to generate English-language improvements (used to improve documentation)",
+      ""
+    ],
+    [
+      "<b><a href=\"https://pypi.org/project/yamllint/\" title=\"yamllint on pypi.org\" target=\"_blank\">yamllint</a></b>",
+      "Linter for YAML files that ensures proper syntax and styling is used",
+      ""
+    ]
+  ],
+  "redditApplicationId": "O3UxD7HlPpcN88gpEkPIXQ",
+  "redditUsername": "tsgangster",
+  "repository": {
+    "github": "",
+    "gitlab": "",
+    "gitlabBaseUrl": "https://gitlab.com/megabyte-labs",
+    "group": {
+      "ansible_roles": "https://gitlab.com/megabyte-labs/ansible-roles",
+      "ansible_roles_path": "megabyte-labs/ansible-roles",
+      "apps": "https://gitlab.com/megabyte-labs/apps",
+      "apps_path": "megabyte-labs/apps",
+      "ci": "https://gitlab.com/megabyte-labs/ci",
+      "ci_path": "megabyte-labs/ci",
+      "cloud": "https://gitlab.com/megabyte-labs/cloud",
+      "cloud_path": "megabyte-labs/cloud",
+      "common": "https://gitlab.com/megabyte-labs/common",
+      "common_path": "megabyte-labs/common",
+      "cryptocurrency": "https://gitlab.com/megabyte-labs/cryptocurrency",
+      "cryptocurrency_path": "megabyte-labs/cryptocurrency",
+      "docker_compose": "https://gitlab.com/megabyte-labs/docker-compose",
+      "docker_compose_path": "megabyte-labs/docker-compose",
+      "dockerfile": "https://gitlab.com/megabyte-labs/docker",
+      "dockerfile_path": "megabyte-labs/docker",
+      "documentation": "https://gitlab.com/megabyte-labs/documentation",
+      "documentation_path": "megabyte-labs/documentation",
+      "go": "https://gitlab.com/megabyte-labs/go",
+      "go_path": "megabyte-labs/go",
+      "kubernetes": "https://gitlab.com/megabyte-labs/kubernetes",
+      "kubernetes_path": "megabyte-labs/kubernetes_path",
+      "npm": "https://gitlab.com/megabyte-labs/npm",
+      "npm_path": "megabyte-labs/npm",
+      "packer": "https://gitlab.com/megabyte-labs/packer",
+      "packer_path": "megabyte-labs/packer",
+      "python": "https://gitlab.com/megabyte-labs/python",
+      "python_cli_path": "megabyte-labs/python/cli",
+      "python_path": "megabyte-labs/python",
+      "software": "https://gitlab.com/megabyte-labs/software",
+      "software_path": "megabyte-labs/software",
+      "web_components": "https://gitlab.com/megabyte-labs/web-components",
+      "web_components_path": "megabyte-labs/web-components"
+    },
+    "location": {
+      "commits": {
+        "github": "/commits/master",
+        "gitlab": "/-/commits/master",
+        "gitlab_e2e": "/-/commits/e2e"
+      },
+      "conduct": {
+        "github": "/blob/master/docs/CODE_OF_CONDUCT.md",
+        "gitlab": "/-/blob/master/docs/CODE_OF_CONDUCT.md"
+      },
+      "contributing": {
+        "github": "/blob/master/docs/CONTRIBUTING.md",
+        "gitlab": "/-/blob/master/docs/CONTRIBUTING.md"
+      },
+      "demo": {
+        "github": "/raw/master/docs/demo.gif",
+        "gitlab": "/-/raw/master/docs/demo.gif"
+      },
+      "issues": {
+        "github": "/issues",
+        "gitlab": "/-/issues"
+      },
+      "license": {
+        "github": "/blob/master/LICENSE",
+        "gitlab": "/-/blob/master/LICENSE"
+      },
+      "logo": {
+        "github": "/raw/master/logo.png",
+        "gitlab": "/-/raw/master/logo.png"
+      },
+      "readme": {
+        "github": "/blob/master/README.md",
+        "gitlab": "/-/blob/master/README.md"
+      }
+    },
+    "namespace": "",
+    "prefix": "ansible-",
+    "project": {
+      "assets": "https://gitlab.com/megabyte-labs/assets/-/raw/master",
+      "autodoc": "https://github.com/AndresBott/ansible-autodoc",
+      "playbooks": "https://github.com/ProfessorManhattan/Gas-Station",
+      "wrangler": "https://gitlab.com/megabyte-labs/wrangler"
+    }
+  },
+  "saas_var_chart": [
+    ["Service", "Description", "Price"],
+    [
+      "**[CloudFlare](https://www.cloudflare.com/)**",
+      "CloudFlare is a DNS provider, edge network, and much more. Some day it might be able to replace all the services in this list but until then CloudFlare is the preferred provider for anything it offers a product for. In our configurations, CloudFlare is used for DNS, encrypted tunnels via [cloudflared](https://github.com/cloudflare/cloudflared), [CloudFlare WARP](https://1.1.1.1/), and [CloudFlare Teams](https://blog.cloudflare.com/introducing-cloudflare-for-teams/). On top of that, CloudFlare provides some other great features that can be utilized to make lightning-fast web apps. (_[Documentation](https://developers.cloudflare.com/docs/)_)",
+      "**Free** for the services we integrate"
+    ],
+    [
+      "**[Digital Ocean](https://m.do.co/c/751743d45e36)**",
+      "Digital Ocean is a cloud hosting provider. Anytime CloudFlare's offerings are not enough to satisfy requirements, Digital Ocean is used. The service has a clean and simple web UI, a wide variety of CLIs/SDKs available on GitHub, and the company has been around since 2011. Digital Ocean is primarily used by our stack to host Kubernetes, S3 buckets, and cheap virtual private servers. (_[Documentation](https://docs.digitalocean.com/)_)",
+      "**~$40/month** for a Kubernetes cluster, S3 bucket, and a general-purpose VPS"
+    ],
+    [
+      "**[Wasabi](https://wasabi.com/)**",
+      "Wasabi is the cheapest S3 bucket provider available. It is used as a secondary backup for any data that is backed up / saved to an S3 bucket. (_[Documentation](https://wasabi.com/help/docs/)_)",
+      "**$5.99/month** for S3 bucket"
+    ],
+    [
+      "**[Ory](https://www.ory.sh/)**",
+      "Ory is the only identity platform that can scale indefinitely and is based entirely on open source. Ory is leveraged to provide a feature-rich and programmable single sign-on platform. It includes support for hardware-based tokens. (_[Documentation](https://www.ory.sh/docs/welcome)_)",
+      "**Free** for the developer edition"
+    ],
+    [
+      "**[Proton](https://proton.me/)**",
+      "Proton Mail is an end-to-end encrypted email service founded in 2013 in Geneva, Switzerland. Proton Mail and ProtonVPN are used in our stack to provide secure e-mail and configure VPN profiles using ProtonVPN's unique security features. With the Business plan, you can get custom domain branded e-mail and enough VPN connections to configure your router / VPN profiles on each of your devices. (_[Documentation](https://proton.me/support)_)",
+      "**$12.99/month** for the Business edition"
+    ],
+    [
+      "**[GMail](https://mail.google.com)**",
+      "GMail is a free e-mail service offered by Google. In some cases, we leverage GMail's SMTP capabilities to send notification e-mails. (_[Documentation](https://support.google.com/mail/?hl=en#topic=7065107)_)",
+      "**Free**"
+    ]
+  ],
+  "scriptsBuild": "task donothing",
+  "scriptsHelp": "task --menu",
+  "scriptsPrepare": "npm run start && (test -f Taskfile.yml && task common:husky) || true",
+  "scriptsReplaceThis": "\"",
+  "scriptsReplaceWith": "\\\"",
+  "scriptsStart": "bash start.sh",
+  "scriptsTest": "task donothing",
+  "sharp_instructions": [],
+  "slackNotificationChannel": "#misc",
+  "slackNotificationIcon": "https://gitlab.com/megabyte-labs/misc/assets/-/raw/master/logo/megabytelabs-color-icon-350x350.png",
+  "slackNotificationUsername": "Megabyte Labs Release Notification Bot",
+  "sponsorship": {
+    "author": "Brian Zalewski",
+    "text": "I create open source projects out of love. Although I have a job, shelter, and as much fast food as I can handle, it would still be pretty cool to be appreciated by the community for something I have spent a lot of time and money on. Please consider sponsoring me! Who knows? Maybe I will be able to quit my job and publish open source full time."
+  },
+  "subgroup": "[[ Needs to be setup. Set this in the common repository for this type of project ]]",
+  "teamsNotificationColor": "#1DA1F2",
+  "teamsNotificationIcon": "https://gitlab.com/megabyte-labs/misc/assets/-/raw/master/logo/megabytelabs-color-icon-350x350.png",
+  "title": "[[ package.json .blueprint.title - See CONTRIBUTING.md ]]",
+  "version": "0.0.1"
+}

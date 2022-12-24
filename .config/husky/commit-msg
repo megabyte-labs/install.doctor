@@ -1,0 +1,34 @@
+#!/bin/sh
+# shellcheck disable=SC1090,SC1091,SC2016
+
+# @file .config/husky/commit-msg
+# @brief A git hook script for the `commit-msg` hook
+# @arg $1 Path to a temporary file that contains the commit message written by the developer (e.g. .git/COMMIT_EDITMSG)
+
+[ -f .config/log ] && chmod +x .config/log
+if [ -f "$(dirname "$0")/_/husky.sh" ]; then
+  . "$(dirname "$0")/_/husky.sh"
+
+  # Attempt to register Bodega/Task from common places if it is not in PATH
+  if ! type task > /dev/null; then
+    PATH="$PATH:$HOME/.local/go/bin:$HOME/.local/bin:$HOME/bin:$HOME/go/bin:$HOME/.asdf/shims"
+    if ! type task > /dev/null; then
+      for DOTFILE in .profile .bashrc .bash_profile .zshrc; do
+        . "$HOME/$DOTFILE"
+        if type task > /dev/null; then
+          break
+        fi
+      done
+    fi
+  fi
+
+  # Show warning if Bodega/Task is still not registered/installed, else proceed with hook
+  if ! type task > /dev/null; then
+    .config/log warn 'Bodega `task` does not appear to be installed or is not registered in the `PATH` variable - please manually include it'
+    .config/log info 'Get Bodega here -> `https://github.com/megabyte-labs/Bodega`'
+  else
+    task git:hook:commit-msg -- "$1"
+  fi
+else
+  .config/log warn 'Husky pre-commit hooks are currently not properly setup.'
+fi

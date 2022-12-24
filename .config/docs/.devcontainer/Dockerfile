@@ -1,0 +1,1 @@
+FROM megabytelabs/devcontainer:latest

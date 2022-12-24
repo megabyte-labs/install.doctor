@@ -1,0 +1,33 @@
+---
+enable_list:
+  - fqcn-builtins
+  - no-log-password
+  - no-same-owner
+
+exclude_paths:
+  - ../.autodoc/
+  - ../.cache/
+  - ../.common/
+  - ../.config/
+  - ../.git/
+  - ../.github/
+  - ../.gitlab/
+  - ../.husky/
+  - ../.modules/
+  - ../.npm/
+  - ../.pnpm-store/
+  - ../.shared/
+  - ../.task/
+  - ../.venv/
+  - ../.vscode/
+  - ../build/
+  - ../dist/
+  - ../molecule/
+  - ../node_modules/
+  - ../pnpm-lock.yaml
+  - ../roles/
+  - ../venv/
+
+offline: true
+
+skip_list: []

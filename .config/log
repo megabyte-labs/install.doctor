@@ -1,0 +1,393 @@
+#!/usr/bin/env bash
+
+# @file .config/log
+# @brief Logger / prompt library that logs pretty console messages and provides several prompt methods
+# @description
+#   This file contains several functions that log content in different formats. It also provides an
+#   interface for [Gum](https://github.com/charmbracelet/gum) based prompts. The available methods include:
+#
+#   * `choose` - Prompt user with choices
+#   * `confirm` - Fancy Yes/No confirmation prompt
+#   * `error` - Logs an error message
+#   * `filter` - Filterable list of choices (with choices passed in as a line-return seperated file)
+#   * `info` - Logs a regular message
+#   * `input` - Prompt for a text input
+#   * `md` - Render a markdown file with [Glow](https://github.com/charmbracelet/glow)
+#   * `password` - Prompt for text that is masked by the prompt
+#   * `prompt` - Log a description for a prompt that follows
+#   * `spin` - Show a spinner while background job completes
+#   * `star` - Logs a message with a star icon at the beginning
+#   * `start` - Log a job start message
+#   * `success` - Logs a success message
+#   * `warn` - Logs a warning message
+#   * `write` - Multi-line input prompt
+#
+#   If the `docker` environment variable is not set, the script / library will ensure both Gum and Glow are installed.
+
+# @description Installs glow (a markdown renderer) from GitHub releases
+# @example installGlow
+installGlow() {
+  # TODO: Add support for other architecture types
+  if [ -d '/Applications' ] && [ -d '/Library' ] && [ -d '/Users' ]; then
+    GLOW_DOWNLOAD_URL="https://github.com/charmbracelet/glow/releases/download/v1.4.1/glow_1.4.1_Darwin_x86_64.tar.gz"
+  elif [ -f '/etc/ubuntu-release' ] || [ -f '/etc/debian_version' ] || [ -f '/etc/redhat-release' ] || [ -f '/etc/SuSE-release' ] || [ -f '/etc/arch-release' ] || [ -f '/etc/alpine-release' ]; then
+    GLOW_DOWNLOAD_URL="https://github.com/charmbracelet/glow/releases/download/v1.4.1/glow_1.4.1_linux_x86_64.tar.gz"
+  fi
+  if type curl &> /dev/null; then
+    if { [ -d '/Applications' ] && [ -d '/Library' ] && [ -d '/Users' ]; } || [ -f '/etc/ubuntu-release' ] || [ -f '/etc/debian_version' ] || [ -f '/etc/redhat-release' ] || [ -f '/etc/SuSE-release' ] || [ -f '/etc/arch-release' ] || [ -f '/etc/alpine-release' ]; then
+      TMP="$(mktemp)"
+      TMP_DIR="$(dirname "$TMP")"
+      curl -sSL "$GLOW_DOWNLOAD_URL" > "$TMP"
+      tar -xzf "$TMP" -C "$TMP_DIR"
+      if [ -n "$HOME" ]; then
+        if mkdir -p "$HOME/.local/bin" && mv "$TMP_DIR/glow" "$HOME/.local/bin/glow"; then
+          GLOW_PATH="$HOME/.local/bin/glow"
+        else
+          GLOW_PATH="$(dirname "${BASH_SOURCE[0]}")/glow"
+          mv "$TMP_DIR/gum" "$GLOW_PATH"
+        fi
+        chmod +x "$GLOW_PATH"
+      else
+        echo "WARNING: The HOME environment variable is not set! (Glow)"
+      fi
+    else
+      echo "WARNING: Unable to detect system type. (Glow)"
+    fi
+  fi
+}
+
+# @description Installs gum (a logging CLI) from GitHub releases
+# @example installGum
+installGum() {
+  # TODO: Add support for other architecture types
+  if [ -d '/Applications' ] && [ -d '/Library' ] && [ -d '/Users' ]; then
+    GUM_DOWNLOAD_URL="https://github.com/charmbracelet/gum/releases/download/v0.4.0/gum_0.4.0_Darwin_x86_64.tar.gz"
+  elif [ -f '/etc/ubuntu-release' ] || [ -f '/etc/debian_version' ] || [ -f '/etc/redhat-release' ] || [ -f '/etc/SuSE-release' ] || [ -f '/etc/arch-release' ] || [ -f '/etc/alpine-release' ]; then
+    GUM_DOWNLOAD_URL="https://github.com/charmbracelet/gum/releases/download/v0.4.0/gum_0.4.0_linux_x86_64.tar.gz"
+  fi
+  if type curl &> /dev/null; then
+    if { [ -d '/Applications' ] && [ -d '/Library' ] && [ -d '/Users' ]; } || [ -f '/etc/ubuntu-release' ] || [ -f '/etc/debian_version' ] || [ -f '/etc/redhat-release' ] || [ -f '/etc/SuSE-release' ] || [ -f '/etc/arch-release' ] || [ -f '/etc/alpine-release' ]; then
+      TMP="$(mktemp)"
+      TMP_DIR="$(dirname "$TMP")"
+      curl -sSL "$GUM_DOWNLOAD_URL" > "$TMP"
+      tar -xzf "$TMP" -C "$TMP_DIR"
+      if [ -n "$HOME" ]; then
+        if mkdir -p "$HOME/.local/bin" && mv "$TMP_DIR/gum" "$HOME/.local/bin/gum"; then
+          GUM_PATH="$HOME/.local/bin/gum"
+        else
+          GUM_PATH="$(dirname "${BASH_SOURCE[0]}")/gum"
+          mv "$TMP_DIR/gum" "$GLOW_PATH"
+        fi
+        chmod +x "$GUM_PATH"
+      else
+        echo "WARNING: The HOME environment variable is not set! (Gum)"
+      fi
+    else
+      echo "WARNING: Unable to detect system type. (Gum)"
+    fi
+  fi
+}
+
+# @description Configure the logger to use echo or gum
+if [ "${container:=}" != 'docker' ]; then
+  # Acquire gum's path or attempt to install it
+  if type gum &> /dev/null; then
+    GUM_PATH="$(which gum)"
+  elif [ -f "$HOME/.local/bin/gum" ]; then
+    GUM_PATH="$HOME/.local/bin/gum"
+  elif [ -f "$(dirname "${BASH_SOURCE[0]}")/gum" ]; then
+    GUM_PATH="$(dirname "${BASH_SOURCE[0]}")/gum"
+  elif type brew &> /dev/null; then
+    brew install gum
+    GUM_PATH="$(which gum)"
+  else
+    installGum
+  fi
+
+  # If gum's path was set, then turn on enhanced logging
+  if [ -n "$GUM_PATH" ]; then
+    chmod +x "$GUM_PATH"
+    ENHANCED_LOGGING=true
+  fi
+fi
+
+# @description Disable logging for Semantic Release because it tries to parse it as JSON
+if [ -n "$SEMANTIC_RELEASE" ]; then
+  NO_LOGGING=true
+fi
+
+# @description Logs using Node.js
+# @example logger info "An informative log"
+logger() {
+  if [ "$1" == 'error' ]; then
+    "$GUM_PATH" style --border="thick" "$("$GUM_PATH" style --foreground="#ff0000" "✖") $("$GUM_PATH" style --bold --background="#ff0000" --foreground="#ffffff"  " ERROR ") $("$GUM_PATH" style --bold "$(format "$2")")"
+  elif [ "$1" == 'info' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ffff" "○") $2"
+  elif [ "$1" == 'md' ]; then
+    # @description Ensure glow is installed
+    if [ "${container:=}" != 'docker' ]; then
+      if type glow &> /dev/null; then
+        GLOW_PATH="$(which glow)"
+      elif [ -f "$HOME/.local/bin/glow" ]; then
+        GLOW_PATH="$HOME/.local/bin/glow"
+      elif [ -f "$(dirname "${BASH_SOURCE[0]}")/glow" ]; then
+        GLOW_PATH="$(dirname "${BASH_SOURCE[0]}")/glow"
+      elif type brew &> /dev/null; then
+        brew install glow
+        GLOW_PATH="$(which glow)"
+      else
+        installGlow
+      fi
+
+      if [ -n "$GLOW_PATH" ]; then
+        chmod +x "$GLOW_PATH"
+        ENHANCED_LOGGING=true
+      fi
+    fi
+    "$GLOW_PATH" "$2"
+  elif [ "$1" == 'prompt' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00008b" "▶") $("$GUM_PATH" style --bold "$(format "$2")")"
+  elif [ "$1" == 'star' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --underline "$(format "$2")")"
+  elif [ "$1" == 'start' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$2")")"
+  elif [ "$1" == 'success' ]; then
+    "$GUM_PATH" style "$("$GUM_PATH" style --foreground="#00ff00" "✔")  $("$GUM_PATH" style --bold "$(format "$2")")"
+  elif [ "$1" == 'warn' ]; then
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --background="#ffff00" --foreground="#000000"  " WARNING ") $("$GUM_PATH" style --bold --italic "$(format "$2")")"
+  else
+    echo "WARNING: Unknown log type"
+    echo "$2"
+  fi
+}
+
+format() {
+  # shellcheck disable=SC2001,SC2016
+  ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`/\1\\u001b[47;1;30m \2 \\e[0;39m/')"
+  if [[ $ANSI_STR == *'`'*'`'* ]]; then
+    ANSI_STR="$(format "$ANSI_STR")"
+  fi
+  echo -e "$ANSI_STR"
+}
+
+# @description Display prompt that allows you to choose between options
+# @example RESPONSE="$(.config/log choose "file.png" "another-file.jpg")"
+choose() {
+  if type gum &> /dev/null; then
+    CHOOSE_ARGS="gum choose"
+    for CURRENT_VAR in "$@"; do
+      CHOOSE_ARGS="$CHOOSE_ARGS \"$CURRENT_VAR\""
+    done
+    eval $CHOOSE_ARGS
+  else
+    echo "ERROR: gum is not installed!"
+  fi
+}
+
+# @description Display a confirmation prompt that returns an exit code if "No" is selected
+# @example RESPONSE="$(.config/log confirm "Are you sure?" "Yeah" "Naa")"
+confirm() {
+  if type gum &> /dev/null; then
+    GUM_OPTS=""
+    if [ -n "$2" ]; then
+      # shellcheck disable=SC089
+      GUM_OPTS="$GUM_OPTS --affirmative=""'$2'"
+    fi
+    if [ -n "$3" ]; then
+      GUM_OPTS="$GUM_OPTS --negative=""'$3'"
+    fi
+    if [ -n "$1" ]; then
+      if [ -n "$GUM_OPTS" ]; then
+        gum confirm "$1" "$GUM_OPTS"
+      else
+        gum confirm "$1"
+      fi
+    else
+      gum confirm
+    fi
+  else
+    echo "ERROR: gum is not installed!"
+  fi
+}
+
+# @description Logs an error message
+# @example .config/log error "Something happened!"
+error() {
+  if [ -z "$NO_LOGGING" ]; then
+    if [ -n "$ENHANCED_LOGGING" ]; then
+      logger error "$1"
+    else
+      echo -e "\e[1;41m  ERROR   \e[0m $(format "$1")\e[0;39m"
+    fi
+  fi
+}
+
+# @description Display a filterable prompt that is populated with options from a text file
+# @example echo Strawberry >> flavors.text && echo Banana >> flavors.text && RESPONSE="$(.config/log filter flavors.txt)"
+filter() {
+  if type gum &> /dev/null; then
+    TMP="$(mktemp)"
+    gum filter < "$1"
+  else
+    echo "ERROR: gum is not installed!"
+  fi
+}
+
+# @description Logs an info message
+# @example .config/log info "Here is some information"
+info() {
+  if [ -z "$NO_LOGGING" ]; then
+    if [ -n "$ENHANCED_LOGGING" ]; then
+      logger info "$1"
+    else
+      echo -e "\e[1;46m   INFO   \e[0m $(format "$1")\e[0;39m"
+    fi
+  fi
+}
+
+# @description Displays an input with masked characters
+# @example INPUT="$(.config/log input 'Enter the value..')"
+input() {
+  if type gum &> /dev/null; then
+    if [ -n "$1" ]; then
+      gum input --placeholder="$1"
+    else
+      gum input
+    fi
+  else
+    echo "ERROR: gum is not installed!"
+  fi
+}
+
+# @description Logs a message written in markdown
+# @example .config/log md "[styled_link](https://google.com)"
+# @example .config/log md mymarkdown/file.md
+md() {
+  if [ ! -f "$1" ]; then
+    echo "ERROR: A markdown file must be passed in as the parameter" && exit 1
+  fi
+  if [ -n "$ENHANCED_LOGGING" ]; then
+    logger md "$1"
+  fi
+}
+
+# @description Displays an input with masked characters
+# @example PASSWORD="$(.config/log password 'Enter the Ansible vault password')"
+password() {
+  if type gum &> /dev/null; then
+    if [ -n "$1" ]; then
+      gum input --password --placeholder="$1"
+    else
+      gum input --password
+    fi
+  else
+    echo "ERROR: gum is not installed!"
+  fi
+}
+
+# @description Logs a message that describes a prompt
+# @example .config/log prompt "Enter text into the following prompt"
+prompt() {
+  if [ -z "$NO_LOGGING" ]; then
+    if [ -n "$ENHANCED_LOGGING" ]; then
+      logger prompt "$1"
+    else
+      echo -e "\e[1;104m  PROMPT  \e[0m $(format "$1")\e[0;39m"
+    fi
+  fi
+}
+
+# @description Display a spinner that stays until a command is completed
+# @example .config/log spin "brew install yq" "Installing yq..")"
+spin() {
+  if type gum &> /dev/null; then
+    if [ -n "$1" ] && [ -n "$2" ]; then
+      gum spin --title="$2" "$1"
+    elif [ -n "$1" ]; then
+      gum spin "$1"
+    else
+      gum input
+    fi
+  else
+    echo "ERROR: gum is not installed!"
+  fi
+}
+
+# @description Logs a message that starts with a star emoji
+# @example .config/log star "Congratulations"
+star() {
+  if [ -z "$NO_LOGGING" ]; then
+    if [ -n "$ENHANCED_LOGGING" ]; then
+      logger star "$1"
+    else
+      echo -e "\e[1;104m   LINK   \e[0m $(format "$1")\e[0;39m"
+    fi
+  fi
+}
+
+# @description Logs a message at the beginning of a task
+# @example .config/log start "Starting the process.."
+start() {
+  if [ -z "$NO_LOGGING" ]; then
+    if [ -n "$ENHANCED_LOGGING" ]; then
+      logger start "$1"
+    else
+      echo -e "\e[1;46m   START  \e[0m $(format "$1")\e[0;39m"
+    fi
+  fi
+}
+
+# @description Logs a success message
+# @example .config/log success "Yay!"
+success() {
+  if [ -z "$NO_LOGGING" ]; then
+    if [ -n "$ENHANCED_LOGGING" ]; then
+      logger success "$1"
+    else
+      echo -e "\e[1;42m SUCCESS  \e[0m $(format "$1")\e[0;39m"
+    fi
+  fi
+}
+
+# @description Logs a warning message
+# @example .config/log warn "Just so you know.."
+warn() {
+  if [ -z "$NO_LOGGING" ]; then
+    if [ -n "$ENHANCED_LOGGING" ]; then
+      logger warn "$1"
+    else
+      echo -e "\e[1;43m WARNING  \e[0m $(format "$1")\e[0;39m"
+    fi
+  fi
+}
+
+# @description Displays a multi-line prompt for text input
+# @example .config/log write "Write something..")"
+write() {
+  if type gum &> /dev/null; then
+    if [ -n "$1" ]; then
+      gum write --placeholder="$1"
+    else
+      gum write
+    fi
+  else
+    echo "ERROR: gum is not installed!"
+  fi
+}
+
+if [ -n "$1" ] && [ -n "$2" ]; then
+  # Public functions that require at least two parameters to be used
+  if [ "$1" == 'warn' ] || [ "$1" == 'success' ] || [ "$1" == 'star' ] || [ "$1" == 'info' ] \
+  || [ "$1" == 'error' ] || [ "$1" == 'md' ] || [ "$1" == 'write' ] || [ "$1" == 'start' ] \
+  || [ "$1" == 'spin' ] || [ "$1" == 'prompt' ] || [ "$1" == 'filter' ] || [ "$1" == 'input' ] \
+  || [ "$1" == 'confirm' ] || [ "$1" == 'password' ]; then
+    "$1" "$2"
+  elif [[ "$1" == 'choose' ]]; then
+    "$@"
+  fi
+elif [ -n "$1" ]; then
+  # Public functions that can run with only one argument passed to .config/log (i.e. `.config/log password`)
+  if [ "$1" == 'write' ] || [ "$1" == 'password' ] || [ "$1" == 'confirm' ] || [ "$1" == 'input' ]; then
+    "$1"
+  fi
+fi

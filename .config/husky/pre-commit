@@ -1,0 +1,49 @@
+#!/bin/sh
+# shellcheck disable=SC1090,SC1091,SC2016
+
+# @file .config/husky/pre-commit
+# @brief A git hook script for the `pre-commit` hook
+
+[ -f .config/log ] && chmod +x .config/log
+if [ -f "$(dirname "$0")/_/husky.sh" ]; then
+  . "$(dirname "$0")/_/husky.sh"
+
+  # Attempt to register Bodega/Task from common places if it is not in PATH
+  if ! type task > /dev/null; then
+    PATH="$PATH:$HOME/.local/go/bin:$HOME/.local/bin:$HOME/bin:$HOME/go/bin:$HOME/.asdf/shims"
+    if ! type task > /dev/null; then
+      for DOTFILE in .profile .bashrc .bash_profile .zshrc; do
+        . "$HOME/$DOTFILE"
+        if type task > /dev/null; then
+          break
+        fi
+      done
+    fi
+  fi
+
+  # Show warning if Bodega/Task is still not registered/installed, else proceed with hook
+  if ! type task > /dev/null; then
+    .config/log warn 'Bodega `task` does not appear to be installed or is not registered in the `PATH` variable - please manually include it'
+    .config/log info 'Get Bodega here -> `https://github.com/megabyte-labs/Bodega`'
+  else
+    .config/log info "Performing various pre-commit tasks on staged files (like autofixing, detecting private keys, etc.)"
+
+    STAGED_FILES=$(git diff --cached --name-only)
+    for FILE in "$STAGED_FILES"; do
+      if [ -f "$1" ]; then
+        task git:hook:pre-commit -- "$FILE" &
+      fi
+    done
+    wait
+
+    .config/log info 'Linting and fixing the staged files with `lint-staged`'
+    task lint:lint-staged
+
+    .config/log info 'Reporting possible spelling errors in the staged files with `cspell`'
+    task lint:spelling
+
+    .config/log success 'Pre-commit validation complete!'
+  fi
+else
+  .config/log warn 'Husky pre-commit hooks are currently not properly setup.'
+fi
