@@ -385,7 +385,6 @@ softwarePackages:
     go: moul.io/assh/v2
     yay: assh
   astronvim:
-    _bin: null
     _deps:
       - bottom
       - lazygit
@@ -410,15 +409,6 @@ softwarePackages:
     _name: null
     _service: null
     npm: auto-install
-  autojump:
-    _bin: null
-    _desc: '[autojump](https://github.com/wting/autojump) is a faster way to navigate your filesystem. It works by maintaining a database of the directories you use the most from the command line.'
-    _docs: https://github.com/wting/autojump/blob/master/docs/install.md
-    _github: https://github.com/wting/autojump
-    _home: null
-    _name: Autojump
-    _service: null
-    ansible: professormanhattan.autojump
   autokey:
     _bin: null
     _desc: '[AutoKey](https://github.com/autokey/autokey) is a free, open-source scripting application for Linux. AutoKey allows the user to define hotkeys and trigger phrases which expand to predefined text, automating frequent or repetitive tasks such as correcting typographical errors or common spelling mistakes and inserting boiler plate sections of text. [AutoHotKey](https://www.autohotkey.com/) is a similar piece of software that is only available on the Windows platform.'
@@ -434,7 +424,7 @@ softwarePackages:
     dnf: autokey
     yay: autokey-gtk
   automake:
-    _bin: null
+    _bin: automake
     _desc: null
     _docs: null
     _github: null
@@ -576,7 +566,7 @@ softwarePackages:
     scoop: bat
     zypper: bat
   beets:
-    _bin: null
+    _bin: beet
     _desc: The purpose of [Beets](https://beets.io/) is to get your music collection right once and for all. It catalogs your collection, automatically improving its metadata as it goes using the MusicBrainz database. Then it provides a bouquet of tools for manipulating and accessing your music.
     _docs: https://beets.readthedocs.io/en/stable/
     _github: https://github.com/beetbox/beets
@@ -1564,7 +1554,7 @@ softwarePackages:
     pacman: dog
     pkg: dog
   dotenv-linter:
-    _bin: null
+    _bin: dotenv-linter
     _desc: null
     _docs: null
     _github: null
@@ -1792,7 +1782,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.environment
   eslint:
-    _bin: null
+    _bin: eslint
     _desc: null
     _docs: null
     _github: null
@@ -1907,7 +1897,7 @@ softwarePackages:
     _service: null
     npm: '@feathersjs/cli'
   ffmpeg:
-    _bin: null
+    _bin: ffmpeg
     _desc: '[FFmpeg](https://www.ffmpeg.org/) is the leading multimedia framework. It is able to decode, encode, transcode, mux, demux, stream, filter and play pretty much anything that humans and machines have created. It supports the most obscure ancient formats up to the cutting edge.'
     _docs: null
     _github: null
@@ -2359,7 +2349,7 @@ softwarePackages:
     pacman: gimp
     snap: gimp
   gist:
-    _bin: null
+    _bin: gist
     _desc: '[gist](https://github.com/defunkt/gist) provides a command that you can use from your terminal to upload content to https://gist.github.com/. This role will optionally set up a dotfile that handles authentication if you pass the appropriate configuration.'
     _docs: null
     _github: null
@@ -2381,7 +2371,7 @@ softwarePackages:
     brew: git
     dnf: git
   git-filter-repo:
-    _bin: null
+    _bin: git-filter-repo
     _desc: '[gitfilterrepo](https://github.com/newren/git-filter-repo) is a versatile tool for rewriting history'
     _docs: null
     _github: null
@@ -2392,7 +2382,7 @@ softwarePackages:
     brew: git-filter-repo
     pipx: git-filter-repo
   git-lfs:
-    _bin: null
+    _bin: git-lfs
     _deps:
       - git
     _desc: Git LFS (Large File Storage) replaces large files such as audio samples, videos, datasets, and graphics with text pointers inside Git, while storing the file contents on a remote server like GitHub.com or GitHub Enterprise.
@@ -2406,7 +2396,7 @@ softwarePackages:
     brew: git-lfs
     scoop: git-lfs
   git-open:
-    _bin: null
+    _bin: git-open
     _desc: null
     _docs: null
     _github: null
@@ -2443,7 +2433,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.gitdocker
   git-extras:
-    _bin: null
+    _bin: git-extras
     _desc: '[Git Extras](https://github.com/tj/git-extras) includes extra git utilities that include repo summary, repl, changelog population, author commit percentages, and more.'
     _docs: null
     _github: null
@@ -2515,7 +2505,7 @@ softwarePackages:
     port: gitlab-runner
     scoop: gitlab-runner
   gitleaks:
-    _bin: null
+    _bin: gitleaks
     _desc: Extension to scan git repos (or files) for secrets using regex and entropy
     _docs: null
     _github: https://github.com/zricethezav/gitleaks
@@ -2529,7 +2519,7 @@ softwarePackages:
     pkg: gitleaks
     yay: gitleaks
   gitomatic:
-    _bin: null
+    _bin: gitomatic
     _desc: '[git-o-matic](https://github.com/muesli/gitomatic) is a tool to monitor git repositories and automatically pull & push changes'
     _docs: null
     _github: https://github.com/muesli/gitomatic
@@ -2709,7 +2699,7 @@ softwarePackages:
     scoop: go
     snap: go
   go-chromecast:
-    _bin: null
+    _bin: go-chromecast
     _desc: CLI for Google Chromecast, Home devices and Cast Groups
     _docs: null
     _github: https://github.com/vishen/go-chromecast
@@ -2720,7 +2710,7 @@ softwarePackages:
     github: github.com/vishen/go-chromecast
     go: github.com/vishen/go-chromecast@latest
   go-outline:
-    _bin: null
+    _bin: go-outline
     _desc: null
     _docs: null
     _github: null
@@ -2741,7 +2731,7 @@ softwarePackages:
     github: github.com/itchyny/gojq
     go: github.com/itchyny/gojq@latest
   golangci-lint:
-    _bin: null
+    _bin: golangci-lint
     _desc: null
     _docs: null
     _github: null
@@ -2751,7 +2741,7 @@ softwarePackages:
     brew: golangci-lint
     go: github.com/golangci/golangci-lint/cmd/golangci-lint@latest
   gomodifytags:
-    _bin: null
+    _bin: gomodifytags
     _desc: null
     _docs: null
     _github: null
@@ -2786,7 +2776,7 @@ softwarePackages:
     ansible:linux: professormanhattan.googler
     brew: googler
   gopkgs:
-    _bin: null
+    _bin: gopkgs
     _desc: null
     _docs: null
     _github: null
@@ -2795,7 +2785,7 @@ softwarePackages:
     _service: null
     go: github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest
   gopls:
-    _bin: null
+    _bin: gopls
     _desc: null
     _docs: null
     _github: null
@@ -2805,7 +2795,7 @@ softwarePackages:
     brew: gopls
     go: golang.org/x/tools/gopls@latest
   gotests:
-    _bin: null
+    _bin: gotests
     _desc: null
     _docs: null
     _github: null
@@ -2871,7 +2861,7 @@ softwarePackages:
     scoop: grex
     snap: grex
   gron:
-    _bin: null
+    _bin: gron
     _desc: Extension to make JSON greppable
     _docs: null
     _github: https://github.com/tomnomnom/gron
@@ -2957,7 +2947,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.gvm
   hadolint:
-    _bin: null
+    _bin: hadolint
     _desc: null
     _docs: null
     _github: null
@@ -2979,12 +2969,12 @@ softwarePackages:
     github: github.com/mattolenik/hclq
     go: github.com/mattolenik/hclq@latest
   heroku-cli:
-    _bin: null
+    _bin: heroku
     _desc: '[Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) lets you create and manage Heroku apps directly from the terminal. It’s an essential part of using Heroku.'
     _docs: null
     _github: null
     _home: null
-    _name: heroku
+    _name: Heroku CLI
     _service: null
     ansible: professormanhattan.heroku
     brew: heroku/brew/heroku
@@ -3132,7 +3122,7 @@ softwarePackages:
     brew: httpstat
     pipx: httpstat
   hub:
-    _bin: null
+    _bin: hub
     _desc: null
     _docs: null
     _github: null
@@ -3213,7 +3203,7 @@ softwarePackages:
     _service: null
     npm: imgur-uploader-cli
   impl:
-    _bin: null
+    _bin: impl
     _desc: null
     _docs: null
     _github: null
@@ -3222,7 +3212,7 @@ softwarePackages:
     _service: null
     go: github.com/josharian/impl@latest
   infracost:
-    _bin: null
+    _bin: infracost
     _desc: null
     _docs: null
     _github: null
@@ -3452,7 +3442,7 @@ softwarePackages:
     choco: juju
     snap: juju
   kdash:
-    _bin: null
+    _bin: kdash
     _desc: A simple and fast dashboard for Kubernetes
     _docs: null
     _github: https://github.com/kdash-rs/kdash
@@ -3491,7 +3481,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.kitty
   kn:
-    _bin: null
+    _bin: kn
     _desc: The Knative CLI (kn) provides a quick and easy interface for creating Knative resources, such as Knative Services and Event Sources
     _docs: null
     _github: https://github.com/knative/client
@@ -3518,7 +3508,7 @@ softwarePackages:
     dnf: kodi
     pacman: kodi
   kubectx:
-    _bin: null
+    _bin: kubectx
     _desc: null
     _docs: null
     _github: https://github.com/ahmetb/kubectx
@@ -3547,7 +3537,7 @@ softwarePackages:
     github: github.com/kubenav/kubenav
     yay: kubenav-bin
   kubernetes-cli:
-    _bin: null
+    _bin: kubectl
     _desc: null
     _docs: null
     _github: null
@@ -3559,7 +3549,7 @@ softwarePackages:
     choco: kubernetes-cli
     snap: kubectl
   kubernetes-helm:
-    _bin: null
+    _bin: helm
     _desc: null
     _docs: null
     _github: null
@@ -3571,7 +3561,7 @@ softwarePackages:
     choco: kubernetes-helm
     snap: helm
   kubernetes-kompose:
-    _bin: null
+    _bin: kompose
     _desc: null
     _docs: null
     _github: null
@@ -3582,7 +3572,7 @@ softwarePackages:
     choco: kubernetes-kompose
     snap: kompose
   kubeval:
-    _bin: null
+    _bin: kubeval
     _desc: null
     _docs: null
     _github: null
@@ -3641,7 +3631,7 @@ softwarePackages:
       - libvirt
       - virt-manager
   lazygit:
-    _bin: null
+    _bin: lazygit
     _desc: Simple terminal UI for git commands
     _docs: null
     _github: https://github.com/jesseduffield/lazygit
@@ -3739,7 +3729,7 @@ softwarePackages:
     go: github.com/nishanths/license@latest
     yay: nishanths-license-git
   linkerd2:
-    _bin: null
+    _bin: linkerd
     _desc: Linkerd is an ultralight, security-first service mesh for Kubernetes
     _docs: null
     _github: https://github.com/linkerd/linkerd2
@@ -3980,7 +3970,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.mcfly
   mergestat:
-    _bin: null
+    _bin: mergestat
     _desc: Query git repositories with SQL. Generate reports, perform status checks, analyze codebases
     _docs: null
     _github: https://github.com/mergestat/mergestat
@@ -4026,7 +4016,7 @@ softwarePackages:
     cask: ao
     snap: microsoft-todo-unofficial
   minikube:
-    _bin: null
+    _bin: minikube
     _desc: null
     _docs: null
     _github: null
@@ -4478,7 +4468,7 @@ softwarePackages:
     github: github.com/tj/node-prune
     go: github.com/tj/node-prune@latest
   nomad:
-    _bin: null
+    _bin: nomad
     _desc: '[HashiCorp Nomad](https://www.nomadproject.io/) is a simple and flexible scheduler and workload orchestrator to deploy and manage containers and non-containerized applications across on-prem and clouds at scale.'
     _docs: null
     _github: null
@@ -4555,15 +4545,6 @@ softwarePackages:
     github: github.com/nukeop/nuclear
     snap: nuclear
     yay: nuclear-player-bin
-  nvm:
-    _bin: null
-    _desc: '[NVM](https://github.com/nvm-sh/nvm) is a version manager for Node.js, designed to be installed per-user, and invoked per-shell. Please note that the Windows version uses a [seperate NVM project](https://github.com/coreybutler/nvm-windows).'
-    _docs: null
-    _github: https://github.com/nvm-sh/nvm
-    _home: null
-    _name: NVM
-    _service: null
-    ansible: professormanhattan.nvm
   oclif:
     _bin: null
     _desc: null
@@ -4644,7 +4625,7 @@ softwarePackages:
     github: github.com/osquery/osquery
     yay: osquery-git
   ots:
-    _bin: null
+    _bin: ots
     _desc: Share end-to-end encrypted secrets with others via a one-time URL
     _docs: null
     _github: https://github.com/sniptt-official/ots
@@ -4665,7 +4646,7 @@ softwarePackages:
     _service: null
     npm: package-size
   packer:
-    _bin: null
+    _bin: packer
     _desc: '[Packer](https://www.packer.io/) is a free and open source tool for creating golden images for multiple platforms from a single source configuration. Packer is lightweight, runs on every major operating system, and is highly performant, creating machine images for multiple platforms in parallel. It is a [HashiCorp](https://www.hashicorp.com/) product.'
     _docs: null
     _github: null
@@ -4697,7 +4678,7 @@ softwarePackages:
     _service: null
     npm: pageres-cli
   pandoc:
-    _bin: null
+    _bin: pandoc
     _deps:
       - python
     _desc: '[Pandoc](https://pandoc.org/) is a Haskell library for converting from one documentation markup format to another. If you need to convert files from one markup format into another, then look no further. Pandoc is your swiss-army knife. It converts from and to dozens of formats like HTML, markdown, docx, JSON, YAML, and CSV, to name a few.'
@@ -4722,7 +4703,7 @@ softwarePackages:
     pacman: pandoc
     winget: pandoc
   papertrail:
-    _bin: null
+    _bin: papertrail
     _desc: null
     _docs: null
     _github: null
@@ -5058,7 +5039,7 @@ softwarePackages:
     cask: powershell
     snap: powershell
   pre-commit:
-    _bin: null
+    _bin: pre-commit
     _desc: null
     _docs: null
     _github: null
@@ -5174,7 +5155,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.pyenv
   python:
-    _bin: null
+    _bin: python3
     _desc: null
     _docs: null
     _github: null
@@ -5616,9 +5597,9 @@ softwarePackages:
     _home: https://github.com/kahing/goofys
     _name: Goofys
     _service: true
-    ansible: professormanhattan.goofys
-    brew:darwin: goofys
-    go: github.com/kahing/goofys@latest
+    ansible:linux: professormanhattan.goofys
+    brew:linux: goofys
+    go:linux: github.com/kahing/goofys@latest
   catfs:
     _bin: catfs
     _desc: Cache anything filesystem written in Rust
@@ -5700,7 +5681,7 @@ softwarePackages:
     ansible:darwin: professormanhattan.santa
     cask: santa
   schema:
-    _bin: null
+    _bin: schema
     _desc: A tool to infer and instantiate schemas and translate between data formats
     _docs: null
     _github: https://github.com/Confbase/schema
@@ -5802,7 +5783,7 @@ softwarePackages:
     _service: null
     npm: semantic-release
   sentry-cli:
-    _bin: null
+    _bin: sentry-cli
     _desc: sentry-cli can connect to the Sentry API and manage some data for your projects
     _docs: null
     _github: https://github.com/getsentry/sentry-cli/
@@ -5925,7 +5906,7 @@ softwarePackages:
     stack: shellcheck
     zypper: shellcheck
   shfmt:
-    _bin: null
+    _bin: shfmt
     _desc: '[shfmt](https://github.com/mvdan/sh) is a shell parser, formatter, and interpreter with bash support that is written with [Go](https://gitlab.com/megabyte-labs/ansible-roles/go).'
     _docs: null
     _github: https://github.com/mvdan/sh
@@ -6026,7 +6007,7 @@ softwarePackages:
     choco: slack
     snap: slack
   slack-term:
-    _bin: null
+    _bin: slack-term
     _desc: '[slack-term](https://github.com/erroneousboat/slack-term) features a colorful interface as well as keyboard shortcuts. It is one of, if not the, most well-received [Slack](https://slack.com/) client available on GitHub.'
     _docs: null
     _github: null
@@ -6064,7 +6045,7 @@ softwarePackages:
     ansible: professormanhattan.snitch
     cask: little-snitch
   social-analyzer:
-    _bin: null
+    _bin: social-analyzer
     _desc: null
     _docs: null
     _github: null
@@ -6191,7 +6172,7 @@ softwarePackages:
     _type: cli
     github: github.com/suyashkumar/ssl-proxy
   starred:
-    _bin: null
+    _bin: starred
     _desc: null
     _docs: null
     _github: null
@@ -6228,7 +6209,7 @@ softwarePackages:
     pipx: statcode
     yay: statcode
   staticcheck:
-    _bin: null
+    _bin: staticcheck
     _desc: null
     _docs: null
     _github: null
@@ -6559,7 +6540,7 @@ softwarePackages:
     brew: tfenv
     port: tfenv
   tflint:
-    _bin: null
+    _bin: tflint
     _desc: '[tflint](https://github.com/terraform-linters/tflint) is a framework that can help in finding possible errors for major cloud providers, warn about deprecated syntax and unused declarations and enforce best practices. This role installs tflint on nearly any platform.'
     _docs: null
     _github: https://github.com/terraform-linters/tflint
@@ -6592,7 +6573,7 @@ softwarePackages:
     nix: tig
     pkg: tig
   tilt:
-    _bin: null
+    _bin: tilt
     _desc: Define your dev environment as code. For microservice apps on Kubernetes
     _docs: null
     _github: https://github.com/tilt-dev/tilt
@@ -6650,7 +6631,7 @@ softwarePackages:
       - perl
       - tmux
   tokei:
-    _bin: null
+    _bin: tokei
     _desc: Tokei is a program that displays statistics about the code
     _docs: null
     _github: https://github.com/XAMPPRocky/tokei
@@ -6836,7 +6817,7 @@ softwarePackages:
     _type: cli
     brew: vectordotdev/brew/vector
   velero:
-    _bin: null
+    _bin: velero
     _desc: null
     _docs: null
     _github: null
@@ -6997,7 +6978,7 @@ softwarePackages:
     port: w3m
     zypper: w3m
   wails:
-    _bin: null
+    _bin: wails
     _desc: '[Wails](https://github.com/wailsapp/wails) offers a different approach to providing web interfaces to Go programs: it provides the ability to wrap both Go code and a web frontend into a single binary.'
     _docs: null
     _github: null
@@ -7305,7 +7286,7 @@ softwarePackages:
     github: github.com/mvdan/xurls
     go: mvdan.cc/xurls/v2/cmd/xurls@latest
   yamllint:
-    _bin: null
+    _bin: yamllint
     _desc: null
     _docs: null
     _github: null
