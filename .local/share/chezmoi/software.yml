@@ -11,6 +11,7 @@
 #
 # Full example of a softwarePackage:
 # altair:
+#   _appimageName: SwitchHosts.AppImage               # Name of file that the appimage: field downloads to
 #   _bin: ng                                          # Instead of checking if the object key (altair) is in the PATH, check if "ng" is in the PATH and only proceed if it is not available
 #   _deps:                                            # Any piece of data can be a string or array. _deps will take each dep and run that through the installer first. If you need to just install dependencies with apt (for instance), you can also set the _deps equals to [altair:deps] and then define the apt dependencies like that instead of creating a new entry for each apt dependency.
 #     - angular-cli
@@ -55,8 +56,8 @@
 #   scoop: altair
 #   script >-
 #     curl -sS https://getcomposer.org/installer | php
-#     sudo mv composer.phar /usr/local/bin/composer  
-#     sudo chmod +x /usr/local/bin/composer  
+#     sudo mv composer.phar /usr/local/bin/composer
+#     sudo chmod +x /usr/local/bin/composer
 #   _snapClassic: true                                # Install the snap in classic mode
 #   snap: altair
 #   whalebrew:
@@ -457,7 +458,7 @@ softwarePackages:
     ansible: professormanhattan.autorestic
     brew: autorestic
   awscli:
-    _bin: null
+    _bin: aws
     _desc: The [AWS CLI](https://aws.amazon.com/cli/) is a unified tool to manage your AWS services. With just one tool to download and configure, you can control multiple AWS services from the command line and automate them through scripts.
     _docs: https://docs.aws.amazon.com/cli/index.html
     _github: https://github.com/aws/aws-cli
@@ -481,19 +482,7 @@ softwarePackages:
     ansible: professormanhattan.awxcli
     pipx: https://releases.ansible.com/ansible-tower/cli/ansible-tower-cli-latest.tar.gz
   azure-cli:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _service: null
-    brew: azure-cli
-    choco: azure-cli
-    winget: Microsoft.AzureCLI
-    yay: azure-cli
-  azurecli:
-    _bin: null
+    _bin: az
     _desc: The [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/) is a set of commands used to create and manage Azure resources. The Azure CLI is available across Azure services and is designed to get you working quickly with Azure, with an emphasis on automation. It is the official CLI, released by Microsoft.
     _docs: https://docs.microsoft.com/en-us/cli/azure/
     _github: https://github.com/Azure/azure-cli
@@ -501,8 +490,12 @@ softwarePackages:
     _name: Azure CLI
     _service: null
     ansible: professormanhattan.azurecli
-  azurefunctions:
-    _bin: null
+    brew: azure-cli
+    choco: azure-cli
+    winget: Microsoft.AzureCLI
+    yay: azure-cli
+  azure-functions:
+    _bin: func
     _desc: A local development experience for creating, developing, testing, running, and debugging Azure Functions
     _docs: null
     _github: https://github.com/Azure/azure-functions-core-tools
@@ -542,7 +535,7 @@ softwarePackages:
     pacman: bandwhich
     pkg: bandwhich
   bane:
-    _bin: null
+    _bin: bane
     _desc: Custom & better AppArmor profile generator for Docker containers
     _docs: null
     _github: https://github.com/genuinetools/bane
@@ -603,7 +596,7 @@ softwarePackages:
     _type: application
     github: github.com/kdzwinel/betwixt
   bin:
-    _bin: null
+    _bin: bin
     _desc: Effortless binary manager
     _docs: null
     _github: https://github.com/marcosnils/bin
@@ -614,7 +607,7 @@ softwarePackages:
     github: github.com/marcosnils/bin
     go: github.com/marcosnils/bin@latest
   bitly:
-    _bin: null
+    _bin: bitly
     _desc: null
     _docs: null
     _github: null
@@ -722,7 +715,7 @@ softwarePackages:
     _service: null
     npm: browser-sync
   budibase-cli:
-    _bin: null
+    _bin: budi
     _desc: The Budibase CLI is how you initialise, manage and update your Budibase installation
     _docs: null
     _github: https://github.com/Budibase/budibase
@@ -901,7 +894,7 @@ softwarePackages:
     dnf: chrome-gnome-shell
     pacman: chrome-gnome-shell
   clair:
-    _bin: null
+    _bin: clair
     _desc: Vulnerability Static Analysis for Containers
     _docs: null
     _github: https://github.com/quay/clair
@@ -1042,7 +1035,7 @@ softwarePackages:
     brew:darwin: cocoapods
     gem:darwin: cocoapods
   cointop:
-    _bin: null
+    _bin: cointop
     _desc: '[Cointop](https://github.com/miguelmota/cointop) is a fast and lightweight interactive terminal based UI application for tracking and monitoring cryptocurrency coin stats in real-time.'
     _docs: https://docs.cointop.sh/
     _github: https://github.com/cointop-sh/cointop
@@ -1140,7 +1133,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.consultemplate
   container-structure-test:
-    _bin: null
+    _bin: container-structure-test
     _desc: null
     _docs: null
     _github: null
@@ -1273,7 +1266,7 @@ softwarePackages:
     port: curlie
     scoop: curlie
   dasel:
-    _bin: null
+    _bin: dasel
     _desc: Select, put and delete data from JSON, TOML, YAML, XML and CSV files with a single tool
     _docs: null
     _github: https://github.com/TomWright/dasel
@@ -1446,7 +1439,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.disks
   dive:
-    _bin: null
+    _bin: dive
     _desc: '[dive](https://github.com/wagoodman/dive) is a tool for exploring a docker image, layer contents, and discovering ways to shrink the size of the Docker/OCI image.'
     _description: A tool for exploring each layer in a docker image
     _docs: null
@@ -1716,7 +1709,7 @@ softwarePackages:
     _service: false
     npm: emma-cli
   emoj:
-    _bin: null
+    _bin: emoj
     _desc: null
     _docs: null
     _github: null
@@ -1947,13 +1940,13 @@ softwarePackages:
     snap: ffsend
     yay: ffsend
   fig:
-    _bin: null
     _desc: '[Fig](https://fig.io/) adds autocomplete to your terminal. As you type, Fig pops up subcommands, options, and contextually relevant arguments in your existing terminal.'
-    _docs: null
-    _github: null
-    _home: null
+    _docs: https://fig.io/user-manual
+    _github: https://github.com/withfig/autocomplete
+    _home: https://fig.io/
     _name: Fig
-    _service: null
+    _service: false
+    _when:cask: '! test -d "/Applications/Fig.app"'
     ansible: professormanhattan.fig
     cask: fig
   filebrowser:
@@ -2057,7 +2050,7 @@ softwarePackages:
     snap: flutter
     yay: flutter
   fly:
-    _bin: null
+    _bin: fly
     _desc: CLI to manage Concourse CI installation
     _docs: null
     _github: null
@@ -2131,7 +2124,7 @@ softwarePackages:
       - base-devel
       - gcc
   fq:
-    _bin: null
+    _bin: fq
     _desc: jq for binary formats
     _docs: null
     _github: https://github.com/wader/fq
@@ -2146,7 +2139,7 @@ softwarePackages:
     pacman: fq
     scoop: fq
   fselect:
-    _bin: null
+    _bin: fselect
     _desc: Extension to find files with SQL-like queries
     _docs: null
     _github: https://github.com/jhspetersson/fselect
@@ -2178,6 +2171,7 @@ softwarePackages:
     _home: null
     _name: Fuse
     _service: null
+    _when:cask: '! test -d /usr/local/Caskroom/macfuse'
     ansible: professormanhattan.fuse
     cask: macfuse
   fx:
@@ -2253,6 +2247,7 @@ softwarePackages:
     _home: null
     _name: Google Cloud SDK
     _service: false
+    _when:cask: '! test -f /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc'
     ansible: professormanhattan.googlecloudsdk
     cask: google-cloud-sdk
     choco: gcloudsdk
@@ -2644,7 +2639,7 @@ softwarePackages:
     pipx: glances
     port: glances
   glen:
-    _bin: null
+    _bin: glen
     _desc: null
     _docs: null
     _github: null
@@ -2734,7 +2729,7 @@ softwarePackages:
     _service: null
     go: github.com/ramya-rao-a/go-outline@latest
   gojq:
-    _bin: null
+    _bin: gojq
     _desc: gojq is a pure Go implementation of jq that is mostly backwards compatible (but not completely)
     _docs: null
     _github: https://github.com/itchyny/gojq
@@ -2973,7 +2968,7 @@ softwarePackages:
     dnf: hadolint
     scoop: hadolint
   hclq:
-    _bin: null
+    _bin: hclq
     _desc: Command-line processor for HashiCorp config files, like sed for HCL — Terraform, Consul, Nomad, Vault
     _docs: null
     _github: https://github.com/mattolenik/hclq
@@ -3032,7 +3027,7 @@ softwarePackages:
     brew: hey
     github: github.com/rakyll/hey
   himalaya:
-    _bin: null
+    _bin: himalaya
     _desc: '[Himalaya](https://github.com/soywod/himalaya) is a CLI email client written in Rust.'
     _docs: null
     _github: null
@@ -3043,7 +3038,7 @@ softwarePackages:
     brew: himalaya
     scoop: himalaya
   hostctl:
-    _bin: null
+    _bin: hostctl
     _desc: This tool gives more control over the use of hosts file
     _docs: null
     _github: https://github.com/guumaster/hostctl
@@ -3074,7 +3069,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.hosts
   htmlq:
-    _bin: null
+    _bin: htmlq
     _desc: A lightweight and flexible command-line JSON processor for HTML
     _docs: null
     _github: https://github.com/mgdm/htmlq
@@ -3209,7 +3204,7 @@ softwarePackages:
     dnf: imagemagick
     scoop: imagemagick
   imgur-uploader:
-    _bin: null
+    _bin: imgur-uploader
     _desc: null
     _docs: null
     _github: null
@@ -3329,7 +3324,7 @@ softwarePackages:
     pacman: ipfs-desktop
     scoop: ipfs-desktop
   is-up:
-    _bin: null
+    _bin: is-up
     _desc: null
     _docs: null
     _github: null
@@ -3373,7 +3368,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.jenv
   jiq:
-    _bin: null
+    _bin: jiq
     _desc: Create jq queries interactively by leveraging a live reload feature in the terminal
     _docs: null
     _github: https://github.com/fiatjaf/jiq
@@ -3399,7 +3394,7 @@ softwarePackages:
     pkg: jitsi-meet
     yay: jitsi-meet-desktop-bin
   jo:
-    _bin: null
+    _bin: jo
     _desc: '[jo](https://github.com/jpmens/jo) is a free and open-source command-line tool that allows you to create JSON objects.'
     _docs: null
     _github: https://github.com/jpmens/jo
@@ -3444,7 +3439,7 @@ softwarePackages:
     port: jqp
     yay: jqp
   juju:
-    _bin: null
+    _bin: juju
     _desc: '[Juju](https://juju.is/) is a Charmed Operator Framework, composed of a Charmed Operator Lifecycle Manager, and the Charmed Operator SDK. It allows you to deploy, integrate, and manage Kubernetes, container, and VM-native applications seamlessly across hybrid clouds. Juju drives Day 0 through Day 2 operations in your complex environment.'
     _docs: null
     _github: null
@@ -3700,7 +3695,7 @@ softwarePackages:
     cask: lepton
     snap: lepton
   lexicon:
-    _bin: null
+    _bin: lexicon
     _desc: '[Lexicon](https://github.com/AnalogJ/lexicon) provides a way to manipulate DNS records on multiple DNS providers in a standardized/agnostic way.'
     _docs: null
     _github: null
@@ -3789,7 +3784,7 @@ softwarePackages:
     brew: localtunnel
     npm: localtunnel
   logcli:
-    _bin: null
+    _bin: logcli
     _desc: Run LogQL queries against a Loki server
     _docs: null
     _github: https://github.com/grafana/loki
@@ -4170,7 +4165,7 @@ softwarePackages:
     scoop: motrix
     yay: motrix-bin
   mpg123:
-    _bin: null
+    _bin: mpg123
     _desc: null
     _docs: null
     _github: null
@@ -4495,7 +4490,7 @@ softwarePackages:
     choco: nomad
     yay: nomad-git
   nomino:
-    _bin: null
+    _bin: nomino
     _desc: Batch rename utility for developers
     _docs: null
     _github: https://github.com/yaa110/nomino
@@ -4516,7 +4511,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.nordvpn
   normit:
-    _bin: null
+    _bin: normit
     _deps:
       - mpg123
     _desc: '[Normit](https://github.com/pawurb/normit) allows you to easily translate any text from one language to another. It also includes the ability to generate audio through speech synthesis as well.'
@@ -4622,7 +4617,7 @@ softwarePackages:
     choco: onlykey
     snap: onlykey-app
   oq:
-    _bin: null
+    _bin: oq
     _desc: A performant, and portable jq wrapper to facilitate the consumption and output of formats other than JSON; using jq filters to transform the data
     _docs: null
     _github: https://github.com/Blacksmoke16/oq
@@ -4635,14 +4630,15 @@ softwarePackages:
     snap: oq
     yay: oq
   osquery:
-    _bin: null
+    _bin: osquery
     _desc: SQL powered operating system instrumentation, monitoring, and analytics
-    _docs: null
+    _docs: https://osquery.readthedocs.io/en/stable/
     _github: https://github.com/osquery/osquery
-    _home: null
+    _home: https://osquery.io/
     _name: osquery
-    _service: null
+    _service: true
     _type: cli
+    _when:cask: '! test -d /usr/local/Caskroom/osquery'
     cask: osquery
     choco: osquery
     github: github.com/osquery/osquery
@@ -4759,7 +4755,7 @@ softwarePackages:
     pacman: pass
     pkg: password-store
   pastel:
-    _bin: null
+    _bin: pastel
     _desc: A command-line tool to generate, analyze, convert and manipulate colors
     _docs: null
     _github: https://github.com/sharkdp/pastel
@@ -4773,7 +4769,7 @@ softwarePackages:
     snap: pastel
     yay: pastel
   peco:
-    _bin: null
+    _bin: peco
     _desc: '[peco](https://github.com/peco/peco) can be a great tool to filter stuff like logs, process stats, find files, because unlike grep, you can type as you think and look through the current results.'
     _docs: null
     _github: https://github.com/peco/peco
@@ -5156,7 +5152,7 @@ softwarePackages:
     _type: cli
     github: github.com/greenled/portainer-stack-utils
   pup:
-    _bin: null
+    _bin: pup
     _desc: '[pup](https://github.com/ericchiang/pup) is a command line tool for processing HTML. It reads from stdin, prints to stdout, and allows the user to filter parts of the page using CSS selectors.'
     _docs: null
     _github: https://github.com/ericchiang/pup
@@ -5194,7 +5190,7 @@ softwarePackages:
     pacman: python-pip
     scoop: python
   pywhat:
-    _bin: null
+    _bin: pywhat
     _desc: null
     _docs: null
     _github: null
@@ -5205,7 +5201,7 @@ softwarePackages:
     pipx: pywhat
     port: pywhat
   q:
-    _bin: null
+    _bin: q
     _desc: Run SQL directly on CSV or TSV files
     _docs: null
     _github: https://github.com/harelba/q
@@ -5280,7 +5276,7 @@ softwarePackages:
     _service: false
     npm: ramda-cli
   rancher-cli:
-    _bin: null
+    _bin: rancher
     _desc: The Rancher Command Line Interface (CLI) is a unified tool for interacting with your Rancher Server
     _docs: null
     _github: https://github.com/rancher/cli
@@ -5712,7 +5708,7 @@ softwarePackages:
     _name: schema
     _service: null
     _type: cli
-    go: github.com/Confbase/schema
+    go: github.com/Confbase/schema@latest
   scrcpy:
     _bin: scrcpy
     _desc: '[scrcpy](https://github.com/Genymobile/scrcpy) is a free and open-source application that provides display of Android devices connected on USB (or over TCP/IP). It also allows you to control the Android device. It does not require any root access.'
@@ -6075,7 +6071,6 @@ softwarePackages:
     _home: null
     _name: null
     _service: null
-    brew: social-analyzer
     pipx: social-analyzer
   solidity:
     _bin: null
@@ -6258,7 +6253,7 @@ softwarePackages:
     _when:cask: '! test -d /Applications/Stats.app'
     cask: stats
   stegcloak:
-    _bin: null
+    _bin: stegcloak
     _desc: null
     _docs: null
     _github: null
@@ -6277,7 +6272,7 @@ softwarePackages:
     _post:brew:darwin: bash "$(brew --prefix stubby)/sbin/stubby-setdns-macos.sh" && brew services start stubby
     brew:darwin: stubby
   supdock:
-    _bin: null
+    _bin: supdock
     _desc: null
     _docs: null
     _github: null
@@ -6317,12 +6312,13 @@ softwarePackages:
     _appimageName: SwitchHosts.AppImage
     _bin: null
     _desc: '[SwitchHosts](https://github.com/oldj/SwitchHosts) is an application for managing the etc hosts file. It allows you to easily switch between different etc hosts file configurations.'
-    _docs: null
+    _docs: https://github.com/oldj/SwitchHosts
     _github: https://github.com/oldj/SwitchHosts
     _home: https://swh.app/
     _name: SwitchHosts
-    _service: null
+    _service: false
     _type: application
+    _when:cask: '! test -d "/Applications/SwitchHosts.app"'
     ansible: professormanhattan.switchhosts
     appimage: https://github.com/oldj/SwitchHosts/releases/download/v4.1.2/SwitchHosts_linux_x86_64_4.1.2.6086.AppImage
     cask: switchhosts
@@ -6629,7 +6625,7 @@ softwarePackages:
     _service: null
     npm: tinypng-cli
   tldr:
-    _bin: null
+    _bin: tldr
     _desc: null
     _docs: null
     _github: null
@@ -6679,17 +6675,6 @@ softwarePackages:
     _name: TOR
     _service: null
     ansible:linux: professormanhattan.tor
-  transfer:
-    _bin: null
-    _desc: Converts from one encoding to another
-    _docs: null
-    _github: https://github.com/rinetd/transfer
-    _home: null
-    _name: transfer
-    _service: null
-    _type: cli
-    github: github.com/rinetd/transfer
-    go: github.com/rinetd/transfer@latest
   translate:
     _bin: trans
     _desc: '[Translate Shell](https://github.com/soimort/translate-shell) (formerly Google Translate CLI) is a command-line translator powered by Google Translate (default), Bing Translator, Yandex.Translate, and Apertium. It gives you easy access to these translation engines in your terminal. It is feature-rich and, although there is some overlap, it complements [Normit](https://gitlab.com/megabyte-labs/ansible-roles/normit) well.'
@@ -6738,7 +6723,7 @@ softwarePackages:
     github: github.com/aquasecurity/trivy
     yay: trivy-bin
   trufflehog:
-    _bin: null
+    _bin: trufflehog
     _desc: null
     _docs: null
     _github: null
@@ -6775,7 +6760,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.ulauncher
   up:
-    _bin: null
+    _bin: up
     _desc: up, which is short for [Ultimate Plumber](https://github.com/akavel/up), is a tool for writing Linux pipes in a terminal-based UI interactively, with an instant live preview of command results.
     _docs: null
     _github: https://github.com/akavel/up
@@ -7129,6 +7114,17 @@ softwarePackages:
     brew: wget
     dnf: wget
     # whalebrew: whalebrew/wget # Temporarily commentted out for debugging
+  whalebrew:
+    _bin: whalebrew
+    _desc: Homebrew, but with Docker images (see https://github.com/whalebrew/whalebrew-packages for available packages)
+    _docs: https://github.com/whalebrew/whalebrew#usage
+    _github: https://github.com/whalebrew/whalebrew
+    _home: https://github.com/whalebrew/whalebrew
+    _name: Whalebrew
+    _service: false
+    brew: whalebrew
+    script:darwin: curl -L "https://github.com/whalebrew/whalebrew/releases/download/0.4.0/whalebrew-$(uname -s)-$(uname -m)" -o /usr/local/bin/whalebrew; chmod +x /usr/local/bin/whalebrew
+    script:linux: curl -L "https://github.com/whalebrew/whalebrew/releases/download/0.4.0/whalebrew-$(uname -s)-$(uname -m)" -o /usr/local/bin/whalebrew; chmod +x /usr/local/bin/whalebrew
   whaler:
     _bin: null
     _desc: Whaler takes a Docker image and attempts to reverse engineer the Dockerfile that created it
@@ -7298,7 +7294,7 @@ softwarePackages:
     _service: false
     ansible: professormanhattan.xcode
   xurls:
-    _bin: null
+    _bin: xurls
     _desc: Extract urls from text
     _docs: null
     _github: https://github.com/mvdan/xurls
@@ -7319,7 +7315,7 @@ softwarePackages:
     brew: yamllint
     pipx: yamllint
   yank:
-    _bin: null
+    _bin: yank
     _desc: '[yank](https://github.com/mptre/yank) is a terminal agnostic solution which allows copying output from Termial easily, without the need to use Terminal multiplexers.'
     _docs: null
     _github: null
