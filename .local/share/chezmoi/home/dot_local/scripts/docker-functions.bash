@@ -572,12 +572,12 @@ nes(){
 		--name nes \
 		${DOCKER_REPO_PREFIX}/nes "/games/${game}.rom"
 }
-netcat(){
+netcat-docker(){
 	docker run --rm -it \
 		--net host \
 		${DOCKER_REPO_PREFIX}/netcat "$@"
 }
-nginx(){
+nginx-docker(){
 	del_stopped nginx
 
 	docker run -d \
@@ -590,7 +590,7 @@ nginx(){
 	# add domain to hosts & open nginx
 	sudo hostess add jess 127.0.0.1
 }
-nmap(){
+nmap-docker(){
 	if [[ -n "$(which nmap)" ]]; then
 		"$(which nmap)" "$@"
 	else
@@ -643,7 +643,7 @@ openscad(){
 		--name openscad \
 		${DOCKER_REPO_PREFIX}/openscad
 }
-opensnitch(){
+opensnitch-docker(){
 	del_stopped opensnitchd
 	del_stopped opensnitch
 
@@ -685,7 +685,7 @@ opensnitch(){
 		--name opensnitch \
 		${DOCKER_REPO_PREFIX}/opensnitch
 }
-osquery(){
+osquery-docker(){
 	rmctr osquery
 
 	docker run -d --restart always \
@@ -718,7 +718,7 @@ osquery(){
 		--logger_tls_endpoint=/api/v1/osquery/log \
 		--logger_tls_period=10
 }
-pandoc(){
+pandoc-docker(){
 	if [[ -n "$(which pandoc)" ]]; then
 		"$(which pandoc)" "$@"
 	else
@@ -766,7 +766,7 @@ pond(){
 		--name pond \
 		${DOCKER_REPO_PREFIX}/pond
 }
-privoxy(){
+privoxy-docker(){
 	del_stopped privoxy
 	relies_on torproxy
 
@@ -780,7 +780,7 @@ privoxy(){
 
 	hostess add privoxy "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' privoxy)"
 }
-pulseaudio(){
+pulseaudio-docker(){
 	del_stopped pulseaudio
 
 	docker run -d \
@@ -809,7 +809,7 @@ registrator(){
 		--name registrator \
 		gliderlabs/registrator consul:
 }
-remmina(){
+remmina-docker(){
 	del_stopped remmina
 
 	docker run -d \
@@ -898,7 +898,7 @@ shorewall(){
 		--name shorewall \
 		${DOCKER_REPO_PREFIX}/shorewall "$@"
 }
-skype(){
+skype-docker(){
 	del_stopped skype
 	relies_on pulseaudio
 
@@ -915,7 +915,7 @@ skype(){
 		--name skype \
 		${DOCKER_REPO_PREFIX}/skype
 }
-slack(){
+slack-docker(){
 	del_stopped slack
 
 	docker run -d \
@@ -1006,7 +1006,7 @@ tarsnap(){
 		-v "$HOME:/root/workdir" \
 		${DOCKER_REPO_PREFIX}/tarsnap "$@"
 }
-telnet(){
+telnet-docker(){
 	docker run -it --rm \
 		--log-driver none \
 		${DOCKER_REPO_PREFIX}/telnet "$@"
@@ -1020,7 +1020,7 @@ termboy(){
 		--name termboy \
 		${DOCKER_REPO_PREFIX}/nes "/games/${game}.rom"
 }
-terraform(){
+terraform-docker(){
 	if [[ -n "$(which terraform)" ]]; then
 		"$(which terraform)" "$@"
 	else
@@ -1035,7 +1035,7 @@ terraform(){
 			${DOCKER_REPO_PREFIX}/terraform "$@"
 	fi
 }
-tor(){
+tor-docker(){
 	del_stopped tor
 
 	docker run -d \
@@ -1098,7 +1098,7 @@ traceroute(){
 		--net host \
 		${DOCKER_REPO_PREFIX}/traceroute "$@"
 }
-transmission(){
+transmission-docker(){
 	del_stopped transmission
 
 	docker run -d \
@@ -1133,7 +1133,7 @@ virsh(){
 		--net container:kvm \
 		${DOCKER_REPO_PREFIX}/libvirt-client "$@"
 }
-virtualbox(){
+virtualbox-docker(){
 	del_stopped virtualbox
 
 	docker run -d \
@@ -1159,7 +1159,7 @@ virt_viewer(){
 		${DOCKER_REPO_PREFIX}/virt-viewer "$@"
 }
 alias virt-viewer="virt_viewer"
-visualstudio(){
+visualstudio-docker(){
 	del_stopped visualstudio
 
 	docker run -d \
@@ -1171,7 +1171,7 @@ visualstudio(){
 		${DOCKER_REPO_PREFIX}/vscode
 }
 alias vscode="visualstudio"
-vlc(){
+vlc-docker(){
 	del_stopped vlc
 	relies_on pulseaudio
 
@@ -1191,7 +1191,7 @@ vlc(){
 		--name vlc \
 		${DOCKER_REPO_PREFIX}/vlc
 }
-watchman(){
+watchman-docker(){
 	del_stopped watchman
 
 	docker run -d \
@@ -1240,7 +1240,7 @@ wg(){
 		--name wg \
 		${DOCKER_REPO_PREFIX}/wg "$@"
 }
-wireshark(){
+wireshark-docker(){
 	del_stopped wireshark
 
 	docker run -d \
@@ -1253,13 +1253,13 @@ wireshark(){
 		--name wireshark \
 		${DOCKER_REPO_PREFIX}/wireshark
 }
-wrk(){
+wrk-docker(){
 	docker run -it --rm \
 		--log-driver none \
 		--name wrk \
 		${DOCKER_REPO_PREFIX}/wrk "$@"
 }
-ykman(){
+ykman-docker(){
 	del_stopped ykman
 
 	if [[ -n "$(which ykman)" ]]; then

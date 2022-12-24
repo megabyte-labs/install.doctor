@@ -107,9 +107,12 @@ if [ -f "$CARGO_HOME/env" ]; then
 fi
 
 ### Docker Functions / Aliases
-if [ -f "$HOME/.local/scripts/docker-functions.bash" ]; then
-  . "$HOME/.local/scripts/docker-functions.bash"
-fi
+# This file is used as an example file since it conflicts with the installation process of many libraries.
+# Also, using Firejail is the preferred method of limiting the permissions of a process so there is no need
+# to use Docker aliases since Firejail is superior (according to: https://news.ycombinator.com/item?id=21497677)
+# if [ -f "$HOME/.local/scripts/docker-functions.bash" ]; then
+#   . "$HOME/.local/scripts/docker-functions.bash"
+# fi
 
 ### fzf-tmux
 #if [ -f "$HOME/.local/scripts/fzf-tmux.bash" ]; then
