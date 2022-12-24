@@ -5503,6 +5503,7 @@ softwarePackages:
     _name: RunJS
     _service: null
     _type: application
+    _when:cask: '! test -d /Applications/RunJS.app'
     cask: runjs
     choco: runjs
     github: github.com/lukehaas/RunJS
@@ -5553,8 +5554,8 @@ softwarePackages:
     _home: https://github.com/kahing/catfs
     _name: Catfs
     _service: true
-    ansible: professormanhattan.s3filesystem
-    cargo: catfs
+    ansible:linux: professormanhattan.s3filesystem
+    cargo:linux: catfs
   s5cmd:
     _bin: s5cmd
     _desc: '[s5cmd](https://github.com/peak/s5cmd) is a very fast S3 and local filesystem execution tool. It comes with support for a multitude of operations including tab completion and wildcard support for files, which can be very handy for your object storage workflow while working with large number of files. s5cmd is the fastest way of interacting with S3 buckets because it can utilize multiple threads unlike similar tools.'
