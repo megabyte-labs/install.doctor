@@ -6832,7 +6832,9 @@ softwarePackages:
     _github: Not open-source
     _home: https://visualstudio.microsoft.com/
     _name: Visual Studio
+    _post:cask: 'APP_LINK="$(find /usr/local/Caskroom/visual-studio -mindepth 2 -maxdepth 2 -name "*.app*" | head -n1)" && open "$APP_LINK"'
     _service: null
+    _when:cask: '! test -d "/Applications/Visual Studio.app"'
     ansible:windows: professormanhattan.visualstudio
     cask: visual-studio
     choco: visualstudio2022community
