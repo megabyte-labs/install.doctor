@@ -530,30 +530,35 @@ function getHook(packages, hook, scopedPreference, preference) {
 
 // Acquire OS type installer key (for the installerPreference data key)
 async function OSTypeInstallerKey() {
-  const apt = which.sync("apt-get", { nothrow: true });
-  const dnf = which.sync("dnf", { nothrow: true });
-  const freebsdPkg = which.sync("pkg", { nothrow: true });
-  const freebsdVersion = which.sync("freebsd-version", { nothrow: true })
-  const pacman = which.sync("pacman", { nothrow: true });
-  const yum = which.sync("yum", { nothrow: true });
-  const zypper = which.sync("zypper", { nothrow: true });
-  if (apt) {
-    return "apt";
-  } else if (dnf || yum) {
-    return "dnf";
-  } else if (pacman) {
-    return "pacman";
-  } else if (zypper) {
-    return "zypper";
-  } else if (freebsdPkg && freebsdVersion) {
-    return "freebsd";
-  } else {
-    try {
-      await $`test -d /Applications && test -d /Library`;
-      return "darwin";
-    } catch (e) {
-      return "windows";
+  try {
+    const apt = which.sync("apt-get", { nothrow: true });
+    const dnf = which.sync("dnf", { nothrow: true });
+    const freebsdPkg = which.sync("pkg", { nothrow: true });
+    const freebsdVersion = which.sync("freebsd-version", { nothrow: true });
+    const pacman = which.sync("pacman", { nothrow: true });
+    const yum = which.sync("yum", { nothrow: true });
+    const zypper = which.sync("zypper", { nothrow: true });
+    if (apt) {
+      return "apt";
+    } else if (dnf || yum) {
+      return "dnf";
+    } else if (pacman) {
+      return "pacman";
+    } else if (zypper) {
+      return "zypper";
+    } else if (freebsdPkg && freebsdVersion) {
+      return "freebsd";
+    } else {
+      try {
+        await $`test -d /Applications && test -d /Library`;
+        return "darwin";
+      } catch (e) {
+        return "windows";
+      }
     }
+  } catch (e) {
+    log("error", "OS Detection", 'There was an error determining the type of operating system')
+    console.error(e)
   }
 }
 
@@ -1567,10 +1572,16 @@ async function installSoftware(pkgsToInstall) {
   for (const packageManager of packageManagers) {
     await ensurePackageManager(packageManager);
   }
-  for (const key in installOrders) {
-    installOrders[key] = [...new Set(installOrders[key])];
+  try {
+    for (const key in installOrders) {
+      console.log(key)
+      installOrders[key] = [...new Set(installOrders[key])];
+    }
+    log("info", "Install Orders", `The install orders were generated:`);
+  } catch (e) {
+    log("error", "Install Orders", `There was an error reducing the duplicates in the install orders`)
+    console.error(e)
   }
-  log("info", "Install Orders", `The install orders were generated:`);
   console.log(installOrders);
   log(
     "info",
