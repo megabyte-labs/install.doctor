@@ -125,7 +125,19 @@
     "helpUrl": "https://megabyte.space/docs/contributing/commits"
   },
   "eslintConfig": {
-    "extends": "eslint-config-strict-mode"
+    "extends": "eslint-config-strict-mode",
+    "overrides": [
+      {
+        "files": [
+          "home/private_dot_config/oh-my-posh/*",
+          "home/private_dot_config/private_Code/User/extensions/theme-betelgeuse-vscode/**/*",
+          "home/private_dot_config/private_Code/User/settings.json"
+        ],
+        "rules": {
+          "no-secrets/no-secrets": "off"
+        }
+      }
+    ]
   },
   "funding": [
     {
