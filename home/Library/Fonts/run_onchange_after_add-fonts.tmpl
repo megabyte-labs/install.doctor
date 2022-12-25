@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-{{- includeTemplate "universal/logg" }}
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
 
 {{ $fontFiles := (output "find" (joinPath .chezmoi.homeDir ".local" "share" "fonts") "-type" "f") -}}
 {{- range $fontFile := splitList "\n" $fontFiles -}}

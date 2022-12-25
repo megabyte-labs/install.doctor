@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-{{- includeTemplate "universal/logg" }}
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
 
 ### Ensure id_rsa is present and create one if it does not exist
 if [ ! -f "$HOME/.ssh/id_rsa" ]; then

@@ -2,6 +2,9 @@
 
 # home directories: {{ output ("find" .host.homeParentFolder "-maxdepth" "1" "-type" "d" "|" "xargs" "echo") }}
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 find /home -maxdepth 1 -type d | while read HOME_DIR; do
   USER_FOLDER="$(echo "$HOME_DIR" | sed 's/\/\([^\/]*\)/\1/')"
   if [ ! -d "/var/log/user/$USER_FOLDER" ] && [ -d "$HOME_DIR/.local/log" ]; then

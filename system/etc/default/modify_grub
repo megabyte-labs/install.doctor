@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 SCREEN_WIDTH="$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)"
 SCREEN_HEIGHT="$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)"
 SCREEN_RATIO="$(awk -v height={{ screen_height.stdout }} -v width={{ screen_width.stdout }} 'BEGIN { print ((height / width) * 1000) }')"

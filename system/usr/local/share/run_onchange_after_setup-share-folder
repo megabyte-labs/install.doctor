@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 logg info 'Ensure /usr/local/share is a directory'
 sudo mkdir -p /usr/local/share
 

@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 ### Symlink the variables / files / inventories to ~/.config/ansible folders if they are present
 ### i.e. Changes to upstream will not impact the play if your configuration files are stored locally
 for TARGET in "files" "group_vars" "host_vars" "inventories" "templates"; do
