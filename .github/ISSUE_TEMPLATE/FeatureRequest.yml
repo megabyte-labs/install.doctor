@@ -1,0 +1,53 @@
+---
+name: '💡 Feature Request'
+description: Request a new feature or an improvement to an existing one.
+labels: [question]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Thank You For Your Ideas!
+
+        Thank you in advance for any input you have on how we can improve our open-source product.
+        It is great to get ideas from other people's well-thought perspectives. Take a minute to
+        ponder your idea and then feel free to submit your feature/idea for review.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: '💡 Feature/Idea'
+      description: Enter a clear and concise description of the feature request/improvement.
+    validations:
+      required: true
+
+  - type: input
+    id: contributor
+    attributes:
+      label: ':thumbsup: Can you contribute?'
+      description: '**Optional** Add a way we can contact you here if you would like to contribute.'
+      placeholder: 'Twitter: @MegabyteLabs, E-mail: help@megabyte.space, etc.'
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ## :heart: Love Megabyte Labs?
+
+        If you find **[Megabyte Labs](https://megabyte.space)** projects useful, please consider donating so we sustain our projects:
+
+        <a title="Support us on Open Collective" href="https://opencollective.com/megabytelabs" target="_blank">
+          <img
+            alt="Open Collective sponsors"
+            src="https://img.shields.io/opencollective/sponsors/megabytelabs?logo=opencollective&label=OpenCollective&logoColor=white&style=for-the-badge"
+          />
+        </a>
+        <a title="Support us on GitHub" href="https://github.com/ProfessorManhattan" target="_blank">
+          <img
+            alt="GitHub sponsors"
+            src="https://img.shields.io/github/sponsors/ProfessorManhattan?label=GitHub%20sponsors&logo=github&style=for-the-badge"
+          />
+        </a>
+        <a href="https://www.patreon.com/ProfessorManhattan" title="Support us on Patreon" target="_blank">
+          <img alt="Patreon" src="https://img.shields.io/badge/Patreon-Support-052d49?logo=patreon&logoColor=white&style=for-the-badge" />
+        </a>

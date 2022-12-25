@@ -1,0 +1,38 @@
+{
+  "configurations": [
+    {
+      "name": "Debug Active Spec",
+      "outputCapture": "std",
+      "port": 9229,
+      "preLaunchTask": "npm: build",
+      "request": "launch",
+      "runtimeArgs": ["debug", "--break", "--serial", "${file}"],
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/ava",
+      "skipFiles": ["<node_internals>/**/*.js"],
+      "type": "node"
+    },
+    {
+      "name": "Debug Active Spec (no build)",
+      "outputCapture": "std",
+      "port": 9229,
+      "request": "launch",
+      "runtimeArgs": ["debug", "--break", "--serial", "${file}"],
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/ava",
+      "skipFiles": ["<node_internals>/**/*.js"],
+      "type": "node"
+    },
+    {
+      "args": ["debug"],
+      "cwd": "${workspaceFolder}/build",
+      "env": {
+        "TYPESCRIPT_STARTER_REPO_URL": "${workspaceFolder}"
+      },
+      "name": "Try CLI",
+      "program": "${workspaceFolder}/bin/typescript-starter",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**/*.js"],
+      "type": "node"
+    }
+  ],
+  "version": "0.2.0"
+}

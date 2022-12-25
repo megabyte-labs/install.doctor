@@ -1,0 +1,99 @@
+---
+name: '🐛 Bug Report'
+description: Stumbled upon an error? Submit a bug report.
+labels: [question]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Yikes! That Was Not Supposed to Happen
+
+        Sorry you had to find out the hard way that even the best software does not always work
+        perfectly in every type of environment, 24/7. Your bug report is appreciated. After
+        you have taken the time to gather the information needed to reproduce the issue, please
+        fill out the bug report form below.
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: '❔ What are you experiencing an issue with?'
+      options:
+        - Latest Release
+        - Prior Release
+        - Development Issue
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: '❔ Version'
+      description: Enter the version number, the commit ID, or a link to the release that has the issue.
+      placeholder: 'Version 2.4.0'
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: '🐞 Description'
+      description: Enter a clear and concise description of the problem.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: '⏺️ Steps To Reproduce'
+      description: '**Optional** Enter the steps required to reproduce the behavior. Be sure to include environment
+        information, as appropriate.'
+      placeholder: |
+        1. In this environment...
+        2. With this config...
+        3. Run '...'
+        4. See error...
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: '📒 Relevant Log Output'
+      description: '**Optional** Please copy and paste any relevant log output. This will be automatically formatted into
+        code, so no need for backticks.'
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: '💡 Possible Solution'
+      description: '**Optional** Enter suggestions on a fix/reason for the bug if you have any.'
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ## :heart: Love Megabyte Labs?
+
+        If you find **[Megabyte Labs](https://megabyte.space)** projects useful, please consider donating so we sustain our projects:
+
+        <a title="Support us on Open Collective" href="https://opencollective.com/megabytelabs" target="_blank">
+          <img
+            alt="Open Collective sponsors"
+            src="https://img.shields.io/opencollective/sponsors/megabytelabs?logo=opencollective&label=OpenCollective&logoColor=white&style=for-the-badge"
+          />
+        </a>
+        <a title="Support us on GitHub" href="https://github.com/ProfessorManhattan" target="_blank">
+          <img
+            alt="GitHub sponsors"
+            src="https://img.shields.io/github/sponsors/ProfessorManhattan?label=GitHub%20sponsors&logo=github&style=for-the-badge"
+          />
+        </a>
+        <a href="https://www.patreon.com/ProfessorManhattan" title="Support us on Patreon" target="_blank">
+          <img alt="Patreon" src="https://img.shields.io/badge/Patreon-Support-052d49?logo=patreon&logoColor=white&style=for-the-badge" />
+        </a>

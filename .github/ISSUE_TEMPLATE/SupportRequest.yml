@@ -1,0 +1,69 @@
+---
+name: '⛑️ Support Request'
+description: Find out how to get answers and/or submit a support request.
+labels: [question]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 💬 Join Us on Slack!
+        If you have general questions or need help implementing this project, you have several options:
+
+        * Ask the question on **[our Slack channel](https://app.slack.com/client/T01ABCG4NK1/C01NN74H0LW/details/)** *Fast*
+        * Submit a request here *Depends*
+        * E-mail [help@megabyte.space](mailto:help@megabyte.space) *Slow*
+        * Submit a request on any of the above for paid support (just mention you are interested in paid support) **Fastest**
+
+  - type: textarea
+    id: support
+    attributes:
+      label: '⛑️ Support Request'
+      description: Add your support request here. Detail exactly what you need help with.
+    validations:
+      required: true
+
+  - type: input
+    id: contributor
+    attributes:
+      label: '😀 Are you interested in paid support?'
+      description: '**Optional** For the fastest, most-effective support we offer paid services. If you are interested,
+        answer *Yes* and we will get in contact with you immediately.'
+      options:
+        # yamllint disable-line rule:truthy
+        - 'Yes'
+        # yamllint disable-line rule:truthy
+        - 'No'
+    validations:
+      required: false
+
+  - type: input
+    id: contributor
+    attributes:
+      label: '💬 How can we contact you?'
+      description: '**Optional** Add a way we can contact you here (especially if you want us to contact you immediately for paid support).'
+      placeholder: 'Twitter: @MegabyteLabs, E-mail: help@megabyte.space, etc.'
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ## :heart: Love Megabyte Labs?
+
+        If you find **[Megabyte Labs](https://megabyte.space)** projects useful, please consider donating so we sustain our projects:
+
+        <a title="Support us on Open Collective" href="https://opencollective.com/megabytelabs" target="_blank">
+          <img
+            alt="Open Collective sponsors"
+            src="https://img.shields.io/opencollective/sponsors/megabytelabs?logo=opencollective&label=OpenCollective&logoColor=white&style=for-the-badge"
+          />
+        </a>
+        <a title="Support us on GitHub" href="https://github.com/ProfessorManhattan" target="_blank">
+          <img
+            alt="GitHub sponsors"
+            src="https://img.shields.io/github/sponsors/ProfessorManhattan?label=GitHub%20sponsors&logo=github&style=for-the-badge"
+          />
+        </a>
+        <a href="https://www.patreon.com/ProfessorManhattan" title="Support us on Patreon" target="_blank">
+          <img alt="Patreon" src="https://img.shields.io/badge/Patreon-Support-052d49?logo=patreon&logoColor=white&style=for-the-badge" />
+        </a>
