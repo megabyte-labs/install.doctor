@@ -6884,6 +6884,7 @@ softwarePackages:
       sudo dnf -y install @development-tools
       sudo dnf -y install kernel-headers kernel-devel dkms elfutils-libelf-devel qt5-qtx11extras
     _service: false
+    _when:cask: '! test -d /Applications/VirtualBox.app'
     ansible: professormanhattan.virtualbox
     apt: virtualbox
     cask: virtualbox
