@@ -1,5 +1,5 @@
 ---
-name: '⛑️ Support Request'
+name: ⛑️ Support Request
 description: Find out how to get answers and/or submit a support request.
 labels: [question]
 body:
@@ -17,7 +17,7 @@ body:
   - type: textarea
     id: support
     attributes:
-      label: '⛑️ Support Request'
+      label: ⛑️ Support Request
       description: Add your support request here. Detail exactly what you need help with.
     validations:
       required: true
@@ -25,21 +25,21 @@ body:
   - type: input
     id: contributor
     attributes:
-      label: '😀 Are you interested in paid support?'
+      label: 😀 Are you interested in paid support?
       description: '**Optional** For the fastest, most-effective support we offer paid services. If you are interested,
         answer *Yes* and we will get in contact with you immediately.'
       options:
         # yamllint disable-line rule:truthy
-        - 'Yes'
+        - Yes
         # yamllint disable-line rule:truthy
-        - 'No'
+        - No
     validations:
       required: false
 
   - type: input
     id: contributor
     attributes:
-      label: '💬 How can we contact you?'
+      label: 💬 How can we contact you?
       description: '**Optional** Add a way we can contact you here (especially if you want us to contact you immediately for paid support).'
       placeholder: 'Twitter: @MegabyteLabs, E-mail: help@megabyte.space, etc.'
     validations:

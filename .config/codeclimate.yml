@@ -2,15 +2,19 @@
 version: '2'
 
 plugins:
-  ansible-lint:
-    enabled: true
   editorconfig:
     enabled: true
   eslint:
     enabled: true
   jscpd:
     enabled: true
+    exclude_patterns:
+      - common/.config/taskfiles/
+  proselint:
+    enabled: true
   shellcheck:
+    enabled: true
+  semgrep:
     enabled: true
   yamllint:
     enabled: true
@@ -42,9 +46,10 @@ exclude_patterns:
   - deprecated/
   - dist/
   - features/
+  - gl-code-quality-report.json
   - pnpm-lock.yaml
   - roles/
   - script/
   - test-output/
   - testdata/
-  - Tests/
+  - tests/

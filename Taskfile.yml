@@ -1,5 +1,6 @@
 ---
 version: '3'
+
 includes:
   ansible:
     taskfile: ./.config/taskfiles/ansible/Taskfile.yml
@@ -39,6 +40,12 @@ includes:
     optional: true
   cloud:
     taskfile: ./.config/taskfiles/cloud/Taskfile.yml
+    optional: true
+  cloud:cloudflare:
+    taskfile: ./.config/taskfiles/cloud/Taskfile-cloudflare.yml
+    optional: true
+  cloud:dyno:
+    taskfile: ./.config/taskfiles/cloud/Taskfile-dyno.yml
     optional: true
   cloud:heroku:
     taskfile: ./.config/taskfiles/cloud/Taskfile-heroku.yml
@@ -175,6 +182,10 @@ includes:
   lint:prose:
     taskfile: ./.config/taskfiles/lint/Taskfile-prose.yml
     optional: true
+  localhost:
+    taskfile: ./../../Taskfile-localhost.yml
+    optional: true
+
   log:
     optional: true
     taskfile: ./.config/taskfiles/log/Taskfile.yml
@@ -304,13 +315,8 @@ includes:
   web:profile:
     taskfile: ./.config/taskfiles/web/Taskfile-profile.yml
     optional: true
-  cloud:cloudflare:
-    taskfile: ./.config/taskfiles/cloud/Taskfile-cloudflare.yml
-    optional: true
-  cloud:dyno:
-    taskfile: ./.config/taskfiles/cloud/Taskfile-dyno.yml
-    optional: true
 output: interleaved
+
 vars:
   DOCKERHUB_PROFILE:
     sh: |
@@ -363,7 +369,11 @@ vars:
   GROUP_EXEC_ASYNC: 'false'
   # yamllint disable rule:line-length
   IGNORE_FOLDERS: >-
-    -path './.autodoc/*' -o -path './.cache/*' -o -path './.common*' -o -path './.config/*' -o -path './.git/*' -o -path './.modules/*' -o -path './.npm/*' -o -path './.pnpm-store/*' -o -path './.shared/*' -o -path './.task/*' -o -path './.venv/*' -o -path './.vscode/*' -o -path './build/*' -o -path './dist/*' -o -path './node_modules/*' -o -path './roles/*' -o -name pnpm-lock.yaml -o -name package-lock.json -o -name poetry.lock -o -name '.variables.json' -o -name '.git'
+    -path './.autodoc/*' -o -path './.cache/*' -o -path './.common*' -o -path './.config/*' -o -path './.git/*' -o
+    -path './.modules/*' -o -path './.npm/*' -o
+    -path './.pnpm-store/*' -o -path './.shared/*' -o -path './.task/*' -o -path './.venv/*' -o -path './.vscode/*' -o
+    -path './build/*' -o -path './dist/*' -o -path './node_modules/*' -o -path './roles/*' -o -name pnpm-lock.yaml -o
+    -name package-lock.json -o -name poetry.lock -o -name '.variables.json' -o -name '.git'
   INIT_SCRIPT: https://gitlab.com/megabyte-labs/gitlab-ci/-/raw/master/scripts/update-init.sh
   LOG_FIX:
     sh: chmod +x .config/log
@@ -395,13 +405,34 @@ vars:
       fi
   PYTHON_VIRTUALENV: true
   REPOSITORY_SUBTYPE:
-    sh: if type jq &> /dev/null && [ -f package.json ]; then VER="$(jq -r .blueprint.subgroup package.json)"; if [ "$VER" == null ]; then echo "$REPOSITORY_TYPE"; else echo "$VER"; fi; else echo "$REPOSITORY_TYPE"; fi
+    sh: |
+      if [ -n "$REPOSITORY_TYPE" ]; then REPO_SUBTYPE="$REPOSITORY_TYPE"; fi
+      if type jq &> /dev/null && [ -f package.json ]; then
+        VER="$(jq -r '.blueprint.subgroup' package.json)"
+        if [ "$VER" == 'null' ]; then
+          if [ -n "$REPO_SUBTYPE" ]; then echo "$REPO_SUBTYPE"; else echo "misc"; fi
+        else
+          echo "$VER"
+        fi
+      else
+        if [ -n "$REPO_SUBTYPE" ]; then echo "$REPO_SUBTYPE"; else echo "misc"; fi
+      fi
   REPOSITORY_TYPE:
-    sh: if type jq &> /dev/null && [ -f package.json ]; then VER="$(jq -r .blueprint.group package.json)"; if [ "$VER" == null ]; then echo "$GROUP_TYPE"; else echo "$VER"; fi; else echo "$GROUP_TYPE"; fi
+    sh: |
+      if [ -n "$GROUP_TYPE" ]; then REPO_TYPE="$GROUP_TYPE"; fi
+      if type jq &> /dev/null && [ -f package.json ]; then
+        VER="$(jq -r '.blueprint.group' package.json)"
+        if [ "$VER" == 'null' ]; then
+          if [ -n "$REPO_TYPE" ]; then echo "$REPO_TYPE"; else echo "misc"; fi
+        else
+          echo "$VER"
+        fi
+      else
+        if [ -n "$REPO_TYPE" ]; then echo "$REPO_TYPE"; else echo "misc"; fi
+      fi
   SEMANTIC_CONFIG: semantic-release-config
   TIMEZONE: America/New_York
-  includes:
-    common:start: ./.config/taskfiles/common/Taskfile-start.yml
+
 env:
   GOPATH:
     sh: |
@@ -434,6 +465,7 @@ env:
       fi
   VOLTA_HOME:
     sh: echo "$HOME/.volta"
+
 profile: |
   if [[ "$OSTYPE" == 'linux-gnu'* ]] || [[ "$OSTYPE" == 'linux-musl'* ]]; then
     if [ -f /home/linuxbrew/.linuxbrew/bin/brew ] && ! type brew > /dev/null; then
@@ -452,6 +484,7 @@ profile: |
   if [ -f .venv/bin/activate ]; then
     . .venv/bin/activate
   fi
+
 tasks:
   build:
     deps:
@@ -480,6 +513,7 @@ tasks:
         else
           [[ $- == *i* ]] && task prepare || (.config/log error '{{.NONINTERACTIVE_MISSING_BUILD_CMD}}' && exit 1)
         fi
+
   clean:
     desc: Removes optional folders that are cached during various tasks
     summary: |
@@ -490,11 +524,13 @@ tasks:
       which will re-generate the project from scratch. Ideally, this task and the reset task
       should never be necessary. The `start` task should be used instead.
     vars:
-      CLEAN_TARGETS: .autodoc .cache .task .venv node_modules tsconfig.tsbuildinfo venv .variables.json
+      CLEAN_TARGETS: .autodoc .cache .task .venv node_modules tsconfig.tsbuildinfo venv
+        .variables.json
     cmds:
       - task: common:clean
         vars:
           CLEAN_TARGETS: '{{.CLEAN_TARGETS}}'
+
   commit:
     desc: Lint staged files, report spelling errors, and open a _required_ commit dialoge
     summary: |
@@ -511,6 +547,7 @@ tasks:
       to your regular `git commit -m` command to bypass the pre-commit hook.
     cmds:
       - task: common:commit
+
   commit:all:
     deps:
       - install:software:git
@@ -548,6 +585,7 @@ tasks:
         git add --all
         git commit
         {{end}}
+
   commit:quick:
     deps:
       - ci:commit:config
@@ -555,13 +593,16 @@ tasks:
       - |
         task --list > /dev/null || (echo "ERROR: Invalid Taskfiles!" && exit 1)
         git add --all
-      - "HUSKY=0 git commit -m '\U0001F527 chore(tweak)": quick minor update' --no-verify
+      - HUSKY=0 git commit -m '🔧 chore(tweak): quick minor update' --no-verify
       - git push origin master
+
   devcontainer:
     deps:
       - install:npm:devcontainer
       - install:software:docker
+
   donothing: 'true'
+
   fix:
     desc: Run code auto-fixers / auto-formatters
     summary: |
@@ -572,6 +613,7 @@ tasks:
       an error so the auto-fixes still have to be validated.
     cmds:
       - task: fix:all
+
   fresh:
     summary: Initialize a new project with only the Taskfile.yml present
     cmds:
@@ -583,6 +625,7 @@ tasks:
       - TMP="$(mktemp)" && jq -r 'del(.blueprint)' package.json > "$TMP" && mv "$TMP" package.json
       - bash start.sh
       - task: prepare
+
   get:links:
     deps:
       - install:software:jq
@@ -595,6 +638,7 @@ tasks:
     cmds:
       - .config/log info 'GitHub -----> `{{.GITHUB_URL}}`'
       - .config/log info 'GitLab -----> `{{.GITLAB_URL}}`'
+
   group:exec:
     desc: Execute group commands on any GitLab group (including repositories in sub-groups)
     summary: |
@@ -615,6 +659,7 @@ tasks:
       Be sure to wrap the command in quotes or you might observe some odd behavior.
     cmds:
       - task: git:gitlab:group:exec
+
   init:
     deps:
       - install:software:jq
@@ -647,10 +692,12 @@ tasks:
       - git init
       - task: repair
       - task: prepare
+
   jumpusb:
     desc: Creates a JumpUSB (https://jumpusb.com)
     cmds:
       - task: install:ventoy
+
   lint:
     desc: Lints the project using all linters
     summary: |
@@ -664,6 +711,7 @@ tasks:
       `task lint`
     cmds:
       - task: lint:all
+
   livereload:
     deps:
       - install:npm:nodemon
@@ -703,10 +751,12 @@ tasks:
           .config/log error '`Taskfile-project.yml` must exist and have a `livereload` task to use with `nodemon`' && exit 1
         fi
       - nodemon --config {{if .CLI_ARGS}}{{.CLI_ARGS}}{{else}}.config/nodemon.json{{end}}
+
   new:project:
     desc: Create a new project
     cmds:
       - task: prepare
+
   preload:
     desc: Set up your workstation in advance by installing commonly used programs
     summary: |
@@ -749,6 +799,7 @@ tasks:
       - task: install:pipx:bundle
       - task: install:python:requirements
       - task: install:modules:local
+
   prepare:
     desc: Prepares the project for the normal start command
     summary: |
@@ -765,6 +816,7 @@ tasks:
     cmds:
       - task: boilerplate:check:package
       - task: boilerplate:clean
+
   publish:
     desc: Publish a semantic release via `semantic-release`
     summary: |
@@ -812,6 +864,7 @@ tasks:
       success: Successfully ran `semantic-release` via `task publish`
     cmds:
       - task: publish:semantic-release
+
   publish:force:
     desc: Force a `semantic-release` even if there are no new eligible commits
     summary: |
@@ -837,8 +890,10 @@ tasks:
       start: Publishing `semantic-release` update via `task publish:force`
       success: Successfully published update via `task publish:force`
     cmds:
-      - "HUSKY=0 git commit -a --allow-empty -m '\U0001F528 chore(bump): Forced semantic-release {{.UPDATE_LEVEL}}' -n\n"
+      - |
+        HUSKY=0 git commit -a --allow-empty -m '🔨 chore(bump): Forced semantic-release {{.UPDATE_LEVEL}}' -n
       - task: publish
+
   pull:upstream:
     desc: Pull from upstream repositories
     summary: |
@@ -855,6 +910,7 @@ tasks:
       success: Successfully pulled from `upstreamRemotes`
     cmds:
       - task: common:update:upstream:remotes:pull
+
   repair:
     cmds:
       - task: common:repair
@@ -865,6 +921,7 @@ tasks:
         else
           curl -sSL {{.INIT_SCRIPT}} > "$TMP" && bash "$TMP" && rm "$TMP"
         fi
+
   reset:
     desc: Resets the project by removing all caches and then re-generating templated files
     summary: |
@@ -876,6 +933,7 @@ tasks:
       updates, it re-generates any templated files.
     cmds:
       - task: common:reset
+
   reset:force:
     desc: 'Aggressively reset the project (**WARNING** This will wipe uncommitted work)'
     summary: |
@@ -894,6 +952,7 @@ tasks:
       answer:
         cmds:
           - task: common:reset:force
+
   scripts:
     interactive: true
     deps:
@@ -911,6 +970,7 @@ tasks:
       start: Running `NTL_RUNNER={{.NPM_PROGRAM}} ntl`
     cmds:
       - NTL_RUNNER={{.NPM_PROGRAM}} ntl
+
   services:
     desc: Update elements of the repository that require API access
     summary: |
@@ -923,6 +983,7 @@ tasks:
       - task: common:update:services
     status:
       - '[ -n "$GITLAB_CI" ] && [ "$REPOSITORY_UPDATE" != "true" ]'
+
   shell:
     desc: Start a terminal session using Docker with any Linux operating system
     compile: |
@@ -956,11 +1017,13 @@ tasks:
       * ubuntu-21.04
     cmds:
       - task: common:shell
+
   ssh-keys:
     deps:
       - cloud:heroku:ssh-keys
       - git:github:ssh-keys
       - git:gitlab:ssh-keys
+
   start:
     desc: Start the project by installing / updating dependencies, repairing issues, and opening a tutorial
     summary: |
@@ -983,7 +1046,8 @@ tasks:
       start: Starting the project..
       success: Project started!
     cmds:
-      - task: upstream:project
+      - task: common:start
+
   synchronize:
     desc: Set up the project and refresh it with the latest changes
     summary: |
@@ -1004,6 +1068,7 @@ tasks:
       success: Successfully synchronized the project with upstream file changes and also bootstrapped the project
     cmds:
       - task: upstream:{{.PROJECT_TYPE}}
+
   tag:deps:
     desc: Inject a new command in the `Taskfile.yml` that includes all tasks matching a given tag as deps
     summary: |
@@ -1032,6 +1097,7 @@ tasks:
       ```
     cmds:
       - task: common:util:task:tag:deps
+
   template:
     deps:
       - install:npm:liquidjs
@@ -1053,6 +1119,7 @@ tasks:
     preconditions:
       - sh: test -f .variables.json
         msg: This task requires that you have already spun up the project by running `task start`
+
   test:
     deps:
       - install:software:jq
@@ -1073,6 +1140,7 @@ tasks:
         else
           [[ $- == *i* ]] && task prepare || (.config/log error '{{.NONINTERACTIVE_MISSING_TEST_CMD}}' && exit 1)
         fi
+
   update:
     desc: Fully update the repository
     summary: |
@@ -1099,7 +1167,9 @@ tasks:
     cmds:
       - task: common:start
         env:
-          UPDATE_PROJECT: "true"
+          UPDATE_PROJECT: 'true'
+      - task: common:update:finish
+
   yubikey:
     desc: Create an OpenGPG-enabled YubiKey
     summary: |

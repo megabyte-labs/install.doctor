@@ -7,7 +7,6 @@ version: '3'
 # `task local:default` for example. You must keep all the tasks in this file without including other files
 # because the main Taskfile.yml is a symlinked one. Anyway, try `task local:default`.
 tasks:
-  default: echo "Get started on https://taskfile.dev"
   bitwarden:
     cmds:
       - |
@@ -67,6 +66,7 @@ tasks:
     cmds:
       - tar -czpf ~/brave-profile.tar.gz  {{.BrowserProfile}}
 
+  default: echo "Get started on https://taskfile.dev"
   font-test:
     cmds:
       - |
@@ -98,6 +98,20 @@ tasks:
           run localhost:provision:prompt
         fi
 
+  provision:dev:
+    deps:
+      - :install:software:bundle
+      - provision:terminal
+    cmds:
+      - brew bundle --file "$HOME/.local/Brewfile.dev"
+
+  provision:full:
+    deps:
+      - :install:software:bundle
+      - provision:dev
+    cmds:
+      - brew bundle --file "$HOME/.local/Brewfile.full"
+
   provision:prompt:
     deps:
       - :install:software:gum
@@ -115,20 +129,6 @@ tasks:
         elif [ "$CHOICE" = 'Full' ]; then
           run localhost:provision:full
         fi
-
-  provision:dev:
-    deps:
-      - :install:software:bundle
-      - provision:terminal
-    cmds:
-      - brew bundle --file "$HOME/.local/Brewfile.dev"
-
-  provision:full:
-    deps:
-      - :install:software:bundle
-      - provision:dev
-    cmds:
-      - brew bundle --file "$HOME/.local/Brewfile.full"
 
   provision:terminal:
     deps:

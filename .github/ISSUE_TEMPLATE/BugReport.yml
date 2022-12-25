@@ -1,5 +1,5 @@
 ---
-name: '🐛 Bug Report'
+name: 🐛 Bug Report
 description: Stumbled upon an error? Submit a bug report.
 labels: [question]
 body:
@@ -16,7 +16,7 @@ body:
   - type: dropdown
     id: type
     attributes:
-      label: '❔ What are you experiencing an issue with?'
+      label: ❔ What are you experiencing an issue with?
       options:
         - Latest Release
         - Prior Release
@@ -29,16 +29,16 @@ body:
   - type: input
     id: version
     attributes:
-      label: '❔ Version'
+      label: ❔ Version
       description: Enter the version number, the commit ID, or a link to the release that has the issue.
-      placeholder: 'Version 2.4.0'
+      placeholder: Version 2.4.0
     validations:
       required: true
 
   - type: textarea
     id: description
     attributes:
-      label: '🐞 Description'
+      label: 🐞 Description
       description: Enter a clear and concise description of the problem.
     validations:
       required: true
@@ -46,7 +46,7 @@ body:
   - type: textarea
     id: steps
     attributes:
-      label: '⏺️ Steps To Reproduce'
+      label: ⏺️ Steps To Reproduce
       description: '**Optional** Enter the steps required to reproduce the behavior. Be sure to include environment
         information, as appropriate.'
       placeholder: |
@@ -60,7 +60,7 @@ body:
   - type: textarea
     id: logs
     attributes:
-      label: '📒 Relevant Log Output'
+      label: 📒 Relevant Log Output
       description: '**Optional** Please copy and paste any relevant log output. This will be automatically formatted into
         code, so no need for backticks.'
       render: shell
@@ -70,7 +70,7 @@ body:
   - type: textarea
     id: solution
     attributes:
-      label: '💡 Possible Solution'
+      label: 💡 Possible Solution
       description: '**Optional** Enter suggestions on a fix/reason for the bug if you have any.'
     validations:
       required: false

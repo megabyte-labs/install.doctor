@@ -3,7 +3,7 @@ plugin:
   dive:
     shortCut: d
     confirm: false
-    description: "Dive image"
+    description: Dive image
     scopes:
       - containers
     command: dive
@@ -21,11 +21,11 @@ plugin:
     background: false
     args:
       - -c
-      - "kubectl get-all -n $NAMESPACE | less"
+      - 'kubectl get-all -n $NAMESPACE | less'
   edit-secret:
     shortCut: Ctrl-X
     confirm: false
-    description: "Edit Decoded Secret"
+    description: Edit Decoded Secret
     scopes:
       - secrets
     command: kubectl
@@ -41,7 +41,7 @@ plugin:
   stern:
     shortCut: Ctrl-L
     confirm: false
-    description: "Logs <Stern>"
+    description: Logs <Stern>
     scopes:
       - pods
     command: stern
@@ -67,4 +67,4 @@ plugin:
     background: false
     args:
       - -c
-      - "watch -n 5 kubectl get events --context $CONTEXT --namespace $NAMESPACE --field-selector involvedObject.name=$NAME"
+      - watch -n 5 kubectl get events --context $CONTEXT --namespace $NAMESPACE --field-selector involvedObject.name=$NAME

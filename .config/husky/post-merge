@@ -5,11 +5,18 @@
 # @brief A git hook script for the `post-merge` hook
 # @arg $1 A status flag specifying whether or not the merge being done was a squash merge
 
-[ -f .config/log ] && chmod +x .config/log
+# @description Register appropriate logging utility
+if [ -f "$(dirname "$0")/../.config/log" ]; then
+  alias logger="$(dirname "$0")/../.config/log"
+  chmod +x "$(dirname "$0")/../.config/log"
+elif command -v logg > /dev/null; then
+  alias logger='logg'
+fi
+
 if [ -f "$(dirname "$0")/_/husky.sh" ]; then
   . "$(dirname "$0")/_/husky.sh"
 
-  # Attempt to register Bodega/Task from common places if it is not in PATH
+  # Attempt to register Task from common places if it is not in PATH
   if ! type task > /dev/null; then
     PATH="$PATH:$HOME/.local/go/bin:$HOME/.local/bin:$HOME/bin:$HOME/go/bin:$HOME/.asdf/shims"
     if ! type task > /dev/null; then
@@ -22,13 +29,13 @@ if [ -f "$(dirname "$0")/_/husky.sh" ]; then
     fi
   fi
 
-  # Show warning if Bodega/Task is still not registered/installed, else proceed with hook
+  # Show warning if Task is still not registered/installed, else proceed with hook
   if ! type task > /dev/null; then
-    .config/log warn 'Bodega `task` does not appear to be installed or is not registered in the `PATH` variable - please manually include it'
-    .config/log info 'Get Bodega here -> `https://github.com/megabyte-labs/Bodega`'
+    logger warn '`task` does not appear to be installed or is not registered in the `PATH` variable - please manually include it'
+    logger info 'Get `task` here -> https://taskfile.dev'
   else
     task git:hook:post-merge
   fi
 else
-  .config/log warn 'Husky pre-commit hooks are currently not properly setup.'
+  logger warn 'Husky pre-commit hooks are currently not properly setup.'
 fi

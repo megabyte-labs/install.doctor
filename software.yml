@@ -201,7 +201,8 @@ softwarePackages:
     _post:binary:windows: |
       # TODO
     _service: false
-    binary: https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.20.1/allure-commandline-2.20.1.zip
+    binary:
+      https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.20.1/allure-commandline-2.20.1.zip
       # TODO: Find latest version from https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/maven-metadata.xml and use it in the _binary_ URL
     brew: allure
     scoop: allure
@@ -1464,7 +1465,7 @@ softwarePackages:
     # pacman: docker
   docker-slim:
     _bin: docker-slim
-    _desc: '[DockerSlim](https://dockersl.im/) will optimize and secure your containers by understanding your application and what it needs using various analysis techniques. It will throw away what you don''t need, reducing the attack surface of your container. What if you need some of those extra things to debug your container? You can use dedicated debugging side-car containers for that.'
+    _desc: "[DockerSlim](https://dockersl.im/) will optimize and secure your containers by understanding your application and what it needs using various analysis techniques. It will throw away what you don't need, reducing the attack surface of your container. What if you need some of those extra things to debug your container? You can use dedicated debugging side-car containers for that."
     _docs: https://github.com/docker-slim/docker-slim#basic-usage-info
     _github: https://github.com/docker-slim/docker-slim
     _home: https://dockersl.im/
@@ -1587,7 +1588,7 @@ softwarePackages:
     ansible: professormanhattan.droplets
   duf:
     _bin: duf
-    _desc: '[duf](https://github.com/muesli/duf) is a Disk Usage/Free Utility - a better ''df'' alternative. It displays a chart within your terminal that gives you an overview of hard-drive usage statistics.'
+    _desc: "[duf](https://github.com/muesli/duf) is a Disk Usage/Free Utility - a better 'df' alternative. It displays a chart within your terminal that gives you an overview of hard-drive usage statistics."
     _docs: https://github.com/muesli/duf#usage
     _github: https://github.com/muesli/duf
     _home: https://github.com/muesli/duf
@@ -1619,7 +1620,7 @@ softwarePackages:
     pacman: dust
   easyengine:
     _bin: ee
-    _desc: '[EasyEngine](https://easyengine.io/) is a command-line control panel for Nginx to manage WordPress sites running on Nginx, PHP, MySQL, and Let''s Encrypt.'
+    _desc: "[EasyEngine](https://easyengine.io/) is a command-line control panel for Nginx to manage WordPress sites running on Nginx, PHP, MySQL, and Let's Encrypt."
     _docs: https://easyengine.io/handbook/
     _github: https://github.com/EasyEngine/easyengine
     _home: https://easyengine.io/
@@ -1852,7 +1853,7 @@ softwarePackages:
     nix: unstable.fcp
   fd:
     _bin: fd
-    _desc: '[fd](https://github.com/sharkdp/fd) is a program that can search for files on your filesystem. It is a simple, fast, and user-friendly alternative to find. While it does not aim to support all of find''s powerful functionality, it provides sensible (opinionated) defaults for a majority of use cases.'
+    _desc: "[fd](https://github.com/sharkdp/fd) is a program that can search for files on your filesystem. It is a simple, fast, and user-friendly alternative to find. While it does not aim to support all of find's powerful functionality, it provides sensible (opinionated) defaults for a majority of use cases."
     _docs: null
     _github: https://github.com/sharkdp/fd
     _home: null
@@ -2164,7 +2165,7 @@ softwarePackages:
     snap: fx
   fzf:
     _bin: fzf
-    _desc: '[fzf](https://github.com/junegunn/fzf) is a general-purpose command-line fuzzy finder. It''s an interactive Unix filter for command-line that can be used with any list; files, command history, processes, hostnames, bookmarks, git commits, etc.'
+    _desc: "[fzf](https://github.com/junegunn/fzf) is a general-purpose command-line fuzzy finder. It's an interactive Unix filter for command-line that can be used with any list; files, command history, processes, hostnames, bookmarks, git commits, etc."
     _docs: https://github.com/junegunn/fzf#usage
     _github: https://github.com/junegunn/fzf
     _home: https://github.com/junegunn/fzf
@@ -2303,7 +2304,7 @@ softwarePackages:
     winget: GitHub.cli
   ghorg:
     _bin: ghorg
-    _desc: '[ghorg](https://github.com/gabrie30/ghorg) allows you to quickly clone all of an org''s, or user''s repositories into a single directory.'
+    _desc: "[ghorg](https://github.com/gabrie30/ghorg) allows you to quickly clone all of an org's, or user's repositories into a single directory."
     _docs: null
     _github: https://github.com/gabrie30/ghorg
     _home: null
@@ -3624,7 +3625,7 @@ softwarePackages:
     scoop: lazygit
     xbps: lazygit
   ledger-live:
-    _appimageName: 'Ledger Live.AppImage'
+    _appimageName: Ledger Live.AppImage
     _bin: null
     _desc: '[Ledger Live](https://www.ledger.com/ledger-live) is a new generation wallet desktop application providing a unique interface to maintain multiple cryptocurrencies for your Ledger Nano S / Blue. Manage your device, create accounts, receive and send cryptoassets and many more.'
     _docs: null
@@ -3944,7 +3945,7 @@ softwarePackages:
     go: github.com/minio/mc@latest
   mcfly:
     _bin: mcfly
-    _desc: '[McFly](https://github.com/cantino/mcfly) replaces your default CTRL-r shell history search with an intelligent search engine that takes into account your working directory and the context of recently executed commands. McFly''s suggestions are prioritized in real time with a small neural network.'
+    _desc: "[McFly](https://github.com/cantino/mcfly) replaces your default CTRL-r shell history search with an intelligent search engine that takes into account your working directory and the context of recently executed commands. McFly's suggestions are prioritized in real time with a small neural network."
     _docs: null
     _github: null
     _home: null
@@ -4986,7 +4987,7 @@ softwarePackages:
     go: github.com/jessfraz/pony@latest
   portmaster:
     _bin: null
-    _desc: '[portmaster](https://safing.io/portmaster/) is a free and open-source application that puts you back in charge over all your computer''s network connections.'
+    _desc: "[portmaster](https://safing.io/portmaster/) is a free and open-source application that puts you back in charge over all your computer's network connections."
     _docs: https://docs.safing.io/portmaster/architecture/overview
     _github: https://github.com/safing/portmaster
     _home: https://safing.io/
@@ -4996,7 +4997,7 @@ softwarePackages:
     ansible:windows: professormanhattan.portmaster
   postman:
     _bin: null
-    _desc: '[Postman](https://www.postman.com/) is a collaboration platform for API development. Postman''s features simplify each step of building an API and streamline collaboration so you can create better APIs — faster.'
+    _desc: "[Postman](https://www.postman.com/) is a collaboration platform for API development. Postman's features simplify each step of building an API and streamline collaboration so you can create better APIs — faster."
     _docs: https://learning.postman.com/docs/getting-started/introduction/
     _github: Not open-source
     _home: https://www.postman.com/
@@ -6449,7 +6450,8 @@ softwarePackages:
     _name: Termius
     _post:binary:windows: |
       # TODO
-    _service: null
+    _service:
+      null
       # TODO
     ansible: professormanhattan.termius
     binary:windows: https://autoupdate.termius.com/windows/Termius.exe
@@ -6583,7 +6585,7 @@ softwarePackages:
     scoop: tokei
   tor:
     _bin: toron
-    _desc: '[Tor](https://www.torproject.org/) is free and open-source software for enabling anonymous communication by directing Internet traffic through a free, worldwide, volunteer overlay network consisting of more than seven thousand relays in order to conceal a user''s location and usage from anyone conducting network surveillance or traffic analysis. On Linux you can combine Tor with [Privoxy](https://www.privoxy.org/) which allows you to tunnel all of your traffic through the Tor network.'
+    _desc: "[Tor](https://www.torproject.org/) is free and open-source software for enabling anonymous communication by directing Internet traffic through a free, worldwide, volunteer overlay network consisting of more than seven thousand relays in order to conceal a user's location and usage from anyone conducting network surveillance or traffic analysis. On Linux you can combine Tor with [Privoxy](https://www.privoxy.org/) which allows you to tunnel all of your traffic through the Tor network."
     _docs: https://tb-manual.torproject.org/
     _github: https://github.com/TheTorProject
     _home: https://www.torproject.org/
@@ -7210,7 +7212,7 @@ softwarePackages:
     ansible: professormanhattan.wsl
   xcode:
     _bin: xcodebuild
-    _desc: '[Xcode](https://developer.apple.com/xcode/) is Apple''s integrated development environment for macOS, used to develop software for macOS, iOS, iPadOS, watchOS, and tvOS.'
+    _desc: "[Xcode](https://developer.apple.com/xcode/) is Apple's integrated development environment for macOS, used to develop software for macOS, iOS, iPadOS, watchOS, and tvOS."
     _docs: https://developer.apple.com/documentation/xcode
     _github: false
     _home: https://developer.apple.com/xcode/
@@ -7260,7 +7262,7 @@ softwarePackages:
     zypper: yank
   yarn:
     _bin: yarn
-    _desc: '[Yarn](https://yarnpkg.com/) is a relatively new and open source JavaScript package manager developed by Facebook. Yarn is fully compatible with the npm registry (i.e. [npmjs.com](https://www.npmjs.com/)) and can work alongside npm, but it''s aim it to be a safer, more secure and more reliable alternative.'
+    _desc: "[Yarn](https://yarnpkg.com/) is a relatively new and open source JavaScript package manager developed by Facebook. Yarn is fully compatible with the npm registry (i.e. [npmjs.com](https://www.npmjs.com/)) and can work alongside npm, but it's aim it to be a safer, more secure and more reliable alternative."
     _docs: https://yarnpkg.com/getting-started
     _github: https://github.com/yarnpkg/berry
     _home: https://yarnpkg.com/

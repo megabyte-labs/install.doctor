@@ -7,16 +7,23 @@
 # @arg $2 string The type of the `prepare-commit-msg` event. For a `git pull origin master`
 #   command, the event type is 'merge'.
 
-[ -f .config/log ] && chmod +x .config/log
+# @description Register appropriate logging utility
+if [ -f "$(dirname "$0")/../.config/log" ]; then
+  alias logger="$(dirname "$0")/../.config/log"
+  chmod +x "$(dirname "$0")/../.config/log"
+elif command -v logg > /dev/null; then
+  alias logger='logg'
+fi
+
 if [ -f "$(dirname "$0")/_/husky.sh" ]; then
   . "$(dirname "$0")/_/husky.sh"
   if [ "$2" != 'merge' ]; then
-    .config/log info 'This git hook is configured to run even when --no-verify is used. In order to bypass this prompt, use the -n flag instead.'
-    .config/log info 'Opening a `git commit` dialog'
+   logger info 'This git hook is configured to run even when --no-verify is used. In order to bypass this prompt, use the -n flag instead.'
+    logger info 'Opening a `git commit` dialog'
     if ! type pnpx > /dev/null && type npm > /dev/null; then
       npm install -g pnpm
     elif ! type pnpx > /dev/null; then
-      .config/log error '`pnpm` or `npm` must be installed'
+      logger error '`pnpm` or `npm` must be installed'
     fi
     if ! type git-cz &> /dev/null; then
       pnpm install -g commitizen
@@ -24,5 +31,5 @@ if [ -f "$(dirname "$0")/_/husky.sh" ]; then
     exec < /dev/tty && (git-cz --hook || true)
   fi
 else
-  .config/log warn 'Husky pre-commit hooks are currently not properly setup.'
+  logger warn 'Husky pre-commit hooks are currently not properly setup.'
 fi
