@@ -237,6 +237,7 @@ softwarePackages:
     ansible: professormanhattan.androidstudio
     cask: android-studio
     choco: androidstudio
+    flatpak: com.google.AndroidStudio
     snap: android-studio
     yay: android-studio
   angular-cli:
@@ -633,6 +634,7 @@ softwarePackages:
     _when:cask: '! test -d /Applications/Bitwarden.app'
     cask: bitwarden
     choco: bitwarden
+    flatpak: com.bitwarden.desktop
     github: github.com/bitwarden/desktop
     snap: bitwarden
     yay: bitwarden-git
@@ -696,6 +698,7 @@ softwarePackages:
     ansible: professormanhattan.bravebrowser
     cask: brave-browser
     choco: brave
+    flatpak: com.brave.Browser
     snap: brave
   broot:
     _bin: broot
@@ -863,12 +866,15 @@ softwarePackages:
     _service: null
     _when:cask: '! test -d "/Applications/Google Chrome.app"'
     ansible: professormanhattan.chrome
-    apt: chromium
     cask: google-chrome
     choco: googlechrome
-    dnf: chromium
-    snap: chromium
+    flatpak: com.google.Chrome
     yay: google-chrome
+  chromium:
+    apt: chromium
+    dnf: chromium
+    flatpak: org.chromium.Chromium
+    snap: chromium
   chrome-cli:
     _bin: chrome-cli
     _desc: null
@@ -1021,6 +1027,8 @@ softwarePackages:
       - cockpit-podman
       - cockpit-storaged
       - libvirt-dbus
+  cockpit-client:
+    flatpak: org.cockpit_project.CockpitClient
   cocoapods:
     _bin: null
     _desc: '[CocoaPods](https://cocoapods.org/) is an application level dependency manager for Objective-C, Swift and any other languages that run on the Objective-C runtime, such as RubyMotion, that provides a standard format for managing external libraries.'
@@ -1955,6 +1963,10 @@ softwarePackages:
     ansible: professormanhattan.filebrowser
     brew: filebrowser/tap/filebrowser
     github: github.com/filebrowser/filebrowser
+  arduino-ide:
+    cask: arduino
+    choco: arduino
+    flatpak: cc.arduino.IDE2
   filezilla:
     _bin: null
     _desc: '[FileZilla](https://filezilla-project.org/) is a free software, cross-platform FTP application, consisting of FileZilla Client and FileZilla Server. Client binaries are available for Windows, Linux, and macOS, server binaries are available for Windows only.'
@@ -1968,6 +1980,7 @@ softwarePackages:
     apt: filezilla
     choco: filezilla
     dnf: filezilla
+    flatpak: org.filezillaproject.Filezilla
     pacman: filezilla
   finish:
     _bin: null
@@ -2032,6 +2045,8 @@ softwarePackages:
     _name: null
     _service: null
     npm: fkill-cli
+  flameshot:
+    flatpak: org.flameshot.Flameshot
   flutter:
     _bin: flutter
     _desc: null
@@ -2044,6 +2059,8 @@ softwarePackages:
     choco: flutter
     snap: flutter
     yay: flutter
+  fritzing:
+    flatpak: org.fritzing.Fritzing
   fly:
     _bin: fly
     _desc: CLI to manage Concourse CI installation
@@ -2220,6 +2237,14 @@ softwarePackages:
     pacman: gawk
     port: gawk
     scoop: gawk
+  standardnotes:
+    flatpak: org.standardnotes.standardnotes
+  deja-dup:
+    flatpak: org.gnome.DejaDup
+  discord:
+    flatpak: com.discordapp.Discord
+  telegram:
+    flatpak: org.telegram.desktop
   google-assistant:
     _bin: null
     _desc: '[Google Assistant for Desktop](https://github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client) is a cross-platform unofficial Google Assistant Client for Desktop.'
@@ -2351,6 +2376,7 @@ softwarePackages:
     cask: gimp
     choco: gimp
     dnf: gimp
+    flatpak: org.gimp.GIMP
     pacman: gimp
     snap: gimp
   gist:
@@ -2423,6 +2449,12 @@ softwarePackages:
     apt: git-secret
     brew: git-secret
     dnf: git-secret
+  gitter:
+    flatpak: im.gitter.Gitter
+  github-desktop:
+    flatpak: io.github.shiftey.Desktop
+  warp-transfer:
+    flatpak: app.drey.Warp
   gitdock:
     _bin: null
     _desc: '[GitDock](https://gitlab.com/mvanremmerden/gitdock) is an app that displays all your GitLab activities in one place. Instead of the GitLab typical project- or group-centric approach, it collects all your information from a user-centric perspective.'
@@ -2511,6 +2543,7 @@ softwarePackages:
     ansible: professormanhattan.gitkraken
     cask: gitkraken
     choco: gitkraken
+    flatpak: com.axosoft.GitKraken
     snap: gitkraken
   gitlab-runner:
     _bin: gitlab-runner
@@ -2640,6 +2673,8 @@ softwarePackages:
       - wireless_tools
     pipx: glances
     port: glances
+  monitorets:
+    flatpak: io.github.jorchube.monitorets
   glen:
     _bin: glen
     _desc: null
@@ -2918,6 +2953,8 @@ softwarePackages:
     _name: Guacamole
     _service: null
     ansible: professormanhattan.guacamole
+  seafile:
+    flatpak: com.seafile.Client
   gulp:
     _bin: gulp
     _desc: null
@@ -3416,6 +3453,7 @@ softwarePackages:
     _when:cask: '! test -d "/Applications/Jitsi Meet.app"'
     cask: jitsi-meet
     choco: jitsi-meet-electron
+    flatpak: org.jitsi.jitsi-meet
     github: github.com/jitsi/jitsi-meet-electron
     pkg: jitsi-meet
     yay: jitsi-meet-desktop-bin
@@ -3528,6 +3566,8 @@ softwarePackages:
     brew: kn
     github: github.com/knative/client
     yay: knative-client-bin
+  beekeeper-studio:
+    flatpak: io.beekeeperstudio.Studio
   kodi:
     _bin: null
     _desc: '[Kodi](https://kodi.tv/) is a free and open-source media player software application developed by the XBMC Foundation, a non-profit technology consortium. Kodi is available for multiple operating systems and hardware platforms, with a software 10-foot user interface for use with televisions and remote controls.'
@@ -3542,6 +3582,7 @@ softwarePackages:
     cask: kodi
     choco: kodi
     dnf: kodi
+    flatpak: tv.kodi.Kodi
     pacman: kodi
   kubectx:
     _bin: kubectx
@@ -3841,6 +3882,7 @@ softwarePackages:
     ansible:linux: professormanhattan.lollypop
     apt: lollypop
     dnf: lollypop
+    flatpak: org.gnome.Lollypop
     pacman: lollypop
     yay: lollypop-stable-git
   lpass:
@@ -3930,6 +3972,20 @@ softwarePackages:
     _service: true
     cask: malwarebytes
     choco: malwarebytes
+  dialect:
+    flatpak: app.drey.Dialect
+  meld:
+    flatpak: org.gnome.meld
+  cryptomator:
+    flatpak: org.cryptomator.Cryptomator
+  connections:
+    flatpak: org.gnome.Connections
+  ferdium:
+    flatpak: org.ferdium.Ferdium
+  thunderbird:
+    flatpak: org.mozilla.Thunderbird
+  live-captions:
+    flatpak: net.sapples.LiveCaptions
   mailspring:
     _bin: null
     _desc: '[Mailspring](https://getmailspring.com/) comes packed with powerful features like Unified Inbox, Snooze, Send Later, Mail Rules, Templates and more. Mailspring Pro, which you can unlock with a monthly subscription, adds even more features for people who send a ton of email: link tracking, read receipts, mailbox analytics, contact and company profiles. All of these features run in the client - Mailspring does not send your email credentials to the cloud.'
@@ -3942,6 +3998,7 @@ softwarePackages:
     ansible: professormanhattan.mailspring
     cask: mailspring
     choco: mailspring
+    flatpak: com.getmailspring.Mailspring
     snap: mailspring
     yay: mailspring
   manta:
@@ -3978,6 +4035,10 @@ softwarePackages:
     _name: MAS CLI
     _service: null
     ansible: professormanhattan.mas
+  flatseal:
+    flatpak: com.github.tchx84.Flatseal
+  gnome-extension-manager:
+    flatpak: com.mattjakeman.ExtensionManager
   masscode:
     _bin: null
     _desc: A free and open source code snippets manager for developers
@@ -4039,7 +4100,10 @@ softwarePackages:
     ansible: professormanhattan.microsoftedge
     cask: microsoft-edge
     choco: microsoft-edge
+    flatpak: com.microsoft.Edge
     yay: microsoft-edge-stable-bin
+  gnome-boxes:
+    flatpak: org.gnome.Boxes
   microsoft-office:
     _bin: null
     _service: null
@@ -4193,6 +4257,7 @@ softwarePackages:
     ansible: professormanhattan.motrix
     cask: motrix
     choco: motrix
+    flatpak: net.agalwood.Motrix
     github: github.com/agalwood/Motrix
     scoop: motrix
     yay: motrix-bin
@@ -4222,6 +4287,7 @@ softwarePackages:
     _type: application
     _when:cask: '! test -d /Applications/MQTTX.app'
     cask: mqttx
+    flatpak: com.emqx.MQTTX
     github: github.com/emqx/MQTTX
     snap: mqttx
     yay: mqttx-bin
@@ -4587,6 +4653,7 @@ softwarePackages:
     _when:cask: '! test -d /Applications/nuclear.app'
     cask: nuclear
     choco: nuclear
+    flatpak: org.js.nuclear.Nuclear
     github: github.com/nukeop/nuclear
     snap: nuclear
     yay: nuclear-player-bin
@@ -5169,7 +5236,12 @@ softwarePackages:
     _when:cask: '! test -d "/Applications/Proton Mail Bridge.app"'
     cask: protonmail-bridge
     choco: protonmailbridge
+    flatpak: ch.protonmail.protonmail-bridge
     yay: protonmail-bridge
+  protonmail-import-export-app:
+    flatpak: ch.protonmail.protonmail-import-export-app
+  bottles:
+    flatpak: com.usebottles.bottles
   psi:
     _bin: psi
     _desc: null
@@ -5972,6 +6044,7 @@ softwarePackages:
     ansible:linux: professormanhattan.shotwell
     apt: shotwell
     dnf: shotwell
+    flatpak: org.gnome.Shotwell
     pacman: shotwell
   skate:
     _bin: skate
@@ -6011,6 +6084,7 @@ softwarePackages:
     ansible: professormanhattan.skype
     cask: skype
     choco: skype
+    flatpak: com.skype.Client
     snap: skype
     yay: skypeforlinux-stable-bin
   slack:
@@ -6026,6 +6100,7 @@ softwarePackages:
     ansible: professormanhattan.slack
     cask: slack
     choco: slack
+    flatpak: com.slack.Slack
     snap: slack
   slack-term:
     _bin: slack-term
@@ -6472,6 +6547,7 @@ softwarePackages:
     ansible: professormanhattan.teams
     cask: microsoft-teams
     choco: microsoft-teams
+    flatpak: com.microsoft.Teams
     snap: teams-for-linux
     yay: teams-for-linux
   teamviewer:
@@ -6934,6 +7010,16 @@ softwarePackages:
     ansible:windows: professormanhattan.visualstudio
     cask: visual-studio
     choco: visualstudio2022community
+  vscodium:
+    _snapClassic: true
+    cask: vscodium
+    choco: vscodium
+    flatpak: com.vscodium.codium
+    nix: nixpkgs.vscodium
+    scoop: vscodium
+    snap: codium
+    winget: vscodium
+    yay: vscodium-bin
   vlc:
     _bin: null
     _desc: '[VLC](https://www.videolan.org/) media player is a free and open-source, portable, cross-platform media player software, and streaming media server developed by the VideoLAN project. VLC is available for desktop operating systems, and mobile platforms, such as Android, iOS, iPadOS, Tizen, Windows 10 Mobile, and Windows Phone.'
@@ -6947,6 +7033,7 @@ softwarePackages:
     apt: vlc
     cask: vlc
     choco: vlc
+    flatpak: org.videolan.VLC
     snap: vlc
   vmware:
     _bin: null
@@ -6958,6 +7045,8 @@ softwarePackages:
     _service: null
     _when:darwin: '! test -d "/Applications/VMware Fusion.app"'
     ansible: professormanhattan.vmware
+  what-ip:
+    flatpak: org.gabmus.whatip
   volta:
     _bin: volta
     _desc: '[Volta](https://volta.sh/) is a hassle-free Javascript Tool Manager. It is a fast, reliable and universal tool manager. It supports multiple package managers and provides extensibility hooks for site-specific customization.'
@@ -6983,6 +7072,8 @@ softwarePackages:
     ansible: professormanhattan.vpn
   vscode:
     _bin: null
+    _alternative: vscodium
+    _alternativeReason: VS Code includes telemetry that is applied after building the open-source project. VSCodium is the open-source version without tracking.
     _desc: '[Visual Studio Code](https://code.visualstudio.com/) is a freeware source-code editor made by Microsoft for Windows, Linux and macOS. Features include support for debugging, syntax highlighting, intelligent code completion, snippets, code refactoring, and embedded Git.'
     _docs: https://code.visualstudio.com/api/references/vscode-api
     _github: https://github.com/microsoft/vscode
@@ -6994,6 +7085,7 @@ softwarePackages:
     ansible: professormanhattan.vscode
     cask: visual-studio-code
     choco: vscode
+    flatpak: com.visualstudio.code
     snap: code
     yay: visual-studio-code-bin
   w3m:
@@ -7117,6 +7209,7 @@ softwarePackages:
     _when:cask: '! test -d /Applications/WebTorrent.app'
     cask: webtorrent
     choco: webtorrent-desktop
+    flatpak: io.webtorrent.WebTorrent
     github: github.com/webtorrent/webtorrent-desktop
     yay: webtorrent-desktop
   wget:
@@ -7236,6 +7329,7 @@ softwarePackages:
     cask: wireshark
     choco: wireshark
     dnf: wireshark
+    flatpak: org.wireshark.Wireshark
     pacman: wireshark-qt
   wkhtmltopdf:
     _bin: null
@@ -7393,6 +7487,8 @@ softwarePackages:
     _type: cli
     brew: yj
     go: github.com/sclevine/yj/v5@v5.1.0
+  forklift:
+    flatpak: com.github.Johnn3y.Forklift
   youtube-dl:
     _bin: youtube-dl
     _desc: '[youtube-dl](https://github.com/ytdl-org/youtube-dl) is an open-source download manager for video and audio from YouTube and over 1000 other video hosting websites. It is released under the Unlicense software license and is one of the most popular projects on GitHub.'
@@ -7492,6 +7588,7 @@ softwarePackages:
     ansible: professormanhattan.zoom
     cask: zoom
     choco: zoom
+    flatpak: us.zoom.Zoom
     snap: zoom
     yay: zoom
   zoxide:
