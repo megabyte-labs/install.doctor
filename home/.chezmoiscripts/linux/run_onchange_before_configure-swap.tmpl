@@ -4,7 +4,7 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-MEMORY_IN_KB="$(grep MemTotal /proc/meminfo | sed 's/.* \(\d+\) kB/\1/')"
+MEMORY_IN_KB="$(grep MemTotal /proc/meminfo | sed 's/.* \(.*\) kB/\1/')"
 MEMORY_IN_GB="$((MEMORY_IN_KB / 1024 / 1024))"
 
 if [ "$MEMORY_IN_GB" -gt 64 ]; then
