@@ -1,0 +1,332 @@
+{
+  "SPACE": "",
+  "alt_badge_style": "flat-square",
+  "author": {
+    "email": "brian@megabyte.space",
+    "name": "Brian Zalewski"
+  },
+  "autodoc_actions_description": "",
+  "autodoc_tags_description": "",
+  "autodoc_todo_description": "",
+  "autodoc_variables_description": "",
+  "badge_style": "for-the-badge",
+  "build_coverage_regex": "Lines\\s*:\\s*(\\d+.?\\d*)%",
+  "commit_help_url": "https://megabyte.space/docs/contributing/commit-guidelines",
+  "company": "Megabyte LLC",
+  "copyright": "2020-2021",
+  "docker_label_authors": "Brian Zalewski <brian@megabyte.space>",
+  "docs": {
+    "header_description_post": "<i></i>",
+    "header_description_pre": "<i></i>",
+    "header_title_post": "<i></i>",
+    "header_title_pre": "<i></i>",
+    "link": "https://megabyte.space/docs/common/npm"
+  },
+  "downloadLinks": {
+    "fedora": "https://download.fedoraproject.org/pub/fedora/linux/releases/35/Workstation/x86_64/iso/Fedora-Workstation-Live-x86_64-35-1.2.iso",
+    "kali": "https://cdimage.kali.org/kali-2022.1/kali-linux-2022.1-installer-amd64.iso",
+    "qubes": "https://ftp.qubes-os.org/iso/Qubes-R4.1.0-x86_64.iso",
+    "tails": "https://ftp.osuosl.org/pub/tails/stable/tails-amd64-4.29/tails-amd64-4.29.iso",
+    "ubuntu": "https://mirror.arizona.edu/ubuntu-releases/21.10/ubuntu-21.10-desktop-amd64.iso",
+    "windows": "https://software.download.prss.microsoft.com/db/Win11_English_x64.iso?t=c15e0cba-9c8d-4984-b30f-43c42425733d&e=1650582458&h=960d57d2c6a0243e32d3106c0d8f82387966ddf9a9bfce82f89e66866457c014"
+  },
+  "email": {
+    "help": "help@megabyte.space"
+  },
+  "emoji_beginnings": ["🚀 ", "🔥👉 ", "👉 ", "😉 ", "🆓 ", "🐴 ", "👀 ", "🎉 ", "", "", "", "", "", "", "", ""],
+  "emoji_endings": [" 🚀", " 🔥🔥🔥", " 👏", " 😉", " 🐙", " 🐴", " 👀", " 🎟", " 🎉🎉", "", "", "", "", "", "", ""],
+  "github_prefix": "<i></i>",
+  "gitlab_pipelines": [
+    {
+      "active": true,
+      "cron": "0 5 1 * *",
+      "description": "Monthly Repository Update",
+      "ref": "synchronize",
+      "variable": {
+        "REPOSITORY_UPDATE": true
+      }
+    }
+  ],
+  "gomodProxy": true,
+  "group": "none",
+  "groups": {
+    "angular": ["app", "website"],
+    "ansible": ["playbook", "role"],
+    "docker": ["ansible-molecule", "app", "ci-pipeline", "codeclimate", "software"],
+    "go": ["cli", "library"],
+    "npm": ["app", "cli", "config", "library", "plugin"],
+    "packer": ["desktop", "server"],
+    "python": ["cli", "library"]
+  },
+  "homebrew": {
+    "folder": "Formula",
+    "name": "homebrew-tap",
+    "owner": "installdoc"
+  },
+  "idPost": "megabyte.space",
+  "json_top_keys": "",
+  "license": "MIT",
+  "link": {
+    "chat": "https://app.slack.com/client/T01ABCG4NK1/C01NN74H0LW/details/",
+    "docs": "https://megabyte.space/docs",
+    "gitter": "https://gitter.im/megabyte-labs/community",
+    "home": "https://megabyte.space",
+    "installdoctor": "https://install.doctor",
+    "privacy": "https://megabyte.space/privacy",
+    "shield": "https://shields.io",
+    "terms": "https://megabyte.space/terms"
+  },
+  "misc": {
+    "appnest": "https://github.com/andreasbm/readme",
+    "husky": "https://www.npmjs.com/package/husky",
+    "tinypng": "https://tinypng.com/"
+  },
+  "name": "[[ package.json .blueprint.name - See CONTRIBUTING.md ]]",
+  "newProjectTemplates": {
+    "angular-app": {
+      "group": "angular",
+      "subgroup": "app",
+      "title": "Angular App"
+    },
+    "angular-website": {
+      "group": "angular",
+      "subgroup": "website",
+      "title": "Angular Website"
+    },
+    "ansible-role": {
+      "group": "ansible",
+      "subgroup": "role",
+      "title": "Ansible Role"
+    },
+    "docker-app": {
+      "group": "docker",
+      "subgroup": "app",
+      "title": "Dockerfile (App)"
+    },
+    "docker-ci-pipeline": {
+      "group": "docker",
+      "subgroup": "ci-pipeline",
+      "title": "CI/CD Pipeline Dockerfile"
+    },
+    "docker-codeclimate": {
+      "group": "docker",
+      "subgroup": "codeclimate",
+      "title": "CodeClimate Engine / Linter Dockerfile"
+    },
+    "docker-docker-compose": {
+      "group": "docker",
+      "subgroup": "docker-compose",
+      "title": "Docker Compose"
+    },
+    "go-cli": {
+      "group": "go",
+      "subgroup": "cli",
+      "title": "Go CLI"
+    },
+    "go-library": {
+      "group": "go",
+      "subgroup": "library",
+      "title": "Go Library"
+    },
+    "misc": {
+      "group": "misc",
+      "subgroup": "misc",
+      "title": "Miscellaneous project"
+    },
+    "npm-app": {
+      "group": "npm",
+      "subgroup": "app",
+      "title": "Node.js App"
+    },
+    "npm-cli": {
+      "group": "npm",
+      "subgroup": "cli",
+      "title": "Node.js CLI"
+    },
+    "npm-configs": {
+      "group": "npm",
+      "subgroup": "configs",
+      "title": "NPM Config Package"
+    },
+    "npm-library": {
+      "group": "npm",
+      "subgroup": "library",
+      "title": "Node.js Library"
+    },
+    "npm-plugin": {
+      "group": "npm",
+      "subgroup": "plugin",
+      "title": "NPM Plugin"
+    },
+    "npm-web-component": {
+      "group": "npm",
+      "subgroup": "web-component",
+      "title": "Web Component"
+    },
+    "packer-desktop": {
+      "group": "packer",
+      "subgroup": "desktop",
+      "title": "Packer (Desktop)"
+    },
+    "packer-server": {
+      "group": "packer",
+      "subgroup": "server",
+      "title": "Packer (Server)"
+    },
+    "python-cli": {
+      "group": "python",
+      "subgroup": "cli",
+      "title": "Python CLI"
+    },
+    "python-library": {
+      "group": "python",
+      "subgroup": "library",
+      "title": "Python Library"
+    },
+    "website": {
+      "group": "npm",
+      "subgroup": "website",
+      "title": "Website"
+    }
+  },
+  "npm_publish_config_access": "public",
+  "npm_standard_version_prerelease": "git add --all",
+  "npm_type": "module",
+  "organization": "Megabyte Labs",
+  "overview": "[[ This is a new repository without the details filled in yet. Look for the section about blueprint data in the CONTRIBUTING.md to set up the project. ]]",
+  "profile": {
+    "dockerHubUser": "professormanhattan",
+    "dockerhub": "megabytelabs",
+    "galaxy": "professormanhattan",
+    "github": "ProfessorManhattan",
+    "githubOrg": "megabyte-labs",
+    "linkedin": "blzalewski",
+    "npmjs": "thisismyfirstday",
+    "npmjs_organization": "mblabs",
+    "opencollective": "megabytelabs",
+    "patreon": "ProfessorManhattan",
+    "pypi": "ProfessorManhattan",
+    "replit": "ProfessorMegaby",
+    "stackblitz": "ProfessorManhattan",
+    "twitter": "MegabyteLabs",
+    "vagrant": "ProfessorManhattan"
+  },
+  "profile_link": {
+    "dockerhub": "https://hub.docker.com/u",
+    "galaxy": "https://galaxy.ansible.com",
+    "github": "https://github.com",
+    "linkedin": "https://www.linkedin.com/in/",
+    "npmjs": "https://www.npmjs.com/~",
+    "opencollective": "https://opencollective.com",
+    "patreon": "https://www.patreon.com",
+    "pypi": "https://pypi.org/user",
+    "replit": "https://repl.it/@",
+    "stackblitz": "https://stackblitz.com/@",
+    "twitter": "MegabyteLabs",
+    "vagrant": "https://app.vagrantup.com"
+  },
+  "redditApplicationId": "O3UxD7HlPpcN88gpEkPIXQ",
+  "redditUsername": "tsgangster",
+  "repository": {
+    "github": "",
+    "gitlab": "",
+    "gitlabBaseUrl": "https://gitlab.com/megabyte-labs",
+    "group": {
+      "ansible_roles": "https://gitlab.com/megabyte-labs/ansible-roles",
+      "ansible_roles_path": "megabyte-labs/ansible-roles",
+      "apps": "https://gitlab.com/megabyte-labs/apps",
+      "apps_path": "megabyte-labs/apps",
+      "ci": "https://gitlab.com/megabyte-labs/ci",
+      "ci_path": "megabyte-labs/ci",
+      "cloud": "https://gitlab.com/megabyte-labs/cloud",
+      "cloud_path": "megabyte-labs/cloud",
+      "common": "https://gitlab.com/megabyte-labs/common",
+      "common_path": "megabyte-labs/common",
+      "cryptocurrency": "https://gitlab.com/megabyte-labs/cryptocurrency",
+      "cryptocurrency_path": "megabyte-labs/cryptocurrency",
+      "docker_compose": "https://gitlab.com/megabyte-labs/docker-compose",
+      "docker_compose_path": "megabyte-labs/docker-compose",
+      "dockerfile": "https://gitlab.com/megabyte-labs/docker",
+      "dockerfile_path": "megabyte-labs/docker",
+      "documentation": "https://gitlab.com/megabyte-labs/documentation",
+      "documentation_path": "megabyte-labs/documentation",
+      "go": "https://gitlab.com/megabyte-labs/go",
+      "go_path": "megabyte-labs/go",
+      "kubernetes": "https://gitlab.com/megabyte-labs/kubernetes",
+      "kubernetes_path": "megabyte-labs/kubernetes_path",
+      "npm": "https://gitlab.com/megabyte-labs/npm",
+      "npm_path": "megabyte-labs/npm",
+      "packer": "https://gitlab.com/megabyte-labs/packer",
+      "packer_path": "megabyte-labs/packer",
+      "python": "https://gitlab.com/megabyte-labs/python",
+      "python_cli_path": "megabyte-labs/python/cli",
+      "python_path": "megabyte-labs/python",
+      "software": "https://gitlab.com/megabyte-labs/software",
+      "software_path": "megabyte-labs/software",
+      "web_components": "https://gitlab.com/megabyte-labs/web-components",
+      "web_components_path": "megabyte-labs/web-components"
+    },
+    "location": {
+      "commits": {
+        "github": "/commits/master",
+        "gitlab": "/-/commits/master",
+        "gitlab_e2e": "/-/commits/e2e"
+      },
+      "conduct": {
+        "github": "/blob/master/docs/CODE_OF_CONDUCT.md",
+        "gitlab": "/-/blob/master/docs/CODE_OF_CONDUCT.md"
+      },
+      "contributing": {
+        "github": "/blob/master/docs/CONTRIBUTING.md",
+        "gitlab": "/-/blob/master/docs/CONTRIBUTING.md"
+      },
+      "demo": {
+        "github": "/raw/master/docs/demo.gif",
+        "gitlab": "/-/raw/master/docs/demo.gif"
+      },
+      "issues": {
+        "github": "/issues",
+        "gitlab": "/-/issues"
+      },
+      "license": {
+        "github": "/blob/master/LICENSE",
+        "gitlab": "/-/blob/master/LICENSE"
+      },
+      "logo": {
+        "github": "/raw/master/logo.png",
+        "gitlab": "/-/raw/master/logo.png"
+      },
+      "readme": {
+        "github": "/blob/master/README.md",
+        "gitlab": "/-/blob/master/README.md"
+      }
+    },
+    "namespace": "",
+    "project": {
+      "assets": "https://gitlab.com/megabyte-labs/assets/-/raw/master",
+      "autodoc": "https://github.com/AndresBott/ansible-autodoc",
+      "playbooks": "https://github.com/ProfessorManhattan/Gas-Station",
+      "wrangler": "https://gitlab.com/megabyte-labs/wrangler"
+    }
+  },
+  "scriptsBuild": "task donothing",
+  "scriptsHelp": "task --menu",
+  "scriptsPrepare": "npm run start && (test -f Taskfile.yml && task common:husky) || true",
+  "scriptsReplaceThis": "\"",
+  "scriptsReplaceWith": "\\\"",
+  "scriptsStart": "bash start.sh",
+  "scriptsTest": "task donothing",
+  "sharp_instructions": [],
+  "slackNotificationChannel": "#misc",
+  "slackNotificationIcon": "https://gitlab.com/megabyte-labs/misc/assets/-/raw/master/logo/megabytelabs-color-icon-350x350.png",
+  "slackNotificationUsername": "Megabyte Labs Release Notification Bot",
+  "sponsorship": {
+    "author": "Brian Zalewski",
+    "text": "I create open source projects out of love. Although I have a job, shelter, and as much fast food as I can handle, it would still be pretty cool to be appreciated by the community for something I have spent a lot of time and money on. Please consider sponsoring me! Who knows? Maybe I will be able to quit my job and publish open source full time."
+  },
+  "subgroup": "[[ Needs to be setup. Set this in the common repository for this type of project ]]",
+  "teamsNotificationColor": "#1DA1F2",
+  "teamsNotificationIcon": "https://gitlab.com/megabyte-labs/misc/assets/-/raw/master/logo/megabytelabs-color-icon-350x350.png",
+  "title": "[[ package.json .blueprint.title - See CONTRIBUTING.md ]]",
+  "version": "0.0.1"
+}

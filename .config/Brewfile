@@ -1,0 +1,221 @@
+# Standard Homebrew taps
+tap "homebrew/cask"
+tap "homebrew/core"
+tap "homebrew/bundle"
+tap "homebrew/services"
+
+# Homebrew Formulae
+# e.g. `brew install <program>`
+# @brew [act](https://github.com/nektos/act) - Run GitHub Actions locally
+brew "act"
+# @brew [appium](https://appium.io/) - A framework focused on native Android/iOS testing
+brew "appium"
+# @brew [azure-cli](https://docs.microsoft.com/en-us/cli/azure/) - The official CLI for interacting with Microsoft Azure
+brew "azure-cli"
+# @brew [bat](https://github.com/sharkdp/bat) - Clone of cat with syntax highlighting and Git integration
+brew "bat"
+# @brew [bitwarden-cli](https://github.com/bitwarden/cli) - Access and manage a BitWarden instance via CLI
+brew "bitwarden-cli"
+# @brew [codeclimate](https://github.com/codeclimate/codeclimate) - Interact with CodeClimate via CLI
+# tap "codeclimate/formulae"
+# brew "codeclimate"
+##### ERROR #####
+# ==> Installing codeclimate from codeclimate/formulae
+# ==> make install
+# Last 15 lines from /home/megabyte/.cache/Homebrew/Logs/codeclimate/01.make:
+# 2022-03-11 08:34:36 +0000
+#
+# make
+# install
+#
+# bin/check
+# Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+# Unable to run `docker version', the docker daemon may not be running
+# Please ensure `docker version' succeeds and try again
+# make: *** [Makefile:43: install] Error 1
+#
+# If reporting this issue please do so at (not Homebrew/brew or Homebrew/core):
+# https://github.com/codeclimate/homebrew-formulae/issues
+#
+# Installing codeclimate has failed!
+##### ERROR #####
+# @brew [croc](https://github.com/schollz/croc) - A sharing tool that helps transfer files from one computer to another
+brew "croc"
+# @brew [curl](https://curl.se) - An HTTP command-line tool
+brew "curl"
+# @brew [dasel](https://github.com/TomWright/dasel) - Select, put, and delete data from JSON, TOML, YAML, XML and CSV files
+brew "dasel"
+# @brew [direnv](https://github.com/direnv/direnv) - Loads and unloads environment variables based on the directory you are in
+brew "direnv"
+# @brew [dive](https://github.com/wagoodman/dive) - Tool for exploring layer in a Docker image
+brew "dive"
+# @brew [docker](https://www.docker.com/) - A powerful toolchain for developing containerized applications
+if OS.linux?
+    brew "docker"
+end
+# @brew [docker-slim](https://github.com/docker-slim/docker-slim) - A tool that shrinks Docker images and makes them more secure
+brew "docker-slim"
+# @brew [Dockle](https://github.com/goodwithtech/dockle) - A container image security scanner
+tap "goodwithtech/r"
+brew "goodwithtech/r/dockle"
+# @brew [exiftool](https://exiftool.org) - A library for reading and writing EXIF data to files
+brew "exiftool"
+# @brew [ffsend](https://github.com/timvisee/ffsend) - Fully featured Firefox Send client that makes sharing files easy
+brew "ffsend"
+# @brew [gh](https://github.com/cli/cli) - The official GitHub command line tool
+brew "gh"
+# @brew [git](https://git-scm.com) - Tool for interacting with git repositories
+brew "git"
+# @brew [gitlab-runner](https://docs.gitlab.com/runner/) - Test GitLab CI configurations and add self-hosted runners
+brew "gitlab-runner"
+# @brew [gitleaks](https://github.com/zricethezav/gitleaks) - Scans git repos for secrets
+brew "gitleaks"
+# @brew [git-subrepo](https://github.com/ingydotnet/git-subrepo) - An alternative to git submodules
+brew "git-subrepo"
+# @brew [glab](https://glab.readthedocs.io/) - Open-source GitLab CLI
+brew "glab"
+# @brew [go](https://go.dev) - Open source programming language
+brew "go"
+# @brew [goofys](https://github.com/kahing/goofys) - High-performance, POSIX-ish Amazon S3 file system written in Go
+brew "goofys"
+# @brew [grex](https://github.com/pemistahl/grex) - Generate regular expressions by providing target matches
+brew "grex"
+# @brew [helm](https://helm.sh/) - The self-proclaimed package manager for Kubernetes
+brew "helm"
+# @brew [htmlq](https://github.com/mgdm/htmlq) - Use CSS to extract content from HTML via a CLI
+brew "htmlq"
+# @brew [hyperfine](https://github.com/sharkdp/hyperfine) - Command-line benchmarking tool
+brew "hyperfine"
+# @brew [jo](https://github.com/jpmens/jo) - JSON output from scripts
+brew "jo"
+# @brew [jq](https://stedolan.github.io/jq/) - Lightweight and flexible command-line JSON processor
+brew "jq"
+# @brew [kubectx](https://github.com/ahmetb/kubectx) - A tool for switching between Kubernetes clusters and namespaces
+brew "kubectx"
+# @brew [kubernetes-cli](https://kubernetes.io/docs/reference/kubectl/kubectl/) - The CLI for Kubernetes (also known as kubectl)
+brew "kubernetes-cli"
+# @brew [mc](https://github.com/minio/mc) - Replacement for ls, cp and other commands that are compatible with file-system-mounted S3 buckets
+tap "minio/stable"
+brew "minio/stable/mc"
+# @brew [mkcert](https://github.com/FiloSottile/mkcert) - Simple tool to make locally trusted development certificates
+brew "mkcert"
+# @brew [node](https://nodejs.org/) - A JavaScript engine, based on the ultra fast V8-engine
+brew "node"
+# @brew [openssh](https://www.openssh.com/) - OpenBSD freely-licensed SSH connectivity tools
+brew "openssh"
+# @brew [ots](https://ots.sniptt.com) - Share end-to-end encrypted secrets with others via a one-time URL
+brew "ots"
+# @brew [oq](https://blacksmoke16.github.io/oq) - Performant, and portable jq wrapper that supports formats other than JSON
+brew "oq"
+# @brew [php](https://www.php.net/) - General-purpose scripting language
+# brew "php", restart_service: false
+# @brew [poetry](https://python-poetry.org/) - A Python project package management tool and more
+brew "poetry"
+# @brew [pup](https://github.com/EricChiang/pup) - Parse HTML with a CLI
+brew "pup"
+# @brew [python](https://www.python.org/) - Interpreted, interactive, object-oriented programming language
+brew "python@3.10"
+# @brew [rsync](https://rsync.samba.org/) - Tool to do fast, incremental file transfers
+brew "rsync"
+# @brew [ruby](https://www.ruby-lang.org/) - Powerful, clean, object-oriented scripting language
+brew "ruby"
+# @brew [sshpass](https://github.com/hudochenkov/homebrew-sshpass) - Library that allows Ansible to connect over SSH with a password
+tap "hudochenkov/sshpass"
+brew "hudochenkov/sshpass/sshpass"
+# @brew [sysbench](https://github.com/akopytov/sysbench) - System performance benchmark tool
+brew "sysbench"
+# @brew [task](https://github.com/go-task/homebrew-tap) - A parallel task runner
+tap "go-task/tap"
+brew "go-task/tap/go-task"
+# @brew [teleport](https://github.com/bbatsche/homebrew-teleport) - An identity-aware SSH client for teams
+brew "teleport"
+# @brew [terraform](https://www.terraform.io/) - An infrastructure-as-code tool that allows you to define both cloud and on-prem resources
+brew "terraform"
+# @brew [tokei](https://github.com/XAMPPRocky/tokei) - Count and display the lines of code and the language used in a project
+brew "tokei"
+# @brew [trivy](https://aquasecurity.github.io/trivy/v0.18.3/) - Scan images for vulnerabilities
+tap "aquasecurity/trivy"
+brew "aquasecurity/trivy/trivy"
+# @brew [up](https://github.com/akavel/up) - Write Linux pipes with an instant live preview
+brew "up"
+# @brew [waypoint](https://www.waypointproject.io/) - Tool to build, deploy, and release any application on any platform
+tap "hashicorp/tap"
+brew "hashicorp/tap/waypoint"
+# @brew [wireshark](https://www.wireshark.org) - Graphical network analyzer and capture tool (CLI)
+if OS.linux?
+    brew "wireshark"
+end
+# @brew [yarn](https://yarnpkg.com/) - JavaScript package manager from Facebook
+brew "yarn"
+# @brew [yq](https://github.com/mikefarah/yq) - Process and manipulate YAML documents
+brew "yq"
+# @brew [coreutils](https://www.gnu.org/software/coreutils) - A suite of basic UNIX tools published to improve compatibility between Linux and macOS scripts
+if OS.mac?
+    brew "coreutils"
+end
+
+# Homebrew Casks (only available on macOS)
+# e.g. `brew install --cask <program>`
+# @cask [altair](https://altair.sirmuel.design/) - GraphQL GUI client
+cask "altair"
+# @cask [balenaetcher](https://balena.io/etcher) - Tool to flash OS images to SD cards & USB drives
+cask "balenaetcher"
+# @cask [bitwarden](https://bitwarden.com/) - Desktop client for BitWarden
+cask "bitwarden"
+# @cask [docker](https://docker.com) - The desktop GUI for Docker, a virtualization platform for containers and microservices
+cask "docker"
+# @cask [firefox](https://www.mozilla.org/firefox/) - A popular web browser
+cask "firefox"
+# @cask [gimp](https://www.gimp.org/) - Free and open-source image editor
+cask "gimp"
+# @cask [google-chrome](https://www.google.com/chrome/) - Sandbox-based web browser published by Google
+cask "google-chrome"
+# @cask [gcloud](https://cloud.google.com/sdk/gcloud) - The official Google Cloud Platform SDK CLI tool
+cask "google-cloud-sdk"
+# @cask [iterm2](https://www.iterm2.com/) - An improved terminal for macOS
+cask "iterm2"
+# @cask [java](https://www.java.com/en/) - Libraries required for running and developing Java applications
+cask "java" unless system "/usr/libexec/java_home --failfast"
+# @cask [lens](https://k8slens.dev/) - An IDE for Kubernetes
+cask "lens"
+# @cask [microsoft-teams](https://teams.microsoft.com/downloads) - Meet, chat, call, and collaborate in just one place
+cask "microsoft-teams"
+# @cask [osxfuse](https://github.com/osxfuse/osxfuse) - Extends macOS by adding support for user space file systems
+cask "osxfuse"
+# @cask [postman](https://www.postman.com/) - Collaboration platform for API development
+cask "postman"
+# @cask [slack](https://slack.com/) - Team communication and collaboration software
+cask "slack"
+# @cask [skype](https://www.skype.com/) - Video chat, voice call, and instant messaging application
+cask "skype"
+# @cask [teamviewer](https://www.teamviewer.com/) - Remote access and connectivity software focused on security
+cask "teamviewer"
+# @cask [vagrant](https://www.vagrantup.com/) - Command-line, configuration-driven CLI for launching virtualization tools
+cask "vagrant"
+# @cask [virtualbox](https://www.virtualbox.org/) - A popular virtualization platform for virtual machines
+cask "virtualbox"
+# @cask [visual-studio-code](https://code.visualstudio.com/) - Open source code editor
+cask "visual-studio-code"
+# @cask [vmware-fusion](https://www.vmware.com/products/fusion.html) - Create, manage, and run virtual machines
+cask "vmware-fusion"
+# @cask [wireshark](https://www.wireshark.org) - Graphical network analyzer and capture tool
+cask "wireshark"
+
+
+# Examples below
+# 'brew install --with-rmtp', 'brew services restart' on version changes
+# brew "denji/nginx/nginx-full", args: ["with-rmtp"], restart_service: :changed
+# 'brew install', always 'brew services restart', 'brew link', 'brew unlink mysql' (if it is installed)
+# brew "mysql@5.6", restart_service: true, link: true, conflicts_with: ["mysql"]
+# 'brew install --cask'
+# cask "google-chrome"
+# 'brew install --cask --appdir=~/my-apps/Applications'
+# cask "firefox", args: { appdir: "~/my-apps/Applications" }
+# always upgrade auto-updated or unversioned cask to latest version even if already installed
+# cask "opera", greedy: true
+# 'brew install --cask' only if '/usr/libexec/java_home --failfast' fails
+# cask "java" unless system "/usr/libexec/java_home --failfast"
+# 'mas install'
+# mas "1Password", id: 443987910
+# 'whalebrew install'
+# whalebrew "whalebrew/wget"
