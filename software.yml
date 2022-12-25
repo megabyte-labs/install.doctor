@@ -3779,6 +3779,8 @@ softwarePackages:
     _service: null
     _when: '! test -d /usr/local/Cellar/libimobiledevice'
     brew:darwin: libimobiledevice
+  krita:
+    flatpak: org.kde.krita
   libreoffice:
     _bin: null
     _desc: '[LibreOffice](https://www.libreoffice.org/) is a free and open-source office productivity software suite, a project of The Document Foundation. It was forked in 2010 from OpenOffice.org, which was an open-sourced version of the earlier StarOffice.'
@@ -3792,6 +3794,7 @@ softwarePackages:
     cask: libreoffice
     choco: libreoffice-fresh
     dnf: libreoffice
+    flatpak: org.libreoffice.LibreOffice
     pacman: libreoffice
   license:
     _bin: null
@@ -4493,6 +4496,7 @@ softwarePackages:
     _name: Nextcloud Client
     _service: null
     ansible: professormanhattan.nextcloud
+    flatpak: com.nextcloud.desktopclient.nextcloud
   nginx:
     _bin: nginx
     _desc: It also generates sites-enabled proxies using YML configurations. Easter eggs included. [Nginx](https://www.nginx.com/), stylized as NGINX, nginx or NginX, is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache. The software was created by Igor Sysoev and publicly released in 2004. Nginx is free and open-source software, released under the terms of the 2-clause BSD license.
@@ -4692,6 +4696,7 @@ softwarePackages:
     cask: onionshare
     choco: onionshare
     dnf: onionshare
+    flatpak: org.onionshare.OnionShare
     snap: onionshare
   onlykey:
     _bin: null
@@ -4834,6 +4839,8 @@ softwarePackages:
     _service: null
     _when: '! test -d "/Applications/Parallels Desktop.app"'
     ansible:darwin: professormanhattan.parallels
+  gnome-passwords-keys:
+    flatpak: org.gnome.seahorse.Application
   pass:
     _bin: pass
     _desc: Password manager
@@ -4894,6 +4901,7 @@ softwarePackages:
       - ffmpeg
       - gstreamer1-plugins-ugly
       - peek
+    flatpak: com.uploadedlobster.peek
     pacman:
       - gst-plugins-good
       - gst-plugins-ugly
@@ -5070,6 +5078,9 @@ softwarePackages:
     choco:
       - plex
       - plexmediaplayer
+    flatpak:
+      - tv.plex.PlexDesktop
+      - tv.plex.PlexHTPC
     snap: plexmediaserver
     yay: plex-media-server
   pm2:
@@ -5147,6 +5158,7 @@ softwarePackages:
     ansible: professormanhattan.postman
     cask: postman
     choco: postman
+    flatpak: com.getpostman.Postman
     snap: postman
     yay: postman-bin
   powershell:
@@ -5315,6 +5327,7 @@ softwarePackages:
     cask: qbittorrent
     choco: qbittorrent
     dnf: qbittorrent
+    flatpak: org.qbittorrent.qBittorrent
     pacman: qbittorrent
     yay: qbittorrent-git
   qlplugins:
@@ -5379,6 +5392,7 @@ softwarePackages:
     cask: raspberry-pi-imager
     choco: rpi-imager
     dnf: rpi-imager
+    flatpak: org.raspberrypi.rpi-imager
     snap: rpi-imager
     yay: rpi-imager
   rclone:
@@ -5465,6 +5479,7 @@ softwarePackages:
     _service: true
     apt: remmina
     dnf: remmina
+    flatpak: org.remmina.Remmina
     pacman: remmina
     snap: remmina
     yay: remmina-git
@@ -5810,6 +5825,7 @@ softwarePackages:
     _name: Scrcpy GUI
     _service: null
     _type: application
+    flatpak: in.srev.guiscrcpy
     github: github.com/Tomotoes/scrcpy-gui
   sd:
     _bin: sd
@@ -6070,6 +6086,8 @@ softwarePackages:
     brew: timothyye/tap/skm
     github: github.com/TimothyYe/skm
     go: github.com/TimothyYe/skm/cmd/skm@latest
+  vup:
+    flatpak: app.vup.Vup
   skype:
     _bin: null
     _desc: '[Skype](https://www.skype.com/en/) is a proprietary telecommunications application that specializes in providing video chat and voice calls between computers, tablets, mobile devices, the Xbox One console, and smartwatches over the Internet. Skype also provides instant messaging services. Users may transmit text, video, audio and images.'
@@ -6189,6 +6207,10 @@ softwarePackages:
     _name: null
     _service: null
     pipx: spotdl
+  gnome-eyedropper:
+    flatpak: com.github.finefindus.eyedropper
+  kooha:
+    flatpak: io.github.seadve.Kooha
   sqlectron:
     _bin: null
     _desc: A simple and lightweight SQL client desktop with cross database and platform support
@@ -6202,6 +6224,8 @@ softwarePackages:
     cask: sqlectron
     github: github.com/sqlectron/sqlectron-gui
     yay: sqlectron-gui
+  handbrake:
+    flatpak: fr.handbrake.ghb
   sqlite:
     _bin: sqlite3
     _desc: SQLite is a C-language library that implements a small, fast, self-contained, high-reliability, full-featured, SQL database engine.
@@ -6885,6 +6909,20 @@ softwarePackages:
     pacman: upx
     port: upx
     scoop: upx
+  arduino:
+    cask: arduino
+    choco: arduino
+    flatpak: cc.arduino.IDE2
+  cutter:
+    flatpak: re.rizin.cutter
+  librewolf:
+    _scoopExtras: true
+    cask: librewolf
+    choco: librewolf
+    flatpak: io.gitlab.librewolf-community
+    scoop: librewolf
+    winget: librewolf
+    yay: librewolf
   vagrant:
     _bin: vagrant
     _desc: '[Vagrant](https://www.vagrantup.com/) is an open-source software product for building and maintaining portable virtual software development environments (e.g., for VirtualBox, KVM, Hyper-V, Docker containers, VMware, and AWS).'
