@@ -3019,7 +3019,6 @@ softwarePackages:
     pkg-termux: hexyl
     port: hexyl
     scoop: hexyl
-    snap: hexyl
     xbps: hexyl
   hey:
     _bin: hey
@@ -5221,17 +5220,6 @@ softwarePackages:
     brew: pywhat
     pipx: pywhat
     port: pywhat
-  q:
-    _bin: q
-    _desc: Run SQL directly on CSV or TSV files
-    _docs: null
-    _github: https://github.com/harelba/q
-    _home: null
-    _name: q
-    _service: null
-    _type: cli
-    brew: q
-    github: github.com/harelba/q
   qbittorrent:
     _bin: null
     _desc: '[qBittorrent](https://www.qbittorrent.org/) is a cross-platform free and open-source BitTorrent client. qBittorrent is a native application written in C++. It uses Boost, Qt 5 toolkit, and libtorrent-rasterbar library. Its optional search engine is written in Python.'
@@ -5672,7 +5660,8 @@ softwarePackages:
       - libdata-dump-perl
       - lzop
       - mbuffer
-      - mhash2
+      # Unavailable on Ubuntu 22.04
+      # - mhash2
       - pv
       - sanoid
   santa:
@@ -7021,7 +7010,8 @@ softwarePackages:
     _service: false
     _type: cli
     apk: watchexec
-    apt: watchexec
+    # Apt is from an unofficial channel
+    # apt: watchexec
     baulk: watchexec
     brew: watchexec
     cargo: watchexec-cli

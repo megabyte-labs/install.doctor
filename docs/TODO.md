@@ -7,7 +7,8 @@ add to PATH:
 
 ### POSSIBLY USEFUL SOFTWARE
 https://hackjutsu.com/Lepton/
-
+* Incorporate /home/linuxbrew/.linuxbrew/etc/bash_completion.d
+* https://docs.brew.sh/Shell-Completion
 ### WINDOWS MISSING PACKAGES
 # FOLLOWING SOFTWARE IS IN Brewfile.terminal but not in Scoop.terminal or Chocolatey.terminal
 # TODO: Find replacements or alternatives

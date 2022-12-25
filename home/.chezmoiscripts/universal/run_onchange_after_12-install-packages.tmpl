@@ -15,6 +15,8 @@ if command -v install-program > /dev/null; then
     # Ask for the administrator password upfront
     logg info 'A sudo password may be required for some of the installations'
     sudo echo "Sudo access granted."
+    export DEBIAN_FRONTEND=noninteractive
+    export HOMEBREW_NO_ENV_HINTS=true
     install-program {{ $softwareList }}
   else
     logg error '`zx` is not available'
