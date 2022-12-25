@@ -1032,7 +1032,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'apt') {
       for (let pkg of packages) {
         try {
-          await $`sudo apt-get install -y ${pkg}`
+          await $`sudo unbuffer apt-get install -y ${pkg}`
         } catch (e) {
           log('error', 'apt-get Failure', `There was an error installing ${pkg} with apt-get`)
         }
