@@ -92,9 +92,9 @@ async function downloadInstallData() {
 
 // Creates the installOrders object which maps package managers to arrays of packages to install
 let generateInstallOrderCount = 0
-const installerPreference = await OSTypeInstallerKey()
-const preferenceOrder = installData.installerPreference[installerPreference]
 async function generateInstallOrders(pkgsToInstall) {
+  const installerPreference = await OSTypeInstallerKey()
+  const preferenceOrder = installData.installerPreference[installerPreference]
   const logStage = 'Install Orders'
   const packagesToInstall = pkgsToInstall
   const softwarePackages = installData.softwarePackages
