@@ -736,7 +736,7 @@ async function ensurePackageManager(packageManager) {
     )
   } else if (packageManager === 'brew' || packageManager === 'cask') {
     const brew = which.sync('brew', { nothrow: true })
-    if (!brew && false) {
+    if (!brew) {
       await ensureInstalled(
         'brew',
         $`
@@ -762,12 +762,16 @@ async function ensurePackageManager(packageManager) {
       )
     }
   } else if (packageManager === 'cargo') {
-    await ensureInstalled(
-      'cargo',
-      $`
-      # TODO Bash script that installs cargo
-    `
-    )
+    const cargo = which.sync('cargo', { nothrow: true })
+    if (!cargo) {
+      if (osType === 'darwin') {
+        await $`brew install rustup`
+        await $`rustup-init`
+      } else if (osType === 'windows') {
+      } else {
+        await ensurePackage('cargo')
+      }
+    }
   } else if (packageManager === 'choco') {
     await ensureInstalled(
       'choco',
