@@ -5436,7 +5436,8 @@ softwarePackages:
     flatpak: app.resp.RESP
     snap: redis-desktop-manager
   recoverpy:
-    _deps: recoverpy-deps
+    _deps:
+      - recoverpy-deps
     _bin: recoverpy
     _desc: '[RecoverPy](https://github.com/PabloLec/RecoverPy) is a highly configurable terminal emulator, SSH and serial client for Windows, macOS and Linux.'
     _docs: https://github.com/PabloLec/RecoverPy#usage
