@@ -872,7 +872,8 @@ async function ensurePackageManager(packageManager) {
   } else if (packageManager === 'pacman') {
     await ensureInstalled('pacman', false)
   } else if (packageManager === 'pipx') {
-    await ensureInstalled('pipx', $`brew install pipx && pipx ensurepath`)
+    await ensureInstalled('pipx', $`brew install pipx`)
+    await $`pipx ensurepath`
   } else if (packageManager === 'pkg') {
     await ensureInstalled('pkg', false)
   } else if (packageManager === 'port') {
