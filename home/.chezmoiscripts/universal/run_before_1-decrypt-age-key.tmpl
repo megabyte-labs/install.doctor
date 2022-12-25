@@ -14,4 +14,7 @@ if [ ! -f "${XDG_CONFIG_HOME}/age/chezmoi.txt" ]; then
   else
     chmod 600 "${XDG_CONFIG_HOME}/age/chezmoi.txt"
   fi
+else
+  logg info 'Ensuring the chezmoi.txt file has proper private permissions applied'
+  chmod 600 "${XDG_CONFIG_HOME}/age/chezmoi.txt"
 fi
