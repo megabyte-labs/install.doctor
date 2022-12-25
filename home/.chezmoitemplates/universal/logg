@@ -84,13 +84,13 @@ if [ "${container:=}" != 'docker' ]; then
   # If gum's path was set, then turn on enhanced logging
   if [ -n "$GUM_PATH" ]; then
     chmod +x "$GUM_PATH"
-    ENHANCED_LOGGING=true
   fi
 fi
 
 format() {
   # shellcheck disable=SC2001,SC2016
   ANSI_STR_FORMATTED="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`.*/\1\\u001b[47;30m \2 \\e[49;m/')"
+  # shellcheck disable=SC2001,SC2016
   ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`\(.*\)$/\3/')"
   if [ "$ANSI_STR_FORMATTED" != "$ANSI_STR" ]; then
     if [[ $ANSI_STR == *'`'*'`'* ]]; then
@@ -105,6 +105,7 @@ format() {
 formatFaint() {
   # shellcheck disable=SC2001,SC2016
   ANSI_STR_FORMATTED="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`.*/\1\\u001b[47;30m \2 \\e[49;m/')"
+  # shellcheck disable=SC2001,SC2016
   ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`\(.*\)$/\3/')"
   if [ "$ANSI_STR_FORMATTED" != "$ANSI_STR" ]; then
     if [[ $ANSI_STR == *'`'*'`'* ]]; then
@@ -146,7 +147,6 @@ logg() {
 
       if [ -n "$GLOW_PATH" ]; then
         chmod +x "$GLOW_PATH"
-        ENHANCED_LOGGING=true
       fi
     fi
     "$GLOW_PATH" "$MSG"
