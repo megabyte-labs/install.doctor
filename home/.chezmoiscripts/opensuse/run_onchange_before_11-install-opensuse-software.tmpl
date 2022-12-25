@@ -5,20 +5,17 @@
 {{ includeTemplate "universal/logg" }}
 
 {{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}
-# TODO - Add Python dependencies like in ubuntu/archlinux
-{{- $gpgDependencies := list
-gnupg2
-gnupg-agent
-gnupg-curl
-scdaemon
-pcscd
--}}
-{{- if .toolchains.gpg }}
-{{- $packages = concat $packages $gpgDependencies -}}
-{{- end }}
 
 logg 'Installing common dependencies using `zypper`'
 logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 
 ### Install base dependencies
-sudo zypper install -y {{ $packages | sortAlpha | uniq | join " " -}}
+for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
+    logg info 'Installing `'"$PACKAGE"'`'
+    sudo zypper install -y "$PACKAGE" || EXIT_CODE=$?
+    if [ -n "$EXIT_CODE" ]; then
+        logg error 'Error installing `'"$PACKAGE"'` via zypper'
+        logg info 'Proceeding with installation..'
+        unset EXIT_CODE
+    fi
+done

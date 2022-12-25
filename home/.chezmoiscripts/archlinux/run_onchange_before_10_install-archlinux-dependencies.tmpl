@@ -5,38 +5,33 @@
 {{ includeTemplate "universal/logg" }}
 
 {{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}
-{{- $gpgDependencies := list
-gnupg2
-gnupg-agent
-gnupg-curl
-scdaemon
-pcscd
--}}
-{{- if .toolchains.gpg }}
-{{- $packages = concat $packages $gpgDependencies -}}
-{{- end }}
-{{- $pyenvDependencies := list
+{{- $additionalPackages := list
 "base-devel"
 "openssl"
 "zlib"
 "xz"
 "tk"
 }}
-{{- if .toolchains.python }}
-{{- $packages = concat $packages $pyenvDependencies -}}
-{{- end }}
+{{- $packages = concat $packages $additionalPackages -}}
 
 logg 'Installing common dependencies using `pacman`'
 logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 
-### Install base dependencies
-sudo pacman -Sy --noconfirm --needed {{ $packages | sortAlpha | uniq | join " " -}}
+for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
+    logg info 'Installing `'"$PACKAGE"'`'
+    sudo pacman -Sy --noconfirm --needed "$PACKAGE" || EXIT_CODE=$?
+    if [ -n "$EXIT_CODE" ]; then
+        logg error 'Error installing `'"$PACKAGE"'` via pacman'
+        logg info 'Proceeding with installation..'
+        unset EXIT_CODE
+    fi
+done
 
 ### Install yay
 if ! command -v yay > /dev/null; then
-  logg 'Cloning yay from `https://aur.archlinux.org/yay.git` to `/usr/local/src/yay`'
+  logg info 'Cloning yay from `https://aur.archlinux.org/yay.git` to `/usr/local/src/yay`'
   sudo git clone https://aur.archlinux.org/yay.git /usr/local/src/yay
   cd /usr/local/src/yay
-  logg 'Installing yay via `sudo makepkg -si`'
+  logg info 'Installing yay via `sudo makepkg -si`'
   sudo makepkg -si
 fi

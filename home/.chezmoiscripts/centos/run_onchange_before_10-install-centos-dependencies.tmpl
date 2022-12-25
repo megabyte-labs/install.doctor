@@ -5,20 +5,31 @@
 {{ includeTemplate "universal/logg" }}
 
 {{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}
-# TODO - Add Python dependencies like in ubuntu/archlinux
-{{- $gpgDependencies := list
-gnupg2
-gnupg-agent
-gnupg-curl
-scdaemon
-pcscd
--}}
-{{- if .toolchains.gpg }}
-{{- $packages = concat $packages $gpgDependencies -}}
-{{- end }}
 
-logg 'Installing common dependencies using `dnf`'
-logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
+if command -v dnf > /dev/null; then
+    logg 'Installing common dependencies using `dnf`'
+    logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 
-### Install base dependencies
-sudo dnf install -y {{ $packages | sortAlpha | uniq | join " " -}}
+    for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
+        logg info 'Installing `'"$PACKAGE"'`'
+        sudo dnf install -y "$PACKAGE" || EXIT_CODE=$?
+        if [ -n "$EXIT_CODE" ]; then
+            logg error 'Error installing `'"$PACKAGE"'` via dnf'
+            logg info 'Proceeding with installation..'
+            unset EXIT_CODE
+        fi
+    done
+else
+    logg 'Installing common dependencies using `yum`'
+    logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
+
+    for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
+        logg info 'Installing `'"$PACKAGE"'`'
+        sudo yum install -y "$PACKAGE" || EXIT_CODE=$?
+        if [ -n "$EXIT_CODE" ]; then
+            logg error 'Error installing `'"$PACKAGE"'` via yum'
+            logg info 'Proceeding with installation..'
+            unset EXIT_CODE
+        fi
+    done
+fi

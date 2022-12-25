@@ -5,26 +5,12 @@
 {{ includeTemplate "universal/logg" }}
 
 {{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) -}}
-{{- $gpgDependencies := list
-gnupg2
-gnupg-agent
-gnupg-curl
-scdaemon
-pcscd
--}}
-{{- if .toolchains.gpg }}
-{{- $packages = concat $packages $gpgDependencies -}}
-{{- end }}
-{{- $pyenvDependencies := list
-"make"
-"build-essential"
+{{- $additionalPackages := list
 "libssl-dev"
 "zlib1g-dev"
 "libbz2-dev"
 "libreadline-dev"
 "libsqlite3-dev"
-"wget"
-"curl"
 "llvm"
 "libncursesw5-dev"
 "xz-utils"
@@ -34,12 +20,19 @@ pcscd
 "libffi-dev"
 "liblzma-dev"
 -}}
-{{- if .toolchains.python }}
-{{- $packages = concat $packages $pyenvDependencies -}}
-{{- end }}
+{{- $packages = concat $packages $additionalPackages -}}
 
 logg 'Installing common dependencies using `apt-get`'
 logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 
+logg info 'Running `sudo apt-get update`'
 sudo apt-get update
-sudo apt-get install -y --no-install-recommends {{ $packages | sortAlpha | uniq | join " " -}}
+for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
+    logg info 'Installing `'"$PACKAGE"'`'
+    sudo apt-get install -y --no-install-recommends "$PACKAGE" || EXIT_CODE=$?
+    if [ -n "$EXIT_CODE" ]; then
+        logg error 'Error installing `'"$PACKAGE"'` via apt-get'
+        logg info 'Proceeding with installation..'
+        unset EXIT_CODE
+    fi
+done
