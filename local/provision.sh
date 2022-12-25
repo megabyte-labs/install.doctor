@@ -258,7 +258,7 @@ fi
 ### System package manager update / Homebrew dependencies
 if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v brew > /dev/null; then
   # shellcheck disable=SC2016
-  logg info 'Ensuring `curl` and `git` are installed via the system package manager'
+  logg info 'Ensuring `curl`, `git`, and OS-specific dependencies are installed via the system package manager'
   if command -v apt-get > /dev/null; then
     # Debian / Ubuntu
     sudo apt-get update
