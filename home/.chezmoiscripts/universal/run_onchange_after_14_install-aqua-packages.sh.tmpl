@@ -3,8 +3,8 @@
 
 set -eufo pipefail
 
-{{- includeTemplate "universal/profile" }}
-{{- includeTemplate "universal/logg" }}
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
 
 {{- $files := list -}}
 {{- range $path := glob (list .chezmoi.sourceDir "private_dot_config/aqua/**/*.yaml.tmpl" | join "/") }}

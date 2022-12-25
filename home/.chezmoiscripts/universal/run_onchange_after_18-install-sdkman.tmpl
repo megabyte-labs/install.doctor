@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-{{- includeTemplate "universal/profile" }}
-{{- includeTemplate "universal/logg" }}
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
 
 ### Ensure SDKMan is installed (https://sdkman.io/)
 if [ ! -d "$SDKMAN_DIR" ]; then

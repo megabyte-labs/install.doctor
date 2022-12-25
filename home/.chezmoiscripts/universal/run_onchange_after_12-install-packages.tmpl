@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-{{- includeTemplate "universal/profile" }}
-{{- includeTemplate "universal/logg" }}
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
 {{- $softwareGroup := nospace (cat "_" .host.softwareGroup) }}
 
 # software: {{ index .softwareGroups $softwareGroup | toString | replace "[" "" | replace "]" "" }}

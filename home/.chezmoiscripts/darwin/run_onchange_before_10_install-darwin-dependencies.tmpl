@@ -2,8 +2,8 @@
 
 # darwin/Brewfile hash: {{ include (joinPath ".chezmoitemplates" "darwin" "Brewfile") | sha256sum }}
 
-{{- includeTemplate "universal/profile" }}
-{{- includeTemplate "universal/logg" }}
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
 
 if command -v brew > /dev/null; then
   logg 'Installing base dependencies for macOS using `brew bundle`'

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-{{- includeTemplate "universal/profile" }}
-{{- includeTemplate "universal/logg" }}
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
 
 {{ $roleDirs := (output "find" (joinPath .chezmoi.homeDir ".local" "src" "gas-station" "roles") "-mindepth" "2" "-maxdepth" "2" "-type" "d") -}}
 {{- range $roleDir := splitList "\n" $roleDirs -}}

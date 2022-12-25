@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 {{- if (ne .host.distro.family "windows") }}
 
-{{- includeTemplate "universal/profile" }}
-{{- includeTemplate "universal/logg" }}
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
 
 ### Ensure node is installed
 if ! command -v node > /dev/null; then

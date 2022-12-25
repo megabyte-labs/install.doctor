@@ -3,8 +3,8 @@
 # .chezmoidata.yml hash: {{ include (joinPath .chezmoi.sourceDir ".chezmoidata.yaml")| sha256sum }}
 # software.yml hash: {{ include (joinPath .chezmoi.homeDir ".local" "share" "chezmoi" "software.yml")| sha256sum }}
 
-{{- includeTemplate "universal/profile" }}
-{{- includeTemplate "universal/logg" }}
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
 
 logg 'Updating the `~/.local/share/bash-completion/completions` folder based on the installed applications'
 
