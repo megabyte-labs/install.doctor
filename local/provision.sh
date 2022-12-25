@@ -256,13 +256,13 @@ if command -v qubesctl > /dev/null; then
 fi
 
 ### System package manager update / Homebrew dependencies
-if ! command -v curl > /dev/null || ! command -v git > /dev/null; then
+if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v brew > /dev/null; then
   # shellcheck disable=SC2016
   logg info 'Ensuring `curl` and `git` are installed via the system package manager'
   if command -v apt-get > /dev/null; then
     # Debian / Ubuntu
     sudo apt-get update
-    sudo apt-get install -y curl git
+    sudo apt-get install -y build-essential curl git
   elif command -v dnf > /dev/null; then
     # Fedora
     sudo dnf install -y curl git
@@ -306,9 +306,17 @@ ensurePackageManagerHomebrew() {
     logg info 'Installing Homebrew'
     if command -v sudo > /dev/null && sudo -n true; then
       echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        brew install gcc
+      fi
     else
       logg info 'Looks like the user does not have passwordless sudo privileges. A sudo password may be required.'
       bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+      if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        brew install gcc
+      fi
       if [ -n "$BREW_EXIT_CODE" ]; then
         if command -v brew > /dev/null; then
           logg warn 'Homebrew was installed but part of the installation failed. Attempting to fix..'
