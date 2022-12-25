@@ -3,6 +3,9 @@
 
 # Node.js version: {{ output "node" "--version" }}
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 ### Ensure recent version of Node.js is being used
 if command -v volta > /dev/null; then
   if ! test "$(node --version | sed 's/^v//' | awk '{print $1}' | awk -F'.' ' ( $1 > 15) ')"; then
