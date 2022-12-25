@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-if command -v task > /dev/null; then
+if command -v task > /dev/null && [ -n "$PATH_TASK" ]; then
   if [ -f Taskfile.yml ]; then
-    task $@
+    $PATH_TASK $@
   else
-    task --taskfile "$HOME/.local/src/shared-common/common/Taskfile.yml" $@
+    $PATH_TASK --taskfile "$HOME/.local/src/shared-common/common/Taskfile.yml" $@
   fi
 else
-  echo 'task is not installed.' && exit 1
+  echo 'task is not installed or PATH_TASK is not defined.' && exit 1
 fi

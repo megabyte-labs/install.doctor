@@ -321,6 +321,16 @@ softwareGroups:
     - gitdock
     - gitify
     - gitkraken
+  Git-Project-Tools: &Git-Project-Tools
+    - appnest-readme
+    - commitlint
+    - git-notify
+    - hbs-cli
+    - husky
+    - liquidjs
+    - pnpm-lock-export
+    - synp
+    - yarnhook
   Go: &Go
     - delve
     - go
@@ -684,6 +694,7 @@ softwareGroups:
     - *File-System
     - *Finance
     - *Git
+    - *Git-Project-Tools
     - *Go
     - *Home
     - *Kubernetes
@@ -736,62 +747,62 @@ softwareGroups:
     - *Transfer-Desktop
     - *Virtualization-Desktop
     - *Web-Development-Desktop
-  __base-basic-tmpl:
+  __hostname__base-basic-tmpl:
     - *_Basic
     - *_Basic-Desktop
-  __base-standard-tmpl:
+  __hostname__base-standard-tmpl:
     - *_Basic
     - *_Basic-Desktop
     - *Docker
-  __base-full-tmpl:
+  __hostname__base-full-tmpl:
     - *_Full-Desktop
-  __anon-tmpl:
+  __hostname__anon-tmpl:
     - *Anon
-  __crypto-tmpl:
+  __hostname__crypto-tmpl:
     - *Crypto
     - *Crypto-Desktop
-  __dev-tmpl:
+  __hostname__dev-tmpl:
     - *_Full-Desktop
-  __gpg-tmpl: []
-  __kubernetes-tmpl:
+  __hostname__gpg-tmpl: []
+  __hostname__kubernetes-tmpl:
     - *Kubernetes
     - *Kubernetes-Desktop
     - *Networking
-  __media-tmpl:
+  __hostname__media-tmpl:
     - *Media
     - *Media-Desktop
-  __office-tmpl:
+  __hostname__office-tmpl:
     - *Communication-Desktop
     - *Productivity-Desktop
-  __personal-tmpl: []
-  __provision-tmpl: []
-  __remote-tmpl:
+  __hostname__personal-tmpl: []
+  __hostname__provision-tmpl: []
+  __hostname__remote-tmpl:
     - *Networking
     - filezilla
     - remote-desktop
     - teamviewer
-  __swarm-tmpl:
+  __hostname__swarm-tmpl:
     - *Backup
     - *Docker
     - *Networking
     - swarm
-  __util-tmpl: []
-  __vault-tmpl:
+  __hostname__util-tmpl: []
+  __hostname__vault-tmpl:
     - onlykey
     - yubikey
-  __vpn-pritunl-tmpl: []
-  __vpn-proton-tmpl:
+  __hostname__vpn-pritunl-tmpl: []
+  __hostname__vpn-proton-tmpl:
     - protonvpn
-  __vpn-random-tmpl:
+  __hostname__vpn-random-tmpl:
     - vpn
-  __vpn-tailscale-tmpl:
+  __hostname__vpn-tailscale-tmpl:
     - tailscale
-  __vpn-warp-tmpl:
+  __hostname__vpn-warp-tmpl:
     - warp
-  __vpn-tmpl: []
-  __web-tmpl:
+  __hostname__vpn-tmpl: []
+  __hostname__web-tmpl:
     - *Browsers-Desktop
-  __work-tmpl: []
+  __hostname__work-tmpl: []
   deprecated:
     - apt-cacher-ng
     - bivac
