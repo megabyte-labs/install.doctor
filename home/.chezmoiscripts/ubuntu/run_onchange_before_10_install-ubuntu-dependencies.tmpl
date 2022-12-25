@@ -12,9 +12,7 @@
 "scdaemon"
 "pcscd"
 -}}
-{{- if .toolchains.gpg }}
 {{- $packages = concat $packages $gpgDependencies -}}
-{{- end }}
 
 logg 'Installing common dependencies using `apt-get`'
 logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
