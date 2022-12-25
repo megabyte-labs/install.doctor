@@ -1183,7 +1183,7 @@ async function installPackageList(packageManager, packages) {
       for (let pkg of packages) {
         // TODO _snapClassic
         try {
-          await $`sudo snap install -y ${pkg}`
+          await $`sudo snap install ${pkg}`
         } catch (e) {
           log('error', 'Snap Failure', `There was an error installing ${pkg} with snap`)
         }
@@ -1199,7 +1199,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'snap-classic') {
       for (let pkg of packages) {
         try {
-          await $`sudo snap install --classic -y ${pkg}`
+          await $`sudo snap install --classic ${pkg}`
         } catch (e) {
           log('error', 'Snap Failure', `There was an error installing ${pkg} with snap in classic mode`)
         }
