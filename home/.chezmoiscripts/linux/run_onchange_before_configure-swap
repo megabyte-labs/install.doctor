@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # TODO - make equivalent to https://gitlab.com/megabyte-labs/gas-station/-/blob/master/roles/system/common/tasks/linux/swap.yml
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 MEMORY_IN_KB="$(grep MemTotal /proc/meminfo | sed 's/.* \(\d+\) kB/\1/')"
 MEMORY_IN_GB="$((MEMORY_IN_KB / 1024 / 1024))"
 

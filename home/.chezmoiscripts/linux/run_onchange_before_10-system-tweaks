@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 ### Set hostname (if redefined)
 if command -v hostnamectl > /dev/null; then
   # Betelgeuse is the default hostname so only change when it is different
