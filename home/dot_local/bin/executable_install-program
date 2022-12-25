@@ -499,7 +499,7 @@ async function ensurePackage(dep) {
       const pacman = which.sync('pacman', { nothrow: true })
       const zypper = which.sync('zypper', { nothrow: true })
       if (apk) {
-        $`sudo apk add ${dep}`
+        await $`sudo apk add ${dep}`
       } else if (apt) {
         if (updateDone[packageManager] !== true) {
           await beforeInstall('apt-get')
@@ -661,11 +661,11 @@ async function ensureInstalled(bin, callback) {
 }
 
 async function ensurePackageManagerAnsible() {
-  await $`pipx install ansible`
+  await $`pipx install ansible-core`
   if (osType === 'darwin') {
-    await $`pipx inject ansible PyObjC PyObjC-core`
+    await $`pipx inject ansible-core PyObjC PyObjC-core`
   }
-  await $`pipx inject ansible docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog`
+  await $`pipx inject ansible-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog`
   await $`mkdir -p "$HOME/.cache/megabyte-labs"`
   await $`touch "$HOME/.cache/megabyte-labs/ansible-installed"`
   log('info', 'Package Manager Install', `Ansible and its supporting packages are now installed via pipx`)
@@ -806,9 +806,9 @@ async function ensurePackageManager(packageManager) {
       const pacman = which.sync('pacman', { nothrow: true })
       const zypper = which.sync('zypper', { nothrow: true })
       if (apk) {
-        $`sudo apk add flatpak`
+        await $`sudo apk add flatpak`
       } else if (apt) {
-        $`
+        await $`
           sudo apt install -y flatpak
           if [ -f /usr/bin/gnome-shell ]; then
             sudo apt install -y gnome-software-plugin-flatpak
@@ -955,7 +955,7 @@ async function ensurePackageManager(packageManager) {
     }
     const snap = which.sync('snap', { nothrow: true })
     if (snap) {
-      $`sudo snap install core`
+      await $`sudo snap install core`
     } else {
       log('warn', logStage, 'Snap installation sequence completed but the snap bin is still not available')
     }
