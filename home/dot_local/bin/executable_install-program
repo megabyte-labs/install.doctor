@@ -510,27 +510,27 @@ async function ensurePackage(dep) {
       if (apk) {
         await $`sudo apk add ${dep}`
       } else if (apt) {
-        if (updateDone[packageManager] !== true) {
+        if (updateDone['apt-get'] !== true) {
           await beforeInstall('apt-get')
         }
         await $`sudo apt-get install -y ${dep}`
       } else if (dnf) {
-        if (updateDone[packageManager] !== true) {
+        if (updateDone['dnf'] !== true) {
           await beforeInstall('dnf')
         }
         await $`sudo dnf install -y ${dep}`
       } else if (yum) {
-        if (updateDone[packageManager] !== true) {
-          await beforeInstall('dnf')
+        if (updateDone['yum'] !== true) {
+          await beforeInstall('yum')
         }
         await $`sudo yum install -y ${dep}`
       } else if (pacman) {
-        if (updateDone[packageManager] !== true) {
+        if (updateDone['pacman'] !== true) {
           await beforeInstall('pacman')
         }
         await $`sudo pacman -Sy ${dep}`
       } else if (zypper) {
-        if (updateDone[packageManager] !== true) {
+        if (updateDone['zypper'] !== true) {
           await beforeInstall('zypper')
         }
         await $`sudo zypper install -y ${dep}`
@@ -863,9 +863,9 @@ async function ensurePackageManager(packageManager) {
     `
     )
   } else if (packageManager === 'npm') {
-    const npm = which('npm', { nothrow: true })
-    const node = which('node', { nothrow: true })
-    const volta = which('volta', { nothrow: true })
+    const npm = which.sync('npm', { nothrow: true })
+    const node = which.sync('node', { nothrow: true })
+    const volta = which.sync('volta', { nothrow: true })
     if (npm && node && volta) {
       log('info', logStage, `\`npm\`, \`node\`, and \`volta\` are available`)
     } else {
@@ -885,8 +885,11 @@ async function ensurePackageManager(packageManager) {
   } else if (packageManager === 'pacman') {
     await ensureInstalled('pacman', false)
   } else if (packageManager === 'pipx') {
-    await ensureInstalled('pipx', $`brew install pipx`)
-    await $`pipx ensurepath`
+    const pipx = which.sync('pipx', { nothrow: true })
+    if (!pipx) {
+      await ensureInstalled('pipx', $`brew install pipx`)
+      await $`pipx ensurepath`
+    }
   } else if (packageManager === 'pkg') {
     await ensureInstalled('pkg', false)
   } else if (packageManager === 'port') {
