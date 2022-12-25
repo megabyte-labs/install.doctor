@@ -662,7 +662,10 @@ async function ensureInstalled(bin, callback) {
 
 async function ensurePackageManagerAnsible() {
   await $`pipx install ansible`
-  await $`pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog`
+  if (osType === 'darwin') {
+    await $`pipx inject ansible PyObjC PyObjC-core`
+  }
+  await $`pipx inject ansible docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog`
   await $`mkdir -p "$HOME/.cache/megabyte-labs"`
   await $`touch "$HOME/.cache/megabyte-labs/ansible-installed"`
   log('info', 'Package Manager Install', `Ansible and its supporting packages are now installed via pipx`)
