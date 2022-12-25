@@ -10,7 +10,7 @@
 {{ end -}}
 {{- end }}
 
-logg 'Ensuring Gas Station roles are symlinked to ~/.local/share/ansible/roles'
+logg info 'Ensuring Gas Station roles are symlinked to ~/.local/share/ansible/roles'
 mkdir -p "$XDG_DATA_HOME/ansible/roles"
 find "$HOME/.local/src/gas-station/roles" -mindepth 2 -maxdepth 2 -type d | while read ROLE_PATH; do
   ROLE_FOLDER="professormanhattan.$(echo "$ROLE_PATH" | sed 's/.*\/\([^\/]*\)$/\1/')"
@@ -24,3 +24,6 @@ find "$HOME/.local/src/gas-station/roles" -mindepth 2 -maxdepth 2 -type d | whil
     ln -s "$ROLE_PATH" "$XDG_DATA_HOME/ansible/roles/$ALT_ROLE_FOLDER"
   fi
 done
+
+logg info 'Ensuring Ansible Galaxy collections are installed'
+ansible-galaxy install -r "$HOME/.local/src/gas-station/requirements.yml"

@@ -27,6 +27,7 @@
 #   _post:brew:debian: |
 #     echo "_post allows you to define a script that runs after the installation"
 #   _systemd: smbd                                    # System service to enable, restart, and/or start (can also be an array).
+#   _epel: true                                       # True if https://docs.fedoraproject.org/en-US/epel/ should be enabled
 #   ansible: professormanhattan.docker
 #   apk: altair
 #   appimage: https://developers.yubico.com/yubikey-manager-qt/Releases/yubikey-manager-qt-1.2.4b-linux.AppImage
@@ -2166,7 +2167,7 @@ softwarePackages:
     _name: Fuse
     _service: null
     _when:cask: '! test -d /usr/local/Caskroom/macfuse'
-    ansible: professormanhattan.fuse
+    ansible:darwin: professormanhattan.fuse
     cask: macfuse
   fx:
     _bin: fx
@@ -2412,11 +2413,16 @@ softwarePackages:
     _bin: git-secret
     _desc: '[git-secret](https://git-secret.io/) is a bash tool to store your private data inside a git repo. How’s that? Basically, it just encrypts, using GPG, the tracked files with the public keys of all the users that you trust. So everyone of them can decrypt these files using only their personal secret key.'
     _docs: https://git-secret.io/#commands
+    _epel: true
     _github: https://github.com/sobolevn/git-secret
     _home: https://git-secret.io/
     _name: Git Secret
     _service: false
-    ansible: professormanhattan.gitsecret
+    ansible:darwin: professormanhattan.gitsecret
+    ansible:linux: professormanhattan.gitsecret
+    apt: git-secret
+    brew: git-secret
+    dnf: git-secret
   gitdock:
     _bin: null
     _desc: '[GitDock](https://gitlab.com/mvanremmerden/gitdock) is an app that displays all your GitLab activities in one place. Instead of the GitLab typical project- or group-centric approach, it collects all your information from a user-centric perspective.'
@@ -2658,6 +2664,7 @@ softwarePackages:
     scoop: glow
     yay: glow
   glusterfs:
+    # TODO - The master / peer logic still needs to be implemented in the .chezmoiscripts
     _bin: gluster
     _desc: '[Gluster](https://www.gluster.org/) is a free and open source software scalable network filesystem. Gluster is a software defined distributed storage that can scale to several petabytes. It provides interfaces for object, block and file storage.'
     _docs: https://docs.gluster.org/en/latest/
@@ -2665,7 +2672,9 @@ softwarePackages:
     _home: https://www.gluster.org/
     _name: GlusterFS
     _service: true
+    _systemd: glusterd
     ansible:linux: professormanhattan.glusterfs
+    apt: glusterfs-server
     dnf: glusterfs-server
     pacman: glusterfs
   gnu:
@@ -4757,7 +4766,7 @@ softwarePackages:
     _name: Parallels
     _service: null
     _when: '! test -d "/Applications/Parallels Desktop.app"'
-    ansible: professormanhattan.parallels
+    ansible:darwin: professormanhattan.parallels
   pass:
     _bin: pass
     _desc: Password manager
@@ -5331,14 +5340,32 @@ softwarePackages:
     flatpak: app.resp.RESP
     snap: redis-desktop-manager
   recoverpy:
+    _deps: recoverpy-deps
     _bin: recoverpy
-    _desc: '[RecoverPy](https://eugeny.github.io/recoverpy/) is a highly configurable terminal emulator, SSH and serial client for Windows, macOS and Linux.'
-    _docs: null
-    _github: null
-    _home: null
+    _desc: '[RecoverPy](https://github.com/PabloLec/RecoverPy) is a highly configurable terminal emulator, SSH and serial client for Windows, macOS and Linux.'
+    _docs: https://github.com/PabloLec/RecoverPy#usage
+    _github: https://github.com/PabloLec/RecoverPy
+    _home: https://github.com/PabloLec/RecoverPy
     _name: RecoverPy
-    _service: null
+    _service: false
     ansible:linux: professormanhattan.recoverpy
+    pipx:linux: recoverpy
+  recoverpy-deps:
+    apt:
+      - coreutils
+      - grep
+      - progress
+      - util-linux
+    dnf:
+      - coreutils
+      - grep
+      - progress
+      - util-linux
+    pacman:
+      - coreutils
+      - grep
+      - progress
+      - util-linux
   remote-desktop:
     _deps:
       - gnome-boxes
@@ -6662,7 +6689,12 @@ softwarePackages:
     _home: null
     _name: Translate Shell
     _service: null
-    ansible: professormanhattan.translate
+    ansible:darwin: professormanhattan.translate
+    ansible:linux: professormanhattan.translate
+    apt: translate-shell
+    brew: translate-shell
+    dnf: translate-shell
+    pacman: translate-shell
   tree:
     _bin: tree
     _desc: '[tree-cli](https://github.com/MrRaindrop/tree-cli) is a recursive directory listing program that produces a depth indented listing of files. With no arguments, tree lists the files in the current directory. When directory arguments are given, tree lists all the files and/or directories found in the given directories each in turn. Upon completion of listing all files/directories found, tree returns the total number of files and/or directories listed.'

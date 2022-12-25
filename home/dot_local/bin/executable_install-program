@@ -91,15 +91,20 @@ async function downloadInstallData() {
 }
 
 // Creates the installOrders object which maps package managers to arrays of packages to install
+let generateInstallOrderCount = 0
+const installerPreference = await OSTypeInstallerKey()
+const preferenceOrder = installData.installerPreference[installerPreference]
 async function generateInstallOrders(pkgsToInstall) {
   const logStage = 'Install Orders'
   const packagesToInstall = pkgsToInstall
-  const installerPreference = await OSTypeInstallerKey()
-  log('info', logStage, `Installer preference category detected as ${installerPreference}`)
-  const preferenceOrder = installData.installerPreference[installerPreference]
-  log('info', logStage, `Preference order acquired:`)
-  console.log(preferenceOrder)
   const softwarePackages = installData.softwarePackages
+  if (generateInstallOrderCount === 0) {
+    log('info', logStage, `Installer preference category detected as ${installerPreference}`)
+    log('info', logStage, `Preference order acquired:`)
+    console.log(preferenceOrder)
+  }
+  generateInstallOrderCount++
+  log('info', logStage, `New packages discovered for processing: ${pkgsToInstall} (${pkgsToInstall.length} items)`)
   pkgFor: for (let pkg of packagesToInstall) {
     let packageKey
     if (softwarePackages[pkg + ':' + osID]) {
@@ -266,38 +271,38 @@ async function generateInstallOrders(pkgsToInstall) {
           if (softwarePackages[packageKey]['_' + currentSelector + ':' + preference + ':' + osID]) {
             pref = preference + ':' + osID
             log('info', 'Installing Dependencies', `Installing dependencies for ${packageKey}.${pref}`)
-            await installSoftware(softwarePackages[packageKey][pref])
+            await generateInstallOrders(softwarePackages[packageKey][pref])
           } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + preference + ':' + osType]) {
             pref = preference + ':' + osType
             log('info', 'Installing Dependencies', `Installing dependencies for ${packageKey}.${pref}`)
-            await installSoftware(softwarePackages[packageKey][pref])
+            await generateInstallOrders(softwarePackages[packageKey][pref])
           } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osID + ':' + preference]) {
             pref = osID + ':' + preference
             log('info', 'Installing Dependencies', `Installing dependencies for ${packageKey}.${pref}`)
-            await installSoftware(softwarePackages[packageKey][pref])
+            await generateInstallOrders(softwarePackages[packageKey][pref])
           } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osType + ':' + preference]) {
             pref = osType + ':' + preference
             log('info', 'Installing Dependencies', `Installing dependencies for ${packageKey}.${pref}`)
-            await installSoftware(softwarePackages[packageKey][pref])
+            await generateInstallOrders(softwarePackages[packageKey][pref])
           }
         } else if (scopedPkgManager) {
           const pref = preference
           log('info', 'Installing Dependencies', `Installing dependencies for ${packageKey}.${pref}`)
-          await installSoftware(softwarePackages[packageKey][pref])
+          await generateInstallOrders(softwarePackages[packageKey][pref])
         } else if (scopedSystem) {
           let pref
           if (softwarePackages[packageKey]['_' + currentSelector + ':' + osID]) {
             pref = osID
             log('info', 'Installing Dependencies', `Installing dependencies for ${packageKey}.${pref}`)
-            await installSoftware(softwarePackages[packageKey][pref])
+            await generateInstallOrders(softwarePackages[packageKey][pref])
           } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osType]) {
             pref = osType
             log('info', 'Installing Dependencies', `Installing dependencies for ${packageKey}.${pref}`)
-            await installSoftware(softwarePackages[packageKey][pref])
+            await generateInstallOrders(softwarePackages[packageKey][pref])
           }
         } else if (normalCheck) {
           log('info', 'Installing Dependencies', `Installing dependencies for ${packageKey}.deps`)
-          await installSoftware(softwarePackages[packageKey]['_deps'])
+          await generateInstallOrders(softwarePackages[packageKey]['_deps'])
         }
         if (softwarePackages[packageKey][preference + ':' + osID]) {
           await updateInstallMaps(
@@ -333,7 +338,11 @@ async function generateInstallOrders(pkgsToInstall) {
       }
     }
   }
-  return installOrders
+  if (generateInstallOrderCount === 1) {
+    return installOrders
+  } else {
+    generateInstallOrderCount--
+  }
 }
 
 // Update install, pre-hook, and post-hook objects
@@ -1278,7 +1287,6 @@ async function installSoftware(pkgsToInstall) {
   }
   try {
     for (const key in installOrders) {
-      console.log(key)
       installOrders[key] = [...new Set(installOrders[key])]
     }
     log('info', 'Install Orders', `The install orders were generated:`)
