@@ -3,8 +3,9 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 {{- $softwareGroup := nospace (cat "_" .host.softwareGroup) }}
+{{- $softwareList := list (index .softwareGroups $softwareGroup | toString | replace "[" "" | replace "]" "") | uniq | join " " }}
 
-# software: {{ index .softwareGroups $softwareGroup | toString | replace "[" "" | replace "]" "" }}
+# software: {{ $softwareList }}
 # software map: {{ include (joinPath .chezmoi.homeDir ".local" "share" "chezmoi" "software.yml") | sha256sum }}
 
 if command -v install-program > /dev/null; then
@@ -14,7 +15,7 @@ if command -v install-program > /dev/null; then
     # Ask for the administrator password upfront
     logg info 'A sudo password may be required for some of the installations'
     sudo echo "Sudo access granted."
-    install-program {{ index .softwareGroups $softwareGroup | toString | replace "[" "" | replace "]" "" }}
+    install-program {{ $softwareList }}
   else
     logg error '`zx` is not available'
   fi
