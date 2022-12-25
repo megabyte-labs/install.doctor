@@ -37,6 +37,6 @@ Brewfile
 .zprofile
 .zshrc.zwc
 
-{{- if ne .host.distro.id "darwin" }}
+{{- if ne .host.distro.id "linux" }}
 .Xresources
 {{- end }}

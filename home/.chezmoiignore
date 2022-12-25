@@ -13,14 +13,14 @@ Library
 {{- end }}
 
 {{- if ne .host.distro.family "linux" }}
-.local/bin/executable_install-gnome-extensions
-.local/bin/executable_kde-wallpaper
-.VirtualBox
-.Xresources
+dot_local/bin/executable_install-gnome-extensions
+dot_local/bin/executable_kde-wallpaper
+dot_VirtualBox
+dot_Xresources
 {{- end }}
 
 {{- if ne .host.qubes true }}
-.local/bin/ramqube
+dot_local/bin/executable_ramqube
 {{- end }}
 
 {{- if ne .host.distro.family "windows" }}
