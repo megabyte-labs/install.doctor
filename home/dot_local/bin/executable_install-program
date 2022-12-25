@@ -356,7 +356,7 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
   log('info', 'Install Orders', `Found a match for the package \`${pkg}\` (${packageKey} via ${scopedPreference})`)
   const newPackages = packages[scopedPreference]
   const newPkgs = typeof newPackages === 'string' ? [newPackages] : newPackages
-  if (preference === 'snap' && softwarePackages['_snapClassic'] === true) {
+  if (preference === 'snap' && softwarePackages[pkg]['_snapClassic'] === true) {
     if (!installOrders[preference + '-classic']) {
       installOrders[preference + '-classic'] = []
     }
