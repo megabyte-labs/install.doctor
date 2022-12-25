@@ -20,13 +20,13 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
   KEYID_TRIMMED="$(echo "$KEYID" | sed 's/^0x//')"
   if ! gpg --list-secret-keys --keyid-format=long | grep "$KEYID_TRIMMED" > /dev/null; then
     logg info 'Attempting to download the specified public GPG key (`{{ .user.gpg.id }}`) from public keyservers'
-    gpg --recv "$KEYID" --keyserver hkps://keyserver.ubuntu.com || EXIT_CODE=$?
+    gpg --keyserver hkps://pgp.mit.edu --recv "$KEYID" || EXIT_CODE=$?
     if [ -n "$EXIT_CODE" ]; then
       logg warn 'Error downloading public GPG key'
       logg info 'Retrying after turning on debug mode and using the standard DNS resolver'
       sudo pkill dirmngr
       dirmngr --debug-all --daemon --standard-resolver
-      gpg --recv "$KEYID"
+      gpg --keyserver hkps://pgp.mit.edu --recv "$KEYID"
     fi
   else
     logg info 'Key is already in keyring'
