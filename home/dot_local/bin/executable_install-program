@@ -457,10 +457,10 @@ async function afterInstall(packageManager) {
   } else if (packageManager === 'apk') {
   } else if (packageManager === 'apt') {
     try {
-      await $`sudo apt autoclean`
-      await $`sudo apt autoremove`
+      await $`sudo apt-get autoclean`
+      await $`sudo apt-get autoremove`
     } catch (e) {
-      log('error', logStage, 'Error cleaning up apt')
+      log('error', logStage, 'Error cleaning up apt-get')
     }
   } else if (packageManager === 'basher') {
   } else if (packageManager === 'binary') {
@@ -493,7 +493,7 @@ async function ensurePackage(dep) {
   if (!target) {
     if (osType === 'linux') {
       const apk = which.sync('apk', { nothrow: true })
-      const apt = which.sync('apt', { nothrow: true })
+      const apt = which.sync('apt-get', { nothrow: true })
       const dnf = which.sync('dnf', { nothrow: true })
       const yum = which.sync('yum', { nothrow: true })
       const pacman = which.sync('pacman', { nothrow: true })
@@ -504,7 +504,7 @@ async function ensurePackage(dep) {
         if (updateDone[packageManager] !== true) {
           await beforeInstall('apt-get')
         }
-        await $`sudo apt install -y ${dep}`
+        await $`sudo apt-get install -y ${dep}`
       } else if (dnf) {
         if (updateDone[packageManager] !== true) {
           await beforeInstall('dnf')
@@ -559,7 +559,7 @@ async function beforeInstall(packageManager) {
   } else if (packageManager === 'apk') {
     await $`sudo apk update`
   } else if (packageManager === 'apt') {
-    await $`sudo apt update`
+    await $`sudo apt-get update`
   } else if (packageManager === 'basher') {
   } else if (packageManager === 'binary') {
   } else if (packageManager === 'brew' || packageManager === 'cask') {
@@ -800,7 +800,7 @@ async function ensurePackageManager(packageManager) {
       log('info', logStage, `\`flatpak\` is available`)
     } else {
       const apk = which.sync('apk', { nothrow: true })
-      const apt = which.sync('apt', { nothrow: true })
+      const apt = which.sync('apt-get', { nothrow: true })
       const dnf = which.sync('dnf', { nothrow: true })
       const yum = which.sync('yum', { nothrow: true })
       const pacman = which.sync('pacman', { nothrow: true })
@@ -809,12 +809,12 @@ async function ensurePackageManager(packageManager) {
         await $`sudo apk add flatpak`
       } else if (apt) {
         await $`
-          sudo apt install -y flatpak
+          sudo apt-get install -y flatpak
           if [ -f /usr/bin/gnome-shell ]; then
-            sudo apt install -y gnome-software-plugin-flatpak
+            sudo apt-get install -y gnome-software-plugin-flatpak
           fi
           if [ -f /usr/bin/plasmashell ]; then
-            sudo apt install -y plasmashell
+            sudo apt-get install -y plasmashell
           fi
         `
       } else if (dnf) {
@@ -913,7 +913,7 @@ async function ensurePackageManager(packageManager) {
     const pacman = which.sync('pacman', { nothrow: true })
     const zypper = which.sync('zypper', { nothrow: true })
     if (apt) {
-      await $`if [ -f /etc/apt/preferences.d/nosnap.pref ]; then sudo mv /etc/apt/preferences.d/nosnap.pref /etc/apt/nosnap.pref.bak; fi && sudo apt install -y snapd`
+      await $`if [ -f /etc/apt/preferences.d/nosnap.pref ]; then sudo mv /etc/apt/preferences.d/nosnap.pref /etc/apt/nosnap.pref.bak; fi && sudo apt-get install -y snapd`
       // TODO Following may be required on Kali -> https://snapcraft.io/docs/installing-snap-on-kali
       // systemctl enable --now snapd apparmor
     } else if (dnf) {
@@ -1005,7 +1005,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'apt') {
       for (let pkg of packages) {
         try {
-          await $`sudo apt install -y ${pkg}`
+          await $`sudo apt-get install -y ${pkg}`
         } catch (e) {
           log('error', 'apt-get Failure', `There was an error installing ${pkg} with apt-get`)
         }
