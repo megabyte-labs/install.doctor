@@ -457,8 +457,8 @@ async function afterInstall(packageManager) {
   } else if (packageManager === 'apk') {
   } else if (packageManager === 'apt') {
     try {
-      await $`sudo apt-get autoclean`
-      await $`sudo apt-get autoremove`
+      await $`sudo apt autoclean`
+      await $`sudo apt autoremove`
     } catch (e) {
       log('error', logStage, 'Error cleaning up apt')
     }
@@ -504,7 +504,7 @@ async function ensurePackage(dep) {
         if (updateDone[packageManager] !== true) {
           await beforeInstall('apt-get')
         }
-        await $`sudo apt-get install -y ${dep}`
+        await $`sudo apt install -y ${dep}`
       } else if (dnf) {
         if (updateDone[packageManager] !== true) {
           await beforeInstall('dnf')
@@ -559,7 +559,7 @@ async function beforeInstall(packageManager) {
   } else if (packageManager === 'apk') {
     await $`sudo apk update`
   } else if (packageManager === 'apt') {
-    await $`sudo apt-get update`
+    await $`sudo apt update`
   } else if (packageManager === 'basher') {
   } else if (packageManager === 'binary') {
   } else if (packageManager === 'brew' || packageManager === 'cask') {
@@ -1032,7 +1032,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'apt') {
       for (let pkg of packages) {
         try {
-          await $`sudo unbuffer apt-get install -y ${pkg}`
+          await $`sudo apt install -y ${pkg}`
         } catch (e) {
           log('error', 'apt-get Failure', `There was an error installing ${pkg} with apt-get`)
         }
