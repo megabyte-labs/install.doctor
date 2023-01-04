@@ -504,6 +504,7 @@ async function ensurePackage(dep) {
       const apk = which.sync('apk', { nothrow: true })
       const apt = which.sync('apt-get', { nothrow: true })
       const dnf = which.sync('dnf', { nothrow: true })
+      const pkg = which.sync('pkg', { nothrow: true })
       const yum = which.sync('yum', { nothrow: true })
       const pacman = which.sync('pacman', { nothrow: true })
       const zypper = which.sync('zypper', { nothrow: true })
@@ -513,27 +514,68 @@ async function ensurePackage(dep) {
         if (updateDone['apt-get'] !== true) {
           await beforeInstall('apt-get')
         }
-        await $`sudo apt-get install -y ${dep}`
+        try {
+          log('info', 'apt-get Installation', `Checking if ${dep} is already installed`)
+          await $`dpkg -l ${dep} | grep -E '^ii' > /dev/null`
+        } catch (e) {
+          log('info', 'apt-get Installation', `Installing ${dep} since it is not already present on the system`)
+          await $`sudo apt-get install -y ${dep}`
+        }
       } else if (dnf) {
         if (updateDone['dnf'] !== true) {
           await beforeInstall('dnf')
         }
-        await $`sudo dnf install -y ${dep}`
+        try {
+          log('info', 'dnf Installation', `Checking if ${dep} is already installed`)
+          await $`rpm -qa | grep ${dep} > /dev/null`
+        } catch (e) {
+          log('info', 'dnf Installation', `Installing ${dep} since it is not already present on the system`)
+          await $`sudo dnf install -y ${dep}`
+        }
       } else if (yum) {
         if (updateDone['yum'] !== true) {
           await beforeInstall('yum')
         }
-        await $`sudo yum install -y ${dep}`
+        try {
+          log('info', 'YUM Installation', `Checking if ${dep} is already installed`)
+          await $`rpm -qa | grep ${dep} > /dev/null`
+        } catch (e) {
+          log('info', 'YUM Installation', `Installing ${dep} since it is not already present on the system`)
+          await $`sudo yum install -y ${dep}`
+        }
       } else if (pacman) {
         if (updateDone['pacman'] !== true) {
           await beforeInstall('pacman')
         }
-        await $`sudo pacman -Sy ${dep}`
+        try {
+          log('info', 'Pacman Installation', `Checking if ${dep} is already installed`)
+          await $`pacman -Qs ${dep}`
+        } catch (e) {
+          log('info', 'Pacman Installation', `Installing ${dep} since it is not already present on the system`)
+          await $`sudo pacman -Sy ${dep}`
+        }
       } else if (zypper) {
         if (updateDone['zypper'] !== true) {
           await beforeInstall('zypper')
         }
-        await $`sudo zypper install -y ${dep}`
+        try {
+          log('info', 'Zypper Installation', `Checking if ${dep} is already installed`)
+          await $`rpm -qa | grep ${dep} > /dev/null`
+        } catch (e) {
+          log('info', 'Zypper Installation', `Installing ${dep} since it is not already present on the system`)
+          await $`sudo zypper install -y ${dep}`
+        }
+      } else if (pkg) {
+        if (updateDone['pkg'] !== true) {
+          await beforeInstall('pkg')
+        }
+        try {
+          log('info', 'pkg Installation', `Checking if ${dep} is already installed`)
+          await $`pkg info -Ix ${dep} > /dev/null`
+        } catch (e) {
+          log('info', 'pkg Installation', `Installing ${dep} since it is not already present on the system`)
+          await $`sudo pkg install -y ${dep}`
+        }
       }
     } else if (osType === 'darwin') {
       if (updateDone['brew'] !== true) {
@@ -1087,7 +1129,13 @@ async function installPackageList(packageManager, packages) {
       if (dnf) {
         for (let pkg of packages) {
           try {
-            await $`sudo dnf install -y ${pkg}`
+            try {
+              log('info', 'dnf Installation', `Checking if ${pkg} is already installed`)
+              await $`rpm -qa | grep ${pkg} > /dev/null`
+            } catch (e) {
+              log('info', 'dnf Installation', `Installing ${pkg} since it is not already present on the system`)
+              await $`sudo dnf install -y ${pkg}`
+            }
           } catch (e) {
             log('error', 'dnf Failure', `There was an error installing ${pkg} with dnf`)
           }
@@ -1095,7 +1143,13 @@ async function installPackageList(packageManager, packages) {
       } else if (yum) {
         for (let pkg of packages) {
           try {
-            await $`sudo yum install -y ${pkg}`
+            try {
+              log('info', 'YUM Installation', `Checking if ${pkg} is already installed`)
+              await $`rpm -qa | grep ${pkg} > /dev/null`
+            } catch (e) {
+              log('info', 'YUM Installation', `Installing ${pkg} since it is not already present on the system`)
+              await $`sudo yum install -y ${pkg}`
+            }
           } catch (e) {
             log('error', 'yum Failure', `There was an error installing ${pkg} with yum`)
           }
@@ -1137,7 +1191,13 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'pacman') {
       for (let pkg of packages) {
         try {
-          await $`sudo pacman -Sy --noconfirm --needed ${pkg}`
+          try {
+            log('info', 'Pacman Installation', `Checking if ${pkg} is already installed`)
+            await $`pacman -Qs ${pkg}`
+          } catch (e) {
+            log('info', 'Pacman Installation', `Installing ${pkg} since it is not already present on the system`)
+            await $`sudo pacman -Sy --noconfirm --needed ${dep}`
+          }
         } catch (e) {
           log('error', 'Pacman Failure', `There was an error installing ${pkg} with pacman`)
         }
@@ -1227,7 +1287,13 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'zypper') {
       for (let pkg of packages) {
         try {
-          await $`sudo zypper install -y ${packages}`
+          try {
+            log('info', 'Zypper Installation', `Checking if ${pkg} is already installed`)
+            await $`rpm -qa | grep ${pkg} > /dev/null`
+          } catch (e) {
+            log('info', 'Zypper Installation', `Installing ${pkg} since it is not already present on the system`)
+            await $`sudo zypper install -y ${pkg}`
+          }
         } catch (e) {
           log('error', 'Zypper Failure', `There was an error installing ${pkg} with zypper`)
         }
