@@ -1021,7 +1021,13 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'apt') {
       for (let pkg of packages) {
         try {
-          await $`sudo apt-get install -y ${pkg}`
+          try {
+            log('info', 'apt-get Installation', `Checking if ${pkg} is already installed`)
+            await $`dpkg -l ${pkg} | grep -E '^ii' > /dev/null`
+          } catch (e) {
+            log('info', 'apt-get Installation', `Installing ${pkg} since it is not already present on the system`)
+            await $`sudo apt-get install -y ${pkg}`
+          }
         } catch (e) {
           log('error', 'apt-get Failure', `There was an error installing ${pkg} with apt-get`)
         }
