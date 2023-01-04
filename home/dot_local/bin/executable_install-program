@@ -1316,7 +1316,7 @@ async function updateSystemd(service) {
 
 async function pruneInstallOrders(installOrders) {
   const newOrders = Object.assign({}, installOrders)
-  for (const pkgManager in installOrders) {
+  for (const pkgManager of installOrders) {
     if (pkgManager === 'apt') {
       newOrders[pkgManager] = newOrders[pkgManager].filter(async x => {
         try {
@@ -1327,14 +1327,15 @@ async function pruneInstallOrders(installOrders) {
         }
       })
     } else if (pkgManager === 'brew') {
-      newOrders[pkgManager] = newOrders[pkgManager].filter(async x => {
+      let newVal = newOrders[pkgManager]
+      for (const pkg in newOrders[pkgManager]) {
         try {
           await $`brew list ${pkg}`
-          return true
         } catch (e) {
-          return false
+          // Do nothing
         }
-      })
+      }
+      newOrders[pkgManager] = newVal
     } else if (pkgManager === 'dnf') {
       const dnf = which.sync('dnf', { nothrow: true })
       newOrders[pkgManager] = newOrders[pkgManager].filter(async x => {
