@@ -467,7 +467,7 @@ async function afterInstall(packageManager) {
   } else if (packageManager === 'apt') {
     try {
       await $`sudo apt-get autoclean`
-      await $`sudo apt-get autoremove`
+      await $`sudo apt-get -y autoremove`
     } catch (e) {
       log('error', logStage, 'Error cleaning up apt-get')
     }
