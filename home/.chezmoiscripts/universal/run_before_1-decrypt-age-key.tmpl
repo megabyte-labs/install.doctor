@@ -12,7 +12,10 @@ if [ ! -f "${XDG_CONFIG_HOME}/age/chezmoi.txt" ]; then
     logg info 'Proceeding without decrypting age encryption key stored at `~/.local/share/chezmoi/home/key.txt.age`'
     logg info 'To have Chezmoi handle your encryption (so you can store your private files publicly) take a look at https://www.chezmoi.io/user-guide/frequently-asked-questions/encryption/#how-do-i-configure-chezmoi-to-encrypt-files-but-only-request-a-passphrase-the-first-time-chezmoi-init-is-run'
   else
-    chmod 600 "${XDG_CONFIG_HOME}/age/chezmoi.txt"
+    if [ -f "${XDG_CONFIG_HOME}/age/chezmoi.txt" ]; then
+      logg info 'Chezmoi / age decryption key is stored in '"${XDG_CONFIG_HOME}/age/chezmoi.txt"
+      chmod 600 "${XDG_CONFIG_HOME}/age/chezmoi.txt"
+    fi
   fi
 else
   logg info 'Ensuring the chezmoi.txt file has proper private permissions applied'
