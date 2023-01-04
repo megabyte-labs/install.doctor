@@ -749,7 +749,7 @@ async function ensurePackageManager(packageManager) {
     if (!zap) {
       log('info', 'Zap Installation', 'Installing Zap to handle AppImage installation')
       await ensurePackage('curl')
-      await $`sudo curl -sSL https://github.com/srevinsaju/zap/releases/download/continuous/zap-amd64 > /usr/local/bin/zap`
+      await $`sudo curl -sSL --output /usr/local/bin/zap https://github.com/srevinsaju/zap/releases/download/continuous/zap-amd64`
     }
   } else if (packageManager === 'ansible') {
     try {
