@@ -1098,7 +1098,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'flatpak') {
       for (let pkg of packages) {
         try {
-          await $`sudo flatpak install flathub ${pkg}`
+          await $`sudo flatpak install -y flathub ${pkg}`
         } catch (e) {
           log('error', 'Flatpak Failure', `There was an error installing ${pkg} with flatpak`)
         }
