@@ -248,6 +248,9 @@ if [ ! -f "$HOME/.config/chezmoi/chezmoi.yaml" ]; then
   chezmoi init
 fi
 
+### Ensure Debian noninteractive mode
+export DEBIAN_FRONTEND=noninteractive
+
 ### Run chezmoi apply
 # shellcheck disable=SC2016
 logg info 'Running `chezmoi apply`'
