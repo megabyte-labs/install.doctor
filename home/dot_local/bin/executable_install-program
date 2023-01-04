@@ -1320,6 +1320,15 @@ async function pruneInstallOrders(installOrders) {
           return false
         }
       })
+    } else if (pkgManager === 'brew') {
+      newOrders[pkgManager] = newOrders[pkgManager].filter(async x => {
+        try {
+          await $`brew list ${pkg}`
+          return true
+        } catch (e) {
+          return false
+        }
+      })
     } else if (pkgManager === 'dnf') {
       const dnf = which.sync('dnf', { nothrow: true })
       newOrders[pkgManager] = newOrders[pkgManager].filter(async x => {
