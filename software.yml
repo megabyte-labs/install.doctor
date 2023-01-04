@@ -2224,7 +2224,7 @@ softwarePackages:
     _type: cli
     github: github.com/sgarciac/fuego
     snap: fuego
-  macfuse:
+  fuse:
     _bin: null
     _desc: '[macFUSE](https://osxfuse.github.io/) allows you to extend macOS via third party file systems.'
     _docs: null
@@ -2234,6 +2234,7 @@ softwarePackages:
     _service: null
     _when:cask: '! test -d /usr/local/Caskroom/macfuse'
     ansible:darwin: professormanhattan.fuse
+    apt: libfuse-dev
     cask: macfuse
   fx:
     _bin: fx
@@ -5793,7 +5794,7 @@ softwarePackages:
   goofys:
     _bin: goofys
     _deps:
-      - macfuse
+      - fuse
     _desc: A high-performance, POSIX-ish Amazon S3 file system written in Go
     _docs: https://github.com/kahing/goofys#usage
     _github: https://github.com/kahing/goofys
@@ -5804,6 +5805,8 @@ softwarePackages:
     brew:linux: goofys
     go:linux: github.com/kahing/goofys@latest
   catfs:
+    _deps:
+      - fuse
     _bin: catfs
     _desc: Cache anything filesystem written in Rust
     _docs: https://github.com/kahing/catfs#usage
