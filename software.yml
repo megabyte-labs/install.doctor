@@ -1981,6 +1981,7 @@ softwarePackages:
     brew: filebrowser/tap/filebrowser
     github: github.com/filebrowser/filebrowser
   arduino-ide:
+    _when:cask: '! test -d "/Applications/Arduino.app"'
     cask: arduino
     choco: arduino
     flatpak: cc.arduino.IDE2
@@ -2521,6 +2522,7 @@ softwarePackages:
     choco: gitter
     flatpak: im.gitter.Gitter
   github-desktop:
+    _when:cask: '! test -d "/Applications/GitHub Desktop.app"'
     cask: github
     choco: github-desktop
     flatpak: io.github.shiftey.Desktop
@@ -3641,6 +3643,7 @@ softwarePackages:
     github: github.com/knative/client
     yay: knative-client-bin
   beekeeper-studio:
+    _when:cask: '! test -d "/Applications/Beekeeper Studio.app"'
     cask: beekeeper-studio
     choco:  beekeeper-studio
     flatpak: io.beekeeperstudio.Studio
@@ -4057,6 +4060,7 @@ softwarePackages:
   dialect:
     flatpak: app.drey.Dialect
   meld:
+    _when:cask: '! test -d "/Applications/Meld.app"'
     cask: meld
     choco: meld
     flatpak: org.gnome.meld
@@ -4068,10 +4072,12 @@ softwarePackages:
   connections:
     flatpak: org.gnome.Connections
   ferdium:
+    _when:cask: '! test -d "/Applications/Ferdium.app"'
     cask: ferdium
     choco: ferdium
     flatpak: org.ferdium.Ferdium
   thunderbird:
+    _when:cask: '! test -d "/Applications/Thunderbird.app"'
     cask: thunderbird
     choco: thunderbird
     flatpak: org.mozilla.Thunderbird
@@ -7003,6 +7009,7 @@ softwarePackages:
     port: upx
     scoop: upx
   cutter:
+    _when:cask: '! test -d "/Applications/Cutter.app"'
     cask: cutter
     choco: cutter
     flatpak: re.rizin.cutter
