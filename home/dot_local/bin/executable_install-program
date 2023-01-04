@@ -589,7 +589,7 @@ async function beforeInstall(packageManager) {
       await $`sudo yum update -y`
     }
   } else if (packageManager === 'flatpak') {
-    await $`sudo flatpak update`
+    await $`sudo flatpak update -y`
   } else if (packageManager === 'gem') {
   } else if (packageManager === 'go') {
   } else if (packageManager === 'nix') {
