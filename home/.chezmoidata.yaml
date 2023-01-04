@@ -77,6 +77,8 @@ softwareGroups:
     - restic
     - sanoid
   Backup-Desktop: &Backup-Desktop
+    - cryptomator
+    - seafile-client
     - timeshift
   Browsers: &Browsers
     - w3m
@@ -84,7 +86,9 @@ softwareGroups:
     - brave-browser
     - google-chrome
     - chrome-cli
+    - ferdium
     - firefox
+    - librewolf
     - microsoft-edge
   CI: &CI
     - act
@@ -215,11 +219,14 @@ softwareGroups:
     - rclone
     - s5cmd
   Communication-Desktop: &Communication-Desktop
+    - discord
+    - gitter
     - microsoft-teams
     - jitsi-meet
     - keybase
     - skype
     - slack
+    - telegram
     - zoom
   Crypto: &Crypto
     - cointop
@@ -251,12 +258,15 @@ softwareGroups:
   Database: &Database
     - sqlite
   Database-Desktop: &Database-Desktop
+    - beekeeper-studio
     - sqlectron
   Development-Tools-Desktop: &Development-Tools-Desktop
+    - github-desktop
     - intellij-idea-ce
     - iterm2
     - lepton
     - masscode
+    - meld
     - powershell
     - redis-desktop-manager
     - visual-studio
@@ -280,7 +290,13 @@ softwareGroups:
     - himalaya
   E-mail-Desktop: &E-mail-Desktop
     - mailspring
+    - proton-import-export
     - protonmail-bridge
+    - thunderbird
+  Engineering-Desktop: &Engineering
+    - arduino-ide
+    - cutter
+    - fritzing
   Essentials: &Essentials
     - docker
   Essentials-Desktop: &Essentials-Desktop
@@ -289,6 +305,7 @@ softwareGroups:
     - tabby
     - vlc
     - vscode
+    - vscodium
   File-System: &File-System
     - catfs
     - glusterfs
@@ -395,8 +412,10 @@ softwareGroups:
   Media-Desktop: &Media-Desktop
     - balenaetcher
     - gimp
+    - handbrake
     - inkscape
     - kodi
+    - krita
     - lollypop
     - nuclear
     - plex
@@ -405,14 +424,17 @@ softwareGroups:
     - shotwell
     - vlc
   Misc-Desktop: &Misc-Desktop
+    - _misc-flatpaks
     - cerebro
     - clocker
     - cumulus
     - pretzel
     - qlplugins
     - remote-desktop # bundle
+    - remmina
     - rofi
     - secretive
+    - standard-notes
     - stats
     - temps
     - teamviewer
@@ -485,6 +507,7 @@ softwareGroups:
     - dframe
     - t-rec
   Recording-Desktop: &Recording-Desktop
+    - flameshot
     - peek
     - sharex
   Ruby: &Ruby
@@ -584,6 +607,7 @@ softwareGroups:
     - packer
     - vagrant
   Virtualization-Desktop: &Virtualization-Desktop
+    - gnome-boxes
     - parallels
     - virtualbox
     - vmware
@@ -735,6 +759,7 @@ softwareGroups:
     - *Database-Desktop
     - *Development-Tools-Desktop
     - *E-mail-Desktop
+    - *Engineering-Desktop
     - *Finance-Desktop
     - *Git-Desktop
     - *Kubernetes-Desktop

@@ -170,6 +170,23 @@ installerPreference:
     - binary
 
 softwarePackages:
+  _misc-flatpaks:
+    _deps:
+      - bottles
+      - cockpit-client
+      - connections
+      - deja-dup
+      - dialect
+      - flatseal
+      - forklift
+      - gnome-extension-manager
+      - gnome-eyedropper
+      - gnome-passwords-keys
+      - kooha
+      - monitorets
+      - vup
+      - warp-transfer
+      - what-ip
   act:
     _bin: act
     _desc: Run GitHub actions locally
@@ -2046,7 +2063,28 @@ softwarePackages:
     _service: null
     npm: fkill-cli
   flameshot:
+    _bin: null
+    _desc: Powerful yet simple to use screenshot software
+    _docs: https://flameshot.org/docs/overview/overview/
+    _github: https://github.com/flameshot-org/flameshot
+    _home: https://flameshot.org/
+    _name: Flameshot
+    _scoopExtras: true
+    _service: true
+    apt: flameshot
+    cask: flameshot
+    choco: flameshot
+    dnf: flameshot
+    eopkg: flameshot
     flatpak: org.flameshot.Flameshot
+    nix: nixos.flameshot
+    pacman: flameshot
+    port: flameshot
+    scoop: flameshot
+    snap: flameshot
+    winget: flameshot
+    xbps: flameshot
+    zypper: flameshot
   flutter:
     _bin: flutter
     _desc: null
@@ -2060,6 +2098,15 @@ softwarePackages:
     snap: flutter
     yay: flutter
   fritzing:
+    _todo: Add installation source for macOS
+    _bin: null
+    _desc: Fritzing is an open-source hardware initiative that makes electronics accessible as a creative material for anyone. We offer a software tool, a community website and services in the spirit of Processing and Arduino, fostering a creative ecosystem that allows users to document their prototypes, share them with others, teach electronics in a classroom, and layout and manufacture professional PCBs.
+    _docs: https://fritzing.org/learning/get-started
+    _github: https://github.com/fritzing/fritzing-app
+    _home: https://fritzing.org/
+    _name: Fritzing
+    _service: false
+    choco: fritzing
     flatpak: org.fritzing.Fritzing
   fly:
     _bin: fly
@@ -2237,13 +2284,27 @@ softwarePackages:
     pacman: gawk
     port: gawk
     scoop: gawk
-  standardnotes:
+  standard-notes:
+    _bin: null
+    _desc: End-to-end encrypted notes app
+    _docs: https://standardnotes.com/help
+    _github: https://github.com/standardnotes/app
+    _home: https://standardnotes.com/
+    _name: Standard Notes
+    _service: false
+    cask: standard-notes
     flatpak: org.standardnotes.standardnotes
   deja-dup:
     flatpak: org.gnome.DejaDup
   discord:
+    _name: Discord
+    cask: discord
+    choco: discord
     flatpak: com.discordapp.Discord
   telegram:
+    _name: Telegram
+    cask: telegram
+    choco: telegram
     flatpak: org.telegram.desktop
   google-assistant:
     _bin: null
@@ -2450,8 +2511,13 @@ softwarePackages:
     brew: git-secret
     dnf: git-secret
   gitter:
+    _name: Gitter
+    cask: gitter
+    choco: gitter
     flatpak: im.gitter.Gitter
   github-desktop:
+    cask: github
+    choco: github-desktop
     flatpak: io.github.shiftey.Desktop
   warp-transfer:
     flatpak: app.drey.Warp
@@ -2953,7 +3019,9 @@ softwarePackages:
     _name: Guacamole
     _service: null
     ansible: professormanhattan.guacamole
-  seafile:
+  seafile-client:
+    cask: seafile-client
+    choco: seafile-client
     flatpak: com.seafile.Client
   gulp:
     _bin: gulp
@@ -3567,6 +3635,8 @@ softwarePackages:
     github: github.com/knative/client
     yay: knative-client-bin
   beekeeper-studio:
+    cask: beekeeper-studio
+    choco:  beekeeper-studio
     flatpak: io.beekeeperstudio.Studio
   kodi:
     _bin: null
@@ -3780,6 +3850,8 @@ softwarePackages:
     _when: '! test -d /usr/local/Cellar/libimobiledevice'
     brew:darwin: libimobiledevice
   krita:
+    cask: krita
+    choco: krita
     flatpak: org.kde.krita
   libreoffice:
     _bin: null
@@ -3978,16 +4050,25 @@ softwarePackages:
   dialect:
     flatpak: app.drey.Dialect
   meld:
+    cask: meld
+    choco: meld
     flatpak: org.gnome.meld
   cryptomator:
+    cask: cryptomator
+    choco: cryptomator
     flatpak: org.cryptomator.Cryptomator
   connections:
     flatpak: org.gnome.Connections
   ferdium:
+    cask: ferdium
+    choco: ferdium
     flatpak: org.ferdium.Ferdium
   thunderbird:
+    cask: thunderbird
+    choco: thunderbird
     flatpak: org.mozilla.Thunderbird
   live-captions:
+    _desc: Linux Desktop application that provides live captioning
     flatpak: net.sapples.LiveCaptions
   mailspring:
     _bin: null
@@ -5260,7 +5341,8 @@ softwarePackages:
     choco: protonmailbridge
     flatpak: ch.protonmail.protonmail-bridge
     yay: protonmail-bridge
-  protonmail-import-export-app:
+  protonmail-import-export:
+    cask: proton-import-export
     flatpak: ch.protonmail.protonmail-import-export-app
   bottles:
     flatpak: com.usebottles.bottles
@@ -6225,6 +6307,8 @@ softwarePackages:
     github: github.com/sqlectron/sqlectron-gui
     yay: sqlectron-gui
   handbrake:
+    cask: handbrake
+    choco: handbrake
     flatpak: fr.handbrake.ghb
   sqlite:
     _bin: sqlite3
@@ -6909,11 +6993,9 @@ softwarePackages:
     pacman: upx
     port: upx
     scoop: upx
-  arduino:
-    cask: arduino
-    choco: arduino
-    flatpak: cc.arduino.IDE2
   cutter:
+    cask: cutter
+    choco: cutter
     flatpak: re.rizin.cutter
   librewolf:
     _scoopExtras: true
