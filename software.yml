@@ -5356,6 +5356,7 @@ softwarePackages:
     flatpak: ch.protonmail.protonmail-bridge
     yay: protonmail-bridge
   protonmail-import-export:
+    _when:cask: '! test -d "/Applications/ProtonMail Import-Export app.app"'
     cask: protonmail-import-export
     flatpak: ch.protonmail.protonmail-import-export-app
   bottles:
