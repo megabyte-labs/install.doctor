@@ -2071,6 +2071,7 @@ softwarePackages:
     _name: Flameshot
     _scoopExtras: true
     _service: true
+    _when:cask: '! test -d "/Applications/flameshot.app"'
     apt: flameshot
     cask: flameshot
     choco: flameshot
@@ -2292,17 +2293,20 @@ softwarePackages:
     _home: https://standardnotes.com/
     _name: Standard Notes
     _service: false
+    _when:cask: '! test -d "/Applications/Standard Notes.app"'
     cask: standard-notes
     flatpak: org.standardnotes.standardnotes
   deja-dup:
     flatpak: org.gnome.DejaDup
   discord:
     _name: Discord
+    _when:cask: '! test -d "/Applications/Discord.app"'
     cask: discord
     choco: discord
     flatpak: com.discordapp.Discord
   telegram:
     _name: Telegram
+    _when:cask: '! test -d "/Applications/Telegram.app"'
     cask: telegram
     choco: telegram
     flatpak: org.telegram.desktop
@@ -2512,6 +2516,7 @@ softwarePackages:
     dnf: git-secret
   gitter:
     _name: Gitter
+    _when:cask: '! test -d "/Applications/Gitter.app"'
     cask: gitter
     choco: gitter
     flatpak: im.gitter.Gitter
@@ -3020,6 +3025,7 @@ softwarePackages:
     _service: null
     ansible: professormanhattan.guacamole
   seafile-client:
+    _when:cask: '! test -d "/Applications/Seafile Client.app"'
     cask: seafile-client
     choco: seafile-client
     flatpak: com.seafile.Client
@@ -3850,6 +3856,7 @@ softwarePackages:
     _when: '! test -d /usr/local/Cellar/libimobiledevice'
     brew:darwin: libimobiledevice
   krita:
+    _when:cask: '! test -d "/Applications/krita.app"'
     cask: krita
     choco: krita
     flatpak: org.kde.krita
@@ -4054,6 +4061,7 @@ softwarePackages:
     choco: meld
     flatpak: org.gnome.meld
   cryptomator:
+    _when:cask: '! test -d "/Applications/Cryptomator.app"'
     cask: cryptomator
     choco: cryptomator
     flatpak: org.cryptomator.Cryptomator
@@ -6307,6 +6315,7 @@ softwarePackages:
     github: github.com/sqlectron/sqlectron-gui
     yay: sqlectron-gui
   handbrake:
+    _when:cask: '! test -d "/Applications/HandBrake.app"'
     cask: handbrake
     choco: handbrake
     flatpak: fr.handbrake.ghb
@@ -6999,6 +7008,7 @@ softwarePackages:
     flatpak: re.rizin.cutter
   librewolf:
     _scoopExtras: true
+    _when:cask: '! test -d "/Applications/LibreWolf.app"'
     cask: librewolf
     choco: librewolf
     flatpak: io.gitlab.librewolf-community
@@ -7132,6 +7142,7 @@ softwarePackages:
     choco: visualstudio2022community
   vscodium:
     _snapClassic: true
+    _when:cask: '! test -d "/Applications/VSCodium.app"'
     cask: vscodium
     choco: vscodium
     flatpak: com.vscodium.codium
