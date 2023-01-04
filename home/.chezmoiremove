@@ -36,7 +36,3 @@ Brewfile
 .zsh_sessions
 .zprofile
 .zshrc.zwc
-
-{{- if ne .host.distro.family "linux" }}
-.Xresources
-{{- end }}
