@@ -70,7 +70,7 @@ function log(type, label, msg) {
 }
 
 let installData
-const installOrders = {}
+let installOrders = {}
 const installOrdersPre = []
 const installOrdersPost = []
 const installOrdersSystemd = []
@@ -1063,13 +1063,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'apt') {
       for (let pkg of packages) {
         try {
-          try {
-            log('info', 'apt-get Installation', `Checking if ${pkg} is already installed`)
-            await $`dpkg -l ${pkg} | grep -E '^ii' > /dev/null`
-          } catch (e) {
-            log('info', 'apt-get Installation', `Installing ${pkg} since it is not already present on the system`)
-            await $`sudo apt-get install -y ${pkg}`
-          }
+          await $`sudo apt-get install -y ${pkg}`
         } catch (e) {
           log('error', 'apt-get Failure', `There was an error installing ${pkg} with apt-get`)
         }
@@ -1126,30 +1120,16 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'dnf') {
       const dnf = which.sync('dnf', { nothrow: true })
       const yum = which.sync('yum', { nothrow: true })
-      if (dnf) {
-        for (let pkg of packages) {
+      for (let pkg of packages) {
+        if (dnf) {
           try {
-            try {
-              log('info', 'dnf Installation', `Checking if ${pkg} is already installed`)
-              await $`rpm -qa | grep ${pkg} > /dev/null`
-            } catch (e) {
-              log('info', 'dnf Installation', `Installing ${pkg} since it is not already present on the system`)
-              await $`sudo dnf install -y ${pkg}`
-            }
+            await $`sudo dnf install -y ${pkg}`
           } catch (e) {
             log('error', 'dnf Failure', `There was an error installing ${pkg} with dnf`)
           }
-        }
-      } else if (yum) {
-        for (let pkg of packages) {
+        } else if (yum) {
           try {
-            try {
-              log('info', 'YUM Installation', `Checking if ${pkg} is already installed`)
-              await $`rpm -qa | grep ${pkg} > /dev/null`
-            } catch (e) {
-              log('info', 'YUM Installation', `Installing ${pkg} since it is not already present on the system`)
-              await $`sudo yum install -y ${pkg}`
-            }
+            await $`sudo yum install -y ${pkg}`
           } catch (e) {
             log('error', 'yum Failure', `There was an error installing ${pkg} with yum`)
           }
@@ -1191,13 +1171,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'pacman') {
       for (let pkg of packages) {
         try {
-          try {
-            log('info', 'Pacman Installation', `Checking if ${pkg} is already installed`)
-            await $`pacman -Qs ${pkg}`
-          } catch (e) {
-            log('info', 'Pacman Installation', `Installing ${pkg} since it is not already present on the system`)
-            await $`sudo pacman -Sy --noconfirm --needed ${dep}`
-          }
+          await $`sudo pacman -Sy --noconfirm --needed ${dep}`
         } catch (e) {
           log('error', 'Pacman Failure', `There was an error installing ${pkg} with pacman`)
         }
@@ -1287,13 +1261,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'zypper') {
       for (let pkg of packages) {
         try {
-          try {
-            log('info', 'Zypper Installation', `Checking if ${pkg} is already installed`)
-            await $`rpm -qa | grep ${pkg} > /dev/null`
-          } catch (e) {
-            log('info', 'Zypper Installation', `Installing ${pkg} since it is not already present on the system`)
-            await $`sudo zypper install -y ${pkg}`
-          }
+          await $`sudo zypper install -y ${pkg}`
         } catch (e) {
           log('error', 'Zypper Failure', `There was an error installing ${pkg} with zypper`)
         }
@@ -1340,6 +1308,59 @@ async function updateSystemd(service) {
   }
 }
 
+async function pruneInstallOrders(installOrders) {
+  const newOrders = Object.assign({}, installOrders)
+  for (const pkgManager in installOrders) {
+    if (pkgManager === 'apt') {
+      newOrders[pkgManager] = newOrders[pkgManager].filter(async x => {
+        try {
+          await $`dpkg -l ${pkg} | grep -E '^ii' > /dev/null`
+          return true
+        } catch (e) {
+          return false
+        }
+      })
+    } else if (pkgManager === 'dnf') {
+      const dnf = which.sync('dnf', { nothrow: true })
+      newOrders[pkgManager] = newOrders[pkgManager].filter(async x => {
+        try {
+          if (dnf) {
+            await $`rpm -qa | grep ${pkg} > /dev/null > /dev/null`
+          } else {
+            await $`rpm -qa | grep ${pkg} > /dev/null > /dev/null`
+          }
+          return true
+        } catch (e) {
+          return false
+        }
+      })
+    } else if (pkgManager === 'flatpak') {
+      newOrders[pkgManager] = newOrders[pkgManager].filter(async x => {
+        try {
+          if (dnf) {
+            await $`rpm -qa | grep ${pkg} > /dev/null > /dev/null`
+          } else {
+            await $`rpm -qa | grep ${pkg} > /dev/null > /dev/null`
+          }
+          return true
+        } catch (e) {
+          return false
+        }
+      })
+    } else if (pkgManager === 'pacman') {
+      newOrders[pkgManager] = newOrders[pkgManager].filter(async x => {
+        try {
+          await $`pacman -Qs ${pkg} > /dev/null > /dev/null`
+          return true
+        } catch (e) {
+          return false
+        }
+      })
+    }
+  }
+  return newOrders
+}
+
 // main process
 async function installSoftware(pkgsToInstall) {
   osType = await OSType()
@@ -1369,6 +1390,7 @@ async function installSoftware(pkgsToInstall) {
     log('error', 'Install Orders', `There was an error reducing the duplicates in the install orders`)
     console.error(e)
   }
+  installOrders = await pruneInstallOrders(installOrders)
   console.log(installOrders)
   log('info', 'Package Manager Pre-Install', `Running package manager pre-installation steps`)
   for (const packageManager of packageManagers) {
