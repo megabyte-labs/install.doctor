@@ -25,5 +25,7 @@ find "$HOME/.local/src/gas-station/roles" -mindepth 2 -maxdepth 2 -type d | whil
   fi
 done
 
-logg info 'Ensuring Ansible Galaxy collections are installed'
-ansible-galaxy install -r "$HOME/.local/src/gas-station/requirements.yml"
+if [ -f "$HOME/.local/src/gas-station/requirements.yml" ] && command -v ansible-galaxy > /dev/null; then
+  logg info 'Ensuring Ansible Galaxy collections are installed'
+  ansible-galaxy install -r "$HOME/.local/src/gas-station/requirements.yml"
+fi
