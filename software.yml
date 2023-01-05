@@ -7453,7 +7453,9 @@ softwarePackages:
     _name: Wireshark
     _service: null
     ansible: professormanhattan.wireshark
-    apt: tshark
+    # Install hangs even with sudo apt-get -o DPkg::Options::=--force-confdef install -y tshark
+    # Need to figure out how to completely automate this
+    # apt: tshark
     brew: wireshark
     dnf: wireshark-cli
     pacman: wireshark-cli
