@@ -1000,7 +1000,7 @@ async function ensurePackageManager(packageManager) {
         await $`sudo ln -s /var/lib/snapd/snap /snap`
       }
     } else if (yum) {
-      runCommand('Ensuring snapd is installed', `sudo yum install -y snapd')
+      runCommand('Ensuring snapd is installed', 'sudo yum install -y snapd')
       await $`sudo systemctl enable --now snapd.socket`
       if (!fileExists('/snap')) {
         $`sudo ln -s /var/lib/snapd/snap /snap`
