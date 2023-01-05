@@ -1,0 +1,94 @@
+#!/usr/bin/env zx
+
+// gnome config hash: {{ include (joinPath .host.home ".config" "desktop" "gnome.yml")| sha256sum }}
+// settings config hash: {{ include (joinPath .host.home ".config" "desktop" "settings.yml")| sha256sum }}
+
+{{ includeTemplate "universal/zx" }}
+
+async function loadThemeSettings() {
+  try {
+    const themeSettingsFile = `${process.env.HOME}/.config/desktop/settings.yml`
+    if (fileExists(settingsFile)) {
+      const text = fs.readFileSync(themeSettingsFile).toString()
+      return YAML.parse(text)
+    } else {
+      log('warn', 'File Missing', 'Could not find ~/.config/desktop/settings.yml')
+      return {}
+    }
+  } catch (e) {
+    log('error', 'File Load Error', 'Failed to read the ~/.config/desktop/settings.yml file')
+    console.error(e)
+    return {}
+  }
+}
+
+async function loadGnomeSettings() {
+  try {
+    const gnomeSettingsFile = `${process.env.HOME}/.config/desktop/gnome.yml`
+    if (fileExists(settingsFile)) {
+      const text = fs.readFileSync(gnomeSettingsFile).toString()
+      return YAML.parse(text)
+    } else {
+      log('warn', 'File Missing', 'Could not find ~/.config/desktop/gnome.yml')
+      return {}
+    }
+  } catch (e) {
+    log('error', 'File Load Error', 'Failed to read the ~/.config/desktop/gnome.yml file')
+    console.error(e)
+    return {}
+  }
+}
+
+async function applyGsettings(settings) {
+  for (const setting of settings) {
+    try {
+      await $`gsettings set ${setting.setting} ${setting.value}`
+    } catch (e) {
+      log('error', 'Gsettings Failure', 'Failed to apply gsetting')
+      console.error(e)
+    }
+  }
+}
+
+async function applyXconfSettings(settings) {
+  for (const setting of settings) {
+    try {
+      const xfconfType = setting.value_type ? setting.value_type : 'string'
+      await $`xfconf-query --channel '${setting.channel}' --property '${setting.property}' --type ${xfconfType} --set ${setting.value}`
+    } catch (e) {
+      log('error', 'Xfconf Failure', 'Failed to apply gsetting')
+      console.error(e)
+    }
+  }
+}
+
+async function applyDconfSettings(settings) {
+  for (const setting of settings) {
+    try {
+      await $`dconf write ${setting.key} ${setting.value}`
+    } catch (e) {
+      log('error', 'Dconf Failure', 'Failed to apply dconf setting')
+      console.error(e)
+    }
+  }
+}
+
+async function main() {
+  const promises = [loadThemeSettings(), loadGnomeSettings()]
+  const results = await Promise.all(promises)
+  const themeSettings = results[0]
+  const gnomeSettings = results[1]
+  if (themeSettings && themeSettings.gsetting_configs) {
+    settingsPromises.push(applyGsettings(themeSettings.gsetting_configs))
+  }
+  if (themeSettings && themeSettings.xconf_settings) {
+    settingsPromises.push(applyXconfSettings(themeSettings.xconf_settings))
+  }
+  if (gnomeSettings && gnomeSettings.default_dconf_settings) {
+    settingsPromises.push(applyDconfSettings(gnomeSettings.default_dconf_settings))
+  }
+  await Promise.all(settingsPromises)
+  log('success', 'Settings', 'Successfully applied all valid gsettings / xconf / dconf settings')
+}
+
+main()

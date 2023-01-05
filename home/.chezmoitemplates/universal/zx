@@ -1,0 +1,83 @@
+const execSync = require('child_process').execSync
+
+// Log symbols
+const figuresDefault = {
+  bullet: '●',
+  circle: '◯',
+  cross: '✖',
+  lozenge: '◆',
+  play: '▶',
+  pointer: '❯',
+  square: '◼',
+  star: '★',
+  tick: '✔'
+}
+
+const figuresFallback = {
+  bullet: '■',
+  circle: '□',
+  cross: '×',
+  lozenge: '♦',
+  play: '►',
+  pointer: '>',
+  square: '■',
+  star: '✶',
+  tick: '√'
+}
+
+function isUnicodeSupported() {
+  if (process.platform !== 'win32') {
+    // Linux console (kernel)
+    return process.env.TERM !== 'linux'
+  }
+
+  return (
+    Boolean(process.env.CI) ||
+    // Windows Terminal
+    Boolean(process.env.WT_SESSION) ||
+    // ConEmu and cmder
+    process.env.ConEmuTask === '{cmd::Cmder}' ||
+    process.env.TERM_PROGRAM === 'vscode' ||
+    process.env.TERM === 'xterm-256color' ||
+    process.env.TERM === 'alacritty'
+  )
+}
+
+const figures = isUnicodeSupported() ? figuresDefault : figuresFallback
+
+function log(type, label, msg) {
+  let icon, message
+  if (type === 'info') {
+    icon = chalk.cyanBright(figures.pointer)
+    message = chalk.gray.bold(msg)
+  } else if (type === 'star') {
+    icon = chalk.yellowBright(figures.star)
+    message = chalk.bold(msg)
+  } else if (type === 'success') {
+    icon = chalk.greenBright(figures.play)
+    message = chalk.bold(msg)
+  } else if (type === 'warn') {
+    icon = `${chalk.yellowBright(figures.lozenge)} ${chalk.bold.black.bgYellowBright(' WARNING ')}`
+    message = chalk.yellowBright(msg)
+  } else if (type === 'error') {
+    icon = `${chalk.redBright(figures.cross)} ${chalk.black.bold.bgRedBright(' ERROR ')}`
+    message = chalk.redBright(msg)
+  }
+  const outputMessage = `${icon} ${chalk.bold(label)} ${message}`
+  console.log(outputMessage)
+}
+
+function runCommand(spinnerTitle, command) {
+  execSync(`gum spin --spinner dot --title "${spinnerTitle}" -- ${command}`, {
+    stdio: 'inherit',
+    shell: true
+  })
+}
+
+async function runSilentCommand(command) {
+  execSync(`${command}`, { stdio: 'inherit', shell: true })
+}
+
+function fileExists(pathToFile) {
+  return fs.existsSync(pathToFile)
+}
