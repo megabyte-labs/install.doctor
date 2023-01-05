@@ -161,7 +161,7 @@ async function generateInstallOrders(pkgsToInstall) {
             } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osType + ':' + preference]) {
               pref = osType + ':' + preference
             }
-            log('info', 'Skipping Package', `${pkg} is being skipped because of the _when:${pref} condition`)
+            log('info', 'Filter', `${pkg} is being skipped because of the _when:${pref} condition`)
             continue pkgFor
           }
         } else if (scopedPkgManager) {
@@ -169,7 +169,7 @@ async function generateInstallOrders(pkgsToInstall) {
             await $scopedPkgManager
           } catch (e) {
             const pref = preference
-            log('info', 'Skipping Package', `${pkg} is being skipped because of the _when:${pref} condition`)
+            log('info', 'Filter', `${pkg} is being skipped because of the _when:${pref} condition`)
             continue pkgFor
           }
         } else if (scopedSystem) {
@@ -182,14 +182,14 @@ async function generateInstallOrders(pkgsToInstall) {
             } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osType]) {
               pref = osType
             }
-            log('info', 'Skipping Package', `${pkg} is being skipped because of the _when:${pref} condition`)
+            log('info', 'Filter', `${pkg} is being skipped because of the _when:${pref} condition`)
             continue pkgFor
           }
         } else if (normalCheck) {
           try {
             await $(normalCheck)
           } catch (e) {
-            log('info', 'Skipping Package', `${pkg} is being skipped because of the _when condition`)
+            log('info', 'Filter', `${pkg} is being skipped because of the _when condition`)
             continue pkgFor
           }
         }
@@ -222,8 +222,7 @@ async function generateInstallOrders(pkgsToInstall) {
             } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osType + ':' + preference]) {
               pref = osType + ':' + preference
             }
-            log('info', 'Skipping Package', `${pkg} is being skipped because of the _bin:${pref} condition`)
-            log('info', 'Skipping Package', `${bin} is already in the PATH`)
+            log('info', 'Filter', `${bin} already in PATH (via _bin:${pref})`)
             continue pkgFor
           }
         } else if (scopedPkgManager) {
@@ -233,8 +232,7 @@ async function generateInstallOrders(pkgsToInstall) {
               : scopedPkgManager.map((x) => which.sync(x, { nothrow: true })).every((y) => !!y)
           if (bin) {
             const pref = preference
-            log('info', 'Skipping Package', `${pkg} is being skipped because of the _bin:${pref} condition`)
-            log('info', 'Skipping Package', `${bin} is already in the PATH`)
+            log('info', 'Filter', `${bin} already in PATH (via _bin:${pref})`)
             continue pkgFor
           }
         } else if (scopedSystem) {
@@ -249,8 +247,7 @@ async function generateInstallOrders(pkgsToInstall) {
             } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osType]) {
               pref = osType
             }
-            log('info', 'Skipping Package', `${pkg} is being skipped because of the _bin:${pref} condition`)
-            log('info', 'Skipping Package', `${bin} is already in the PATH`)
+            log('info', 'Filter', `${bin} already in PATH (via _bin:${pref})`)
             continue pkgFor
           }
         } else if (normalCheck) {
@@ -259,8 +256,7 @@ async function generateInstallOrders(pkgsToInstall) {
               ? which.sync(normalCheck, { nothrow: true })
               : normalCheck.map((x) => which.sync(x, { nothrow: true })).every((y) => !!y)
           if (bin) {
-            log('info', 'Skipping Package', `${pkg} is being skipped because of the _bin condition`)
-            log('info', 'Skipping Package', `${bin} is already in the PATH`)
+            log('info', 'Filter', `${bin} already in PATH (via _bin)`)
             continue pkgFor
           }
         }
@@ -277,42 +273,43 @@ async function generateInstallOrders(pkgsToInstall) {
           softwarePackages[packageKey]['_' + currentSelector + ':' + osID] ||
           softwarePackages[packageKey]['_' + currentSelector + ':' + osType]
         normalCheck = softwarePackages[packageKey]['_' + currentSelector]
+        const dependenciesTag = 'Dependencies'
         if (doubleScoped) {
           let pref
           if (softwarePackages[packageKey]['_' + currentSelector + ':' + preference + ':' + osID]) {
             pref = preference + ':' + osID
-            log('info', 'Installing Dependencies', `Installing dependencies for ${packageKey}.${pref}`)
+            log('info', dependenciesTag, `Installing dependencies for ${packageKey}.${pref}`)
             await generateInstallOrders(softwarePackages[packageKey][pref])
           } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + preference + ':' + osType]) {
             pref = preference + ':' + osType
-            log('info', 'Installing Dependencies', `Installing dependencies for ${packageKey}.${pref}`)
+            log('info', dependenciesTag, `Installing dependencies for ${packageKey}.${pref}`)
             await generateInstallOrders(softwarePackages[packageKey][pref])
           } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osID + ':' + preference]) {
             pref = osID + ':' + preference
-            log('info', 'Installing Dependencies', `Installing dependencies for ${packageKey}.${pref}`)
+            log('info', dependenciesTag, `Installing dependencies for ${packageKey}.${pref}`)
             await generateInstallOrders(softwarePackages[packageKey][pref])
           } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osType + ':' + preference]) {
             pref = osType + ':' + preference
-            log('info', 'Installing Dependencies', `Installing dependencies for ${packageKey}.${pref}`)
+            log('info', dependenciesTag, `Installing dependencies for ${packageKey}.${pref}`)
             await generateInstallOrders(softwarePackages[packageKey][pref])
           }
         } else if (scopedPkgManager) {
           const pref = preference
-          log('info', 'Installing Dependencies', `Installing dependencies for ${packageKey}.${pref}`)
+          log('info', dependenciesTag, `Installing dependencies for ${packageKey}.${pref}`)
           await generateInstallOrders(softwarePackages[packageKey][pref])
         } else if (scopedSystem) {
           let pref
           if (softwarePackages[packageKey]['_' + currentSelector + ':' + osID]) {
             pref = osID
-            log('info', 'Installing Dependencies', `Installing dependencies for ${packageKey}.${pref}`)
+            log('info', dependenciesTag, `Installing dependencies for ${packageKey}.${pref}`)
             await generateInstallOrders(softwarePackages[packageKey][pref])
           } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osType]) {
             pref = osType
-            log('info', 'Installing Dependencies', `Installing dependencies for ${packageKey}.${pref}`)
+            log('info', dependenciesTag, `Installing dependencies for ${packageKey}.${pref}`)
             await generateInstallOrders(softwarePackages[packageKey][pref])
           }
         } else if (normalCheck) {
-          log('info', 'Installing Dependencies', `Installing dependencies for ${packageKey}.deps`)
+          log('info', dependenciesTag, `Installing dependencies for ${packageKey}.deps`)
           await generateInstallOrders(softwarePackages[packageKey]['_deps'])
         }
         if (softwarePackages[packageKey][preference + ':' + osID]) {
@@ -373,7 +370,7 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
   if (!installOrders[preference]) {
     installOrders[preference] = []
   }
-  log('info', 'Install Orders', `Found a match for the package \`${pkg}\` (${packageKey} via ${scopedPreference})`)
+  log('info', 'Match', `Found a match for the package \`${pkg}\` (${packageKey} via ${scopedPreference})`)
   const newPackages = packages[scopedPreference]
   const newPkgs = typeof newPackages === 'string' ? [newPackages] : newPackages
   if (preference === 'snap' && softwarePackages[pkg]['_snapClassic'] === true) {
