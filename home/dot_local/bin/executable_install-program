@@ -623,10 +623,7 @@ async function beforeInstall(packageManager) {
   } else if (packageManager === 'apk') {
     await $`sudo apk update`
   } else if (packageManager === 'apt') {
-    runCommand('Running apt-get update', `sudo apt-get update`)
-    if (fileExists('/var/lib/apt/lists/lock')) {
-      runCommand('Removing /var/lib/apt/lists/lock', `sudo rm /var/lib/apt/lists/lock`)
-    }
+    runCommand('Running apt-get update / upgrade', `sudo apt-get update && sudo apt-get upgrade -y`)
   } else if (packageManager === 'basher') {
   } else if (packageManager === 'binary') {
   } else if (packageManager === 'brew' || packageManager === 'cask') {
