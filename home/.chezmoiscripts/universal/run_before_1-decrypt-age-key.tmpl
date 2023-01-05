@@ -12,6 +12,11 @@ if [ ! -f "${XDG_CONFIG_HOME}/age/chezmoi.txt" ]; then
   if [ -n "$EXIT_CODE" ]; then
     logg info 'Proceeding without decrypting age encryption key stored at `~/.local/share/chezmoi/home/key.txt.age`'
     logg info 'To have Chezmoi handle your encryption (so you can store your private files publicly) take a look at https://shorturl.at/jkpzG'
+    logg info 'Removing all files that begin with encrypted_ because decryption failed'
+    find "$HOME/.local/share/chezmoi" -type f -name "encrypted_*" | while read ENCRYPTED_FILE; do
+      logg info "Removing $ENCRYPTED_FILE"
+      rm -f "$ENCRYPTED_FILE"
+    done
   fi
 fi
 

@@ -201,6 +201,12 @@
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
+### Vagrant
+[".ssh/authorized_keys.vagrant"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub"
+    refreshPeriod = "{{ $refreshPeriod }}"
+
 {{- if and (not .host.headless) (ne .chezmoi.os "windows") }}
 ### Neovim
 [".config/nvim"]

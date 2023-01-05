@@ -883,7 +883,7 @@ async function ensurePackageManager(packageManager) {
       }
       const flatpakPost = which.sync('flatpak', { nothrow: true })
       if (flatpakPost) {
-        await $`flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo`
+        await $`sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo`
       } else {
         log('error', logStage, `\`flatpak\` failed to install!`)
       }
@@ -1032,13 +1032,13 @@ async function installPackageList(packageManager, packages) {
         try {
           if (pkg.substring(0, 3) === 'http' && pkg.slice(-8) === 'AppImage') {
             log('info', 'AppImage Install', `Installing ${pkg} from its URL`)
-            await $`zap install --from ${pkg}`
+            await $`sudo zap install --from ${pkg}`
           } else if (pkg.includes('/')) {
             log('info', 'AppImage Install', `Installing ${pkg} from a GitHub Release`)
-            await $`zap install --github --from ${pkg}`
+            await $`sudo zap install --github --from ${pkg}`
           } else {
             log('info', 'AppImage Install', `Installing ${pkg} using the AppImage Catalog`)
-            await $`zap install ${pkg}`
+            await $`sudo zap install ${pkg}`
           }
         } catch (e) {
           log('error', 'AppImage / Zap Failure', `There was an error using Zap to install ${pkg}`)
@@ -1314,11 +1314,20 @@ async function updateSystemd(service) {
   }
 }
 
+/**
+* Filter that resolves when all asynchronous filter actions are done
+*/
+const asyncFilter = async (arr, predicate) => {
+	const results = await Promise.all(arr.map(predicate));
+
+	return arr.filter((_v, index) => results[index]);
+}
+
 async function pruneInstallOrders(installOrders) {
   const newOrders = Object.assign({}, installOrders)
   for (const pkgManager of installOrders) {
     if (pkgManager === 'apt') {
-      newOrders[pkgManager] = newOrders[pkgManager].filter(async x => {
+      newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (x) => {
         try {
           await $`dpkg -l ${pkg} | grep -E '^ii' > /dev/null`
           return true
@@ -1331,6 +1340,7 @@ async function pruneInstallOrders(installOrders) {
       for (const pkg in newOrders[pkgManager]) {
         try {
           await $`brew list ${pkg}`
+          newVal = newVal.filter(x => x === pkg)
         } catch (e) {
           // Do nothing
         }
@@ -1338,7 +1348,7 @@ async function pruneInstallOrders(installOrders) {
       newOrders[pkgManager] = newVal
     } else if (pkgManager === 'dnf') {
       const dnf = which.sync('dnf', { nothrow: true })
-      newOrders[pkgManager] = newOrders[pkgManager].filter(async x => {
+      newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (x) => {
         try {
           if (dnf) {
             await $`rpm -qa | grep ${pkg} > /dev/null > /dev/null`
@@ -1364,7 +1374,7 @@ async function pruneInstallOrders(installOrders) {
         }
       })
     } else if (pkgManager === 'pacman') {
-      newOrders[pkgManager] = newOrders[pkgManager].filter(async x => {
+      newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (x) => {
         try {
           await $`pacman -Qs ${pkg} > /dev/null > /dev/null`
           return true
