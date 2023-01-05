@@ -69,6 +69,17 @@ function log(type, label, msg) {
   console.log(outputMessage)
 }
 
+function runCommand(spinnerTitle, command) {
+  execSync(`gum spin --spinner dot --title "${spinnerTitle}" -- ${command}`, {
+    stdio: 'inherit',
+    shell: true
+  })
+}
+
+function fileExists(pathToFile) {
+  return fs.existsSync(pathToFile)
+}
+
 let installData
 let installOrders = {}
 const installOrdersPre = []
@@ -862,17 +873,15 @@ async function ensurePackageManager(packageManager) {
       const pacman = which.sync('pacman', { nothrow: true })
       const zypper = which.sync('zypper', { nothrow: true })
       if (apk) {
-        await $`sudo apk add flatpak`
+        runCommand('Installing flatpak via apk', 'sudo apk add flatpak')
       } else if (apt) {
-        await $`
-          sudo apt-get install -y flatpak
-          if [ -f /usr/bin/gnome-shell ]; then
-            sudo apt-get install -y gnome-software-plugin-flatpak
-          fi
-          if [ -f /usr/bin/plasmashell ]; then
-            sudo apt-get install -y plasmashell
-          fi
-        `
+        runCommand('Installing flatpak via apt-get', 'sudo apt-get install -y flatpak')
+        if (fileExists('/usr/bin/gnome-shell')) {
+          runCommand('Installing gnome-software-plugin-flatpak via apt-get', 'sudo apt-get install -y gnome-software-plugin-flatpak')
+        }
+        if (fileExists('/usr/bin/plasmashell')) {
+          runCommand('Installing plasmashell via apt-get', 'sudo apt-get install -y plasmashell')
+        }
       } else if (dnf) {
         await $`sudo dnf install -y flatpak`
       } else if (yum) {
@@ -1331,21 +1340,22 @@ async function pruneInstallOrders(installOrders) {
     log('info', 'Filtering Install Orders', `Filtering the ${pkgManager} installOrders`)
     console.log(newOrders[pkgManager])
     if (pkgManager === 'apt') {
-      newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (x) => {
+      newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
-          await $`dpkg -l ${pkg} | grep -E '^ii' > /dev/null`
-          return false
-        } catch (e) {
+          log('info', 'Filtering Install Orders', `Checking for presence of ${pkg}`)
+          runCommand(`Checking if ${pkg} is already installed via apt-get`, `dpkg -l ${pkg} | grep -E '^ii' > /dev/null`)
           return true
+        } catch (e) {
+          return false
         }
       })
     } else if (pkgManager === 'brew') {
-      newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (x) => {
+      newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
           await $`brew list ${pkg} > /dev/null`
-          return false
-        } catch (e) {
           return true
+        } catch (e) {
+          return false
         }
       })
       /*let newVal = newOrders[pkgManager]
@@ -1360,38 +1370,38 @@ async function pruneInstallOrders(installOrders) {
       newOrders[pkgManager] = newVal*/
     } else if (pkgManager === 'dnf') {
       const dnf = which.sync('dnf', { nothrow: true })
-      newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (x) => {
+      newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
           if (dnf) {
             await $`rpm -qa | grep ${pkg} > /dev/null > /dev/null`
           } else {
             await $`rpm -qa | grep ${pkg} > /dev/null > /dev/null`
           }
-          return false
-        } catch (e) {
           return true
+        } catch (e) {
+          return false
         }
       })
     } else if (pkgManager === 'flatpak') {
-      newOrders[pkgManager] = newOrders[pkgManager].filter(async x => {
+      newOrders[pkgManager] = newOrders[pkgManager].filter(async (pkg) => {
         try {
           if (dnf) {
             await $`rpm -qa | grep ${pkg} > /dev/null > /dev/null`
           } else {
             await $`rpm -qa | grep ${pkg} > /dev/null > /dev/null`
           }
-          return false
-        } catch (e) {
           return true
+        } catch (e) {
+          return false
         }
       })
     } else if (pkgManager === 'pacman') {
-      newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (x) => {
+      newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
           await $`pacman -Qs ${pkg} > /dev/null > /dev/null`
-          return false
-        } catch (e) {
           return true
+        } catch (e) {
+          return false
         }
       })
     }
