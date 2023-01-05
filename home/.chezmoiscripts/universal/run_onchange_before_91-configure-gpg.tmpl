@@ -30,6 +30,11 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
       if [ -n "$EXIT_CODE" ]; then
         logg error 'Failed to retrieve public user GPG key on hkps://pgp.mit.edu'
         gpgconf --kill dirmngr
+        KEYID="${KEYID^^}"
+        KEYID="$(echo "$KEYID" | sed 's/^0X/0x/')"
+        if [ -f "$HOME/.gnupg/$KEYID.key" ]; then
+          gpg --import "$HOME/.gnupg/$KEYID.key"
+        fi
       else
         logg success 'Successfully imported configured public user GPG key'
       fi
