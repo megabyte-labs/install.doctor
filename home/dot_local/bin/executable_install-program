@@ -1365,7 +1365,7 @@ async function pruneInstallOrders(installOrders) {
       })
     } else if (pkgManager === 'brew') {
       let newVal = newOrders[pkgManager]
-      for (const pkg in newOrders[pkgManager]) {
+      for (const pkg of newOrders[pkgManager]) {
         try {
           console.log(pkg)
           runCommand('Pruning ${pkg} if it is already installed by Homebrew', `brew list ${pkg}`)
