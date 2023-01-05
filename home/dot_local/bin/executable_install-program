@@ -1343,7 +1343,7 @@ async function pruneInstallOrders(installOrders) {
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
           log('info', 'Filtering Install Orders', `Checking for presence of ${pkg}`)
-          runCommand(`Checking if ${pkg} is already installed via apt-get`, `dpkg -l ${pkg} | grep -E '^ii' > /dev/null`)
+          await $`dpkg -l ${pkg} | grep -E '^ii' > /dev/null`
           return true
         } catch (e) {
           return false
