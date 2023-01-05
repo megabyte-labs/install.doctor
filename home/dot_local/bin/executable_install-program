@@ -625,7 +625,7 @@ async function beforeInstall(packageManager) {
   } else if (packageManager === 'brew' || packageManager === 'cask') {
     if (!brewUpdated) {
       brewUpdated = true
-      await $`brew update`
+      runCommand('Running brew update', `brew update`)
     }
   } else if (packageManager === 'cargo') {
   } else if (packageManager === 'choco') {
@@ -635,35 +635,35 @@ async function beforeInstall(packageManager) {
     const dnf = which.sync('dnf', { nothrow: true })
     const yum = which.sync('yum', { nothrow: true })
     if (dnf) {
-      await $`sudo dnf update -y`
+      runCommand('Running dnf update', `sudo dnf update -y`)
     } else if (yum) {
-      await $`sudo yum update -y`
+      runCommand('Running yum update', `sudo yum update -y`)
     }
   } else if (packageManager === 'flatpak') {
-    await $`sudo flatpak update -y`
+    runCommand('Running flatpak update', `sudo flatpak update -y`)
   } else if (packageManager === 'gem') {
   } else if (packageManager === 'go') {
   } else if (packageManager === 'nix') {
-    await $`nix-channel --update`
+    runCommand('Running nix-channel --update', `nix-channel --update`)
   } else if (packageManager === 'npm') {
   } else if (packageManager === 'pacman') {
-    await $`sudo pacman -Syu`
+    runCommand('Running pacman update', `sudo pacman -Syu`)
   } else if (packageManager === 'pipx') {
   } else if (packageManager === 'pkg') {
     await $`sudo pkg upgrade`
   } else if (packageManager === 'port') {
     const port = which.sync('port', { nothrow: true })
     if (port) {
-      await $`sudo port sync`
+      runCommand('Running port sync', `sudo port sync`)
     } else {
       log('error', 'Port Not Installed', 'Skipping sudo port sync step because port is not installed')
     }
   } else if (packageManager === 'scoop') {
-    await $`scoop update`
+    runCommand('Running scoop update', `scoop update`)
   } else if (packageManager === 'snap' || packageManager === 'snap-classic') {
     if (!snapRefreshed) {
       snapRefreshed = true
-      await $`sudo snap refresh`
+      runCommand('Ensuring snap is refreshed', `sudo snap refresh`)
     }
   } else if (packageManager === 'whalebrew') {
     if (osType === 'darwin') {
@@ -698,10 +698,10 @@ async function beforeInstall(packageManager) {
       }
     }
   } else if (packageManager === 'winget') {
-    await $`winget source update`
+    runCommand('Running winget source update', `winget source update`)
   } else if (packageManager === 'yay') {
   } else if (packageManager === 'zypper') {
-    await $`sudo zypper update`
+    runCommand('Running zypper update', `sudo zypper update`)
   }
 }
 
