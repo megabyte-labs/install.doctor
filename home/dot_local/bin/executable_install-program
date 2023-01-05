@@ -527,7 +527,7 @@ async function ensurePackage(dep) {
           runCommand(`Checking if ${dep} is already installed via apt-get`, `dpkg -l ${dep} | grep -E '^ii' > /dev/null`)
           log('info', 'Filter', `${pkg} already installed via apt-get`)
         } catch (e) {
-          runCommand(`Installing ${dep} via apt-get`, `sudo apt-get install -y ${dep}`)
+          runCommand(`Installing ${dep} via apt-get`, `sudo apt-get -o DPkg::Options::=--force-confdef install -y ${dep}`)
           log('success', 'Install', `Successfully installed ${pkg} via apt-get`)
         }
       } else if (dnf) {
