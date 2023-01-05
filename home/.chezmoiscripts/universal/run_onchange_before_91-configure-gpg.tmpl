@@ -32,8 +32,8 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
         gpgconf --kill dirmngr
         KEYID="${KEYID^^}"
         KEYID="$(echo "$KEYID" | sed 's/^0X/0x/')"
-        if [ -f "$HOME/.gnupg/public/$KEYID.key" ]; then
-          gpg --import "$HOME/.gnupg/public/$KEYID.key"
+        if [ -f "$HOME/.gnupg/public/$KEYID.sig" ]; then
+          gpg --import "$HOME/.gnupg/public/$KEYID.sig"
         fi
       else
         logg success 'Successfully imported configured public user GPG key'
