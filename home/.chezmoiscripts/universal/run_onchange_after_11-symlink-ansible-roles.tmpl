@@ -25,18 +25,24 @@ find "$HOME/.local/src/gas-station/roles" -mindepth 2 -maxdepth 2 -type d | whil
   fi
 done
 
-if [ -f "$HOME/.local/src/gas-station/requirements.yml" ] && command -v ansible-galaxy > /dev/null; then
-  logg info 'Ensuring Ansible Galaxy collections are installed'
-  ansible-galaxy install -r "$HOME/.local/src/gas-station/requirements.yml" || EXIT_CODE=$?
-  if [ -n "$EXIT_CODE" ]; then
-    logg error 'Failed to install Ansible requirements from Ansible Galaxy'
-    if [ -d "$HOME/.local/src/gas-station/collections" ]; then
-      logg info 'Attempting to use locally stored Ansible requirements'
-      cd "$HOME/.local/src/gas-station/collections"
-      ansible-galaxy install -r requirements.yml || SECOND_EXIT_CODE=$?
-      if [ -n "$SECOND_EXIT_CODE" ]; then
-        logg error 'Failed to install requirements from both the cloud and the local copy' && exit 1
+if [ -f "$HOME/.local/src/gas-station/requirements.yml" ]; then
+  if command -v ansible-galaxy > /dev/null; then
+    logg info 'Ensuring Ansible Galaxy collections are installed'
+    ansible-galaxy install -r "$HOME/.local/src/gas-station/requirements.yml" || EXIT_CODE=$?
+    if [ -n "$EXIT_CODE" ]; then
+      logg error 'Failed to install Ansible requirements from Ansible Galaxy'
+      if [ -d "$HOME/.local/src/gas-station/collections" ]; then
+        logg info 'Attempting to use locally stored Ansible requirements'
+        cd "$HOME/.local/src/gas-station/collections"
+        ansible-galaxy install -r requirements.yml || SECOND_EXIT_CODE=$?
+        if [ -n "$SECOND_EXIT_CODE" ]; then
+          logg error 'Failed to install requirements from both the cloud and the local copy' && exit 1
+        fi
       fi
     fi
+  else
+    logg warn 'Unable to install the Ansible Galaxy requirements.yml since the ansible-galaxy executable is missing from the PATH'
   fi
+else
+  logg warn '~/.local/src/gas-station/requirements.yml is missing'
 fi
