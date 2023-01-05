@@ -5540,7 +5540,7 @@ softwarePackages:
     _name: RecoverPy
     _service: false
     ansible:linux: professormanhattan.recoverpy
-    pipx:linux: recoverpy
+    script:linux: python3 -m pip install recoverpy
   recoverpy-deps:
     apt:
       - coreutils

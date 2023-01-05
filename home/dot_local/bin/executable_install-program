@@ -1406,7 +1406,7 @@ async function pruneInstallOrders(installOrders) {
     if (pkgManager === 'apt') {
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
-          runSilentCommand(`dpkg -l ${pkg} | grep -E '^ii' > /dev/null`)
+          await runSilentCommand(`dpkg -l ${pkg} | grep -E '^ii' > /dev/null`)
           return false
         } catch (e) {
           return true
@@ -1428,9 +1428,9 @@ async function pruneInstallOrders(installOrders) {
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
           if (dnf) {
-            runSilentCommand(`rpm -qa | grep ${pkg} > /dev/null > /dev/null`)
+            await runSilentCommand(`rpm -qa | grep ${pkg} > /dev/null > /dev/null`)
           } else {
-            runSilentCommand(`rpm -qa | grep ${pkg} > /dev/null > /dev/null`)
+            await runSilentCommand(`rpm -qa | grep ${pkg} > /dev/null > /dev/null`)
           }
           return false
         } catch (e) {
@@ -1440,7 +1440,7 @@ async function pruneInstallOrders(installOrders) {
     } else if (pkgManager === 'flatpak') {
       newOrders[pkgManager] = newOrders[pkgManager].filter(async (pkg) => {
         try {
-          runSilentCommand(`flatpak info ${pkg} > /dev/null`)
+          await runSilentCommand(`flatpak info ${pkg} > /dev/null`)
           return true
         } catch (e) {
           return false
@@ -1449,16 +1449,16 @@ async function pruneInstallOrders(installOrders) {
     } else if (pkgManager === 'pacman') {
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
-          runSilentCommand(`pacman -Qs ${pkg} > /dev/null > /dev/null`)
+          await runSilentCommand(`pacman -Qs ${pkg} > /dev/null > /dev/null`)
           return false
         } catch (e) {
           return true
         }
       })
-    } else if (pkgManager === 'snap') {
+    } else if (pkgManager === 'snap' || pkgManager === 'snap-classic') {
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
-          runSilentCommand(`snap list ${pkg} | grep ${pkg} > /dev/null`)
+          await runSilentCommand(`snap list ${pkg} | grep ${pkg} > /dev/null`)
           return false
         } catch (e) {
           return true
