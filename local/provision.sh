@@ -419,7 +419,7 @@ export DEBIAN_FRONTEND=noninteractive
 # shellcheck disable=SC2016
 logg info 'Running `chezmoi apply`'
 if [ -n "$FORCE_CHEZMOI" ]; then
-  chezmoi apply --force
+  chezmoi apply -k --force
 else
-  chezmoi apply
+  chezmoi apply -k
 fi
