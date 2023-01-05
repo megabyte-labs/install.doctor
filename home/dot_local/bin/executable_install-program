@@ -1050,16 +1050,18 @@ async function installPackageList(packageManager, packages) {
         try {
           if (pkg.substring(0, 3) === 'http' && pkg.slice(-8) === 'AppImage') {
             log('info', 'AppImage Install', `Installing ${pkg} from its URL`)
-            await $`sudo zap install --from ${pkg}`
+            runCommand('Installing ${pkg} via apk', `sudo zap install --from ${pkg}`)
           } else if (pkg.includes('/')) {
             log('info', 'AppImage Install', `Installing ${pkg} from a GitHub Release`)
-            await $`sudo zap install --github --from ${pkg}`
+            runCommand('Installing ${pkg} via apk', `sudo zap install --github --from ${pkg}`)
           } else {
             log('info', 'AppImage Install', `Installing ${pkg} using the AppImage Catalog`)
-            await $`sudo zap install ${pkg}`
+            runCommand('Installing ${pkg} via apk', `sudo zap install ${pkg}`)
           }
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'AppImage / Zap Failure', `There was an error using Zap to install ${pkg}`)
+          log('error', 'Install Failure', `There was an error using Zap to install ${pkg}`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'ansible') {
@@ -1071,27 +1073,31 @@ async function installPackageList(packageManager, packages) {
             unbufferPrefix = 'unbuffer'
           }
           const verboseMode = process.env.DEBUG_MODE === 'on' ? 'vv' : ''
-          await $`${unbufferPrefix} ansible 127.0.0.1 -v${verboseMode} -e '{ ansible_connection: "local", ansible_user: "${process.env.USER}", install_homebrew: False }' -m include_role -a name=${pkg}`
+          runCommand('Installing ${pkg} via Ansible', `${unbufferPrefix} ansible 127.0.0.1 -v${verboseMode} -e '{ ansible_connection: "local", ansible_user: "${process.env.USER}", install_homebrew: False }' -m include_role -a name=${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Ansible Role Failure', `There was an error installing ${pkg} with Ansible`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with Ansible`)
+          console.log(e)
         }
       }
     } else if (packageManager === 'apk') {
       for (let pkg of packages) {
         try {
           runCommand('Installing ${pkg} via apk', `sudo apk add ${pkg}`)
-          log('success', 'Install', `Installed ${pkg} via apk`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'APK Install Failure', `There was an error installing ${pkg} with apk`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with apk`)
+          console.log(e)
         }
       }
     } else if (packageManager === 'apt') {
       for (let pkg of packages) {
         try {
-          runCommand(`Installing ${pkg} via apt-get`, `sudo apt-get -o DPkg::Options::=--force-confdef install -y ${pkg}`)
-          log('success', 'Install', `Installed ${pkg} via apt-get`)
+          runCommand(`Installing ${pkg} via ${packageManager}`, `sudo apt-get -o DPkg::Options::=--force-confdef install -y ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'apt-get Failure', `There was an error installing ${pkg} with apt-get`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with apt-get`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'basher') {
@@ -1099,7 +1105,8 @@ async function installPackageList(packageManager, packages) {
         try {
           await $`basher install ${pkg}`
         } catch (e) {
-          log('error', 'Basher Failure', `There was an error installing ${pkg} with basher`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with basher`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'binary') {
@@ -1107,40 +1114,48 @@ async function installPackageList(packageManager, packages) {
         try {
           await $`TMP="$(mktemp)" && curl -sSL ${pkg} > "$TMP" && sudo mv "$TMP" /usr/local/src/${binName} && chmod +x /usr/local/src/${binName}`
         } catch (e) {
-          log('error', 'Binary Release Install', `There was an error installing the binary release for ${pkg}`)
+          log('error', 'Install Failure', `There was an error installing the binary release for ${pkg}`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'brew') {
       for (let pkg of packages) {
         try {
-          runCommand(`Installing ${pkg} via brew`, `brew install ${pkg}`)
-          log('success', 'Install', `Installed ${pkg} via brew`)
+          runCommand(`Installing ${pkg} via ${packageManager}`, `brew install ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Homebrew Failure', `There was an error installing ${pkg} with brew`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with brew`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'cask') {
       for (let pkg of packages) {
         try {
-          await $`brew install --cask ${pkg}`
+          runCommand(`Installing ${pkg} via ${packageManager}`, `brew install --cask ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Homebrew Cask Failure', `There was an error installing ${pkg} with Homebrew Cask`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with Homebrew Cask`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'cargo') {
       for (const pkg of packages) {
         try {
-          await $`cargo install ${pkg}`
+          runCommand(`Installing ${pkg} via ${packageManager}`, `cargo install ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Cargo Failure', `There was an error installing ${pkg} with Cargo`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with Cargo`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'choco') {
       for (let pkg of packages) {
         try {
-          await $`choco install -y ${pkg}`
+          runCommand(`Installing ${pkg} via ${packageManager}`, `choco install -y ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Chocolatey Failure', `There was an error installing ${pkg} with Chocolatey`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with Chocolatey`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'crew') {
@@ -1150,65 +1165,82 @@ async function installPackageList(packageManager, packages) {
       for (let pkg of packages) {
         if (dnf) {
           try {
-            await $`sudo dnf install -y ${pkg}`
+            runCommand(`Installing ${pkg} via ${packageManager}`, `sudo dnf install -y ${pkg}`)
+            log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
           } catch (e) {
-            log('error', 'dnf Failure', `There was an error installing ${pkg} with dnf`)
+            log('error', 'Install Failure', `There was an error installing ${pkg} with dnf`)
+            console.error(e)
           }
         } else if (yum) {
           try {
-            await $`sudo yum install -y ${pkg}`
+            runCommand(`Installing ${pkg} via ${packageManager}`, `sudo yum install -y ${pkg}`)
+            log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
           } catch (e) {
-            log('error', 'yum Failure', `There was an error installing ${pkg} with yum`)
+            log('error', 'Install Failure', `There was an error installing ${pkg} with yum`)
+            console.error(e)
           }
         }
       }
     } else if (packageManager === 'flatpak') {
       for (let pkg of packages) {
         try {
-          await $`sudo flatpak install -y flathub ${pkg}`
+          runCommand(`Installing ${pkg} via ${packageManager}`, `sudo flatpak install -y flathub ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Flatpak Failure', `There was an error installing ${pkg} with flatpak`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with flatpak`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'gem') {
       for (let pkg of packages) {
         try {
+          runCommand(`Installing ${pkg} via ${packageManager}`, `gem install ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
           await $`gem install ${pkg}`
         } catch (e) {
-          log('error', 'Gem Failure', `There was an error installing ${pkg} with gem`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with gem`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'go') {
       for (let pkg of packages) {
         try {
-          await $`go install ${pkg}`
+          runCommand(`Installing ${pkg} via ${packageManager}`, `go install ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Go Failure', `There was an error installing ${pkg} with go`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with go`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'nix') {
     } else if (packageManager === 'npm') {
       for (let pkg of packages) {
         try {
-          await $`volta install ${pkg}`
+          runCommand(`Installing ${pkg} via ${packageManager}`, `volta install ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Volta Failure', `There was an error installing ${pkg} with volta`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with volta`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'pacman') {
       for (let pkg of packages) {
         try {
-          await $`sudo pacman -Sy --noconfirm --needed ${dep}`
+          runCommand(`Installing ${pkg} via ${packageManager}`, `sudo pacman -Sy --noconfirm --needed ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Pacman Failure', `There was an error installing ${pkg} with pacman`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with pacman`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'pipx') {
       for (let pkg of packages) {
         try {
-          await $`pipx install ${pkg}`
+          runCommand(`Installing ${pkg} via ${packageManager}`, `pipx install ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'PIPX Failure', `There was an error installing ${pkg} with pipx`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with pipx`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'pkg') {
@@ -1217,9 +1249,11 @@ async function installPackageList(packageManager, packages) {
       if (port) {
         for (let pkg of packages) {
           try {
-            await $`sudo port install ${pkg}`
+            runCommand(`Installing ${pkg} via ${packageManager}`, `sudo port install ${pkg}`)
+            log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
           } catch (e) {
-            log('error', 'Port Failure', `There was an error installing ${pkg} with port`)
+            log('error', 'Install Failure', `There was an error installing ${pkg} with port`)
+            console.error(e)
           }
         }
       } else {
@@ -1232,17 +1266,21 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'scoop') {
       for (let pkg of packages) {
         try {
-          await $`scoop install ${pkg}`
+          runCommand(`Installing ${pkg} via ${packageManager}`, `scoop install ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Scoop Failure', `There was an error installing ${pkg} with scoop`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with scoop`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'snap') {
       for (let pkg of packages) {
         try {
-          await $`sudo snap install ${pkg}`
+          runCommand(`Installing ${pkg} via ${packageManager}`, `sudo snap install ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Snap Failure', `There was an error installing ${pkg} with snap`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with snap`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'script') {
@@ -1250,47 +1288,58 @@ async function installPackageList(packageManager, packages) {
         try {
           await $`${pkg}`
         } catch (e) {
-          log('error', 'Script Install Failure', `There was an error running the script installation method for ${pkg}`)
+          log('error', 'Install Failure', `There was an error running the script installation method for ${pkg}`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'snap-classic') {
       for (let pkg of packages) {
         try {
-          await $`sudo snap install --classic ${pkg}`
+          runCommand(`Installing ${pkg} via ${packageManager}`, `sudo snap install --classic ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Snap Failure', `There was an error installing ${pkg} with snap in classic mode`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with snap in classic mode`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'whalebrew') {
       for (let pkg of packages) {
         try {
-          await $`whalebrew install ${pkg}`
+          runCommand(`Installing ${pkg} via ${packageManager}`, `whalebrew install ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Whalebrew Failure', `There was an error installing ${pkg} with whalebrew`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with whalebrew`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'winget') {
       for (let pkg of packages) {
         try {
-          await $`winget install ${pkg}`
+          runCommand(`Installing ${pkg} via ${packageManager}`, `winget install ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Winget Failure', `There was an error installing ${pkg} with winget`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with winget`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'yay') {
       for (let pkg of packages) {
         try {
-          await $`yay -Sy --noconfirm --needed ${pkg}`
+          runCommand(`Installing ${pkg} via ${packageManager}`, `yay -Sy --noconfirm --needed ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Yay Failure', `There was an error installing ${pkg} with yay`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with yay`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'zypper') {
       for (let pkg of packages) {
         try {
-          await $`sudo zypper install -y ${pkg}`
+          runCommand(`Installing ${pkg} via ${packageManager}`, `sudo zypper install -y ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Zypper Failure', `There was an error installing ${pkg} with zypper`)
+          log('error', 'Install Failure', `There was an error installing ${pkg} with zypper`)
+          console.error(e)
         }
       }
     }
