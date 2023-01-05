@@ -175,6 +175,7 @@ softwarePackages:
       - bottles
       - cockpit-client
       - connections
+      - dconf-editor
       - deja-dup
       - dialect
       - flatseal
@@ -184,9 +185,15 @@ softwarePackages:
       - gnome-passwords-keys
       - kooha
       - monitorets
+      - newsflash
       - vup
       - warp-transfer
+      - web-font-generator
       - what-ip
+  newsflash:
+    flatpak: com.gitlab.newsflash
+  web-font-generator:
+    flatpak: com.rafaelmardojai.WebfontKitGenerator
   act:
     _bin: act
     _desc: Run GitHub actions locally
@@ -887,6 +894,8 @@ softwarePackages:
     choco: googlechrome
     flatpak: com.google.Chrome
     yay: google-chrome
+  dconf-editor:
+    flatpak: ca.desrt.dconf-editor
   chromium:
     apt: chromium
     dnf: chromium
