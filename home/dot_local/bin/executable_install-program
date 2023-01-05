@@ -477,8 +477,8 @@ async function afterInstall(packageManager) {
   } else if (packageManager === 'apk') {
   } else if (packageManager === 'apt') {
     try {
-      await $`sudo apt-get autoclean`
-      await $`sudo apt-get -y autoremove`
+      runCommand('Running apt-get autoclean', `sudo apt-get autoclean`)
+      runCommand('Running apt-get autoremove', `sudo apt-get -y autoremove`)
     } catch (e) {
       log('error', logStage, 'Error cleaning up apt-get')
     }
@@ -527,10 +527,11 @@ async function ensurePackage(dep) {
         }
         try {
           log('info', 'apt-get Installation', `Checking if ${dep} is already installed`)
-          await $`dpkg -l ${dep} | grep -E '^ii' > /dev/null`
+          runCommand(`Checking if ${dep} is already installed via apt-get`, `dpkg -l ${dep} | grep -E '^ii' > /dev/null`)
+          log('info', 'Filter', `${pkg} already installed via apt-get`)
         } catch (e) {
-          log('info', 'apt-get Installation', `Installing ${dep} since it is not already present on the system`)
-          await $`sudo apt-get install -y ${dep}`
+          runCommand(`Installing ${dep} via apt-get`, `sudo apt-get install -y ${dep}`)
+          log('success', 'Install', `Successfully installed ${pkg} via apt-get`)
         }
       } else if (dnf) {
         if (updateDone['dnf'] !== true) {
@@ -1071,7 +1072,8 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'apk') {
       for (let pkg of packages) {
         try {
-          await $`sudo apk add ${pkg}`
+          runCommand('Installing ${pkg} via apk', `sudo apk add ${pkg}`)
+          log('success', 'Install', `Installed ${pkg} via apk`)
         } catch (e) {
           log('error', 'APK Install Failure', `There was an error installing ${pkg} with apk`)
         }
@@ -1079,7 +1081,8 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'apt') {
       for (let pkg of packages) {
         try {
-          await $`sudo apt-get -o DPkg::Options::=--force-confdef install -y ${pkg}`
+          runCommand(`Installing ${pkg} via apt-get`, `sudo apt-get -o DPkg::Options::=--force-confdef install -y ${pkg}`)
+          log('success', 'Install', `Installed ${pkg} via apt-get`)
         } catch (e) {
           log('error', 'apt-get Failure', `There was an error installing ${pkg} with apt-get`)
         }
@@ -1103,7 +1106,8 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'brew') {
       for (let pkg of packages) {
         try {
-          await $`brew install ${pkg}`
+          runCommand(`Installing ${pkg} via brew`, `brew install ${pkg}`)
+          log('success', 'Install', `Installed ${pkg} via brew`)
         } catch (e) {
           log('error', 'Homebrew Failure', `There was an error installing ${pkg} with brew`)
         }
