@@ -318,10 +318,8 @@ else
 fi
 {{ end }}
 
-{{ if eq .host.type "wsl" }}
 ### WSL
-export LIBGL_ALWAYS_INDIRECT="1"
-export BROWSER='/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe'
-{{ else }}
+# export LIBGL_ALWAYS_INDIRECT="1"
+# export BROWSER='/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe'
+
 export BROWSER=google-chrome
-{{ end }}
