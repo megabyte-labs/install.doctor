@@ -27,6 +27,7 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
       sudo pkill dirmngr
       dirmngr --debug-all --daemon --standard-resolver
       gpg --keyserver hkps://pgp.mit.edu --recv "$KEYID"
+      gpgconf --kill dirmngr
     fi
   else
     logg info 'Key is already in keyring'
