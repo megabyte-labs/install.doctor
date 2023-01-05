@@ -622,7 +622,7 @@ async function beforeInstall(packageManager) {
   } else if (packageManager === 'apk') {
     await $`sudo apk update`
   } else if (packageManager === 'apt') {
-    await $`sudo apt-get update`
+    runCommand('Running apt-get update', `sudo apt-get update`)
   } else if (packageManager === 'basher') {
   } else if (packageManager === 'binary') {
   } else if (packageManager === 'brew' || packageManager === 'cask') {
