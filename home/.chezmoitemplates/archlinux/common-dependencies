@@ -1,0 +1,8 @@
+{{- $packages := list
+    "base-devel"
+    "openssl"
+    "tk"
+    "xz"
+    "zlib"
+-}}
+{{- $packages | join " " -}}

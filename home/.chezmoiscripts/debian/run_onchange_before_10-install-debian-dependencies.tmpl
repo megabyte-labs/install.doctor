@@ -1,25 +1,12 @@
 #!/usr/bin/env bash
 
-# universal/essential-packages hash: {{ include (joinPath ".chezmoitemplates" "universal" "essential-packages") | sha256sum }}
+# universal/common-dependencies hash: {{ include (joinPath ".chezmoitemplates" "universal" "common-dependencies") | sha256sum }}
+# debian/common-dependencies hash: {{ include (joinPath ".chezmoitemplates" "debian" "common-dependencies") | sha256sum }}
 
 {{ includeTemplate "universal/logg" }}
 
-{{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) -}}
-{{- $additionalPackages := list
-"libssl-dev"
-"zlib1g-dev"
-"libbz2-dev"
-"libreadline-dev"
-"libsqlite3-dev"
-"llvm"
-"libncursesw5-dev"
-"xz-utils"
-"tk-dev"
-"libxml2-dev"
-"libxmlsec1-dev"
-"libffi-dev"
-"liblzma-dev"
--}}
+{{- $packages := splitList " " (includeTemplate "universal/common-dependencies" .) -}}
+{{- $additionalPackages := splitList " " (includeTemplate "debian/common-dependencies" .) -}}
 {{- $packages = concat $packages $additionalPackages -}}
 
 logg 'Installing common dependencies using `apt-get`'

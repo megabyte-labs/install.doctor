@@ -1,17 +1,12 @@
 #!/usr/bin/env bash
 
-# universal/essential-packages hash: {{ include (joinPath ".chezmoitemplates" "universal" "essential-packages") | sha256sum }}
+# universal/common-dependencies hash: {{ include (joinPath ".chezmoitemplates" "universal" "common-dependencies") | sha256sum }}
+# archlinux/common-dependencies hash: {{ include (joinPath ".chezmoitemplates" "archlinux" "common-dependencies") | sha256sum }}
 
 {{ includeTemplate "universal/logg" }}
 
-{{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}
-{{- $additionalPackages := list
-"base-devel"
-"openssl"
-"zlib"
-"xz"
-"tk"
-}}
+{{- $packages := splitList " " (includeTemplate "universal/common-dependencies" .) -}}
+{{- $additionalPackages := splitList " " (includeTemplate "archlinux/common-dependencies" .) -}}
 {{- $packages = concat $packages $additionalPackages -}}
 
 logg 'Installing common dependencies using `pacman`'

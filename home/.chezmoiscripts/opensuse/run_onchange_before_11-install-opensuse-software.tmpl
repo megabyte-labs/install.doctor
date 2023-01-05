@@ -1,13 +1,20 @@
 #!/usr/bin/env bash
 
-# universal/essential-packages hash: {{ include (joinPath ".chezmoitemplates" "universal" "essential-packages") | sha256sum }}
+# universal/common-dependencies hash: {{ include (joinPath ".chezmoitemplates" "universal" "common-dependencies") | sha256sum }}
+# opensuse/common-dependencies hash: {{ include (joinPath ".chezmoitemplates" "opensuse" "common-dependencies") | sha256sum }}
 
 {{ includeTemplate "universal/logg" }}
 
-{{- $packages := splitList " " (includeTemplate "universal/essential-packages" .) }}
+{{- $packages := splitList " " (includeTemplate "universal/common-dependencies" .) -}}
+{{- $additionalPackages := splitList " " (includeTemplate "opensuse/common-dependencies" .) -}}
+{{- $packages = concat $packages $additionalPackages -}}
 
 logg 'Installing common dependencies using `zypper`'
 logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
+
+### Install base_devel
+logg info 'Installing base_devel pattern with `sudo zypper install -t pattern devel_basis`'
+sudo zypper install -t pattern devel_basis
 
 ### Install base dependencies
 for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
