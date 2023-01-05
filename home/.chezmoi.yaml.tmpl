@@ -48,25 +48,6 @@
 {{-   writeToStdout "Chezmoi is running in a container.\n" -}}
 {{- end -}}
 
-{{- $chassisType := "desktop" }}
-{{- if $ephemeral -}}
-{{-   $chassisType = "ephemeral" }}
-{{- else if eq .chezmoi.os "linux" }}
-{{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
-{{-     $chassisType = "wsl" }}
-{{-   else -}}
-{{-     $chassisType = (output "hostnamectl" "--json=short" | mustFromJson).Chassis }}
-{{-   end -}}
-{{- else if eq .chezmoi.os "darwin" }}
-{{-   if contains "MacBook" (output "sysctl" "-n" "hw.model") }}
-{{-     $chassisType = "laptop" }}
-{{-   else }}
-{{-     $chassisType = "desktop" }}
-{{-   end }}
-{{- else if eq .chezmoi.os "windows" }}
-{{-   $chassisType = (output "powershell.exe" "-noprofile" "-command" "if (Get-WmiObject -Class win32_battery -ComputerName localhost) { echo laptop } else { echo desktop }") }}
-{{- end }}
-
 {{- $cpuCores := 1 }}
 {{- $cpuThreads := 1 }}
 {{- if eq .chezmoi.os "darwin" }}
@@ -191,7 +172,6 @@ data:
     hostname: "Betelgeuse"
     qubes: {{ ne (stat (joinPath "usr" "bin" "qubes-session")) false }}
     softwareGroup: "{{ $softwareGroup }}"
-    type: "{{ $chassisType }}"
     work: {{ $work }}
     restricted: {{ $restricted }}
     headless: {{ $headless }}
