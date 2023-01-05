@@ -1338,7 +1338,7 @@ async function pruneInstallOrders(installOrders) {
       })
     } else if (pkgManager === 'brew') {
       let newVal = newOrders[pkgManager]
-      for (const pkg in newOrders[pkgManager]) {
+      for (const pkg of newOrders[pkgManager]) {
         try {
           await $`brew list ${pkg}`
           newVal = newVal.filter(x => x === pkg)
