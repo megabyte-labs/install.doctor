@@ -1337,7 +1337,15 @@ async function pruneInstallOrders(installOrders) {
         }
       })
     } else if (pkgManager === 'brew') {
-      let newVal = newOrders[pkgManager]
+      newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (x) => {
+        try {
+          await $`brew list ${pkg} > /dev/null`
+          return true
+        } catch (e) {
+          return false
+        }
+      })
+      /*let newVal = newOrders[pkgManager]
       for (const pkg of newOrders[pkgManager]) {
         try {
           await $`brew list ${pkg}`
@@ -1346,7 +1354,7 @@ async function pruneInstallOrders(installOrders) {
           // Do nothing
         }
       }
-      newOrders[pkgManager] = newVal
+      newOrders[pkgManager] = newVal*/
     } else if (pkgManager === 'dnf') {
       const dnf = which.sync('dnf', { nothrow: true })
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (x) => {
