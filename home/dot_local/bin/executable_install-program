@@ -1395,14 +1395,14 @@ const asyncFilter = async (arr, predicate) => {
 
 async function pruneInstallOrders(installOrders) {
   const newOrders = Object.assign({}, installOrders)
-  log('info', 'Filtering Install Orders', 'Removing packages from installOrders that are already installed')
+  log('info', 'Filter', 'Removing packages from installOrders that are already installed')
   for (const pkgManager in installOrders) {
-    log('info', 'Filtering Install Orders', `Filtering the ${pkgManager} installOrders`)
+    log('info', 'Filter', `Filtering the ${pkgManager} installOrders`)
     console.log(newOrders[pkgManager])
     if (pkgManager === 'apt') {
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
-          log('info', 'Filtering Install Orders', `Checking for presence of ${pkg}`)
+          log('info', 'Filter', `Checking for presence of ${pkg}`)
           await $`dpkg -l ${pkg} | grep -E '^ii' > /dev/null`
           return false
         } catch (e) {
@@ -1472,11 +1472,11 @@ async function installSoftware(pkgsToInstall) {
   }
   log('info', 'Catalog Download', `Fetching the latest version of the installation map`)
   installData = await downloadInstallData()
-  log('info', 'Install Orders', `Calculating the install orders`)
+  log('info', 'Filter', `Calculating the install orders`)
   await generateInstallOrders(pkgsToInstall ? pkgsToInstall : process.argv.slice(3))
   log(
     'info',
-    'Ensure Package Manager Installed',
+    'Pre-Reqs',
     `Ensuring any package managers that will be used are installed / configured`
   )
   const packageManagers = Object.keys(installOrders)
@@ -1487,39 +1487,39 @@ async function installSoftware(pkgsToInstall) {
     for (const key in installOrders) {
       installOrders[key] = [...new Set(installOrders[key])]
     }
-    log('info', 'Install Orders', `The install orders were generated:`)
+    log('info', 'Install', `The install orders were generated:`)
   } catch (e) {
-    log('error', 'Install Orders', `There was an error reducing the duplicates in the install orders`)
+    log('error', 'Filter', `There was an error reducing the duplicates in the install orders`)
     console.error(e)
   }
   installOrders = await pruneInstallOrders(installOrders)
   console.log(installOrders)
-  log('info', 'Package Manager Pre-Install', `Running package manager pre-installation steps`)
+  log('info', 'Pre-Reqs', `Running package manager pre-installation steps`)
   for (const packageManager of packageManagers) {
     await beforeInstall(packageManager)
   }
-  log('info', 'Package Pre-Install', `Running package-specific pre-installation steps`)
+  log('info', 'Pre-Install', `Running package-specific pre-installation steps`)
   for (const script of installOrdersPre) {
     await $`${script}`
   }
-  log('info', 'Package Install', `Installing the packages`)
+  log('info', 'Install', `Installing the packages`)
   for (const packageManager of packageManagers) {
     const asyncOrders = []
     asyncOrders.push(installPackageList(packageManager, installOrders[packageManager]))
     await Promise.all(asyncOrders)
   }
-  log('info', 'Package Post-Install', `Running package-specific post-installation steps`)
+  log('info', 'Post-Install', `Running package-specific post-installation steps`)
   for (const service of installOrdersSystemd) {
     await updateSystemd(service)
   }
   for (const script of installOrdersPost) {
     await $`${script}`
   }
-  log('info', 'Package Manager Post-Install', `Running package manager post-installation steps`)
+  log('info', 'Post-Install', `Running package manager post-installation steps`)
   for (const packageManager of packageManagers) {
     await afterInstall(packageManager)
   }
-  log('success', 'Installation Complete', `Done!`)
+  log('success', 'Complete', `Done!`)
 }
 
 // Start the main process
