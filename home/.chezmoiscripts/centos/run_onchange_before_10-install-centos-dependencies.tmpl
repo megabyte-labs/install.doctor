@@ -9,30 +9,29 @@
 {{- $additionalPackages := splitList " " (includeTemplate "centos/common-dependencies" .) -}}
 {{- $packages = concat $packages $additionalPackages -}}
 
+### Detect package manager
 if command -v dnf > /dev/null; then
-    logg 'Installing common dependencies using `dnf`'
-    logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
-
-    for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
-        logg info 'Installing `'"$PACKAGE"'`'
-        sudo dnf install -y "$PACKAGE" || EXIT_CODE=$?
-        if [ -n "$EXIT_CODE" ]; then
-            logg error 'Error installing `'"$PACKAGE"'` via dnf'
-            logg info 'Proceeding with installation..'
-            unset EXIT_CODE
-        fi
-    done
+    PKG_MANAGER='dnf'
 else
-    logg 'Installing common dependencies using `yum`'
-    logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
+    PKG_MANAGER='yum'
+fi
 
-    for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
+### Print dependency list
+logg 'Installing common dependencies using `'"$PKG_MANAGER"'`'
+logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
+
+### Install packages if they are not already present
+for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
+    logg info 'Checking for presence of `'"$PACKAGE"'`'
+    if rpm -qa | grep "$PACKAGE" > /dev/null; then
+        logg info 'The '"$PACKAGE"' package is already installed'
+    else
         logg info 'Installing `'"$PACKAGE"'`'
-        sudo yum install -y "$PACKAGE" || EXIT_CODE=$?
+        sudo "$PKG_MANAGER" install -y "$PACKAGE" || EXIT_CODE=$?
         if [ -n "$EXIT_CODE" ]; then
-            logg error 'Error installing `'"$PACKAGE"'` via yum'
+            logg error 'Error installing `'"$PACKAGE"'` via `'"$PKG_MANAGER"'`'
             logg info 'Proceeding with installation..'
             unset EXIT_CODE
         fi
-    done
-fi
+    fi
+done

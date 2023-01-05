@@ -9,6 +9,7 @@
 {{- $additionalPackages := splitList " " (includeTemplate "freebsd/common-dependencies" .) -}}
 {{- $packages = concat $packages $additionalPackages -}}
 
+### Print dependency list
 logg 'Installing common dependencies using `pkg`'
 logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 
