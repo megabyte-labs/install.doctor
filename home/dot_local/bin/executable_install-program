@@ -1348,9 +1348,9 @@ async function pruneInstallOrders(installOrders) {
         try {
           log('info', 'Filtering Install Orders', `Checking for presence of ${pkg}`)
           await $`dpkg -l ${pkg} | grep -E '^ii' > /dev/null`
-          return true
-        } catch (e) {
           return false
+        } catch (e) {
+          return true
         }
       })
     } else if (pkgManager === 'brew') {
@@ -1373,9 +1373,9 @@ async function pruneInstallOrders(installOrders) {
           } else {
             await $`rpm -qa | grep ${pkg} > /dev/null > /dev/null`
           }
-          return true
-        } catch (e) {
           return false
+        } catch (e) {
+          return true
         }
       })
     } else if (pkgManager === 'flatpak') {
@@ -1395,13 +1395,13 @@ async function pruneInstallOrders(installOrders) {
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
           await $`pacman -Qs ${pkg} > /dev/null > /dev/null`
-          return true
-        } catch (e) {
           return false
+        } catch (e) {
+          return true
         }
       })
     }
-    log('info', 'Filtering Install Orders', `Finished filtering ${pkgManager}`)
+    log('info', 'Filter', `Finished filtering ${pkgManager}`)
     console.log(newOrders[pkgManager])
   }
   return newOrders
