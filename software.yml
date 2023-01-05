@@ -2417,7 +2417,6 @@ softwarePackages:
     _name: Github CLI
     _service: false
     ansible: professormanhattan.gh
-    apt: gh
     brew: gh
     choco: gh
     port: gh
@@ -2732,7 +2731,7 @@ softwarePackages:
     _service: null
     _post:pipx: pipx inject glances glances[all]
     ansible: professormanhattan.glances
-    apt:
+    apt:ubuntu:
       - python3-dev
       - python3-jinja2
       - python3-pip
@@ -6894,7 +6893,7 @@ softwarePackages:
     _service: null
     ansible:darwin: professormanhattan.translate
     ansible:linux: professormanhattan.translate
-    apt: translate-shell
+    apt:ubuntu: translate-shell
     brew: translate-shell
     dnf: translate-shell
     pacman: translate-shell
