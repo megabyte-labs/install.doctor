@@ -1413,7 +1413,7 @@ async function pruneInstallOrders(installOrders) {
       let newVal = newOrders[pkgManager]
       for (const pkg of newOrders[pkgManager]) {
         try {
-          runCommand(`Pruning packages that are already installed via Homebrew - ${pkg}`, `brew list ${pkg}`)
+          runCommand(`Ensuring Homebrew package is not already installed - ${pkg}`, `brew list ${pkg}`)
           newVal = newVal.filter(x => x === pkg)
         } catch (e) {
           // Do nothing
