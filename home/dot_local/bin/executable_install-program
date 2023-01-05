@@ -1326,7 +1326,7 @@ const asyncFilter = async (arr, predicate) => {
 
 async function pruneInstallOrders(installOrders) {
   const newOrders = Object.assign({}, installOrders)
-  for (const pkgManager of installOrders) {
+  for (const pkgManager in installOrders) {
     if (pkgManager === 'apt') {
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (x) => {
         try {
