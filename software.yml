@@ -3755,7 +3755,7 @@ softwarePackages:
     _service: null
     binary:darwin: https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-darwin-amd64.tar.gz
     binary:linux: https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
-    brew: instrumenta/instrumenta/kubeval
+    brew: kubeval
     scoop: kubeval
   kvm:
     _bin:brew:
@@ -3912,17 +3912,6 @@ softwarePackages:
     brew: linkerd
     github: github.com/linkerd/linkerd2
     yay: linkerd
-  linuxkit:
-    _bin: linuxkit
-    _desc: A toolkit for building secure, portable and lean operating systems for containers
-    _docs: null
-    _github: https://github.com/linuxkit/linuxkit
-    _home: null
-    _name: linuxkit
-    _service: null
-    _type: cli
-    brew: linuxkit/linuxkit/linuxkit
-    github: github.com/linuxkit/linuxkit
   litecli:
     _bin: litecli
     _desc: CLI for SQLite Databases with auto-completion and syntax highlighting
@@ -4186,17 +4175,6 @@ softwarePackages:
     _name: McFly
     _service: null
     ansible: professormanhattan.mcfly
-  mergestat:
-    _bin: mergestat
-    _desc: Query git repositories with SQL. Generate reports, perform status checks, analyze codebases
-    _docs: null
-    _github: https://github.com/mergestat/mergestat
-    _home: null
-    _name: mergestat
-    _service: null
-    _type: cli
-    brew: mergestat/mergestat/mergestat
-    github: github.com/mergestat/mergestat
   microsoft-edge:
     _bin: null
     _desc: '[Microsoft Edge](https://www.microsoft.com/en-us/edge) is a cross-platform web browser developed by Microsoft. It was first released for Windows 10 and Xbox One in 2015, then for Android and iOS in 2017, for macOS in 2019, and as a preview for Linux in October 2020.'
@@ -5749,10 +5727,10 @@ softwarePackages:
     _name: Ruby
     _service: false
     ansible: professormanhattan.ruby
-    apt: ruby-full
+    apt: ruby-dev
     brew: ruby
     choco: ruby
-    dnf: ruby
+    dnf: ruby-devel
     pacman: ruby
     port: ruby
     scoop: ruby
@@ -5781,9 +5759,6 @@ softwarePackages:
     _service: false
     _snapClassic: true
     ansible: professormanhattan.rust
-    apt:
-      - cargo
-      - rustc
     brew: rust
     choco: rust
     dnf:
@@ -5794,7 +5769,8 @@ softwarePackages:
       - cargo
       - rust
     scoop: rust
-    snap: rustup
+    script:darwin: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    script:linux: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   goofys:
     _bin: goofys
     _deps:
@@ -6004,7 +5980,7 @@ softwarePackages:
     _name: sentry-cli
     _service: null
     _type: cli
-    brew: getsentry/tools/sentry-cli
+    brew:darwin: getsentry/tools/sentry-cli
     github: github.com/getsentry/sentry-cli
     npm: '@sentry/cli'
     scoop: sentry-cli
