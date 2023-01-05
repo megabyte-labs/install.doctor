@@ -26,8 +26,13 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
       logg info 'Retrying after turning on debug mode and using the standard DNS resolver'
       sudo pkill dirmngr
       dirmngr --debug-all --daemon --standard-resolver
-      gpg --keyserver hkps://pgp.mit.edu --recv "$KEYID"
-      gpgconf --kill dirmngr
+      gpg --keyserver hkps://pgp.mit.edu --recv "$KEYID" || EXIT_CODE=$?
+      if [ -n "$EXIT_CODE" ]; then
+        logg error 'Failed to retrieve public user GPG key on hkps://pgp.mit.edu'
+        gpgconf --kill dirmngr
+      else
+        logg success 'Successfully imported configured public user GPG key'
+      fi
     fi
   else
     logg info 'Key is already in keyring'
