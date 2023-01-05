@@ -734,7 +734,7 @@ async function ensurePackageManagerAnsible() {
 // Ensure the package manager is available
 let packageManagerInstalled = {}
 async function ensurePackageManager(packageManager) {
-  const logStage = 'Package Manager Install'
+  const logStage = 'Pre-Reqs'
   log('info', logStage, `Ensuring \`${packageManager}\` is set up`)
   if (packageManagerInstalled[packageManager]) {
     return
