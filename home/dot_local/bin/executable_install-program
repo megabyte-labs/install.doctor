@@ -988,15 +988,25 @@ async function ensurePackageManager(packageManager) {
     const pacman = which.sync('pacman', { nothrow: true })
     const zypper = which.sync('zypper', { nothrow: true })
     if (apt) {
-      runCommand('Ensuring snapd is installed', `if [ -f /etc/apt/preferences.d/nosnap.pref ]; then sudo mv /etc/apt/preferences.d/nosnap.pref /etc/apt/nosnap.pref.bak; fi && sudo apt-get install -y snapd`)
+      if (fileExists('/etc/apt/preferences.d/nosnap.pref')) {
+        $`sudo mv /etc/apt/preferences.d/nosnap.pref /etc/apt/nosnap.pref.bak`
+      }
+      runCommand('Ensuring snapd is installed', `sudo apt-get install -y snapd`)
       // TODO Following may be required on Kali -> https://snapcraft.io/docs/installing-snap-on-kali
       // systemctl enable --now snapd apparmor
     } else if (dnf) {
-      runCommand('Ensuring snapd is installed', `sudo dnf install -y snapd && if [ ! -d /snap ]; then sudo ln -s /var/lib/snapd/snap /snap; fi`)
+      runCommand('Ensuring snapd is installed', `sudo dnf install -y snapd`)
+      if (!fileExists('/snap')) {
+        await $`sudo ln -s /var/lib/snapd/snap /snap`
+      }
     } else if (yum) {
-      runCommand('Ensuring snapd is installed', `sudo yum install -y snapd && sudo systemctl enable --now snapd.socket && if [ ! -d /snap ]; then sudo ln -s /var/lib/snapd/snap /snap; fi`)
+      runCommand('Ensuring snapd is installed', `sudo yum install -y snapd')
+      await $`sudo systemctl enable --now snapd.socket`
+      if (!fileExists('/snap')) {
+        $`sudo ln -s /var/lib/snapd/snap /snap`
+      }
     } else if (pacman) {
-      runCommand('Ensuring snapd is installed', `if [ -f /etc/arch-release ]; then sudo git clone https://aur.archlinux.org/snapd.git /usr/local/src/snapd && cd /usr/local/src/snapd && sudo makepkg -si; else sudo pacman -S snapd && sudo systemctl enable --now snapd.socket && if [ ! -d /snap ]; then sudo ln -s /var/lib/snapd/snap /snap; fi; fi`)
+      $`if [ -f /etc/arch-release ]; then sudo git clone https://aur.archlinux.org/snapd.git /usr/local/src/snapd && cd /usr/local/src/snapd && sudo makepkg -si; else sudo pacman -S snapd && sudo systemctl enable --now snapd.socket && if [ ! -d /snap ]; then sudo ln -s /var/lib/snapd/snap /snap; fi; fi`
     } else if (zypper) {
       // TODO See https://snapcraft.io/docs/installing-snap-on-opensuse
       await $`
