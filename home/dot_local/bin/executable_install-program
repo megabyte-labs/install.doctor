@@ -1350,28 +1350,18 @@ async function pruneInstallOrders(installOrders) {
         }
       })
     } else if (pkgManager === 'brew') {
-      newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
-        try {
-          log('info', 'Detecting Brew Package', `Checking for presence of ${pkg} with Homebrew`)
-          await $`brew list ${pkg} > /dev/null`
-          log('info', 'Brew Package', `${pkg} is present`)
-          return true
-        } catch (e) {
-          return false
-        }
-      })
-      /*let newVal = newOrders[pkgManager]
+      let newVal = newOrders[pkgManager]
       for (const pkg of newOrders[pkgManager]) {
         try {
-          log('info', 'Test', 'Listing..')
-          await $`brew list ${pkg}`
-          log('info)
+          console.log('start')
+          runCommand('Pruning Homebrew packages that are already installed from the install list', `brew list ${pkg}`)
+          console.log('stop')
           newVal = newVal.filter(x => x === pkg)
         } catch (e) {
           // Do nothing
         }
       }
-      newOrders[pkgManager] = newVal*/
+      newOrders[pkgManager] = newVal
     } else if (pkgManager === 'dnf') {
       const dnf = which.sync('dnf', { nothrow: true })
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
