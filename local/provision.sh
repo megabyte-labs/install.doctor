@@ -260,30 +260,30 @@ if ! command -v brew > /dev/null && [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; 
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
-### System package manager update / Homebrew dependencies
-if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v brew > /dev/null; then
+
+if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v brew > /dev/null || ! command -v rsync > /dev/null; then
   # shellcheck disable=SC2016
-  logg info 'Ensuring `curl`, `git`, and OS-specific dependencies are installed via the system package manager'
+  logg info 'Ensuring `curl` and `git` are installed via the system package manager'
   if command -v apt-get > /dev/null; then
     # Debian / Ubuntu
     sudo apt-get update
-    sudo apt-get install -y build-essential curl git
+    sudo apt-get install -y build-essential curl git rsync
   elif command -v dnf > /dev/null; then
     # Fedora
-    sudo dnf install -y curl git
+    sudo dnf install -y curl git rsync
   elif command -v yum > /dev/null; then
     # CentOS
-    sudo yum install -y curl git
+    sudo yum install -y curl git rsync
   elif command -v pacman > /dev/null; then
     # Archlinux
     sudo pacman update
-    sudo pacman -Sy curl git
+    sudo pacman -Sy curl git rsync
   elif command -v zypper > /dev/null; then
     # OpenSUSE
-    sudo zypper install -y curl git nodejs
+    sudo zypper install -y curl git nodejs rsync
   elif command -v apk > /dev/null; then
     # Alpine
-    apk add curl git
+    apk add curl git rsync
   elif [ -d /Applications ] && [ -d /Library ]; then
     # macOS
     sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
@@ -301,7 +301,7 @@ if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v
     echo "TODO - Add support for Void"
   elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
     # Windows
-    choco install -y curl git node
+    choco install -y curl git node rsync
   fi
 fi
 
