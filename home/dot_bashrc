@@ -3,7 +3,9 @@
 
 # Prefer US English
 export LANG="en_US"
-export LC_ALL="en_US"
+if [[ "$(hostname)" != *'-minimal' ]]; then
+  export LC_ALL="en_US.UTF-8"
+fi
 
 # Detect support for advanced terminal features
 if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
@@ -17,9 +19,6 @@ fi
 
 ### Fig / LC_ALL
 if [ "$BASH_SUPPORT" = 'true' ]; then
-  if [[ "$(hostname)" != *'-minimal' ]]; then
-    export LC_ALL="en_US.UTF-8"
-  fi
   if [ -f "$HOME/.fig/shell/bashrc.pre.bash" ]; then
     . "$HOME/.fig/shell/bashrc.pre.bash"
   fi
