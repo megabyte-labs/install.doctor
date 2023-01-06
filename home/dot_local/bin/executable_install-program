@@ -1440,9 +1440,9 @@ async function pruneInstallOrders(installOrders) {
       newOrders[pkgManager] = newOrders[pkgManager].filter(async (pkg) => {
         try {
           await runSilentCommand(`flatpak info ${pkg} > /dev/null`)
-          return true
-        } catch (e) {
           return false
+        } catch (e) {
+          return true
         }
       })
     } else if (pkgManager === 'pacman') {

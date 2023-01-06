@@ -242,7 +242,7 @@ softwarePackages:
     scoop: allure
     yay: allure
   altair:
-    _bin: null
+    _bin:snap: altair
     _desc: A beautiful feature-rich GraphQL Client for all platforms.
     _docs: https://altairgraphql.dev/docs/
     _github: https://github.com/altair-graphql/altair
@@ -768,7 +768,7 @@ softwarePackages:
     github: github.com/Budibase/budibase
     npm: '@budibase/cli'
   bundler:
-    _bin: bundler
+    _bin: bundle
     _desc: null
     _docs: null
     _github: null
@@ -1918,6 +1918,7 @@ softwarePackages:
     nix: unstable.fcp
   fd:
     _bin: fd
+    _bin:apt: fdfind
     _desc: "[fd](https://github.com/sharkdp/fd) is a program that can search for files on your filesystem. It is a simple, fast, and user-friendly alternative to find. While it does not aim to support all of find's powerful functionality, it provides sensible (opinionated) defaults for a majority of use cases."
     _docs: null
     _github: https://github.com/sharkdp/fd
@@ -2234,7 +2235,7 @@ softwarePackages:
     github: github.com/jhspetersson/fselect
     yay: fselect
   fuego:
-    _bin: null
+    _bin: fuego
     _desc: Fuego is a command line client for the Firestore database
     _docs: null
     _github: https://github.com/sgarciac/fuego
@@ -3391,7 +3392,7 @@ softwarePackages:
     choco: infracost
     yay: infracost
   inkscape:
-    _bin: null
+    _bin: inkscape
     _desc: '[Inkscape](https://inkscape.org/) is a free and open-source vector graphics editor used to create vector images, primarily in Scalable Vector Graphics format. Other formats can be imported and exported. Inkscape can render primitive vector shapes and text. This role installs Inkscape on nearly any platform.'
     _docs: https://inkscape.org/*docs/
     _github: https://github.com/inkscape/inkscape
@@ -3771,6 +3772,9 @@ softwarePackages:
     brew: kubeval
     scoop: kubeval
   kvm:
+    _bin:
+      - kvm
+      - qemu-img
     _bin:brew:
       - libvirtd
       - qemu-img
@@ -3837,7 +3841,7 @@ softwarePackages:
     cask: ledger-live
     choco: ledger-live
   lens:
-    _bin: null
+    _bin:snap: kontena-lens
     _desc: '[Lens IDE](https://k8slens.dev/) provides the full situational awareness for everything that runs in Kubernetes. It is an IDE designed for those who work with Kubernetes on a daily basis'
     _docs: https://docs.k8slens.dev/main/
     _github: https://github.com/lensapp/lens
@@ -3852,7 +3856,7 @@ softwarePackages:
     snap: kontena-lens
     yay: lens
   lepton:
-    _bin: null
+    _bin:snap: lepton
     _desc: Cross-platform snippet manager
     _docs: null
     _github: null
@@ -4231,7 +4235,7 @@ softwarePackages:
     cask: microsoft-office
     choco: office365business
   microsoft-todo:
-    _bin: null
+    _bin:snap: microsoft-todo-unofficial
     _desc: '[Microsoft To Do](https://todo.microsoft.com/tasks/) is a productivity application developed by Microsoft. It lets you create to do lists, reminders, and notes for any purpose. Sync lists across devices and Microsoft 365 accounts to access daily planner and task manager features anywhere.'
     _docs: https://support.microsoft.com/en-us/todo
     _github: false
@@ -4270,7 +4274,7 @@ softwarePackages:
     choco: mitmproxy
     pacman: mitmproxy
   mjml:
-    _bin: null
+    _bin:npm: mjml
     _desc: The desktop app for MJML
     _docs: https://documentation.mjml.io/
     _github: https://github.com/mjmlio/mjml-app
@@ -4297,7 +4301,7 @@ softwarePackages:
     pacman: mkcert
     scoop: mkcert
   mockoon:
-    _bin: null
+    _bin:snap: mockoon
     _desc: Mockoon is the easiest and quickest way to run mock APIs locally. No remote deployment, no account required, open source
     _docs: null
     _github: https://github.com/mockoon/mockoon
@@ -4433,7 +4437,7 @@ softwarePackages:
     github: github.com/mullvad/mullvadvpn-app
     yay: mullvad-vpn
   multipass:
-    _bin: null
+    _bin: multipass
     _desc: '[Multipass](https://multipass.run/) makes it so that you can get an instant Ubuntu VM with a single command. Multipass can launch and run virtual machines and configure them with cloud-init like a public cloud. It is a product of [Canonical](https://canonical.com/), the same company that publishes Ubuntu.'
     _docs: null
     _github: null
@@ -4811,7 +4815,7 @@ softwarePackages:
     flatpak: org.onionshare.OnionShare
     snap: onionshare
   onlykey:
-    _bin: null
+    _bin:snap: onlykey-app
     _desc: null
     _docs: null
     _github: null
@@ -5535,7 +5539,10 @@ softwarePackages:
     snap: redis-desktop-manager
   recoverpy:
     _deps:
-      - recoverpy-deps
+      - coreutils
+      - grep
+      - progress
+      - util-linux
     _bin: recoverpy
     _desc: '[RecoverPy](https://github.com/PabloLec/RecoverPy) is a highly configurable terminal emulator, SSH and serial client for Windows, macOS and Linux.'
     _docs: https://github.com/PabloLec/RecoverPy#usage
@@ -5545,22 +5552,32 @@ softwarePackages:
     _service: false
     ansible:linux: professormanhattan.recoverpy
     script:linux: python3 -m pip install recoverpy
-  recoverpy-deps:
-    apt:
-      - coreutils
-      - grep
-      - progress
-      - util-linux
-    dnf:
-      - coreutils
-      - grep
-      - progress
-      - util-linux
-    pacman:
-      - coreutils
-      - grep
-      - progress
-      - util-linux
+  coreutils:
+    _bin:
+      - cat
+      - ls
+      - rm
+    apt: coreutils
+    dnf: coreutils
+    pacman: coreutils
+  grep:
+    _bin: grep
+    apt: grep
+    dnf: grep
+    pacman: grep
+  progress:
+    _bin: progress
+    apt: progress
+    dnf: progress
+    pacman: progress
+  util-linux:
+    _bin:
+      - cal
+      - chmem
+      - hexdump
+    apt: util-linux
+    dnf: util-linux
+    pacman: util-linux
   remote-desktop:
     _deps:
       - gnome-boxes
@@ -6660,6 +6677,17 @@ softwarePackages:
     github: github.com/go-task/task
     go: github.com/go-task/task/v3/cmd/task@latest
     scoop: task
+  dua:
+    _bin: dua
+    _github: https://github.com/Byron/dua-cli
+    brew: dua-cli
+    cargo: dua-cli
+    dnf:fedora: dua-cli
+    pacman: dua-cli
+    pkgin: dua-cli
+    port: dua-cli
+    scoop: dua
+    xbps: dua-cli
   microsoft-teams:
     _bin: null
     _desc: '[Microsoft Teams](https://www.microsoft.com/en-us/microsoft-teams/group-chat-software) is a proprietary business communication platform developed by Microsoft, as part of the Microsoft 365 family of products. Teams primarily competes with the similar service Slack, offering workspace chat and videoconferencing, file storage, and application integration.'
