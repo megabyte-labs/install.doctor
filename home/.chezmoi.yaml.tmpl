@@ -54,7 +54,7 @@
 {{- else if eq .chezmoi.os "linux" }}
 {{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
 {{-     $chassisType = "wsl" }}
-{{-   else -}}regexFind "[a-zA-Z][1-9]" "abcd1234"
+{{-   else -}}
 {{-     $chassisType = (regexFind "Chassis.*" "(output "hostnamectl") | replace "Chassis: " "") }}
 {{-   end -}}
 {{- else if eq .chezmoi.os "darwin" }}
