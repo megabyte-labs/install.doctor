@@ -1427,9 +1427,9 @@ async function pruneInstallOrders(installOrders) {
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
           if (dnf) {
-            await runSilentCommand(`rpm -qa | grep ${pkg} > /dev/null > /dev/null`)
+            await runSilentCommand(`rpm -qa | grep ${pkg} > /dev/null`)
           } else {
-            await runSilentCommand(`rpm -qa | grep ${pkg} > /dev/null > /dev/null`)
+            await runSilentCommand(`rpm -qa | grep ${pkg} > /dev/null`)
           }
           return false
         } catch (e) {
@@ -1437,7 +1437,7 @@ async function pruneInstallOrders(installOrders) {
         }
       })
     } else if (pkgManager === 'flatpak') {
-      newOrders[pkgManager] = newOrders[pkgManager].filter(async (pkg) => {
+      newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
           await runSilentCommand(`flatpak info ${pkg} > /dev/null`)
           return false
@@ -1448,7 +1448,7 @@ async function pruneInstallOrders(installOrders) {
     } else if (pkgManager === 'pacman') {
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
-          await runSilentCommand(`pacman -Qs ${pkg} > /dev/null > /dev/null`)
+          await runSilentCommand(`pacman -Qs ${pkg} > /dev/null`)
           return false
         } catch (e) {
           return true
