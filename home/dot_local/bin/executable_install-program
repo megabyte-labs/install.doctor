@@ -1437,6 +1437,15 @@ async function pruneInstallOrders(installOrders) {
         }
       })
     } else if (pkgManager === 'flatpak') {
+      const flatpakInstallation = await $`flatpak --installation`
+      newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
+        try {
+          await runSilentCommand(`test -d ${flatpakInstallation}/app/${pkg}`)
+          return false
+        } catch (e) {
+          return true
+        }
+      })
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
           await runSilentCommand(`flatpak info ${pkg} > /dev/null`)
