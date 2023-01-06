@@ -93,8 +93,9 @@ installerPreference:
     - npm
     - pipx
     - gem
-    - ansible
     - appimage
+    - script
+    - ansible
     - binary
   darwin:
     - whalebrew
@@ -106,6 +107,7 @@ installerPreference:
     - npm
     - pipx
     - gem
+    - script
     - ansible
     - binary
   dnf:
@@ -119,8 +121,9 @@ installerPreference:
     - npm
     - pipx
     - gem
-    - ansible
     - appimage
+    - script
+    - ansible
     - binary
   freebsd:
     - pkg
@@ -128,6 +131,7 @@ installerPreference:
     - cargo
     - npm
     - gem
+    - script
   pacman:
     - flatpak
     - snap
@@ -140,8 +144,9 @@ installerPreference:
     - npm
     - pipx
     - gem
-    - ansible
     - appimage
+    - script
+    - ansible
     - binary
   windows:
     - choco
@@ -152,6 +157,7 @@ installerPreference:
     - npm
     - pipx
     - gem
+    - script
     - ansible
     - binary
   zypper:
@@ -165,8 +171,9 @@ installerPreference:
     - npm
     - pipx
     - gem
-    - ansible
     - appimage
+    - script
+    - ansible
     - binary
 
 softwarePackages:
@@ -548,6 +555,7 @@ softwarePackages:
     _service: false
     _when:cask: '! test -d /Applications/balenaEtcher.app'
     ansible:linux: professormanhattan.etcher
+    appimage: etcher
     cask: balenaetcher
     choco: etcher
     yay: balena-etcher
@@ -1061,7 +1069,7 @@ softwarePackages:
     _name: cocoapods
     _service: null
     _when:brew: '! test -d /usr/local/Cellar/cocoapods'
-    ansible: professormanhattan.cocoapods
+    ansible:darwin: professormanhattan.cocoapods
     brew:darwin: cocoapods
     gem:darwin: cocoapods
   cointop:
@@ -1383,6 +1391,11 @@ softwarePackages:
     _name: Deno
     _service: false
     ansible: professormanhattan.deno
+    brew: deno
+    cargo: deno
+    choco: deno
+    nix: deno
+    scoop: deno
   desed:
     _bin: desed
     _desc: Debugger for sed used to demystify and debug the sed scripts, from comfort of terminal
@@ -1972,7 +1985,7 @@ softwarePackages:
     _name: Fig
     _service: false
     _when:cask: '! test -d "/Applications/Fig.app"'
-    ansible: professormanhattan.fig
+    ansible:darwin: professormanhattan.fig
     cask: fig
   filebrowser:
     _bin: filebrowser
@@ -4170,11 +4183,16 @@ softwarePackages:
     _bin: mcfly
     _desc: "[McFly](https://github.com/cantino/mcfly) replaces your default CTRL-r shell history search with an intelligent search engine that takes into account your working directory and the context of recently executed commands. McFly's suggestions are prioritized in real time with a small neural network."
     _docs: null
-    _github: null
+    _github: https://github.com/cantino/mcfly
     _home: null
     _name: McFly
     _service: null
-    ansible: professormanhattan.mcfly
+    ansible:darwin: professormanhattan.mcfly
+    ansible:linux: professormanhattan.mcfly
+    brew: mcfly
+    port: mcfly
+    script:darwin: curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | sh -s -- --git cantino/mcfly
+    script:linux: curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | sh -s -- --git cantino/mcfly
   microsoft-edge:
     _bin: null
     _desc: '[Microsoft Edge](https://www.microsoft.com/en-us/edge) is a cross-platform web browser developed by Microsoft. It was first released for Windows 10 and Xbox One in 2015, then for Android and iOS in 2017, for macOS in 2019, and as a preview for Linux in October 2020.'
@@ -5226,12 +5244,12 @@ softwarePackages:
     go: github.com/jessfraz/pony@latest
   portmaster:
     _bin: null
-    _desc: "[portmaster](https://safing.io/portmaster/) is a free and open-source application that puts you back in charge over all your computer's network connections."
+    _desc: "[Portmaster](https://safing.io/portmaster/) is a free and open-source application that puts you back in charge over all your computer's network connections."
     _docs: https://docs.safing.io/portmaster/architecture/overview
     _github: https://github.com/safing/portmaster
     _home: https://safing.io/
-    _name: portmaster
-    _service: null
+    _name: Portmaster
+    _service: true
     ansible:linux: professormanhattan.portmaster
     ansible:windows: professormanhattan.portmaster
   postman:
@@ -6054,7 +6072,10 @@ softwarePackages:
     _home: https://neurobin.org/projects/softwares/unix/shc/
     _name: shc
     _service: false
-    ansible: professormanhattan.shc
+    ansible:darwin: professormanhattan.shc
+    ansible:linux: professormanhattan.shc
+    brew: shc
+    port: shc
   shdoc:
     _deps:script:
       - gawk
@@ -6065,8 +6086,10 @@ softwarePackages:
     _home: null
     _name: shdoc
     _service: null
-    ansible: professormanhattan.shdoc
-    script: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install
+    ansible:darwin: professormanhattan.shdoc
+    ansible:linux: professormanhattan.shdoc
+    script:darwin: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install
+    script:linux: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install
     yay: shdoc-git
   shellcheck:
     _bin: shellcheck
@@ -6850,6 +6873,19 @@ softwarePackages:
     pacman: tokei
     pkg: tokei
     scoop: tokei
+  privoxy:
+    _bin: privoxy
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: Privoxy
+    _service: true
+    apt: privoxy
+    brew: privoxy
+    dnf: privoxy
+    pacman: privoxy
+    port: privoxy
   tor:
     _bin: toron
     _desc: "[Tor](https://www.torproject.org/) is free and open-source software for enabling anonymous communication by directing Internet traffic through a free, worldwide, volunteer overlay network consisting of more than seven thousand relays in order to conceal a user's location and usage from anyone conducting network surveillance or traffic analysis. On Linux you can combine Tor with [Privoxy](https://www.privoxy.org/) which allows you to tunnel all of your traffic through the Tor network."
@@ -6859,6 +6895,11 @@ softwarePackages:
     _name: TOR
     _service: null
     ansible:linux: professormanhattan.tor
+    apt: tor
+    brew: tor
+    dnf: tor
+    pacman: tor
+    port: tor
   translate:
     _bin: trans
     _desc: '[Translate Shell](https://github.com/soimort/translate-shell) (formerly Google Translate CLI) is a command-line translator powered by Google Translate (default), Bing Translator, Yandex.Translate, and Apertium. It gives you easy access to these translation engines in your terminal. It is feature-rich and, although there is some overlap, it complements [Normit](https://gitlab.com/megabyte-labs/ansible-roles/normit) well.'
@@ -7162,6 +7203,7 @@ softwarePackages:
     _service: null
     _when:darwin: '! test -d "/Applications/VMware Fusion.app"'
     ansible: professormanhattan.vmware
+    cask: vmware-fusion
   what-ip:
     flatpak: org.gabmus.whatip
   volta:
@@ -7527,7 +7569,7 @@ softwarePackages:
     _home: https://developer.apple.com/xcode/
     _name: XCode
     _service: false
-    ansible: professormanhattan.xcode
+    ansible:darwin: professormanhattan.xcode
   xurls:
     _bin: xurls
     _desc: Extract urls from text
@@ -7728,7 +7770,13 @@ softwarePackages:
     _home: null
     _name: Zsh
     _service: null
-    ansible: professormanhattan.zsh
+    ansible:darwin: professormanhattan.zsh
+    ansible:linux: professormanhattan.zsh
+    apt: zsh
+    brew: zsh
+    dnf: zsh
+    pacman: zsh
+    port: zsh
   zx:
     _bin: zx
     _desc: null
