@@ -55,7 +55,7 @@
 {{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
 {{-     $chassisType = "wsl" }}
 {{-   else -}}
-{{-     $chassisType = (regexFind "Chassis" "(output "hostnamectl")) }}
+{{-     $chassisType = "todo-get-from-hostnamectl" }}
 {{-   end -}}
 {{- else if eq .chezmoi.os "darwin" }}
 {{-   if contains "MacBook" (output "sysctl" "-n" "hw.model") }}
