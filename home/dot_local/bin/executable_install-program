@@ -281,37 +281,34 @@ async function generateInstallOrders(pkgsToInstall) {
         if (doubleScoped) {
           let pref
           if (softwarePackages[packageKey]['_' + currentSelector + ':' + preference + ':' + osID]) {
-            pref = preference + ':' + osID
+            pref = '_deps:' + preference + ':' + osID
             log('info', dependenciesTag, `Installing dependencies for ${packageKey}.${pref}`)
             await generateInstallOrders(softwarePackages[packageKey][pref])
           } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + preference + ':' + osType]) {
-            pref = preference + ':' + osType
+            pref = '_deps:' + preference + ':' + osType
             log('info', dependenciesTag, `Installing dependencies for ${packageKey}.${pref}`)
             await generateInstallOrders(softwarePackages[packageKey][pref])
           } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osID + ':' + preference]) {
-            pref = osID + ':' + preference
+            pref = '_deps:' + osID + ':' + preference
             log('info', dependenciesTag, `Installing dependencies for ${packageKey}.${pref}`)
             await generateInstallOrders(softwarePackages[packageKey][pref])
           } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osType + ':' + preference]) {
-            pref = osType + ':' + preference
+            pref = '_deps:' + osType + ':' + preference
             log('info', dependenciesTag, `Installing dependencies for ${packageKey}.${pref}`)
             await generateInstallOrders(softwarePackages[packageKey][pref])
           }
         } else if (scopedPkgManager) {
-          const pref = preference
+          const pref = '_deps:' + preference
           log('info', dependenciesTag, `Installing dependencies for ${packageKey}.${pref}`)
-          console.log(packageKey)
-          console.log(softwarePackages[packageKey])
-          console.log(pref)
           await generateInstallOrders(softwarePackages[packageKey][pref])
         } else if (scopedSystem) {
           let pref
           if (softwarePackages[packageKey]['_' + currentSelector + ':' + osID]) {
-            pref = osID
+            pref = '_deps:' + osID
             log('info', dependenciesTag, `Installing dependencies for ${packageKey}.${pref}`)
             await generateInstallOrders(softwarePackages[packageKey][pref])
           } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osType]) {
-            pref = osType
+            pref = '_deps:' + osType
             log('info', dependenciesTag, `Installing dependencies for ${packageKey}.${pref}`)
             await generateInstallOrders(softwarePackages[packageKey][pref])
           }
