@@ -300,6 +300,9 @@ async function generateInstallOrders(pkgsToInstall) {
         } else if (scopedPkgManager) {
           const pref = preference
           log('info', dependenciesTag, `Installing dependencies for ${packageKey}.${pref}`)
+          console.log(packageKey)
+          console.log(softwarePackages[packageKey])
+          console.log(pref)
           await generateInstallOrders(softwarePackages[packageKey][pref])
         } else if (scopedSystem) {
           let pref
