@@ -310,7 +310,9 @@ softwareGroups:
     - vscode
     - vscodium
   File-System: &File-System
-    - catfs
+    # After `sudo apt-get install -y fuse libfuse-dev, the following error still shows up:
+    # error: could not find system library 'fuse' required by the 'fuse' crate
+    # - catfs
     - glusterfs
     - goofys
     - sshfs

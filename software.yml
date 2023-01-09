@@ -536,7 +536,10 @@ softwarePackages:
     _name: balenaEtcher
     _when:cask: '! test -d /Applications/balenaEtcher.app'
     ansible:linux: professormanhattan.etcher
-    appimage: etcher
+    # Waiting for zap to allow headless automation of AppImage Catalog images
+    # Currently, it fails because there are multiple versions to select
+    # appimage: etcher
+    appimage: https://github.com/balena-io/etcher/releases/download/v1.13.1/balenaEtcher-1.13.1-x64.AppImage
     cask: balenaetcher
     choco: etcher
     yay: balena-etcher
@@ -2185,7 +2188,9 @@ softwarePackages:
     _name: Fuse
     _when:cask: '! test -d /usr/local/Caskroom/macfuse'
     ansible:darwin: professormanhattan.fuse
-    apt: libfuse-dev
+    apt:
+      - fuse
+      - libfuse-dev
     cask: macfuse
   fx:
     _bin: fx

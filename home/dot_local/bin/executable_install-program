@@ -1059,10 +1059,10 @@ async function installPackageList(packageManager, packages) {
     if (packageManager === 'appimage') {
       for (let pkg of packages) {
         try {
-          if (pkg.substring(0, 4) === 'http' && pkg.slice(-8) === 'AppImage') {
+          if (pkg.substring(0, 4) === 'http') {
             log('info', 'AppImage Install', `Installing ${pkg} from its URL`)
             runCommand('Installing ${pkg} via apk', `sudo zap install --from ${pkg}`)
-          } else if (pkg.includes('/')) {
+          } else if ((pkg.match(/\\/g) || []).length === 1) {
             log('info', 'AppImage Install', `Installing ${pkg} from a GitHub Release`)
             runCommand('Installing ${pkg} via apk', `sudo zap install --github --from ${pkg}`)
           } else {
