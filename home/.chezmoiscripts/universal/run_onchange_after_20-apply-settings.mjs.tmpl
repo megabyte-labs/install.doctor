@@ -68,7 +68,8 @@ async function applyXconfSettings(settings) {
     for (const setting of settings) {
       try {
         const xfconfType = setting.value_type ? setting.value_type : 'string'
-        await $`xfconf-query --channel '${setting.channel}' --property '${setting.property}' --type ${xfconfType} --set ${setting.value}`
+        const xfCmd = 'xfconf-query --channel \'' + setting.channel + '\' --property \'' + setting.property + '\' --type ' + xfconfType + ' --set ' + setting.value
+        execSync(xfCmd)
       } catch (e) {
         log('error', 'Xfconf', 'Failed to apply gsetting')
         console.error(e)
@@ -85,7 +86,7 @@ async function applyDconfSettings(settings) {
     for (const setting of settings) {
       try {
         const dconfCmd = 'dconf write ' + setting.key + ' ' + setting.value
-        await $(dconfCmd)
+        execSync(dconfCmd)
         log('success', 'Dconf', 'Changed ' + setting.key + ' to ' + setting.value)
       } catch (e) {
         log('error', 'Dconf', 'Failed to apply dconf setting')
