@@ -185,7 +185,6 @@ softwarePackages:
       - deja-dup
       - dialect
       - drawing
-      - flatseal
       - forklift
       - gnome-calendar
       - gnome-document-viewer
@@ -207,6 +206,8 @@ softwarePackages:
       - warp-transfer
       - web-font-generator
       - what-ip
+    # Only works with at least one package specified
+    flatpak: flatseal
   drawing:
     _bin: drawing
     flatpak: com.github.maoschanz.drawing
