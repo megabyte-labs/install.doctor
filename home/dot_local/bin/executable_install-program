@@ -95,6 +95,10 @@ const installOrdersPlugins = []
 const installOrdersBinLink = []
 let brewUpdated, osType, osID, snapRefreshed
 
+// Register the OS platform type
+const osPlatformData = os.platform()
+const osPlatform = osPlatformData === 'win32' ? 'windows' : osPlatformData
+
 // Download the installation map
 async function downloadInstallData() {
   const response = await fetch('https://gitlab.com/megabyte-labs/hiawatha-dotfiles/-/raw/master/software.yml')
@@ -669,7 +673,11 @@ async function beforeInstall(packageManager) {
     if (unbuffer) {
       unbufferPrefix = 'unbuffer'
     }
-    await $`ANSIBLE_CONFIG=${process.env.HOME}/.local/share/ansible/ansible.cfg ${unbufferPrefix} ansible 127.0.0.1 -e '{ ansible_connection: "local", ansible_become_user: "${process.env.USER}", ansible_user: "${process.env.USER}", install_homebrew: False }' -m setup`
+    if (osPlatform === 'darwin' || osPlatform === 'linux' || osPlatform === 'windows') {
+      await $`ANSIBLE_CONFIG=${process.env.HOME}/.local/share/ansible/ansible.cfg ${unbufferPrefix} ansible 127.0.0.1 -e '{ ansible_connection: "local", ansible_become_user: "${process.env.USER}", ansible_user: "${process.env.USER}", ansible_family: "${osPlatform}", install_homebrew: False }' -m setup`
+    } else {
+      log('warn', 'Ansible', 'Unsupported platform - ' + osPlatform)
+    }
   } else if (packageManager === 'apk') {
     await $`sudo apk update`
   } else if (packageManager === 'apt') {
