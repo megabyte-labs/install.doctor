@@ -269,7 +269,6 @@ softwarePackages:
     _github: null
     _home: https://developer.android.com/studio
     _name: Android Studio
-    _service: null
     _when:cask: '! test -d "/Applications/Android Studio.app"'
     ansible: professormanhattan.androidstudio
     cask: android-studio
@@ -284,7 +283,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: angular-cli
     npm: '@angular/cli'
   ansible:
@@ -294,7 +292,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _post:pipx: pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
     brew: ansible
     dnf: ansible
@@ -306,7 +303,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     pipx: ansible-lint
   ansibleconnect:
     _bin: ansibleconnect
@@ -318,7 +314,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     pipx: ansibleconnect
   antivirus:
     _bin: null
@@ -329,7 +324,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: AntiVirus
-    _service: null
     ansible: professormanhattan.antivirus
   appium:
     _bin: appium
@@ -338,7 +332,6 @@ softwarePackages:
     _github: https://github.com/appium/appium
     _home: https://appium.io/
     _name: Appium
-    _service: null
     ansible: professormanhattan.appium
     brew: appium
     choco: appium-desktop
@@ -357,7 +350,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: AptCacherNG
-    _service: null
     ansible: professormanhattan.aptcacherng
   aqua:
     _bin: aqua
@@ -366,7 +358,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: aquaproj/aqua/aqua
     binary:linux: https://github.com/aquaproj/aqua/releases/download/v2.0.0-0/aqua_linux_amd64.tar.gz
     binary:windows: https://github.com/aquaproj/aqua/releases/download/v2.0.0-0/aqua_windows_amd64.tar.gz
@@ -391,7 +382,6 @@ softwarePackages:
     _github: https://github.com/aria2/aria2
     _home: null
     _name: Aria2/AriaNg
-    _service: null
     ansible: professormanhattan.aria
     apt: aria2
     brew: aria2
@@ -409,7 +399,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     apk: asciinema
     apt: asciinema
     brew: asciinema
@@ -423,7 +412,6 @@ softwarePackages:
     _github: https://github.com/asdf-vm/asdf
     _home: https://asdf-vm.com/
     _name: asdf-vm
-    _service: null
     ansible: professormanhattan.asdf
   assh:
     _bin: assh
@@ -432,7 +420,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: assh
     go: moul.io/assh/v2
     yay: assh
@@ -451,7 +438,6 @@ softwarePackages:
     _home: null
     _name: null
     _post: nvim --headless -c 'autocmd User PackerComplete quitall'
-    _service: null
   auto-install:
     _bin: auto-install
     _desc: null
@@ -459,7 +445,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: auto-install
   autokey:
     _bin: null
@@ -468,7 +453,6 @@ softwarePackages:
     _github: https://github.com/autokey/autokey
     _home: https://code.google.com/archive/p/autokey/
     _name: Autokey
-    _service: null
     ansible:linux: professormanhattan.autokey
     ansible:windows: professormanhattan.autokey
     apt: autokey
@@ -482,7 +466,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     apk: automake
     apt: automake
     brew: automake
@@ -496,7 +479,6 @@ softwarePackages:
     _github: https://github.com/cupcakearmy/autorestic/
     _home: https://autorestic.vercel.app/
     _name: Autorestic
-    _service: null
     ansible: professormanhattan.autorestic
     brew: autorestic
   awscli:
@@ -506,7 +488,6 @@ softwarePackages:
     _github: https://github.com/aws/aws-cli
     _home: https://aws.amazon.com/
     _name: AWS CLI
-    _service: null
     ansible: professormanhattan.awscli
     brew: awscli@2
     binary:darwin: https://awscli.amazonaws.com/AWSCLIV2.pkg
@@ -529,7 +510,6 @@ softwarePackages:
     _github: https://github.com/Azure/azure-cli
     _home: https://azure.microsoft.com/
     _name: Azure CLI
-    _service: null
     ansible: professormanhattan.azurecli
     brew: azure-cli
     choco: azure-cli
@@ -542,7 +522,6 @@ softwarePackages:
     _github: https://github.com/Azure/azure-functions-core-tools
     _home: null
     _name: azure-functions-core-tools
-    _service: null
     _type: cli
     brew: azure/functions/azure-functions-core-tools@4
     choco: azure-functions-core-tools
@@ -568,7 +547,6 @@ softwarePackages:
     _github: https://github.com/imsnif/bandwhich
     _home: null
     _name: Bandwhich
-    _service: null
     _type: cli
     ansible: professormanhattan.bandwhich
     brew: bandwhich
@@ -582,7 +560,6 @@ softwarePackages:
     _github: https://github.com/genuinetools/bane
     _home: null
     _name: bane
-    _service: null
     _type: cli
     github: github.com/genuinetools/bane
     go: github.com/genuinetools/bane@latest
@@ -593,7 +570,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _when:darwin: '! (brew list bash-completion | grep bash-completion)'
     brew:darwin: bash-completion
   axel:
@@ -626,7 +602,6 @@ softwarePackages:
     _github: https://github.com/sharkdp/bat
     _home: null
     _name: bat
-    _service: null
     _type: cli
     ansible: professormanhattan.bat
     apk: bat
@@ -646,7 +621,6 @@ softwarePackages:
     _github: https://github.com/beetbox/beets
     _home: https://beets.io/
     _name: Beets
-    _service: null
     ansible: professormanhattan.beets
     pipx: beets
   betwixt:
@@ -656,7 +630,6 @@ softwarePackages:
     _github: https://github.com/kdzwinel/betwixt
     _home: null
     _name: Betwixt
-    _service: null
     _type: application
     github: github.com/kdzwinel/betwixt
   bin:
@@ -666,7 +639,6 @@ softwarePackages:
     _github: https://github.com/marcosnils/bin
     _home: null
     _name: bin
-    _service: null
     _type: cli
     github: github.com/marcosnils/bin
     go: github.com/marcosnils/bin@latest
@@ -677,7 +649,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: bitly-cli-client
   bitwarden:
     _bin: null
@@ -686,7 +657,6 @@ softwarePackages:
     _github: https://github.com/bitwarden/desktop
     _home: null
     _name: BitWarden
-    _service: null
     _type: application
     _when:cask: '! test -d /Applications/Bitwarden.app'
     cask: bitwarden
@@ -702,7 +672,6 @@ softwarePackages:
     _github: https://github.com/bitwarden/clients
     _home: https://bitwarden.com/
     _name: Bitwarden CLI
-    _service: null
     ansible: professormanhattan.bw
     brew: bitwarden-cli
     choco: bitwarden-cli
@@ -716,7 +685,6 @@ softwarePackages:
     _github: https://github.com/camptocamp/bivac
     _home: null
     _name: bivac
-    _service: null
     _type: cli
     github: github.com/camptocamp/bivac
   boilr:
@@ -726,7 +694,6 @@ softwarePackages:
     _github: https://github.com/tmrts/boilr
     _home: null
     _name: boilr
-    _service: null
     _type: cli
     github: github.com/tmrts/boilr
     go: github.com/tmrts/boilr@latest
@@ -738,7 +705,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: bottom
     pacman: bottom
     scoop: bottom
@@ -750,7 +716,6 @@ softwarePackages:
     _github: https://github.com/brave/brave-browser
     _home: https://brave.com/
     _name: Brave Browser
-    _service: null
     _when:cask: '! test -d "/Applications/Brave Browser.app"'
     ansible: professormanhattan.bravebrowser
     cask: brave-browser
@@ -778,7 +743,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: browser-sync
   budibase-cli:
     _bin: budi
@@ -787,7 +751,6 @@ softwarePackages:
     _github: https://github.com/Budibase/budibase
     _home: null
     _name: budibase-cli
-    _service: null
     _type: cli
     github: github.com/Budibase/budibase
     npm: '@budibase/cli'
@@ -798,7 +761,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     gem: bundler
   caniuse:
     _bin: caniuse
@@ -807,7 +769,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: caniuse-cmd
   captain:
     _bin: null
@@ -816,7 +777,6 @@ softwarePackages:
     _github: https://github.com/jenssegers/captain
     _home: null
     _name: captain
-    _service: null
     _type: cli
     github: github.com/jenssegers/captain
   carbon-now:
@@ -826,7 +786,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: carbon-now-cli
   carthage:
     _bin: carthage
@@ -835,7 +794,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew:darwin: carthage
   cerebro:
     _bin: null
@@ -871,7 +829,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: cfssl
     pacman: cfssl
   cheat:
@@ -915,7 +872,6 @@ softwarePackages:
     _github: Not open-source
     _home: https://www.google.com/chrome/
     _name: Google Chrome
-    _service: null
     _when:cask: '! test -d "/Applications/Google Chrome.app"'
     ansible: professormanhattan.chrome
     cask: google-chrome
@@ -936,7 +892,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew:darwin: chrome-cli
   chrome-gnome-shell:
     _bin: null
@@ -945,7 +900,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _when: |
       test -f /usr/bin/gnome-session
     apt: chrome-gnome-shell
@@ -958,7 +912,6 @@ softwarePackages:
     _github: https://github.com/quay/clair
     _home: null
     _name: clair
-    _service: null
     _type: cli
     brew: clair
     github: github.com/quay/clair
@@ -989,7 +942,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     cask: clocker
   cloudflare:
     _bin: null
@@ -998,7 +950,6 @@ softwarePackages:
     _github: https://github.com/cloudflare/1.1.1.1
     _home: https://www.cloudflare.com/
     _name: CloudFlare
-    _service: null
     ansible: professormanhattan.cloudflare
   cloudflared:
     _bin: cloudflared
@@ -1007,7 +958,6 @@ softwarePackages:
     _github: https://github.com/cloudflare/cloudflared
     _home: null
     _name: CloudFlared
-    _service: null
     _type: cli
     ansible: professormanhattan.cloudflared
     brew: cloudflare/cloudflare/cloudflared
@@ -1031,7 +981,6 @@ softwarePackages:
     _github: null
     _home: https://cert-manager.io/docs/usage/cmctl/
     _name: cmctl
-    _service: null
     _type: cli
     github: github.com/cert-manager/cert-manager
   cockpit:
@@ -1042,7 +991,6 @@ softwarePackages:
     _home: https://cockpit-project.org/
     _name: Cockpit
     _post: sudo usermod -a -G libvirtdbus libvirt
-    _service: null
     _service: cockpit
     _service:pacman: cockpit.socket
     ansible:linux: professormanhattan.cockpit
@@ -1085,7 +1033,6 @@ softwarePackages:
     _github: https://github.com/CocoaPods/CocoaPods
     _home: https://cocoapods.org/
     _name: cocoapods
-    _service: null
     _when:brew: '! test -d /usr/local/Cellar/cocoapods'
     ansible:darwin: professormanhattan.cocoapods
     brew:darwin: cocoapods
@@ -1097,7 +1044,6 @@ softwarePackages:
     _github: https://github.com/cointop-sh/cointop
     _home: https://cointop.sh/
     _name: Cointop
-    _service: null
     ansible:darwin: professormanhattan.cointop
     ansible:linux: professormanhattan.cointop
     brew: cointop
@@ -1109,7 +1055,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: commitizen
   commitlint:
     _bin: commitlint
@@ -1126,7 +1071,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Common
-    _service: null
     ansible: professormanhattan.common
   composer:
     _bin: composer
@@ -1149,7 +1093,6 @@ softwarePackages:
     _github: https://github.com/kelseyhightower/confd
     _home: null
     _name: confd
-    _service: null
     _type: cli
     brew: confd
     choco: confd
@@ -1162,7 +1105,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     ansible: professormanhattan.connect
   consul-cli:
     _bin: consul
@@ -1171,7 +1113,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     apt: consul
     brew: consul
     pkg: consul
@@ -1183,7 +1124,6 @@ softwarePackages:
     _github: https://github.com/hashicorp/consul-template
     _home: https://www.hashicorp.com/
     _name: Consul-Template
-    _service: null
     ansible: professormanhattan.consultemplate
   container-structure-test:
     _bin: container-structure-test
@@ -1194,7 +1134,6 @@ softwarePackages:
     _name: null
     _post:binary:linux: |
       # TODO
-    _service: null
     binary:linux: https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
     brew: container-structure-test
     yay: container-structure-test
@@ -1205,7 +1144,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: cookiecutter
     pipx: cookiecutter
   cordova:
@@ -1215,7 +1153,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: cordova
   croc:
     _bin: croc
@@ -1224,7 +1161,6 @@ softwarePackages:
     _github: https://github.com/schollz/croc
     _home: null
     _name: croc
-    _service: null
     _type: cli
     brew: croc
     choco: croc
@@ -1240,7 +1176,6 @@ softwarePackages:
     _github: https://github.com/bcicen/ctop
     _home: null
     _name: ctop
-    _service: null
     _type: cli
     brew: ctop
     github: github.com/bcicen/ctop
@@ -1253,7 +1188,6 @@ softwarePackages:
     _github: https://github.com/gillesdemey/Cumulus
     _home: null
     _name: Cumulus
-    _service: null
     _type: menubar
     cask: cumulus
     github: github.com/gillesdemey/Cumulus
@@ -1264,7 +1198,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: CUPS
-    _service: null
     _service: smbd
     ansible: professormanhattan.cups
     apt:
@@ -1282,7 +1215,6 @@ softwarePackages:
     _github: null
     _home: https://www.elastic.co/guide/en/elasticsearch/client/curator
     _name: curator
-    _service: null
     _type: cli
     pip: elasticsearch-curator
   curl:
@@ -1323,7 +1255,6 @@ softwarePackages:
     _github: https://github.com/TomWright/dasel
     _home: null
     _name: dasel
-    _service: null
     _type: cli
     brew: dasel
     github: github.com/TomWright/dasel
@@ -1335,7 +1266,6 @@ softwarePackages:
     _github: https://github.com/datproject/dat
     _home: null
     _name: dat
-    _service: null
     _type: cli
     github: github.com/dat-ecosystem-archive/dat
     npm: dat@next
@@ -1347,7 +1277,6 @@ softwarePackages:
     _github: https://github.com/datproject/dat-desktop
     _home: null
     _name: Dat Desktop
-    _service: null
     _type: application
     cask: dat
     github: github.com/datproject/dat-desktop
@@ -1358,7 +1287,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Debloat Windows
-    _service: null
     ansible: professormanhattan.debloat
   defaultbrowser:
     _bin: null
@@ -1367,7 +1295,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Default Browser Setter
-    _service: null
     ansible: professormanhattan.defaultbrowser
   delta:
     _bin: delta
@@ -1427,7 +1354,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Desktop
-    _service: null
     ansible: professormanhattan.desktop
   deta:
     _bin: deta
@@ -1448,7 +1374,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: deviceframe
   diff-so-fancy:
     _bin: null
@@ -1457,7 +1382,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: diff-so-fancy
-    _service: null
     ansible: professormanhattan.diffsofancy
   difftastic:
     _bin: difft
@@ -1476,7 +1400,6 @@ softwarePackages:
     _github: https://github.com/direnv/direnv
     _home: https://direnv.net/
     _name: direnv
-    _service: null
     _type: cli
     ansible: professormanhattan.direnv
     apt: direnv
@@ -1490,7 +1413,6 @@ softwarePackages:
     _github: https://github.com/wagoodman/dive
     _home: https://github.com/wagoodman/dive
     _name: dive
-    _service: null
     _type: cli
     ansible: professormanhattan.dive
     brew: dive
@@ -1504,7 +1426,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: DNS
-    _service: null
     ansible: professormanhattan.dns
   dnsmasq:
     _bin: dnsmasq
@@ -1528,7 +1449,6 @@ softwarePackages:
     _post:apt: sudo systemctl start docker
     _post:pacman: sudo systemctl start docker
     _name: Docker
-    _service: null
     ansible: professormanhattan.docker
     # apt:
     #   - docker.io
@@ -1555,7 +1475,6 @@ softwarePackages:
     _github: https://github.com/christian-korneck/docker-pushrm
     _home: https://hub.docker.com/r/chko/docker-pushrm
     _name: docker-pushrm
-    _service: null
     _when:darwin: '! test -f /Applications/Docker.app/Contents/Resources/cli-plugins/docker-pushrm'
     _when:linux: '! test -f /usr/libexec/docker/cli-plugins/docker-pushrm'
     _when:windows: '! test -f %ProgramData%\Docker\cli-plugins\docker-pushrm.exe'
@@ -1567,7 +1486,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: GCC
-    _service: null
     apt: gcc
     brew: gcc
     dnf: gcc
@@ -1615,7 +1533,6 @@ softwarePackages:
     _github: https://github.com/goodwithtech/dockle
     _home: null
     _name: dockle
-    _service: null
     _type: cli
     brew: goodwithtech/r/dockle
     github: github.com/goodwithtech/dockle
@@ -1627,7 +1544,6 @@ softwarePackages:
     _github: https://github.com/digitalocean/doctl
     _home: null
     _name: doctl
-    _service: null
     _type: cli
     brew: doctl
     github: github.com/digitalocean/doctl
@@ -1641,7 +1557,6 @@ softwarePackages:
     _github: https://github.com/ogham/dog
     _home: null
     _name: dog
-    _service: null
     _type: cli
     brew: dog
     github: github.com/ogham/dog
@@ -1654,7 +1569,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: dotenv-linter
     cargo: dotenv-linter
     scoop: dotenv-linter
@@ -1666,7 +1580,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: dotnet
     choco: dotnet
     yay: dotnet-sdk-bin
@@ -1677,7 +1590,6 @@ softwarePackages:
     _github: null
     _home: https://dprint.dev/
     _name: DPrint
-    _service: null
     brew: dprint
     cargo: dprint
     npm: dprint
@@ -1703,7 +1615,6 @@ softwarePackages:
     _github: https://github.com/digitalocean/droplet-agent
     _home: https://www.digitalocean.com/products/droplets
     _name: Droplets
-    _service: null
     ansible: professormanhattan.droplets
   duf:
     _bin: duf
@@ -1771,7 +1682,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Electron CLI
-    _service: null
     npm: electron
   electron-app:
     # TODO: Figure out if this app is necessary and add description that describes the difference between
@@ -1781,7 +1691,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Electron Desktop App
-    _service: null
     _when:cask: '! test -d /Applications/Electron.app'
     cask: electron
     choco: electron
@@ -1800,7 +1709,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: emoj
   emplace:
     _bin: null
@@ -1809,7 +1717,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     cargo: emplace
     nix: emplace
     scoop: emplace
@@ -1860,7 +1767,6 @@ softwarePackages:
     _github: https://github.com/hashicorp/envconsul
     _home: null
     _name: envconsul
-    _service: null
     _type: cli
     ansible: professormanhattan.envconsul
     brew: envconsul
@@ -1872,7 +1778,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     ansible: professormanhattan.environment
   eslint:
     _bin: eslint
@@ -1881,7 +1786,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: eslint
     npm: eslint
   etcd:
@@ -1891,7 +1795,6 @@ softwarePackages:
     _github: https://github.com/etcd-io/etcd
     _home: null
     _name: etcd
-    _service: null
     _type: cli
     apt: etcd
     brew: etcd
@@ -1949,7 +1852,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Extensions
-    _service: null
     ansible: professormanhattan.extensions
   fastify:
     _bin: fastify
@@ -1958,7 +1860,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: fastify-cli
   fcp:
     _bin: fcp
@@ -1978,7 +1879,6 @@ softwarePackages:
     _github: https://github.com/sharkdp/fd
     _home: null
     _name: fd
-    _service: null
     _type: cli
     ansible: professormanhattan.fd
     apk: fd
@@ -1997,7 +1897,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: '@feathersjs/cli'
   ffmpeg:
     _bin: ffmpeg
@@ -2006,7 +1905,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: FFmpeg
-    _service: null
     ansible: professormanhattan.ffmpeg
     apk: ffmpeg
     apt: ffmpeg
@@ -2022,7 +1920,6 @@ softwarePackages:
     _github: https://github.com/timvisee/ffsend
     _home: null
     _name: ffsend
-    _service: null
     _type: cli
     ansible: professormanhattan.ffsend
     apk: ffsend
@@ -2078,7 +1975,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Finish
-    _service: null
     ansible: professormanhattan.finish
   firebase:
     _bin: firebase
@@ -2087,7 +1983,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: firebase-tools
   firefox:
     _bin: null
@@ -2096,7 +1991,6 @@ softwarePackages:
     _github: null
     _home: https://www.mozilla.org/en-US/firefox/new/
     _name: Mozilla Firefox
-    _service: null
     _when:cask: '! test -d "/Applications/Firefox.app"'
     ansible: professormanhattan.firefox
     apt: firefox
@@ -2113,7 +2007,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Firewall
-    _service: null
     ansible: professormanhattan.firewall
   fission:
     _bin: null
@@ -2122,7 +2015,6 @@ softwarePackages:
     _github: null
     _home: https://fission.io/
     _name: Fission
-    _service: null
     _type: binary
     github: github.com/fission/fission
   fkill:
@@ -2132,7 +2024,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: fkill-cli
   flameshot:
     _bin: null
@@ -2164,7 +2055,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _snapClassic: true
     brew: flutter
     choco: flutter
@@ -2187,7 +2077,6 @@ softwarePackages:
     _github: null
     _home: https://concourse-ci.org/
     _name: fly
-    _service: null
     _type: binary
     cask: fly
     github: https://github.com/concourse/concourse
@@ -2199,7 +2088,6 @@ softwarePackages:
     _github: https://github.com/knipferrc/fm
     _home: null
     _name: fm
-    _service: null
     _type: cli
     github: github.com/knipferrc/fm
     go: github.com/knipferrc/fm@latest
@@ -2210,7 +2098,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Install Fonts
-    _service: null
     ansible: professormanhattan.fontinstall
   fonts:
     _bin: null
@@ -2219,7 +2106,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _when:cask: '! ((brew list font-sf-mono-nerd-font | grep SFMono) && (brew list font-hack-nerd-font | grep Hack) && (brew list font-meslo-lg-nerd-font | grep Meslo))'
     cask:
       - epk/epk/font-sf-mono-nerd-font
@@ -2234,7 +2120,6 @@ softwarePackages:
     _github: https://github.com/jordansissel/fpm
     _home: null
     _name: fpm
-    _service: null
     ansible: professormanhattan.fpm
     gem: fpm
   fpm:deps:
@@ -2261,7 +2146,6 @@ softwarePackages:
     _github: https://github.com/wader/fq
     _home: null
     _name: fq
-    _service: null
     _type: cli
     apk: fq
     brew: wader/tap/fq
@@ -2276,7 +2160,6 @@ softwarePackages:
     _github: https://github.com/jhspetersson/fselect
     _home: null
     _name: fselect
-    _service: null
     _type: cli
     brew: fselect
     cargo: fselect
@@ -2290,7 +2173,6 @@ softwarePackages:
     _github: https://github.com/sgarciac/fuego
     _home: null
     _name: Fuego
-    _service: null
     _type: cli
     github: github.com/sgarciac/fuego
     snap: fuego
@@ -2301,7 +2183,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Fuse
-    _service: null
     _when:cask: '! test -d /usr/local/Caskroom/macfuse'
     ansible:darwin: professormanhattan.fuse
     apt: libfuse-dev
@@ -2412,7 +2293,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     pipx: gdown
   gdrive:
     _bin: gdrive
@@ -2441,7 +2321,6 @@ softwarePackages:
       sudo snap connect gdu-disk-usage-analyzer:mount-observe :mount-observe
       sudo snap connect gdu-disk-usage-analyzer:system-backup :system-backup
       sudo snap alias gdu-disk-usage-analyzer.gdu gdu
-    _service: null
     brew: gdu
     go: github.com/dundee/gdu/v5/cmd/gdu@latest
     pacman: gdu
@@ -2453,7 +2332,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     apt: gdu
   gfi:
     _bin: gfi
@@ -2462,7 +2340,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: google-font-installer
   gh:
     _bin: gh
@@ -2484,7 +2361,6 @@ softwarePackages:
     _github: https://github.com/gabrie30/ghorg
     _home: null
     _name: ghorg
-    _service: null
     _type: cli
     ansible: professormanhattan.ghorg
     brew: gabrie30/utils/ghorg
@@ -2498,7 +2374,6 @@ softwarePackages:
     _github: https://github.com/GNOME/gimp
     _home: https://www.gimp.org/
     _name: GIMP
-    _service: null
     _when:cask: '! test -d /Applications/GIMP-2.10.app'
     ansible: professormanhattan.gimp
     apt: gimp
@@ -2515,7 +2390,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: gist
-    _service: null
     ansible: professormanhattan.gist
     gem: gist
   git:
@@ -2525,7 +2399,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     apk: git
     apt: git
     brew: git
@@ -2547,7 +2420,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     ansible: professormanhattan.gitfilterrepo
     brew: git-filter-repo
     pipx: git-filter-repo
@@ -2561,7 +2433,6 @@ softwarePackages:
     _home: null
     _name: Git LFS
     _post: git lfs install
-    _service: null
     ansible: professormanhattan.gitlfs
     brew: git-lfs
     scoop: git-lfs
@@ -2572,7 +2443,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: git-open
   git-secret:
     _bin: git-secret
@@ -2625,7 +2495,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: GitDocker
-    _service: null
     ansible: professormanhattan.gitdocker
   git-extras:
     _bin: git-extras
@@ -2634,7 +2503,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: git-extras
-    _service: null
     ansible:windows: professormanhattan.gitextras
     apt: git-extras
     brew: git-extras
@@ -2647,7 +2515,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: git-fuzzy
-    _service: null
     _notes: Installed via dotfiles
     # ansible: professormanhattan.gitfuzzy
   git-notify:
@@ -2665,7 +2532,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: GitHub Binary Downloader
-    _service: null
     ansible: professormanhattan.githubbinary
   gitify:
     _bin: null
@@ -2675,7 +2541,6 @@ softwarePackages:
     _github: https://github.com/manosim/gitify
     _home: https://github.com/manosim/gitify
     _name: Gitify
-    _service: null
     _type: menubar
     _when:cask: '! test -d /Applications/Gitify.app'
     cask: gitify
@@ -2688,7 +2553,6 @@ softwarePackages:
     _github: Not open-source
     _home: https://www.gitkraken.com/
     _name: GitKraken
-    _service: null
     _snapClassic: true
     _when:cask: '! test -d /Applications/GitKraken.app'
     ansible: professormanhattan.gitkraken
@@ -2716,7 +2580,6 @@ softwarePackages:
     _github: https://github.com/zricethezav/gitleaks
     _home: null
     _name: gitleaks
-    _service: null
     _type: cli
     brew: gitleaks
     dnf: gitleaks
@@ -2730,7 +2593,6 @@ softwarePackages:
     _github: https://github.com/muesli/gitomatic
     _home: null
     _name: git-o-matic
-    _service: null
     _type: cli
     ansible: professormanhattan.gitomatic
     github: github.com/muesli/gitomatic
@@ -2743,7 +2605,6 @@ softwarePackages:
     _github: https://github.com/IonicaBizau/git-stats
     _home: null
     _name: git-stats
-    _service: null
     ansible: professormanhattan.gitstats
     npm: git-stats
   gitui:
@@ -2771,7 +2632,6 @@ softwarePackages:
     _github: https://github.com/yandex/gixy
     _home: null
     _name: null
-    _service: null
     pipx: gixy
   glab:
     _bin: glab
@@ -2780,7 +2640,6 @@ softwarePackages:
     _github: https://github.com/profclems/glab
     _home: null
     _name: glab
-    _service: null
     _type: cli
     apk: glab
     brew: glab
@@ -2796,7 +2655,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Glances
-    _service: null
     _post:pipx: pipx inject glances glances[all]
     ansible: professormanhattan.glances
     apt:ubuntu:
@@ -2832,7 +2690,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     go: github.com/lingrino/glen@latest
   glow:
     _bin: glow
@@ -2841,7 +2698,6 @@ softwarePackages:
     _github: https://github.com/charmbracelet/glow
     _home: null
     _name: glow
-    _service: null
     _type: cli
     brew: glow
     github: github.com/charmbracelet/glow
@@ -2868,7 +2724,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _when:brew:darwin: '(! brew list coreutils | grep coreutils) || (! brew list findutils | grep findutils) || (! brew list gawk | grep gawk) || (! brew list gnu-getopt | grep gnu-getopt) || (! brew list gnu-indent | grep gnu-indent) || (! brew list gnu-tar | grep gnu-tar) || (! brew list gnu-sed | grep gnu-sed) || (! brew list gnutls | grep gnutls) || (! brew list grep | grep grep)'
     brew:darwin:
       - coreutils
@@ -2903,7 +2758,6 @@ softwarePackages:
     _github: https://github.com/vishen/go-chromecast
     _home: null
     _name: go-chromecast
-    _service: null
     _type: cli
     github: github.com/vishen/go-chromecast
     go: github.com/vishen/go-chromecast@latest
@@ -2914,7 +2768,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     go: github.com/ramya-rao-a/go-outline@latest
   gojq:
     _bin: gojq
@@ -2923,7 +2776,6 @@ softwarePackages:
     _github: https://github.com/itchyny/gojq
     _home: null
     _name: gojq
-    _service: null
     _type: cli
     brew: gojq
     github: github.com/itchyny/gojq
@@ -2935,7 +2787,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: golangci-lint
     go: github.com/golangci/golangci-lint/cmd/golangci-lint@latest
   gomodifytags:
@@ -2945,7 +2796,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: gomodifytags
     go: github.com/fatih/gomodifytags@latest
   gomplate:
@@ -2978,7 +2828,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     go: github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest
   gopls:
     _bin: gopls
@@ -2987,7 +2836,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: gopls
     go: golang.org/x/tools/gopls@latest
   gotests:
@@ -2997,7 +2845,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: gotests
     go: github.com/cweill/gotests/...@latest
   gphotos-sync:
@@ -3016,7 +2863,6 @@ softwarePackages:
     _github: https://github.com/orf/gping
     _home: null
     _name: gping
-    _service: null
     _type: cli
     ansible: professormanhattan.gping
     brew: gping
@@ -3060,7 +2906,6 @@ softwarePackages:
     _github: https://github.com/tomnomnom/gron
     _home: null
     _name: gron
-    _service: null
     _type: cli
     brew: gron
     github: github.com/tomnomnom/gron
@@ -3083,7 +2928,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: gtop
     npm: gtop
   guacamole:
@@ -3093,7 +2937,6 @@ softwarePackages:
     _github: https://github.com/apache/guacamole-client
     _home: https://guacamole.apache.org/
     _name: Guacamole
-    _service: null
     ansible: professormanhattan.guacamole
   seafile-client:
     _when:cask: '! test -d "/Applications/Seafile Client.app"'
@@ -3107,7 +2950,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     # Brew gulp is deprecated
     # brew: gulp
     npm: gulp
@@ -3132,7 +2974,6 @@ softwarePackages:
     _github: https://github.com/google/gvisor
     _home: https://gvisor.dev/
     _name: gVisor
-    _service: null
     _when: '! test -f /usr/local/bin/runsc || ! test -f /usr/local/bin/containerd-shim-runsc-v1'
     ansible:linux: professormanhattan.gvisor
   gvm:
@@ -3142,7 +2983,6 @@ softwarePackages:
     _github: https://github.com/moovweb/gvm
     _home: null
     _name: rvm
-    _service: null
     ansible: professormanhattan.gvm
   hadolint:
     _bin: hadolint
@@ -3151,7 +2991,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: hadolint
     dnf: hadolint
     scoop: hadolint
@@ -3169,7 +3008,6 @@ softwarePackages:
     _github: https://github.com/mattolenik/hclq
     _home: null
     _name: hclq
-    _service: null
     _type: cli
     github: github.com/mattolenik/hclq
     go: github.com/mattolenik/hclq@latest
@@ -3180,7 +3018,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Heroku CLI
-    _service: null
     ansible: professormanhattan.heroku
     brew: heroku/brew/heroku
     choco: heroku-cli
@@ -3194,7 +3031,6 @@ softwarePackages:
     _github: https://github.com/sharkdp/hexyl
     _home: null
     _name: hexyl
-    _service: null
     _type: cli
     ansible: professormanhattan.hexyl
     apt: hexyl
@@ -3216,7 +3052,6 @@ softwarePackages:
     _github: https://github.com/rakyll/hey
     _home: null
     _name: hey
-    _service: null
     _type: cli
     brew: hey
     github: github.com/rakyll/hey
@@ -3227,7 +3062,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Himalaya
-    _service: null
     ansible: professormanhattan.himalaya
     brew: himalaya
     scoop: himalaya
@@ -3238,7 +3072,6 @@ softwarePackages:
     _github: https://github.com/guumaster/hostctl
     _home: null
     _name: hostctl
-    _service: null
     _type: cli
     brew: guumaster/tap/hostctl
     github: github.com/guumaster/hostctl
@@ -3251,7 +3084,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Host Home Page
-    _service: null
     ansible: professormanhattan.hosthomepage
   hosts:
     _bin: null
@@ -3260,7 +3092,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Hosts
-    _service: null
     ansible: professormanhattan.hosts
   htmlq:
     _bin: htmlq
@@ -3269,7 +3100,6 @@ softwarePackages:
     _github: https://github.com/mgdm/htmlq
     _home: null
     _name: htmlq
-    _service: null
     _type: cli
     brew: htmlq
     cargo: htmlq
@@ -3304,7 +3134,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: HTTPie
-    _service: null
     ansible: professormanhattan.httpie
     brew: httpie
     choco: httpie
@@ -3329,7 +3158,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     apt: hub
     brew: hub
     choco: hub
@@ -3352,7 +3180,6 @@ softwarePackages:
     _github: https://github.com/vercel/hyper
     _home: https://hyper.is/
     _name: Hyper
-    _service: null
     ansible: professormanhattan.hyper
     appimage: https://releases.hyper.is/download/AppImage
     brew: hyper
@@ -3365,7 +3192,6 @@ softwarePackages:
     _github: https://github.com/sharkdp/hyperfine
     _home: null
     _name: hyperfine
-    _service: null
     _type: cli
     ansible: professormanhattan.hyperfine
     apk: hyperfine
@@ -3384,7 +3210,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew:darwin: ideviceinstaller
   imagemagick:
     _bin: magick
@@ -3393,7 +3218,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     apk: imagemagick
     apt:
       - imagemagick
@@ -3409,7 +3233,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: imgur-uploader-cli
   codeclimate:
     _bin: codeclimate
@@ -3426,7 +3249,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     go: github.com/josharian/impl@latest
   infracost:
     _bin: infracost
@@ -3435,7 +3257,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: infracost
     choco: infracost
     yay: infracost
@@ -3446,7 +3267,6 @@ softwarePackages:
     _github: https://github.com/inkscape/inkscape
     _home: https://inkscape.org
     _name: Inkscape
-    _service: null
     _when:cask: '! test -d "/Applications/Inkscape.app"'
     ansible: professormanhattan.inkscape
     apt: inkscape
@@ -3462,7 +3282,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Installer
-    _service: null
     ansible: professormanhattan.installer
   intellij-idea-ce:
     _bin: null
@@ -3471,7 +3290,6 @@ softwarePackages:
     _github: https://github.com/JetBrains/intellij-community
     _home: https://www.jetbrains.com/idea/
     _name: IntelliJ IDEA (CE)
-    _service: null
     _snapClassic: true
     _when:cask: '! test -d "/Applications/IntelliJ IDEA CE.app"'
     ansible: professormanhattan.intellij
@@ -3485,7 +3303,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: '@ionic/cli'
   ios-deploy:
     _bin: ios-deploy
@@ -3494,7 +3311,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew:darwin: ios-deploy
     npm:darwin: ios-deploy
   ipfs:
@@ -3504,7 +3320,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: ipfs
     choco: go-ifps
     nix: ipfs
@@ -3518,7 +3333,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: ipfs-deploy
   ipfs-desktop:
     _bin: null
@@ -3527,7 +3341,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _when:cask: '! test -d "/Applications/IPFS Desktop.app"'
     cask: ipfs
     choco: ipfs-desktop
@@ -3540,7 +3353,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: is-up-cli
   iterm2:
     _bin: null
@@ -3549,7 +3361,6 @@ softwarePackages:
     _github: https://github.com/gnachman/iTerm2
     _home: https://iterm2.com/
     _name: iTerm2
-    _service: null
     _when:cask: '! test -d /Applications/iTerm.app'
     ansible:darwin: professormanhattan.iterm2
     cask: iterm2
@@ -3575,7 +3386,6 @@ softwarePackages:
     _github: https://github.com/jenv/jenv
     _home: https://www.jenv.be/
     _name: jenv
-    _service: null
     ansible: professormanhattan.jenv
   jiq:
     _bin: jiq
@@ -3584,7 +3394,6 @@ softwarePackages:
     _github: https://github.com/fiatjaf/jiq
     _home: null
     _name: jiq
-    _service: null
     _type: cli
     github: github.com/fiatjaf/jiq/cmd/jiq
     go: github.com/fiatjaf/jiq/cmd/jiq@latest
@@ -3595,7 +3404,6 @@ softwarePackages:
     _github: https://github.com/jitsi/jitsi-meet-electron
     _home: null
     _name: Jitsi Meet Electron
-    _service: null
     _type: application
     _when:cask: '! test -d "/Applications/Jitsi Meet.app"'
     cask: jitsi-meet
@@ -3611,7 +3419,6 @@ softwarePackages:
     _github: https://github.com/jpmens/jo
     _home: null
     _name: jo
-    _service: null
     _type: cli
     ansible: professormanhattan.jo
     apt: jo
@@ -3628,7 +3435,6 @@ softwarePackages:
     _github: https://github.com/stedolan/jq
     _home: null
     _name: jq
-    _service: null
     _type: cli
     ansible: professormanhattan.jq
     apk: jq
@@ -3655,7 +3461,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Juju
-    _service: null
     _snapClassic: true
     ansible: professormanhattan.juju
     brew: juju
@@ -3668,7 +3473,6 @@ softwarePackages:
     _github: https://github.com/kdash-rs/kdash
     _home: null
     _name: kdash
-    _service: null
     _type: cli
     brew: kdash-rs/kdash/kdash
     cargo: kdash
@@ -3682,7 +3486,6 @@ softwarePackages:
     _github: https://github.com/keybase/client
     _home: https://keybase.io/
     _name: Keybase
-    _service: null
     _when:cask: '! test -d /Applications/Keybase.app'
     ansible: professormanhattan.keybase
     cask: keybase
@@ -3698,7 +3501,6 @@ softwarePackages:
     _github: https://github.com/kovidgoyal/kitty
     _home: https://sw.kovidgoyal.net/kitty/
     _name: KiTTY
-    _service: null
     ansible: professormanhattan.kitty
   kn:
     _bin: kn
@@ -3707,7 +3509,6 @@ softwarePackages:
     _github: https://github.com/knative/client
     _home: null
     _name: kn
-    _service: null
     _type: cli
     brew: kn
     github: github.com/knative/client
@@ -3724,7 +3525,6 @@ softwarePackages:
     _github: https://github.com/xbmc/xbmc
     _home: https://kodi.tv/
     _name: Kodi
-    _service: null
     _when:cask: '! test -d /Applications/Kodi.app'
     ansible: professormanhattan.kodi
     apt: kodi
@@ -3740,7 +3540,6 @@ softwarePackages:
     _github: https://github.com/ahmetb/kubectx
     _home: null
     _name: null
-    _service: null
     _snapClassic: true
     brew: kubectx
     choco:
@@ -3759,7 +3558,6 @@ softwarePackages:
     _github: https://github.com/kubenav/kubenav
     _home: null
     _name: kubenav
-    _service: null
     _type: cli
     github: github.com/kubenav/kubenav
     yay: kubenav-bin
@@ -3770,7 +3568,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _snapClassic: true
     brew: kubectl
     choco: kubernetes-cli
@@ -3782,7 +3579,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _snapClassic: true
     brew: helm
     choco: kubernetes-helm
@@ -3794,7 +3590,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: kompose
     choco: kubernetes-kompose
     snap: kompose
@@ -3812,7 +3607,6 @@ softwarePackages:
       tar xf kubeval-linux-amd64.tar.gz
       sudo cp kubeval /usr/local/bin
     _pre:scoop: scoop bucket add instrumenta https://github.com/instrumenta/scoop-instrumenta
-    _service: null
     binary:darwin: https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-darwin-amd64.tar.gz
     binary:linux: https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
     brew: kubeval
@@ -3832,7 +3626,6 @@ softwarePackages:
       - libvirt
     _home: https://www.linux-kvm.org/page/Main_Page
     _name: KVM
-    _service: null
     ansible: professormanhattan.kvm
     apt:
       - bridge-utils
@@ -3863,7 +3656,6 @@ softwarePackages:
     _github: https://github.com/jesseduffield/lazygit
     _home: null
     _name: null
-    _service: null
     brew: lazygit
     choco: lazygit
     eopkg: lazygit
@@ -3880,7 +3672,6 @@ softwarePackages:
     _github: Not open-source
     _home: null
     _name: Ledger Live
-    _service: null
     _when:cask: '! test -d "/Applications/Ledger Live.app"'
     ansible: professormanhattan.ledgerlive
     appimage: https://download.live.ledger.com/latest/linux
@@ -3893,7 +3684,6 @@ softwarePackages:
     _github: https://github.com/lensapp/lens
     _home: https://k8slens.dev/
     _name: Lens
-    _service: null
     _snapClassic: true
     _when:cask: '! test -d /Applications/Lens.app'
     ansible: professormanhattan.lens
@@ -3908,7 +3698,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _when:cask: '! test -d /Applications/Lepton.app'
     cask: lepton
     snap: lepton
@@ -3919,7 +3708,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Lexicon
-    _service: null
     ansible: professormanhattan.lexicon
     pipx: dns-lexicon[full]
   libimobiledevice:
@@ -3929,7 +3717,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _when: '! test -d /usr/local/Cellar/libimobiledevice'
     brew:darwin: libimobiledevice
   krita:
@@ -3944,7 +3731,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _when:cask: '! test -d /Applications/LibreOffice.app'
     apt: libreoffice
     cask: libreoffice
@@ -3959,7 +3745,6 @@ softwarePackages:
     _github: https://github.com/nishanths/license
     _home: null
     _name: license
-    _service: null
     _type: cli
     go: github.com/nishanths/license@latest
     yay: nishanths-license-git
@@ -4001,7 +3786,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: localtunnel
     npm: localtunnel
   logcli:
@@ -4011,7 +3795,6 @@ softwarePackages:
     _github: https://github.com/grafana/loki
     _home: null
     _name: logcli
-    _service: null
     _type: cli
     brew: logcli
     github: github.com/grafana/loki
@@ -4023,7 +3806,6 @@ softwarePackages:
     _github: null
     _home: https://wiki.gnome.org/Apps/Lollypop
     _name: Lollypop
-    _service: null
     ansible:linux: professormanhattan.lollypop
     apt: lollypop
     dnf: lollypop
@@ -4039,7 +3821,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: LastPass CLI
-    _service: null
     ansible: professormanhattan.lpass
   lsd:
     _bin: null
@@ -4048,7 +3829,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: LSD (LSDeluxe)
-    _service: null
     ansible: professormanhattan.lsd
   lxc:
     _bin: lxc
@@ -4093,7 +3873,6 @@ softwarePackages:
     _github: https://github.com/maas/maas
     _home: https://maas.io/
     _name: MAAS
-    _service: null
     ansible: professormanhattan.maas
   mackup:
     _bin: null
@@ -4102,7 +3881,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: mackup
-    _service: null
     ansible: professormanhattan.mackup
   malwarebytes:
     _bin: null
@@ -4147,7 +3925,6 @@ softwarePackages:
     _github: https://github.com/Foundry376/Mailspring
     _home: https://getmailspring.com/
     _name: Mailspring
-    _service: null
     _when:cask: '! test -d /Applications/Mailspring.app'
     ansible: professormanhattan.mailspring
     cask: mailspring
@@ -4162,7 +3939,6 @@ softwarePackages:
     _github: https://github.com/hql287/Manta
     _home: null
     _name: Manta
-    _service: null
     _type: application
     _when:cask: '! test -d /Applications/Manta.app'
     cask: manta
@@ -4174,7 +3950,6 @@ softwarePackages:
     _github: https://github.com/marktext/marktext
     _home: null
     _name: MarkText
-    _service: null
     _type: application
     cask: mark-text
     choco: marktext
@@ -4187,7 +3962,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: MAS CLI
-    _service: null
     ansible: professormanhattan.mas
   flatseal:
     flatpak: com.github.tchx84.Flatseal
@@ -4200,7 +3974,6 @@ softwarePackages:
     _github: https://github.com/antonreshetov/massCode
     _home: null
     _name: MassCode
-    _service: null
     _type: application
     _when:cask: '! test -d /Applications/massCode.app'
     cask: masscode
@@ -4216,7 +3989,6 @@ softwarePackages:
       # TODO
     _post:binary:windows: |
       # TODO
-    _service: null
     _type: cli
     binary:linux: https://dl.min.io/client/mc/release/linux-amd64/mc
     binary:windows: https://dl.min.io/client/mc/release/windows-amd64/mc.exe
@@ -4229,7 +4001,6 @@ softwarePackages:
     _github: https://github.com/cantino/mcfly
     _home: null
     _name: McFly
-    _service: null
     ansible:darwin: professormanhattan.mcfly
     ansible:linux: professormanhattan.mcfly
     brew: mcfly
@@ -4243,7 +4014,6 @@ softwarePackages:
     _github: false
     _home: https://www.microsoft.com/en-us/edge
     _name: Microsoft Edge
-    _service: null
     _when:cask: '! test -d "/Applications/Microsoft Edge.app"'
     ansible: professormanhattan.microsoftedge
     cask: microsoft-edge
@@ -4263,7 +4033,6 @@ softwarePackages:
     pacman: gnome-boxes
   microsoft-office:
     _bin: null
-    _service: null
     _desc: '[Microsoft Office](https://www.microsoft.com/en-us/microsoft-365/microsoft-office), or simply Office, is a family of client software, server software, and services developed by Microsoft.'
     _docs: https://docs.microsoft.com/en-us/microsoft-365/?view=o365-worldwide
     _github: false
@@ -4279,7 +4048,6 @@ softwarePackages:
     _github: false
     _home: https://todo.microsoft.com/tasks/
     _name: Microsoft To-Do
-    _service: null
     _when:cask: '! test -d /Applications/Ao.app'
     ansible: professormanhattan.microsofttodo
     cask: ao
@@ -4292,7 +4060,6 @@ softwarePackages:
     _home: null
     _name: null
     _post: minikube config set driver virtualbox
-    _service: null
     brew: minikube
     brew:darwin:
       - hyperkit
@@ -4305,7 +4072,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: mitmproxy
-    _service: null
     ansible: professormanhattan.mitmproxy
     apt: mitmproxy
     brew: mitmproxy
@@ -4330,7 +4096,6 @@ softwarePackages:
     _github: https://github.com/FiloSottile/mkcert
     _home: null
     _name: mkcert
-    _service: null
     _type: cli
     brew: mkcert
     choco: mkcert
@@ -4344,7 +4109,6 @@ softwarePackages:
     _github: https://github.com/mockoon/mockoon
     _home: null
     _name: Mockoon
-    _service: null
     _type: application
     _when:cask: '! test -d /Applications/Mockoon.app'
     cask: mockoon
@@ -4361,7 +4125,6 @@ softwarePackages:
     _github: https://github.com/davrodpin/mole
     _home: null
     _name: mole
-    _service: null
     _type: cli
     brew: davrodpin/homebrew-mole/mole
     github: github.com/davrodpin/mole
@@ -4383,7 +4146,6 @@ softwarePackages:
     _github: https://github.com/monero-project/monero
     _home: https://www.getmonero.org/
     _name: Monero
-    _service: null
     _when:cask: '! test -d /Applications/monero-wallet-gui.app'
     ansible: professormanhattan.monero
     brew: monero
@@ -4397,7 +4159,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Message of the Day
-    _service: null
     ansible: professormanhattan.motd
   motrix:
     _bin: null
@@ -4406,7 +4167,6 @@ softwarePackages:
     _github: https://github.com/agalwood/Motrix
     _home: https://motrix.app/
     _name: Motrix
-    _service: null
     _type: application
     _when:cask: '! test -d /Applications/Motrix.app'
     ansible: professormanhattan.motrix
@@ -4423,7 +4183,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: mpg123
-    _service: null
     apt: mpg123
     brew: mpg123
     choco: mpg123
@@ -4438,7 +4197,6 @@ softwarePackages:
     _github: https://github.com/emqx/MQTTX
     _home: null
     _name: MQTT X
-    _service: null
     _type: application
     _when:cask: '! test -d /Applications/MQTTX.app'
     cask: mqttx
@@ -4453,7 +4211,6 @@ softwarePackages:
     _github: https://github.com/raviqqe/muffet
     _home: null
     _name: muffet
-    _service: null
     _type: cli
     brew: muffet
     github: github.com/raviqqe/muffet
@@ -4466,7 +4223,6 @@ softwarePackages:
     _github: https://github.com/mullvad/mullvadvpn-app
     _home: null
     _name: Mullvad VPN
-    _service: null
     _type: application
     _when:cask: '! test -d "/Applications/Mullvad VPN.app"'
     cask: mullvadvpn
@@ -4479,7 +4235,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Multipass
-    _service: null
     _post:cask: multipass set local.driver=virtualbox
     _post:choco: multipass set local.driver=virtualbox
     _when:cask: '! test -d /Applications/Multipass.app'
@@ -4507,7 +4262,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: nativefier
   nb:
     _bin: nb
@@ -4524,7 +4278,6 @@ softwarePackages:
     _home: null
     _name: nb
     _post: nb completions install
-    _service: null
     ansible: professormanhattan.nb
     basher: xwmx/nb
     bpkg: xwmx/nb
@@ -4537,7 +4290,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: ncc
     npm: '@vercel/ncc'
   nebula:
@@ -4547,7 +4299,6 @@ softwarePackages:
     _github: https://github.com/slackhq/nebula
     _home: null
     _name: nebula
-    _service: null
     _type: cli
     github: github.com/slackhq/nebula
     pacman: nebula
@@ -4558,7 +4309,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: nectarjs
   neovim:
     _bin: nvim
@@ -4567,7 +4317,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     apk: neovim
     apt:
       - neovim
@@ -4599,7 +4348,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: '@nestjs/cli'
   netcat:
     _bin: netcat
@@ -4608,7 +4356,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     apt: netcat
     brew: netcat
     choco: netcat
@@ -4634,7 +4381,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: newman
     npm: newman
   nextcloud:
@@ -4644,7 +4390,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Nextcloud Client
-    _service: null
     ansible: professormanhattan.nextcloud
     flatpak: com.nextcloud.desktopclient.nextcloud
   nginx:
@@ -4669,7 +4414,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Ngrok
-    _service: null
     ansible: professormanhattan.ngrok
     cask: ngrok
     choco: ngrok
@@ -4681,7 +4425,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     pipx: ngxtop
   nmap:
     _bin: nmap
@@ -4692,7 +4435,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Nmap
-    _service: null
     ansible: professormanhattan.nmap
   nnn:
     _bin: nnn
@@ -4701,7 +4443,6 @@ softwarePackages:
     _github: https://github.com/jarun/nnn
     _home: null
     _name: nnn
-    _service: null
     _type: cli
     apk: nnn
     apt: nnn
@@ -4716,7 +4457,6 @@ softwarePackages:
     _github: https://github.com/nodejs/node
     _home: https://nodejs.org/en/
     _name: Node.js
-    _service: null
     ansible: professormanhattan.nodejs
     brew: node
     scoop: nodejs
@@ -4727,7 +4467,6 @@ softwarePackages:
     _github: https://github.com/tj/node-prune
     _home: null
     _name: node-prune
-    _service: null
     _type: cli
     github: github.com/tj/node-prune
     go: github.com/tj/node-prune@latest
@@ -4738,7 +4477,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: HashiCorp Nomad
-    _service: null
     ansible: professormanhattan.nomad
     brew: nomad
     choco: nomad
@@ -4750,7 +4488,6 @@ softwarePackages:
     _github: https://github.com/yaa110/nomino
     _home: null
     _name: nomino
-    _service: null
     _type: cli
     cargo: nomino
     github: github.com/yaa110/nomino
@@ -4762,7 +4499,6 @@ softwarePackages:
     _github: https://github.com/jotyGill/openpyn-nordvpn
     _home: https://nordvpn.com/
     _name: NordVPN
-    _service: null
     ansible: professormanhattan.nordvpn
   normit:
     _bin: normit
@@ -4773,7 +4509,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Normit
-    _service: null
     ansible: professormanhattan.normit
     npm: normit
   np:
@@ -4783,7 +4518,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: np
   npm-check:
     _bin: npm-check
@@ -4792,7 +4526,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: npm-check
   nuclear:
     _bin: null
@@ -4801,7 +4534,6 @@ softwarePackages:
     _github: https://github.com/nukeop/nuclear
     _home: null
     _name: Nuclear
-    _service: null
     _type: application
     _when:cask: '! test -d /Applications/nuclear.app'
     cask: nuclear
@@ -4817,7 +4549,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: oclif
   oh-my-posh:
     _bin: oh-my-posh
@@ -4827,7 +4558,6 @@ softwarePackages:
     _home: null
     _name: null
     _post:scoop: clink autorun install
-    _service: null
     brew: jandedobbeleer/oh-my-posh/oh-my-posh
     scoop:
       - clink
@@ -4839,7 +4569,6 @@ softwarePackages:
     _github: https://github.com/onionshare/onionshare
     _home: https://onionshare.org/
     _name: OnionShare
-    _service: null
     ansible: professormanhattan.onionshare
     apt: onionshare
     cask: onionshare
@@ -4859,7 +4588,6 @@ softwarePackages:
       sudo chmod 644 /etc/udev/rules.d/49-onlykey.rules
       sudo udevadm control --reload-rules
       sudo udevadm trigger
-    _service: null
     _when:ansible:darwin: '! test -d "/Applications/OnlyKey App.app"'
     ansible:darwin: professormanhattan.onlykey
     choco: onlykey
@@ -4871,7 +4599,6 @@ softwarePackages:
     _github: https://github.com/Blacksmoke16/oq
     _home: null
     _name: oq
-    _service: null
     _type: cli
     brew: oq
     github: github.com/Blacksmoke16/oq
@@ -4897,7 +4624,6 @@ softwarePackages:
     _github: https://github.com/sniptt-official/ots
     _home: null
     _name: ots
-    _service: null
     _type: cli
     brew: ots
     github: github.com/sniptt-official/ots
@@ -4909,7 +4635,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: package-size
   packer:
     _bin: packer
@@ -4918,7 +4643,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Packer
-    _service: null
     ansible: professormanhattan.packer
     apt: packer
     brew: packer
@@ -4931,7 +4655,6 @@ softwarePackages:
     _github: https://github.com/detectify/page-fetch
     _home: null
     _name: page-fetch
-    _service: null
     _type: cli
     go: github.com/detectify/page-fetch@latest
   pageres:
@@ -4941,7 +4664,6 @@ softwarePackages:
     _github: https://github.com/sindresorhus/pageres-cli
     _home: null
     _name: null
-    _service: null
     npm: pageres-cli
   fury:
     _bin: fury
@@ -4960,7 +4682,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Pandoc
-    _service: null
     ansible: professormanhattan.pandoc
     apt: pandoc
     brew:
@@ -4983,7 +4704,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     gem: papertrail
   parallels:
     _bin: null
@@ -4992,7 +4712,6 @@ softwarePackages:
     _github: Not open-source
     _home: https://www.parallels.com/
     _name: Parallels
-    _service: null
     _when: '! test -d "/Applications/Parallels Desktop.app"'
     ansible:darwin: professormanhattan.parallels
   gnome-passwords-keys:
@@ -5004,7 +4723,6 @@ softwarePackages:
     _github: https://www.passwordstore.org/
     _home: null
     _name: pass
-    _service: null
     _type: cli
     apt: pass
     brew: pass
@@ -5018,7 +4736,6 @@ softwarePackages:
     _github: https://github.com/sharkdp/pastel
     _home: null
     _name: pastel
-    _service: null
     _type: cli
     brew: pastel
     cargo: pastel
@@ -5032,7 +4749,6 @@ softwarePackages:
     _github: https://github.com/peco/peco
     _home: https://peco.github.io/
     _name: Peco
-    _service: null
     _type: cli
     ansible: professormanhattan.peco
     apt: peco
@@ -5048,7 +4764,6 @@ softwarePackages:
     _home: null
     _name: Peek
     _rpmFusion: true
-    _service: null
     ansible:linux: professormanhattan.peek
     apt:
       - software-properties-common
@@ -5071,7 +4786,6 @@ softwarePackages:
     _github: https://github.com/pfsense/pfsense
     _home: https://www.pfsense.org/
     _name: pfSense
-    _service: null
     ansible: professormanhattan.pfsense
   pgcli:
     _bin: pgcli
@@ -5080,7 +4794,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: pgcli
-    _service: null
     ansible: professormanhattan.pgcli
     brew: pgcli
     choco: pgcli
@@ -5170,7 +4883,6 @@ softwarePackages:
     _github: https://github.com/pi-hole/pi-hole
     _home: https://pi-hole.net/
     _name: PiHole
-    _service: null
     ansible: professormanhattan.pihole
   pip:
     _bin: null
@@ -5179,7 +4891,6 @@ softwarePackages:
     _github: https://github.com/pypa/pip
     _home: https://pip.pypa.io/en/stable/
     _name: PIP
-    _service: null
     ansible: professormanhattan.pip
   pipx:
     _bin: null
@@ -5189,7 +4900,6 @@ softwarePackages:
     _home: null
     _name: null
     _post:brew: pipx ensurepath
-    _service: null
     brew: pipx
   pkg:
     _bin: pkg
@@ -5198,7 +4908,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: pkg
   playwright:
     _bin: playwright
@@ -5207,7 +4916,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: playwright
   plex:
     _bin: null
@@ -5216,7 +4924,6 @@ softwarePackages:
     _github: https://github.com/plexinc/plex-media-player
     _home: https://www.plex.tv/
     _name: Plex
-    _service: null
     _when:cask: '! test -d /Applications/Plex.app'
     ansible: professormanhattan.plex
     cask:
@@ -5238,7 +4945,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: pm2
   pnpm:
     _bin: pnpm
@@ -5247,7 +4953,6 @@ softwarePackages:
     _github: https://github.com/pnpm/pnpm
     _home: https://pnpm.io/
     _name: pnpm
-    _service: null
     ansible: professormanhattan.pnpm
     brew: pnpm
     npm: pnpm
@@ -5268,7 +4973,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Poetry
-    _service: null
     ansible: professormanhattan.poetry
     brew: poetry
     yay: python-poetry-git
@@ -5279,7 +4983,6 @@ softwarePackages:
     _github: https://github.com/jessfraz/pony
     _home: null
     _name: pony
-    _service: null
     _type: cli
     github: github.com/jessfraz/pony
     go: github.com/jessfraz/pony@latest
@@ -5299,7 +5002,6 @@ softwarePackages:
     _github: Not open-source
     _home: https://www.postman.com/
     _name: Postman
-    _service: null
     _when:cask: '! test -d /Applications/Postman.app'
     ansible: professormanhattan.postman
     cask: postman
@@ -5314,7 +5016,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Powershell
-    _service: null
     _snapClassic: true
     _when:cask: '! test -d /Applications/PowerShell.app'
     ansible: professormanhattan.powershell
@@ -5327,7 +5028,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: pre-commit
     pipx: pre-commit
   prepare:
@@ -5337,7 +5037,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     ansible: professormanhattan.prepare
   prettier:
     _bin: prettier
@@ -5346,7 +5045,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: prettier
     npm: prettier
   pretzel:
@@ -5356,7 +5054,6 @@ softwarePackages:
     _github: https://github.com/amiechen/pretzel
     _home: null
     _name: Pretzel
-    _service: null
     _type: menubar
     github: github.com/amiechen/pretzel
   procs:
@@ -5366,7 +5063,6 @@ softwarePackages:
     _github: https://github.com/dalance/procs
     _home: null
     _name: procs
-    _service: null
     _type: cli
     apk: procs
     brew: procs
@@ -5383,7 +5079,6 @@ softwarePackages:
     _github: https://github.com/ProtonMail/WebClients
     _home: https://protonmail.com/
     _name: Proton
-    _service: null
     _when:cask: '! test -d /Applications/ProtonVPN.app'
     ansible: professormanhattan.proton
     cask: protonvpn
@@ -5409,7 +5104,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: psi
   psu:
     _bin: null
@@ -5418,7 +5112,6 @@ softwarePackages:
     _github: https://github.com/greenled/portainer-stack-utils
     _home: null
     _name: psu
-    _service: null
     _type: cli
     github: github.com/greenled/portainer-stack-utils
   pup:
@@ -5428,7 +5121,6 @@ softwarePackages:
     _github: https://github.com/ericchiang/pup
     _home: null
     _name: pup
-    _service: null
     _type: cli
     ansible: professormanhattan.pup
     brew: pup
@@ -5444,7 +5136,6 @@ softwarePackages:
     _post:brew: |
       python3 -m pip install --upgrade setuptools
       python3 -m pip install --upgrade pip
-    _service: null
     apt: python3-pip
     brew: python
     dnf: python3-pip
@@ -5457,7 +5148,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: pywhat
     pipx: pywhat
     port: pywhat
@@ -5468,7 +5158,6 @@ softwarePackages:
     _github: https://github.com/qbittorrent/qBittorrent
     _home: https://www.qbittorrent.org/
     _name: qBittorrent
-    _service: null
     _when:cask: '! test -d /Applications/qBittorrent.app'
     ansible: professormanhattan.qbittorrent
     apt: qbittorrent
@@ -5485,7 +5174,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _when: '! ((brew list provisionql | grep ProvisionQL) && (brew list qlcolorcode | grep QLColorCode) && (brew list qlimagesize | grep qlImageSize) && (brew list qlmarkdown | grep QLMarkdown) && (brew list qlstephen | grep QLStephen) && (brew list qlvideo | grep QLVideo) && (brew list quicklook-json | grep QuickLookJSON) && (brew list quicklookapk | grep QuickLookAPK) && (brew list webpquicklook | grep WebpQuickLook))'
     cask:
       - provisionql
@@ -5520,7 +5208,6 @@ softwarePackages:
     _github: https://github.com/rancher/cli
     _home: null
     _name: rancher
-    _service: null
     _type: cli
     brew: rancher-cli
     github: github.com/rancher/cli
@@ -5658,7 +5345,6 @@ softwarePackages:
     _github: https://github.com/responsively-org/responsively-app
     _home: null
     _name: Responsively
-    _service: null
     _type: application
     _when:cask: '! test -d /Applications/ResponsivelyApp.app'
     cask: responsively
@@ -5671,7 +5357,6 @@ softwarePackages:
     _github: https://github.com/restic/restic
     _home: https://restic.net/
     _name: Restic
-    _service: null
     ansible: professormanhattan.restic
     apk: restic
     apt: restic
@@ -5692,7 +5377,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: ripgrep
-    _service: null
     ansible: professormanhattan.ripgrep
     apt: ripgrep
     brew: ripgrep
@@ -5712,7 +5396,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew:
       - ffmpeg
       - pandoc
@@ -5758,7 +5441,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     apt: rofi
     dnf: rofi
     pacman: rofi
@@ -5773,7 +5455,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     apt: rsync
     brew: rsync
     choco: rsync
@@ -5800,7 +5481,6 @@ softwarePackages:
     _github: https://github.com/lukehaas/RunJS
     _home: null
     _name: RunJS
-    _service: null
     _type: application
     _when:cask: '! test -d /Applications/RunJS.app'
     cask: runjs
@@ -5859,7 +5539,6 @@ softwarePackages:
     _github: https://github.com/peak/s5cmd
     _home: null
     _name: s5cmd
-    _service: null
     _type: cli
     ansible: professormanhattan.s5cmd
     brew: peak/tap/s5cmd
@@ -5872,7 +5551,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: ms-jpq/sad/sad
     pacman: sad
   samba:
@@ -5901,7 +5579,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Sanoid
-    _service: null
     ansible:linux: professormanhattan.sanoid
     apt:
       - libcapture-tiny-perl
@@ -5929,7 +5606,6 @@ softwarePackages:
     _github: https://github.com/Confbase/schema
     _home: null
     _name: schema
-    _service: null
     _type: cli
     go: github.com/Confbase/schema@latest
   scrcpy:
@@ -5939,7 +5615,6 @@ softwarePackages:
     _github: https://github.com/Genymobile/scrcpy
     _home: null
     _name: scrcpy
-    _service: null
     _type: cli
     ansible: professormanhattan.scrcpy
     apt: scrcpy
@@ -5957,7 +5632,6 @@ softwarePackages:
     _github: https://github.com/Tomotoes/scrcpy-gui
     _home: null
     _name: Scrcpy GUI
-    _service: null
     _type: application
     flatpak: in.srev.guiscrcpy
     github: github.com/Tomotoes/scrcpy-gui
@@ -5968,7 +5642,6 @@ softwarePackages:
     _github: https://github.com/chmln/sd
     _home: null
     _name: sd
-    _service: null
     _type: cli
     apk: sd
     brew: sd
@@ -5985,7 +5658,6 @@ softwarePackages:
     _github: https://github.com/sdkman/sdkman-cli
     _home: https://sdkman.io/
     _name: SDKMAN
-    _service: null
     _note: SDKMan is installed via .chezmoiscripts
     # ansible: professormanhattan.sdkman
   seconion:
@@ -5995,7 +5667,6 @@ softwarePackages:
     _github: https://github.com/Security-Onion-Solutions/securityonion
     _home: https://securityonionsolutions.com/
     _name: Security Onion
-    _service: null
     ansible: professormanhattan.seconion
   secretive:
     _bin: null
@@ -6004,7 +5675,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _when:cask: '! test -d /Applications/Secretive.app'
     cask: secretive
   security:
@@ -6014,7 +5684,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Security
-    _service: null
     ansible: professormanhattan.security
   semantic-release:
     _bin: semantic-release
@@ -6023,7 +5692,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: semantic-release
   sentry-cli:
     _bin: sentry-cli
@@ -6032,7 +5700,6 @@ softwarePackages:
     _github: https://github.com/getsentry/sentry-cli/
     _home: null
     _name: sentry-cli
-    _service: null
     _type: cli
     brew:darwin: getsentry/tools/sentry-cli
     github: github.com/getsentry/sentry-cli
@@ -6046,7 +5713,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: serve
   serverless:
     _bin: serverless
@@ -6055,7 +5721,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: serverless
     npm: serverless
   sftpgo:
@@ -6078,7 +5743,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: share-cli
   sharex:
     _bin: null
@@ -6087,7 +5751,6 @@ softwarePackages:
     _github: https://github.com/ShareX/ShareX
     _home: https://getsharex.com/
     _name: ShareX
-    _service: null
     ansible:windows: professormanhattan.sharex
     choco: sharex
   sharp:
@@ -6097,7 +5760,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: sharp-cli
   shc:
     _bin: shc
@@ -6119,7 +5781,6 @@ softwarePackages:
     _github: https://github.com/reconquest/shdoc
     _home: null
     _name: shdoc
-    _service: null
     ansible:darwin: professormanhattan.shdoc
     ansible:linux: professormanhattan.shdoc
     script:darwin: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install
@@ -6157,7 +5818,6 @@ softwarePackages:
     _github: https://github.com/mvdan/sh
     _home: https://pkg.go.dev/mvdan.cc/sh/v3
     _name: Java
-    _service: null
     _type: cli
     ansible: professormanhattan.shfmt
     apk: shfmt
@@ -6175,7 +5835,6 @@ softwarePackages:
     _github: https://github.com/mltframework/shotcut
     _home: https://shotcut.org/
     _name: Shotcut
-    _service: null
     _snapClassic: true
     _when:cask: '! test -d /Applications/Shotcut.app'
     ansible: professormanhattan.shotcut
@@ -6192,7 +5851,6 @@ softwarePackages:
     _github: https://github.com/GNOME/shotwell
     _home: https://wiki.gnome.org/Apps/Shotwell
     _name: Shotwell
-    _service: null
     ansible:linux: professormanhattan.shotwell
     apt: shotwell
     dnf: shotwell
@@ -6205,7 +5863,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: charmbracelet/tap/skate
     go: github.com/charmbracelet/skate@latest
     nix: nixpkgs.skate
@@ -6217,7 +5874,6 @@ softwarePackages:
     _github: https://github.com/TimothyYe/skm
     _home: null
     _name: skm
-    _service: null
     _type: cli
     brew: timothyye/tap/skm
     github: github.com/TimothyYe/skm
@@ -6232,7 +5888,6 @@ softwarePackages:
     _github: Not open-source
     _home: https://www.skype.com/en/
     _name: Skype
-    _service: null
     _type: application
     _when:cask: '! test -d /Applications/Skype.app'
     ansible: professormanhattan.skype
@@ -6248,7 +5903,6 @@ softwarePackages:
     _github: https://github.com/slackhq/SlackTextViewController
     _home: https://slack.com/
     _name: Slack
-    _service: null
     _type: application
     _when:cask: '! test -d /Applications/Slack.app'
     ansible: professormanhattan.slack
@@ -6263,7 +5917,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: slack-term
-    _service: null
     ansible: professormanhattan.slackterm
     go: github.com/erroneousboat/slack-term@latest
   sloth:
@@ -6273,7 +5926,6 @@ softwarePackages:
     _github: https://github.com/sveinbjornt/Sloth
     _home: https://sveinbjorn.org/sloth
     _name: Sloth
-    _service: null
     _when:cask: '! test -d /Applications/Sloth.app'
     cask: sloth
   snapcraft:
@@ -6294,7 +5946,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Snap
-    _service: null
     ansible:linux: professormanhattan.snapd
   snitch:
     _bin: null
@@ -6303,7 +5954,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: OpenSnitch/Little Snitch
-    _service: null
     _when:cask: '! test -d "/Applications/Little Snitch.app"'
     ansible: professormanhattan.snitch
     cask: little-snitch
@@ -6314,7 +5964,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     pipx: social-analyzer
   solidity:
     _bin: solcjs
@@ -6323,7 +5972,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: solc
   sonatype-nexus:
     _bin: null
@@ -6332,7 +5980,6 @@ softwarePackages:
     _github: https://github.com/sonatype/nexus-public
     _home: https://www.sonatype.com/products/nexus-repository
     _name: Sonatype Nexus
-    _service: null
     ansible: professormanhattan.sonatype-nexus
   speed-test:
     _bin: speed-test
@@ -6341,7 +5988,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: speed-test
   spotdl:
     _bin: spotdl
@@ -6352,7 +5998,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     pipx: spotdl
   gnome-eyedropper:
     flatpak: com.github.finefindus.eyedropper
@@ -6365,7 +6010,6 @@ softwarePackages:
     _github: https://github.com/sqlectron/sqlectron-gui
     _home: null
     _name: SQLectron
-    _service: null
     _type: application
     _when:cask: '! test -d /Applications/sqlectron.app'
     cask: sqlectron
@@ -6398,7 +6042,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: SSH
-    _service: null
     ansible: professormanhattan.ssh
   ssh-vault:
     _bin: ssh-vault
@@ -6407,7 +6050,6 @@ softwarePackages:
     _github: https://github.com/ssh-vault/ssh-vault
     _home: https://ssh-vault.com/
     _name: ssh-vault
-    _service: null
     ansible: professormanhattan.sshvault
     brew: ssh-vault
     github: github.com/ssh-vault/ssh-vault
@@ -6418,7 +6060,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     apt: sshpass
     brew: hudochenkov/sshpass/sshpass
     dnf: sshpass
@@ -6439,7 +6080,6 @@ softwarePackages:
     _github: https://github.com/suyashkumar/ssl-proxy
     _home: null
     _name: ssl-proxy
-    _service: null
     _type: cli
     github: github.com/suyashkumar/ssl-proxy
   # Error installing aiohttp dependency
@@ -6453,7 +6093,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Starship
-    _service: null
     ansible: professormanhattan.starship
   startmenu:
     _bin: null
@@ -6462,7 +6101,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Start Menu Configuration
-    _service: null
     ansible: professormanhattan.startmenu
   statcode:
     _bin: statcode
@@ -6471,7 +6109,6 @@ softwarePackages:
     _github: https://github.com/shobrook/statcode
     _home: null
     _name: null
-    _service: null
     pipx: statcode
     yay: statcode
   staticcheck:
@@ -6481,7 +6118,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: staticcheck
     dnf: golang-honnef-tools
     go: honnef.co/go/tools/cmd/staticcheck@latest
@@ -6495,7 +6131,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _when:cask: '! test -d /Applications/Stats.app'
     cask: stats
   stegcloak:
@@ -6505,7 +6140,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: stegcloak
   stubby:
     _bin: stubby
@@ -6523,7 +6157,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: supdock
   surge:
     _bin: surge
@@ -6532,7 +6165,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: surge
   svgo:
     _bin: svgo
@@ -6541,7 +6173,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: svgo
     npm: svgo
   swarm:
@@ -6551,7 +6182,6 @@ softwarePackages:
     _github: https://github.com/moby/swarmkit
     _home: null
     _name: null
-    _service: null
     ansible: professormanhattan.swarm
   switchhosts:
     _appimageName: SwitchHosts.AppImage
@@ -6576,7 +6206,6 @@ softwarePackages:
     _github: https://github.com/samber/sync-ssh-keys
     _home: null
     _name: sync-ssh-keys
-    _service: null
     _type: cli
     github: github.com/samber/sync-ssh-keys
     yay: sync-ssh-keys-bin
@@ -6595,7 +6224,6 @@ softwarePackages:
     _github: https://github.com/akopytov/sysbench
     _home: null
     _name: sysbench
-    _service: null
     _type: cli
     apk: sysbench
     apt: sysbench
@@ -6612,7 +6240,6 @@ softwarePackages:
       - sysdig
     _home: null
     _name: sysdig
-    _service: null
     ansible: professormanhattan.sysdig
     brew: sysdig
     pacman:
@@ -6625,7 +6252,6 @@ softwarePackages:
     _github: https://github.com/emilengler/sysget
     _home: null
     _name: sysget
-    _service: null
     _type: cli
   t:
     _bin: t
@@ -6634,7 +6260,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     gem: t
   t-rec:
     _bin: t-rec
@@ -6661,7 +6286,6 @@ softwarePackages:
     _github: https://github.com/Eugeny/tabby
     _home: https://tabby.sh/
     _name: Tabby
-    _service: null
     _type: application
     _when:cask: '! test -d /Applications/Tabby.app'
     ansible:linux: professormanhattan.tabby
@@ -6714,7 +6338,6 @@ softwarePackages:
     _github: Not open-source
     _home: null
     _name: Microsoft Teams
-    _service: null
     _when:cask: '! test -d "/Applications/Microsoft Teams.app"'
     ansible: professormanhattan.teams
     cask: microsoft-teams
@@ -6729,7 +6352,6 @@ softwarePackages:
     _github: Not open-source
     _home: https://www.teamviewer.com/en-us/
     _name: TeamViewer
-    _service: null
     _when:cask: '! test -d /Applications/TeamViewer.app'
     ansible:linux: professormanhattan.teamviewer
     cask: teamviewer
@@ -6742,7 +6364,6 @@ softwarePackages:
     _github: https://github.com/gravitational/teleport
     _home: null
     _name: Teleport
-    _service: null
     _type: cli
     ansible: professormanhattan.teleport
     brew: teleport
@@ -6755,7 +6376,6 @@ softwarePackages:
     _github: https://github.com/tellerops/teller
     _home: null
     _name: teller
-    _service: null
     _type: cli
     brew: spectralops/tap/teller
     github: github.com/tellerops/teller
@@ -6766,7 +6386,6 @@ softwarePackages:
     _github: https://github.com/jackd248/temps
     _home: null
     _name: Temps
-    _service: null
     _type: application
     github: github.com/jackd248/temps
   terminalizer:
@@ -6776,7 +6395,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: terminalizer
   termius:
     _bin: null
@@ -6818,7 +6436,6 @@ softwarePackages:
     _github: https://github.com/terraform-linters/tflint
     _home: null
     _name: tflint
-    _service: null
     _type: cli
     ansible: professormanhattan.tflint
     brew: tflint
@@ -6831,7 +6448,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Betelgeuse Theme
-    _service: null
     ansible: professormanhattan.theme
   tig:
     _bin: tig
@@ -6840,7 +6456,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: tig
     nix: tig
     pkg: tig
@@ -6851,7 +6466,6 @@ softwarePackages:
     _github: https://github.com/tilt-dev/tilt
     _home: null
     _name: tilt
-    _service: null
     _type: cli
     brew: tilt
     github: github.com/tilt-dev/tilt
@@ -6863,7 +6477,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Timeshift
-    _service: null
     ansible:linux: professormanhattan.timeshift
     apt: timeshift
     dnf: timeshift
@@ -6875,7 +6488,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: tinypng-cli
   tldr:
     _bin: tldr
@@ -6884,7 +6496,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: tldr
     npm: tldr
   tmux:
@@ -6894,7 +6505,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: tmux
-    _service: null
     ansible: professormanhattan.tmux
     apt: tmux
     brew:
@@ -6909,7 +6519,6 @@ softwarePackages:
     _github: https://github.com/XAMPPRocky/tokei
     _home: null
     _name: tokei
-    _service: null
     _type: cli
     apk: tokei
     brew: tokei
@@ -6938,7 +6547,6 @@ softwarePackages:
     _github: https://github.com/TheTorProject
     _home: https://www.torproject.org/
     _name: TOR
-    _service: null
     ansible:linux: professormanhattan.tor
     apt: tor
     brew: tor
@@ -6952,7 +6560,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Translate Shell
-    _service: null
     ansible:darwin: professormanhattan.translate
     ansible:linux: professormanhattan.translate
     apt:ubuntu: translate-shell
@@ -6966,7 +6573,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: tree-cli
-    _service: null
     ansible: professormanhattan.tree
   tree-sitter:
     _bin: null
@@ -6975,7 +6581,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     cargo: tree-sitter-cli
   trellis:
     _bin: trellis
@@ -6984,7 +6589,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: roots/tap/trellis-cli
   trivy:
     _bin: null
@@ -6993,7 +6597,6 @@ softwarePackages:
     _github: https://github.com/aquasecurity/trivy
     _home: null
     _name: trivy
-    _service: null
     _type: cli
     github: github.com/aquasecurity/trivy
     yay: trivy-bin
@@ -7004,7 +6607,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: trufflesecurity/trufflehog/trufflehog
   ts2c:
     _bin: ts2c
@@ -7013,7 +6615,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: ts2c
   typescript:
     _bin: tsc
@@ -7022,7 +6623,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: typescript
     npm: tsc
   ulauncher:
@@ -7032,7 +6632,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Ulauncher
-    _service: null
     ansible: professormanhattan.ulauncher
   unbuffer:
     _bin: unbuffer
@@ -7052,7 +6651,6 @@ softwarePackages:
     _github: https://github.com/akavel/up
     _home: null
     _name: Ultimate Plumber (up)
-    _service: null
     _type: cli
     ansible: professormanhattan.up
     brew: up
@@ -7066,7 +6664,6 @@ softwarePackages:
     _github: https://github.com/sigoden/upt
     _home: null
     _name: null
-    _service: null
     'cargo:': upt
   upx:
     _bin: upx
@@ -7118,7 +6715,6 @@ softwarePackages:
     _github: null
     _home: https://vaultproject.io/
     _name: HashiCorp Vault
-    _service: null
     _type: cli
     ansible: professormanhattan.vault
     brew: hashicorp/tap/vault
@@ -7130,7 +6726,6 @@ softwarePackages:
     _github: https://github.com/vectordotdev/vector
     _home: https://vector.dev/
     _name: Vector
-    _service: null
     _type: cli
     brew: vectordotdev/brew/vector
   velero:
@@ -7140,7 +6735,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: velero
     choco: velero
     github: github.com/vmware-tanzu/velero
@@ -7203,7 +6797,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: virtualenv
     pipx: virtualenv
   visual-studio:
@@ -7214,7 +6807,6 @@ softwarePackages:
     _home: https://visualstudio.microsoft.com/
     _name: Visual Studio
     _post:cask: 'APP_LINK="$(find /usr/local/Caskroom/visual-studio -mindepth 2 -maxdepth 2 -name "*.app*" | head -n1)" && open "$APP_LINK"'
-    _service: null
     _when:cask: '! test -d "/Applications/Visual Studio.app"'
     ansible:windows: professormanhattan.visualstudio
     cask: visual-studio
@@ -7237,7 +6829,6 @@ softwarePackages:
     _github: https://github.com/videolan/vlc
     _home: https://www.videolan.org/vlc/
     _name: VLC Media Player
-    _service: null
     _when:cask: '! test -d /Applications/VLC.app'
     ansible: professormanhattan.vlc
     apt: vlc
@@ -7252,7 +6843,6 @@ softwarePackages:
     _github: Not open-source
     _home: https://www.vmware.com/
     _name: VMWare
-    _service: null
     _when:darwin: '! test -d "/Applications/VMware Fusion.app"'
     ansible: professormanhattan.vmware
     cask: vmware-fusion
@@ -7268,7 +6858,6 @@ softwarePackages:
     _post: |
       volta setup
       volta install node@latest
-    _service: null
     ansible: professormanhattan.volta
     brew: volta
     scoop: volta
@@ -7279,7 +6868,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: System VPN
-    _service: null
     ansible: professormanhattan.vpn
   vscode:
     _bin: null
@@ -7290,7 +6878,6 @@ softwarePackages:
     _github: https://github.com/microsoft/vscode
     _home: https://code.visualstudio.com/
     _name: Visual Studio Code
-    _service: null
     _snapClassic: true
     _when:cask: '! test -d "/Applications/Visual Studio Code.app"'
     ansible: professormanhattan.vscode
@@ -7319,7 +6906,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Wails
-    _service: null
     ansible: professormanhattan.wails
     go: github.com/wailsapp/wails/cmd/wails@latest
   warp:
@@ -7329,7 +6915,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Cloudflare WARP Client
-    _service: null
     _when:darwin: '! test -d "/Applications/Cloudflare WARP.app"'
     ansible: professormanhattan.warp
     cask: cloudflare-warp
@@ -7360,7 +6945,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Watchman
-    _service: null
     ansible: professormanhattan.watchman
     brew: watchman
     choco: watchman
@@ -7373,7 +6957,6 @@ softwarePackages:
     _github: https://github.com/hashicorp/waypoint
     _home: null
     _name: HashiCorp Waypoint
-    _service: null
     _type: cli
     ansible: professormanhattan.waypoint
     brew: hashicorp/tap/waypoint
@@ -7398,7 +6981,6 @@ softwarePackages:
     _github: https://github.com/vi/websocat
     _home: null
     _name: websocat
-    _service: null
     _type: cli
     brew: websocat
     cargo: websocat
@@ -7412,7 +6994,6 @@ softwarePackages:
     _github: https://github.com/webtorrent/webtorrent-desktop
     _home: null
     _name: WebTorrent Desktop
-    _service: null
     _type: application
     _when:cask: '! test -d /Applications/WebTorrent.app'
     cask: webtorrent
@@ -7427,7 +7008,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: wget
-    _service: null
     ansible: professormanhattan.wget
     apk: wget
     apt: wget
@@ -7451,7 +7031,6 @@ softwarePackages:
     _github: https://github.com/P3GLEG/Whaler
     _home: null
     _name: whaler
-    _service: null
     _type: cli
     github: github.com/P3GLEG/Whaler
   wifi-password:
@@ -7461,7 +7040,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     bpkg: rauchg/wifi-password
     brew:darwin: wifi-password
     npm: wifi-password-cli
@@ -7474,7 +7052,6 @@ softwarePackages:
     _github: false
     _home: https://learn.microsoft.com/en-us/windows-hardware/get-started/adk-install
     _name: Windows ADK
-    _service: null
     ansible:windows: professormanhattan.windowsadk
     choco: windows-adk
   windows-admin-center:
@@ -7486,7 +7063,6 @@ softwarePackages:
     _github: false
     _home: https://www.microsoft.com/en-us/windows-server/windows-admin-center
     _name: Windows Admin Center
-    _service: null
     ansible:windows: professormanhattan.windowsadmincenter
     choco: windows-admin-center
   windows-power-toys:
@@ -7496,7 +7072,6 @@ softwarePackages:
     _github: https://github.com/microsoft/PowerToys
     _home: https://learn.microsoft.com/en-us/windows/powertoys/
     _name: Microsoft PowerToys
-    _service: null
     ansible:windows: professormanhattan.windowspowertoys
     choco: powertoys
     scoop: powertoys
@@ -7507,7 +7082,6 @@ softwarePackages:
     _github: https://github.com/masterzen/winrm-cli
     _home: null
     _name: winrm-cli
-    _service: null
     _type: cli
     yay: winrm-cli-git
   wireshark-cli:
@@ -7517,7 +7091,6 @@ softwarePackages:
     _github: null
     _home: https://tshark.dev/
     _name: Wireshark
-    _service: null
     ansible: professormanhattan.wireshark
     # Install hangs even with sudo apt-get -o DPkg::Options::=--force-confdef install -y tshark
     # Need to figure out how to completely automate this
@@ -7532,7 +7105,6 @@ softwarePackages:
     _github: https://github.com/wireshark/wireshark
     _home: https://www.wireshark.org/
     _name: Wireshark
-    _service: null
     _when:cask: '! test -d /Applications/Wireshark.app'
     apt: wireshark
     cask: wireshark
@@ -7547,7 +7119,6 @@ softwarePackages:
     _github: https://github.com/wkhtmltopdf/wkhtmltopdf
     _home: null
     _name: wkhtmltopdf
-    _service: null
     _type: cli
     _when:cask: '! test -d /usr/local/Caskroom/wkhtmltopdf'
     ansible: professormanhattan.wkhtmltopdf
@@ -7563,7 +7134,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: wordpressify
   wp-cli:
     _bin: wp
@@ -7572,7 +7142,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: WP-CLI
-    _service: null
     ansible:darwin: professormanhattan.wpcli
     ansible:linux: professormanhattan.wpcli
     brew: wp-cli
@@ -7583,7 +7152,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     npm: '@cloudflare/wrangler'
   wrk:
     _bin: wrk
@@ -7606,7 +7174,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Common
-    _service: null
     ansible: professormanhattan.wsl
   xcode:
     _bin: xcodebuild
@@ -7623,7 +7190,6 @@ softwarePackages:
     _github: https://github.com/mvdan/xurls
     _home: null
     _name: xurls
-    _service: null
     _type: cli
     github: github.com/mvdan/xurls
     go: mvdan.cc/xurls/v2/cmd/xurls@latest
@@ -7634,7 +7200,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: yamllint
     pipx: yamllint
   sshfs:
@@ -7644,7 +7209,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: SSH FS
-    _service: null
     apt: sshfs
     brew: sshfs
     choco: sshfs
@@ -7659,7 +7223,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: yank
-    _service: null
     ansible: professormanhattan.yank
     apt: yank
     brew: yank
@@ -7715,7 +7278,6 @@ softwarePackages:
     _github: https://github.com/ytdl-org/youtube-dl
     _home: https://youtube-dl.org/
     _name: youtube-dl
-    _service: null
     ansible: professormanhattan.youtubedl
     brew: youtube-dl
     pipx: youtube-dl
@@ -7727,7 +7289,6 @@ softwarePackages:
     _github: https://github.com/mikefarah/yq
     _home: https://mikefarah.gitbook.io/yq/
     _name: yq
-    _service: null
     _type: cli
     ansible: professormanhattan.yq
     apk: yq
@@ -7743,7 +7304,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: yubikey
-    _service: null
     ansible: professormanhattan.yubikey
   yubikey-authenticator:
     _bin: null
@@ -7752,7 +7312,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _when:darwin: '! test -d "/Applications/Yubico Authenticator.app"'
     ansible:darwin: professormanhattan.yubikey
     choco: yubico-authenticator
@@ -7764,7 +7323,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: ykman
     dnf: yubikey-manager
     pacman: yubikey-manager
@@ -7776,7 +7334,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     _when:darwin: '! test -d "/Applications/YubiKey Manager.app"'
     ansible:darwin: professormanhattan.yubikey
     appimage: https://developers.yubico.com/yubikey-manager-qt/Releases/yubikey-manager-qt-1.2.4b-linux.AppImage
@@ -7801,7 +7358,6 @@ softwarePackages:
     _github: Not open-source
     _home: https://zoom.us/
     _name: Zoom
-    _service: null
     _when:cask: '! test -d /Applications/zoom.us.app'
     ansible: professormanhattan.zoom
     cask: zoom
@@ -7816,7 +7372,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: zoxide
-    _service: null
     ansible: professormanhattan.zoxide
     brew: zoxide
   zsh:
@@ -7826,7 +7381,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: Zsh
-    _service: null
     ansible:darwin: professormanhattan.zsh
     ansible:linux: professormanhattan.zsh
     apt: zsh
@@ -7841,7 +7395,6 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _service: null
     brew: zx
     npm: zx
 
