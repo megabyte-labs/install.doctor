@@ -1539,7 +1539,7 @@ async function linkBin(installOrdersBinLink) {
       } else if (binLink.preference === 'cask') {
         try {
           const caskWhen = softwarePackages[binLink.package]["_when:cask"]
-          const caskDir = caskWhen.replace('test -d ', '').replace(/"/g, '')
+          const caskDir = caskWhen.replace('! test -d ', '').replace(/"/g, '')
           if (fileExists(caskDir)) {
             runCommand(`Adding shortcut bin link for ${binLink.package}`, `bash -c 'mkdir -p "${process.env.HOME}/.local/bin/cask" && echo "open ${caskDir}" > "${process.env.HOME}/.local/bin/cask/${binLink.bin}"'`)
           } else {

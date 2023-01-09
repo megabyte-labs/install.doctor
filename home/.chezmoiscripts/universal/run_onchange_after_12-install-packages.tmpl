@@ -25,6 +25,9 @@ if command -v install-program > /dev/null; then
         log warn 'gcc either needs to be added to the PATH or it is missing'
       fi
     fi
+    if [ -f "$HOME/.bashrc" ]; then
+      . "$HOME/.bashrc"
+    fi
     export LC_ALL="en_US.UTF-8"
     install-program {{ $softwareList }}
   else

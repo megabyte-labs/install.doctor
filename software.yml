@@ -3504,6 +3504,7 @@ softwarePackages:
     _github: https://github.com/keybase/client
     _home: https://keybase.io/
     _name: Keybase
+    _when:ansible: '! test -f /opt/keybase/Keybase'
     _when:cask: '! test -d /Applications/Keybase.app'
     ansible: professormanhattan.keybase
     cask: keybase
@@ -5033,6 +5034,7 @@ softwarePackages:
     _github: https://github.com/safing/portmaster
     _home: https://safing.io/
     _name: Portmaster
+    _when:linux: '! test -f /opt/safing/portmaster/portmaster-start'
     ansible:linux: professormanhattan.portmaster
     ansible:windows: professormanhattan.portmaster
   postman:
@@ -5310,6 +5312,7 @@ softwarePackages:
     _github: https://github.com/PabloLec/RecoverPy
     _home: https://github.com/PabloLec/RecoverPy
     _name: RecoverPy
+    _when: '! pip3 list | grep recoverpy > /dev/null'
     ansible:linux: professormanhattan.recoverpy
     script:linux: python3 -m pip install recoverpy
   coreutils:
