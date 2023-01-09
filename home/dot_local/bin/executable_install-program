@@ -1083,7 +1083,7 @@ async function installPackageList(packageManager, packages) {
           if (pkg.substring(0, 4) === 'http') {
             log('info', 'AppImage Install', `Installing ${pkg} from its URL`)
             runCommand('Installing ${pkg} via zap', `sudo zap install --select-first -q --from ${pkg}`)
-          } else if ((pkg.match(/\\/g) || []).length === 1) {
+          } else if ((pkg.match(/\//g) || []).length === 1) {
             log('info', 'AppImage Install', `Installing ${pkg} from a GitHub Release`)
             runCommand('Installing ${pkg} via zap', `sudo zap install --select-first -q --github --from ${pkg}`)
           } else {
@@ -1429,7 +1429,16 @@ async function pruneInstallOrders(installOrders) {
   for (const pkgManager in installOrders) {
     log('info', 'Filter', `Filtering the ${pkgManager} installOrders`)
     console.log(newOrders[pkgManager])
-    if (pkgManager === 'apt') {
+    if (pkgManager === 'appimage') {
+      newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
+        try {
+          await runSilentCommand(`zap list | grep ${pkg} > /dev/null`)
+          return false
+        } catch (e) {
+          return true
+        }
+      })
+    } else if (pkgManager === 'apt') {
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
           await runSilentCommand(`dpkg -l ${pkg} | grep -E '^ii' > /dev/null`)
