@@ -406,7 +406,7 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
   }
   log('info', 'Match', `Found a match for the package \`${pkg}\` (${packageKey} via ${scopedPreference})`)
   const newPackages = packages[scopedPreference]
-  const newPkgs = typeof newPackages === 'string' ? [{ newPackages }] : newPackages
+  const newPkgs = typeof newPackages === 'string' ? [ newPackages ] : newPackages
   if (typeof newPackages === 'string') {
     installMeta[newPackages] = {
       preference,
