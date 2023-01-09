@@ -46,7 +46,8 @@ async function applyGsettings(settings) {
       try {
         const gsetting = setting.setting
         const gsettingVal = setting.value
-        await $`gsettings set ` + gsetting + `${gsettingVal}`
+        const gsettingCmd = 'gsettings set ' + gsetting + ' ' + gsettingVal
+        await $gsettingCmd
       } catch (e) {
         log('error', 'Gsettings Failure', 'Failed to apply gsetting')
         console.error(e)
@@ -79,7 +80,8 @@ async function applyDconfSettings(settings) {
   if (dconf) {
     for (const setting of settings) {
       try {
-        await $`dconf write ${setting.key} ` + setting.value
+        const dconfCmd = 'dconf write ' + setting.key + ' ' + setting.value
+        await $dconfCmd
       } catch (e) {
         log('error', 'Dconf Failure', 'Failed to apply dconf setting')
         console.error(e)
@@ -94,7 +96,6 @@ async function main() {
   const promises = [loadThemeSettings(), loadGnomeSettings()]
   const results = await Promise.all(promises)
   const themeSettings = results[0]
-  console.log(themeSettings)
   const gnomeSettings = results[1]
   const settingsPromises = []
   if (themeSettings && themeSettings.gsetting_configs) {

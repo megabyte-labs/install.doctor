@@ -635,6 +635,9 @@ async function beforeInstall(packageManager) {
   updateDone[packageManager] = true
   const logStage = 'Pre-Install Package Manager'
   if (packageManager === 'appimage') {
+    if(!fileExists(`${process.env.HOME}/Applications)) {
+      runSilentCommand(`mkdir -p "${process.env.HOME}/Applications"`)
+    }
   } else if (packageManager === 'ansible') {
     log('info', logStage, `Temporarily enabling passwordless sudo for Ansible role installations`)
     await $`echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR ANSIBLE INSTALL" | sudo tee -a /etc/sudoers`
