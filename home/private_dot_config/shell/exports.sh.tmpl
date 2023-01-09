@@ -39,8 +39,10 @@ export PATH_TASK="$(which task)"
 ### PATH
 export PATH="/opt/local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin/cask:$PATH"
 export PATH="$HOME/.local/bin/docker:$PATH"
 export PATH="$HOME/.local/bin/firejail:$PATH"
+export PATH="$HOME/.local/bin/flatpak:$PATH"
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
 ### Homebrew
@@ -134,6 +136,13 @@ fi
 
 ### ffmpeg
 export FFMPEG_DATADIR="$XDG_CONFIG_HOME/ffmpeg"
+
+### Flatpak
+if command -v flatpak > /dev/null; then
+  FLATPAK_INSTALLATIONS="$(flatpak --installations)"
+  export PATH="$FLATPAK_INSTALLATIONS/exports/bin:$PATH"
+  export XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share:$FLATPAK_INSTALLATIONS/exports/share:$XDG_DATA_DIRS"
+fi
 
 ### fzf
 if command -v fd > /dev/null; then

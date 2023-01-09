@@ -643,7 +643,7 @@ async function beforeInstall(packageManager) {
     if (unbuffer) {
       unbufferPrefix = 'unbuffer'
     }
-    await $`ANSIBLE_CONFIG=${process.env.HOME}/.local/share/ansible/ansible.cfg ${unbufferPrefix} ansible 127.0.0.1 -vv -e '{ ansible_connection: "local", ansible_become_user: "${process.env.USER}", ansible_user: "${process.env.USER}", install_homebrew: False }' -m setup`
+    await $`ANSIBLE_CONFIG=${process.env.HOME}/.local/share/ansible/ansible.cfg ${unbufferPrefix} ansible 127.0.0.1 -e '{ ansible_connection: "local", ansible_become_user: "${process.env.USER}", ansible_user: "${process.env.USER}", install_homebrew: False }' -m setup`
   } else if (packageManager === 'apk') {
     await $`sudo apk update`
   } else if (packageManager === 'apt') {
@@ -1100,8 +1100,8 @@ async function installPackageList(packageManager, packages) {
           if (unbuffer) {
             unbufferPrefix = 'unbuffer'
           }
-          const verboseMode = process.env.DEBUG_MODE === 'on' ? 'vv' : ''
-          await $`ANSIBLE_CONFIG=${process.env.HOME}/.local/share/ansible/ansible.cfg ansible 127.0.0.1 -v${verboseMode} -e '{ ansible_connection: "local", ansible_become_user: "root", ansible_user: "${process.env.USER}", install_homebrew: False }' -m include_role -a name=${pkg}`
+          const verboseMode = process.env.DEBUG_MODE === 'on' ? '-vvv' : ''
+          await $`ANSIBLE_CONFIG=${process.env.HOME}/.local/share/ansible/ansible.cfg ansible 127.0.0.1 ${verboseMode} -e '{ ansible_connection: "local", ansible_become_user: "root", ansible_user: "${process.env.USER}", install_homebrew: False }' -m include_role -a name=${pkg}`
           log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
           log('error', 'Install Failure', `There was an error installing ${pkg} with Ansible`)
@@ -1531,8 +1531,12 @@ async function linkBin(installOrdersBinLink) {
     if(!which.sync(binLink.bin, { nothrow: true })) {
       if (binLink.preference === 'flatpak' && flatpak) {
         try {
-          await runSilentCommand(`test -d ${flatpakDir}/app/${pkg}`)
-          await $`mkdir -p "${process.env.HOME}/.local/bin/flatpak" && echo "flatpak run ${pkg}" > "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}"`
+          runCommand(`Adding bin link for ${pkg} (${binLink.bin})`, `
+            test -d ${flatpakDir}/app/${pkg}
+            mkdir -p "${process.env.HOME}/.local/bin/flatpak"
+            echo "flatpak run ${pkg}" > "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}"
+          `)
+          log('success', 'Bin', `Linked ~/.local/bin/flatpak/${binLink.bin} to the ${pkg} Flatpak`)
         } catch (e) {
           log('warn', 'Bin', `Expected flatpak directory not available - ${flatpakDir}/app/${pkg}`)
         }
@@ -1540,10 +1544,16 @@ async function linkBin(installOrdersBinLink) {
         try {
           const caskWhen = softwarePackages[binLink.package]["_when:cask"]
           const caskDir = caskWhen.replace('test -d ', '').replace(/"/g, '')
-          await $`test -d "${caskDir}"`
-          await $`mkdir -p "${process.env.HOME}/.local/bin/cask" && echo "open ${caskDir}" > "${process.env.HOME}/.local/bin/cask/${binLink.bin}"`
+          if (fileExists(caskDir)) {
+            runCommand(`Adding shortcut bin link for ${binLink.package}`, `
+              mkdir -p "${process.env.HOME}/.local/bin/cask"
+              echo "open ${caskDir}" > "${process.env.HOME}/.local/bin/cask/${binLink.bin}"
+            `)
+          } else {
+            log('warn', 'Bin', `Expected Homebrew cask directory not found - ${pkg}`)
+          }
         } catch (e) {
-          log('warn', 'Bin', `Expected Homebrew cask directory not available - ${pkg}`)
+          log('warn', 'Bin', `Error creating bin shortcut link for ${pkg}`)
         }
       }
     } else {
