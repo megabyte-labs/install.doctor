@@ -367,9 +367,9 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
   if (postHook) {
     installOrdersPost.concat(typeof postHook === 'string' ? [postHook] : postHook)
   }
-  const systemdHook = getHook(packages, 'systemd', scopedPreference, preference)
-  if (systemdHook) {
-    installOrdersSystemd.concat(typeof systemdHook === 'string' ? [systemdHook] : systemdHook)
+  const serviceHook = getHook(packages, 'service', scopedPreference, preference)
+  if (serviceHook) {
+    installOrdersService.concat(typeof serviceHook === 'string' ? [serviceHook] : serviceHook)
   }
   if (!installOrders[preference]) {
     installOrders[preference] = []
@@ -1352,11 +1352,11 @@ async function installPackageList(packageManager, packages) {
   }
 }
 
-async function updateSystemd(service) {
-  const logStage = 'Systemd Service'
+async function updateService(service) {
+  const logStage = 'Service Service'
   if (osType === 'linux') {
-    const systemd = which.sync('systemctl', { nothrow: true })
-    if (systemd) {
+    const systemctl = which.sync('systemctl', { nothrow: true })
+    if (systemctl) {
       try {
         log('info', logStage, `Starting / enabling the ${service} service`)
         await $`sudo systemctl enable --now ${service}`
@@ -1525,8 +1525,8 @@ async function installSoftware(pkgsToInstall) {
     await Promise.all(asyncOrders)
   }
   log('info', 'Post-Install', `Running package-specific post-installation steps`)
-  for (const service of installOrdersSystemd) {
-    await updateSystemd(service)
+  for (const service of installOrdersService) {
+    await updateService(service)
   }
   for (const script of installOrdersPost) {
     await $`${script}`
