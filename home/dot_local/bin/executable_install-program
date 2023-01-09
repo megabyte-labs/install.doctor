@@ -291,6 +291,7 @@ async function generateInstallOrders(pkgsToInstall) {
 
         // Handle the _deps attribute
         currentSelector = 'deps'
+        console.log('---deps---')
         console.log(packageKey)
         doubleScoped =
           softwarePackages[packageKey]['_' + currentSelector + ':' + preference + ':' + osID] ||
