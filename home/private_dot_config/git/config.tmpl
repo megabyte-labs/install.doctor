@@ -1,6 +1,6 @@
 [include]
-  path = ${XDG_DATA_HOME}/delta/themes.gitconfig
-  path = ${XDG_CONFIG_HOME}/git/local.toml
+  path = ~/.local/share/delta/themes.gitconfig
+  path = ~/.config/git/local.toml
 [advice]
   detachedHead = false
 [alias]
@@ -50,12 +50,12 @@
   changed = green
   untracked = cyan
 [commit]
-  template = ${XDG_CONFIG_HOME}/git/commit-template
+  template = ~/.config/git/commit-template
 [core]
   editor = vi
-  excludesfile = ${XDG_CONFIG_HOME}/git/ignore
+  excludesfile = ~/.config/git/ignore
   autocrlf = input
-  attributesfile = ${XDG_CONFIG_HOME}/git/attributes
+  attributesfile = ~/.config/git/attributes
   editor = code --wait
   eol = lf
   fileMode = false
@@ -112,7 +112,7 @@
   autocorrect = 20
 [init]
   defaultBranch = master
-  templatedir = ${XDG_CONFIG_HOME}/git/template
+  templatedir = ~/.config/git/template
 [interactive]
   diffFilter = delta --color-only --features=interactive
 [merge]
