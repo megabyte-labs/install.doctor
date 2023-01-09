@@ -85,7 +85,7 @@ async function applyDconfSettings(settings) {
   if (dconf) {
     for (const setting of settings) {
       try {
-        const dconfCmd = 'dconf write ' + setting.key + ' ' + setting.value
+        const dconfCmd = 'dconf write ' + setting.key + ' "' + setting.value + '"'
         execSync(dconfCmd)
         log('success', 'Dconf', 'Changed ' + setting.key + ' to ' + setting.value)
       } catch (e) {

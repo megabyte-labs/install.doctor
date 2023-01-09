@@ -1135,6 +1135,7 @@ async function installPackageList(packageManager, packages) {
           console.error(e)
         }
       }
+      log('warn', 'Install', 'Zap installs might fail - this is expected. Waiting on fixes to Zap upstream project')
     } else if (packageManager === 'ansible') {
       for (let pkg of packages) {
         try {
