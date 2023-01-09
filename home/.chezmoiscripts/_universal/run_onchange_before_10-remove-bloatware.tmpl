@@ -9,11 +9,11 @@
 ### Remove bloatware packages defined in .chezmoidata.yaml
 for PKG in {{ $removePackages }}; do
     if command -v apk > /dev/null; then
-        if apk list "$PKG" | grep "$PKG"; then
+        if apk list "$PKG" | grep "$PKG" > /dev/null; then
             sudo apk delete "$PKG"
         fi
     elif command -v apt-get > /dev/null; then
-        if dpkg -l "$PKG" | grep "$PKG"; then
+        if dpkg -l "$PKG" | grep "$PKG" > /dev/null; then
             sudo apt-get remove -y "$PKG"
             logg success 'Removed `'"$PKG"'` via apt-get'
         fi
