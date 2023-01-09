@@ -432,7 +432,7 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
     if (!installOrders['snap-classic']) {
       installOrders['snap-classic'] = []
     }
-    installOrders['snap-classic'] = installOrders[preference].concat(newPkgs)
+    installOrders['snap-classic'] = installOrders['snap-classic'].concat(newPkgs)
   } else {
     installOrders[preference] = installOrders[preference].concat(newPkgs)
   }
