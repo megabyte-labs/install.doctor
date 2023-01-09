@@ -7464,7 +7464,7 @@ softwarePlugins:
     plugins:
       - Microsoft.CST.AttackSurfaceAnalyzer.CLI
   gh:
-    cmd: if [ -n "$GITHUB_TOKEN" ] && ! gh extension list | grep {PLUGIN}; then gh extension install {PLUGIN}; fi
+    cmd: bash -c 'if [ -n "$GITHUB_TOKEN" ] && ! gh extension list | grep {PLUGIN}; then gh extension install {PLUGIN}; fi'
     plugins:
       - dlvhdr/gh-dash
       - github/gh-net
@@ -7491,7 +7491,7 @@ softwarePlugins:
       - view-allocations
       - who-can
   vagrant:
-    cmd: if ! vagrant plugin list | grep {PLUGIN}; then vagrant plugin install {PLUGIN}; fi
+    cmd: bash -c 'if ! vagrant plugin list | grep {PLUGIN}; then vagrant plugin install {PLUGIN}; fi'
     plugins:
       - vagrant-bindfs
       - vagrant-digitalocean
@@ -7502,7 +7502,7 @@ softwarePlugins:
       - vagrant-vbguest
       - vagrant-vmware-desktop
   vscodium:
-    cmd: if test -n "$(find ~/.vscode/extensions -mindepth 1 -maxdepth 1 -type d -name "$(echo {PLUGIN} | tr "[:upper:]" "[:lower:]")*" -print -quit)"; then codium --install-extension "$(echo {PLUGIN} | tr "[:upper:]" "[:lower:]")"; fi
+    cmd: bash -c 'if test -n "$(find ~/.vscode/extensions -mindepth 1 -maxdepth 1 -type d -name "$(echo {PLUGIN} | tr "[:upper:]" "[:lower:]")*" -print -quit)"; then codium --install-extension "$(echo {PLUGIN} | tr "[:upper:]" "[:lower:]")"; fi'
     plugins:
       - Angular.ng-template
       - attilabuti.vscode-mjml
