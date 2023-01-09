@@ -1,3 +1,4 @@
+---
 version: 3
 profiles: []
 hotkeys:
@@ -216,13 +217,4 @@ enableAnalytics: false
 enableAnalytics: false
 enableWelcomeTab: false
 recoverTabs: false
-vault:
-  version: 1
-  contents: ''
-configSync:
-  parts: {}
-  token: >-
-    {{ .user.TABBY_SYNC_TOKEN }}
-  configID: {{ .user.TABBY_CONFIG_ID }}
-  auto: true
 workspaceManager: {}

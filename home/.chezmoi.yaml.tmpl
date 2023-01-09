@@ -18,8 +18,6 @@
 {{- $locale := (output "echo" "$LANG") }}
 {{- $ngrokAuthToken := (default "" (env "NGROK_AUTH_TOKEN")) -}}
 {{- $slackApiToken := (default "" (env "SLACK_API_TOKEN")) -}}
-{{- $tabbyConfigId := (default "" (env "TABBY_CONFIG_ID")) -}}
-{{- $tabbySyncToken := (default "" (env "TABBY_SYNC_TOKEN")) -}}
 {{- $tailscaleAuthKey := (default "" (env "TAILSCALE_AUTH_KEY")) -}}
 {{- $timezone := (default "America/New_York" (env "TIMEZONE")) -}}
 {{- $toolchains := list "CLI-Extras" "Docker" "Go" "Kubernetes" "Web-Development" -}}
@@ -155,12 +153,6 @@
 {{- if not (env "SLACK_API_TOKEN") -}}
 {{-   $slackApiToken = promptStringOnce $data.user "slackApiToken" "Slack API token" $slackApiToken -}}
 {{- end -}}
-{{- if not (env "TABBY_CONFIG_ID") -}}
-{{-   $tabbyConfigId = promptStringOnce $data.user "tabbyConfigId" "Tabby configuration ID" $tabbyConfigId -}}
-{{- end -}}
-{{- if not (env "TABBY_SYNC_TOKEN") -}}
-{{-   $tabbySyncToken = promptStringOnce $data.user "tabbySyncToken" "Tabby Sync token" $tabbySyncToken -}}
-{{- end -}}
 {{- if not (env "TAILSCALE_AUTH_KEY") -}}
 {{-   $tailscaleAuthKey = promptStringOnce $data.user "tailscaleAuthKey" "Tailscale authentication key" $tailscaleAuthKey -}}
 {{- end -}}
@@ -226,8 +218,6 @@ data:
     NGROK_AUTH_TOKEN: "{{ $ngrokAuthToken }}"
     SLACK_API_TOKEN: "{{ $slackApiToken }}"
     SNAPCRAFT_EMAIL: "{{ $email }}"
-    TABBY_CONFIG_ID: "{{ $tabbyConfigId }}"
-    TABBY_SYNC_TOKEN: "{{ $tabbySyncToken }}"
     TAILSCALE_AUTH_KEY: "{{ $tailscaleAuthKey }}"
     TINYPNG_API_KEY: "g355tx7dxG5yJfl0RXJnpQlQqk88dJBv"
 diff:
