@@ -10,11 +10,22 @@ for PKG in {{ $removePackages }}; do
             sudo apt-get remove -y "$PKG"
         fi
     elif command -v dnf > /dev/null; then
-        if 
+        if rpm -qa | grep "$PKG" > /dev/null; then
+            sudo dnf remove -y "$PKG"
+        fi
     elif command -v yum > /dev/null; then
+        if rpm -qa | grep "$PKG" > /dev/null; then
+            sudo yum remove -y "$PKG"
+        fi
     elif command -v pacman > /dev/null; then
         if pacman -Qs "$PKG" > /dev/null; then
             sudo pacman -R "$PKG"
         fi
+    elif command -v zypper > /dev/null; then
+        if rpm -qa | grep "$PKG" > /dev/null; then
+            sudo zypper remove -y "$PKG"
+        fi
     fi
 done
+
+{{- end }}
