@@ -90,6 +90,7 @@ const installOrdersPre = []
 const installOrdersPost = []
 const installOrdersService = []
 const installOrdersPlugins = []
+const installOrdersBinLink = []
 let brewUpdated, osType, osID, snapRefreshed
 
 // Download the installation map
@@ -229,6 +230,10 @@ async function generateInstallOrders(pkgsToInstall) {
             }
             log('info', 'Filter', `${bin} already in PATH (via _bin:${pref})`)
             continue pkgFor
+          } else {
+            if (preference === 'cask' || preference === 'flatpak') {
+              installOrdersBinLink.push({ package: packageKey, bin: doubleScoped, preference })
+            }
           }
         } else if (scopedPkgManager) {
           const bin =
@@ -239,6 +244,10 @@ async function generateInstallOrders(pkgsToInstall) {
             const pref = preference
             log('info', 'Filter', `${bin} already in PATH (via _bin:${pref})`)
             continue pkgFor
+          } else {
+            if (preference === 'cask' || preference === 'flatpak') {
+              installOrdersBinLink.push({ package: packageKey, bin: scopedPkgManager, preference })
+            }
           }
         } else if (scopedSystem) {
           const bin =
@@ -254,6 +263,10 @@ async function generateInstallOrders(pkgsToInstall) {
             }
             log('info', 'Filter', `${bin} already in PATH (via _bin:${pref})`)
             continue pkgFor
+          } else {
+            if (preference === 'cask' || preference === 'flatpak') {
+              installOrdersBinLink.push({ package: packageKey, bin: scopedSystem, preference })
+            }
           }
         } else if (normalCheck) {
           const bin =
@@ -263,6 +276,10 @@ async function generateInstallOrders(pkgsToInstall) {
           if (bin) {
             log('info', 'Filter', `${bin} already in PATH (via _bin)`)
             continue pkgFor
+          } else {
+            if (preference === 'cask' || preference === 'flatpak') {
+              installOrdersBinLink.push({ package: packageKey, bin: normalCheck, preference })
+            }
           }
         }
 
@@ -1295,7 +1312,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'script') {
       for (let pkg of packages) {
         try {
-          await $`${pkg}`
+          await $`bash -c ${pkg}`
         } catch (e) {
           log('error', 'Install Failure', `There was an error running the script installation method for ${pkg}`)
           console.error(e)
@@ -1444,7 +1461,7 @@ async function pruneInstallOrders(installOrders) {
       })
     } else if (pkgManager === 'flatpak') {
       const flatpakInstallation = await $`flatpak --installations`
-      const flatpakDir = flatpakInstallation.stdout.replace('\\n', '')
+      const flatpakDir = flatpakInstallation.stdout.replace(/\\n/g, '')
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
           await runSilentCommand(`test -d ${flatpakDir}/app/${pkg}`)
@@ -1495,6 +1512,39 @@ async function installPlugins(pluginData) {
     } catch (e) {
       log('error', 'Plugin', `Failed to install ${pluginData.package} plugin - ${plugin}`)
       console.error(e)
+    }
+  }
+}
+
+async function linkBin(installOrdersBinLink) {
+  let flatpakInstallation, flatpakDir
+  const flatpak = which.sync('flatpak', { nothrow: true })
+  if (flatpak) {
+    flatpakInstallation = await $`flatpak --installations`
+    flatpakDir = flatpakInstallation.stdout.replace(/\\n/g, '')
+  }
+  for (const binLink of installOrdersBinLink) {
+    const pkg = softwarePackages[binLink.package][binLink.preference]
+    if(!which.sync(binLink.bin, { nothrow: true })) {
+      if (binLink.preference === 'flatpak' && flatpak) {
+        try {
+          await runSilentCommand(`test -d ${flatpakDir}/app/${pkg}`)
+          await $`mkdir -p "${process.env.HOME}/.local/bin/flatpak" && echo "flatpak run ${pkg}" > "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}"`
+        } catch (e) {
+          log('warn', 'Bin', `Expected flatpak directory not available - ${flatpakDir}/app/${pkg}`)
+        }
+      } else if (binLink.preference === 'cask') {
+        try {
+          const caskWhen = softwarePackages[binLink.package]["_when:cask"]
+          const caskDir = caskWhen.replace('test -d ', '').replace(/"/g, '')
+          await $`test -d "${caskDir}"`
+          await $`mkdir -p "${process.env.HOME}/.local/bin/cask" && echo "open ${caskDir}" > "${process.env.HOME}/.local/bin/cask/${binLink.bin}"`
+        } catch (e) {
+          log('warn', 'Bin', `Expected Homebrew cask directory not available - ${pkg}`)
+        }
+      }
+    } else {
+      log('info', 'Bin', `Link already exists for ${binLink.package}`)
     }
   }
 }
@@ -1552,6 +1602,8 @@ async function installSoftware(pkgsToInstall) {
   for (const plugin of installOrdersPlugins) {
     await installPlugins(plugin)
   }
+  log('info', 'Bin', 'Linking bin aliases to their installed packages')
+  await linkBin(installOrdersBinLink)
   for (const script of installOrdersPost) {
     await $`${script}`
   }

@@ -197,6 +197,7 @@ softwarePackages:
       - web-font-generator
       - what-ip
   newsflash:
+    _bin: newsflash
     flatpak: com.gitlab.newsflash
   web-font-generator:
     flatpak: com.rafaelmardojai.WebfontKitGenerator
@@ -261,7 +262,7 @@ softwarePackages:
     choco: ansifilter
     port: ansifilter
   android-studio:
-    _bin: null
+    _bin: android-studio
     _desc: >-
       [Android Studio](https://developer.android.com/studio) is the official integrated development environment for Google's Android operating system, built on JetBrains' IntelliJ IDEA software and designed specifically for Android development. This role installs Android Studio on nearly any operating system and also ensures a configurable list of command-line tools and SDKs are installed and seamlessly integrated with the system (i.e. the role adds the appropriate items to the `PATH` environment
       variable).
@@ -654,7 +655,7 @@ softwarePackages:
     _name: null
     npm: bitly-cli-client
   bitwarden:
-    _bin: null
+    _bin: bitwarden
     _desc: The desktop vault (Windows, macOS, & Linux)
     _docs: null
     _github: https://github.com/bitwarden/desktop
@@ -713,7 +714,7 @@ softwarePackages:
     scoop: bottom
     snap: bottom
   brave-browser:
-    _bin: null
+    _bin: brave
     _desc: '[Brave Browser](https://brave.com/) is a free and open-source web browser developed by Brave Software, Inc. based on the Chromium web browser. It includes the ability to access Tor websites and has a built-in plugin that replaces ads and pays you to surf the web. It is a privacy-focused browser, which automatically blocks online advertisements and website trackers in its default settings. It also supports Chrome extensions.'
     _docs: https://support.brave.com/hc/en-us/articles/360035410812-Quickstart-guide-New-to-Brave-Start-here-
     _github: https://github.com/brave/brave-browser
@@ -867,7 +868,7 @@ softwarePackages:
     xbps: chezmoi
     zypper: chezmoi
   google-chrome:
-    _bin: null
+    _bin: chrome
     _deps:
       - chrome-gnome-shell
     _desc: '[Google Chrome](https://www.google.com/chrome/) is a cross-platform web browser developed by Google. It was first released in 2008 for Microsoft Windows, and was later ported to Linux, macOS, iOS, and Android where it is the default browser built into the OS.'
@@ -882,8 +883,10 @@ softwarePackages:
     flatpak: com.google.Chrome
     yay: google-chrome
   dconf-editor:
+    _bin: dconf-editor
     flatpak: ca.desrt.dconf-editor
   chromium:
+    _bin: chromium
     apt: chromium
     dnf: chromium
     flatpak: org.chromium.Chromium
@@ -987,7 +990,7 @@ softwarePackages:
     _type: cli
     github: github.com/cert-manager/cert-manager
   cockpit:
-    _bin: null
+    _bin: cockpit
     _desc: '[Cockpit](https://cockpit-project.org/) allows you to view many aspects of system performance and make configuration changes, though the task list may depend on the particular flavor of Linux that you are using.'
     _docs: https://cockpit-project.org/documentation.html
     _github: https://github.com/cockpit-project/cockpit
@@ -1028,6 +1031,7 @@ softwarePackages:
       - cockpit-storaged
       - libvirt-dbus
   cockpit-client:
+    _bin: cockpit-client
     flatpak: org.cockpit_project.CockpitClient
   cocoapods:
     _bin: null
@@ -1953,12 +1957,13 @@ softwarePackages:
     brew: filebrowser/tap/filebrowser
     github: github.com/filebrowser/filebrowser
   arduino-ide:
+    _bin: arduino
     _when:cask: '! test -d "/Applications/Arduino.app"'
     cask: arduino
     choco: arduino
     flatpak: cc.arduino.IDE2
   filezilla:
-    _bin: null
+    _bin: filezilla
     _desc: '[FileZilla](https://filezilla-project.org/) is a free software, cross-platform FTP application, consisting of FileZilla Client and FileZilla Server. Client binaries are available for Windows, Linux, and macOS, server binaries are available for Windows only.'
     _docs: https://wiki.filezilla-project.org/Documentation
     _github: https://svn.filezilla-project.org/filezilla/
@@ -1988,7 +1993,7 @@ softwarePackages:
     _name: null
     npm: firebase-tools
   firefox:
-    _bin: null
+    _bin: firefox
     _desc: '[Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/), or simply Firefox, is a free and open-source web browser developed by the Mozilla Foundation and its subsidiary, the Mozilla Corporation. Firefox uses the Gecko layout engine to render web pages, which implements current and anticipated web standards.'
     _docs: https://developer.mozilla.org/en-US/
     _github: null
@@ -2029,7 +2034,7 @@ softwarePackages:
     _name: null
     npm: fkill-cli
   flameshot:
-    _bin: null
+    _bin: flameshot
     _desc: Powerful yet simple to use screenshot software
     _docs: https://flameshot.org/docs/overview/overview/
     _github: https://github.com/flameshot-org/flameshot
@@ -2065,7 +2070,7 @@ softwarePackages:
     yay: flutter
   fritzing:
     _todo: Add installation source for macOS
-    _bin: null
+    _bin: fritzing
     _desc: Fritzing is an open-source hardware initiative that makes electronics accessible as a creative material for anyone. We offer a software tool, a community website and services in the spirit of Processing and Arduino, fostering a creative ecosystem that allows users to document their prototypes, share them with others, teach electronics in a classroom, and layout and manufacture professional PCBs.
     _docs: https://fritzing.org/learning/get-started
     _github: https://github.com/fritzing/fritzing-app
@@ -2241,7 +2246,7 @@ softwarePackages:
     port: gawk
     scoop: gawk
   standard-notes:
-    _bin: null
+    _bin: standard-notes
     _desc: End-to-end encrypted notes app
     _docs: https://standardnotes.com/help
     _github: https://github.com/standardnotes/app
@@ -2251,21 +2256,24 @@ softwarePackages:
     cask: standard-notes
     flatpak: org.standardnotes.standardnotes
   deja-dup:
+    _bin: dejadup
     flatpak: org.gnome.DejaDup
   discord:
+    _bin: discord
     _name: Discord
     _when:cask: '! test -d "/Applications/Discord.app"'
     cask: discord
     choco: discord
     flatpak: com.discordapp.Discord
   telegram:
+    _bin: telegram
     _name: Telegram
     _when:cask: '! test -d "/Applications/Telegram.app"'
     cask: telegram
     choco: telegram
     flatpak: org.telegram.desktop
   google-assistant:
-    _bin: null
+    _bin: g-assist
     _desc: '[Google Assistant for Desktop](https://github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client) is a cross-platform unofficial Google Assistant Client for Desktop.'
     _docs: null
     _github: https://github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client
@@ -2278,7 +2286,7 @@ softwarePackages:
     snap: g-assist
     winget: g-assist
   gcloud:
-    _bin: null
+    _bin: gcloud
     _desc: '[Google Cloud SDK](https://cloud.google.com/sdk) includes tools and libraries for interacting with Google Cloud products and services. With it, you can orchestrate virtual machine instances directly from your command line, manage Compute Engine networks/firewalls/disks, simulate Pub/Sub locally, and much more.'
     _docs: null
     _github: null
@@ -2315,7 +2323,7 @@ softwarePackages:
     scoop: gdrive
     yay: gdrive
   gdu:
-    _bin: null
+    _bin: gdu
     _desc: null
     _docs: null
     _github: null
@@ -2373,7 +2381,7 @@ softwarePackages:
     go: github.com/gabrie30/ghorg@latest
     yay: ghorg
   gimp:
-    _bin: null
+    _bin: gimp
     _desc: '[GIMP](https://www.gimp.org/) is a free and open-source raster graphics editor used for image manipulation and image editing, free-form drawing, transcoding between different image file formats, and more specialized tasks. GIMP is released under GPLv3+ license and is available for Linux, macOS, and Microsoft Windows.'
     _docs: https://www.gimp.org/docs/
     _github: https://github.com/GNOME/gimp
@@ -2471,17 +2479,20 @@ softwarePackages:
     _name: Git Sub Repo
     brew: git-subrepo
   gitter:
+    _bin: gitter
     _name: Gitter
     _when:cask: '! test -d "/Applications/Gitter.app"'
     cask: gitter
     choco: gitter
     flatpak: im.gitter.Gitter
   github-desktop:
+    _bin: github
     _when:cask: '! test -d "/Applications/GitHub Desktop.app"'
     cask: github
     choco: github-desktop
     flatpak: io.github.shiftey.Desktop
   warp-transfer:
+    _bin: warp-transfer
     flatpak: app.drey.Warp
   gitdock:
     _bin: null
@@ -2552,7 +2563,7 @@ softwarePackages:
     github: github.com/manosim/gitify
     yay: gitify-bin
   gitkraken:
-    _bin: null
+    _bin: gitkraken
     _desc: '[GitKraken](https://www.gitkraken.com/) is a software product for developers and dev teams. The Git Client is a leading software tool helping developers maximize their productivity with a beautiful, intuitive GUI.'
     _docs: https://support.gitkraken.com/
     _github: Not open-source
@@ -2687,6 +2698,7 @@ softwarePackages:
     pipx: glances
     port: glances
   monitorets:
+    _bin: monitorets
     flatpak: io.github.jorchube.monitorets
   glen:
     _bin: glen
@@ -2944,6 +2956,7 @@ softwarePackages:
     _name: Guacamole
     ansible: professormanhattan.guacamole
   seafile-client:
+    _bin: seafile-client
     _when:cask: '! test -d "/Applications/Seafile Client.app"'
     cask: seafile-client
     choco: seafile-client
@@ -3289,7 +3302,7 @@ softwarePackages:
     _name: Installer
     ansible: professormanhattan.installer
   intellij-idea-ce:
-    _bin: null
+    _bin: intellij-idea-community
     _desc: '[IntelliJ IDEA](https://www.jetbrains.com/idea/) is an integrated development environment written in Java for developing computer software. It is developed by JetBrains, and is available as an Apache 2 Licensed community edition, and in a proprietary commercial edition. Both can be used for commercial development.'
     _docs: https://www.jetbrains.com/help/
     _github: https://github.com/JetBrains/intellij-community
@@ -3403,7 +3416,7 @@ softwarePackages:
     github: github.com/fiatjaf/jiq/cmd/jiq
     go: github.com/fiatjaf/jiq/cmd/jiq@latest
   jitsi-meet:
-    _bin: null
+    _bin: jitsi-meet
     _desc: Desktop application for Jitsi Meet built with Electron
     _docs: null
     _github: https://github.com/jitsi/jitsi-meet-electron
@@ -3519,12 +3532,13 @@ softwarePackages:
     github: github.com/knative/client
     yay: knative-client-bin
   beekeeper-studio:
+    _bin: beekeeper-studio
     _when:cask: '! test -d "/Applications/Beekeeper Studio.app"'
     cask: beekeeper-studio
     choco:  beekeeper-studio
     flatpak: io.beekeeperstudio.Studio
   kodi:
-    _bin: null
+    _bin: kodi
     _desc: '[Kodi](https://kodi.tv/) is a free and open-source media player software application developed by the XBMC Foundation, a non-profit technology consortium. Kodi is available for multiple operating systems and hardware platforms, with a software 10-foot user interface for use with televisions and remote controls.'
     _docs: https://kodi.wiki/view/Main_Page
     _github: https://github.com/xbmc/xbmc
@@ -3683,6 +3697,7 @@ softwarePackages:
     cask: ledger-live
     choco: ledger-live
   lens:
+    _bin: lens
     _bin:snap: kontena-lens
     _desc: '[Lens IDE](https://k8slens.dev/) provides the full situational awareness for everything that runs in Kubernetes. It is an IDE designed for those who work with Kubernetes on a daily basis'
     _docs: https://docs.k8slens.dev/main/
@@ -3697,6 +3712,7 @@ softwarePackages:
     snap: kontena-lens
     yay: lens
   lepton:
+    _bin: lepton
     _bin:snap: lepton
     _desc: Cross-platform snippet manager
     _docs: null
@@ -3725,12 +3741,13 @@ softwarePackages:
     _when: '! test -d /usr/local/Cellar/libimobiledevice'
     brew:darwin: libimobiledevice
   krita:
+    _bin: krita
     _when:cask: '! test -d "/Applications/krita.app"'
     cask: krita
     choco: krita
     flatpak: org.kde.krita
   libreoffice:
-    _bin: null
+    _bin: libreoffice
     _desc: '[LibreOffice](https://www.libreoffice.org/) is a free and open-source office productivity software suite, a project of The Document Foundation. It was forked in 2010 from OpenOffice.org, which was an open-sourced version of the earlier StarOffice.'
     _docs: null
     _github: null
@@ -3805,7 +3822,7 @@ softwarePackages:
     github: github.com/grafana/loki
     yay: logcli-git
   lollypop:
-    _bin: null
+    _bin: lollypop
     _desc: '[Lollypop](https://wiki.gnome.org/Apps/Lollypop) is a lightweight modern music player designed to work excellently on the GNOME desktop environment. Lollypop also features a party mode which will automatically select party-related playlists to play; a full-screen view which lets you visually access the player from your couch thanks to its HiDPI support; and native support for replay gain.'
     _docs: https://gitlab.gnome.org/World/lollypop/issues
     _github: null
@@ -3897,34 +3914,41 @@ softwarePackages:
     cask: malwarebytes
     choco: malwarebytes
   dialect:
+    _bin: dialect
     flatpak: app.drey.Dialect
   meld:
+    _bin: meld
     _when:cask: '! test -d "/Applications/Meld.app"'
     cask: meld
     choco: meld
     flatpak: org.gnome.meld
   cryptomator:
+    _bin: cryptomator
     _when:cask: '! test -d "/Applications/Cryptomator.app"'
     cask: cryptomator
     choco: cryptomator
     flatpak: org.cryptomator.Cryptomator
   connections:
+    _bin: connections
     flatpak: org.gnome.Connections
   ferdium:
+    _bin: ferdium
     _when:cask: '! test -d "/Applications/Ferdium.app"'
     cask: ferdium
     choco: ferdium
     flatpak: org.ferdium.Ferdium
   thunderbird:
+    _bin: thunderbird
     _when:cask: '! test -d "/Applications/Thunderbird.app"'
     cask: thunderbird
     choco: thunderbird
     flatpak: org.mozilla.Thunderbird
   live-captions:
+    _bin: live-captions
     _desc: Linux Desktop application that provides live captioning
     flatpak: net.sapples.LiveCaptions
   mailspring:
-    _bin: null
+    _bin: mailspring
     _desc: '[Mailspring](https://getmailspring.com/) comes packed with powerful features like Unified Inbox, Snooze, Send Later, Mail Rules, Templates and more. Mailspring Pro, which you can unlock with a monthly subscription, adds even more features for people who send a ton of email: link tracking, read receipts, mailbox analytics, contact and company profiles. All of these features run in the client - Mailspring does not send your email credentials to the cloud.'
     _docs: https://community.getmailspring.com/docs/
     _github: https://github.com/Foundry376/Mailspring
@@ -3969,8 +3993,10 @@ softwarePackages:
     _name: MAS CLI
     ansible: professormanhattan.mas
   flatseal:
+    _bin: flatseal
     flatpak: com.github.tchx84.Flatseal
   gnome-extension-manager:
+    _bin: gnome-extension-manager
     flatpak: com.mattjakeman.ExtensionManager
   masscode:
     _bin: null
@@ -4013,7 +4039,7 @@ softwarePackages:
     script:darwin: curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | sh -s -- --git cantino/mcfly
     script:linux: curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | sh -s -- --git cantino/mcfly
   microsoft-edge:
-    _bin: null
+    _bin: microsoft-edge
     _desc: '[Microsoft Edge](https://www.microsoft.com/en-us/edge) is a cross-platform web browser developed by Microsoft. It was first released for Windows 10 and Xbox One in 2015, then for Android and iOS in 2017, for macOS in 2019, and as a preview for Linux in October 2020.'
     _docs: https://docs.microsoft.com/en-us/microsoft-edge/
     _github: false
@@ -4026,7 +4052,7 @@ softwarePackages:
     flatpak: com.microsoft.Edge
     yay: microsoft-edge-stable-bin
   gnome-boxes:
-    _bin: null
+    _bin: gnome-boxes
     _desc: null
     _docs: null
     _github: null
@@ -4145,7 +4171,7 @@ softwarePackages:
     brew: molecule
     pipx: molecule
   monero:
-    _bin: null
+    _bin: monero-gui
     _desc: '[Monero](https://www.getmonero.org/) is a leading cryptocurrency focused on private and censorship-resistant transactions. This role installs the Monero wallet application which is required for interacting with the Monero network.'
     _docs: https://www.getmonero.org/resources/user-guides/
     _github: https://github.com/monero-project/monero
@@ -4166,7 +4192,7 @@ softwarePackages:
     _name: Message of the Day
     ansible: professormanhattan.motd
   motrix:
-    _bin: null
+    _bin: motrix
     _desc: '[Motrix](https://motrix.app/) is a full-featured download manager that supports downloading HTTP, FTP, BitTorrent, Magnet, etc.'
     _docs: null
     _github: https://github.com/agalwood/Motrix
@@ -4196,7 +4222,7 @@ softwarePackages:
     port: mpg123
     scoop: mpg123
   mqttx:
-    _bin: null
+    _bin: mqttx
     _desc: MQTT X - Elegant Cross-platform MQTT 5.0 Desktop Client
     _docs: null
     _github: https://github.com/emqx/MQTTX
@@ -4389,7 +4415,7 @@ softwarePackages:
     brew: newman
     npm: newman
   nextcloud:
-    _bin: null
+    _bin: nextcloud-client
     _desc: '[Nextcloud Client](https://nextcloud.com) is a tool to keep your files synchronized between your Nextcloud server and your desktop. Select one or more directories on your local machine and always have access to your latest files wherever you are'
     _docs: null
     _github: null
@@ -4533,7 +4559,7 @@ softwarePackages:
     _name: null
     npm: npm-check
   nuclear:
-    _bin: null
+    _bin: nuclear
     _desc: Streaming music player that finds free music
     _docs: null
     _github: https://github.com/nukeop/nuclear
@@ -4568,7 +4594,7 @@ softwarePackages:
       - clink
       - https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json
   onionshare:
-    _bin: null
+    _bin: onionshare
     _desc: '[OnionShare](https://.onionshare.org/) is an open source tool that lets you securely and anonymously share files, host websites, and chat with friends using the Tor network.'
     _docs: https://docs.onionshare.org/2.5/en/
     _github: https://github.com/onionshare/onionshare
@@ -4582,6 +4608,7 @@ softwarePackages:
     flatpak: org.onionshare.OnionShare
     snap: onionshare
   onlykey:
+    _bin: onlykey
     _bin:snap: onlykey-app
     _desc: null
     _docs: null
@@ -4720,6 +4747,7 @@ softwarePackages:
     _when: '! test -d "/Applications/Parallels Desktop.app"'
     ansible:darwin: professormanhattan.parallels
   gnome-passwords-keys:
+    _bin: seahorse
     flatpak: org.gnome.seahorse.Application
   pass:
     _bin: pass
@@ -4762,7 +4790,7 @@ softwarePackages:
     github: github.com/peco/peco
     pacman: peco
   peek:
-    _bin: null
+    _bin: peek
     _desc: '[Peek](https://github.com/phw/peek) is an animated GIF screen recorder with an easy-to-use interface. It is available for Linux systems that are running GNOME. It is not a general purpose screencast app with extended features. It focuses on simply creating small screencasts of an area of the screen that are output as a GIF, WebM, or MP4 video.'
     _docs: null
     _github: https://github.com/phw/peek
@@ -4923,7 +4951,7 @@ softwarePackages:
     _name: null
     npm: playwright
   plex:
-    _bin: null
+    _bin: plex
     _desc: '[Plex](https://www.plex.tv/) is a global streaming service of free ad-supported video, with TV shows and movies from distributors such as Crackle, Warner Bros., MGM, Endemol Shine Group, Lionsgate, and Legendary. Plex is also a client–server media player system plus an ancillary software suite.'
     _docs: https://forums.plex.tv/t/introducing-plex-htpc/703075
     _github: https://github.com/plexinc/plex-media-player
@@ -5001,7 +5029,7 @@ softwarePackages:
     ansible:linux: professormanhattan.portmaster
     ansible:windows: professormanhattan.portmaster
   postman:
-    _bin: null
+    _bin: postman
     _desc: "[Postman](https://www.postman.com/) is a collaboration platform for API development. Postman's features simplify each step of building an API and streamline collaboration so you can create better APIs — faster."
     _docs: https://learning.postman.com/docs/getting-started/introduction/
     _github: Not open-source
@@ -5015,7 +5043,7 @@ softwarePackages:
     snap: postman
     yay: postman-bin
   powershell:
-    _bin: null
+    _bin: powershell
     _desc: '[PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.1) is a task automation and configuration management framework from Microsoft, consisting of a command-line shell and the associated scripting language. Initially a Windows component only, known as Windows PowerShell, it was made open-source and cross-platform in 2016 with the introduction of PowerShell Core.'
     _docs: null
     _github: null
@@ -5091,16 +5119,19 @@ softwarePackages:
     dnf: protonvpn-cli
     yay: protonvpn
   protonmail-bridge:
+    _bin: protonmail-bridge
     _when:cask: '! test -d "/Applications/Proton Mail Bridge.app"'
     cask: protonmail-bridge
     choco: protonmailbridge
     flatpak: ch.protonmail.protonmail-bridge
     yay: protonmail-bridge
   protonmail-import-export:
+    _bin: protonmail-import-export
     _when:cask: '! test -d "/Applications/ProtonMail Import-Export app.app"'
     cask: protonmail-import-export
     flatpak: ch.protonmail.protonmail-import-export-app
   bottles:
+    _bin: bottles
     flatpak: com.usebottles.bottles
   psi:
     _bin: psi
@@ -5157,7 +5188,7 @@ softwarePackages:
     pipx: pywhat
     port: pywhat
   qbittorrent:
-    _bin: null
+    _bin: qbittorrent
     _desc: '[qBittorrent](https://www.qbittorrent.org/) is a cross-platform free and open-source BitTorrent client. qBittorrent is a native application written in C++. It uses Boost, Qt 5 toolkit, and libtorrent-rasterbar library. Its optional search engine is written in Python.'
     _docs: https://github.com/qbittorrent/qBittorrent/wiki
     _github: https://github.com/qbittorrent/qBittorrent
@@ -5218,7 +5249,7 @@ softwarePackages:
     github: github.com/rancher/cli
     yay: rancher-cli-bin
   raspberry-pi-imager:
-    _bin: null
+    _bin: rpi-imager
     _desc: '[Raspberry Pi Imager](https://www.raspberrypi.org/software/) is the quick and easy way to install Raspberry Pi OS and other operating systems to a microSD card, ready to use with your Raspberry Pi.'
     _docs: https://www.raspberrypi.com/documentation/computers/getting-started.html
     _github: https://github.com/raspberrypi/rpi-imager
@@ -5251,7 +5282,7 @@ softwarePackages:
     port: rclone
     scoop: rclone
   redis-desktop-manager:
-    _bin: null
+    _bin: redis-desktop-manager
     _desc: '[Redis Desktop Manager](https://rdm.dev/) is an open source cross-platform Desktop Manager for Redis based on Qt 5.'
     _docs: https://docs.rdm.dev/en/docs-fix-edit-url/
     _github: https://github.com/uglide/RedisDesktopManager
@@ -5307,7 +5338,7 @@ softwarePackages:
       - remmina
       - xrdp
   remmina:
-    _bin: null
+    _bin: remmina
     _desc: null
     _docs: null
     _github: null
@@ -5578,7 +5609,9 @@ softwarePackages:
     pacman: samba
     port: samba4
   sanoid:
-    _bin: null
+    _deps:
+      - pv
+    _bin: sanoid
     _desc: '[Sanoid](https://github.com/jimsalterjrs/sanoid/) is a free and open source snapshot management tool. Sanoid is a policy-driven snapshot management tool for ZFS filesystems. When combined with the Linux KVM hypervisor, you can use it to make your systems functionally immortal.'
     _docs: null
     _github: null
@@ -5589,12 +5622,18 @@ softwarePackages:
       - libcapture-tiny-perl
       - libconfig-inifiles-perl
       - libdata-dump-perl
-      - lzop
-      - mbuffer
       # Unavailable on Ubuntu 22.04
       # - mhash2
-      - pv
       - sanoid
+  pv:
+    _bin: pv
+    apt: pv
+  mbuffer:
+    _bin: mbuffer
+    apt: mbuffer
+  lzop:
+    _bin: lzop
+    apt: lzop
   santa:
     _bin: santactl
     _desc: A binary authorization system for MacOS (santa) role is a daemon that makes execution decisions based on the contents of a local database, a GUI agent that notifies the user in case of a block decision and a command-line utility for managing the system and synchronizing the database with a server.
@@ -5631,7 +5670,7 @@ softwarePackages:
     snap: scrcpy
     yay: scrcpy
   scrcpy-gui:
-    _bin: null
+    _bin: scrcpy-gui
     _desc: A simple & beautiful GUI application for scrcpy
     _docs: null
     _github: https://github.com/Tomotoes/scrcpy-gui
@@ -5834,7 +5873,7 @@ softwarePackages:
     scoop: shfmt
     snap: shfmt
   shotcut:
-    _bin: null
+    _bin: shotcut
     _desc: '[Shotcut](https://shotcut.org/) is a free and open-source cross-platform video editing application for FreeBSD, Linux, macOS and Windows. Started in 2011 by Dan Dennedy, Shotcut is developed on the MLT Multimedia Framework, in development since 2004 by the same author.'
     _docs: https://shotcut.org/howtos/getting-started/
     _github: https://github.com/mltframework/shotcut
@@ -5850,7 +5889,7 @@ softwarePackages:
     flatpak: org.shotcut.Shotcut
     snap: shotcut
   shotwell:
-    _bin: null
+    _bin: shotwell
     _desc: '[Shotwell](https://shotwell-project.org/doc/html/) is an image organizer designed to provide personal photo management for the GNOME desktop environment. In 2010, it replaced F-Spot as the standard image tool for several GNOME-based Linux distributions, including Fedora in version 13 and Ubuntu in its 10.10 Maverick Meerkat release.'
     _docs: http://shotwell-project.org/doc/html/
     _github: https://github.com/GNOME/shotwell
@@ -5886,7 +5925,7 @@ softwarePackages:
   vup:
     flatpak: app.vup.Vup
   skype:
-    _bin: null
+    _bin: skype
     _desc: '[Skype](https://www.skype.com/en/) is a proprietary telecommunications application that specializes in providing video chat and voice calls between computers, tablets, mobile devices, the Xbox One console, and smartwatches over the Internet. Skype also provides instant messaging services. Users may transmit text, video, audio and images.'
     _description: Skype is for connecting with the people that matter most in your life and work
     _docs: https://docs.microsoft.com/en-us/skype-sdk/skypeuris/skypeuriapireference
@@ -5902,7 +5941,7 @@ softwarePackages:
     snap: skype
     yay: skypeforlinux-stable-bin
   slack:
-    _bin: null
+    _bin: slack
     _desc: '[Slack](https://slack.com/) is a proprietary business communication platform developed by American software company Slack Technologies. Slack offers many IRC-style features, including persistent chat rooms organized by topic, private groups, and direct messaging.'
     _docs: https://api.slack.com/docs
     _github: https://github.com/slackhq/SlackTextViewController
@@ -6005,8 +6044,10 @@ softwarePackages:
     _name: null
     pipx: spotdl
   gnome-eyedropper:
+    _bin: eyedropper
     flatpak: com.github.finefindus.eyedropper
   kooha:
+    _bin: kooha
     flatpak: io.github.seadve.Kooha
   sqlectron:
     _bin: null
@@ -6021,6 +6062,7 @@ softwarePackages:
     github: github.com/sqlectron/sqlectron-gui
     yay: sqlectron-gui
   handbrake:
+    _bin: handbrake
     _when:cask: '! test -d "/Applications/HandBrake.app"'
     cask: handbrake
     choco: handbrake
@@ -6337,7 +6379,7 @@ softwarePackages:
     scoop: dua
     xbps: dua-cli
   microsoft-teams:
-    _bin: null
+    _bin: teams
     _desc: '[Microsoft Teams](https://www.microsoft.com/en-us/microsoft-teams/group-chat-software) is a proprietary business communication platform developed by Microsoft, as part of the Microsoft 365 family of products. Teams primarily competes with the similar service Slack, offering workspace chat and videoconferencing, file storage, and application integration.'
     _docs: null
     _github: Not open-source
@@ -6351,7 +6393,7 @@ softwarePackages:
     snap: teams-for-linux
     yay: teams-for-linux
   teamviewer:
-    _bin: null
+    _bin: teamviewer
     _desc: '[TeamViewer](https://www.teamviewer.com/en-us/) is a proprietary software for remote access to as well as remote control and maintenance of computers and other devices, which was first released in 2005. The functionality has been expanded step by step, most recently for example through the integration of TeamViewer Meeting.'
     _docs: https://www.teamviewer.com/en-us/documents/
     _github: Not open-source
@@ -6394,7 +6436,7 @@ softwarePackages:
     _type: application
     github: github.com/jackd248/temps
   terminalizer:
-    _bin: null
+    _bin: terminalizer
     _desc: null
     _docs: null
     _github: null
@@ -6402,7 +6444,7 @@ softwarePackages:
     _name: null
     npm: terminalizer
   termius:
-    _bin: null
+    _bin: termius
     _desc: '[Termius](https://www.termius.com/) is the SSH client that works on Desktop and Mobile.'
     _docs: null
     _github: null
@@ -6476,7 +6518,7 @@ softwarePackages:
     github: github.com/tilt-dev/tilt
     yay: tilt-bin
   timeshift:
-    _bin: null
+    _bin: timeshift
     _desc: '[Timeshift](https://github.com/jimsalterjrs/timeshift/) is a free and open source system restore tool for Linux. Timeshift for Linux is an application that provides functionality similar to the System Restore feature in Windows and the Time Machine tool in Mac OS. Timeshift protects your system by taking incremental snapshots of the file system at regular intervals. These snapshots can be restored at a later date to undo all changes to the system.'
     _docs: null
     _github: null
@@ -6546,7 +6588,7 @@ softwarePackages:
     pacman: privoxy
     port: privoxy
   tor:
-    _bin: toron
+    _bin: tor
     _desc: "[Tor](https://www.torproject.org/) is free and open-source software for enabling anonymous communication by directing Internet traffic through a free, worldwide, volunteer overlay network consisting of more than seven thousand relays in order to conceal a user's location and usage from anyone conducting network surveillance or traffic analysis. On Linux you can combine Tor with [Privoxy](https://www.privoxy.org/) which allows you to tunnel all of your traffic through the Tor network."
     _docs: https://tb-manual.torproject.org/
     _github: https://github.com/TheTorProject
@@ -6686,11 +6728,13 @@ softwarePackages:
     port: upx
     scoop: upx
   cutter:
+    _bin: cutter
     _when:cask: '! test -d "/Applications/Cutter.app"'
     cask: cutter
     choco: cutter
     flatpak: re.rizin.cutter
   librewolf:
+    _bin: librewolf
     _scoopExtras: true
     _when:cask: '! test -d "/Applications/LibreWolf.app"'
     cask: librewolf
@@ -6817,6 +6861,7 @@ softwarePackages:
     cask: visual-studio
     choco: visualstudio2022community
   vscodium:
+    _bin: codium
     _snapClassic: true
     _when:cask: '! test -d "/Applications/VSCodium.app"'
     cask: vscodium
@@ -6828,7 +6873,7 @@ softwarePackages:
     winget: vscodium
     yay: vscodium-bin
   vlc:
-    _bin: null
+    _bin: vlc
     _desc: '[VLC](https://www.videolan.org/) media player is a free and open-source, portable, cross-platform media player software, and streaming media server developed by the VideoLAN project. VLC is available for desktop operating systems, and mobile platforms, such as Android, iOS, iPadOS, Tizen, Windows 10 Mobile, and Windows Phone.'
     _docs: https://www.videolan.org/doc/
     _github: https://github.com/videolan/vlc
@@ -6852,6 +6897,7 @@ softwarePackages:
     ansible: professormanhattan.vmware
     cask: vmware-fusion
   what-ip:
+    _bin: whatip
     flatpak: org.gabmus.whatip
   volta:
     _bin: volta
@@ -6875,7 +6921,7 @@ softwarePackages:
     _name: System VPN
     ansible: professormanhattan.vpn
   vscode:
-    _bin: null
+    _bin: code
     _alternative: vscodium
     _alternativeReason: VS Code includes telemetry that is applied after building the open-source project. VSCodium is the open-source version without tracking.
     _desc: '[Visual Studio Code](https://code.visualstudio.com/) is a freeware source-code editor made by Microsoft for Windows, Linux and macOS. Features include support for debugging, syntax highlighting, intelligent code completion, snippets, code refactoring, and embedded Git.'
@@ -6993,7 +7039,7 @@ softwarePackages:
     pkg: websocat
     port: websocat
   webtorrent:
-    _bin: null
+    _bin: webtorrent
     _desc: Streaming torrent app for Mac, Windows, and Linux
     _docs: null
     _github: https://github.com/webtorrent/webtorrent-desktop
@@ -7104,7 +7150,7 @@ softwarePackages:
     dnf: wireshark-cli
     pacman: wireshark-cli
   wireshark:
-    _bin: null
+    _bin: wireshark-gui
     _desc: '[Wireshark](https://www.wireshark.org/) is a free and open-source packet analyzer. It is used for network troubleshooting, analysis, software and communications protocol development, and education. Originally named Ethereal, the project was renamed Wireshark in May 2006 due to trademark issues.'
     _docs: https://www.wireshark.org/docs/
     _github: https://github.com/wireshark/wireshark
@@ -7118,7 +7164,7 @@ softwarePackages:
     flatpak: org.wireshark.Wireshark
     pacman: wireshark-qt
   wkhtmltopdf:
-    _bin: null
+    _bin: wkhtmltopdf
     _desc: '[wkhtmltopdf](https://github.com/wkhtmltopdf/wkhtmltopdf) is a command line tool to render HTML into PDF and various image formats using the QT Webkit rendering engine.'
     _docs: null
     _github: https://github.com/wkhtmltopdf/wkhtmltopdf
@@ -7208,7 +7254,7 @@ softwarePackages:
     brew: yamllint
     pipx: yamllint
   sshfs:
-    _bin:
+    _bin: sshfs
     _desc: null
     _docs: null
     _github: null
@@ -7275,6 +7321,7 @@ softwarePackages:
     brew: yj
     go: github.com/sclevine/yj/v5@v5.1.0
   forklift:
+    _bin: forklift
     flatpak: com.github.Johnn3y.Forklift
   youtube-dl:
     _bin: youtube-dl
@@ -7311,7 +7358,7 @@ softwarePackages:
     _name: yubikey
     ansible: professormanhattan.yubikey
   yubikey-authenticator:
-    _bin: null
+    _bin: yubioath
     _desc: null
     _docs: null
     _github: null
@@ -7357,7 +7404,7 @@ softwarePackages:
     binary:linux: https://github.com/srevinsaju/zap/releases/download/continuous/zap-amd64
     script:linux: curl https://raw.githubusercontent.com/srevinsaju/zap/main/install.sh | sudo bash -s
   zoom:
-    _bin: null
+    _bin: zoom
     _desc: '[Zoom](https://zoom.us/) is a videotelephony software program developed by Zoom Video Communications. This role installs Zoom on nearly any platform. The Zoom free plan provides a video chatting service that allows up to 100 participants concurrently, with a 40-minute time restriction.'
     _docs: https://support.zoom.us/hc/en-us/categories/200101697-Getting-Started-with-Zoom
     _github: Not open-source
