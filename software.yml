@@ -26,7 +26,7 @@
 #     echo "_pre allows you to define a script that runs before the installation"
 #   _post:brew:debian: |
 #     echo "_post allows you to define a script that runs after the installation"
-#   _systemd: smbd                                    # System service to enable, restart, and/or start (can also be an array).
+#   _service: smbd                                    # System service to enable, restart, and/or start (can also be an array).
 #   _epel: true                                       # True if https://docs.fedoraproject.org/en-US/epel/ should be enabled
 #   ansible: professormanhattan.docker
 #   apk: altair
@@ -76,7 +76,6 @@
 #   _docs: https://docs.angular.io/                   # Link to documentation (if available)
 #   _github: https://github.com/manosim/gitify        # GitHub link to the package
 #   _type: menubar                                    # Type of package (either application, cli, or menubar)
-#   _service: true                                    # True when the application relies on a system service
 #   npm:
 #     - '@angular/cli'
 #     - gulp
