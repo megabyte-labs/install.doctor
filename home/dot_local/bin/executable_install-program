@@ -406,7 +406,7 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
   }
   log('info', 'Match', `Found a match for the package \`${pkg}\` (${packageKey} via ${scopedPreference})`)
   const newPackages = packages[scopedPreference]
-  const newPkgs = typeof newPackages === 'string' ? [{newPackages}] : newPackages
+  const newPkgs = typeof newPackages === 'string' ? [{ newPackages }] : newPackages
   if (typeof newPackages === 'string') {
     installMeta[newPackages] = {
       preference,
@@ -579,10 +579,16 @@ async function ensurePackage(dep) {
         }
         try {
           log('info', 'apt-get Installation', `Checking if ${dep} is already installed`)
-          runCommand(`Checking if ${dep} is already installed via apt-get`, `dpkg -l ${dep} | grep -E '^ii' > /dev/null`)
+          runCommand(
+            `Checking if ${dep} is already installed via apt-get`,
+            `dpkg -l ${dep} | grep -E '^ii' > /dev/null`
+          )
           log('info', 'Filter', `${pkg} already installed via apt-get`)
         } catch (e) {
-          runCommand(`Installing ${dep} via apt-get`, `sudo apt-get -o DPkg::Options::=--force-confdef install -y ${dep}`)
+          runCommand(
+            `Installing ${dep} via apt-get`,
+            `sudo apt-get -o DPkg::Options::=--force-confdef install -y ${dep}`
+          )
           log('success', 'Install', `Successfully installed ${pkg} via apt-get`)
         }
       } else if (dnf) {
@@ -661,7 +667,7 @@ async function beforeInstall(packageManager) {
   updateDone[packageManager] = true
   const logStage = 'Pre-Install Package Manager'
   if (packageManager === 'appimage') {
-    if(!fileExists(`${process.env.HOME}/Applications)) {
+    if (!fileExists(`${process.env.HOME}/Applications`)) {
       runSilentCommand(`mkdir -p "${process.env.HOME}/Applications"`)
     }
   } else if (packageManager === 'ansible') {
@@ -937,7 +943,10 @@ async function ensurePackageManager(packageManager) {
       } else if (apt) {
         runCommand('Installing flatpak via apt-get', 'sudo apt-get install -y flatpak')
         if (fileExists('/usr/bin/gnome-shell')) {
-          runCommand('Installing gnome-software-plugin-flatpak via apt-get', 'sudo apt-get install -y gnome-software-plugin-flatpak')
+          runCommand(
+            'Installing gnome-software-plugin-flatpak via apt-get',
+            'sudo apt-get install -y gnome-software-plugin-flatpak'
+          )
         }
         if (fileExists('/usr/bin/plasmashell')) {
           runCommand('Installing plasmashell via apt-get', 'sudo apt-get install -y plasmashell')
@@ -1154,7 +1163,10 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'apt') {
       for (let pkg of packages) {
         try {
-          runCommand(`Installing ${pkg} via ${packageManager}`, `sudo apt-get -o DPkg::Options::=--force-confdef install -y ${pkg}`)
+          runCommand(
+            `Installing ${pkg} via ${packageManager}`,
+            `sudo apt-get -o DPkg::Options::=--force-confdef install -y ${pkg}`
+          )
           log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
           log('error', 'Install Failure', `There was an error installing ${pkg} with apt-get`)
@@ -1173,7 +1185,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'binary') {
       for (let pkg of packages) {
         try {
-          const bins = installData.softwarePackages.filter(x => x.appimage === pkg)
+          const bins = installData.softwarePackages.filter((x) => x.appimage === pkg)
           if (bins && bins[0]) {
             const binName = bins[0]['_bin']
             await $`TMP="$(mktemp)" && curl -sSL ${pkg} > "$TMP" && sudo mv "$TMP" /usr/local/src/${binName} && chmod +x /usr/local/src/${binName}`
@@ -1449,12 +1461,12 @@ async function updateService(service) {
 }
 
 /**
-* Filter that resolves when all asynchronous filter actions are done
-*/
+ * Filter that resolves when all asynchronous filter actions are done
+ */
 const asyncFilter = async (arr, predicate) => {
-	const results = await Promise.all(arr.map(predicate));
+  const results = await Promise.all(arr.map(predicate))
 
-	return arr.filter((_v, index) => results[index]);
+  return arr.filter((_v, index) => results[index])
 }
 
 async function pruneInstallOrders(installOrders) {
@@ -1486,7 +1498,7 @@ async function pruneInstallOrders(installOrders) {
       for (const pkg of newOrders[pkgManager]) {
         try {
           runCommand(`Ensuring Homebrew package is not already installed - ${pkg}`, `brew list ${pkg}`)
-          newVal = newVal.filter(x => x === pkg)
+          newVal = newVal.filter((x) => x === pkg)
         } catch (e) {
           // Do nothing
         }
@@ -1575,21 +1587,27 @@ async function linkBin(installOrdersBinLink) {
   }
   for (const binLink of installOrdersBinLink) {
     const pkg = softwarePackages[binLink.package][binLink.preference]
-    if(typeof pkg === 'string') {
-      if(!which.sync(binLink.bin, { nothrow: true })) {
+    if (typeof pkg === 'string') {
+      if (!which.sync(binLink.bin, { nothrow: true })) {
         if (binLink.preference === 'flatpak' && flatpak) {
           try {
-            runCommand(`Adding bin link for ${pkg} (${binLink.bin})`, `bash -c 'test -d ${flatpakDir}/app/${pkg} && mkdir -p "${process.env.HOME}/.local/bin/flatpak" && echo "flatpak run ${pkg} \"$*\"" > "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}" && chmod +x  "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}"'`)
+            runCommand(
+              `Adding bin link for ${pkg} (${binLink.bin})`,
+              `bash -c 'test -d ${flatpakDir}/app/${pkg} && mkdir -p "${process.env.HOME}/.local/bin/flatpak" && echo "flatpak run ${pkg} \"$*\"" > "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}" && chmod +x  "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}"'`
+            )
             log('success', 'Bin', `Linked ~/.local/bin/flatpak/${binLink.bin} to the ${pkg} Flatpak`)
           } catch (e) {
             log('warn', 'Bin', `Expected flatpak directory not available - ${flatpakDir}/app/${pkg}`)
           }
         } else if (binLink.preference === 'cask') {
           try {
-            const caskWhen = softwarePackages[binLink.package]["_when:cask"]
+            const caskWhen = softwarePackages[binLink.package]['_when:cask']
             const caskDir = caskWhen.replace('! test -d ', '').replace(/"/g, '')
             if (fileExists(caskDir)) {
-              runCommand(`Adding shortcut bin link for ${binLink.package}`, `bash -c 'mkdir -p "${process.env.HOME}/.local/bin/cask" && echo "open ${caskDir}" > "${process.env.HOME}/.local/bin/cask/${binLink.bin}" && chmod +x "${process.env.HOME}/.local/bin/cask/${binLink.bin}"'`)
+              runCommand(
+                `Adding shortcut bin link for ${binLink.package}`,
+                `bash -c 'mkdir -p "${process.env.HOME}/.local/bin/cask" && echo "open ${caskDir}" > "${process.env.HOME}/.local/bin/cask/${binLink.bin}" && chmod +x "${process.env.HOME}/.local/bin/cask/${binLink.bin}"'`
+              )
             } else {
               log('warn', 'Bin', `Expected Homebrew cask directory not found - ${pkg}`)
             }
@@ -1617,11 +1635,7 @@ async function installSoftware(pkgsToInstall) {
   installData = await downloadInstallData()
   log('info', 'Filter', `Calculating the install orders`)
   await generateInstallOrders(pkgsToInstall ? pkgsToInstall : process.argv.slice(3))
-  log(
-    'info',
-    'Pre-Reqs',
-    `Ensuring any package managers that will be used are installed / configured`
-  )
+  log('info', 'Pre-Reqs', `Ensuring any package managers that will be used are installed / configured`)
   const packageManagers = Object.keys(installOrders)
   for (const packageManager of packageManagers) {
     await ensurePackageManager(packageManager)
