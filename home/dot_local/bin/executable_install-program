@@ -1529,29 +1529,33 @@ async function linkBin(installOrdersBinLink) {
   }
   for (const binLink of installOrdersBinLink) {
     const pkg = softwarePackages[binLink.package][binLink.preference]
-    if(typeof pkg === 'string' && !which.sync(binLink.bin, { nothrow: true })) {
-      if (binLink.preference === 'flatpak' && flatpak) {
-        try {
-          runCommand(`Adding bin link for ${pkg} (${binLink.bin})`, `bash -c 'test -d ${flatpakDir}/app/${pkg} && mkdir -p "${process.env.HOME}/.local/bin/flatpak" && echo "flatpak run ${pkg} \"$*\"" > "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}" && chmod +x  "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}"'`)
-          log('success', 'Bin', `Linked ~/.local/bin/flatpak/${binLink.bin} to the ${pkg} Flatpak`)
-        } catch (e) {
-          log('warn', 'Bin', `Expected flatpak directory not available - ${flatpakDir}/app/${pkg}`)
-        }
-      } else if (binLink.preference === 'cask') {
-        try {
-          const caskWhen = softwarePackages[binLink.package]["_when:cask"]
-          const caskDir = caskWhen.replace('! test -d ', '').replace(/"/g, '')
-          if (fileExists(caskDir)) {
-            runCommand(`Adding shortcut bin link for ${binLink.package}`, `bash -c 'mkdir -p "${process.env.HOME}/.local/bin/cask" && echo "open ${caskDir}" > "${process.env.HOME}/.local/bin/cask/${binLink.bin}" && chmod +x "${process.env.HOME}/.local/bin/cask/${binLink.bin}"'`)
-          } else {
-            log('warn', 'Bin', `Expected Homebrew cask directory not found - ${pkg}`)
+    if(typeof pkg === 'string') {
+      if(!which.sync(binLink.bin, { nothrow: true })) {
+        if (binLink.preference === 'flatpak' && flatpak) {
+          try {
+            runCommand(`Adding bin link for ${pkg} (${binLink.bin})`, `bash -c 'test -d ${flatpakDir}/app/${pkg} && mkdir -p "${process.env.HOME}/.local/bin/flatpak" && echo "flatpak run ${pkg} \"$*\"" > "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}" && chmod +x  "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}"'`)
+            log('success', 'Bin', `Linked ~/.local/bin/flatpak/${binLink.bin} to the ${pkg} Flatpak`)
+          } catch (e) {
+            log('warn', 'Bin', `Expected flatpak directory not available - ${flatpakDir}/app/${pkg}`)
           }
-        } catch (e) {
-          log('warn', 'Bin', `Error creating bin shortcut link for ${pkg}`)
+        } else if (binLink.preference === 'cask') {
+          try {
+            const caskWhen = softwarePackages[binLink.package]["_when:cask"]
+            const caskDir = caskWhen.replace('! test -d ', '').replace(/"/g, '')
+            if (fileExists(caskDir)) {
+              runCommand(`Adding shortcut bin link for ${binLink.package}`, `bash -c 'mkdir -p "${process.env.HOME}/.local/bin/cask" && echo "open ${caskDir}" > "${process.env.HOME}/.local/bin/cask/${binLink.bin}" && chmod +x "${process.env.HOME}/.local/bin/cask/${binLink.bin}"'`)
+            } else {
+              log('warn', 'Bin', `Expected Homebrew cask directory not found - ${pkg}`)
+            }
+          } catch (e) {
+            log('warn', 'Bin', `Error creating bin shortcut link for ${pkg}`)
+          }
         }
+      } else {
+        log('info', 'Bin', `Link already exists for ${binLink.package}`)
       }
     } else {
-      log('info', 'Bin', `Link already exists for ${binLink.package}`)
+      log('info', 'Bin', `Skipping ${binLink.package} because there was more than one _bin value`)
     }
   }
 }
