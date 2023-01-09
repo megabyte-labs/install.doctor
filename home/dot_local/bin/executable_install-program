@@ -86,6 +86,7 @@ function fileExists(pathToFile) {
 
 let installData
 let installOrders = {}
+let binLinkRan = false
 const installOrdersPre = []
 const installOrdersPost = []
 const installOrdersService = []
@@ -1100,8 +1101,8 @@ async function installPackageList(packageManager, packages) {
           if (unbuffer) {
             unbufferPrefix = 'unbuffer'
           }
-          const verboseMode = process.env.DEBUG_MODE === 'on' ? '-vvv' : ''
-          await $`ANSIBLE_CONFIG=${process.env.HOME}/.local/share/ansible/ansible.cfg ansible 127.0.0.1 ${verboseMode} -e '{ ansible_connection: "local", ansible_become_user: "root", ansible_user: "${process.env.USER}", install_homebrew: False }' -m include_role -a name=${pkg}`
+          const verboseMode = process.env.DEBUG_MODE === 'on' ? 'vv' : ''
+          await $`ANSIBLE_CONFIG=${process.env.HOME}/.local/share/ansible/ansible.cfg ansible 127.0.0.1 -v${verboseMode} -e '{ ansible_connection: "local", ansible_become_user: "root", ansible_user: "${process.env.USER}", install_homebrew: False }' -m include_role -a name=${pkg}`
           log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
           log('error', 'Install Failure', `There was an error installing ${pkg} with Ansible`)
@@ -1528,10 +1529,10 @@ async function linkBin(installOrdersBinLink) {
   }
   for (const binLink of installOrdersBinLink) {
     const pkg = softwarePackages[binLink.package][binLink.preference]
-    if(!which.sync(binLink.bin, { nothrow: true })) {
+    if(typeof binLink.bin === 'string' && !which.sync(binLink.bin, { nothrow: true })) {
       if (binLink.preference === 'flatpak' && flatpak) {
         try {
-          runCommand(`Adding bin link for ${pkg} (${binLink.bin})`, `bash -c 'test -d ${flatpakDir}/app/${pkg} && mkdir -p "${process.env.HOME}/.local/bin/flatpak" && echo "flatpak run ${pkg}" > "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}"'`)
+          runCommand(`Adding bin link for ${pkg} (${binLink.bin})`, `bash -c 'test -d ${flatpakDir}/app/${pkg} && mkdir -p "${process.env.HOME}/.local/bin/flatpak" && echo "flatpak run ${pkg} \"$*\"" > "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}"'`)
           log('success', 'Bin', `Linked ~/.local/bin/flatpak/${binLink.bin} to the ${pkg} Flatpak`)
         } catch (e) {
           log('warn', 'Bin', `Expected flatpak directory not available - ${flatpakDir}/app/${pkg}`)
@@ -1604,14 +1605,17 @@ async function installSoftware(pkgsToInstall) {
   for (const service of installOrdersService) {
     await updateService(service)
   }
+  if (!binLinkRan) {
+    binLinkRan = true
+    log('info', 'Bin', 'Linking bin aliases to their installed packages')
+    await linkBin(installOrdersBinLink)
+    for (const script of installOrdersPost) {
+      await $`${script}`
+    }
+  }
   log('info', 'Plugin', 'Installing package-specific plugins')
   for (const plugin of installOrdersPlugins) {
     await installPlugins(plugin)
-  }
-  log('info', 'Bin', 'Linking bin aliases to their installed packages')
-  await linkBin(installOrdersBinLink)
-  for (const script of installOrdersPost) {
-    await $`${script}`
   }
   log('info', 'Post-Install', `Running package manager post-installation steps`)
   for (const packageManager of packageManagers) {
