@@ -1520,6 +1520,7 @@ async function installPlugins(pluginData) {
 
 async function linkBin(installOrdersBinLink) {
   let flatpakInstallation, flatpakDir
+  const softwarePackages = installData.softwarePackages
   const flatpak = which.sync('flatpak', { nothrow: true })
   if (flatpak) {
     flatpakInstallation = await $`flatpak --installations`
