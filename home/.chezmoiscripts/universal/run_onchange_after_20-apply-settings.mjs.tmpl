@@ -3,6 +3,8 @@
 // gnome config hash: {{ include (joinPath .host.home ".config" "desktop" "gnome.yml")| sha256sum }}
 // settings config hash: {{ include (joinPath .host.home ".config" "desktop" "settings.yml")| sha256sum }}
 
+const execSync = require('child_process').execSync
+
 {{ includeTemplate "universal/zx" }}
 
 async function loadThemeSettings() {
@@ -47,7 +49,7 @@ async function applyGsettings(settings) {
         const gsetting = setting.setting
         const gsettingVal = setting.value
         const gsettingCmd = 'gsettings set ' + gsetting + ' ' + gsettingVal
-        await $`${gsettingCmd}`
+        execSync(gsettingCmd)
       } catch (e) {
         log('error', 'Gsettings Failure', 'Failed to apply gsetting')
         console.error(e)
@@ -81,7 +83,7 @@ async function applyDconfSettings(settings) {
     for (const setting of settings) {
       try {
         const dconfCmd = 'dconf write ' + setting.key + ' ' + setting.value
-        await $`${dconfCmd}`
+        await $(dconfCmd)
       } catch (e) {
         log('error', 'Dconf Failure', 'Failed to apply dconf setting')
         console.error(e)
