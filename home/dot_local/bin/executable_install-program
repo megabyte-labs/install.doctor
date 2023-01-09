@@ -1144,8 +1144,12 @@ async function installPackageList(packageManager, packages) {
             unbufferPrefix = 'unbuffer'
           }
           const verboseMode = process.env.DEBUG_MODE === 'on' ? 'vv' : ''
-          await $`ANSIBLE_CONFIG=${process.env.HOME}/.local/share/ansible/ansible.cfg ansible 127.0.0.1 -v${verboseMode} -e '{ ansible_connection: "local", ansible_become_user: "root", ansible_user: "${process.env.USER}", install_homebrew: False }' -m include_role -a name=${pkg}`
-          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
+          if (osPlatform === 'darwin' || osPlatform === 'linux' || osPlatform === 'windows') {
+            await $`ANSIBLE_CONFIG=${process.env.HOME}/.local/share/ansible/ansible.cfg ansible 127.0.0.1 -v${verboseMode} -e '{ ansible_connection: "local", ansible_become_user: "root", ansible_user: "${process.env.USER}", ansible_family: "${osPlatform}", install_homebrew: False }' -m include_role -a name=${pkg}`
+            log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
+          } else {
+            log('warn', 'Ansible', 'Unsupported platform - ' + osPlatform)
+          }
         } catch (e) {
           log('error', 'Install Failure', `There was an error installing ${pkg} with Ansible`)
         }
