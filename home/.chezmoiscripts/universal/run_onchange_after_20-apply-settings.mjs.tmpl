@@ -8,7 +8,7 @@
 async function loadThemeSettings() {
   try {
     const themeSettingsFile = `${process.env.HOME}/.config/desktop/settings.yml`
-    if (fileExists(settingsFile)) {
+    if (fileExists(themeSettingsFile)) {
       const text = fs.readFileSync(themeSettingsFile).toString()
       return YAML.parse(text)
     } else {
@@ -25,7 +25,7 @@ async function loadThemeSettings() {
 async function loadGnomeSettings() {
   try {
     const gnomeSettingsFile = `${process.env.HOME}/.config/desktop/gnome.yml`
-    if (fileExists(settingsFile)) {
+    if (fileExists(gnomeSettingsFile)) {
       const text = fs.readFileSync(gnomeSettingsFile).toString()
       return YAML.parse(text)
     } else {
