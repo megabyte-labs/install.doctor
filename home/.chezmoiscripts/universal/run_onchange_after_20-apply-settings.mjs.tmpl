@@ -51,13 +51,14 @@ async function applyGsettings(settings) {
         const gsettingVal = setting.value
         const gsettingCmd = 'gsettings set ' + gsetting + ' ' + gsettingVal
         execSync(gsettingCmd)
+        log('success', 'Gsettings', 'Changed ' + gsetting + ' to ' + gsettingVal)
       } catch (e) {
-        log('error', 'Gsettings Failure', 'Failed to apply gsetting')
+        log('error', 'Gsettings', 'Failed to apply gsetting')
         console.error(e)
       }
     }
   } else {
-    log('info', 'Gsettings Not Installed', 'gsettings does not appear to be available')
+    log('info', 'Gsettings', 'gsettings does not appear to be available')
   }
 }
 
@@ -69,12 +70,12 @@ async function applyXconfSettings(settings) {
         const xfconfType = setting.value_type ? setting.value_type : 'string'
         await $`xfconf-query --channel '${setting.channel}' --property '${setting.property}' --type ${xfconfType} --set ${setting.value}`
       } catch (e) {
-        log('error', 'Xfconf Failure', 'Failed to apply gsetting')
+        log('error', 'Xfconf', 'Failed to apply gsetting')
         console.error(e)
       }
     }
   } else {
-    log('info', 'xfconf-query Not Installed', 'xfconf-query does not appear to be available')
+    log('info', 'Xfconf', 'xfconf-query does not appear to be available')
   }
 }
 
@@ -85,13 +86,14 @@ async function applyDconfSettings(settings) {
       try {
         const dconfCmd = 'dconf write ' + setting.key + ' ' + setting.value
         await $(dconfCmd)
+        log('success', 'Dconf', 'Changed ' + setting.key + ' to ' + setting.value)
       } catch (e) {
-        log('error', 'Dconf Failure', 'Failed to apply dconf setting')
+        log('error', 'Dconf', 'Failed to apply dconf setting')
         console.error(e)
       }
     }
   } else {
-    log('info', 'Dconf Not Installed', 'dconf does not appear to be available')
+    log('info', 'Dconf', 'dconf does not appear to be available')
   }
 }
 
