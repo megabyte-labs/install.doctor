@@ -86,6 +86,7 @@ function fileExists(pathToFile) {
 
 let installData
 let installOrders = {}
+let installMeta = {}
 let binLinkRan = false
 const installOrdersPre = []
 const installOrdersPost = []
@@ -401,12 +402,33 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
   }
   log('info', 'Match', `Found a match for the package \`${pkg}\` (${packageKey} via ${scopedPreference})`)
   const newPackages = packages[scopedPreference]
-  const newPkgs = typeof newPackages === 'string' ? [newPackages] : newPackages
-  if (preference === 'snap' && softwarePackages[pkg]['_snapClassic'] === true) {
-    if (!installOrders[preference + '-classic']) {
-      installOrders[preference + '-classic'] = []
+  const newPkgs = typeof newPackages === 'string' ? [{newPackages}] : newPackages
+  if (typeof newPackages === 'string') {
+    installMeta[newPackages] = {
+      preference,
+      packages,
+      scopedPreference,
+      pkg,
+      packageKey,
+      softwarePackages
     }
-    installOrders[preference + '-classic'] = installOrders[preference].concat(newPkgs)
+  } else {
+    for (const dataKey in newPackages) {
+      installMeta[newPackages] = {
+        preference,
+        packages,
+        scopedPreference,
+        pkg,
+        packageKey,
+        softwarePackages
+      }
+    }
+  }
+  if (preference === 'snap' && softwarePackages[pkg]['_snapClassic'] === true) {
+    if (!installOrders['snap-classic']) {
+      installOrders['snap-classic'] = []
+    }
+    installOrders['snap-classic'] = installOrders[preference].concat(newPkgs)
   } else {
     installOrders[preference] = installOrders[preference].concat(newPkgs)
   }
@@ -1143,7 +1165,11 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'binary') {
       for (let pkg of packages) {
         try {
-          await $`TMP="$(mktemp)" && curl -sSL ${pkg} > "$TMP" && sudo mv "$TMP" /usr/local/src/${binName} && chmod +x /usr/local/src/${binName}`
+          const bins = installData.softwarePackages.filter(x => x.appimage === pkg)
+          if (bins && bins[0]) {
+            const binName = bins[0]['_bin']
+            await $`TMP="$(mktemp)" && curl -sSL ${pkg} > "$TMP" && sudo mv "$TMP" /usr/local/src/${binName} && chmod +x /usr/local/src/${binName}`
+          }
         } catch (e) {
           log('error', 'Install Failure', `There was an error installing the binary release for ${pkg}`)
           console.error(e)

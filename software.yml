@@ -967,7 +967,8 @@ softwarePackages:
     _name: CloudFlared
     _type: cli
     ansible: professormanhattan.cloudflared
-    brew: cloudflare/cloudflare/cloudflared
+    binary:linux: https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+    brew:darwin: cloudflare/cloudflare/cloudflared
     github: github.com/cloudflare/cloudflared
   cmake:
     _bin: cmake
