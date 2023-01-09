@@ -184,11 +184,22 @@ softwarePackages:
       - dconf-editor
       - deja-dup
       - dialect
+      - drawing
       - flatseal
       - forklift
+      - gnome-calendar
+      - gnome-document-viewer
       - gnome-extension-manager
       - gnome-eyedropper
+      - gnome-file-roller
+      - gnome-network-displays
       - gnome-passwords-keys
+      - gnome-photos
+      - gnome-sound-recorder
+      - gnome-text-editor
+      - gnome-video-player
+      - gnome-weather
+      - junction
       - kooha
       - monitorets
       - newsflash
@@ -196,11 +207,51 @@ softwarePackages:
       - warp-transfer
       - web-font-generator
       - what-ip
+  drawing:
+    _bin: drawing
+    flatpak: com.github.maoschanz.drawing
+  junction:
+    _bin: junction
+    flatpak: re.sonny.Junction
+  gnome-sound-recorder:
+    _bin: sound-recorder
+    flatpak: org.gnome.SoundRecorder
+  gnome-text-editor:
+    _bin: text-editor
+    flatpak: org.gnome.TextEditor
+  gnome-image-viewer:
+    _bin: image-viewer
+    flatpak: org.gnome.eog
+  gnome-video-player:
+    _bin: video-player
+    flatpak: org.gnome.Totem
+  gnome-document-viewer:
+    _bin: document-viewer
+    flatpak: org.gnome.Evince
+  gnome-file-roller:
+    _bin: file-roller
+    flatpak: org.gnome.FileRoller
+  gnome-network-displays:
+    _bin: network-displays
+    flatpak: org.gnome.NetworkDisplays
+  gnome-calendar:
+    _bin: calendar
+    flatpak: org.gnome.Calendar
+  gnome-weather:
+    _bin: gnome-weather
+    flatpak: org.gnome.Weather
+  gnome-photos:
+    _bin: photos
+    flatpak: org.gnome.Photos
   newsflash:
     _bin: newsflash
     flatpak: com.gitlab.newsflash
   web-font-generator:
     flatpak: com.rafaelmardojai.WebfontKitGenerator
+  gnome-tweaks:
+    apt: gnome-tweaks
+    dnf: gnome-tweaks
+    pacman: gnome-tweaks
   act:
     _bin: act
     _desc: Run GitHub actions locally
@@ -4977,11 +5028,12 @@ softwarePackages:
     choco:
       - plex
       - plexmediaplayer
-    flatpak:
-      - tv.plex.PlexDesktop
-      - tv.plex.PlexHTPC
+    flatpak: tv.plex.PlexDesktop
     snap: plexmediaserver
     yay: plex-media-server
+  plex-htpc:
+    _bin: plex-htpc
+    flatpak: tv.plex.PlexHTPC
   pm2:
     _bin: pm2
     _desc: null
@@ -6004,14 +6056,16 @@ softwarePackages:
     _name: Snap
     ansible:linux: professormanhattan.snapd
   snitch:
-    _bin: opensnitchd
+    # Used for OpenSnitch, which is "temporarily" disabled until it works as expected
+    # _bin: opensnitchd
     _desc: '[Little Snitch](https://www.obdev.at/products/littlesnitch/index.html) (macOS) and [OpenSnitch](https://github.com/evilsocket/opensnitch) (Linux) are application firewalls that make Internet connections visible. You can then configure which applications can access the internet (or LAN) as well as monitor the traffic patterns of applications.'
     _docs: null
     _github: null
     _home: null
     _name: OpenSnitch/Little Snitch
     _when:cask: '! test -d "/Applications/Little Snitch.app"'
-    ansible: professormanhattan.snitch
+    # Not loading on Ubuntu 22.04
+    # ansible: professormanhattan.snitch
     cask: little-snitch
   social-analyzer:
     _bin: social-analyzer
