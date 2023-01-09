@@ -3,9 +3,10 @@
 // gnome config hash: {{ include (joinPath .host.home ".config" "desktop" "gnome.yml")| sha256sum }}
 // settings config hash: {{ include (joinPath .host.home ".config" "desktop" "settings.yml")| sha256sum }}
 
-const execSync = require('child_process').execSync
-
 {{ includeTemplate "universal/zx" }}
+
+// Already included by the universal/zx template
+// const execSync = require('child_process').execSync
 
 async function loadThemeSettings() {
   try {
