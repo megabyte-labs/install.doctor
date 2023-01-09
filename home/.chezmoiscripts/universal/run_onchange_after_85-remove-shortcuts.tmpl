@@ -1,7 +1,7 @@
 {{- if eq .host.distro.family "linux" -}}
 #!/usr/bin/env bash
 
-{{ $removeShortcuts := splitList " " .removeLinuxShortcuts }}
+{{ $removeShortcuts := join " " .removeLinuxShortcuts }}
 # shortcuts to remove: {{ $removeShortcuts }}
 
 ### Remove unnecessary desktop shortcuts

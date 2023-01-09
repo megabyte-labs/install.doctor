@@ -4,7 +4,7 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-{{- $removePackages := splitList " " .removeLinuxPackages }}
+{{- $removePackages := join " " .removeLinuxPackages }}
 
 ### Remove bloatware packages defined in .chezmoidata.yaml
 for PKG in {{ $removePackages }}; do
