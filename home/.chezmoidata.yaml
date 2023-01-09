@@ -313,6 +313,7 @@ softwareGroups:
     - catfs
     - glusterfs
     - goofys
+    - sshfs
   Finance: &Finance
     - infracost
   Finance-Desktop: &Finance-Desktop
@@ -322,12 +323,14 @@ softwareGroups:
     - gh
     - gist
     - git
+    - git-bug
     - git-extras
     - git-filter-repo
     - git-fuzzy
     - git-lfs
     - git-open
     - git-secret
+    - git-subrepo
     - gitomatic
     - git-stats
     - gitui
@@ -396,6 +399,7 @@ softwareGroups:
     - fuego
     - papertrail
     - sentry-cli
+    - unbuffer
   Media: &Media
     - beets
     # editly NPM package is failing to install on macOS - attempts to compile with node-gyp
@@ -453,6 +457,7 @@ softwareGroups:
     - codeclimate
     - dotnet
     - expect
+    - fury
     - gradle
     - ideviceinstaller
     - ios-deploy
@@ -460,6 +465,7 @@ softwareGroups:
     - libimobiledevice
     - rust
     - sdkman
+    - snapcraft
     - solidity
     - upx
     - windows-adk

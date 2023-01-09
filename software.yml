@@ -2538,6 +2538,17 @@ softwarePackages:
     apt: git
     brew: git
     dnf: git
+  git-bug:
+    _bin: git-bug
+    _desc: null
+    _docs: null
+    _github: https://github.com/MichaelMure/git-bug
+    _home: null
+    _name: Git Bug
+    _service: false
+    brew: git-bug
+    pkg-freebsd: git-bug
+    scoop: git-bug
   git-filter-repo:
     _bin: git-filter-repo
     _desc: '[gitfilterrepo](https://github.com/newren/git-filter-repo) is a versatile tool for rewriting history'
@@ -2586,6 +2597,15 @@ softwarePackages:
     apt: git-secret
     brew: git-secret
     dnf: git-secret
+  git-subrepo:
+    _bin: git-subrepo
+    _desc: null
+    _docs: null
+    _github: https://github.com/ingydotnet/git-subrepo
+    _home: null
+    _name: Git Sub Repo
+    _service: false
+    brew: git-subrepo
   gitter:
     _name: Gitter
     _when:cask: '! test -d "/Applications/Gitter.app"'
@@ -4969,6 +4989,15 @@ softwarePackages:
     _name: null
     _service: null
     npm: pageres-cli
+  fury:
+    _bin: fury
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: Fury
+    _service: false
+    brew: gemfury/tap/gemfury
   pandoc:
     _bin: pandoc
     _deps:
@@ -6318,6 +6347,18 @@ softwarePackages:
     _service: null
     _when:cask: '! test -d /Applications/Sloth.app'
     cask: sloth
+  snapcraft:
+    _deps:
+      - snapd
+    _bin: snapcraft
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: Snapcraft
+    _service: false
+    brew: snapcraft
+    snap: snapcraft
   snapd:
     _bin: snap
     _desc: '[Snap](https://snapcraft.io/) is a software packaging and deployment system developed by Canonical for operating systems that use the Linux kernel. The packages, called snaps, and the tool for using them, snapd, work across a range of Linux distributions and allow upstream software developers to distribute their applications directly to users. Snaps are self-contained applications running in a sandbox with mediated access to the host system.'
@@ -7075,6 +7116,18 @@ softwarePackages:
     _name: Ulauncher
     _service: null
     ansible: professormanhattan.ulauncher
+  unbuffer:
+    _bin: unbuffer
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: Unbuffer
+    _service: false
+    apt: unbuffer
+    brew: unbuffer
+    dnf: unbuffer
+    pacman: unbuffer
   up:
     _bin: up
     _desc: up, which is short for [Ultimate Plumber](https://github.com/akavel/up), is a tool for writing Linux pipes in a terminal-based UI interactively, with an instant live preview of command results.
@@ -7677,6 +7730,21 @@ softwarePackages:
     _service: null
     brew: yamllint
     pipx: yamllint
+  sshfs:
+    _bin:
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: SSH FS
+    _service: null
+    apt: sshfs
+    brew: sshfs
+    choco: sshfs
+    dnf: sshfs
+    pacman: sshfs
+    port: sshfs
+    scoop: sshfs-np
   yank:
     _bin: yank
     _desc: '[yank](https://github.com/mptre/yank) is a terminal agnostic solution which allows copying output from Termial easily, without the need to use Terminal multiplexers.'
