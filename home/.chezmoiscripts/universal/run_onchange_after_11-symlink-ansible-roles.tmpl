@@ -28,7 +28,8 @@ done
 if [ -f "$HOME/.local/src/gas-station/requirements.yml" ]; then
   if command -v ansible-galaxy > /dev/null; then
     logg info 'Ensuring Ansible Galaxy collections are installed'
-    ansible-galaxy install -r "$HOME/.local/src/gas-station/requirements.yml" || EXIT_CODE=$?
+    export ANSIBLE_CONFIG="$HOME/.local/share/ansible/ansible.cfg"
+    ansible-galaxy install -r "$HOME/.local/share/ansible/requirements.yml" || EXIT_CODE=$?
     if [ -n "$EXIT_CODE" ]; then
       logg error 'Failed to install Ansible requirements from Ansible Galaxy'
       if [ -d "$HOME/.local/src/gas-station/collections" ]; then
@@ -38,11 +39,13 @@ if [ -f "$HOME/.local/src/gas-station/requirements.yml" ]; then
         if [ -n "$SECOND_EXIT_CODE" ]; then
           logg error 'Failed to install requirements from both the cloud and the local copy' && exit 1
         fi
+      else
+        logg warn '~/.local/src/gas-station/collections is missing'
       fi
     fi
   else
     logg warn 'Unable to install the Ansible Galaxy requirements.yml since the ansible-galaxy executable is missing from the PATH'
   fi
 else
-  logg warn '~/.local/src/gas-station/requirements.yml is missing'
+  logg warn '~/.local/share/ansible/requirements.yml is missing'
 fi
