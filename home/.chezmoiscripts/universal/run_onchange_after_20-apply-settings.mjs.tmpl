@@ -49,7 +49,7 @@ async function applyGsettings(settings) {
         console.log(setting.value)
         const gsetting = setting.setting
         const gsettingVal = setting.value
-        await $`gsettings set ${gsetting} ${gsettingVal}`
+        await $`gsettings set ` + ${gsetting} + `${gsettingVal}`
       } catch (e) {
         log('error', 'Gsettings Failure', 'Failed to apply gsetting')
         console.error(e)
