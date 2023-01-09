@@ -4854,6 +4854,7 @@ softwarePackages:
     _note: Needs testing
     apt:
       - libpcre3-dev
+      - libpq-dev
       - php-apcu
       - php-cgi
       - php-cli
@@ -4871,8 +4872,11 @@ softwarePackages:
       - php-snmp
       - php-sqlite3
       - php-xml
+    brew:
+      - postgresql
     dnf:
       - libpcre3-dev
+      - postgresql-devel
       - php-apcu
       - php-cgi
       - php-cli
@@ -4892,6 +4896,7 @@ softwarePackages:
       - php-xml
     pacman:
       - libpcre3-dev
+      - postgresql-libs
       - php-apcu
       - php-cgi
       - php-cli
@@ -4909,6 +4914,8 @@ softwarePackages:
       - php-snmp
       - php-sqlite3
       - php-xml
+    zypper:
+      - postgresql-devel
   pihole:
     _bin: null
     _desc: '[Pi-hole](https://pi-hole.net/) is a Linux network-level advertisement and Internet tracker blocking application which acts as a DNS sinkhole and optionally a DHCP server, intended for use on a private network. It is designed for low-power embedded devices with network capability, such as the Raspberry Pi, but supports any Linux machines.'
