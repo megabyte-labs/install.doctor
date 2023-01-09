@@ -1487,7 +1487,7 @@ async function pruneInstallOrders(installOrders) {
 }
 
 async function installPlugins(pluginData) {
-  for (const plugin of pluginData.plugin) {
+  for (const plugin of pluginData.plugins) {
     try {
       const pluginCmd = plugin.cmd.replace(/{PLUGIN}/g, plugin)
       runCommand(`Installing ${pluginData.package} plugin - ${plugin}`, `{pluginCmd}`)
