@@ -44,12 +44,9 @@ async function applyGsettings(settings) {
   if (gsettings) {
     for (const setting of settings) {
       try {
-        console.log(setting.setting)
-        console.log('-- val ---')
-        console.log(setting.value)
         const gsetting = setting.setting
         const gsettingVal = setting.value
-        await $`gsettings set ` + ${gsetting} + `${gsettingVal}`
+        await $`gsettings set ` + gsetting + `${gsettingVal}`
       } catch (e) {
         log('error', 'Gsettings Failure', 'Failed to apply gsetting')
         console.error(e)
@@ -82,7 +79,7 @@ async function applyDconfSettings(settings) {
   if (dconf) {
     for (const setting of settings) {
       try {
-        await $`dconf write ${setting.key} ${setting.value}`
+        await $`dconf write ${setting.key} ` + setting.value
       } catch (e) {
         log('error', 'Dconf Failure', 'Failed to apply dconf setting')
         console.error(e)
