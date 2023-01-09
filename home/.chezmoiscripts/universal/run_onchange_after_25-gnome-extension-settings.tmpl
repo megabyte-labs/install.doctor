@@ -1,0 +1,58 @@
+{{- if eq .host.distro.family "linux" -}}
+#!/usr/bin/env bash
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+# extension config hash: {{ include (joinPath .host.home ".config" "desktop" "gnome.yml") | sha256sum }}
+
+### Ensure /tmp/install-gnome-extensions.txt is not present on the system
+if [ -f /tmp/install-gnome-extensions.txt ]; then
+    rm -f /tmp/install-gnome-extensions.txt
+fi
+
+### Populate /tmp/install-gnome-extensions.txt with GNOME extensions that need to be installed
+if [ -f "$HOME/.config/desktop/gnome.yml" ]; then
+    yq e -o=j "$HOME/.config/desktop/gnome.yml" | jq -cr '.default_gnome_extensions[]' | while read EXT; do
+        EXT_URL="$(echo "$EXT" | jq -r '.url')"
+        EXT_ID="$(echo "$EXT" | jq -r '.regex')"
+        echo "$EXT_URL" >> /tmp/install-gnome-extensions.txt
+        find "$HOME/.local/share/gnome-shell/extensions" -mindepth 1 -maxdepth 1 -type d | while read EXT_FOLDER; do
+            if [[ "$EXT_FOLDER" == "$EXT_REGEX"* ]]; then
+                head -n -1 /tmp/install-gnome-extensions.txt > "$TMP_EXT"
+                mv "$TMP_EXT" /tmp/install-gnome-extensions.txt
+            fi
+        done
+    done
+else
+    logg warn 'The `~/.config/desktop/gnome.yml` file is missing so GNOME extension install orders cannot be calculated'
+fi
+
+### Install the GNOME extensions using the `install-gnome-extensions` script
+if command -v install-gnome-extensions > /dev/null; then
+    if [ -f /tmp/install-gnome-extensions.txt ]; then
+        install-gnome-extensions --enable --overwrite --file /tmp/install-gnome-extensions.txt
+        rm -f /tmp/install-gnome-extensions.txt
+        logg success 'Finished installing the GNOME extensions'
+        logg info 'Restarting gnome-shell'
+        sudo killall -SIGQUIT gnome-shell
+    else
+        logg info 'No new GNOME extensions to install'
+    fi
+else
+    logg warn 'Cannot install GNOME extensions because the `install-gnome-extensions` script is missing from ~/.local/bin'
+fi
+
+### Apply plugin gsettings
+if [ -f "$HOME/.config/desktop/gnome.yml" ]; then
+    yq e -o=j "$HOME/.config/desktop/gnome.yml" | jq -cr '.default_gnome_extensions[]' | while read EXT; do
+        EXT_ID="$(echo "$EXT" | jq -r '.regex')"
+        EXT_SETTINGS="$(echo "$EXT" | jq -r '.settings')"
+        if [ "$EXT_SETTINGS" != 'null' ]; then
+            eval "$EXT_SETTINGS"
+            logg success 'Applied gsettings configuration for the `'"$EXT_ID"'` GNOME extension'
+        fi
+    done
+fi
+
+{{- end }}

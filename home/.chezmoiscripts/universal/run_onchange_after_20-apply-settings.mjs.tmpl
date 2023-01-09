@@ -1,7 +1,7 @@
 #!/usr/bin/env zx
 
-// gnome config hash: {{ include (joinPath .host.home ".config" "desktop" "gnome.yml")| sha256sum }}
-// settings config hash: {{ include (joinPath .host.home ".config" "desktop" "settings.yml")| sha256sum }}
+// gnome config hash: {{ include (joinPath .host.home ".config" "desktop" "gnome.yml") | sha256sum }}
+// settings config hash: {{ include (joinPath .host.home ".config" "desktop" "settings.yml") | sha256sum }}
 
 {{ includeTemplate "universal/zx" }}
 
