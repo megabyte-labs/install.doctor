@@ -1097,7 +1097,7 @@ async function installPackageList(packageManager, packages) {
           log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
           log('error', 'Install Failure', `There was an error installing ${pkg} with apk`)
-          console.log(e)
+          console.error(e)
         }
       }
     } else if (packageManager === 'apt') {
@@ -1206,7 +1206,6 @@ async function installPackageList(packageManager, packages) {
         try {
           runCommand(`Installing ${pkg} via ${packageManager}`, `gem install ${pkg}`)
           log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
-          await $`gem install ${pkg}`
         } catch (e) {
           log('error', 'Install Failure', `There was an error installing ${pkg} with gem`)
           console.error(e)
@@ -1365,8 +1364,8 @@ async function updateService(service) {
     const systemctl = which.sync('systemctl', { nothrow: true })
     if (systemctl) {
       try {
-        log('info', logStage, `Starting / enabling the ${service} service`)
-        await $`sudo systemctl enable --now ${service}`
+        runCommand(`Starting / enabling ${service} with systemctl`, `sudo systemctl enable --now ${service}`)
+        log('success', logStage, `Started / enabled the ${service} service`)
       } catch (e) {
         log('error', logStage, `There was an error starting / enabling the ${service} service`)
         console.error(e)
@@ -1382,8 +1381,8 @@ async function updateService(service) {
     const brew = which.sync('brew', { nothrow: true })
     if (brew) {
       try {
-        log('info', logStage, `Starting / enabling the ${service} service with Homebrew`)
-        await $`brew services start ${service}`
+        runCommand(`Starting / enabling ${service} with Homebrew`, `brew services start ${service}`)
+        log('success', logStage, `Started / enabled the ${service} service with Homebrew`)
       } catch (e) {
         log('error', logStage, `There was an error starting / enabling the ${service} Homebrew service`)
         console.error(e)
@@ -1445,11 +1444,10 @@ async function pruneInstallOrders(installOrders) {
       })
     } else if (pkgManager === 'flatpak') {
       const flatpakInstallation = await $`flatpak --installations`
-      console.log('RIGHT HERE')
-      console.log(flatpakInstallation)
+      const flatpakDir = flatpakInstallation.stdout.replace('\\n', '')
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
-          await runSilentCommand(`test -d ${flatpakInstallation}/app/${pkg}`)
+          await runSilentCommand(`test -d ${flatpakDir}/app/${pkg}`)
           return false
         } catch (e) {
           return true
