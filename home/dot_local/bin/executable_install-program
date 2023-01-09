@@ -1529,7 +1529,7 @@ async function linkBin(installOrdersBinLink) {
   }
   for (const binLink of installOrdersBinLink) {
     const pkg = softwarePackages[binLink.package][binLink.preference]
-    if(typeof binLink.bin === 'string' && !which.sync(binLink.bin, { nothrow: true })) {
+    if(typeof pkg === 'string' && !which.sync(binLink.bin, { nothrow: true })) {
       if (binLink.preference === 'flatpak' && flatpak) {
         try {
           runCommand(`Adding bin link for ${pkg} (${binLink.bin})`, `bash -c 'test -d ${flatpakDir}/app/${pkg} && mkdir -p "${process.env.HOME}/.local/bin/flatpak" && echo "flatpak run ${pkg} \"$*\"" > "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}" && chmod +x  "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}"'`)
