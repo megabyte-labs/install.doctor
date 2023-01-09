@@ -1504,14 +1504,16 @@ async function pruneInstallOrders(installOrders) {
 }
 
 async function installPlugins(pluginData) {
-  for (const plugin of pluginData.plugins) {
-    try {
-      const pluginCmd = plugin.cmd.replace(/{PLUGIN}/g, plugin)
-      runCommand(`Installing ${pluginData.package} plugin - ${plugin}`, `{pluginCmd}`)
-      log('success', 'Plugin', `Successfully installed ${pluginData.package} plugin - ${plugin}`)
-    } catch (e) {
-      log('error', 'Plugin', `Failed to install ${pluginData.package} plugin - ${plugin}`)
-      console.error(e)
+  if (pluginData.cmd && pluginData.plugins && pluginData.plugins.length) {
+    for (const plugin of pluginData.plugins) {
+      try {
+        const pluginCmd = pluginData.cmd.replace(/{PLUGIN}/g, plugin)
+        runCommand(`Installing ${pluginData.package} plugin - ${plugin}`, `{pluginCmd}`)
+        log('success', 'Plugin', `Successfully installed ${pluginData.package} plugin - ${plugin}`)
+      } catch (e) {
+        log('error', 'Plugin', `Failed to install ${pluginData.package} plugin - ${plugin}`)
+        console.error(e)
+      }
     }
   }
 }
