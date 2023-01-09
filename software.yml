@@ -529,6 +529,7 @@ softwarePackages:
     github: github.com/Azure/azure-functions-core-tools
     npm: azure-functions-core-tools@4
   balenaetcher:
+    _appImageName: balenaEtcher.AppImage
     _bin: null
     _desc: '[balenaEtcher](https://www.balena.io/etcher/) is a powerful OS image flasher built with web technologies to ensure flashing an SDCard or USB drive is a pleasant and safe experience. It protects from accidentally writing to hard-drives, ensures every byte of data was written correctly, and much more. It can also directly flash Raspberry Pi devices that support USB device boot mode. It will run on any platform officially supported by Electron.'
     _docs: https://www.balena.io/docs/learn/welcome/introduction/
@@ -540,7 +541,7 @@ softwarePackages:
     # Waiting for zap to allow headless automation of AppImage Catalog images
     # Currently, it fails because there are multiple versions to select
     # appimage: etcher
-    appimage: https://github.com/balena-io/etcher/releases/download/v1.13.1/balenaEtcher-1.13.1-x64.AppImage
+    appimage: etcher
     cask: balenaetcher
     choco: etcher
     yay: balena-etcher
@@ -3192,6 +3193,7 @@ softwarePackages:
     _name: null
     npm: husky
   hyper:
+    _appImageName: Hyper
     _bin: null
     _desc: '[Hyper](https://hyper.is/) is an electron-based terminal. It is written using web technologies such as HTML, CSS, JavaScript etc. It looks very modern and has lots of customization options.'
     _docs: https://hyper.is/blog
@@ -3199,7 +3201,7 @@ softwarePackages:
     _home: https://hyper.is/
     _name: Hyper
     ansible: professormanhattan.hyper
-    appimage: https://releases.hyper.is/download/AppImage
+    appimage: hyper
     brew: hyper
     choco: hyper
     yay: hyper
@@ -3686,7 +3688,6 @@ softwarePackages:
     scoop: lazygit
     xbps: lazygit
   ledger-live:
-    _appimageName: Ledger Live.AppImage
     _bin: null
     _desc: '[Ledger Live](https://www.ledger.com/ledger-live) is a new generation wallet desktop application providing a unique interface to maintain multiple cryptocurrencies for your Ledger Nano S / Blue. Manage your device, create accounts, receive and send cryptoassets and many more.'
     _docs: null
@@ -3695,7 +3696,7 @@ softwarePackages:
     _name: Ledger Live
     _when:cask: '! test -d "/Applications/Ledger Live.app"'
     ansible: professormanhattan.ledgerlive
-    appimage: https://download.live.ledger.com/latest/linux
+    appimage: ledger-live-desktop
     cask: ledger-live
     choco: ledger-live
   lens:
@@ -6241,7 +6242,6 @@ softwarePackages:
     _name: null
     ansible: professormanhattan.swarm
   switchhosts:
-    _appimageName: SwitchHosts.AppImage
     _bin: null
     _desc: '[SwitchHosts](https://github.com/oldj/SwitchHosts) is an application for managing the etc hosts file. It allows you to easily switch between different etc hosts file configurations.'
     _docs: https://github.com/oldj/SwitchHosts
@@ -6251,7 +6251,7 @@ softwarePackages:
     _type: application
     _when:cask: '! test -d "/Applications/SwitchHosts.app"'
     ansible: professormanhattan.switchhosts
-    appimage: https://github.com/oldj/SwitchHosts/releases/download/v4.1.2/SwitchHosts_linux_x86_64_4.1.2.6086.AppImage
+    appimage: oldj/SwitchHosts
     cask: switchhosts
     choco: switchhosts
     github: github.com/oldj/SwitchHosts
@@ -7401,10 +7401,10 @@ softwarePackages:
     _docs: null
     _github: null
     _home: null
-    _name: null
+    _name: YubiKey Manager
     _when:darwin: '! test -d "/Applications/YubiKey Manager.app"'
     ansible:darwin: professormanhattan.yubikey
-    appimage: https://developers.yubico.com/yubikey-manager-qt/Releases/yubikey-manager-qt-1.2.4b-linux.AppImage
+    appimage: Yubico/yubikey-manager-qt
     choco: yubikey-manager
     dnf: yubikey-manager-qt
     pacman: yubikey-manager-qt
