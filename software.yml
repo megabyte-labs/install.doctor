@@ -294,8 +294,6 @@ softwarePackages:
     _home: null
     _name: null
     _post:pipx: pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
-    brew: ansible
-    dnf: ansible
     pipx: ansible
   ansible-lint:
     _bin: ansible-lint
@@ -3259,6 +3257,7 @@ softwarePackages:
     _github: null
     _home: null
     _name: CodeClimate
+    _usesDocker: true
     brew: codeclimate/formulae/codeclimate
   impl:
     _bin: impl
@@ -5929,7 +5928,6 @@ softwarePackages:
     _home: null
     _name: skm
     _type: cli
-    brew: timothyye/tap/skm
     github: github.com/TimothyYe/skm
     go: github.com/TimothyYe/skm/cmd/skm@latest
   vup:
@@ -6330,7 +6328,6 @@ softwarePackages:
     _snapClassic: true
     _type: cli
     ansible: professormanhattan.trec
-    apk: gomplate
     brew: t-rec
     cargo: t-rec
     port: t-rec
@@ -6786,7 +6783,12 @@ softwarePackages:
     _home: https://vector.dev/
     _name: Vector
     _type: cli
-    brew: vectordotdev/brew/vector
+    # Unlisted on their website and formulae didn't seem to be registering the bin in the PATH
+    # brew: vectordotdev/brew/vector
+    helm: https://helm.vector.dev
+    pacman: vector
+    script:darwin: curl --proto '=https' --tlsv1.2 -sSf https://sh.vector.dev | bash
+    script:linux: curl --proto '=https' --tlsv1.2 -sSf https://sh.vector.dev | bash
   velero:
     _bin: velero
     _desc: null
