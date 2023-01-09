@@ -89,6 +89,7 @@ let installOrders = {}
 const installOrdersPre = []
 const installOrdersPost = []
 const installOrdersService = []
+const installOrdersPlugins = []
 let brewUpdated, osType, osID, snapRefreshed
 
 // Download the installation map
@@ -370,6 +371,12 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
   const serviceHook = getHook(packages, 'service', scopedPreference, preference)
   if (serviceHook) {
     installOrdersService.concat(typeof serviceHook === 'string' ? [serviceHook] : serviceHook)
+  }
+  const pluginMap = installData && installData.softwarePlugins && installData.softwarePlugins[pkg]
+  if (pluginMap) {
+    if (pluginMap.cmd && pluginMap.plugins) {
+      installOrdersPlugins.push({ package: pkg, cmd: pluginMap.cmd, plugins: pluginMap.plugins })
+    }
   }
   if (!installOrders[preference]) {
     installOrders[preference] = []
@@ -1479,6 +1486,19 @@ async function pruneInstallOrders(installOrders) {
   return newOrders
 }
 
+async function installPlugins(pluginData) {
+  for (const plugin of pluginData.plugin) {
+    try {
+      const pluginCmd = plugin.cmd.replace(/{PLUGIN}/g, plugin)
+      runCommand(`Installing ${pluginData.package} plugin - ${plugin}`, `{pluginCmd}`)
+      log('success', 'Plugin', `Successfully installed ${pluginData.package} plugin - ${plugin}`)
+    } catch (e) {
+      log('error', 'Plugin', `Failed to install ${pluginData.package} plugin - ${plugin}`)
+      console.error(e)
+    }
+  }
+}
+
 // main process
 async function installSoftware(pkgsToInstall) {
   osType = await OSType()
@@ -1527,6 +1547,10 @@ async function installSoftware(pkgsToInstall) {
   log('info', 'Post-Install', `Running package-specific post-installation steps`)
   for (const service of installOrdersService) {
     await updateService(service)
+  }
+  log('info', 'Plugin', 'Installing package-specific plugins')
+  for (const plugin of installOrdersPlugins) {
+    await installPlugins(plugin)
   }
   for (const script of installOrdersPost) {
     await $`${script}`
