@@ -20,6 +20,7 @@ if [ ! -f "${XDG_CONFIG_HOME}/age/chezmoi.txt" ]; then
       if [ -f "$FALLBACK_FILENAME" ]; then
         NEW_FALLBACK_FILENAME="$(echo "$ENCRYPTED_FILE" | sed 's/encrypted-fallback_//')"
         cp "$FALLBACK_FILENAME" "$NEW_FALLBACK_FILENAME"
+      fi
     done
   fi
 fi
