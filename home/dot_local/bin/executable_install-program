@@ -1508,7 +1508,7 @@ async function installPlugins(pluginData) {
     for (const plugin of pluginData.plugins) {
       try {
         const pluginCmd = pluginData.cmd.replace(/{PLUGIN}/g, plugin)
-        runCommand(`Installing ${pluginData.package} plugin - ${plugin}`, `{pluginCmd}`)
+        runCommand(`Installing ${pluginData.package} plugin - ${plugin}`, pluginCmd)
         log('success', 'Plugin', `Successfully installed ${pluginData.package} plugin - ${plugin}`)
       } catch (e) {
         log('error', 'Plugin', `Failed to install ${pluginData.package} plugin - ${plugin}`)
@@ -1524,7 +1524,7 @@ async function linkBin(installOrdersBinLink) {
   const flatpak = which.sync('flatpak', { nothrow: true })
   if (flatpak) {
     flatpakInstallation = await $`flatpak --installations`
-    flatpakDir = flatpakInstallation.stdout.replace(/\\n/g, '')
+    flatpakDir = flatpakInstallation.stdout.replace('\n', '')
   }
   for (const binLink of installOrdersBinLink) {
     const pkg = softwarePackages[binLink.package][binLink.preference]
