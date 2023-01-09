@@ -6984,7 +6984,8 @@ softwarePackages:
     _home: null
     _name: Cloudflare WARP Client
     _when:darwin: '! test -d "/Applications/Cloudflare WARP.app"'
-    ansible: professormanhattan.warp
+    # Needs tuning - possibly unrelated, but internet wasn't working on Ubuntu after installing this and removed it during debugging
+    # ansible: professormanhattan.warp
     cask: cloudflare-warp
   watchexec:
     _bin: watchexec
