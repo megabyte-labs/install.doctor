@@ -1478,7 +1478,9 @@ async function pruneInstallOrders(installOrders) {
     if (pkgManager === 'appimage') {
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
-          await runSilentCommand(`zap list | grep ${pkg} > /dev/null`)
+          console.log('---zap')
+          console.log(pkg)
+          await runSilentCommand(`zap list | grep "${pkg}" > /dev/null`)
           return false
         } catch (e) {
           return true
