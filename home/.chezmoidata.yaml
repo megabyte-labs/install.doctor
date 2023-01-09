@@ -23,6 +23,18 @@ config:
   gpg: https://raw.githubusercontent.com/drduh/config/master/gpg.conf
 fonts:
   main: Montserrat Bold
+removeLinuxPackages:
+  - aisleriot
+  - gnome-mahjongg
+  - gnome-mines
+  - gnome-sudoku
+  - rhythmbox
+removeLinuxShortcuts:
+  - cmake_cmake-gui.desktop
+  - display-im6.q16.desktop
+  - flutter_openurl.desktop
+  - htop.desktop
+  - scvim.desktop
 softwareGroups:
   Android: &Android
     - scrcpy
@@ -511,7 +523,8 @@ softwareGroups:
   Productivity-Desktop: &Productivity-Desktop
     - libreoffice
     - microsoft-office
-    - microsoft-todo
+    # Deprecated in favor of Google Tasks
+    # - microsoft-todo
   Python: &Python
     - poetry
     - python

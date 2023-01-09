@@ -1,0 +1,20 @@
+{{- if eq .host.distro.family "linux" -}}
+#!/usr/bin/env bash
+
+{{- $removePackages := splitList " " .removeLinuxPackages }}
+
+### Remove bloatware packages defined in .chezmoidata.yaml
+for PKG in {{ $removePackages }}; do
+    if command -v apt-get > /dev/null; then
+        if dpkg -l "$PKG" | grep "$PKG"; then
+            sudo apt-get remove -y "$PKG"
+        fi
+    elif command -v dnf > /dev/null; then
+        if 
+    elif command -v yum > /dev/null; then
+    elif command -v pacman > /dev/null; then
+        if pacman -Qs "$PKG" > /dev/null; then
+            sudo pacman -R "$PKG"
+        fi
+    fi
+done
