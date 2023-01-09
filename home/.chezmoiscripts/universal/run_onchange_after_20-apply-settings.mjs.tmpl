@@ -40,36 +40,56 @@ async function loadGnomeSettings() {
 }
 
 async function applyGsettings(settings) {
-  for (const setting of settings) {
-    try {
-      await $`gsettings set ${setting.setting} ${setting.value}`
-    } catch (e) {
-      log('error', 'Gsettings Failure', 'Failed to apply gsetting')
-      console.error(e)
+  const gsettings = which.sync('gsettings', { nothrow: true })
+  if (gsettings) {
+    for (const setting of settings) {
+      try {
+        console.log(setting.setting)
+        console.log('-- val ---')
+        console.log(setting.value)
+        const gsetting = setting.setting
+        const gsettingVal = setting.value
+        await $`gsettings set ${gsetting} ${gsettingVal}`
+      } catch (e) {
+        log('error', 'Gsettings Failure', 'Failed to apply gsetting')
+        console.error(e)
+      }
     }
+  } else {
+    log('info', 'Gsettings Not Installed', 'gsettings does not appear to be available')
   }
 }
 
 async function applyXconfSettings(settings) {
-  for (const setting of settings) {
-    try {
-      const xfconfType = setting.value_type ? setting.value_type : 'string'
-      await $`xfconf-query --channel '${setting.channel}' --property '${setting.property}' --type ${xfconfType} --set ${setting.value}`
-    } catch (e) {
-      log('error', 'Xfconf Failure', 'Failed to apply gsetting')
-      console.error(e)
+  const xfconfQuery = which.sync('xfconf-query', { nothrow: true })
+  if (xfconfQuery) {
+    for (const setting of settings) {
+      try {
+        const xfconfType = setting.value_type ? setting.value_type : 'string'
+        await $`xfconf-query --channel '${setting.channel}' --property '${setting.property}' --type ${xfconfType} --set ${setting.value}`
+      } catch (e) {
+        log('error', 'Xfconf Failure', 'Failed to apply gsetting')
+        console.error(e)
+      }
     }
+  } else {
+    log('info', 'xfconf-query Not Installed', 'xfconf-query does not appear to be available')
   }
 }
 
 async function applyDconfSettings(settings) {
-  for (const setting of settings) {
-    try {
-      await $`dconf write ${setting.key} ${setting.value}`
-    } catch (e) {
-      log('error', 'Dconf Failure', 'Failed to apply dconf setting')
-      console.error(e)
+  const dconf = which.sync('dconf', { nothrow: true })
+  if (dconf) {
+    for (const setting of settings) {
+      try {
+        await $`dconf write ${setting.key} ${setting.value}`
+      } catch (e) {
+        log('error', 'Dconf Failure', 'Failed to apply dconf setting')
+        console.error(e)
+      }
     }
+  } else {
+    log('info', 'Dconf Not Installed', 'dconf does not appear to be available')
   }
 }
 
