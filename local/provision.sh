@@ -8,14 +8,10 @@
 #   ~/.local/share/chezmoi. Finally, it begins the TUI experience by displaying styled documentation, prompts, and finishes
 #   by calling the appropriate Chezmoi commands.
 
-### Print output to console and log file
+### Ensure ~/.local/share/megabyte-labs is a directory
 if [ ! -d "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs" ]; then
   mkdir -p "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs"
 fi
-# Source: https://unix.stackexchange.com/a/323189
-exec 3<&1
-coproc logtee { tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.log" >&3;  }
-exec >&${logtee[1]} 2>&1
 
 # @description Installs glow (a markdown renderer) from GitHub releases
 # @example installGlow
@@ -384,12 +380,13 @@ fi
 
 ### Copy new files from src git repository to dotfiles with rsync
 rsyncChezmoiFiles() {
-  rsync -rtvu --delete /usr/local/src/hiawatha/docs/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/docs/"
-  rsync -rtvu --delete /usr/local/src/hiawatha/home/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/home/"
-  rsync -rtvu --delete /usr/local/src/hiawatha/system/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/system/"
-  rsync -rtvu /usr/local/src/hiawatha/.chezmoiignore "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiignore"
-  rsync -rtvu /usr/local/src/hiawatha/.chezmoiroot "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiroot"
-  rsync -rtvu /usr/local/src/hiawatha/software.yml "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/software.yml"
+  rsync -rtvu --delete /usr/local/src/hiawatha/docs/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/docs/" &
+  rsync -rtvu --delete /usr/local/src/hiawatha/home/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/home/" &
+  rsync -rtvu --delete /usr/local/src/hiawatha/system/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/system/" &
+  rsync -rtvu /usr/local/src/hiawatha/.chezmoiignore "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiignore" &
+  rsync -rtvu /usr/local/src/hiawatha/.chezmoiroot "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiroot" &
+  rsync -rtvu /usr/local/src/hiawatha/software.yml "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/software.yml" &
+  wait
   logg success 'Successfully updated the ~/.local/share/chezmoi folder with changes from the upstream repository'
 }
 
@@ -430,7 +427,7 @@ export DEBIAN_FRONTEND=noninteractive
 # shellcheck disable=SC2016
 logg info 'Running `chezmoi apply`'
 if [ -n "$FORCE_CHEZMOI" ]; then
-  chezmoi apply -k --force
+  chezmoi apply -k --force 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
 else
-  chezmoi apply -k
+  chezmoi apply -k 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
 fi

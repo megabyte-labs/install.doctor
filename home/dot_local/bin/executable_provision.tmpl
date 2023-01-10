@@ -10,6 +10,11 @@
 
 {{ includeTemplate "universal/logg" }}
 
+### Ensure ~/.local/share/megabyte-labs is a directory
+if [ ! -d "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs" ]; then
+  mkdir -p "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs"
+fi
+
 ### Qubes dom0
 if command -v qubesctl > /dev/null; then
   # The VM name that will manage the Ansible provisioning (for Qubes dom0)
@@ -255,7 +260,7 @@ export DEBIAN_FRONTEND=noninteractive
 # shellcheck disable=SC2016
 logg info 'Running `chezmoi apply`'
 if [ -n "$FORCE_CHEZMOI" ]; then
-  chezmoi apply --force
+  chezmoi apply -k --force 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
 else
-  chezmoi apply
+  chezmoi apply -k 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
 fi
