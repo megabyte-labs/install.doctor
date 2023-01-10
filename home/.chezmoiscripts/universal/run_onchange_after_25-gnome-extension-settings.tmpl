@@ -34,8 +34,6 @@ if command -v install-gnome-extensions > /dev/null; then
         install-gnome-extensions --enable --overwrite --file /tmp/install-gnome-extensions.txt
         rm -f /tmp/install-gnome-extensions.txt
         logg success 'Finished installing the GNOME extensions'
-        logg info 'Restarting gnome-shell'
-        sudo killall -SIGQUIT gnome-shell
     else
         logg info 'No new GNOME extensions to install'
     fi
