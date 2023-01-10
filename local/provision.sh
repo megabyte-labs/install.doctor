@@ -427,7 +427,7 @@ export DEBIAN_FRONTEND=noninteractive
 # shellcheck disable=SC2016
 logg info 'Running `chezmoi apply`'
 if [ -n "$FORCE_CHEZMOI" ]; then
-  chezmoi apply -k --force 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+  chezmoi apply -k --force 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log" | grep --line-buffered
 else
-  chezmoi apply -k 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+  chezmoi apply -k 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log" | grep --line-buffered
 fi
