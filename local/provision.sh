@@ -266,29 +266,29 @@ if ! command -v brew > /dev/null && [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; 
 fi
 
 
-if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v brew > /dev/null || ! command -v rsync > /dev/null; then
+if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v brew > /dev/null || ! command -v rsync > /dev/null || ! command -v unbuffer > /dev/null; then
   # shellcheck disable=SC2016
-  logg info 'Ensuring `curl` and `git` are installed via the system package manager'
+  logg info 'Ensuring `curl`, `expect`, `git`, and `rsync` are installed via the system package manager'
   if command -v apt-get > /dev/null; then
     # Debian / Ubuntu
     sudo apt-get update
-    sudo apt-get install -y build-essential curl git rsync
+    sudo apt-get install -y build-essential curl expect git rsync
   elif command -v dnf > /dev/null; then
     # Fedora
-    sudo dnf install -y curl git rsync
+    sudo dnf install -y curl expect git rsync
   elif command -v yum > /dev/null; then
     # CentOS
-    sudo yum install -y curl git rsync
+    sudo yum install -y curl expect git rsync
   elif command -v pacman > /dev/null; then
     # Archlinux
     sudo pacman update
-    sudo pacman -Sy curl git rsync
+    sudo pacman -Sy curl expect git rsync
   elif command -v zypper > /dev/null; then
     # OpenSUSE
-    sudo zypper install -y curl git nodejs rsync
+    sudo zypper install -y curl expect git rsync
   elif command -v apk > /dev/null; then
     # Alpine
-    apk add curl git rsync
+    apk add curl expect git rsync
   elif [ -d /Applications ] && [ -d /Library ]; then
     # macOS
     sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
@@ -306,7 +306,7 @@ if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v
     echo "TODO - Add support for Void"
   elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
     # Windows
-    choco install -y curl git node rsync
+    choco install -y curl expect git node rsync
   fi
 fi
 
@@ -427,7 +427,7 @@ export DEBIAN_FRONTEND=noninteractive
 # shellcheck disable=SC2016
 logg info 'Running `chezmoi apply`'
 if [ -n "$FORCE_CHEZMOI" ]; then
-  chezmoi apply -k --force 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log" | grep --line-buffered
+  chezmoi apply -k --force 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
 else
-  chezmoi apply -k 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log" | grep --line-buffered
+  chezmoi apply -k 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
 fi
