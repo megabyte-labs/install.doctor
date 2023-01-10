@@ -391,8 +391,6 @@ rsync -rtvu --delete /usr/local/src/hiawatha/system/ "${XDG_DATA_DIR:-$HOME/.loc
 rsync -rtvu /usr/local/src/hiawatha/.chezmoiignore "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiignore" &
 rsync -rtvu /usr/local/src/hiawatha/.chezmoiroot "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiroot" &
 rsync -rtvu /usr/local/src/hiawatha/software.yml "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/software.yml" &
-logg info 'Waiting for rsync jobs to finish'
-wait
 logg success 'Successfully updated the ~/.local/share/chezmoi folder with changes from the upstream repository'
 
 ### Ensure ~/.local/bin files are executable
