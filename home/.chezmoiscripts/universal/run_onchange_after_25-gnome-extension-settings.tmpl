@@ -17,7 +17,7 @@ if [ -f "$HOME/.config/desktop/gnome.yml" ]; then
         EXT_URL="$(echo "$EXT" | jq -r '.url')"
         EXT_ID="$(echo "$EXT" | jq -r '.regex')"
         echo "$EXT_URL" >> /tmp/install-gnome-extensions.txt
-        find "$HOME/.local/share/gnome-shell/extensions" -mindepth 1 -maxdepth 1 -type d | while read EXT_FOLDER; do
+        find "$XDG_DATA_DIR/gnome-shell/extensions" -mindepth 1 -maxdepth 1 -type d | while read EXT_FOLDER; do
             if [[ "$EXT_FOLDER" == "$EXT_REGEX"* ]]; then
                 head -n -1 /tmp/install-gnome-extensions.txt > "$TMP_EXT"
                 mv "$TMP_EXT" /tmp/install-gnome-extensions.txt

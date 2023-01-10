@@ -9,12 +9,12 @@
 #   by calling the appropriate Chezmoi commands.
 
 ### Print output to console and log file
-if [ ! -d "$HOME/.cache/megabyte-labs" ]; then
-  mkdir -p "$HOME/.cache/megabyte-labs"
+if [ ! -d "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs" ]; then
+  mkdir -p "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs"
 fi
 # Source: https://unix.stackexchange.com/a/323189
 exec 3<&1
-coproc logtee { tee "$HOME/.cache/megabyte-labs/betelgeuse.log" >&3;  }
+coproc logtee { tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.log" >&3;  }
 exec >&${logtee[1]} 2>&1
 
 # @description Installs glow (a markdown renderer) from GitHub releases
@@ -384,13 +384,13 @@ fi
 
 ### Copy files to HOME folder with rsync
 logg info 'Copying files from /usr/local/src/hiawatha to the HOME directory via rsync'
-mkdir -p "$HOME/.local/share/chezmoi"
-rsync -rtvu --delete /usr/local/src/hiawatha/docs/ "$HOME/.local/share/chezmoi/docs/" &
-rsync -rtvu --delete /usr/local/src/hiawatha/home/ "$HOME/.local/share/chezmoi/home/" &
-rsync -rtvu --delete /usr/local/src/hiawatha/system/ "$HOME/.local/share/chezmoi/system/" &
-rsync -rtvu /usr/local/src/hiawatha/.chezmoiignore "$HOME/.local/share/chezmoi/.chezmoiignore" &
-rsync -rtvu /usr/local/src/hiawatha/.chezmoiroot "$HOME/.local/share/chezmoi/.chezmoiroot" &
-rsync -rtvu /usr/local/src/hiawatha/software.yml "$HOME/.local/share/chezmoi/software.yml" &
+mkdir -p "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi"
+rsync -rtvu --delete /usr/local/src/hiawatha/docs/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/docs/" &
+rsync -rtvu --delete /usr/local/src/hiawatha/home/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/home/" &
+rsync -rtvu --delete /usr/local/src/hiawatha/system/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/system/" &
+rsync -rtvu /usr/local/src/hiawatha/.chezmoiignore "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiignore" &
+rsync -rtvu /usr/local/src/hiawatha/.chezmoiroot "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiroot" &
+rsync -rtvu /usr/local/src/hiawatha/software.yml "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/software.yml" &
 logg info 'Waiting for rsync jobs to finish'
 wait
 logg success 'Successfully updated the ~/.local/share/chezmoi folder with changes from the upstream repository'
