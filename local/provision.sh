@@ -382,17 +382,21 @@ else
   chown -Rf "$USER":"$(id -g -n)" /usr/local/src/hiawatha
 fi
 
+rsyncChezmoiFiles() {
+  rsync -rtvu --delete /usr/local/src/hiawatha/docs/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/docs/" &
+  rsync -rtvu --delete /usr/local/src/hiawatha/home/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/home/" &
+  rsync -rtvu --delete /usr/local/src/hiawatha/system/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/system/" &
+  rsync -rtvu /usr/local/src/hiawatha/.chezmoiignore "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiignore" &
+  rsync -rtvu /usr/local/src/hiawatha/.chezmoiroot "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiroot" &
+  rsync -rtvu /usr/local/src/hiawatha/software.yml "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/software.yml" &
+  wait
+  logg success 'Successfully updated the ~/.local/share/chezmoi folder with changes from the upstream repository'
+}
+
 ### Copy files to HOME folder with rsync
 logg info 'Copying files from /usr/local/src/hiawatha to the HOME directory via rsync'
 mkdir -p "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi"
-rsync -rtvu --delete /usr/local/src/hiawatha/docs/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/docs/" &
-rsync -rtvu --delete /usr/local/src/hiawatha/home/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/home/" &
-rsync -rtvu --delete /usr/local/src/hiawatha/system/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/system/" &
-rsync -rtvu /usr/local/src/hiawatha/.chezmoiignore "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiignore" &
-rsync -rtvu /usr/local/src/hiawatha/.chezmoiroot "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiroot" &
-rsync -rtvu /usr/local/src/hiawatha/software.yml "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/software.yml" &
-logg success 'Successfully updated the ~/.local/share/chezmoi folder with changes from the upstream repository'
-
+rsyncChezmoiFiles
 ### Ensure ~/.local/bin files are executable
 logg info 'Ensuring scripts in ~/.local/bin are executable'
 find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f | while read -r BINFILE; do
