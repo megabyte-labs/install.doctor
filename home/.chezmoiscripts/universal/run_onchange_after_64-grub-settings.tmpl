@@ -29,7 +29,7 @@ SCREEN_RATIO_ULTRAWIDE="2100"
 GRUB_RESOLUTION_TYPE="1080p"
 
 ### Determine screen size ratio (used for picking GRUB2 theme resolution)
-if command -v xrandr && command -v uniq; then
+if command -v xrandr > /dev/null && command -v uniq > /dev/null; then
     SCREEN_WIDTH="$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)"
     SCREEN_HEIGHT="$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)"
     SCREEN_RATIO="$(awk -v height="$SCREEN_HEIGHT" -v width="$SCREEN_WIDTH" 'BEGIN { print ((height / width) * 1000) }')"
@@ -87,8 +87,8 @@ if [ -f /etc/default/grub ]; then
 
     ### GRUB_FORCE_HIDDEN_MENU
     logg info 'Setting GRUB_FORCE_HIDDEN_MENU={{ .grub.shiftToSee }} in /etc/default/grub'
-    sed -i '/GRUB_FORCE_HIDDEN_MENU/d' /etc/default/grub
-    echo "GRUB_FORCE_HIDDEN_MENU={{ .grub.shiftToSee }}" > /etc/default/grub
+    sudo sed -i '/GRUB_FORCE_HIDDEN_MENU/d' /etc/default/grub
+    echo "GRUB_FORCE_HIDDEN_MENU={{ .grub.shiftToSee }}" | sudo tee -a /etc/default/grub
 
     ### Remove duplicate lines in /etc/default/grub
     logg info 'Ensuring there are no duplicate entries in /etc/default/grub'
