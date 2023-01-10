@@ -1,5 +1,5 @@
+{{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
-{{- if (eq .host.distro.family "linux") }}
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
