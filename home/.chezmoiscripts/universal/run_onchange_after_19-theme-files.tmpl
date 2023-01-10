@@ -5,7 +5,7 @@
 {{ includeTemplate "universal/logg" }}
 
 ### Clean up system theme settings
-for ITEM_TO_BE_REMOVED of "/usr/share/backgrounds/images" "/usr/share/backgrounds/f32" "/usr/share/backgrounds/qubes" "/usr/share/wallpapers"; do
+for ITEM_TO_BE_REMOVED in "/usr/share/backgrounds/images" "/usr/share/backgrounds/f32" "/usr/share/backgrounds/qubes" "/usr/share/wallpapers"; do
   if [ -d "$ITEM_TO_BE_REMOVED" ] || [ -f "$ITEM_TO_BE_REMOVED" ]; then
     sudo rm -rf "$ITEM_TO_BE_REMOVED"
     logg success "Removed $ITEM_TO_BE_REMOVED"
