@@ -5173,18 +5173,25 @@ softwarePackages:
     scoop: procs
     snap: procs
   protonvpn:
-    _bin: null
+    _bin: protonvpn
     _desc: '[Proton](https://www.proton.org/) is a free and open-source raster graphics editor used for image manipulation and image editing, free-form drawing, transcoding between different image file formats, and more specialized tasks. Proton is released under GPLv3+ license and is available for Linux, macOS, and Microsoft Windows.'
     _docs: https://protonmail.com/support/
     _github: https://github.com/ProtonMail/WebClients
     _home: https://protonmail.com/
-    _name: Proton
+    _name: ProtonVPN
     _when:cask: '! test -d /Applications/ProtonVPN.app'
     ansible: professormanhattan.proton
     cask: protonvpn
     choco: protonvpn
-    dnf: protonvpn-cli
     yay: protonvpn
+  protonvpn-cli:
+    _bin: protonvpn-cli
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: ProtonVPN CLI
+    _todo: Populate this once the ProtonVPN CLI is released to the package managers
   protonmail-bridge:
     _bin: protonmail-bridge
     _when:cask: '! test -d "/Applications/Proton Mail Bridge.app"'

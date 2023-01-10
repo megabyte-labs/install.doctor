@@ -1,0 +1,27 @@
+{{- if eq .host.distro.family "linux" -}}
+#!/usr/bin/env bash
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+### Create backups
+if [ -d "$XDG_CONFIG_HOME/dconf/settings" ]; then
+    DCONF_TMP="$(mktemp)"
+    logg info 'Moving ~/.config/dconf/settings to '"$DCONF_TMP"
+    mv "$XDG_CONFIG_HOME/dconf/settings" "$DCONF_TMP"
+fi
+
+### Ensure ~/.config/dconf/settings exists
+mkdir -p "$XDG_CONFIG_HOME/dconf/settings"
+
+### Overwrite ~/.config/dconf/settings configurations so we can diff with Chezmoi
+find "$XDG_CONFIG_HOME/dconf/settings" -mindepth 1 -maxdepth 1 -type f | while read DCONF_CONFIG_FILE; do
+    DCONF_SETTINGS_ID="/$(basename "$DCONF_CONFIG_FILE" | sed 's/\./\//')/"
+    logg info 'Dumping `'"$DCONF_SETTINGS_ID"'` to '"$DCONF_CONFIG_FILE"
+    dconf dump "$DCONF_SETTINGS_ID" > "$DCONF_CONFIG_FILE"
+    logg success 'Saved new configuration to '"$DCONF_CONFIG_FILE"
+    logg info 'Printing diff for '"$DCONF_CONFIG_FILE"
+    chezmoi diff "$DCONF_CONFIG_FILE"
+done
+
+{{ end -}}
