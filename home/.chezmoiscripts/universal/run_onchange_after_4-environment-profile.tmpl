@@ -1,6 +1,9 @@
 {{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 ### Ensure QT_STYLE_OVERRIDE is set in /etc/environment
 logg info 'Ensuring QT_STYLE_OVERRIDE is set in /etc/environment'
 if cat /etc/environment | grep QT_STYLE_OVERRIDE; then

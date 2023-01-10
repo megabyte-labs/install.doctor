@@ -1,6 +1,9 @@
 {{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 ### Copy ~/.local/bin/squash-symlink to /usr/local/bin/squash-symlink
 if [ ! -f /usr/local/bin/squash-symlink ] && [ -f "$HOME/.local/bin/squash-symlink" ]; then
     logg info 'Copying ~/.local/bin/squash-symlink to /usr/local/bin/squash-symlink'
