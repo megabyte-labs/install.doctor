@@ -12,7 +12,15 @@ logg info 'Backed up system dconf settings to '"$DCONF_TMP"
 ### Reset system settings / load saved configurations from ~/.config/dconf/settings
 if [ -d "$XDG_CONFIG_HOME/dconf/settings" ]; then
     find "$XDG_CONFIG_HOME/dconf/settings" -mindepth 1 -maxdepth 1 -type f | while read DCONF_CONFIG_FILE; do
-        DCONF_SETTINGS_ID="/$(basename "$DCONF_CONFIG_FILE" | sed 's/\./\//')"
+        if [ "$DEBUG_MODE" == 'true' ]; then
+            logg info 'Dconf configuration file:'
+            echo "$DCONF_CONFIG_FILE"
+        fi
+        DCONF_SETTINGS_ID="/$(basename "$DCONF_CONFIG_FILE" | sed 's/\./\//')/"
+        if [ "$DEBUG_MODE" == 'true' ]; then
+            log info 'Dconf settings ID:'
+            log info "$DCONF_SETTINGS_ID"
+        fi
         # Reset dconf settings if environment variable RESET_DCONF is set to true
         if [ "$RESET_DCONF" == 'true' ]; then
             logg info 'Resetting dconf settings for `'"$DCONF_SETTINGS_ID"'`'
