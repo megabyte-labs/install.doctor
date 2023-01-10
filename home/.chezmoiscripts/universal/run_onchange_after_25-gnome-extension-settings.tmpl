@@ -50,11 +50,13 @@ if [ -f "$HOME/.config/desktop/gnome.yml" ]; then
         if [ "$EXT_SETTINGS" != 'null' ]; then
             logg info 'Evaluating extension settings'
             if [ "$EXT_SETTINGS_TYPE" == 'array' ]; then
-                echo "$EXT_SETTINGS" | jq -cr '.' | while read EXT_SETTING; do
+                echo "$EXT_SETTINGS" | jq -cr '.[]' | while read EXT_SETTING; do
+                    logg info 'Applying following extension setting:'
                     echo "$EXT_SETTING"
                     eval "$EXT_SETTING"
                 done
             else
+                logg info 'Applying following extension setting:'
                 echo "$EXT_SETTINGS"
                 eval "$EXT_SETTINGS"
             fi
