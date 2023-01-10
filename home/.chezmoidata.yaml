@@ -23,6 +23,9 @@ config:
   gpg: https://raw.githubusercontent.com/drduh/config/master/gpg.conf
 fonts:
   main: Montserrat Bold
+grub:
+  shiftToSee: false
+  timeout: 9
 removeLinuxPackages:
   - aisleriot
   - gnome-mahjongg
@@ -35,6 +38,7 @@ removeLinuxShortcuts:
   - flutter_openurl.desktop
   - htop.desktop
   - scvim.desktop
+theme: Betelgeuse
 softwareGroups:
   Android: &Android
     - scrcpy

@@ -1,3 +1,4 @@
+{{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
 
 ### Ensure QT_STYLE_OVERRIDE is set in /etc/environment
@@ -7,3 +8,5 @@ if cat /etc/environment | grep QT_STYLE_OVERRIDE; then
 else
   echo 'export QT_STYLE_OVERRIDE=kvantum-dark' | sudo tee -a /etc/environment
 fi
+
+{{ end -}}
