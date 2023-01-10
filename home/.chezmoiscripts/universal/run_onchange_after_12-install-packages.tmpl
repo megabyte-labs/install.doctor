@@ -29,7 +29,11 @@ if command -v install-program > /dev/null; then
       . "$HOME/.bashrc"
     fi
     export LC_ALL="en_US.UTF-8"
-    install-program {{ $softwareList }}
+    if command -v unbuffer > /dev/null; then
+      unbuffer install-program {{ $softwareList }}
+    else
+      install-program {{ $softwareList }}
+    fi
   else
     logg error '`zx` is not available'
   fi
