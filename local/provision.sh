@@ -382,14 +382,14 @@ else
   chown -Rf "$USER":"$(id -g -n)" /usr/local/src/hiawatha
 fi
 
+### Copy new files from src git repository to dotfiles with rsync
 rsyncChezmoiFiles() {
-  rsync -rtvu --delete /usr/local/src/hiawatha/docs/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/docs/" &
-  rsync -rtvu --delete /usr/local/src/hiawatha/home/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/home/" &
-  rsync -rtvu --delete /usr/local/src/hiawatha/system/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/system/" &
-  rsync -rtvu /usr/local/src/hiawatha/.chezmoiignore "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiignore" &
-  rsync -rtvu /usr/local/src/hiawatha/.chezmoiroot "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiroot" &
-  rsync -rtvu /usr/local/src/hiawatha/software.yml "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/software.yml" &
-  wait
+  rsync -rtvu --delete /usr/local/src/hiawatha/docs/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/docs/"
+  rsync -rtvu --delete /usr/local/src/hiawatha/home/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/home/"
+  rsync -rtvu --delete /usr/local/src/hiawatha/system/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/system/"
+  rsync -rtvu /usr/local/src/hiawatha/.chezmoiignore "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiignore"
+  rsync -rtvu /usr/local/src/hiawatha/.chezmoiroot "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiroot"
+  rsync -rtvu /usr/local/src/hiawatha/software.yml "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/software.yml"
   logg success 'Successfully updated the ~/.local/share/chezmoi folder with changes from the upstream repository'
 }
 
