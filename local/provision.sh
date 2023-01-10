@@ -8,6 +8,15 @@
 #   ~/.local/share/chezmoi. Finally, it begins the TUI experience by displaying styled documentation, prompts, and finishes
 #   by calling the appropriate Chezmoi commands.
 
+### Print output to console and log file
+if [ ! -d "$HOME/.cache/megabyte-labs" ]; then
+  mkdir -p "$HOME/.cache/megabyte-labs"
+fi
+# Source: https://unix.stackexchange.com/a/323189
+exec 3<&1
+coproc logtee { tee "$HOME/.cache/megabyte-labs/betelgeuse.log" >&3;  }
+exec >&${logtee[1]} 2>&1
+
 # @description Installs glow (a markdown renderer) from GitHub releases
 # @example installGlow
 installGlow() {
