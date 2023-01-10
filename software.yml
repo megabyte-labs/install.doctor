@@ -1489,6 +1489,18 @@ softwarePackages:
     _home: null
     _name: DNS
     ansible: professormanhattan.dns
+  plymouth:
+    apt:
+      - libplymouth5
+      - plymouth
+      - plymouth-themes
+      - plymouth-label
+    dnf:
+      - plymouth
+      - plymouth-x11
+      - plymouth-plugin-script
+    pacman:
+      - plymouth
   dnsmasq:
     _bin: dnsmasq
     _desc: '[Dnsmasq](https://wiki.debian.org/dnsmasq) is free software providing Domain Name System caching, a Dynamic Host Configuration Protocol server, router advertisement and network boot features, intended for small computer networks.'

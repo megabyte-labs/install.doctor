@@ -117,7 +117,8 @@ else
 fi
 
 ### Apply GRUB2 theme
-if [ -d /sys/firmware/efi ]; then
+# Set `export DEBUG_MODE=true` to bypass GRUB2 / Plymouth application
+if [ -d /sys/firmware/efi ] && [ "$DEBUG_MODE" != 'true' ]; then
     logg info 'Assuming system is UEFI-enabled since /sys/firmware/efi is present'
     if [ -f /boot/efi/EFI/qubes/grub.cfg ]; then
         logg info 'Running `sudo grub2-mkconfig -o /boot/efi/EFI/qubes/grub.cfg`'
