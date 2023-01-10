@@ -1,5 +1,5 @@
+{{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
-{{- if (ne .host.distro.family "windows") }}
 
 # Node.js version: {{ output "node" "--version" }}
 
@@ -17,4 +17,5 @@ if command -v volta > /dev/null; then
 else
   logg warn 'Volta is not installed - skipping logic that ensures Node.js meets the version requirement of >15'
 fi
+
 {{ end -}}

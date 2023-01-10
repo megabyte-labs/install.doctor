@@ -1,5 +1,5 @@
+{{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
-{{- if (ne .host.distro.family "windows") }}
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
