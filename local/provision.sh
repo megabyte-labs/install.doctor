@@ -426,16 +426,21 @@ export DEBIAN_FRONTEND=noninteractive
 ### Run chezmoi apply
 # shellcheck disable=SC2016
 logg info 'Running `chezmoi apply`'
+if [ "$DEBUG_MODE" == 'true' ]; then
+  DEBUG_MODIFIER="-vvvvv"
+else
+  DEBUG_MODIFIER=""
+fi
 if [ -n "$FORCE_CHEZMOI" ]; then
   if command -v unbuffer > /dev/null; then
-    unbuffer -p chezmoi apply -k --force 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
   else
-    chezmoi apply -k --force 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+    chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
   fi
 else
   if command -v unbuffer > /dev/null; then
-    unbuffer -p chezmoi apply -k 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
   else
-    chezmoi apply -k 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+    chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
   fi
 fi
