@@ -18,8 +18,8 @@ if [ -d "$XDG_CONFIG_HOME/dconf/settings" ]; then
         fi
         DCONF_SETTINGS_ID="/$(basename "$DCONF_CONFIG_FILE" | sed 's/\./\//')/"
         if [ "$DEBUG_MODE" == 'true' ]; then
-            log info 'Dconf settings ID:'
-            log info "$DCONF_SETTINGS_ID"
+            logg info 'Dconf settings ID:'
+            echo "$DCONF_SETTINGS_ID"
         fi
         # Reset dconf settings if environment variable RESET_DCONF is set to true
         if [ "$RESET_DCONF" == 'true' ]; then
