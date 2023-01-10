@@ -3697,6 +3697,16 @@ softwarePackages:
     binary:linux: https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
     brew: kubeval
     scoop: kubeval
+  kvantum:
+    _bin: kvantum
+    apt: kvantum
+    dnf: kvantum
+    pacman: kvantum
+  rofi:
+    _bin: rofi
+    apt: rofi
+    dnf: rofi
+    pacman: rofi
   kvm:
     _bin:
       - kvm
@@ -3806,6 +3816,17 @@ softwarePackages:
     _name: null
     _when: '! test -d /usr/local/Cellar/libimobiledevice'
     brew:darwin: libimobiledevice
+  kdeplasma-addons:
+    apt: kdeplasma-addons
+    dnf: kdeplasma-addons
+    pacman: kdeplasma-addons
+  kde-plasma-desktop:
+    _deps:
+      - kdeplasma-addons
+    _bin: plasmashell
+    apt: kde-plasma-desktop
+    dnf: kde-plasma-desktop
+    pacman: kde-plasma-desktop
   krita:
     _bin: krita
     _when:cask: '! test -d "/Applications/krita.app"'
