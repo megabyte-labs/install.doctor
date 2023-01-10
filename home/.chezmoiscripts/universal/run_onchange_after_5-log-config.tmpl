@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
-# home directories: {{ output ("ls" "-1" .host.homeParentFolder) }}
+{{ $homeDirs := (output "find" .host.homeParentFolder "-mindepth" "1" "-maxdepth" "1" "-type" "d") -}}
+{{- range $homeDir := splitList "\n" $homeDirs -}}
+{{- if ne $homeDir "" -}}
+# home dir: {{ $homeDir }}
+{{ end -}}
+{{- end }}
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
