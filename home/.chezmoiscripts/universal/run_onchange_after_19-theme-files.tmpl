@@ -21,7 +21,7 @@ fi
 ### Copy theme files over to /usr/local/share
 if [ -d "$HOME/.local/src/{{ .theme | lower }}/share" ]; then
     logg info 'Copying ~/.local/src/{{ .theme | lower }}/share to /usr/local/share'
-    sudo cp -rf ~/.local/src/{{ .theme | lower }}/share/ /usr/local/share
+    sudo cp -rf ~/.local/src/betelgeuse/share/ /usr/local/
 else
     logg warn '~/.local/src/betelgeuse/share is missing'
 fi
