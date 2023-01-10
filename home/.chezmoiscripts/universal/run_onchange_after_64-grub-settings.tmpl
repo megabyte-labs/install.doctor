@@ -18,7 +18,7 @@ fi
 
 ### Copy GRUB theme to /boot/grub2/themes
 if [ -d /usr/local/share/grub/themes ]; then
-    sudo cp -rf /usr/local/share/grub/themes/ /boot/grub2/themes
+    sudo cp -rf /usr/local/share/grub/themes /boot/grub2/
     logg success 'Copied GRUB themes in /usr/local/share/grub/themes to /boot/grub2/themes'
 else
     logg warn '`/usr/local/share/grub/themes` is missing'
@@ -64,7 +64,7 @@ if [ -f /etc/default/grub ]; then
     ### GRUB_THEME
     logg info 'Setting GRUB_THEME={{ .theme }} in /etc/default/grub'
     if cat /etc/default/grub | grep GRUB_THEME; then
-        sudo sed -i 's/.*GRUB_THEME.*/GRUB_THEME="{{ .theme }}-'"$GRUB_RESOLUTION_TYPE"'/' /etc/default/grub
+        sudo sed -i 's/.*GRUB_THEME.*/GRUB_THEME="{{ .theme }}-'"$GRUB_RESOLUTION_TYPE"'"/' /etc/default/grub
     else
         echo 'GRUB_THEME="{{ .theme }}-'"$GRUB_RESOLUTION_TYPE"'"' | sudo tee -a /etc/default/grub
     fi
@@ -72,7 +72,7 @@ if [ -f /etc/default/grub ]; then
     ### GRUB_BACKGROUND
     logg info 'Setting GRUB_BACKGROUND=/usr/local/share/grub/{{ .theme }}-blue.png in /etc/default/grub'
     if cat /etc/default/grub | grep GRUB_BACKGROUND; then
-        sudo sed -i 's/.*GRUB_BACKGROUND.*/GRUB_BACKGROUND="/usr/local/share/grub/{{ .theme }}-blue.png"/' /etc/default/grub
+        sudo sed -i 's/.*GRUB_BACKGROUND.*/GRUB_BACKGROUND="\/usr\/local\/share\/grub\/{{ .theme }}-blue.png"/' /etc/default/grub
     else
         echo 'GRUB_BACKGROUND="/usr/local/share/grub/{{ .theme }}-blue.png"' | sudo tee -a /etc/default/grub
     fi
@@ -87,12 +87,12 @@ if [ -f /etc/default/grub ]; then
 
     ### GRUB_FORCE_HIDDEN_MENU
     logg info 'Setting GRUB_FORCE_HIDDEN_MENU={{ .grub.shiftToSee }} in /etc/default/grub'
-    sudo sed -i 's/GRUB_FORCE_HIDDEN_MENU/d' /etc/default/grub
+    sudo sed -i '/GRUB_FORCE_HIDDEN_MENU/d' /etc/default/grub
     echo "GRUB_FORCE_HIDDEN_MENU={{ .grub.shiftToSee }}" | sudo tee -a /etc/default/grub
 
     ### Remove duplicate lines in /etc/default/grub
     logg info 'Ensuring there are no duplicate entries in /etc/default/grub'
-    cat /etc/default/grub | uniq -u | sudo tee /etc/default/grub
+    cat /etc/default/grub | uniq | sudo tee /etc/default/grub > /dev/null
 else
     logg warn '/etc/default/grub is missing'
 fi
