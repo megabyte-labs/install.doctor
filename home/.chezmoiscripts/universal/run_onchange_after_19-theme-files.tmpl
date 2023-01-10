@@ -10,7 +10,7 @@ for ITEM_TO_BE_REMOVED in "/usr/share/backgrounds/images" "/usr/share/background
     sudo rm -rf "$ITEM_TO_BE_REMOVED"
     logg success "Removed $ITEM_TO_BE_REMOVED"
   fi
-fi
+done
 
 ### Ensure /usr/local/share exists
 if [ ! -d /usr/local/share ]; then
