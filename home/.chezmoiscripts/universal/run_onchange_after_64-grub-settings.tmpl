@@ -124,7 +124,7 @@ if [ -d /sys/firmware/efi ] && [ "$DEBUG_MODE" != 'true' ]; then
         logg info 'Running `sudo grub2-mkconfig -o /boot/efi/EFI/qubes/grub.cfg`'
         sudo grub2-mkconfig -o /boot/efi/EFI/qubes/grub.cfg
         logg success 'Applied GRUB2 theme'
-    elif [ -f /boot/efi/EFI/grub.cfg ]
+    elif [ -f /boot/efi/EFI/grub.cfg ]; then
         logg info 'Running `sudo grub2-mkconfig -o /boot/efi/EFI/grub.cfg`'
         sudo grub2-mkconfig -o /boot/efi/EFI/grub.cfg
         logg success 'Applied GRUB2 theme'
