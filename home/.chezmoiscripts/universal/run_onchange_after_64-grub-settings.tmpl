@@ -116,26 +116,39 @@ else
     logg warn "/boot/grub2/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icons/$GRUB_ICON.png is missing"
 fi
 
+### Ensure grub2-mkconfig is available
+if ! command -v grub2-mkconfig > /dev/null; then
+    if command -v grub-mkconfig > /dev/null; then
+        sudo ln -s "$(which grub-mkconfig)" /usr/bin/grub2-mkconfig
+    else
+        logg warn 'Neither grub2-mkconfig or grub-mkconfig are available
+    fi
+fi
+
 ### Apply GRUB2 theme
 # Set `export DEBUG_MODE=true` to bypass GRUB2 / Plymouth application
-if [ -d /sys/firmware/efi ] && [ "$DEBUG_MODE" != 'true' ]; then
-    logg info 'Assuming system is UEFI-enabled since /sys/firmware/efi is present'
-    if [ -f /boot/efi/EFI/qubes/grub.cfg ]; then
-        logg info 'Running `sudo grub2-mkconfig -o /boot/efi/EFI/qubes/grub.cfg`'
-        sudo grub2-mkconfig -o /boot/efi/EFI/qubes/grub.cfg
-        logg success 'Applied GRUB2 theme'
-    elif [ -f /boot/efi/EFI/grub.cfg ]; then
-        logg info 'Running `sudo grub2-mkconfig -o /boot/efi/EFI/grub.cfg`'
-        sudo grub2-mkconfig -o /boot/efi/EFI/grub.cfg
-        logg success 'Applied GRUB2 theme'
+if [ "$DEBUG_MODE" != 'true' ]; then
+    if [ -d /sys/firmware/efi ]; then
+        logg info 'Assuming system is UEFI-enabled since /sys/firmware/efi is present'
+        if [ -f /boot/efi/EFI/qubes/grub.cfg ]; then
+            logg info 'Running `sudo grub2-mkconfig -o /boot/efi/EFI/qubes/grub.cfg`'
+            sudo grub2-mkconfig -o /boot/efi/EFI/qubes/grub.cfg
+            logg success 'Applied GRUB2 theme'
+        elif [ -f /boot/efi/EFI/grub.cfg ]; then
+            logg info 'Running `sudo grub2-mkconfig -o /boot/efi/EFI/grub.cfg`'
+            sudo grub2-mkconfig -o /boot/efi/EFI/grub.cfg
+            logg success 'Applied GRUB2 theme'
+        else
+            logg warn 'Unknown GRUB2 configuration - not applying GRUB2 theme'
+        fi
     else
-        logg warn 'Unknown GRUB2 configuration - not applying GRUB2 theme'
+        logg info 'Assuming system is non-UEFI since /sys/firmware/efi is not present'
+        logg info 'Running `sudo grub2-mkconfig -o /boot/grub2/grub.cfg`'
+        sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+        logg success 'Applied GRUB2 theme'
     fi
 else
-    logg info 'Assuming system is non-UEFI since /sys/firmware/efi is not present'
-    logg info 'Running `sudo grub2-mkconfig -o /boot/grub2/grub.cfg`'
-    sudo grub2-mkconfig -o /boot/grub2/grub.cfg
-    logg success 'Applied GRUB2 theme'
+    logg info 'Skipping GRUB2 theme application because DEBUG_MODE is set to true'
 fi
 
 {{ end -}}
