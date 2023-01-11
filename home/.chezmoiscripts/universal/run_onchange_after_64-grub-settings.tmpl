@@ -110,7 +110,7 @@ fi
 
 ### Copy icon to GRUB2 theme folder
 if [ -f "/boot/grub2/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icons/$GRUB_ICON.png" ]; then
-    cp -f /boot/grub2/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icons/$GRUB_ICON.png /boot/grub2/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icon.png
+    sudo cp -f /boot/grub2/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icons/$GRUB_ICON.png /boot/grub2/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icon.png
     logg success 'Copied platform-specific icon to GRUB2 theme folder'
 else
     logg warn "/boot/grub2/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icons/$GRUB_ICON.png is missing"
