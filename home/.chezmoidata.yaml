@@ -638,7 +638,8 @@ softwareGroups:
   Virtualization: &Virtualization
     - kvm
     - lxdc
-    - multipass
+    # Opens persistent menu icon on GNOME and has issues that sometimes require switching the virt driver
+    # - multipass
     - packer
     - vagrant
   Virtualization-Desktop: &Virtualization-Desktop
