@@ -282,21 +282,6 @@
       "command": "bash start.sh && task get:links"
     },
     {
-      "label": "(git:filter): Remove large unnecessary and large files from the repository",
-      "type": "shell",
-      "command": "bash start.sh && task git:filter"
-    },
-    {
-      "label": "(git:remotes): Configure the the `origin`, `gitlab`, `github`, and `all` git remotes",
-      "type": "shell",
-      "command": "bash start.sh && task git:remotes"
-    },
-    {
-      "label": "(git:remove:submodules): Remove all submodules in the current directory and optionally filter by RegEx",
-      "type": "shell",
-      "command": "bash start.sh && task git:remove:submodules"
-    },
-    {
       "label": "(go:test:convey): Run tests through the browser with GoConvey",
       "type": "shell",
       "command": "bash start.sh && task go:test:convey"

@@ -593,7 +593,7 @@ tasks:
       - |
         task --list > /dev/null || (echo "ERROR: Invalid Taskfiles!" && exit 1)
         git add --all
-      - HUSKY=0 git commit -m '🔧 chore(tweak): quick minor update' --no-verify
+      - 'HUSKY=0 git commit -m "🔧 chore(tweak): quick minor update" --no-verify'
       - git push origin master
 
   devcontainer:
