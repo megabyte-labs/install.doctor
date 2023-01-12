@@ -10,14 +10,15 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-find /home -maxdepth 1 -type d | while read HOME_DIR; do
-  USER_FOLDER="$(echo "$HOME_DIR" | sed 's/\/\([^\/]*\)/\1/')"
-  if [ ! -d "/var/log/user/$USER_FOLDER" ]; then
-    if [ ! -d "$HOME_DIR/.local/log" ]; then
-      mkdir -p "$HOME_DIR/.local/log"
+find /home -mindepth 1 -maxdepth 1 -type d | while read HOME_DIR; do
+  USER_FOLDER="$(echo "$HOME_DIR" | sed 's/.*\/\([^\/]*\)$/\1/')"
+  if [ -d "$HOME_DIR/.local" ]; then
+    if [ ! -d "/var/log/user/$USER_FOLDER" ]; then
+      if [ ! -d "$HOME_DIR/.local/log" ]; then
+        mkdir -p "$HOME_DIR/.local/log"
+      fi
+      sudo ln -s "$HOME_DIR/.local/log" "/var/log/user/$USER_FOLDER"
+      logg success 'Symlinked /var/log/user/'"$USER_FOLDER"' to ~/.local/log'
     fi
-    sudo mkdir -p "$(dirname "/var/log/user/$USER_FOLDER")"
-    sudo ln -s "$HOME_DIR/.local/log" "/var/log/user/$USER_FOLDER"
-    logg success 'Symlinked /var/log/user/'"$USER_FOLDER"' to ~/.local/log'
   fi
 done

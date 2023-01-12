@@ -73,7 +73,7 @@ if [ -f "$HOME/.config/desktop/gnome.yml" ]; then
         EXT_SETTINGS_TYPE="$(cat "$TMP" | jq -r '.settings | type')"
         EXT_SETTINGS="$(cat "$TMP" | jq -r '.settings')"
         if [ "$EXT_SETTINGS" != 'null' ]; then
-            logg info 'Evaluating extension settings'
+            logg info 'Evaluating extension settings for `'"$EXT_ID"'`'
             if [ "$EXT_SETTINGS_TYPE" == 'array' ]; then
                 cat "$TMP" | jq -r '.settings[]' | while read EXT_SETTING; do
                     logg info 'Applying following extension setting:'
