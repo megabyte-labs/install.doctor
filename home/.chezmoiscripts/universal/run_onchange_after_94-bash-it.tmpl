@@ -1,5 +1,5 @@
 {{- if (ne .host.distro.family "windows") -}}
-#!/usr/bin/env bash
+#!/usr/bin/env bash -i
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
@@ -10,7 +10,7 @@ if ! command -v powerline > /dev/null; then
 fi
 
 ### Bash-it completions / plugins
-if command -v powerline > /dev/null; then
+if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
     logg info 'Running `source ~/.bashrc`'
     source ~/.bashrc
     logg success 'Imported the `~/.bashrc` profile'
@@ -28,7 +28,11 @@ if command -v powerline > /dev/null; then
         logg warn '`bash-it` is not available'
     fi
 else
-    logg warn '`powerline` is not available'
+    if ! command -v powerline > /dev/null; then
+        logg warn '`powerline` is not available'
+    else
+        logg warn '`~/.bashrc` is missing'
+    fi
 fi
 
 {{ end -}}
