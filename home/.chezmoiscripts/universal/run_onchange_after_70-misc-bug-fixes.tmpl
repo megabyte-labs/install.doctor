@@ -65,6 +65,9 @@ if [ -d "$SOURCE_DIR" ] && [ -d "$TARGET_DIR" ]; then
     if [ -f "$SOURCE_DIR/preferences-desktop-remote-desktop.svg" ] && [ ! -f "$TARGET_DIR/org.gnome.Connections.svg" ]; then
         sudo cp -f "$SOURCE_DIR/preferences-desktop-remote-desktop.svg" "$TARGET_DIR/org.gnome.Connections.svg"
     fi
+    if [ -f "$SOURCE_DIR/com.github.wwmm.pulseeffects.svg" ] && [ ! -f "$TARGET_DIR/com.mattjakeman.ExtensionManager.svg" ]; then
+        sudo cp -f "$SOURCE_DIR/com.github.wwmm.pulseeffects.svg" "$TARGET_DIR/com.mattjakeman.ExtensionManager.svg"
+    fi
 fi
 
 ### Icons added to fork (https://github.com/ProfessorManhattan/candy-icons)

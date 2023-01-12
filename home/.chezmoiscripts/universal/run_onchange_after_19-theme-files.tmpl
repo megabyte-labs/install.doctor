@@ -40,4 +40,30 @@ else
     logg warn '`squash-symlink` is not a script in the PATH'
 fi
 
+### Copy /usr/local/share/backgrounds to /usr/share/backgrounds (required for GNOME wallpaper on Ubuntu)
+if [ -d /usr/local/share/backgrounds ] && command -v rsync > /dev/null; then
+    sudo rsync -atvu --include "*.jpg" --exclude "*" /usr/local/share/backgrounds/ /usr/share/backgrounds
+    sudo rsync -atvu --include "*.jpg" --exclude "*" /usr/local/share/backgrounds/images/ /usr/share/backgrounds
+    logg success 'Synchronized the background images in /usr/local/share/backgrounds to /usr/share/backgrounds'
+fi
+
+### Add the default image symlink based on the OS
+if [ '{{ .host.os.id }}' == 'archlinux' ]; then
+    sudo ln -s /usr/local/share/wallpapers/Betelgeuse-Archlinux/contents/source.png /usr/share/backgrounds/default.png
+elif [ '{{ .host.os.id }}' == 'centos' ]; then
+    sudo ln -s /usr/local/share/wallpapers/Betelgeuse-CentOS/contents/source.png /usr/share/backgrounds/default.png
+elif [ '{{ .host.os.id }}' == 'darwin' ]; then
+    sudo ln -s /usr/local/share/wallpapers/Betelgeuse-macOS/contents/source.png /usr/share/backgrounds/default.png
+elif [ '{{ .host.os.id }}' == 'debian' ]; then
+    sudo ln -s /usr/local/share/wallpapers/Betelgeuse-Debian/contents/source.png /usr/share/backgrounds/default.png
+elif [ '{{ .host.os.id }}' == 'fedora' ]; then
+    sudo ln -s /usr/local/share/wallpapers/Betelgeuse-Fedora/contents/source.png /usr/share/backgrounds/default.png
+elif [ '{{ .host.os.id }}' == 'ubuntu' ]; then
+    sudo ln -s /usr/local/share/wallpapers/Betelgeuse-Ubuntu/contents/source.png /usr/share/backgrounds/default.png
+else
+    sudo ln -s /usr/local/share/wallpapers/Betelgeuse/contents/source.png /usr/share/backgrounds/default.png
+fi
+
+### Note: ubuntu-default-greyscale-wallpaper.png symlink to whiteish gray background
+
 {{ end -}}
