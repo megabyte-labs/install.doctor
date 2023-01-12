@@ -32,12 +32,12 @@ else
     logg warn '~/.local/src/betelgeuse/share is missing'
 fi
 
-### Flatten theme files (i.e. convert symlinks to regular files)
-#if command -v squash-symlink > /dev/null; then
-#    logg info 'Converting all theme symlinks to equivalent regular files'
-#    sudo find /usr/local/share -type l -exec squash-symlink {} +
-#else
-#    logg warn '`squash-symlink` is not a script in the PATH'
-#fi
+### Flatten GRUB theme files (i.e. convert symlinks to regular files)
+if command -v squash-symlink > /dev/null; then
+    logg info 'Converting /usr/local/share/grub symlinks to equivalent regular files'
+    sudo find /usr/local/share/grub -type l -exec squash-symlink {} +
+else
+    logg warn '`squash-symlink` is not a script in the PATH'
+fi
 
 {{ end -}}
