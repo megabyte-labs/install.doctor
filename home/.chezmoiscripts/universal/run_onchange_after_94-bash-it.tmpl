@@ -1,0 +1,15 @@
+{{- if (ne .host.distro.family "windows") -}}
+#!/usr/bin/env bash
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+### Bash-it completions / plugins
+if command -v bash-it; then
+    logg info 'Enabling bash-it completions'
+    bash-it enable completion defaults dirs docker docker-compose export git makefile ng npm ssh system vagrant
+    logg info 'Enabling bash-it plugins'
+    bash-it enable plugin base blesh browser cht-sh dirs gitstatus powerline sudo xterm
+fi
+
+{{ end -}}

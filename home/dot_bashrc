@@ -23,6 +23,33 @@ if [ -f "$HOME/.config/shell/profile.sh" ]; then
   . "$HOME/.config/shell/profile.sh"
 fi
 
+# Prompt (on bash only)
+if [ "$BASH_SUPPORT" = 'true' ]; then
+  if [[ "$(hostname)" != *'-minimal' ]]; then
+    ### Styled Terminal
+    export BASH_IT="$HOME/.local/bash_it"
+    export BASH_IT_THEME="powerline"
+    if [ -f "$BASH_IT/bash_it.sh" ]; then
+      . "$BASH_IT/bash_it.sh"
+    elif command -v oh-my-posh > /dev/null; then
+      # Oh My Posh (See: https://ohmyposh.dev/)
+      eval "$(oh-my-posh init bash --config "$XDG_CONFIG_HOME/oh-my-posh/Betelgeuse.omp.json")"
+    else
+      # Basic styled terminal
+      case "$TERM" in
+      xterm* | rxvt* | Eterm | aterm | kterm | gnome* | alacritty)
+        PS1="\n \[\033[0;34m\]╭─\[\033[0;31m\]\[\033[0;37m\]\[\033[41m\] $OS_ICON \u \[\033[0m\]\[\033[0;31m\]\[\033[44m\]\[\033[0;34m\]\[\033[44m\]\[\033[0;30m\]\[\033[44m\] \w \[\033[0m\]\[\033[0;34m\] \n \[\033[0;34m\]╰ \[\033[1;36m\]\$ \[\033[0m\]"
+        ;;
+      esac
+    fi
+  else
+    # Minimal session
+    if command -v oh-my-posh > /dev/null; then
+      eval "$(oh-my-posh init bash --config "$XDG_CONFIG_HOME/oh-my-posh/Betelgeuse-minimal.omp.json")"
+    fi
+  fi
+fi
+
 ### Fig / LC_ALL
 if [ "$BASH_SUPPORT" = 'true' ]; then
   if [ -f "$HOME/.fig/shell/bashrc.pre.bash" ]; then
@@ -45,33 +72,6 @@ if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
 
-# Prompt (on bash only)
-if [ "$BASH_SUPPORT" = 'true' ]; then
-  if [[ "$(hostname)" != *'-minimal' ]]; then
-    ### Styled Terminal
-    export BASH_IT="$HOME/.local/bash_it"
-    export BASH_IT_THEME=modern
-    if [ -f "$BASH_IT/bash_it.sh" ]; then
-      . "$BASH_IT/bash_it.sh"
-    elif command -v oh-my-posh > /dev/null; then
-      # Oh My Posh (See: https://ohmyposh.dev/)
-      eval "$(oh-my-posh init bash --config "$XDG_CONFIG_HOME/oh-my-posh/Betelgeuse.omp.json")"
-    else
-      # Basic styled terminal
-      case "$TERM" in
-      xterm* | rxvt* | Eterm | aterm | kterm | gnome* | alacritty)
-        PS1="\n \[\033[0;34m\]╭─\[\033[0;31m\]\[\033[0;37m\]\[\033[41m\] $OS_ICON \u \[\033[0m\]\[\033[0;31m\]\[\033[44m\]\[\033[0;34m\]\[\033[44m\]\[\033[0;30m\]\[\033[44m\] \w \[\033[0m\]\[\033[0;34m\] \n \[\033[0;34m\]╰ \[\033[1;36m\]\$ \[\033[0m\]"
-        ;;
-      esac
-    fi
-  else
-    # Minimal session
-    if command -v oh-my-posh > /dev/null; then
-      eval "$(oh-my-posh init bash --config "$XDG_CONFIG_HOME/oh-my-posh/Betelgeuse-minimal.omp.json")"
-    fi
-  fi
-fi
-
 ### Bash Initialization Hooks
 if [ "$BASH_SUPPORT" = 'true' ]; then
   ### Bash Completion
@@ -89,11 +89,6 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     . "$ASDF_DATA_DIR/plugins/java/set-java-home.bash"
   fi
 
-  ### zoxide
-  if command -v zoxide > /dev/null; then
-    eval "$(zoxide init --cmd cd bash)" > /dev/null
-  fi
-
   ### Fig
   if [ -f "$HOME/.fig/shell/bashrc.post.bash" ]; then
     . "$HOME/.fig/shell/bashrc.post.bash"
@@ -102,5 +97,10 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   ### Vault
   if command -v vault > /dev/null; then
     complete -C vault vault
+  fi
+
+  ### zoxide
+  if command -v zoxide > /dev/null; then
+    eval "$(zoxide init --cmd cd bash)" > /dev/null
   fi
 fi

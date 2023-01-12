@@ -259,13 +259,13 @@ if command -v antigen > /dev/null; then
   # Fix for oh-my-zsh overriding exa aliases
   export DISABLE_LS_COLORS=true
   antigen use oh-my-zsh
-  # antigen bundle adb
+  antigen bundle adb
   # antigen bundle colored-man-pages
   # antigen bundle command-not-found
   # antigen bundle copyfile
   # antigen bundle copybuffer
   # antigen bundle encode64
-  # antigen bundle fd
+  antigen bundle fd
   # antigen bundle git-auto-fetch
   # antigen bundle gnu-utils
   # antigen bundle heroku
@@ -274,29 +274,27 @@ if command -v antigen > /dev/null; then
   # antigen bundle macos
   # antigen bundle magic-enter
   # antigen bundle minikube
-  # antigen bundle ng
+  antigen bundle ng
   # antigen bundle nomad
-  # antigen bundle npm
+  antigen bundle npm
   # antigen bundle redis-cli
-  # antigen bundle ripgrep
+  antigen bundle ripgrep
   # antigen bundle rust
   # antigen bundle safe-paste
   # antigen bundle salt
   # antigen bundle shell-proxy
   # antigen bundle ssh-agent
-  # antigen bundle sudo
+  antigen bundle sudo
   # antigen bundle ufw
   # antigen bundle web-search
-  # antigen bundle docker
-  # antigen bundle docker-compose
-  # antigen bundle gem
-  # antigen bundle ionic
-  # antigen bundle microk8s
+  antigen bundle docker
+  antigen bundle docker-compose
+  antigen bundle ionic
   # antigen bundle multipass
   # antigen bundle pip
   # antigen bundle pm2
   # antigen bundle terraform
-  # antigen bundle vagrant
+  antigen bundle vagrant
   # antigen bundle yarn
 
   # antigen bundle zsh-interactive-cd
@@ -335,11 +333,6 @@ if command -v mcfly > /dev/null; then
 	eval "$(mcfly init zsh)"
 fi
 
-### zoxide
-if command -v zoxide > /dev/null; then
-	eval "$(zoxide init --cmd cd zsh)" > /dev/null
-fi
-
 ### Fig
 if [ -f "$HOME/.fig/shell/zshrc.post.zsh" ]; then
 	source "$HOME/.fig/shell/zshrc.post.zsh"
@@ -356,4 +349,9 @@ autoload -U +X bashcompinit && bashcompinit
 ### HashiCorp Vault
 if command -v vault > /dev/null; then
 	complete -o nospace -C vault vault
+fi
+
+### zoxide
+if command -v zoxide > /dev/null; then
+	eval "$(zoxide init --cmd cd zsh)" > /dev/null
 fi
