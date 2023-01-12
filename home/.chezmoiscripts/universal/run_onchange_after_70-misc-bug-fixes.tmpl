@@ -29,6 +29,19 @@ else
     logg warn '`rsync` is missing from the system!'
 fi
 
+### Move ~/.gnome/apps/* to ~/.local/share/applications
+if [ -d "$HOME/gnome/apps" ]; then
+    if [ ! -d "${XDG_DATA_DIR:-$HOME/.local/share}/applications" ]; then
+        mkdir -p "${XDG_DATA_DIR:-$HOME/.local/share}/applications"
+    fi
+    find "$HOME/gnome/apps" -mindepth 1 -maxdepth 1 -type f | while read DESKTOP_FILE; do
+        logg info "Moving $DESKTOP_FILE to ${XDG_DATA_DIR:-$HOME/.local/share}/applications/$(basename "$DESKTOP_FILE")"
+        mv "$DESKTOP_FILE" "${XDG_DATA_DIR:-$HOME/.local/share}/applications/$(basename "$DESKTOP_FILE")"
+    done
+    logg info 'Removing ~/.gnome/apps'
+    rm -rf "$HOME/.gnome/apps"
+fi
+
 ##### CANDY ICONS START ######
 
 ### Additional icons
