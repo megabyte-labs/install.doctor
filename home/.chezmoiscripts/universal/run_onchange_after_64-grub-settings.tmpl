@@ -115,7 +115,7 @@ if [ -f "/boot/grub2/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icons/$GRUB_ICON.
 else
     logg warn "/boot/grub2/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icons/$GRUB_ICON.png is missing"
 fi
-set -x
+
 ### Ensure grub2-mkconfig is available
 if ! command -v grub2-mkconfig > /dev/null; then
     if command -v grub-mkconfig > /dev/null; then
