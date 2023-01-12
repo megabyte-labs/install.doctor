@@ -40,26 +40,26 @@ else
     logg warn '`squash-symlink` is not a script in the PATH'
 fi
 
-### Copy /usr/local/share/backgrounds to /usr/share/backgrounds (required for GNOME wallpaper on Ubuntu)
-if [ -d /usr/local/share/backgrounds ] && command -v rsync > /dev/null; then
-    sudo rsync -atvu --include "*.jpg" --exclude "*" /usr/local/share/backgrounds/ /usr/share/backgrounds
-    sudo rsync -atvu --include "*.jpg" --exclude "*" /usr/local/share/backgrounds/images/ /usr/share/backgrounds
-    logg success 'Synchronized the background images in /usr/local/share/backgrounds to /usr/share/backgrounds'
+### Ensure /usr/share/backgrounds/default.png is deleted
+if [ -f /usr/share/backgrounds/default.png ]; then
+    sudo rm -f /usr/share/backgrounds/default.png
 fi
 
 ### Add the default image symlink based on the OS
-if [ '{{ .host.os.id }}' == 'archlinux' ]; then
+if [ '{{ .host.distro.id }}' == 'archlinux' ]; then
     sudo ln -s /usr/local/share/wallpapers/Betelgeuse-Archlinux/contents/source.png /usr/share/backgrounds/default.png
-elif [ '{{ .host.os.id }}' == 'centos' ]; then
+elif [ '{{ .host.distro.id }}' == 'centos' ]; then
     sudo ln -s /usr/local/share/wallpapers/Betelgeuse-CentOS/contents/source.png /usr/share/backgrounds/default.png
-elif [ '{{ .host.os.id }}' == 'darwin' ]; then
+elif [ '{{ .host.distro.id }}' == 'darwin' ]; then
     sudo ln -s /usr/local/share/wallpapers/Betelgeuse-macOS/contents/source.png /usr/share/backgrounds/default.png
-elif [ '{{ .host.os.id }}' == 'debian' ]; then
+elif [ '{{ .host.distro.id }}' == 'debian' ]; then
     sudo ln -s /usr/local/share/wallpapers/Betelgeuse-Debian/contents/source.png /usr/share/backgrounds/default.png
-elif [ '{{ .host.os.id }}' == 'fedora' ]; then
+elif [ '{{ .host.distro.id }}' == 'fedora' ]; then
     sudo ln -s /usr/local/share/wallpapers/Betelgeuse-Fedora/contents/source.png /usr/share/backgrounds/default.png
-elif [ '{{ .host.os.id }}' == 'ubuntu' ]; then
+elif [ '{{ .host.distro.id }}' == 'ubuntu' ]; then
     sudo ln -s /usr/local/share/wallpapers/Betelgeuse-Ubuntu/contents/source.png /usr/share/backgrounds/default.png
+elif [ '{{ .host.distro.id }}' == 'windows' ]; then
+    sudo ln -s /usr/local/share/wallpapers/Betelgeuse-Windows/contents/source.png /usr/share/backgrounds/default.png
 else
     sudo ln -s /usr/local/share/wallpapers/Betelgeuse/contents/source.png /usr/share/backgrounds/default.png
 fi
