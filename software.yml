@@ -3700,9 +3700,12 @@ softwarePackages:
     brew: kubeval
     scoop: kubeval
   kvantum:
-    _bin: kvantum
-    apt: kvantum
-    dnf: kvantum
+    _bin: kvantummanager
+    apt:
+      - qt5-style-kvantum
+      - qt5-style-kvantum-themes
+    dnf: kvantum-qt5
+    eopkg: kvantum
     pacman: kvantum
   kvm:
     _bin:
