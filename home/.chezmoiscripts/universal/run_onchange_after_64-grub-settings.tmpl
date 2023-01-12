@@ -21,7 +21,7 @@ if [ -d /usr/local/share/grub/themes ]; then
     sudo cp -rf /usr/local/share/grub/themes /boot/grub2/
     logg success 'Copied GRUB themes in /usr/local/share/grub/themes to /boot/grub2/themes'
 else
-    logg warn '`/usr/local/share/grub/themes` is missing'
+    logg warn '/usr/local/share/grub/themes is missing'
 fi
 
 ### Set default GRUB screen resolution variables
@@ -37,10 +37,10 @@ if command -v xrandr > /dev/null && command -v uniq > /dev/null; then
     logg success "Screen detected as $SCREEN_WIDTH x $SCREEN_HEIGHT (ratio of $SCREEN_RATIO)"
     if (( $(echo "$SCREEN_RATIO $SCREEN_RATIO_ULTRAWIDE" | awk '{print ($1 > $2)}') )); then
         GRUB_RESOLUTION_TYPE="ultrawide"
-        logg info 'GRUB resolution registered as `ultrawide`'
+        logg info 'GRUB resolution registered as ultrawide'
     fi
 else
-    logg warn 'Missing either `xrandr` or `uniq` (required for calculating screen size ratio)'
+    logg warn 'Missing either xrandr or uniq (required for calculating screen size ratio)'
 fi
 
 ### Optimize the GRUB resolution
@@ -126,16 +126,16 @@ if ! command -v grub2-mkconfig > /dev/null; then
 fi
 
 ### Apply GRUB2 theme
-# Set `export DEBUG_MODE=true` to bypass GRUB2 / Plymouth application
+# Set export DEBUG_MODE=true to bypass GRUB2 / Plymouth application
 if [ "$DEBUG_MODE" != 'true' ]; then
     if [ -d /sys/firmware/efi ]; then
         logg info 'Assuming system is UEFI-enabled since /sys/firmware/efi is present'
         if [ -f /boot/efi/EFI/qubes/grub.cfg ]; then
-            logg info 'Running `sudo grub2-mkconfig -o /boot/efi/EFI/qubes/grub.cfg`'
+            logg info 'Running sudo grub2-mkconfig -o /boot/efi/EFI/qubes/grub.cfg'
             sudo grub2-mkconfig -o /boot/efi/EFI/qubes/grub.cfg
             logg success 'Applied GRUB2 theme'
         elif [ -f /boot/efi/EFI/grub.cfg ]; then
-            logg info 'Running `sudo grub2-mkconfig -o /boot/efi/EFI/grub.cfg`'
+            logg info 'Running sudo grub2-mkconfig -o /boot/efi/EFI/grub.cfg'
             sudo grub2-mkconfig -o /boot/efi/EFI/grub.cfg
             logg success 'Applied GRUB2 theme'
         else
@@ -143,7 +143,7 @@ if [ "$DEBUG_MODE" != 'true' ]; then
         fi
     else
         logg info 'Assuming system is non-UEFI since /sys/firmware/efi is not present'
-        logg info 'Running `sudo grub2-mkconfig -o /boot/grub2/grub.cfg`'
+        logg info 'Running sudo grub2-mkconfig -o /boot/grub2/grub.cfg'
         sudo grub2-mkconfig -o /boot/grub2/grub.cfg
         logg success 'Applied GRUB2 theme'
     fi
