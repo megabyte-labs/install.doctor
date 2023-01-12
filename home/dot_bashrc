@@ -23,8 +23,24 @@ if [ -f "$HOME/.config/shell/profile.sh" ]; then
   . "$HOME/.config/shell/profile.sh"
 fi
 
-# Prompt (on bash only)
+### Fig / LC_ALL
 if [ "$BASH_SUPPORT" = 'true' ]; then
+  if [ -f "$HOME/.fig/shell/bashrc.pre.bash" ]; then
+    . "$HOME/.fig/shell/bashrc.pre.bash"
+  fi
+fi
+
+### History
+export HISTFILE="$XDG_STATE_HOME/bash/history"
+
+### /etc/bashrc
+if [ -f /etc/bashrc ]; then
+  . /etc/bashrc
+fi
+
+### Bash Initialization Hooks
+if [ "$BASH_SUPPORT" = 'true' ]; then
+  # Prompt (on bash only)
   if [[ "$(hostname)" != *'-minimal' ]]; then
     ### Styled Terminal
     export BASH_IT="$HOME/.local/bash_it"
@@ -48,32 +64,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
       eval "$(oh-my-posh init bash --config "$XDG_CONFIG_HOME/oh-my-posh/Betelgeuse-minimal.omp.json")"
     fi
   fi
-fi
 
-### Fig / LC_ALL
-if [ "$BASH_SUPPORT" = 'true' ]; then
-  if [ -f "$HOME/.fig/shell/bashrc.pre.bash" ]; then
-    . "$HOME/.fig/shell/bashrc.pre.bash"
-  fi
-fi
-
-### Settings
-if command -v shopt > /dev/null; then
-  shopt -s globstar
-  shopt -s histappend
-  shopt -s checkwinsize
-fi
-
-### History
-export HISTFILE="$XDG_STATE_HOME/bash/history"
-
-### /etc/bashrc
-if [ -f /etc/bashrc ]; then
-  . /etc/bashrc
-fi
-
-### Bash Initialization Hooks
-if [ "$BASH_SUPPORT" = 'true' ]; then
   ### Bash Completion
   if [ -f "/usr/local/etc/profile.d/bash_completion.sh" ]; then
     . "/usr/local/etc/profile.d/bash_completion.sh"
