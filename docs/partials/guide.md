@@ -15,6 +15,18 @@ To provision your workstation, you can run the following which will install some
 bash <(curl -sSL https://install.doctor/start)
 ```
 
+If you fork this repository and would like to use your fork as the source, you can still use the command shown above by setting the `START_REPO` environment variable. If it is located on GitHub, you can do this by running:
+
+```
+START_REPO=my-gh-user/my-fork-name bash <(curl -sSL https://install.doctor/start)
+```
+
+Alternatively, if you want to host your project on GitLab or another git provider, then just specify the git remote's URL:
+
+```
+START_REPO=git@gitlab.com:megabyte-labs/sexy-start.git bash <(curl -sSL https://install.doctor/start)
+```
+
 ### Quick Start Notes
 
 * The quick start script is tested on the latest versions of Archlinux, CentOS, Debian, Fedora, macOS, and Ubuntu
@@ -53,3 +65,17 @@ Qubes support is on its way.
 ## Gas Station
 
 This project began as something to supplement our provisioning system that uses Ansible. The system is called [Gas Station](https://gitlab.com/megabyte-labs/gas-station). It includes hundreds of Ansible roles. If you look at the [`software.yml`](/sexy-start) file, you will notice that some of the Ansible roles that Gas Station provides are inside of it. By default, this project will try to install software / dependencies using other, lighter methods before resorting to using Ansible. This is because of the software installer order that is defined at the top of the software.yml file. Gas Station is also still used to house some of the variables / data that this project uses.
+
+## Chezmoi
+
+This project uses Chezmoi to orchestrate the provisioning. After calling the quick start script shown above, the quick start script will ensure some dependencies are installed (including Chezmoi) and then initiate Chezmoi. In order to customize this project, you should head over to the Chezmoi documentation to get a better understanding of why some of the files in this repository start with `dot_`, `run_`, etc.
+
+### Resetting Chezmoi
+
+This script is designed to run only the code that is necessary to improve performance. This is accomplished by using [`.chezmoiscripts`](home/.chezmoiscripts), Chezmoi's `onchange_` identifier, and a custom installer written in ZX that is powered by the software definitions in [`software.yml`](software.yml).
+
+If there is an error during the provision process or you make changes that are not being run during the provision process then you might want to clear Chezmoi's cache and configuration. This can be done on macOS/Linux by running:
+
+```
+rm -rf ~/.config/chezmoi && rm -rf ~/.cache/chezmoi
+```

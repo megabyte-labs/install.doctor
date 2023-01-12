@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # @file local/provision.sh
-# @brief Installs dependencies, clones the Hiawatha Dotfiles repository, and then starts Chezmoi
+# @brief Installs dependencies, clones the Sexy Start repository, and then starts Chezmoi
 # @description
 #   This script ensures Chezmoi, Glow, and Gum are installed. It also includes logging functions for styled logging.
-#   After dependencies are installed, it adds the necessary files from https://gitlab.com/megabyte-labs/hiawatha-dotfiles.git into
+#   After dependencies are installed, it adds the necessary files from https://gitlab.com/megabyte-labs/sexy-start.git into
 #   ~/.local/share/chezmoi. Finally, it begins the TUI experience by displaying styled documentation, prompts, and finishes
 #   by calling the appropriate Chezmoi commands.
 
@@ -179,7 +179,6 @@ logg() {
     "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$TYPE")")"
   fi
 }
-
 
 ### Qubes dom0
 if command -v qubesctl > /dev/null; then
@@ -359,39 +358,49 @@ if command -v brew > /dev/null; then
   installBrewPackage zx
 fi
 
+### Clones the source repository
+cloneStart() {
+  logg info "Cloning ${START_REPO:-https://gitlab.com/megabyte-labs/sexy-start.git} to /usr/local/src/sexy-start"
+  rm -rf /usr/local/src/sexy-start
+  sudo git clone ${START_REPO:-https://gitlab.com/megabyte-labs/sexy-start.git} /usr/local/src/sexy-start
+  chown -Rf "$USER":"$(id -g -n)" /usr/local/src/sexy-start
+}
+
 ### Ensure source files are present
-logg 'Ensuring /usr/local/src/hiawatha is owned by the user'
-if [ -d /usr/local/src/hiawatha ] && [ ! -w /usr/local/src/hiawatha ]; then
-  sudo chown -Rf "$USER":"$(id -g -n)" /usr/local/src/hiawatha
+logg 'Ensuring /usr/local/src/sexy-start is owned by the user'
+if [ -d /usr/local/src/sexy-start ] && [ ! -w /usr/local/src/sexy-start ]; then
+  sudo chown -Rf "$USER":"$(id -g -n)" /usr/local/src/sexy-start
 fi
-if [ -d /usr/local/src/hiawatha/.git ]; then
-  logg info 'Pulling the latest changes from https://gitlab.com/megabyte-labs/hiawatha-dotfiles.git to /usr/local/src/hiawatha'
-  cd /usr/local/src/hiawatha || exit 1
-  git config pull.rebase false
-  git reset --hard HEAD
-  git clean -fxd
-  git pull origin master
+if [ -d /usr/local/src/sexy-start/.git ]; then
+  cd /usr/local/src/sexy-start || exit 1
+  if [ "$(git remote get-url origin)" == 'https://gitlab.com/megabyte-labs/sexy-start.git' ]; then
+    logg info "Pulling the latest changes from ${START_REPO:-https://gitlab.com/megabyte-labs/sexy-start.git} to /usr/local/src/sexy-start"
+    git config pull.rebase false
+    git reset --hard HEAD
+    git clean -fxd
+    git pull origin master
+  else
+    logg info "The repository's origin URL has changed so /usr/local/src/sexy-start will be removed and re-cloned using the origin specified by the START_REPO variable"
+    cloneStart
+  fi
 else
-  logg info 'Cloning https://gitlab.com/megabyte-labs/hiawatha-dotfiles.git to /usr/local/src/hiawatha'
-  rm -rf /usr/local/src/hiawatha
-  sudo git clone https://gitlab.com/megabyte-labs/hiawatha-dotfiles.git /usr/local/src/hiawatha
-  chown -Rf "$USER":"$(id -g -n)" /usr/local/src/hiawatha
+  cloneStart
 fi
 
 ### Copy new files from src git repository to dotfiles with rsync
 rsyncChezmoiFiles() {
-  rsync -rtvu --delete /usr/local/src/hiawatha/docs/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/docs/" &
-  rsync -rtvu --delete /usr/local/src/hiawatha/home/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/home/" &
-  rsync -rtvu --delete /usr/local/src/hiawatha/system/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/system/" &
-  rsync -rtvu /usr/local/src/hiawatha/.chezmoiignore "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiignore" &
-  rsync -rtvu /usr/local/src/hiawatha/.chezmoiroot "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiroot" &
-  rsync -rtvu /usr/local/src/hiawatha/software.yml "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/software.yml" &
+  rsync -rtvu --delete /usr/local/src/sexy-start/docs/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/docs/" &
+  rsync -rtvu --delete /usr/local/src/sexy-start/home/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/home/" &
+  rsync -rtvu --delete /usr/local/src/sexy-start/system/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/system/" &
+  rsync -rtvu /usr/local/src/sexy-start/.chezmoiignore "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiignore" &
+  rsync -rtvu /usr/local/src/sexy-start/.chezmoiroot "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiroot" &
+  rsync -rtvu /usr/local/src/sexy-start/software.yml "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/software.yml" &
   wait
   logg success 'Successfully updated the ~/.local/share/chezmoi folder with changes from the upstream repository'
 }
 
 ### Copy files to HOME folder with rsync
-logg info 'Copying files from /usr/local/src/hiawatha to the HOME directory via rsync'
+logg info 'Copying files from /usr/local/src/sexy-start to the HOME directory via rsync'
 mkdir -p "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi"
 rsyncChezmoiFiles
 ### Ensure ~/.local/bin files are executable
