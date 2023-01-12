@@ -37,6 +37,7 @@ if [ -d "$HOME/.gnome/apps" ]; then
     find "$HOME/.gnome/apps" -mindepth 1 -maxdepth 1 -type f | while read DESKTOP_FILE; do
         logg info "Moving $DESKTOP_FILE to ${XDG_DATA_HOME:-$HOME/.local/share}/applications/$(basename "$DESKTOP_FILE")"
         mv "$DESKTOP_FILE" "${XDG_DATA_HOME:-$HOME/.local/share}/applications/$(basename "$DESKTOP_FILE")"
+        chmod 755 "${XDG_DATA_HOME:-$HOME/.local/share}/applications/$(basename "$DESKTOP_FILE")"
     done
     logg info 'Removing ~/.gnome/apps'
     rm -rf "$HOME/.gnome/apps"
@@ -112,6 +113,28 @@ fi
 # Multipass - multipass_gui
 # Portmaster - portmaster, portmaster_notifier
 # GNOME Connections - org.gnome.Connections
+
+### Copy Snap desktop links to ~/.local/share/applications to apply custom icons
+find /var/lib/snapd/desktop/applications -mindepth 1 -maxdepth 1 -name "*.desktop" | while read DESKTOP_FILE; do
+    DESKTOP_FILE_BASE="$(basename "$DESKTOP_FILE" | sed 's/.desktop$//')"
+    SNAP_ICON_BASE="$(echo "$DESKTOP_FILE_BASE" | sed 's/^[^_]*_//')"
+    if [ -f "/usr/local/share/icons/Candy/apps/scalable/${DESKTOP_FILE_BASE}.svg" ] || [ -f "/usr/local/share/icons/Candy/apps/scalable/${SNAP_ICON_BASE}.svg" ]; then
+        logg info "Found matching Candy icon theme icon for $DESKTOP_FILE"
+        if [ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/applications/${DESKTOP_FILE_BASE}.desktop" ]; then
+            cp "$DESKTOP_FILE" "${XDG_DATA_HOME:-$HOME/.local/share}/applications"
+            logg info "Copied the .desktop shortcut to ${XDG_DATA_HOME:-$HOME/.local/share}/applications"
+            if [ -f "/usr/local/share/icons/Candy/apps/scalable/${SNAP_ICON_BASE}.svg" ]; then
+                SNAP_ICON="${SNAP_ICON_BASE}"
+            else
+                SNAP_ICON="${DESKTOP_FILE_BASE}"
+            fi
+            logg info 'Setting the .desktop shortcut Icon value equal to `'"$SNAP_ICON"'`'
+            sed -i 's/^Icon=.*$/Icon='"$SNAP_ICON"'/' "${XDG_DATA_HOME:-$HOME/.local/share}/applications/${DESKTOP_FILE_BASE}.desktop"
+        else
+            logg info "${XDG_DATA_HOME:-$HOME/.local/share}/applications/${DESKTOP_FILE_BASE}.desktop already exists!"
+        fi
+    fi
+done
 
 ##### CANDY ICONS END ######
 
