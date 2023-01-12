@@ -6299,14 +6299,6 @@ softwarePackages:
     _name: Stubby
     _post:brew:darwin: bash "$(brew --prefix stubby)/sbin/stubby-setdns-macos.sh" && brew services start stubby
     brew:darwin: stubby
-  supdock:
-    _bin: supdock
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    npm: supdock
   surge:
     _bin: surge
     _desc: null
