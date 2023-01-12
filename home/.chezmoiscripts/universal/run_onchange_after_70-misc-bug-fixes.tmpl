@@ -21,7 +21,7 @@ fi
 ### Merge latest Candy icons into the Betelgeuse icon theme
 if command -v rsync > /dev/null; then
     if [ -d "$HOME/.local/src/candy-icons" ] && [ -d "/usr/local/share/icons/{{ .theme }}" ]; then
-        rsync -rtvu "$HOME/.local/src/candy-icons/" "/usr/local/share/icons/{{ .theme }}/"
+        sudo rsync -rtvu "$HOME/.local/src/candy-icons/" "/usr/local/share/icons/{{ .theme }}/"
     else
         logg warn 'Skipping synchronization of Candy icons since either the target or destination folder is not present'
     fi
