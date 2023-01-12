@@ -70,7 +70,7 @@ function log(type, label, msg) {
 }
 
 function runCommand(spinnerTitle, command) {
-  execSync(`gum spin --spinner dot --title "${spinnerTitle}" -- ${command}`, {
+  execSync(command.includes('sudo') ? `sudo gum spin --spinner dot --title "${spinnerTitle}" -- ${command}` : `gum spin --spinner dot --title "${spinnerTitle}" -- ${command}`, {
     stdio: 'inherit',
     shell: true
   })

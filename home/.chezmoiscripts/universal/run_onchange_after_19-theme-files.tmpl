@@ -27,7 +27,7 @@ fi
 ### Copy theme files over to /usr/local/share
 if [ -d "$HOME/.local/src/{{ .theme | lower }}/share" ]; then
     logg info 'Copying ~/.local/src/{{ .theme | lower }}/share to /usr/local/share'
-    sudo rsync -artvu "$HOME/.local/src/betelgeuse/share/" "/usr/local/share/"
+    sudo rsync -artvu "$HOME/.local/src/betelgeuse/share/" "/usr/local/share/" > /dev/null
 else
     logg warn '~/.local/src/betelgeuse/share is missing'
 fi
