@@ -33,11 +33,11 @@ else
 fi
 
 ### Flatten theme files (i.e. convert symlinks to regular files)
-if command -v squash-symlink > /dev/null; then
-    logg info 'Converting all theme symlinks to equivalent regular files'
-    sudo find /usr/local/share -type l -exec squash-symlink {} +
-else
-    logg warn '`squash-symlink` is not a script in the PATH'
-fi
+#if command -v squash-symlink > /dev/null; then
+#    logg info 'Converting all theme symlinks to equivalent regular files'
+#    sudo find /usr/local/share -type l -exec squash-symlink {} +
+#else
+#    logg warn '`squash-symlink` is not a script in the PATH'
+#fi
 
 {{ end -}}
