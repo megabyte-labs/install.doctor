@@ -1,4 +1,4 @@
-# User / Environment Variable Configuration
+## User / Environment Variable Configuration
 
 This script will automatically set up a handful of different configurations / integrations
 if you decide to add your information. The script will first check for environment variables

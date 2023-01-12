@@ -1,8 +1,6 @@
-**DISCLAIMER:** _Currently this project has only been fully tested on macOS. Support for the other operating systems still requires a little bit of testing since we migrated architectures._
+Sexy Start is a cross-platform development environment provisioning system. The project began as an ongoing Ansible project named [Gas Station](https://github.com/megabyte-labs/gas-station) but transitioned to a dotfile-ish approach for easier adoption and less overhead. It is intended for:
 
-Hiawatha is a cross-platform development environment provisioning system. The project began as an ongoing Ansible project named [Gas Station](https://github.com/megabyte-labs/gas-station) but transitioned to a dotfile-ish approach for easier adoption and less overhead. It is intended for:
-
-1. Power users that want to maximize their long-term efficiency by incorporating the [most-starred applications / projects / CLIs on GitHub]() into their stack.
+1. Power users that want to maximize their long-term efficiency by incorporating the [most-starred applications / projects / CLIs on GitHub](https://stars.megabyte.space) into their stack.
 2. Users that distro hop but want to retain their favorite tools regardless of whether they are using macOS, Windows, or Linux
 3. People that want to reformat their computers on a, perhaps, daily basis while retaining stateful elements of their file system by leveraging S3 buckets
 4. Enthusiasts that want to deploy as many cool, useful tools as possible without having to spend much time configuring their file system
@@ -17,7 +15,12 @@ To provision your workstation, you can run the following which will install some
 bash <(curl -sSL https://install.doctor/start)
 ```
 
-_Windows support is on its way._
+### Quick Start Notes
+
+* The quick start script is tested on the latest versions of Archlinux, CentOS, Debian, Fedora, macOS, and Ubuntu
+* The quick start script is the preferred method of using this project to provision your system
+* The script can be configured to be completely headless by specifying environment variables which are detailed below
+* _Windows support is on the roadmap._
 
 ## Chezmoi-Based
 
@@ -29,7 +32,7 @@ This project leverages [Chezmoi](https://github.com/twpayne/chezmoi) to provide:
 
 ## Security Focused
 
-This software was built in an adversarial environment. This led towards a focus on security which is why we employ technologies like [Firejail](https://github.com/netblue30/firejail), [Portmaster](https://safing.io/), [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html), and [Qubes](https://www.qubes-os.org/). This also led to an emphasis on performance. When your workstation is possibly compromised or you have a good habit of reformatting your workstation on regular basis then it makes sense to use a provisioning system that can restore the workstation to a similar state quicker.
+This software was built in an adversarial environment. This led towards a focus on security which is why we employ technologies like [Firejail](https://github.com/netblue30/firejail), [Portmaster](https://safing.io/), [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html), and [Qubes](https://www.qubes-os.org/). Whenever possible, Flatpaks are used as the preferred application type. This also led to an emphasis on performance. When your workstation is possibly compromised or you have a good habit of reformatting your workstation on regular basis then it makes sense to use a provisioning system that can restore the workstation to a similar state quicker.
 
 ## Cross-Platform
 
@@ -37,7 +40,7 @@ This project has been developed with support for Archlinux, CentOS, Fedora, macO
 
 ### Custom Software Provisioning System
 
-The project also incorporates a custom [ZX](https://github.com/google/zx) script that allows you to choose which package managers you would like to manage your software. It attempts to be as asynchronous as possible without opening the door to errors. The script leverages the [software.yml](https://github.com/megabyte-labs/hiawatha-dotfiles/blob/master/software.yml) file in the root of this repository to figure out which package manager to use. By default, the installer will choose the most secure option (e.g. Flatpaks are preferred for Linux applications). The installer is more performant and less error-prone than our Ansible variant. It also makes it a lot easier to add software to your stack in such a way that you can keep the software regardless of what operating system you are using by storing everything in the aforementioned `software.yml` file.
+The project also incorporates a custom [ZX](https://github.com/google/zx) script that allows you to choose which package managers you would like to manage your software. It attempts to be as asynchronous as possible without opening the door to errors. The script leverages the [software.yml](/software.yml) file in the root of this repository to figure out which package manager to use. By default, the installer will choose the most secure option (e.g. Flatpaks are preferred for Linux applications). The installer is more performant and less error-prone than our Ansible variant. It also makes it a lot easier to add software to your stack in such a way that you can keep the software regardless of what operating system you are using by storing everything in the aforementioned `software.yml` file.
 
 ### Beautiful Anywhere
 
@@ -46,3 +49,7 @@ Windows and macOS do a great job of making things look good from a UI perspectiv
 ### Qubes Support
 
 Qubes support is on its way.
+
+## Gas Station
+
+This project began as something to supplement our provisioning system that uses Ansible. The system is called [Gas Station](https://gitlab.com/megabyte-labs/gas-station). It includes hundreds of Ansible roles. If you look at the [`software.yml`](/sexy-start) file, you will notice that some of the Ansible roles that Gas Station provides are inside of it. By default, this project will try to install software / dependencies using other, lighter methods before resorting to using Ansible. This is because of the software installer order that is defined at the top of the software.yml file. Gas Station is also still used to house some of the variables / data that this project uses.
