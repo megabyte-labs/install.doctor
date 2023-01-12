@@ -6,6 +6,8 @@ and then show prompts to fill in the gaps if the system is not headless. Below y
 a description of what each piece of information is used for as well as the name of the
 environment variable you can specify to bypass the prompt.
 
+If a description starts off with **Environment Variable Only** then the prompt system will not ask you for the default value. Instead, you should run `export VARIABLE_NAME="VALUE_HERE"` for each value you want to utilize before you proceed with the provisioning.
+
 ### Work Environment
 
 Set to true if you are setting up a work environment where things like Tor should
@@ -42,7 +44,7 @@ Enter your primary e-mail address.
 
 ### Public GPG Key ID
 
-If you have a public GPG key available on the Ubuntu or MIT keyservers, then you can enter it
+**Environment Variable Only** If you have a public GPG key available on the Ubuntu or MIT keyservers, then you can enter it
 so that it is automatically imported.
 
 * Environment variable: `KEYID`
@@ -69,58 +71,51 @@ records.
 
 ### GitHub Gist Token
 
-Pass in a GitHub token with the `gist` scope to be able to use the `gist` CLI tool without having to authenticate.
+**Environment Variable Only** Pass in a GitHub token with the `gist` scope to be able to use the `gist` CLI tool without having to authenticate.
 
 * Environment variable: `GITHUB_GIST_TOKEN`
 
 ### GitHub Read-Only Token
 
-Pass in a GitHub read-only token linked to your account to automatically save a backup of your
+**Environment Variable Only** Pass in a GitHub read-only token linked to your account to automatically save a backup of your
 GitHub repositories. For more information, see [this link](https://github.com/gabrie30/ghorg#scm-provider-setup).
 
 * Environment variable: `GITHUB_READ_TOKEN`
 
 ### GitLab Read-Only Token
 
-Pass in a GitLab read-only token linked to your account to automatically save a backup of your
+**Environment Variable Only** Pass in a GitLab read-only token linked to your account to automatically save a backup of your
 GitLab repositories. For more information, see [this link](https://github.com/gabrie30/ghorg#scm-provider-setup).
 
 * Environment variable: `GITLAB_READ_TOKEN`
 
 ### G-mail Address
 
-Add a G-mail address which you would like to use as the handler for outgoing SMTP mail.
+**Environment Variable Only** Add a G-mail address which you would like to use as the handler for outgoing SMTP mail.
 
 * Environment variable: `GMAIL_ADDRESS`
 
 ### G-mail App Password
 
-Add the app password to your G-mail address so that outgoing mail can be handled by G-mail.
+**Environment Variable Only** Add the app password to your G-mail address so that outgoing mail can be handled by G-mail.
 
 * Environment variable: `GMAIL_APP_PASSWORD`
 
 ### Ngrok Authentication Token
 
-Add your Ngrok authentication token so that the configuration file can be automatically
+**Environment Variable Only** Add your Ngrok authentication token so that the configuration file can be automatically
 generated.
 
 * Environment Variable: `NGROK_AUTH_TOKEN`
 
 ### Slack API Token
 
-Add your Slack API token so that `slackterm` can be automatically set up.
+**Environment Variable Only** Add your Slack API token so that `slackterm` can be automatically set up.
 
 * Environment Variable: `SLACK_API_TOKEN`
 
-### Tabby Configuration ID
+### Tailscale Auth Key
 
-Add your Tabby configuration ID to automatically sync Tabby settings.
+**Environment Variable Only** Add a Tailscale authentication key so that Tailscale can be automatically connected to your Tailscale network.
 
-* Environment Variable: `TABBY_CONFIG_ID`
-
-### Tabby Sync Token
-
-Add your Tabby sync token to automatically sync Tabby settings. This works in conjunction with
-the Tabby Configuration ID mentioned above.
-
-* Environment Variable: `TABBY_SYNC_TOKEN`
+* Environment Variable: `TAILSCALE_AUTH_KEY`

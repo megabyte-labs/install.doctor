@@ -85,22 +85,13 @@
     {{- $withToolchain := env (list "WITH" (upper $toolchain) | join "_") -}}
     {{- if and (or $withoutToolchains $withoutToolchain) (not $withToolchain) -}}
       {{- writeToStdout (list "Disabled" $toolchain "toolchain.\n" | join " ")  -}}
-      {{- $_ := set $toolchainsEnabled $toolchain false }}
+      {{- $_ := set $toolchainsEnabled $toolchain true }}
     {{- else }}
       {{- $_ := set $toolchainsEnabled $toolchain true }}
     {{- end}}
 {{- end }}
 
 {{- if stdinIsATTY -}}
-
-{{- range $toolchain := $toolchains }}
-    {{- $enabled := promptBoolOnce $data.toolchains $toolchain (list "Enable" $toolchain "toolchain" | join " ") (get $toolchainsEnabled $toolchain) -}}
-    {{- if and (eq $toolchain "Kubernetes") $enabled (not $toolchainsEnabled.Docker)  -}}
-    {{- $_ := set $toolchainsEnabled "Docker" $enabled }}
-    {{-   writeToStdout "Enabled Docker toolchain to support Kubernetes.\n" -}}
-    {{- end -}}
-    {{- $_ := set $toolchainsEnabled $toolchain $enabled }}
-{{- end }}
 
 {{- if not (env "WORK_ENVIRONMENT") -}}
 {{-   $work = promptBoolOnce $data.host "work" "Work environment" $work -}}
@@ -117,9 +108,6 @@
 {{- if not (env "PRIMARY_EMAIL") -}}
 {{-   $email = promptStringOnce $data.user "email" "Primary e-mail address" $email -}}
 {{- end -}}
-{{- if not (env "KEYID") -}}
-{{-   $gpgKeyId = promptStringOnce $data.user "gpgKeyId" "Public GPG key ID" $gpgKeyId -}}
-{{- end -}}
 {{- if not (env "PUBLIC_SERVICES_DOMAIN") -}}
 {{-   $domain = promptStringOnce $data.user "domain" "Domain name" $domain -}}
 {{- end -}}
@@ -128,33 +116,6 @@
 {{- end -}}
 {{- if not (env "CLOUDFLARE_TOKEN") -}}
 {{-   $cloudflareToken = promptStringOnce $data.user "cloudflareToken" "CloudFlare API Token" $cloudflareToken -}}
-{{- end -}}
-{{- if not (env "GITHUB_USERNAME") -}}
-{{-   $githubUsername = promptStringOnce $data.user "githubUsername" "GitHub username" $githubUsername -}}
-{{- end -}}
-{{- if not (env "GITHUB_GIST_TOKEN") -}}
-{{-   $githubGistToken = promptStringOnce $data.user "githubGistToken" "GitHub Gist token" $githubGistToken -}}
-{{- end -}}
-{{- if not (env "GITLAB_READ_TOKEN") -}}
-{{-   $gitlabReadToken = promptStringOnce $data.user "gitlabReadToken" "GitLab read-only token" $gitlabReadToken }}
-{{- end -}}
-{{- if not (env "GITHUB_READ_TOKEN") -}}
-{{-   $githubReadToken = promptStringOnce $data.user "githubReadToken" "GitHub read-only token" $githubReadToken }}
-{{- end -}}
-{{- if not (env "GMAIL_ADDRESS") -}}
-{{-   $gmailAddress = promptStringOnce $data.user "gmailAddress" "G-mail address" $gmailAddress -}}
-{{- end -}}
-{{- if not (env "GMAIL_APP_PASSWORD") -}}
-{{-   $gmailAddressAppPassword = promptStringOnce $data.user "gmailAddressAppPassword" "G-mail app password" $gmailAddressAppPassword -}}
-{{- end -}}
-{{- if not (env "NGROK_AUTH_TOKEN") -}}
-{{-   $ngrokAuthToken = promptStringOnce $data.user "ngrokAuthToken" "Ngrok authentication token" $ngrokAuthToken -}}
-{{- end -}}
-{{- if not (env "SLACK_API_TOKEN") -}}
-{{-   $slackApiToken = promptStringOnce $data.user "slackApiToken" "Slack API token" $slackApiToken -}}
-{{- end -}}
-{{- if not (env "TAILSCALE_AUTH_KEY") -}}
-{{-   $tailscaleAuthKey = promptStringOnce $data.user "tailscaleAuthKey" "Tailscale authentication key" $tailscaleAuthKey -}}
 {{- end -}}
 
 {{- else -}}
