@@ -13,7 +13,7 @@ for PKG in {{ $removePackages }}; do
             sudo apk delete "$PKG"
         fi
     elif command -v apt-get > /dev/null; then
-        if dpkg -l "$PKG" | grep "$PKG" 2>&1 /dev/null; then
+        if dpkg -l "$PKG" | grep -E '^ii' /dev/null; then
             sudo apt-get remove -y "$PKG"
             logg success 'Removed `'"$PKG"'` via apt-get'
         fi
