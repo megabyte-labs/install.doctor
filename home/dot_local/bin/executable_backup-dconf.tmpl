@@ -21,7 +21,7 @@ find "$XDG_CONFIG_HOME/dconf/settings" -mindepth 1 -maxdepth 1 -type f | while r
     dconf dump "$DCONF_SETTINGS_ID" > "$DCONF_CONFIG_FILE"
     logg success 'Saved new configuration to '"$DCONF_CONFIG_FILE"
     logg info 'Printing diff for '"$DCONF_CONFIG_FILE"
-    chezmoi diff "$DCONF_CONFIG_FILE"
+    chezmoi diff "$DCONF_CONFIG_FILE" || true
 done
 
 {{ end -}}
