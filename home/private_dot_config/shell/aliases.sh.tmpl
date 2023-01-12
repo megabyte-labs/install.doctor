@@ -25,14 +25,11 @@ alias ip='ip --color=auto'
 alias pacman='pacman --color=auto'
 
 ### TOP - order based on preference of "top" application (last item will always be chosen if installed, e.g. glances)
-command -v htop > /dev/null && alias top='htop'
-command -v gotop > /dev/null && alias top='gotop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
-command -v ytop > /dev/null && alias top='ytop -p $([ "$COLOR_SCHEME" = "light" ] && echo "-c default-dark")'
-command -v btm > /dev/null && alias top='btm $([ "$COLOR_SCHEME" = "light" ] && echo "--color default-light")'
-# themes for light/dark color-schemes inside ~/.config/bashtop; Press ESC to open the menu and change the theme
-command -v bashtop > /dev/null && alias top='bashtop'
-command -v bpytop > /dev/null && alias top='bpytop'
-command -v glances > /dev/null && alias top='glances'
+if command -v glances > /dev/null; then
+  alias top='glances'
+elif command -v htop > /dev/null; then
+  alias top='bashtop'
+fi
 
 ### bat
 if command -v bat > /dev/null; then
@@ -67,9 +64,11 @@ if command -v gping > /dev/null; then
   alias ping='gping'
 fi
 
-alias xclip='xclip -selection c'
-command -v vim > /dev/null && alias vi='vim'
-command -v vim > /dev/null && alias v='vim'
+### VIM
+if command -v vim > /dev/null; then
+  alias vi='vim'
+  alias v='vim'
+fi
 
 ### mitmproxy / mitmweb
 if command -v mitmproxy > /dev/null; then
@@ -84,8 +83,14 @@ if command -v rg &> /dev/null; then
   alias rgrep='rg --color=auto'
 fi
 
+### xclip
+alias xclip='xclip -selection c'
+
 ### VSCodium
 if command -v codium > /dev/null; then
+  if command -v code > /dev/null; then
+    alias vscode="$(which code)"
+  fi
   alias code='codium'
 fi
 

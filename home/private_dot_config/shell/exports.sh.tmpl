@@ -111,6 +111,17 @@ export PATH="$PATH:$CARGO_HOME/bin"
 ### Bash
 export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash-completion/bash_completion"
 
+### Bash It
+# Don't check mail when opening terminal.
+unset MAILCHECK
+export GIT_HOSTING='git@gitlab.com'
+if command -v irssi > /dev/null; then
+  export IRC_CLIENT='irssi'
+fi
+# Set this to the command you use for todo.txt-cli TODO -- figure this out with Standard Notes / Lepton / or nb
+export TODO="t"
+export SCM_CHECK=true
+
 ### BitWarden
 # https://bitwarden.com/help/cli/#using-an-api-key
 # BW_CLIENTID	client_id
@@ -310,11 +321,14 @@ export HISTCONTROL=ignoreboth
 export HISTSIZE=1000000000
 export HISTFILESIZE=$HISTSIZE
 export HIST_STAMPS=mm/dd/yyyy
-export SAVEHIST=5000
+export SAVEHIST=50000
 
 ### Editor
 {{ if not .host.headless }}
-if command -v code > /dev/null; then
+if command -v codium > /dev/null; then
+  export EDITOR='codium --wait'
+  export VISUAL="$EDITOR"
+elif command -v code > /dev/null; then
   export EDITOR='code --wait'
   export VISUAL="$EDITOR"
 else
@@ -339,4 +353,4 @@ fi
 # export LIBGL_ALWAYS_INDIRECT="1"
 # export BROWSER='/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe'
 
-export BROWSER=google-chrome
+export BROWSER=librewolf

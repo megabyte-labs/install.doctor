@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090,SC1091
 
+# If not running interactively, don't do anything
+case $- in
+  *i*) ;;
+    *) return;;
+esac
+
 # Prefer US English
 export LANG="en_US"
 if [[ "$(hostname)" != *'-minimal' ]]; then
