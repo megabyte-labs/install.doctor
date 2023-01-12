@@ -50,17 +50,20 @@ SOURCE_DIR="/usr/local/share/icons/Candy/apps/scalable"
 TARGET_DIR="/usr/local/share/icons/Candy/apps/scalable"
 if [ -d "$SOURCE_DIR" ] && [ -d "$TARGET_DIR" ]; then
     logg info 'Adding similar substitutes for some apps in the Candy icons theme'
-    if [ -f "$SOURCE_DIR/youtube-dl-gui.svg" ]; then
+    if [ -f "$SOURCE_DIR/youtube-dl-gui.svg" ] && [ ! -f "$TARGET_DIR/com.github.Johnn3y.Forklift.svg" ]; then
         sudo cp -f "$SOURCE_DIR/youtube-dl-gui.svg" "$TARGET_DIR/com.github.Johnn3y.Forklift.svg"
     fi
-    if [ -f "$SOURCE_DIR/rdm.svg" ]; then
+    if [ -f "$SOURCE_DIR/rdm.svg" ] && [ ! -f "$TARGET_DIR/app.resp.RESP.svg" ]; then
         sudo cp -f "$SOURCE_DIR/rdm.svg" "$TARGET_DIR/app.resp.RESP.svg"
     fi
-    if [ -f "$SOURCE_DIR/preferences-system-power.svg" ]; then
+    if [ -f "$SOURCE_DIR/preferences-system-power.svg" ] && [ ! -f "$TARGET_DIR/org.gnome.PowerStats.svg" ]; then
         sudo cp -f "$SOURCE_DIR/preferences-system-power.svg" "$TARGET_DIR/org.gnome.PowerStats.svg"
     fi
-    if [ -f "$SOURCE_DIR/software-store.svg" ]; then
+    if [ -f "$SOURCE_DIR/software-store.svg" ] && [ ! -f "$TARGET_DIR/software-properties-gtk.svg" ]; then
         sudo cp -f "$SOURCE_DIR/software-store.svg" "$TARGET_DIR/software-properties-gtk.svg"
+    fi
+    if [ -f "$SOURCE_DIR/preferences-desktop-remote-desktop.svg" ] && [ ! -f "$TARGET_DIR/org.gnome.Connections.svg" ]; then
+        sudo cp -f "$SOURCE_DIR/preferences-desktop-remote-desktop.svg" "$TARGET_DIR/org.gnome.Connections.svg"
     fi
 fi
 

@@ -9,6 +9,8 @@
 #   It is used to handle cross-VM links when Gas Station is used to provision [Qubes](https://www.qubes-os.org/).
 #   When called with -d, the default program is used.
 
+# TODO Add support for opening .desktop files with gtk-launch (i.e. `gtk-launch my-app.desktop`)
+
 # Default to system open executable on macOS
 if [ -d /Applications ] && [ -d /Library ]; then
   /usr/bin/open "$*" && exit 0
