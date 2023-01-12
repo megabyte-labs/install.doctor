@@ -9,7 +9,7 @@
 ### Fix for Ubuntu default extension conflicting with dash-to-dock
 if dconf read /org/gnome/shell/enabled-extensions | grep dash-to-dock > /dev/null; then
     if [ -d '/usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com' ]; then
-        if [ ! -d /usr/share/gnome-shell/extensions/disabled ]
+        if [ ! -d /usr/share/gnome-shell/extensions/disabled ]; then
             sudo mkdir /usr/share/gnome-shell/extensions/disabled
             logg info 'Created /usr/share/gnome-shell/extensions/disabled for GNOME extensions that have issues'
         fi

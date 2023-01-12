@@ -121,7 +121,7 @@ if ! command -v grub2-mkconfig > /dev/null; then
     if command -v grub-mkconfig > /dev/null; then
         sudo ln -s "$(which grub-mkconfig)" /usr/bin/grub2-mkconfig
     else
-        logg warn 'Neither grub2-mkconfig or grub-mkconfig are available
+        logg warn 'Neither grub2-mkconfig or grub-mkconfig are available'
     fi
 fi
 
