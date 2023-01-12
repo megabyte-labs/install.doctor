@@ -3325,7 +3325,8 @@ softwarePackages:
     _home: null
     _name: CodeClimate
     _usesDocker: true
-    brew: codeclimate/formulae/codeclimate
+    brew:darwin: codeclimate/formulae/codeclimate
+    script:linux: cd /tmp && curl -L https://github.com/codeclimate/codeclimate/archive/master.tar.gz | tar xvz && cd codeclimate-* && sudo make install
   impl:
     _bin: impl
     _desc: null
