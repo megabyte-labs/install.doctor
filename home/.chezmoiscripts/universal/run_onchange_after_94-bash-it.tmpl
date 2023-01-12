@@ -11,7 +11,9 @@ fi
 
 ### Bash-it completions / plugins
 if command -v powerline > /dev/null; then
+    logg info 'Running `source ~/.bashrc`'
     source ~/.bashrc
+    logg success 'Imported the `~/.bashrc` profile'
     if command -v bash-it > /dev/null; then
         if [ -n "$BASH_IT" ]; then
             cd "$BASH_IT" || logg warn "The $BASH_IT directory does not exist"
