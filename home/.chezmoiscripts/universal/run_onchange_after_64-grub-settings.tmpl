@@ -1,6 +1,8 @@
 {{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
 
+set -x
+
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 

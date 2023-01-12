@@ -1,6 +1,6 @@
 {{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
-
+set -x
 # enabled extensions: {{ output "dconf" "read" "/org/gnome/shell/enabled-extensions" }}
 
 {{ includeTemplate "universal/profile" }}
