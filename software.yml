@@ -6886,8 +6886,8 @@ softwarePackages:
     # brew: vectordotdev/brew/vector
     helm: https://helm.vector.dev
     pacman: vector
-    script:darwin: curl --proto '=https' --tlsv1.2 -sSf https://sh.vector.dev | bash -s -- --prefix "${XDG_DATA_DIR:-$HOME/.local/share}/vector" --no-modify-path -y
-    script:linux: curl --proto '=https' --tlsv1.2 -sSf https://sh.vector.dev | bash -s -- --prefix "${XDG_DATA_DIR:-$HOME/.local/share}/vector" --no-modify-path -y
+    script:darwin: curl --proto '=https' --tlsv1.2 -sSf https://sh.vector.dev | bash -s -- --prefix "${XDG_DATA_HOME:-$HOME/.local/share}/vector" --no-modify-path -y
+    script:linux: curl --proto '=https' --tlsv1.2 -sSf https://sh.vector.dev | bash -s -- --prefix "${XDG_DATA_HOME:-$HOME/.local/share}/vector" --no-modify-path -y
   velero:
     _bin: velero
     _desc: null
