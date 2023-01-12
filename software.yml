@@ -2187,6 +2187,7 @@ softwarePackages:
       - epk/epk/font-sf-mono-nerd-font
       - homebrew/cask-fonts/font-hack-nerd-font
       - homebrew/cask-fonts/font-meslo-lg-nerd-font
+      - homebrew/cask-fonts/font-powerline-symbols
   fpm:
     _bin: fpm
     _deps:
@@ -3704,10 +3705,10 @@ softwarePackages:
     appimage: edex-ui
   powerline:
     _bin: powerline
+    _post: pip3 install powerline-status
     apt: powerline
     dnf: powerline
     pacman: powerline
-    pipx: powerline-status
   handlr:
     _bin: handlr
     _desc: A better xdg-utils
