@@ -6,8 +6,6 @@
 
 # extension config hash: {{ include (joinPath .host.home ".config" "desktop" "gnome.yml") | sha256sum }}
 
-set -x
-
 ### Ensure /tmp/install-gnome-extensions.txt is not present on the system
 if [ -f /tmp/install-gnome-extensions.txt ]; then
     rm -f /tmp/install-gnome-extensions.txt

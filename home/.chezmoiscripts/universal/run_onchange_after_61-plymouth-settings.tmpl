@@ -9,8 +9,6 @@ if command -v install-software > /dev/null; then
     install-software plymouth
 fi
 
-set -x
-
 ### Apply update-alternatives
 if command -v update-alternatives > /dev/null; then
     if [ -f "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" ]; then
