@@ -45,41 +45,41 @@ fi
 ##### CANDY ICONS START ######
 
 ### Additional icons
-SRC="/usr/local/share/icons/Candy/apps/scalable"
-TAR="/usr/local/share/icons/Candy/apps/scalable"
-if [ -d "$SRC" ] && [ -d "$TAR" ]; the
+SOURCE_DIR="/usr/local/share/icons/Candy/apps/scalable"
+TARGET_DIR="/usr/local/share/icons/Candy/apps/scalable"
+if [ -d "$SOURCE_DIR" ] && [ -d "$TARGET_DIR" ]; then
     logg info 'Adding similar substitutes for some apps in the Candy icons theme'
-    if [ -f "$SRC/youtube-dl-gui.svg" ]; then
-        sudo cp -f "$SRC/youtube-dl-gui.svg" "$TAR/com.github.Johnn3y.Forklift.svg"
+    if [ -f "$SOURCE_DIR/youtube-dl-gui.svg" ]; then
+        sudo cp -f "$SOURCE_DIR/youtube-dl-gui.svg" "$TARGET_DIR/com.github.Johnn3y.Forklift.svg"
     fi
-    if [ -f "$SRC/rdm.svg" ]; then
-        sudo cp -f "$SRC/rdm.svg" "$TAR/app.resp.RESP.svg"
+    if [ -f "$SOURCE_DIR/rdm.svg" ]; then
+        sudo cp -f "$SOURCE_DIR/rdm.svg" "$TARGET_DIR/app.resp.RESP.svg"
     fi
-    if [ -f "$SRC/preferences-system-power.svg" ]; then
-        sudo cp -f "$SRC/preferences-system-power.svg" "$TAR/org.gnome.PowerStats.svg"
+    if [ -f "$SOURCE_DIR/preferences-system-power.svg" ]; then
+        sudo cp -f "$SOURCE_DIR/preferences-system-power.svg" "$TARGET_DIR/org.gnome.PowerStats.svg"
     fi
-    if [ -f "$SRC/software-store.svg" ]; then
-        sudo cp -f "$SRC/software-store.svg" "$TAR/software-properties-gtk.svg"
+    if [ -f "$SOURCE_DIR/software-store.svg" ]; then
+        sudo cp -f "$SOURCE_DIR/software-store.svg" "$TARGET_DIR/software-properties-gtk.svg"
     fi
 fi
 
 ### Icons added to fork (https://github.com/ProfessorManhattan/candy-icons)
 # These commented out icons already had good matches in the Sweet theme so a fork was created
 # and a pull request was open for them.
-# sudo cp -f "$SRC/gitkraken.svg" "$TAR/com.axosoft.GitKraken.svg"
-# sudo cp -f "$SRC/github-desktop.svg" "$TAR/io.github.shiftey.Desktop"
-# sudo cp -f "$SRC/inkscape.svg" "$TAR/inkscape_inkscape.desktop"
-# sudo cp -f "$SRC/cutter.svg" "$TAR/re.rizin.cutter.svg"
-# sudo cp -f "$SRC/arduino.svg" "$TAR/cc.arduino.IDE2.svg"    
-# sudo cp -f "$SRC/intellij.svg" "$TAR/intellij-idea-community_intellij-idea-community.svg"
-# sudo cp -f "$SRC/google-chrome.svg" "$TAR/com.google.Chrome.svg"
-# sudo cp -f "$SRC/firefox.svg" "$TAR/org.mozilla.firefox.svg"
-# sudo cp -f "$SRC/microsoft-edge.svg" "$TAR/com.microsoft.Edge.svg"
-# sudo cp -f "$SRC/thunderbird.svg" "$TAR/org.mozilla.Thunderbird.svg"
-# sudo cp -f "$SRC/postman.svg" "$TAR/com.getpostman.Postman.svg"
-# sudo cp -f "$SRC/plexhometheater.svg" "$TAR/tv.plex.PlexDesktop.svg"
-# sudo cp -f "$SRC/seafile.svg" "$TAR/com.client.Seafile.svg"
-# sudo cp -f "$SRC/com.github.gi_lom.dialect.svg" "$TAR/app.drey.Dialect.svg"
+# sudo cp -f "$SOURCE_DIR/gitkraken.svg" "$TARGET_DIR/com.axosoft.GitKraken.svg"
+# sudo cp -f "$SOURCE_DIR/github-desktop.svg" "$TARGET_DIR/io.github.shiftey.Desktop"
+# sudo cp -f "$SOURCE_DIR/inkscape.svg" "$TARGET_DIR/inkscape_inkscape.desktop"
+# sudo cp -f "$SOURCE_DIR/cutter.svg" "$TARGET_DIR/re.rizin.cutter.svg"
+# sudo cp -f "$SOURCE_DIR/arduino.svg" "$TARGET_DIR/cc.arduino.IDE2.svg"    
+# sudo cp -f "$SOURCE_DIR/intellij.svg" "$TARGET_DIR/intellij-idea-community_intellij-idea-community.svg"
+# sudo cp -f "$SOURCE_DIR/google-chrome.svg" "$TARGET_DIR/com.google.Chrome.svg"
+# sudo cp -f "$SOURCE_DIR/firefox.svg" "$TARGET_DIR/org.mozilla.firefox.svg"
+# sudo cp -f "$SOURCE_DIR/microsoft-edge.svg" "$TARGET_DIR/com.microsoft.Edge.svg"
+# sudo cp -f "$SOURCE_DIR/thunderbird.svg" "$TARGET_DIR/org.mozilla.Thunderbird.svg"
+# sudo cp -f "$SOURCE_DIR/postman.svg" "$TARGET_DIR/com.getpostman.Postman.svg"
+# sudo cp -f "$SOURCE_DIR/plexhometheater.svg" "$TARGET_DIR/tv.plex.PlexDesktop.svg"
+# sudo cp -f "$SOURCE_DIR/seafile.svg" "$TARGET_DIR/com.client.Seafile.svg"
+# sudo cp -f "$SOURCE_DIR/com.github.gi_lom.dialect.svg" "$TARGET_DIR/app.drey.Dialect.svg"
 
 ### Missing icons
 # The following applications are missing icons after using the "Full" installer. The application name
