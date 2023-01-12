@@ -222,7 +222,7 @@ alias vault-dir='find . -type f -printf "%h/\"%f\" " | xargs ansible-vault encry
 alias weather='curl -A curl wttr.in'
 
 # Change .wget-hsts file location
-alias wget="wget --hsts-file ~/.config/.wget-hsts"
+alias wget="wget --hsts-file ~/.local/wget-hsts"
 
 ### Yarn
 alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'

@@ -85,7 +85,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
 
   ### zoxide
   if command -v zoxide > /dev/null; then
-    eval "$(zoxide init --cmd cd bash)"
+    eval "$(zoxide init --cmd cd bash)" > /dev/null
   fi
 
   ### Fig

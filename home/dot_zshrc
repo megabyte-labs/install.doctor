@@ -331,7 +331,7 @@ fi
 
 ### zoxide
 if command -v zoxide > /dev/null; then
-	eval "$(zoxide init --cmd cd zsh)"
+	eval "$(zoxide init --cmd cd zsh)" > /dev/null
 fi
 
 ### Fig
