@@ -680,7 +680,8 @@ async function beforeInstall(packageManager) {
       unbufferPrefix = 'unbuffer'
     }
     if (osPlatform === 'darwin' || osPlatform === 'linux' || osPlatform === 'windows') {
-      await $`ANSIBLE_CONFIG=${process.env.HOME}/.local/share/ansible/ansible.cfg ${unbufferPrefix} ansible 127.0.0.1 -e '{ ansible_connection: "local", ansible_become_user: "${process.env.USER}", ansible_user: "${process.env.USER}", ansible_family: "${osPlatform}", install_homebrew: False }' -m setup`
+      const capitalOsPlatform = osPlatform.charAt(0).toUpperCase() + osPlatform.slice(1)
+      await $`ANSIBLE_CONFIG=${process.env.HOME}/.local/share/ansible/ansible.cfg ${unbufferPrefix} ansible 127.0.0.1 -e '{ ansible_connection: "local", ansible_become_user: "${process.env.USER}", ansible_user: "${process.env.USER}", ansible_family: "${capitalOsPlatform}", install_homebrew: False }' -m setup`
     } else {
       log('warn', 'Ansible', 'Unsupported platform - ' + osPlatform)
     }
