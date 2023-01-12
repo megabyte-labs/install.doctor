@@ -16,8 +16,8 @@ fi
 ### Populate /tmp/install-gnome-extensions.txt with GNOME extensions that need to be installed
 if [ -f "$HOME/.config/desktop/gnome.yml" ]; then
     cat "$HOME/.config/desktop/gnome.yml" | yq e -o=j '.' | jq -cr '.default_gnome_extensions[] | tojson' | while read EXT; do
-        EXT_URL="$(echo "$EXT" | jq -nr '.url')"
-        EXT_ID="$(echo "$EXT" | jq -nr '.regex')"
+        EXT_URL="$(echo "$EXT" | jq -r '.url')"
+        EXT_ID="$(echo "$EXT" | jq -r '.regex')"
         echo "$EXT_URL" >> /tmp/install-gnome-extensions.txt
         find "$XDG_DATA_DIR/gnome-shell/extensions" -mindepth 1 -maxdepth 1 -type d | while read EXT_FOLDER; do
             if [[ "$EXT_FOLDER" == "$EXT_REGEX"* ]]; then
@@ -50,17 +50,17 @@ if [ -f "$HOME/.config/desktop/gnome.yml" ]; then
             logg info 'Extension data:'
             echo "$EXT"
         fi
-        EXT_ID="$(echo "$EXT" | jq -nr '.regex')"
+        EXT_ID="$(echo "$EXT" | jq -r '.regex')"
         if [ "$DEBUG_MODE" == 'true' ]; then
             logg info 'Extension ID:'
             echo "$EXT_ID"
         fi
-        EXT_SETTINGS_TYPE="$(echo "$EXT" | jq -nr '.settings | type')"
-        EXT_SETTINGS="$(echo "$EXT" | jq -nr '.settings')"
+        EXT_SETTINGS_TYPE="$(echo "$EXT" | jq -r '.settings | type')"
+        EXT_SETTINGS="$(echo "$EXT" | jq -r '.settings')"
         if [ "$EXT_SETTINGS" != 'null' ]; then
             logg info 'Evaluating extension settings'
             if [ "$EXT_SETTINGS_TYPE" == 'array' ]; then
-                echo "$EXT_SETTINGS" | jq -cnr '.[]' | while read EXT_SETTING; do
+                echo "$EXT_SETTINGS" | jq -cr '.[]' | while read EXT_SETTING; do
                     logg info 'Applying following extension setting:'
                     echo "$EXT_SETTING"
                     eval "$EXT_SETTING"
