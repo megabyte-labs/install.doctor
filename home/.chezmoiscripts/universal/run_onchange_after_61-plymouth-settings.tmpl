@@ -66,9 +66,7 @@ fi
 if [ "$DEBUG_MODE" != 'true' ]; then
     if command -v update-initramfs > /dev/null; then
         logg info 'Running `sudo update-initramfs -u`'
-        if [ "$DEBUG_MODE" != 'true' ]; then
-            sudo update-initramfs -u
-        fi
+        sudo update-initramfs -u
         logg success 'Updated kernel / initrd images for Plymouth'
     elif command -v dracut > /dev/null; then
         logg info 'Running `sudo dracut --regenerate-all -f`'

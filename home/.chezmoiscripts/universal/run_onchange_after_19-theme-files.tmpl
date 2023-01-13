@@ -66,4 +66,12 @@ fi
 
 ### Note: ubuntu-default-greyscale-wallpaper.png symlink to whiteish gray background
 
+### Set appropriate platform-specific icon in plymouth theme
+if [ -f '/usr/local/share/plymouth/themes/{{ .theme }}/icons/{{ .host.distro.id }}.png' ]; then
+    sudo cp -f '/usr/local/share/plymouth/themes/{{ .theme }}/icons/{{ .host.distro.id }}.png' '/usr/local/share/plymouth/themes/{{ .theme }}/icon.png'
+    logg success 'Added platform-specific icon to {{ .theme }} Plymouth theme'
+else
+    logg warn 'The `{{ .host.distro.id }}.png` icon is not available in the icons folder insider the {{ .theme }} Plymouth theme'
+fi
+
 {{ end -}}
