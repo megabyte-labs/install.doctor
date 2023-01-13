@@ -3711,10 +3711,10 @@ softwarePackages:
     appimage: edex-ui
   powerline:
     _bin: powerline
-    _post: pip3 install powerline-status
     apt: powerline
     dnf: powerline
     pacman: powerline
+    pipx: powerline-status
   handlr:
     _bin: handlr
     _desc: A better xdg-utils
@@ -3723,6 +3723,10 @@ softwarePackages:
     _home: https://github.com/chmln/handlr
     _name: Handlr
     _type: cli
+    _notes: |
+      Try installing this again at a later time.
+
+      Issue opened here: https://github.com/chmln/handlr/issues/69
     cargo: handlr
     yay: handlr-bin
   kvantum:
@@ -7400,7 +7404,6 @@ softwarePackages:
     _home: null
     _name: SSH FS
     apt: sshfs
-    brew: sshfs
     choco: sshfs
     dnf: sshfs
     pacman: sshfs
