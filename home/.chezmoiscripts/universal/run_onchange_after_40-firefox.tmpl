@@ -25,8 +25,8 @@ if command -v org.mozilla.firefox > /dev/null; then
     fi
     logg info 'Renaming default profile folders and assigning them human-readable profile names'
     DEFAULT_RELEASE_PROFILE="$(find "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox" -mindepth 1 -maxdepth 1 -name "*.default-release")"
-    mv "$DEFAULT_RELEASE_PROFILE" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox/profile.default"
     DEFAULT_PROFILE="$(find "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox" -mindepth 1 -maxdepth 1 -name "*.default")"
+    mv "$DEFAULT_RELEASE_PROFILE" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox/profile.default"
     mv "$DEFAULT_PROFILE" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox/profile.primary"
     logg info 'Adding a secondary profile'            
     cp -rf "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox/profile.primary" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox/profile.secondary"
