@@ -5,6 +5,8 @@ add to PATH:
 '%ProgramFiles(x86)%\mitmproxy\bin'
 '%ProgramFiles(x86)%\juju'
 # https://github.com/graysky2/profile-cleaner
+# https://github.com/chifflier/ff_create_profile/blob/master/ff_create_profile
+# https://addons.mozilla.org/en-US/firefox/addon/duckduckgo-for-firefox/
 ### POSSIBLY USEFUL SOFTWARE
 https://hackjutsu.com/Lepton/
 * Incorporate /home/linuxbrew/.linuxbrew/etc/bash_completion.d
