@@ -101,7 +101,7 @@ const osPlatform = osPlatformData === 'win32' ? 'windows' : osPlatformData
 
 // Download the installation map
 async function downloadInstallData() {
-  const response = await fetch('https://gitlab.com/megabyte-labs/sexy-start/-/raw/master/software.yml')
+  const response = await fetch('https://gitlab.com/megabyte-labs/install.doctor/-/raw/master/software.yml')
   if (response.ok) {
     const text = await response.text()
     return YAML.parse(text)

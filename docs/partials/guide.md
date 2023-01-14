@@ -24,7 +24,7 @@ START_REPO=my-gh-user/my-fork-name bash <(curl -sSL https://install.doctor/start
 Alternatively, if you want to host your project on GitLab or another git provider, then just specify the git remote's URL:
 
 ```
-START_REPO=git@gitlab.com:megabyte-labs/sexy-start.git bash <(curl -sSL https://install.doctor/start)
+START_REPO=git@gitlab.com:megabyte-labs/install.doctor.git bash <(curl -sSL https://install.doctor/start)
 ```
 
 ### Quick Start Notes
@@ -64,7 +64,7 @@ Qubes support is on its way.
 
 ## Gas Station
 
-This project began as something to supplement our provisioning system that uses Ansible. The system is called [Gas Station](https://gitlab.com/megabyte-labs/gas-station). It includes hundreds of Ansible roles. If you look at the [`software.yml`](/sexy-start) file, you will notice that some of the Ansible roles that Gas Station provides are inside of it. By default, this project will try to install software / dependencies using other, lighter methods before resorting to using Ansible. This is because of the software installer order that is defined at the top of the software.yml file. Gas Station is also still used to house some of the variables / data that this project uses.
+This project began as something to supplement our provisioning system that uses Ansible. The system is called [Gas Station](https://gitlab.com/megabyte-labs/gas-station). It includes hundreds of Ansible roles. If you look at the [`software.yml`](/software.yml) file, you will notice that some of the Ansible roles that Gas Station provides are inside of it. By default, this project will try to install software / dependencies using other, lighter methods before resorting to using Ansible. This is because of the software installer order that is defined at the top of the software.yml file. Gas Station is also still used to house some of the variables / data that this project uses.
 
 ## Chezmoi
 

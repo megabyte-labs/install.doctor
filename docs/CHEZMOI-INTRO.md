@@ -12,9 +12,9 @@ If a description starts off with **Environment Variable Only** then the prompt s
 
 To use a fork (if you made modifications to the original project), set this equal to one of the following:
 
-1. Your GitHub username if you forked this project and the project slug is Sexy-Start
-2. Your GitHub username / slug if you changed it from Sexy-Start (e.g. `ProfessorManhattan/Sexy-Start`)
-3. A git remote URL (e.g. `git@gitlab.com:megabyte-labs/sexy-start`)
+1. Your GitHub username if you forked this project and the project slug is `install.doctor`
+2. Your GitHub username / slug if you changed it from `install.doctor` (e.g. `ProfessorManhattan/install.doctor`)
+3. A git remote URL (e.g. `git@gitlab.com:megabyte-labs/install.doctor`)
 
 * Environment variable: `START_REPO`
 
