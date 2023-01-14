@@ -21,6 +21,7 @@ if command -v org.mozilla.firefox > /dev/null; then
         sleep 5
         kill "$FIREFOX_PID"
         logg info 'Finished running Firefox headlessly'
+        sleep 5
     fi
     logg info 'Renaming default profile folders and assigning them human-readable profile names'
     DEFAULT_RELEASE_PROFILE="$(find "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox" -mindepth 1 -maxdepth 1 -name "*.default-release")"
