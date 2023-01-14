@@ -41,9 +41,9 @@ if command -v org.mozilla.firefox > /dev/null; then
         curl --silent "https://addons.mozilla.org/en-US/firefox/addon/$FIREFOX_PLUGIN/" > "$PLUGIN_HTML"
         PLUGIN_TMP="$(mktemp)"
         cat "$PLUGIN_HTML" | htmlq '#redux-store-state' | sed 's/^<scri.*application\/json">//' | sed 's/<\/script>$//' > "$PLUGIN_TMP"
-        PLUGIN_ID="$(jq '.addons.bySlug.'"$FIREFOX_PLUGIN" "$PLUGIN_TMP")"
+        PLUGIN_ID="$(jq '.addons.bySlug["'"$FIREFOX_PLUGIN"'"]' "$PLUGIN_TMP")"
         if [ "$PLUGIN_ID" != 'null' ]; then
-            PLUGIN_FILE_ID="$(jq '.addons.byID["'"$PLUGIN_ID"'"].guid' "$PLUGIN_TMP")"
+            PLUGIN_FILE_ID="$(jq -r '.addons.byID["'"$PLUGIN_ID"'"].guid' "$PLUGIN_TMP")"
             if [ "$PLUGIN_FILE_ID" != 'null' ]; then
                 PLUGIN_URL="$(cat "$PLUGIN_HTML" | htmlq '.InstallButtonWrapper-download-link' --attribute href)"
                 PLUGIN_FILENAME="${PLUGIN_FILE_ID}.xpi"
