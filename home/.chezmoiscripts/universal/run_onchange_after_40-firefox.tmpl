@@ -48,9 +48,9 @@ if command -v org.mozilla.firefox > /dev/null; then
                 PLUGIN_URL="$(cat "$PLUGIN_HTML" | htmlq '.InstallButtonWrapper-download-link' --attribute href)"
                 PLUGIN_FILENAME="${PLUGIN_FILE_ID}.xpi"
                 if [ ! -d "$HOME/.var/app/org.mozilla.firefox/.mozilla/extensions/$PLUGIN_FILENAME" ]; then
-                    logg info 'Downloading plugin file for `'"$PLUGIN_FILENAME"'`'
+                    logg info 'Downloading plugin file for `'"$PLUGIN_FILENAME"'` ('"$FIREFOX_PLUGIN"')'
                     curl "$PLUGIN_URL" -o "$HOME/.var/app/org.mozilla.firefox/.mozilla/extensions/$PLUGIN_FILENAME"
-                    logg success 'Finished downloading plugin file for `'"$PLUGIN_FILENAME"'`'
+                    logg success 'Finished downloading `'"$PLUGIN_FILENAME"'` ('"$FIREFOX_PLUGIN"')'
                 fi
             else
                 logg warn 'A null Firefox add-on filename was detected for `'"$FIREFOX_PLUGIN"'`'
