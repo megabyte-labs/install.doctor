@@ -35,7 +35,7 @@ fi
 
 ### Install Firefox addons (using list declared in .chezmoidata.yaml)
 if command -v org.mozilla.firefox > /dev/null; then
-    for FIREFOX_PLUGIN in {{ list .firefoxAddOns | replace "[" "" | replace "]" "" | join " " }}; do
+    for FIREFOX_PLUGIN in {{ list .firefoxAddOns | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
         logg info 'Ensuring `'"$FIREFOX_PLUGIN"'` is installed'
         PLUGIN_HTML="$(mktemp)"
         curl --silent "https://addons.mozilla.org/en-US/firefox/addon/$FIREFOX_PLUGIN/" > "$PLUGIN_HTML"
