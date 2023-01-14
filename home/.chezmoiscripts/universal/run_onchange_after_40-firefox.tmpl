@@ -1,0 +1,64 @@
+{{- if ne .host.distro.family "windows" -}}
+#!/usr/bin/env bash
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+### Add Firefox enterprise profile
+# TODO - figure out how to do this for other installations like Flatpak and macOS
+for FIREFOX_DIR in '/usr/lib/firefox' '/usr/lib/firefox-esr' '/Applications/Firefox.app/Contents/Resources'; do
+    if [ -d "$FIREFOX_DIR" ] && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/firefox" ] && command -v rsync > /dev/null; then
+        sudo rsync -artvu "${XDG_DATA_HOME:-$HOME/.local/share}/firefox" "$FIREFOX_DIR"
+    fi
+done
+
+### Initiatize Firefox default profiles
+if command -v org.mozilla.firefox > /dev/null; then
+    if [ ! -d "$HOME/.var/app/org.mozilla.firefox" ]; then
+        logg info 'Running Firefox headlessly to generate default profiles'
+        firefox --headless &
+        FIREFOX_PID=$!
+        sleep 5
+        kill "$FIREFOX_PID"
+        logg info 'Finished running Firefox headlessly'
+    fi
+    logg info 'Renaming default profile folders and assigning them human-readable profile names'
+    DEFAULT_RELEASE_PROFILE="$(find "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox" -mindepth 1 -maxdepth 1 -name "*.default-release")"
+    mv "$DEFAULT_RELEASE_PROFILE" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox/profile.default"
+    DEFAULT_PROFILE="$(find "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox" -mindepth 1 -maxdepth 1 -name "*.default")"
+    mv "$DEFAULT_PROFILE" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox/profile.primary"
+    logg info 'Adding a secondary profile'            
+    cp -rf "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox/profile.primary" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox/profile.secondary"
+    logg info "Copying "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" to profile directory"
+    cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox/profiles.ini"
+fi
+
+### Install Firefox addons (using list declared in .chezmoidata.yaml)
+if command -v org.mozilla.firefox > /dev/null; then
+    for FIREFOX_PLUGIN in "{{ list .firefoxAddOns | join '" "' }}"; do
+        logg info 'Ensuring `'"$FIREFOX_PLUGIN"'` is installed'
+        PLUGIN_HTML="$(mktemp)"
+        curl --silent "https://addons.mozilla.org/en-US/firefox/addon/$FIREFOX_PLUGIN/" > "$PLUGIN_HTML"
+        PLUGIN_TMP="$(mktemp)"
+        cat "$PLUGIN_HTML" | htmlq '#redux-store-state' | sed 's/^<scri.*application\/json">//' | sed 's/<\/script>$//' > "$PLUGIN_TMP"
+        PLUGIN_ID="$(jq '.addons.bySlug.'"$FIREFOX_PLUGIN" "$PLUGIN_TMP")"
+        if [ "$PLUGIN_ID" != 'null' ]; then
+            PLUGIN_FILE_ID="$(jq '.addons.byID["'"$PLUGIN_ID"'"].guid' "$PLUGIN_TMP")"
+            if [ "$PLUGIN_FILE_ID" != 'null' ]; then
+                PLUGIN_URL="$(cat "$PLUGIN_HTML" | htmlq '.InstallButtonWrapper-download-link' --attribute href)"
+                PLUGIN_FILENAME="${PLUGIN_FILE_ID}.xpi"
+                if [ ! -d "$HOME/.var/app/org.mozilla.firefox/.mozilla/extensions/$PLUGIN_FILENAME" ]; then
+                    logg info 'Downloading plugin file for `'"$PLUGIN_FILENAME"'`'
+                    curl "$PLUGIN_URL" -o "$HOME/.var/app/org.mozilla.firefox/.mozilla/extensions/$PLUGIN_FILENAME"
+                    logg success 'Finished downloading plugin file for `'"$PLUGIN_FILENAME"'`'
+                fi
+            else
+                logg warn 'A null Firefox add-on filename was detected for `'"$FIREFOX_PLUGIN"'`'
+            fi
+        else
+            logg warn 'A null Firefox add-on ID was detected for `'"$FIREFOX_PLUGIN"'`'
+        fi
+    done
+fi
+
+{{ end -}}
