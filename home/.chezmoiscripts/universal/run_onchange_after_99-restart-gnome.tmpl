@@ -1,0 +1,10 @@
+{{- if eq .host.distro.family "linux" -}}
+#!/usr/bin/env bash
+
+### Restart GNOME
+if command -v gnome-shell > /dev/null; then
+    logg info 'Reloading `gnome-shell`'
+    killall -3 gnome-shell
+fi
+
+{{ end -}}

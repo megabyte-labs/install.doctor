@@ -6,6 +6,10 @@
 
 {{- $removePackages := join " " .removeLinuxPackages }}
 
+echo "HEREEEE"
+echo '{{ $removePackages }}'
+echo "DONNEEEE"
+
 ### Remove bloatware packages defined in .chezmoidata.yaml
 for PKG in {{ $removePackages }}; do
     if command -v apk > /dev/null; then
