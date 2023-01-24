@@ -78,7 +78,7 @@ function locations(substring,string){
 function wrapMessage(msg) {
   const indexes = locations('`', msg)
   if (indexes.length > 1) {
-    return wrapMessage(msg.substring(0, indexes[0]) + chalk.bold.black.bgGray(' ' + msg.substring(indexes[0] + 1, indexes[1] + 1 - indexes[0]) + ' ') + msg.substring(indexes[1] + 1 - indexes[0]) + ' '))
+    return wrapMessage(msg.substring(0, indexes[0]) + chalk.bold.black.bgGray(' ' + msg.substring(indexes[0] + 1, indexes[1] + 1 - indexes[0]) + ' ') + msg.substring(indexes[1] + 1 - indexes[0]) + ' ')
   } else {
     return msg
   }
