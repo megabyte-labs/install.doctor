@@ -59,8 +59,11 @@ setopt PROMPT_SUBST
 setopt SHARE_HISTORY
 
 # ZSH completion system
-autoload -Uz compinit
+if [ ! -d "$XDG_CACHE_HOME/zsh" ]; then
+	mkdir -p "$XDG_CACHE_HOME/zsh"
+fi
 compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+autoload -Uz compinit
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
