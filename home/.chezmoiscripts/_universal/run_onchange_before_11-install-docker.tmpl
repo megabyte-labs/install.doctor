@@ -78,6 +78,10 @@ if [ ! -d /Applications ] || [ ! -d /System ]; then
     if ! command -v runsc > /dev/null; then
         # Install gVisor
         logg info 'Building gVisor from source'
+        if [ -d /usr/local/src/gvisor ]; then
+            logg info 'Removing stale directory /usr/local/src/gvisor'
+            sudo rm -rf /usr/local/src/gvisor
+        fi
         sudo git clone https://github.com/google/gvisor.git /usr/local/src/gvisor
         cd /usr/local/src/gvisor
         sudo mkdir -p bin
@@ -90,8 +94,12 @@ if [ ! -d /Applications ] || [ ! -d /System ]; then
         # Create /etc/docker/daemon.json
         logg info 'Creating /etc/docker'
         sudo mkdir -p /etc/docker
-        logg info 'Creating /etc/docker/daemon.json'
-        sudo cp "$HOME/.config/docker/daemon.json" /etc/docker/daemon.json
+        if [ -f /usr/local/src/install.doctor/home/private_dot_config/docker/daemon.json ]; then
+            logg info 'Creating /etc/docker/daemon.json'
+            sudo cp "/usr/local/src/install.doctor/home/private_dot_config/docker/daemon.json" /etc/docker/daemon.json
+        else
+            logg warn '/usr/local/src/install.doctor/home/private_dot_config/docker/daemon.json is not available so the /etc/docker/daemon.json file cannot be populated'
+        fi
     fi
 fi
 
