@@ -25,6 +25,9 @@ if [ -f "$HOME/.config/desktop/gnome.yml" ]; then
         EXT_URL="$(cat "$TMP" | jq -r '.url')"
         EXT_ID="$(cat "$TMP" | jq -r '.regex')"
         echo "$EXT_URL" >> /tmp/install-gnome-extensions.txt
+        if [ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/gnome-shell/extensions" ]; then
+            mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/gnome-shell/extensions"
+        fi
         find "${XDG_DATA_HOME:-$HOME/.local/share}/gnome-shell/extensions" -mindepth 1 -maxdepth 1 -type d | while read EXT_FOLDER; do
             if [[ "$EXT_FOLDER" == *"$EXT_ID"* ]] && [ -f /tmp/install-gnome-extensions.txt ]; then
                 TMP_EXT="$(mktemp)"
@@ -45,6 +48,8 @@ fi
 ### Install the GNOME extensions using the `install-gnome-extensions` script
 if command -v install-gnome-extensions > /dev/null; then
     if [ -f /tmp/install-gnome-extensions.txt ]; then
+        logg info 'Running the `install-gnome-extensions` script'
+        cd /tmp
         install-gnome-extensions --enable --overwrite --file /tmp/install-gnome-extensions.txt
         rm -f /tmp/install-gnome-extensions.txt
         logg success 'Finished installing the GNOME extensions'
