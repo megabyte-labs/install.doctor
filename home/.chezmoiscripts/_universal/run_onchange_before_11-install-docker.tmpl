@@ -1,0 +1,73 @@
+{{- if ne .host.distro.family "windows" -}}
+#!/usr/bin/env bash
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+### Install Docker
+if [ -d /Applications ] && [ -d /System ]; then
+    # macOS
+    logg info 'Installing Docker on macOS via Homebrew cask'
+    brew install --cask docker 
+    logg info 'Opening the Docker for Desktop app so that the Docker engine starts running'
+    open /Applications/Docker.app
+elif command -v apt-get > /dev/null; then
+    . /etc/os-release
+    if [ "$ID" == 'ubuntu' ]; then
+        logg info 'Installing Docker on Ubuntu'
+    else
+        logg info 'Installing Docker on Debian'
+    fi
+    sudo apt-get update
+    sudo apt-get install -y ca-certificates curl gnupg lsb-release
+    sudo mkdir -p /etc/apt/keyrings
+    curl -fsSL "https://download.docker.com/linux/$ID/gpg" | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    sudo chmod a+r /etc/apt/keyrings/docker.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/$ID $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt-get update
+    sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+elif command -v dnf > /dev/null; then
+    # Fedora
+    sudo dnf -y install dnf-plugins-core
+    sudo dnf config-manager --add-repo -y https://download.docker.com/linux/fedora/docker-ce.repo
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+elif command -v yum > /dev/null; then
+    # CentOS
+    logg info 'Installing Docker on CentOS'
+    sudo yum install -y yum-utils
+    sudo yum-config-manager --add-repo -y https://download.docker.com/linux/centos/docker-ce.repo
+    sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+elif command -v apk > /dev/null; then
+    # Alpine
+    logg info 'Installing Docker on Alpine'
+    sudo apk add --update docker
+elif command -v pacman > /dev/null; then
+    # Archlinux
+    logg info 'Installing Docker on Archlinux'
+    sudo pacman -Syu
+    sudo pacman -S docker
+elif command -v zypper > /dev/null; then
+    # OpenSUSE
+    logg info 'Installing Docker on OpenSUSE'
+    sudo zypper addrepo https://download.docker.com/linux/sles/docker-ce.repo
+    sudo zypper install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+fi
+
+### Add Docker group on Linux
+if command -v groupadd > /dev/null; then
+    # Linux
+    logg info 'Adding user to Docker group'
+    sudo groupadd docker
+    sudo usermod -aG docker "$USER"
+    newgrp docker
+fi
+
+### Boot Docker on start with systemd on Linux machines
+if command -v systemctl > /dev/null; then
+    # Systemd Linux
+    sudo systemctl start docker.service
+    sudo systemctl enable docker.service
+    sudo systemctl enable containerd.service
+fi
+
+{{ end -}}
