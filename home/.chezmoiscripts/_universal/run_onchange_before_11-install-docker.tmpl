@@ -29,13 +29,13 @@ elif command -v apt-get > /dev/null; then
 elif command -v dnf > /dev/null; then
     # Fedora
     sudo dnf -y install dnf-plugins-core
-    sudo dnf config-manager --add-repo -y https://download.docker.com/linux/fedora/docker-ce.repo
+    sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
     sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 elif command -v yum > /dev/null; then
     # CentOS
     logg info 'Installing Docker on CentOS'
     sudo yum install -y yum-utils
-    sudo yum-config-manager --add-repo -y https://download.docker.com/linux/centos/docker-ce.repo
+    sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
     sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 elif command -v apk > /dev/null; then
     # Alpine
