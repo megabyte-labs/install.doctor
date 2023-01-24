@@ -4,9 +4,16 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-### Ensure ~/.config/git/template/hooks files are executable
-logg info 'Ensuring '"$XDG_CONFIG_HOME"'/git/template/hooks files are executable'
-find "$XDG_CONFIG_HOME/git/template/hooks" -mindepth 1 -maxdepth 1 -type f | while read HOOK; do
+{{ $gitHooks := (output "find" (joinPath .chezmoi.homeDir ".local" "src" "shared-common" "common" ".config" "husky") "-mindepth" "1" "-maxdepth" "1" "-type" "f") -}}
+{{- range $gitHook := splitList "\n" $gitHooks -}}
+{{- if ne $gitHook "" -}}
+# {{ $gitHook }} hash: {{ include $gitHook | sha256sum }}
+{{- end -}}
+{{- end }}
+
+### Ensure git hooks are executable
+logg info 'Ensuring git hooks are executable'
+find "$HOME/.local/src/shared-common/common/.config/husky" -mindepth 1 -maxdepth 1 -type f | while read HOOK; do
     chmod +x "$HOOK"
 done
 
