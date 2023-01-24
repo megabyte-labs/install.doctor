@@ -16,3 +16,9 @@ fi
 if [ -f "$HOME/.wget-hsts" ]; then
     rm -f "$HOME/.wget-hsts"
 fi
+
+### Remove .wrangler
+# Not sure how this is populating but the proper environment variables appear to be in place and nothing breaks when its removed
+if [ -d "$HOME/.wrangler" ]; then
+    rm -rf "$HOME/.wrangler"
+fi
