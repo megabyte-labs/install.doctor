@@ -80,8 +80,8 @@ if [ ! -d /Applications ] || [ ! -d /System ]; then
         logg info 'Building gVisor from source'
         sudo git clone https://github.com/google/gvisor.git /usr/local/src/gvisor
         cd /usr/local/src/gvisor
-        mkdir -p bin
-        make copy TARGETS=runsc DESTINATION=bin/
+        sudo mkdir -p bin
+        sudo make copy TARGETS=runsc DESTINATION=bin/
         sudo cp ./bin/runsc /usr/local/bin
     fi
 
