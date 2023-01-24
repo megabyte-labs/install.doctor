@@ -364,7 +364,8 @@ softwareGroups:
     - tabby
     - vlc
     - vscode
-    - vscodium
+    # Some plugins do not work with vscodium
+    # - vscodium
   File-System: &File-System
     # After `sudo apt-get install -y fuse libfuse-dev, the following error still shows up:
     # error: could not find system library 'fuse' required by the 'fuse' crate
