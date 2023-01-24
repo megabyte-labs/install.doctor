@@ -50,13 +50,13 @@ const figures = isUnicodeSupported() ? figuresDefault : figuresFallback
 function log(type, label, msg) {
   let icon, message
   if (type === 'info') {
-    icon = `${chalk.cyanBright(figures.pointer)} ${chalk.bold.white.bgCyanBright(' ' + label + ' ')}`
+    icon = `${chalk.cyanBright(figures.pointer)} ${chalk.bold.white.bgCyan(' ' + label.padStart(label.length / 2 + 4, ' ').padEnd(label.length / 2 + 4, ' ') + ' ')}`
     message = wrapMessage(msg)
   } else if (type === 'star') {
-    icon = `${chalk.yellowBright(figures.star)} ${chalk.bold.black.bgYellowBright(' ' + label + ' ')}`
+    icon = `${chalk.yellow(figures.star)} ${chalk.bold.black.bgYellow(' ' + label.padStart(label.length / 2 + 4, ' ').padEnd(label.length / 2 + 4, ' ') + ' ')}`
     message = wrapMessage(msg)
   } else if (type === 'success') {
-    icon = `${chalk.greenBright(figures.play)} ${chalk.bold.white.bgGreenBright(' ' + label + ' ')}`
+    icon = `${chalk.greenBright(figures.play)} ${chalk.bold.white.bgGreenBright(' ' + label.padStart(label.length / 2 + 4, ' ').padEnd(label.length / 2 + 4, ' ') + ' ')}`
     message = wrapMessage(msg)
   } else if (type === 'warn') {
     icon = `${chalk.yellowBright(figures.lozenge)} ${chalk.bold.black.bgYellowBright(' WARNING ')}`
