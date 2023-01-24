@@ -4,6 +4,19 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
+### Update background to be OS-specific
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/dconf/settings/org.gnome.desktop.background" ]; then
+    logg info 'Checking for presence of /usr/local/share/wallpapers/Betelgeuse-{{ title .host.distro.id }}/contents/source.jpg'
+    if [ -f /usr/local/share/wallpapers/Betelgeuse-{{ title .host.distro.id }}/contents/source.jpg ]; then
+        logg info "Updating ${XDG_CONFIG_HOME:-$HOME/.config}/dconf/settings/org.gnome.desktop.background to point to OS-specific background"
+        TMP="$(mktemp)"
+        sed 's/Betelgeuse/Betelgeuse-{{ title .host.distro.id }}/g' < "${XDG_CONFIG_HOME:-$HOME/.config}/dconf/settings/org.gnome.desktop.background" > "$TMP"
+        mv "$TMP" "${XDG_CONFIG_HOME:-$HOME/.config}/dconf/settings/org.gnome.desktop.background"
+    else
+        logg info 'OS-specific background not found'
+    fi
+fi
+
 ### Backup system settings
 DCONF_TMP="$(mktemp)"
 dconf dump / > "$DCONF_TMP"
