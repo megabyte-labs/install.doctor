@@ -5,10 +5,12 @@
 {{ includeTemplate "universal/logg" }}
 
 ### Docker Clip
-logg info 'Adding Docker clip commands. For more details check out https://github.com/lukaszlach/clip/'
-docker clip add || EXIT_CODE=$?
-if [ -n "$EXIT_CODE" ]; then
-    logg error 'Failed to run `docker clip add`'
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.docker}/cli-plugins/docker-clip" ]; then
+    logg info 'Adding Docker clip commands. For more details check out https://github.com/lukaszlach/clip/'
+    docker clip add || EXIT_CODE=$?
+    if [ -n "$EXIT_CODE" ]; then
+        logg error 'Failed to run `docker clip add`'
+    fi
 fi
 
 ### Docker Convoy
@@ -20,4 +22,21 @@ if [ ! -f /etc/docker/plugins/convoy.spec ]; then
     tar xvzf convoy.tar.gz
     sudo cp convoy/convoy convoy/convoy-pdata_tools /usr/local/bin/
     rm -rf convoy
+else
+    logg info 'Docker Convoy already added at /etc/docker/plugins/convoy.spec'
 fi
+
+### Docker push-rm
+if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.docker}/cli-plugins/docker-pushrm ]; then
+    logg info 'Acquiring release information for Docker push-rm'
+    RELEASE_TAG="$(curl -sSL https://api.github.com/repos/christian-korneck/docker-pushrm/releases/latest | jq -r '.tag_name')"
+    mkdir -p "${XDG_CONFIG_HOME:-$HOME/.docker}/cli-plugins"
+    logg info 'Downloading Docker push-rm'
+    curl https://github.com/christian-korneck/docker-pushrm/releases/download/$RELEASE_TAG/docker-pushrm_darwin_amd64 -o "${XDG_CONFIG_HOME:-$HOME/.docker}/cli-plugins/docker-pushrm"
+    chmod +x "${XDG_CONFIG_HOME:-$HOME/.docker}/cli-plugins/docker-pushrm"
+    logg success 'Added Docker push-rm'
+else
+    logg info 'Docker push-rm already added'
+fi
+
+{{ end -}}
