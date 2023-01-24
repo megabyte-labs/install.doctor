@@ -1,3 +1,4 @@
+{{- if eq .host.distro.family "darwin" -}}
 #!/usr/bin/env bash
 
 {{ includeTemplate "universal/profile" }}
@@ -18,3 +19,5 @@ find "$HOME/.local/share/fonts" -type f | while read FONT_FILE; do
     cp "$FONT_FILE" "$HOME/Library/Fonts/$BASENAME"
   fi
 done
+
+{{ end -}}
