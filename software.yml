@@ -4246,8 +4246,15 @@ softwarePackages:
     cargo: handlr
     yay: handlr-bin
   kvantum:
-    _bin: kvantum
-    apt: kvantum
+    _bin: kvantummanager
+    _desc: Kvantum is an SVG-based theme engine for Qt4/Qt5 and KDE, i.e. a program for styling Qt applications with SVG images, with an emphasis on elegance, usability and practicality.
+    _docs: https://github.com/tsujan/Kvantum/blob/master/Kvantum/doc/Theme-Config.pdf
+    _github: https://github.com/tsujan/Kvantum
+    _home: https://github.com/tsujan/Kvantum
+    _name: Kvantum
+    apt:
+      - qt5-style-kvantum
+      - qt5-style-kvantum-themes
     dnf: kvantum
     eopkg: kvantum
     pacman: kvantum
@@ -7761,6 +7768,19 @@ softwarePackages:
     scoop: vagrant
     _service: false
     _type: cli
+  vagrant-vmware-utility:
+    _bin: vagrant-vmware-utility
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: Vagrant VMWare Utility
+    _post:cask: 'sudo ln -s /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility /usr/local/bin/vagrant-vmware-utility'
+    _when:cask: '! test -f /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility'
+    ansible: professormanhattan.vmware
+    cask: vagrant-vmware-utility
+    choco: vagrant-vmware-utility
+    script: rm -rf /tmp/vagrant-vmware-utility_1.0.21_linux_amd64.zip && curl https://releases.hashicorp.com/vagrant-vmware-utility/1.0.21/vagrant-vmware-utility_1.0.21_linux_amd64.zip -o /tmp/vagrant-vmware-utility_1.0.21_linux_amd64.zip && unzip /tmp/vagrant-vmware-utility_1.0.21_linux_amd64.zip && sudo mv -f /tmp/vagrant-vmware-utility /usr/local/bin/vagrant-vmware-utility && sudo chmod +x /usr/local/bin/vagrant-vmware-utility
   vault:
     _bin: vault
     _desc: '[HashiCorp Vault](https://www.vaultproject.io/) secures, stores, and tightly controls access to tokens, passwords, certificates, API keys, and other secrets. Basically, it is a tool for managing any data that you want to tightly control access to. It also has some advanced integrations with systems like AWS.'
