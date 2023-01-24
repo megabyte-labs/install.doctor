@@ -1733,7 +1733,6 @@ softwarePackages:
     _docs: https://docs.docker.com/
     _github: null
     _home: https://www.docker.com/
-    _post:apt: sudo systemctl start docker
     _name: Docker Desktop
     _when: '! test -d /Applications/Docker.app'
     apt: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.16.2-amd64.deb
@@ -8195,6 +8194,33 @@ softwarePackages:
     _type: cli
     yay: winrm-cli-git
     _service: false
+  docker:
+    _bin: docker
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: Docker CLI
+    apt:
+      - containerd.io
+      - docker-ce
+      - docker-ce-cli
+      - docker-compose-plugin
+    dnf:
+      - containerd.io
+      - docker-ce
+      - docker-ce-cli
+      - docker-compose-plugin
+    pacman:
+      - containerd.io
+      - docker-ce
+      - docker-ce-cli
+      - docker-compose-plugin
+    zypper:
+      - containerd.io
+      - docker-ce
+      - docker-ce-cli
+      - docker-compose-plugin
   wireshark-cli:
     _bin: sharkd
     _desc: null
