@@ -70,12 +70,14 @@ if [ -f /etc/default/grub ]; then
     fi
 
     ### GRUB_BACKGROUND
-    logg info 'Setting GRUB_BACKGROUND=/usr/local/share/grub/{{ .theme }}-blue.png in /etc/default/grub'
-    if cat /etc/default/grub | grep GRUB_BACKGROUND > /dev/null; then
-        sudo sed -i 's/.*GRUB_BACKGROUND.*/GRUB_BACKGROUND="\/usr\/local\/share\/grub\/{{ .theme }}-blue.png"/' /etc/default/grub
-    else
-        echo 'GRUB_BACKGROUND="/usr/local/share/grub/{{ .theme }}-blue.png"' | sudo tee -a /etc/default/grub
-    fi
+    # Removed since the background should be flat black which is configurable
+    # Leaving this code here in case we need to add a flat black image background for some reason
+    # logg info 'Setting GRUB_BACKGROUND=/usr/local/share/grub/{{ .theme }}-blue.png in /etc/default/grub'
+    # if cat /etc/default/grub | grep GRUB_BACKGROUND > /dev/null; then
+    #     sudo sed -i 's/.*GRUB_BACKGROUND.*/GRUB_BACKGROUND="\/usr\/local\/share\/grub\/{{ .theme }}-blue.png"/' /etc/default/grub
+    # else
+    #     echo 'GRUB_BACKGROUND="/usr/local/share/grub/{{ .theme }}-blue.png"' | sudo tee -a /etc/default/grub
+    # fi
 
     ### GRUB_TIMEOUT
     logg info 'Setting GRUB_TIMEOUT={{ .grub.timeout }} in /etc/default/grub'
