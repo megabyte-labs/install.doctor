@@ -176,6 +176,7 @@ async function generateInstallOrders(pkgsToInstall) {
               pref = osType + ':' + preference
             }
             log('info', 'Filter', `${pkg} is being skipped because of the _when:${pref} condition`)
+            processPluginOrders(pkg)
             continue pkgFor
           }
         } else if (scopedPkgManager) {
@@ -184,6 +185,7 @@ async function generateInstallOrders(pkgsToInstall) {
           } catch (e) {
             const pref = preference
             log('info', 'Filter', `${pkg} is being skipped because of the _when:${pref} condition`)
+            processPluginOrders(pkg)
             continue pkgFor
           }
         } else if (scopedSystem) {
@@ -197,6 +199,7 @@ async function generateInstallOrders(pkgsToInstall) {
               pref = osType
             }
             log('info', 'Filter', `${pkg} is being skipped because of the _when:${pref} condition`)
+            processPluginOrders(pkg)
             continue pkgFor
           }
         } else if (normalCheck) {
@@ -204,6 +207,7 @@ async function generateInstallOrders(pkgsToInstall) {
             await $(normalCheck)
           } catch (e) {
             log('info', 'Filter', `${pkg} is being skipped because of the _when condition`)
+            processPluginOrders(pkg)
             continue pkgFor
           }
         }
@@ -237,6 +241,7 @@ async function generateInstallOrders(pkgsToInstall) {
               pref = osType + ':' + preference
             }
             log('info', 'Filter', `${bin} already in PATH (via _bin:${pref})`)
+            processPluginOrders(pkg)
             continue pkgFor
           } else {
             if (preference === 'cask' || preference === 'flatpak') {
@@ -251,6 +256,7 @@ async function generateInstallOrders(pkgsToInstall) {
           if (bin) {
             const pref = preference
             log('info', 'Filter', `${bin} already in PATH (via _bin:${pref})`)
+            processPluginOrders(pkg)
             continue pkgFor
           } else {
             if (preference === 'cask' || preference === 'flatpak') {
@@ -270,6 +276,7 @@ async function generateInstallOrders(pkgsToInstall) {
               pref = osType
             }
             log('info', 'Filter', `${bin} already in PATH (via _bin:${pref})`)
+            processPluginOrders(pkg)
             continue pkgFor
           } else {
             if (preference === 'cask' || preference === 'flatpak') {
@@ -283,6 +290,7 @@ async function generateInstallOrders(pkgsToInstall) {
               : normalCheck.map((x) => which.sync(x, { nothrow: true })).every((y) => !!y)
           if (bin) {
             log('info', 'Filter', `${bin} already in PATH (via _bin)`)
+            processPluginOrders(pkg)
             continue pkgFor
           } else {
             if (preference === 'cask' || preference === 'flatpak') {
@@ -383,6 +391,15 @@ async function generateInstallOrders(pkgsToInstall) {
   }
 }
 
+function processPluginOrders(pkg) {
+  const pluginMap = installData && installData.softwarePlugins && installData.softwarePlugins[pkg]
+  if (pluginMap) {
+    if (pluginMap.cmd && pluginMap.plugins) {
+      installOrdersPlugins.push({ package: pkg, cmd: pluginMap.cmd, plugins: pluginMap.plugins })
+    }
+  }
+}
+
 // Update install, pre-hook, and post-hook objects
 async function updateInstallMaps(preference, packages, scopedPreference, pkg, packageKey, softwarePackages) {
   const preHook = getHook(packages, 'pre', scopedPreference, preference)
@@ -397,12 +414,7 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
   if (serviceHook) {
     installOrdersService.concat(typeof serviceHook === 'string' ? [serviceHook] : serviceHook)
   }
-  const pluginMap = installData && installData.softwarePlugins && installData.softwarePlugins[pkg]
-  if (pluginMap) {
-    if (pluginMap.cmd && pluginMap.plugins) {
-      installOrdersPlugins.push({ package: pkg, cmd: pluginMap.cmd, plugins: pluginMap.plugins })
-    }
-  }
+  processPluginOrders(pkg)
   if (!installOrders[preference]) {
     installOrders[preference] = []
   }
