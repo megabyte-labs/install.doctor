@@ -1,0 +1,16 @@
+{{- if (ne .host.distro.family "windows") -}}
+#!/usr/bin/env bash
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+### Symlink custom code for Neovim configuration
+if [ ! -d "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/lua/custom" ]; then
+    logg info "Linking ${XDG_CONFIG_HOME:-$HOME/.config}/nvim-custom to ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/lua/custom"
+    logg info "Changes should go in ${XDG_CONFIG_HOME:-$HOME/.config}/nvim-custom"
+    ln -s "${XDG_CONFIG_HOME:-$HOME/.config}/nvim-custom" "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/lua/custom"
+else
+    logg info "${XDG_CONFIG_HOME:-$HOME/.config}/nvim-custom appears to already be symlinked to ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/lua/custom"
+fi
+
+{{ end -}}

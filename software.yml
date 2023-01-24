@@ -286,6 +286,15 @@ softwarePackages:
       - what-ip
     # Only works with at least one package specified
     flatpak: flatseal
+  _nautilus-extensions:
+    _deps:
+      - nautilus-gtkhash
+      - nautilus-image-converter
+      - nautilus-share
+      - nautilus-wipe
+    apt: nautilus
+    dnf: nautilus
+    pacman: nautilus
   drawing:
     _bin: drawing
     flatpak: com.github.maoschanz.drawing
@@ -4988,6 +4997,22 @@ softwarePackages:
     npm: nativefier
     _service: false
     _type: cli
+  nautilus-gtkhash:
+    apt: nautilus-gtkhash
+    dnf: nautilus-gtkhash
+    pacman: nautilus-gtkhash
+  nautilus-image-converter:
+    apt: nautilus-image-converter
+    dnf: nautilus-image-converter
+    pacman: nautilus-image-converter
+  nautilus-share:
+    apt: nautilus-share
+    dnf: nautilus-share
+    pacman: nautilus-share
+  nautilus-wipe:
+    apt: nautilus-wipe
+    dnf: nautilus-wipe
+    pacman: nautilus-wipe
   nb:
     _bin: nb
     _deps:
@@ -5996,6 +6021,18 @@ softwarePackages:
     pacman: python-pip
     scoop: python
     _service: false
+  python2:
+    _bin: python2
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: null
+    apt: python2
+    brew: python2
+    dnf: python2
+    pacman: python2
+    scoop: python2
   pywhat:
     _bin: what
     _desc: Identify anything. pyWhat easily lets you identify emails, IP addresses, and more. Feed it a .pcap file or some text and it'll tell you what it is!
