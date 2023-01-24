@@ -114,9 +114,6 @@
 {{- if not (env "TIMEZONE") -}}
 {{-   $timezone = promptStringOnce $data.user "timezone" "Timezone" $timezone -}}
 {{- end -}}
-{{- if not (env "CLOUDFLARE_TOKEN") -}}
-{{-   $cloudflareToken = promptStringOnce $data.user "cloudflareToken" "CloudFlare API Token" $cloudflareToken -}}
-{{- end -}}
 
 {{- else -}}
 {{-   $headless = true -}}
