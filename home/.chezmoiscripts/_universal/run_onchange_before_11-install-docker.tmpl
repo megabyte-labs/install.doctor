@@ -62,7 +62,6 @@ if command -v groupadd > /dev/null; then
     fi
     logg info 'Adding user to Docker group'
     sudo usermod -aG docker "$USER"
-    newgrp docker
 fi
 
 ### Boot Docker on start with systemd on Linux machines
