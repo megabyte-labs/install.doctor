@@ -50,23 +50,38 @@ const figures = isUnicodeSupported() ? figuresDefault : figuresFallback
 function log(type, label, msg) {
   let icon, message
   if (type === 'info') {
-    icon = chalk.cyanBright(figures.pointer)
-    message = chalk.gray.bold(msg)
+    icon = `${chalk.cyanBright(figures.pointer)} ${chalk.bold.white.bgCyanBright(' ' + label + ' ')}`
+    message = wrapMessage(msg)
   } else if (type === 'star') {
-    icon = chalk.yellowBright(figures.star)
-    message = chalk.bold(msg)
+    icon = `${chalk.yellowBright(figures.star)} ${chalk.bold.black.bgYellowBright(' ' + label + ' ')}`
+    message = wrapMessage(msg)
   } else if (type === 'success') {
-    icon = chalk.greenBright(figures.play)
-    message = chalk.bold(msg)
+    icon = `${chalk.greenBright(figures.play)} ${chalk.bold.white.bgGreenBright(' ' + label + ' ')}`
+    message = wrapMessage(msg)
   } else if (type === 'warn') {
     icon = `${chalk.yellowBright(figures.lozenge)} ${chalk.bold.black.bgYellowBright(' WARNING ')}`
-    message = chalk.yellowBright(msg)
+    message = chalk.yellowBright(wrapMessage(msg))
   } else if (type === 'error') {
     icon = `${chalk.redBright(figures.cross)} ${chalk.black.bold.bgRedBright(' ERROR ')}`
-    message = chalk.redBright(msg)
+    message = chalk.redBright(wrapMessage(msg))
   }
-  const outputMessage = `${icon} ${chalk.bold(label)} ${message}`
+  const outputMessage = `${icon} ${message}`
   console.log(outputMessage)
+}
+
+function locations(substring,string){
+  var a=[],i=-1;
+  while((i=string.indexOf(substring,i+1)) >= 0) a.push(i);
+  return a;
+}
+
+function wrapMessage(msg) {
+  const indexes = locations('`', msg)
+  if (indexes.length > 1) {
+    return wrapMessage(msg.substring(0, indexes[0]) + chalk.bold.black.bgGray(' ' + msg.substring(indexes[0] + 1, indexes[1] + 1 - indexes[0]) + ' ') + msg.substring(indexes[1] + 1 - indexes[0]) + ' '))
+  } else {
+    return msg
+  }
 }
 
 function runCommand(spinnerTitle, command) {
