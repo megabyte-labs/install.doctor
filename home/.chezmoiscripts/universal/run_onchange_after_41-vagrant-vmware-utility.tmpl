@@ -1,8 +1,8 @@
 {{- if ne .host.distro.family "windows" -}}
 #!/usr/bin/env bash
 
-{{- includeTemplate "universal/profile" }}
-{{- includeTemplate "universal/logg" }}
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
 
 ### Only run logic if both Vagrant and VMWare are installed
 if command -v vagrant > /dev/null && command -v vmware > /dev/null; then
