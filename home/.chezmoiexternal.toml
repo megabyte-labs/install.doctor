@@ -303,16 +303,4 @@
     url = "{{ $fontUrlBase }}{{ $font }}.ttf"
     refreshPeriod = "{{ $refreshPeriod }}"
 {{-   end }}
-
-### Miscellaneous Fonts Download
-["{{ $fontDir }}/FontAwesome.ttf"]
-    type = "file"
-    # Source URL
-    url = "https://github.com/VermiumSifell/dotfiles/raw/main/dot_local/share/fonts/fontawesome.ttf"
-    refreshPeriod = "{{ $refreshPeriod }}"
-["{{ $fontDir }}/Weather-Icons.ttf"]
-    type = "file"
-    # Source URL
-    url = "https://github.com/VermiumSifell/dotfiles/raw/main/dot_local/share/fonts/weathericons.ttf"
-    refreshPeriod = "{{ $refreshPeriod }}"
 {{- end }}
