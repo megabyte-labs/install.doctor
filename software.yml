@@ -1765,26 +1765,19 @@ softwarePackages:
     port: dnsmasq
     _service: true
     _type: cli
-  docker:
-    _bin: docker
-    _desc: '[Docker](https://www.docker.com/) is a set of platform-as-a-service products that use OS-level virtualization to deliver software in packages called containers. Containers are isolated from one another and bundle their own software, libraries and configuration files; they can communicate with each other through well-defined channels.'
+  docker-desktop:
+    _desc: '[Docker](https://www.docker.com/) is a set of platform-as-a-service products that use OS-level virtualization to deliver software in packages called containers. Containers are isolated from one another and bundle their own software, libraries and configuration files; they can communicate with each other through well-defined channels. [Docker Desktop](https://www.docker.com/products/docker-desktop/) adds a sleek UI for Docker and makes it easier to manage Docker on macOS and Windows.'
     _docs: https://docs.docker.com/
-    _github: https://github.com/docker/cli
+    _github: null
     _home: https://www.docker.com/
     _post:apt: sudo systemctl start docker
-    _post:pacman: sudo systemctl start docker
-    _name: Docker
-    ansible: professormanhattan.docker
-    # apt:
-    #   - docker.io
-    #   - docker-compose
-    # cask: docker
-    # brew: docker
-    # pacman: docker
-
-    _service: true
-    _systemd: docker
-    _type: cli
+    _name: Docker Desktop
+    _when: '! test -d /Applications/Docker.app'
+    apt: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.16.2-amd64.deb
+    cask: docker
+    choco: docker-desktop
+    dnf: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.16.2-x86_64.rpm
+    pacman: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.16.2-x86_64.pkg.tar.zst
   docker-slim:
     _bin: docker-slim
     _desc: "[DockerSlim](https://dockersl.im/) will optimize and secure your containers by understanding your application and what it needs using various analysis techniques. It will throw away what you don't need, reducing the attack surface of your container. What if you need some of those extra things to debug your container? You can use dedicated debugging side-car containers for that."
