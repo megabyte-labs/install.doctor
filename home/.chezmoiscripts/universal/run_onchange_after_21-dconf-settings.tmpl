@@ -16,7 +16,7 @@ if [ -d "$XDG_CONFIG_HOME/dconf/settings" ]; then
             logg info 'Dconf configuration file:'
             echo "$DCONF_CONFIG_FILE"
         fi
-        DCONF_SETTINGS_ID="/$(basename "$DCONF_CONFIG_FILE" | sed 's/\./\//')/"
+        DCONF_SETTINGS_ID="/$(basename "$DCONF_CONFIG_FILE" | sed 's/\./\//g')/"
         if [ "$DEBUG_MODE" == 'true' ]; then
             logg info 'Dconf settings ID:'
             echo "$DCONF_SETTINGS_ID"
