@@ -56,8 +56,11 @@ fi
 ### Add Docker group on Linux
 if command -v groupadd > /dev/null; then
     # Linux
+    if ! cat /etc/group | grep docker > /dev/null; then
+        logg info 'Creating Docker group'
+        sudo groupadd docker
+    fi
     logg info 'Adding user to Docker group'
-    sudo groupadd docker
     sudo usermod -aG docker "$USER"
     newgrp docker
 fi
