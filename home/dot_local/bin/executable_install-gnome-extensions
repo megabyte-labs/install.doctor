@@ -165,7 +165,7 @@ function install_shell_extensions() {
     fi
 
     printf "\n%sPlease wait...\n" "$info_text_blue"
-    filename="$(basename "$download_url")"
+    filename="$(basename "$download_url" | sed 's/\?version_tag.*$//')"
     wget -q "$download_url" \
       && mkdir -p "$target_installation_dir" \
       && unzip -o -q "$filename" -d "$target_installation_dir" \
