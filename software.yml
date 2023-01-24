@@ -1052,6 +1052,17 @@ softwarePackages:
     yay: google-chrome
     _service: false
     _type: application
+  tor-browser:
+    _bin: tor-browser
+    _desc: Tor, short for The Onion Router, is free and open-source software for enabling anonymous communication. It directs Internet traffic through a free, worldwide, volunteer overlay network, consisting of more than seven thousand relays, to conceal a user's location and usage.
+    _docs: https://www.torproject.org/docs/documentation.html.en
+    _github: https://github.com/TheTorProject/gettorbrowser
+    _home: https://www.torproject.org/
+    _name: Tor Browser
+    _when:cask: '! test -d "/Applications/Tor Browser.app"'
+    cask: tor-browser
+    choco: tor-browser
+    flatpak: com.github.micahflee.torbrowser-launcher
   dconf-editor:
     _bin: dconf-editor
     flatpak: ca.desrt.dconf-editor
