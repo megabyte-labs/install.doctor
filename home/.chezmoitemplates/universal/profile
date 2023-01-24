@@ -1,8 +1,8 @@
 ### Source .bashrc if it is present
 if [ -f "$HOME/.bashrc" ]; then
   . "$HOME/.bashrc"
-elif [ -f "$HOME/.config/shell/exports" ]; then
-  . "$HOME/.config/shell/exports"
+elif [ -f "$HOME/.config/shell/exports.sh" ]; then
+  . "$HOME/.config/shell/exports.sh"
 fi
 
 ### Ensure Homebrew PATHs
