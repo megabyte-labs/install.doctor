@@ -111,9 +111,6 @@
 {{- if not (env "PUBLIC_SERVICES_DOMAIN") -}}
 {{-   $domain = promptStringOnce $data.user "domain" "Domain name" $domain -}}
 {{- end -}}
-{{- if not (env "TIMEZONE") -}}
-{{-   $timezone = promptStringOnce $data.user "timezone" "Timezone" $timezone -}}
-{{- end -}}
 
 {{- else -}}
 {{-   $headless = true -}}
