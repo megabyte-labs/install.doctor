@@ -184,6 +184,7 @@ softwarePackages:
       - deja-dup
       - dialect
       - drawing
+      - flatseal
       - forklift
       - gnome-calendar
       - gnome-document-viewer
@@ -204,8 +205,6 @@ softwarePackages:
       - warp-transfer
       - web-font-generator
       - what-ip
-    # Only works with at least one package specified
-    flatpak: flatseal
   _nautilus-extensions:
     _deps:
       - nautilus-gtkhash
@@ -644,6 +643,17 @@ softwarePackages:
     github: github.com/Azure/azure-functions-core-tools
     npm: azure-functions-core-tools@4
     _service: false
+  signal:
+    _bin: signal
+    _desc: Signal is a cross-platform centralized encrypted instant messaging service developed by the non-profit Signal Foundation and its subsidiary, the Signal Messenger LLC. Users can send one-to-one and group messages, which can include files, voice notes, images, and videos.
+    _docs: https://support.signal.org/hc/en-us
+    _github: https://github.com/signalapp/Signal-Desktop
+    _home: https://signal.org
+    _name: Signal Desktop
+    cask: signal
+    choco: signal
+    flatpak: org.signal.Signal
+    scoop: signal
   balenaetcher:
     _appImageName: balenaEtcher.AppImage
     _bin: null
@@ -4977,7 +4987,7 @@ softwarePackages:
     pacman: nebula
     _service: false
   nectar:
-    _bin: nerd
+    _bin: nectar
     _desc: JavaScript native compiler. No bytecode no VM, just pure native binaries.
     _docs: https://nectar.js.org/docs/
     _github: https://github.com/NerdLang/nerd
