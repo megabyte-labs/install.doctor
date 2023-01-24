@@ -175,6 +175,9 @@ installerPreference:
     - ansible
     - binary
 softwarePackages:
+  _kde:
+    _deps:
+      - plasma-desktop
   _misc-flatpaks:
     _deps:
       - bottles
@@ -1556,6 +1559,16 @@ softwarePackages:
     pkg: git-delta
     scoop: delta
     _service: false
+  plasma-desktop:
+    _bin: plasmashell
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: KDE
+    apt: plasma-desktop
+    dnf: plasma-desktop
+    pacman: plasma-desktop
   delve:
     _bin: dlv
     _desc: Delve is a debugger for the Go programming language.

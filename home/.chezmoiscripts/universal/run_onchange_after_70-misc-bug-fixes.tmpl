@@ -6,6 +6,14 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
+### Remove Ubuntu logo branding from GDM lock screen
+if [ '{{ .whiteLabel }}' == 'true' ]; then
+    if [ -f /usr/share/plymouth/ubuntu-logo.png ]; then
+        logg info 'Renaming `/usr/share/plymouth/ubuntu-logo.png` to `/usr/share/plymouth/ubuntu-logo.png.bak` since the whiteLabel setting is true'
+        sudo mv /usr/share/plymouth/ubuntu-logo.png /usr/share/plymouth/ubuntu-logo.png.bak
+    fi
+fi
+
 ### Fix for Ubuntu default extension conflicting with dash-to-dock
 if dconf read /org/gnome/shell/enabled-extensions | grep dash-to-dock > /dev/null; then
     if [ -d '/usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com' ]; then
