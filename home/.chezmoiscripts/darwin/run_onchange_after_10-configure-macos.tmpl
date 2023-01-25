@@ -9,8 +9,6 @@ logg info 'Applying optimized macOS settings'
 logg info 'A sudo password is required to apply some of the macOS optimizations.'
 sudo echo "Sudo access granted."
 
-set -x
-
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
 osascript -e 'tell application "System Preferences" to quit'
@@ -937,7 +935,5 @@ for app in "Activity Monitor" \
 	killall "${app}" &> /dev/null
 done
 
-set +x
-
 logg success 'Done applying macOS settings'
-logg info 'Some of these changes  may require a logout/restart to take effect' && exit 0
+logg info 'Some of these changes  may require a logout/restart to take effect'
