@@ -12,54 +12,84 @@ for FIREFOX_DIR in '/usr/lib/firefox' '/usr/lib/firefox-esr' '/Applications/Fire
     fi
 done
 
-### Initiatize Firefox default profiles
-if command -v org.mozilla.firefox > /dev/null; then
-    if [ ! -d "$HOME/.var/app/org.mozilla.firefox" ]; then
-        logg info 'Running Firefox headlessly to generate default profiles'
-        firefox --headless &
-        FIREFOX_PID=$!
-        sleep 5
-        kill "$FIREFOX_PID"
-        logg info 'Finished running Firefox headlessly'
-        sleep 5
+### Loop through various Firefox profile locations
+for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox" "$HOME/.var/app/io.gitlab.librewolf-community/.librewolf" "$HOME/Library/Application Support/Firefox/Profiles" "$HOME/Library/Application Support/LibreWolf/Profiles" "$HOME/.mozilla/firefox"; do
+    ### Determine executable to use
+    if [ "$SETTINGS_DIR" == "$HOME/.var/app/org.mozilla.firefox" ]; then
+        FIREFOX_EXE="$(which org.mozilla.firefox)"
+    elif [ "$SETTINGS_DIR" == "$HOME/.var/app/io.gitlab.librewolf-community/.librewolf" ]; then
+        FIREFOX_EXE="$(which io.gitlab.librewolf-community)"
+    elif [ "$SETTINGS_DIR" == "$HOME/Library/Application Support/Firefox/Profiles" ]; then
+        FIREFOX_EXE="/Applications/Firefox.app/Contents/MacOS/firefox"
+    elif [ "$SETTINGS_DIR == "$HOME/Library/Application Support/LibreWolf/Profiles" ]; then
+        FIREFOX_EXE="/Applications/LibreWolf.app/Contents/MacOS/librewolf"
+    elif [ "$SETTINGS_DIR" == "$HOME/snap/firefox/common/.mozilla/firefox" ]; then
+        FIREFOX_EXE="$(which firefox)"
+    else
+        if command -v firefox-esr > /dev/null; then
+            FIREFOX_EXE="$(which firefox-esr)"
+        elif command -v firefox > /dev/null && [ "$(which firefox)" != *'snap'* ] && [ "$(which firefox)" != *'flatpak'* ] && [ ! -d /Applications ] && [ ! -d /System ]; then
+            # Conditional check ensures Snap / Flatpak / macOS Firefox versions do not try to install to the wrong folder
+            FIREFOX_EXE="$(which firefox)"
+        else
+            logg warn 'Unable to register Firefox executable'
+            logg info "Settings directory: $SETTINGS_DIR"
+            continue
+        fi
     fi
-    logg info 'Renaming default profile folders and assigning them human-readable profile names'
-    DEFAULT_RELEASE_PROFILE="$(find "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox" -mindepth 1 -maxdepth 1 -name "*.default-release")"
-    DEFAULT_PROFILE="$(find "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox" -mindepth 1 -maxdepth 1 -name "*.default")"
-    mv "$DEFAULT_RELEASE_PROFILE" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox/profile.default"
-    mv "$DEFAULT_PROFILE" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox/profile.primary"
-    logg info 'Adding a secondary profile'            
-    cp -rf "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox/profile.primary" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox/profile.secondary"
-    logg info "Copying "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" to profile directory"
-    cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox/profiles.ini"
-fi
-
-### Install Firefox addons (using list declared in .chezmoidata.yaml)
-if command -v org.mozilla.firefox > /dev/null; then
-    for FIREFOX_PLUGIN in {{ list (.firefoxAddOns | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
-        logg info 'Ensuring `'"$FIREFOX_PLUGIN"'` is installed'
-        PLUGIN_HTML="$(mktemp)"
-        curl --silent "https://addons.mozilla.org/en-US/firefox/addon/$FIREFOX_PLUGIN/" > "$PLUGIN_HTML"
-        PLUGIN_TMP="$(mktemp)"
-        cat "$PLUGIN_HTML" | htmlq '#redux-store-state' | sed 's/^<scri.*application\/json">//' | sed 's/<\/script>$//' > "$PLUGIN_TMP"
-        PLUGIN_ID="$(jq '.addons.bySlug["'"$FIREFOX_PLUGIN"'"]' "$PLUGIN_TMP")"
-        if [ "$PLUGIN_ID" != 'null' ]; then
-            PLUGIN_FILE_ID="$(jq -r '.addons.byID["'"$PLUGIN_ID"'"].guid' "$PLUGIN_TMP")"
-            if [ "$PLUGIN_FILE_ID" != 'null' ]; then
-                PLUGIN_URL="$(cat "$PLUGIN_HTML" | htmlq '.InstallButtonWrapper-download-link' --attribute href)"
-                PLUGIN_FILENAME="${PLUGIN_FILE_ID}.xpi"
-                if [ ! -d "$HOME/.var/app/org.mozilla.firefox/.mozilla/extensions/$PLUGIN_FILENAME" ]; then
-                    logg info 'Downloading plugin file for `'"$PLUGIN_FILENAME"'` ('"$FIREFOX_PLUGIN"')'
-                    curl "$PLUGIN_URL" -o "$HOME/.var/app/org.mozilla.firefox/.mozilla/extensions/$PLUGIN_FILENAME"
-                    logg success 'Finished downloading `'"$PLUGIN_FILENAME"'` ('"$FIREFOX_PLUGIN"')'
+    ### Initiatize Firefox default profiles
+    if command -v "$FIREFOX_EXE" > /dev/null; then
+        if [ ! -d "$SETTINGS_DIR" ]; then
+            logg info 'Running Firefox headlessly to generate default profiles'
+            "$FIREFOX_EXE" --headless &
+            FIREFOX_PID=$!
+            sleep 5
+            kill "$FIREFOX_PID"
+            logg info 'Finished running Firefox headlessly'
+            sleep 5
+        fi
+        logg info 'Renaming default profile folders and assigning them human-readable profile names'
+        DEFAULT_RELEASE_PROFILE="$(find "$SETTINGS_DIR" -mindepth 1 -maxdepth 1 -name "*.default-release")"
+        DEFAULT_PROFILE="$(find "$SETTINGS_DIR" -mindepth 1 -maxdepth 1 -name "*.default")"
+        mv "$DEFAULT_PROFILE" "$SETTINGS_DIR/profile.default"
+        mv "$DEFAULT_RELEASE_PROFILE" "$SETTINGS_DIR/profile.primary"
+        logg info 'Adding a secondary profile'            
+        cp -rf "$SETTINGS_DIR/profile.primary" "$SETTINGS_DIR/profile.secondary"
+        logg info "Copying "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" to profile directory"
+        if [ -d /Applications ] && [ -d /System ]; then
+            # macOS
+            cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" "$SETTINGS_DIR/../profiles.ini"
+        else
+            # Linux
+            cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" "$SETTINGS_DIR/profiles.ini"
+        fi
+        
+        ### Install Firefox addons (using list declared in .chezmoidata.yaml)
+        for FIREFOX_PLUGIN in {{ list (.firefoxAddOns | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
+            logg info 'Ensuring `'"$FIREFOX_PLUGIN"'` is installed'
+            PLUGIN_HTML="$(mktemp)"
+            curl --silent "https://addons.mozilla.org/en-US/firefox/addon/$FIREFOX_PLUGIN/" > "$PLUGIN_HTML"
+            PLUGIN_TMP="$(mktemp)"
+            cat "$PLUGIN_HTML" | htmlq '#redux-store-state' | sed 's/^<scri.*application\/json">//' | sed 's/<\/script>$//' > "$PLUGIN_TMP"
+            PLUGIN_ID="$(jq '.addons.bySlug["'"$FIREFOX_PLUGIN"'"]' "$PLUGIN_TMP")"
+            if [ "$PLUGIN_ID" != 'null' ]; then
+                PLUGIN_FILE_ID="$(jq -r '.addons.byID["'"$PLUGIN_ID"'"].guid' "$PLUGIN_TMP")"
+                if [ "$PLUGIN_FILE_ID" != 'null' ]; then
+                    PLUGIN_URL="$(cat "$PLUGIN_HTML" | htmlq '.InstallButtonWrapper-download-link' --attribute href)"
+                    PLUGIN_FILENAME="${PLUGIN_FILE_ID}.xpi"
+                    if [ ! -d "$SETTINGS_DIR/profile.primary/extensions/$PLUGIN_FILENAME" ]; then
+                        logg info 'Downloading plugin file for `'"$PLUGIN_FILENAME"'` ('"$FIREFOX_PLUGIN"')'
+                        curl "$PLUGIN_URL" -o "$SETTINGS_DIR/profile.primary/extensions/$PLUGIN_FILENAME"
+                        logg success 'Finished downloading `'"$PLUGIN_FILENAME"'` ('"$FIREFOX_PLUGIN"')'
+                    fi
+                else
+                    logg warn 'A null Firefox add-on filename was detected for `'"$FIREFOX_PLUGIN"'`'
                 fi
             else
-                logg warn 'A null Firefox add-on filename was detected for `'"$FIREFOX_PLUGIN"'`'
+                logg warn 'A null Firefox add-on ID was detected for `'"$FIREFOX_PLUGIN"'`'
             fi
-        else
-            logg warn 'A null Firefox add-on ID was detected for `'"$FIREFOX_PLUGIN"'`'
-        fi
-    done
-fi
+        done
+    fi
+done
 
 {{ end -}}

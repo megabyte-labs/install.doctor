@@ -1,0 +1,19 @@
+[Profile2]
+Name=Secondary
+IsRelative=1
+Path={{ if eq .host.distro.family "darwin" }}Profiles/{{ end }}profile.secondary
+
+[Profile1]
+Name=Primary
+IsRelative=1
+Path={{ if eq .host.distro.family "darwin" }}Profiles/{{ end }}profile.primary
+Default=1
+
+[Profile0]
+Name=Default
+IsRelative=1
+Path={{ if eq .host.distro.family "darwin" }}Profiles/{{ end }}profile.default
+
+[General]
+StartWithLastProfile=1
+Version=2
