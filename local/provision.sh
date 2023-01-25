@@ -181,13 +181,10 @@ logg() {
 }
 
 ### Prompt for sudo password and (optionally) enable passwordless sudo
-sudo -n true || SUDO_EXIT_CODE=$?
-if [ -n "$SUDO_EXIT_CODE" ]; then
-  echo 'Your user will temporarily be granted passwordless sudo for the duration of the script'
-  echo 'Press `CTRL+C` to bypass this prompt. You will either enter your password when needed or perform a non-privileged installation'
-  echo 'Note: Non-privileged installations are not yet supported - pull requests welcome'
-  echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers
-fi
+logg info 'Your user will temporarily be granted passwordless sudo for the duration of the script'
+logg info 'Press `CTRL+C` to bypass this prompt to either enter your password when needed or perform a non-privileged installation'
+logg info 'Note: Non-privileged installations are not yet supported'
+echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers
 
 ### Qubes dom0
 if command -v qubesctl > /dev/null; then
