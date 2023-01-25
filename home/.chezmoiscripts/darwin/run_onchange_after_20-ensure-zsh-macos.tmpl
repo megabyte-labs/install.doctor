@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-{{- includeTemplate "universal/logg" }}
+{{ includeTemplate "universal/logg" }}
 
 {{- if (not .host.restricted) }}
 logg 'Ensuring ZSH is set as the default shell'
