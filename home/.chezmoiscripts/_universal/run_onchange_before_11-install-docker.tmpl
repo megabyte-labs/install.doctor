@@ -98,11 +98,11 @@ if [ ! -d /Applications ] || [ ! -d /System ]; then
         # Create /etc/docker/daemon.json
         logg info 'Creating /etc/docker'
         sudo mkdir -p /etc/docker
-        if [ -f /usr/local/src/install.doctor/home/private_dot_config/docker/daemon.json ]; then
+        if [ -f /usr/local/src/install.doctor/home/dot_config/docker/daemon.json ]; then
             logg info 'Creating /etc/docker/daemon.json'
-            sudo cp "/usr/local/src/install.doctor/home/private_dot_config/docker/daemon.json" /etc/docker/daemon.json
+            sudo cp "/usr/local/src/install.doctor/home/dot_config/docker/daemon.json" /etc/docker/daemon.json
         else
-            logg warn '/usr/local/src/install.doctor/home/private_dot_config/docker/daemon.json is not available so the /etc/docker/daemon.json file cannot be populated'
+            logg warn '/usr/local/src/install.doctor/home/dot_config/docker/daemon.json is not available so the /etc/docker/daemon.json file cannot be populated'
         fi
     fi
 fi
