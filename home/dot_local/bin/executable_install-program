@@ -1117,6 +1117,7 @@ async function ensurePackageManager(packageManager) {
     }
     const snap = which.sync('snap', { nothrow: true })
     if (snap) {
+      runCommand('Check info for core snap package', `sudo snap info core`)
       runCommand('Ensuring snap core is installed', `sudo snap install core`)
     } else {
       log('warn', logStage, 'Snap installation sequence completed but the snap bin is still not available')
