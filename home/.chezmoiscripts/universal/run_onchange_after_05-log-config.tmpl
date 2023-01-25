@@ -1,3 +1,4 @@
+{{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
 
 {{ $homeDirs := (output "find" .host.homeParentFolder "-mindepth" "1" "-maxdepth" "1" "-type" "d") -}}
@@ -10,15 +11,14 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-find /home -mindepth 1 -maxdepth 1 -type d | while read HOME_DIR; do
+find '{{ .host.homeParentFolder }}' -mindepth 1 -maxdepth 1 -type d | while read HOME_DIR; do
   USER_FOLDER="$(echo "$HOME_DIR" | sed 's/.*\/\([^\/]*\)$/\1/')"
   if [ -d "$HOME_DIR/.local" ]; then
     if [ ! -d "/var/log/user/$USER_FOLDER" ]; then
-      if [ ! -d "$HOME_DIR/.local/log" ]; then
-        mkdir -p "$HOME_DIR/.local/log"
-      fi
-      sudo ln -s "$HOME_DIR/.local/log" "/var/log/user/$USER_FOLDER"
-      logg success 'Symlinked /var/log/user/'"$USER_FOLDER"' to ~/.local/log'
+      logg info 'Creating `/var/log/user/'"$USER_FOLDER"'`'
+      sudo mkdir -p "/var/log/user/$USER_FOLDER"
     fi
   fi
 done
+
+{{ end -}}
