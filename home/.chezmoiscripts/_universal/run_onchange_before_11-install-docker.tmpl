@@ -1,14 +1,14 @@
 {{- if ne .host.distro.family "windows" -}}
 #!/usr/bin/env bash
 
-{{ includeTemplate "universal/profile-bundle" }}
-{{ includeTemplate "universal/logg-bundle" }}
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
 
 ### Install Docker
 if [ -d /Applications ] && [ -d /System ]; then
     # macOS
     logg info 'Installing Docker on macOS via Homebrew cask'
-    brew install --cask docker 
+    brew install --cask docker
     logg info 'Opening the Docker for Desktop app so that the Docker engine starts running'
     open --background -a Docker
 elif command -v apt-get > /dev/null; then

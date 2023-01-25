@@ -3,8 +3,8 @@
 
 # Node.js version: {{ output "node" "--version" }}
 
-{{ includeTemplate "universal/profile-bundle" }}
-{{ includeTemplate "universal/logg-bundle" }}
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
 
 ### Ensure recent version of Node.js is being used
 if command -v volta > /dev/null; then

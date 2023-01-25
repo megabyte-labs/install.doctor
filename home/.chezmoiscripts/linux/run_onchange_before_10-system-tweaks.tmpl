@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-{{ includeTemplate "universal/profile-bundle" }}
-{{ includeTemplate "universal/logg-bundle" }}
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
 
 ### Set hostname (if redefined)
 if command -v hostnamectl > /dev/null; then

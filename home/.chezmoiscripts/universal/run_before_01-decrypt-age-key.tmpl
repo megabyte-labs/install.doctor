@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-{{ includeTemplate "universal/logg-bundle" }}
-{{ includeTemplate "universal/profile-bundle" }}
+{{ includeTemplate "universal/logg-before" }}
+{{ includeTemplate "universal/profile-before" }}
 
 ### Decrypt private key if it is not already present
 if [ ! -f "${XDG_CONFIG_HOME}/age/chezmoi.txt" ]; then

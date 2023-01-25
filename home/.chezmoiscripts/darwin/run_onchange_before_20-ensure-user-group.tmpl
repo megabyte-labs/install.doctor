@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-{{ includeTemplate "universal/profile-bundle" }}
-{{ includeTemplate "universal/logg-bundle" }}
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
 
 ### Ensure user has group of same name (required for Macports)
 logg info 'Ensuring user has a group with the same name and that it is a member. Sudo privileges may be required'

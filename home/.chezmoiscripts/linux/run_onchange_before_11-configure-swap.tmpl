@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # TODO - make equivalent to https://gitlab.com/megabyte-labs/gas-station/-/blob/master/roles/system/common/tasks/linux/swap.yml
 
-{{ includeTemplate "universal/profile-bundle" }}
-{{ includeTemplate "universal/logg-bundle" }}
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
 
 if [ ! -f /swapfile ]; then
   MEMORY_IN_KB="$(grep MemTotal /proc/meminfo | sed 's/.* \(.*\) kB/\1/')"
