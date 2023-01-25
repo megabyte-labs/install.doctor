@@ -1155,13 +1155,13 @@ async function installPackageList(packageManager, packages) {
         try {
           if (pkg.substring(0, 4) === 'http') {
             log('info', 'AppImage Install', `Installing ${pkg} from its URL`)
-            runCommand('Installing ${pkg} via zap', `sudo zap install --select-first -q --from ${pkg}`)
+            runCommand('Installing ${pkg} via zap', `zap install --select-first -q --from ${pkg}`)
           } else if ((pkg.match(/\//g) || []).length === 1) {
             log('info', 'AppImage Install', `Installing ${pkg} from a GitHub Release`)
-            runCommand('Installing ${pkg} via zap', `sudo zap install --select-first -q --github --from ${pkg}`)
+            runCommand('Installing ${pkg} via zap', `zap install --select-first -q --github --from ${pkg}`)
           } else {
             log('info', 'AppImage Install', `Installing ${pkg} using the AppImage Catalog`)
-            runCommand('Installing ${pkg} via zap', `sudo zap install --select-first -q ${pkg}`)
+            runCommand('Installing ${pkg} via zap', `zap install --select-first -q ${pkg}`)
           }
           log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
