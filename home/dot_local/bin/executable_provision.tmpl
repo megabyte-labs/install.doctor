@@ -10,11 +10,18 @@
 
 {{ includeTemplate "universal/logg" }}
 
-### Prompt for sudo password and (optionally) enable passwordless sudo
+### Prompt for sudo password
+sudo -n true || SUDO_EXIT_CODE=$?
 logg info 'Your user will temporarily be granted passwordless sudo for the duration of the script'
-logg info 'Press `CTRL+C` to bypass this prompt to either enter your password when needed or perform a non-privileged installation'
-logg info 'Note: Non-privileged installations are not yet supported'
-echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers
+if [ -n "$SUDO_EXIT_CODE" ]; then
+  logg info 'Press `CTRL+C` to bypass this prompt to either enter your password when needed or perform a non-privileged installation'
+  logg info 'Note: Non-privileged installations are not yet supported'
+fi
+
+### Enable passwordless sudo
+if ! sudo cat /etc/sudoers | grep '# TEMPORARY FOR INSTALL DOCTOR' > /dev/null; then
+  echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers
+fi
 
 ### Ensure ~/.local/share/megabyte-labs is a directory
 if [ ! -d "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs" ]; then
