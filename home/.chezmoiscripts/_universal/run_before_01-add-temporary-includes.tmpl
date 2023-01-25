@@ -4,8 +4,7 @@
 ### Ensure /tmp/tmp-profile is created and owned by root
 if [ ! -f /tmp/tmp-profile ]; then
     # Add pre-scaffolding profile to /tmp/tmp-profile so it's easier to navigate through scripts
-    cat << EOF > /tmp/tmp-profile
-#!/usr/bin/env bash
+cat << EOF > /tmp/tmp-profile
 {{ includeTemplate "universal/profile-inline" }}
 EOF
     
@@ -16,8 +15,7 @@ fi
 ### Ensure /tmp/tmp-logg is created and owned by root
 if [ ! -f /tmp/tmp-logg ]; then
     # Add pre-scaffolding /tmp/tmp-logg
-    cat << EOF > /tmp/tmp-logg
-#!/usr/bin/env bash
+cat << EOF > /tmp/tmp-logg
 {{ includeTemplate "universal/logg-inline" }}
 EOF
     
