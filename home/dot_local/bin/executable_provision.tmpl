@@ -10,6 +10,15 @@
 
 {{ includeTemplate "universal/logg" }}
 
+### Prompt for sudo password and (optionally) enable passwordless sudo
+sudo -n true || SUDO_EXIT_CODE=$?
+if [ -n "$SUDO_EXIT_CODE" ]; then
+  logg info 'Your user will temporarily be granted passwordless sudo for the duration of the script'
+  logg info 'Press `CTRL+C` to bypass this prompt to either enter your password when needed or perform a non-privileged installation'
+  logg info 'Note: Non-privileged installations are not yet supported'
+  echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers
+fi
+
 ### Ensure ~/.local/share/megabyte-labs is a directory
 if [ ! -d "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs" ]; then
   mkdir -p "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs"
@@ -287,4 +296,28 @@ else
   else
     chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
   fi
+fi
+
+### Ensure gsed is available on macOS (for modifying /etc/sudoers to remove passwordless sudo)
+if [ -d /Applications ] && [ -d /System ]; then
+  if ! command -v gsed > /dev/null; then
+    if command -v brew > /dev/null; then
+      brew install gsed
+    else
+      logg warn 'Homebrew is not available and passwordless sudo might still be enabled in /etc/sudoers. Modify the file manually if you wish to disable passwordless sudo.'
+    fi
+  fi
+fi
+
+### Remove temporary passwordless sudo privileges
+if command -v gsed > /dev/null; then
+  sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR/d' /etc/sudoers
+else
+  sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR/d' /etc/sudoers
+fi
+
+logg success 'Provisioning complete!'
+
+if command -v glow > /dev/null && [ -f "$HOME/.local/share/chezmoi/docs/POST-INSTALL.md" ]; then
+  glow "$HOME/.local/share/chezmoi/docs/POST-INSTALL.md"
 fi
