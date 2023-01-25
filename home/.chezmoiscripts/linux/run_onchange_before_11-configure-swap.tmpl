@@ -19,7 +19,7 @@ if [ ! -f /swapfile ]; then
   fi
 
   logg info "Creating a $SWAP_SPACE GB /swapfile"
-  sudo fallocate -l "$SWAP_SPACE" /swapfile
+  sudo fallocate -l "${SWAP_SPACE}G" /swapfile
   sudo chmod 600 /swapfile
   sudo mkswap /swapfile
   sudo swapon /swapfile
