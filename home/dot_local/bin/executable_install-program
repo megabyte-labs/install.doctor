@@ -498,7 +498,12 @@ async function OSTypeInstallerKey() {
     const yum = which.sync('yum', { nothrow: true })
     const zypper = which.sync('zypper', { nothrow: true })
     if (apt) {
-      return 'apt'
+      try {
+        await $`test -d /etc/ubuntu-advantage`
+        return 'ubuntu'
+      } catch (e) {
+        return 'apt'
+      }
     } else if (dnf || yum) {
       return 'dnf'
     } else if (pacman) {
