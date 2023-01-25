@@ -17,6 +17,12 @@ logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 logg info 'Running `sudo apt-get update`'
 sudo apt-get update
 
+### Update debconf for non-interactive installation
+if command -v dpkg-reconfigure > /dev/null; then
+    logg info 'Running sudo dpkg-reconfigure debconf -f noninteractive -p critical'
+    sudo dpkg-reconfigure debconf -f noninteractive -p critical
+fi
+
 ### Install packages if they are not already present
 for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
     logg info 'Checking for presence of `'"$PACKAGE"'`'
