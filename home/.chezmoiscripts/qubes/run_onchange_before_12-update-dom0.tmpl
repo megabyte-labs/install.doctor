@@ -11,7 +11,7 @@ logg info "Installing qubes-repo-contrib"
 sudo qubes-dom0-update -y qubes-repo-contrib
 
 ### Install dependencies
-for PACKAGE of latte-dock nautilus nautilus-gtkhash nautilus-search-tool kde-settings-qubes kdeplasma-addons konsole kscreen kvantum plymouth-kcm sssd-kcm sddm-kcm; do
+for PACKAGE of {{ .qubes.dom0Packages | toString | replace "[" "" | replace "]" "" }}; do
   logg info "Installing $PACKAGE"
   sudo qubes-dom0-update -y "$PACKAGE" || true
 done

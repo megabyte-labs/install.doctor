@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-{{ includeTemplate "universal/logg" }}
-
-XDG_CONFIG_HOME="$HOME/.config"
+{{ includeTemplate "universal/logg-bundle" }}
+{{ includeTemplate "universal/profile-bundle" }}
 
 ### Decrypt private key if it is not already present
 if [ ! -f "${XDG_CONFIG_HOME}/age/chezmoi.txt" ]; then

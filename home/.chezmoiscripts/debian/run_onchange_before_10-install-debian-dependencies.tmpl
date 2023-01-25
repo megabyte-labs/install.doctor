@@ -3,7 +3,7 @@
 # universal/common-dependencies hash: {{ include (joinPath ".chezmoitemplates" "universal" "common-dependencies") | sha256sum }}
 # debian/common-dependencies hash: {{ include (joinPath ".chezmoitemplates" "debian" "common-dependencies") | sha256sum }}
 
-{{ includeTemplate "universal/logg" }}
+{{ includeTemplate "universal/logg-bundle" }}
 
 {{- $packages := splitList " " (includeTemplate "universal/common-dependencies" .) -}}
 {{- $additionalPackages := splitList " " (includeTemplate "debian/common-dependencies" .) -}}
