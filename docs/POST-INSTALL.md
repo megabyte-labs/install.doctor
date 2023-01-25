@@ -12,3 +12,5 @@ The script has finished provisioning. Enjoy! You can review the installation log
 6. Visit [Megabyte Labs](https://megabyte.space) to see what else we are up to
 
 **bZ out**
+
+*Note: Some of the settings / applications might require a reboot (or at the very least, a terminal reload).*
