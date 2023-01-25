@@ -7785,7 +7785,7 @@ softwarePackages:
     _github: null
     _home: null
     _name: Vagrant VMWare Utility
-    _post:cask: 'sudo ln -s /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility /usr/local/bin/vagrant-vmware-utility'
+    _post:cask: sudo ln -s /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility /usr/local/bin/vagrant-vmware-utility
     _when:cask: '! test -f /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility'
     ansible: professormanhattan.vmware
     cask: vagrant-vmware-utility

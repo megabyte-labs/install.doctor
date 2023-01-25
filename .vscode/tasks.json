@@ -187,11 +187,6 @@
       "command": "bash start.sh && task docker:build:slim"
     },
     {
-      "label": "(docker:publish): Publish the Docker images (using `Docker*.test.yml` files)",
-      "type": "shell",
-      "command": "bash start.sh && task docker:publish"
-    },
-    {
       "label": "(docker:shell): Open the terminal of an existing Docker image",
       "type": "shell",
       "command": "bash start.sh && task docker:shell"
@@ -297,11 +292,6 @@
       "command": "bash start.sh && task image:compress"
     },
     {
-      "label": "(image:resize): Resize an image",
-      "type": "shell",
-      "command": "bash start.sh && task image:resize"
-    },
-    {
       "label": "(install:ansible:role): Install an Ansible role by using Docker",
       "type": "shell",
       "command": "bash start.sh && task install:ansible:role"
@@ -395,11 +385,6 @@
       "label": "(lint:spelling): Checks for spelling errors in staged files",
       "type": "shell",
       "command": "bash start.sh && task lint:spelling"
-    },
-    {
-      "label": "(lint:spelling:markdown): Run `misspell` (a spell-checker) on all markdown files",
-      "type": "shell",
-      "command": "bash start.sh && task lint:spelling:markdown"
     },
     {
       "label": "(lint:vagrant): Validate the Vagrantfile",
@@ -615,11 +600,6 @@
       "label": "(python:requirementstxt): Generate the requirements.txt fallback file",
       "type": "shell",
       "command": "bash start.sh && task python:requirementstxt"
-    },
-    {
-      "label": "(python:run): Runs the project by calling `run.py`",
-      "type": "shell",
-      "command": "bash start.sh && task python:run"
     },
     {
       "label": "(python:test): Runs tests with `pytest` after fixing and linting",

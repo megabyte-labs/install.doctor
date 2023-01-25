@@ -87,13 +87,16 @@
     "node": ">=18.4.0"
   },
   "publishConfig": {
-    "@gitlab:registry": "https://gitlab.com/api/v4/projects//packages/npm/",
+    "@gitlab:registry": "https://gitlab.com/api/v4/projects/42515222/packages/npm/",
     "access": "public",
     "registry": "https://registry.npmjs.org/",
     "tag": "edge"
   },
   "blueprint": {
     "description": "A glorious combination of application / theme settings and a performant cross-platform, desktop-oriented software suite.",
+    "github_id": "R_kgDOIxh9bQ",
+    "gitlab_group_id": "3940994",
+    "gitlab_project_id": "42515222",
     "group": "npm",
     "name": "Install Doctor",
     "overview": "Want to try out a new desktop jam-packed with a whole suite of GitHub's most-starred projects? Install Doctor is a combination of application settings, theme files, and a performant yet flexible software installer written with [ZX](https://github.com/google/zx). It is easily customizable, with optional prompts that ask you for API keys if you want to completely automate everything. The installer supports almost any operating system, just checkout the [software.yml file](https://gitlab.com/megabyte-labs/install.doctor/-/blob/master/software.yml). It uses [Chezmoi](https://github.com/twpayne/chezmoi) to apply file changes in an interactive way. It is not your typical Chezmoi project - it is built around the philosophy that you should be able to bash all your computers to bits with a hammer and then resurrect them the next day ✝️️ by storing stateful data to an encrypted S3 bucket and automating desktop configuration as much as possible.",
@@ -103,10 +106,7 @@
     },
     "slug": "install-doctor",
     "subgroup": "misc",
-    "title": "Install Doctor, The Desktop Provisioning System",
-    "github_id": "R_kgDOIxh9bQ",
-    "gitlab_project_id": "42515222",
-    "gitlab_group_id": "3940994"
+    "title": "Install Doctor, The Desktop Provisioning System"
   },
   "changelog": {
     "displayTypes": [
