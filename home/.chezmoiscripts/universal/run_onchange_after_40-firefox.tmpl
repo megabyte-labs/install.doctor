@@ -78,9 +78,9 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
                     PLUGIN_URL="$(cat "$PLUGIN_HTML" | htmlq '.InstallButtonWrapper-download-link' --attribute href)"
                     PLUGIN_FILENAME="${PLUGIN_FILE_ID}.xpi"
                     if [ ! -d "$SETTINGS_DIR/profile.primary/extensions/$PLUGIN_FILENAME" ]; then
-                        logg info 'Downloading plugin file for `'"$PLUGIN_FILENAME"'` ('"$FIREFOX_PLUGIN"')'
+                        logg info 'Downloading plugin file for '"$PLUGIN_FILENAME"' ('"$FIREFOX_PLUGIN"')'
                         curl "$PLUGIN_URL" -o "$SETTINGS_DIR/profile.primary/extensions/$PLUGIN_FILENAME"
-                        logg success 'Finished downloading `'"$PLUGIN_FILENAME"'` ('"$FIREFOX_PLUGIN"')'
+                        logg success 'Finished downloading '"$PLUGIN_FILENAME"' ('"$FIREFOX_PLUGIN"')'
                     fi
                 else
                     logg warn 'A null Firefox add-on filename was detected for `'"$FIREFOX_PLUGIN"'`'
