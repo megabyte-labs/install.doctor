@@ -7,8 +7,12 @@
 ### Install Docker
 if [ -d /Applications ] && [ -d /System ]; then
     # macOS
-    logg info 'Installing Docker on macOS via Homebrew cask'
-    brew install --cask docker
+    if [ ! -d /Applications/Docker.app ]; then
+        logg info 'Installing Docker on macOS via Homebrew cask'
+        brew install --cask docker
+    else
+        logg info 'Docker appears to be installed already'
+    fi
     logg info 'Opening the Docker for Desktop app so that the Docker engine starts running'
     open --background -a Docker
 elif command -v apt-get > /dev/null; then
