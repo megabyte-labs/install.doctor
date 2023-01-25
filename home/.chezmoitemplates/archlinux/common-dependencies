@@ -1,10 +1,14 @@
 {{- $packages := list
     "base-devel"
+    "ccid"
+    "hopenpgp-tools"
     "nodejs"
     "npm"
     "openssl"
+    "pcsclite"
     "tk"
     "xz"
+    "yubikey-personalization"
     "zlib"
 -}}
 {{- $packages | join " " -}}

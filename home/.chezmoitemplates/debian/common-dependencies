@@ -1,5 +1,7 @@
 {{- $packages := list
     "build-essential"
+    "gnupg-agent"
+    "hopenpgp-tools"
     "libbz2-dev"
     "libffi-dev"
     "liblzma-dev"
@@ -13,9 +15,12 @@
     "net-tools"
     "nodejs"
     "npm"
+    "pcscd"
     "ruby-dev"
+    "scdaemon"
     "tk-dev"
     "xz-utils"
+    "yubikey-personalization"
     "zlib1g-dev"
 -}}
 {{- $packages | join " " -}}

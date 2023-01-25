@@ -1,9 +1,15 @@
 {{- $packages := list
   "gcc"
   "gcc-c++"
+  "gnupg2-smime"
   "kernel-devel"
   "nodejs"
   "npm"
+  "opensc"
+  "pgp-tools"
+  "pcsc-lite"
+  "pcsc-tools"
   "ruby-devel"
+  "yubikey-personalization-gui"
 -}}
 {{- $packages | join " " -}}
