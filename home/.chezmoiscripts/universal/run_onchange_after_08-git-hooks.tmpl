@@ -24,7 +24,7 @@ done
 ### Make git hooks executable
 if [ -d "${XDG_CONFIG_HOME:-$HOME/.config}/git/template/hooks" ]; then
     logg info 'Ensuring git hooks are executable'
-    chmod +x "${XDG_CONFIG_HOME:-$HOME/.config}/git/template/hooks/*"
+    chmod +x "${XDG_CONFIG_HOME:-$HOME/.config}/git/template/hooks/"*
 fi
 
 {{ end -}}
