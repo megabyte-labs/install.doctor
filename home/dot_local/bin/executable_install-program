@@ -994,13 +994,13 @@ async function ensurePackageManager(packageManager) {
       } else if (zypper) {
         await $`sudo zypper install -y flatpak`
       }
-      const flatpakPost = which.sync('flatpak', { nothrow: true })
-      if (flatpakPost) {
-        await $`sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo`
-      } else {
-        log('error', logStage, `\`flatpak\` failed to install!`)
-      }
       log('info', logStage, `\`flatpak\` was installed. It may require a reboot to function correctly.`)
+    }
+    const flatpakPost = which.sync('flatpak', { nothrow: true })
+    if (flatpakPost) {
+      await $`sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo`
+    } else {
+      log('error', logStage, `\`flatpak\` failed to install!`)
     }
   } else if (packageManager === 'gem') {
     const gem = which.sync('gem', { nothrow: true })
