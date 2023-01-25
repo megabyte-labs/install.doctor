@@ -16,11 +16,12 @@ if [ ! -f "${XDG_CONFIG_HOME}/age/chezmoi.txt" ]; then
     find "$HOME/.local/share/chezmoi" -type f -name "encrypted_*" | while read ENCRYPTED_FILE; do
       logg info "Removing $ENCRYPTED_FILE"
       rm -f "$ENCRYPTED_FILE"
-      FALLBACK_FILENAME="$(echo "$ENCRYPTED_FILE" | sed 's/encrypted_/encrypted-fallback_/')"
-      if [ -f "$FALLBACK_FILENAME" ]; then
-        logg info 'Substituting encrypted-file fallback for `'"$ENCRYPTED_FILE"'`'
-        mv -f "$FALLBACK_FILENAME" "$(echo "$ENCRYPTED_FILE" | sed 's/encrypted_//')"
-      fi
+    done
+  else
+    logg info 'Removing files used when an encryption key is not configured'
+    find "$HOME/.local/share/chezmoi" -type f -name "encrypted-fallback_*" | while read UNENCRYPTED_FILE; do
+      logg info "Removing $UNENCRYPTED_FILE"
+      rm -f "$UNENCRYPTED_FILE"
     done
   fi
 fi
