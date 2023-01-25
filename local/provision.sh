@@ -8,15 +8,6 @@
 #   ~/.local/share/chezmoi. Finally, it begins the TUI experience by displaying styled documentation, prompts, and finishes
 #   by calling the appropriate Chezmoi commands.
 
-### Prompt for sudo password and (optionally) enable passwordless sudo
-sudo -n true || SUDO_EXIT_CODE=$?
-if [ -n "$SUDO_EXIT_CODE" ]; then
-  logg info 'Your user will temporarily be granted passwordless sudo for the duration of the script'
-  logg info 'Press `CTRL+C` to bypass this prompt. You will either enter your password when needed or perform a non-privileged installation'
-  logg info 'Note: Non-privileged installations are not yet supported - pull requests welcome'
-  echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers
-fi
-
 ### Ensure ~/.local/share/megabyte-labs is a directory
 if [ ! -d "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs" ]; then
   mkdir -p "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs"
@@ -188,6 +179,15 @@ logg() {
     "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$TYPE")")"
   fi
 }
+
+### Prompt for sudo password and (optionally) enable passwordless sudo
+sudo -n true || SUDO_EXIT_CODE=$?
+if [ -n "$SUDO_EXIT_CODE" ]; then
+  logg info 'Your user will temporarily be granted passwordless sudo for the duration of the script'
+  logg info 'Press `CTRL+C` to bypass this prompt. You will either enter your password when needed or perform a non-privileged installation'
+  logg info 'Note: Non-privileged installations are not yet supported - pull requests welcome'
+  echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers
+fi
 
 ### Qubes dom0
 if command -v qubesctl > /dev/null; then
