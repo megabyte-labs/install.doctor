@@ -13,9 +13,9 @@
 ### Prompt for sudo password and (optionally) enable passwordless sudo
 sudo -n true || SUDO_EXIT_CODE=$?
 if [ -n "$SUDO_EXIT_CODE" ]; then
-  logg info 'Your user will temporarily be granted passwordless sudo for the duration of the script'
-  logg info 'Press `CTRL+C` to bypass this prompt to either enter your password when needed or perform a non-privileged installation'
-  logg info 'Note: Non-privileged installations are not yet supported'
+  echo 'Your user will temporarily be granted passwordless sudo for the duration of the script'
+  echo 'Press `CTRL+C` to bypass this prompt to either enter your password when needed or perform a non-privileged installation'
+  echo 'Note: Non-privileged installations are not yet supported'
   echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers
 fi
 
