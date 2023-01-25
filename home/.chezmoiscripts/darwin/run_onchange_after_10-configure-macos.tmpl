@@ -9,6 +9,9 @@ logg info 'Applying optimized macOS settings'
 logg info 'A sudo password is required to apply some of the macOS optimizations.'
 sudo echo "Sudo access granted."
 
+# Log commands
+set +x
+
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
 osascript -e 'tell application "System Preferences" to quit'
