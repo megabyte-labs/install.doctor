@@ -2,25 +2,21 @@
 #!/usr/bin/env bash
 
 ### Ensure /tmp/tmp-profile is created and owned by root
-if [ ! -f /tmp/tmp-profile ]; then
-    # Add pre-scaffolding profile to /tmp/tmp-profile so it's easier to navigate through scripts
-    cat << EOF > /tmp/tmp-profile
-    {{ includeTemplate "universal/profile-inline" }}
-    EOF
+# Add pre-scaffolding profile to /tmp/tmp-profile so it's easier to navigate through scripts
+cat << EOF > /tmp/tmp-profile
+{{ includeTemplate "universal/profile-inline" }}
+EOF
     
-    # Make /tmp/tmp-profile owned by root to prevent tampering
-    sudo chown root /tmp/tmp-profile
-fi
+# Make /tmp/tmp-profile owned by root to prevent tampering
+sudo chown root /tmp/tmp-profile
 
 ### Ensure /tmp/tmp-logg is created and owned by root
-if [ ! -f /tmp/tmp-logg ]; then
-    # Add pre-scaffolding /tmp/tmp-logg
-    cat << EOF > /tmp/tmp-logg
-    {{ includeTemplate "universal/logg-inline" }}
-    EOF
+# Add pre-scaffolding /tmp/tmp-logg
+cat << EOF > /tmp/tmp-logg
+{{ includeTemplate "universal/logg-inline" }}
+EOF
     
-    # Make /tmp/tmp-logg owned by root to prevent tampering
-    sudo chown root /tmp/tmp-logg
-fi
+# Make /tmp/tmp-logg owned by root to prevent tampering
+sudo chown root /tmp/tmp-logg
 
 {{ end -}}
