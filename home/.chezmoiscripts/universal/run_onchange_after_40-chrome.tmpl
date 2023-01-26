@@ -17,7 +17,7 @@ if [ -f "$HOME/.config/chrome/policies.json" ]; then
 fi
 
 ### Add Chrome extension JSON
-for EXTENSION_DIR in "/opt/google/chrome/extensions" "$HOME/Library/Application Support/Google/Chrome/External Extensions"; do
+for EXTENSION_DIR in "/opt/google/chrome/extensions" "$HOME/Library/Application Support/Google/Chrome/External Extensions" "$HOME/Library/Application Support/Microsoft/Edge/External Extensions"; do
     if [ -d "$EXTENSION_DIR" ]; then
         logg info "Adding Chrome extensions to $EXTENSION_DIR"
         for EXTENSION in {{ list (.chromeExtensions | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
