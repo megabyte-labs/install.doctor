@@ -21,11 +21,14 @@ colors:
   color16: '#FFFFFF'
 config:
   gpg: https://raw.githubusercontent.com/drduh/config/master/gpg.conf
+chromeExtensions:
+  - https://chrome.google.com/webstore/detail/chatgpt-for-google/jgjaeacdkonaoafenlfkkkmbaopkbilf
 firefoxAddOns:
   - automa
   - bitwarden-password-manager
   - buffer-for-firefox
   - canvasblocker
+  - chatgpt-for-google
   - clearurls
   - decentraleyes
   - dictionary-anyvhere
@@ -41,6 +44,7 @@ firefoxAddOns:
   - languagetool
   - mailvelope
   - markdown-here
+  - medium-unlimited-read-for-free
   - multi-account-containers
   - noscript
   - privacy-badger17
@@ -561,6 +565,7 @@ softwareGroups:
   Orchestration: &Orchestration
     - nomad
     - pm2
+    - sake
     - waypoint
   PHP: &PHP
     - composer

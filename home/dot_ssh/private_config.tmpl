@@ -1,31 +1,5 @@
-Host *
-    AddKeysToAgent no
-    Compression no
-    ControlMaster auto
-    ControlPath /tmp/ssh-%r@%h:%p
-    ControlPersist 5
-    ExitOnForwardFailure yes
-    ForwardAgent no
-    ForwardX11 no
-    ForwardX11Trusted no
-    GSSAPIAuthentication no
-    IgnoreUnknown UseKeychain
-    PreferredAuthentications publickey
-    Protocol 2
-    ServerAliveInterval 60
-    ServerAliveCountMax 30
-    IdentitiesOnly yes
-Host gitlab.com
-    UpdateHostKeys no
-{{- if ne .host.distro.family "windows" }}
-    ControlMaster auto
-    ControlPath /tmp/ssh-%r@%h:%p
-    ControlPersist 5
-{{- end }}
-{{- if eq .host.distro.family "darwin" }}
-    AddKeysToAgent yes
-    UseKeychain yes
-{{- end }}
-    ExitOnForwardFailure yes
-    ForwardAgent yes
-    ForwardX11 no
+{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ssh-config")) -}}
+{{   includeTemplate "secrets/ssh-config" | decrypt -}}
+{{ else if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ssh-config-fallback")) -}}
+{{   includeTemplate "secrets/ssh-config-fallback" }}
+{{- end -}}

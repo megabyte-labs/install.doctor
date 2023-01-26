@@ -152,6 +152,13 @@ elif [ -f "$COMPLETION_DIR/poetry.bash" ]; then
   rm "$COMPLETION_DIR/poetry.bash"
 fi
 
+### Sake
+if command -v sake > /dev/null; then
+  sake completion bash > "$COMPLETION_DIR/sake.bash"
+elif [ -f "$COMPLETION_DIR/sake.bash" ]; then
+  rm "$COMPLETION_DIR/sake.bash"
+fi
+
 ### Volta
 if command -v volta > /dev/null; then
   volta completions bash > "$COMPLETION_DIR/volta.bash"

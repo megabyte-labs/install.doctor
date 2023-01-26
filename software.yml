@@ -6473,6 +6473,17 @@ softwarePackages:
     pacman: sad
     _service: false
     _type: cli
+  sake:
+    _bin: sake
+    _desc: Sake is a task runner for local and remote hosts
+    _docs: https://sakecli.com/examples
+    _github: https://github.com/alajmo/sake
+    _home: https://sakecli.com/
+    _name: Sake
+    brew: alajmo/sake/sake
+    go: github.com/alajmo/sake@latest
+    script:darwin: curl -sfL https://raw.githubusercontent.com/alajmo/sake/main/install.sh | sh
+    script:linux: curl -sfL https://raw.githubusercontent.com/alajmo/sake/main/install.sh | sh
   samba:
     _bin: smbd
     _bin:dnf: smb

@@ -1,5 +1,9 @@
 
 https://drasite.com/blog/Pimp%20my%20terminal
+https://github.com/checkly/headless-recorder
+https://github.com/DustinBrett/daedalOS
+https://github.com/ansh/jiffyreader.com
+https://github.com/allinurl/goaccess
 ### Ensure these PATHs are added on Windows
 add to PATH:
 '%ProgramFiles(x86)%\mitmproxy\bin'
@@ -161,3 +165,9 @@ WAZUH_AGENT_GROUP
 Assigns the agent to one or more existing groups (separated by commas). See agent_groups.
 ENROLLMENT_DELAY
 Assigns the time that agentd should wait after a successful registration. See delay_after_enrollment.
+
+
+
+### Docker
+https://github.com/filebrowser/filebrowser
+https://github.com/coder/code-server
