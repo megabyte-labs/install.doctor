@@ -1,16 +1,29 @@
-{{- if eq .host.distro.family "linux" -}}
+{{- if and (eq .host.distro.family "linux") (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) -}}
 #!/usr/bin/env bash
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
 if command -v nmcli > /dev/null; then
-    nmcli connection import type openvpn file '{{ vpn_connection.file }}'
-    nmcli connection modify '{{ ovpn_name }}' +vpn.data username={{ vpn_connection.username }}
-    nmcli connection modify '{{ ovpn_name }}' vpn.secrets 'password={{ vpn_connection.password }}'
-    nmcli connection modify '{{ ovpn_name }}' +vpn.data password-flags=0
+    ### OpenVPN profiles
+    find "${XDG_CONFIG_HOME:-$HOME/.config}/vpn" -type f -name "*.ovpn" | while read OVPN_FILE; do
+        nmcli connection import type openvpn file '{{ vpn_connection.file }}'
+        nmcli connection modify '{{ ovpn_name }}' +vpn.data username={{ vpn_connection.username }}
+        nmcli connection modify '{{ ovpn_name }}' vpn.secrets 'password={{ vpn_connection.password }}'
+        nmcli connection modify '{{ ovpn_name }}' +vpn.data password-flags=0
+    done
+
+    ### WireGuard profiles
+    if [ -d /etc/NetworkManager/system-connections ]; then
+        find "${XDG_CONFIG_HOME:-$HOME/.config}/vpn" -type f -name "*.nmconnection" | while read WG_FILE; do
+            logg info "Adding $WG_FILE to /etc/NetworkManager/system-connections
+            chezmoi decrypt "$WG_FILE" > /etc/NetworkManager/system-connections
+        done
+    else
+        logg warn '/etc/NetworkManager/system-connections is not a directory!'
+    fi
 else
-    logg info '`nmcli` is unavailable'
+    logg warn '`nmcli` is unavailable'
 fi
 
 {{ end -}}
