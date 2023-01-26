@@ -1,5 +1,5 @@
 
-
+https://drasite.com/blog/Pimp%20my%20terminal
 ### Ensure these PATHs are added on Windows
 add to PATH:
 '%ProgramFiles(x86)%\mitmproxy\bin'
