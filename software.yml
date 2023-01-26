@@ -8275,6 +8275,44 @@ softwarePackages:
       - docker-ce
       - docker-ce-cli
       - docker-compose-plugin
+  boringtun:
+    _bin: boringtun-cli
+    _desc: BoringTun is an implementation of the WireGuard® protocol designed for portability and speed.
+    _docs: null
+    _github: https://github.com/cloudflare/boringtun
+    _home: null
+    _name: BoringTun
+    brew: boringtun
+    cargo:darwin: boringtun-cli
+    cargo:linux: boringtun-cli
+  wireguard-client:
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: WireGuard Client
+    _when:mas: '! test -d /Applications/WireGuard.app'
+    choco: wireguard
+    mas: TODO MAS (not available as Homebrew cask)
+    scoop: wireguard-np
+  wireguard-tools:
+    _bin: wg
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: WireGuard Tools
+    apk: wireguard-tools
+    apt: wireguard
+    brew: wireguard-tools
+    dnf: wireguard-tools
+    emerge: wireguard-tools
+    nix: nixpkgs.wireguard-tools
+    opkg: wireguard
+    pacman: wireguard-tools
+    port: wireguard-tools
+    slackpkg: wireguard-tools
+    zypper: wireguard-tools
   wireshark-cli:
     _bin: sharkd
     _desc: null
