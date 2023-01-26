@@ -1,7 +1,5 @@
-#!/usr/bin/env bash
-
-### Connect to Tailscale network
-if command -v tailscale > /dev/null && [ "{{ .user.TAILSCALE_AUTH_KEY }}" != "" ]; then
-  logg info 'Connecting to Tailscale with user-defined authentication key'
-  tailscale up --authkey={{ .user.TAILSCALE_AUTH_KEY }} && logg success 'Connected to Tailscale network'
-fi
+{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "tailscale")) -}}
+{{   includeTemplate "secrets/tailscale" | decrypt -}}
+{{ else if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "tailscale-fallback")) -}}
+{{   includeTemplate "secrets/tailscale-fallback" }}
+{{- end -}}

@@ -7310,16 +7310,23 @@ softwarePackages:
     _github: https://github.com/tailscale/tailscale
     _home: https://tailscale.com/
     _name: Tailscale
-    _post: sudo tailscale up
+    _service:brew: tailscale
     _service:pacman: tailscaled
     ansible: professormanhattan.tailscale
     brew: tailscale
-    cask: tailscale
-    choco: tailscale
+    go: tailscale.com/cmd/tailscale{,d}@main
     pacman: tailscale
     port: tailscale
-    _service: true
     _type: cli
+  tailscale-client:
+    _bin: tailscale-client
+    _desc: The Tailscale Client is a menubar app available on macOS and Windows that allows you to easily login and configure Tailscale.
+    _github: https://github.com/tailscale/tailscale
+    _home: https://tailscale.com/
+    _name: Tailscale Client
+    _when:cask: '! test -d "/Applications/Tailscale.app"'
+    cask: tailscale
+    choco: tailscale
   task:
     _bin: task
     _desc: A task runner / simpler Make alternative written in Go
