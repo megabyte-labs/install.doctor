@@ -1105,6 +1105,8 @@ softwarePackages:
     _bin: dconf-editor
     flatpak: ca.desrt.dconf-editor
   chromium:
+    _deps:
+      - chrome-gnome-shell
     _bin: chromium
     apt: chromium
     dnf: chromium

@@ -1,0 +1,33 @@
+{{- if ne .host.distro.family "windows" -}}
+#!/usr/bin/env bash
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+### Ensure Chrome policies directory is present
+if [ ! -d /etc/opt/chrome/policies/managed ]; then
+    logg info 'Creating directory /etc/opt/chrome/policies/managed'
+    sudo mkdir -p /etc/opt/chrome/policies/managed
+fi
+
+### Add Chrome policy
+if [ -f "$HOME/.config/chrome/policies.json" ]; then
+    logg info 'Copying policies.json to /etc/opt/chrome/policies/managed/policies.json'
+    sudo cp -f "$HOME/.config/chrome/policies.json" /etc/opt/chrome/policies/managed/policies.json
+fi
+
+### Add Chrome extension JSON
+for EXTENSION_DIR in "/opt/google/chrome/extensions" "$HOME/Library/Application Support/Google/Chrome/External Extensions"; do
+    if [ -d "$EXTENSION_DIR" ]; then
+        logg info "Adding Chrome extensions to $EXTENSION_DIR"
+        for EXTENSION in {{ list (.chromeExtensions | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
+            logg info "Adding Chrome extension ($EXTENSION)"
+            EXTENSION_ID="$(echo "$EXTENSION" | sed 's/^.*\/\([^\/]*\)$/\1/')"
+            cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
+        done
+    else
+        logg info "$EXTENSION_DIR does not exist"
+    fi
+fi
+
+{{ end -}}
