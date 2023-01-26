@@ -1,2 +1,5 @@
----
-authtoken: '{{ .user.NGROK_AUTH_TOKEN }}'
+{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ngrok")) -}}
+{{   includeTemplate "secrets/ngrok" | decrypt -}}
+{{ else if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ngrok-fallback")) -}}
+{{   includeTemplate "secrets/ngrok-fallback" }}
+{{- end -}}
