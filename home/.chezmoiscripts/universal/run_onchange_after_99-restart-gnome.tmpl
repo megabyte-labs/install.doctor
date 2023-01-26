@@ -3,8 +3,9 @@
 
 ### Restart GNOME
 if command -v gnome-shell > /dev/null; then
-    logg info 'Reloading `gnome-shell`'
-    killall -3 gnome-shell
+    logg info 'Manually reload `gnome-shell`'
+    # logg info 'Reloading `gnome-shell`'
+    # killall -3 gnome-shell
 fi
 
 {{ end -}}
