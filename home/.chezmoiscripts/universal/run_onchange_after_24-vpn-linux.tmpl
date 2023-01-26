@@ -1,0 +1,16 @@
+{{- if eq .host.distro.family "linux" -}}
+#!/usr/bin/env bash
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+if command -v nmcli > /dev/null; then
+    nmcli connection import type openvpn file '{{ vpn_connection.file }}'
+    nmcli connection modify '{{ ovpn_name }}' +vpn.data username={{ vpn_connection.username }}
+    nmcli connection modify '{{ ovpn_name }}' vpn.secrets 'password={{ vpn_connection.password }}'
+    nmcli connection modify '{{ ovpn_name }}' +vpn.data password-flags=0
+else
+    logg info '`nmcli` is unavailable'
+fi
+
+{{ end -}}
