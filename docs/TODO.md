@@ -4,6 +4,7 @@ https://github.com/checkly/headless-recorder
 https://github.com/DustinBrett/daedalOS
 https://github.com/ansh/jiffyreader.com
 https://github.com/allinurl/goaccess
+https://github.com/cloudflare/boringtun
 ### Ensure these PATHs are added on Windows
 add to PATH:
 '%ProgramFiles(x86)%\mitmproxy\bin'
