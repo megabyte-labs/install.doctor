@@ -19,6 +19,7 @@ colors:
   color14: '#EB71AD'
   color15: '#24E5FF'
   color16: '#FFFFFF'
+macosRemoteLogin: 'on'
 themeparkTheme: aquamarine
 config:
   gpg: https://raw.githubusercontent.com/drduh/config/master/gpg.conf
@@ -638,6 +639,8 @@ softwareGroups:
     - ruby
   SSH: &SSH
     - assh
+    - fail2ban
+    - openssh-server
     - skm
     - ssh-vault
     - sshpass

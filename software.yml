@@ -8275,6 +8275,21 @@ softwarePackages:
       - docker-ce
       - docker-ce-cli
       - docker-compose-plugin
+  openssh-server:
+    _service: sshd
+    _when: '! "$(grep Microsoft /proc/version)"'
+    apt: openssh-server
+    dnf: openssh-server
+    pacman: openssh
+  fail2ban:
+    _service: fail2ban
+    # fail2ban cannot be installed on Qubes Fedora 36 without messing with the qubes-firewall since firewalld is required
+    _when: '! command -v qubes-firewall > /dev/null && ! "$(grep Microsoft /proc/version)"'
+    apt: fail2ban
+    brew: fail2ban
+    dnf: fail2ban
+    pacman: fail2ban
+    port: fail2ban
   boringtun:
     _bin: boringtun-cli
     _desc: BoringTun is an implementation of the WireGuard® protocol designed for portability and speed.

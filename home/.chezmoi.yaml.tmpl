@@ -137,6 +137,10 @@ data:
     dns:
       primary: 10.0.0.1#dns.megabyte.space
       secondary: 1.1.1.1#cloudflare-dns.com
+    ssh:
+      allowTCPForwarding: no
+      allowUsers: {{ output "echo" "$USER" }}
+      port: 2214
     vpn:
       excludedSubnets:
         - 10.0.0.0/24

@@ -1,0 +1,35 @@
+{{- if ne .host.distro.family "windows" }}
+#!/usr/bin/env bash
+
+### Update /etc/ssh/sshd_config if environment is not WSL
+if [[ ! "$(grep Microsoft /proc/version)" ]]; then
+    if [ -d /etc/ssh ]; then
+        logg info 'Copying ~/.ssh/system/banner to /etc/ssh/banner'
+        sudo cp -f "$HOME/.ssh/system/banner" /etc/ssh/banner
+
+        logg info 'Copying ~/.ssh/system/sshd_config to /etc/ssh/sshd_config'
+        sudo cp -f "$HOME/.ssh/system/sshd_config" /etc/ssh/sshd_config
+
+        ### Restart SSH server
+        if [ -d /Applications ] && [ -d /System ]; then
+            # macOS
+            logg info 'Running `sudo launchctl stop com.openssh.sshd`'
+            sudo launchctl stop com.openssh.sshd
+            logg info 'Running `sudo launchctl start com.openssh.sshd`'
+            sudo launchctl start com.openssh.sshd
+        else
+            # Linux
+            logg info 'Enabling the `sshd` service'
+            sudo systemctl enable sshd
+            logg info 'Restarting the `sshd` service'
+            
+            sudo service sshd restart
+        fi
+    else
+        logg warn 'The /etc/ssh folder does not exist'
+    fi
+else
+    logg info 'Skipping sshd_config application since environment is WSL'
+fi
+
+{{ end -}}
