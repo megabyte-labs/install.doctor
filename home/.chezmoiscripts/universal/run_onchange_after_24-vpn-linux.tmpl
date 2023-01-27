@@ -1,26 +1,95 @@
 {{- if and (eq .host.distro.family "linux") (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) -}}
 #!/usr/bin/env bash
 
+{{ $ovpnUsername := (default (env "OVPN_USERNAME") ((includeTemplate "secrets/key-ovpn-username") | decrypt)) }}
+{{ $ovpnPassword := (default (env "OVPN_PASSWORD") ((includeTemplate "secrets/key-ovpn-password") | decrypt)) }}
+
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-if command -v nmcli > /dev/null; then
-    ### OpenVPN profiles
-    find "${XDG_CONFIG_HOME:-$HOME/.config}/vpn" -type f -name "*.ovpn" | while read OVPN_FILE; do
-        nmcli connection import type openvpn file '{{ vpn_connection.file }}'
-        nmcli connection modify '{{ ovpn_name }}' +vpn.data username={{ vpn_connection.username }}
-        nmcli connection modify '{{ ovpn_name }}' vpn.secrets 'password={{ vpn_connection.password }}'
-        nmcli connection modify '{{ ovpn_name }}' +vpn.data password-flags=0
-    done
+RESTART_NM=false
 
-    ### WireGuard profiles
+### Ensure NetworkManager plugins are 
+# NOTE: By default, all the NetworkManager plugins are installed.
+if command -v apt-get > /dev/null; then
+    sudo apt-get install -y network-manager*
+elif command -v dnf > /dev/null; then
+    sudo dnf install -y openvpn NetworkManager*
+elif command -v pacman > /dev/null; then
+    sudo pacman -Syu openvpn networkmanager*
+else
+    logg warn 'Unknown package manager - install OpenVPN / WireGuard / NetworkManager plugins individually'
+fi
+
+### Ensures NetworkManager event config folders are created
+function ensureNetworkConfigs() {
+    if [ ! -d /etc/network/if-up.d ]; then
+        logg info 'Creating /etc/network/if-up.d folder'
+        sudo mkdir -p /etc/network/if-up.d
+    fi
+    if [ ! -d /etc/network/if-post-down.d ]; then
+        logg info 'Creating /etc/network/if-post.d folder'
+        sudo mkdir -p /etc/network/if-post.d
+    fi
+}
+
+### Ensure NetworkManager is installed
+if command -v nmcli > /dev/null; then
+    ### Setup OpenVPN profiles
+    if [ '{{ $ovpnUsername }}' != '' ] && [ '{{ $ovpnPassword }}' != '' ]; then
+        find "${XDG_CONFIG_HOME:-$HOME/.config}/vpn" -type f -name "*.ovpn" | while read OVPN_FILE; do
+            ### Add the profile
+            logg info "Adding $OVPN_FILE to NetworkManager OpenVPN profiles"
+            OVPN_NAME="$(basename "$OVPN_FILE" | sed 's/.ovpn$//')"
+            nmcli connection import type openvpn file '{{ vpn_connection.file }}'
+            nmcli connection modify "$OVPN_NAME" +vpn.data 'username={{- $ovpnUsername }}'
+            nmcli connection modify "$OVPN_NAME" vpn.secrets 'password={{- $ovpnPassword }}'
+            nmcli connection modify "$OVPN_NAME" +vpn.data password-flags=0
+
+            ### Register the excluded subnets in the routeadd / routedel files
+            for EXCLUDED_SUBNET in '{{ $removeShortcuts := join "' '" .host.vpn.excludedSubnets }}'; do
+                ensureNetworkConfigs
+                nmcli connection modify "$OVPN_NAME" +ipv4.routes "$EXCLUDED_SUBNET" | sudo tee -a /etc/network/if-up.d/routeadd
+                nmcli connection modify "$OVPN_NAME" -ipv4.routes "$EXCLUDED_SUBNET" | sudo tee -a /etc/network/if-post-down.d/routedel
+            fi
+            RESTART_NM=true
+        done
+    else
+        logg info 'Either the OpenVPN username or password is undefined.'
+        logg info 'See the `docs/VARIABLES.md` file for details.'
+    fi
+
+    ### Setup WireGuard profiles
     if [ -d /etc/NetworkManager/system-connections ]; then
         find "${XDG_CONFIG_HOME:-$HOME/.config}/vpn" -type f -name "*.nmconnection" | while read WG_FILE; do
+            ### Ensure the WireGuard NetworkManager plugin is available
+            if [ ! -d /usr/lib/NetworkManager/nm-wireguard-service ]; then
+                logg info 'The `nm-wireguard-service` is not present'
+                logg info 'Installing the `nm-wireguard-service`'
+            fi
+
+            ### Add the WireGuard profile
             logg info "Adding $WG_FILE to /etc/NetworkManager/system-connections
-            chezmoi decrypt "$WG_FILE" > /etc/NetworkManager/system-connections
+            WG_FILENAME="$(basename "$WG_FILE")"
+            chezmoi decrypt "$WG_FILE" | sudo tee "/etc/NetworkManager/system-connections/$WG_FILENAME"
+            
+            ### Register the excluded subnets in the routeadd / routedel files
+            for EXCLUDED_SUBNET in '{{ $removeShortcuts := join "' '" .host.vpn.excludedSubnets }}'; do
+                ensureNetworkConfigs
+                WG_PROFILE_NAME="$(echo "$WG_FILENAME" | sed 's/.nmconnection$//')"
+                nmcli connection modify "$WG_PROFILE_NAME" +ipv4.routes "$EXCLUDED_SUBNET" | sudo tee -a /etc/network/if-up.d/routeadd
+                nmcli connection modify "$WG_PROFILE_NAME" -ipv4.routes "$EXCLUDED_SUBNET" | sudo tee -a /etc/network/if-post-down.d/routedel
+            fi
+            RESTART_NM=true
         done
     else
         logg warn '/etc/NetworkManager/system-connections is not a directory!'
+    fi
+
+    ### Restart NetworkManager if changes were made and environment is not WSL
+    if [ "$RESTART_NM" == 'true' ] && [[ ! "$(grep Microsoft /proc/version)" ]]; then
+        logg info 'Restarting NetworkManager since VPN profiles were updated'
+        sudo service NetworkManager restart
     fi
 else
     logg warn '`nmcli` is unavailable'

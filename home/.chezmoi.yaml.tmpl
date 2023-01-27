@@ -137,6 +137,10 @@ data:
     dns:
       primary: 10.0.0.1#dns.megabyte.space
       secondary: 1.1.1.1#cloudflare-dns.com
+    vpn:
+      excludedSubnets:
+        - 10.0.0.0/24
+        - 10.14.50.0/24
     home: "{{ .chezmoi.homeDir }}"
     homeParentFolder: "{{ if eq .chezmoi.os "linux" }}/home{{ else if eq .chezmoi.os "darwin" }}/Users{{ else }}C:\Users{{ end }}"
     hostname: "Betelgeuse"

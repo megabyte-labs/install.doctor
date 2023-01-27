@@ -136,3 +136,11 @@ in `.chezmoitemplates/secrets/key-surgesh-password` to leverage this functionali
 **Environment Variable Only** Add a Tailscale authentication key so that Tailscale can be automatically connected to your Tailscale network.
 
 * Environment Variable: `TAILSCALE_AUTH_KEY`
+
+### OpenVPN Username
+
+* Environment Variable: `OVPN_USERNAME`
+
+### OpenVPN Password
+
+* Environment Variable: `OVPN_PASSWORD`

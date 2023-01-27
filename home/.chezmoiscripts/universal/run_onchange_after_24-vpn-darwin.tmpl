@@ -1,10 +1,31 @@
-{{- if eq .host.distro.family "linux" -}}
+{{- if eq .host.distro.family "darwin" -}}
 #!/usr/bin/env bash
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-# wireguard_conf_dir: /etc/wireguard
-# system_connections_path: /Library/Preferences/com.apple.networkextension.plist
+# TODO - What about OpenVPN profiles? Do we have an app to manage OpenVPN connections for macOS?
+
+### Backup previous network settings
+if [ -f /Library/Preferences/com.apple.networkextension.plist ]; then
+    logg info 'Backing up /Library/Preferences/com.apple.networkextension.plist to /Library/Preferences/com.apple.networkextension.plist.old
+    sudo cp -f /Library/Preferences/com.apple.networkextension.plist /Library/Preferences/com.apple.networkextension.plist.old
+else
+    logg info 'The /Library/Preferences/com.apple.networkextension.plist file does not exist yet'
+fi
+
+### Ensure /etc/wireguard exists
+if [ ! -d /etc/wireguard ]; then
+    logg info 'Creating `/etc/wireguard` since it does not exist yet'
+    sudo mkdir -p /etc/wireguard
+    sudo chmod 600 /etc/wireguard
+fi
+
+### Add the WireGuard configurations
+find "${XDG_CONFIG_HOME:-$HOME/.config}" -type f -name "*.conf" | while read WG_CONF; do
+    WG_FILE="$(basename "$WG_CONF")"
+    logg info 'Adding `'"$WG_FILE"'` to /etc/wireguard'
+    sudo cp -f "$WG_CONF" "/etc/wireguard/$WG_FILE"
+done
 
 {{ end -}}
