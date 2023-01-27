@@ -4,7 +4,6 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-
 ### Remove Firefox snap if Flatpak is installed
 if command -v org.mozilla.firefox > /dev/null && command -v snap > /dev/null && snap list firefox | grep firefox > /dev/null; then
     logg info 'Removing snap version of Firefox because Flatpak version is already installed'

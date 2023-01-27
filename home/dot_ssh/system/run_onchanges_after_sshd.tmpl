@@ -1,6 +1,12 @@
 {{- if ne .host.distro.family "windows" }}
 #!/usr/bin/env bash
 
+# sshd_config hash: {{ include (joinPath .host.home ".ssh" "system" "sshd_config") | sha256sum }}
+# banner hash: {{ include (joinPath .host.home ".ssh" "system" "banner") | sha256sum }}
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 ### Update /etc/ssh/sshd_config if environment is not WSL
 if [[ ! "$(grep Microsoft /proc/version)" ]]; then
     if [ -d /etc/ssh ]; then
@@ -22,8 +28,7 @@ if [[ ! "$(grep Microsoft /proc/version)" ]]; then
             logg info 'Enabling the `sshd` service'
             sudo systemctl enable sshd
             logg info 'Restarting the `sshd` service'
-            
-            sudo service sshd restart
+            sudo systemctl restart sshd
         fi
     else
         logg warn 'The /etc/ssh folder does not exist'
