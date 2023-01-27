@@ -126,6 +126,11 @@ generated.
 
 * Environment Variable: `SLACK_API_TOKEN`
 
+### Surge.sh Username
+
+**Environment Variable Only** Add your surge.sh username to automatically sign into surge.sh. Encrypted password should be stored
+in `.chezmoitemplates/secrets/key-surgesh-password` to leverage this functionality.
+
 ### Tailscale Auth Key
 
 **Environment Variable Only** Add a Tailscale authentication key so that Tailscale can be automatically connected to your Tailscale network.

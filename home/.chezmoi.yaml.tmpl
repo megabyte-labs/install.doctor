@@ -5,6 +5,7 @@
 {{- $gpgKeyId := (default "0xF0A300E4199A1C33" (env "KEYID")) -}}
 {{- $gmailAddress := (default "blzalewski@gmail.com" (env "GMAIL_ADDRESS")) -}}
 {{- $gmailAddressAppPassword := (default "" (env "GMAIL_APP_PASSWORD")) -}}
+{{- $surgeshUsername := (default "brian@megabyte.space" (env "SURGESH_USERNAME")) -}}
 {{- $domain := (default "megabyte.space" (env "PUBLIC_SERVICES_DOMAIN")) -}}
 {{- $cloudflareUsername := (default "brian@megabyte.space" (env "CLOUDFLARE_USERNAME")) -}}
 {{- $cloudflareToken := (default "" (env "CLOUDFLARE_API_TOKEN")) -}}
@@ -133,6 +134,9 @@ data:
     distro:
       family: "{{ .chezmoi.os }}"
       id: "{{ get .chezmoi.osRelease "id" | default .chezmoi.os }}"
+    dns:
+      primary: 10.0.0.1#dns.megabyte.space
+      secondary: 1.1.1.1#cloudflare-dns.com
     home: "{{ .chezmoi.homeDir }}"
     homeParentFolder: "{{ if eq .chezmoi.os "linux" }}/home{{ else if eq .chezmoi.os "darwin" }}/Users{{ else }}C:\Users{{ end }}"
     hostname: "Betelgeuse"
@@ -150,12 +154,14 @@ data:
     email: "{{ $email }}"
     name: "{{ $name }}"
     username: "{{ output "echo" "$USER" }}"
+    defaultBrowser: firefox
     domain: "{{ $domain }}"
     gpg:
       id: "{{ $gpgKeyId }}"
     gmail:
       email: "{{ $gmailAddress }}"
       password: "{{ $gmailAddressAppPassword }}"
+    surgeshUsername: "{{ $surgeshUsername }}"
     githubUsername: "{{ $githubUsername }}"
     locale: "{{ $locale }}"
     timezone: "{{ $timezone }}"
