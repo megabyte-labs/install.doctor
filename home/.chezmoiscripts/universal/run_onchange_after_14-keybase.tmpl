@@ -1,0 +1,18 @@
+{{- if eq .host.distro.family "linux" -}}
+#!/usr/bin/env bash
+
+# timeshift.json hash: {{ include (joinPath .chezmoi.homeDir ".config" "keybase" "config.json") | sha256sum }}
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+if command -v keybase > /dev/null; then
+    logg info 'Ensuring /etc/keybase is a directory'
+    sudo mkdir -p /etc/keybase
+
+    KEYBASE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/keybase/config.json"
+    logg info "Copying $KEYBASE_CONFIG to /etc/keybase/config.json"
+    sudo cp -f "$KEYBASE_CONFIG" /etc/keybase/config.json
+else
+    logg info 'The `keybase` executable is not available'
+fi

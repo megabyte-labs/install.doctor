@@ -4,6 +4,23 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
+# font config hash: {{ include (joinPath .host.home ".config" "fontconfig" "fonts.conf") | sha256sum }}
+
+### Sync user fonts with system fonts
+if [ -d /Applications ] && [ -d /System ]; then
+    # macOS
+    logg info 'Copying fonts from ~/Library/Fonts and ~/.local/share/fonts to /Library/Fonts to make them available globally'
+    FONT_DIR='/Library/Fonts'
+    sudo rsync -av "$HOME/Library/Fonts" "$FONT_DIR"
+    sudo rsync -av "$HOME/.local/share/fonts" "$FONT_DIR"
+else
+    # Linux
+    logg info 'Copying fonts from ~/.local/share/fonts to /usr/local/share/fonts to make them available globally'
+    FONT_DIR='/usr/local/share/fonts'
+    sudo rsync -av "$HOME/.local/share/fonts" "$FONT_DIR"
+fi
+
+### Configure system font properties
 if [ -d /etc/fonts ]; then
     logg info 'Copying ~/.config/fontconfig/fonts.conf to /etc/fonts/local.conf'
     sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/fontconfig/fonts.conf" /etc/fonts/local.conf

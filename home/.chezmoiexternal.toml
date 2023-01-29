@@ -138,6 +138,19 @@
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
+### NGINX
+[".local/system/etc/nginx"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/cloud/nginx-configs.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+### Rundeck
+[".local/system/src/var/lib/rundeck/libext/ansible-plugin-3.2.2.jar"]
+    type = "file"
+    url = "https://github.com/rundeck-plugins/ansible-plugin/releases/download/v3.2.2/ansible-plugin-3.2.2.jar"
+    refreshPeriod = "{{ $refreshPeriod }}"
+
 ### CookieCutter Template
 [".local/src/cookiecutter"]
     type = "git-repo"
