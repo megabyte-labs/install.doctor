@@ -140,6 +140,7 @@ data:
     ssh:
       allowTCPForwarding: no
       allowUsers: {{ output "echo" "$USER" }}
+      endlesshPort: 22
       port: 2214
     vpn:
       excludedSubnets:
