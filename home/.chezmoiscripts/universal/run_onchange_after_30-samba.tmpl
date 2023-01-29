@@ -1,8 +1,10 @@
+{{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-### TODO - Add logic from Tor / Privoxy role here
-### Add config files to system folder if applicable
+# Samba logic
 echo true
+
+{{ end -}}

@@ -1,7 +1,7 @@
 {{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
 
-# privoxy config hash: {{ include (joinPath .host.home ".local" "config" "privoxy") | sha256sum }}
+# privoxy config hash: {{ include (joinPath .host.home ".config" "privoxy" "config") | sha256sum }}
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
@@ -19,7 +19,7 @@ PRIVOXY_CONFIG="$PRIVOXY_CONFIG_DIR/config"
 ### Configure Privoxy
 if command -v privoxy > /dev/null; then
     if [ -d  "$PRIVOXY_CONFIG_DIR" ]; then
-        sudo cp -f "$HOME/.local/config/privoxy" "$PRIVOXY_CONFIG"
+        sudo cp -f "${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config" "$PRIVOXY_CONFIG"
         sudo chmod 600 "$PRIVOXY_CONFIG"
 
         # Restart / enable Privoxy
@@ -27,9 +27,13 @@ if command -v privoxy > /dev/null; then
             # macOS
             brew services restart privoxy
         else
-            # Linux
-            sudo systemctl enable privoxy
-            sudo systemlctl restart privoxy
+            if [[ ! "$(grep Microsoft /proc/version)" ]]; then
+                # Linux
+                sudo systemctl enable privoxy
+                sudo systemlctl restart privoxy
+            else
+                logg info 'The system is a WSL environment so the Privoxy systemd service will not be enabled / restarted'
+            fi
         fi
     else
         logg warn 'The '"$PRIVOXY_CONFIG_DIR"' directory is missing'

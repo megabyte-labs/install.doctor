@@ -1,7 +1,7 @@
-{{- if (ne .host.distro.family "windows") -}}
+{{- if and (ne .host.distro.family "windows") (ne .host.work true) -}}
 #!/usr/bin/env bash
 
-# tor config hash: {{ include (joinPath .host.home ".local" "config" "torrc") | sha256sum }}
+# tor config hash: {{ include (joinPath .host.home ".config" "tor" "torrc") | sha256sum }}
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
@@ -20,7 +20,7 @@ TORRC_CONFIG="$TORRC_CONFIG_DIR/torrc"
 if command -v toron > /dev/null; then
     if [ -d  "$TORRC_CONFIG_DIR" ]; then
         # Copy config
-        sudo cp -f "$HOME/.local/config/torrc" "$TORRC_CONFIG"
+        sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc" "$TORRC_CONFIG"
         sudo chmod 600 "$TORRC_CONFIG"
 
         # Restart / enable Tor
@@ -28,9 +28,13 @@ if command -v toron > /dev/null; then
             # macOS
             brew services restart tor
         else
-            # Linux
-            sudo systemctl enable tor
-            sudo systemlctl restart tor
+            if [[ ! "$(grep Microsoft /proc/version)" ]]; then
+                # Linux
+                sudo systemctl enable tor
+                sudo systemlctl restart tor
+            else
+                logg info 'Environment is WSL so the Tor systemd service will not be enabled / restarted'
+            fi
         fi
     else
         logg warn 'The '"$TORRC_CONFIG_DIR"' directory is missing'

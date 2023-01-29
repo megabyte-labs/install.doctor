@@ -1,0 +1,41 @@
+#!/bin/sh
+
+RKHUNTER=/usr/bin/rkhunter
+
+test -x $RKHUNTER || exit 0
+
+# source our config
+. /etc/rkhunter.conf
+
+if [ -z "$NICE" ]; then
+    NICE=0
+fi
+
+if [ -z "$RUN_CHECK_ON_BATTERY" ]; then
+    RUN_CHECK_ON_BATTERY="false"
+fi
+
+# Do not run daily check if running on battery except if explicitely allowed
+if [ -x /usr/bin/on_ac_power >/dev/null 2>&1 ]; then
+    on_ac_power >/dev/null 2>&1
+    [ $? -eq 1 -a "$RUN_CHECK_ON_BATTERY" != "true" ] && exit 0
+fi
+
+case "$CRON_DAILY_RUN" in
+     [YyTt]*)
+        OUTFILE=`mktemp` || exit 1
+        /usr/bin/nice -n $NICE $RKHUNTER --cronjob --report-warnings-only --appendlog > $OUTFILE
+        if [ -s "$OUTFILE" -a -n "$REPORT_EMAIL" ]; then
+          (
+            echo "Subject: [rkhunter] $(hostname) - Daily report"
+            echo "To: $REPORT_EMAIL"
+            echo ""
+            cat $OUTFILE
+          ) | /usr/sbin/mailx $REPORT_EMAIL
+        fi
+        rm -f $OUTFILE
+        ;;
+      *)
+       exit 0
+       ;;
+esac
