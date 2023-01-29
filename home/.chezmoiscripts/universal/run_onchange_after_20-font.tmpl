@@ -1,0 +1,14 @@
+{{- if (eq .host.distro.family "linux") -}}
+#!/usr/bin/env bash
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+if [ -d /etc/fonts ]; then
+    logg info 'Copying ~/.config/fontconfig/fonts.conf to /etc/fonts/local.conf'
+    sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/fontconfig/fonts.conf" /etc/fonts/local.conf
+else
+    logg warn 'The `/etc/fonts` directory is missing'
+fi
+
+{{ end -}}

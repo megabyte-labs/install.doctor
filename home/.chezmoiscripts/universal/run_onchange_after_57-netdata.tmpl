@@ -8,9 +8,11 @@
 if command -v netdata-claim.sh > /dev/null; then
     NETDATA_TOKEN="$(cat "{{ .chezmoi.sourceDir }}/.chezmoitemplates/secrets/key-netdata-token" | chezmoi decrypt)"
     NETDATA_ROOM="$(cat "{{ .chezmoi.sourceDir }}/.chezmoitemplates/secrets/key-netdata-room" | chezmoi decrypt)"
-    netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url={{ .netdataClaimURL }}
+    netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="{{ .netdataClaimURL }}"
 
     # Kernel optimizations
+    # These are mentioned while installing via the kickstart.sh script method. We are using Homebrew for the installation though.
+    # Assuming these optimizations do not cause any harm.
     if [ -d /Applications ] && [ -d /System ]; then
         # macOS
         logg info 'System is macOS so Netdata kernel optimizations are not required'

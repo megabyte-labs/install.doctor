@@ -1,0 +1,25 @@
+{{- if ne .host.distro.family "windows" -}}
+#!/usr/bin/env bash
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+if rclone -v rclone > /dev/null; then
+    logg info 'Ensuring /var/cache/rclone exists'
+    sudo mkdir -p /var/cache/rclone
+    sudo chmod 700 /var/cache/rclone
+
+    logg info 'Ensuring /mnt/s3-docker exists'
+    sudo mkdir -p /mnt/s3-docker
+    sudo chmod 700 /mnt/s3-docker
+
+    logg info 'Adding ~/.local/bin/rclone-mount to /usr/local/bin'
+    sudo cp -f "$HOME/.local/bin/rclone-mount" /usr/local/bin/rclone-mount
+    sudo chmod +x /usr/local/bin/rclone-mount
+
+
+else
+    logg info '`rclone` is not available'
+fi
+
+{{ end -}}
