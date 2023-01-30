@@ -4,6 +4,8 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
+# Firefox plugins: {{ list (.firefoxAddOns | toString | replace "[" "" | replace "]" "") | uniq | join " " }}
+
 ### Add Firefox enterprise profile
 # TODO - figure out how to do this for other installations like Flatpak and macOS
 for FIREFOX_DIR in '/usr/lib/firefox' '/usr/lib/firefox-esr' '/Applications/Firefox.app/Contents/Resources'; do
