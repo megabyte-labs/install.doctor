@@ -1,3 +1,4 @@
+{{- $cloudflareR2AccountId := (default "84fa0d1b16ff8086dd958c468ce7fd59" (env "CLOUDFLARE_R2_ID")) -}}
 {{- $cloudflareUsername := (default "brian@megabyte.space" (env "CLOUDFLARE_USERNAME")) -}}
 {{- $desktopSession := true -}}
 {{- $domain := (default "megabyte.space" (env "PUBLIC_SERVICES_DOMAIN")) -}}
