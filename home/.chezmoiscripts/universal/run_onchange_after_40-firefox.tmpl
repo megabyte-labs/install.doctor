@@ -7,26 +7,30 @@
 # Firefox plugins: {{ list (.firefoxAddOns | toString | replace "[" "" | replace "]" "") | uniq | join " " }}
 
 ### Add Firefox enterprise profile
-# TODO - figure out how to do this for other installations like Flatpak and macOS
+# TODO - figure out how to do this for other installations like Flatpak and macOS and Librewolf
 for FIREFOX_DIR in '/usr/lib/firefox' '/usr/lib/firefox-esr' '/Applications/Firefox.app/Contents/Resources'; do
-    if [ -d "$FIREFOX_DIR" ] && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/firefox" ] && command -v rsync > /dev/null; then
-        sudo rsync -artvu "${XDG_DATA_HOME:-$HOME/.local/share}/firefox" "$FIREFOX_DIR"
+    if [ -d "$FIREFOX_DIR" ] && [ -d "${XDG_DATA_DIR:-$HOME/.local/share}/firefox" ] && command -v rsync > /dev/null; then
+        sudo rsync -artvu "${XDG_DATA_DIR:-$HOME/.local/share}/firefox/" "$FIREFOX_DIR"
     fi
 done
 
 ### Loop through various Firefox profile locations
 for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox" "$HOME/.var/app/io.gitlab.librewolf-community/.librewolf" "$HOME/Library/Application Support/Firefox/Profiles" "$HOME/Library/Application Support/LibreWolf/Profiles" "$HOME/.mozilla/firefox"; do
     ### Determine executable to use
+    logg info "Processing Firefox profile location $SETTINGS_DIR"
+    unset FIREFOX_EXE
     if [ "$SETTINGS_DIR" == "$HOME/.var/app/org.mozilla.firefox" ]; then
         if ! command -v org.mozilla.firefox > /dev/null; then
             continue
+        else
+            FIREFOX_EXE="$(which org.mozilla.firefox)"
         fi
-        FIREFOX_EXE="$(which org.mozilla.firefox)"
     elif [ "$SETTINGS_DIR" == "$HOME/.var/app/io.gitlab.librewolf-community/.librewolf" ]; then
         if ! command -v io.gitlab.librewolf-community > /dev/null; then
             continue
+        else
+            FIREFOX_EXE="$(which io.gitlab.librewolf-community)"
         fi
-        FIREFOX_EXE="$(which io.gitlab.librewolf-community)"
     elif [ "$SETTINGS_DIR" == "$HOME/Library/Application Support/Firefox/Profiles" ]; then
         FIREFOX_EXE="/Applications/Firefox.app/Contents/MacOS/firefox"
         if [ ! -f "$FIREFOX_EXE" ]; then
@@ -38,10 +42,10 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
             continue
         fi
     elif [ "$SETTINGS_DIR" == "$HOME/snap/firefox/common/.mozilla/firefox" ]; then
-        if ! command -v firefox > /dev/null; then
+        FIREFOX_EXE="/snap/bin/firefox"
+        if [ ! -f "$FIREFOX_EXE" ]; then
             continue
         fi
-        FIREFOX_EXE="$(which firefox)"
     elif [ "$SETTINGS_DIR" == "$HOME/.mozilla/firefox" ]; then
         if command -v firefox-esr > /dev/null; then
             FIREFOX_EXE="$(which firefox-esr)"
@@ -56,29 +60,33 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
     fi
     ### Initiatize Firefox default profiles
     if command -v "$FIREFOX_EXE" > /dev/null; then
+        logg info "Firefox executable set to $FIREFOX_EXE"
         if [ ! -d "$SETTINGS_DIR" ]; then
             logg info 'Running Firefox headlessly to generate default profiles'
-            "$FIREFOX_EXE" --headless &
-            FIREFOX_PID=$!
-            sleep 5
-            kill "$FIREFOX_PID"
+            timeout 8 "$FIREFOX_EXE" --headless
             logg info 'Finished running Firefox headlessly'
-            sleep 5
         fi
-        logg info 'Renaming default profile folders and assigning them human-readable profile names'
-        DEFAULT_RELEASE_PROFILE="$(find "$SETTINGS_DIR" -mindepth 1 -maxdepth 1 -name "*.default-release")"
+        DEFAULT_RELEASE_PROFILE="$(find "$SETTINGS_DIR" -mindepth 1 -maxdepth 1 -name "*.default-*")"
         DEFAULT_PROFILE="$(find "$SETTINGS_DIR" -mindepth 1 -maxdepth 1 -name "*.default")"
-        mv "$DEFAULT_PROFILE" "$SETTINGS_DIR/profile.default"
-        mv "$DEFAULT_RELEASE_PROFILE" "$SETTINGS_DIR/profile.primary"
-        logg info 'Adding a secondary profile'            
-        cp -rf "$SETTINGS_DIR/profile.primary" "$SETTINGS_DIR/profile.secondary"
-        logg info "Copying "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" to profile directory"
+        if [ -n "$DEFAULT_PROFILE" ] && [ "$DEFAULT_PROFILE" != "$SETTINGS_DIR/profile.default" ]; then
+            logg info "Renaming $DEFAULT_PROFILE to $SETTINGS_DIR/profile.default"
+            rsync -a "$DEFAULT_PROFILE/" "$SETTINGS_DIR/profile.default"
+        fi
+        if [ -n "$DEFAULT_RELEASE_PROFILE" ]; then
+            logg info "Renaming $DEFAULT_RELEASE_PROFILE to $SETTINGS_DIR/profile.primary"
+            rsync -a "$DEFAULT_RELEASE_PROFILE/" "$SETTINGS_DIR/profile.primary"
+        fi
+        if [ ! -d "$SETTINGS_DIR/profile.secondary" ] && [ -d "$SETTINGS_DIR/profile.default" ]; then
+            logg info 'Adding a secondary profile'
+            rsync -a "$SETTINGS_DIR/profile.default/" "$SETTINGS_DIR/profile.secondary"
+        fi
+        logg info "Copying "${XDG_DATA_DIR:-$HOME/.local/share}/firefox/profiles.ini" to profile directory"
         if [ -d /Applications ] && [ -d /System ]; then
             # macOS
-            cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" "$SETTINGS_DIR/../profiles.ini"
+            cp -f "${XDG_DATA_DIR:-$HOME/.local/share}/firefox/profiles.ini" "$SETTINGS_DIR/../profiles.ini"
         else
             # Linux
-            cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" "$SETTINGS_DIR/profiles.ini"
+            cp -f "${XDG_DATA_DIR:-$HOME/.local/share}/firefox/profiles.ini" "$SETTINGS_DIR/profiles.ini"
         fi
         
         ### Install Firefox addons (using list declared in .chezmoidata.yaml)
@@ -94,10 +102,22 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
                 if [ "$PLUGIN_FILE_ID" != 'null' ]; then
                     PLUGIN_URL="$(cat "$PLUGIN_HTML" | htmlq '.InstallButtonWrapper-download-link' --attribute href)"
                     PLUGIN_FILENAME="${PLUGIN_FILE_ID}.xpi"
-                    if [ ! -d "$SETTINGS_DIR/profile.primary/extensions/$PLUGIN_FILENAME" ]; then
+                    PLUGIN_FOLDER="$(echo "$PLUGIN_FILENAME" | sed 's/.xpi$//')"
+                    if [ ! -d "$SETTINGS_DIR/profile.primary/extensions/$PLUGIN_FOLDER" ]; then
                         logg info 'Downloading plugin file for '"$PLUGIN_FILENAME"' ('"$FIREFOX_PLUGIN"')'
-                        curl "$PLUGIN_URL" -o "$SETTINGS_DIR/profile.primary/extensions/$PLUGIN_FILENAME"
-                        logg success 'Finished downloading '"$PLUGIN_FILENAME"' ('"$FIREFOX_PLUGIN"')'
+                        if [ ! -d "$SETTINGS_DIR/profile.primary/extensions" ]; then
+                            mkdir -p "$SETTINGS_DIR/profile.primary/extensions"
+                        fi
+                        curl -sSL "$PLUGIN_URL" -o "$SETTINGS_DIR/profile.primary/extensions/$PLUGIN_FILENAME"
+                        # Unzipping like this causes Firefox to complain about unsigned plugins
+                        # TODO - figure out how to headlessly enable the extensions in such a way that is compatible with Flatpak / Snap
+                        # using the /usr/lib/firefox/distribution/policies.json works but this is not compatible with Flatpak / Snap out of the box
+                        # it seems since they do not have access to the file system by default. Also, using the policies.json approach forces
+                        # all Firefox profiles to use the same extensions. Ideally, we should find a way to enable the extensions scoped
+                        # to the user profile.
+                        # logg info 'Unzipping '"$PLUGIN_FILENAME"' ('"$FIREFOX_PLUGIN"')'
+                        # unzip "$SETTINGS_DIR/profile.primary/extensions/$PLUGIN_FILENAME" -d "$SETTINGS_DIR/profile.primary/extensions/$PLUGIN_FOLDER"
+                        logg success 'Installed `'"$FIREFOX_PLUGIN"'`'
                     fi
                 else
                     logg warn 'A null Firefox add-on filename was detected for `'"$FIREFOX_PLUGIN"'`'
