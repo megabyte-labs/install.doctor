@@ -18,16 +18,31 @@ done
 for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox" "$HOME/.var/app/io.gitlab.librewolf-community/.librewolf" "$HOME/Library/Application Support/Firefox/Profiles" "$HOME/Library/Application Support/LibreWolf/Profiles" "$HOME/.mozilla/firefox"; do
     ### Determine executable to use
     if [ "$SETTINGS_DIR" == "$HOME/.var/app/org.mozilla.firefox" ]; then
+        if ! command -v org.mozilla.firefox > /dev/null; then
+            continue
+        fi
         FIREFOX_EXE="$(which org.mozilla.firefox)"
     elif [ "$SETTINGS_DIR" == "$HOME/.var/app/io.gitlab.librewolf-community/.librewolf" ]; then
+        if ! command -v io.gitlab.librewolf-community > /dev/null; then
+            continue
+        fi
         FIREFOX_EXE="$(which io.gitlab.librewolf-community)"
     elif [ "$SETTINGS_DIR" == "$HOME/Library/Application Support/Firefox/Profiles" ]; then
         FIREFOX_EXE="/Applications/Firefox.app/Contents/MacOS/firefox"
+        if [ ! -f "$FIREFOX_EXE" ]; then
+            continue
+        fi
     elif [ "$SETTINGS_DIR" == "$HOME/Library/Application Support/LibreWolf/Profiles" ]; then
         FIREFOX_EXE="/Applications/LibreWolf.app/Contents/MacOS/librewolf"
+        if [ ! -f "$FIREFOX_EXE" ]; then
+            continue
+        fi
     elif [ "$SETTINGS_DIR" == "$HOME/snap/firefox/common/.mozilla/firefox" ]; then
+        if ! command -v firefox > /dev/null; then
+            continue
+        fi
         FIREFOX_EXE="$(which firefox)"
-    else
+    elif [ "$SETTINGS_DIR" == "$HOME/.mozilla/firefox" ]; then
         if command -v firefox-esr > /dev/null; then
             FIREFOX_EXE="$(which firefox-esr)"
         elif command -v firefox > /dev/null && [ "$(which firefox)" != *'snap'* ] && [ "$(which firefox)" != *'flatpak'* ] && [ ! -d /Applications ] && [ ! -d /System ]; then
@@ -67,7 +82,7 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
         fi
         
         ### Install Firefox addons (using list declared in .chezmoidata.yaml)
-        for FIREFOX_PLUGIN in {{ list (.firefoxAddOns | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
+        for FIREFOX_PLUGIN in "bitwarden-password-manager"; do
             logg info 'Ensuring `'"$FIREFOX_PLUGIN"'` is installed'
             PLUGIN_HTML="$(mktemp)"
             curl --silent "https://addons.mozilla.org/en-US/firefox/addon/$FIREFOX_PLUGIN/" > "$PLUGIN_HTML"
