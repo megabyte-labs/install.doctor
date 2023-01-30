@@ -90,7 +90,7 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
         fi
         
         ### Install Firefox addons (using list declared in .chezmoidata.yaml)
-        for FIREFOX_PLUGIN in "bitwarden-password-manager"; do
+        for FIREFOX_PLUGIN in {{ list (.firefoxAddOns | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
             logg info 'Ensuring `'"$FIREFOX_PLUGIN"'` is installed'
             PLUGIN_HTML="$(mktemp)"
             curl --silent "https://addons.mozilla.org/en-US/firefox/addon/$FIREFOX_PLUGIN/" > "$PLUGIN_HTML"
