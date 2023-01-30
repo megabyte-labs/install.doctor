@@ -41,7 +41,7 @@ if command -v nmcli > /dev/null; then
             ### Add the profile
             logg info "Adding $OVPN_FILE to NetworkManager OpenVPN profiles"
             OVPN_NAME="$(basename "$OVPN_FILE" | sed 's/.ovpn$//')"
-            nmcli connection import type openvpn file '{{ vpn_connection.file }}'
+            nmcli connection import type openvpn file "$OVPN_FILE"
             nmcli connection modify "$OVPN_NAME" +vpn.data 'username={{- $ovpnUsername }}'
             nmcli connection modify "$OVPN_NAME" vpn.secrets 'password={{- $ovpnPassword }}'
             nmcli connection modify "$OVPN_NAME" +vpn.data password-flags=0

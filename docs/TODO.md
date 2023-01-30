@@ -9,6 +9,10 @@ https://github.com/cloudflare/boringtun
     GCE_CREDENTIALS_FILE: "{{ joinPath .chezmoi.homeDir ".config" "gcp.json" }}"
     GCE_SERVICE_ACCOUNT_EMAIL: "molecule@megabyte-labs.iam.gserviceaccount.com"
 
+✖  ERROR  Gsettings Failed to apply gsetting
+Error: Command failed: gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+No such key “color-scheme”
+
 GITLAB_READ_TOKEN
 GITHUB_READ_TOKEN
 GITHUB_GIST_TOKEN

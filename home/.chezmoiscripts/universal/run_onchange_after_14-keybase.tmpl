@@ -1,7 +1,7 @@
 {{- if eq .host.distro.family "linux" -}}
 #!/usr/bin/env bash
 
-# timeshift.json hash: {{ include (joinPath .chezmoi.homeDir ".config" "keybase" "config.json") | sha256sum }}
+# Keybase config hash: {{ include (joinPath .chezmoi.homeDir ".config" "keybase" "config.json") | sha256sum }}
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
@@ -16,3 +16,5 @@ if command -v keybase > /dev/null; then
 else
     logg info 'The `keybase` executable is not available'
 fi
+
+{{ end -}}
