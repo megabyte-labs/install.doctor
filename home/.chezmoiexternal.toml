@@ -113,12 +113,6 @@
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
-### Docker Convoy
-[".local/src/convoy.tar.gz"]
-    type = "file"
-    url = "https://github.com/rancher/convoy/releases/download/v0.5.2/convoy.tar.gz"
-    refreshPeriod = "{{ $refreshPeriod }}"
-
 ### Git Template
 [".config/git/template/_/husky.sh"]
     type = "file"
