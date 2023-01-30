@@ -30,8 +30,8 @@ if [ ! -d /var/lib/docker-plugins/rclone/cache ]; then
     sudo mkdir -p /var/lib/docker-plugins/rclone/cache
 fi
 sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/docker-rclone.conf /var/lib/docker-plugins/rclone/config/rclone.conf
-if ! docker plugin ls | grep 'rclone:latest' > /dev/null; then
-    docker plugin install rclone/docker-volume-rclone:amd64 args="-v" --alias rclone --grant-all-permissions
+if ! sudo su -c 'docker plugin ls' - "$USER" | grep 'rclone:latest' > /dev/null; then
+    sudo su -c 'docker plugin install rclone/docker-volume-rclone:amd64 args="-v" --alias rclone --grant-all-permissions' - "$USER"
 fi
 
 

@@ -21,7 +21,7 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
         FIREFOX_EXE="$(which io.gitlab.librewolf-community)"
     elif [ "$SETTINGS_DIR" == "$HOME/Library/Application Support/Firefox/Profiles" ]; then
         FIREFOX_EXE="/Applications/Firefox.app/Contents/MacOS/firefox"
-    elif [ "$SETTINGS_DIR == "$HOME/Library/Application Support/LibreWolf/Profiles" ]; then
+    elif [ "$SETTINGS_DIR" == "$HOME/Library/Application Support/LibreWolf/Profiles" ]; then
         FIREFOX_EXE="/Applications/LibreWolf.app/Contents/MacOS/librewolf"
     elif [ "$SETTINGS_DIR" == "$HOME/snap/firefox/common/.mozilla/firefox" ]; then
         FIREFOX_EXE="$(which firefox)"

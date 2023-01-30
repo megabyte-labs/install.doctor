@@ -784,7 +784,7 @@ async function beforeInstall(packageManager) {
         await $`brew install --cask docker`
       }
       try {
-        await $`docker run --rm hello-world`
+        await $`sudo -c 'docker run --rm hello-world' - ${process.env.USER}`
       } catch (e) {
         log('warn', logStage, `The command \`docker run --rm hello-world\` failed`)
         try {
@@ -1487,6 +1487,9 @@ async function addUserGroup(group) {
       log('error', logStage, `The useradd command is unavailable`)
     }
   } else if (osType === 'darwin') {
+    runCommand(`Adding the ${group} group`, `sudo dscl . -create /Users/${group}`)
+    runCommand(`Creating the ${group} group`, `sudo dscl . -create /Groups/${group}`)
+    runCommand(`Adding the ${group} user to the ${group} group`, `sudo dscl . -append /Groups/${group} GroupMembership ${group}`)
   } else if (osType === 'windows') {
     log('warn', logStage, `Windows support not yet added`)
   } else {
