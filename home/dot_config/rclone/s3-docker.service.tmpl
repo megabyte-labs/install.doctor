@@ -4,9 +4,9 @@ After=network-online.target
 
 [Service]
 Type=simple
-User=root
-ExecStart=/usr/local/bin/rclone-mount "docker" "docker" "docker-s3"
-ExecStop=/bin/fusermount -u /mnt/docker-s3
+User=rclone
+ExecStart=/usr/local/bin/rclone-mount "docker" "docker" "s3-docker"
+ExecStop=/bin/fusermount -u /mnt/s3-docker
 Restart=always
 RestartSec=10
 

@@ -1,6 +1,8 @@
 {{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
 
+# Docker plugins.json hash: {{ include (joinPath .chezmoi.homeDir ".config" "docker" "plugins.json") | sha256sum }}
+
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
@@ -30,13 +32,24 @@ fi
 if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.docker}/cli-plugins/docker-pushrm" ]; then
     logg info 'Acquiring release information for Docker push-rm'
     RELEASE_TAG="$(curl -sSL https://api.github.com/repos/christian-korneck/docker-pushrm/releases/latest | jq -r '.tag_name')"
-    mkdir -p "${XDG_CONFIG_HOME:-$HOME/.docker}/cli-plugins"
+    mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins"
     logg info 'Downloading Docker push-rm'
-    curl https://github.com/christian-korneck/docker-pushrm/releases/download/$RELEASE_TAG/docker-pushrm_darwin_amd64 -o "${XDG_CONFIG_HOME:-$HOME/.docker}/cli-plugins/docker-pushrm"
-    chmod +x "${XDG_CONFIG_HOME:-$HOME/.docker}/cli-plugins/docker-pushrm"
+    curl https://github.com/christian-korneck/docker-pushrm/releases/download/$RELEASE_TAG/docker-pushrm_darwin_amd64 -o "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm"
+    chmod +x "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm"
     logg success 'Added Docker push-rm'
 else
     logg info 'Docker push-rm already added'
 fi
+
+{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-digitalocean-pat")) -}}
+### Docker DigitalOcean Block Storage
+docker plugin install --grant-all-permissions rexray/dobs DOBS_TOKEN={{ includeTemplate "secrets/key-digitalocean-pat" | decrypt -}} DOBS_REGION={{ .host.docker.doRegion }} LINUX_VOLUME_FILEMODE=0775
+{{ end -}}
+
+### Docker plugins (defined in ~/.config/docker/plugins.json)
+jq -r '.plugins[]' "${XDG_CONFIG_HOME:-$HOME/.config}/docker/plugins.json" | while read PLUGIN; do
+    logg info 'Installing the `'"$PLUGIN"'` Docker plugin'
+    docker plugin install --grant-all-permissions "$PLUGIN"
+done
 
 {{ end -}}

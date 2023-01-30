@@ -19,11 +19,11 @@ colors:
   color14: '#EB71AD'
   color15: '#24E5FF'
   color16: '#FFFFFF'
-macosRemoteLogin: 'on'
-themeparkTheme: aquamarine
-netdataClaimURL: https://app.netdata.cloud
 config:
   gpg: https://raw.githubusercontent.com/drduh/config/master/gpg.conf
+macosRemoteLogin: 'on'
+netdataClaimURL: https://app.netdata.cloud
+themeparkTheme: aquamarine
 chromeExtensions:
   - https://chrome.google.com/webstore/detail/automa/infppggnoaenmfagbfknfkancpbljcca
   - https://chrome.google.com/webstore/detail/bitly-powerful-short-link/iabeihobmhlgpkcgjiloemdbofjbdcic
@@ -1007,6 +1007,9 @@ softwareGroups:
     - termius
     - ulauncher
 softwarePlugins:
+  docker:
+    plugins:
+      - sapk/plugin-rclone
   vim:
     plugins:
       - https://github.com/dense-analysis/ale.git

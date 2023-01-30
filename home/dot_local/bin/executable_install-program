@@ -110,6 +110,7 @@ let binLinkRan = false
 const installOrdersPre = []
 const installOrdersPost = []
 const installOrdersService = []
+const installOrdersGroups = []
 const installOrdersPlugins = []
 const installOrdersBinLink = []
 let brewUpdated, osType, osID, snapRefreshed
@@ -432,6 +433,10 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
   const serviceHook = getHook(packages, 'service', scopedPreference, preference)
   if (serviceHook) {
     installOrdersService.concat(typeof serviceHook === 'string' ? [serviceHook] : serviceHook)
+  }
+  const groupsHook = getHook(packages, 'groups', scopedPreference, preference)
+  if (groupsHook) {
+    installOrdersGroups.concat(typeof groupsHook === 'string' ? [groupsHook] : groupsHook)
   }
   processPluginOrders(pkg)
   if (!installOrders[preference]) {
@@ -1471,17 +1476,49 @@ async function installPackageList(packageManager, packages) {
   }
 }
 
+async function addUserGroup(group) {
+  const logStage = 'Users / Groups'
+  log('info', logStage, `Ensuring the ${group} group / user is added`)
+  if (osType === 'linux') {
+    const useradd = which.sync('useradd', { nothrow: true })
+    if (useradd) {
+      runCommand(`Adding the ${group} user / group`, `sudo useradd ${group}`)
+    } else {
+      log('error', logStage, `The useradd command is unavailable`)
+    }
+  } else if (osType === 'darwin') {
+  } else if (osType === 'windows') {
+    log('warn', logStage, `Windows support not yet added`)
+  } else {
+    log('warn', logStage, `Unknown operating system type`)
+  }
+}
+
 async function updateService(service) {
   const logStage = 'Service Service'
   if (osType === 'linux') {
     const systemctl = which.sync('systemctl', { nothrow: true })
+    const brew = which.sync('brew', { nothrow: true })
     if (systemctl) {
       try {
         runCommand(`Starting / enabling ${service} with systemctl`, `sudo systemctl enable --now ${service}`)
         log('success', logStage, `Started / enabled the ${service} service`)
       } catch (e) {
-        log('error', logStage, `There was an error starting / enabling the ${service} service`)
-        console.error(e)
+        log('info', logStage, `There was an error starting / enabling the ${service} service with systemd`)
+        try {
+          if (brew) {
+            runCommand(`Starting / enabling ${service} with Homebrew`, `brew services start ${service}`)
+            log('success', logStage, `Started / enabled the ${service} service with Homebrew`)
+          } else {
+            log('error', logStage, `Unable to start service with systemd and Homebrew is not available`)
+          }
+        } catch (err) {
+          log('error', logStage, `Unable to start service with both systemd and Homebrew`)
+          log('info', logStage, `systemd error`)
+          console.error(e)
+          log('info', logStage, `brew services error`)
+          console.error(e)
+        }
       }
     } else {
       log(
@@ -1710,6 +1747,10 @@ async function installSoftware(pkgsToInstall) {
     const asyncOrders = []
     asyncOrders.push(installPackageList(packageManager, installOrders[packageManager]))
     await Promise.all(asyncOrders)
+  }
+  log('info', 'Users / Groups', `Adding groups / users`)
+  for (const group of installOrdersGroups) {
+    await addUserGroup(group)
   }
   log('info', 'Post-Install', `Running package-specific post-installation steps`)
   for (const service of installOrdersService) {

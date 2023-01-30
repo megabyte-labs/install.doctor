@@ -4,46 +4,37 @@
 TYPE="$1"
 USER="$2"
 MOUNT="$3"
+
+### Path definitions
 if [ "$TYPE" = 'user' ]; then
   CACHE_FOLDER="/home/$USER/.cache/rclone"
   CONFIG_FOLDER="/home/$USER/.config/rclone"
   LOG_FOLDER="/home/$USER/.local/log"
   LOG_FILE="$LOG_FOLDER/$MOUNT.log"
   MOUNT_PATH="/home/{{ .user.username }}/.local/mnt/$MOUNT"
-elif [ "$TYPE" = 'docker' ]; then
-  CACHE_FOLDER="/var/cache/rclone/$MOUNT"
-  CONFIG_FOLDER="/etc"
-  LOG_FOLDER="/var/log/rclone"
-  LOG_FILE="$LOG_FOLDER/$MOUNT.log"
-  MOUNT_PATH="/mnt/$MOUNT"
 else
-  CACHE_FOLDER="/var/cache/rclone"
+  CACHE_FOLDER="/var/cache/rclone/$MOUNT"
   CONFIG_FOLDER="/etc"
   LOG_FOLDER="/var/log/rclone"
   LOG_FILE="$LOG_FOLDER/$MOUNT.log"
   MOUNT_PATH="/mnt/$MOUNT"
 fi
 
-### Ensure directories created
-if [ ! -d "$CACHE_FOLDER" ]; then
-  mkdir -p "$CACHE_FOLDER"
-fi
-if [ ! -d "$CONFIG_FOLDER" ]; then
-  mkdir -p "$CONFIG_FOLDER"
-fi
-if [ ! -d "$LOG_FOLDER" ]; then
-  mkdir -p "$LOG_FOLDER"
-fi
-if [ ! -d "$MOUNT_PATH" ]; then
-  mkdir -p "$MOUNT_PATH"
-fi
+### Ensure folders exist
+for FOLDER in "$CACHE_FOLDER" "$CONFIG_FOLDER" "$LOG_FOLDER" "$MOUNT_PATH"; do
+    if [ ! -d "$FOLDER" ]; then
+        mkdir -p "$FOLDER" || echo "ERROR: Need permissions for $FOLDER"
+    fi
+done
+
+### Define rcloneignore location
 RCLONE_IGNORE="$CONFIG_FOLDER/rcloneignore"
 if [ ! -f "$RCLONE_IGNORE" ] && [ -f "/etc/rcloneignore" ]; then
   RCLONE_IGNORE='etc/rcloneignore'
 fi
 
 ### Mount
- /usr/bin/rclone --config="$CONFIG_FOLDER/rclone.conf" \
+/usr/bin/rclone --config="$CONFIG_FOLDER/rclone.conf" \
   mount \
   --cache-tmp-upload-path="$CACHE_FOLDER/$MOUNT-upload" \
   --cache-chunk-path="$CACHE_FOLDER/$MOUNT-chunks" \
