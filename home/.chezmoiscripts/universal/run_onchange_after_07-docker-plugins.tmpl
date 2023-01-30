@@ -6,30 +6,8 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-### Docker Clip
-if [ -f "${XDG_CONFIG_HOME:-$HOME/.docker}/cli-plugins/docker-clip" ]; then
-    logg info 'Adding Docker clip commands. For more details check out https://github.com/lukaszlach/clip/'
-    docker clip add || EXIT_CODE=$?
-    if [ -n "$EXIT_CODE" ]; then
-        logg error 'Failed to run `docker clip add`'
-    fi
-fi
-
-### Docker Convoy
-if [ ! -f /etc/docker/plugins/convoy.spec ]; then
-    logg info 'Adding the Docker Convoy plugin'
-    sudo mkdir -p /etc/docker/plugins
-    sudo bash -c 'echo "unix:///var/run/convoy/convoy.sock" > /etc/docker/plugins/convoy.spec'
-    cd "$HOME/.local/src"
-    tar xvzf convoy.tar.gz
-    sudo cp convoy/convoy convoy/convoy-pdata_tools /usr/local/bin/
-    rm -rf convoy
-else
-    logg info 'Docker Convoy already added at /etc/docker/plugins/convoy.spec'
-fi
-
 ### Docker push-rm
-if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.docker}/cli-plugins/docker-pushrm" ]; then
+if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm" ]; then
     logg info 'Acquiring release information for Docker push-rm'
     RELEASE_TAG="$(curl -sSL https://api.github.com/repos/christian-korneck/docker-pushrm/releases/latest | jq -r '.tag_name')"
     mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins"
@@ -41,15 +19,20 @@ else
     logg info 'Docker push-rm already added'
 fi
 
-{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-digitalocean-pat")) -}}
-### Docker DigitalOcean Block Storage
-docker plugin install --grant-all-permissions rexray/dobs DOBS_TOKEN={{ includeTemplate "secrets/key-digitalocean-pat" | decrypt -}} DOBS_REGION={{ .host.docker.doRegion }} LINUX_VOLUME_FILEMODE=0775
-{{ end -}}
+### Docker Rclone plugin
+# Source: https://rclone.org/docker/
+if [ ! -d /var/lib/docker-plugins/rclone/config ]; then
+    logg info 'Creating directory /var/lib/docker-plugins/rclone/config'
+    sudo mkdir -p /var/lib/docker-plugins/rclone/config
+fi
+if [ ! -d /var/lib/docker-plugins/rclone/cache ]; then
+    logg info 'Creating directory /var/lib/docker-plugins/rclone/cache'
+    sudo mkdir -p /var/lib/docker-plugins/rclone/cache
+fi
+sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/docker-rclone.conf /var/lib/docker-plugins/rclone/config/rclone.conf
+if ! docker plugin ls | grep 'rclone:latest' > /dev/null; then
+    docker plugin install rclone/docker-volume-rclone:amd64 args="-v" --alias rclone --grant-all-permissions
+fi
 
-### Docker plugins (defined in ~/.config/docker/plugins.json)
-jq -r '.plugins[]' "${XDG_CONFIG_HOME:-$HOME/.config}/docker/plugins.json" | while read PLUGIN; do
-    logg info 'Installing the `'"$PLUGIN"'` Docker plugin'
-    docker plugin install --grant-all-permissions "$PLUGIN"
-done
 
 {{ end -}}

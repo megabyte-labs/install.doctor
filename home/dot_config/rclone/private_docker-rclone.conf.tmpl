@@ -1,0 +1,11 @@
+{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-cloudflare-r2-id")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-cloudflare-r2-secret")) (ne .user.cloudflare.r2 "") -}}
+[docker]
+access_key_id = {{ includeTemplate "secrets/key-cloudflare-r2-id" | decrypt -}}
+acl = private
+endpoint = {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com/docker
+env_auth = false
+provider = Cloudflare
+region = auto
+secret_access_key = {{ includeTemplate "secrets/key-cloudflare-r2-secret" | decrypt -}}
+type = s3
+{{ end -}}
