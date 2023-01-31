@@ -6,6 +6,8 @@ if command -v gnome-shell > /dev/null; then
     logg info 'Manually reload `gnome-shell`'
     # logg info 'Reloading `gnome-shell`'
     # killall -3 gnome-shell
+    # Disabled because it causes the terminal window with the logs to close
+    # If you don't mind this, you can enable (logs are still stored at "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log")
 fi
 
 {{ end -}}
