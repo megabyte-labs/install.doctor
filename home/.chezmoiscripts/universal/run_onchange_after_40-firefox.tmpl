@@ -9,8 +9,8 @@
 ### Add Firefox enterprise profile
 # TODO - figure out how to do this for other installations like Flatpak and macOS and Librewolf
 for FIREFOX_DIR in '/usr/lib/firefox' '/usr/lib/firefox-esr' '/Applications/Firefox.app/Contents/Resources'; do
-    if [ -d "$FIREFOX_DIR" ] && [ -d "${XDG_DATA_DIR:-$HOME/.local/share}/firefox" ] && command -v rsync > /dev/null; then
-        sudo rsync -artvu "${XDG_DATA_DIR:-$HOME/.local/share}/firefox/" "$FIREFOX_DIR"
+    if [ -d "$FIREFOX_DIR" ] && [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/firefox" ] && command -v rsync > /dev/null; then
+        sudo rsync -artvu "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/" "$FIREFOX_DIR"
     fi
 done
 
@@ -80,13 +80,13 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
             logg info 'Adding a secondary profile'
             rsync -a "$SETTINGS_DIR/profile.default/" "$SETTINGS_DIR/profile.secondary"
         fi
-        logg info "Copying "${XDG_DATA_DIR:-$HOME/.local/share}/firefox/profiles.ini" to profile directory"
+        logg info "Copying "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" to profile directory"
         if [ -d /Applications ] && [ -d /System ]; then
             # macOS
-            cp -f "${XDG_DATA_DIR:-$HOME/.local/share}/firefox/profiles.ini" "$SETTINGS_DIR/../profiles.ini"
+            cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" "$SETTINGS_DIR/../profiles.ini"
         else
             # Linux
-            cp -f "${XDG_DATA_DIR:-$HOME/.local/share}/firefox/profiles.ini" "$SETTINGS_DIR/profiles.ini"
+            cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" "$SETTINGS_DIR/profiles.ini"
         fi
         
         ### Install Firefox addons (using list declared in .chezmoidata.yaml)

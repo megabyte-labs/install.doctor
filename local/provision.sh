@@ -9,8 +9,8 @@
 #   by calling the appropriate Chezmoi commands.
 
 ### Ensure ~/.local/share/megabyte-labs is a directory
-if [ ! -d "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs" ]; then
-  mkdir -p "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs"
+if [ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs" ]; then
+  mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs"
 fi
 
 # @description Installs glow (a markdown renderer) from GitHub releases
@@ -402,19 +402,19 @@ fi
 
 ### Copy new files from src git repository to dotfiles with rsync
 rsyncChezmoiFiles() {
-  rsync -rtvu --delete /usr/local/src/install.doctor/docs/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/docs/" &
-  rsync -rtvu --delete /usr/local/src/install.doctor/home/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/home/" &
-  rsync -rtvu --delete /usr/local/src/install.doctor/system/ "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/system/" &
-  rsync -rtvu /usr/local/src/install.doctor/.chezmoiignore "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiignore" &
-  rsync -rtvu /usr/local/src/install.doctor/.chezmoiroot "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/.chezmoiroot" &
-  rsync -rtvu /usr/local/src/install.doctor/software.yml "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi/software.yml" &
+  rsync -rtvu --delete /usr/local/src/install.doctor/docs/ "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/" &
+  rsync -rtvu --delete /usr/local/src/install.doctor/home/ "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/" &
+  rsync -rtvu --delete /usr/local/src/install.doctor/system/ "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/system/" &
+  rsync -rtvu /usr/local/src/install.doctor/.chezmoiignore "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.chezmoiignore" &
+  rsync -rtvu /usr/local/src/install.doctor/.chezmoiroot "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.chezmoiroot" &
+  rsync -rtvu /usr/local/src/install.doctor/software.yml "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/software.yml" &
   wait
   logg success 'Successfully updated the ~/.local/share/chezmoi folder with changes from the upstream repository'
 }
 
 ### Copy files to HOME folder with rsync
 logg info 'Copying files from /usr/local/src/install.doctor to the HOME directory via rsync'
-mkdir -p "${XDG_DATA_DIR:-$HOME/.local/share}/chezmoi"
+mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
 rsyncChezmoiFiles
 ### Ensure ~/.local/bin files are executable
 logg info 'Ensuring scripts in ~/.local/bin are executable'
@@ -455,15 +455,15 @@ else
 fi
 if [ -n "$FORCE_CHEZMOI" ]; then
   if command -v unbuffer > /dev/null; then
-    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
   else
-    chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+    chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
   fi
 else
   if command -v unbuffer > /dev/null; then
-    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
   else
-    chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "${XDG_DATA_DIR:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+    chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
   fi
 fi
 
