@@ -6,6 +6,7 @@
 ### Install Age via Homebrew if not present
 if ! command -v age > /dev/null; then
   if command -v brew > /dev/null; then
+    logg info 'Running `brew install age`'
     brew install age
   else
     logg warn '`age` is not installed which is utilized in the decryption process'
