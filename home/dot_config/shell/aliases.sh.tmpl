@@ -94,6 +94,11 @@ if command -v codium > /dev/null; then
   alias code='codium'
 fi
 
+### Zola
+if command -v org.getzola.zola > /dev/null; then
+  alias zola="flatpak run org.getzola.zola"
+fi
+
 # Fix for auto expansion (source: https://wiki.archlinux.org/title/Sudo#Passing_aliases)
 alias sudo='sudo '
 

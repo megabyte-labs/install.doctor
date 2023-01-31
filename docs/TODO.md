@@ -5,6 +5,10 @@ https://github.com/DustinBrett/daedalOS
 https://github.com/ansh/jiffyreader.com
 https://github.com/allinurl/goaccess
 https://github.com/cloudflare/boringtun
+https://github.com/Barre/privaxy
+https://github.com/rustdesk/rustdesk
+https://github.com/tw93/Pake
+https://github.com/lencx/ChatGPT
     CLOUDSDK_CORE_PROJECT: "megabyte-labs"
     GCE_CREDENTIALS_FILE: "{{ joinPath .chezmoi.homeDir ".config" "gcp.json" }}"
     GCE_SERVICE_ACCOUNT_EMAIL: "molecule@megabyte-labs.iam.gserviceaccount.com"

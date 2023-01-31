@@ -2939,6 +2939,31 @@ softwarePackages:
     _name: GitDocker
     ansible: professormanhattan.gitdocker
     _service: false
+  zola:
+    _bin: zola
+    _desc: A static site generator built with Rust
+    _docs: 
+    apk: zola
+    brew: zola
+    choco: zola
+    flatpak: org.getzola.zola
+    pacman: zola
+    pkgin: zola
+    pkg-freebsd: zola
+    pkg-openbsd: zola
+    port: zola
+    scoop: zola
+    snap: zola
+    xbps: zola
+  rustscan:
+    _bin: rustscan
+    _desc: An Nmap-based port scanner that scans all 65k ports in 3 seconds
+    _docs: https://rustscan.github.io/RustScan/
+    _github: https://github.com/RustScan/RustScan
+    _home: https://github.com/RustScan/RustScan
+    _name: RustScan
+    brew: rustscan
+    yay: rustscan
   git-extras:
     _bin: git-extras
     _desc: '[Git Extras](https://github.com/tj/git-extras) includes extra git utilities that include repo summary, repl, changelog population, author commit percentages, and more.'
@@ -2962,7 +2987,6 @@ softwarePackages:
     _name: git-fuzzy
     _notes: Installed via dotfiles
     # ansible: professormanhattan.gitfuzzy
-
     _service: false
     _type: cli
   git-notify:
