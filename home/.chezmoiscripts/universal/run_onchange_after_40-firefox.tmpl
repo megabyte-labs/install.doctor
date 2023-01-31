@@ -67,7 +67,7 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
             logg info 'Finished running Firefox headlessly'
         fi
         DEFAULT_RELEASE_PROFILE="$(find "$SETTINGS_DIR" -mindepth 1 -maxdepth 1 -name "*.default-*")"
-        DEFAULT_PROFILE="$(find "$SETTINGS_DIR" -mindepth 1 -maxdepth 1 -name "*.default")"
+        DEFAULT_PROFILE="$(find "$SETTINGS_DIR" -mindepth 1 -maxdepth 1 -name "*.default" -not -name "profile.default")"
         if [ -n "$DEFAULT_PROFILE" ] && [ "$DEFAULT_PROFILE" != "$SETTINGS_DIR/profile.default" ]; then
             logg info "Renaming $DEFAULT_PROFILE to $SETTINGS_DIR/profile.default"
             rsync -a "$DEFAULT_PROFILE/" "$SETTINGS_DIR/profile.default"
