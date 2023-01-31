@@ -16,7 +16,7 @@ logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 ### Install packages if they are not already present
 for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
     logg info 'Checking for presence of `'"$PACKAGE"'`'
-    if rpm -qa | grep "$PACKAGE" > /dev/null; then
+    if rpm -qa | grep "^$PACKAGE-" > /dev/null; then
         logg info 'The '"$PACKAGE"' package is already installed'
     else
         logg info 'Installing `'"$PACKAGE"'`'
