@@ -9,6 +9,7 @@ if ! command -v age > /dev/null; then
     brew install age
   else
     logg warn '`age` is not installed which is utilized in the decryption process'
+  fi
 fi
 
 ### Decrypt private key if it is not already present
