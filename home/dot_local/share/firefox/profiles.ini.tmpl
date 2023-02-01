@@ -1,17 +1,32 @@
-[Profile3]
+[Profile6]
+Name=Default (w/ plugins)
+IsRelative=1
+Path={{ if eq .host.distro.family "darwin" }}Profiles/{{ end }}profile.plugins
+
+[Profile5]
+Name=Automation
+IsRelative=1
+Path={{ if eq .host.distro.family "darwin" }}Profiles/{{ end }}profile.automation
+
+[Profile4]
 Name=Development
 IsRelative=1
 Path={{ if eq .host.distro.family "darwin" }}Profiles/{{ end }}profile.development
 
-[Profile2]
-Name=Secondary
+[Profile3]
+Name=Miscellaneous
 IsRelative=1
-Path={{ if eq .host.distro.family "darwin" }}Profiles/{{ end }}profile.secondary
+Path={{ if eq .host.distro.family "darwin" }}Profiles/{{ end }}profile.miscellaneous
+
+[Profile2]
+Name=Private
+IsRelative=1
+Path={{ if eq .host.distro.family "darwin" }}Profiles/{{ end }}profile.private
 
 [Profile1]
-Name=Primary
+Name=Git (Public)
 IsRelative=1
-Path={{ if eq .host.distro.family "darwin" }}Profiles/{{ end }}profile.primary
+Path={{ if eq .host.distro.family "darwin" }}Profiles/{{ end }}profile.git
 Default=1
 
 [Profile0]

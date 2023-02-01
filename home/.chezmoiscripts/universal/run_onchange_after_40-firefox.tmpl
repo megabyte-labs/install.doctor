@@ -177,17 +177,24 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
             git clone {{ .firefoxPublicProfile }} profile.git
         fi
 
+        {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) }}
         ### Private hosted profile
         if [ ! -d "$SETTINGS_DIR/profile.private" ]; then
             logg info 'Downloading the encrypted Firefox private profile'
+            cd "$SETTINGS_DIR"
             curl -sSL '{{ .firefoxPrivateProfile }}' -o profile.private.tar.gz.age
             logg info 'Decrypting the Firefox private profile'
-            chezmoi decrypt profile.private.tar.gz.age > profile.private.tar.gz
-            rm -f profile.private.tar.gz.age
-            logg info 'Decompressing the Firefox private profile'
-            tar -xzf profile.private.tar.gz
-            logg success 'The Firefox private profile was successfully installed'
+            chezmoi decrypt profile.private.tar.gz.age > profile.private.tar.gz || EXIT_DECRYPT_CODE=$?
+            if [ -z "$EXIT_DECRYPT_CODE" ]; then
+                rm -f profile.private.tar.gz.age
+                logg info 'Decompressing the Firefox private profile'
+                tar -xzf profile.private.tar.gz
+                logg success 'The Firefox private profile was successfully installed'
+            else
+                logg error 'Failed to decrypt the private Firefox profile'
+            fi
         fi
+        {{- end }}
 
         ### Add the populated profiles.ini
         logg info "Copying "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" to profile directory"
