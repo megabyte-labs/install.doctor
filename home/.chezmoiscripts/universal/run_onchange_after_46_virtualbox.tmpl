@@ -4,16 +4,28 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-### Only run logic if VirtualBox is installed
+### Run logic if VirtualBox is installed
+# TODO - Add check to determine if ExtensionPack is required
 if command -v VirtualBox > /dev/null; then
-    ###Install VirtualBox Extension pack
-    VBOX_VERSION=$(VirtualBox --help | head -n 1 | cut -f 6 -d' ')
-    VBOX_VERSION=${VBOX_VERSION//v}
+    ### Install VirtualBox extension pack
+    logg info 'Acquiring VirtualBox version information'
+    VBOX_VERSION="$(VirtualBox --help | head -n 1 | cut -f 6 -d' ')"
+    VBOX_VERSION="${VBOX_VERSION//v}"
+
+    ### Set up folders
     mkdir -p /usr/lib/virtualbox/ExtensionPacks
+    mkdir -p /tmp/vbox
     cd /tmp/vbox
-    curl https://download.virtualbox.org/virtualbox/$VBOX_VERSION/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack \
+
+    ### Download extension pack
+    logg info 'Downloading VirtualBox extension pack'
+    curl -sSL https://download.virtualbox.org/virtualbox/$VBOX_VERSION/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack \
       -o /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack
+
+    ### Install extension pack
+    logg info 'Installing VirtualBox extension pack'
     echo 'y' | VBoxManage extpack install --replace /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack
+    logg success 'Successfully installed VirtualBox extension pack'
 else
     logg warn 'VirtualBox is not installed so VirtualBox Extension pack will not be installed'
 fi

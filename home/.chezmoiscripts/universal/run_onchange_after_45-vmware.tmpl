@@ -4,18 +4,21 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-### Only run logic if VMWare is installed
+### Run logic if VMWare is installed
 if command -v vmware > /dev/null; then
-    ### Build Kernel Modules
+    ### Build kernel modules
+    # TODO - Add check to see if kernel modules are required before running this logic
     if sudo vmware-modconfig --console --install-all; then
       :
     else
+      logg info 'Acquiring VMWare version from CLI'
       VMW_VERSION=$(vmware --version | cut -f 3 -d' ')
       mkdir -p /tmp/vmw_patch
       cd /tmp/vmw_patch
       logg info 'Downloading VMWare host module patches'
       curl -sSL https://github.com/mkubecek/vmware-host-modules/archive/workstation-$VMW_VERSION.tar.gz -o /tmp/vmw_patch/workstation.tar.gz
       tar -xzf /tmp/vmw_patch/workstation.tar.gz
+      cd vmware*
       logg info 'Running `sudo make` and `sudo make install`'
       sudo make
       sudo make install
