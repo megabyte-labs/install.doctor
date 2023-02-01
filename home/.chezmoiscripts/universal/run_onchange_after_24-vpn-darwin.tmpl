@@ -22,7 +22,7 @@ if [ ! -d /etc/wireguard ]; then
 fi
 
 ### Add the WireGuard configurations
-find "${XDG_CONFIG_HOME:-$HOME/.config}" -type f -name "*.conf" | while read WG_CONF; do
+find "${XDG_CONFIG_HOME:-$HOME/.config}/vpn" -mindepth 1 -maxdepth 1 -type f -name "*.conf" | while read WG_CONF; do
     WG_FILE="$(basename "$WG_CONF")"
     logg info 'Adding `'"$WG_FILE"'` to /etc/wireguard'
     sudo cp -f "$WG_CONF" "/etc/wireguard/$WG_FILE"
