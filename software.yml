@@ -7347,12 +7347,16 @@ softwarePackages:
     _home: https://tabby.sh/
     _name: Tabby
     _type: application
+    _snapClassic: true
+    _notes: TODO Update the direct links periodically and keep eye out for Snap / Flatpak
     _when:cask: '! test -d /Applications/Tabby.app'
     ansible:linux: professormanhattan.tabby
+    apt: https://github.com/Eugeny/tabby/releases/download/v1.0.188/tabby-1.0.188-linux-x64.deb
     cask: tabby
     choco: tabby
+    dnf: https://github.com/Eugeny/tabby/releases/download/v1.0.188/tabby-1.0.188-linux-x64.rpm
     github: github.com/Eugeny/tabby
-    _service: false
+    pacman: https://github.com/Eugeny/tabby/releases/download/v1.0.188/tabby-1.0.188-linux-x64.pacman
   tailscale:
     _bin: tailscale
     _desc: '[Tailscale](https://tailscale.com/) lets you easily manage access to private resources, quickly SSH into devices on your network, and work securely from anywhere in the world.'
