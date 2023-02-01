@@ -16,6 +16,13 @@ if [[ ! "$(grep Microsoft /proc/version)" ]]; then
         logg info 'Copying ~/.ssh/system/sshd_config to /etc/ssh/sshd_config'
         sudo cp -f "$HOME/.ssh/system/sshd_config" /etc/ssh/sshd_config
 
+        if command -v semanage > /dev/null; then
+            logg info 'Apply SELinux configuration addressing custom SSH port'
+            sudo semanage port -a -t ssh_port_t -p tcp {{ .host.ssh.port }}
+            logg info 'Allow NIS SSHD'
+            sudo setsebool -P nis_enabled 1
+        fi
+
         ### Restart SSH server
         if [ -d /Applications ] && [ -d /System ]; then
             # macOS
