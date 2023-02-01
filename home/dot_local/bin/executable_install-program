@@ -91,7 +91,9 @@ function wrapMessage(msg) {
 function runCommand(spinnerTitle, command) {
   execSync(command.includes('sudo') ? `sudo "$(which gum)" spin --spinner dot --title "${spinnerTitle}" -- ${command}` : `gum spin --spinner dot --title "${spinnerTitle}" -- ${command}`, {
     stdio: 'inherit',
-    shell: true
+    shell: true,
+    // Timeout of 10m
+    timeout: 1000 * 60 * 10
   })
 }
 
@@ -752,7 +754,9 @@ async function beforeInstall(packageManager) {
       runCommand('Running yum update', `sudo yum update -y`)
     }
   } else if (packageManager === 'flatpak') {
-    runCommand('Running flatpak update', `sudo flatpak update -y`)
+    // Issues with Flatpak not downloading updates on CentOS so reverting to ZX way of doing things so stdout can do its thing
+    // runCommand('Running flatpak update', `timeout 600 sudo flatpak update -y`)
+    await $`sudo flatpak update -y`
   } else if (packageManager === 'gem') {
   } else if (packageManager === 'go') {
   } else if (packageManager === 'nix') {
