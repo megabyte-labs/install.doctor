@@ -133,26 +133,63 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
     fi
     ### Initiatize Firefox default profiles
     if command -v "$FIREFOX_EXE" > /dev/null; then
+        ### Create default profile by launching Firefox headlessly
         logg info "Firefox executable set to $FIREFOX_EXE"
         if [ ! -d "$SETTINGS_DIR" ]; then
             logg info 'Running Firefox headlessly to generate default profiles'
             timeout 8 "$FIREFOX_EXE" --headless
             logg info 'Finished running Firefox headlessly'
         fi
+
+        ### Default profile (created by launching Firefox headlessly)
         DEFAULT_RELEASE_PROFILE="$(find "$SETTINGS_DIR" -mindepth 1 -maxdepth 1 -name "*.default-*")"
-        DEFAULT_PROFILE="$(find "$SETTINGS_DIR" -mindepth 1 -maxdepth 1 -name "*.default" -not -name "profile.default")"
-        if [ -n "$DEFAULT_PROFILE" ] && [ "$DEFAULT_PROFILE" != "$SETTINGS_DIR/profile.default" ]; then
-            logg info "Renaming $DEFAULT_PROFILE to $SETTINGS_DIR/profile.default"
-            rsync -a "$DEFAULT_PROFILE/" "$SETTINGS_DIR/profile.default"
-        fi
+        # DEFAULT_PROFILE="$(find "$SETTINGS_DIR" -mindepth 1 -maxdepth 1 -name "*.default" -not -name "profile.default")"
         if [ -n "$DEFAULT_RELEASE_PROFILE" ]; then
-            logg info "Renaming $DEFAULT_RELEASE_PROFILE to $SETTINGS_DIR/profile.primary"
-            rsync -a "$DEFAULT_RELEASE_PROFILE/" "$SETTINGS_DIR/profile.primary"
+            logg info "Renaming $DEFAULT_RELEASE_PROFILE to $SETTINGS_DIR/profile.default"
+            rsync -a "$DEFAULT_RELEASE_PROFILE/" "$SETTINGS_DIR/profile.default"
         fi
-        if [ ! -d "$SETTINGS_DIR/profile.secondary" ] && [ -d "$SETTINGS_DIR/profile.default" ]; then
-            logg info 'Adding a secondary profile'
-            rsync -a "$SETTINGS_DIR/profile.default/" "$SETTINGS_DIR/profile.secondary"
+
+        ### Default profile w/ plugins installed (installation happens below)
+        if [ -n "$DEFAULT_RELEASE_PROFILE" ]; then
+            logg info "Renaming $DEFAULT_RELEASE_PROFILE to $SETTINGS_DIR/profile.plugins"
+            rsync -a "$DEFAULT_RELEASE_PROFILE/" "$SETTINGS_DIR/profile.plugins"
         fi
+
+        ### Miscellaneous default profiles
+        for NEW_PROFILE in "automation" "development" "miscellaneous"; do
+            if [ ! -d "$SETTINGS_DIR/profile.${NEW_PROFILE}" ] && [ -d "$SETTINGS_DIR/profile.default" ]; then
+                logg info "Cloning $NEW_PROFILE from profile.default"
+                rsync -a "$SETTINGS_DIR/profile.default/" "$SETTINGS_DIR/profile.${NEW_PROFILE}"
+            fi
+        done
+
+        ### Public git profile
+        if [ -d "$SETTINGS_DIR/profile.git" ]; then
+            logg info 'Resetting the Firefox git profile'
+            cd "$SETTINGS_DIR/profile.git"
+            git reset --hard HEAD
+            git clean -fxd
+            logg info 'Pulling latest updates to the Firefox git profile'
+            git pull origin master
+        else
+            logg info 'Cloning the public Firefox git profile'
+            cd "$SETTINGS_DIR"
+            git clone {{ .firefoxPublicProfile }} profile.git
+        fi
+
+        ### Private hosted profile
+        if [ ! -d "$SETTINGS_DIR/profile.private" ]; then
+            logg info 'Downloading the encrypted Firefox private profile'
+            curl -sSL '{{ .firefoxPrivateProfile }}' -o profile.private.tar.gz.age
+            logg info 'Decrypting the Firefox private profile'
+            chezmoi decrypt profile.private.tar.gz.age > profile.private.tar.gz
+            rm -f profile.private.tar.gz.age
+            logg info 'Decompressing the Firefox private profile'
+            tar -xzf profile.private.tar.gz
+            logg success 'The Firefox private profile was successfully installed'
+        fi
+
+        ### Add the populated profiles.ini
         logg info "Copying "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" to profile directory"
         if [ -d /Applications ] && [ -d /System ]; then
             # macOS
@@ -190,12 +227,12 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
                     PLUGIN_URL="$(cat "$PLUGIN_HTML" | htmlq '.InstallButtonWrapper-download-link' --attribute href)"
                     PLUGIN_FILENAME="${PLUGIN_FILE_ID}.xpi"
                     PLUGIN_FOLDER="$(echo "$PLUGIN_FILENAME" | sed 's/.xpi$//')"
-                    if [ ! -d "$SETTINGS_DIR/profile.primary/extensions/$PLUGIN_FOLDER" ]; then
+                    if [ ! -d "$SETTINGS_DIR/profile.plugins/extensions/$PLUGIN_FOLDER" ]; then
                         logg info 'Downloading plugin file for '"$PLUGIN_FILENAME"' ('"$FIREFOX_PLUGIN"')'
-                        if [ ! -d "$SETTINGS_DIR/profile.primary/extensions" ]; then
-                            mkdir -p "$SETTINGS_DIR/profile.primary/extensions"
+                        if [ ! -d "$SETTINGS_DIR/profile.plugins/extensions" ]; then
+                            mkdir -p "$SETTINGS_DIR/profile.plugins/extensions"
                         fi
-                        curl -sSL "$PLUGIN_URL" -o "$SETTINGS_DIR/profile.primary/extensions/$PLUGIN_FILENAME"
+                        curl -sSL "$PLUGIN_URL" -o "$SETTINGS_DIR/profile.plugins/extensions/$PLUGIN_FILENAME"
                         # Unzipping like this causes Firefox to complain about unsigned plugins
                         # TODO - figure out how to headlessly enable the extensions in such a way that is compatible with Flatpak / Snap
                         # using the /usr/lib/firefox/distribution/policies.json works but this is not compatible with Flatpak / Snap out of the box
@@ -203,7 +240,7 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
                         # all Firefox profiles to use the same extensions. Ideally, we should find a way to enable the extensions scoped
                         # to the user profile.
                         # logg info 'Unzipping '"$PLUGIN_FILENAME"' ('"$FIREFOX_PLUGIN"')'
-                        # unzip "$SETTINGS_DIR/profile.primary/extensions/$PLUGIN_FILENAME" -d "$SETTINGS_DIR/profile.primary/extensions/$PLUGIN_FOLDER"
+                        # unzip "$SETTINGS_DIR/profile.plugins/extensions/$PLUGIN_FILENAME" -d "$SETTINGS_DIR/profile.primary/extensions/$PLUGIN_FOLDER"
                         logg success 'Installed `'"$FIREFOX_PLUGIN"'`'
                     fi
                 else
