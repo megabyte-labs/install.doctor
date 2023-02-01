@@ -209,7 +209,7 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
         
         ### Install Firefox addons (using list declared in .chezmoidata.yaml)
         for FIREFOX_PLUGIN in {{ list (.firefoxAddOns | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
-            logg info 'Ensuring `'"$FIREFOX_PLUGIN"'` is installed'
+            logg info "Processing the $FIREFOX_PLUGIN Firefox add-on"
             PLUGIN_HTML="$(mktemp)"
             curl --silent "https://addons.mozilla.org/en-US/firefox/addon/$FIREFOX_PLUGIN/" > "$PLUGIN_HTML"
             PLUGIN_TMP="$(mktemp)"
@@ -222,7 +222,7 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
                     PLUGIN_FILENAME="${PLUGIN_FILE_ID}.xpi"
                     PLUGIN_FOLDER="$(echo "$PLUGIN_FILENAME" | sed 's/.xpi$//')"
                     if [ ! -d "$SETTINGS_DIR/profile.plugins/extensions/$PLUGIN_FOLDER" ]; then
-                        logg info 'Downloading plugin file for '"$PLUGIN_FILENAME"' ('"$FIREFOX_PLUGIN"')'
+                        logg info 'Downloading add-on XPI file for '"$PLUGIN_FILENAME"' ('"$FIREFOX_PLUGIN"')'
                         if [ ! -d "$SETTINGS_DIR/profile.plugins/extensions" ]; then
                             mkdir -p "$SETTINGS_DIR/profile.plugins/extensions"
                         fi
