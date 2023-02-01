@@ -8,7 +8,7 @@
 
 ### Backup previous network settings
 if [ -f /Library/Preferences/com.apple.networkextension.plist ]; then
-    logg info 'Backing up /Library/Preferences/com.apple.networkextension.plist to /Library/Preferences/com.apple.networkextension.plist.old
+    logg info 'Backing up /Library/Preferences/com.apple.networkextension.plist to /Library/Preferences/com.apple.networkextension.plist.old'
     sudo cp -f /Library/Preferences/com.apple.networkextension.plist /Library/Preferences/com.apple.networkextension.plist.old
 else
     logg info 'The /Library/Preferences/com.apple.networkextension.plist file does not exist yet'
