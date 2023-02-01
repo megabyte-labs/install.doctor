@@ -5967,7 +5967,7 @@ softwarePackages:
     _github: https://github.com/ProtonMail/WebClients
     _home: https://protonmail.com/
     _name: ProtonVPN
-    _post:dnf: sudo dnf install -y python3-pip && pip3 install --user 'dnspython>=1.16.0'
+    _post:dnf:fedora: sudo dnf install -y python3-pip && pip3 install --user 'dnspython>=1.16.0'
     _post:yay: sudo pacman -Syu libappindicator-gtk3 gnome-shell-extension-appindicator
     _pre:apt: sudo apt-get install -y https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3_all.deb && sudo apt-get update
     _pre:dnf: sudo dnf install -y https://repo.protonvpn.com/fedora-36-stable/release-packages/protonvpn-stable-release-1.0.1-1.noarch.rpm && sudo dnf update
@@ -5979,7 +5979,7 @@ softwarePackages:
       - protonvpn
     cask: protonvpn
     choco: protonvpn
-    dnf:
+    dnf:fedora:
       - gnome-extensions-app
       - gnome-shell-extension-appindicator
       - gnome-tweaks
