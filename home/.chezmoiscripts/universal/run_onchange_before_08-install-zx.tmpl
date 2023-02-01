@@ -16,14 +16,26 @@ else
   logg '`node` is available'
 fi
 
-### Ensure volta is installed
+### Ensure Volta is installed
 if ! command -v volta > /dev/null; then
   if command -v brew > /dev/null; then
     logg 'Installing `volta` via `brew`'
     brew install volta
+  else
+    logg warn '`brew` needs to be available to install Volta'
   fi
+else
+  if ! node --version > /dev/null; then
+    volta install node@latest
+  fi
+fi
+
+### Setup Volta
+if command -v volta > /dev/null; then
   if [ -z "$VOLTA_HOME" ]; then
     volta setup
+  else
+    logg warn 'VOLTA_HOME is not defined'
   fi
   if [ -f "$HOME/.bashrc" ]; then
     . "$HOME/.bashrc"
@@ -34,9 +46,7 @@ if ! command -v volta > /dev/null; then
   logg 'Installing `node` via `volta`'
   volta install node@latest
 else
-  if ! node --version > /dev/null; then
-    volta install node@latest
-  fi
+  logg warn '`volta` needs to be installed'
 fi
 
 ### Ensure zx is installed
