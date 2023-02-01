@@ -756,7 +756,7 @@ async function beforeInstall(packageManager) {
   } else if (packageManager === 'flatpak') {
     // TODO - figure out why CentOS is failing to update
     // and then switch command below for `sudo flatpak update -y`
-    runCommand('Running flatpak update', `. /etc/os-release && if [ "$ID" != 'centos' ]; then sudo flatpak update -y; fi`)
+    runCommand('Running flatpak update', `. /etc/os-release; if [ "$ID" != "centos" ]; then sudo flatpak update -y; else echo "Skipping Flatpak update on CentOS"; fi`)
   } else if (packageManager === 'gem') {
   } else if (packageManager === 'go') {
   } else if (packageManager === 'nix') {
