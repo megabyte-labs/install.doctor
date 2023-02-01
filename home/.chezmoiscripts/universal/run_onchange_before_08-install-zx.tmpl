@@ -8,7 +8,11 @@
 if ! command -v node > /dev/null; then
   if command -v brew; then
     logg 'Installing `node` via Homebrew'
-    brew install node || brew link --overwrite node
+    brew install node || NODE_EXIT_CODE=$?
+    if [ -n "$NODE_EXIT_CODE" ]; then
+      logg warn 'Calling `brew link --overwrite node` because the Node.js installation seems to be misconfigured'
+      brew link --overwrite node
+    fi
   else
     logg '`brew` is unavailable. Cannot use it to perform a system installation of node.'
   fi
