@@ -20,6 +20,14 @@ To use a fork (if you made modifications to the original project), set this equa
 
 Note, this variable is used by the `bash <(curl -sSL https://install.doctor/start)` command and is not used anywhere in the project itself.
 
+### Headless Install
+
+Set to true if you would like all prompts to be bypassed. If you have not already set up
+your encryption keys, then the encryption process will be bypassed and default fallback
+files will be used. Set to any value to perform a headless installation.
+
+* Environment variable: `HEADLESS_INSTALL`
+
 ### Work Environment
 
 Set to true if you are setting up a work environment where things like Tor should

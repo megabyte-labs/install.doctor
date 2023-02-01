@@ -453,7 +453,7 @@ if [ "$DEBUG_MODE" == 'true' ]; then
 else
   DEBUG_MODIFIER=""
 fi
-if [ -n "$FORCE_CHEZMOI" ]; then
+if [ -n "$HEADLESS_INSTALL" ]; then
   if command -v unbuffer > /dev/null; then
     unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
   else
