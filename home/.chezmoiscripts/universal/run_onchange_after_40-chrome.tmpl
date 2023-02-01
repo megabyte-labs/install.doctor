@@ -28,7 +28,7 @@ for EXTENSION_DIR in "/opt/google/chrome/extensions" "/etc/chromium/extensions" 
     ### Ensure program-type is installed
     if [ -d "$(dirname "$EXTENSION_DIR")" ]; then
         ### Ensure extension directory exists
-        if [ "$EXTENSION_DIR" == '/opt/'* ] || [ "$EXTENSION_DIR" == '/etc/'* ]; then
+        if [[ "$EXTENSION_DIR" == '/opt/'* ]] || [[ "$EXTENSION_DIR" == '/etc/'* ]]; then
             if [ ! -d "$EXTENSION_DIR" ]; then
                 logg info "Creating directory $EXTENSION_DIR"
                 sudo mkdir -p "$EXTENSION_DIR"
@@ -45,7 +45,7 @@ for EXTENSION_DIR in "/opt/google/chrome/extensions" "/etc/chromium/extensions" 
         for EXTENSION in {{ list (.chromeExtensions | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
             logg info "Adding Chrome extension ($EXTENSION)"
             EXTENSION_ID="$(echo "$EXTENSION" | sed 's/^.*\/\([^\/]*\)$/\1/')"
-            if [ "$EXTENSION_DIR" == '/opt/'* ] || [ "$EXTENSION_DIR" == '/etc/'* ]; then
+            if [[ "$EXTENSION_DIR" == '/opt/'* ]] || [[ "$EXTENSION_DIR" == '/etc/'* ]]; then
                 sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
             else
                 cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
