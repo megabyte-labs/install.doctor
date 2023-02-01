@@ -85,6 +85,7 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
                 sudo mkdir -p "/Library/Applcation Support/Mozilla/NativeMessagingHosts"
                 sudo ln -sf "$(brew ls -l firefox-profile-switcher-connector | grep -i ax.nd.profile_switcher_ff.json | head -n1)" "/Library/Application Support/Mozilla/NativeMessagingHosts/ax.nd.profile_switcher_ff.json"
             fi
+        fi
     elif [ "$SETTINGS_DIR" == "$HOME/Library/Application Support/LibreWolf/Profiles" ]; then
         FIREFOX_EXE="/Applications/LibreWolf.app/Contents/MacOS/librewolf"
         if [ ! -f "$FIREFOX_EXE" ]; then
