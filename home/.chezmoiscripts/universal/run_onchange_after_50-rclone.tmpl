@@ -24,7 +24,7 @@ if command -v rclone > /dev/null; then
     sudo chmod 644 /etc/rcloneignore
 
     logg info 'Adding ~/.config/rclone/system-rclone.conf to /etc/rclone.conf'
-    sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system-rclone.conf /etc/rclone.conf
+    sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system-rclone.conf" /etc/rclone.conf
 
     ### Add / configure service files
     if [ -d /etc/systemd/system ]; then
@@ -42,7 +42,7 @@ if command -v rclone > /dev/null; then
             sudo chown -Rf rclone:rclone "/mnt/$SERVICE_ID"
 
             ### Enable / restart the service
-            logg info "Enabling / restarting the $ S3 service"
+            logg info "Enabling / restarting the $SERVICE_ID S3 service"
             sudo systemctl enable "$SERVICE_ID"
             sudo systemctl restart "$SERVICE_ID"
         done
