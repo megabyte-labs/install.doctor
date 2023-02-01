@@ -209,20 +209,6 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
         
         ### Install Firefox addons (using list declared in .chezmoidata.yaml)
         for FIREFOX_PLUGIN in {{ list (.firefoxAddOns | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
-            ### Configure profile switcher
-            if [ "$FIREFOX_PLUGIN" == "" ]; then
-                if [ -d /Applications ] && [ -d /System ]; then
-                    # macOS
-                    brew install null-dev/firefox-profile-switcher/firefox-profile-switcher-connector
-                    sudo mkdir -p "/Library/Application Support/Mozilla/NativeMessagingHosts"
-                    LATEST_VERSION="$(ls -v /usr/local/Cellar/firefox-profile-switcher-connector | tail -n 1)"
-                    sudo ln -sf "/usr/local/Cellar/firefox-profile-switcher-connector/$LATEST_VERSION/ax.nd.profile_switcher_ff.json" "/Library/Application Support/Mozilla/NativeMessagingHosts/ax.nd.profile_switcher_ff.json"
-                elif command -v apt-get > /dev/null; then
-                    # Debian/Ubuntu
-                elif command -v dnf > /dev/null; then
-                    # CentOS / Fedora
-                elif command -v pacman > /dev/null; then
-            fi
             logg info 'Ensuring `'"$FIREFOX_PLUGIN"'` is installed'
             PLUGIN_HTML="$(mktemp)"
             curl --silent "https://addons.mozilla.org/en-US/firefox/addon/$FIREFOX_PLUGIN/" > "$PLUGIN_HTML"
