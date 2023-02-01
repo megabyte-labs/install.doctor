@@ -5,9 +5,9 @@
 {{ includeTemplate "universal/logg" }}
 
 ### Run logic if VirtualBox is installed
-# TODO - Add check to determine if ExtensionPack is required
 if command -v VirtualBox > /dev/null; then
-    ### Install VirtualBox extension pack
+  ### Install VirtualBox extension pack if it is not installed already
+  if [[ ! -d /usr/lib/virtualbox/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack/ ]]; then
     logg info 'Acquiring VirtualBox version information'
     VBOX_VERSION="$(VirtualBox --help | head -n 1 | cut -f 6 -d' ')"
     VBOX_VERSION="${VBOX_VERSION//v}"
@@ -26,8 +26,11 @@ if command -v VirtualBox > /dev/null; then
     logg info 'Installing VirtualBox extension pack'
     echo 'y' | VBoxManage extpack install --replace /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack
     logg success 'Successfully installed VirtualBox extension pack'
+  else
+    logg info 'VirtualBox Extension pack is already installed'
+  fi
 else
-    logg warn 'VirtualBox is not installed so VirtualBox Extension pack will not be installed'
+  logg warn 'VirtualBox is not installed so VirtualBox Extension pack will not be installed'
 fi
 
 {{ end -}}
