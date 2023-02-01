@@ -7127,9 +7127,10 @@ softwarePackages:
     _home: https://github.com/skeeto/endlessh
     _name: Endlessh
     _service: endlessh
-    ansible:linux: professormanhattan.sshtarpit
+    # CentOS 9 not in EPEL
+    # ansible:linux: professormanhattan.sshtarpit
     apt: endlessh
-    dnf: endlessh
+    dnf:fedora: endlessh
     pacman: endlessh-git
   ssl-proxy:
     _bin: null
