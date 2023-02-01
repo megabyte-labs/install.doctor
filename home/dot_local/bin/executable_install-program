@@ -1729,8 +1729,8 @@ async function installSoftware(pkgsToInstall) {
   installData = await downloadInstallData()
   log('info', 'Filter', `Calculating the install orders`)
   await generateInstallOrders(pkgsToInstall ? pkgsToInstall : process.argv.slice(3))
-  log('info', 'Pre-Reqs', `Ensuring any package managers that will be used are installed / configured`)
   const packageManagers = Object.keys(installOrders)
+  packageManagers.length && log('info', 'Pre-Reqs', `Ensuring any package managers that will be used are installed / configured`)
   for (const packageManager of packageManagers) {
     await ensurePackageManager(packageManager)
   }
@@ -1745,25 +1745,25 @@ async function installSoftware(pkgsToInstall) {
   }
   installOrders = await pruneInstallOrders(installOrders)
   console.log(installOrders)
-  log('info', 'Pre-Reqs', `Running package manager pre-installation steps`)
+  packageManagers.length && log('info', 'Pre-Reqs', `Running package manager pre-installation steps`)
   for (const packageManager of packageManagers) {
     await beforeInstall(packageManager)
   }
-  log('info', 'Pre-Install', `Running package-specific pre-installation steps`)
+  installOrdersPre.length && log('info', 'Pre-Install', `Running package-specific pre-installation steps`)
   for (const script of installOrdersPre) {
     await $`${script}`
   }
-  log('info', 'Install', `Installing the packages`)
+  packageManagers.length && log('info', 'Install', `Installing the packages`)
   for (const packageManager of packageManagers) {
     const asyncOrders = []
     asyncOrders.push(installPackageList(packageManager, installOrders[packageManager]))
     await Promise.all(asyncOrders)
   }
-  log('info', 'Users / Groups', `Adding groups / users`)
+  installOrdersGroups.length && log('info', 'Users / Groups', `Adding groups / users`)
   for (const group of installOrdersGroups) {
     await addUserGroup(group)
   }
-  log('info', 'Post-Install', `Running package-specific post-installation steps`)
+  installOrdersService.length && log('info', 'Post-Install', `Running package-specific post-installation steps`)
   for (const service of installOrdersService) {
     await updateService(service)
   }
@@ -1775,11 +1775,11 @@ async function installSoftware(pkgsToInstall) {
       await $`${script}`
     }
   }
-  log('info', 'Plugin', 'Installing package-specific plugins')
+  installOrdersPlugins.length && log('info', 'Plugin', 'Installing package-specific plugins')
   for (const plugin of installOrdersPlugins) {
     await installPlugins(plugin)
   }
-  log('info', 'Post-Install', `Running package manager post-installation steps`)
+  packageManagers.length && log('info', 'Post-Install', `Running package manager post-installation steps`)
   for (const packageManager of packageManagers) {
     await afterInstall(packageManager)
   }
