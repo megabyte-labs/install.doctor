@@ -1,4 +1,4 @@
-
+Ensure git-delta (or kvantum or fzf) installs with dnf on Fedora because it didn't on Centos and was marked as dnf:fedora: in software.yml
 https://drasite.com/blog/Pimp%20my%20terminal
 https://github.com/checkly/headless-recorder
 https://github.com/DustinBrett/daedalOS
