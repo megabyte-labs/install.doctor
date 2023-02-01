@@ -1,0 +1,27 @@
+{{- if eq .host.distro.family "linux" -}}
+#!/usr/bin/env bash
+
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
+
+### Install VMware Workstation
+if [ ! command -v vmware > /dev/null ]; then
+  logg info 'VMware Workstation is not installed.'
+  VMWARE_WORKSTATION_URL=https://www.vmware.com/go/getworkstation-linux
+  VMWARE_WORKSTATION_DIR=/tmp/workstation-downloads
+  mkdir -p $VMWARE_WORKSTATION_DIR
+  logg info 'Downloading VMware Workstation Installer'
+  curl -sSLA "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20220101 Firefox/102.0" "$VMWARE_WORKSTATION_URL" \
+    -o "$VMWARE_WORKSTATION_DIR/tryworkstation-linux-64.sh"
+  logg info 'Installing VMware Workstation'
+  if [[ -v VMWARE_WORKSTATION_LICENSE_KEY && -n $VMWARE_WORKSTATION_LICENSE_KEY ]]; then
+    sudo $VMWARE_WORKSTATION_DIR/tryworkstation-linux-64.sh --eulas-agreed --console --required \
+      --set-setting vmware-workstation serialNumber $VMWARE_WORKSTATION_LICENSE_KEY
+  else
+    sudo $VMWARE_WORKSTATION_DIR/tryworkstation-linux-64.sh --eulas-agreed --console --required
+  fi
+  logg success 'VMware Workstation installed successfully'
+else
+  logg info 'VMware Workstation is already installed'
+fi
+{{ end -}}
