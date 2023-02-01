@@ -1106,11 +1106,15 @@ async function ensurePackageManager(packageManager) {
       runCommand('Ensuring snapd is installed', `sudo apt-get install -y snapd`)
       // TODO Following may be required on Kali -> https://snapcraft.io/docs/installing-snap-on-kali
       // systemctl enable --now snapd apparmor
+      runCommand('Enabling snapd service', `sudo systemctl enable snapd`)
+      runCommand('Starting snapd service', `sudo systemctl start snapd`)
     } else if (dnf) {
       runCommand('Ensuring snapd is installed', `sudo dnf install -y snapd`)
       if (!fileExists('/snap')) {
         await $`sudo ln -s /var/lib/snapd/snap /snap`
       }
+      runCommand('Enabling snapd service', `sudo systemctl enable snapd`)
+      runCommand('Starting snapd service', `sudo systemctl start snapd`)
     } else if (yum) {
       runCommand('Ensuring snapd is installed', 'sudo yum install -y snapd')
       await $`sudo systemctl enable --now snapd.socket`
