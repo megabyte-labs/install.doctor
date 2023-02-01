@@ -21,6 +21,7 @@ if command -v privoxy > /dev/null; then
     if [ -d  "$PRIVOXY_CONFIG_DIR" ]; then
         sudo cp -f "${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config" "$PRIVOXY_CONFIG"
         sudo chmod 600 "$PRIVOXY_CONFIG"
+        sudo chown privoxy:privoxy "$PRIVOXY_CONFIG"
 
         # Restart / enable Privoxy
         if [ -d /Applications ] && [ -d /System ]; then
