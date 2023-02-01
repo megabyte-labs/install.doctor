@@ -8,7 +8,7 @@
 if ! command -v node > /dev/null; then
   if command -v brew; then
     logg 'Installing `node` via Homebrew'
-    brew install node
+    brew install node || brew link --overwrite node
   else
     logg '`brew` is unavailable. Cannot use it to perform a system installation of node.'
   fi
