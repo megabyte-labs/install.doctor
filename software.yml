@@ -7430,9 +7430,12 @@ softwarePackages:
     _name: TeamViewer
     _when:cask: '! test -d /Applications/TeamViewer.app'
     ansible:linux: professormanhattan.teamviewer
+    apt: https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
     cask: teamviewer
     choco: teamviewer
+    dnf: https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm
     yay: teamviewer
+    zypper: https://download.teamviewer.com/download/linux/teamviewer-suse.x86_64.rpm
     _service: false
     _type: application
   irssi:
