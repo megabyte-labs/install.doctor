@@ -1,4 +1,4 @@
-{{- if ne .host.distro.family "windows" }}
+{{- if eq .host.distro.family "linux" }}
 #!/usr/bin/env bash
 
 # jail.local hash: {{ include (joinPath .host.home ".ssh" "fail2ban" "jail.local") | sha256sum }}
