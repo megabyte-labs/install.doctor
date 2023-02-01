@@ -30,7 +30,7 @@ if command -v privoxy > /dev/null; then
             if [[ ! "$(grep Microsoft /proc/version)" ]]; then
                 # Linux
                 sudo systemctl enable privoxy
-                sudo systemlctl restart privoxy
+                sudo systemctl restart privoxy
             else
                 logg info 'The system is a WSL environment so the Privoxy systemd service will not be enabled / restarted'
             fi

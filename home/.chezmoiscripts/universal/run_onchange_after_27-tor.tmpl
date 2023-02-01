@@ -31,7 +31,7 @@ if command -v toron > /dev/null; then
             if [[ ! "$(grep Microsoft /proc/version)" ]]; then
                 # Linux
                 sudo systemctl enable tor
-                sudo systemlctl restart tor
+                sudo systemctl restart tor
             else
                 logg info 'Environment is WSL so the Tor systemd service will not be enabled / restarted'
             fi
