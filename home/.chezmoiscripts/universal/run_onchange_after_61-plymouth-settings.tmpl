@@ -30,7 +30,7 @@ if [ -f /etc/plymouth/plymouthd.conf ]; then
     if cat /etc/plymouth/plymouthd.conf | grep ShowDelay; then
         sudo sed -i 's/^ShowDelay=.*/ShowDelay=1/' /etc/plymouth/plymouthd.conf
     else
-        echo 'ShowDelay=1' | sudo tee -a /etc/plymouth/plymouthd.conf
+        echo 'ShowDelay=1' | sudo tee -a /etc/plymouth/plymouthd.conf > /dev/null
     fi
 else
     logg warn '/etc/plymouth/plymouthd.conf does not exist!'
