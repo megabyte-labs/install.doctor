@@ -754,9 +754,9 @@ async function beforeInstall(packageManager) {
       runCommand('Running yum update', `sudo yum update -y`)
     }
   } else if (packageManager === 'flatpak') {
-    // Issues with Flatpak not downloading updates on CentOS so reverting to ZX way of doing things so stdout can do its thing
-    // runCommand('Running flatpak update', `timeout 600 sudo flatpak update -y`)
-    await $`sudo flatpak update -y`
+    // TODO - figure out why CentOS is failing to update
+    // and then switch command below for `sudo flatpak update -y`
+    runCommand('Running flatpak update', `. /etc/os-release && if [ "$ID" != 'centos' ]; then sudo flatpak update -y; fi`)
   } else if (packageManager === 'gem') {
   } else if (packageManager === 'go') {
   } else if (packageManager === 'nix') {
