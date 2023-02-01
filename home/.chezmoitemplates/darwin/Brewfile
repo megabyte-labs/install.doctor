@@ -17,7 +17,7 @@ brew "glow"
 brew "gnupg"
 brew "gum"
 brew "jq"
-brew "node"
+brew "node" if system 'command -v node'
 brew "progress"
 tap "go-task/tap"
 brew "go-task/tap/go-task"
