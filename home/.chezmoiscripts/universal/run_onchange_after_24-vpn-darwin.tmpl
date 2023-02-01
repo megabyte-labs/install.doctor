@@ -4,7 +4,8 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-# TODO - What about OpenVPN profiles? Do we have an app to manage OpenVPN connections for macOS?
+# TODO - Populate Tunnelblick on macOS using the .ovpn profiles located in $HOME/.config/vpn
+# along with the secrets for the protonVPN OpenVPN (check vpn-linux.tmpl)
 
 ### Backup previous network settings
 if [ -f /Library/Preferences/com.apple.networkextension.plist ]; then
