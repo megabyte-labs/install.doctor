@@ -28,12 +28,18 @@ fi
 if [ -f /etc/plymouth/plymouthd.conf ]; then
     logg info 'Setting ShowDelay=1 in /etc/plymouth/plymouthd.conf'
     if cat /etc/plymouth/plymouthd.conf | grep ShowDelay; then
-        sudo sed -i '/^ShowDelay=.*/ShowDelay=1/' /etc/plymouth/plymouthd.conf
+        sudo sed -i 's/^ShowDelay=.*/ShowDelay=1/' /etc/plymouth/plymouthd.conf
     else
         echo 'ShowDelay=1' | sudo tee -a /etc/plymouth/plymouthd.conf
     fi
 else
     logg warn '/etc/plymouth/plymouthd.conf does not exist!'
+fi
+
+### Symlink /usr/local/share/plymouth/themes to /usr/share/plymouth/themes
+if [ ! -d '/usr/share/plymouth/themes/{{ .theme }}' ]; then
+    logg info 'Symlinking /usr/local/share/plymouth/themes/{{ .theme }} to /usr/share/plymouth/themes/{{ .theme }}'
+    sudo ln -s '/usr/local/share/plymouth/themes/{{ .theme }}' '/usr/share/plymouth/themes/{{ .theme }}'
 fi
 
 ### Set default Plymouth theme
