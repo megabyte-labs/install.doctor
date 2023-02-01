@@ -678,6 +678,7 @@ softwarePackages:
     _github: https://github.com/signalapp/Signal-Desktop
     _home: https://signal.org
     _name: Signal Desktop
+    _when: '! test -d "/Applications/Signal.app"'
     cask: signal
     choco: signal
     flatpak: org.signal.Signal
