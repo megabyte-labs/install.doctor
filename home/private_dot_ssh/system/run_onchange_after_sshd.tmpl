@@ -1,8 +1,8 @@
-{{- if ne .host.distro.family "windows" }}
+{{- if ne .host.distro.family "windows" -}}
 #!/usr/bin/env bash
 
-# sshd_config hash: {{ include (joinPath .host.home ".ssh" "system" "sshd_config") | sha256sum }}
-# banner hash: {{ include (joinPath .host.home ".ssh" "system" "banner") | sha256sum }}
+# sshd_config hash: {{- include (joinPath .host.home ".ssh" "system" "sshd_config") | sha256sum -}}
+# banner hash: {{- include (joinPath .host.home ".ssh" "system" "banner") | sha256sum -}}
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
