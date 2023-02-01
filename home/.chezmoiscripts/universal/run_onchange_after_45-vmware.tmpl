@@ -13,19 +13,31 @@ if command -v vmware > /dev/null; then
       VMW_VERSION=$(vmware --version | cut -f 3 -d' ')
       mkdir -p /tmp/vmw_patch
       cd /tmp/vmw_patch
-      curl https://github.com/mkubecek/vmware-host-modules/archive/workstation-$VMW_VERSION.tar.gz -o /tmp/vmw_patch/workstation.tar.gz
+      logg info 'Downloading VMWare host module patches'
+      curl -sSL https://github.com/mkubecek/vmware-host-modules/archive/workstation-$VMW_VERSION.tar.gz -o /tmp/vmw_patch/workstation.tar.gz
       tar -xzf /tmp/vmw_patch/workstation.tar.gz
+      logg info 'Running `sudo make` and `sudo make install`'
       sudo make
       sudo make install
+      logg success 'Successfully configured VMWare host module patches'
     fi
 
-    ###Install Unlocker
-    UNLOCKER_URL=$(curl https://api.github.com/repos/DrDonk/unlocker/releases/latest | jq  -r '.assets[0].browser_download_url')
-    mkdir -p /tmp/vmw_unlocker
-    cd /tmp/vmw_unlocker
-    curl $UNLOCKER_URL -o /tmp/vmw_unlocker/unlocker.zip
-    unzip /tmp/vmw_unlocker/unlocker.zip
-    echo "y" | sudo ./unlock
+    ### Patch VMWare with Unlocker
+    if [ ! -f /usr/lib/vmware/isoimages/darwin.iso ]; then
+      logg info 'Acquiring VMWare Unlocker latest release version'
+      UNLOCKER_URL=$(curl -sSL https://api.github.com/repos/DrDonk/unlocker/releases/latest | jq  -r '.assets[0].browser_download_url')
+      mkdir -p /tmp/vmware-unlocker
+      cd /tmp/vmware-unlocker
+      logg info 'Downloading unlocker.zip'
+      curl -sSL "$UNLOCKER_URL" -o unlocker.zip
+      unzip unlocker.zip
+      cd linux
+      logg info 'Running the unlocker'
+      echo "y" | sudo ./unlock
+      logg success 'Successfully unlocked VMWare for macOS compatibility'
+    else
+      logg info '/usr/lib/vmware/isoimages/darwin.iso is already present on the system so VMWare macOS unlocking will not be performed'
+    fi
 else
     logg warn 'VMware Workstation is not installed so the VMware Unlocker will not be installed'
 fi
