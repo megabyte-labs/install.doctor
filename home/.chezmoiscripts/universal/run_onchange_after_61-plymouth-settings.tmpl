@@ -9,6 +9,21 @@ if command -v install-software > /dev/null; then
     install-software plymouth
 fi
 
+### Create /etc/plymouth/plymouthd.conf
+if [ -f /etc/plymouth/plymouthd.conf ]; then
+    ### Back up original plymouthd.conf
+    if [ ! -f /etc/plymouth/plymouthd.conf.bak ]; then
+        logg info 'Backing up /etc/plymouth/plymouthd.conf to /etc/plymouth/plymouthd.conf.bak'
+        sudo cp -f /etc/plymouth/plymouthd.conf /etc/plymouth/plymouthd.conf.bak
+    fi
+
+    ### Create new plymouthd.conf
+    logg info 'Populating the /etc/plymouth/plymouthd.conf file'
+    echo "[Daemon]" | sudo tee /etc/plymouth/plymouthd.conf > /dev/null
+    echo "Theme={{ .theme }}" | sudo tee -a /etc/plymouth/plymouthd.conf > /dev/null
+    echo "ShowDelay=1" | sudo tee -a /etc/plymouth/plymouthd.conf > /dev/null
+fi
+
 ### Apply update-alternatives
 if command -v update-alternatives > /dev/null; then
     if [ -f "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" ]; then
@@ -25,16 +40,17 @@ else
 fi
 
 ### Update /etc/plymouth/plymouthd.conf
-if [ -f /etc/plymouth/plymouthd.conf ]; then
-    logg info 'Setting ShowDelay=1 in /etc/plymouth/plymouthd.conf'
-    if cat /etc/plymouth/plymouthd.conf | grep ShowDelay; then
-        sudo sed -i 's/^ShowDelay=.*/ShowDelay=1/' /etc/plymouth/plymouthd.conf
-    else
-        echo 'ShowDelay=1' | sudo tee -a /etc/plymouth/plymouthd.conf > /dev/null
-    fi
-else
-    logg warn '/etc/plymouth/plymouthd.conf does not exist!'
-fi
+# Replaced by code above
+# if [ -f /etc/plymouth/plymouthd.conf ]; then
+#     logg info 'Setting ShowDelay=1 in /etc/plymouth/plymouthd.conf'
+#     if cat /etc/plymouth/plymouthd.conf | grep ShowDelay; then
+#         sudo sed -i 's/^ShowDelay=.*/ShowDelay=1/' /etc/plymouth/plymouthd.conf
+#     else
+#         echo 'ShowDelay=1' | sudo tee -a /etc/plymouth/plymouthd.conf > /dev/null
+#     fi
+# else
+#     logg warn '/etc/plymouth/plymouthd.conf does not exist!'
+# fi
 
 ### Symlink /usr/local/share/plymouth/themes to /usr/share/plymouth/themes
 if [ ! -d '/usr/share/plymouth/themes/{{ .theme }}' ]; then
