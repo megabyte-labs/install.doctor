@@ -5985,7 +5985,7 @@ softwarePackages:
     _pre:apt: sudo apt-get install -y https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3_all.deb && sudo apt-get update
     _pre:dnf: sudo dnf install -y https://repo.protonvpn.com/fedora-36-stable/release-packages/protonvpn-stable-release-1.0.1-1.noarch.rpm && sudo dnf update
     _when:cask: '! test -d /Applications/ProtonVPN.app'
-    ansible: professormanhattan.proton
+    # ansible: professormanhattan.proton
     apt:
       - gir1.2-appindicator3-0.1
       - gnome-shell-extension-appindicator
