@@ -1,21 +1,21 @@
 [plugins]
-active-plugins=['spell', 'sort', 'modelines', 'filebrowser', 'docinfo']
+active-plugins=['time', 'spell', 'sort', 'snippets', 'quickopen', 'quickhighlight', 'pythonconsole', 'modelines', 'filebrowser', 'externaltools', 'docinfo']
 
 [plugins/filebrowser]
 root='file:///'
 tree-view=true
 virtual-root='file:///home/parallels/Downloads'
 
+[plugins/spell]
+highlight-misspelled=true
+
 [preferences/editor]
-scheme='tango'
+auto-save=false
+background-pattern='none'
+display-overview-map=true
+display-right-margin=true
+insert-spaces=false
+right-margin-position=uint32 80
+scheme='cobalt'
+tabs-size=uint32 4
 wrap-last-split-mode='word'
-
-[preferences/ui]
-show-tabs-mode='auto'
-
-[state/window]
-bottom-panel-size=140
-side-panel-active-page='GeditWindowDocumentsPanel'
-side-panel-size=200
-size=(900, 700)
-state=87168
