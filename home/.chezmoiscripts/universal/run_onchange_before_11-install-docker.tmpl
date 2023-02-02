@@ -96,6 +96,7 @@ if [ ! -d /Applications ] || [ ! -d /System ]; then
         sudo git clone https://github.com/google/gvisor.git /usr/local/src/gvisor
         cd /usr/local/src/gvisor
         sudo mkdir -p bin
+        sudo su - "$USER"
         sudo make copy TARGETS=runsc DESTINATION=bin/
         sudo cp ./bin/runsc /usr/local/bin
     fi
