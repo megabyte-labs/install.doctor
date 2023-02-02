@@ -4662,7 +4662,9 @@ softwarePackages:
     _name: Manta
     _type: application
     _when:cask: '! test -d /Applications/Manta.app'
+    appimage: https://github.com/hql287/Manta/releases/download/v1.1.4/Manta-1.1.4-x86_64.AppImage
     cask: manta
+    exe: https://github.com/hql287/Manta/releases/download/v1.1.4/Manta.Setup.1.1.4.exe
     github: github.com/hql287/Manta
     _service: false
   mark-text:
@@ -4968,6 +4970,26 @@ softwarePackages:
     go: github.com/raviqqe/muffet/v2@latest
     yay: muffet-bin
     _service: false
+  youtube-music:
+    _desc: YouTube Music desktop app bundled with custom plugins (and built-in ad blocker / downloader)
+    _docs: null
+    _github: https://github.com/th-ch/youtube-music
+    _home: https://th-ch.github.io/youtube-music/
+    appimage: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/YouTube-Music-1.19.0.AppImage
+    apt: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/youtube-music_1.19.0_amd64.deb
+    dmg: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/YouTube-Music-1.19.0.dmg
+    exe: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/YouTube-Music-Setup-1.19.0.exe
+    scoop: extras/youtube-music
+    snap: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/youtube-music_1.19.0_amd64.snap
+    winget: th-ch.YouTubeMusic
+    yay: youtube-music-bin
+  imagine:
+    _desc: Imagine is a desktop app for compression of PNG and JPEG, with a modern and friendly UI.
+    _github: https://github.com/meowtec/Imagine
+    appimage: https://github.com/meowtec/Imagine/releases/download/v0.7.3/Imagine-0.7.3.AppImage
+    dmg: https://github.com/meowtec/Imagine/releases/download/v0.7.3/Imagine-0.7.3.dmg
+    exe: https://github.com/meowtec/Imagine/releases/download/v0.7.3/Imagine-Setup-0.7.3.exe
+    snap: https://github.com/meowtec/Imagine/releases/download/v0.7.3/Imagine_0.7.3_amd64.snap
   mullvad-vpn:
     _bin: null
     _desc: The Mullvad VPN client app for desktop and mobile
@@ -4977,7 +4999,10 @@ softwarePackages:
     _name: Mullvad VPN
     _type: application
     _when:cask: '! test -d "/Applications/Mullvad VPN.app"'
+    apt: https://github.com/mullvad/mullvadvpn-app/releases/download/2022.5/MullvadVPN-2022.5_amd64.deb
     cask: mullvadvpn
+    exe: https://github.com/mullvad/mullvadvpn-app/releases/download/2022.5/MullvadVPN-2022.5.exe
+    dnf: https://github.com/mullvad/mullvadvpn-app/releases/download/2022.5/MullvadVPN-2022.5_x86_64.rpm
     github: github.com/mullvad/mullvadvpn-app
     yay: mullvad-vpn
     _service: false
@@ -5912,6 +5937,9 @@ softwarePackages:
     ansible:windows: professormanhattan.portmaster
     _service: true
     _type: application
+  pake:
+    _bin: pake
+    npm: pake-cli
   postman:
     _bin: postman
     _desc: "[Postman](https://www.postman.com/) is a collaboration platform for API development. Postman's features simplify each step of building an API and streamline collaboration so you can create better APIs — faster."
