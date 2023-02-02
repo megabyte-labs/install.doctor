@@ -516,7 +516,7 @@ softwarePackages:
     apt: aria2
     brew: aria2
     choco: aria2
-    dnf: aria2
+    dnf:fedora: aria2
     pacman: aria2
     port: aria2
     scoop: aria2
@@ -1255,7 +1255,16 @@ softwarePackages:
       - cockpit-podman
       - cockpit-storaged
       - libvirt-dbus
-    dnf:
+    dnf:centos:
+      - 389-ds-base
+      - cockpit
+      - cockpit-machines
+      - cockpit-networkmanager
+      - cockpit-packagekit
+      - cockpit-podman
+      - cockpit-storaged
+      - libvirt-dbus
+    dnf:fedora:
       - 389-ds-base
       - cockpit
       - cockpit-389-ds
@@ -2171,7 +2180,7 @@ softwarePackages:
     apt: etcd
     brew: etcd
     choco: etcd
-    dnf: etcd
+    dnf:fedora: etcd
     github: github.com/etcd-io/etcd
     yay: etcd
     _service: true
@@ -2902,7 +2911,7 @@ softwarePackages:
     ansible:linux: professormanhattan.gitsecret
     apt: git-secret
     brew: git-secret
-    dnf: git-secret
+    dnf:fedora: git-secret
     _service: false
     _type: cli
   git-subrepo:
@@ -3073,7 +3082,7 @@ softwarePackages:
     _name: gitleaks
     _type: cli
     brew: gitleaks
-    dnf: gitleaks
+    dnf:fedora: gitleaks
     github: github.com/zricethezav/gitleaks
     pkg: gitleaks
     yay: gitleaks
@@ -3113,7 +3122,7 @@ softwarePackages:
     brew: gitui
     cargo: gitui
     choco: delta
-    dnf: gitui
+    dnf:fedora: gitui
     nix: nixpkgs.gitui
     pacman: gitui
     pkg: gitui
@@ -3522,7 +3531,7 @@ softwarePackages:
     _home: null
     _name: hadolint
     brew: hadolint
-    dnf: hadolint
+    dnf:fedora: hadolint
     scoop: hadolint
     _service: false
     _type: cli
@@ -3785,7 +3794,7 @@ softwarePackages:
       - libx11-dev
     brew: imagemagick
     choco: imagemagick
-    dnf: imagemagick
+    dnf:fedora: imagemagick
     scoop: imagemagick
     _service: false
     _type: application
@@ -5688,7 +5697,24 @@ softwarePackages:
       - php-xml
     brew:
       - postgresql
-    dnf:
+    dnf:centos:
+      - postgresql-devel
+      - php-apcu
+      - php-cgi
+      - php-cli
+      - php-common
+      - php-curl
+      - php-fpm
+      - php-gd
+      - php-intl
+      - php-json
+      - php-mbstring
+      - php-opcache
+      - php-redis
+      - php-snmp
+      - php-sqlite3
+      - php-xml
+    dnf:fedora:
       - libpcre3-dev
       - postgresql-devel
       - php-apcu
@@ -7176,7 +7202,7 @@ softwarePackages:
     _home: https://staticcheck.io/
     _name: staticcheck
     brew: staticcheck
-    dnf: golang-honnef-tools
+    dnf:fedora: golang-honnef-tools
     go: honnef.co/go/tools/cmd/staticcheck@latest
     pacman: staticcheck
     port: staticcheck
@@ -7290,7 +7316,7 @@ softwarePackages:
     apk: sysbench
     apt: sysbench
     brew: sysbench
-    dnf: sysbench
+    dnf:fedora: sysbench
     pacman: sysbench
     pkg: sysbench
     _service: false
@@ -7644,7 +7670,7 @@ softwarePackages:
     apk: tokei
     brew: tokei
     cargo: tokei
-    dnf: tokei
+    dnf:fedora: tokei
     github: github.com/XAMPPRocky/tokei
     pacman: tokei
     pkg: tokei
@@ -7826,7 +7852,7 @@ softwarePackages:
     apt: upx
     brew: upx
     choco: upx
-    dnf: upx
+    dnf:fedora: upx
     pacman: upx
     port: upx
     scoop: upx
@@ -7860,7 +7886,7 @@ softwarePackages:
     apt: vagrant
     brew: hashicorp/tap/vagrant
     choco: vagrant
-    dnf: vagrant
+    dnf:fedora: vagrant
     pacman: vagrant
     scoop: vagrant
     _service: false
@@ -8650,7 +8676,7 @@ softwarePackages:
     _home: https://www.yubico.com/support/download/yubikey-manager/
     _name: Yubikey Manager
     brew: ykman
-    dnf: yubikey-manager
+    dnf:fedora: yubikey-manager
     pacman: yubikey-manager
     pipx: yubikey-manager
     _service: false
@@ -8666,7 +8692,7 @@ softwarePackages:
     ansible:darwin: professormanhattan.yubikey
     appimage: Yubico/yubikey-manager-qt
     choco: yubikey-manager
-    dnf: yubikey-manager-qt
+    dnf:fedora: yubikey-manager-qt
     pacman: yubikey-manager-qt
     scoop: yubikey-manager-qt
     _service: false
