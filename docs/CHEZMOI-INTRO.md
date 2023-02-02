@@ -152,3 +152,7 @@ in `.chezmoitemplates/secrets/key-surgesh-password` to leverage this functionali
 ### OpenVPN Password
 
 * Environment Variable: `OVPN_PASSWORD`
+
+### VMWare Workstation Key
+
+* Environment Variable: `VMWARE_WORKSTATION_LICENSE_KEY`
