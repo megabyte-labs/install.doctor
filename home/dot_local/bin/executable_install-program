@@ -642,7 +642,7 @@ async function ensurePackage(dep) {
         }
         try {
           log('info', 'dnf Installation', `Checking if ${dep} is already installed`)
-          await $`rpm -qa | grep ${dep} > /dev/null`
+          await $`rpm -qa | grep '$'"${dep}-" > /dev/null`
         } catch (e) {
           log('info', 'dnf Installation', `Installing ${dep} since it is not already present on the system`)
           await $`sudo dnf install -y ${dep}`
@@ -653,7 +653,7 @@ async function ensurePackage(dep) {
         }
         try {
           log('info', 'YUM Installation', `Checking if ${dep} is already installed`)
-          await $`rpm -qa | grep ${dep} > /dev/null`
+          await $`rpm -qa | grep '$'"${dep}-" > /dev/null`
         } catch (e) {
           log('info', 'YUM Installation', `Installing ${dep} since it is not already present on the system`)
           await $`sudo yum install -y ${dep}`
@@ -675,7 +675,7 @@ async function ensurePackage(dep) {
         }
         try {
           log('info', 'Zypper Installation', `Checking if ${dep} is already installed`)
-          await $`rpm -qa | grep ${dep} > /dev/null`
+          await $`rpm -qa | grep '$'"${dep}-" > /dev/null`
         } catch (e) {
           log('info', 'Zypper Installation', `Installing ${dep} since it is not already present on the system`)
           await $`sudo zypper install -y ${dep}`
@@ -1603,9 +1603,9 @@ async function pruneInstallOrders(installOrders) {
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
           if (dnf) {
-            await runSilentCommand(`rpm -qa | grep ${pkg} > /dev/null`)
+            await runSilentCommand(`rpm -qa | grep '$'"${pkg}-" > /dev/null`)
           } else {
-            await runSilentCommand(`rpm -qa | grep ${pkg} > /dev/null`)
+            await runSilentCommand(`rpm -qa | grep '$'"${pkg}-" > /dev/null`)
           }
           return false
         } catch (e) {
