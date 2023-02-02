@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+{{ includeTemplate "universal/logg-before" }}
+
+### Upgrade system
+logg info 'Upgrade system'
+sudo dnf upgrade --refresh
+
+# https://docs.fedoraproject.org/en-US/quick-docs/dnf-system-upgrade/
+# TODO - Optional: Look into using Fedora's upgrade system described in the link above
+# sudo dnf install dnf-plugin-system-upgrade
+
+### Add RPM Fusion Free repository
+if ! dnf repolist | grep 'rpmfusion-free' > /dev/null; then
+    logg info 'Adding RPM-Fusion Free repository for Fedora'
+    sudo dnf install -y "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm"
+fi
+
+### Add RPM Fusion Non-Free repository
+if ! dnf repolist | grep 'rpmfusion-nonfree' > /dev/null; then
+    logg info 'Adding RPM-Fusion Non-Free repository for Fedora'
+    sudo dnf install -y "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
+fi
+
+### Add Appstream data from the RPM Fusion repositories
+if command -v gnome-shell > /dev/null; then
+    logg info 'Adding Appstream data from the RPM-Fusion repositories'
+    sudo dnf group update -y core
+else
+    logg warn 'Skipping installation of Appstream data because GNOME is not installed'
+fi
