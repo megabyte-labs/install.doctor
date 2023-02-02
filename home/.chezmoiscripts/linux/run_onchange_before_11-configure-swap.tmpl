@@ -5,9 +5,9 @@
 {{ includeTemplate "universal/logg-before" }}
 
 if [ ! -f /swapfile ]; then
+  ### Determine ideal size of /swapfile
   MEMORY_IN_KB="$(grep MemTotal /proc/meminfo | sed 's/.* \(.*\) kB/\1/')"
   MEMORY_IN_GB="$((MEMORY_IN_KB / 1024 / 1024))"
-
   if [ "$MEMORY_IN_GB" -gt 64 ]; then
     SWAP_SPACE="$((MEMORY_IN_GB / 10))"
   elif [ "$MEMORY_IN_GB" -gt 32 ]; then
@@ -17,15 +17,29 @@ if [ ! -f /swapfile ]; then
   else
     SWAP_SPACE="$MEMORY_IN_GB"
   fi
-
-  logg info "Creating a $SWAP_SPACE GB /swapfile"
-  sudo fallocate -l "${SWAP_SPACE}G" /swapfile
-  sudo chmod 600 /swapfile
-  sudo mkswap /swapfile
-  sudo swapon /swapfile
-  if cat /etc/fstab | grep "/swapfile"; then
-    sudo sed -i '/\/swapfile/\/swapfile none swap sw 0 0/' /etc/fstab
+  
+  ### Create /swapfile
+  FS_TYPE="$(df -Th | grep ' /$' | sed 's/[^ ]*\s*\([^ ]*\).*/\1/')"
+  if [ "$FS_TYPE" == 'btrfs' ]; then
+    logg info 'Creating BTRFS /swapfile'
+    sudo btrfs filesystem mkswapfile /swapfile
+  elif [ "$FS_TYPE" == 'zfs' ]; then
+    logg warn 'ZFS system detected - add logic here to add /swapfile'
   else
-    echo "/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab
+    logg info "Creating a $SWAP_SPACE GB /swapfile"
+    sudo fallocate -l "${SWAP_SPACE}G" /swapfile
+    sudo chmod 600 /swapfile
+    sudo mkswap /swapfile
+  fi
+
+  ### Enable the /swapfile
+  if [ -f /swapfile ]; then
+    logg info 'Running `sudo swapon /swapfile`'
+    sudo swapon /swapfile
+    if cat /etc/fstab | grep "/swapfile"; then
+      sudo sed -i '/\/swapfile/\/swapfile none swap defaults 0 0/' /etc/fstab
+    else
+      echo "/swapfile none swap defaults 0 0" | sudo tee -a /etc/fstab > /dev/null
+    fi
   fi
 fi
