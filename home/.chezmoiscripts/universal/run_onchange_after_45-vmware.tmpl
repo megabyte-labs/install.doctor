@@ -7,17 +7,17 @@
 ### Run logic if VMware is installed
 if command -v vmware > /dev/null; then
   ### Build kernel modules if they are not present
-  if [ ! -f /lib/modules/$(uname -r)/misc/vmmon.ko || ! -f /lib/modules/$(uname -r)/misc/vmnet.ko ]; then
+  if [ ! -f "/lib/modules/$(uname -r)/misc/vmmon.ko" ] || [ ! -f "/lib/modules/$(uname -r)/misc/vmnet.ko" ]; then
     logg info 'Building VMware host modules'
     if sudo vmware-modconfig --console --install-all; then
-      :
+      logg success 'Built VMWare host modules successfully with `sudo vmware-modconfig --console --install-all`'
     else
       logg info 'Acquiring VMware version from CLI'
-      VMW_VERSION=$(vmware --version | cut -f 3 -d' ')
+      VMW_VERSION="$(vmware --version | cut -f 3 -d' ')"
       mkdir -p /tmp/vmw_patch
       cd /tmp/vmw_patch
       logg info 'Downloading VMware host module patches'
-      curl -sSL https://github.com/mkubecek/vmware-host-modules/archive/workstation-$VMW_VERSION.tar.gz -o /tmp/vmw_patch/workstation.tar.gz
+      curl -sSL "https://github.com/mkubecek/vmware-host-modules/archive/workstation-$VMW_VERSION.tar.gz" -o /tmp/vmw_patch/workstation.tar.gz
       tar -xzf /tmp/vmw_patch/workstation.tar.gz
       cd vmware*
       logg info 'Running `sudo make` and `sudo make install`'
@@ -32,8 +32,8 @@ if command -v vmware > /dev/null; then
       mkdir -p /tmp/vmware
       cd /tmp/vmware
       openssl req -new -x509 -newkey rsa:2048 -keyout MOK.priv -outform DER -out MOK.der -nodes -days 36500 -subj "/CN=VMware/"
-      /usr/src/linux-headers-$(uname -r)/scripts/sign-file sha256 ./MOK.priv ./MOK.der $(modinfo -n vmmon)
-      /usr/src/linux-headers-$(uname -r)/scripts/sign-file sha256 ./MOK.priv ./MOK.der $(modinfo -n vmnet)
+      "/usr/src/linux-headers-$(uname -r)/scripts/sign-file" sha256 ./MOK.priv ./MOK.der "$(modinfo -n vmmon)"
+      "/usr/src/linux-headers-$(uname -r)/scripts/sign-file" sha256 ./MOK.priv ./MOK.der "$(modinfo -n vmnet)"
       echo '' | mokutil --import MOK.der
       logg success 'Successfully signed VMware host modules. Reboot the host before powering on VMs'
     fi
@@ -41,7 +41,7 @@ if command -v vmware > /dev/null; then
     ### Patch VMware with Unlocker
     if [ ! -f /usr/lib/vmware/isoimages/darwin.iso ]; then
       logg info 'Acquiring VMware Unlocker latest release version'
-      UNLOCKER_URL=$(curl -sSL https://api.github.com/repos/DrDonk/unlocker/releases/latest | jq  -r '.assets[0].browser_download_url')
+      UNLOCKER_URL="$(curl -sSL 'https://api.github.com/repos/DrDonk/unlocker/releases/latest' | jq  -r '.assets[0].browser_download_url')"
       mkdir -p /tmp/vmware-unlocker
       cd /tmp/vmware-unlocker
       logg info 'Downloading unlocker.zip'
