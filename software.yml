@@ -757,7 +757,7 @@ softwarePackages:
     apt: axel
     brew: axel
     choco: axel
-    dnf: axel
+    dnf:fedora: axel
     pacman: axel
     port: axel
   bfg:
@@ -1661,7 +1661,7 @@ softwarePackages:
     _name: desed
     _type: cli
     cargo: desed
-    dnf: desed
+    dnf:fedora: desed
     github: github.com/SoptikHa2/desed
     pkg: desed
     xbps-freebsd: desed
@@ -1806,7 +1806,7 @@ softwarePackages:
     _name: Docker Slim
     _type: cli
     brew: docker-slim
-    dnf: golang-github-docker-slim
+    dnf:fedora: golang-github-docker-slim
     github: github.com/docker-slim/docker-slim
     yay: docker-slim
     _service: false
@@ -3223,9 +3223,9 @@ softwarePackages:
     _home: https://www.gluster.org/
     _name: GlusterFS
     _service: glusterd
-    ansible:linux: professormanhattan.glusterfs
+    # ansible:linux: professormanhattan.glusterfs
     apt: glusterfs-server
-    dnf: glusterfs-server
+    dnf:fedora: glusterfs-server
     pacman: glusterfs
   gnu:
     _bin: null
@@ -3582,7 +3582,7 @@ softwarePackages:
     apt: hexyl
     brew: hexyl
     cargo: hexyl
-    dnf: hexyl
+    dnf:fedora: hexyl
     github: github.com/sharkdp/hexyl
     nix: hexyl
     pacman: hexyl
@@ -3722,7 +3722,7 @@ softwarePackages:
     apt: hub
     brew: hub
     choco: hub
-    dnf: hub
+    dnf:fedora: hub
     pacman: hub
     pkg: hub
     scoop: hub
