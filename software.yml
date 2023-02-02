@@ -8426,7 +8426,8 @@ softwarePackages:
     _name: wkhtmltopdf
     _type: cli
     _when:cask: '! test -d /usr/local/Caskroom/wkhtmltopdf'
-    ansible: professormanhattan.wkhtmltopdf
+    # CentOS Stream 9 does not have a supported GitHub release available
+    # ansible: professormanhattan.wkhtmltopdf
     apt: wkhtmltopdf
     cask: wkhtmltopdf
     choco: wkhtmltopdf
