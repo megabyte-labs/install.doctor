@@ -20,7 +20,7 @@ for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
         logg info 'The '"$PACKAGE"' package is already installed'
     else
         logg info 'Installing `'"$PACKAGE"'`'
-        sudo dnf install -y --enablerepo="epel" "$PACKAGE" || EXIT_CODE=$?
+        sudo dnf install -y "$PACKAGE" || EXIT_CODE=$?
         if [ -n "$EXIT_CODE" ]; then
             logg error 'Error installing `'"$PACKAGE"'` via dnf'
             logg info 'Proceeding with installation..'
