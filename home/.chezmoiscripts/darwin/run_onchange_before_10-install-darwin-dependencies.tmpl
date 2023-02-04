@@ -7,7 +7,7 @@
 
 if command -v brew > /dev/null; then
   logg 'Installing base dependencies for macOS using `brew bundle`'
-  logg info 'Dependencies: asdf jq node glow go-task/tap/go-task gum volta yq m-cli zx'
+  logg info 'Dependencies: age asdf jq node glow go go-task/tap/go-task gnupg gum m-cli progress volta yq m-cli yq zx'
   logg info 'GNU compatibility dependencies: coreutils findutils'
 
   brew bundle --verbose --no-lock --file=/dev/stdin <<EOF
