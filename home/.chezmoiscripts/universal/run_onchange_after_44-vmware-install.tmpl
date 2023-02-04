@@ -1,14 +1,15 @@
 {{- if eq .host.distro.family "linux" -}}
 #!/usr/bin/env bash
 
+{{- $secretKey := "" -}}
 {{- if (stat (joinPath (.chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-vmware-workstation"))) -}}
-{{-   $secretKey := (default "4C21U-2KK9Q-M8130-4V2QH-CF810" (includeTemplate "secrets/key-vmware-workstation" | decrypt)) -}}
+{{-   $secretKey = (default "4C21U-2KK9Q-M8130-4V2QH-CF810" (includeTemplate "secrets/key-vmware-workstation" | decrypt)) -}}
 {{- else -}}
-{{-   $secretKey := (default "4C21U-2KK9Q-M8130-4V2QH-CF810" (env "VMWARE_WORKSTATION_LICENSE_KEY")) -}}
+{{-   $secretKey = (default "4C21U-2KK9Q-M8130-4V2QH-CF810" (env "VMWARE_WORKSTATION_LICENSE_KEY")) -}}
 {{- end }}
 
 # Source: https://gist.github.com/PurpleVibe32/30a802c3c8ec902e1487024cdea26251
-# key: {{- $secretKey }}
+# key: {{ $secretKey }}
 
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}
