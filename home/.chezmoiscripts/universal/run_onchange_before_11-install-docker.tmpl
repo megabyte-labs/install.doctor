@@ -96,8 +96,12 @@ if [ ! -d /Applications ] || [ ! -d /System ]; then
         sudo git clone https://github.com/google/gvisor.git /usr/local/src/gvisor
         cd /usr/local/src/gvisor
         sudo mkdir -p bin
-        sudo make copy TARGETS=runsc DESTINATION=bin/
-        sudo cp ./bin/runsc /usr/local/bin
+        # Wait 3 minutes for build to finish, and if it does not use Go
+        sudo timeout 180 make copy TARGETS=runsc DESTINATION=bin/
+        if [ -f ./bin/runsc ]; then
+            sudo cp ./bin/runsc /usr/local/bin
+        else
+        fi
     fi
 
     if [ ! -f /etc/docker/daemon.json ]; then

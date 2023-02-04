@@ -9,7 +9,9 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
   if [ ! -d "$HOME/.gnupg" ]; then
     mkdir "$HOME/.gnupg"
   fi
-  chown -R "$(whoami)" "$HOME/.gnupg/"
+  chown "$(whoami)" "$HOME/.gnupg"
+  chmod 700 "$HOME/.gnupg"
+  chown -Rf "$(whoami)" "$HOME/.gnupg/"
   find "$HOME/.gnupg" -type f -exec chmod 600 {} \;
   find "$HOME/.gnupg" -type d -exec chmod 700 {} \;
   if [ ! -f "$HOME/.gnupg/gpg.conf" ]; then
