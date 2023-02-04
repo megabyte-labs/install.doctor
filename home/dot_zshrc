@@ -254,6 +254,10 @@ xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
 	;;
 esac
 
+### Homebrew ZSH Completions
+# Must be sourced before compinit / Oh-My-ZSH inclusion
+FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:${FPATH}"
+
 ### Antigen
 if [ -f "$HOME/.local/scripts/antigen.zsh" ]; then
   source "$HOME/.local/scripts/antigen.zsh"

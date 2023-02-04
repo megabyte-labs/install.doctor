@@ -9,8 +9,6 @@ No such key “color-scheme”
 
 CLOUDFLARE_API_TOKEN
 GMAIL_APP_PASSWORD
-LEXICON_CLOUDFLARE_USERNAME
-LEXICON_CLOUDFLARE_TOKEN
 ### Ensure these PATHs are added on Windows
 add to PATH:
 '%ProgramFiles(x86)%\mitmproxy\bin'
@@ -79,9 +77,6 @@ age:
 
 
 ## Figure out where these go
-
-AWS_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY
 
 ### Restic
 RESTIC_REPOSITORY_FILE              Name of file containing the repository location (replaces --repository-file)

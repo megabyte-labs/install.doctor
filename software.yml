@@ -740,13 +740,14 @@ softwarePackages:
   bash-completion:
     _bin: null
     _desc: null
-    _docs: null
+    _docs: https://docs.brew.sh/Shell-Completion
     _github: null
     _home: null
     _name: null
     _when:darwin: '! (brew list bash-completion | grep bash-completion)'
+    _when:linux: '! (brew list bash-completion | grep bash-completion)'
     brew:darwin: bash-completion
-    _service: false
+    brew:linux: bash-completion
   axel:
     _bin: axel
     _docs: null
