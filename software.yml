@@ -5761,7 +5761,7 @@ softwarePackages:
     pacman: php
     port: php
     scoop: php
-    _service: false_
+    _service: false
     _type: cli
   php-extensions:
     _name: PHP Extensions
@@ -5788,36 +5788,18 @@ softwarePackages:
       - php-xml
     brew:
       - postgresql
-    dnf:centos:
+    dnf:
+      - pcre-devel
       - postgresql-devel
       - php-apcu
       - php-cgi
       - php-cli
       - php-common
       - php-curl
+      - php-devel
       - php-fpm
       - php-gd
       - php-intl
-      - php-json
-      - php-mbstring
-      - php-opcache
-      - php-redis
-      - php-snmp
-      - php-sqlite3
-      - php-xml
-    dnf:fedora:
-      - libpcre3-dev
-      - postgresql-devel
-      - php-apcu
-      - php-cgi
-      - php-cli
-      - php-common
-      - php-curl
-      - php-dev
-      - php-fpm
-      - php-gd
-      - php-intl
-      - php-imap
       - php-json
       - php-mbstring
       - php-opcache
@@ -5846,7 +5828,24 @@ softwarePackages:
       - php-sqlite3
       - php-xml
     zypper:
+      - pcre-devel
       - postgresql-devel
+      - php-apcu
+      - php-cgi
+      - php-cli
+      - php-common
+      - php-curl
+      - php-devel
+      - php-fpm
+      - php-gd
+      - php-intl
+      - php-json
+      - php-mbstring
+      - php-opcache
+      - php-redis
+      - php-snmp
+      - php-sqlite3
+      - php-xml
   pihole:
     _bin: null
     _desc: '[Pi-hole](https://pi-hole.net/) is a Linux network-level advertisement and Internet tracker blocking application which acts as a DNS sinkhole and optionally a DHCP server, intended for use on a private network. It is designed for low-power embedded devices with network capability, such as the Raspberry Pi, but supports any Linux machines.'

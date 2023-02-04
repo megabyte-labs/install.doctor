@@ -19,17 +19,27 @@ fi
 
 ### Docker Rclone plugin
 # Source: https://rclone.org/docker/
-if [ ! -d /var/lib/docker-plugins/rclone/config ]; then
-    logg info 'Creating directory /var/lib/docker-plugins/rclone/config'
-    sudo mkdir -p /var/lib/docker-plugins/rclone/config
-fi
-if [ ! -d /var/lib/docker-plugins/rclone/cache ]; then
-    logg info 'Creating directory /var/lib/docker-plugins/rclone/cache'
-    sudo mkdir -p /var/lib/docker-plugins/rclone/cache
-fi
-sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/docker-rclone.conf" /var/lib/docker-plugins/rclone/config/rclone.conf
-if ! sudo su -c 'docker plugin ls' - "$USER" | grep 'rclone:latest' > /dev/null; then
-    sudo su -c 'docker plugin install rclone/docker-volume-rclone:amd64 args="-v" --alias rclone --grant-all-permissions' - "$USER"
+# First, ensure Docker Rclone configuration exists (which only happens when the Chezmoi Age decryption key is present as well as keys for Rclone)
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/docker-rclone.conf" ]; then
+    ### Ensure Docker Rclone plugin system folders exist
+    logg info 'Ensure Docker Rclone plugin system folders exist'
+    if [ ! -d /var/lib/docker-plugins/rclone/config ]; then
+        logg info 'Creating directory /var/lib/docker-plugins/rclone/config'
+        sudo mkdir -p /var/lib/docker-plugins/rclone/config
+    fi
+    if [ ! -d /var/lib/docker-plugins/rclone/cache ]; then
+        logg info 'Creating directory /var/lib/docker-plugins/rclone/cache'
+        sudo mkdir -p /var/lib/docker-plugins/rclone/cache
+    fi
+
+    ### Copy Rclone configuration
+    logg info "Copy the Rclone configuration from ${XDG_CONFIG_HOME:-$HOME/.config}/rclone/docker-rclone.conf to /var/lib/docker-plugins/rclone/config/rclone.conf"
+    sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/docker-rclone.conf" /var/lib/docker-plugins/rclone/config/rclone.conf
+
+    ### Install the Rclone Docker plugin (if not already installed)
+    if ! sudo su -c 'docker plugin ls' - "$USER" | grep 'rclone:latest' > /dev/null; then
+        sudo su -c 'docker plugin install rclone/docker-volume-rclone:amd64 args="-v" --alias rclone --grant-all-permissions' - "$USER"
+    fi
 fi
 
 {{ end -}}
