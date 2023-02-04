@@ -96,14 +96,24 @@ if [ ! -d /Applications ] || [ ! -d /System ]; then
         sudo git clone https://github.com/google/gvisor.git /usr/local/src/gvisor
         cd /usr/local/src/gvisor
         sudo mkdir -p bin
-        # Wait 3 minutes for build to finish, and if it does not use Go
-        sudo timeout 180 make copy TARGETS=runsc DESTINATION=bin/
+        # Wait 5 minutes for build to finish, and if it does not use Go
+        sudo timeout 300 make copy TARGETS=runsc DESTINATION=bin/
         if [ -f ./bin/runsc ]; then
             sudo cp ./bin/runsc /usr/local/bin
         else
+            # Official build timed out - use Go method
+            logg info 'Installing gVisor using the Go fallback method'
+            sudo chown -Rf "$(whoami)" /usr/local/src/gvisor
+            echo "module runsc" > go.mod
+            GO111MODULE=on go get gvisor.dev/gvisor/runsc@go
+            CGO_ENABLED=0 GO111MODULE=on sudo -E go build -o /usr/local/bin/runsc gvisor.dev/gvisor/runsc
+            GO111MODULE=on sudo -E go build -o /usr/local/bin/containerd-shim-runsc-v1 gvisor.dev/gvisor/shim
         fi
+    else
+        logg info '`runsc` is installed'
     fi
 
+    ### Ensure Docker is configured to use runsc
     if [ ! -f /etc/docker/daemon.json ]; then
         # Configure Docker to use gVisor
         # Create /etc/docker/daemon.json
@@ -114,6 +124,19 @@ if [ ! -d /Applications ] || [ ! -d /System ]; then
             sudo cp "/usr/local/src/install.doctor/home/dot_config/docker/daemon.json" /etc/docker/daemon.json
         else
             logg warn '/usr/local/src/install.doctor/home/dot_config/docker/daemon.json is not available so the /etc/docker/daemon.json file cannot be populated'
+        fi
+
+        # Restart / enable Docker
+        if command -v systemctl > /dev/null; then
+            logg info 'Restarting Docker service'
+            sudo systemctl restart docker.service
+            sudo systemctl restart containerd.service
+        fi
+
+        # Test Docker /w runsc
+        docker run --rm --runtime=runsc hello-world || RUNSC_EXIT_CODE=$?
+        if [ -n "$RUNSC_EXIT_CODE" ]; then
+            logg error 'Failed to run the Docker hello-world container with runsc' && exit 5
         fi
     fi
 fi
