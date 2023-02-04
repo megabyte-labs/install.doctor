@@ -235,8 +235,13 @@ softwarePackages:
       - what-ip
   _nautilus-extensions:
     _deps:
+      - nautilus-brasero
       - nautilus-gtkhash
+      - nautilus-gsconnect
       - nautilus-image-converter
+      - nautilus-python
+      - nautilus-seahorse
+      - nautilus-search-tool
       - nautilus-share
       - nautilus-wipe
   pinapp:
@@ -5110,22 +5115,40 @@ softwarePackages:
     _name: nativefier
     npm: nativefier
     _service: false
-    _type: cli
+    _type: 
+  nautilus-brasero:
+    apt: nautilus-extension-brasero
+    dnf: brasero-nautilus
+    pacman: brasero-nautilus
+  nautilus-gsconnect:
+    apt: nautilus-gsconnect
+    dnf: nautilus-gsconnect
+    pacman: nautilus-gsconnect
   nautilus-gtkhash:
     apt: nautilus-gtkhash
-    dnf:fedora: nautilus-gtkhash
+    dnf: gtkhash-nautilus
     pacman: nautilus-gtkhash
   nautilus-image-converter:
     apt: nautilus-image-converter
     dnf:fedora: nautilus-image-converter
     pacman: nautilus-image-converter
+  nautilus-python:
+    apt: nautilus-python
+    dnf:fedora: nautilus-python
+    pacman: nautilus-python
+  nautilus-seahorse:
+    apt: nautilus-seahorse
+    dnf: seahorse-nautilus
+    pacman: nautilus-seahorse
+  nautilus-search-tool:
+    apt: nautilus-search-tool
+    dnf:fedora: nautilus-search-tool
+    pacman: nautilus-search-tool
   nautilus-share:
     apt: nautilus-share
-    dnf:fedora: nautilus-share
     pacman: nautilus-share
   nautilus-wipe:
     apt: nautilus-wipe
-    dnf:fedora: nautilus-wipe
     pacman: nautilus-wipe
   nb:
     _bin: nb
@@ -6693,6 +6716,8 @@ softwarePackages:
     _github: https://github.com/jimsalterjrs/sanoid/
     _home: null
     _name: Sanoid
+    # Only install Sanoid when there are ZFS shares listed in the command `zfs list`
+    _when: zfs list
     ansible:linux: professormanhattan.sanoid
     apt:
       - libcapture-tiny-perl
