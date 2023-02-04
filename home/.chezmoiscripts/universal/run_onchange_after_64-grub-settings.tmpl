@@ -102,16 +102,17 @@ fi
 ### Determine platform-specific icon to use
 if command -v qubesctl > /dev/null; then
     GRUB_ICON='qubes'
-elif [ -f "/boot/grub2/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icons/{{ .host.distro.id }}.png" ]; then
+elif [ -f "/usr/local/share/grub/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icons/{{ .host.distro.id }}.png" ]; then
     GRUB_ICON='{{ .host.distro.id }}'
-elif [ -f "/boot/grub2/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icons/{{ .host.distro.family }}.png" ]; then
+elif [ -f "/usr/local/share/grub/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icons/{{ .host.distro.family }}.png" ]; then
     GRUB_ICON='{{ .host.distro.family }}'
 else
     GRUB_ICON='linux'
 fi
 
 ### Copy icon to GRUB2 theme folder
-if [ -f "/boot/grub2/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icons/$GRUB_ICON.png" ]; then
+# Check looks in /usr/local/share/grub because on some systems the /boot folder is behind permissions for non-root users
+if [ -f "/usr/local/share/grub/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icons/$GRUB_ICON.png" ]; then
     sudo cp -f /boot/grub2/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icons/$GRUB_ICON.png /boot/grub2/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icon.png
     logg success 'Copied platform-specific icon to GRUB2 theme folder'
 else

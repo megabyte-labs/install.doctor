@@ -1756,15 +1756,15 @@ async function installSoftware(pkgsToInstall) {
   for (const script of installOrdersPre) {
     await $`${script}`
   }
+  installOrdersGroups.length && log('info', 'Users / Groups', `Adding groups / users`)
+  for (const group of installOrdersGroups) {
+    await addUserGroup(group)
+  }
   packageManagers.length && log('info', 'Install', `Installing the packages`)
   for (const packageManager of packageManagers) {
     const asyncOrders = []
     asyncOrders.push(installPackageList(packageManager, installOrders[packageManager]))
     await Promise.all(asyncOrders)
-  }
-  installOrdersGroups.length && log('info', 'Users / Groups', `Adding groups / users`)
-  for (const group of installOrdersGroups) {
-    await addUserGroup(group)
   }
   installOrdersService.length && log('info', 'Post-Install', `Running package-specific post-installation steps`)
   for (const service of installOrdersService) {
