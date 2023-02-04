@@ -156,3 +156,16 @@ in `.chezmoitemplates/secrets/key-surgesh-password` to leverage this functionali
 ### VMWare Workstation Key
 
 * Environment Variable: `VMWARE_WORKSTATION_LICENSE_KEY`
+
+### Google Cloud SDK Default E-mail
+
+* Environment Variable: `GCE_SERVICE_ACCOUNT_EMAIL`
+
+### Google Cloud SDK Default Project
+
+* Environment Variable: `CLOUDSDK_CORE_PROJECT`
+
+
+### Snapcraft E-mail
+
+* `SNAPCRAFT_EMAIL`

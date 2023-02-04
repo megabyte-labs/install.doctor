@@ -124,6 +124,8 @@ removeLinuxShortcuts:
   - scvim.desktop
 theme: Betelgeuse
 softwareGroups:
+  AI-Desktop: &AI-Desktop
+    - chatgpt-desktop
   Android: &Android
     - scrcpy
   Android-Desktop: &Android-Desktop
@@ -554,6 +556,7 @@ softwareGroups:
     - remote-desktop
     - remmina
     - rofi
+    - rustdesk
     - secretive
     - standard-notes
     - stats
@@ -696,6 +699,7 @@ softwareGroups:
     - t
   Sys-Admin: &Sys-Admin
     - ctop
+    - goaccess
     - gtop
     - htop
     - sysbench
@@ -908,6 +912,7 @@ softwareGroups:
   _Full-Desktop: &_Full-Desktop
     - *_Full
     - *_Standard-Desktop
+    - *AI-Desktop
     - *Android-Desktop
     - *Backup-Desktop
     - *Browsers-Desktop

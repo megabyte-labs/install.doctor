@@ -3,6 +3,8 @@
 {{- $desktopSession := true -}}
 {{- $domain := (default "megabyte.space" (env "PUBLIC_SERVICES_DOMAIN")) -}}
 {{- $email := (default "brian@megabyte.space" (env "PRIMARY_EMAIL")) -}}
+{{- $gcloudCoreProject := (default "megabyte-labs" (env "CLOUDSDK_CORE_PROJECT"))}}
+{{- $gcloudEmail := (default "automation@megabyte-labs.iam.gserviceaccount.com" (env "GCE_SERVICE_ACCOUNT_EMAIL"))}}
 {{- $githubUsername := (default "ProfessorManhattan" (env "GITHUB_USERNAME")) -}}
 {{- $gmailAddress := (default "blzalewski@gmail.com" (env "GMAIL_ADDRESS")) -}}
 {{- $gpgKeyId := (default "0xF0A300E4199A1C33" (env "KEYID")) -}}
@@ -10,6 +12,7 @@
 {{- $locale := (output "echo" "$LANG") }}
 {{- $name := (default "Brian Zalewski" (env "FULL_NAME")) -}}
 {{- $restricted := (default false (env "WORK_ENVIRONMENT")) -}}
+{{- $snapcraftEmail := (default "brian@megabyte.space" (env "SNAPCRAFT_EMAIL"))}}
 {{- $surgeshUsername := (default "brian@megabyte.space" (env "SURGESH_USERNAME")) -}}
 {{- $timezone := (default "America/New_York" (env "TIMEZONE")) -}}
 {{- $toolchains := list "CLI-Extras" "Docker" "Go" "Kubernetes" "Web-Development" -}}
@@ -162,6 +165,9 @@ data:
     defaultBrowser: firefox
     domain: "{{ $domain }}"
     email: "{{ $email }}"
+    gcloud:
+      coreProject: "{{ $gcloudCoreProject }}"
+      email: "{{ $gcloudEmail }}"
     github:
       username: "{{ $githubUsername }}"
     gmail:
@@ -171,6 +177,8 @@ data:
     holdSudoPrivileges: true
     locale: "{{ $locale }}"
     name: "{{ $name }}"
+    snapcraft:
+      username: "{{ $snapcraftEmail }}"
     surgesh:
       username: "{{ $surgeshUsername }}"
     timezone: "{{ $timezone }}"

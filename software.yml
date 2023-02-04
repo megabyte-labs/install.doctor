@@ -3522,6 +3522,22 @@ softwarePackages:
     pacman: gum
     pkg-termux: gum
     _service: false
+  goaccess:
+    _bin: goaccess
+    _desc: GoAccess is a real-time web log analyzer and interactive viewer that runs in a terminal in *nix systems or through your browser.
+    _docs: https://goaccess.io/get-started
+    _github: https://github.com/allinurl/goaccess
+    _home: https://goaccess.io/
+    _name: GoAccess
+    _type:
+      - cli
+      - webapp
+    apt: goaccess
+    brew: goaccess
+    dnf:fedora: goaccess
+    emerge: net-analyzer/goaccess
+    pacman: goaccess
+    pkgin: goaccess
   gvisor:
     _bin: null
     _desc: '[gVisor](https://gvisor.dev/) is an application kernel, written in Go, that implements a substantial portion of the Linux system surface. It includes an Open Container Initiative (OCI) runtime called runsc that provides an isolation boundary between the application and the host kernel. The runsc runtime integrates with Docker and Kubernetes, making it simple to run sandboxed containers.'
@@ -3612,6 +3628,20 @@ softwarePackages:
     scoop: hexyl
     xbps: hexyl
     _service: false
+  chatgpt-desktop:
+    _bin: null
+    _desc: ChatGPT desktop application (Mac, Windows and Linux)
+    _docs: https://app.nofwl.com/docs/chatgpt/config
+    _github: https://github.com/lencx/ChatGPT
+    _home: https://app.nofwl.com/
+    _name: ChatGPT Desktop
+    _type: app
+    appimage: lencx/ChatGPT
+    apt: https://github.com/lencx/ChatGPT/releases/download/v0.10.3/chat-gpt_0.10.3_amd64.deb
+    cask: lencx/chatgpt/chatgpt
+    msi: https://github.com/lencx/ChatGPT/releases/download/v0.10.3/ChatGPT_0.10.3_x64_en-US.msi
+    pacman: chatgpt-desktop-bin
+    winget: lencx.ChatGPT
   hey:
     _bin: hey
     _desc: HTTP load generator, ApacheBench (ab) replacement, formerly known as rakyll/boom
@@ -3623,6 +3653,21 @@ softwarePackages:
     brew: hey
     github: github.com/rakyll/hey
     _service: false
+  rustdesk:
+    _bin: rustdesk
+    _desc: Open source virtual / remote desktop infrastructure for everyone! The open source TeamViewer alternative. Display and control your PC and Android devices from anywhere at anytime.
+    _docs: https://rustdesk.com/docs/en/
+    _github: https://github.com/rustdesk/rustdesk
+    _home: https://rustdesk.com/
+    _name: RustDesk
+    _type: app
+    apt: https://github.com/rustdesk/rustdesk/releases/download/1.1.9/rustdesk-1.1.9.deb
+    cask: rustdesk
+    choco: rustdesk
+    dnf: https://github.com/rustdesk/rustdesk/releases/download/1.1.9/rustdesk-1.1.9-fedora28-centos8.rpm
+    pacman: rustdesk
+    scoop: rustdesk
+    zypper: https://github.com/rustdesk/rustdesk/releases/download/1.1.9/rustdesk-1.1.9-suse.rpm
   himalaya:
     _bin: himalaya
     _desc: '[Himalaya](https://github.com/soywod/himalaya) is a CLI email client written in Rust.'

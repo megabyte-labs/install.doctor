@@ -1,30 +1,14 @@
 Ensure git-delta (or kvantum or fzf) installs with dnf on Fedora because it didn't on Centos and was marked as dnf:fedora: in software.yml
 https://drasite.com/blog/Pimp%20my%20terminal
 https://github.com/checkly/headless-recorder
-https://github.com/DustinBrett/daedalOS
-https://github.com/allinurl/goaccess
-https://github.com/cloudflare/boringtun
-https://github.com/rustdesk/rustdesk
-https://github.com/lencx/ChatGPT
 https://github.com/QaidVoid/Complete-Single-GPU-Passthrough
-
-
-    CLOUDSDK_CORE_PROJECT: "megabyte-labs"
-    GCE_CREDENTIALS_FILE: "{{ joinPath .chezmoi.homeDir ".config" "gcp.json" }}"
-    GCE_SERVICE_ACCOUNT_EMAIL: "molecule@megabyte-labs.iam.gserviceaccount.com"
 
 ✖  ERROR  Gsettings Failed to apply gsetting
 Error: Command failed: gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 No such key “color-scheme”
 
-GITLAB_READ_TOKEN
-GITHUB_READ_TOKEN
-GITHUB_GIST_TOKEN
 CLOUDFLARE_API_TOKEN
 GMAIL_APP_PASSWORD
-NGROK_AUTH_TOKEN
-SLACK_API_TOKEN
-TAILSCALE_AUTH_KEY
 LEXICON_CLOUDFLARE_USERNAME
 LEXICON_CLOUDFLARE_TOKEN
 ### Ensure these PATHs are added on Windows
