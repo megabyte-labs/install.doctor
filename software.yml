@@ -5046,21 +5046,19 @@ softwarePackages:
     _docs: null
     _github: https://github.com/th-ch/youtube-music
     _home: https://th-ch.github.io/youtube-music/
-    appimage: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/YouTube-Music-1.19.0.AppImage
+    appimage: th-ch/youtube-music
     apt: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/youtube-music_1.19.0_amd64.deb
     dmg: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/YouTube-Music-1.19.0.dmg
     exe: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/YouTube-Music-Setup-1.19.0.exe
     scoop: extras/youtube-music
-    snap: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/youtube-music_1.19.0_amd64.snap
     winget: th-ch.YouTubeMusic
     yay: youtube-music-bin
   imagine:
     _desc: Imagine is a desktop app for compression of PNG and JPEG, with a modern and friendly UI.
     _github: https://github.com/meowtec/Imagine
-    appimage: https://github.com/meowtec/Imagine/releases/download/v0.7.3/Imagine-0.7.3.AppImage
+    appimage: meowtec/Imagine
     dmg: https://github.com/meowtec/Imagine/releases/download/v0.7.3/Imagine-0.7.3.dmg
     exe: https://github.com/meowtec/Imagine/releases/download/v0.7.3/Imagine-Setup-0.7.3.exe
-    snap: https://github.com/meowtec/Imagine/releases/download/v0.7.3/Imagine_0.7.3_amd64.snap
   mullvad-vpn:
     _bin: null
     _desc: The Mullvad VPN client app for desktop and mobile
@@ -6141,13 +6139,17 @@ softwarePackages:
     yay: protonvpn
     _type: application
   protonvpn-cli:
-    _bin: protonvpn-cli
-    _desc: null
+    _bin: protonvpn
+    _desc: The ProtonVPN CLI official release for Linux along with an unofficial ProtonVPN CLI for macOS
     _docs: null
     _github: null
     _home: null
     _name: ProtonVPN CLI
     _todo: Populate this once the ProtonVPN CLI is released to the package managers
+    apt: protonvpn-cli
+    dnf: protonvpn-cli
+    pacman: protonvpn-cli
+    script:darwin: brew install openvpn dialog python3 && sudo git clone https://github.com/phx/protonvpn-cli-macos /usr/local/src/protonvpn-cli && pip3 install -r requirements.txt && sudo python3 setup.py install
   protonmail-bridge:
     _bin: protonmail-bridge
     _when:cask: '! test -d "/Applications/Proton Mail Bridge.app"'
