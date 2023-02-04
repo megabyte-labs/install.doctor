@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090,SC1091
 
-# If not running interactively, don't do anything
-case $- in
-  *i*) ;;
-    *) return;;
-esac
-
 # Prefer US English
 export LANG="en_US"
 if [[ "$(hostname)" != *'-minimal' ]]; then
@@ -22,6 +16,12 @@ fi
 if [ -f "$HOME/.config/shell/profile.sh" ]; then
   . "$HOME/.config/shell/profile.sh"
 fi
+
+### Escape if shell not interactive
+case $- in
+  *i*) ;;
+    *) return;;
+esac
 
 ### Fig / LC_ALL
 if [ "$BASH_SUPPORT" = 'true' ]; then
