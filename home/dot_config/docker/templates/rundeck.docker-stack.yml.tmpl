@@ -1,0 +1,21 @@
+---
+version: "2.1"
+services:
+  rundeck:
+    image: rundeck/rundeck
+    container_name: Rundeck
+    environment:
+      PUID: 1000
+      PGID: 1000
+      MENU_VERSION: 2.0.19 #optional
+    volumes:
+      - $HOME/.ssh:/home/rundeck/.ssh
+      - rundeck-data:/home/rundeck/server/data
+    ports:
+      - 3000:3000
+      - 69:69/udp
+      - 26688:80
+    restart: unless-stopped
+
+volumes:
+  rundeck-data:

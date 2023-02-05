@@ -5,6 +5,7 @@
 {{ includeTemplate "universal/logg" }}
 
 # Firefox plugins: {{ list (.firefoxAddOns | toString | replace "[" "" | replace "]" "") | uniq | join " " }}
+# 
 
 ### Installs the Firefox Profile Connector on Linux systems (Snap / Flatpak installs are not included in this function, but instead inline below)
 function installFirefoxProfileConnector() {

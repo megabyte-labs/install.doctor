@@ -1,0 +1,74 @@
+---
+version: '3.7'
+
+services:
+  statup:
+    container_name: StatPing
+    image: statping/statping:latest
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    networks:
+      - statping_network
+      - nginx_network
+    expose:
+      - 8080
+    volumes:
+      - statping_app:/app
+    environment:
+      VIRTUAL_HOST: localhost
+      VIRTUAL_PORT: 8080
+      DB_CONN: postgres
+      DB_HOST: postgres
+      DB_USER_FILE: /run/secrets/statping_database_user
+      DB_PASS_FILE: /run/secrets/statping_database_password
+      DB_DATABASE_FILE: /run/secrets/statping_database_name
+      NAME: "{{ template.NAME }}"
+      DESCRIPTION: "{{ template.DESCRIPTION }}"
+    deploy:
+      mode: replicated
+      replicas: 1
+    secrets:
+     - statping_database_name
+     - statping_database_password
+     - statping_database_user
+
+  postgres:
+    container_name: Postgres
+    image: postgres:10
+    restart: unless-stopped
+    volumes:
+      - statping_postgres:/var/lib/postgresql/data
+    networks:
+      - statping_network
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/statping_database_password
+      POSTGRES_USER_FILE: /run/secrets/statping_database_user
+      POSTGRES_DB_FILE: /run/secrets/statping_database_name
+    deploy:
+      mode: replicated
+      replicas: 1
+    secrets:
+     - statping_database_name
+     - statping_database_password
+     - statping_database_user
+
+networks:
+  statping_network:
+    driver: overlay
+    attachable: true
+    internal: true
+  nginx_network:
+    external: true
+
+secrets:
+  statping_database_name:
+    external: true
+  statping_database_password:
+    external: true
+  statping_database_user:
+    external: true
+
+volumes:
+  statping_app:
+  statping_postgres:

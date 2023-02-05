@@ -1,0 +1,16 @@
+---
+version: '3.8'
+
+services:
+  code-server:
+    image: linuxserver/code-server
+    container_name: CodeServer
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/New_York
+    volumes:
+      - ./config:/config
+    ports:
+      - 28814:8443
+    restart: unless-stopped

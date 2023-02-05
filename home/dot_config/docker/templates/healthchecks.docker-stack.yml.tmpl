@@ -1,0 +1,105 @@
+---
+version: '3.7'
+
+services:
+  healthchecks:
+    image: lscr.io/linuxserver/healthchecks:latest
+    container_name: Healthchecks
+    depends_on:
+      - postgres
+    networks:
+      - healthchecks_network
+      - nginx_network
+    environment:
+      ALLOWED_HOSTS: "{{ template.ALLOWED_HOSTS }}"
+      APPRISE_ENABLED: 'False'
+      DB_HOST: postgres
+      DB_NAME_FILE: /run/secrets/healthchecks_db_name
+      DB_PASSWORD_FILE: /run/secrets/healthchecks_db_password
+      DB_USER_FILE: /run/secrets/healthchecks_db_user
+      DEBUG: 'False'
+      DEFAULT_FROM_EMAIL: "{{ template.DEFAULT_FROM_EMAIL }}"
+      EMAIL_HOST_PASSWORD_FILE: /run/secrets/healthchecks_sendgrid_api_key
+      EMAIL_HOST_USER: apikey
+      EMAIL_HOST: smtp.sendgrid.net
+      EMAIL_PORT: 587
+      EMAIL_USE_TLS: 'True'
+      PGID: 1000
+      PROMETHEUS_ENABLED: 'True'
+      PUID: 1000
+      REGENERATE_SETTINGS: 'True'
+      SECRET_KEY_FILE: /run/secrets/healthchecks_secret_key
+      SHELL_ENABLED: 'True'
+      SITE_LOGO_URL: "{{ template.SITE_LOGO_URL }}"
+      SITE_NAME: "{{ template.SITE_NAME }}"
+      SITE_ROOT: "{{ template.SITE_ROOT }}"
+      SLACK_CLIENT_ID_FILE: /run/secrets/healthchecks_slack_client_id
+      SLACK_CLIENT_SECRET_FILE: /run/secrets/healthchecks_slack_client_secret
+      SLACK_ENABLED: 'True'
+      SUPERUSER_EMAIL_FILE: /run/secrets/healthchecks_superuser_email
+      SUPERUSER_PASSWORD_FILE: /run/secrets/healthchecks_superuser_password
+      WEBHOOKS_ENABLED: 'True'
+    deploy:
+      mode: replicated
+      replicas: 1
+    volumes:
+      - healthchecks_config:/config
+    expose:
+      - 8000
+    restart: unless-stopped
+    secrets:
+      - healthchecks_db_name
+      - healthchecks_db_password
+      - healthchecks_db_user
+      - healthchecks_secret_key
+      - healthchecks_sendgrid_api_key
+      - healthchecks_superuser_email
+      - healthchecks_superuser_password
+
+  postgres:
+    container_name: Postgres
+    image: postgres:10
+    restart: unless-stopped
+    volumes:
+      - healthchecks_postgres:/var/lib/postgresql/data
+    networks:
+      - healthchecks_network
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/healthchecks_db_password
+      POSTGRES_USER_FILE: /run/secrets/healthchecks_db_user
+      POSTGRES_DB_FILE: /run/secrets/healthchecks_db_name
+    deploy:
+      mode: replicated
+      replicas: 1
+    secrets:
+     - healthchecks_db_name
+     - healthchecks_db_password
+     - healthchecks_db_user
+
+networks:
+  healthchecks_network:
+    driver: overlay
+    attachable: true
+    internal: true
+  nginx_network:
+    external: true
+
+secrets:
+  healthchecks_db_name:
+    external: true
+  healthchecks_db_password:
+    external: true
+  healthchecks_db_user:
+    external: true
+  healthchecks_secret_key:
+    external: true
+  healthchecks_sendgrid_api_key:
+    external: true
+  healthchecks_superuser_email:
+    external: true
+  healthchecks_superuser_password:
+    external: true
+
+volumes:
+  healthchecks_config:
+  healthchecks_postgres:
