@@ -177,7 +177,7 @@ if [ ! -d /Applications ] || [ ! -d /System ]; then
         fi
 
         # Restart / enable Docker
-        if command -v systemctl > /dev/null; then
+        if [[ ! "$(grep Microsoft /proc/version)" ]] && command -v systemctl > /dev/null; then
             logg info 'Restarting Docker service'
             sudo systemctl restart docker.service
             sudo systemctl restart containerd.service

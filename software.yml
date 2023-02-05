@@ -6013,6 +6013,16 @@ softwarePackages:
     github: github.com/jessfraz/pony
     go: github.com/jessfraz/pony@latest
     _service: false
+  firewall-applet:
+    _bin: firewall-applet
+    apt: firewall-applet
+    dnf: firewall-applet
+    pacman: firewall-applet
+  firewall-config:
+    _bin: firewall-config
+    apt: firewall-config
+    dnf: firewall-config
+    pacman: firewall-config
   portmaster:
     _bin: null
     _desc: "[Portmaster](https://safing.io/portmaster/) is a free and open-source application that puts you back in charge over all your computer's network connections."
@@ -6023,6 +6033,11 @@ softwarePackages:
     _when:linux: '! test -f /opt/safing/portmaster/portmaster-start'
     ansible:linux: professormanhattan.portmaster
     ansible:windows: professormanhattan.portmaster
+    apt: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.
+    choco: portmaster
+    dnf: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.rpm
+    exe: https://updates.safing.io/latest/windows_amd64/packages/portmaster-installer.
+    scoop: portmaster-np
     _service: true
     _type: application
   pake:
@@ -8280,7 +8295,9 @@ softwarePackages:
     _when:darwin: '! test -d "/Applications/Cloudflare WARP.app"'
     # Needs tuning - possibly unrelated, but internet wasn't working on Ubuntu after installing this and removed it during debugging
     # ansible: professormanhattan.warp
+    apt: cloudflare-warp
     cask: cloudflare-warp
+    choco: warp
     _service: false
     _type: application
   watchexec:

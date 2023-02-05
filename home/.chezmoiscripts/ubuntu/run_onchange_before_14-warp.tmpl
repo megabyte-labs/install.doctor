@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+{{ includeTemplate "universal/logg-before" }}
+
+### Add CloudFlare WARP desktop app apt-get source
+if [ ! -f /etc/apt/sources.list.d/cloudflare-client.list ]; then
+    logg info 'Adding CloudFlare WARP keyring'
+    curl https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+
+    logg info 'Adding apt source reference'
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+
+    sudo apt-get update
+fi
