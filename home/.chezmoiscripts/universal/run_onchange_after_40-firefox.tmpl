@@ -154,6 +154,7 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
         if [ -n "$DEFAULT_RELEASE_PROFILE" ]; then
             logg info "Renaming $DEFAULT_RELEASE_PROFILE to $SETTINGS_DIR/profile.plugins"
             rsync -a "$DEFAULT_RELEASE_PROFILE/" "$SETTINGS_DIR/profile.plugins"
+            rsync -a "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/" "$SETTINGS_DIR/profile.plugins"
         fi
 
         ### Miscellaneous default profiles
@@ -161,6 +162,7 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
             if [ ! -d "$SETTINGS_DIR/profile.${NEW_PROFILE}" ] && [ -d "$SETTINGS_DIR/profile.default" ]; then
                 logg info "Cloning $NEW_PROFILE from profile.default"
                 rsync -a "$SETTINGS_DIR/profile.default/" "$SETTINGS_DIR/profile.${NEW_PROFILE}"
+                rsync -a "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/" "$SETTINGS_DIR/profile.${NEW_PROFILE}"
             fi
         done
 

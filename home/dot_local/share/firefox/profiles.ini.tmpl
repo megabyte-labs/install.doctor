@@ -1,5 +1,5 @@
 [Profile6]
-Name=Default (w/ plugins)
+Name=Factory (w/ plugins)
 IsRelative=1
 Path={{ if eq .host.distro.family "darwin" }}Profiles/{{ end }}profile.plugins
 
@@ -18,19 +18,25 @@ Name=Miscellaneous
 IsRelative=1
 Path={{ if eq .host.distro.family "darwin" }}Profiles/{{ end }}profile.miscellaneous
 
+{{- if (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) }}
 [Profile2]
 Name=Private
 IsRelative=1
 Path={{ if eq .host.distro.family "darwin" }}Profiles/{{ end }}profile.private
+Default=1
+{{- end }}
 
 [Profile1]
 Name=Git (Public)
 IsRelative=1
 Path={{ if eq .host.distro.family "darwin" }}Profiles/{{ end }}profile.git
+{{- if not (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) }}
 Default=1
+{{- end }}
+
 
 [Profile0]
-Name=Default
+Name=Factory
 IsRelative=1
 Path={{ if eq .host.distro.family "darwin" }}Profiles/{{ end }}profile.default
 
