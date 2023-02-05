@@ -49,10 +49,10 @@ if command -v rclone > /dev/null; then
 
         ### Add user Rclone mount
         logg info 'Adding user S3 rclone mount (available at ~/.local/mnt/s3)'
-        sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/s3-user.service" "/etc/systemd/system/${USER}-s3.service"
+        sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/s3-user.service" "/etc/systemd/system/s3-${USER}.service"
         logg info 'Enabling / restarting the S3 user mount'
-        sudo systemctl enable "${USER}-s3"
-        sudo systemctl restart "${USER}-s3"
+        sudo systemctl enable "s3-${USER}"
+        sudo systemctl restart "s3-${USER}"
     fi
 else
     logg info '`rclone` is not available'

@@ -8,6 +8,7 @@
 if command -v vmware > /dev/null; then
   ### Build kernel modules if they are not present
   if [ ! -f "/lib/modules/$(uname -r)/misc/vmmon.ko" ] || [ ! -f "/lib/modules/$(uname -r)/misc/vmnet.ko" ]; then
+    ### Build VMWare host modules
     logg info 'Building VMware host modules'
     if sudo vmware-modconfig --console --install-all; then
       logg success 'Built VMWare host modules successfully with `sudo vmware-modconfig --console --install-all`'
@@ -53,6 +54,14 @@ if command -v vmware > /dev/null; then
       logg success 'Successfully unlocked VMware for macOS compatibility'
     else
       logg info '/usr/lib/vmware/isoimages/darwin.iso is already present on the system so VMware macOS unlocking will not be performed'
+    fi
+
+    ### Start / enable VMWare USB Arbitrator
+    if command -v vmware-usbarbitrator.service > /dev/null; then
+      sudo systemctl enable vmware-usbarbitrator.service
+      sudo systemctl restart vmware-usbarbitrator.service
+    else
+      logg warn '`vmware-usbarbitrator` does not exist in the PATH'
     fi
   else
     logg info 'VMware host modules are present'
