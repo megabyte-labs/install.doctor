@@ -56,12 +56,25 @@ if command -v vmware > /dev/null; then
       logg info '/usr/lib/vmware/isoimages/darwin.iso is already present on the system so VMware macOS unlocking will not be performed'
     fi
 
-    ### Start / enable VMWare USB Arbitrator
-    if command -v vmware-usbarbitrator.service > /dev/null; then
-      sudo systemctl enable vmware-usbarbitrator.service
-      sudo systemctl restart vmware-usbarbitrator.service
-    else
-      logg warn '`vmware-usbarbitrator` does not exist in the PATH'
+    if [[ ! "$(grep Microsoft /proc/version)" ]]; then
+      ### Start / enable VMWare service
+      logg info 'Ensuring `vmware.service` is enabled and running'
+      sudo systemctl enable vmware.service
+      sudo systemctl restart vmware.service
+
+      ### Start / enable VMWare Workstation Server service
+      logg info 'Ensuring `vmware-workstation-server.service` is enabled and running'
+      sudo systemctl enable vmware-workstation-server.service
+      sudo systemctl restart vmware-workstation-server.service
+
+      ### Start / enable VMWare USB Arbitrator service
+      if command -v vmware-usbarbitrator.service > /dev/null; then
+        logg info 'Ensuring `vmware-usbarbitrator.service` is enabled and running'
+        sudo systemctl enable vmware-usbarbitrator.service
+        sudo systemctl restart vmware-usbarbitrator.service
+      else
+        logg warn '`vmware-usbarbitrator` does not exist in the PATH'
+      fi
     fi
   else
     logg info 'VMware host modules are present'

@@ -7,7 +7,7 @@
 ### Run logic if VirtualBox is installed
 if command -v VirtualBox > /dev/null; then
   ### Install VirtualBox extension pack if it is not installed already
-  if [[ ! -d /usr/lib/virtualbox/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack/ ]]; then
+  if [ ! -d /usr/lib/virtualbox/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack ]; then
     logg info 'Acquiring VirtualBox version information'
     VBOX_VERSION="$(VirtualBox --help | head -n 1 | cut -f 6 -d' ')"
     VBOX_VERSION="${VBOX_VERSION//v}"
