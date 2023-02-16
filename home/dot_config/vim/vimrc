@@ -31,6 +31,11 @@ Plug '~/.vim/plugged/ansible-vim', {'do': './UltiSnips/generate.sh'}
 call plug#end()
 " TODO -- add executable checks around plugins
 
+" Install Coc extensions
+if executable('node')
+  let g:coc_global_extensions = ['coc-angular', '@yaegassy/coc-ansible', 'coc-calc', 'coc-copilot', 'coc-htmlhint', 'coc-html-css-support', 'coc-markdownlint', 'coc-markdown-preview-enhanced', '@yaegassy/coc-nginx', 'coc-powershell', 'coc-prettier', 'coc-stylelint', 'coc-spell-checker', 'coc-yaml', 'coc-xml']
+endif
+
 syntax enable
 set background=dark
 colorscheme Betelgeuse
