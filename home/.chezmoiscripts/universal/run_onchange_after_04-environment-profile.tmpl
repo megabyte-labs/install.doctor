@@ -14,13 +14,4 @@ else
   logg info 'Added QT_STYLE_OVERRIDE to /etc/environment'
 fi
 
-### Ensure Neovim alias is set in /etc/skel/.bashrc
-logg info 'Ensuring Neovim alias is set in /etc/skel/.bashrc'
-if cat /etc/skel/.bashrc | grep 'env -u VIMINIT nvim' > /dev/null; then
-  :
-else
-  echo 'alias nvim='env -u VIMINIT nvim' | sudo tee -a /etc/skel/.bashrc
-  logg info 'Added neovim alias to /etc/skel/.bashrc'
-fi
-
 {{ end -}}

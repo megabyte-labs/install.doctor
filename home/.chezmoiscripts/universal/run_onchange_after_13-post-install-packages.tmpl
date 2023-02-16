@@ -10,27 +10,4 @@ if command -v org.mozilla.firefox > /dev/null && command -v snap > /dev/null && 
     sudo snap remove firefox
 fi
 
-### Setup Neovim
-VIM_NEOVIM_INTEGRATION='set runtimepath^=~/.vim runtimepath+=~/.vim/after
-let &packpath = &runtimepath
-source ~/.vimrc'
-if command -v nvim > /dev/null && cat ~/.config/nvim/init.lua | grep 'if executable('volta')' > /dev/null; then
-    ### Setup fix for Neovim-Volta integration
-    logg info 'Setting up fix for Neovim-Volta integration (non-Flatpak install)'
-    echo -e "if executable('volta')\n  let g:node_host_prog = trim(system(\"volta which neovim-node-host\"))\nendif" | tee -a ~/.config/nvim/init.lua
-    ### Setup Neovim to work with Vim setup and plugins
-    logg info 'Setting up Neovim to work with Vim setup and plugins'
-    echo -e "$VIM_NEOVIM_INTEGRATION\n$(cat ~/.config/nvim/init.lua)" > ~/.config/nvim/init.lua
-elif flatpak list | grep 'io.neovim.nvim' > /dev/null && cat ~/.var/app/io.neovim.nvim/config/nvim/init.lua | grep 'if executable('volta')' > /dev/null; then
-    ### Setup fix for Neovim-Volta integration
-    logg info 'Setting up fix for Neovim-Volta integration (Flatpak install)'
-    echo -e "if executable('volta')\n  let g:node_host_prog = trim(system(\"volta which neovim-node-host\"))\nendif" \
-      | tee -a ~/.var/app/io.neovim.nvim/config/nvim/init.lua
-    ### Setup Neovim to work with Vim setup and plugins
-    logg info 'Setting up Neovim to work with Vim setup and plugins'
-    echo -e "$VIM_NEOVIM_INTEGRATION\n$(cat ~/.var/app/io.neovim.nvim/nvim/init.lua)" > ~/.var/app/io.neovim.nvim/nvim/init.lua
-else
-    logg info 'Neovim is not installed'
-fi
-
 {{ end -}}

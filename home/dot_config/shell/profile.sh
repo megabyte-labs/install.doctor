@@ -131,3 +131,20 @@ fi
 ### VIM
 export GVIMINIT='let $MYGVIMRC="$XDG_CONFIG_HOME/vim/gvimrc" | source $MYGVIMRC'
 export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
+
+### NVIM
+VIM_NEOVIM_INTEGRATION='vim.cmd([[
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
+let &packpath = &runtimepath
+source ~/.vimrc
+]])'
+if command -v nvim > /dev/null && cat ~/.config/nvim/init.lua | grep 'set runtimepath^=~/.vim runtimepath+=~/.vim/after' > /dev/null; then
+  ### Setup Neovim to work with Vim setup and plugins
+  echo -e "$VIM_NEOVIM_INTEGRATION\n$(cat ~/.config/nvim/init.lua)" > ~/.config/nvim/init.lua || echo ''
+elif flatpak list | grep 'io.neovim.nvim' > /dev/null && cat ~/.var/app/io.neovim.nvim/config/nvim/init.lua | grep 'set runtimepath^=~/.vim runtimepath+=~/.vim/after' > /dev/null; then
+  ### Setup Neovim to work with Vim setup and plugins
+  echo -e "$VIM_NEOVIM_INTEGRATION\n$(cat ~/.var/app/io.neovim.nvim/config/nvim/init.lua)" > ~/.var/app/io.neovim.nvim/config/nvim/init.lua || echo ''
+else
+  :
+fi
+unset VIM_NEOVIM_INTEGRATION
