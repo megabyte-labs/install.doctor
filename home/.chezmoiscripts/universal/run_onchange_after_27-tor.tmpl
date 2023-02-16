@@ -28,7 +28,7 @@ if command -v toron > /dev/null; then
             # macOS
             brew services restart tor
         else
-            if [[ ! "$(grep Microsoft /proc/version > /dev/null)" ]]; then
+            if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
                 # Linux
                 sudo systemctl enable tor
                 sudo systemctl restart tor

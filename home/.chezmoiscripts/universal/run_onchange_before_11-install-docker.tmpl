@@ -122,7 +122,7 @@ function gVisorSource() {
     else
         sudo git clone https://github.com/google/gvisor.git /usr/local/src/gvisor
     fi
-    
+
     ### Build gVisor
     cd /usr/local/src/gvisor
     sudo mkdir -p bin
@@ -177,7 +177,7 @@ if [ ! -d /Applications ] || [ ! -d /System ]; then
         fi
 
         # Restart / enable Docker
-        if [[ ! "$(grep Microsoft /proc/version > /dev/null)" ]] && command -v systemctl > /dev/null; then
+        if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]] && command -v systemctl > /dev/null; then
             logg info 'Restarting Docker service'
             sudo systemctl restart docker.service
             sudo systemctl restart containerd.service

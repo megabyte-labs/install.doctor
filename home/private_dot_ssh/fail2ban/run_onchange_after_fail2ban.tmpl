@@ -22,7 +22,7 @@ function restartFail2Ban() {
 }
 
 ### Update the jail.local file if environment is not WSL
-if [[ ! "$(grep Microsoft /proc/version > /dev/null)" ]]; then
+if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
     if [ -d /etc/fail2ban ]; then
         logg info 'Copying ~/.ssh/fail2ban/jail.local to /etc/fail2ban/jail.local'
         sudo cp -f "$HOME/.ssh/fail2ban/jail.local" /etc/fail2ban/jail.local

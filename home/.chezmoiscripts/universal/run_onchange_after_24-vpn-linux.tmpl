@@ -9,7 +9,7 @@
 
 RESTART_NM=false
 
-### Ensure NetworkManager plugins are 
+### Ensure NetworkManager plugins are
 # NOTE: By default, all the NetworkManager plugins are installed.
 if command -v apt-get > /dev/null; then
     sudo apt-get install -y network-manager*
@@ -72,7 +72,7 @@ if command -v nmcli > /dev/null; then
             logg info "Adding $WG_FILE to /etc/NetworkManager/system-connections
             WG_FILENAME="$(basename "$WG_FILE")"
             chezmoi decrypt "$WG_FILE" | sudo tee "/etc/NetworkManager/system-connections/$WG_FILENAME"
-            
+
             ### Register the excluded subnets in the routeadd / routedel files
             for EXCLUDED_SUBNET in '{{ $removeShortcuts := join "' '" .host.vpn.excludedSubnets }}'; do
                 ensureNetworkConfigs
@@ -87,7 +87,7 @@ if command -v nmcli > /dev/null; then
     fi
 
     ### Restart NetworkManager if changes were made and environment is not WSL
-    if [ "$RESTART_NM" == 'true' ] && [[ ! "$(grep Microsoft /proc/version > /dev/null)" ]]; then
+    if [ "$RESTART_NM" == 'true' ] && [[ ! "$(test -d proc && grep Microsoft /proc/version > /dev/null)" ]]; then
         logg info 'Restarting NetworkManager since VPN profiles were updated'
         sudo service NetworkManager restart
     fi
