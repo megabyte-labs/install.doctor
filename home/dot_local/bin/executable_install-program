@@ -164,7 +164,9 @@ async function generateInstallOrders(pkgsToInstall) {
       console.log('pkg:', pkg)
       continue
     }
+    let comparesRemaining = preferenceOrder.length
     for (let preference of preferenceOrder) {
+      comparesRemaining--
       let currentSelector, doubleScoped, scopedPkgManager, scopedSystem, normalCheck
       if (
         softwarePackages[packageKey][preference + ':' + osID] ||
@@ -402,8 +404,10 @@ async function generateInstallOrders(pkgsToInstall) {
             softwarePackages
           )
           break
-        } else {
-          log('info', 'No Match', `No suitable installation type available for \`${pkg}\``)
+        }
+      } else {
+        if (!comparedCountMax) {
+          log('info', 'No Match', `There was no match found for ${pkg} - it may be an OS-specific package`)
         }
       }
     }
