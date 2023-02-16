@@ -146,7 +146,7 @@ async function generateInstallOrders(pkgsToInstall) {
   if (generateInstallOrderCount === 0) {
     log('info', logStage, `Installer preference category detected as ${installerPreference}`)
     log('info', logStage, `Preference order acquired:`)
-    console.log(preferenceOrder)
+    console.log('Preference order:', preferenceOrder)
   }
   generateInstallOrderCount++
   log('info', logStage, `New packages discovered for processing: ${pkgsToInstall} (${pkgsToInstall.length} items)`)
@@ -432,22 +432,19 @@ function processPluginOrders(pkg) {
 async function updateInstallMaps(preference, packages, scopedPreference, pkg, packageKey, softwarePackages) {
   const preHook = getHook(packages, 'pre', scopedPreference, preference)
   if (preHook) {
-    installOrdersPre.concat(typeof preHook === 'string' ? [preHook] : preHook)
+    installOrdersPre = installOrdersPre.concat(typeof preHook === 'string' ? [preHook] : preHook)
   }
   const postHook = getHook(packages, 'post', scopedPreference, preference)
   if (postHook) {
-    installOrdersPost.concat(typeof postHook === 'string' ? [postHook] : postHook)
+    installOrdersPost = installOrdersPost.concat(typeof postHook === 'string' ? [postHook] : postHook)
   }
   const serviceHook = getHook(packages, 'service', scopedPreference, preference)
   if (serviceHook) {
-    installOrdersService.concat(typeof serviceHook === 'string' ? [serviceHook] : serviceHook)
+    installOrdersService = installOrdersService.concat(typeof serviceHook === 'string' ? [serviceHook] : serviceHook)
   }
   const groupsHook = getHook(packages, 'groups', scopedPreference, preference)
-  console.log('GROUPS HOOK')
-  console.log(groupsHook)
   if (groupsHook) {
-    installOrdersGroups.concat(typeof groupsHook === 'string' ? [groupsHook] : groupsHook)
-    console.log(installOrdersGroups)
+    installOrdersGroups = installOrdersGroups.concat(typeof groupsHook === 'string' ? [groupsHook] : groupsHook)
   }
   processPluginOrders(pkg)
   if (!installOrders[preference]) {
@@ -1577,7 +1574,7 @@ async function pruneInstallOrders(installOrders) {
   log('info', 'Filter', 'Removing packages from installOrders that are already installed')
   for (const pkgManager in installOrders) {
     log('info', 'Filter', `Filtering the ${pkgManager} installOrders`)
-    console.log(newOrders[pkgManager])
+    console.log('List to be filtered:', newOrders[pkgManager])
     if (pkgManager === 'appimage') {
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
@@ -1663,7 +1660,7 @@ async function pruneInstallOrders(installOrders) {
       })
     }
     log('info', 'Filter', `Finished filtering ${pkgManager}`)
-    console.log(newOrders[pkgManager])
+    console.log('Filtered list:', newOrders[pkgManager])
   }
   return newOrders
 }
@@ -1756,7 +1753,7 @@ async function installSoftware(pkgsToInstall) {
     console.error(e)
   }
   installOrders = await pruneInstallOrders(installOrders)
-  console.log(installOrders)
+  console.log('Install orders:', installOrders)
   packageManagers.length && log('info', 'Pre-Reqs', `Running package manager pre-installation steps`)
   for (const packageManager of packageManagers) {
     await beforeInstall(packageManager)
@@ -1765,7 +1762,6 @@ async function installSoftware(pkgsToInstall) {
   for (const script of installOrdersPre) {
     await $`${script}`
   }
-  console.log(installOrdersGroups)
   installOrdersGroups.length && log('info', 'Users / Groups', `Adding groups / users`)
   for (const group of installOrdersGroups) {
     await addUserGroup(group)
