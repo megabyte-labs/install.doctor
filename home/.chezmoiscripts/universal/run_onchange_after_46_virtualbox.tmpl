@@ -13,7 +13,7 @@ if command -v VirtualBox > /dev/null; then
     VBOX_VERSION="${VBOX_VERSION//v}"
 
     ### Set up folders
-    mkdir -p /usr/lib/virtualbox/ExtensionPacks
+    sudo mkdir -p /usr/lib/virtualbox/ExtensionPacks
     mkdir -p /tmp/vbox
     cd /tmp/vbox
 
