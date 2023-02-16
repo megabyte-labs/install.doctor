@@ -21,6 +21,19 @@ colors:
   color16: '#FFFFFF'
 config:
   gpg: https://raw.githubusercontent.com/drduh/config/master/gpg.conf
+docker:
+  healthchecks:
+    allowedHosts: "*"
+    defaultFromEmail: no-reply@megabyte.space
+    siteLogoUrl: https://gitlab.com/megabyte-labs/misc/assets/-/raw/master/logo/color3@10x.png
+    siteName: Megabyte Labs Healthchecks
+    siteRoot: "/"
+  portainer:
+    siteLogoUrl: https://gitlab.com/megabyte-labs/misc/assets/-/raw/master/logo/color3@10x.png
+    templatesUrl: ""
+  statping:
+    description: Uptime monitoring for Megabyte Labs managed web services
+    name: Megabyte Labs Uptime Monitoring
 macosRemoteLogin: 'on'
 netdataClaimURL: https://app.netdata.cloud
 themeparkTheme: aquamarine
