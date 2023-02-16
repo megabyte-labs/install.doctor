@@ -6166,7 +6166,7 @@ softwarePackages:
     apt: protonvpn-cli
     dnf: protonvpn-cli
     pacman: protonvpn-cli
-    script:darwin: brew install openvpn dialog python3 || true && if [ ! -d /usr/local/src/protonvpn-cli ]; then sudo git clone https://github.com/phx/protonvpn-cli-macos /usr/local/src/protonvpn-cli; fi && pip3 install -r /usr/local/src/protonvpn-cli/requirements.txt && sudo python3 setup.py install
+    script:darwin: brew install openvpn dialog python3 || true && sudo rm -rf /usr/local/src/protonvpn-cli && sudo git clone https://github.com/phx/protonvpn-cli-macos /usr/local/src/protonvpn-cli && pip3 install -r /usr/local/src/protonvpn-cli/requirements.txt && sudo python3 setup.py install
   protonmail-bridge:
     _bin: protonmail-bridge
     _when:cask: '! test -d "/Applications/Proton Mail Bridge.app"'
