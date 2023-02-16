@@ -402,6 +402,8 @@ async function generateInstallOrders(pkgsToInstall) {
             softwarePackages
           )
           break
+        } else {
+          log('info', 'No Match', `No suitable installation type available for \`${pkg}\``)
         }
       }
     }
