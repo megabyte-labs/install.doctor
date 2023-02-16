@@ -443,8 +443,10 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
     installOrdersService.concat(typeof serviceHook === 'string' ? [serviceHook] : serviceHook)
   }
   const groupsHook = getHook(packages, 'groups', scopedPreference, preference)
+  console.log(groupsHook)
   if (groupsHook) {
     installOrdersGroups.concat(typeof groupsHook === 'string' ? [groupsHook] : groupsHook)
+    console.log(installOrdersGroups)
   }
   processPluginOrders(pkg)
   if (!installOrders[preference]) {
