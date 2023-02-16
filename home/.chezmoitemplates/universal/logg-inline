@@ -111,9 +111,9 @@ formatFaint() {
   ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`\(.*\)$/\3/')"
   if [ "$ANSI_STR_FORMATTED" != "$ANSI_STR" ]; then
     if [[ $ANSI_STR == *'`'*'`'* ]]; then
-      ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$(formatFaint "$("$GUM_PATH" style --faint "$ANSI_STR")")"
+      ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$(formatFaint "$("$GUM_PATH" style --faint --foreground="#ffffff" "$ANSI_STR")")"
     else
-      ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$("$GUM_PATH" style --faint "$ANSI_STR")"
+      ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$("$GUM_PATH" style --faint --foreground="#ffffff" "$ANSI_STR")"
     fi
   fi
   echo -e "$ANSI_STR_FORMATTED"
@@ -127,7 +127,7 @@ logg() {
   if [ "$TYPE" == 'error' ]; then
     "$GUM_PATH" style --border="thick" "$("$GUM_PATH" style --foreground="#ff0000" "✖") $("$GUM_PATH" style --bold --background="#ff0000" --foreground="#ffffff"  " ERROR ") $("$GUM_PATH" style --bold "$(format "$MSG")")"
   elif [ "$TYPE" == 'info' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ffff" "○") $("$GUM_PATH" style --faint "$(formatFaint "$MSG")")"
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ffff" "○") $("$GUM_PATH" style --faint --foreground="#ffffff" "$(formatFaint "$MSG")")"
   elif [ "$TYPE" == 'md' ]; then
     # @description Ensure glow is installed
     if [ "${container:=}" != 'docker' ]; then
