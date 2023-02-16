@@ -13,7 +13,7 @@ export GCE_CREDENTIALS_FILE="$HOME/.config/gcloud/gcp.json"
 
 ### CloudFlare
 export LEXICON_CLOUDFLARE_TOKEN=""
-export LEXICON_CLOUDFLARE_USERNAME="{{ .user.CLOUDFLARE_USERNAME }}"
+export LEXICON_CLOUDFLARE_USERNAME="{{ .user.cloudflare.username }}"
 
 ### DockerHub
 export DOCKERHUB_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-dockerhub-api-key")) }}{{ includeTemplate "secrets/key-dockerhub-api-key" }}{{ else }}{{ env "DOCKERHUB_TOKEN" }}{{ end }}"
