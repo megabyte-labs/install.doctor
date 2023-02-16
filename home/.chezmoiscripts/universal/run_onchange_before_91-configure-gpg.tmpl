@@ -26,10 +26,10 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
     dirmngr --daemon --standard-resolver
     gpg --keyserver https://pgp.mit.edu --recv "$KEYID" || EXIT_CODE=$?
     if [ -n "$EXIT_CODE" ]; then
-      logg warn 'Error downloading public GPG key'
+      logg info 'Non-zero exit code received when downloading public GPG key'
       gpg --keyserver hkps://pgp.mit.edu --recv "$KEYID" || EXIT_CODE=$?
       if [ -n "$EXIT_CODE" ]; then
-        logg warn 'Failed to retrieve public user GPG key on hkps://pgp.mit.edu'
+        logg info 'Non-zero exit code received when trying to retrieve public user GPG key on hkps://pgp.mit.edu'
         gpgconf --kill dirmngr
         KEYID="${KEYID^^}"
         KEYID="$(echo "$KEYID" | sed 's/^0X/0x/')"
