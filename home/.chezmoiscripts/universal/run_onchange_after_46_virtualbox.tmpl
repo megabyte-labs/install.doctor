@@ -24,7 +24,7 @@ if command -v VirtualBox > /dev/null; then
 
     ### Install extension pack
     logg info 'Installing VirtualBox extension pack'
-    echo 'y' | VBoxManage extpack install --replace /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack
+    echo 'y' | sudo VBoxManage extpack install --replace /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack
     logg success 'Successfully installed VirtualBox extension pack'
   else
     logg info 'VirtualBox Extension pack is already installed'
