@@ -7,7 +7,7 @@
 {{ includeTemplate "universal/logg" }}
 
 ### Update /etc/endlessh/config if environment is not WSL
-if [[ ! "$(grep Microsoft /proc/version)" ]]; then
+if [[ ! "$(grep Microsoft /proc/version > /dev/null)" ]]; then
     if command -v endlessh > /dev/null; then
         if [ -d /etc/endlessh ]; then
             logg info 'Copying ~/.ssh/endlessh/config to /etc/endlessh/config'

@@ -8,7 +8,7 @@
 {{ includeTemplate "universal/logg" }}
 
 ### Update /etc/ssh/sshd_config if environment is not WSL
-if [[ ! "$(grep Microsoft /proc/version)" ]]; then
+if [[ ! "$(grep Microsoft /proc/version > /dev/null)" ]]; then
     if [ -d /etc/ssh ]; then
         logg info 'Copying ~/.ssh/system/banner to /etc/ssh/banner'
         sudo cp -f "$HOME/.ssh/system/banner" /etc/ssh/banner
