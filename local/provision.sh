@@ -132,7 +132,7 @@ formatFaint() {
   echo -e "$ANSI_STR_FORMATTED"
 }
 
-# @description Logs using Node.js
+# @description Logs using Gum
 # @example logger info "An informative log"
 logg() {
   TYPE="$1"
