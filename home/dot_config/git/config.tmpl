@@ -27,8 +27,6 @@
       git commit --amend --author \"$1 <$2>\" -C HEAD; \
     fi \
   }; f"
-[branch]
-  autosetuprebase = always
 [color]
   diff = auto
   status = auto
@@ -128,8 +126,6 @@
   threads = 0
 [pretty]
   custom = "%C(magenta)%h%C(red)%d %C(yellow)%ar %C(green)%s %C(yellow)(%an)"
-[pull]
-  rebase = true
 [push]
   autoSetupRemote = true
   default = upstream
