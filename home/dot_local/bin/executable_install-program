@@ -443,6 +443,7 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
     installOrdersService.concat(typeof serviceHook === 'string' ? [serviceHook] : serviceHook)
   }
   const groupsHook = getHook(packages, 'groups', scopedPreference, preference)
+  console.log('GROUPS HOOK')
   console.log(groupsHook)
   if (groupsHook) {
     installOrdersGroups.concat(typeof groupsHook === 'string' ? [groupsHook] : groupsHook)
@@ -1602,7 +1603,7 @@ async function pruneInstallOrders(installOrders) {
         const pkgTmp = mktemp.stdout
         runCommand(`Populating temporary file with list of Homebrew packages`, `brew list > ${pkgTmp}`)
         try {
-          await $`cat ${pkgTmp} | grep '^${pkg}$'`
+          await $"cat ${pkgTmp} | grep '^" + pkg + "$'"
           newVal = newVal.filter((x) => x === pkg)
         } catch (e) {
           // Do nothing
