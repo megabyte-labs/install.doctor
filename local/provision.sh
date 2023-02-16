@@ -402,12 +402,11 @@ fi
 
 ### Copy new files from src git repository to dotfiles with rsync
 rsyncChezmoiFiles() {
-  rsync -rtvu --delete /usr/local/src/install.doctor/docs/ "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/" &
-  rsync -rtvu --delete /usr/local/src/install.doctor/home/ "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/" &
-  rsync -rtvu --delete /usr/local/src/install.doctor/system/ "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/system/" &
-  rsync -rtvu /usr/local/src/install.doctor/.chezmoiignore "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.chezmoiignore" &
-  rsync -rtvu /usr/local/src/install.doctor/.chezmoiroot "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.chezmoiroot" &
-  rsync -rtvu /usr/local/src/install.doctor/software.yml "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/software.yml" &
+  rsync -rtu --delete /usr/local/src/install.doctor/docs/ "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/" &
+  rsync -rtu --delete /usr/local/src/install.doctor/home/ "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/" &
+  rsync -rtu /usr/local/src/install.doctor/.chezmoiignore "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.chezmoiignore" &
+  rsync -rtu /usr/local/src/install.doctor/.chezmoiroot "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.chezmoiroot" &
+  rsync -rtu /usr/local/src/install.doctor/software.yml "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/software.yml" &
   wait
   logg success 'Successfully updated the ~/.local/share/chezmoi folder with changes from the upstream repository'
 }
