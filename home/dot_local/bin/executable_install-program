@@ -1595,9 +1595,11 @@ async function pruneInstallOrders(installOrders) {
       })
     } else if (pkgManager === 'brew') {
       let newVal = newOrders[pkgManager]
+      const pkgTmp = '/tmp/brew-list-install-doctor'
+      runCommand(`Populating temporary file with list of Homebrew packages`, `brew list > ${pkgTmp}`)
       for (const pkg of newOrders[pkgManager]) {
         try {
-          await $`brew list | grep '^${pkg}$'`
+          await $`cat ${pkgTmp} | grep '^${pkg}$'`
           newVal = newVal.filter((x) => x === pkg)
         } catch (e) {
           // Do nothing
