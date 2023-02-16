@@ -56,7 +56,7 @@ if command -v vmware > /dev/null; then
       logg info '/usr/lib/vmware/isoimages/darwin.iso is already present on the system so VMware macOS unlocking will not be performed'
     fi
 
-    if [[ ! "$(grep Microsoft /proc/version)" ]]; then
+    if [[ ! "$(grep Microsoft /proc/version > /dev/null)" ]]; then
       ### Start / enable VMWare service
       logg info 'Ensuring `vmware.service` is enabled and running'
       sudo systemctl enable vmware.service

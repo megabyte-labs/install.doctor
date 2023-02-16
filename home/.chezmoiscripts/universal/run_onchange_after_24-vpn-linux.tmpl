@@ -87,7 +87,7 @@ if command -v nmcli > /dev/null; then
     fi
 
     ### Restart NetworkManager if changes were made and environment is not WSL
-    if [ "$RESTART_NM" == 'true' ] && [[ ! "$(grep Microsoft /proc/version)" ]]; then
+    if [ "$RESTART_NM" == 'true' ] && [[ ! "$(grep Microsoft /proc/version > /dev/null)" ]]; then
         logg info 'Restarting NetworkManager since VPN profiles were updated'
         sudo service NetworkManager restart
     fi

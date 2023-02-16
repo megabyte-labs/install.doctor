@@ -28,7 +28,7 @@ if command -v privoxy > /dev/null; then
             # macOS
             brew services restart privoxy
         else
-            if [[ ! "$(grep Microsoft /proc/version)" ]]; then
+            if [[ ! "$(grep Microsoft /proc/version > /dev/null)" ]]; then
                 # Linux
                 sudo systemctl enable privoxy
                 sudo systemctl restart privoxy

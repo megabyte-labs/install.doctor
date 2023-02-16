@@ -2,7 +2,7 @@
 #!/usr/bin/env bash
 
 ### Configure CloudFlare WARP (if not WSL and warp-cli is installed)
-if [[ ! "$(grep Microsoft /proc/version)" ]] && command -v warp-cli > /dev/null; then
+if [[ ! "$(grep Microsoft /proc/version > /dev/null)" ]] && command -v warp-cli > /dev/null; then
     ### Register CloudFlare WARP
     if warp-cli --accept-tos status | grep 'Registration missing' > /dev/null; then
         logg info 'Registering CloudFlare WARP'

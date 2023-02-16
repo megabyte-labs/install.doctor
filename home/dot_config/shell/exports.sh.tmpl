@@ -358,7 +358,7 @@ fi
 export BROWSER=brave
 
 ### WSL
-if [[ "$(grep Microsoft /proc/version)" ]]; then
+if [ -d /proc ] && [[ "$(grep Microsoft /proc/version > /dev/null)" ]]; then
   # Source: https://stackoverflow.com/questions/61110603/how-to-set-up-working-x11-forwarding-on-wsl2
   export LIBGL_ALWAYS_INDIRECT="1"
   export DISPLAY=$(ip route list default | awk '{print $3}'):0
