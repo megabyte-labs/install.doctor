@@ -1764,6 +1764,7 @@ async function installSoftware(pkgsToInstall) {
   for (const script of installOrdersPre) {
     await $`${script}`
   }
+  console.log(installOrdersGroups)
   installOrdersGroups.length && log('info', 'Users / Groups', `Adding groups / users`)
   for (const group of installOrdersGroups) {
     await addUserGroup(group)
