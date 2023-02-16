@@ -406,7 +406,7 @@ async function generateInstallOrders(pkgsToInstall) {
           break
         }
       } else {
-        if (!comparedCountMax) {
+        if (!comparesRemaining) {
           log('info', 'No Match', `There was no match found for ${pkg} - it may be an OS-specific package`)
         }
       }
