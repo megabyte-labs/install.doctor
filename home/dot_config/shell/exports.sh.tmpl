@@ -354,8 +354,13 @@ else
 fi
 {{ end }}
 
-### WSL
-# export LIBGL_ALWAYS_INDIRECT="1"
-# export BROWSER='/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe'
+### Browser
+export BROWSER=brave
 
-export BROWSER=librewolf
+### WSL
+if [[ "$(grep Microsoft /proc/version)" ]]; then
+  # Source: https://stackoverflow.com/questions/61110603/how-to-set-up-working-x11-forwarding-on-wsl2
+  export LIBGL_ALWAYS_INDIRECT="1"
+  export DISPLAY=$(ip route list default | awk '{print $3}'):0
+  export BROWSER='/mnt/c/Program\ Files/BraveSoftware/Brave-Browser/Application/brave.exe'
+fi
