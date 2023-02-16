@@ -109,12 +109,12 @@ let installData
 let installOrders = {}
 let installMeta = {}
 let binLinkRan = false
-const installOrdersPre = []
-const installOrdersPost = []
-const installOrdersService = []
-const installOrdersGroups = []
-const installOrdersPlugins = []
-const installOrdersBinLink = []
+let installOrdersPre = []
+let installOrdersPost = []
+let installOrdersService = []
+let installOrdersGroups = []
+let installOrdersPlugins = []
+let installOrdersBinLink = []
 let brewUpdated, osType, osID, snapRefreshed
 
 // Register the OS platform type
