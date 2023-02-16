@@ -2,7 +2,9 @@ Ensure git-delta (or kvantum or fzf) installs with dnf on Fedora because it didn
 https://drasite.com/blog/Pimp%20my%20terminal
 https://github.com/checkly/headless-recorder
 https://github.com/QaidVoid/Complete-Single-GPU-Passthrough
-
+https://github.com/dosyago/DiskerNet
+https://github.com/mldangelo/personal-site
+https://github.com/rigoneri/Syte3
 ✖  ERROR  Gsettings Failed to apply gsetting
 Error: Command failed: gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 No such key “color-scheme”

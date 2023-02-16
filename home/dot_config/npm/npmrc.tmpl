@@ -1,6 +1,6 @@
-cache=${XDG_CACHE_HOME}/npm
+cache={{ .host.home }}/.cache/npm
 init.license=MIT
 init.version=0.0.1
-init-module=${XDG_CONFIG_HOME}/npm/config/npm-init.js
-prefix=${XDG_DATA_HOME}/npm
-store-dir=${XDG_DATA_HOME}/pnpm-store
+init-module={{ .host.home }}/.config/npm/config/npm-init.js
+prefix={{ .host.home }}/.local/share/npm
+store-dir={{ .host.home }}/.local/share/pnpm-store
