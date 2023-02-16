@@ -1,1 +1,9 @@
-{{ if }}
+{{- if (ne .host.distro.family "windows") -}}
+#!/usr/bin/env bash
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+logg info 'KubeSphere integration coming soon..'
+
+{{ end -}}
