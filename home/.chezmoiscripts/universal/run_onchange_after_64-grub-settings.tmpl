@@ -119,6 +119,23 @@ else
     logg warn "/boot/grub2/themes/{{ .theme }}-$GRUB_RESOLUTION_TYPE/icons/$GRUB_ICON.png is missing"
 fi
 
+### Hide unnecessary Boot messages and Bliking cursor
+GRUB_DEFAULT_CMDLINE=$(grep 'GRUB_CMDLINE_LINUX_DEFAULT' /etc/default/grub)
+if [[ -n $GRUB_DEFAULT_CMDLINE ]]; then
+  KERNEL_PARAMS_QUIET=$(echo "$GRUB_DEFAULT_CMDLINE" | grep 'quiet')
+  logg info 'Updating GRUB_CMDLINE_LINUX_DEFAULT to hide log messages'
+  if [[ -z $KERNEL_PARAMS_QUIET ]]; then
+    sudo sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT="/GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3 systemd.show_status=auto rd.udev.log_level=3 vt.global_cursor_default=0 /' /etc/default/grub
+  else
+    NEW_KERNEL_PARAMS=$(echo $KERNEL_PARAMS_QUIET | sed -e "s/quiet/quiet loglevel=3 systemd.show_status=auto rd.udev.log_level=3 vt.global_cursor_default=0/")
+    sudo sed -i "s/^GRUB_CMDLINE_LINUX_DEFAULT.*/${NEW_KERNEL_PARAMS}/" /etc/default/grub
+  fi
+else
+  logg info 'GRUB_CMDLINE_LINUX_DEFAULT was not present, adding one with parameters to hide log messages'
+  echo 'GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3 systemd.show_status=auto rd.udev.log_level=3 vt.global_cursor_default=0"' | sudo tee -a /etc/default/grub > /dev/null
+fi
+
+
 ### Ensure grub2-mkconfig is available
 if ! command -v grub2-mkconfig > /dev/null; then
     if command -v grub-mkconfig > /dev/null; then
