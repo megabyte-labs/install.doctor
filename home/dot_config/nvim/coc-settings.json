@@ -1,0 +1,31 @@
+{
+  "sh.enable": true,
+  "languageserver": {
+    "arduino":{
+      "command":"arduino-language-server",
+      "rootPatterns":["*.ino"],
+      "filetypes":["arduino"],
+      "args":["-cli", "arduino-cli", "-clangd", "clangd", "-cli-config", "/opt/arduino-cli.yaml"]
+    },
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": ["Dockerfile"],
+      "args": ["--stdio"]
+    },
+    "sql": {
+      "module": "/opt/node_modules/sql-language-server/dist/bin/cli.js",
+      "args": ["up", "--method", "node-ipc"],
+      "filetypes": ["sql", "mysql"]
+    },
+    "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": [
+        "terraform",
+        "tf"
+      ],
+      "initializationOptions": {},
+      "settings": {}
+    }
+  }
+}

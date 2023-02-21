@@ -1,3 +1,7 @@
+if !executable('docker-langserver')
+  call system('sudo npm install -g dockerfile-language-server-nodejs')
+endif
+
 silent! call plug#begin()
 Plug '~/.vim/plugged/typescript-vim'
 Plug '~/.vim/plugged/vim-airline'
@@ -33,8 +37,43 @@ call plug#end()
 
 " Install Coc extensions
 if executable('node')
-  let g:coc_global_extensions = ['coc-angular', '@yaegassy/coc-ansible', 'coc-calc', 'coc-copilot', 'coc-htmlhint', 'coc-html-css-support', 'coc-markdownlint', 'coc-markdown-preview-enhanced', '@yaegassy/coc-nginx', 'coc-powershell', 'coc-prettier', 'coc-stylelint', 'coc-spell-checker', 'coc-yaml', 'coc-xml']
+  let g:coc_global_extensions = [
+    \ 'coc-angular',
+    \ '@yaegassy/coc-ansible',
+    \ 'coc-calc',
+    \ 'coc-copilot',
+    \ 'coc-htmlhint',
+    \ 'coc-html-css-support',
+    \ 'coc-markdownlint',
+    \ 'coc-markdown-preview-enhanced',
+    \ '@yaegassy/coc-nginx',
+    \ 'coc-powershell',
+    \ 'coc-prettier',
+    \ 'coc-stylelint',
+    \ 'coc-spell-checker',
+    \ 'coc-yaml',
+    \ 'coc-xml',
+    \ 'coc-sh',
+    \ 'coc-css',
+    \ 'coc-deno',
+    \ 'coc-go',
+    \ 'coc-html',
+    \ 'coc-tsserver',
+    \ 'coc-json',
+    \ 'coc-markdownlint',
+    \ 'coc-phpls',
+    \ 'coc-pyright',
+    \ 'coc-solargraph',
+    \ 'coc-rls',
+    \ 'coc-solidity'
+    \]
 endif
+
+" Settings for coc-css extension
+autocmd FileType scss setl iskeyword+=@-@
+
+" Settings for coc-go extension, to add missing imports on save
+autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
 
 syntax enable
 set background=dark
