@@ -1193,6 +1193,20 @@ softwarePackages:
       - clamav
       - clamav-update
     pacman: clamav
+  clangd:
+    _bin: clangd
+    _desc: '[clangd](https://clangd.llvm.org/) is an language server that understands your C++ code and adds smart features to your editor'
+    _docs: https://clangd.llvm.org/guides/
+    _github: https://github.com/llvm/llvm-project/tree/main/clang-tools-extra/clangd
+    _home: https://clangd.llvm.org/
+    _name: clangd
+    _type: cli
+    apt: clangd
+    brew: llvm
+    choco: llvm
+    dnf: clang-tools-extra
+    pacman: clang
+    scoop: llvm
   clocker:
     _when: '! test -d /Applications/Clocker.app'
     _bin: null
@@ -2978,7 +2992,7 @@ softwarePackages:
   zola:
     _bin: zola
     _desc: A static site generator built with Rust
-    _docs: 
+    _docs:
     apk: zola
     brew: zola
     choco: zola
@@ -5113,7 +5127,7 @@ softwarePackages:
     _name: nativefier
     npm: nativefier
     _service: false
-    _type: 
+    _type:
   nautilus-brasero:
     apt: nautilus-extension-brasero
     dnf: brasero-nautilus
@@ -5208,6 +5222,7 @@ softwarePackages:
     _github: https://github.com/neovim/neovim
     _home: https://neovim.io/
     _name: neovim
+    _deps: clangd
     apk: neovim
     apt:
       - neovim
@@ -5228,6 +5243,22 @@ softwarePackages:
       - py27-pynvim
       - py36-pynvim
     port: neovim
+    script:darwin: |
+      rm -rf /tmp/terraform-ls.zip && curl https://releases.hashicorp.com/terraform-ls/0.30.2/terraform-ls_0.30.2_darwin_amd64.zip -o /tmp/terraform-ls.zip && \
+      unzip /tmp/terraform-ls.zip -d /tmp && sudo mv -f /tmp/terraform-ls /usr/local/bin/terraform-ls && sudo chmod +x /usr/local/bin/terraform-ls
+      mkdir -p ~/.local/bin && \
+      curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=~/.local/bin sh && \
+      ~/.local/bin/arduino-cli config init --dest-file ~/.config/arduino-cli/arduino-cli.yml
+      rm -rf /tmp/arduino-language-server.tar.gz && curl -sSL https://github.com/arduino/arduino-language-server/releases/download/0.7.4/arduino-language-server_0.7.4_macOS_64bit.tar.gz -o /tmp/arduino-language-server.tar.gz && \
+      tar -xf /tmp/arduino-language-server.tar.gz -C /tmp --exclude "LICENSE.txt" && sudo mv -f /tmp/arduino-language-server /usr/local/bin/arduino-language-server && sudo chmod +x /usr/local/bin/arduino-language-server
+    script:linux: |
+      rm -rf /tmp/terraform-ls.zip && curl https://releases.hashicorp.com/terraform-ls/0.30.2/terraform-ls_0.30.2_linux_amd64.zip -o /tmp/terraform-ls.zip && \
+      unzip /tmp/terraform-ls.zip -d /tmp && sudo mv -f /tmp/terraform-ls /usr/local/bin/terraform-ls && sudo chmod +x /usr/local/bin/terraform-ls
+      mkdir -p ~/.local/bin && \
+      curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=~/.local/bin sh && \
+      ~/.local/bin/arduino-cli config init --dest-file ~/.config/arduino-cli/arduino-cli.yml
+      rm -rf /tmp/arduino-language-server.tar.gz && curl -sSL https://github.com/arduino/arduino-language-server/releases/download/0.7.4/arduino-language-server_0.7.4_Linux_64bit.tar.gz -o /tmp/arduino-language-server.tar.gz && \
+      tar -xf /tmp/arduino-language-server.tar.gz -C /tmp --exclude "LICENSE.txt" && sudo mv -f /tmp/arduino-language-server /usr/local/bin/arduino-language-server && sudo chmod +x /usr/local/bin/arduino-language-server
     winget: Neovim.Neovim
     zypper:
       - neovim

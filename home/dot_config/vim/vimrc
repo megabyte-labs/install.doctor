@@ -1,7 +1,3 @@
-if !executable('docker-langserver')
-  call system('sudo npm install -g dockerfile-language-server-nodejs')
-endif
-
 silent! call plug#begin()
 Plug '~/.vim/plugged/typescript-vim'
 Plug '~/.vim/plugged/vim-airline'
@@ -67,6 +63,16 @@ if executable('node')
     \ 'coc-rls',
     \ 'coc-solidity'
     \]
+
+  if !executable('docker-langserver')
+    call system('sudo npm install -g dockerfile-language-server-nodejs')
+  endif
+  if !executable('sql-language-server')
+    call system('sudo npm install -g sql-language-server')
+  endif
+  if executable('gem')
+    call system('gem install solargraph')
+  endif
 endif
 
 " Settings for coc-css extension
