@@ -5244,21 +5244,31 @@ softwarePackages:
       - py36-pynvim
     port: neovim
     script:darwin: |
-      rm -rf /tmp/terraform-ls.zip && curl https://releases.hashicorp.com/terraform-ls/0.30.2/terraform-ls_0.30.2_darwin_amd64.zip -o /tmp/terraform-ls.zip && \
-      unzip /tmp/terraform-ls.zip -d /tmp && sudo mv -f /tmp/terraform-ls /usr/local/bin/terraform-ls && sudo chmod +x /usr/local/bin/terraform-ls
-      mkdir -p ~/.local/bin && \
-      curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=~/.local/bin sh && \
-      ~/.local/bin/arduino-cli config init --dest-file ~/.config/arduino-cli/arduino-cli.yml
-      rm -rf /tmp/arduino-language-server.tar.gz && curl -sSL https://github.com/arduino/arduino-language-server/releases/download/0.7.4/arduino-language-server_0.7.4_macOS_64bit.tar.gz -o /tmp/arduino-language-server.tar.gz && \
-      tar -xf /tmp/arduino-language-server.tar.gz -C /tmp --exclude "LICENSE.txt" && sudo mv -f /tmp/arduino-language-server /usr/local/bin/arduino-language-server && sudo chmod +x /usr/local/bin/arduino-language-server
+      if [ ! $(command -v terraform-ls > /dev/null) ]; then
+        rm -rf /tmp/terraform-ls.zip && curl -fsSL https://releases.hashicorp.com/terraform-ls/0.30.2/terraform-ls_0.30.2_darwin_amd64.zip -o /tmp/terraform-ls.zip && \
+        unzip /tmp/terraform-ls.zip -d /tmp && sudo mv -f /tmp/terraform-ls /usr/local/bin/terraform-ls && sudo chmod +x /usr/local/bin/terraform-ls
+      fi
+      if [ ! $(command -v arduino-cli > /dev/null) ]; then
+        curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=/tmp sh && \
+        sudo mv -f /tmp/arduino-cli /usr/local/bin/arduino-cli && sudo chmod +x /usr/local/bin/arduino-cli && arduino-cli config init --dest-file ~/.config/arduino-cli/arduino-cli.yml
+      fi
+      if [ ! $(command -v arduino-language-server > /dev/null) ]; then
+        rm -rf /tmp/arduino-language-server.tar.gz && curl -fsSL https://github.com/arduino/arduino-language-server/releases/download/0.7.4/arduino-language-server_0.7.4_macOS_64bit.tar.gz -o /tmp/arduino-language-server.tar.gz && \
+        tar -xf /tmp/arduino-language-server.tar.gz -C /tmp --exclude "LICENSE.txt" && sudo mv -f /tmp/arduino-language-server /usr/local/bin/arduino-language-server && sudo chmod +x /usr/local/bin/arduino-language-server
+      fi
     script:linux: |
-      rm -rf /tmp/terraform-ls.zip && curl https://releases.hashicorp.com/terraform-ls/0.30.2/terraform-ls_0.30.2_linux_amd64.zip -o /tmp/terraform-ls.zip && \
-      unzip /tmp/terraform-ls.zip -d /tmp && sudo mv -f /tmp/terraform-ls /usr/local/bin/terraform-ls && sudo chmod +x /usr/local/bin/terraform-ls
-      mkdir -p ~/.local/bin && \
-      curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=~/.local/bin sh && \
-      ~/.local/bin/arduino-cli config init --dest-file ~/.config/arduino-cli/arduino-cli.yml
-      rm -rf /tmp/arduino-language-server.tar.gz && curl -sSL https://github.com/arduino/arduino-language-server/releases/download/0.7.4/arduino-language-server_0.7.4_Linux_64bit.tar.gz -o /tmp/arduino-language-server.tar.gz && \
-      tar -xf /tmp/arduino-language-server.tar.gz -C /tmp --exclude "LICENSE.txt" && sudo mv -f /tmp/arduino-language-server /usr/local/bin/arduino-language-server && sudo chmod +x /usr/local/bin/arduino-language-server
+      if [ ! $(command -v terraform-ls > /dev/null) ]; then
+        rm -rf /tmp/terraform-ls.zip && curl https://releases.hashicorp.com/terraform-ls/0.30.2/terraform-ls_0.30.2_linux_amd64.zip -o /tmp/terraform-ls.zip && \
+        unzip /tmp/terraform-ls.zip -d /tmp && sudo mv -f /tmp/terraform-ls /usr/local/bin/terraform-ls && sudo chmod +x /usr/local/bin/terraform-ls
+      fi
+      if [ ! $(command -v arduino-cli > /dev/null) ]; then
+        curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=/tmp sh && \
+        sudo mv -f /tmp/arduino-cli /usr/local/bin/arduino-cli && sudo chmod +x /usr/local/bin/arduino-cli && arduino-cli config init --dest-file ~/.config/arduino-cli/arduino-cli.yml
+      fi
+      if [ ! $(command -v arduino-language-server > /dev/null) ]; then
+        rm -rf /tmp/arduino-language-server.tar.gz && curl -sSL https://github.com/arduino/arduino-language-server/releases/download/0.7.4/arduino-language-server_0.7.4_Linux_64bit.tar.gz -o /tmp/arduino-language-server.tar.gz && \
+        tar -xf /tmp/arduino-language-server.tar.gz -C /tmp --exclude "LICENSE.txt" && sudo mv -f /tmp/arduino-language-server /usr/local/bin/arduino-language-server && sudo chmod +x /usr/local/bin/arduino-language-server
+      fi
     winget: Neovim.Neovim
     zypper:
       - neovim

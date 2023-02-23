@@ -65,13 +65,13 @@ if executable('node')
     \]
 
   if !executable('docker-langserver')
-    call system('sudo npm install -g dockerfile-language-server-nodejs')
+    call system('npm install --prefix ~/.local -g dockerfile-language-server-nodejs')
   endif
   if !executable('sql-language-server')
-    call system('sudo npm install -g sql-language-server')
+    call system('npm install --prefix ~/.local -g sql-language-server')
   endif
-  if executable('gem')
-    call system('gem install solargraph')
+  if !executable('solargraph')
+    call system('gem install solargraph -n ~/.local/bin')
   endif
 endif
 
