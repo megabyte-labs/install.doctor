@@ -1,0 +1,63 @@
+[global]
+  allow hosts = {{ .samba_allowed_hosts }}
+  {{ if (index . "samba_printers") -}}
+  load printers = yes
+  {{ end -}}
+  # Allows users without accounts to log in and be assigned to the guest account
+  map to guest = bad user
+  netbios name = {{ .samba_netbios_name }}
+  obey pam restrictions = yes
+  # Source: https://wiki.archlinux.org/index.php/CUPS/Printer_sharing
+  printing = CUPS
+  proxy = no
+  security = user
+  server role = standalone server
+  server string = Samba on %L
+  # Required for allowing wide links (symlinks)
+  unix extension = no
+  # Follow symlinks out of the current share
+  wide links = yes
+  workgroup = {{ .samba_workgroup }}
+{{ if (index . "samba_shares") -}}
+{{ range .samba_shares }}
+[{{ .id }}]
+  browsable = yes
+  comment = {{ if (index . "comment") }}{{ .comment }}{{ else }}{{ end }}
+  follow symlinks = {{ if (index . "follow_symlinks") }}{{ .follow_symlinks }}{{ else }}no{{ end }}
+  guest only = {{ if (index . "public") }}{{ .public }}{{ else }}no{{ end }}
+  path = {{ .path }}
+  public = {{ if (index . "public") }}{{ .public }}{{ else }}no{{ end }}
+{{- if (index . "users") }}
+  valid users = {{ .users }}
+{{- end }}
+  writable = {{ if (index . "writable") }}{{ .writable }}{{ else }}no{{ end }}
+{{ end -}}
+{{ end -}}
+{{ if (index . "samba_printers") }}
+[printers]
+  browsable = yes
+  comment = Printers
+  path = /var/spool/samba/
+  printable = yes
+  public = yes
+  writable = no
+
+[print]
+  browsable = yes
+  comment = Printer drivers
+  path = /var/lib/samba/printers
+  public = yes
+  writable = no
+{{ if (index . "samba_shares") }}
+{{ range .samba_printers -}}
+[{{ .id }}]
+  comment = {{ if (index . "comment") }}{{ .comment }}{{ else }}{{ end }}
+  path = /var/spool/samba/
+  printable = yes
+  # Source: https://wiki.samba.org/index.php/Setting_up_Samba_as_a_Print_Server
+  printer name = {{ .name }}
+  public = {{ if (index . "public") }}{{ .public }}{{ else }}no{{ end }}
+  writable = no
+{{ end -}}
+{{ end -}}
+{{ end }}

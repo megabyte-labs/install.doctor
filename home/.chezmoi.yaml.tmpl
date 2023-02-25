@@ -25,6 +25,12 @@
 {{-   $softwareGroup = list $softwareGroup "-Desktop" | join "" -}}
 {{- end -}}
 
+{{- $samba_allowed_hosts := (default "127.0.0.1" (env "SAMBA_ALLOWED_HOSTS")) -}}
+{{- $samba_netbios_name := (default "HTPC" (env "SAMBA_NETBIOS_NAME")) -}}
+{{- $samba_printers := (default (list) (get $data "samba_printers")) -}}
+{{- $samba_shares := (default (list) (get $data "samba_shares")) -}}
+{{- $samba_workgroup := (default "MEGAGROUP" (env "SAMBA_WORKGROUP")) -}}
+
 {{- $data := . }}
 {{- $_ := set $data "host" (default (dict) (get $data "host")) -}}
 {{- $_ := set $data "user" (default (dict) (get $data "user")) -}}
