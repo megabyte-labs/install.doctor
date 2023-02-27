@@ -8,7 +8,7 @@
 if command -v smbd > /dev/null; then
     ### Copy the Samba server configuration file
     logg info "Copying Samba server configuration to /etc/samba/smb.conf"
-    cp -f "${XDG_DATA_HOME:-$HOME/.config}/samba/config" "/etc/samba/smb.conf"
+    sudo cp -f "${XDG_DATA_HOME:-$HOME/.config}/samba/config" "/etc/samba/smb.conf"
     ### Reload configuration file changes
     smbcontrol smbd reload-config
 else
