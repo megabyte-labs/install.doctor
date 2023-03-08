@@ -1016,6 +1016,23 @@ softwarePackages:
     brew:darwin: carthage
     _service: false
     _type: cli
+  imageoptim:
+    _bin: null
+    _docs: null
+    _desc: Image compressor that utilizes other applications like ImageOptim under the hood
+    _github: https://github.com/ImageOptim/ImageOptim
+    _home: https://imageoptim.com/mac
+    cask: imageoptim
+  imageoptim-cli:
+    _deps:
+      - imageoptim
+    _bin: imageoptim
+    _docs: null
+    _desc: Image compressor that utilizes other applications like ImageOptim under the hood
+    _github: https://github.com/ImageOptim/ImageOptim
+    _home: https://imageoptim.com/mac
+    brew:darwin: imageoptim-cli
+    npm:darwin: imageoptim-cli
   cerebro:
     _bin: null
     _desc: Open-source productivity booster with a brain
