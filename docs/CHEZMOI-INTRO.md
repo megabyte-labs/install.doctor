@@ -16,7 +16,7 @@ To use a fork (if you made modifications to the original project), set this equa
 2. Your GitHub username / slug if you changed it from `install.doctor` (e.g. `ProfessorManhattan/install.doctor`)
 3. A git remote URL (e.g. `git@gitlab.com:megabyte-labs/install.doctor`)
 
-* Environment variable: `START_REPO`
+- Environment variable: `START_REPO`
 
 Note, this variable is used by the `bash <(curl -sSL https://install.doctor/start)` command and is not used anywhere in the project itself.
 
@@ -26,113 +26,113 @@ Set to true if you would like all prompts to be bypassed. If you have not alread
 your encryption keys, then the encryption process will be bypassed and default fallback
 files will be used. Set to any value to perform a headless installation.
 
-* Environment variable: `HEADLESS_INSTALL`
+- Environment variable: `HEADLESS_INSTALL`
 
 ### Work Environment
 
 Set to true if you are setting up a work environment where things like Tor should
 not be installed.
 
-* Environment variable: `WORK_ENVIRONMENT`
+- Environment variable: `WORK_ENVIRONMENT`
 
 ### Restricted Environment
 
 Set to true if you are setting up an environment that should not use sudo / administrator
 privileges. This is a WIP.
 
-* Environment variable: `RESTRICTED_ENVIRONMENT`
+- Environment variable: `RESTRICTED_ENVIRONMENT`
 
 ### Software Group
 
 The category you select for software group will determine which list of software should be
 installed. The lists are configurable by modifying `~/.local/share/chezmoi/software.yml`.
 
-* Environment variable: `SOFTWARE_GROUP`
+- Environment variable: `SOFTWARE_GROUP`
 
 ### Name
 
 Enter your full name as you would like it to appear in configuration files such as the Git
 configuration.
 
-* Environment variable: `FULL_NAME`
+- Environment variable: `FULL_NAME`
 
 ### E-mail
 
 Enter your primary e-mail address.
 
-* Environment variable: `PRIMARY_EMAIL`
+- Environment variable: `PRIMARY_EMAIL`
 
 ### Public GPG Key ID
 
 **Environment Variable Only** If you have a public GPG key available on the Ubuntu or MIT keyservers, then you can enter it
 so that it is automatically imported.
 
-* Environment variable: `KEYID`
+- Environment variable: `KEYID`
 
 ### Timezone
 
 Enter your timezone in the format of `America/New_York`. It should be available in the TZ database.
 
-* Environment variable: `TIMEZONE`
+- Environment variable: `TIMEZONE`
 
 ### Domain
 
 The domain address you would like to use for any part of the deployment that involves launching
 a publicly web service.
 
-* Environment variable: `PUBLIC_SERVICES_DOMAIN`
+- Environment variable: `PUBLIC_SERVICES_DOMAIN`
 
 ### CloudFlare API Token
 
 The API token is used to automatically configure various web services that rely on public DNS
 records.
 
-* Environment variable: `CLOUDFLARE_API_TOKEN`
+- Environment variable: `CLOUDFLARE_API_TOKEN`
 
 ### GitHub Gist Token
 
 **Environment Variable Only** Pass in a GitHub token with the `gist` scope to be able to use the `gist` CLI tool without having to authenticate.
 
-* Environment variable: `GITHUB_GIST_TOKEN`
+- Environment variable: `GITHUB_GIST_TOKEN`
 
 ### GitHub Read-Only Token
 
 **Environment Variable Only** Pass in a GitHub read-only token linked to your account to automatically save a backup of your
 GitHub repositories. For more information, see [this link](https://github.com/gabrie30/ghorg#scm-provider-setup).
 
-* Environment variable: `GITHUB_READ_TOKEN`
+- Environment variable: `GITHUB_READ_TOKEN`
 
 ### GitLab Read-Only Token
 
 **Environment Variable Only** Pass in a GitLab read-only token linked to your account to automatically save a backup of your
 GitLab repositories. For more information, see [this link](https://github.com/gabrie30/ghorg#scm-provider-setup).
 
-* Environment variable: `GITLAB_READ_TOKEN`
+- Environment variable: `GITLAB_READ_TOKEN`
 
 ### G-mail Address
 
 **Environment Variable Only** Add a G-mail address which you would like to use as the handler for outgoing SMTP mail.
 
-* Environment variable: `GMAIL_ADDRESS`
+- Environment variable: `GMAIL_ADDRESS`
 
 ### G-mail App Password
 
 **Environment Variable Only** Add the app password to your G-mail address so that outgoing mail can be handled by G-mail.
 
-* Environment variable: `GMAIL_APP_PASSWORD`
+- Environment variable: `GMAIL_APP_PASSWORD`
 
 ### Ngrok Authentication Token
 
 **Environment Variable Only** Add your Ngrok authentication token so that the configuration file can be automatically
 generated.
 
-* Environment Variable: `NGROK_AUTH_TOKEN`
+- Environment Variable: `NGROK_AUTH_TOKEN`
 
 ### Slack API Token
 
 **Environment Variable Only** Add your Slack API token so that `slackterm` can be automatically set up.
 
-* Environment Variable: `SLACK_API_TOKEN`
+- Environment Variable: `SLACK_API_TOKEN`
 
 ### Surge.sh Username
 
@@ -143,29 +143,28 @@ in `.chezmoitemplates/secrets/key-surgesh-password` to leverage this functionali
 
 **Environment Variable Only** Add a Tailscale authentication key so that Tailscale can be automatically connected to your Tailscale network.
 
-* Environment Variable: `TAILSCALE_AUTH_KEY`
+- Environment Variable: `TAILSCALE_AUTH_KEY`
 
 ### OpenVPN Username
 
-* Environment Variable: `OVPN_USERNAME`
+- Environment Variable: `OVPN_USERNAME`
 
 ### OpenVPN Password
 
-* Environment Variable: `OVPN_PASSWORD`
+- Environment Variable: `OVPN_PASSWORD`
 
 ### VMWare Workstation Key
 
-* Environment Variable: `VMWARE_WORKSTATION_LICENSE_KEY`
+- Environment Variable: `VMWARE_WORKSTATION_LICENSE_KEY`
 
 ### Google Cloud SDK Default E-mail
 
-* Environment Variable: `GCE_SERVICE_ACCOUNT_EMAIL`
+- Environment Variable: `GCE_SERVICE_ACCOUNT_EMAIL`
 
 ### Google Cloud SDK Default Project
 
-* Environment Variable: `CLOUDSDK_CORE_PROJECT`
-
+- Environment Variable: `CLOUDSDK_CORE_PROJECT`
 
 ### Snapcraft E-mail
 
-* `SNAPCRAFT_EMAIL`
+- `SNAPCRAFT_EMAIL`

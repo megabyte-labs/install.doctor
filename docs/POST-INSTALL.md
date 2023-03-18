@@ -13,4 +13,4 @@ The script has finished provisioning. Enjoy! You can review the installation log
 
 **bZ out**
 
-*Note: Some of the settings / applications might require a reboot (or at the very least, a terminal reload).*
+_Note: Some of the settings / applications might require a reboot (or at the very least, a terminal reload)._
