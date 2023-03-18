@@ -1,5 +1,13 @@
-{{- if (eq .host.distro.family "linux") -}}
+{{- if false -}}
 #!/usr/bin/env bash
+### This script is `if false` blocked out! ###
+# This script is disabled until we figure out sensible git hooks for linters / auto-fixers
+# that are not too aggressive. Megabyte Labs projects can install git hooks by running
+# `bash start.sh`.
+#
+# To re-enable, add the missing files to the ~/.config/git/template folder, uncomment the templatedir line
+# in ~/.config/git/config, and uncomment the Husky script in .chezmoiexternal.toml. Then, move this file to
+# the universal folder.
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}

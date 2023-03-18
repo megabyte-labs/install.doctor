@@ -1,6 +1,7 @@
 cache={{ .host.home }}/.cache/npm
-init.license=MIT
-init.version=0.0.1
+init-author-name "{{ .user.name }} <{{ .user.email }}> ({{ .user.domain }})"
+init-license=MIT
+init-version=0.0.1
 init-module={{ .host.home }}/.config/npm/config/npm-init.js
 prefix={{ .host.home }}/.local/share/npm
 store-dir={{ .host.home }}/.local/share/pnpm-store
