@@ -1,4 +1,4 @@
-{{- if and (ne .host.distro.family "windows") (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-netdata-token")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-netdata-room")) -}}
+{{- if and (ne .host.distro.family "windows") (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (or (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-NETDATA_TOKEN")) (env "NETDATA_TOKEN")) (or (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-NETDATA_ROOM")) (env "NETDATA_ROOM")) -}}
 #!/usr/bin/env bash
 
 {{ includeTemplate "universal/profile" }}
