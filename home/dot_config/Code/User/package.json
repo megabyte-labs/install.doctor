@@ -7,123 +7,124 @@
     "author": "Brian Zalewski <brian@megabyte.space> (https://megabyte.space)",
     "homepage": "https://megabyte.space",
     "config": {
-        "commitizen": {
-            "path": "node_modules/git-cz-emoji"
-        }
-    },
-    "peerDependenciesMeta": {
-        "eslint": {
-            "optional": true
-        }
+      "commitizen": {
+        "path": "node_modules/git-cz-emoji"
+      }
     },
     "dependencies": {
-        "@commitlint/config-conventional": "latest",
-        "eslint-config-strict-mode": "latest",
-        "git-cz-emoji": "latest",
-        "handlebars-helpers": "latest",
-        "jest-preset-ts": "latest",
-        "prettier": "^2.4.1",
-        "prettier-config-sexy-mode": "latest",
-        "semantic-release-config": "latest",
-        "stylelint-config-so-pretty": "latest",
-        "typescript": "^4.5.5"
+      "@commitlint/config-conventional": "latest",
+      "eslint-config-strict-mode": "latest",
+      "git-cz-emoji": "latest",
+      "handlebars-helpers": "latest",
+      "jest-preset-ts": "latest",
+      "prettier": "^2.4.1",
+      "prettier-config-sexy-mode": "latest",
+      "semantic-release-config": "latest",
+      "stylelint-config-so-pretty": "latest",
+      "typescript": "^4.5.5"
+    },
+    "peerDependenciesMeta": {
+      "eslint": {
+        "optional": true
+      }
     },
     "keywords": [
-        "eslint",
-        "extensions",
-        "handlebars",
-        "jest",
-        "plugins",
-        "prettier",
-        "semantic-release",
-        "stylelint",
-        "vscode"
+      "eslint",
+      "extensions",
+      "handlebars",
+      "jest",
+      "plugins",
+      "prettier",
+      "semantic-release",
+      "stylelint",
+      "vscode"
     ],
     "engines": {
-        "node": ">=16.19.1"
+      "node": ">=16.19.1"
     },
     "changelog": {
-        "displayTypes": [
-            "feat",
-            "fix",
-            "perf",
-            "refactor",
-            "revert"
-        ],
-        "showAuthor": true
+      "displayTypes": [
+        "feat",
+        "fix",
+        "perf",
+        "refactor",
+        "revert"
+      ],
+      "showAuthor": true
     },
     "commitlint": {
-        "extends": [
-            "@commitlint/config-conventional"
-        ],
-        "helpUrl": "https://megabyte.space/docs/contributing/commits"
+      "extends": [
+        "@commitlint/config-conventional"
+      ],
+      "helpUrl": "https://megabyte.space/docs/contributing/commits"
     },
     "eslintConfig": {
-        "extends": "eslint-config-strict-mode"
+      "extends": "eslint-config-strict-mode"
     },
     "funding": [
-        {
-            "type": "opencollective",
-            "url": "https://opencollective.com/megabytelabs"
-        },
-        {
-            "type": "patreon",
-            "url": "https://www.patreon.com/ProfessorManhattan"
-        }
+      {
+        "type": "opencollective",
+        "url": "https://opencollective.com/megabytelabs"
+      },
+      {
+        "type": "patreon",
+        "url": "https://www.patreon.com/ProfessorManhattan"
+      }
     ],
     "jest": {
-        "preset": "jest-preset-ts",
-        "reporters": [
-            "default",
-            [
-                "jest-html-reporters",
-                {
-                    "filename": "index.html",
-                    "logoImgPath": "./.config/assets/logo-jest-report.png",
-                    "openReport": true,
-                    "pageTitle": "Code Coverage Report",
-                    "publicPath": "./coverage"
-                }
-            ]
+      "preset": "jest-preset-ts",
+      "reporters": [
+        "default",
+        [
+          "jest-html-reporters",
+          {
+            "filename": "index.html",
+            "logoImgPath": "./.config/assets/logo-jest-report.png",
+            "openReport": true,
+            "pageTitle": "Code Coverage Report",
+            "publicPath": "./coverage"
+          }
         ]
+      ]
     },
     "pnpm": {
-        "allowedVersions": {
-            "@typescript-eslint/eslint-plugin": "5",
-            "eslint": "8",
-            "typescript": "4"
-        },
-        "neverBuiltDependencies": [
-            "core-js",
-            "core-js-pure",
-            "highlight.js"
-        ],
-        "peerDependencyRules": {
-            "ignoreMissing": [
-                "eslint",
-                "prettier",
-                "puppeteer"
-            ]
-        }
+      "allowedVersions": {
+        "@typescript-eslint/eslint-plugin": "5",
+        "eslint": "8",
+        "typescript": "4"
+      },
+      "neverBuiltDependencies": [
+        "core-js",
+        "core-js-pure",
+        "highlight.js"
+      ],
+      "peerDependencyRules": {
+        "ignoreMissing": [
+          "eslint",
+          "prettier",
+          "puppeteer"
+        ]
+      }
     },
     "prettier": "prettier-config-sexy-mode",
     "release": {
-        "branches": [
-            "main",
-            "master",
-            "next",
-            {
-                "name": "beta",
-                "prerelease": true
-            }
-        ],
-        "extends": "semantic-release-config"
+      "branches": [
+        "main",
+        "master",
+        "next",
+        {
+          "name": "beta",
+          "prerelease": true
+        }
+      ],
+      "extends": "semantic-release-config"
     },
     "stylelint": {
-        "extends": "stylelint-config-so-pretty"
+      "extends": "stylelint-config-so-pretty"
     },
     "volta": {
-        "node": "18.4.0",
-        "yarn": "1.22.19"
+      "node": "18.4.0",
+      "yarn": "1.22.19"
     }
-}
+  }
+  
