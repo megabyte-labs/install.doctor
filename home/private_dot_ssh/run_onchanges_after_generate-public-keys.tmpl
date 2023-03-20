@@ -16,5 +16,6 @@ find "$HOME/.ssh" -type f | while read FILE; do
   if [ ! -f "${FILE}.pub" ]; then
     logg info 'Generating missing public key for `'"$FILE"'`'
     ssh-keygen -f "$FILE" -y > "${FILE}.pub"
+    chmod 600 "${FILE}.pub"
   fi
 done

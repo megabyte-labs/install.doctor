@@ -7,4 +7,5 @@
 if [ ! -f "$HOME/.ssh/id_rsa" ]; then
   logg 'Generating missing default private key / public key (`~/.ssh/id_rsa`)'
   ssh-keygen -b 4096 -t rsa -f "$HOME/.ssh/id_rsa" -q -N ""
+  chmod 600 "$HOME/.ssh/id_rsa"
 fi
