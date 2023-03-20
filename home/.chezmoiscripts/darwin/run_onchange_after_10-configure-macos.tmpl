@@ -10,7 +10,10 @@ logg info 'A sudo password is required to apply some of the macOS optimizations.
 sudo echo "Sudo access granted."
 
 # Log commands
-set +x
+if [ "$DEBUG" = 'true' ]; then
+	set -x
+fi
+set -x
 
 # Enable SSH access
 sudo systemsetup -setremotelogin {{ .macosRemoteLogin }}
@@ -216,11 +219,12 @@ sudo systemsetup -setcomputersleep Off > /dev/null
 sudo pmset -a hibernatemode 0
 
 # Remove the sleep image file to save disk space
-sudo rm /private/var/vm/sleepimage
-# Create a zero-byte file instead…
-sudo touch /private/var/vm/sleepimage
-# …and make sure it can’t be rewritten
-sudo chflags uchg /private/var/vm/sleepimage
+if sudo rm -f /private/var/vm/sleepimage > /dev/null; then
+	# Create a zero-byte file instead…
+	sudo touch /private/var/vm/sleepimage
+	# …and make sure it can’t be rewritten
+	sudo chflags uchg /private/var/vm/sleepimage
+fi
 
 ###############################################################################
 # Screen                                                                      #
