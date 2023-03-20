@@ -20,5 +20,6 @@ find "{{ .chezmoi.sourceDir }}/home/.chezmoitemplates/ssh" -type f | while read 
         logg info "Applying appropriate permissions on $HOME/.ssh/$(basename "$SSH_FILE")"
         chmod 600 "$HOME/.ssh/$(basename "$SSH_FILE")"
     fi
-fi
+done
+
 {{ end -}}
