@@ -1,11 +1,11 @@
-{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-cloudflare-r2-id")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-cloudflare-r2-secret")) (ne .user.cloudflare.r2 "") -}}
+{{- if and (or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID"))) (env "CLOUDFLARE_R2_ID")) (or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET"))) (env "CLOUDFLARE_R2_SECRET)) (ne .user.cloudflare.r2 "") -}}
 [docker]
-access_key_id = {{ includeTemplate "secrets/key-cloudflare-r2-id" | decrypt -}}
+access_key_id = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_ID" | decrypt }}{{ else }}{{ env "CLOUDFLARE_R2_ID" }}{{ end }}
 acl = private
 endpoint = {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com/docker
 env_auth = false
 provider = Cloudflare
 region = auto
-secret_access_key = {{ includeTemplate "secrets/key-cloudflare-r2-secret" | decrypt -}}
+secret_access_key = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_SECRET" | decrypt }}{{ else }}{{ env "CLOUDFLARE_R2_SECRET" }}{{ end }}
 type = s3
 {{ end -}}

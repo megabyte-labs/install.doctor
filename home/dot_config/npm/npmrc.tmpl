@@ -1,9 +1,12 @@
-cache={{ .host.home }}/.cache/npm
-init-author-name "{{ .user.name }} <{{ .user.email }}> ({{ .user.domain }})"
+cache=${XDG_CACHE_HOME:-$HOME/.cache}/npm
+init-author-email={{ .user.email }}
+init-author-name="{{ .user.name }} <{{ .user.email }}> ({{ .user.domain }})"
+init-author-url="{{ .user.domain }}"
 init-license=MIT
+init-module=${XDG_CONFIG_HOME:-$HOME/.config}/npm/config/npm-init.js
 init-version=0.0.1
-init-module={{ .host.home }}/.config/npm/config/npm-init.js
-prefix={{ .host.home }}/.local/share/npm
-store-dir={{ .host.home }}/.local/share/pnpm-store
-loglevel=error                                                                     8 │
+loglevel=error
+network-concurrency=32
+prefix=${XDG_DATA_HOME:-$HOME/.local/share}/npm
 strict-peer-dependencies=false
+//registry.npmjs.org/:_authToken={{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NPM_TOKEN")) }}{{ includeTemplate "secrets/NPM_TOKEN" | decrypt }}{{ else if (env "NPM_TOKEN") }}{{ env "NPM_TOKEN" }}{{ else }}${NPM_TOKEN}{{ end }}

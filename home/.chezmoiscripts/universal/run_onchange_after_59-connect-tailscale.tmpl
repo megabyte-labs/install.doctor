@@ -1,4 +1,4 @@
-{{- if and (ne .host.distro.family "windows") (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "tailscale")) -}}
+{{- if or (and (ne .host.distro.family "windows") (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TAILSCALE_AUTH_KEY")) (env "TAILSCALE_AUTH_KEY")) -}}
 #!/usr/bin/env bash
 
 ### Install the Tailscale system daemon
@@ -14,7 +14,7 @@ if [ -d /Applications ] && [ -d System ]; then
 fi
 
 ### Connect to Tailscale network
-TAILSCALE_AUTH_KEY="$(cat "{{ .chezmoi.sourceDir }}/.chezmoitemplates/secrets/key-netdata-token" | chezmoi decrypt)"
+TAILSCALE_AUTH_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TAILSCALE_AUTH_KEY")) }}{{ includeTemplate "secrets/TAILSCALE_AUTH_KEY" | decrypt }}{{ else }}{{ env "TAILSCALE_AUTH_KEY" }}{{ end }}"
 if command -v tailscale > /dev/null && [ "$TAILSCALE_AUTH_KEY" != "" ]; then
   logg info 'Connecting to Tailscale with user-defined authentication key'
   timeout 14 tailscale up --authkey="$TAILSCALE_AUTH_KEY" --accept-routes || EXIT_CODE=$?

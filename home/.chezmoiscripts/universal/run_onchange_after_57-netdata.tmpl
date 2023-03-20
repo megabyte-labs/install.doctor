@@ -1,4 +1,4 @@
-{{- if and (ne .host.distro.family "windows") (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (or (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-NETDATA_TOKEN")) (env "NETDATA_TOKEN")) (or (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-NETDATA_ROOM")) (env "NETDATA_ROOM")) -}}
+{{- if and (ne .host.distro.family "windows") (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (or (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) (env "NETDATA_TOKEN")) (or (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_ROOM")) (env "NETDATA_ROOM")) -}}
 #!/usr/bin/env bash
 
 {{ includeTemplate "universal/profile" }}
@@ -6,8 +6,8 @@
 
 ### Claim the instance with Netdata Cloud
 if command -v netdata-claim.sh > /dev/null; then
-    NETDATA_TOKEN="$(cat "{{ .chezmoi.sourceDir }}/.chezmoitemplates/secrets/key-netdata-token" | chezmoi decrypt)"
-    NETDATA_ROOM="$(cat "{{ .chezmoi.sourceDir }}/.chezmoitemplates/secrets/key-netdata-room" | chezmoi decrypt)"
+    NETDATA_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) }}{{ includeTemplate "secrets/NETDATA_TOKEN" | decrypt }}{{ else }}{{ env "NETDATA_TOKEN" }}{{ end }}"
+    NETDATA_ROOM="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_ROOM")) }}{{ includeTemplate "secrets/NETDATA_ROOM" | decrypt }}{{ else }}{{ env "NETDATA_ROOM" }}{{ end }}"
     netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="{{ .netdataClaimURL }}"
 
     # Kernel optimizations

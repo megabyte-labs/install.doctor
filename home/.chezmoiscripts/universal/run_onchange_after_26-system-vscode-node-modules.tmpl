@@ -1,0 +1,30 @@
+{{- if (ne .host.distro.family "windows") -}}
+#!/usr/bin/env bash
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+if command -v code > /dev/null && command -v pnpm > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" ]; then
+    ### Install linter fallback node_modules / package.json to system or home directory
+    if sudo cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" /package.json; then
+        logg info 'Successfully copied linter fallback configurations package.json to /package.json'
+        logg info 'Installing system root directory node_modules'
+        cd / && sudo pnpm i --no-lockfile || EXIT_CODE=$?
+    else
+        logg warn 'Unable to successfully copy linter fallback configurations package.json to /package.json'
+        logg info 'Installing linter fallback configurations node_modules to home directory instead'
+        cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" "$HOME/package.json"
+        cd ~ && pnpm i --no-lockfile || EXIT_CODE=$?
+    fi
+
+    ### Log message if install failed
+    if [ -n "$EXIT_CODE" ]; then
+        logg warn 'Possible error(s) were detected while installing linter fallback configurations to the home directory.'
+    else
+        logg success 'Installed linter fallback configuration node_modules'
+    fi
+else
+    logg info 'Skipping installation of fallback linter configurations because one or more of the dependencies is missing.'
+fi
+
+{{ end -}}
