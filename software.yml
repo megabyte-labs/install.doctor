@@ -2702,6 +2702,7 @@ softwarePackages:
     _home: null
     _name: Google Assistant for Desktop
     _type: application
+    _when:cask: '! test -d "/Applications/Google Assistant.app"'
     ansible:windows: professormanhattan.googleassistant
     cask: google-assistant
     github: github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client
@@ -4296,10 +4297,6 @@ softwarePackages:
     _home: https://github.com/chmln/handlr
     _name: Handlr
     _type: cli
-    _notes: |
-      Try installing this again at a later time.
-
-      Issue opened here: https://github.com/chmln/handlr/issues/69
     cargo: handlr --locked
     yay: handlr-bin
   kvantum:
