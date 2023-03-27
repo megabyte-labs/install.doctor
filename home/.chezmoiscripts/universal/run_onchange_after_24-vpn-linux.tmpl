@@ -1,16 +1,14 @@
 {{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
 
+{{ $ovpnUsername := (env "OVPN_USERNAME") }}
 {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "OVPN_USERNAME")) }}
-{{   $ovpnUsername := includeTemplate "secrets/OVPN_USERNAME" | decrypt }}
-{{ else }}
-{{   $ovpnUsername := (env "OVPN_USERNAME") }}
+{{   $ovpnUsername := (includeTemplate "secrets/OVPN_USERNAME" | decrypt) }}
 {{ end }}
 
+{{ $ovpnPassword := (env "OVPN_PASSWORD") }}
 {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "OVPN_PASSWORD")) }}
-{{   $ovpnPassword := includeTemplate "secrets/OVPN_PASSWORD" | decrypt }}
-{{ else }}
-{{   $ovpnPassword := (env "OVPN_PASSWORD") }}
+{{   $ovpnPassword := (includeTemplate "secrets/OVPN_PASSWORD" | decrypt) }}
 {{ end }}
 
 {{ includeTemplate "universal/profile" }}
