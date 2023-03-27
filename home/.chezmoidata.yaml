@@ -541,8 +541,6 @@ softwareGroups:
     - unbuffer
   Media: &Media
     - beets
-    # editly NPM package is failing to install on macOS - attempts to compile with node-gyp
-    - editly
     - exiftool
     - ffmpeg
     - imagemagick
@@ -1086,6 +1084,8 @@ softwareGroups:
     - chromium
     - astronvim
     - asdf
+    # editly NPM package is failing to install on macOS - attempts to compile with node-gyp
+    - editly
 softwarePlugins:
   docker:
     plugins:
