@@ -5,7 +5,9 @@
 # @description
 #     The Firefox setup script performs a handful of tasks that automate the setup of Firefox as well as
 #     useful utilities that will benefit Firefox power-users. The script also performs the same logic on
-#     [LibreWolf](https://librewolf.net/) installations. The features that are included are:
+#     [LibreWolf](https://librewolf.net/) installations.
+#
+#     ## Features
 #
 #     * Installs and sets up [Firefox Profile Switcher](https://github.com/null-dev/firefox-profile-switcher)
 #     * Sets up system-wide enterprise settings (with configurations found in `~/.local/share/firefox`)
@@ -36,9 +38,11 @@
 #     * The Firefox Profile Switcher is only compatible with Firefox and not LibreWolf
 #     * This script is only designed to properly provision profiles on a fresh installation (so it does not mess around with pre-existing / already configured profiles)
 #
-# @see [Script on GitHub](https://github.com/megabyte-labs/install.doctor/blob/master/home/.chezmoiscripts/universal/run_onchange_after_40-firefox.tmpl)
-# @see [System-wide configurations](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_local/share/firefox) as well as the location of the `profile.ini` and some other configurations
-# @see [User-specific configurations](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/firefox/user.js) added to all profiles except Factory
+#     ## Links
+#
+#     * [Script on GitHub](https://github.com/megabyte-labs/install.doctor/blob/master/home/.chezmoiscripts/universal/run_onchange_after_40-firefox.tmpl)
+#     * [System-wide configurations](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_local/share/firefox) as well as the location of the `profile.ini` and some other configurations
+#     * [User-specific configurations](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/firefox/user.js) added to all profiles except Factory
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
