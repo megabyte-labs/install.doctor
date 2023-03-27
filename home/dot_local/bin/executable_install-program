@@ -1704,7 +1704,7 @@ async function linkBin(installOrdersBinLink) {
         } else if (binLink.preference === 'cask') {
           try {
             const caskWhen = softwarePackages[binLink.package]['_when:cask']
-            const caskDir = caskWhen.replace('! test -d ', '').replace(/"/g, '')
+            const caskDir = caskWhen.replace('! test -d ', '')
             if (fileExists(caskDir)) {
               runCommand(
                 `Adding shortcut bin link for ${binLink.package}`,
