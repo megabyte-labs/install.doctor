@@ -515,6 +515,7 @@ softwarePackages:
     port: aria2
     scoop: aria2
   ariang:
+    _when: '! test -d "/Applications/AriaNg Native.app"'
     cask: ariang
   asciinema:
     _bin: asciinema
@@ -4366,6 +4367,7 @@ softwarePackages:
     _github: null
     _home: https://www.malwarebytes.com/
     _name: Malwarebytes
+    _when:cask: '! test -d /Applications/Malwarebytes.app'
     cask: malwarebytes
     choco: malwarebytes
     _type: application
@@ -4439,6 +4441,7 @@ softwarePackages:
     _home: null
     _name: MarkText
     _type: application
+    _when:cask: '! test -d /Applications/MarkText.app'
     cask: mark-text
     choco: marktext
     github: github.com/marktext/marktext
