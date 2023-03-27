@@ -18,6 +18,13 @@ COMPLETION_DIR="$HOME/.local/share/bash-completion/completions"
 mkdir -p "$COMPLETION_DIR"
 FALLBACK_URL="https://gitlab.com/megabyte-labs/misc/dotfiles/-/raw/master/dotfiles/.local/share/bash-completion/completions"
 
+### Aqua
+if command -v aqua &> /dev/null; then
+  aqua completion bash > "$COMPLETION_DIR/aqua.bash"
+elif [ -f "$COMPLETION_DIR/aqua.bash" ]; then
+  rm "$COMPLETION_DIR/aqua.bash"
+fi
+
 ### Deno
 if command -v deno > /dev/null; then
   deno completions bash > "$COMPLETION_DIR/deno.bash"
