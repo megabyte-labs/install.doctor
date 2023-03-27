@@ -171,7 +171,6 @@ softwareGroups:
     # - disks
     - dns
     - dnsmasq
-    # - easyengine
     - environment
     - extensions
     - finish
@@ -294,10 +293,10 @@ softwareGroups:
     - emoj
     - fig
     - filebrowser
+    - fm
     - grex
     - gron
-    # Waiting on fix: https://github.com/chmln/handlr/issues/69
-    # - handlr
+    - handlr
     - hexyl
     - http-prompt
     - httpie
@@ -338,6 +337,7 @@ softwareGroups:
     - juju
     - lexicon
     - logcli
+    - nextcloud
     - psu
     - rancher-cli
   Cloud-Storage: &Cloud-Storage
@@ -345,7 +345,10 @@ softwareGroups:
     - gphotos-sync
     - rclone
     - s5cmd
+  Communication: &Communication
+    - irssi
   Communication-Desktop: &Communication-Desktop
+    - *Communication
     - discord
     - gitter
     - microsoft-teams
@@ -360,7 +363,6 @@ softwareGroups:
     - cointop
   Crypto-Desktop: &Crypto-Desktop
     - ledger-live
-    # - monero
     - onlykey
   DNS: &DNS
     - hostctl
@@ -413,6 +415,7 @@ softwareGroups:
   E-mail: &E-mail
     - himalaya
   E-mail-Desktop: &E-mail-Desktop
+    - m-cli
     - mailspring
     - protonmail-import-export
     - protonmail-bridge
@@ -426,8 +429,10 @@ softwareGroups:
     - docker
     - rkhunter
   Essentials-Desktop: &Essentials-Desktop
+    - autokey
     - firefox
     - flow-launcher
+    - fonts
     - kvantum
     - malwarebytes
     - portmaster
@@ -435,8 +440,6 @@ softwareGroups:
     - tabby
     - vlc
     - vscode
-    # Some plugins do not work with vscodium
-    # - vscodium
   File-System: &File-System
     # After `sudo apt-get install -y fuse libfuse-dev, the following error still shows up:
     # error: could not find system library 'fuse' required by the 'fuse' crate
@@ -517,15 +520,20 @@ softwareGroups:
     - dotenv-linter
     - dprint
     - eslint
+    - eslint-dashboard
+    - eslintd
+    - esprint
     - gitleaks
     - golangci-lint
     - hadolint
+    - prettierd
     - pre-commit
     - shellcheck
     - shfmt
     - tflint
     - tokei
     - yamllint
+    - yapf
   Logging: &Logging
     - fuego
     - papertrail
@@ -534,7 +542,7 @@ softwareGroups:
   Media: &Media
     - beets
     # editly NPM package is failing to install on macOS - attempts to compile with node-gyp
-    # - editly
+    - editly
     - exiftool
     - ffmpeg
     - imagemagick
@@ -569,7 +577,9 @@ softwareGroups:
     - clocker
     - cumulus
     - edex-ui
+    - google-assistant
     - gnome-tweaks
+    - mark-text
     - pake
     - pretzel
     - qlplugins
@@ -585,8 +595,7 @@ softwareGroups:
   Misc-Development-Tools: &Misc-Development-Tools
     - ansifilter
     - aqua
-    # - asdf # Handled by dotfiles
-    # - astronvim
+    - astronvim
     - automake
     - bfg
     - bundler
@@ -602,6 +611,7 @@ softwareGroups:
     - ios-deploy
     - java
     - libimobiledevice
+    - ntl
     - rust
     - snapcraft
     - solidity
@@ -629,6 +639,7 @@ softwareGroups:
     - nebula
     - ngrok
     - privaxy
+    - rustscan
     - ssl-proxy
     - tailscale
     - tailscale-client
@@ -659,6 +670,7 @@ softwareGroups:
     - carbon-now
     - dframe
     - t-rec
+    - terminalizer
   Recording-Desktop: &Recording-Desktop
     - flameshot
     - peek
@@ -754,6 +766,7 @@ softwareGroups:
     - ots
     - share
   Transfer-Desktop: &Transfer-Desktop
+    - ariang
     - dat-desktop
     - filezilla
     - google-drive
@@ -765,10 +778,9 @@ softwareGroups:
   Virtualization: &Virtualization
     - kvm
     - lxdc
-    # Opens persistent menu icon on GNOME and has issues that sometimes require switching the virt driver
-    # - multipass
     - packer
     - vagrant
+    - vagrant-vmware-utility
   Virtualization-Desktop: &Virtualization-Desktop
     - docker-desktop
     - gnome-boxes
@@ -821,12 +833,14 @@ softwareGroups:
     - surge
     - trellis
     - ts2c
+    - typescript
     - websocat
     - wordpressify
     - wp-cli
     - wrangler
     - wrk
     - yarn
+    - zola
   Web-Development-Desktop: &Web-Development-Desktop
     - altair
     - betwixt
@@ -879,6 +893,7 @@ softwareGroups:
     - *Recording-Desktop
     - *Virtualization-Desktop
     - bitwarden
+    - bottles
     - brave-browser
     - mailspring
     - protonvpn
@@ -1044,6 +1059,33 @@ softwareGroups:
     - supdock
     - termius
     - ulauncher
+    # Some plugins do not work with vscodium
+    - vscodium
+  # Files below need to be reviewed before adding them to the stack. They should include all of the
+  # definitions in software.yml that are not included somewhere in the definitions that this file
+  # maps out.
+  queued:
+    # Opens persistent menu icon on GNOME and has issues that sometimes require switching the virt driver
+    - multipass
+    - monero
+    - catfs
+    - lzop
+    - mas
+    - mbuffer
+    - pip
+    - pipx
+    - python2
+    - vector
+    - maas
+    - gdu
+    - easyengine
+    - yubikey-agent
+    - p7zip
+    - openssl
+    - plymouth
+    - chromium
+    - astronvim
+    - asdf
 softwarePlugins:
   docker:
     plugins:

@@ -200,7 +200,7 @@ installerPreference:
 softwarePackages:
   _kde:
     _deps:
-      - plasma-desktop
+      - kde-plasma-desktop
   _misc-flatpaks:
     _deps:
       - bottles
@@ -217,6 +217,7 @@ softwarePackages:
       - gnome-extension-manager
       - gnome-eyedropper
       - gnome-file-roller
+      - gnome-image-viewer
       - gnome-network-displays
       - gnome-passwords-keys
       - gnome-photos
@@ -233,6 +234,7 @@ softwarePackages:
       - warp-transfer
       - web-font-generator
       - what-ip
+      - live-captions
   _nautilus-extensions:
     _deps:
       - nautilus-brasero
@@ -1221,16 +1223,6 @@ softwarePackages:
     cask: clocker
     _service: false
     _type: Application
-  cloudflare:
-    _bin: null
-    _desc: '[Cloudflare](https://www.cloudflare.com/) is a DNS provider (and much more). Using this role, you can automatically configure DNS (through a configuration file or script) to point to your various web apps.'
-    _docs: https://developers.cloudflare.com/
-    _github: https://github.com/cloudflare/1.1.1.1
-    _home: https://www.cloudflare.com/
-    _name: CloudFlare
-    ansible: professormanhattan.cloudflare
-    _service: true
-    _type: cli
   cloudflared:
     _bin: cloudflared
     _desc: '[CloudFlare Argo Tunnel Client](https://developers.cloudflare.com/argo-tunnel/) contains the command-line client for CloudFlare Argo Tunnel, a tunneling daemon that proxies any local webserver through the Cloudflare network.'
@@ -1406,15 +1398,6 @@ softwarePackages:
     choco: confd
     github: github.com/kelseyhightower/confd
     yay: confd
-    _service: false
-  connect:
-    _bin: null
-    _desc: Handles the connection process for hosts that have not been reassigned a "secure" / non-default port and sets variables that are used later in the playbook
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    ansible: professormanhattan.connect
     _service: false
   consul-cli:
     _bin: consul
@@ -1649,16 +1632,6 @@ softwarePackages:
     pkg: git-delta
     scoop: delta
     _service: false
-  plasma-desktop:
-    _bin: plasmashell
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: KDE
-    apt: plasma-desktop
-    dnf: plasma-desktop
-    pacman: plasma-desktop
   delve:
     _bin: dlv
     _desc: Delve is a debugger for the Go programming language.
@@ -1730,16 +1703,6 @@ softwarePackages:
     _home: null
     _name: null
     npm: deviceframe
-    _service: false
-    _type: cli
-  diff-so-fancy:
-    _bin: diff-so-fancy
-    _desc: '[diff-so-fancy](https://github.com/so-fancy/diff-so-fancy) strives to make your diffs human readable instead of machine readable. This helps improve code quality and helps you spot defects faster.'
-    _docs: null
-    _github: https://github.com/so-fancy/diff-so-fancy
-    _home: null
-    _name: diff-so-fancy
-    ansible: professormanhattan.diffsofancy
     _service: false
     _type: cli
   difftastic:
@@ -1843,19 +1806,6 @@ softwarePackages:
     github: github.com/docker-slim/docker-slim
     yay: docker-slim
     _service: false
-  docker-pushrm:
-    _bin: null
-    _desc: '[docker-pushrm](https://github.com/christian-korneck/docker-pushrm) is a Docker CLI plugin that adds a new docker pushrm command to Docker. The command pushes the README file from the current working directory to a container registry server. When using it with DockerHub, you can programmatically upload your README so that it shows up on your containers landing page.'
-    _docs: null
-    _github: https://github.com/christian-korneck/docker-pushrm
-    _home: https://hub.docker.com/r/chko/docker-pushrm
-    _name: docker-pushrm
-    _when:darwin: '! test -f /Applications/Docker.app/Contents/Resources/cli-plugins/docker-pushrm'
-    _when:linux: '! test -f /usr/libexec/docker/cli-plugins/docker-pushrm'
-    _when:windows: '! test -f %ProgramData%\Docker\cli-plugins\docker-pushrm.exe'
-    ansible: professormanhattan.dockerpushrm
-    _service: false
-    _type: cli
   gcc:
     _bin: gcc
     _desc: null
@@ -1894,7 +1844,7 @@ softwarePackages:
     dnf: p7zip
     pacman: p7zip
   yubikey-agent:
-    _bin: openssl
+    _bin: yubikey-agent
     _desc: null
     _docs: https://github.com/FiloSottile/yubikey-agent
     _github: https://github.com/FiloSottile/yubikey-agent
@@ -1995,16 +1945,6 @@ softwarePackages:
     github: github.com/harness/drone-cli
     scoop: drone
     _service: false
-  droplets:
-    _bin: null
-    _desc: Digital Ocean is a cloud service provider and Droplets are what Digital Oceans calls VMs. This roles helps set up Droplets programmatically.
-    _docs: https://docs.digitalocean.com/products/droplets/
-    _github: https://github.com/digitalocean/droplet-agent
-    _home: https://www.digitalocean.com/products/droplets
-    _name: Droplets
-    ansible: professormanhattan.droplets
-    _service: false
-    _type: application
   duf:
     _bin: duf
     _desc: "[duf](https://github.com/muesli/duf) is a Disk Usage/Free Utility - a better 'df' alternative. It displays a chart within your terminal that gives you an overview of hard-drive usage statistics."
@@ -2138,7 +2078,7 @@ softwarePackages:
     _service: false
   envchain:
     _deps:
-      - envchain:deps
+      - _envchain:deps
     _bin: envchain
     _desc: Environment variables meet macOS Keychain and gnome-keyring
     _docs: https://github.com/sorah/envchain#usage
@@ -2149,7 +2089,7 @@ softwarePackages:
     brew: envchain
     github: github.com/sorah/envchain
     _service: false
-  envchain:deps:
+  _envchain:deps:
     apt:
       - gnome-keyring
       - gcc
@@ -2202,6 +2142,46 @@ softwarePackages:
     npm: eslint
     _service: false
     _type: cli
+  ntl:
+    _bin: ntl
+    _desc: null
+    _docs: null
+    _github: https://github.com/ruyadorno/ntl
+    _home: null
+    _name: NTL
+    npm: ntl
+  eslint-interactive:
+    _bin: eslint-interactive
+    _desc: null
+    _docs: null
+    _github: https://github.com/mizdra/eslint-interactive
+    _home: null
+    _name: ESLint Interactive
+    npm: eslint-interactive
+  esprint:
+    _bin: esprint
+    _desc: null
+    _docs: null
+    _github:
+    _home: null
+    _name: ESPrint
+    npm: esprint
+  eslint-dashboard:
+    _bin: eslint-dashboard
+    _desc: null
+    _docs: null
+    _github: https://github.com/fengzilong/eslint-dashboard
+    _home: null
+    _name: ESLint Dashboard
+    npm: eslint-dashboard
+  eslintd:
+    _bin: eslint_d
+    _desc: null
+    _docs: https://github.com/mantoni/eslint_d.js
+    _github: https://github.com/mantoni/eslint_d.js
+    _home: https://github.com/mantoni/eslint_d.js
+    _name: ESLint_d
+    npm: eslint_d
   etcd:
     _bin: etcd
     _desc: Distributed reliable key-value store for the most critical data of a distributed system
@@ -2540,15 +2520,6 @@ softwarePackages:
     github: github.com/knipferrc/fm
     go: github.com/knipferrc/fm@latest
     _service: false
-  fontinstall:
-    _bin: null
-    _desc: ''
-    _docs: null
-    _github: null
-    _home: null
-    _name: Install Fonts
-    ansible: professormanhattan.fontinstall
-    _service: false
   fonts:
     _bin: null
     _desc: null
@@ -2789,21 +2760,13 @@ softwarePackages:
       sudo snap connect gdu-disk-usage-analyzer:mount-observe :mount-observe
       sudo snap connect gdu-disk-usage-analyzer:system-backup :system-backup
       sudo snap alias gdu-disk-usage-analyzer.gdu gdu
+    apt:debian: gdu
     brew: gdu
     go: github.com/dundee/gdu/v5/cmd/gdu@latest
     pacman: gdu
     snap: gdu-disk-usage-analyzer
     _service: false
     _type: cli
-  gdu:debian:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    apt: gdu
-    _service: false
   gfi:
     _bin: gfi
     _desc: Google Font Installer is a NodeJS module/CLI that lets you Search, Download and Install fonts offered by Google Web Fonts
@@ -2983,15 +2946,6 @@ softwarePackages:
     cask: gitdock
     _service: true
     _type: application
-  gitdocker:
-    _bin: null
-    _desc: It will clone and start up projects that have not been initialized and backup projects that are already running. It also uses git instead of Wasabi for anything that is not a volume (i.e. folder mounts).
-    _docs: null
-    _github: null
-    _home: null
-    _name: GitDocker
-    ansible: professormanhattan.gitdocker
-    _service: false
   zola:
     _bin: zola
     _desc: A static site generator built with Rust
@@ -3052,15 +3006,6 @@ softwarePackages:
     npm: git-notify
     _service: false
     _type: cli
-  githubbinary:
-    _bin: null
-    _desc: This role performs the necessary logic to download and install binaries and other installers from GitHub Releases.
-    _docs: null
-    _github: null
-    _home: null
-    _name: GitHub Binary Downloader
-    ansible: professormanhattan.githubbinary
-    _service: false
   gitify:
     _bin: null
     _desc: null
@@ -3947,15 +3892,6 @@ softwarePackages:
     snap: inkscape
     _service: false
     _type: application
-  installer:
-    _bin: null
-    _desc: This role helps install Software from GitHub on nearly any platform.
-    _docs: null
-    _github: null
-    _home: null
-    _name: Installer
-    ansible: professormanhattan.installer
-    _service: false
   intellij-idea-ce:
     _bin: intellij-idea-community
     _desc: '[IntelliJ IDEA](https://www.jetbrains.com/idea/) is an integrated development environment written in Java for developing computer software. It is developed by JetBrains, and is available as an Apache 2 Licensed community edition, and in a proprietary commercial edition. Both can be used for commercial development.'
@@ -4344,6 +4280,14 @@ softwarePackages:
     dnf: powerline
     pacman: powerline
     pipx: powerline-status
+ yapf:
+    _bin: yapf
+    _desc: A formatter for Python files maintained by Google
+    _docs: false
+    _github: https://github.com/google/yapf
+    _home: false
+    _name: YAPF
+    pipx: yapf
   handlr:
     _bin: handlr
     _desc: A better xdg-utils
@@ -4775,7 +4719,9 @@ softwarePackages:
     _github: null
     _home: null
     _name: MAS CLI
-    ansible: professormanhattan.mas
+    ansible:darwin: professormanhattan.mas
+    brew:darwin: mas
+    port: mas
     _service: false
     _type: cli
   gnome-extension-manager:
@@ -4988,15 +4934,6 @@ softwarePackages:
     flatpak: org.getmonero.Monero
     _service: false
     _type: application
-  motd:
-    _bin: null
-    _desc: This Message of the Day (motd) role is used to display an informative system overview when launching a terminal shell.
-    _docs: null
-    _github: null
-    _home: null
-    _name: Message of the Day
-    ansible: professormanhattan.motd
-    _service: false
   motrix:
     _bin: motrix
     _desc: '[Motrix](https://motrix.app/) is a full-featured download manager that supports downloading HTTP, FTP, BitTorrent, Magnet, etc.'
@@ -5309,7 +5246,6 @@ softwarePackages:
     _github: https://github.com/nextcloud/desktop
     _home: https://nextcloud.com
     _name: Nextcloud Client
-    ansible: professormanhattan.nextcloud
     flatpak: com.nextcloud.desktopclient.nextcloud
     _service: false
     _type: cli
@@ -5758,16 +5694,6 @@ softwarePackages:
     yay: peek-git
     _service: false
     _type: application
-  pfsense:
-    _bin: null
-    _desc: '[pfSense](https://www.pfsense.org/) is a firewall/router computer software distribution based on FreeBSD. pfSense Community Edition is the open source version while pfSense Plus has moved to a closed source model. It is installed on a physical computer or a virtual machine to make a dedicated firewall/router for a network.'
-    _docs: https://docs.netgate.com/pfsense/en/latest/
-    _github: https://github.com/pfsense/pfsense
-    _home: https://www.pfsense.org/
-    _name: pfSense
-    ansible: professormanhattan.pfsense
-    _service: true
-    _type: webapp
   pgcli:
     _bin: pgcli
     _desc: '[pgcli](https://www.pgcli.com/) is a free and open-source CLI for Postgres that does auto-completion and syntax highlighting.'
@@ -5886,16 +5812,6 @@ softwarePackages:
       - php-snmp
       - php-sqlite3
       - php-xml
-  pihole:
-    _bin: null
-    _desc: '[Pi-hole](https://pi-hole.net/) is a Linux network-level advertisement and Internet tracker blocking application which acts as a DNS sinkhole and optionally a DHCP server, intended for use on a private network. It is designed for low-power embedded devices with network capability, such as the Raspberry Pi, but supports any Linux machines.'
-    _docs: https://docs.pi-hole.net/
-    _github: https://github.com/pi-hole/pi-hole
-    _home: https://pi-hole.net/
-    _name: PiHole
-    ansible: professormanhattan.pihole
-    _service: true
-    _type: webapp
   pip:
     _bin: pip
     _desc: '[pip](https://pypi.org/project/pip/) is a package-management system written in Python used to install and manage software packages. It connects to an online repository of public and paid-for private packages, called the Python Package Index.'
@@ -6120,10 +6036,10 @@ softwarePackages:
     _service: false
   prettierd:
     _bin: prettierd
-    _desc: null
-    _docs: null
+    _desc: Prettier, as a daemon, for improved formatting speed.
+    _docs: https://github.com/fsouza/prettierd
     _github: https://github.com/fsouza/prettierd
-    _home: null
+    _home: https://github.com/fsouza/prettierd
     _name: Prettierd
     brew: fsouza/prettierd/prettierd
     npm: '@fsouza/prettierd'
@@ -6846,15 +6762,6 @@ softwarePackages:
     github: github.com/chmln/sd
     pacman: sd
     pkg: sd
-  seconion:
-    _bin: null
-    _desc: '[Security Onion](https://securityonionsolutions.com/) is a free and open source Linux distribution for threat hunting, enterprise security monitoring, and log management. It includes Elasticsearch, Logstash, Kibana, Snort, Suricata, Bro, Wazuh, Sguil, Squert, NetworkMiner, and many other security tools. The easy-to-use Setup wizard allows you to build an army of distributed sensors for your enterprise in minutes! This role takes it a step further and automates the whole setup process.'
-    _docs: https://docs.securityonion.net
-    _github: https://github.com/Security-Onion-Solutions/securityonion
-    _home: https://securityonionsolutions.com/
-    _name: Security Onion
-    ansible: professormanhattan.seconion
-    _service: false
   secretive:
     _bin: null
     _desc: Store SSH keys in the Secure Enclave
@@ -7201,16 +7108,6 @@ softwarePackages:
     npm: solc
     _service: false
     _type: cli
-  sonatype-nexus:
-    _bin: null
-    _desc: '[Sonatype Nexus](https://www.sonatype.com/products/repository-oss-download) is a repository manager that lets you proxy and cache assets from apt-get, yum, npm, pypi, and a handful of other sources. This role sets up Sonatype Nexus using the awesome work of the [ansible-ThoTeam/nexus3-oss](https://github.com/ansible-ThoTeam/nexus3-oss) repository on GitHub.'
-    _docs: https://help.sonatype.com/repomanager3
-    _github: https://github.com/sonatype/nexus-public
-    _home: https://www.sonatype.com/products/nexus-repository
-    _name: Sonatype Nexus
-    ansible: professormanhattan.sonatype-nexus
-    _service: true
-    _type: webapp
   speed-test:
     _bin: speed-test
     _desc: Test your internet connection speed and ping using speedtest.net from the CLI
@@ -7351,15 +7248,6 @@ softwarePackages:
     ansible: professormanhattan.starship
     _service: false
     _type: cli
-  startmenu:
-    _bin: null
-    _desc: This role helps clean up the Windows start menu by moving shortcuts to the root of the start menu and removing shortcut folders. It is used to update the start menu when applications install whole folders of shortcuts instead of just a shortcut to the main application.
-    _docs: null
-    _github: null
-    _home: null
-    _name: Start Menu Configuration
-    ansible: professormanhattan.startmenu
-    _service: false
   statcode:
     _bin: statcode
     _desc: null
@@ -7752,15 +7640,6 @@ softwarePackages:
     brew: tflint
     choco: tflint
     github: github.com/terraform-linters/tflint
-    _service: false
-  theme:
-    _bin: null
-    _desc: Betelgeuse is a theme for KDE, XFCE, Gnome, and many more themeing engines. It is heavily based on [Sweet](https://store.kde.org/p/1294174). It tries to make the theme compatible with many environment types. It also includes special styles geared towards styling [Qubes OS](https://www.qubes-os.org/).
-    _docs: null
-    _github: null
-    _home: null
-    _name: Betelgeuse Theme
-    ansible: professormanhattan.theme
     _service: false
   tig:
     _bin: tig
