@@ -1,7 +1,7 @@
 ---
 inputDir: src/
 outputMap: |
-  build/{{ .in | strings.ReplaceAll ".tmpl" "" }}
+  ./{{ .in | strings.ReplaceAll ".tmpl" "" }}
 
 datasources:
   partials:
