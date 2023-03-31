@@ -49,7 +49,6 @@ else
     logg warn 'Unknown package manager - install OpenVPN / WireGuard / NetworkManager plugins individually'
 fi
 
-# @description Ensures NetworkManager event config folders are created
 function ensureNetworkConfigs() {
     if [ ! -d /etc/network/if-up.d ]; then
         logg info 'Creating /etc/network/if-up.d folder'
