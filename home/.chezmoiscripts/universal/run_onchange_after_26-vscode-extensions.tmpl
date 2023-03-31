@@ -27,11 +27,12 @@
 #
 #     * [`run_onchange_after_26-vscode-extensions.tmpl`](https://github.com/megabyte-labs/install.doctor/blob/master/home/.chezmoiscripts/universal/run_onchange_after_26-vscode-extensions.tmpl)
 #     * [Visual Studio Code settings folder](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User)
+#     * [Visual Studio Code `extensions.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/extensions.json)
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-### Install Visual Studio Code extensions
+# @description Install Visual Studio Code extensions if they are not already installed (by checking the `code --list-extensions` output)
 if command -v code > /dev/null; then
     EXTENSIONS="$(code --list-extensions)"
     jq -r '.recommendations[]' "${XDG_CONFIG_HOME:-$HOME/.config}/Code/User/extensions.json" | while read EXTENSION; do
@@ -47,7 +48,7 @@ else
     logg warn '`code` executable not available'
 fi
 
-### Install VSCodium extensions
+# @description Check for the presence of the `codium` command in the `PATH` and install extensions for VSCodium if it is present
 if command -v codium > /dev/null; then
     EXTENSIONS="$(codium --list-extensions)"
     jq -r '.recommendations[]' "${XDG_CONFIG_HOME:-$HOME/.config}/Code/User/extensions.json" | while read EXTENSION; do

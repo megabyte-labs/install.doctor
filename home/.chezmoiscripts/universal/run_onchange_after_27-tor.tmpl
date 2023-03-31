@@ -1,12 +1,27 @@
 {{- if and (ne .host.distro.family "windows") (ne .host.work true) -}}
 #!/usr/bin/env bash
+# @file run_onchange_after_27-tor.tmpl
+# @brief This script applies the Tor configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/tor/torrc` to the system and then restarts Tor
+# @description
+#     Tor is a network that uses onion routing, originally published by the US Navy. It is leveraged by privacy enthusiasts
+#     and other characters that deal with sensitive material, like journalists and people buying drugs on the internet.
+#     This script:
+#
+#     1. Determines the system configuration file location
+#     2. Applies the configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/tor/torrc`
+#     3. Enables and restarts the Tor service with the new configuration
+#
+#     ## Links
+#
+#     * [Script on GitHub](https://github.com/megabyte-labs/install.doctor/blob/master/home/.chezmoiscripts/universal/run_onchange_after_27-tor.tmpl)
+#     * [Tor configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/tor/torrc)
 
 # tor config hash: {{ include (joinPath .host.home ".config" "tor" "torrc") | sha256sum }}
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-### Apply system variables
+# @description Determine the Tor configuration location by checking whether the system is macOS or Linux
 if [ -d /Applications ] && [ -d /System ]; then
     # macOS
     TORRC_CONFIG_DIR=/usr/local/etc/tor
@@ -16,14 +31,14 @@ else
 fi
 TORRC_CONFIG="$TORRC_CONFIG_DIR/torrc"
 
-### Configure Tor
+# @description Apply the configuration if the `torrc` binary is available in the `PATH`
 if command -v toron > /dev/null; then
     if [ -d  "$TORRC_CONFIG_DIR" ]; then
-        # Copy config
+        # @description Copy the configuration from `${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc` to the system configuration file location
         sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc" "$TORRC_CONFIG"
         sudo chmod 600 "$TORRC_CONFIG"
 
-        # Restart / enable Tor
+        # @description Enable and restart the Tor service
         if [ -d /Applications ] && [ -d /System ]; then
             # macOS
             brew services restart tor

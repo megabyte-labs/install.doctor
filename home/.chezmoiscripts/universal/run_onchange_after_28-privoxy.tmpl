@@ -1,12 +1,26 @@
 {{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
+# @file run_onchange_after_28-privoxy.tmpl
+# @brief This script applies the Privoxy configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config` to the system and then restarts Privoxy
+# @description
+#     Privoxy is a web proxy that can be combined with Tor to provide an HTTPS / HTTP proxy that can funnel all traffic
+#     through Tor. This script:
+#
+#     1. Determines the system configuration file location
+#     2. Applies the configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config`
+#     3. Enables and restarts the Privoxy service with the new configuration
+#
+#     ## Links
+#
+#     * [Script on GitHub](https://github.com/megabyte-labs/install.doctor/blob/master/home/.chezmoiscripts/universal/run_onchange_after_28-privoxy.tmpl)
+#     * [Privoxy configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/privoxy/config)
 
 # privoxy config hash: {{ include (joinPath .host.home ".config" "privoxy" "config") | sha256sum }}
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-### Apply system variables
+# @description Define the Privoxy configuration location based on whether system is macOS or Linux
 if [ -d /Applications ] && [ -d /System ]; then
     # macOS
     PRIVOXY_CONFIG_DIR=/usr/local/etc/privoxy
@@ -16,14 +30,14 @@ else
 fi
 PRIVOXY_CONFIG="$PRIVOXY_CONFIG_DIR/config"
 
-### Configure Privoxy
+# @description Copy Privoxy configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config` to the system location
 if command -v privoxy > /dev/null; then
     if [ -d  "$PRIVOXY_CONFIG_DIR" ]; then
         sudo cp -f "${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config" "$PRIVOXY_CONFIG"
         sudo chmod 600 "$PRIVOXY_CONFIG"
         sudo chown privoxy:privoxy "$PRIVOXY_CONFIG"
 
-        # Restart / enable Privoxy
+        # @description Restart Privoxy after configuration is applied
         if [ -d /Applications ] && [ -d /System ]; then
             # macOS
             brew services restart privoxy
