@@ -1704,7 +1704,7 @@ async function linkBin(installOrdersBinLink) {
         } else if (binLink.preference === 'cask') {
           try {
             const caskWhen = softwarePackages[binLink.package]['_when:cask']
-            const caskDir = caskWhen.replace('! test -d ', '').replace(/"/g, '')
+            const caskDir = caskWhen.replace('! test -d ', '')
             if (fileExists(caskDir)) {
               runCommand(
                 `Adding shortcut bin link for ${binLink.package}`,
@@ -1780,7 +1780,11 @@ async function installSoftware(pkgsToInstall) {
     log('info', 'Bin', 'Linking bin aliases to their installed packages')
     await linkBin(installOrdersBinLink)
     for (const script of installOrdersPost) {
-      await $`${script}`
+      try {
+        await $`${script}`
+      } catch(e) {
+        log('info', 'Post-Install Hook', 'Encountered error while running post-install hook')
+      }
     }
   }
   installOrdersPlugins.length && log('info', 'Plugin', 'Installing package-specific plugins')

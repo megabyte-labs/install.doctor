@@ -128,7 +128,6 @@
   diffFilter = delta --color-only
 [merge]
   conflictstyle = diff3
-  ff = only
   renamelimit = 0
   summary = true
   stat = true
@@ -155,7 +154,7 @@
   smtpuser = {{ default "" .user.gmail.username }}
   smtpencryption = tls
   smtpserverport = 587
-  smtpPass = {{ default "" (env "GMAIL_PASSWORD") }}
+  smtpPass = {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GMAIL_PASSWORD")) }}{{ includeTemplate "secrets/GMAIL_PASSWORD" | decrypt }}{{ else }}{{ default "" (env "GMAIL_PASSWORD") }}{{ end }}
 [status]
   showUntrackedFiles = all
   submoduleSummary = true

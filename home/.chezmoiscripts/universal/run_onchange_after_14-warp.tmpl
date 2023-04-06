@@ -1,6 +1,9 @@
 {{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 ### Configure CloudFlare WARP (if not WSL and warp-cli is installed)
 if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]] && command -v warp-cli > /dev/null; then
     ### Register CloudFlare WARP

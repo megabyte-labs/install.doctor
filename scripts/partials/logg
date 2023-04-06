@@ -1,0 +1,62 @@
+# @description Logs with style using Gum if it is installed, otherwise it uses `echo`. It also leverages Glow to render markdown.
+# When Glow is not installed, it uses `cat`.
+# @example logger info "An informative log"
+logg() {
+  TYPE="$1"
+  MSG="$2"
+  if [ "$TYPE" == 'error' ]; then
+    if command -v gum > /dev/null; then
+        gum style --border="thick" "$(gum style --foreground="#ff0000" "✖") $(gum style --bold --background="#ff0000" --foreground="#ffffff"  " ERROR ") $(gum style --bold "$MSG")"
+    else
+        echo "ERROR: $MSG"
+    fi
+  elif [ "$TYPE" == 'info' ]; then
+    if command -v gum > /dev/null; then
+        gum style " $(gum style --foreground="#00ffff" "○") $(gum style --faint --foreground="#ffffff" "$MSG")"
+    else
+        echo "INFO: $MSG"
+    fi
+  elif [ "$TYPE" == 'md' ]; then
+    if command -v glow > /dev/null; then
+        glow "$MSG"
+    else
+        cat "$MSG"
+    fi
+  elif [ "$TYPE" == 'prompt' ]; then
+    if command -v gum > /dev/null; then
+        gum style " $(gum style --foreground="#00008b" "▶") $(gum style --bold "$MSG")"
+    else
+        echo "PROMPT: $MSG"
+    fi
+  elif [ "$TYPE" == 'star' ]; then
+    if command -v gum > /dev/null; then
+        gum style " $(gum style --foreground="#d1d100" "◆") $(gum style --bold "$MSG")"
+    else
+        echo "STAR: $MSG"
+    fi
+  elif [ "$TYPE" == 'start' ]; then
+    if command -v gum > /dev/null; then
+        gum style " $(gum style --foreground="#00ff00" "▶") $(gum style --bold "$MSG")"
+    else
+        echo "START: $MSG"
+    fi
+  elif [ "$TYPE" == 'success' ]; then
+    if command -v gum > /dev/null; then
+        gum style "$(gum style --foreground="#00ff00" "✔")  $(gum style --bold "$MSG")"
+    else
+        echo "SUCCESS: $MSG"
+    fi
+  elif [ "$TYPE" == 'warn' ]; then
+    if command -v gum > /dev/null; then
+        gum style " $(gum style --foreground="#d1d100" "◆") $(gum style --bold --background="#ffff00" --foreground="#000000"  " WARNING ") $(gum style --bold "$MSG")"
+    else
+        echo "WARNING: $MSG"
+    fi
+  else
+    if command -v gum > /dev/null; then
+        gum style " $(gum style --foreground="#00ff00" "▶") $(gum style --bold "$TYPE")"
+    else
+        echo "$MSG"
+    fi
+  fi
+}

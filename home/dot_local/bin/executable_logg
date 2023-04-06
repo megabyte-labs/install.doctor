@@ -121,7 +121,7 @@ fi
 
 # @description Logs using Gum
 # @example logger info "An informative log"
-logg() {
+logger() {
   TYPE="$1"
   MSG="$2"
   if [ "$TYPE" == 'error' ]; then
