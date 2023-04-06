@@ -205,3 +205,24 @@ textconv:
       - "-o"
       - "-"
       - "-"
+samba_printers:
+  - id: HPOfficeJetPro
+    comment: HP OfficeJet Pro 6978 (in Garage)
+    name: HP OfficeJet Pro 6978
+samba_shares:
+  - id: Media
+    comment: Movies, TV Shows, and other read-only multimedia
+    follow_symlinks: true
+    path: /mnt/htpc
+    public: true
+  - id: Private
+    comment: Authenticated share with read/write capabilities (backed up to OneDrive)
+    path: "{{ .chezmoi.homeDir }}/Documents/Private"
+    public: no
+    users: '@sambausers'
+    writable: true
+  - id: Public
+    comment: Public folder provided for file sharing on the LAN
+    path: "{{ .chezmoi.homeDir }}/Public"
+    public: true
+    writable: true
