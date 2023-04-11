@@ -115,6 +115,9 @@
 {{-   writeToStdout "Chezmoi is running in headless environment.\n" -}}
 {{- end -}}
 
+{{- $sambaNetBiosName := (default $hostname (env "SAMBA_NETBIOS_NAME")) -}}
+{{- $sambaWorkGroupName := (default "BETELGEUSE" (env "SAMBA_WORKGROUP")) -}}
+
 encryption: "age"
 age:
   identity: "{{ .chezmoi.homeDir }}/.config/age/chezmoi.txt"
@@ -136,10 +139,14 @@ data:
       secondary: 1.1.1.1#cloudflare-dns.com
     docker:
       doRegion: nyc1
+    domain: "{{ $domain }}"
     headless: {{ $headless }}
     home: "{{ .chezmoi.homeDir }}"
     homeParentFolder: "{{ if eq .chezmoi.os "linux" }}/home{{ else if eq .chezmoi.os "darwin" }}/Users{{ else }}C:\Users{{ end }}"
     hostname: "{{ $hostname }}"
+    samba:
+      netbiosName: "{{ $sambaNetBiosName }}"
+      workgroup: "{{ $sambaWorkGroupName }}"
     ssh:
       allowTCPForwarding: no
       allowUsers: {{ output "echo" "$USER" }}
@@ -149,6 +156,7 @@ data:
       excludedSubnets:
         - 10.0.0.0/24
         - 10.14.50.0/24
+        - 192.168.1.0/24
     qubes: {{ ne (stat (joinPath "usr" "bin" "qubes-session")) false }}
     restricted: {{ $restricted }}
     softwareGroup: "{{ $softwareGroup }}"
@@ -163,6 +171,7 @@ data:
       r2: "{{ $cloudflareR2AccountId }}"
       username: "{{ $cloudflareUsername }}"
     defaultBrowser: firefox
+    # `domain` is kept here for backwards compatibility, but the .host.domain is the preferred selector
     domain: "{{ $domain }}"
     email: "{{ $email }}"
     gcloud:

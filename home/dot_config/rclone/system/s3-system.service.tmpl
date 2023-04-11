@@ -1,0 +1,14 @@
+[Unit]
+Description=rclone S3 service (system)
+After=network-online.target
+
+[Service]
+Type=simple
+User=rclone
+ExecStart=/usr/local/bin/rclone-mount "rclone" "rclone" "s3-system"
+ExecStop=/bin/fusermount -u /mnt/s3-system
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target
