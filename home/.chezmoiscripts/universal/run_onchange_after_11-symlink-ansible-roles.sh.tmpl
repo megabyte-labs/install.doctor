@@ -1,4 +1,23 @@
 #!/usr/bin/env bash
+# @file Ansible Roles / Gas Station
+# @brief Symlinks roles that are part of the [Gas Station](https://github.com/megabyte-labs/gas-station) project to a location that Ansible can digest
+# @description
+#     Install Doctor was previously called Gas Station. It was also Ansible based. Some of the features that Install Doctor
+#     provides are made available via Ansible roles that Gas Station provides. This script symlinks Gas Station's roles
+#     so that they can be leveraged by Install Doctor.
+#
+#     Some of the roles that Gas Station provides are not available via Ansible Galaxy yet. This script symlinks Gas Station
+#     roles to an Ansible Galaxy / Ansible friendly location.
+#
+#     ## Ansible Installation
+#
+#     If Ansible is not already installed, this script will also install Ansible and all the necessary requirements using `pipx`.
+#     This script must run before the `install-packages` script because some of the Ansible roles might be leveraged by it.
+#
+#     ## TODO
+#
+#     * Move installation logic into the ZX installer so that Ansible and its dependencies are only installed when required
+#     * Remove Ansible dependency completely
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
