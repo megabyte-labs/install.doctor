@@ -1,5 +1,11 @@
 {{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
+# @file `/etc/environment` Setup
+# @brief Configures `/etc/environment` to include environment variables that should be applied globally
+# @description
+#     This script modifies the `/etc/environment` file on Linux devices to include:
+#
+#     1. `export QT_STYLE_OVERRIDE=kvantum-dark` which is required for the Linux GNOME / KDE themeing that relies on Kvantum.
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
