@@ -1,5 +1,10 @@
 {{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
+# @file `/var/log/user` Folder
+# @brief Creates an empty directory for each user in `/var/log/user`
+# @description
+#     This script creates an empty directory with each user's name in `/var/log/user`. It initializes the folder in hopes
+#     that we can eventually store all user logs in a single directory alongside the system logs folder.
 
 {{ $homeDirs := (output "find" .host.homeParentFolder "-mindepth" "1" "-maxdepth" "1" "-type" "d") -}}
 {{- range $homeDir := splitList "\n" $homeDirs -}}
