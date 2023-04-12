@@ -1,5 +1,10 @@
 {{- if eq .host.distro.family "linux" -}}
 #!/usr/bin/env bash
+# @file Linux Bloatware Removal
+# @brief Removes Linux bloatware defined in `.removeLinuxPackages` of the `home/.chezmoidata.yaml` file
+# @description
+#     This script removes some of the software deemed to be "bloatware" by cycling through the values defined in
+#     `.removeLinuxPackages` of the `home/.chezmoidata.yaml` file.
 
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}

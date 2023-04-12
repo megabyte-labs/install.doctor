@@ -1,5 +1,10 @@
 {{- if eq .host.distro.family "linux" -}}
 #!/usr/bin/env bash
+# @file Linux Shortcut Removal
+# @brief Cleans up desktop shortcuts that are out of place or unwanted on Linux devices
+# @description
+#     This script loops through the `.removeLinuxShortcuts` value in `home/.chezmoidata.yaml` and removes
+#     desktop shortcuts that have been deemed to be unnecessary or obtrusive.
 
 {{ $removeShortcuts := join " " .removeLinuxShortcuts }}
 # shortcuts to remove: {{ $removeShortcuts }}

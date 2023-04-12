@@ -1,5 +1,10 @@
 {{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
+# @file Node.js Version
+# @brief Ensures a recent version of Node.js is available to the user by leveraging Volta
+# @description
+#     This script installs the latest version of Node.js with Volta if the default Node.js version
+#     is an outdated version.
 
 # Node.js version: {{ output "node" "--version" }}
 

@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+# @file GPG Configuration
+# @brief Imports the public GPG key defined by the variable `KEYID` and then assigns it ultimate trust
+# @description
+#     This script imports your publicly hosted GPG key using `pgp.mit.edu` as the key host. It then assigns it
+#     the ultimate trust level. It also downloads and configures GPG to use the configuration defined in `.config.gpg`
+#     in the `home/.chezmoidata.yaml` file.
 
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}

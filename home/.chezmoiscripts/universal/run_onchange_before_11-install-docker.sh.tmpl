@@ -1,5 +1,16 @@
 {{- if ne .host.distro.family "windows" -}}
 #!/usr/bin/env bash
+# @file Docker Install
+# @brief Ensures Docker is installed, ensures the user can access Docker without sudo, and ensures Docker is configured to use gVisor
+# @description
+#     This script ensures Docker is installed and then adds the provisioning user to the `docker` group so that they can
+#     access Docker without `sudo`. It also installs and configures gVisor for use with Docker.
+#
+#     ## gVisor
+#
+#     gVisor is included with our Docker setup because it improves the security of Docker. gVisor is an application kernel, written in Go,
+#     that implements a substantial portion of the Linux system call interface. It provides an additional layer of isolation between running
+#     applications and the host operating system. It has gained a lot of attention, perhaps partly, because it is maintained by Google.
 
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}

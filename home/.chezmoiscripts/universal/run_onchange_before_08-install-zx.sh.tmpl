@@ -1,5 +1,16 @@
 {{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
+# @file Node.js / Volta / ZX Install
+# @brief Ensures Node.js, Volta, and ZX are installed prior to Chezmoi applying the dotfile state.
+# @description
+#     This script ensures required dependencies are installed. These dependencies include:
+#
+#     1. **[Node.js](https://nodejs.org/en)**: JavaScript runtime engine which is installed to ensure any user with Homebrew configured can access Node.js
+#     2. **[Volta](https://volta.sh/)**: Node.js version manager that provides the capability of automatically using `package.json` defined Node.js versions
+#     3. **[ZX](https://github.com/google/zx)**: Used for the script that installs the software packages on any OS
+#
+#     The Volta setup process will ensure that the user is configured to use the latest Node.js version, by default. It then
+#     also ensures the user's `~/.bashrc` and `~/.zshrc` profiles are setup for use with Volta.
 
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}
