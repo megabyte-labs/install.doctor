@@ -1,5 +1,9 @@
 {{- if false }}
 #!/usr/bin/env bash
+# @file Crontab Jobs
+# @brief Schedules Crontab jobs by importing a configuration stored in `~/.config/crontab/config`
+# @description
+#     This script loads crontab jobs that are defined and housed in your Install Doctor fork.
 
 # crontab config hash: {{ include (joinPath .chezmoi.homeDir ".config" "crontab" "config")| sha256sum }}
 

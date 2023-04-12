@@ -1,5 +1,10 @@
 {{- if eq .host.distro.family "linux" -}}
 #!/usr/bin/env bash
+# @file DConf Settings
+# @brief Applies repository-housed `dconf` settings.
+# @description
+#     This script allows you to apply `dconf` settings that you can store in your fork of Install Doctor. By default,
+#     it makes a handful of `dconf` settings optimizations.
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}

@@ -1,5 +1,18 @@
 {{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
+# @file CloudFlare WARP
+# @brief Configures and connects the CloudFlare WARP CLI to the CloudFlare network if `warp-cli` is installed.
+# @description
+#     This script automatically connects CloudFlare WARP CLI by first ensuring that the environment is not a WSL environment
+#     and also by ensuring the `warp-cli` command is available. It then:
+#
+#     1. Automatically accepts the Terms of Service and registers the client with CloudFlare
+#     2. Automatically connects to the CloudFlare network
+#     3. Ensures Always-On Mode is enabled
+#     4. Enrolls the client with CloudFlare teams (if the `CLOUDFLARE_TEAMS_CLIENT_ID` and `CLOUDFLARE_TEAMS_CLIENT_SECRET` variables are provided)
+#
+#     There are also commented lines in this script that show how you can enable WARP+DNS and Family Mode, if you decide
+#     to leverage CloudFlare WARP CLI for anything other than securely connecting to CloudFlare Teams.
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}

@@ -1,5 +1,10 @@
 {{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
+# @file GNOME Extension Settings
+# @brief Applies GNOME extension settings from various data sources.
+# @description
+#     This script ensures your GNOME extensions come pre-configured to your liking. It provides the ability
+#     to automatically install a configurable list of GNOME extensions as well as apply your preferred settings.
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}

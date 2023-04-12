@@ -1,5 +1,9 @@
 {{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
+# @file Linux GNOME / KDE Theme
+# @brief Installs the Sweet-based theme for GNOME / KDE.
+# @description
+#     This script applies various themes to Linux systems that use GNOME or KDE.
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}

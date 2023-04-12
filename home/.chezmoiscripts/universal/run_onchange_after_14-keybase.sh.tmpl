@@ -1,5 +1,9 @@
 {{- if eq .host.distro.family "linux" -}}
 #!/usr/bin/env bash
+# @file Keybase Configuration
+# @brief Updates Keybase's system configuration with the Keybase configuration stored in the `home/dot_config/keybase/config.json` location.
+# @description
+#     This script ensures Keybase utilizes a configuration that, by default, adds a security fix.
 
 # Keybase config hash: {{ include (joinPath .chezmoi.homeDir ".config" "keybase" "config.json") | sha256sum }}
 

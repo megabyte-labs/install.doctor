@@ -1,5 +1,17 @@
 {{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
+# @file Docker Plugins
+# @brief Ensures Docker push-rm and the Docker Rclone plugin are installed
+# @description
+#     This script sets up two different Docker plugins.
+#
+#     1. [Docker push-rm](https://github.com/christian-korneck/docker-pushrm) allows you to programmatically update the README.md and other Docker registry metadata on [DockerHub](https://hub.docker.com/)
+#     2. [Docker Rclone plugin](https://rclone.org/docker/) allows you to mount Rclone mounts as Docker volumes
+#
+#     ## Docker Rclone
+#
+#     The Docker Rclone installation ensures necessary system directories are initialized / created. It also copies the [Docker Rclone configuration](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/rclone/private_docker-rclone.conf.tmpl)
+#     to the proper system location.
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}

@@ -1,5 +1,9 @@
 {{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
+# @file Miscellaneous Bug Fixes
+# @brief This script applies miscellaneous bug fixes.
+# @description
+#     This script houses bug fixes that do not yet have their own script file.
 
 # enabled extensions: {{ output "dconf" "read" "/org/gnome/shell/enabled-extensions" }}
 

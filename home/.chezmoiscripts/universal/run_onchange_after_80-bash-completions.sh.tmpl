@@ -1,5 +1,10 @@
 {{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
+# @file Bash Completions
+# @brief Ensures bash completions are pre-generated and made available
+# @description
+#     This script detects the presence of various executables with Bash completions available and then
+#     conditionally adds the completions to the Bash completions folder.
 
 # .chezmoidata.yml hash: {{ include (joinPath .chezmoi.sourceDir ".chezmoidata.yaml")| sha256sum }}
 # software.yml hash: {{ include (joinPath .chezmoi.homeDir ".local" "share" "chezmoi" "software.yml")| sha256sum }}

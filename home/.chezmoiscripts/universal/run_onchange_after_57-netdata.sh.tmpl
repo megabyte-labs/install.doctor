@@ -1,5 +1,11 @@
 {{- if and (ne .host.distro.family "windows") (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (or (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) (env "NETDATA_TOKEN")) (or (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_ROOM")) (env "NETDATA_ROOM")) -}}
 #!/usr/bin/env bash
+# @file Netdata
+# @brief Connects Netdata with Netdata's free cloud dashboard and applies some system optimizations, if necessary
+# @description
+#     This script connects Netdata with Netdata Cloud if Netdata is installed, the `NETDATA_TOKEN` is provided, and the
+#     `NETDATA_ROOM` is defined. This allows you to graphically browse through system metrics on all your connected devices
+#     from a single free web application.
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}

@@ -1,5 +1,9 @@
 {{- if eq .host.distro.family "linux" -}}
 #!/usr/bin/env bash
+# @file Timeshift Configuration
+# @brief Updates the Timeshift system configuration with the Timeshift configuration stored in the `home/dot_config/timeshift/timeshift.json` location.
+# @description
+#     This script applies a Timeshift configuration that defines how Timeshift should maintain system backups.
 
 # timeshift.json hash: {{ include (joinPath .chezmoi.homeDir ".config" "timeshift" "timeshift.json") | sha256sum }}
 

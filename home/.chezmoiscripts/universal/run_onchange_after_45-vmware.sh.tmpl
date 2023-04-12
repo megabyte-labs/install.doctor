@@ -1,5 +1,9 @@
 {{- if eq .host.distro.family "linux" -}}
 #!/usr/bin/env bash
+# @file VMWare Configuration
+# @brief Patches VMWare to leverage kernel optimizations, support macOS, and work harmoniously with Secure Boot. It also enables optional services such as the USB service.
+# @description
+#     This script performs various VMWare optimizations that allow VMWare to work optimally with all features enabled.
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}

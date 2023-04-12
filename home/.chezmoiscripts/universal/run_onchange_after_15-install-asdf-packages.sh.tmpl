@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 {{- if (ne .host.distro.family "windows") }}
+# @file ASDF Plugins / Install
+# @brief Configures ASDF plugins and ensures they are pre-installed.
+# @description
+#     This script ensures ASDF is setup and then adds the plugins specified in the `~/.tool-versions` file. After that,
+#     it ensures the ASDF plugins are pre-installed.
 
 # dot_tool-versions.tmpl hash: {{ include "dot_tool-versions.tmpl" | sha256sum }}
 
