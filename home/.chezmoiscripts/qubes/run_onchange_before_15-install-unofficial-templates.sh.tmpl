@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+# @file Qubes Passwordless Templates
+# @brief Ensures unofficial templates defined in `.qubes.templatesUnofficial` in the `home/.chezmoidata.yaml` file are made available to dom0
+# @description
+#     This script downloads unofficial templates defined in the `.qubes.templatesUnofficial` data key of `home/.chezmoidata.yaml` and then
+#     installs them in dom0 after transferring the downloads from a temporary Qube used for downloading the templates.
 
 ### Ensure unofficial templates are installed
 for TEMPLATE_URL of {{ .qubes.templatesUnofficial | toString | replace "[" "" | replace "]" "" }}; do
