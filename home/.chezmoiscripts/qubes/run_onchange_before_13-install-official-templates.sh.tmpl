@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# @file Qubes Install Templates
+# @brief Ensures the templates defined in `.qubes.templates` in the `home/.chezmoidata.yaml` file are installed
+# @description
+#     This script runs in dom0 and ensures the templates defined in `home/.chezmoidata.yaml` are all installed.
 
 ### Ensure Qubes templates exist and download if they are not present
 for TEMPLATE of {{ .qubes.templates | toString | replace "[" "" | replace "]" "" }}; do

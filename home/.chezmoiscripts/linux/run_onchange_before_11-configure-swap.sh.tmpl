@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
-# TODO - make equivalent to https://gitlab.com/megabyte-labs/gas-station/-/blob/master/roles/system/common/tasks/linux/swap.yml
+# @file Linux Swap
+# @brief Determines the ideal size `/swapfile`, ensures it exists, and then enables it on Linux systems
+# @description
+#     This script determines the ideal `/swapfile` size by checking how much RAM is available on the system.
+#     It then creates the appropriate `/swapfile` by considering factors such as the file system type. It
+#     currently supports BTRFS and regular file systems.
+#
+#     After the `/swapfile` is created, it is enabled and assigned the appropriate permissions.
+#
+#     ## TODO
+#
+#     * Add logic that creates a swapfile for ZFS-based systems
+#     * Integrate logic from https://gitlab.com/megabyte-labs/gas-station/-/blob/master/roles/system/common/tasks/linux/swap.yml
 
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}

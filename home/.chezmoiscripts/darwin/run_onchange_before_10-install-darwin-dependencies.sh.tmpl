@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+# @file macOS Common Dependencies
+# @brief Ensures common system dependencies are installed via Homebrew on macOS
+# @description
+#     This script ensures packages that are commonly used by other packages or needed by Install Doctor, are installed
+#     via Homebrew. The list of packages is defined in `home/.chezmoitemplates/darwin/Brewfile`.
 
 # darwin/Brewfile hash: {{ include (joinPath ".chezmoitemplates" "darwin" "Brewfile") | sha256sum }}
 

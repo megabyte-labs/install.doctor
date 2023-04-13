@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+# @file macOS Ensure ZSH Default Shell
+# @brief Ensures ZSH is configured to be used as the default command-line shell
+# @description
+#     This script ensures ZSH is used as the default shell by ensuring it is added to `/etc/shells`. The script
+#     also ensures ZSH is available at `/usr/local/bin/zsh` on ARM64 systems by symlinking the Homebrew ZSH shell
+#     to `/usr/local/bin/zsh` if it is missing.
 
 {{ includeTemplate "universal/logg" }}
 

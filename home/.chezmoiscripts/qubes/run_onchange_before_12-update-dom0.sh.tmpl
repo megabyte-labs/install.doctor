@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+# @file Qubes Update dom0
+# @brief Ensures Qubes dom0 is up-to-date, includes all the Qubes repository definitions, and that `sys-whonix` is running
+# @description
+#     This script begins with ensuring Qubes dom0 is up-to-date by including developer-channel Qubes repository definitions are available.
+#     It then ensures Qubes dom0 is up-to-date using a combination of several methods including the recommended Salt-based
+#     update script. After dom0 is updated, it installs the packages defined in `.qubes.dom0Packages` which is defined in the
+#     `home/.chezmoidata.yaml` file. It also ensures `sys-whonix` is running if it is not already running.
 
 # qubes-templates.repo hash: {{ include (joinPath .chezmoi.homeDir ".config" "qubes" "qubes-templates.repo") | sha256sum }}
 # qubes-dom0.repo hash: {{ include (joinPath .chezmoi.homeDir ".config" "qubes" "qubes-dom0.repo") | sha256sum }}

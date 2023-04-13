@@ -1,5 +1,15 @@
 {{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
+# @file Homebrew / Xcode Tools Installation
+# @brief Ensures Xcode tools are installed on macOS and ensures Homebrew is installed on either Linux or macOS
+# @description
+#     This script ensures macOS has tools like `git` by installing the Xcode command-line developer tools if they are
+#     not already installed. Then, on both Linux and macOS, it ensures Homebrew is installed.
+#
+#     ## Homebrew Requirement
+#
+#     Install Doctor relies on Homebrew for many tools that are currently only available via Homebrew. Removing the dependency
+#     would be a nice-to-have but there are currently no plans for supporting systems without Homebrew installed.
 
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}
