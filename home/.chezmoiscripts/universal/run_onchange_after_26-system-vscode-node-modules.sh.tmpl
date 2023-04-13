@@ -1,6 +1,6 @@
 {{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
-# @file run_onchange_after_26-system-vscode-node-modules.tmpl
+# @file Global NPM Modules Fallback
 # @brief Installs NPM packages to the system `/` directory as a catch-all for tools that recursively search upwards for shared NPM configurations.
 # @description
 #     This script makes fallback linter and code auto-fixer configurations globally available. Normally, configurations, like
