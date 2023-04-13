@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+# @file Qubes `sys-gui-gpu`
+# @brief Enables `sys-gui-gpu` if a compatible GPU controller is found on Qubes dom0
+# @description
+#     This script enables `sys-gui-gpu` which allows you to secure dom0 even more by seperating the GUI
+#     management from dom0 and into a seperate Qube.
 
 ### Enables sys-gui-gpu
 enableSysGUIGPU() {

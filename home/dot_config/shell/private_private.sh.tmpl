@@ -1,5 +1,10 @@
 {{- if (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) -}}
 #!/usr/bin/env sh
+# @file Shell Secrets
+# @brief Seperate environment variables file that, when manually sourced, includes secret environment variables
+# @description
+#     This script can be invoked by running `. ~/.config/shell/private.sh` to include secret environment variables
+#     that are populated by Install Doctor during the provisioning process (if they are provided).
 
 ### Ansible
 export ANSIBLE_GALAXY_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ANSIBLE_GALAXY_TOKEN")) }}{{ includeTemplate "secrets/ANSIBLE_GALAXY_TOKEN" | decrypt }}{{ else }}{{ env "ANSIBLE_GALAXY_TOKEN" }}{{ end }}"

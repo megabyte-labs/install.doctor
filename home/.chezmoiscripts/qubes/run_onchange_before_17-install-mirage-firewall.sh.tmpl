@@ -1,4 +1,13 @@
 #!/usr/bin/env bash
+# @file Qubes Mirage Firewall
+# @brief Ensures the Mirage firewall kernel VM is installed in dom0
+# @description
+#     This script first ensures the TemplateVMs are updated and then downloads the Mirage firewall. It configures
+#     Mirage firewall so it can be used as a unikernel firewall VM.
+
+### Update TemplateVMs
+logg info 'Updating TemplateVMs via `qubesctl`'
+timeout 900 qubesctl --show-output --skip-dom0 --templates state.sls update.qubes-vm
 
 ### Ensure mirage-firewall kernel folder setup
 if [ ! -d /var/lib/qubes/vm-kernels/mirage-firewall ]; then

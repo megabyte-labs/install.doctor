@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# @file Qubes Update TemplateVMs
+# @brief Ensures the templates available in dom0 are all up-to-date
+# @description
+#     This script ensures the dom0 Qube VM templates are all up-to-date by using the recommended `qubesctl` command.
+#     Due to issues with the Whonix Qubes, the update process will timeout after 15 minutes which should be enough time
+#     for the updates to finish.
+
+### Update TemplateVMs
+logg info 'Updating TemplateVMs via `qubesctl`'
+timeout 900 qubesctl --show-output --skip-dom0 --templates state.sls update.qubes-vm
