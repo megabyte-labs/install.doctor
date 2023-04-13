@@ -77,6 +77,71 @@ tasks:
         echo -en " \e[4mUnderline\e[0m "
         echo -e " \e[9mStrikethrough\e[0m"
 
+  ferdium:profile:backup:
+    desc: Imports the user's Ferdium profile from the CloudFlare R2 Restic repository for Ferdium
+    summary: |
+      # Ferdium Profile Backup
+
+      This command backups the Ferdium profile to the S3-backed Restic repository, if the profile exists. If the repository
+      has not been initialized then it will initialize it. After you backup the profile, you can restore it with the
+      `ferdium:profile:restore` command.
+
+      The Ferdium backup is encrypted with the same key that Chezmoi uses (stored in `~/.config/age/chezmoi.txt`, by default).
+      The backup uses Restic so all the functionality that Restic offers is available with backups made by this command.
+    cmds:
+      - |
+        for FERDIUM_PROFILE in "~/Library/Application Support/Ferdium"; do
+          if [ -d '{{ .FerdiumProfile }}' ]; then
+            if [ -d ~/.local/mnt/s3 ]; then
+              if command -v rclone > /dev/null && command -v restic > /dev/null; then
+                logg info 'Ferdium profile folder exists and user S3 mount exists. Backing the profile up to user S3 bucket.'
+                if ([ -z "$(restic -r "rclone:$USER-s3:user/ferdium" --password-file "$HOME/.config/age/chezmoi.txt" cat config)" ]) 2>/dev/null; then
+                  logg info 'Initializing Ferdium Restic repository'
+                  restic -r "rclone:$USER-s3:user/ferdium" --password-file "$HOME/.config/age/chezmoi.txt" init
+                fi
+                restic -r "rclone:$USER-s3:user/ferdium" --password-file "$HOME/.config/age/chezmoi.txt" --verbose backup --tag "$FERDIUM_PROFILE" --tag {{ OS }} --tag "$HOST" "$FERDIUM_PROFILE"
+              else
+                logg warn 'Both `rclone` and `restic` must be available'
+              fi
+            else
+              logg warn 'User S3 bucket mount is unavailable'
+            fi
+          else
+            logg warn 'The Ferdium profile folder does not exist yet. You must run the Ferdium app to generate an initialial profile.'
+          fi
+        done
+
+  ferdium:profile:restore:
+    desc: Imports the user's Ferdium profile from the CloudFlare R2 Restic repository for Ferdium
+    summary: |
+      # Ferdium Profile Import
+
+      This command imports the Ferdium profile from the Restic repository if it exists. In order to use this
+      command for the first time, you should initialize Ferdium by opening the application. Then, after making
+      any changes you wish to be saved, you should backup the Ferdium profile to the CloudFlare R2 user bucket
+      by running the `ferdium:profile:import` task first.
+
+      The Ferdium backup is encrypted with the same key that Chezmoi uses (stored in `~/.config/age/chezmoi.txt`, by default).
+      The backup uses Restic so all the functionality that Restic offers is available with backups made by this command.
+    cmds:
+      - |
+        ### Detect Ferdium profile location
+        if [ -d "/Applications/Ferdium.app" ]; then
+          FERDIUM_PROFILE="$HOME/Library/Application Support/Ferdium"
+        fi
+
+        ### Restore Ferdium profile
+        if [ -d ~/.local/mnt/s3 ]; then
+          if command -v rclone > /dev/null && command -v restic > /dev/null; then
+            logg info 'Ferdium profile folder exists and user S3 mount exists. Restoring the profile from the user S3 bucket.'
+            restic -r "rclone:$USER-s3:user/ferdium" --password-file "$HOME/.config/age/chezmoi.txt" restore latest --target "$FERDIUM_PROFILE"
+          else
+            logg warn 'Both `rclone` and `restic` must be available'
+          fi
+        else
+          logg warn 'User S3 bucket mount is unavailable'
+        fi
+
   provision:
     desc: Provision the environment
     summary: |
