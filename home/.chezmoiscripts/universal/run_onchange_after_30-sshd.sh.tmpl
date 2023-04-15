@@ -1,5 +1,14 @@
 {{- if ne .host.distro.family "windows" -}}
 #!/usr/bin/env bash
+# @file SSHD Configuration
+# @brief Applies SSHD system configuration and then restarts / enables the SSH server
+# @description
+#     This script applies the SSH server MOTD banner and `sshd_config` (which are housed in the `home/private_dot_ssh/system` location)
+#     to the system by copying the files to the system location and then restarting / enabling the system SSH server.
+#
+#     ## Links
+#
+#     * [System SSHD configurations](https://github.com/megabyte-labs/install.doctor/tree/master/home/private_dot_ssh/system)
 
 # sshd_config hash: {{- include (joinPath .host.home ".ssh" "system" "sshd_config") | sha256sum -}}
 # banner hash: {{- include (joinPath .host.home ".ssh" "system" "banner") | sha256sum -}}

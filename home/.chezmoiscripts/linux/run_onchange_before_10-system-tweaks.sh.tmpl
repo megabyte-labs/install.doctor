@@ -1,3 +1,4 @@
+{{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
 # @file Linux System Tweaks
 # @brief Applies a set of generic Linux system tweaks such as ensuring the hostname is set, setting the timezone, and more
@@ -27,3 +28,4 @@ if command -v sysctl > /dev/null; then
   logg info 'Increasing vm.max_map_count size to 262144'
   sudo sysctl -w vm.max_map_count=262144 > /dev/null
 fi
+{{ end -}}

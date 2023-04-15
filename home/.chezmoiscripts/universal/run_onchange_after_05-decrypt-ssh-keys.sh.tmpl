@@ -1,5 +1,15 @@
 {{- if (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) -}}
 #!/usr/bin/env bash
+# @file Decrypt SSH Keys
+# @brief Decrypts the encrypted SSH key files stored in the `home/.chezmoitemplates/ssh` folder of the repository / fork
+# @description
+#     This script decrypts the SSH key files that are housed in the `home/.chezmoitemplates/ssh` section of the repository.
+#     It loops through all the files in `home/.chezmoitemplates/ssh` and stores them to the `~/.ssh` folder
+#     when they are successfully decrypted.
+#
+#     ## Secrets
+#
+#     For more information about storing secrets like SSH keys and API keys, refer to our [Secrets documentation](https://install.doctor/docs/customization/secrets).
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}

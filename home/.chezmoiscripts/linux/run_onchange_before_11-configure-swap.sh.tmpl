@@ -1,3 +1,4 @@
+{{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
 # @file Linux Swap
 # @brief Determines the ideal size `/swapfile`, ensures it exists, and then enables it on Linux systems
@@ -55,3 +56,4 @@ if [ ! -f /swapfile ]; then
     fi
   fi
 fi
+{{ end -}}

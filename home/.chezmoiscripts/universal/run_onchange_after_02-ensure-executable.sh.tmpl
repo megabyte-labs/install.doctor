@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+# @file Ensure Local Bin Executable
+# @brief Ensures all the scripts located in `~/.local/bin` have executable permissions
+# @description
+#     This script cycles through the scripts in `~/.local/bin` are executable. It only cycles through
+#     the scripts that are exactly one level deep in the `~/.local/bin` folder.
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}

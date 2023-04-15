@@ -1,5 +1,16 @@
 {{- if eq .host.distro.family "linux" -}}
 #!/usr/bin/env bash
+# @file Fail2ban Configuration
+# @brief Applies the system `fail2ban` jail configuration and then restarts the service
+# @description
+#     Fail2ban is an SSH security program that temporarily bans IP addresses that could possibly be
+#     attempting to gain unauthorized system access. This script applies the "jail" configuration
+#     located at `home/private_dot_ssh/fail2ban/` to the system location. It then enables and restarts
+#     the `fail2ban` configuration.
+#
+#     ## Links
+#
+#     * [`fail2ban` configuration folder](https://github.com/megabyte-labs/install.doctor/tree/master/home/private_dot_ssh/fail2ban)
 
 # jail.local hash: {{- include (joinPath .host.home ".ssh" "fail2ban" "jail.local") | sha256sum -}}
 

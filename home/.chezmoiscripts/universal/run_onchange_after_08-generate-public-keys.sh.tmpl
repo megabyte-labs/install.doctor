@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+# @file Generate Missing Public SSH Keys
+# @brief Attempts to create missing public SSH keys for all private keys that are missing a public key file
+# @description
+#     Using private SSH keys, you can generate the corresponding public key. This script ensures that any SSH private key
+#     that does not have a matching `.pub` public key file has one generated.
 
 {{ $sshFiles := (output "find" (joinPath .chezmoi.homeDir ".ssh") "-type" "f") -}}
 {{- range $sshFile := splitList "\n" $sshFiles -}}

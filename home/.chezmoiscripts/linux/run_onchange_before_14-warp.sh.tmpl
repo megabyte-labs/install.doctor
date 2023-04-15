@@ -1,3 +1,4 @@
+{{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
 # @file CloudFlare WARP Repository
 # @brief Adds the CloudFlare WARP `apt-get` repository to Debian and Ubuntu systems
@@ -30,3 +31,4 @@ elif [ '{{ .host.distro.id }}' = 'ubuntu' ]; then
         sudo apt-get update
     fi
 fi
+{{ end -}}

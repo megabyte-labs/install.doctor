@@ -1,5 +1,21 @@
 {{- if eq .host.distro.family "linux" -}}
 #!/usr/bin/env bash
+# @file Endlessh Configuration
+# @brief Applies the Endlessh configuration and starts the service on Linux systems
+# @description
+#     Endlessh is a endless SSH tarpit that slowly shows an infinitely long SSH welcome banner on the default
+#     SSH port. It is intended to break unsophisticated malware that targets SSH.
+#
+#     If the `endlessh` program is installed, this script applies the configuration stored in `home/private_dot_ssh/endlessh/config.tmpl`
+#     (that unpacks with Chezmoi to `~/.ssh/endlessh/config`) to the system location and then starts the service.
+#
+#     **Note:** _This script runs under the assumption that the actual SSH port which is defined in `home/.chezmoidata.yaml`
+#     is assigned to a non-standard port like 2214. This allows the default port to be used for `endlessh`._
+#
+#     ## Links
+#
+#     * [Endlessh GitHub repository](https://github.com/skeeto/endlessh)
+#     * [Endlessh configuration](https://github.com/megabyte-labs/install.doctor/blob/master/home/private_dot_ssh/endlessh/config.tmpl)
 
 # endlessh config hash: {{- include (joinPath .host.home ".ssh" "endlessh" "config") | sha256sum -}}
 

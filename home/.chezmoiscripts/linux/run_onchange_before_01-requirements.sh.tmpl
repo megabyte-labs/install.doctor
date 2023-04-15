@@ -1,3 +1,4 @@
+{{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
 # @file Linux Required Dependencies
 # @brief Ensures commonly used system packages that are common dependencies of other packages are installed
@@ -238,3 +239,4 @@ elif [ '{{ .host.distro.id }}' = 'ubuntu' ]; then
         fi
     done
 fi
+{{ end -}}
