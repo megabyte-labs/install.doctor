@@ -1,3 +1,4 @@
+{{- if (eq .host.distro.id "qubes") -}}
 #!/usr/bin/env bash
 # @file Qubes Update TemplateVMs
 # @brief Ensures the templates available in dom0 are all up-to-date
@@ -9,3 +10,4 @@
 ### Update TemplateVMs
 logg info 'Updating TemplateVMs via `qubesctl`'
 timeout 900 qubesctl --show-output --skip-dom0 --templates state.sls update.qubes-vm
+{{ end -}}

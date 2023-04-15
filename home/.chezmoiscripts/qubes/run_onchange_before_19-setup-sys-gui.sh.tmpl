@@ -1,3 +1,4 @@
+{{- if (eq .host.distro.id "qubes") -}}
 #!/usr/bin/env bash
 # @file Qubes `sys-gui-gpu`
 # @brief Enables `sys-gui-gpu` if a compatible GPU controller is found on Qubes dom0
@@ -29,3 +30,4 @@ elif qvm-pci list | grep 'VGA compatible controller' | grep 'NVIDIA'; then
     qvm-pci attach sys-gui-gpu "$ID" --persistent -o permissive=true
   done
 fi
+{{ end -}}

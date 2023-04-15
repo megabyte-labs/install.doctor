@@ -1,3 +1,4 @@
+{{- if (eq .host.distro.id "qubes") -}}
 #!/usr/bin/env bash
 # @file Qubes Update dom0
 # @brief Ensures Qubes dom0 is up-to-date, includes all the Qubes repository definitions, and that `sys-whonix` is running
@@ -35,3 +36,4 @@ done
 ### Ensure sys-whonix is running
 logg info 'Ensuring `sys-whonix` is running'
 qvm-start sys-whonix --skip-if-running
+{{ end -}}

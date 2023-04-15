@@ -1,3 +1,4 @@
+{{- if (eq .host.distro.id "qubes") -}}
 #!/usr/bin/env bash
 # @file Qubes Install Templates
 # @brief Ensures the templates defined in `.qubes.templates` in the `home/.chezmoidata.yaml` file are installed
@@ -11,3 +12,4 @@ for TEMPLATE of {{ .qubes.templates | toString | replace "[" "" | replace "]" ""
     sudo qubes-dom0-update "qubes-template-$TEMPLATE"
   fi
 done
+{{ end -}}

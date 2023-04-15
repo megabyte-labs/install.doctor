@@ -1,3 +1,4 @@
+{{- if (eq .host.distro.id "qubes") -}}
 #!/usr/bin/env bash
 # @file Qubes Mirage Firewall
 # @brief Ensures the Mirage firewall kernel VM is installed in dom0
@@ -28,3 +29,4 @@ if [ ! -f/var/lib/qubes/vm-kernels/mirage-firewall/initramfs ]; then
   logg info 'Adding dummy initrmfs file to the mirage-firewall kernel folder'
   gzip -n9 < /dev/null > /var/lib/qubes/vm-kernels/mirage-firewall/initramfs
 fi
+{{ end -}}

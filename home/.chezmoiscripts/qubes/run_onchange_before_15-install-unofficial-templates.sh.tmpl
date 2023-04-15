@@ -1,3 +1,4 @@
+{{- if (eq .host.distro.id "qubes") -}}
 #!/usr/bin/env bash
 # @file Qubes Passwordless Templates
 # @brief Ensures unofficial templates defined in `.qubes.templatesUnofficial` in the `home/.chezmoidata.yaml` file are made available to dom0
@@ -24,3 +25,4 @@ for TEMPLATE_URL of {{ .qubes.templatesUnofficial | toString | replace "[" "" | 
     logg info "$TEMPLATE is already installed"
   fi
 done
+{{ end -}}

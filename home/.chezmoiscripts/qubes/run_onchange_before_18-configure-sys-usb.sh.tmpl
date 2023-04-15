@@ -1,3 +1,4 @@
+{{- if (eq .host.distro.id "qubes") -}}
 #!/usr/bin/env bash
 # @file Qubes `sys-usb`
 # @brief Enables `sys-usb` and configures it with ideal security settings
@@ -27,3 +28,4 @@ fi
 ### Configure USB mouse settings
 logg info 'Ensuring newly connected USB mouse devices are only allowed to connect after a prompt is accepted'
 echo "sys-usb dom0 ask,default_target=dom0" | sudo tee /etc/qubes-rpc/policy/qubes.InputMouse
+{{ end -}}
