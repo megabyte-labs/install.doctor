@@ -1,3 +1,4 @@
+{{- if (ne .host.distro.family "darwin") -}}
 #!/usr/bin/env bash
 # @file macOS Ensure ZSH Default Shell
 # @brief Ensures ZSH is configured to be used as the default command-line shell
@@ -20,3 +21,4 @@ if [[ ! -e /usr/local/bin/zsh ]]; then
 fi
 {{- end -}}
 {{- end }}
+{{ end -}}

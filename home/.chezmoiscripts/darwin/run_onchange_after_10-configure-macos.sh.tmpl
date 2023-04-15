@@ -1,3 +1,4 @@
+{{- if (ne .host.distro.family "darwin") -}}
 #!/usr/bin/env bash
 # @file macOS System Settings
 # @brief Applies an optimized set of macOS system configurations intended to provide more sensible system defaults
@@ -952,3 +953,4 @@ done
 
 logg success 'Done applying macOS settings'
 logg info 'Some of these changes  may require a logout/restart to take effect'
+{{ end -}}

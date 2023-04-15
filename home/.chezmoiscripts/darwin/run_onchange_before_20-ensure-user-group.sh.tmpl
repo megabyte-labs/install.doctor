@@ -1,3 +1,4 @@
+{{- if (ne .host.distro.family "darwin") -}}
 #!/usr/bin/env bash
 # @file macOS Ensure User Group
 # @brief Ensures that the provisioning user has a group on the system with the same name
@@ -10,3 +11,4 @@
 ### Ensure user has group of same name (required for Macports)
 logg info 'Ensuring user has a group with the same name and that it is a member. Sudo privileges may be required'
 echo y | sudo dseditgroup -o create "$USER" > /dev/null
+{{ end -}}

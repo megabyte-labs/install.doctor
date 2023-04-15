@@ -1,3 +1,4 @@
+{{- if (ne .host.distro.family "darwin") -}}
 #!/usr/bin/env bash
 # @file macOS Common Dependencies
 # @brief Ensures common system dependencies are installed via Homebrew on macOS
@@ -21,3 +22,4 @@ if command -v brew > /dev/null; then
 else
   logg error '`brew` was not found in the PATH'
 fi
+{{ end -}}

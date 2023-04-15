@@ -1,3 +1,4 @@
+{{- if (ne .host.distro.family "darwin") -}}
 #!/usr/bin/env bash
 # @file macOS Set Wallpaper
 # @brief Ensures the macOS wallpaper is set to the Betelgeuse wallpaper for macOS.
@@ -13,3 +14,4 @@ if command -v m > /dev/null && [ -f "$HOME/.local/src/betelgeuse/share/wallpaper
 else
   logg warn 'Either `m` or the macOS default wallpaper is missing.'
 fi
+{{ end -}}
