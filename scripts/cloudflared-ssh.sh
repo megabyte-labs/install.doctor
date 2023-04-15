@@ -140,9 +140,9 @@ if [ -n "$TUNNEL_ID" ]; then
     DOMAINS_HOSTED="$(find /opt/easyengine/sites -maxdepth 1 -mindepth 1 -type d | sed 's/.*sites\///' | xargs)"
   else
     if [ -d /etc/qubes ]; then
-      DOMAINS_HOSTED="$(hostname)-qube.${SSH_DOMAIN:-ssh.megabyte.spaccec}"
+      DOMAINS_HOSTED="$(hostname)-qube.${SSH_DOMAIN:-ssh.megabyte.space}"
     else
-      DOMAINS_HOSTED="$(hostname).${SSH_DOMAIN:-ssh.megabyte.spaccec}"
+      DOMAINS_HOSTED="$(hostname).${SSH_DOMAIN:-ssh.megabyte.space}"
     fi
   fi
   for DOMAIN in $DOMAINS_HOSTED; do
