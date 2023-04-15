@@ -588,6 +588,8 @@ async function afterInstall(packageManager) {
   } else if (packageManager === 'basher') {
   } else if (packageManager === 'binary') {
   } else if (packageManager === 'brew' || packageManager === 'cask') {
+    log('info', logStage, `Ensuring Homebrew cleanup is run`)
+    await $`brew cleanup`
   } else if (packageManager === 'cargo') {
   } else if (packageManager === 'choco') {
   } else if (packageManager === 'crew') {

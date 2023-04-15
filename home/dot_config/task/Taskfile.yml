@@ -41,6 +41,22 @@ tasks:
         printf '%s' "$(echo "$selected" | jq -r '.login.password')" | $COPY
 
   brave:profile:backup:
+    vars:
+      AppName: Brave Browser
+      RcloneRepository: brave
+    summary: |
+      # {{ .AppName }} Profile Backup
+
+      This command backups the {{ .AppName }} user data profile to an S3-backed Restic repository if the profile exists. If the repository
+      has not been initialized then it will initialize it. After you backup the profile, you can restore it with the
+      `{{ .RcloneRepository }}:profile:restore` command like so:
+
+      ```
+      run {{ .RcloneRepository }}:profile:restore
+      ```
+
+      The {{ .AppName }} backup is encrypted with the same key that Chezmoi uses (stored in `~/.config/age/chezmoi.txt`, by default).
+      The backup uses Restic so all the functionality that Restic offers is available with backups made by this command.
     cmds:
       - task: profile:backup
         vars:
@@ -58,6 +74,22 @@ tasks:
           RcloneRepository: brave
 
   chrome:profile:backup:
+    vars:
+      AppName: Chrome
+      RcloneRepository: chrome
+    summary: |
+      # {{ .AppName }} Profile Backup
+
+      This command backups the {{ .AppName }} user data profile to an S3-backed Restic repository if the profile exists. If the repository
+      has not been initialized then it will initialize it. After you backup the profile, you can restore it with the
+      `{{ .RcloneRepository }}:profile:restore` command like so:
+
+      ```
+      run {{ .RcloneRepository }}:profile:restore
+      ```
+
+      The {{ .AppName }} backup is encrypted with the same key that Chezmoi uses (stored in `~/.config/age/chezmoi.txt`, by default).
+      The backup uses Restic so all the functionality that Restic offers is available with backups made by this command.
     cmds:
       - task: profile:backup
         vars:
@@ -75,6 +107,22 @@ tasks:
           RcloneRepository: chrome
 
   edge:profile:backup:
+    vars:
+      AppName: Microsoft Edge
+      RcloneRepository: edge
+    summary: |
+      # {{ .AppName }} Profile Backup
+
+      This command backups the {{ .AppName }} user data profile to an S3-backed Restic repository if the profile exists. If the repository
+      has not been initialized then it will initialize it. After you backup the profile, you can restore it with the
+      `{{ .RcloneRepository }}:profile:restore` command like so:
+
+      ```
+      run {{ .RcloneRepository }}:profile:restore
+      ```
+
+      The {{ .AppName }} backup is encrypted with the same key that Chezmoi uses (stored in `~/.config/age/chezmoi.txt`, by default).
+      The backup uses Restic so all the functionality that Restic offers is available with backups made by this command.
     cmds:
       - task: profile:backup
         vars:
@@ -93,14 +141,21 @@ tasks:
 
   ferdium:profile:backup:
     desc: Imports the user's Ferdium profile from the CloudFlare R2 Restic repository for Ferdium
+    vars:
+      AppName: Ferdium
+      RcloneRepository: ferdium
     summary: |
-      # Ferdium Profile Backup
+      # {{ .AppName }} Profile Backup
 
-      This command backups the Ferdium profile to the S3-backed Restic repository, if the profile exists. If the repository
+      This command backups the {{ .AppName }} user data profile to an S3-backed Restic repository if the profile exists. If the repository
       has not been initialized then it will initialize it. After you backup the profile, you can restore it with the
-      `ferdium:profile:restore` command.
+      `{{ .RcloneRepository }}:profile:restore` command like so:
 
-      The Ferdium backup is encrypted with the same key that Chezmoi uses (stored in `~/.config/age/chezmoi.txt`, by default).
+      ```
+      run {{ .RcloneRepository }}:profile:restore
+      ```
+
+      The {{ .AppName }} backup is encrypted with the same key that Chezmoi uses (stored in `~/.config/age/chezmoi.txt`, by default).
       The backup uses Restic so all the functionality that Restic offers is available with backups made by this command.
     cmds:
       - task: profile:backup
@@ -130,6 +185,22 @@ tasks:
           RcloneRepository: ferdium
 
   firefox:profile:backup:
+    vars:
+      AppName: Firefox
+      RcloneRepository: firefox
+    summary: |
+      # {{ .AppName }} Profile Backup
+
+      This command backups the {{ .AppName }} user data profile to an S3-backed Restic repository if the profile exists. If the repository
+      has not been initialized then it will initialize it. After you backup the profile, you can restore it with the
+      `{{ .RcloneRepository }}:profile:restore` command like so:
+
+      ```
+      run {{ .RcloneRepository }}:profile:restore
+      ```
+
+      The {{ .AppName }} backup is encrypted with the same key that Chezmoi uses (stored in `~/.config/age/chezmoi.txt`, by default).
+      The backup uses Restic so all the functionality that Restic offers is available with backups made by this command.
     cmds:
       - task: profile:backup
         vars:
@@ -157,6 +228,22 @@ tasks:
         echo -e " \e[9mStrikethrough\e[0m"
 
   librewolf:profile:backup:
+    vars:
+      AppName: LibreWolf
+      RcloneRepository: librewolf
+    summary: |
+      # {{ .AppName }} Profile Backup
+
+      This command backups the {{ .AppName }} user data profile to an S3-backed Restic repository if the profile exists. If the repository
+      has not been initialized then it will initialize it. After you backup the profile, you can restore it with the
+      `{{ .RcloneRepository }}:profile:restore` command like so:
+
+      ```
+      run {{ .RcloneRepository }}:profile:restore
+      ```
+
+      The {{ .AppName }} backup is encrypted with the same key that Chezmoi uses (stored in `~/.config/age/chezmoi.txt`, by default).
+      The backup uses Restic so all the functionality that Restic offers is available with backups made by this command.
     cmds:
       - task: profile:backup
         vars:
