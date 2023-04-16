@@ -1,0 +1,21 @@
+{{- if (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "DIGITALOCEAN_ACCESS_TOKEN")) (env "DIGITALOCEAN_ACCESS_TOKEN")) -}}
+#!/usr/bin/env bash
+# @file DigitalOcean Kubernetes
+# @brief Connects to DigitalOcean Kubernetes cluster
+# @description
+#     This script runs when `DIGITALOCEAN_ACCESS_TOKEN` is defined as an environment variable or as an encrypted key (see
+#     [Secrets documentation](https://install.doctor/docs/customization/secrets#encrypted-secrets)). If the check passes,
+#     then the script ensures the DigitalOcean CLI is installed (i.e. `doctl`). Then, it uses `doctl` to connect to the Kubernetes
+#     cluster defined by the `DIGITALOCEAN_K8S_ID` secret.
+#     This script detects the presence of various executables with Bash completions available and then
+#     conditionally adds the completions to the Bash completions folder.
+
+### Ensure DigitalOcean CLI is instaled
+if ! command -v doctl > /dev/null; then
+    logg info '`doctl` is missing - installing via Homebrew'
+    brew install doctl
+fi
+
+doctl kubernetes cluster kubeconfig save b7fc4e37-ffe7-4ea1-887a-0e19ee077f32
+
+{{ end -}}
