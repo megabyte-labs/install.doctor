@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# @file scripts/homebrew.sh
+# @file Homebrew Install
 # @brief Installs Homebrew on macOS and / or Linux.
 # @description
 #     This script installs Homebrew on macOS and/or Linux machines. The script:

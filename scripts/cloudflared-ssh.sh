@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# @file scripts/cloudflared-ssh.sh
+# @file CloudFlare SSO SSH Tunnel Setup
 # @brief Installs and configures cloudflared for short-lived SSH certificates authenticated via SSO
 # @description
 #     This script ensures Homebrew is installed and then uses Homebrew to ensure `cloudflared` is installed.

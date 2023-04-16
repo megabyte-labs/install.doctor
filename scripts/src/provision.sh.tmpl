@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# @file scripts/provision.sh
+# @file Quick Start
 # @brief Main entry point for Install Doctor that ensures Homebrew and a few dependencies are installed before cloning the repository and running Chezmoi.
 # @description
 #     This script ensures Homebrew is installed and then installs a few dependencies that Install Doctor relies on.
