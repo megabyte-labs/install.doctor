@@ -12,7 +12,7 @@
 {{ includeTemplate "universal/logg-before" }}
 
 {{- $packages := splitList " " (includeTemplate "universal/common-dependencies" .) -}}
-{{- $additionalPackages := splitList " " (includeTemplate (join .host.distro.id "/common-dependencies") .) -}}
+{{- $additionalPackages := splitList " " (includeTemplate (joinPath .host.distro.id "common-dependencies") .) -}}
 {{- $packages = concat $packages $additionalPackages -}}
 
 if [ '{{ .host.distro.id }}' = 'archlinux' ]; then
