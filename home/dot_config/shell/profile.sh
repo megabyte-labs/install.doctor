@@ -141,6 +141,8 @@ source ~/.vimrc
 if command -v nvim > /dev/null && cat ~/.config/nvim/init.lua | grep 'set runtimepath^=~/.vim runtimepath+=~/.vim/after' > /dev/null; then
   ### Setup Neovim to work with Vim setup and plugins
   echo -e "$VIM_NEOVIM_INTEGRATION\n$(cat ~/.config/nvim/init.lua)" > ~/.config/nvim/init.lua || echo ''
-  echo -e "$VIM_NEOVIM_INTEGRATION\n$(cat ~/.var/app/io.neovim.nvim/config/nvim/init.lua)" > ~/.var/app/io.neovim.nvim/config/nvim/init.lua || echo ''
+  if -d ~/.var/app/io.neovim.nvim/config/nvim; then
+    echo -e "$VIM_NEOVIM_INTEGRATION\n$(cat ~/.var/app/io.neovim.nvim/config/nvim/init.lua)" > ~/.var/app/io.neovim.nvim/config/nvim/init.lua || echo ''
+  fi
 fi
 unset VIM_NEOVIM_INTEGRATION

@@ -1,5 +1,15 @@
 {{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
+# @file Neovim Configuration
+# @brief This script configures Neovim by applying the configuration stored in `${XDG_DATA_HOME:-$HOME/.config}/nvim-custom/init.lua` if the `nvim` application is available
+# @description
+#     This script applies the Neovim configuration stored in `${XDG_DATA_HOME:-$HOME/.config}/nvim-custom/init.lua` if nvim is installed.
+#     The custom init configuration provides compatiblity between Volta and Neovim. This allows neovim to discover node modules installed by Volta. This script sets up
+#     init in such a way that the compatibility setting is applied even when Neovim is installed using Flatpak
+#
+#     ## Links
+#
+#     * [Default Neovim configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/nvim-custom/init.lua)
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
