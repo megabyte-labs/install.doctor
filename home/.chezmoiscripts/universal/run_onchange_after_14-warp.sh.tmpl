@@ -34,7 +34,8 @@
 #     * [Linux managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/warp/private_mdm.xml.tmpl)
 #     * [macOS managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/Library/Managed%20Preferences/private_com.cloudflare.warp.plist.tmpl)
 
-{{ includeTemplate "universal/logg-before" }}
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
 
 ### Install CloudFlare WARP (on non-WSL *nix systems)
 if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
