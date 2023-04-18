@@ -1,4 +1,4 @@
-{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt") (ne .firefoxPrivateProfile false)) -}}
+{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (ne .firefoxPrivateProfile false) -}}
 [Profile6]
 Name=Private
 IsRelative=1
