@@ -750,7 +750,7 @@ async function beforeInstall(packageManager) {
       try {
         runCommand('Running brew update', `brew update`)
       } catch (e) {
-        log('error', 'Homebrew', 'Failed while running brew update')
+        log('error', 'Homebrew', 'Failed running brew update')
       }
     }
   } else if (packageManager === 'cargo') {
