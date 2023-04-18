@@ -8,7 +8,7 @@
 {{- $githubUsername := (default "ProfessorManhattan" (env "GITHUB_USERNAME")) -}}
 {{- $gmailAddress := (default "blzalewski@gmail.com" (env "GMAIL_ADDRESS")) -}}
 {{- $gpgKeyId := (default "0xF0A300E4199A1C33" (env "KEYID")) -}}
-{{- $hostname := (default (env "HOST") "alpha") -}}
+{{- $hostname := (default "alpha" (env "HOST")) -}}
 {{- $locale := (output "echo" "$LANG") }}
 {{- $name := (default "Brian Zalewski" (env "FULL_NAME")) -}}
 {{- $restricted := (default false (env "WORK_ENVIRONMENT")) -}}
