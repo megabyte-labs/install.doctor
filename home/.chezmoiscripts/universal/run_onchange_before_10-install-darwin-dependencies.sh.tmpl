@@ -1,0 +1,25 @@
+{{- if (ne .host.distro.family "darwin") -}}
+#!/usr/bin/env bash
+# @file macOS Common Dependencies
+# @brief Ensures common system dependencies are installed via Homebrew on macOS
+# @description
+#     This script ensures packages that are commonly used by other packages or needed by Install Doctor, are installed
+#     via Homebrew. The list of packages is defined in `home/.chezmoitemplates/darwin/Brewfile`.
+
+# darwin/Brewfile hash: {{ include (joinPath ".chezmoitemplates" "darwin" "Brewfile") | sha256sum }}
+
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
+
+if command -v brew > /dev/null; then
+  logg 'Installing base dependencies for macOS using `brew bundle`'
+  logg info 'Dependencies: age asdf jq node glow go go-task/tap/go-task gnupg gum m-cli progress volta yq m-cli yq zx'
+  logg info 'GNU compatibility dependencies: coreutils findutils'
+
+  brew bundle --verbose --no-lock --file=/dev/stdin <<EOF
+  {{ includeTemplate "darwin/Brewfile" . -}}
+  EOF
+else
+  logg error '`brew` was not found in the PATH'
+fi
+{{ end -}}

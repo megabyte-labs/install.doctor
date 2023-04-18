@@ -23,8 +23,8 @@ services:
       DB_USER_FILE: /run/secrets/statping_database_user
       DB_PASS_FILE: /run/secrets/statping_database_password
       DB_DATABASE_FILE: /run/secrets/statping_database_name
-      NAME: "{{ template.NAME }}"
-      DESCRIPTION: "{{ template.DESCRIPTION }}"
+      NAME: "{{ .docker.statping.name }}"
+      DESCRIPTION: "{{ .docker.statping.description }}"
     deploy:
       mode: replicated
       replicas: 1

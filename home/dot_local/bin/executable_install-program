@@ -109,12 +109,12 @@ let installData
 let installOrders = {}
 let installMeta = {}
 let binLinkRan = false
-const installOrdersPre = []
-const installOrdersPost = []
-const installOrdersService = []
-const installOrdersGroups = []
-const installOrdersPlugins = []
-const installOrdersBinLink = []
+let installOrdersPre = []
+let installOrdersPost = []
+let installOrdersService = []
+let installOrdersGroups = []
+let installOrdersPlugins = []
+let installOrdersBinLink = []
 let brewUpdated, osType, osID, snapRefreshed
 
 // Register the OS platform type
@@ -123,7 +123,7 @@ const osPlatform = osPlatformData === 'win32' ? 'windows' : osPlatformData
 
 // Download the installation map
 async function downloadInstallData() {
-  const response = await fetch('https://gitlab.com/megabyte-labs/install.doctor/-/raw/master/software.yml')
+  const response = await fetch('https://github.com/megabyte-labs/install.doctor/raw/master/software.yml')
   if (response.ok) {
     const text = await response.text()
     return YAML.parse(text)
@@ -146,7 +146,7 @@ async function generateInstallOrders(pkgsToInstall) {
   if (generateInstallOrderCount === 0) {
     log('info', logStage, `Installer preference category detected as ${installerPreference}`)
     log('info', logStage, `Preference order acquired:`)
-    console.log(preferenceOrder)
+    console.log('Preference order:', preferenceOrder)
   }
   generateInstallOrderCount++
   log('info', logStage, `New packages discovered for processing: ${pkgsToInstall} (${pkgsToInstall.length} items)`)
@@ -164,7 +164,9 @@ async function generateInstallOrders(pkgsToInstall) {
       console.log('pkg:', pkg)
       continue
     }
+    let comparesRemaining = preferenceOrder.length
     for (let preference of preferenceOrder) {
+      comparesRemaining--
       let currentSelector, doubleScoped, scopedPkgManager, scopedSystem, normalCheck
       if (
         softwarePackages[packageKey][preference + ':' + osID] ||
@@ -403,6 +405,10 @@ async function generateInstallOrders(pkgsToInstall) {
           )
           break
         }
+      } else {
+        if (!comparesRemaining) {
+          log('info', 'No Match', `There was no match found for ${pkg} - it may be an OS-specific package`)
+        }
       }
     }
   }
@@ -426,19 +432,19 @@ function processPluginOrders(pkg) {
 async function updateInstallMaps(preference, packages, scopedPreference, pkg, packageKey, softwarePackages) {
   const preHook = getHook(packages, 'pre', scopedPreference, preference)
   if (preHook) {
-    installOrdersPre.concat(typeof preHook === 'string' ? [preHook] : preHook)
+    installOrdersPre = installOrdersPre.concat(typeof preHook === 'string' ? [preHook] : preHook)
   }
   const postHook = getHook(packages, 'post', scopedPreference, preference)
   if (postHook) {
-    installOrdersPost.concat(typeof postHook === 'string' ? [postHook] : postHook)
+    installOrdersPost = installOrdersPost.concat(typeof postHook === 'string' ? [postHook] : postHook)
   }
   const serviceHook = getHook(packages, 'service', scopedPreference, preference)
   if (serviceHook) {
-    installOrdersService.concat(typeof serviceHook === 'string' ? [serviceHook] : serviceHook)
+    installOrdersService = installOrdersService.concat(typeof serviceHook === 'string' ? [serviceHook] : serviceHook)
   }
   const groupsHook = getHook(packages, 'groups', scopedPreference, preference)
   if (groupsHook) {
-    installOrdersGroups.concat(typeof groupsHook === 'string' ? [groupsHook] : groupsHook)
+    installOrdersGroups = installOrdersGroups.concat(typeof groupsHook === 'string' ? [groupsHook] : groupsHook)
   }
   processPluginOrders(pkg)
   if (!installOrders[preference]) {
@@ -582,6 +588,8 @@ async function afterInstall(packageManager) {
   } else if (packageManager === 'basher') {
   } else if (packageManager === 'binary') {
   } else if (packageManager === 'brew' || packageManager === 'cask') {
+    log('info', logStage, `Ensuring Homebrew cleanup is run`)
+    await $`brew cleanup`
   } else if (packageManager === 'cargo') {
   } else if (packageManager === 'choco') {
   } else if (packageManager === 'crew') {
@@ -1568,7 +1576,7 @@ async function pruneInstallOrders(installOrders) {
   log('info', 'Filter', 'Removing packages from installOrders that are already installed')
   for (const pkgManager in installOrders) {
     log('info', 'Filter', `Filtering the ${pkgManager} installOrders`)
-    console.log(newOrders[pkgManager])
+    console.log('List to be filtered:', newOrders[pkgManager])
     if (pkgManager === 'appimage') {
       newOrders[pkgManager] = await asyncFilter(newOrders[pkgManager], async (pkg) => {
         try {
@@ -1589,12 +1597,11 @@ async function pruneInstallOrders(installOrders) {
       })
     } else if (pkgManager === 'brew') {
       let newVal = newOrders[pkgManager]
+      const pkgTmp = '/tmp/brew-list-install-doctor'
+      runCommand(`Populating temporary file with list of Homebrew packages`, `brew list > ${pkgTmp}`)
       for (const pkg of newOrders[pkgManager]) {
-        const mktemp = await $`mktemp`
-        const pkgTmp = mktemp.stdout
-        runCommand(`Populating temporary file with list of Homebrew packages`, `brew list > ${pkgTmp}`)
         try {
-          runCommand(`Ensuring Homebrew package is not already installed - ${pkg}`, `cat ${pkgTmp} | grep '^${pkg}$'`)
+          await $`cat ${pkgTmp} | grep '^${pkg}$'`
           newVal = newVal.filter((x) => x === pkg)
         } catch (e) {
           // Do nothing
@@ -1654,7 +1661,7 @@ async function pruneInstallOrders(installOrders) {
       })
     }
     log('info', 'Filter', `Finished filtering ${pkgManager}`)
-    console.log(newOrders[pkgManager])
+    console.log('Filtered list:', newOrders[pkgManager])
   }
   return newOrders
 }
@@ -1699,7 +1706,7 @@ async function linkBin(installOrdersBinLink) {
         } else if (binLink.preference === 'cask') {
           try {
             const caskWhen = softwarePackages[binLink.package]['_when:cask']
-            const caskDir = caskWhen.replace('! test -d ', '').replace(/"/g, '')
+            const caskDir = caskWhen.replace('! test -d ', '')
             if (fileExists(caskDir)) {
               runCommand(
                 `Adding shortcut bin link for ${binLink.package}`,
@@ -1747,7 +1754,7 @@ async function installSoftware(pkgsToInstall) {
     console.error(e)
   }
   installOrders = await pruneInstallOrders(installOrders)
-  console.log(installOrders)
+  console.log('Install orders:', installOrders)
   packageManagers.length && log('info', 'Pre-Reqs', `Running package manager pre-installation steps`)
   for (const packageManager of packageManagers) {
     await beforeInstall(packageManager)
@@ -1775,7 +1782,11 @@ async function installSoftware(pkgsToInstall) {
     log('info', 'Bin', 'Linking bin aliases to their installed packages')
     await linkBin(installOrdersBinLink)
     for (const script of installOrdersPost) {
-      await $`${script}`
+      try {
+        await $`${script}`
+      } catch(e) {
+        log('info', 'Post-Install Hook', 'Encountered error while running post-install hook')
+      }
     }
   }
   installOrdersPlugins.length && log('info', 'Plugin', 'Installing package-specific plugins')

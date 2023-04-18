@@ -1,3 +1,0 @@
-{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-cloudflare-r2-id")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-cloudflare-r2-secret")) (ne .user.cloudflare.r2 "") -}}
-{{ .host.home }}/.local/mnt/s3
-{{- end -}}

@@ -1,0 +1,47 @@
+{{- if eq .host.distro.family "linux" -}}
+#!/usr/bin/env bash
+# @file Endlessh Configuration
+# @brief Applies the Endlessh configuration and starts the service on Linux systems
+# @description
+#     Endlessh is a endless SSH tarpit that slowly shows an infinitely long SSH welcome banner on the default
+#     SSH port. It is intended to break unsophisticated malware that targets SSH.
+#
+#     If the `endlessh` program is installed, this script applies the configuration stored in `home/private_dot_ssh/endlessh/config.tmpl`
+#     (that unpacks with Chezmoi to `~/.ssh/endlessh/config`) to the system location and then starts the service.
+#
+#     **Note:** _This script runs under the assumption that the actual SSH port which is defined in `home/.chezmoidata.yaml`
+#     is assigned to a non-standard port like 2214. This allows the default port to be used for `endlessh`._
+#
+#     ## Links
+#
+#     * [Endlessh GitHub repository](https://github.com/skeeto/endlessh)
+#     * [Endlessh configuration](https://github.com/megabyte-labs/install.doctor/blob/master/home/private_dot_ssh/endlessh/config.tmpl)
+
+# endlessh config hash: {{- include (joinPath .host.home ".ssh" "endlessh" "config") | sha256sum -}}
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+### Update /etc/endlessh/config if environment is not WSL
+if [[ ! "$(test -d proc && grep Microsoft /proc/version > /dev/null)" ]]; then
+    if command -v endlessh > /dev/null; then
+        if [ -d /etc/endlessh ]; then
+            logg info 'Copying ~/.ssh/endlessh/config to /etc/endlessh/config'
+            sudo cp -f "$HOME/.ssh/endlessh/config" /etc/endlessh/config
+
+            ### Restart / enable Endlessh
+            logg info 'Enabling the `endlessh` service'
+            sudo systemctl enable endlessh
+            logg info 'Restarting the `endlessh` service'
+            sudo systemctl restart endlessh
+        else
+            logg warn 'The /etc/endlessh folder does not exist'
+        fi
+    else
+        logg info 'Skipping Endlessh configuration because the `endlessh` executable is not available in the PATH'
+    fi
+else
+    logg info 'Skipping Endlessh configuration since environment is WSL'
+fi
+
+{{ end -}}

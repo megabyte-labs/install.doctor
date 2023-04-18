@@ -8,7 +8,7 @@
 {{- $githubUsername := (default "ProfessorManhattan" (env "GITHUB_USERNAME")) -}}
 {{- $gmailAddress := (default "blzalewski@gmail.com" (env "GMAIL_ADDRESS")) -}}
 {{- $gpgKeyId := (default "0xF0A300E4199A1C33" (env "KEYID")) -}}
-{{- $hostname := (default "alpha" (env "HOSTNAME")) -}}
+{{- $hostname := (default "alpha" (env "HOST")) -}}
 {{- $locale := (output "echo" "$LANG") }}
 {{- $name := (default "Brian Zalewski" (env "FULL_NAME")) -}}
 {{- $restricted := (default false (env "WORK_ENVIRONMENT")) -}}
@@ -106,7 +106,7 @@
 {{- if not (env "PUBLIC_SERVICES_DOMAIN") -}}
 {{-   $domain = promptStringOnce $data.user "domain" "Domain name" $domain -}}
 {{- end -}}
-{{- if not (env "HOSTNAME") -}}
+{{- if not (env "HOST") -}}
 {{-   $hostname = promptStringOnce $data.host "hostname" "Hostname ID" $hostname -}}
 {{- end -}}
 
@@ -114,6 +114,9 @@
 {{-   $headless = true -}}
 {{-   writeToStdout "Chezmoi is running in headless environment.\n" -}}
 {{- end -}}
+
+{{- $sambaNetBiosName := (default $hostname (env "SAMBA_NETBIOS_NAME")) -}}
+{{- $sambaWorkGroupName := (default "BETELGEUSE" (env "SAMBA_WORKGROUP")) -}}
 
 encryption: "age"
 age:
@@ -136,10 +139,14 @@ data:
       secondary: 1.1.1.1#cloudflare-dns.com
     docker:
       doRegion: nyc1
+    domain: "{{ $domain }}"
     headless: {{ $headless }}
     home: "{{ .chezmoi.homeDir }}"
     homeParentFolder: "{{ if eq .chezmoi.os "linux" }}/home{{ else if eq .chezmoi.os "darwin" }}/Users{{ else }}C:\Users{{ end }}"
     hostname: "{{ $hostname }}"
+    samba:
+      netbiosName: "{{ $sambaNetBiosName }}"
+      workgroup: "{{ $sambaWorkGroupName }}"
     ssh:
       allowTCPForwarding: no
       allowUsers: {{ output "echo" "$USER" }}
@@ -149,6 +156,7 @@ data:
       excludedSubnets:
         - 10.0.0.0/24
         - 10.14.50.0/24
+        - 192.168.1.0/24
     qubes: {{ ne (stat (joinPath "usr" "bin" "qubes-session")) false }}
     restricted: {{ $restricted }}
     softwareGroup: "{{ $softwareGroup }}"
@@ -163,6 +171,8 @@ data:
       r2: "{{ $cloudflareR2AccountId }}"
       username: "{{ $cloudflareUsername }}"
     defaultBrowser: firefox
+    digitalOceanClusterId: b7fc4e37-ffe7-4ea1-887a-0e19ee077f32
+    # `domain` is kept here for backwards compatibility, but the .host.domain is the preferred selector
     domain: "{{ $domain }}"
     email: "{{ $email }}"
     gcloud:

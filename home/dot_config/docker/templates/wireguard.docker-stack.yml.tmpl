@@ -11,13 +11,13 @@ services:
     environment:
       PUID: 1000
       PGID: 1000
-      TZ: "{{ timezone }}"
-      SERVERURL: "{{ template.SERVERURL }}"
+      TZ: "{{ .user.timezone }}"
+      SERVERURL: "{{ .docker.wireguard.serverUrl }}"
       SERVERPORT: 51820
       PEERS: 1
       PEERDNS: auto
-      INTERNAL_SUBNET: "{{ template.INTERNAL_SUBNET }}"
-      ALLOWEDIPS: "{{ template.INTERNAL_SUBNET }}/24"
+      INTERNAL_SUBNET: "{{ .docker.wireguard.internalSubnet }}"
+      ALLOWEDIPS: "{{ .docker.wireguard.internalSubnet }}/24"
       LOG_CONFS: true
     volumes:
       - /srv/stacks/wireguard:/config

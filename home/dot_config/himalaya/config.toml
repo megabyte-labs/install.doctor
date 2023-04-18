@@ -6,13 +6,11 @@ email-listing-page-size = 50
 [gmail]
 default = true
 email = "{{ .user.gmail.email }}"
-
 backend = "imap"
 imap-host = "imap.gmail.com"
 imap-port = 993
 imap-login = "{{ .user.gmail.email }}"
 imap-passwd-cmd = "pass show gmail"
-
 sender = "smtp"
 smtp-host = "smtp.gmail.com"
 smtp-port = 465

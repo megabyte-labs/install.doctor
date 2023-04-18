@@ -11,14 +11,14 @@ services:
       - healthchecks_network
       - nginx_network
     environment:
-      ALLOWED_HOSTS: "{{ template.ALLOWED_HOSTS }}"
+      ALLOWED_HOSTS: "{{ .docker.healthchecks.allowedHosts }}"
       APPRISE_ENABLED: 'False'
       DB_HOST: postgres
       DB_NAME_FILE: /run/secrets/healthchecks_db_name
       DB_PASSWORD_FILE: /run/secrets/healthchecks_db_password
       DB_USER_FILE: /run/secrets/healthchecks_db_user
       DEBUG: 'False'
-      DEFAULT_FROM_EMAIL: "{{ template.DEFAULT_FROM_EMAIL }}"
+      DEFAULT_FROM_EMAIL: "{{ .docker.healthchecks.defaultFromEmail }}"
       EMAIL_HOST_PASSWORD_FILE: /run/secrets/healthchecks_sendgrid_api_key
       EMAIL_HOST_USER: apikey
       EMAIL_HOST: smtp.sendgrid.net
@@ -30,9 +30,9 @@ services:
       REGENERATE_SETTINGS: 'True'
       SECRET_KEY_FILE: /run/secrets/healthchecks_secret_key
       SHELL_ENABLED: 'True'
-      SITE_LOGO_URL: "{{ template.SITE_LOGO_URL }}"
-      SITE_NAME: "{{ template.SITE_NAME }}"
-      SITE_ROOT: "{{ template.SITE_ROOT }}"
+      SITE_LOGO_URL: "{{ .docker.healthchecks.siteLogoUrl }}"
+      SITE_NAME: "{{ .docker.healthchecks.siteName }}"
+      SITE_ROOT: "{{ .docker.healthchecks.siteRoot }}"
       SLACK_CLIENT_ID_FILE: /run/secrets/healthchecks_slack_client_id
       SLACK_CLIENT_SECRET_FILE: /run/secrets/healthchecks_slack_client_secret
       SLACK_ENABLED: 'True'

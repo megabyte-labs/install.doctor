@@ -124,15 +124,15 @@ formatFaint() {
   ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`\(.*\)$/\3/')"
   if [ "$ANSI_STR_FORMATTED" != "$ANSI_STR" ]; then
     if [[ $ANSI_STR == *'`'*'`'* ]]; then
-      ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$(formatFaint "$("$GUM_PATH" style --faint "$ANSI_STR")")"
+      ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$(formatFaint "$("$GUM_PATH" style --faint --foreground="#ffffff" "$ANSI_STR")")"
     else
-      ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$("$GUM_PATH" style --faint "$ANSI_STR")"
+      ANSI_STR_FORMATTED="$ANSI_STR_FORMATTED$("$GUM_PATH" style --faint --foreground="#ffffff" "$ANSI_STR")"
     fi
   fi
   echo -e "$ANSI_STR_FORMATTED"
 }
 
-# @description Logs using Node.js
+# @description Logs using Gum
 # @example logger info "An informative log"
 logg() {
   TYPE="$1"
@@ -140,7 +140,7 @@ logg() {
   if [ "$TYPE" == 'error' ]; then
     "$GUM_PATH" style --border="thick" "$("$GUM_PATH" style --foreground="#ff0000" "✖") $("$GUM_PATH" style --bold --background="#ff0000" --foreground="#ffffff"  " ERROR ") $("$GUM_PATH" style --bold "$(format "$MSG")")"
   elif [ "$TYPE" == 'info' ]; then
-    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ffff" "○") $("$GUM_PATH" style --faint "$(formatFaint "$MSG")")"
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ffff" "○") $("$GUM_PATH" style --faint --foreground="#ffffff" "$(formatFaint "$MSG")")"
   elif [ "$TYPE" == 'md' ]; then
     # @description Ensure glow is installed
     if [ "${container:=}" != 'docker' ]; then
@@ -402,12 +402,11 @@ fi
 
 ### Copy new files from src git repository to dotfiles with rsync
 rsyncChezmoiFiles() {
-  rsync -rtvu --delete /usr/local/src/install.doctor/docs/ "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/" &
-  rsync -rtvu --delete /usr/local/src/install.doctor/home/ "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/" &
-  rsync -rtvu --delete /usr/local/src/install.doctor/system/ "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/system/" &
-  rsync -rtvu /usr/local/src/install.doctor/.chezmoiignore "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.chezmoiignore" &
-  rsync -rtvu /usr/local/src/install.doctor/.chezmoiroot "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.chezmoiroot" &
-  rsync -rtvu /usr/local/src/install.doctor/software.yml "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/software.yml" &
+  rsync -rtu --delete /usr/local/src/install.doctor/docs/ "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/" &
+  rsync -rtu --delete /usr/local/src/install.doctor/home/ "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/" &
+  rsync -rtu /usr/local/src/install.doctor/.chezmoiignore "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.chezmoiignore" &
+  rsync -rtu /usr/local/src/install.doctor/.chezmoiroot "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.chezmoiroot" &
+  rsync -rtu /usr/local/src/install.doctor/software.yml "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/software.yml" &
   wait
   logg success 'Successfully updated the ~/.local/share/chezmoi folder with changes from the upstream repository'
 }

@@ -1,5 +1,4 @@
 [include]
-  path = ~/.local/share/delta/themes.gitconfig
   path = ~/.config/git/local.toml
 [advice]
   detachedHead = false
@@ -27,8 +26,6 @@
       git commit --amend --author \"$1 <$2>\" -C HEAD; \
     fi \
   }; f"
-[branch]
-  autosetuprebase = always
 [color]
   diff = auto
   status = auto
@@ -69,31 +66,45 @@
 [credential "https://gist.github.com"]
 	helper = !gh auth git-credential
 [delta]
-  decorations = true
-  features = side-by-side decorations hyperlinks interactive navigate unobtrusive-line-numbers woolly-mammoth zebra-dark
-  hyperlinks = true
-  interactive = true
-  map-styles = bold purple => syntax magenta, bold cyan => syntax blue
-  navigate = true
+  features = Betelgeuse
+[delta "Betelgeuse"]
+  dark = true
+  line-numbers = true
   side-by-side = true
-  unobtrusive-line-numbers = true
-  plus-style = syntax "#003800"
-  minus-style = syntax "#3f0001"
-[delta "interactive"]
   keep-plus-minus-markers = false
-[delta "decorations"]
-  commit-decoration-style = blue ol
-  commit-style = raw
-  file-style = omit
-  hunk-header-decoration-style = blue box
-  hunk-header-file-style = red
-  hunk-header-line-number-style = "#067a00"
-  hunk-header-style = file line-number syntax
-[delta "line-numbers"]
+  syntax-theme = Nord
+  file-style = "#434C5E" bold
+  file-decoration-style = "#434C5E" ul
+  file-added-label = [added]
+  file-copied-label = [copied]
+  file-modified-label = [modified]
+  file-removed-label = [removed]
+  file-renamed-label = [renamed]
+  hunk-header-style = omit
+  line-numbers-left-format = " {nm:>3} │"
   line-numbers-left-style = cyan
+  line-numbers-right-format = " {nm:>3} │"
   line-numbers-right-style = cyan
-  line-numbers-minus-style = 124
-  line-numbers-plus-style = 28
+  line-numbers-minus-style = red black
+  line-numbers-plus-style = green black
+  line-numbers-zero-style = "#434C5E" italic
+  minus-style = bold red
+  minus-emph-style = bold "#202020" "#FF5555"
+  minus-non-emph-style = bold
+  plus-style = bold green
+  plus-emph-style = bold "#202020" "#50FA7B"
+  plus-non-emph-style = bold
+  zero-style = syntax
+  blame-code-style = syntax
+  blame-format = "{author:<18} ({commit:>9}) {timestamp:^16}"
+  blame-palette = "#2E3440" "#3B4252" "#434C5E" "#4C566A"
+  merge-conflict-begin-symbol = ~
+  merge-conflict-end-symbol = ~
+  merge-conflict-ours-diff-header-style = "#F1FA8C" bold
+  merge-conflict-ours-diff-header-decoration-style = "#434C5E" box
+  merge-conflict-theirs-diff-header-style = "#F1FA8C" bold
+  merge-conflict-theirs-diff-header-decoration-style = "#434C5E" box
+  keep-plus-minus-markers = true
 [diff]
   colorMoved = default
   ignoresubmodules = dirty
@@ -112,12 +123,11 @@
   autocorrect = 20
 [init]
   defaultBranch = master
-  templatedir = ~/.config/git/template
+  # templatedir = ~/.config/git/template
 [interactive]
-  diffFilter = delta --color-only --features=interactive
+  diffFilter = delta --color-only
 [merge]
   conflictstyle = diff3
-  ff = only
   renamelimit = 0
   summary = true
   stat = true
@@ -129,7 +139,7 @@
 [pretty]
   custom = "%C(magenta)%h%C(red)%d %C(yellow)%ar %C(green)%s %C(yellow)(%an)"
 [pull]
-  rebase = true
+  rebase = false
 [push]
   autoSetupRemote = true
   default = upstream
@@ -144,7 +154,7 @@
   smtpuser = {{ default "" .user.gmail.username }}
   smtpencryption = tls
   smtpserverport = 587
-  smtpPass = {{ default "" (env "GMAIL_PASSWORD") }}
+  smtpPass = {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GMAIL_PASSWORD")) }}{{ includeTemplate "secrets/GMAIL_PASSWORD" | decrypt }}{{ else }}{{ default "" (env "GMAIL_PASSWORD") }}{{ end }}
 [status]
   showUntrackedFiles = all
   submoduleSummary = true
