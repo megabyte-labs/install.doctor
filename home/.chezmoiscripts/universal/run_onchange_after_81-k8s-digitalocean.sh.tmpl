@@ -6,16 +6,26 @@
 #     This script runs when `DIGITALOCEAN_ACCESS_TOKEN` is defined as an environment variable or as an encrypted key (see
 #     [Secrets documentation](https://install.doctor/docs/customization/secrets#encrypted-secrets)). If the check passes,
 #     then the script ensures the DigitalOcean CLI is installed (i.e. `doctl`). Then, it uses `doctl` to connect to the Kubernetes
-#     cluster defined by the `DIGITALOCEAN_K8S_ID` secret.
-#     This script detects the presence of various executables with Bash completions available and then
-#     conditionally adds the completions to the Bash completions folder.
+#     cluster defined by the the configuration stored under `.user.digitalOceanClusterId` in `home/.chezmoi.yaml.tmpl`.
 
-### Ensure DigitalOcean CLI is instaled
-if ! command -v doctl > /dev/null; then
-    logg info '`doctl` is missing - installing via Homebrew'
-    brew install doctl
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+### Ensure `DIGITALOCEAN_ACCESS_TOKEN` is defined (used for headlessly connecting to the k8s cluster)
+export DIGITALOCEAN_ACCESS_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "DIGITALOCEAN_ACCESS_TOKEN")) }}{{ includeTemplate "secrets/DIGITALOCEAN_ACCESS_TOKEN" | decrypt }}{{ else }}{{ env "DIGITALOCEAN_ACCESS_TOKEN" }}{{ end }}"
+
+if [ -n "$DIGITALOCEAN_ACCESS_TOKEN" ] && [ -n '{{ .user.digitalOceanClusterId }}' ]; then
+    ### Ensure DigitalOcean CLI is instaled
+    if ! command -v doctl > /dev/null; then
+        logg info '`doctl` is missing - installing via Homebrew'
+        brew install doctl
+    fi
+
+    ### Connect to the k8s cluster with `doctl`
+    logg info 'Connecting to the DigitalOcean k8s cluster with `doctl`'
+    doctl kubernetes cluster kubeconfig save {{ .user.digitalOceanClusterId }}
+else
+    logg info 'Skipping connecting to the DigitalOcean k8s cluster because either the `DIGITALOCEAN_ACCESS_TOKEN` or the `.user.digitalOceanClusterId` is not defined'
 fi
-
-doctl kubernetes cluster kubeconfig save b7fc4e37-ffe7-4ea1-887a-0e19ee077f32
 
 {{ end -}}

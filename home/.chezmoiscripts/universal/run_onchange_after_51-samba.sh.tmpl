@@ -58,19 +58,19 @@ if command -v smbd > /dev/null; then
     if [ -d /mnt/s3-private ] && [ ! -d /mnt/samba-private ]; then
         sudo ln -s /mnt/s3-private /mnt/samba-private
     else
-        sudo mkdir /mnt/samba-private
+        sudo mkdir -p /mnt/samba-private
     fi
 
     ### Ensure public Samba directory / symlink exists
     if [ -d /mnt/s3-public ] && [ ! -d /mnt/samba-public ]; then
         sudo ln -s /mnt/s3-public /mnt/samba-public
     else
-        sudo mkdir /mnt/samba-public
+        sudo mkdir -p /mnt/samba-public
     fi
 
     ### Copy the Samba server configuration file
     logg info "Copying Samba server configuration to /etc/samba/smb.conf"
-    sudo cp -f "${XDG_DATA_HOME:-$HOME/.config}/samba/config" "/etc/samba/smb.conf"
+    sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/samba/config" "/etc/samba/smb.conf"
 
     ### Reload configuration file changes
     smbcontrol smbd reload-config

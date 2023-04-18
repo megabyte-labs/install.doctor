@@ -6,6 +6,9 @@
 #     This script ensures the `tailscaled` system daemon is installed on macOS. Then, on both macOS and Linux, it connects to the Tailscale
 #     network if the `TAILSCALE_AUTH_KEY` variable is provided.
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 ### Install the Tailscale system daemon
 if [ -d /Applications ] && [ -d System ]; then
     # macOS

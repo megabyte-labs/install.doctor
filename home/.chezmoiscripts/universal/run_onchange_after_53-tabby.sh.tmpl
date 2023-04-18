@@ -47,7 +47,7 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package-lock.json" ]; then
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json" ]; then
     if [ -d "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/node_modules" ]; then
         logg info 'Skipping Tabby plugin installation because it looks like the plugins were already installed since `node_modules` is present in ~/.config/tabby/plugins'
     else
