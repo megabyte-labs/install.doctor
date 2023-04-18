@@ -1,5 +1,9 @@
 {{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
+# @file Go Install
+# @brief Ensures Go is installed via Homebrew
+# @description
+#     This script ensures Go is installed. It uses Homebrew to install Go.
 
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}

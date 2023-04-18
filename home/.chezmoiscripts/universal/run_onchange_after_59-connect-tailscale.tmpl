@@ -1,5 +1,0 @@
-{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "tailscale")) -}}
-{{   includeTemplate "secrets/tailscale" | decrypt -}}
-{{ else if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "tailscale-fallback")) -}}
-{{   includeTemplate "secrets/tailscale-fallback" }}
-{{- end -}}

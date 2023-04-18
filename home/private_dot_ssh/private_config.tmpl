@@ -1,5 +1,27 @@
-{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ssh-config")) -}}
-{{   includeTemplate "secrets/ssh-config" | decrypt -}}
-{{ else if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ssh-config-fallback")) -}}
-{{   includeTemplate "secrets/ssh-config-fallback" }}
+{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "ssh" "config")) -}}
+{{   includeTemplate "ssh/config" | decrypt -}}
+{{ else -}}
+Host *
+    IgnoreUnknown AddKeysToAgent,UseKeychain
+    AddKeysToAgent yes
+    UseKeychain yes
+    Compression no
+    ControlPath ~/.ssh/master-%r@%h:%p
+    ControlMaster auto
+    ControlPersist 5
+    ExitOnForwardFailure yes
+    ForwardAgent yes
+    ForwardX11 no
+    ForwardX11Trusted no
+    GSSAPIAuthentication no
+    PreferredAuthentications publickey
+    Protocol 2
+    ServerAliveInterval 60
+    ServerAliveCountMax 30
+    IdentitiesOnly yes
+Host gitlab.com
+    UpdateHostKeys no
+Host github.com
+    UpdateHostKeys no
+
 {{- end -}}

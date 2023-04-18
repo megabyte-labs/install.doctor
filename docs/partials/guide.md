@@ -29,10 +29,10 @@ START_REPO=git@gitlab.com:megabyte-labs/install.doctor.git bash <(curl -sSL http
 
 ### Quick Start Notes
 
-* The quick start script is tested on the latest versions of Archlinux, CentOS, Debian, Fedora, macOS, and Ubuntu
-* The quick start script is the preferred method of using this project to provision your system
-* The script can be configured to be completely headless by specifying environment variables which are detailed below
-* _Windows support is on the roadmap._
+- The quick start script is tested on the latest versions of Archlinux, CentOS, Debian, Fedora, macOS, and Ubuntu
+- The quick start script is the preferred method of using this project to provision your system
+- The script can be configured to be completely headless by specifying environment variables which are detailed below
+- _Windows support is on the roadmap._
 
 ## Chezmoi-Based
 

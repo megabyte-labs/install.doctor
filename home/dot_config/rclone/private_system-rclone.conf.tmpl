@@ -1,10 +1,10 @@
-{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-cloudflare-r2-id")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "key-cloudflare-r2-secret")) (ne .user.cloudflare.r2 "") -}}
+{{- if and (or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID"))) (env "CLOUDFLARE_R2_ID")) (or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET"))) (env "CLOUDFLARE_R2_SECRET")) (ne .user.cloudflare.r2 "") -}}
 [private]
 type = s3
 provider = Cloudflare
 env_auth = false
-access_key_id = {{ includeTemplate "secrets/key-cloudflare-r2-id" | decrypt -}}
-secret_access_key = {{ includeTemplate "secrets/key-cloudflare-r2-secret" | decrypt -}}
+access_key_id = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_ID" | decrypt }}{{ else }}{{ env "CLOUDFLARE_R2_ID" }}{{ end }}
+secret_access_key = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_SECRET" | decrypt }}{{ else }}{{ env "CLOUDFLARE_R2_SECRET" }}{{ end }}
 endpoint = {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com/private
 acl = private
 
@@ -12,8 +12,8 @@ acl = private
 type = s3
 provider = Cloudflare
 env_auth = false
-access_key_id = {{ includeTemplate "secrets/key-cloudflare-r2-id" | decrypt -}}
-secret_access_key = {{ includeTemplate "secrets/key-cloudflare-r2-secret" | decrypt -}}
+access_key_id = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_ID" | decrypt }}{{ else }}{{ env "CLOUDFLARE_R2_ID" }}{{ end }}
+secret_access_key = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_SECRET" | decrypt }}{{ else }}{{ env "CLOUDFLARE_R2_SECRET" }}{{ end }}
 endpoint = {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com/public
 acl = public-read
 
@@ -21,8 +21,8 @@ acl = public-read
 type = s3
 provider = Cloudflare
 env_auth = false
-access_key_id = {{ includeTemplate "secrets/key-cloudflare-r2-id" | decrypt -}}
-secret_access_key = {{ includeTemplate "secrets/key-cloudflare-r2-secret" | decrypt -}}
+access_key_id = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_ID" | decrypt }}{{ else }}{{ env "CLOUDFLARE_R2_ID" }}{{ end }}
+secret_access_key = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_SECRET" | decrypt }}{{ else }}{{ env "CLOUDFLARE_R2_SECRET" }}{{ end }}
 endpoint = {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com/system
 acl = private
 {{ end -}}

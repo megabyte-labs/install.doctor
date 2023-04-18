@@ -1,19 +1,12 @@
 {
   "sh.enable": true,
-  "languageserver": {
-    "arduino":{
-      "command":"arduino-language-server",
-      "rootPatterns":["*.ino"],
-      "filetypes":["arduino"],
-      "args":["-cli", "~/.local/bin/arduino-cli", "-clangd", "/usr/bin/clangd", "-cli-config", "~/.config/arduino-cli/arduino-cli.yaml"]
-    },
     "dockerfile": {
       "command": "docker-langserver",
       "filetypes": ["Dockerfile"],
       "args": ["--stdio"]
     },
     "sql": {
-      "module": "/usr/lib/node_modules/sql-language-server/npm_bin/cli.js",
+      "module": "$HOME/.local/share/nvim/lib/node_modules/sql-language-server/npm_bin/cli.js",
       "args": ["up", "--method", "node-ipc"],
       "filetypes": ["sql", "mysql"]
     },

@@ -1,4 +1,9 @@
 #!/usr/bin/env sh
+# @file Environment Variables
+# @brief Houses the environment variables that are included by `~/.bashrc` and `~/.zshrc`
+# @description
+#     This script is included by `~/.bashrc` and `~/.zshrc` to provide environment variables that play harmoniously with
+#     the default Install Doctor configurations.
 
 ### Disable Telemetry
 export DO_NOT_TRACK=1
@@ -129,7 +134,7 @@ fi
 
 ### BitWarden
 # https://bitwarden.com/help/cli/#using-an-api-key
-# BW_CLIENTID	client_id
+# BW_CLIENTID client_id
 # BW_CLIENTSECRET
 
 ### Deta
@@ -252,6 +257,12 @@ export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_repl_history"
 ### NPM
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 
+### NTL
+export NTL_RUNNER="pnpm"
+export NTL_RERUN_CACHE_DIR="$XDG_DATA_HOME/ntl"
+export NTL_RERUN_CACHE_NAME="cache"
+export NTL_RERUN_CACHE_MAX="100"
+
 ### Parallels
 export PARALLEL_HOME="$XDG_CONFIG_HOME/parallel"
 
@@ -267,6 +278,14 @@ export PSQLRC="$XDG_CONFIG_HOME/pg/psqlrc"
 export PSQL_HISTORY="$XDG_STATE_HOME/psql_history"
 export PGPASSFILE="$XDG_CONFIG_HOME/pg/pgpass"
 export PGSERVICEFILE="$XDG_CONFIG_HOME/pg/pg_service.conf"
+
+### PNPM
+export PNPM_HOME="$XDG_DATA_HOME/pnpm"
+export PATH="$PATH:$PNPM_HOME"
+
+### Prettierd
+# Specify location of the default Prettierd configuration
+# export PRETTIERD_DEFAULT_CONFIG=""
 
 ### Readline
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
@@ -349,6 +368,7 @@ fi
 export EDITOR='vi -e'
 if command -v nvim > /dev/null; then
   export VISUAL='nvim -e'
+  export PATH="$PATH:$HOME/.local/share/nvim/bin"
 else
   export VISUAL="$EDITOR"
 fi

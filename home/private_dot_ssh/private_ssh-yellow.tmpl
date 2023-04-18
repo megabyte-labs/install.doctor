@@ -1,3 +1,0 @@
-{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ssh-yellow")) -}}
-{{   includeTemplate "secrets/ssh-yellow" | decrypt -}}
-{{ end -}}

@@ -20,6 +20,9 @@
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[toml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -46,8 +49,21 @@
   "eslint.alwaysShowStatus": true,
   "eslint.format.enable": true,
   "eslint.lintTask.enable": true,
-  "eslint.lintTask.options": "-c package.json --no-eslintrc --cache --cache-location .cache/eslintcache .",
   "eslint.packageManager": "pnpm",
+  "eslint.probe": [
+    "html",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "jsonc",
+    "json5",
+    "markdown",
+    "toml",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "yaml"
+  ],
   "eslint.validate": [
     "html",
     "javascript",
@@ -87,6 +103,7 @@
   "npm.enableRunFromFolder": true,
   "npm.packageManager": "pnpm",
   "prettier.printWidth": 120,
+  "prettier.resolveGlobalModules": true,
   "prettier.singleQuote": true,
   "python.languageServer": "Pylance",
   "security.workspace.trust.banner": "never",

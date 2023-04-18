@@ -1,0 +1,40 @@
+{{- if ne .host.distro.family "windows" -}}
+#!/usr/bin/env bash
+# @file VirtualBox Extension Pack
+# @brief Ensures the VirtualBox extension pack is installed.
+# @description
+#     This script ensures the VirtualBox extension pack that corresponds with VirtualBox's version is properly installed.
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+### Run logic if VirtualBox is installed
+if command -v VirtualBox > /dev/null; then
+  ### Install VirtualBox extension pack if it is not installed already
+  if [ ! -d /usr/lib/virtualbox/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack ]; then
+    logg info 'Acquiring VirtualBox version information'
+    VBOX_VERSION="$(VirtualBox --help | head -n 1 | cut -f 6 -d' ')"
+    VBOX_VERSION="${VBOX_VERSION//v}"
+
+    ### Set up folders
+    sudo mkdir -p /usr/lib/virtualbox/ExtensionPacks
+    mkdir -p /tmp/vbox
+    cd /tmp/vbox
+
+    ### Download extension pack
+    logg info 'Downloading VirtualBox extension pack'
+    curl -sSL https://download.virtualbox.org/virtualbox/$VBOX_VERSION/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack \
+      -o /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack
+
+    ### Install extension pack
+    logg info 'Installing VirtualBox extension pack'
+    echo 'y' | sudo VBoxManage extpack install --replace /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack
+    logg success 'Successfully installed VirtualBox extension pack'
+  else
+    logg info 'VirtualBox Extension pack is already installed'
+  fi
+else
+  logg warn 'VirtualBox is not installed so VirtualBox Extension pack will not be installed'
+fi
+
+{{ end -}}
