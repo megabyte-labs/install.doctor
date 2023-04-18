@@ -1,6 +1,26 @@
 {{- if eq .host.distro.family "linux" -}}
 #!/usr/bin/env bash
 
+# @file Endlessh Configuration
+# @brief This script configures Endlessh by applying the configuration stored in `${XDG_DATA_HOME:-$HOME/.ssh}/endlessh/config` if the `endlessh` application is available
+# @description
+#     This script applies the Endlessh configuration stored in `${XDG_DATA_HOME:-$HOME/.ssh}/endlessh/config` if endlessh is installed.
+#     Endlessh is and SSH Tarpit configured to listen for incoming connection on the given port and respond slowly with a random, endless SSH banner. To protect the real server,
+#     configure Endlessh to listen on the default SSH port (22), while the real server listens to a different port.
+#
+#     ## Configuration Variables
+#
+#     The following chart details the input variable(s) that are used to determine the configuration of the endlessh:
+#
+#     | Variable        | Description                                                |
+#     |-----------------|------------------------------------------------------------|
+#     | `endlesshPort`  | The port that endlessh listens to for incoming connections |
+#
+#     ## Links
+#
+#     * [Default Endlessh configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/private_dot_ssh/endlessh/config.tmpl)
+#     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
+
 # endlessh config hash: {{- include (joinPath .host.home ".ssh" "endlessh" "config") | sha256sum -}}
 
 {{ includeTemplate "universal/profile" }}
