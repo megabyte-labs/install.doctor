@@ -250,7 +250,7 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
             cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/user.js" "$SETTINGS_DIR/profile.plugins"
         fi
 
-        {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt") (ne .firefoxPrivateProfile false)) }}
+        {{- if stat (joinPath .host.home ".config" "age" "chezmoi.txt") }}
         ### Private hosted profile
         if [ ! -d "$SETTINGS_DIR/profile.private" ]; then
             logg info 'Downloading the encrypted Firefox private profile'
