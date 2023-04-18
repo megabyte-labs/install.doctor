@@ -747,7 +747,11 @@ async function beforeInstall(packageManager) {
   } else if (packageManager === 'brew' || packageManager === 'cask') {
     if (!brewUpdated) {
       brewUpdated = true
-      runCommand('Running brew update', `brew update`)
+      try {
+        runCommand('Running brew update', `brew update`)
+      } catch (e) {
+        log('error', 'Homebrew', 'Failed while running brew update')
+      }
     }
   } else if (packageManager === 'cargo') {
   } else if (packageManager === 'choco') {
