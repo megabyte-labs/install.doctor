@@ -63,7 +63,13 @@ if command -v postfix > /dev/null; then
         if [ -d /Applications ] && [ -d /System ]; then
             ### macOS
             # Source: https://budiirawan.com/install-mail-server-mac-osx/
+            if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/com.apple.postfix.master.plist" ]; then
+                logg info 'Copying com.apple.postfix.master.plist'
+                sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/com.apple.postfix.master.plist" /System/Library/LaunchDaemons/com.apple.postfix.master.plist
+            fi
+            logg info 'Starting postfix'
             sudo postfix start
+            logg info 'Reloading postfix'
             sudo postfix reload
         else
             ### Enable / restart postfix on Linux
