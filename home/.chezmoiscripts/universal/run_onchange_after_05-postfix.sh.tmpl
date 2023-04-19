@@ -60,10 +60,17 @@ if command -v postfix > /dev/null; then
             sudo postmap /etc/postfix/sasl_passwd
         fi
 
-        ### Enable / restart postfix
-        logg info 'Enabling / restarting postfix'
-        sudo systemctl enable postfix
-        sudo systemctl restart postfix
+        if [ -d /Applications ] && [ -d /System ]; then
+            ### macOS
+            # Source: https://budiirawan.com/install-mail-server-mac-osx/
+            sudo postfix start
+            sudo postfix reload
+        else
+            ### Enable / restart postfix on Linux
+            logg info 'Enabling / restarting postfix'
+            sudo systemctl enable postfix
+            sudo systemctl restart postfix
+        fi
     else
         logg warn '/etc/postfix is not a directory! Skipping SendGrid Postfix setup.'
     fi
