@@ -31,6 +31,12 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
+### Hides useless error during extension installations
+# Error looks like:
+#     (node:53151) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+#     (Use `Electron --trace-deprecation ...` to show where the warning was created)
+export NODE_OPTIONS=--throw-deprecation
+
 # @description Install Visual Studio Code extensions if they are not already installed (by checking the `code --list-extensions` output)
 if command -v code > /dev/null; then
     EXTENSIONS="$(code --list-extensions)"
