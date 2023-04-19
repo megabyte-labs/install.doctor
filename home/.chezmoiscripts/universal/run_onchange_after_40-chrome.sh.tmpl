@@ -68,6 +68,9 @@ for EXTENSION_DIR in "/opt/google/chrome/extensions" "/etc/chromium/extensions" 
         logg info "Adding Chrome extensions to $EXTENSION_DIR"
         for EXTENSION in {{ list (.chromeExtensions | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
             logg info "Adding Chrome extension manifest ($EXTENSION)"
+            if ! echo "$EXTENSION" | grep 'https://chrome.google.com/webstore/detail/' > /dev/null; then
+                EXTENSION="https://chrome.google.com/webstore/detail/$EXTENSION"
+            fi
             EXTENSION_ID="$(echo "$EXTENSION" | sed 's/^.*\/\([^\/]*\)$/\1/')"
             if [[ "$EXTENSION_DIR" == '/opt/'* ]] || [[ "$EXTENSION_DIR" == '/etc/'* ]]; then
                 sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
