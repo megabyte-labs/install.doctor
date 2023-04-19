@@ -90,14 +90,6 @@ fi
 ### xclip
 alias xclip='xclip -selection c'
 
-### VSCodium
-if command -v codium > /dev/null; then
-  if command -v code > /dev/null; then
-    alias vscode="$(which code)"
-  fi
-  alias code='codium'
-fi
-
 ### Zola
 if command -v org.getzola.zola > /dev/null; then
   alias zola="flatpak run org.getzola.zola"
