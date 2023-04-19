@@ -19,9 +19,11 @@ No such key “color-scheme”
 # oVirt
 # opennebula
 # emailengine.app
-
+# Consider:
+- https://marketplace.visualstudio.com/items?itemName=asvetliakov.vscode-neovim
 CLOUDFLARE_API_TOKEN
 GMAIL_APP_PASSWORD
+# https://whatthediff.ai/
 
 ### Ensure these PATHs are added on Windows
 
