@@ -53,6 +53,7 @@
 #   npm: altair
 #   pacman: altair
 #   pipx: altair
+#   pkg-darwin: https://google.com/macos-pkgfile.pkg
 #   pkg-freebsd: altair
 #   pkg-termux: altair
 #   port: altair
@@ -107,6 +108,7 @@ installerPreference:
     - npm
     - pipx
     - gem
+    - pkg-darwin
     - script
     - ansible
     - binary
@@ -311,6 +313,27 @@ softwarePackages:
     scoop: act
     yay: act
     _type: cli
+  pieces:
+    _bin:snap: pieces-os
+    _desc: Pieces is a first-in-kind productivity suite that optimizes developer tools and eliminates the chaos of context switching.
+    _docs: https://docs.pieces.app/
+    _github: false
+    _home: https://pieces.app/
+    _name: Pieces
+    _post:snap: sudo snap connect pieces-os:dotnet-runtime-aspnetcore
+    _when:pkg-darwin: '! test -d /Applications/Pieces.app'
+    # TODO - Figure out how to deal with appinstaller
+    appinstaller: https://builds.pieces.app/stages/production/pieces_suite_windows/appinstaller/download
+    pkg-darwin: https://builds.pieces.app/stages/production/macos_packaging/pkg/download
+    snap: pieces-os
+  pieces-cli:
+    _bin: pieces
+    _desc: Pieces is a first-in-kind productivity suite that optimizes developer tools and eliminates the chaos of context switching.
+    _docs: https://docs.pieces.app/
+    _github: false
+    _home: https://pieces.app/
+    _name: Pieces CLI
+    cask: pieces-cli
   allure:
     _bin: allure
     _desc: '[Allure Report](https://docs.qameta.io/allure-testops/) is a flexible, lightweight multi-language test reporting tool. It provides clear graphical reports and allows everyone involved in the development process to extract the maximum of information from the everyday testing process.'

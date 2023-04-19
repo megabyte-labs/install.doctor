@@ -854,6 +854,8 @@ softwareGroups:
     - mjml
     - mockoon
     - mqttx
+    - pieces
+    - pieces-cli
     - postman
     - responsively
     - runjs
@@ -1178,6 +1180,10 @@ softwarePlugins:
   docker:
     plugins:
       - sapk/plugin-rclone
+  # TODO Add Intellij missing plugins and fix install
+  intellij:
+    plugins:
+      - https://plugins.jetbrains.com/plugin/17328-pieces--save-search-share--reuse-code-snippets
   vim:
     plugins:
       - https://github.com/dense-analysis/ale.git

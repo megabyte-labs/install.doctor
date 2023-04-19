@@ -1390,7 +1390,16 @@ async function installPackageList(packageManager, packages) {
           console.error(e)
         }
       }
-    } else if (packageManager === 'pkg') {
+    } else if (packageManager === 'pkg-darwin') {
+      for (let pkg of packages) {
+        try {
+          runCommand(`Installing ${pkg} via ${packageManager}`, `TMP="$(mktemp)" && curl -sSL "${pkg}" > "$TMP" && sudo installer -pkg "$TMP" -target /`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
+        } catch (e) {
+          log('error', 'Install', `There was an error installing ${pkg} with the system installer`)
+          console.error(e)
+        }
+      }
     } else if (packageManager === 'port') {
       const port = which.sync('port', { nothrow: true })
       if (port) {
