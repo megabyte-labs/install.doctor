@@ -7,7 +7,7 @@ Type=simple
 User={{ .user.username }}
 ExecStartPre=/usr/bin/mkdir -p /home/{{ .user.username }}/.local/mnt/s3
 ExecStart=/usr/local/bin/rclone-mount "user" "{{ .user.username }}" "s3"
-ExecStop=/bin/fusermount -u /home/{{ .user.username }}/.local/mnt/s3
+ExecStop=/bin/fusermount -u "/home/{{ .user.username }}/.local/mnt/s3"
 Restart=always
 RestartSec=10
 

@@ -16,13 +16,13 @@ fi
 tee -a "$CONFIG_FILE" > /dev/null <<EOT
 # MEGABYTE LABS MANAGED S3
 [{{ .user.username}}-s3]
-type = s3
-provider = Cloudflare
-access_key_id = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_ID" | decrypt }}{{ else }}{{ env "CLOUDFLARE_R2_ID" }}{{ end }}
-secret_access_key = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_SECRET" | decrypt }}{{ else }}{{ env "CLOUDFLARE_R2_SECRET" }}{{ end }}
-region = auto
-endpoint = {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com/user
+access_key_id = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID")) }}{{- includeTemplate "secrets/CLOUDFLARE_R2_ID" | decrypt -}}{{ else }}{{- env "CLOUDFLARE_R2_ID" -}}{{ end }}
 acl = private
+endpoint = {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com/user
+provider = Cloudflare
+region = auto
+secret_access_key = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET")) }}{{- includeTemplate "secrets/CLOUDFLARE_R2_SECRET" | decrypt -}}{{ else }}{{- env "CLOUDFLARE_R2_SECRET" -}}{{ end }}
+type = s3
 # MEGABYTE LABS MANAGED S3
 EOT
 {{- end -}}

@@ -18,7 +18,7 @@
 #
 #     If CloudFlare R2 credentials are provided, Samba is configured to store its shared files in the Rclone mounts so that your
 #     Samba shares are synchronized to the S3 buckets. If not, new folders are created. Either way, the folder / symlink that the
-#     shares host data from are stored at `/mnt/samba-private` and `/mnt/samba-public`.
+#     shares host data from are stored at `/mnt/share-private` and `/mnt/share-public` (*Note: Different paths are used on macOS*).
 #
 #     1. The **public** share (named "Public") can be accessed by anyone (including write permissions with the default settings)
 #     2. The **private** share (named "Private") can be accessed by specifying the PAM credentials of anyone who has an account that is included in the `sambausers` group
@@ -54,26 +54,43 @@
 
 ### Configure Samba server
 if command -v smbd > /dev/null; then
-    ### Ensure private Samba directory / symlink exists
-    if [ -d /mnt/s3-private ] && [ ! -d /mnt/samba-private ]; then
-        sudo ln -s /mnt/s3-private /mnt/samba-private
+    ### Define share locations
+    if [ -d /Applications ] && [ -d /System ]; then
+        ### macOS does not have `/mnt` folder so use `/Volumes` location
+        MNT_FOLDER='Volumes'
     else
-        sudo mkdir -p /mnt/samba-private
+        MNT_FOLDER='mnt'
+    fi
+    PRIVATE_CLOUD="/$MNT_FOLDER/Cloud (Private)"
+    PUBLIC_CLOUD="/$MNT_FOLDER/Cloud (Public)"
+    PRIVATE_SHARE="/$MNT_FOLDER/Network Share (Private)"
+    PUBLIC_SHARE="/$MNT_FOLDER/Network Share (Public)"
+
+    ### Ensure private Samba directory / symlink exists
+    if [ -d "$PRIVATE_CLOUD" ] && [ ! -d "$PRIVATE_SHARE" ]; then
+        sudo ln -s "$PRIVATE_CLOUD" "$PRIVATE_SHARE"
+    else
+        sudo mkdir -p "$PRIVATE_SHARE"
     fi
 
     ### Ensure public Samba directory / symlink exists
-    if [ -d /mnt/s3-public ] && [ ! -d /mnt/samba-public ]; then
-        sudo ln -s /mnt/s3-public /mnt/samba-public
+    if [ -d "$PUBLIC_CLOUD" ] && [ ! -d "$PUBLIC_SHARE" ]; then
+        sudo ln -s "$PUBLIC_CLOUD" "$PUBLIC_SHARE"
     else
-        sudo mkdir -p /mnt/samba-public
+        sudo mkdir -p "$PUBLIC_SHARE"
     fi
 
     ### Copy the Samba server configuration file
-    logg info "Copying Samba server configuration to /etc/samba/smb.conf"
-    sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/samba/config" "/etc/samba/smb.conf"
+    if [ -d /Applications ] && [ -d /System ]; then
+        logg warn 'TODO Add logic that applies the Samba configuration for macOS'
+    else
+        logg info "Copying Samba server configuration to /etc/samba/smb.conf"
+        sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/samba/config" "/etc/samba/smb.conf"
 
-    ### Reload configuration file changes
-    smbcontrol smbd reload-config
+        ### Reload configuration file changes
+        logg info 'Reloading the `smbd` config'
+        smbcontrol smbd reload-config
+    fi
 else
     logg info "Samba server is not installed"
 fi

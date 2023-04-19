@@ -7,17 +7,27 @@ MOUNT="$3"
 
 ### Path definitions
 if [ "$TYPE" = 'user' ]; then
-  CACHE_FOLDER="/home/$USER/.cache/rclone"
-  CONFIG_FOLDER="/home/$USER/.config/rclone"
-  LOG_FOLDER="/home/$USER/.local/log"
+  if [ -d /Applications ] && [ -d /System ]; then
+    USER_FOLDER='Users'
+  else
+    USER_FOLDER='home'
+  fi
+  CACHE_FOLDER="/$USER_FOLDER/$USER/.cache/rclone"
+  CONFIG_FOLDER="/$USER_FOLDER/$USER/.config/rclone"
+  LOG_FOLDER="/$USER_FOLDER/$USER/.local/log"
   LOG_FILE="$LOG_FOLDER/$MOUNT.log"
-  MOUNT_PATH="/home/{{ .user.username }}/.local/mnt/$MOUNT"
+  MOUNT_PATH="/$USER_FOLDER/$USER/.local/mnt/$MOUNT"
 else
   CACHE_FOLDER="/var/cache/rclone/$MOUNT"
   CONFIG_FOLDER="/etc"
   LOG_FOLDER="/var/log/rclone"
   LOG_FILE="$LOG_FOLDER/$MOUNT.log"
-  MOUNT_PATH="/mnt/$MOUNT"
+  if [ -d /Applications ] && [ -d /System ]; then
+    MNT_FOLDER='Volumes'
+  else
+    MNT_FOLDER='mnt'
+  fi
+  MOUNT_PATH="/$MNT_FOLDER/$MOUNT"
 fi
 
 ### Ensure folders exist
@@ -30,7 +40,7 @@ done
 ### Define rcloneignore location
 RCLONE_IGNORE="$CONFIG_FOLDER/rcloneignore"
 if [ ! -f "$RCLONE_IGNORE" ] && [ -f "/etc/rcloneignore" ]; then
-  RCLONE_IGNORE='etc/rcloneignore'
+  RCLONE_IGNORE='/etc/rcloneignore'
 fi
 
 ### Mount

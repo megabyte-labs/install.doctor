@@ -7,7 +7,7 @@
 #     It does this by invoking ZSH in the background during the provisioning process so that "first-run" tasks such
 #     as cache-building are handled ahead of time.
 
-# .zshrc hash: {{ include (joinPath .chezmoi.homeDir ".zshrc")| sha256sum }}
+# .zshrc hash: {{ include (joinPath .chezmoi.homeDir ".zshrc") | sha256sum }}
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}

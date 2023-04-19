@@ -5,8 +5,8 @@ After=network-online.target
 [Service]
 Type=simple
 User=rclone
-ExecStart=/usr/local/bin/rclone-mount "rclone" "rclone" "s3-public"
-ExecStop=/bin/fusermount -u /mnt/s3-public
+ExecStart=/usr/local/bin/rclone-mount "rclone" "rclone" "Cloud (Public)"
+ExecStop=/bin/fusermount -u "/mnt/Cloud (Public)"
 Restart=always
 RestartSec=10
 
