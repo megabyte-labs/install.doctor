@@ -26,11 +26,13 @@
 [Private]
   browsable = yes
   comment = Authenticated share with read/write capabilities (backed up to S3)
-  follow symlinks = no
+  follow symlinks = yes
   guest only = no
-  path = /mnt/samba-private
+  path = /mnt/Network Share (Private)
   public = no
+  unix extension = yes
   valid users = @sambausers
+  wide links = yes
   writable = true
 
 [Public]
@@ -38,7 +40,7 @@
   comment = Public folder provided for file sharing on the LAN (backed up to S3)
   follow symlinks = no
   guest only = yes
-  path = /mnt/samba-public
+  path = /mnt/Network Share (Public)
   public = yes
   writable = yes
 

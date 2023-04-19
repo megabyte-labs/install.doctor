@@ -8,6 +8,17 @@ https://github.com/rigoneri/Syte3
 ✖ ERROR Gsettings Failed to apply gsetting
 Error: Command failed: gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 No such key “color-scheme”
+# Skate!
+# RUNDECK
+# Foreman?
+# FOG
+# AMANDA
+# CloudStack
+# AppScale
+# resilio connect
+# oVirt
+# opennebula
+# emailengine.app
 
 CLOUDFLARE_API_TOKEN
 GMAIL_APP_PASSWORD

@@ -4,8 +4,8 @@
 CONFIG_FILE="$HOME/.config/rclone/rclone.conf"
 if cat "$CONFIG_FILE" | grep '# MEGABYTE LABS MANAGED S3'; then
   # TODO: Remove old block
-  START_LINE="$(echo `grep -n -m 1 "# MEGABYTE LABS MANAGED S3" .zshrc | cut -f1 -d ":"`)"
-  END_LINE="$(echo `grep -n -m 1 "# MEGABYTE LABS MANAGED S3" .zshrc | cut -f1 -d ":"`)"
+  START_LINE="$(echo `grep -n -m 1 "# MEGABYTE LABS MANAGED S3" "$CONFIG_FILE" | cut -f1 -d ":"`)"
+  END_LINE="$(echo `grep -n -m 1 "# MEGABYTE LABS MANAGED S3" "$CONFIG_FILE" | cut -f1 -d ":"`)"
   if command -v gsed > /dev/null; then
     gsed -i "$START_LINE,$END_LINEd" "$CONFIG_FILE"
   else

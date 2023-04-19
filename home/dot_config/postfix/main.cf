@@ -1,0 +1,17 @@
+### INSTALL DOCTOR MANAGED ### START
+# @file SendGrid Postfix configuration
+# @brief Configures Postfix to use SendGrid as a relay host
+# @description
+#     This configuration file is appended to `/etc/postfix/main.cf` by one of the scripts. It configures SendGrid
+#     as a relay host that Postfix can use. More details can be found in the 
+#     [SendGrid documentation on integrating Postfix](https://docs.sendgrid.com/for-developers/sending-email/postfix).
+
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_sasl_tls_security_options = noanonymous
+smtp_tls_security_level = encrypt
+header_size_limit = 4096000
+relayhost = [smtp.sendgrid.net]:587
+
+### INSTALL DOCTOR MANAGED ### END

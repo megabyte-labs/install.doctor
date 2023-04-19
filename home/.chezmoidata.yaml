@@ -588,7 +588,6 @@ softwareGroups:
     - secretive
     - standard-notes
     - stats
-    - temps
     - teamviewer
   Misc-Development-Tools: &Misc-Development-Tools
     - ansifilter
@@ -765,6 +764,7 @@ softwareGroups:
     - ots
     - share
     - syncthing
+    - lsyncd
   Transfer-Desktop: &Transfer-Desktop
     - ariang
     - dat-desktop
@@ -1166,6 +1166,8 @@ softwareGroups:
     - plymouth
     - chromium
     - astronvim
+    # macOS menu bar app for weather - little bit buggy
+    - temps
     - asdf
     # editly NPM package is failing to install on macOS - attempts to compile with node-gyp
     - editly

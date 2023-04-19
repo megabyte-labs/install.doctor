@@ -7195,6 +7195,17 @@ softwarePackages:
     _type: cli
     brew: spectralops/tap/teller
     github: github.com/tellerops/teller
+  lsyncd:
+    _bin: lsyncd
+    _desc: Lsyncd (Live Syncing Daemon) synchronizes local directories with remote targets (via SSH and more)
+    _docs: https://lsyncd.github.io/lsyncd/
+    _github: https://github.com/lsyncd/lsyncd
+    _home: false
+    _name: Lsyncd
+    apt: lsyncd
+    dnf: lsyncd
+    pacman: lsyncd
+    brew: lsyncd
   temps:
     _bin: null
     _desc: Simple menubar application based on Electron with actual weather information and forecast
@@ -7230,6 +7241,16 @@ softwarePackages:
     snap: termius-app
     yay: termius
     _type: application
+  postfix:
+    _bin: postfix
+    _desc: Postfix is an e-mail server that can be used to send e-mail
+    _docs: https://www.postfix.org/documentation.html
+    _github: https://github.com/vdukhovni/postfix
+    _home: https://www.postfix.org/
+    _name: Postfix
+    apt: postfix
+    dnf: postfix
+    pacman: postfix
   terraform:
     _deps:
       - tfenv
