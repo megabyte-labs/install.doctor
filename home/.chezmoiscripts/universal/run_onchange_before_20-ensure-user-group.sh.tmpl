@@ -1,4 +1,4 @@
-{{- if (ne .host.distro.family "darwin") -}}
+{{- if (eq .host.distro.family "darwin") -}}
 #!/usr/bin/env bash
 # @file macOS Ensure User Group
 # @brief Ensures that the provisioning user has a group on the system with the same name

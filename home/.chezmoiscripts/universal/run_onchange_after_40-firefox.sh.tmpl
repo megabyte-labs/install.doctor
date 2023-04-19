@@ -252,23 +252,24 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
 
         {{- if stat (joinPath .host.home ".config" "age" "chezmoi.txt") }}
         ### Private hosted profile
-        if [ ! -d "$SETTINGS_DIR/profile.private" ]; then
-            logg info 'Downloading the encrypted Firefox private profile'
-            cd "$SETTINGS_DIR"
-            curl -sSL '{{ .firefoxPrivateProfile }}' -o profile.private.tar.gz.age
-            logg info 'Decrypting the Firefox private profile'
-            chezmoi decrypt profile.private.tar.gz.age > profile.private.tar.gz || EXIT_DECRYPT_CODE=$?
-            if [ -z "$EXIT_DECRYPT_CODE" ]; then
-                rm -f profile.private.tar.gz.age
-                logg info 'Decompressing the Firefox private profile'
-                tar -xzf profile.private.tar.gz
-                logg success 'The Firefox private profile was successfully installed'
-                cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/user.js" "$SETTINGS_DIR/profile.private"
-                logg info 'Copied ~/.config/firefox/user.js to profile.private profile'
-            else
-                logg error 'Failed to decrypt the private Firefox profile'
-            fi
-        fi
+        # Deprecated in favor of using the Restic profile tasks saved in `~/.config/task/Taskfile.yml`
+        # if [ ! -d "$SETTINGS_DIR/profile.private" ]; then
+        #     logg info 'Downloading the encrypted Firefox private profile'
+        #     cd "$SETTINGS_DIR"
+        #     curl -sSL '{{ .firefoxPrivateProfile }}' -o profile.private.tar.gz.age
+        #     logg info 'Decrypting the Firefox private profile'
+        #     chezmoi decrypt profile.private.tar.gz.age > profile.private.tar.gz || EXIT_DECRYPT_CODE=$?
+        #     if [ -z "$EXIT_DECRYPT_CODE" ]; then
+        #         rm -f profile.private.tar.gz.age
+        #         logg info 'Decompressing the Firefox private profile'
+        #         tar -xzf profile.private.tar.gz
+        #         logg success 'The Firefox private profile was successfully installed'
+        #         cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/user.js" "$SETTINGS_DIR/profile.private"
+        #         logg info 'Copied ~/.config/firefox/user.js to profile.private profile'
+        #     else
+        #         logg error 'Failed to decrypt the private Firefox profile'
+        #     fi
+        # fi
         {{- end }}
         
         ### Install Firefox addons (using list declared in .chezmoidata.yaml)
