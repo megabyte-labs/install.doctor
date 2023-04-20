@@ -314,6 +314,11 @@ softwarePackages:
     scoop: act
     yay: act
     _type: cli
+  genymotion:
+    _when:cask: '! test -d /Applications/Genymotion.app'
+    cask: genymotion
+    choco: genymotion
+    # TODO: Figure out how to install on Android
   pieces:
     _bin:snap: pieces-os
     _desc: Pieces is a first-in-kind productivity suite that optimizes developer tools and eliminates the chaos of context switching.
