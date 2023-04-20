@@ -1,0 +1,21 @@
+{{- if and (eq .host.distro.family "linux") (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (or (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "JUMPCLOUD_CONNECT_KEY")) (env "JUMPCLOUD_CONNECT_KEY")) -}}
+#!/usr/bin/env bash
+# @file JumpCloud Device Enrollment
+# @brief Enrolls the device as a JumpCloud asset if `JUMPCLOUD_CONNECT_KEY` is defined
+# @description
+#     This script enrolls the device as a JumpCloud managed asset. The `JUMPCLOUD_CONNECT_KEY` secret should
+#     be populated using one of the methods described in the [Secrets documentation](https://install.doctor/docs/customization/secrets).
+#
+#     *Note: You should check out the supported systems before trying to enroll devices.*
+#
+#     ## Links
+#
+#     * [JumpCloud device management requirements](https://support.jumpcloud.com/support/s/article/jumpcloud-agent-compatibility-system-requirements-and-impacts1)
+
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
+
+logg info 'Enrolling device with JumpCloud by running the kickstart script'
+curl --tlsv1.2 --silent --show-error --header 'x-connect-key: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "JUMPCLOUD_CONNECT_KEY")) }}{{- includeTemplate "secrets/JUMPCLOUD_CONNECT_KEY" | decrypt -}}{{ else }}{{- env "JUMPCLOUD_CONNECT_KEY" -}}{{ end }}' https://kickstart.jumpcloud.com/Kickstart | sudo bash
+
+{{ end -}}
