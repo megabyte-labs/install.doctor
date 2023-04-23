@@ -421,6 +421,18 @@ softwarePackages:
     apt: brasero
     dnf: brasero
     pacman: brasero
+  openjdk:
+    _bin: javac
+    _desc: Latest version of the OpenJDK (Java Development Kit)
+    _docs: https://openjdk.org/groups/build/doc/building.html
+    _github: https://github.com/openjdk/jdk
+    _home: https://openjdk.org/
+    _name: OpenJDK
+    apt: default-jdk
+    choco: openjdk
+    brew: openjdk
+    dnf: java-latest-openjdk.x86_64
+    pacman: jdk-openjdk
   firefox-profile:
     _bin: firefox-profile
     _github: https://github.com/saadtazi/firefox-profile-js
