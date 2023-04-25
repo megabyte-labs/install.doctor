@@ -548,6 +548,10 @@ softwarePackages:
     pacman:
       - argocd
       - argocd-cli
+  blackhole:
+    _bin: blackhole
+    _desc: Audio loopback device for macOS (supports sound passthrough to screen recording software on macOS)
+    brew: blackhole-16ch
   aria2:
     _bin: aria2c
     _desc: '[aria2](https://aria2.github.io/) is a lightweight multi-protocol & multi-source command-line download utility. It supports HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink. [AriaNg](http://ariang.mayswind.net/) is a modern web frontend that makes working with aria2 easier.'
