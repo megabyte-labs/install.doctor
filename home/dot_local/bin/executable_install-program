@@ -1068,7 +1068,7 @@ async function ensurePackageManager(packageManager) {
       `
     }
     log('info', logStage, 'Ensuring Volt has Node.js runtime available')
-    await $`if ! volta list 2>1 | grep 'runtime node' > /dev/null; then volta install node; fi`
+    await $`if ! volta list 2>&1 | grep 'runtime node' > /dev/null; then volta install node; fi`
   } else if (packageManager === 'pacman') {
     await ensureInstalled('pacman', false)
   } else if (packageManager === 'pipx') {
