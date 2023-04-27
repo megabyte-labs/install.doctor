@@ -62,7 +62,10 @@ tasks:
       - task: profile:backup
         vars:
           AppName: Brave Browser
-          ProfileFolder: ~/Library/Application Support/BraveSoftware/Brave-Browser/Default
+          ProfileFolderDarwin: ~/Library/Application Support/BraveSoftware/Brave-Browser/Default
+          ProfileFolderLinux: ~/.config/BraveSoftware/Brave-Browser/Default
+          ProfileFolderWindows: %AppData%/Local/BraveSoftware/Brave-Browser/Default
+          ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: brave
 
   brave:profile:restore:
@@ -87,7 +90,10 @@ tasks:
         vars:
           AppFolder: /Applications/Brave Browser.app
           AppName: Brave Browser
-          ProfileFolder: ~/Library/Application Support/BraveSoftware/Brave-Browser/Default
+          ProfileFolderDarwin: ~/Library/Application Support/BraveSoftware/Brave-Browser/Default
+          ProfileFolderLinux: ~/.config/BraveSoftware/Brave-Browser/Default
+          ProfileFolderWindows: %AppData%/Local/BraveSoftware/Brave-Browser/Default
+          ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: brave
 
   chrome:profile:backup:
