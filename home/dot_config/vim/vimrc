@@ -31,6 +31,56 @@ Plug '~/.vim/plugged/ansible-vim', {'do': './UltiSnips/generate.sh'}
 call plug#end()
 " TODO -- add executable checks around plugins
 
+" Install Coc extensions
+if executable('node')
+  let g:coc_global_extensions = [
+    \ 'coc-angular',
+    \ '@yaegassy/coc-ansible',
+    \ 'coc-calc',
+    \ 'coc-copilot',
+    \ 'coc-htmlhint',
+    \ 'coc-html-css-support',
+    \ 'coc-markdownlint',
+    \ 'coc-markdown-preview-enhanced',
+    \ '@yaegassy/coc-nginx',
+    \ 'coc-powershell',
+    \ 'coc-prettier',
+    \ 'coc-stylelint',
+    \ 'coc-spell-checker',
+    \ 'coc-yaml',
+    \ 'coc-xml',
+    \ 'coc-sh',
+    \ 'coc-css',
+    \ 'coc-deno',
+    \ 'coc-go',
+    \ 'coc-html',
+    \ 'coc-tsserver',
+    \ 'coc-json',
+    \ 'coc-markdownlint',
+    \ 'coc-phpls',
+    \ 'coc-pyright',
+    \ 'coc-solargraph',
+    \ 'coc-rls',
+    \ 'coc-solidity'
+    \]
+
+  if !executable('docker-langserver')
+    call system('npm install --prefix $HOME/.local/share/nvim -g dockerfile-language-server-nodejs')
+  endif
+  if !executable('sql-language-server')
+    call system('npm install --prefix $HOME/.local/share/nvim -g sql-language-server')
+  endif
+  if !executable('solargraph')
+    call system('gem install solargraph -n $HOME/.local/share/nvim/bin')
+  endif
+endif
+
+" Settings for coc-css extension
+autocmd FileType scss setl iskeyword+=@-@
+
+" Settings for coc-go extension, to add missing imports on save
+autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
+
 syntax enable
 set background=dark
 colorscheme Betelgeuse

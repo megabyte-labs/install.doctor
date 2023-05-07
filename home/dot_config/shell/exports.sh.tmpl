@@ -134,7 +134,7 @@ fi
 
 ### BitWarden
 # https://bitwarden.com/help/cli/#using-an-api-key
-# BW_CLIENTID	client_id
+# BW_CLIENTID client_id
 # BW_CLIENTSECRET
 
 ### Deta
@@ -368,6 +368,7 @@ fi
 export EDITOR='vi -e'
 if command -v nvim > /dev/null; then
   export VISUAL='nvim -e'
+  export PATH="$PATH:$HOME/.local/share/nvim/bin"
 else
   export VISUAL="$EDITOR"
 fi

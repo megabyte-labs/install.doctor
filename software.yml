@@ -1237,6 +1237,20 @@ softwarePackages:
       - clamav
       - clamav-update
     pacman: clamav
+  clangd:
+    _bin: clangd
+    _desc: '[clangd](https://clangd.llvm.org/) is an language server that understands your C++ code and adds smart features to your editor'
+    _docs: https://clangd.llvm.org/guides/
+    _github: https://github.com/llvm/llvm-project/tree/main/clang-tools-extra/clangd
+    _home: https://clangd.llvm.org/
+    _name: clangd
+    _type: cli
+    apt: clangd
+    brew: llvm
+    choco: llvm
+    dnf: clang-tools-extra
+    pacman: clang
+    scoop: llvm
   clocker:
     _when: '! test -d /Applications/Clocker.app'
     _bin: null
@@ -4881,6 +4895,7 @@ softwarePackages:
     _home: null
     _name: nativefier
     npm: nativefier
+    _service: false
     _type:
   nautilus-brasero:
     apt: nautilus-extension-brasero
@@ -4973,6 +4988,9 @@ softwarePackages:
     _github: https://github.com/neovim/neovim
     _home: https://neovim.io/
     _name: neovim
+    _deps:
+      - clangd
+      - terraform-ls
     apk: neovim
     apt:
       - neovim
@@ -7332,6 +7350,16 @@ softwarePackages:
   terraform:
     _deps:
       - tfenv
+  terraform-ls:
+    _bin: terraform-ls
+    _desc: '[terraform-ls](https://github.com/tfutils/tfenv) is the official Terraform language server maintained by HashiCorp that provides IDE features to any LSP-compatible editor.'
+    _docs: https://github.com/hashicorp/terraform-ls
+    _github: https://github.com/hashicorp/terraform-ls
+    _home: https://github.com/hashicorp/terraform-ls
+    _name: terraform-ls
+    brew: terraform-ls
+    _service: false
+    _type: cli
   tfenv:
     _bin: tfenv
     _desc: '[tfenv](https://github.com/tfutils/tfenv) is a Terraform version manager inspired by [rbenv](https://github.com/rbenv/rbenv). It supports macOS, Linux, and Windows.'
