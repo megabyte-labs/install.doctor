@@ -73,6 +73,10 @@ if command -v vim > /dev/null; then
   alias vi='vim'
   alias v='vim'
 fi
+### NVIM
+if command -v nvim > /dev/null; then
+  alias nvim='env -u VIMINIT nvim'
+fi
 
 ### mitmproxy / mitmweb
 if command -v mitmproxy > /dev/null; then
