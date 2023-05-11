@@ -64,7 +64,7 @@ tasks:
           AppName: Brave Browser
           ProfileFolderDarwin: ~/Library/Application Support/BraveSoftware/Brave-Browser/Default
           ProfileFolderLinux: ~/.config/BraveSoftware/Brave-Browser/Default
-          ProfileFolderWindows: %AppData%/Local/BraveSoftware/Brave-Browser/Default
+          ProfileFolderWindows: %APPDATA%/Local/BraveSoftware/Brave-Browser/Default
           ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: brave
 
@@ -92,7 +92,7 @@ tasks:
           AppName: Brave Browser
           ProfileFolderDarwin: ~/Library/Application Support/BraveSoftware/Brave-Browser/Default
           ProfileFolderLinux: ~/.config/BraveSoftware/Brave-Browser/Default
-          ProfileFolderWindows: %AppData%/Local/BraveSoftware/Brave-Browser/Default
+          ProfileFolderWindows: %APPDATA%/Local/BraveSoftware/Brave-Browser/Default
           ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: brave
 
@@ -118,7 +118,10 @@ tasks:
       - task: profile:backup
         vars:
           AppName: Google Chrome
-          ProfileFolder: ~/Library/Application Support/Google/Chrome/Default
+          ProfileFolderDarwin: ~/Library/Application Support/Google/Chrome/Default
+          ProfileFolderLinux: ~/.config/google-chrome/default
+          ProfileFolderWindows: %LOCALAPPDATA%/Google/Chrome/User Data/Default
+          ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: chrome
 
   chrome:profile:restore:
@@ -143,7 +146,10 @@ tasks:
         vars:
           AppFolder: /Applications/Google Chrome.app
           AppName: Google Chrome
-          ProfileFolder: ~/Library/Application Support/Google/Chrome/Default
+          ProfileFolderDarwin: ~/Library/Application Support/Google/Chrome/Default
+          ProfileFolderLinux: ~/.config/google-chrome/default
+          ProfileFolderWindows: %LOCALAPPDATA%/Google/Chrome/User Data/Default
+          ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: chrome
 
   edge:profile:backup:
@@ -168,7 +174,10 @@ tasks:
       - task: profile:backup
         vars:
           AppName: Microsoft Edge
-          ProfileFolder: ~/Library/Application Support/Microsoft Edge/Default
+          ProfileFolderDarwin: ~/Library/Application Support/Microsoft Edge/Default
+          ProfileFolderLinux: ~/.config/microsoft-edge/Default
+          ProfileFolderWindows: %LOCALAPPDATA%/Microsoft/Edge/User Data/Default
+          ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: edge
 
   edge:profile:restore:
@@ -193,7 +202,10 @@ tasks:
         vars:
           AppFolder: /Applications/Microsoft Edge.app
           AppName: Microsoft Edge
-          ProfileFolder: ~/Library/Application Support/Microsoft Edge/Default
+          ProfileFolderDarwin: ~/Library/Application Support/Microsoft Edge/Default
+          ProfileFolderLinux: ~/.config/microsoft-edge/Default
+          ProfileFolderWindows: %LOCALAPPDATA%/Microsoft/Edge/User Data/Default
+          ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: edge
 
   ferdium:profile:backup:
@@ -218,7 +230,10 @@ tasks:
       - task: profile:backup
         vars:
           AppName: Ferdium
-          ProfileFolder: ~/Library/Application Support/Ferdium
+          ProfileFolderDarwin: ~/Library/Application Support/Ferdium
+          ProfileFolderLinux: ~/.config/Ferdium/
+          ProfileFolderWindows: %APPDATA%/Ferdium
+          ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: ferdium
 
   ferdium:profile:restore:
@@ -243,7 +258,10 @@ tasks:
         vars:
           AppFolder: /Applications/Ferdium.app
           AppName: Ferdium
-          ProfileFolder: ~/Library/Application Support/Ferdium
+          ProfileFolderDarwin: ~/Library/Application Support/Ferdium
+          ProfileFolderLinux: ~/.config/Ferdium/
+          ProfileFolderWindows: %APPDATA%/Ferdium
+          ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: ferdium
 
   firefox:profile:backup:
@@ -268,7 +286,10 @@ tasks:
       - task: profile:backup
         vars:
           AppName: Firefox
-          ProfileFolder: ~/Library/Application Support/Firefox/Profiles/profile.private
+          ProfileFolderDarwin: ~/Library/Application Support/Firefox/Profiles/profile.private
+          ProfileFolderLinux: ~/.mozilla/firefox
+          ProfileFolderWindows: %APPDATA%/Mozilla/Firefox/Profiles
+          ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: firefox
 
   firefox:profile:restore:
@@ -293,7 +314,10 @@ tasks:
         vars:
           AppFolder: /Applications/Firefox.app
           AppName: Firefox
-          ProfileFolder: ~/Library/Application Support/Firefox/Profiles/profile.private
+          ProfileFolderDarwin: ~/Library/Application Support/Firefox/Profiles/profile.private
+          ProfileFolderLinux: ~/.mozilla/firefox
+          ProfileFolderWindows: %APPDATA%/Mozilla/Firefox/Profiles
+          ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: firefox
 
   font-test:
@@ -328,7 +352,10 @@ tasks:
       - task: profile:backup
         vars:
           AppName: LibreWolf
-          ProfileFolder: ~/Library/Application Support/LibreWolf/Profiles/profile.default
+          ProfileFolderDarwin: ~/Library/Application Support/LibreWolf/Profiles/profile.default
+          ProfileFolderLinux: ~/.librewolf
+          ProfileFolderWindows: %USERPROFILE%/.librewolf
+          ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: librewolf
 
   librewolf:profile:restore:
@@ -353,7 +380,10 @@ tasks:
         vars:
           AppFolder: /Applications/LibreWolf.app
           AppName: LibreWolf
-          ProfileFolder: ~/Library/Application Support/LibreWolf/Profiles/profile.default
+          ProfileFolderDarwin: ~/Library/Application Support/LibreWolf/Profiles/profile.default
+          ProfileFolderLinux: ~/.librewolf
+          ProfileFolderWindows: %USERPROFILE%/.librewolf
+          ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: librewolf
 
   profile:backup:
