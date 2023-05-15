@@ -81,6 +81,11 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     fi
   fi
 
+  ### Cod
+  if command -v cod > /dev/null; then
+	  source <(cod init $$ bash)
+  fi
+
   ### direnv
   if command -v direnv > /dev/null; then
     eval "$(direnv hook bash)"

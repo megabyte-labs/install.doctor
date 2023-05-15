@@ -955,6 +955,49 @@ softwarePackages:
     scoop: bottom
     snap: bottom
     _type: cli
+  cod:
+    _bin: cod
+    _todo: Check for brew install later on (5/14/2023)
+    _desc: Cod is a completion daemon for bash/fish/zsh that automatically adds auto-completions when --help is used
+    _docs: https://github.com/dim-an/cod
+    _github: https://github.com/dim-an/cod
+    _home: https://github.com/dim-an/cod
+    _name: Cod
+    go: github.com/dim-an/cod@master
+  opencommit:
+    _bin: opencommit
+    _desc: GPT CLI to auto-generate impressive commits in 1 second
+    _docs: https://github.com/di-sukharev/opencommit
+    _github: https://github.com/di-sukharev/opencommit
+    _home: https://www.npmjs.com/package/opencommit
+    _name: OpenCommit
+    npm: opencommit
+  mosh:
+    _bin: mosh
+    _desc: Remote terminal application that allows roaming, supports intermittent connectivity, and provides intelligent local echo and line editing of user keystrokes.
+    _docs: https://mosh.org/#usage
+    _github: https://github.com/mobile-shell/mosh
+    _home: https://mosh.org/
+    _name: Mosh
+    apk: mosh
+    apt: mosh
+    brew: mosh
+    dnf: mosh
+    emerge: net-misc/mosh
+    pacman: mosh
+    pkg-freebsd: net/mosh
+    pkg_add: mosh
+    port: mosh
+    zypper: mosh
+  mongodb-atlas:
+    _bin: atlas
+    _desc: Install the Atlas CLI to quickly provision and manage Atlas database deployments from the terminal. (Official MongoDB hosted service provider CLI)
+    _docs: https://www.mongodb.com/docs/atlas/cli/stable/command/atlas/
+    _github: https://github.com/mongodb/mongodb-atlas-cli
+    _home: https://www.mongodb.com/docs/atlas/cli/stable/
+    _name: MongoDB Atlas
+    brew: mongodb-atlas
+    choco: mongodb-atlas
   privaxy:
     _bin: privaxy
     _desc: Privaxy is the next generation tracker and advertisement blocker. It blocks ads and trackers by MITMing HTTP(s) traffic.

@@ -9,6 +9,9 @@ $env:GIT_SSH = "C:\Windows\system32\OpenSSH\ssh.exe"
 Install-Module posh-git
 oh-my-posh init pwsh --config "$env:HOME/.config/oh-my-posh/Betelgeuse.omp.json" | Invoke-Expression
 
+### Docker Completion
+Import-Module "$env:HOME/.local/share/powershell/docker/DockerCompletion/DockerCompletion"
+
 # Import-Module -Name Terminal-Icons
 
 # PSReadLine

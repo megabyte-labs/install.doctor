@@ -265,30 +265,75 @@ fi
 if command -v antigen > /dev/null; then
   # Fix for oh-my-zsh overriding exa aliases
   export DISABLE_LS_COLORS=true
+  # Official Oh-My-ZSH plugins
   antigen use oh-my-zsh
   antigen bundle adb
+  antigen bundle bazel
+  antigen bundle codeclimate
   # antigen bundle colored-man-pages
   antigen bundle command-not-found
   antigen bundle copybuffer
   # TODO: Add as an alias available to Bash as well
   antigen bundle encode64
   antigen bundle fd
+  antigen bundle flutter
+  antigen bundle fzf
+  antigen bundle gcloud
+  antigen bundle gem
+  antigen bundle gh
   antigen bundle git-auto-fetch
+  antigen bundle git-extras
+  antigen bundle git-flow
+  antigen bundle gitfast
+  antigen bundle github
   # antigen bundle gnu-utils
-  # antigen bundle heroku
+  antigen bundle golang
+  # antigen bundle gpg-agent
+  antigen bundle gradle
+  antigen bundle helm
+  antigen bundle heroku
+  antigen bundle httpie
+  antigen bundle ionic
+  antigen bundle ipfs
+  antigen bundle isodate
   # antigen bundle keychain
+  antigen bundle kn
+  antigen bundle kubectl
   antigen bundle kubectx
+  antigen bundle last-working-dir
+  antigen bundle lxd
   antigen bundle macos
+  antigen bundle macports
   antigen bundle magic-enter
+  antigen bundle marktext
+  antigen bundle microk8s
   antigen bundle minikube
+  antigen bundle mongo-atlas
+  antigen bundle mongocli
+  antigen bundle mosh
+  antigen bundle multipass
   antigen bundle ng
+  antigen bundle node-docs
   antigen bundle nomad
   antigen bundle npm
+  antigen bundle oc
+  antigen bundle pass
+  # antigen bundle pep8
+  antigen bundle pip
+  # antigen bundle pipenv
+  antigen bundle pm2
+  antigen bundle poetry
+  antigen bundle qrcode
+  antigen bundle react-native
   antigen bundle redis-cli
   antigen bundle ripgrep
   antigen bundle rust
   antigen bundle safe-paste
+  antigen bundle sdk
+  # antigen bundle skaffold
+  antigen bundle spring
   # antigen bundle shell-proxy
+  antigen bundle sprunge
   # antigen bundle ssh-agent
   antigen bundle sudo
   antigen bundle ufw
@@ -302,6 +347,10 @@ if command -v antigen > /dev/null; then
   antigen bundle terraform
   antigen bundle vagrant
   antigen bundle yarn
+
+  # Third-party plugins
+  antigen bundle jscutlery/nx-completion
+  antigen bundle lukechilds/zsh-better-npm-completion
 
   antigen bundle zsh-interactive-cd
   # antigen bundle zsh-navigation-tools
@@ -322,6 +371,11 @@ if command -v fzf > /dev/null; then
 fi
 if command -v zoxide > /dev/null; then
 	zstyle ':autocomplete:recent-dirs' backend zoxide
+fi
+
+### Cod
+if command -v cod > /dev/null; then
+	source <(cod init $$ zsh)
 fi
 
 ### direnv

@@ -41,6 +41,9 @@ export FULLY_AUTOMATED_TASKS=true
 ### NPM
 export NPM_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NPM_TOKEN")) }}{{ includeTemplate "secrets/NPM_TOKEN" | decrypt }}{{ else }}{{ env "NPM_TOKEN" }}{{ end }}"
 
+### OpenAI
+export OPENAI_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "OPENAI_API_KEY")) }}{{ includeTemplate "secrets/OPENAI_API_KEY" | decrypt }}{{ else }}{{ env "OPENAI_API_KEY" }}{{ end }}"
+
 ### PyPi
 export PYPI_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "PYPI_TOKEN")) }}{{ includeTemplate "secrets/PYPI_TOKEN" | decrypt }}{{ else }}{{ env "PYPI_TOKEN" }}{{ end }}"
 
