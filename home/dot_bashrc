@@ -101,6 +101,11 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     . "$HOME/.fig/shell/bashrc.post.bash"
   fi
 
+  ### The Fuck
+  if command -v thefuck > /dev/null; then
+	  eval "$(thefuck --alias)"
+  fi
+
   ### Vault
   if command -v vault > /dev/null; then
     complete -C vault vault

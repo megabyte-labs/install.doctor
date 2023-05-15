@@ -79,6 +79,12 @@ zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 # shellcheck disable=SC2016
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+zstyle ':completion:*:git-checkout:*' sort false
+zstyle ':completion:*:descriptions' format '[%d]'
+if command -v fzf > /dev/null && command -v exa > /dev/null; then
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+  zstyle ':fzf-tab:*' switch-group ',' '.'
+fi
 
 # Key bindings
 bindkey -e
@@ -336,16 +342,18 @@ if command -v antigen > /dev/null; then
   antigen bundle sprunge
   # antigen bundle ssh-agent
   antigen bundle sudo
+  antigen bundle terraform
+  antigen bundle thefuck
+  antigen bundle timer
+  antigen bundle tmuxinator
+  antigen bundle urltools
   antigen bundle ufw
+  antigen bundle vagrant
+  antigen bundle volta
   antigen bundle web-search
+  antigen bundle wp-cli
   antigen bundle docker
   antigen bundle docker-compose
-  antigen bundle ionic
-  antigen bundle multipass
-  antigen bundle pip
-  antigen bundle pm2
-  antigen bundle terraform
-  antigen bundle vagrant
   antigen bundle yarn
 
   # Third-party plugins
@@ -355,9 +363,15 @@ if command -v antigen > /dev/null; then
   antigen bundle zsh-interactive-cd
   # antigen bundle zsh-navigation-tools
   antigen bundle zsh-users/zsh-completions src
-  antigen bundle zsh-users/zsh-syntax-highlighting
-  antigen bundle zsh-users/zsh-autosuggestions
+  if command -v fzf > /dev/null; then
+  	antigen bundle aloxaf/fzf-tab
+  fi
   antigen bundle marlonrichert/zsh-autocomplete@main
+  antigen bundle zsh-users/zsh-autosuggestions
+  antigen bundle zsh-users/zsh-syntax-highlighting
+  if [ -d /Applications ] && [ -d /System ]; then
+  	antigen bundle zsh-apple-touchbar
+  fi
   antigen theme romkatv/powerlevel10k
   antigen apply
 fi
@@ -401,6 +415,11 @@ fi
 ### Powerline
 if [ -f "$HOME/.local/scripts/p10k.zsh" ]; then
 	source "$HOME/.local/scripts/p10k.zsh"
+fi
+
+### The Fuck
+if command -v thefuck > /dev/null; then
+	eval "$(thefuck --alias)"
 fi
 
 ### Bash Completions
