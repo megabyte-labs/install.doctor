@@ -158,6 +158,13 @@ elif [ -f "$COMPLETION_DIR/npm.bash" ]; then
   rm "$COMPLETION_DIR/npm.bash"
 fi
 
+### Please
+if command -v plz > /dev/null; then
+  plz --completion_script > "$COMPLETION_DIR/please.bash"
+elif [ -f "$COMPLETION_DIR/please.bash" ]; then
+  rm "$COMPLETION_DIR/please.bash"
+fi
+
 ### Poetry
 if command -v poetry > /dev/null; then
   poetry completions bash > "$COMPLETION_DIR/poetry.bash"
