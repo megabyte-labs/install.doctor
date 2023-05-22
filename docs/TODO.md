@@ -22,7 +22,6 @@ https://github.com/sindresorhus/Actions
 https://github.com/lanayotech/vagrant-manager
 https://github.com/wellsjo/JSON-Splora
 https://github.com/ytmdesktop/ytmdesktop
-https://github.com/chrissimpkins/Crunch
 https://github.com/leits/MeetingBar
 https://github.com/koekeishiya/skhd
 https://github.com/Ji4n1ng/OpenInTerminal

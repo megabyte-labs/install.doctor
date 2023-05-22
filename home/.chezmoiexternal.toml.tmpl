@@ -121,6 +121,16 @@
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
+{{- if eq .host.distro.id "darwin" }}
+### Crunch
+[".local/share/crunch"]
+    type = "git-repo"
+    url = "https://github.com/chrissimpkins/Crunch.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+{{- end }}
+
 ### Git Template
 # [".config/git/template/_/husky.sh"]
 #     type = "file"

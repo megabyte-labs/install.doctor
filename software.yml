@@ -2610,6 +2610,23 @@ softwarePackages:
     _home: https://github.com/XcodesOrg/xcodes
     _name: Xcodes
     brew:darwin: xcodesorg/made/xcodes
+  crunch:
+    _bin: crunch
+    _desc: The crunch command line executable is a *nix executable that supports parallel PNG image optimization with local (off of the system PATH) installs of the pngquant and zopflipng project dependencies.
+    _docs: https://github.com/chrissimpkins/Crunch
+    _github: https://github.com/chrissimpkins/Crunch
+    _home: https://github.com/chrissimpkins/Crunch
+    _name: Crunch
+    brew: crunch
+  crunch-app:
+    _bin: null
+    _desc: The macOS companion app for the crunch CLI tool that compresses PNG images.
+    _docs: https://github.com/chrissimpkins/Crunch/blob/master/docs/MACOSGUI.md
+    _github: https://github.com/chrissimpkins/Crunch
+    _home: https://github.com/chrissimpkins/Crunch
+    _name: Crunch macOS App
+    _when:cask: '! test -d /Applications/Crunch.app'
+    cask: crunch
   xcodes-app:
     _bin: null
     _desc: macOS desktop app that allows you to download, install, and switch to alternate versions of Xcode
