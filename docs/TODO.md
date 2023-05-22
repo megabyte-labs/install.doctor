@@ -8,6 +8,33 @@ https://github.com/rigoneri/Syte3
 
 ## macOS TODOs
 https://github.com/Hammerspoon/hammerspoon
+https://github.com/Sigil-Ebook/Sigil
+
+## add
+https://github.com/shaojiankui/ProfilesManager
+https://github.com/BonzaiThePenguin/Loading
+https://github.com/hschmidt/EnvPane
+https://github.com/halo/LinkLiar
+https://github.com/ProfileCreator/ProfileCreator
+https://github.com/Toinane/colorpicker
+https://github.com/vladimiry/ElectronMail
+https://github.com/sindresorhus/Actions
+https://github.com/lanayotech/vagrant-manager
+https://github.com/wellsjo/JSON-Splora
+https://github.com/ytmdesktop/ytmdesktop
+https://github.com/chrissimpkins/Crunch
+https://github.com/leits/MeetingBar
+https://github.com/koekeishiya/skhd
+https://github.com/Ji4n1ng/OpenInTerminal
+https://github.com/pedrommcarrasco/Brooklyn
+https://github.com/objective-see/LuLu
+https://github.com/dwarvesf/hidden
+https://github.com/gao-sun/eul
+https://github.com/GetStream/Winds
+https://github.com/keycastr/keycastr
+https://github.com/pqrs-org/Karabiner-Elements
+https://github.com/utmapp/UTM
+https://github.com/MonitorControl/MonitorControl
 
 # Tiltfile
 ✖ ERROR Gsettings Failed to apply gsetting
