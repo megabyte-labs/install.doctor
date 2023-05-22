@@ -894,6 +894,34 @@ softwarePackages:
     _name: bitly
     npm: bitly-cli-client
     _type: cli
+  swimat:
+    _bin: null
+    _desc: Swift code auto-formatter for Xcode
+    _docs: https://jintin.github.io/Swimat/
+    _github: https://github.com/Jintin/Swimat
+    _home: https://jintin.github.io/Swimat/
+    _name: Swimat
+    _when:cask: '! test -d /Applications/Swimat.app'
+    cask: swimat
+  textql:
+    _bin: textql
+    _desc: CLI that allows you to execute SQL against structured text like CSV or TSV
+    _docs: https://github.com/dinedal/textql
+    _github: https://github.com/dinedal/textql
+    _home: https://github.com/dinedal/textql
+    _name: TextQL
+    brew: textql
+    go: github.com/dinedal/textql@master
+    yay: textql-git
+  cakebrew:
+    _bin: null
+    _desc: Manage your Homebrew formulas with style using Cakebrew.
+    _docs: https://www.cakebrew.com/
+    _github: https://github.com/brunophilipe/Cakebrew
+    _home: http://www.cakebrew.com/
+    _name: Cakebrew
+    _when:cask: '! test -d /Applications/Cakebrew.app'
+    cask: cakebrew
   bitwarden:
     _bin: bitwarden
     _desc: The desktop vault (Windows, macOS, & Linux)
@@ -2565,6 +2593,31 @@ softwarePackages:
     snap: flutter
     yay: flutter
     _type: application
+  pock:
+    _bin: null
+    _desc: Widgets manager for MacBook Touch Bar
+    _docs: https://github.com/pock/pock
+    _github: https://github.com/pock/pock
+    _home: https://pock.app/
+    _name: Pock
+    _when:cask: '! test -d /Applications/Pock.app'
+    cask: pock
+  xcodes:
+    _bin: xcodes
+    _desc: CLI utility to download, install, and switch to alternate versions of Xcode
+    _docs: https://github.com/XcodesOrg/xcodes
+    _github: https://github.com/XcodesOrg/xcodes
+    _home: https://github.com/XcodesOrg/xcodes
+    _name: Xcodes
+    brew:darwin: xcodesorg/made/xcodes
+  xcodes-app:
+    _bin: null
+    _desc: macOS desktop app that allows you to download, install, and switch to alternate versions of Xcode
+    _docs: https://github.com/XcodesOrg/XcodesApp
+    _github: https://github.com/XcodesOrg/XcodesApp
+    _home: https://github.com/XcodesOrg/XcodesApp
+    _name: Xcodes App
+    cask: xcodes
   nitroshare:
     _bin: nitroshare
     _desc: Network file transfer application for Windows, OS X, & Linux 

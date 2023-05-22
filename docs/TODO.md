@@ -5,6 +5,10 @@ https://github.com/QaidVoid/Complete-Single-GPU-Passthrough
 https://github.com/dosyago/DiskerNet
 https://github.com/mldangelo/personal-site
 https://github.com/rigoneri/Syte3
+
+## macOS TODOs
+https://github.com/Hammerspoon/hammerspoon
+
 # Tiltfile
 ✖ ERROR Gsettings Failed to apply gsetting
 Error: Command failed: gsettings set org.gnome.desktop.interface color-scheme prefer-dark
