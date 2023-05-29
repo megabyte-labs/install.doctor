@@ -1,35 +1,22 @@
-Ensure git-delta (or kvantum or fzf) installs with dnf on Fedora because it didn't on Centos and was marked as dnf:fedora: in software.yml
-https://drasite.com/blog/Pimp%20my%20terminal
-https://github.com/checkly/headless-recorder
-https://github.com/QaidVoid/Complete-Single-GPU-Passthrough
-https://github.com/dosyago/DiskerNet
-https://github.com/mldangelo/personal-site
-https://github.com/rigoneri/Syte3
+# TODOs
 
-## macOS TODOs
-https://github.com/Hammerspoon/hammerspoon
-https://github.com/Sigil-Ebook/Sigil
+## Pending
 
-## add
-https://github.com/shaojiankui/ProfilesManager
-https://github.com/hschmidt/EnvPane --- no brew cask for this
-https://github.com/ProfileCreator/ProfileCreator
-https://github.com/vladimiry/ElectronMail
-https://github.com/sindresorhus/Actions
-https://github.com/lanayotech/vagrant-manager
-https://github.com/wellsjo/JSON-Splora
-https://github.com/ytmdesktop/ytmdesktop
-https://github.com/koekeishiya/skhd
-https://github.com/Ji4n1ng/OpenInTerminal
-https://github.com/GetStream/Winds
-https://github.com/keycastr/keycastr
-https://github.com/pqrs-org/Karabiner-Elements
-https://github.com/utmapp/UTM
+* [Actions](https://github.com/sindresorhus/Actions) adds a wide-variety of actions that you can utilize with the macOS Shortcuts app. It is currently only available via the macOS app store. Requested a Homebrew Cask [here](https://github.com/sindresorhus/Actions/issues/127).
+* [Color Picker](https://github.com/sindresorhus/System-Color-Picker) is an improved color picker app available on macOS. It is currently only available via the macOS app store. Requested Homebrew Cask [here](https://github.com/sindresorhus/System-Color-Picker/issues/32).
+
+## Premium Software Recommendations
+
+### macOS
+
+* [Dato](https://apps.apple.com/app/id1470584107) - World clocks and calendar menu bar application available for macOS. It is a better, paid alternative to the free version of Clockr which is currently installed using the default configuration of Install Doctor.
+* [Parallels](https://www.parallels.com/) is the best virtualization manager / platform available on macOS
+
+
+
+
 
 # Tiltfile
-✖ ERROR Gsettings Failed to apply gsetting
-Error: Command failed: gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-No such key “color-scheme”
 # Skate!
 # RUNDECK
 # Foreman?
@@ -45,8 +32,6 @@ No such key “color-scheme”
 - https://marketplace.visualstudio.com/items?itemName=asvetliakov.vscode-neovim
 CLOUDFLARE_API_TOKEN
 GMAIL_APP_PASSWORD
-# https://whatthediff.ai/
-https://pieces.app/
 ### Ensure these PATHs are added on Windows
 
 add to PATH:
@@ -55,112 +40,10 @@ add to PATH:
 
 # https://github.com/graysky2/profile-cleaner
 
-# https://github.com/chifflier/ff_create_profile/blob/master/ff_create_profile
-
-# https://addons.mozilla.org/en-US/firefox/addon/duckduckgo-for-firefox/
-
 ### POSSIBLY USEFUL SOFTWARE
-
-https://hackjutsu.com/Lepton/
 
 - Incorporate /home/linuxbrew/.linuxbrew/etc/bash_completion.d
 - https://docs.brew.sh/Shell-Completion
-
-### WINDOWS MISSING PACKAGES
-
-# FOLLOWING SOFTWARE IS IN Brewfile.terminal but not in Scoop.terminal or Chocolatey.terminal
-
-# TODO: Find replacements or alternatives
-
-# It's possible some are available via other installation methods - please research and figure out which ones
-
-# we can install via NPM, Go etc.
-
-# LSD used instead of exa for Windows
-
-# Glances not on Windows
-
-# ASDF not on Windows
-
-# autorestic not on windows
-
-# gist not on Windows
-
-# git-secret not on Windows
-
-# nb not on Windows
-
-# zsh not on Windows
-
-# bandwhich
-
-# nnn not on Windows
-
-# rm-improved not on Windows
-
-# hey not on Windows
-
-# pass not on Windows
-
-# sysbench not on Windows
-
-# teller not on Windows
-
-# ssh-vault not on Windows
-
-# automake not on windows
-
-# zx --- needs npm?
-
-# pywhat --- ???
-
-# mycli --- ?
-
-# litecli --- ?
-
-# yj --- ?
-
-# choose --- ?
-
-# tmux not on Windows
-
-# mcfly
-
-# t-rec
-
-# whalebrew
-
-# ots
-
-### WINDOWS MISSING FROM DEV environment
-
-# bun
-
-# codeclimate
-
-# minio mc
-
-# dockle
-
-# git-subrepo
-
-# oq
-
-# sdkman
-
-# sshpass
-
-# goofys
-
-# tfenv
-
-# shc
-
-{{ if not $headless -}}
-age:
-identity: "{{ .chezmoi.homeDir }}/.config/age/key.txt"
-recipient: "age16kxd4ljclq9ksnxvl2ee7a5xnj744kwyv04p04ka0n3rzxdpl5nsq52svl"
-{{- end }}
 
 ## Figure out where these go
 
@@ -260,7 +143,10 @@ Assigns the time that agentd should wait after a successful registration. See de
 https://github.com/filebrowser/filebrowser
 https://github.com/coder/code-server
 
-
-
+[Polyform License Example](https://github.com/dosyago/DiskerNet/blob/fun/LICENSE.md)
 
 ### Robocorp.com
+
+https://github.com/rigoneri/Syte3
+
+* Look into tile managers

@@ -2555,6 +2555,15 @@ softwarePackages:
     _name: LuLu
     _when:cask: '! test -d /Applications/LuLu.app'
     cask: lulu
+  keycastr:
+    _bin: null
+    _desc: Keystroke visualizer for macOS screen recordings
+    _docs: https://github.com/keycastr/keycastr
+    _github: https://github.com/keycastr/keycastr
+    _home: https://github.com/keycastr/keycastr
+    _name: Keycastr
+    _when:cask: '! test -d /Applications/KeyCastr.app'
+    cask: keycastr
   hiddenbar:
     _bin: null
     _desc: macOS menu bar application that allows you to add menu bar items to a hideable drawer
@@ -5062,6 +5071,52 @@ softwarePackages:
     github: github.com/raviqqe/muffet
     go: github.com/raviqqe/muffet/v2@latest
     yay: muffet-bin
+  envpane:
+    _bin: null
+    _desc: An OS X preference pane for environment variables
+    _docs: https://github.com/hschmidt/EnvPane
+    _github: https://github.com/hschmidt/EnvPane
+    _home: https://github.com/hschmidt/EnvPane
+    _name: EnvPane
+    _when:script: '! test -d "$HOME/Library/PreferencePanes/EnvPane.prefPane"'
+    script:darwin: '(cd ~/Library/PreferencePanes && rm -rf EnvPane.prefPane && curl -sL https://github.com/hschmidt/EnvPane/releases/download/releases%2F0.8/EnvPane-0.8.tar.bz2 | tar -xjf -)'
+  skhd:
+    _bin: skhd
+    _desc: Keyboard shortcut daemon for macOS
+    _docs: https://github.com/koekeishiya/skhd/issues/1
+    _github: https://github.com/koekeishiya/skhd
+    _home: https://github.com/koekeishiya/skhd
+    _name: skhd
+    _post:brew: skhd --start-service
+    brew:darwin: koekeishiya/formulae/skhd
+  profilecreator:
+    _bin: null
+    _desc: Profile manifest creator GUI for macOS
+    _docs: https://github.com/ProfileCreator/ProfileCreator
+    _github: https://github.com/ProfileCreator/ProfileCreator
+    _home: https://github.com/ProfileCreator/ProfileCreator
+    _name: Profile Creator
+    _when:cask: '! test -d /Applications/ProfileCreator.app'
+    cask: profilecreator
+  vagrant-manager:
+    _bin: null
+    _desc: Status bar menu application that allows you to manage Vagrant available on macOS and Windows
+    _docs: https://github.com/lanayotech/vagrant-manager
+    _github: https://github.com/lanayotech/vagrant-manager
+    _home: https://www.vagrantmanager.com/
+    _name: Vagrant Manager
+    _when:cask: '! test -d "/Applications/Vagrant Manager.app"'
+    cask: vagrant-manager
+    choco: vagrant-manager
+  openinterminal:
+    _bin: null
+    _desc: Finder Toolbar app for macOS to open the current directory in Terminal, iTerm, Hyper or Alacritty
+    _docs: https://github.com/Ji4n1ng/OpenInTerminal
+    _github: https://github.com/Ji4n1ng/OpenInTerminal
+    _home: https://github.com/Ji4n1ng/OpenInTerminal
+    _name: OpenInTerminal
+    _when:cask: '! test -d /Applications/OpenInTerminal.app'
+    cask: openinterminal
   youtube-music:
     _desc: YouTube Music desktop app bundled with custom plugins (and built-in ad blocker / downloader)
     _docs: null
