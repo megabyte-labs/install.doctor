@@ -951,6 +951,9 @@ for app in "Activity Monitor" \
 	killall "${app}" &> /dev/null
 done
 
+# Set Drift as default screen saver
+defaults -currentHost write com.apple.screensaver moduleDict -dict moduleName Brooklyn path "/System/Library/Screen Savers/Drift.saver"
+
 logg success 'Done applying macOS settings'
 logg info 'Some of these changes  may require a logout/restart to take effect'
 {{ end -}}

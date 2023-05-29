@@ -25,7 +25,6 @@ https://github.com/ytmdesktop/ytmdesktop
 https://github.com/leits/MeetingBar
 https://github.com/koekeishiya/skhd
 https://github.com/Ji4n1ng/OpenInTerminal
-https://github.com/pedrommcarrasco/Brooklyn
 https://github.com/objective-see/LuLu
 https://github.com/dwarvesf/hidden
 https://github.com/gao-sun/eul
