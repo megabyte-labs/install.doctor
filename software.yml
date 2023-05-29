@@ -2546,6 +2546,24 @@ softwarePackages:
     _name: fkill
     npm: fkill-cli
     _type: cli
+  lulu:
+    _bin: null
+    _desc: Powerful firewall application for macOS
+    _docs: https://objective-see.org/products/lulu.html
+    _github: https://github.com/objective-see/LuLu
+    _home: https://objective-see.org/products/lulu.html
+    _name: LuLu
+    _when:cask: '! test -d /Applications/LuLu.app'
+    cask: lulu
+  hiddenbar:
+    _bin: null
+    _desc: macOS menu bar application that allows you to add menu bar items to a hideable drawer
+    _docs: https://github.com/dwarvesf/hidden
+    _github: https://github.com/dwarvesf/hidden
+    _home: https://dwarves.foundation/opensource/
+    _name: Hidden Bar
+    _when:cask: '! test -d "/Applications/Hidden Bar.app"'
+    cask: hiddenbar
   flameshot:
     _bin: flameshot
     _desc: Powerful yet simple to use screenshot software
@@ -2618,6 +2636,42 @@ softwarePackages:
     _home: https://github.com/chrissimpkins/Crunch
     _name: Crunch
     brew: crunch
+  eul:
+    _bin: null
+    _desc: Menu bar application that shows system stats like CPU, RAM, and disk usage on macOS
+    _docs: https://github.com/gao-sun/eul
+    _github: https://github.com/gao-sun/eul
+    _home: https://github.com/gao-sun/eul
+    _name: Eul
+    _when:cask: '! test -d /Applications/eul.app'
+    cask: eul
+  linkliar:
+    _bin: null
+    _desc: Menu bar application for macOS that allows you to spoof your MAC address
+    _docs: https://halo.github.io/LinkLiar/usage.html
+    _home: https://halo.github.io/LinkLiar/
+    _github: https://github.com/halo/LinkLiar
+    _name: Link Liar
+    _when:cask: '! test -d /Applications/LinkLiar.app'
+    cask: linkliar
+  monitorcontrol:
+    _bin: null
+    _desc: Menu bar application for macOS that allows you to control the screen brightness and volume
+    _docs: https://github.com/MonitorControl/MonitorControl
+    _github: https://github.com/MonitorControl/MonitorControl
+    _home: https://github.com/MonitorControl/MonitorControl
+    _name: Monitor Control
+    _when:brew: '! test -d /Applications/MonitorControl.app'
+    brew:darwin: monitorcontrol
+  meetingbar:
+    _bin: null
+    _desc: Meeting menu bar application that shows calendar event details on macOS
+    _docs: https://github.com/leits/MeetingBar
+    _github: https://github.com/leits/MeetingBar
+    _home: https://apps.apple.com/app/id1532419400
+    _name: Meeting Bar
+    _when:brew: '! test -d /Applications/MeetingBar.app'
+    brew:darwin: meetingbar
   crunch-app:
     _bin: null
     _desc: The macOS companion app for the crunch CLI tool that compresses PNG images.
