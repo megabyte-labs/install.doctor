@@ -3272,6 +3272,17 @@ softwarePackages:
     github: github.com/muesli/gitomatic
     pacman: gitomatic
     scoop: gitomatic
+  mudlet:
+    _bin: mudlet
+    _desc: A full-featured cross-OS MUD client
+    _docs: https://wiki.mudlet.org/?pk_vid=b53bfe5eba0aac5a1685341616dc4f27
+    _github: https://github.com/Mudlet/Mudlet
+    _home: https://www.mudlet.org/
+    _name: Mudlet
+    _when:cask: '! test -d /Applications/mudlet.app'
+    cask: mudlet
+    choco: mudlet
+    snap: mudlet-linux
   git-stats:
     _bin: git-stats
     _desc: '[gitstats](https://github.com/IonicaBizau/git-stats) can track and display local git statistics. It includes the capability of displaying a GitHub-like contributions calendar in the terminal.'

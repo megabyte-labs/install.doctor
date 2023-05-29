@@ -465,6 +465,8 @@ softwareGroups:
     - infracost
   Finance-Desktop: &Finance-Desktop
     - manta
+  Games-Desktop: &Games
+    - mudlet
   Git: &Git
     - commitizen
     - gh
@@ -1088,6 +1090,7 @@ softwareGroups:
     - *E-mail-Desktop
     - *Engineering-Desktop
     - *Finance-Desktop
+    - *Games-Desktop
     - *Git-Desktop
     - *Kubernetes-Desktop
     - *Media-Desktop
@@ -1276,11 +1279,9 @@ qubes:
     # - debian-10
     - debian-11
     - debian-11-minimal
-    - fedora-32
-    - fedora-36
-    - fedora-36-minimal
-    - fedora-36-xfce
     - fedora-37
+    - fedora-38
+    - fedora-38-minimal
     # - gentoo
     # - gentoo-minimal
     # - kali
