@@ -1186,6 +1186,25 @@ softwarePackages:
     port: certbot
     snap: certbot
     _type: cli
+  ugm:
+    _bin: ugm
+    _desc: A terminal based UNIX user and group browser
+    _docs: https://github.com/ariasmn/ugm
+    _github: https://github.com/ariasmn/ugm
+    _home: https://github.com/ariasmn/ugm
+    _name: ugm
+    go: github.com/ariasmn/ugm@latest
+  wishlist:
+    _bin: wishlist
+    _desc: TUI for listing definitions defined in the SSH directory
+    _docs: https://github.com/charmbracelet/wishlist
+    _github: https://github.com/charmbracelet/wishlist
+    _home: https://charm.sh
+    _name: Wishlist
+    brew: charmbracelet/tap/wishlist
+    nix-env: nixpkgs.wishlist
+    scoop: wishlist
+    yay: wishlist-bin
   cfssl:
     _bin: cfssl
     _desc: "[CFSSL](https://cfssl.org/) is CloudFlare's PKI/TLS swiss army knife. It is both a command line tool and an HTTP API server for signing, verifying, and bundling TLS certificates"
@@ -5265,6 +5284,47 @@ softwarePackages:
     brew: nb
     npm: nb.sh
     _service: null
+  charm:
+    _bin: charm
+    _desc: The Charm Tool and Library
+    _docs: https://github.com/charmbracelet/charm
+    _github: https://github.com/charmbracelet/charm
+    _home: https://charm.sh
+    _name: Charm
+    brew: charmbracelet/tap/charm
+    go: github.com/charmbracelet/charm@main
+    nix-env: nixpkgs.charm
+    pacman: charm
+  portal:
+    _bin: portal
+    _desc: Portal is a quick and easy command-line file transfer utility from any computer to another
+    _docs: https://github.com/SpatiumPortae/portal
+    _github: https://github.com/SpatiumPortae/portal
+    _home: https://portal.spatiumportae.com/
+    _name: Portal
+    brew: portal
+    scoop: portal
+    winget: SpatiumPortae.portal
+    yay: portal-bin
+  sttr:
+    _bin: sttr
+    _desc: Cross-platform, CLI app to perform various operations on string
+    _docs: https://github.com/abhimanyu003/sttr
+    _github: https://github.com/abhimanyu003/sttr
+    _home: https://github.com/abhimanyu003/sttr
+    _name: sttr
+    brew: abhimanyu003/sttr/sttr
+    go: github.com/abhimanyu003/sttr@latest
+    snap: sttr
+    yay: sttr-bin
+  enola:
+    _bin: enola
+    _desc: Hunt down social media accounts by username across social networks (Sherlock Go clone)
+    _docs: https://github.com/TheYahya/enola
+    _github: https://github.com/TheYahya/enola
+    _home: https://github.com/TheYahya/enola
+    _name: Enola
+    go: github.com/theyahya/enola/cmd/enola@latest
   ncc:
     _bin: ncc
     _desc: Compile a Node.js project into a single file. Supports TypeScript, binary addons, dynamic requires.
@@ -7548,6 +7608,31 @@ softwarePackages:
     brew: charmbracelet/tap/mods
     go: github.com/charmbracelet/mods@latest
     yay: mods
+  vhs:
+    _bin: vhs
+    _desc: Your CLI home video recorder
+    _docs: https://github.com/charmbracelet/vhs
+    _github: https://github.com/charmbracelet/vhs
+    _home: https://charm.sh/
+    _name: VHS
+    brew: vhs
+    go: github.com/charmbracelet/vhs@latest
+    nix-env: nixpkgs.vhs
+    pacman: vhs
+    port: vhs
+    scoop: vhs
+    xbps-install: vhs
+  soft-serve:
+    _bin: soft
+    _desc: A tasty, self-hostable Git server for the command line
+    _docs: https://github.com/charmbracelet/soft-serve
+    _github: https://github.com/charmbracelet/soft-serve
+    _home: https://charm.sh/
+    _name: Soft Serve
+    brew: charmbracelet/tap/soft-serve
+    go: github.com/charmbracelet/soft-serve/cmd/soft@latest
+    nix-env: nixpkgs.soft-serve
+    pacman: soft-serve
   microsoft-teams:
     _bin: teams
     _desc: '[Microsoft Teams](https://www.microsoft.com/en-us/microsoft-teams/group-chat-software) is a proprietary business communication platform developed by Microsoft, as part of the Microsoft 365 family of products. Teams primarily competes with the similar service Slack, offering workspace chat and videoconferencing, file storage, and application integration.'
@@ -8869,6 +8954,7 @@ softwarePlugins:
   gh:
     cmd: bash -c 'if [ -n "$GITHUB_TOKEN" ] && ! gh extension list | grep {PLUGIN}; then gh extension install {PLUGIN}; fi'
     plugins:
+      - abdfnx/gh-tran
       - dlvhdr/gh-dash
       - github/gh-net
       - mislav/gh-cp

@@ -16,7 +16,7 @@
 
 
 
-
+# https://github.com/mergestat/mergestat
 # Tiltfile
 # Skate!
 # RUNDECK
@@ -151,3 +151,10 @@ https://github.com/coder/code-server
 https://github.com/rigoneri/Syte3
 
 * Look into tile managers
+
+
+## CLI
+
+* https://github.com/r-darwish/idnt
+* https://github.com/charmbracelet/wish
+* https://github.com/charmbracelet/skate

@@ -165,6 +165,13 @@ elif [ -f "$COMPLETION_DIR/please.bash" ]; then
   rm "$COMPLETION_DIR/please.bash"
 fi
 
+### Portal
+if command -v portal > /dev/null; then
+  portal completion bash > "$COMPLETION_DIR/portal.bash"
+elif [ -f "$COMPLETION_DIR/portal.bash" ]; then
+  rm "$COMPLETION_DIR/portal.bash"
+fi
+
 ### Poetry
 if command -v poetry > /dev/null; then
   poetry completions bash > "$COMPLETION_DIR/poetry.bash"
