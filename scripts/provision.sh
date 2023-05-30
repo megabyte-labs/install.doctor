@@ -39,7 +39,7 @@
 #
 #     | Variable               | Description                                                                       |
 #     |------------------------|-----------------------------------------------------------------------------------|
-#     | `START_REPO`           | Variable to specify the Git fork to use when provisioning                         |
+#     | `START_REPO` (or `REPO`)           | Variable to specify the Git fork to use when provisioning                         |
 #     | `ANSIBLE_PROVISION_VM` | **For Qubes**, determines the name of the VM used to provision the system         |
 #     | `DEBUG_MODE`           | Set to true to enable verbose logging                                             |
 #
@@ -56,7 +56,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 # @description Detect `START_REPO` format and determine appropriate git address, otherwise use the master Install Doctor branch
 if [ -z "$START_REPO" ]; then
-    START_REPO="https://gitlab.com/megabyte-labs/install.doctor.git"
+    START_REPO="https://github.com/megabyte-labs/install.doctor.git"
 else
     if [[ "$START_REPO == *"/"* ]]; then
         # Either full git address or GitHubUser/RepoName
