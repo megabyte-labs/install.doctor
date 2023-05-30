@@ -14,7 +14,8 @@
 if command -v netdata-claim.sh > /dev/null; then
     NETDATA_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) }}{{ includeTemplate "secrets/NETDATA_TOKEN" | decrypt }}{{ else }}{{ env "NETDATA_TOKEN" }}{{ end }}"
     NETDATA_ROOM="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_ROOM")) }}{{ includeTemplate "secrets/NETDATA_ROOM" | decrypt }}{{ else }}{{ env "NETDATA_ROOM" }}{{ end }}"
-    netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="{{ .netdataClaimURL }}"
+    # netdata-claim.sh must be run as netdata user
+    sudo -H -u netdata bash -c 'netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="{{ .netdataClaimURL }}"'
 
     # Kernel optimizations
     # These are mentioned while installing via the kickstart.sh script method. We are using Homebrew for the installation though.

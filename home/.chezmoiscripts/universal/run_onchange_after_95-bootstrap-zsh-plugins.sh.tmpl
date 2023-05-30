@@ -14,7 +14,7 @@
 
 ### Initialize ZSH so plugin bootstrap process is done ahead of time
 if command -v zsh > /dev/null; then
-  logg info 'Bootstrapping ZSH by running `exec zsh && exit 0`'
-  exec zsh && exit 0
+  logg info 'Bootstrapping ZSH by running `exec zsh`'
+  exec zsh
 fi
 {{ end -}}

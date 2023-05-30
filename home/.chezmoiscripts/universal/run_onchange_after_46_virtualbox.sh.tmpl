@@ -11,13 +11,16 @@
 ### Run logic if VirtualBox is installed
 if command -v VirtualBox > /dev/null; then
   ### Install VirtualBox extension pack if it is not installed already
-  if [ ! -d /usr/lib/virtualbox/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack ]; then
+  if [ ! -d /usr/lib/virtualbox/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack ] && [ ! -d /Applications/VirtualBox.app/Contents/MacOS/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack ]; then
     logg info 'Acquiring VirtualBox version information'
     VBOX_VERSION="$(VirtualBox --help | head -n 1 | cut -f 6 -d' ')"
     VBOX_VERSION="${VBOX_VERSION//v}"
 
     ### Set up folders
-    sudo mkdir -p /usr/lib/virtualbox/ExtensionPacks
+    # Check for macOS installation before creating ExtensionPacks folder on Linux machines
+    if [ ! -d /Applications/VirtualBox.app ]; then
+      sudo mkdir -p /usr/lib/virtualbox/ExtensionPacks
+    fi
     mkdir -p /tmp/vbox
     cd /tmp/vbox
 
