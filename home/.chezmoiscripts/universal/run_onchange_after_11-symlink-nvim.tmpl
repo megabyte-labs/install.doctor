@@ -19,7 +19,7 @@ if [ ! -d "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/lua/custom" ]; then
     logg info "Linking ${XDG_CONFIG_HOME:-$HOME/.config}/nvim-custom to ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/lua/custom"
     logg info "Changes should go in ${XDG_CONFIG_HOME:-$HOME/.config}/nvim-custom"
     ln -s "${XDG_CONFIG_HOME:-$HOME/.config}/nvim-custom" "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/lua/custom"
-elif [ flatpak list | grep 'io.neovim.nvim' > /dev/null && ! -d "~/.var/app/io.neovim.nvim/config/nvim/lua/custom" ]; then
+elif flatpak list | grep 'io.neovim.nvim' > /dev/null && [ ! -d "~/.var/app/io.neovim.nvim/config/nvim/lua/custom" ]; then
     logg info "Linking ${XDG_CONFIG_HOME:-$HOME/.config}/nvim-custom to ~/.var/app/io.neovim.nvim/config/nvim/lua/custom"
     logg info "Changes should go in ${XDG_CONFIG_HOME:-$HOME/.config}/nvim-custom"
     ln -s "${XDG_CONFIG_HOME:-$HOME/.config}/nvim-custom" "~/.var/app/io.neovim.nvim/config/nvim/lua/custom"
