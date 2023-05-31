@@ -1,5 +1,7 @@
 # TODOs
 
+* Port over installations handled by Taskfile.yml
+
 ## Pending
 
 * [Actions](https://github.com/sindresorhus/Actions) adds a wide-variety of actions that you can utilize with the macOS Shortcuts app. It is currently only available via the macOS app store. Requested a Homebrew Cask [here](https://github.com/sindresorhus/Actions/issues/127).
