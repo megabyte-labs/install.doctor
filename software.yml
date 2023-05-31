@@ -4151,12 +4151,30 @@ softwarePackages:
     ansible:darwin: professormanhattan.iterm2
     cask: iterm2
     _type: application
+  kube-shell:
+    _bin: kube-shell
+    _desc: An integrated shell for working with the Kubernetes
+    _docs: https://github.com/cloudnativelabs/kube-shell
+    _github: https://github.com/cloudnativelabs/kube-shell
+    _home: https://github.com/cloudnativelabs/kube-shell
+    _name: Kube Shell
+    pipx: kube-shell
+  iredis:
+    _bin: iredis
+    _desc: A terminal client for Redis with auto-completion and syntax highlightin
+    _docs: https://github.com/laixintao/iredis
+    _github: https://github.com/laixintao/iredis
+    _home: https://pypi.org/project/iredis/
+    _name: iRedis
+    apt: iredis
+    brew: iredis
+    pipx: iredis
   aws-shell:
     _bin: aws-shell
     _desc: An integrated shell for working with the AWS CLI.
     _docs: https://github.com/awslabs/aws-shell
     _github: https://github.com/awslabs/aws-shell
-    _home: https://github.com/awslabs/aws-shell
+    _home: https://pypi.org/project/aws-shell/
     _name: AWS Shell
     brew: aws-shell
     pipx: aws-shell
@@ -5046,6 +5064,23 @@ softwarePackages:
     _post:pipx: pipx inject molecule ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog apache-libcloud gcloud junit-xml molecule-docker molecule-gce molecule-vagrant pycrypto
     # brew: molecule
     pipx: molecule
+  markdownlint-cli:
+    _bin: markdownlint
+    _desc: MarkdownLint command line interface
+    _docs: https://github.com/igorshubovych/markdownlint-cli
+    _github: https://github.com/igorshubovych/markdownlint-cli
+    _home: https://github.com/igorshubovych/markdownlint-cli
+    _name: Markdownlint CLI
+    brew: markdownlint-cli
+    pipx: markdownlint-cli
+  starred:
+    _bin: starred
+    _desc: Creates your own Awesome List sorted by GitHub stars by using the GitHub API
+    _docs: https://github.com/maguowei/starred
+    _github: https://github.com/maguowei/starred
+    _home: https://pypi.org/project/starred/
+    _name: Starred
+    pipx: starred
   monero:
     _bin: monero-gui
     _desc: '[Monero](https://www.getmonero.org/) is a leading cryptocurrency focused on private and censorship-resistant transactions. This role installs the Monero wallet application which is required for interacting with the Monero network.'
