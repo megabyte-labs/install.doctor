@@ -409,8 +409,6 @@ softwareGroups:
     - github-desktop
     - intellij-idea-ce
     - iterm2
-    - lepton
-    - masscode
     - meld
     - powershell
     - redis-desktop-manager
@@ -1181,10 +1179,14 @@ softwareGroups:
     - hyper
     - jenv
     - kitty
+    - pkg: lepton
+      note: Deprecated in favor of [Pieces](https://pieces.app/). The core components of Pieces are not open-source but the functionality is significantly better than massCode.
     - license
     - lpass
     - lsd
     - mackup
+    - pkg: masscode # Deprecated in favor of Pieces
+      note: Deprecated in favor of [Pieces](https://pieces.app/). The core components of Pieces are not open-source but the functionality is significantly better than massCode.
     - nordvpn
     - nvm
     - pyenv

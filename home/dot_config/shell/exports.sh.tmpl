@@ -146,6 +146,7 @@ export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 export MACHINE_STORAGE_PATH="$XDG_DATA_HOME/docker-machine"
 
 ### Dotnet
+export DOTNET_CLI_HOME="$XDG_CONFIG_HOME/dotnet"
 if [ -d /Applications ] && [ -d /Library ]; then
   export DOTNET_ROOT="/usr/local/opt/dotnet/libexec"
 elif [ -d /home/linuxbrew/.linuxbrew/opt/dotnet ]; then
@@ -227,6 +228,9 @@ export KODI_DATA="$XDG_DATA_HOME/kodi"
 ### Krew
 export KREW_ROOT="$XDG_DATA_HOME/krew"
 
+### Kube
+export KUBECONFIG="$XDG_CONFIG_HOME/kube/config"
+
 ### Maven
 export MAVEN_CONFIG="$XDG_CONFIG_HOME/maven/settings.xml"
 alias mvn="mvn -s $MAVEN_CONFIG"
@@ -241,6 +245,9 @@ export MINIKUBE_HOME="$XDG_DATA_HOME/minikube"
 
 ### MySQL
 export MYSQL_HISTFILE="$XDG_DATA_HOME/mysql_history"
+
+### .netrc
+export NETRC="$XDG_CONFIG_HOME/netrc"
 
 ### nnn
 if command -v nnn > /dev/null; then
@@ -262,6 +269,9 @@ export NTL_RUNNER="pnpm"
 export NTL_RERUN_CACHE_DIR="$XDG_DATA_HOME/ntl"
 export NTL_RERUN_CACHE_NAME="cache"
 export NTL_RERUN_CACHE_MAX="100"
+
+### NuGet
+export NUGET_PACKAGES="$XDG_DATA_HOME/nuget"
 
 ### Parallels
 export PARALLEL_HOME="$XDG_CONFIG_HOME/parallel"
@@ -315,6 +325,9 @@ export VAGRANT_HOME="$XDG_DATA_HOME/vagrant.d"
 ### Volta
 export VOLTA_HOME="$XDG_DATA_HOME/volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
+
+### Wakatime
+export WAKATIME_HOME="$XDG_CONFIG_HOME/wakatime"
 
 ### wget
 export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
