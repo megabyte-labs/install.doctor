@@ -59,4 +59,9 @@ export SURGE_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates"
 ### Vagrant Cloud
 export VAGRANT_CLOUD_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VAGRANT_CLOUD_TOKEN")) }}{{ includeTemplate "secrets/VAGRANT_CLOUD_TOKEN" | decrypt }}{{ else }}{{ env "VAGRANT_CLOUD_TOKEN" }}{{ end }}"
 
+### Xcodes
+# Apple ID username and password
+export XCODES_USERNAME="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "APPLE_USERNAME")) }}{{ includeTemplate "secrets/APPLE_USERNAME" | decrypt }}{{ else }}{{ env "APPLE_USERNAME" }}{{ end }}"
+export XCODES_PASSWORD="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "APPLE_PASSWORD")) }}{{ includeTemplate "secrets/APPLE_PASSWORD" | decrypt }}{{ else }}{{ env "APPLE_PASSWORD" }}{{ end }}"
+
 {{ end -}}
