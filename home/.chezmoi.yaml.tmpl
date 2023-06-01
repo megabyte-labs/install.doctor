@@ -12,13 +12,8 @@
 {{- $locale := (output "echo" "$LANG") }}
 {{- $name := (default "Brian Zalewski" (env "FULL_NAME")) -}}
 {{- $restricted := (default false (env "WORK_ENVIRONMENT")) -}}
-{{- $slack_webhook_url := (default "" (env "SLACK_WEBHOOK_URL")) -}}
-{{- $slack_netdata_alarms_channel := (default "" (env "SLACK_NETDATA_ALARMS_CHANNEL")) -}}
 {{- $snapcraftEmail := (default "brian@megabyte.space" (env "SNAPCRAFT_EMAIL"))}}
 {{- $surgeshUsername := (default "brian@megabyte.space" (env "SURGESH_USERNAME")) -}}
-{{- $syslog_netdata_enable := (default false (env "SYSLOG_NETDATA_ENABLE")) -}}
-{{- $syslog_netdata_facility := (default "local6" (env "SYSLOG_NETDATA_FACILITY")) -}}
-{{- $syslog_netdata_recipients := (default "" (env "SYSLOG_NETDATA_RECIPIENTS")) -}}
 {{- $timezone := (default "America/New_York" (env "TIMEZONE")) -}}
 {{- $toolchains := list "CLI-Extras" "Docker" "Go" "Kubernetes" "Web-Development" -}}
 {{- $work := (default false (env "WORK_ENVIRONMENT")) -}}
@@ -164,14 +159,7 @@ data:
         - 192.168.1.0/24
     qubes: {{ ne (stat (joinPath "usr" "bin" "qubes-session")) false }}
     restricted: {{ $restricted }}
-    slack:
-      webhook_url: "{{ $slack_webhook_url }}"
-      netdata_alarms_channel: "{{ $slack_netdata_alarms_channel }}"
     softwareGroup: "{{ $softwareGroup }}"
-    syslog:
-      config: {{ $syslog_netdata_enable }}
-      netdata_facility: "{{ $syslog_netdata_facility }}"
-      netdata_recipients: "{{ $syslog_netdata_recipients }}"
     type: "{{ $chassisType }}"
     work: {{ $work }}
   toolchains:

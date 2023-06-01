@@ -211,7 +211,7 @@ sendsms=""
 # EMAIL_SENDER="User Name <user@domain>"
 # EMAIL_SENDER="'User Name' <user@domain>"
 # EMAIL_SENDER="\"User Name\" <user@domain>"
-EMAIL_SENDER=""
+EMAIL_SENDER="'Netdata Notifications <no-reply@{{ .host.hostname }}.{{ .host.domain }}"
 
 # enable/disable sending emails
 SEND_EMAIL="YES"
@@ -473,20 +473,20 @@ DEFAULT_RECIPIENT_TELEGRAM=""
 #                  "RECIPIENT1 RECIPIENT2 ..."
 
 # enable/disable sending slack notifications
-SEND_SLACK="YES"
+# SEND_SLACK="YES"
 
 # Login to your slack.com workspace and create an incoming webhook, using the "Incoming Webhooks" App: https://slack.com/apps/A0F7XDUAZ-incoming-webhooks
 # Do not use the instructions in https://api.slack.com/incoming-webhooks#enable_webhooks, as those webhooks work only for a single channel.
 # You need only one for all your netdata servers (or you can have one for each of your netdata).
 # Without the app and a webhook, netdata cannot send slack notifications.
-SLACK_WEBHOOK_URL="{{ .host.slack.webhook_url }}"
+# SLACK_WEBHOOK_URL=""
 
 # if a role's recipients are not configured, a notification will be send to:
 # - A slack channel (syntax: '#channel' or 'channel')
 # - A slack user (syntax: '@user')
 # - The channel or user defined in slack for the webhook (syntax: '#')
 # empty = do not send a notification for unconfigured roles
-DEFAULT_RECIPIENT_SLACK="{{ .host.slack.netdata_alarms_channel }}"
+# DEFAULT_RECIPIENT_SLACK=""
 
 #------------------------------------------------------------------------------
 # Microsoft Teams (office.com) global notification options
@@ -727,7 +727,7 @@ IRC_REALNAME=""
 # enable/disable sending syslog notifications
 # NOTE: make sure you have everything else configured the way you want
 # it _before_ turning this on.
-SEND_SYSLOG="{{ if eq true .host.syslog.config }}YES{{ else }}NO{{ end }}"
+SEND_SYSLOG="YES"
 
 # A note on log levels and facilities:
 #
@@ -760,7 +760,7 @@ SEND_SYSLOG="{{ if eq true .host.syslog.config }}YES{{ else }}NO{{ end }}"
 
 # This controls which facility is used by default for logging.  Defaults
 # to local6.
-SYSLOG_FACILITY='{{ if eq true .host.syslog.config }}{{ .host.syslog.netdata_facility }}{{ else }}local6{{ end }}'
+SYSLOG_FACILITY='local6'
 
 # If a role's recipients are not configured, use the following.
 # (empty = do not send a notification for unconfigured roles)
@@ -781,8 +781,6 @@ SYSLOG_FACILITY='{{ if eq true .host.syslog.config }}{{ .host.syslog.netdata_fac
 # daemon listening on port 514 on 'loghost' using the daemon facility and
 # notice log level:
 # DEFAULT_RECIPIENT_SYSLOG='daemon.notice@loghost:514/netdata'
-#
-DEFAULT_RECIPIENT_SYSLOG="{{ if eq true .host.syslog.config }}{{ .host.syslog.netdata_recipients }}{{ else }}netdata{{ end }}"
 
 #------------------------------------------------------------------------------
 # iOS Push Notifications
