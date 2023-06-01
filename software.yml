@@ -8207,6 +8207,10 @@ softwarePackages:
     choco: velero
     github: github.com/vmware-tanzu/velero
     yay: velero-bin
+  macvim:
+    _todo: Integrate this into macOS setup
+    _when:cask: '! test -d /Applications/MacVim.app'
+    cask: macvim
   vim:
     _bin: vim
     _desc: '[Vim](https://www.vim.org/) is a greatly improved version of the good old UNIX editor Vi'
@@ -8214,10 +8218,8 @@ softwarePackages:
     _github: https://github.com/vim/vim
     _home: https://www.vim.org/
     _name: VIM
-    _when:cask: '! test -d /Applications/MacVim.app'
     ansible: professormanhattan.vim
     apt: vim
-    cask: macvim
     brew: vim
     choco: vim
     dnf: vim

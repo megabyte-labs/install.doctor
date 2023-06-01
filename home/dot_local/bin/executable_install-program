@@ -748,7 +748,7 @@ async function beforeInstall(packageManager) {
     if (!brewUpdated) {
       brewUpdated = true
       try {
-        runCommand('Running brew update / upgrade', `brew update && brew upgrade`)
+        runCommand('Running brew update / upgrade', `brew update && brew upgrade --force`)
       } catch (e) {
         console.log(e)
         log('error', 'Homebrew', 'Failed running brew update / upgrade')
