@@ -397,6 +397,11 @@ if command -v direnv > /dev/null; then
 	eval "$(direnv hook zsh)"
 fi
 
+### Emplace
+if command -v emplace > /dev/null; then
+	eval "$(emplace init zsh)"
+fi
+
 ### Java (asdf)
 # if [ -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ]; then
 #   . "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"

@@ -1141,6 +1141,14 @@ softwarePackages:
     _name: Carthage
     brew:darwin: carthage
     _type: cli
+  wordops:
+    _bin: wo
+    _desc: Install and manage a high performance WordPress stack with a few keystrokes
+    _docs: https://docs.wordops.net/
+    _github: https://github.com/WordOps/WordOps
+    _home: https://wordops.net/
+    _name: WordOps
+    script:debian: wget -qO wo wops.cc && sudo bash wo
   imageoptim:
     _bin: null
     _docs: null
@@ -2198,12 +2206,12 @@ softwarePackages:
     npm: emoj
     _type: cli
   emplace:
-    _bin: null
+    _bin: emplace
     _desc: Emplace objects and arrays - pointer to pointer style
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
+    _docs: https://github.com/tversteeg/emplace
+    _github: https://github.com/tversteeg/emplace
+    _home: https://github.com/tversteeg/emplace
+    _name: Emplace
     cargo: emplace
     nix: emplace
     scoop: emplace
@@ -4733,13 +4741,14 @@ softwarePackages:
     ansible: professormanhattan.lpass
     _type: cli
   lsd:
-    _bin: null
+    _bin: lsd
     _desc: '[LSD](https://github.com/Peltoche/lsd) (LSDeluxe), a clone of ls, is the next gen ls command with colorful output, file type icons, and more.'
-    _docs: null
+    _docs: https://github.com/lsd-rs/lsd
     _github: https://github.com/Peltoche/lsd
-    _home: null
+    _home: https://github.com/lsd-rs/lsd
     _name: LSD (LSDeluxe)
-    ansible: professormanhattan.lsd
+    _notes: Only the Chocolatey definition is included because LSD is only used on Windows (when `exa` is not available)
+    choco: lsd
   lxc:
     _bin: lxc
     _desc: Linux Containers is an operating-system-level virtualization method for running multiple isolated Linux systems on a control host using a single Linux kernel.
@@ -4783,8 +4792,8 @@ softwarePackages:
     _github: https://github.com/maas/maas
     _home: https://maas.io/
     _name: MAAS
-    ansible: professormanhattan.maas
-    _type: cli
+    ansible:ubuntu: professormanhattan.maas
+    snap:ubuntu: maas
   mackup:
     _bin: null
     _desc: '[mackup](https://github.com/lra/mackup) lets you keep your application settings in sync.'
@@ -5091,7 +5100,7 @@ softwarePackages:
     _name: Starred
     pipx: starred
   monero:
-    _bin: monero-gui
+    _bin: org.getmonero.Monero
     _desc: '[Monero](https://www.getmonero.org/) is a leading cryptocurrency focused on private and censorship-resistant transactions. This role installs the Monero wallet application which is required for interacting with the Monero network.'
     _docs: https://www.getmonero.org/resources/user-guides/
     _github: https://github.com/monero-project/monero
@@ -5099,11 +5108,26 @@ softwarePackages:
     _name: Monero
     _when:cask: '! test -d /Applications/monero-wallet-gui.app'
     ansible: professormanhattan.monero
-    brew: monero
     cask: monero-wallet
     choco: monero
     flatpak: org.getmonero.Monero
-    _type: application
+  monero-cli:
+    _bin: monerod
+    _desc: CLI for Monero, a leading cryptocurrency focused on private and censorship-resistant transactions.
+    _github: https://github.com/monero-project/monero
+    _docs: https://www.getmonero.org/resources/user-guides/
+    _home: https://www.getmonero.org/
+    brew: monero
+    scoop: monero
+  mymonero:
+    _bin: null
+    _desc: Easy-to-use Monero client with managed keys
+    _github: https://github.com/mymonero/mymonero-app-js
+    _docs: https://github.com/mymonero/mymonero-app-js
+    _home: https://mymonero.com/
+    _when:cask: '! test -d /Applications/MyMonero.app'
+    cask: mymonero
+    choco: mymonero
   motrix:
     _bin: motrix
     _desc: '[Motrix](https://motrix.app/) is a full-featured download manager that supports downloading HTTP, FTP, BitTorrent, Magnet, etc.'
@@ -6413,6 +6437,7 @@ softwarePackages:
     _name: null
     apt: python2
     brew: python2
+    choco: python2
     dnf: python2
     pacman: python2
     scoop: python2
@@ -6900,12 +6925,6 @@ softwarePackages:
   pv:
     _bin: pv
     apt: pv
-  mbuffer:
-    _bin: mbuffer
-    apt: mbuffer
-  lzop:
-    _bin: lzop
-    apt: lzop
   santa:
     _bin: santactl
     _desc: A binary authorization system for MacOS (santa) role is a daemon that makes execution decisions based on the contents of a local database, a GUI agent that notifies the user in case of a block decision and a command-line utility for managing the system and synchronizing the database with a server.
@@ -8300,6 +8319,7 @@ softwarePackages:
     _bin: codium
     _snapClassic: true
     _when:cask: '! test -d "/Applications/VSCodium.app"'
+    appimage: vscodium/vscodium
     cask: vscodium
     choco: vscodium
     flatpak: com.vscodium.codium
@@ -9009,15 +9029,6 @@ softwarePackages:
   flatseal:
     _bin: flatseal
     flatpak: com.github.tchx84.Flatseal
-  supdock:
-    _bin: supdock
-    _desc: A slightly more visual way to interact with the docker daemon. Supdock is a wrapper for the docker command meaning you can still use all of the other docker commands without issues
-    _docs: null
-    _github: https://github.com/segersniels/supdock
-    _home: null
-    _name: supdock
-    _type: cli
-    npm: supdock
 softwarePlugins:
   dotnet:
     cmd: null

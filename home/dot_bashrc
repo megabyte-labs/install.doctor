@@ -91,6 +91,11 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     eval "$(direnv hook bash)"
   fi
 
+  ### Emplace
+  if command -v emplace > /dev/null; then
+    source <(emplace init bash)
+  fi
+
   ### Java (asdf)
   if [ -f "$ASDF_DATA_DIR/plugins/java/set-java-home.bash" ]; then
     . "$ASDF_DATA_DIR/plugins/java/set-java-home.bash"

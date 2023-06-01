@@ -193,6 +193,7 @@ softwareGroups:
   Backup: &Backup
     - autorestic
     - ghorg
+    - mackup
     - restic
     - sanoid
   Backup-Desktop: &Backup-Desktop
@@ -250,6 +251,7 @@ softwareGroups:
     - htmlq
     - hyperfine
     - jq
+    - lsd
     - mc
     - mcfly
     - nb
@@ -264,6 +266,7 @@ softwareGroups:
     - procs
     - prettier
     - privoxy
+    - python2
     - recoverpy
     - ripgrep
     - ripgrep-all
@@ -295,6 +298,8 @@ softwareGroups:
     - charm
     - cod
     - desed
+    - difftastic
+    - emplace
     - emoj
     - fig
     - filebrowser
@@ -320,6 +325,7 @@ softwareGroups:
     - peco
     - pgcli
     - pywhat
+    - sad
     - slack-term
     - slides
     - social-analyzer
@@ -360,6 +366,8 @@ softwareGroups:
     - gphotos-sync
     - rclone
     - s5cmd
+  Compression: &Compression
+    - p7zip
   Communication: &Communication
     - irssi
   Communication-Desktop: &Communication-Desktop
@@ -376,6 +384,9 @@ softwareGroups:
     - zoom
   Crypto: &Crypto
     - cointop
+    - monero
+    - monero-cli
+    - mymonero
   Crypto-Desktop: &Crypto-Desktop
     - ledger-live
     - onlykey
@@ -651,6 +662,7 @@ softwareGroups:
     - ios-deploy
     - java
     - libimobiledevice
+    - license
     - ntl
     - openjdk
     - please
@@ -747,6 +759,7 @@ softwareGroups:
     - debsecan
     - envchain
     - envconsul
+    - openssl
     - pony
     - protonvpn-cli
     - skate
@@ -804,6 +817,7 @@ softwareGroups:
     - wireshark
   Templates: &Templates
     - confd
+    - consul-template
     - cookiecutter
     - gomplate
   Terraform: &Terraform
@@ -897,6 +911,7 @@ softwareGroups:
     - ts2c
     - typescript
     - websocat
+    - wordops
     - wordpressify
     - wp-cli
     - wrangler
@@ -1008,6 +1023,8 @@ softwareGroups:
     - *Essentials-Desktop
     - firewall-applet
     - firewall-config
+    - mas
+    - plymouth
     - stacer
   _Standard: &_Standard
     - *_Basic
@@ -1138,6 +1155,8 @@ softwareGroups:
     - *Kubernetes
     - *Kubernetes-Desktop
     - *Networking
+  __hostname__maas:
+    - maas
   __hostname__media-tmpl:
     - *Media
     - *Media-Desktop
@@ -1174,72 +1193,86 @@ softwareGroups:
     - *Browsers-Desktop
   __hostname__work-tmpl: []
   deprecated:
-    - apt-cacher-ng
-    - bivac
-    - boilr
-    - captain
-    - consul-template
-    - diffsofancy
-    - difftastic
-    - emplace
-    - gvm
-    - htop
-    - hyper
-    - jenv
-    - kitty
+    - pkg: apt-cacher-ng
+      note: Deprecated in favor of using Sonatype Nexus apt proxies.
+    - pkg: asdf
+      note: ASDF is currently installed via a script rather than in the software definitions.
+    - pkg: astronvim
+      note: AstronVIM is deprecated in favor of NvChad which has more stars and is less troublesome to install (in our experience)
+    - pkg: bivac
+      note: Deprecated in favor of using the RClone Docker plugin for S3-backed mounts
+    - pkg: boilr
+      note: Deprecated in favor of using `gomplate`
+    - pkg: captain
+      note: Unused Docker assistance package
+    - pkg: catfs
+      note: CatFS is reportedly in the alpha stage of development and we experienced issues when trying to use it.
+    - pkg: cerebro
+      note: macOS system search more native way of providing similar features. Better alternatives are available.
+    - pkg: chromium
+      note: Deprecated in favor of the regular Chrome.
+    - pkg: diffsofancy
+      note: Deprecated in favor of `delta`
+    - pkg: easyengine
+      note: Deprecated in favor of `wordops` which is the new and improved version of EasyEngine
+    - pkg: gdu
+      note: Deprecated in favor of `duf` which is written in Rust
+    - pkg: gvm
+      note: Deprecated in favor of using ASDF.
+    - pkg: hyper
+      note: Deprecated in favor of Tabby for a full-featured terminal.
+    - pkg: jenv
+      note: Deprecated in favor of using ASDF or SDKMan
+    - pkg: kitty
+      note: Deprecated in favor of using alternative terminals such as iTerm2, Tabby, and bundled Linux terminals.
     - pkg: lepton
       note: Deprecated in favor of [Pieces](https://pieces.app/). The core components of Pieces are not open-source but the functionality is significantly better than massCode.
-    - license
-    - lpass
-    - lsd
-    - mackup
+    - pkg: lpass
+      note: Deprecated in favor of using the BitWarden password manager and its related tools.
+    - pkg: lsd
+      note: Deprecated in favor of using `exa`. `lsd` may be re-introduced when Windows support is added.
     - pkg: masscode # Deprecated in favor of Pieces
       note: Deprecated in favor of [Pieces](https://pieces.app/). The core components of Pieces are not open-source but the functionality is significantly better than massCode.
-    - nordvpn
-    - nvm
-    - pyenv
-    - s3filesystem
-    - starship
-    - raindrop
-    - rear
-    - rvm
-    - sad
-    - supdock
-    - termius
-    - ulauncher
-    # Some plugins do not work with vscodium
-    - vscodium
+    - pkg: multipass
+      note: Opens persistent menu icon on GNOME and has issues that sometimes require switching the virt driver
+    - pkg: nordvpn
+      note: Deprecated in favor of leveraging ProtonVPN as the primary VPN service.
+    - pkg: nvm
+      note: Deprecated in favor of using ASDF.
+    - pkg: pip
+      note: The `pip` installation is handled by the `install-software` program bundled with Install Doctor.
+    - pkg: pipx
+      note: The `pipx` installation is handled by the `install-software` program bundled with Install Doctor.
+    - pkg: pyenv
+      note: Deprecated in favor of using ASDF.
+    - pkg: s3filesystem
+      note: Deprecated in favor of using RClone.
+    - pkg: starship
+      note: Deprecated in favor of alternative terminal status prompts such as PowerLevel10k.
+    - pkg: raindrop
+      note: Deprecated because browser extensions do a better job of unifying bookmarks. Namely, the extension called Floccus allows cross-browser bookmark syncing. The Raindrop package also requires a paid subscription for advanced features.
+    - pkg: rvm
+      note: Deprecated in favor of using ASDF.
+    - pkg: temps
+      note: macOS menu bar app for weather. Buggy software.
+    - pkg: termius
+      note: Deprecated since all the interesting features require a paid subscription.
+    - pkg: ulauncher
+      note: Deprecated in favor of alternative app launchers.
+    - pkg: vscodium
+      note: Not all VSCode plugins work with VSCodium.
+    - pkg: yubikey-agent
+      note: The OpenSSH library can now create native keys that integrate with the client.
   # Files below need to be reviewed before adding them to the stack. They should include all of the
   # definitions in software.yml that are not included somewhere in the definitions that this file
   # maps out.
   queued:
-    # Opens persistent menu icon on GNOME and has issues that sometimes require switching the virt driver
-    - multipass
-    - monero
-    # macOS system search more native way of providing similar features --- explore leveraging this on Linux
-    - cerebro
-    - catfs
-    - lzop
-    - mas
-    - mbuffer
-    - pip
-    - pipx
-    - python2
+    - pkg: editly
+      note: Editly NPM package is failing to install on macOS. Attempts to compile with node-gyp and fails.
+    - pkg: rear
+      note: System backup utility that may be incorporated after comparing it with alternative and perhaps better alternatives.
+  helmCharts:
     - vector
-    - maas
-    - gdu
-    - easyengine
-    - yubikey-agent
-    - p7zip
-    - openssl
-    - plymouth
-    - chromium
-    - astronvim
-    # macOS menu bar app for weather - little bit buggy
-    - temps
-    - asdf
-    # editly NPM package is failing to install on macOS - attempts to compile with node-gyp
-    - editly
 softwarePlugins:
   docker:
     plugins:
