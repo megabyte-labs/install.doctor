@@ -324,7 +324,7 @@ fi
 # @description Ensure the ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi directory is cloned and up-to-date
 if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.git" ]; then
   cd "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
-  logg info "Pulling the latest changes from ${START_REPO:-https://gitlab.com/megabyte-labs/install.doctor.git}"
+  logg info "Pulling the latest changes from ${START_REPO:-https://github.com/megabyte-labs/install.doctor.git}"
   git pull origin master
 else
   logg info "Cloning ${START_REPO} to ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
