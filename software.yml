@@ -1759,6 +1759,15 @@ softwarePackages:
     _name: Debloat Windows
     ansible: professormanhattan.debloat
     _type: cli
+  debsecan:
+    _bin: debsecan-by-type
+    _desc: `debsecan` analyzes the list of installed packages on the current host and reports vulnerabilities found on the system.
+    _docs: null
+    _github: null
+    _gitlab: https://gitlab.com/fweimer/debsecan
+    _home: https://wiki.debian.org/DebianSecurity/debsecan
+    _name: Debian Security Analyzer
+    apt: debsecan
   defaultbrowser:
     _bin: null
     _desc: This role performs the necessary logic to set the default browser on nearly any platform.
@@ -2710,7 +2719,7 @@ softwarePackages:
     cask: xcodes
   nitroshare:
     _bin: nitroshare
-    _desc: Network file transfer application for Windows, OS X, & Linux 
+    _desc: Network file transfer application for Windows, OS X, & Linux
     _docs: https://nitroshare.net/
     _github: https://github.com/nitroshare/nitroshare-desktop
     _home: https://nitroshare.net/

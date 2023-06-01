@@ -6,6 +6,9 @@
 #     This script connects Netdata with Netdata Cloud if Netdata is installed, the `NETDATA_TOKEN` is provided, and the
 #     `NETDATA_ROOM` is defined. This allows you to graphically browse through system metrics on all your connected devices
 #     from a single free web application.
+#
+#     This script installs additional alerts and enables notifications if Netdata is installed. Email notifications are configured
+#     using the provided primary email address. If the OS is Debian based, Netdata shows the number of CVEs in currently installed packages.
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
@@ -32,6 +35,68 @@ if command -v netdata-claim.sh > /dev/null; then
             echo 1000 | sudo tee /sys/kernel/mm/ksm/sleep_millisecs
         else
             logg info 'The `/sys/kernel/mm/ksm` directory does not exist so Netdata kernel optimizations are not being applied'
+        fi
+    fi
+
+    ### Install additional alerts and enable notifications
+    if command -v netdata > /dev/null; then
+        # Copy the additional alert definitions
+        if [ -d /usr/local/etc/netdata ]; then
+            NETDATA_ETC='/usr/local/etc/netdata/'
+        elif [ -d /etc/netdata ]; then
+            NETDATA_EDC='/etc/netdata'
+        else
+            logg error 'No etc location found for netdata' && exit 1
+        fi
+        logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/ to $NETDATA_ETC"
+        sudo cp -rf "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/" "$NETDATA_ETC"
+
+        # Backup current health alarm configuration and apply new one
+        if [ -d /usr/local/lib/netdata ]; then
+            NETDATA_LIB='/usr/local/lib/netdata'
+        elif [ -d /usr/lib/netdata ]; then
+            NETDATA_LIB='/usr/lib/netdata'
+        else
+            logg error 'No lib location found for netdata' && exit 1
+        fi
+        logg info "Copying $${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health_alarm_notify.conf to $NETDATA_LIB/conf.d/health_alarm_notify.conf"
+        sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health_alarm_notify.conf" "$NETDATA_LIB/conf.d/health_alarm_notify.conf"
+    else
+        logg warn '`netdata` is not available in the PATH or is not installed'
+    fi
+
+    ### Ensure the apt command is available before running `debsecan` logic
+    if command -v apt > /dev/null; then
+        ### Configure Netdata to gather information about CVEs in the installed packages
+        if command -v debsecan > /dev/null; then
+            DEBSECAN_GIT="${XDG_DATA_HOME:-$HOME/.local/share}/netdata-debsecan"
+
+            # Installing the script to generate report on CVEs in installed packages
+            logg info 'Installing script to generate on CVEs in installed packages'
+            sudo cp -f "$DEBSECAN_GIT/usr_local_bin_debsecan-by-type" /usr/local/bin/debsecan-by-type
+
+            # Generate initial debsecan reports in /var/log/debsecan/
+            logg info 'Generating initial debsecan reports in /var/log/debsecan/'
+            debsecan-by-type
+
+            # Configure dpkg to refresh the file after each run
+            logg info 'Configuring dpkg to refresh the file after each run'
+            sudo cp -f "$DEBSECAN_GIT/etc_apt_apt.conf.d_99debsecan"  /etc/apt/apt.conf.d/99-debsecan
+
+            # Add a cron job to refresh the file every hour
+            logg info 'Adding a cron job to refresh the file every hour'
+            sudo cp -f "$DEBSECAN_GIT/etc_cron.d_debsecan" /etc/cron.d/debsecan
+
+            # Install the module/configuration file
+            logg info 'Installing the module and configuration file
+            sudo "$DEBSECAN_GIT/debsecan.chart.py" /usr/libexec/netdata/python.d/debsecan.chart.py
+            sudo "$DEBSECAN_GIT/debsecan.conf" /etc/netdata/python.d/debsecan.conf
+
+            # Restart Netdata service
+            logg info 'Restarting netdata service'
+            sudo systemctl restart netdata
+        else
+            logg warn '`debsecan` is not available in the PATH or is not installed'
         fi
     fi
 else
