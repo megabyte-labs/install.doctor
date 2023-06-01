@@ -131,7 +131,7 @@
     pull.args = ["--ff-only"]
 {{- end }}
 
-{{- if (and (lookPath "apt") (lookPath "debsecan")) }}
+{{- if (lookPath "apt") }}
 ### Netdata Debsecan
 [".local/share/netdata-debsecan"]
     type = "git-repo"
