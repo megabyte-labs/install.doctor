@@ -68,26 +68,28 @@ if command -v netdata-claim.sh > /dev/null; then
     if command -v apt > /dev/null; then
         ### Configure Netdata to gather information about CVEs in the installed packages
         if command -v debsecan > /dev/null; then
+            DEBSECAN_GIT="${XDG_DATA_HOME:-$HOME/.local/share}/netdata-debsecan"
+
             # Installing the script to generate report on CVEs in installed packages
             logg info 'Installing script to generate on CVEs in installed packages'
-            sudo curl -sSL https://raw.githubusercontent.com/nodiscc/netdata-debsecan/master/usr_local_bin_debsecan-by-type -o /usr/local/bin/debsecan-by-type
+            sudo cp -f "$DEBSECAN_GIT/usr_local_bin_debsecan-by-type" /usr/local/bin/debsecan-by-type
 
             # Generate initial debsecan reports in /var/log/debsecan/
             logg info 'Generating initial debsecan reports in /var/log/debsecan/'
-            /usr/local/bin/debsecan-by-type
+            debsecan-by-type
 
             # Configure dpkg to refresh the file after each run
             logg info 'Configuring dpkg to refresh the file after each run'
-            sudo curl -sSL https://github.com/nodiscc/netdata-debsecan/raw/master/etc_apt_apt.conf.d_99debsecan -o /etc/apt/apt.conf.d/99debsecan
+            sudo cp -f "$DEBSECAN_GIT/etc_apt_apt.conf.d_99debsecan"  /etc/apt/apt.conf.d/99-debsecan
 
             # Add a cron job to refresh the file every hour
             logg info 'Adding a cron job to refresh the file every hour'
-            sudo curl -sSL https://github.com/nodiscc/netdata-debsecan/raw/master/etc_cron.d_debsecan -o /etc/cron.d/debsecan
+            sudo cp -f "$DEBSECAN_GIT/etc_cron.d_debsecan" /etc/cron.d/debsecan
 
             # Install the module/configuration file
             logg info 'Installing the module and configuration file
-            sudo curl -sSL https://github.com/nodiscc/netdata-debsecan/raw/master/debsecan.chart.py -o /usr/libexec/netdata/python.d/
-            sudo curl -sSL https://github.com/nodiscc/netdata-debsecan/raw/master/debsecan.conf -o /etc/netdata/python.d/
+            sudo "$DEBSECAN_GIT/debsecan.chart.py" /usr/libexec/netdata/python.d/debsecan.chart.py
+            sudo "$DEBSECAN_GIT/debsecan.conf" /etc/netdata/python.d/debsecan.conf
 
             # Restart Netdata service
             logg info 'Restarting netdata service'
