@@ -8255,6 +8255,33 @@ softwarePackages:
     port: vim
     scoop: vim
     _type: cli
+  docker-langserver:
+    _bin: docker-langserver
+    _desc: A Docker language server
+    _docs: https://github.com/rcjsuen/dockerfile-language-server-nodejs
+    _github: https://github.com/rcjsuen/dockerfile-language-server-nodejs
+    _home: https://github.com/rcjsuen/dockerfile-language-server-nodejs
+    _name: Docker Language Server
+    npm: dockerfile-language-server-nodejs
+  sql-language-server:
+    _bin: sql-language-server
+    _desc: An SQL language server
+    _docs: https://github.com/joe-re/sql-language-server
+    _github: https://github.com/joe-re/sql-language-server
+    _home: https://github.com/joe-re/sql-language-server
+    _name: SQL Language Server
+    brew: sql-language-server
+    npm: sql-language-server
+  solargraph:
+    _bin: solargraph
+    _desc: Ruby language server
+    _docs: https://solargraph.org/guides/getting-started
+    _github: https://github.com/castwide/solargraph
+    _home: https://solargraph.org/
+    _name: Solargraph
+    _post: solargraph download-core
+    brew: solargraph
+    gem: solargraph
   virtualbox:
     _bin: null
     _desc: '[VirtualBox](https://www.virtualbox.org/) is a free and open-source hosted hypervisor for x86 virtualization, developed by Oracle Corporation. Created by Innotek, it was acquired by Sun Microsystems in 2008, which was in turn acquired by Oracle in 2010. VirtualBox may be installed on Windows, macOS, Linux, Solaris and OpenSolaris.'

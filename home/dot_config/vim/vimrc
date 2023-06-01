@@ -63,16 +63,6 @@ if executable('node')
     \ 'coc-rls',
     \ 'coc-solidity'
     \]
-
-  if !executable('docker-langserver')
-    call system('npm install --prefix $HOME/.local/share/nvim -g dockerfile-language-server-nodejs')
-  endif
-  if !executable('sql-language-server')
-    call system('npm install --prefix $HOME/.local/share/nvim -g sql-language-server')
-  endif
-  if !executable('solargraph')
-    call system('gem install solargraph -n $HOME/.local/share/nvim/bin')
-  endif
 endif
 
 " Settings for coc-css extension
