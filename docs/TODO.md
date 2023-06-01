@@ -1,6 +1,8 @@
 # TODOs
 
 * Port over installations handled by Taskfile.yml
+https://github.com/search?q=vscode&type=repositories&s=stars&o=desc&p=2
+* COC Extensions
 
 ## Pending
 
