@@ -3268,6 +3268,7 @@ softwarePackages:
     _github: https://github.com/gitlabhq/gitlab-runner
     _home: https://gitlab.com/gitlab-org/gitlab-runner
     _name: Gitlab Runner
+    _service: gitlab-runner
     ansible: professormanhattan.gitlabrunner
     brew: gitlab-runner
     choco: gitlab-runner
@@ -4524,6 +4525,7 @@ softwarePackages:
       - libvirt
     _home: https://www.linux-kvm.org/page/Main_Page
     _name: KVM
+    _service: libvirt
     ansible: professormanhattan.kvm
     apt:
       - bridge-utils
@@ -4796,14 +4798,15 @@ softwarePackages:
     ansible:ubuntu: professormanhattan.maas
     snap:ubuntu: maas
   mackup:
-    _bin: null
+    _bin: mackup
     _desc: '[mackup](https://github.com/lra/mackup) lets you keep your application settings in sync.'
-    _docs: null
+    _docs: https://github.com/lra/mackup
     _github: https://github.com/lra/mackup
-    _home: null
+    _home: https://github.com/lra/mackup
     _name: mackup
     ansible: professormanhattan.mackup
-    _type: cli
+    brew: mackup
+    pipx: mackup
   malwarebytes:
     _bin: null
     _desc: Cybersecurity. For every one.
