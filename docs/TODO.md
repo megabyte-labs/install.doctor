@@ -1,8 +1,12 @@
 # TODOs
 
-* Port over installations handled by Taskfile.yml
 https://github.com/search?q=vscode&type=repositories&s=stars&o=desc&p=2
-* COC Extensions
+* Revisit https://github.com/rome/tools when project matures
+https://github.com/rigoneri/syte/graphs/code-frequency
+https://www.automated-bots.com/
+https://github.com/NathanDuma/LinkedIn-Easy-Apply-Bot
+https://github.com/hfreire/get-me-a-date
+https://github.com/joelbarmettlerUZH/auto-tinder
 
 ## Pending
 
