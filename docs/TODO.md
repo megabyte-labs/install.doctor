@@ -10,6 +10,8 @@ https://github.com/joelbarmettlerUZH/auto-tinder
 https://github.com/coder/coder
 zsh completions have been installed to:
   /usr/local/share/zsh/site-functions
+  ==> Linking Binary 'completion.bash.inc' to '/usr/local/etc/bash_completion.d/google-cloud-sdk'
+==> Linking Binary 'completion.zsh.inc' to '/usr/local/share/zsh/site-functions/_google_cloud_sdk'
 ## Pending
 
 * [Actions](https://github.com/sindresorhus/Actions) adds a wide-variety of actions that you can utilize with the macOS Shortcuts app. It is currently only available via the macOS app store. Requested a Homebrew Cask [here](https://github.com/sindresorhus/Actions/issues/127).
