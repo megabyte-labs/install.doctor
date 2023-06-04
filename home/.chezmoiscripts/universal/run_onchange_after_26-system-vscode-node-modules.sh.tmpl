@@ -68,6 +68,7 @@ if command -v code > /dev/null && command -v pnpm > /dev/null && [ -f "${XDG_DAT
     ### Log message if install failed
     if [ -n "$EXIT_CODE" ]; then
         logg warn 'Possible error(s) were detected while installing linter fallback configurations to the home directory.'
+        logg info "Exit code: $EXIT_CODE"
     else
         logg success 'Installed linter fallback configuration node_modules'
     fi

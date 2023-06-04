@@ -156,6 +156,13 @@ if ! command -v pip > /dev/null; then
   alias pip='pip3'
 fi
 
+# Link python to python3
+if [ -f /usr/bin/python3 ]; then
+  alias python='/usr/bin/python3'
+elif [ -f /usr/local/bin/python3 ]; then
+  alias python='/usr/local/bin/python3'
+fi
+
 # Masked sudo password entry
 if command -v gum > /dev/null; then
   alias please="gum input --password | sudo -nS"

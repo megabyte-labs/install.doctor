@@ -15,8 +15,8 @@
 
 ### Claim the instance with Netdata Cloud
 if command -v netdata-claim.sh > /dev/null; then
-    NETDATA_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) }}{{ includeTemplate "secrets/NETDATA_TOKEN" | decrypt }}{{ else }}{{ env "NETDATA_TOKEN" }}{{ end }}"
-    NETDATA_ROOM="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_ROOM")) }}{{ includeTemplate "secrets/NETDATA_ROOM" | decrypt }}{{ else }}{{ env "NETDATA_ROOM" }}{{ end }}"
+    NETDATA_TOKEN="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) -}}{{- includeTemplate "secrets/NETDATA_TOKEN" | decrypt -}}{{- else -}}{{- env "NETDATA_TOKEN" -}}{{- end -}}"
+    NETDATA_ROOM="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_ROOM")) -}}{{- includeTemplate "secrets/NETDATA_ROOM" | decrypt -}}{{- else -}}{{- env "NETDATA_ROOM" -}}{{- end -}}"
     # netdata-claim.sh must be run as netdata user
     sudo -H -u netdata bash -c 'netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="{{ .netdataClaimURL }}"'
 
@@ -49,7 +49,7 @@ if command -v netdata-claim.sh > /dev/null; then
             logg error 'No etc location found for netdata' && exit 1
         fi
         logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/ to $NETDATA_ETC"
-        sudo cp -rf "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/" "$NETDATA_ETC"
+        sudo cp -rf "${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/" "$NETDATA_ETC"
 
         # Backup current health alarm configuration and apply new one
         if [ -d /usr/local/lib/netdata ]; then
@@ -73,7 +73,7 @@ if command -v netdata-claim.sh > /dev/null; then
 
             # Installing the script to generate report on CVEs in installed packages
             logg info 'Installing script to generate on CVEs in installed packages'
-            sudo cp -f "$DEBSECAN_GIT/usr_local_bin_debsecan-by-type" /usr/local/bin/debsecan-by-type
+            sudo cp -f "$DEBSECAN_GIT/usr_local_bin_debsecan-by-type" "/usr/local/bin/debsecan-by-type"
 
             # Generate initial debsecan reports in /var/log/debsecan/
             logg info 'Generating initial debsecan reports in /var/log/debsecan/'
@@ -88,13 +88,17 @@ if command -v netdata-claim.sh > /dev/null; then
             sudo cp -f "$DEBSECAN_GIT/etc_cron.d_debsecan" /etc/cron.d/debsecan
 
             # Install the module/configuration file
-            logg info 'Installing the module and configuration file
+            logg info 'Installing the module and configuration file'
             sudo "$DEBSECAN_GIT/debsecan.chart.py" /usr/libexec/netdata/python.d/debsecan.chart.py
             sudo "$DEBSECAN_GIT/debsecan.conf" /etc/netdata/python.d/debsecan.conf
 
             # Restart Netdata service
-            logg info 'Restarting netdata service'
-            sudo systemctl restart netdata
+            if command -v systemctl > /dev/null; then
+                logg info 'Restarting netdata service'
+                sudo systemctl restart netdata
+            else
+                logg warn '`systemctl` is not available'
+            fi
         else
             logg warn '`debsecan` is not available in the PATH or is not installed'
         fi
