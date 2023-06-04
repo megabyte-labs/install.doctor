@@ -7,6 +7,7 @@ https://www.automated-bots.com/
 https://github.com/NathanDuma/LinkedIn-Easy-Apply-Bot
 https://github.com/hfreire/get-me-a-date
 https://github.com/joelbarmettlerUZH/auto-tinder
+https://github.com/coder/coder
 
 ## Pending
 
