@@ -27,6 +27,7 @@
 #   _post:brew:debian: |
 #     echo "_post allows you to define a script that runs after the installation"
 #   _service: smbd                                    # System service to enable, restart, and/or start (can also be an array).
+#   _restricted: true                                 # True if it should be skipped on a restricted machine (i.e. a work machine).
 #   _epel: true                                       # True if https://docs.fedoraproject.org/en-US/epel/ should be enabled
 #   ansible: professormanhattan.docker
 #   apk: altair
@@ -5106,6 +5107,7 @@ softwarePackages:
     _github: https://github.com/monero-project/monero
     _home: https://www.getmonero.org/
     _name: Monero
+    _restricted: true
     _when:cask: '! test -d /Applications/monero-wallet-gui.app'
     ansible: professormanhattan.monero
     cask: monero-wallet
@@ -5117,6 +5119,7 @@ softwarePackages:
     _github: https://github.com/monero-project/monero
     _docs: https://www.getmonero.org/resources/user-guides/
     _home: https://www.getmonero.org/
+    _restricted: true
     brew: monero
     scoop: monero
   mymonero:
