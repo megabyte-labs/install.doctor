@@ -86,6 +86,11 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
 	  source <(cod init $$ bash)
   fi
 
+  ### Google Cloud SDK
+  if [ -f "${HOMEBREW_PREFIX}/share/google-cloud-sdk/path.bash.inc" ]; then
+    . "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.bash.inc"
+  fi
+
   ### direnv
   if command -v direnv > /dev/null; then
     eval "$(direnv hook bash)"

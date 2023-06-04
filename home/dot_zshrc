@@ -402,6 +402,14 @@ if command -v emplace > /dev/null; then
 	eval "$(emplace init zsh)"
 fi
 
+### Google Cloud SDK
+if [ -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.zsh.inc" ]; then
+	source "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.zsh.inc"
+fi
+if [ -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc" ]; then
+    source "$HOMEBREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc"
+fi
+
 ### Java (asdf)
 # if [ -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ]; then
 #   . "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
