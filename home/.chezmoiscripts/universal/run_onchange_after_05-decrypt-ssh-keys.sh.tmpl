@@ -17,7 +17,7 @@
 logg info 'Decrypting SSH keys stored in the `home/.chezmoitemplates/ssh` folder of the Install Doctor repo / fork.'
 find "{{ .chezmoi.sourceDir }}/.chezmoitemplates/ssh" -type f | while read SSH_FILE; do
     ### Decrypt SSH file with Chezmoi
-    logg info 'Decrypting the $(basename "$SSH_FILE") encrypted SSH file'
+    logg info "Decrypting the $(basename "$SSH_FILE") encrypted SSH file"
     chezmoi decrypt "$SSH_FILE" > "$HOME/.ssh/$(basename "$SSH_FILE")" || EXIT_CODE=$?
 
     ### Handle failed decryption with warning log message
