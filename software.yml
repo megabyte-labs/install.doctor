@@ -5876,6 +5876,18 @@ softwarePackages:
     _home: https://jsonresume.org/
     _name: JSON Resume CLI
     npm: resume-cli
+  neovide:
+    _bin: neovide
+    _desc: No Nonsense Neovim Client in Rust
+    _docs: https://neovide.dev/installation.html
+    _github: https://github.com/neovide/neovide
+    _home: https://neovide.dev/
+    _name: Neovide
+    _when:cask: '! test -d /Applications/Neovide.app'
+    cask: neovide
+    pacman: neovide
+    scoop: neovide
+    snap: neovide
   marp:
     _bin: marp
     _desc: A CLI interface for Marp and Marpit based converters
