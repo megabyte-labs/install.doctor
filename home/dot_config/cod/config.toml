@@ -10,7 +10,7 @@
 # 'command-execution-timout' controls how long cod waits for completion of command (in milliseconds).
 # Default value is 1000 (i.e. 1 second).
 #
-# command-execution-timeout = 1000
+command-execution-timeout = 5000
 
 
 #
@@ -42,15 +42,14 @@
 #   - 'trust'  :: cod will automatically learn detected help command;
 #   - 'ignore' :: cod will ignore all command for this executable.
 
-# Examples:
-#   [[rule]]
-#   executable = "/usr/bin/*"
-#   policy = 'ignore'
-#
-#   [[rule]]
-#   executable = "~/bin/*"
-#   policy = 'trust'
+[[rule]]
+executable = "/usr/bin/*"
+policy = 'trust'
 
-#   [[rule]]
-#   executable = "~/my/repo/**"
-#   policy = 'trust'
+[[rule]]
+executable = "/usr/local/bin/*"
+policy = 'trust'
+
+[[rule]]
+executable = "~/.local/bin/**"
+policy = 'trust'
