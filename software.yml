@@ -1575,14 +1575,16 @@ softwarePackages:
     yay: consul-bin
     _type: cli
   consul-template:
-    _bin: null
+    _bin: consul-template
     _desc: '[Consul-Template](https://github.com/hashicorp/consul-template) provides a convenient way to populate values from [Consul](https://www.consul.io/) into the file system using the consul-template daemon. It was created by [HashiCorp](https://www.hashicorp.com/) (the creators of Consul).'
     _docs: https://learn.hashicorp.com/tutorials/consul/consul-template
     _github: https://github.com/hashicorp/consul-template
     _home: https://www.hashicorp.com/
-    _name: Consul-Template
+    _name: Consul Template
     ansible: professormanhattan.consultemplate
-    _type: cli
+    brew: consul-template
+    choco: consul-template
+    scoop: main/consul
   container-structure-test:
     _bin: container-structure-test
     _desc: The Container Structure Tests provide a powerful framework to validate the structure of a container image. These tests can be used to check the output of commands in an image, as well as verify metadata and contents of the filesystem
@@ -1990,14 +1992,15 @@ softwarePackages:
     pacman: openssl
     port: openssl
     scoop: openssl
-  openshift:
-    _bin: null
-    # TODO
-    cask: openshift-client
   openshift-cli:
-    _bin: null
+    _bin: oc
+    _desc: The OpenShift Command Line, part of OKD
+    _docs: https://docs.openshift.com/container-platform/4.8/cli_reference/openshift_cli/getting-started-cli.html
+    _github: https://github.com/openshift/oc
+    _home: https://www.redhat.com/en/technologies/cloud-computing/openshift
+    _name: OpenShift CLI
     brew: openshift-cli
-    # TODO
+    choco: openshift-cli
   p7zip:
     _bin: p7zip
     _desc: null
@@ -2733,6 +2736,7 @@ softwarePackages:
     _github: https://github.com/nitroshare/nitroshare-desktop
     _home: https://nitroshare.net/
     _name: NitroShare
+    _when:cask: '! test -d /Applications/nitroshare.app'
     apt: nitroshare
     cask: nitroshare
     choco: nitroshare

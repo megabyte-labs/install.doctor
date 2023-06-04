@@ -159,36 +159,36 @@ softwareGroups:
     - awxcli
     - molecule
     - winrm-cli
-  Ansible-Roles: &Ansible-Roles
-    - ssh
-    - swarm
-    - vpn
-    - wsl
-    - yubikey
-    - antivirus
-    - common
+  Ansible-Roles: &Ansible-Roles []
+    # TODO: Implement these using chezmoiscripts
+    ## - ssh
+    ## - swarm
+    ## - vpn
+    ## - wsl
+    ## - yubikey
+    ## - antivirus
+    ## - common
     # - connect
-    - debloat
-    - defaultbrowser
-    - desktop
+    ## - debloat
+    ## - desktop
     # - disks
-    - dns
-    - dnsmasq
-    - environment
-    - extensions
-    - finish
-    - firewall
-    - fuse
-    - guacamole
-    - hosthomepage
-    - hosts
+    ## - dns
+    ## - dnsmasq
+    ## - environment
+    ## - extensions
+    ## - finish
+    ## - firewall
+    ## - fuse
+    ## - guacamole
+    ## - hosthomepage
+    ## - hosts
     # - motd
     # - pfsense
     # - pihole
     # - pip
-    - prepare
-    - security
-    - ssh
+    ## - prepare
+    ## - security
+    ## - ssh
     # - swarm
     # - maas
   Backup: &Backup
@@ -342,7 +342,6 @@ softwareGroups:
     - thefuck
     - tldr
     - tmuxinator
-    - ugm
     - up
     - yank
   Cloud: &Cloud
@@ -555,7 +554,6 @@ softwareGroups:
     - kubeval
     - linkerd2
     - minikube
-    - openshift
     - openshift-cli
     - tilt
     - velero
@@ -1266,6 +1264,8 @@ softwareGroups:
       note: macOS menu bar app for weather. Buggy software.
     - pkg: termius
       note: Deprecated since all the interesting features require a paid subscription.
+    - pkg: ugm
+      note: Error encountered while installing with Go reported [here](https://github.com/ariasmn/ugm/issues/2).
     - pkg: ulauncher
       note: Deprecated in favor of alternative app launchers.
     - pkg: vscodium

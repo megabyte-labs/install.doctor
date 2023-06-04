@@ -66,7 +66,7 @@ if command -v netdata-claim.sh > /dev/null; then
     fi
 
     ### Ensure the apt command is available before running `debsecan` logic
-    if command -v apt > /dev/null; then
+    if command -v apt-get > /dev/null; then
         ### Configure Netdata to gather information about CVEs in the installed packages
         if command -v debsecan > /dev/null; then
             DEBSECAN_GIT="${XDG_DATA_HOME:-$HOME/.local/share}/netdata-debsecan"
@@ -100,7 +100,7 @@ if command -v netdata-claim.sh > /dev/null; then
                 logg warn '`systemctl` is not available'
             fi
         else
-            logg warn '`debsecan` is not available in the PATH or is not installed'
+            logg warn '`apt-get` is available but `debsecan` is not available in the PATH or is not installed'
         fi
     fi
 else

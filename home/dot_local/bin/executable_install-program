@@ -1812,7 +1812,7 @@ async function installSoftware(pkgsToInstall) {
     await linkBin(installOrdersBinLink)
     for (const script of installOrdersPost) {
       try {
-        await $`${script}`
+        await $` ${script}`
       } catch(e) {
         log('info', 'Post-Install Hook', 'Encountered error while running post-install hook')
       }
