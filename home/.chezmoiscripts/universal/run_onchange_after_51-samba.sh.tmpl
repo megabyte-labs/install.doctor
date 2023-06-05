@@ -82,7 +82,12 @@ if command -v smbd > /dev/null; then
 
     ### Copy the Samba server configuration file
     if [ -d /Applications ] && [ -d /System ]; then
-        logg warn 'TODO Add logic that applies the Samba configuration for macOS'
+        logg info 'Create File share'
+        sudo sharing -a $PRIVATE_SHARE
+        sudo sharing -a $PUBLIC_SHARE
+
+        logg info 'Turn on File sharing'
+        sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.smbd.plist
     else
         logg info "Copying Samba server configuration to /etc/samba/smb.conf"
         sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/samba/config" "/etc/samba/smb.conf"
