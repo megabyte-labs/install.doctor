@@ -176,6 +176,7 @@ https://github.com/rigoneri/Syte3
 * https://github.com/charmbracelet/wish
 * https://github.com/charmbracelet/skate
 * https://github.com/console-rs/indicatif
+* https://github.com/tauri-apps/tauri
 
 ## PHP
 
