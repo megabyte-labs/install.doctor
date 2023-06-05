@@ -15,3 +15,5 @@
         // "sprkldev.sprkl-vscode", Creates a ~/.sprkl folder. Does not respect XDG spec.
 // Creates ~/.console-ninja folder -- needs to respect XDG
     // "wallabyjs.console-ninja",
+    "gitpod.gitpod-remote-ssh", // Bunch of errors like this during install [gitpod-remote-ssh]: Couldn't find message for key openPreview.
+    // "leonardssh.vscord", Discord presence plugin (requires embedding key in settings.json)

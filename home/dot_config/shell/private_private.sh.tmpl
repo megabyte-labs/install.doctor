@@ -35,6 +35,21 @@ export GITLAB_TOKEN="$GL_TOKEN"
 ### Heroku
 export HEROKU_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "HEROKU_API_KEY")) }}{{ includeTemplate "secrets/HEROKU_API_KEY" | decrypt }}{{ else }}{{ env "HEROKU_API_KEY" }}{{ end }}"
 
+### Install Doctor
+export HEADLESS_INSTALL=true
+export SOFTWARE_GROUP="Full"
+export FULL_NAME="Brian Zalewski"
+export PRIMARY_EMAIL="help@megabyte.space"
+export PUBLIC_SERVICES_DOMAIN="megabyte.space"
+export RESTRICTED_ENVIRONMENT=false
+export WORK_ENVIRONMENT=false
+export HOST="$HOST"
+
+# Set to work environment if Cisco applications are installed (modify this to your liking)
+if [ -d /Applications/Cisco ]; then
+    export WORK_ENVIRONMENT=true
+fi
+
 ### Megabyte Labs
 export FULLY_AUTOMATED_TASKS=true
 
