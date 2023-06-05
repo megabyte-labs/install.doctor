@@ -1,0 +1,13 @@
+{{- if ne .host.distro.family "windows" -}}
+#!/usr/bin/env bash
+# @file VIM Plugin Pre-Install
+# @brief Pre-installs the VIM plugins from their git sources
+# @description
+#     This script pre-installs the VIM plugins defined in [`.chezmoidata.yaml`](https://github.com/megabyte-labs/install.doctor/tree/master/home/.chezmoidata.yaml)
+#     so that VIM does not have to do anything on its first launch.
+
+### Run the VIM plugin install routine
+if command -v vim > /dev/null; then
+    vim +PlugInstall +qall
+fi
+{{ end -}}

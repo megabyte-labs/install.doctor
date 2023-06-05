@@ -6980,6 +6980,76 @@ softwarePackages:
       # - mhash2
       - sanoid
     _type: cli
+  x64dbg:
+    _bin: x64dbg
+    _desc: An open-source user mode debugger for Windows. Optimized for reverse engineering and malware analysis.
+    _docs: https://github.com/x64dbg/x64dbg/wiki
+    _github: https://github.com/x64dbg/x64dbg
+    _home: https://x64dbg.com/
+    _name: x64dbg
+    choco: x64dbg.portable
+    scoop: extras/x64dbg
+  blender:
+    _bin: blender
+    _desc: Blender is the free and open source 3D creation suite. It supports the entirety of the 3D pipeline-modeling, rigging, animation, simulation, rendering, compositing, motion tracking and video editing.
+    _docs: https://docs.blender.org/manual/en/latest/
+    _github: https://github.com/blender/blender
+    _home: https://www.blender.org/
+    _name: Blender
+    _snapClassic: true
+    _when:cask: '! test -d /Applications/Blender.app'
+    apt: blender
+    cask: blender
+    choco: blender
+    dnf: blender
+    flatpak: org.blender.Blender
+    scoop: extras/blender
+    snap: blender
+  fiddler:
+    _bin: fiddler
+    _desc: The community-trusted free Windows-only tool that logs HTTP(s) network traffic.
+    _docs: https://docs.telerik.com/fiddler/configure-fiddler/tasks/configurefiddler
+    _github: false
+    _home: https://www.telerik.com/fiddler
+    _name: Fiddler
+    _todo: Add headless installation method for Linux
+    choco: fiddler
+    scoop: extras/fiddler
+  recuva:
+    _bin: recuva
+    _desc: Recuva recovers files from your Windows computer, recycle bin, digital camera card, or MP3 player!
+    _docs: https://www.ccleaner.com/recuva
+    _github: false
+    _home: https://www.ccleaner.com/recuva
+    _name: Recuva
+    choco: recuva
+    scoop: extras/recuva
+  audacity:
+    _bin: audacity
+    _desc: An open-source audio editor
+    _docs: https://support.audacityteam.org/
+    _github: https://github.com/audacity/audacity
+    _home: https://www.audacityteam.org/
+    _name: Audacity
+    appimage: Audacity
+    apt: audacity
+    choco: audacity
+    dnf: audacity
+    flatpak: org.audacityteam.Audacity
+    scoop: extras/audacity
+    snap: audacity
+  bazelisk:
+    _bin: bazelisk
+    _desc: A user-friendly launcher for Bazel.
+    _docs: https://bazel.build/docs
+    _github: https://github.com/bazelbuild/bazelisk
+    _home: https://bazel.build/
+    _name: Bazel
+    brew: bazelisk
+    choco: bazelisk
+    go: github.com/bazelbuild/bazelisk@latest
+    npm: '@bazel/bazelisk'
+    scoop: main/bazel
   pv:
     _bin: pv
     apt: pv

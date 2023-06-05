@@ -13,6 +13,7 @@ zsh completions have been installed to:
   ==> Linking Binary 'completion.bash.inc' to '/usr/local/etc/bash_completion.d/google-cloud-sdk'
 ==> Linking Binary 'completion.zsh.inc' to '/usr/local/share/zsh/site-functions/_google_cloud_sdk'
 Ansible roles
+https://github.com/altermo/vim-plugin-list
 
 ## Pending
 

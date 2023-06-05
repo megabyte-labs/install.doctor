@@ -394,7 +394,7 @@ fi
 {{ end }}
 
 ### Browser
-export BROWSER=brave
+export BROWSER="{{ .user.defaultBrowser }}"
 
 ### WSL
 if [ -d /proc ] && [[ "$(grep Microsoft /proc/version > /dev/null)" ]]; then
