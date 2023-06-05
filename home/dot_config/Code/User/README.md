@@ -19,3 +19,4 @@
     // "leonardssh.vscord", Discord presence plugin (requires embedding key in settings.json)
     "ms-toolsai.vscode-ai-remote", [vscode-ai]: Couldn't find message for key azureml.internal.activate.title.
     "ms-toolsai.vscode-ai",
+    "circleci.circleci", // Unneeded (not using CircleCI currently)
