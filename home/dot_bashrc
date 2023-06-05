@@ -32,6 +32,10 @@ fi
 
 ### History
 export HISTFILE="$XDG_STATE_HOME/bash/history"
+if [ -d "$HISTFILE" ]; then
+  # Remove history file if it is incorrectly created as a directory
+  rm -rf "$HISTFILE"
+fi
 
 ### /etc/bashrc
 if [ -f /etc/bashrc ]; then

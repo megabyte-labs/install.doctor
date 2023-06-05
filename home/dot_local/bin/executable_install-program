@@ -1810,12 +1810,13 @@ async function installSoftware(pkgsToInstall) {
     binLinkRan = true
     log('info', 'Bin', 'Linking bin aliases to their installed packages')
     await linkBin(installOrdersBinLink)
-    for (const script of installOrdersPost) {
-      try {
-        await $` ${script}`
-      } catch(e) {
-        log('info', 'Post-Install Hook', 'Encountered error while running post-install hook')
-      }
+  }
+  for (const script of installOrdersPost) {
+    try {
+      log('info', 'Post Hook', script)
+      runCommand('Running post-install hook', script)
+    } catch(e) {
+      log('info', 'Post-Install Hook', 'Encountered error while running post-install hook')
     }
   }
   installOrdersPlugins.length && log('info', 'Plugin', 'Installing package-specific plugins')

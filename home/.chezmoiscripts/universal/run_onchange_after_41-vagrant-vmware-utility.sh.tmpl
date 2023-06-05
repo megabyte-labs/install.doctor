@@ -20,7 +20,7 @@
 {{ includeTemplate "universal/logg" }}
 
 # @description Only run logic if both Vagrant and VMWare are installed
-if command -v vagrant > /dev/null && command -v vmware > /dev/null; then
+if command -v vagrant > /dev/null && command -v vmware-id > /dev/null; then
     # @description  Vagrant VMWare Utility configuration
     if command -v vagrant-vmware-utility > /dev/null; then
         if [ -f /usr/local/bin/certificates/vagrant-utility.key ]; then
