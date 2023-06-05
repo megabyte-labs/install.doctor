@@ -256,6 +256,7 @@ softwareGroups:
     - lsd
     - mc
     - mcfly
+    - navi
     - nb
     - neovim
     - netcat
@@ -574,6 +575,7 @@ softwareGroups:
     - markdownlint-cli
     - prettierd
     - pre-commit
+    - ruff
     - shellcheck
     - shfmt
     - tflint
@@ -597,6 +599,7 @@ softwareGroups:
     - spotdl
     - svgo
     - tinypng
+    - vidmerger
     - wkhtmltopdf
     - youtube-dl
   Media-Desktop: &Media-Desktop
@@ -891,10 +894,12 @@ softwareGroups:
     - gfi
     - gulp
     - hey
+    - hugo
     - ionic
     - imageoptim-cli
     - ipfs
     - ipfs-deploy
+    - json-server
     - localtunnel
     - mitmproxy
     - muffet
@@ -1286,6 +1291,8 @@ softwareGroups:
       note: Editly NPM package is failing to install on macOS. Attempts to compile with node-gyp and fails.
     - pkg: rear
       note: System backup utility that may be incorporated after comparing it with alternative and perhaps better alternatives.
+    - pkg: frps / frpc
+      note: No need to integrate these packages at this time.
   helmCharts:
     - vector
 softwarePlugins:

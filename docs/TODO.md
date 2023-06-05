@@ -14,12 +14,14 @@ zsh completions have been installed to:
 ==> Linking Binary 'completion.zsh.inc' to '/usr/local/share/zsh/site-functions/_google_cloud_sdk'
 Ansible roles
 https://github.com/altermo/vim-plugin-list
+Play with Navi and configure cheat repos
 
 ## Pending
 
 * [Actions](https://github.com/sindresorhus/Actions) adds a wide-variety of actions that you can utilize with the macOS Shortcuts app. It is currently only available via the macOS app store. Requested a Homebrew Cask [here](https://github.com/sindresorhus/Actions/issues/127).
 * [Color Picker](https://github.com/sindresorhus/System-Color-Picker) is an improved color picker app available on macOS. It is currently only available via the macOS app store. Requested Homebrew Cask [here](https://github.com/sindresorhus/System-Color-Picker/issues/32).
 * Consider integrating [LocalAI](https://github.com/go-skynet/LocalAI) which can be used in combination with mods to generate ChatGPT responses locally
+* Wait for Homebrew install option for [Warpgate](https://github.com/warp-tech/warpgate)
 
 ## Premium Software Recommendations
 
@@ -173,7 +175,12 @@ https://github.com/rigoneri/Syte3
 * https://github.com/r-darwish/idnt
 * https://github.com/charmbracelet/wish
 * https://github.com/charmbracelet/skate
+* https://github.com/console-rs/indicatif
 
 ## PHP
 
 https://github.com/deployphp/deployer
+
+## Alternative OSes
+
+https://github.com/Andy-Python-Programmer/aero

@@ -137,6 +137,11 @@ fi
 # BW_CLIENTID client_id
 # BW_CLIENTSECRET
 
+### Cheat
+if command -v fzf > /dev/null; then
+  export CHEAT_USE_FZF=true
+fi
+
 ### Deta
 export DETA_INSTALL="$XDG_DATA_HOME/deta"
 export PATH="$PATH:$DETA_INSTALL/bin"
@@ -248,6 +253,9 @@ export MYSQL_HISTFILE="$XDG_DATA_HOME/mysql_history"
 
 ### .netrc
 export NETRC="$XDG_CONFIG_HOME/netrc"
+
+### Navi
+export NAVI_CONFIG "$XDG_CONFIG_HOME/navi/config.yaml"
 
 ### nnn
 if command -v nnn > /dev/null; then

@@ -7676,6 +7676,80 @@ softwarePackages:
     _type: cli
     github: github.com/samber/sync-ssh-keys
     yay: sync-ssh-keys-bin
+  vidmerger:
+    _deps:
+      - ffmpeg
+    _bin: vidmerger
+    _desc: Merge video & audio files via CLI
+    _docs: https://github.com/tgotwig/vidmerger
+    _github: https://github.com/tgotwig/vidmerger
+    _home: https://github.com/tgotwig/vidmerger
+    _name: VidMerger
+    brew: tgotwig/vidmerger/vidmerger
+    choco: vidmerger
+  navi:
+    _bin: navi
+    _desc: An interactive cheatsheet tool for the command-line
+    _docs: https://github.com/denisidoro/navi/blob/master/docs/installation.md
+    _github: https://github.com/denisidoro/navi
+    _home: https://github.com/denisidoro/navi
+    _name: Navi
+    _repology: navi
+    brew: navi
+    cargo: navi --locked
+    emerge: app-misc/navi
+    nix-env: nixpkgs.navi
+    pacman: navi
+  frpc:
+    _bin: frpc
+    _desc: A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet.
+    _docs: https://github.com/fatedier/frp
+    _github: https://github.com/fatedier/frp
+    _home: https://github.com/fatedier/frp
+    _name: frpc (client)
+    brew: frpc
+  frps:
+    _bin: frps
+    _desc: A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet.
+    _docs: https://github.com/fatedier/frp
+    _github: https://github.com/fatedier/frp
+    _home: https://github.com/fatedier/frp
+    _name: frps (server)
+    brew: frps
+  ruff:
+    _bin: ruff
+    _desc: An extremely fast Python linter, written in Rust.
+    _docs: https://beta.ruff.rs/docs/
+    _github: https://github.com/charliermarsh/ruff
+    _home: https://beta.ruff.rs/docs/
+    _name: Ruff
+    pipx: ruff
+  hugo:
+    _bin: hugo
+    _desc: The world’s fastest framework for building websites.
+    _docs: https://gohugo.io/documentation/
+    _github: https://github.com/gohugoio/hugo
+    _home: https://gohugo.io/
+    _name: Hugo
+    apt: hugo
+    dnf: hugo
+    brew: hugo
+    choco: hugo
+    eopkg: hugo
+    go: github.com/gohugoio/hugo@latest
+    pacman: hugo
+    port: hugo
+    scoop: main/hugo
+    snap: hugo
+    zypper: hugo
+  json-server:
+    _bin: json-server
+    _desc: Get a full fake REST API with zero coding in less than 30 seconds (seriously)
+    _docs: https://github.com/typicode/json-server
+    _github: https://github.com/typicode/json-server
+    _home: https://github.com/typicode/json-server
+    _name: JSON Server
+    npm: json-server
   synp:
     _bin: synp
     _desc: Convert yarn.lock to package-lock.json and vice versa

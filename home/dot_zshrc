@@ -415,6 +415,11 @@ fi
 #   . "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
 # fi
 
+### Navi (Ctrl+G)
+if command -v navi > /dev/null; then
+	eval "$(navi widget zsh)"
+fi
+
 ### mcfly
 if command -v mcfly > /dev/null; then
 	eval "$(mcfly init zsh)"

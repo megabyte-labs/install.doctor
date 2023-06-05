@@ -115,6 +115,11 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     . "$HOME/.fig/shell/bashrc.post.bash"
   fi
 
+  ### Navi (Ctrl+G)
+  if command -v navi > /dev/null; then
+    eval "$(navi widget bash)"
+  fi
+
   ### The Fuck
   if command -v thefuck > /dev/null; then
 	  eval "$(thefuck --alias)"
