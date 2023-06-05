@@ -7687,6 +7687,34 @@ softwarePackages:
     _name: VidMerger
     brew: tgotwig/vidmerger/vidmerger
     choco: vidmerger
+  lapce:
+    _bin: lapce
+    _desc: Lightning-fast and Powerful Code Editor written in Rust
+    _docs: https://docs.lapce.dev/
+    _github: https://github.com/lapce/lapce
+    _home: https://lapce.dev/
+    _name: Lapce
+    _when:cask: '! test -d /Applications/Lapce.app'
+    brew: lapce
+    emerge: app-editors/lapce
+    flatpak: dev.lapce.lapce
+    nix-env: nixpkgs.lapce
+    scoop: lapce
+    winget: lapce
+  helix:
+    _bin: hx
+    _desc: A post-modern modal text editor.
+    _docs: https://docs.helix-editor.com/
+    _github: https://github.com/helix-editor/helix
+    _home: https://helix-editor.com/
+    _name: Helix Editor
+    _repology: helix
+    brew: helix
+    choco: helix
+    pacman: helix
+    flatpak: com.helix_editor.Helix
+    scoop: helix
+    winget: Helix.Helix
   navi:
     _bin: navi
     _desc: An interactive cheatsheet tool for the command-line
