@@ -20,3 +20,10 @@
     "ms-toolsai.vscode-ai-remote", [vscode-ai]: Couldn't find message for key azureml.internal.activate.title.
     "ms-toolsai.vscode-ai",
     "circleci.circleci", // Unneeded (not using CircleCI currently)
+    "wallabyjs.console-ninja",
+        "webhint.vscode-webhint",
+    "statelyai.stately-vscode",
+    "lottiefiles.vscode-lottie",
+    "logerfo.gitlab-notifications",
+    "antonreshetov.masscode-assistant",
+    "circleci.circleci",

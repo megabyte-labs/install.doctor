@@ -62,8 +62,7 @@ setopt SHARE_HISTORY
 if [ ! -d "$XDG_CACHE_HOME/zsh" ]; then
 	mkdir -p "$XDG_CACHE_HOME/zsh"
 fi
-compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
-autoload -Uz compinit
+autoload -U +X compinit && compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -398,9 +397,10 @@ if command -v direnv > /dev/null; then
 fi
 
 ### Emplace
-if command -v emplace > /dev/null; then
-	eval "$(emplace init zsh)"
-fi
+# Error tracking: https://github.com/tversteeg/emplace/issues/375
+# if command -v emplace > /dev/null; then
+# 	eval "$(emplace init zsh)"
+# fi
 
 ### Google Cloud SDK
 if [ -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.zsh.inc" ]; then
