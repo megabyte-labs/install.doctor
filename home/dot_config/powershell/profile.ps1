@@ -22,6 +22,7 @@ Set-PSReadLineOption -PredictionSource History
 
 ### Fzf
 # Note: This was not working under PowerShell via VSCode on macOS
+# The specified module 'PSFzf' was not loaded because no valid module file was found in any module directory.
 # Import-Module PSFzf
 # Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
 
