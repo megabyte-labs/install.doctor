@@ -226,4 +226,3 @@ https://github.com/Andy-Python-Programmer/aero
 * https://github.com/derailed/k9s
 
 
-https://github.com/weaveworks/footloose
