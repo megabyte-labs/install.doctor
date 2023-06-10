@@ -7,8 +7,8 @@
 #     that are populated by Install Doctor during the provisioning process (if they are provided).
 
 ### Ansible
-export ANSIBLE_GALAXY_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ANSIBLE_GALAXY_TOKEN")) }}{{ includeTemplate "secrets/ANSIBLE_GALAXY_TOKEN" | decrypt }}{{ else }}{{ env "ANSIBLE_GALAXY_TOKEN" }}{{ end }}"
-export ANSIBLE_VAULT_PASSWORD="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ANSIBLE_VAULT_PASSWORD")) }}{{ includeTemplate "secrets/ANSIBLE_VAULT_PASSWORD" | decrypt }}{{ else }}{{ env "ANSIBLE_VAULT_PASSWORD" }}{{ end }}"
+export ANSIBLE_GALAXY_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ANSIBLE_GALAXY_TOKEN")) }}{{ includeTemplate "secrets/ANSIBLE_GALAXY_TOKEN" | decrypt | nospace }}{{ else }}{{ env "ANSIBLE_GALAXY_TOKEN" }}{{ end }}"
+export ANSIBLE_VAULT_PASSWORD="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ANSIBLE_VAULT_PASSWORD")) }}{{ includeTemplate "secrets/ANSIBLE_VAULT_PASSWORD" | decrypt | trim }}{{ else }}{{ env "ANSIBLE_VAULT_PASSWORD" }}{{ end }}"
 export AVP="$ANSIBLE_VAULT_PASSWORD"
 
 ### Google Cloud SDK
