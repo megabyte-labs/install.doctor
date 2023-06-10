@@ -178,6 +178,7 @@ https://github.com/rigoneri/Syte3
 * https://github.com/console-rs/indicatif
 * https://github.com/tauri-apps/tauri
 * https://github.com/emilengler/sysget
+* https://github.com/pocketbase/pocketbase
 
 ## PHP
 
@@ -186,3 +187,43 @@ https://github.com/deployphp/deployer
 ## Alternative OSes
 
 https://github.com/Andy-Python-Programmer/aero
+
+
+## Go Libraries to Consider
+
+* https://github.com/ivaaaan/smug
+* https://github.com/arl/gitmux
+* https://github.com/jessfraz/dockfmt
+* https://github.com/sahib/brig
+* https://github.com/vieux/docker-volume-sshfs
+* https://github.com/lindell/multi-gitter
+* https://github.com/DBCDK/morph
+* https://github.com/buildkite/agent
+* https://github.com/fiatjaf/jiq
+* https://github.com/curusarn/resh
+* https://github.com/fleetdm/fleet
+* https://github.com/git-town/git-town
+* https://github.com/0xERR0R/blocky
+* https://github.com/terraform-linters/tflint
+* https://github.com/cube2222/octosql
+* https://github.com/alda-lang/alda
+* https://github.com/aquasecurity/tfsec
+* https://github.com/filhodanuvem/gitql
+* https://github.com/filebrowser/filebrowser
+* https://github.com/helm/helm
+* https://github.com/homeport/dyff
+* https://github.com/zquestz/s
+* https://github.com/owenthereal/ccat
+* https://github.com/errata-ai/vale
+* https://github.com/gopasspw/gopass
+* https://github.com/turbot/steampipe
+* https://github.com/moby/buildkit
+* https://github.com/schachmat/wego
+* https://github.com/johnkerl/miller
+* https://github.com/xo/usql
+* https://github.com/future-architect/vuls
+* https://github.com/containers/podman
+* https://github.com/derailed/k9s
+
+
+https://github.com/weaveworks/footloose
