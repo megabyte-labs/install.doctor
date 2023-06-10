@@ -2650,6 +2650,7 @@ softwarePackages:
     _github: https://github.com/jgraph/drawio-desktop
     _home: https://www.diagrams.net/
     _name: DrawIO Desktop
+    _when:cask: '! test -d /Applications/draw.io.app'
     appimage: draw.io
     cask: drawio
     choco: drawio
@@ -2743,6 +2744,7 @@ softwarePackages:
     _github: https://github.com/XcodesOrg/XcodesApp
     _home: https://github.com/XcodesOrg/XcodesApp
     _name: Xcodes App
+    _when:cask: '! test -d /Applications/Xcodes.app'
     cask: xcodes
   nitroshare:
     _bin: nitroshare
@@ -4147,6 +4149,19 @@ softwarePackages:
     scoop: go-ipfs
     snap: ipfs
     _type: cli
+  ipfs-desktop:
+    _bin: null
+    _desc: An unobtrusive and user-friendly desktop application for IPFS on Windows, Mac and Linux.
+    _docs: https://docs.ipfs.tech/install/ipfs-desktop/
+    _github: https://github.com/ipfs/ipfs-desktop
+    _home: https://ipfs.tech/
+    _name: IPFS Desktop
+    _when:cask: '! test -d "/Applications/IPFS Desktop.app"'
+    appimage: https://github.com/ipfs-shipyard/ipfs-desktop/releases/download/v0.28.0/ipfs-desktop-0.28.0-linux-x86_64.AppImage
+    cask: ipfs
+    choco: ipfs-desktop
+    scoop: extras/ipfs-desktop
+    winget: IPFS.IPFS-Desktop
   ipfs-deploy:
     _bin: ipd
     _desc: A peer-to-peer hypermedia protocol designed to preserve and grow humanity's knowledge by making the web upgradeable, resilient, and more open
@@ -4156,19 +4171,6 @@ softwarePackages:
     _name: IPFS
     npm: ipfs-deploy
     _type: cli
-  ipfs-desktop:
-    _bin: null
-    _desc: A peer-to-peer hypermedia protocol designed to preserve and grow humanity's knowledge by making the web upgradeable, resilient, and more open
-    _docs: https://docs.ipfs.tech/
-    _github: https://github.com/ipfs/ipfs
-    _home: https://ipfs.tech/
-    _name: IPFS
-    _when:cask: '! test -d "/Applications/IPFS Desktop.app"'
-    cask: ipfs
-    choco: ipfs-desktop
-    pacman: ipfs-desktop
-    scoop: ipfs-desktop
-    _type: application
   is-up:
     _bin: is-up
     _desc: Check whether a website is up or down using the isitup.org API
@@ -4677,7 +4679,7 @@ softwarePackages:
     pacman: libreoffice
     _type: application
   license:
-    _bin: null
+    _bin: license
     _desc: Command-line license text generator
     _docs: null
     _github: https://github.com/nishanths/license
@@ -4913,7 +4915,7 @@ softwarePackages:
     github: github.com/marktext/marktext
     yay: marktext
   mas:
-    _bin: null
+    _bin: mas
     _desc: '[MAS CLI](https://github.com/mas-cli/mas) is a simple command line interface for the Mac App Store. Designed for scripting and automation.'
     _docs: null
     _github: null
@@ -7050,6 +7052,7 @@ softwarePackages:
     _github: https://github.com/audacity/audacity
     _home: https://www.audacityteam.org/
     _name: Audacity
+    _when:cask: '! test -d /Applications/Audacity.app'
     appimage: Audacity
     apt: audacity
     cask: audacity
