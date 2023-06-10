@@ -15,14 +15,15 @@ Import-Module "$env:HOME/.local/share/powershell/docker/DockerCompletion/DockerC
 # Import-Module -Name Terminal-Icons
 
 ### PSReadLine
-# Set-PSReadLineOption -EditMode Vim
+Set-PSReadLineOption -EditMode Vi
 Set-PSReadLineOption -BellStyle None
 Set-PSReadLineKeyHandler -Chord 'Ctrl+d' -Function DeleteChar
 Set-PSReadLineOption -PredictionSource History
 
 ### Fzf
-Import-Module PSFzf
-Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+f' -PSReadlineChordReverseHistory 'Ctrl+r'
+# Note: This was not working under PowerShell via VSCode on macOS
+# Import-Module PSFzf
+# Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
 
 ### zoxide
 Invoke-Expression (& {
