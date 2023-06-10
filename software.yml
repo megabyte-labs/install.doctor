@@ -1744,6 +1744,7 @@ softwarePackages:
     _bin: syncthing
     _github: https://github.com/syncthing/syncthing
     _name: Syncthing
+    _service: syncthing
     brew: syncthing
     choco: syncthing
     port: syncthing
@@ -5116,13 +5117,15 @@ softwarePackages:
     _name: Starred
     pipx: starred
   monero:
-    _bin: org.getmonero.Monero
+    _bin: monero
+    _bin:flatpak: org.getmonero.Monero
     _desc: '[Monero](https://www.getmonero.org/) is a leading cryptocurrency focused on private and censorship-resistant transactions. This role installs the Monero wallet application which is required for interacting with the Monero network.'
     _docs: https://www.getmonero.org/resources/user-guides/
     _github: https://github.com/monero-project/monero
     _home: https://www.getmonero.org/
     _name: Monero
     _restricted: true
+    _service: monero
     _when:cask: '! test -d /Applications/monero-wallet-gui.app'
     ansible: professormanhattan.monero
     cask: monero-wallet
@@ -6059,6 +6062,7 @@ softwarePackages:
     _github: https://github.com/php/php-src
     _home: https://www.php.net/
     _name: PHP
+    _service: php
     ansible: professormanhattan.php
     apt: php
     brew: php
