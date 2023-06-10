@@ -394,6 +394,7 @@ tasks:
           if [[ "$PLIST" == *".plist" ]]; then
             PLIST_FILE="$(basename "$PLIST")"
             cp -f "$HOME/Library/Preferences/$PLIST_FILE" "/usr/local/src/install.doctor/home/Library/Preferences/$PLIST_FILE"
+            plutil -convert xml1 "/usr/local/src/install.doctor/home/Library/Preferences/$PLIST_FILE"
           fi
         done
 

@@ -48,7 +48,7 @@ export PATH="$HOME/.local/bin/cask:$PATH"
 export PATH="$HOME/.local/bin/docker:$PATH"
 export PATH="$HOME/.local/bin/firejail:$PATH"
 export PATH="$HOME/.local/bin/flatpak:$PATH"
-export SSH_KEY_PATH="~/.ssh/id_rsa"
+export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 
 ### Homebrew
 export HOMEBREW_NO_ENV_HINTS=true
@@ -71,11 +71,11 @@ fi
 export WHALEBREW_INSTALL_PATH="/usr/local/bin"
 
 ### Android Studio
-if [ -d ~/Library/Android ]; then
-  export PATH="$PATH:~/Library/Android/sdk/cmdline-tools/latest/bin"
-  export PATH="$PATH:~/Library/Android/sdk/platform-tools"
-  export PATH="$PATH:~/Library/Android/sdk/tools/bin"
-  export PATH="$PATH:~/Library/Android/sdk/tools"
+if [ -d "$HOME/Library/Android" ]; then
+  export PATH="$PATH:$HOME/Library/Android/sdk/cmdline-tools/latest/bin"
+  export PATH="$PATH:$HOME/Library/Android/sdk/platform-tools"
+  export PATH="$PATH:$HOME/Library/Android/sdk/tools/bin"
+  export PATH="$PATH:$HOME/Library/Android/sdk/tools"
 fi
 {{ end }}
 export ANDROID_SDK_HOME="$XDG_DATA_HOME/android-sdk"
