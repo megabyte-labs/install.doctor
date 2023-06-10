@@ -1,8 +1,8 @@
-# Env
+### Env
 $env:EDITOR = 'code --wait'
 $env:GIT_SSH = "C:\Windows\system32\OpenSSH\ssh.exe"
 
-# Set PowerShell to UTF-8
+### Set PowerShell to UTF-8
 [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 
 ### Oh My Posh
@@ -14,13 +14,13 @@ Import-Module "$env:HOME/.local/share/powershell/docker/DockerCompletion/DockerC
 
 # Import-Module -Name Terminal-Icons
 
-# PSReadLine
-Set-PSReadLineOption -EditMode Vim
+### PSReadLine
+# Set-PSReadLineOption -EditMode Vim
 Set-PSReadLineOption -BellStyle None
 Set-PSReadLineKeyHandler -Chord 'Ctrl+d' -Function DeleteChar
 Set-PSReadLineOption -PredictionSource History
 
-# Fzf
+### Fzf
 Import-Module PSFzf
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+f' -PSReadlineChordReverseHistory 'Ctrl+r'
 
