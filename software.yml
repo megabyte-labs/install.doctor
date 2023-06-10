@@ -1570,6 +1570,7 @@ softwarePackages:
     _github: https://github.com/kelseyhightower/confd
     _home: null
     _name: confd
+    _service: consul
     _type: cli
     brew: confd
     choco: confd
@@ -2689,7 +2690,7 @@ softwarePackages:
     _github: https://github.com/chrissimpkins/Crunch
     _home: https://github.com/chrissimpkins/Crunch
     _name: Crunch
-    brew: crunch
+    script: cd /tmp && rm -rf Crunch && git clone https://github.com/chrissimpkins/Crunch.git && make build-dependencies && make install-executable
   eul:
     _bin: null
     _desc: Menu bar application that shows system stats like CPU, RAM, and disk usage on macOS
@@ -5143,6 +5144,7 @@ softwarePackages:
     _docs: https://www.getmonero.org/resources/user-guides/
     _home: https://www.getmonero.org/
     _restricted: true
+    _when:darwin: '! test -f /Applications/monero-wallet-gui.app/Contents/MacOS/monerod'
     brew: monero
     scoop: monero
   mymonero:
@@ -7050,6 +7052,7 @@ softwarePackages:
     _name: Audacity
     appimage: Audacity
     apt: audacity
+    cask: audacity
     choco: audacity
     dnf: audacity
     flatpak: org.audacityteam.Audacity
@@ -8880,6 +8883,15 @@ softwarePackages:
     _name: winrm-cli
     _type: cli
     yay: winrm-cli-git
+  browserosaurus:
+    _bin: null
+    _desc: 
+    _docs: 
+    _github: 
+    _home: 
+    _name: Browserosaurus
+    _when:cask: '! test -d /Applications/Browserosaurus.app'
+    cask: browserosaurus
   docker:
     _bin: docker
     _desc: null
@@ -9309,6 +9321,22 @@ softwarePlugins:
     # cmd: Handled by .chezmoiexternal.toml
     plugins:
       - Microsoft.CST.AttackSurfaceAnalyzer.CLI
+  gcloud:
+    cmd: bash -c 'gcloud components install {PLUGIN}'
+    plugins:
+      - app-engine-go
+      - cloud-datastore-emulator
+      - cloud-firestore-emulator
+      - cloud-run-proxy
+      - gke-gcloud-auth-plugin
+      - kubectl
+      - kustomize
+      - log-streaming
+      - minikube
+      - pubsub-emulator
+      - skaffold
+      - terraform-tools
+    update: gcloud components update
   gh:
     cmd: bash -c 'if [ -n "$GITHUB_TOKEN" ] && ! gh extension list | grep {PLUGIN}; then gh extension install {PLUGIN}; fi'
     plugins:

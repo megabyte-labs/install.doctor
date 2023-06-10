@@ -248,6 +248,11 @@ export MCFLY_KEY_SCHEME=vim
 ### minikube
 export MINIKUBE_HOME="$XDG_DATA_HOME/minikube"
 
+### Monero
+if [ -f /Applications/monero-wallet-gui.app/Contents/MacOS/monerod ]; then
+  export PATH="$PATH:/Applications/monero-wallet-gui.app/Contents/MacOS"
+fi
+
 ### MySQL
 export MYSQL_HISTFILE="$XDG_DATA_HOME/mysql_history"
 
