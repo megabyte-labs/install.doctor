@@ -38,3 +38,4 @@
      "chiro2001.digital-ocean-manager",
          "ms-toolsai.vscode-ai-remote",
     "ms-toolsai.vscode-ai",
+    "ms-vscode.powershell",
