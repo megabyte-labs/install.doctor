@@ -309,6 +309,7 @@ softwareGroups:
     - fig
     - filebrowser
     - fm
+    - gopass
     - grex
     - gron
     - handlr
@@ -333,6 +334,7 @@ softwareGroups:
     - pgcli
     - pywhat
     - resume
+    - s-search
     - sad
     - slack-term
     - slides
@@ -818,9 +820,11 @@ softwareGroups:
     - t
   Sys-Admin: &Sys-Admin
     - ctop
+    - fleetctl
     - goaccess
     - gtop
     - htop
+    - pulumi
     - sysbench
     - sysdig
     - sysget
@@ -1303,6 +1307,7 @@ softwarePlugins:
   docker:
     plugins:
       - sapk/plugin-rclone
+      - vieux/sshfs
   # TODO Add Intellij missing plugins and fix install
   intellij:
     plugins:

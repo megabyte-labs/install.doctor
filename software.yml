@@ -540,6 +540,23 @@ softwarePackages:
     ansible: professormanhattan.aptcacherng
     _systemd: apt-cacher-ng
     _type: cli
+  gopass:
+    _bin: gopass
+    _desc: The slightly more awesome standard unix password manager for teams
+    _docs: https://github.com/gopasspw/gopass/tree/master/docs
+    _github: https://github.com/gopasspw/gopass
+    _home: https://www.gopass.pw/
+    _name: GoPass
+    apk: gopass
+    brew: gopass
+    choco:
+      - gpg4win
+      - gopass
+    dnf: gopass
+    go: github.com/gopasspw/gopass@latest
+    pacman: gopass
+    scoop: gopass
+    winget: gopass.gopass
   aqua:
     _bin: aqua
     _desc: '[aqua](https://aquaproj.github.io/) is a Declarative CLI Version manager written in Go. It supports Lazy Install, Registry, and continuous update with Renovate.'
@@ -2170,6 +2187,14 @@ softwarePackages:
     _name: Editly
     npm: editly
     _type: cli
+  fleetctl:
+    _bin: fleetctl
+    _desc: Open-source platform for IT and security teams with thousands of computers. (Linux, macOS, Windows, ChromeOS, AWS, Google Cloud, Azure, data center, containers, IoT)
+    _docs: https://fleetdm.com/docs
+    _github: https://github.com/fleetdm/fleet
+    _home: https://fleetdm.com/
+    _name: Fleet CLI
+    npm: fleetctl
   elastic-agent:
     # Elastic Agent performs some security measures that make it so that checking the bin only works
     # with sudo. So the _when condition is added to account for this circumstance.
@@ -4382,6 +4407,14 @@ softwarePackages:
     brew: kn
     github: github.com/knative/client
     yay: knative-client-bin
+  s-search:
+    _bin: s
+    _desc: Open a web search in your terminal.
+    _docs: https://github.com/zquestz/s
+    _github: https://github.com/zquestz/s
+    _home: https://github.com/zquestz/s
+    _name: s
+    brew: s-search
   footloose:
     _bin: footloose
     _desc: Container Machines - Containers that look like Virtual Machines
@@ -4460,12 +4493,12 @@ softwarePackages:
     _docs: https://helm.sh/docs
     _github: https://github.com/helm/helm
     _home: https://helm.sh/
-    _name: helm
+    _name: Helm
     _snapClassic: true
     brew: helm
     choco: kubernetes-helm
+    scoop: helm
     snap: helm
-    _type: cli
   kubernetes-kompose:
     _bin: kompose
     _desc: Go from Docker Compose to Kubernetes
@@ -5827,6 +5860,15 @@ softwarePackages:
     github: github.com/Blacksmoke16/oq
     snap: oq
     yay: oq
+  pulumi:
+    _bin: pulumi
+    _desc: Pulumi - Infrastructure as Code in any programming language. Build infrastructure intuitively on any cloud using familiar languages
+    _docs: https://www.pulumi.com/docs/quickstart/
+    _github: https://github.com/pulumi/pulumi
+    _home: https://www.pulumi.com/
+    _name: Pulumi
+    brew: pulumi/tap/pulumi
+    choco: pulumi
   osquery:
     _bin: osquery
     _desc: SQL powered operating system instrumentation, monitoring, and analytics
