@@ -36,3 +36,5 @@
         "redhat.vscode-server-connector",
     "redhat.vscode-tekton-pipelines",
      "chiro2001.digital-ocean-manager",
+         "ms-toolsai.vscode-ai-remote",
+    "ms-toolsai.vscode-ai",
