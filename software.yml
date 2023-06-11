@@ -900,12 +900,12 @@ softwarePackages:
   betwixt:
     _bin: null
     _desc: Web Debugging Proxy based on Chrome DevTools Network panel
-    _docs: null
+    _docs: https://github.com/kdzwinel/betwixt
     _github: https://github.com/kdzwinel/betwixt
-    _home: null
+    _home: https://github.com/kdzwinel/betwixt
     _name: Betwixt
-    _type: application
-    github: github.com/kdzwinel/betwixt
+    _when:cask: '! test -d /Applications/Betwixt.app'
+    cask: betwixt
   bin:
     _bin: bin
     _desc: Effortless binary manager
@@ -1710,7 +1710,6 @@ softwarePackages:
     pacman:
       - avahi-daemon
       - cups
-    _type: cli
     _systemd: smbd
   curator:
     _bin: curator
@@ -1719,8 +1718,7 @@ softwarePackages:
     _github: https://github.com/elastic/curator
     _home: https://www.elastic.co/guide/en/elasticsearch/client/curator
     _name: curator
-    _type: cli
-    pip: elasticsearch-curator
+    pipx: elasticsearch-curator
   curl:
     _bin: curl
     _desc: cURL is a computer software project providing a library (libcurl) and command-line tool (curl) for transferring data using various network protocols.
@@ -2603,11 +2601,15 @@ softwarePackages:
     _bin: fission
     _desc: Fast and Simple Serverless Functions for Kubernetes
     _docs: https://fission.io/docs/
-    _github: https://github.com/fission
+    _github: https://github.com/fission/fission
     _home: https://fission.io/
     _name: Fission
     _type: binary
+    exe: https://github.com/fission/fission/releases/download/v1.19.0/fission-v1.19.0-windows-amd64.exe
     github: github.com/fission/fission
+    nix-env: nixos.fission
+    script:darwin: cd /tmp && curl -Lo fission https://github.com/fission/fission/releases/download/v1.19.0/fission-v1.19.0-darwin-amd64 && chmod +x fission && sudo mv fission /usr/local/bin/
+    script:linux: cd /tmp && curl -Lo fission https://github.com/fission/fission/releases/download/v1.19.0/fission-v1.19.0-linux-amd64 && chmod +x fission && sudo mv fission /usr/local/bin/
   fkill:
     _bin: fkill
     _desc: Fabulously kill processes. Cross-platform
@@ -3767,8 +3769,8 @@ softwarePackages:
     _home: https://gvisor.dev/
     _name: gVisor
     _when: '! test -f /usr/local/bin/runsc || ! test -f /usr/local/bin/containerd-shim-runsc-v1'
+    _note: 'gvisor is not available on macOS or Windows'
     ansible:linux: professormanhattan.gvisor
-    _type: cli
   gvm:
     _bin: null
     _desc: '[gvm](https://github.com/moovweb/gvm) lets you manage Go environments and switch between Go versions.'
@@ -4529,13 +4531,16 @@ softwarePackages:
     brew: kubeval
     scoop: kubeval
   edex-ui:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
+    _bin: edex-ui
+    _desc: A cross-platform, customizable science fiction terminal emulator with advanced monitoring & touchscreen support.
+    _docs: https://github.com/GitSquared/edex-ui
+    _github: https://github.com/GitSquared/edex-ui
+    _home: https://github.com/GitSquared/edex-ui
+    _name: EDEX UI
+    _when:cask: '! test -d /Applications/eDEX-UI.app'
     appimage: edex-ui
+    cask: edex-ui
+    port: edex-ui
   powerline:
     _bin: powerline
     apt: powerline
@@ -5619,14 +5624,16 @@ softwarePackages:
     npm: newman
     _type: cli
   nextcloud:
-    _bin: nextcloud-client
+    _bin: nextcloudcmd
     _desc: '[Nextcloud Client](https://nextcloud.com) is a tool to keep your files synchronized between your Nextcloud server and your desktop. Select one or more directories on your local machine and always have access to your latest files wherever you are'
-    _docs: null
+    _docs: https://docs.nextcloud.com/server/latest/user_manual/en/
     _github: https://github.com/nextcloud/desktop
     _home: https://nextcloud.com
     _name: Nextcloud Client
+    _when:cask: '! test -d /Applications/Nextcloud.app'
+    cask: nextcloud
+    choco: nextcloud-client
     flatpak: com.nextcloud.desktopclient.nextcloud
-    _type: cli
   nginx:
     _bin: nginx
     _desc: It also generates sites-enabled proxies using YML configurations. Easter eggs included. [Nginx](https://www.nginx.com/), stylized as NGINX, nginx or NginX, is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache. The software was created by Igor Sysoev and publicly released in 2004. Nginx is free and open-source software, released under the terms of the 2-clause BSD license.
@@ -6445,12 +6452,13 @@ softwarePackages:
   pretzel:
     _bin: null
     _desc: Pretzel is Mac desktop app that shows and find keyboard shortcuts based on your current app
-    _docs: null
+    _docs: https://github.com/amiechen/pretzel
     _github: https://github.com/amiechen/pretzel
-    _home: null
+    _home: https://github.com/amiechen/pretzel
     _name: Pretzel
-    _type: menubar
-    github: github.com/amiechen/pretzel
+    _todo: Waiting for SHASUM error on Homebrew cask to resolve
+    _when:cask: '! test -d /Applications/Pretzel.app'
+    # cask: pretzel
   procs:
     _bin: procs
     _desc: A modern replacement for ps written in Rust
@@ -6531,14 +6539,14 @@ softwarePackages:
     npm: psi
     _type: cli
   psu:
-    _bin: null
+    _bin: portainer-stack-utils
     _desc: CLI client for Portainer
-    _docs: null
+    _docs: https://github.com/greenled/portainer-stack-utils
     _github: https://github.com/greenled/portainer-stack-utils
-    _home: null
+    _home: https://hub.docker.com/r/greenled/portainer-stack-utils/
     _name: psu
     _type: cli
-    github: github.com/greenled/portainer-stack-utils
+    go: github.com/greenled/portainer-stack-utils@master
   pup:
     _bin: pup
     _desc: '[pup](https://github.com/ericchiang/pup) is a command line tool for processing HTML. It reads from stdin, prints to stdout, and allows the user to filter parts of the page using CSS selectors.'
@@ -6899,10 +6907,8 @@ softwarePackages:
     dnf:fedora: rofi
     pacman: rofi
     pkg: rofi
-    # port installation has way too many dependencies
-    # port: rofi
+    port: rofi
     zypper: rofi
-    _type: cli
   rsync:
     _bin: rsync
     _desc: rsync is an open source utility that provides fast incremental file transfer.
@@ -8155,6 +8161,7 @@ softwarePackages:
     apt: postfix
     dnf: postfix
     pacman: postfix
+    port: postfix
   terraform:
     _deps:
       - tfenv
@@ -8870,8 +8877,6 @@ softwarePackages:
     brew: wget
     dnf: wget
     # whalebrew: whalebrew/wget # Temporarily commentted out for debugging
-
-    _type: cli
   whalebrew:
     _bin: whalebrew
     _desc: Homebrew, but with Docker images (see https://github.com/whalebrew/whalebrew-packages for available packages)
@@ -8883,15 +8888,6 @@ softwarePackages:
     script:darwin: curl -L "https://github.com/whalebrew/whalebrew/releases/download/0.4.0/whalebrew-$(uname -s)-$(uname -m)" -o /usr/local/bin/whalebrew; chmod +x /usr/local/bin/whalebrew
     script:linux: curl -L "https://github.com/whalebrew/whalebrew/releases/download/0.4.0/whalebrew-$(uname -s)-$(uname -m)" -o /usr/local/bin/whalebrew; chmod +x /usr/local/bin/whalebrew
     _type: cli
-  whaler:
-    _bin: null
-    _desc: Whaler takes a Docker image and attempts to reverse engineer the Dockerfile that created it
-    _docs: null
-    _github: https://github.com/P3GLEG/Whaler
-    _home: null
-    _name: whaler
-    _type: cli
-    github: github.com/P3GLEG/Whaler
   wifi-password:
     _bin: wifi-password
     _desc: Get the password of the wifi you're on
