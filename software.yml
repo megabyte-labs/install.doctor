@@ -2274,18 +2274,17 @@ softwarePackages:
     _docs: https://github.com/sorah/envchain#usage
     _github: https://github.com/sorah/envchain
     _home: https://github.com/sorah/envchain
-    _name: envconsul
+    _name: envchain
     _type: cli
     brew: envchain
     github: github.com/sorah/envchain
   _envchain:deps:
     apt:
-      - gnome-keyring
       - gcc
       - gnome-keyring
+      - libreadline-dev
       - libsecret-1-dev
       - make
-      - libreadline-dev
     dnf:
       - gcc
       - gnome-keyring
