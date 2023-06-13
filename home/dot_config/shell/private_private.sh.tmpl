@@ -31,6 +31,7 @@ export GITHUB_TOKEN="$GH_TOKEN"
 ### GitLab
 export GL_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_TOKEN")) }}{{ includeTemplate "secrets/GITLAB_TOKEN" | decrypt }}{{ else }}{{ env "GITLAB_TOKEN" }}{{ end }}"
 export GITLAB_TOKEN="$GL_TOKEN"
+export GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN" | decrypt }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN" }}{{ end }}"
 
 ### Heroku
 export HEROKU_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "HEROKU_API_KEY")) }}{{ includeTemplate "secrets/HEROKU_API_KEY" | decrypt }}{{ else }}{{ env "HEROKU_API_KEY" }}{{ end }}"

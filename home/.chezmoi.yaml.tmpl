@@ -140,6 +140,11 @@ data:
     docker:
       doRegion: nyc1
     domain: "{{ $domain }}"
+    gitlab:
+      glurl: "https://gitlab.com/"
+      runnerDescription: "Docker executor"
+      runnerImage: "alpine:latest"
+      runnerTags: ""
     headless: {{ $headless }}
     home: "{{ .chezmoi.homeDir }}"
     homeParentFolder: "{{ if eq .chezmoi.os "linux" }}/home{{ else if eq .chezmoi.os "darwin" }}/Users{{ else }}C:\Users{{ end }}"
