@@ -218,3 +218,11 @@ https://github.com/Andy-Python-Programmer/aero
 * https://github.com/derailed/k9s
 
 
+https://www.activepieces.com/docs/install/docker
+https://easypanel.io/
+https://app.zipy.ai/organization
+https://github.com/apple/turicreate/
+https://obsidian-plugin-stats.vercel.app/most-downloaded
+https://fig.io/
+https://medusajs.com/?ref=producthunt
+https://railway.app/?ref=producthunt

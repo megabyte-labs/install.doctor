@@ -39,3 +39,5 @@
          "ms-toolsai.vscode-ai-remote",
     "ms-toolsai.vscode-ai",
     "ms-vscode.powershell",
+    "gitpod.gitpod-desktop",
+    "ms-kubernetes-tools.kind-vscode",

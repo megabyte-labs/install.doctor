@@ -78,7 +78,7 @@
 #   _desc: GitHub notifications on the menu bar       # Short description of the package
 #   _docs: https://docs.angular.io/                   # Link to documentation (if available)
 #   _github: https://github.com/manosim/gitify        # GitHub link to the package
-#   _type: menubar                                    # Type of package (either application, cli, or menubar)
+#   _type: menubar                                    # Type of package (either application, cli, webapp, or menubar)
 #   npm:
 #     - '@angular/cli'
 #     - gulp
@@ -322,7 +322,6 @@ softwarePackages:
     port: act
     scoop: act
     yay: act
-    _type: cli
   genymotion:
     _when:cask: '! test -d /Applications/Genymotion.app'
     cask: genymotion
@@ -372,7 +371,6 @@ softwarePackages:
     brew: allure
     scoop: allure
     yay: allure
-    _type: application
   altair:
     _bin:snap: altair
     _desc: '[Altair GraphQL Client](https://altairgraphql.dev/) A beautiful feature-rich GraphQL Client for all platforms.'
@@ -385,7 +383,6 @@ softwarePackages:
     choco: altair-graphql
     snap: altair
     yay: altair
-    _type: application
   ansifilter:
     _bin: ansifilter
     _desc: null
@@ -411,7 +408,6 @@ softwarePackages:
     flatpak: com.google.AndroidStudio
     snap: android-studio
     yay: android-studio
-    _type: application
   brasero:
     _bin: brasero
     _desc: null
@@ -457,7 +453,6 @@ softwarePackages:
     _name: Angular
     brew: angular-cli
     npm: '@angular/cli'
-    _type: cli
   ansible:
     _bin: ansible
     _desc: '[Ansible](https://www.ansible.com/) Ansible is a radically simple IT automation platform that makes your applications and systems easier to deploy and maintain'
@@ -469,7 +464,6 @@ softwarePackages:
     # brew: ansible
     # dnf: ansible
     pipx: ansible
-    _type: cli
   ansible-lint:
     _bin: ansible-lint
     _desc: '[Ansible Lint](https://github.com/ansible/ansible-lint/) is a command-line tool for linting playbooks, roles and collections aimed toward any Ansible users'
@@ -478,7 +472,6 @@ softwarePackages:
     _home: https://github.com/ansible/ansible-lint/
     _name: Ansible Lint
     pipx: ansible-lint
-    _type: cli
   ansibleconnect:
     _bin: ansibleconnect
     _deps:
@@ -490,7 +483,6 @@ softwarePackages:
     _home: https://github.com/psykulsk/ansibleconnect
     _name: Ansibleconnect
     pipx: ansibleconnect
-    _type: cli
   quark-engine:
     _bin: quark
     _desc: Dig Vulnerabilities in the BlackBox (requirement of APKLabs VSCode plugin)
@@ -509,7 +501,6 @@ softwarePackages:
       https://www.clamav.net/ https://www.malwarebytes.com/
     _name: AntiVirus
     ansible: professormanhattan.antivirus
-    _type: cli
   appium:
     _bin: appium
     _desc: '[Appium](https://appium.io/) is an open source automation tool for running scripts and testing native applications, mobile-web applications and hybrid applications on Android or iOS using a webdriver.'
@@ -520,7 +511,6 @@ softwarePackages:
     ansible: professormanhattan.appium
     brew: appium
     choco: appium-desktop
-    _type: application
   appnest-readme:
     _bin: readme
     _desc: '[Readme](https://github.com/andreasbm/readme/) automatically generate a beautiful best-practice README file based on the contents of your repository'
@@ -529,7 +519,6 @@ softwarePackages:
     _home: https://github.com/andreasbm/readme/
     _name: Readme
     npm: '@appnest/readme'
-    _type: cli
   apt-cacher-ng:
     _bin: null
     _desc: '[Apt-Cacher-NG](https://wiki.debian.org/AptCacherNg) is a caching proxy server (or apt proxy) for Debian based distributions like Ubuntu, Kubuntu, Xubuntu, Edubuntu, Linux Mint, etc, which is used to cache the downloaded packages locally on your server.'
@@ -539,7 +528,6 @@ softwarePackages:
     _name: AptCacherNG
     ansible: professormanhattan.aptcacherng
     _systemd: apt-cacher-ng
-    _type: cli
   gopass:
     _bin: gopass
     _desc: The slightly more awesome standard unix password manager for teams
@@ -568,7 +556,6 @@ softwarePackages:
     binary:linux: https://github.com/aquaproj/aqua/releases/download/v2.0.0-0/aqua_linux_amd64.tar.gz
     binary:windows: https://github.com/aquaproj/aqua/releases/download/v2.0.0-0/aqua_windows_amd64.tar.gz
     go: github.com/aquaproj/aqua/v2/cmd/aqua@latest
-    _type: cli
   argo-cli:
     _bin: argocd
     _desc: ArgoCD is a declarative GitOps continuous delivery platform.
@@ -576,7 +563,6 @@ softwarePackages:
     _github: https://github.com/argoproj/argo-cd
     _home: https://argo-cd.readthedocs.io/en/stable/
     _name: argo
-    _type: cli
     brew: argocd
     choco: argocd-cli
     github: https://github.com/argoproj/argo-workflows
@@ -623,7 +609,6 @@ softwarePackages:
     dnf: asciinema
     pacman: asciinema
     pipx: asciinema
-    _type: cli
   asdf:
     _bin: asdf
     _desc: '[asdf](https://asdf-vm.com/#/) is a CLI tool that can manage multiple language runtime versions on a per-project basis or globally. It is like gvm, nvm, rbenv, and pyenv all in one. This role installs asdf on Linux or macOS.'
@@ -632,7 +617,6 @@ softwarePackages:
     _home: https://asdf-vm.com/
     _name: asdf-vm
     ansible: professormanhattan.asdf
-    _type: cli
   assh:
     _bin: assh
     _desc: '[assh](https://manfred.life/assh) makes your ssh client smarter'
@@ -643,7 +627,6 @@ softwarePackages:
     brew: assh
     go: moul.io/assh/v2
     yay: assh
-    _type: cli
   astronvim:
     _deps:
       - bottom
@@ -659,7 +642,6 @@ softwarePackages:
     _home: https://astronvim.github.io/
     _name: AstroNvim
     _post: nvim --headless -c 'autocmd User PackerComplete quitall'
-    _type: cli
   auto-install:
     _bin: auto-install
     _desc: '[auto-install](https://github.com/siddharthkp/auto-install) installs dependencies as you code'
@@ -668,7 +650,6 @@ softwarePackages:
     _home: https://github.com/siddharthkp/auto-install
     _name: auto-install
     npm: auto-install
-    _type: cli
   autokey:
     _bin: null
     _desc: '[AutoKey](https://github.com/autokey/autokey) is a free, open-source scripting application for Linux. AutoKey allows the user to define hotkeys and trigger phrases which expand to predefined text, automating frequent or repetitive tasks such as correcting typographical errors or common spelling mistakes and inserting boiler plate sections of text. [AutoHotKey](https://www.autohotkey.com/) is a similar piece of software that is only available on the Windows platform.'
@@ -682,7 +663,6 @@ softwarePackages:
     choco: autohotkey
     dnf: autokey
     yay: autokey-gtk
-    _type: application
   automake:
     _bin: automake
     _desc: '[GNU Automake](https://www.gnu.org/software/automake/) is a tool for automatically generating Makefile.in files compliant with the GNU Coding Standards'
@@ -696,7 +676,6 @@ softwarePackages:
     dnf: automake
     pacman: automake
     pkg: automake
-    _type: cli
   autorestic:
     _bin: autorestic
     _desc: '[Autorestic](https://autorestic.vercel.app/) is a wrapper around [Restic](https://restic.net/). The Restic CLI can be a bit overwhelming and difficult to manage if you have many different location that you want to backup to multiple locations. Autorestic makes managing all your S3 backups easier by making it config / cron driven.'
@@ -706,7 +685,6 @@ softwarePackages:
     _name: Autorestic
     ansible: professormanhattan.autorestic
     brew: autorestic
-    _type: cli
   awscli:
     _bin: aws
     _desc: 'The [AWS CLI](https://aws.amazon.com/cli/) is a unified tool to manage your AWS services. With just one tool to download and configure, you can control multiple AWS services from the command line and automate them through scripts.'
@@ -720,7 +698,6 @@ softwarePackages:
     binary:linux: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
     binary:windows: https://awscli.amazonaws.com/AWSCLIV2.msi
     choco: awscli
-    _type: cli
   awxcli:
     _bin: awx
     _desc: '[ansible-tower-cli](https://docs.ansible.com/ansible-tower/latest/html/towercli/index.html) is a CLI program that interacts with Ansible Tower or AWX. It is the official command-line client for both Ansible Tower and AWX. It uses naming and structure consistent with the AWX HTTP API, provides consistent output formats with optional machine-parsable formats, and auto-detects API versions, available endpoints, and feature support.'
@@ -730,7 +707,6 @@ softwarePackages:
     _name: AWX CLI
     ansible: professormanhattan.awxcli
     pipx: https://releases.ansible.com/ansible-tower/cli/ansible-tower-cli-latest.tar.gz
-    _type: cli
   azure-cli:
     _bin: az
     _desc: 'The [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/) is a set of commands used to create and manage Azure resources. The Azure CLI is available across Azure services and is designed to get you working quickly with Azure, with an emphasis on automation. It is the official CLI, released by Microsoft.'
@@ -743,7 +719,6 @@ softwarePackages:
     choco: azure-cli
     winget: Microsoft.AzureCLI
     yay: azure-cli
-    _type: cli
   azure-functions:
     _bin: func
     _desc: '[azure-functions-core-tools](https://github.com/Azure/azure-functions-core-tools) A local development experience for creating, developing, testing, running, and debugging Azure Functions'
@@ -751,7 +726,6 @@ softwarePackages:
     _github: https://github.com/Azure/azure-functions-core-tools
     _home: null
     _name: azure-functions-core-tools
-    _type: cli
     brew: azure/functions/azure-functions-core-tools@4
     choco: azure-functions-core-tools
     github: github.com/Azure/azure-functions-core-tools
@@ -810,7 +784,6 @@ softwarePackages:
     cask: balenaetcher
     choco: etcher
     yay: balena-etcher
-    _type: application
   bandwhich:
     _bin: bandwhich
     _desc: '[Bandwhich](https://github.com/imsnif/bandwhich) is a CLI utility for displaying current network utilization by process, connection and remote IP/hostname.'
@@ -818,7 +791,6 @@ softwarePackages:
     _github: https://github.com/imsnif/bandwhich
     _home: null
     _name: Bandwhich
-    _type: cli
     ansible: professormanhattan.bandwhich
     brew: bandwhich
     github: github.com/imsnif/bandwhich
@@ -831,7 +803,6 @@ softwarePackages:
     _github: https://github.com/genuinetools/bane
     _home: null
     _name: bane
-    _type: cli
     github: github.com/genuinetools/bane
     go: github.com/genuinetools/bane@latest
   bash-completion:
@@ -851,7 +822,6 @@ softwarePackages:
     _github: https://github.com/axel-download-accelerator/axel
     _home: null
     _name: Axel
-    _type: cli
     apt: axel
     brew: axel
     choco: axel
@@ -864,7 +834,6 @@ softwarePackages:
     _github: https://github.com/rtyley/bfg-repo-cleaner
     _home: https://rtyley.github.io/bfg-repo-cleaner/
     _name: BFG Repo Cleaner
-    _type: cli
     brew: bfg
     choco: bfg-repo-cleaner
     port: bfg
@@ -875,7 +844,6 @@ softwarePackages:
     _github: https://github.com/sharkdp/bat
     _home: null
     _name: bat
-    _type: cli
     ansible: professormanhattan.bat
     apk: bat
     apt: bat
@@ -896,7 +864,6 @@ softwarePackages:
     _name: Beets
     ansible: professormanhattan.beets
     pipx: beets
-    _type: cli
   betwixt:
     _bin: null
     _desc: Web Debugging Proxy based on Chrome DevTools Network panel
@@ -913,7 +880,6 @@ softwarePackages:
     _github: https://github.com/marcosnils/bin
     _home: null
     _name: bin
-    _type: cli
     github: github.com/marcosnils/bin
     go: github.com/marcosnils/bin@latest
   bitly:
@@ -924,7 +890,6 @@ softwarePackages:
     _home: null
     _name: bitly
     npm: bitly-cli-client
-    _type: cli
   swimat:
     _bin: null
     _desc: Swift code auto-formatter for Xcode
@@ -960,7 +925,6 @@ softwarePackages:
     _github: https://github.com/bitwarden/desktop
     _home: null
     _name: BitWarden
-    _type: application
     _when:cask: '! test -d /Applications/Bitwarden.app'
     cask: bitwarden
     choco: bitwarden
@@ -981,7 +945,6 @@ softwarePackages:
     npm: '@bitwarden/cli'
     scoop: bitwarden-cli
     snap: bw
-    _type: cli
   bivac:
     _bin: null
     _desc: '[Bivac](https://bivac.io/) - Backup Interface for Volumes Attached to Containers - allows to backup Container volumes using Restic'
@@ -989,7 +952,6 @@ softwarePackages:
     _github: https://github.com/camptocamp/bivac
     _home: https://bivac.io/
     _name: bivac
-    _type: cli
     github: github.com/camptocamp/bivac
   boilr:
     _bin: null
@@ -998,7 +960,6 @@ softwarePackages:
     _github: https://github.com/tmrts/boilr
     _home: null
     _name: boilr
-    _type: cli
     github: github.com/tmrts/boilr
     go: github.com/tmrts/boilr@latest
   bottom:
@@ -1013,7 +974,6 @@ softwarePackages:
     pacman: bottom
     scoop: bottom
     snap: bottom
-    _type: cli
   thefuck:
     _bin: fuck
     _desc: Magnificent CLI tool that corrects your previous console command whenever something fails due to misspelling.
@@ -1092,7 +1052,6 @@ softwarePackages:
     choco: brave
     flatpak: com.brave.Browser
     snap: brave
-    _type: application
   broot:
     _bin: broot
     _desc: '[broot](https://dystroy.org/broot/) offers a new way to see and navigate directory trees.'
@@ -1107,7 +1066,6 @@ softwarePackages:
     emerge: broot
     pkgin: broot
     port: broot
-    _type: cli
   browser-sync:
     _bin: browser-sync
     _desc: '[Browsersync](https://browsersync.io/) allows you to keep multiple browsers & devices in sync when building websites'
@@ -1116,7 +1074,6 @@ softwarePackages:
     _home: https://browsersync.io/
     _name: Browsersync
     npm: browser-sync
-    _type: cli
   budibase-cli:
     _bin: budi
     _desc: '[Budibase](https://budibase.com) The Budibase CLI is how you initialise, manage and update your Budibase installation'
@@ -1124,7 +1081,6 @@ softwarePackages:
     _github: https://github.com/Budibase/budibase
     _home: https://budibase.com
     _name: budibase-cli
-    _type: cli
     github: github.com/Budibase/budibase
     npm: '@budibase/cli'
   bundler:
@@ -1135,7 +1091,6 @@ softwarePackages:
     _home: https://bundler.io/
     _name: Bundler
     gem: bundler
-    _type: cli
   caniuse:
     _bin: caniuse
     _desc: caniuse-cmd is a caniuse command line tool, providing all the power of caniuse.com with none of the nice UI or interactivity
@@ -1144,7 +1099,6 @@ softwarePackages:
     _home: null
     _name: null
     npm: caniuse-cmd
-    _type: cli
   captain:
     _bin: captain
     _desc: Helps manage docker-compose.yml files from anywhere in the file system
@@ -1152,7 +1106,6 @@ softwarePackages:
     _github: https://github.com/jenssegers/captain
     _home: null
     _name: captain
-    _type: cli
     github: github.com/jenssegers/captain
   carbon-now:
     _bin: carbon-now
@@ -1162,7 +1115,6 @@ softwarePackages:
     _home: https://carbon.now.sh/
     _name: Carbon
     npm: carbon-now-cli
-    _type: cli
   carthage:
     _bin: carthage
     _desc: A simple, decentralized dependency manager for Cocoa
@@ -1171,7 +1123,6 @@ softwarePackages:
     _home: null
     _name: Carthage
     brew:darwin: carthage
-    _type: cli
   wordops:
     _bin: wo
     _desc: Install and manage a high performance WordPress stack with a few keystrokes
@@ -1205,7 +1156,6 @@ softwarePackages:
     _github: https://github.com/cerebroapp/cerebro
     _home: null
     _name: Cerebro
-    _type: application
     _when:cask: '! test -d /Applications/Cerebro.app'
     cask: cerebro
     choco: cerebro
@@ -1224,7 +1174,6 @@ softwarePackages:
     brew: certbot
     port: certbot
     snap: certbot
-    _type: cli
   ugm:
     _bin: ugm
     _desc: A terminal based UNIX user and group browser
@@ -1253,7 +1202,6 @@ softwarePackages:
     _name: CFSSL
     brew: cfssl
     pacman: cfssl
-    _type: cli
   cheat:
     _bin: cheat
     _desc: Cheat allows you to create and view interactive cheatsheets on the command-line. It was designed to help remind *nix system administrators of options for commands that they use frequently, but not frequently enough to remember.
@@ -1262,7 +1210,6 @@ softwarePackages:
     _github: https://github.com/cheat/cheat
     _home: https://github.com/cheat/cheat
     _name: Cheat
-    _type: cli
     brew: cheat
     go: github.com/cheat/cheat/cmd/cheat@latest
     nix: nixos.cheat
@@ -1276,7 +1223,6 @@ softwarePackages:
     _home: https://www.chezmoi.io/
     _name: Chezmoi
     _snapClassic: true
-    _type: cli
     apk: chezmoi
     brew: chezmoi
     choco: chezmoi
@@ -1301,7 +1247,6 @@ softwarePackages:
     choco: googlechrome
     flatpak: com.google.Chrome
     yay: google-chrome
-    _type: application
   google-drive:
     _bin: google-drive
     _desc: Google Drive for Desktop integrates a Google Drive account into your macOS / Windows workstation by adding a menubar with options to synchronize folders to the cloud.
@@ -1342,7 +1287,6 @@ softwarePackages:
     _home: null
     _name: null
     brew:darwin: chrome-cli
-    _type: cli
   chrome-gnome-shell:
     _bin: null
     _desc: Browser extension for Google Chrome/Chromium, Firefox, Vivaldi (and other Browser Extension, Chrome Extension or WebExtensions capable browsers) and native host messaging connector that provides integration with GNOME Shell and the corresponding extensions repository
@@ -1363,7 +1307,6 @@ softwarePackages:
     _github: https://github.com/quay/clair
     _home: null
     _name: clair
-    _type: cli
     brew: clair
     github: github.com/quay/clair
   gitlabform:
@@ -1394,7 +1337,6 @@ softwarePackages:
     _service:apt: clamav-freshclam
     _service:dnf: clamd-freshclam
     _service:pacman: clamav-freshclam
-    _type: cli
     apt:
       - clamav
       - clamdscan
@@ -1410,7 +1352,6 @@ softwarePackages:
     _github: https://github.com/llvm/llvm-project/tree/main/clang-tools-extra/clangd
     _home: https://clangd.llvm.org/
     _name: clangd
-    _type: cli
     apt: clangd
     brew: llvm
     choco: llvm
@@ -1426,7 +1367,6 @@ softwarePackages:
     _home: null
     _name: null
     cask: clocker
-    _type: Application
   cloudflared:
     _bin: cloudflared
     _desc: '[CloudFlare Argo Tunnel Client](https://developers.cloudflare.com/argo-tunnel/) contains the command-line client for CloudFlare Argo Tunnel, a tunneling daemon that proxies any local webserver through the Cloudflare network.'
@@ -1434,7 +1374,6 @@ softwarePackages:
     _github: https://github.com/cloudflare/cloudflared
     _home: null
     _name: CloudFlared
-    _type: cli
     ansible: professormanhattan.cloudflared
     binary:linux: https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
     brew:darwin: cloudflare/cloudflare/cloudflared
@@ -1447,7 +1386,6 @@ softwarePackages:
     _home: https://cmake.org/
     _name: Chezmoi
     _snapClassic: true
-    _type: cli
     brew: cmake
     choco: cmake
     snap: cmake
@@ -1458,7 +1396,6 @@ softwarePackages:
     _github: https://github.com/cert-manager/cert-manager
     _home: https://cert-manager.io/docs/usage/cmctl/
     _name: cmctl
-    _type: cli
     github: github.com/cert-manager/cert-manager
   cockpit:
     _bin: cockpit
@@ -1509,7 +1446,6 @@ softwarePackages:
       - cockpit-podman
       - cockpit-storaged
       - libvirt-dbus
-    _type: application
     _systemd: cockpit
     _systemd:pacman: cockpit.socket
   cockpit-client:
@@ -1526,7 +1462,6 @@ softwarePackages:
     ansible:darwin: professormanhattan.cocoapods
     brew:darwin: cocoapods
     gem:darwin: cocoapods
-    _type: cli
   cointop:
     _bin: cointop
     _desc: '[Cointop](https://github.com/miguelmota/cointop) is a fast and lightweight interactive terminal based UI application for tracking and monitoring cryptocurrency coin stats in real-time.'
@@ -1538,7 +1473,6 @@ softwarePackages:
     ansible:linux: professormanhattan.cointop
     brew: cointop
     port: cointop
-    _type: application
   commitizen:
     _bin: cz
     _desc: Commitizen is a tool designed for teams. Its main purpose is to define a standard way of committing rules and communicating it
@@ -1547,7 +1481,6 @@ softwarePackages:
     _home: https://commitizen-tools.github.io/commitizen/
     _name: commitizen
     npm: commitizen
-    _type: cli
   commitlint:
     _bin: commitlint
     _desc: Lint commit messages
@@ -1556,7 +1489,6 @@ softwarePackages:
     _home: https://commitlint.js.org
     _name: commitlint
     npm: '@commitlint/cli'
-    _type: cli
   common:
     _bin: null
     _desc: 'For example, this role sets the timezone, sets the hostname, sets up the swap space, ensures auto-login is either disabled or enabled, and customizes GRUB (on Linux). It also ensures that specified groups are present on the system. On Windows, the role ensures all the available updates are installed, ensures [Scoop](https://scoop.sh/) is installed, and ensures common dependencies like [Bandizip](https://en.bandisoft.com/bandizip/) (a compressed-file manager) are installed.'
@@ -1579,7 +1511,6 @@ softwarePackages:
     scoop: composer
     script:darwin: cd ~ && curl -sS https://getcomposer.org/installer | php && sudo mv composer.phar /usr/local/bin/composer &&  sudo chmod +x /usr/local/bin/composer
     script:linux: cd ~ && curl -sS https://getcomposer.org/installer | php && sudo mv composer.phar /usr/local/bin/composer &&  sudo chmod +x /usr/local/bin/composer
-    _type: cli
   confd:
     _bin: confd
     _desc: Manage local application configuration files using templates and data from etcd or consul
@@ -1588,7 +1519,6 @@ softwarePackages:
     _home: null
     _name: confd
     _service: consul
-    _type: cli
     brew: confd
     choco: confd
     github: github.com/kelseyhightower/confd
@@ -1604,7 +1534,6 @@ softwarePackages:
     brew: consul
     pkg: consul
     yay: consul-bin
-    _type: cli
   consul-template:
     _bin: consul-template
     _desc: '[Consul-Template](https://github.com/hashicorp/consul-template) provides a convenient way to populate values from [Consul](https://www.consul.io/) into the file system using the consul-template daemon. It was created by [HashiCorp](https://www.hashicorp.com/) (the creators of Consul).'
@@ -1628,7 +1557,6 @@ softwarePackages:
     binary:linux: https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
     brew: container-structure-test
     yay: container-structure-test
-    _type: cli
   cookiecutter:
     _bin: cookiecutter
     _desc: A cross-platform command-line utility that creates projects from cookiecutters (project templates)
@@ -1638,7 +1566,6 @@ softwarePackages:
     _name: cookiecutter
     brew: cookiecutter
     pipx: cookiecutter
-    _type: cli
   cordova:
     _bin: cordova
     _desc: >-
@@ -1648,7 +1575,6 @@ softwarePackages:
     _home: https://cordova.apache.org/
     _name: Apache Cordova
     npm: cordova
-    _type: cli
   croc:
     _bin: croc
     _desc: Easily and securely send things from one computer to another
@@ -1656,7 +1582,6 @@ softwarePackages:
     _github: https://github.com/schollz/croc
     _home: null
     _name: croc
-    _type: cli
     brew: croc
     choco: croc
     github: github.com/schollz/croc
@@ -1671,7 +1596,6 @@ softwarePackages:
     _github: https://github.com/bcicen/ctop
     _home: null
     _name: ctop
-    _type: cli
     brew: ctop
     github: github.com/bcicen/ctop
     yay: ctop-bin
@@ -1683,7 +1607,6 @@ softwarePackages:
     _github: https://github.com/gillesdemey/Cumulus
     _home: null
     _name: Cumulus
-    _type: menubar
     cask: cumulus
     github: github.com/gillesdemey/Cumulus
   trunk:
@@ -1726,7 +1649,6 @@ softwarePackages:
     _github: https://github.com/curl/curl
     _home: https://curl.se/
     _name: cURL
-    _type: cli
     apk: curl
     apt: curl
     brew: curl
@@ -1744,7 +1666,6 @@ softwarePackages:
     _github: https://github.com/rs/curlie
     _home: https://curlie.io/
     _name: Curlie
-    _type: cli
     brew: curlie
     go: github.com/rs/curlie@latest
     pkg: curlie
@@ -1757,7 +1678,6 @@ softwarePackages:
     _github: https://github.com/TomWright/dasel
     _home: null
     _name: dasel
-    _type: cli
     brew: dasel
     github: github.com/TomWright/dasel
     go: github.com/tomwright/dasel/cmd/dasel@master
@@ -1777,7 +1697,6 @@ softwarePackages:
     _github: https://github.com/datproject/dat
     _home: null
     _name: dat
-    _type: cli
     github: github.com/dat-ecosystem-archive/dat
     npm: dat@next
   dat-desktop:
@@ -1788,7 +1707,6 @@ softwarePackages:
     _github: https://github.com/datproject/dat-desktop
     _home: null
     _name: Dat Desktop
-    _type: application
     cask: dat
     github: github.com/datproject/dat-desktop
   debloat:
@@ -1799,7 +1717,6 @@ softwarePackages:
     _home: null
     _name: Debloat Windows
     ansible: professormanhattan.debloat
-    _type: cli
   debsecan:
     _bin: debsecan-by-type
     _desc: debsecan analyzes the list of installed packages on the current host and reports vulnerabilities found on the system.
@@ -1817,7 +1734,6 @@ softwarePackages:
     _home: null
     _name: Default Browser Setter
     ansible: professormanhattan.defaultbrowser
-    _type: cli
   delta:
     _bin: delta
     _desc: '[delta](https://github.com/dandavison/delta) is a viewer for git and diff output'
@@ -1825,7 +1741,6 @@ softwarePackages:
     _github: https://github.com/dandavison/delta
     _home: https://github.com/dandavison/delta
     _name: Delta
-    _type: cli
     ansible: professormanhattan.delta
     brew: git-delta
     cargo: git-delta
@@ -1843,7 +1758,6 @@ softwarePackages:
     _name: Delve
     brew: delve
     go: github.com/go-delve/delve/cmd/dlv@latest
-    _type: cli
   deno:
     _bin: deno
     _desc: '[Deno](https://deno.land/) is a modern runtime for JavaScript and TypeScript. It is advertised as a simple runtime that uses V8 and Rust. It is boasted as secure-by-default because there is no file, network, or environment access unless explicitly enabled. Deno compiles apps into single executables. An app made with Deno generally specifies its dependencies as URLs mainly hosted in the [Deno standard module repository](https://deno.land/std).'
@@ -1857,7 +1771,6 @@ softwarePackages:
     choco: deno
     nix: deno
     scoop: deno
-    _type: cli
   desed:
     _bin: desed
     _desc: Debugger for sed used to demystify and debug the sed scripts, from comfort of terminal
@@ -1865,7 +1778,6 @@ softwarePackages:
     _github: https://github.com/SoptikHa2/desed
     _home: https://github.com/SoptikHa2/desed
     _name: desed
-    _type: cli
     cargo: desed
     dnf:fedora: desed
     github: github.com/SoptikHa2/desed
@@ -1879,7 +1791,6 @@ softwarePackages:
     _home: null
     _name: Desktop
     ansible: professormanhattan.desktop
-    _type: cli
   deta:
     _bin: deta
     _desc: Command line interface for managing Deta micros and deployments
@@ -1887,7 +1798,6 @@ softwarePackages:
     _github: https://github.com/deta/deta-cli
     _home: https://www.deta.sh/
     _name: deta
-    _type: cli
     github: github.com/deta/deta-cli
     script:darwin: curl -fsSL https://get.deta.dev/cli.sh | sh
     script:linux: curl -fsSL https://get.deta.dev/cli.sh | sh
@@ -1900,7 +1810,6 @@ softwarePackages:
     _home: null
     _name: null
     npm: deviceframe
-    _type: cli
   difftastic:
     _bin: difft
     _desc: Difftastic is a structural diff tool that understands syntax.
@@ -1908,7 +1817,6 @@ softwarePackages:
     _github: https://github.com/Wilfred/difftastic
     _home: https://difftastic.wilfred.me.uk/
     _name: Difftastic
-    _type: cli
     brew: difftastic
     cargo: difftastic
   direnv:
@@ -1918,7 +1826,6 @@ softwarePackages:
     _github: https://github.com/direnv/direnv
     _home: https://direnv.net/
     _name: direnv
-    _type: cli
     ansible: professormanhattan.direnv
     apt: direnv
     brew: direnv
@@ -1931,7 +1838,6 @@ softwarePackages:
     _github: https://github.com/wagoodman/dive
     _home: https://github.com/wagoodman/dive
     _name: dive
-    _type: cli
     ansible: professormanhattan.dive
     brew: dive
     github: github.com/wagoodman/dive
@@ -1945,7 +1851,6 @@ softwarePackages:
     _home: null
     _name: DNS
     ansible: professormanhattan.dns
-    _type: cli
   plymouth:
     apt:
       - libplymouth5
@@ -1971,7 +1876,6 @@ softwarePackages:
     dnf: dnsmasq
     pacman: dnsmasq
     port: dnsmasq
-    _type: cli
   docker-desktop:
     _desc: '[Docker](https://www.docker.com/) is a set of platform-as-a-service products that use OS-level virtualization to deliver software in packages called containers. Containers are isolated from one another and bundle their own software, libraries and configuration files; they can communicate with each other through well-defined channels. [Docker Desktop](https://www.docker.com/products/docker-desktop/) adds a sleek UI for Docker and makes it easier to manage Docker on macOS and Windows.'
     _docs: https://docs.docker.com/
@@ -1991,7 +1895,6 @@ softwarePackages:
     _github: https://github.com/docker-slim/docker-slim
     _home: https://dockersl.im/
     _name: Docker Slim
-    _type: cli
     brew: docker-slim
     dnf:fedora: golang-github-docker-slim
     github: github.com/docker-slim/docker-slim
@@ -2059,7 +1962,6 @@ softwarePackages:
     _github: https://github.com/goodwithtech/dockle
     _home: null
     _name: dockle
-    _type: cli
     brew: goodwithtech/r/dockle
     github: github.com/goodwithtech/dockle
     yay: dockle-bin
@@ -2070,7 +1972,6 @@ softwarePackages:
     _github: https://github.com/digitalocean/doctl
     _home: null
     _name: doctl
-    _type: cli
     brew: doctl
     github: github.com/digitalocean/doctl
     pacman: doctl
@@ -2083,7 +1984,6 @@ softwarePackages:
     _github: https://github.com/ogham/dog
     _home: null
     _name: dog
-    _type: cli
     brew: dog
     github: github.com/ogham/dog
     pacman: dog
@@ -2099,7 +1999,6 @@ softwarePackages:
     cargo: dotenv-linter
     scoop: dotenv-linter
     yay: dotenv-linter
-    _type: cli
   dotnet:
     _bin: dotnet
     _desc: "[.Net](https://dotnet.microsoft.com/) lets you create beautiful apps and scalable cloud services, faster and easier with the free, open-source platform that's loved by developers and trusted by organizations"
@@ -2110,7 +2009,6 @@ softwarePackages:
     brew: dotnet
     choco: dotnet
     yay: dotnet-sdk-bin
-    _type: cli
   dprint:
     _bin: dprint
     _desc: '[dprint](https://dprint.dev/) is a pluggable and configurable code formatting platform written in Rust.'
@@ -2125,7 +2023,6 @@ softwarePackages:
     script:darwin: curl -fsSL https://dprint.dev/install.sh | sh
     script:linux: curl -fsSL https://dprint.dev/install.sh | sh
     script:windows: iwr https://dprint.dev/install.ps1 -useb | iex
-    _type: cli
   drone-cli:
     _bin: drone
     _desc: The Drone command line tools are used to interact with the Drone from the command line, and provide important utilities for managing users and repository settings
@@ -2133,7 +2030,6 @@ softwarePackages:
     _github: https://github.com/harness/drone-cli
     _home: https://www.drone.io/
     _name: Drone CLI
-    _type: cli
     brew: drone/drone/drone
     github: github.com/harness/drone-cli
     scoop: drone
@@ -2144,7 +2040,6 @@ softwarePackages:
     _github: https://github.com/muesli/duf
     _home: https://github.com/muesli/duf
     _name: duf
-    _type: cli
     ansible: professormanhattan.duf
     brew: duf
     choco: duf
@@ -2159,7 +2054,6 @@ softwarePackages:
     _github: https://github.com/bootandy/dust
     _home: https://github.com/bootandy/dust
     _name: dust
-    _type: cli
     apk: dust
     brew:darwin: dust
     brew:linux: tgotwig/linux-dust/dust
@@ -2175,7 +2069,6 @@ softwarePackages:
     _name: EasyEngine
     ansible:darwin: professormanhattan.easyengine
     ansible:linux: professormanhattan.easyengine
-    _type: cli
   editly:
     _bin: editly
     _desc: Editly is a tool and framework for declarative NLE (non-linear video editing) using Node.js and ffmpeg. Editly allows you to easily and programmatically create a video from a set of clips, images, audio and titles, with smooth transitions and music overlaid.
@@ -2184,7 +2077,6 @@ softwarePackages:
     _home: https://github.com/mifi/editly
     _name: Editly
     npm: editly
-    _type: cli
   fleetctl:
     _bin: fleetctl
     _desc: Open-source platform for IT and security teams with thousands of computers. (Linux, macOS, Windows, ChromeOS, AWS, Google Cloud, Azure, data center, containers, IoT)
@@ -2205,7 +2097,6 @@ softwarePackages:
     _name: Elastic Agent
     _when: '! sudo which elastic-agent > /dev/null'
     ansible: professormanhattan.elasticagent
-    _type: application
   electron:
     _bin: electron
     _desc: '[Electron](https://www.electronjs.org/) allows you to build cross-platform desktop apps with JavaScript, HTML, and CSS'
@@ -2214,7 +2105,6 @@ softwarePackages:
     _home: https://www.electronjs.org/
     _name: Electron
     npm: electron
-    _type: application
     _when:cask: '! test -d /Applications/Electron.app'
     cask: electron
     choco: electron
@@ -2237,7 +2127,6 @@ softwarePackages:
     _home: https://www.npmjs.com/package/emma-cli
     _name: Emma
     npm: emma-cli
-    _type: cli
   emoj:
     _bin: emoj
     _desc: Find relevant emoji from text on the command-line
@@ -2246,7 +2135,6 @@ softwarePackages:
     _home: null
     _name: emoj
     npm: emoj
-    _type: cli
   emplace:
     _bin: emplace
     _desc: Emplace objects and arrays - pointer to pointer style
@@ -2257,7 +2145,6 @@ softwarePackages:
     cargo: emplace --locked
     nix: emplace
     scoop: emplace
-    _type: cli
   empty-trash:
     _bin: empty-trash
     _desc: CLI to empty trash on macOS, Windows, and Linux
@@ -2275,7 +2162,6 @@ softwarePackages:
     _github: https://github.com/sorah/envchain
     _home: https://github.com/sorah/envchain
     _name: envconsul
-    _type: cli
     brew: envchain
     github: github.com/sorah/envchain
   _envchain:deps:
@@ -2305,7 +2191,6 @@ softwarePackages:
     _github: https://github.com/hashicorp/envconsul
     _home: null
     _name: envconsul
-    _type: cli
     ansible: professormanhattan.envconsul
     brew: envconsul
     github: github.com/hashicorp/envconsul
@@ -2317,7 +2202,6 @@ softwarePackages:
     _home: null
     _name: null
     ansible: professormanhattan.environment
-    _type: cli
   eslint:
     _bin: eslint
     _desc: '[ESLint](https://eslint.org/) allows you to find and fix problems in your JavaScript code'
@@ -2327,7 +2211,6 @@ softwarePackages:
     _name: ESLint
     brew: eslint
     npm: eslint
-    _type: cli
   ntl:
     _bin: ntl
     _desc: null
@@ -2375,7 +2258,6 @@ softwarePackages:
     _github: https://github.com/etcd-io/etcd
     _home: null
     _name: etcd
-    _type: cli
     apt: etcd
     brew: etcd
     choco: etcd
@@ -2389,7 +2271,6 @@ softwarePackages:
     _github: https://github.com/ogham/exa
     _home: https://the.exa.website/
     _name: Exa
-    _type: cli
     apt: exa
     brew: exa
     cargo: exa
@@ -2441,7 +2322,6 @@ softwarePackages:
     _home: https://www.fastify.io/
     _name: fastify
     npm: fastify-cli
-    _type: cli
   fcp:
     _bin: fcp
     _desc: A significantly faster alternative to the classic Unix cp(1) command, copying large files and directories in a fraction of the time.
@@ -2452,7 +2332,6 @@ softwarePackages:
     brew: fcp
     cargo: fcp
     nix: unstable.fcp
-    _type: cli
   fd:
     _bin: fd
     _bin:apt: fdfind
@@ -2461,7 +2340,6 @@ softwarePackages:
     _github: https://github.com/sharkdp/fd
     _home: null
     _name: fd
-    _type: cli
     ansible: professormanhattan.fd
     apk: fd
     apt: fd-find
@@ -2480,7 +2358,6 @@ softwarePackages:
     _home: null
     _name: null
     npm: '@feathersjs/cli'
-    _type: cli
   ffmpeg:
     _bin: ffmpeg
     _desc: '[FFmpeg](https://www.ffmpeg.org/) is the leading multimedia framework. It is able to decode, encode, transcode, mux, demux, stream, filter and play pretty much anything that humans and machines have created. It supports the most obscure ancient formats up to the cutting edge.'
@@ -2496,7 +2373,6 @@ softwarePackages:
     dnf: ffmpeg
     pacman: ffmpeg
     scoop: ffmpeg
-    _type: cli
   ffsend:
     _bin: ffsend
     _desc: '[ffsend](https://github.com/timvisee/ffsend) (formerly [Firefox Send](https://support.mozilla.org/en-US/kb/what-happened-firefox-send)) allows you to easily and securely share files and directories from the command line through a safe, private and encrypted link using a single simple command. Files are shared using the [Send](https://send.vis.ee/) service and may be up to 1GB. Others are able to download these files with this tool, or through their web browser.'
@@ -2504,7 +2380,6 @@ softwarePackages:
     _github: https://github.com/timvisee/ffsend
     _home: null
     _name: ffsend
-    _type: cli
     ansible: professormanhattan.ffsend
     apk: ffsend
     brew: ffsend
@@ -2522,7 +2397,6 @@ softwarePackages:
     _when:cask: '! test -d "/Applications/Fig.app"'
     ansible:darwin: professormanhattan.fig
     cask: fig
-    _type: application
   filebrowser:
     _bin: filebrowser
     _desc: '[File Browser](https://filebrowser.org/) is a tool that lets you browse and edit files on any mounting point in the operating system.'
@@ -2530,7 +2404,6 @@ softwarePackages:
     _github: https://github.com/filebrowser/filebrowser
     _home: https://filebrowser.org/
     _name: File Browser
-    _type: webapp
     ansible: professormanhattan.filebrowser
     brew: filebrowser/tap/filebrowser
     github: github.com/filebrowser/filebrowser
@@ -2554,7 +2427,6 @@ softwarePackages:
     dnf: filezilla
     flatpak: org.filezillaproject.Filezilla
     pacman: filezilla
-    _type: application
   finish:
     _bin: null
     _desc: This role should be the last role in the playbook.
@@ -2571,7 +2443,6 @@ softwarePackages:
     _home: null
     _name: null
     npm: firebase-tools
-    _type: cli
   firefox:
     _bin: firefox
     _desc: '[Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/), or simply Firefox, is a free and open-source web browser developed by the Mozilla Foundation and its subsidiary, the Mozilla Corporation. Firefox uses the Gecko layout engine to render web pages, which implements current and anticipated web standards.'
@@ -2588,7 +2459,6 @@ softwarePackages:
     dnf: firefox
     flatpak: org.mozilla.firefox
     pacman: firefox
-    _type: application
   firewall:
     _bin: null
     _desc: This role is intended to be used with the ProfessorManhattan playbook. It integrates tightly with the other roles included with the playbook.
@@ -2604,7 +2474,6 @@ softwarePackages:
     _github: https://github.com/fission/fission
     _home: https://fission.io/
     _name: Fission
-    _type: binary
     exe: https://github.com/fission/fission/releases/download/v1.19.0/fission-v1.19.0-windows-amd64.exe
     github: github.com/fission/fission
     nix-env: nixos.fission
@@ -2618,7 +2487,6 @@ softwarePackages:
     _home: null
     _name: fkill
     npm: fkill-cli
-    _type: cli
   lulu:
     _bin: null
     _desc: Powerful firewall application for macOS
@@ -2669,7 +2537,6 @@ softwarePackages:
     winget: flameshot
     xbps: flameshot
     zypper: flameshot
-    _type: application
   drawio:
     _bin: null
     _desc: Desktop version of the popular diagrams.net diagramming software
@@ -2693,7 +2560,6 @@ softwarePackages:
     choco: flutter
     snap: flutter
     yay: flutter
-    _type: application
   pock:
     _bin: null
     _desc: Widgets manager for MacBook Touch Bar
@@ -2796,7 +2662,6 @@ softwarePackages:
     _name: Fritzing
     choco: fritzing
     flatpak: org.fritzing.Fritzing
-    _type: application
   fly:
     _bin: fly
     _desc: CLI to manage Concourse CI installation
@@ -2804,7 +2669,6 @@ softwarePackages:
     _github: null
     _home: https://concourse-ci.org/
     _name: fly
-    _type: binary
     cask: fly
     github: https://github.com/concourse/concourse
     yay: fly-cli
@@ -2815,7 +2679,6 @@ softwarePackages:
     _github: https://github.com/knipferrc/fm
     _home: null
     _name: fm
-    _type: cli
     github: github.com/knipferrc/fm
     go: github.com/knipferrc/fm@latest
   fonts:
@@ -2841,7 +2704,6 @@ softwarePackages:
     _name: fpm
     ansible: professormanhattan.fpm
     gem: fpm
-    _type: cli
   fpm:deps:
     apt:
       - build-essential
@@ -2866,7 +2728,6 @@ softwarePackages:
     _github: https://github.com/wader/fq
     _home: null
     _name: fq
-    _type: cli
     apk: fq
     brew: wader/tap/fq
     github: github.com/wader/fq
@@ -2880,7 +2741,6 @@ softwarePackages:
     _github: https://github.com/jhspetersson/fselect
     _home: null
     _name: fselect
-    _type: cli
     brew: fselect
     cargo: fselect
     choco: fselect
@@ -2893,7 +2753,6 @@ softwarePackages:
     _github: https://github.com/sgarciac/fuego
     _home: null
     _name: Fuego
-    _type: cli
     github: github.com/sgarciac/fuego
     snap: fuego
   fuse:
@@ -2916,7 +2775,6 @@ softwarePackages:
     _github: https://github.com/antonmedv/fx
     _home: https://github.com/antonmedv/fx
     _name: FX
-    _type: cli
     brew: fx
     go: github.com/antonmedv/fx@latest
     pacman: fx
@@ -2943,7 +2801,20 @@ softwarePackages:
     port: fzf
     xbps: fzf
     zypper: fzf
-    _type: cli
+  mono:
+    _bin: mono
+    _desc: Mono open source ECMA CLI, C# and .NET implementation.
+    _docs: https://www.mono-project.com/docs/
+    _github: https://github.com/mono/mono
+    _home: https://www.mono-project.com/
+    _name: Mono
+    apt: mono-complete
+    brew: mono
+    choco: mono
+    dnf: mono-complete
+    port: mono
+    scoop: main/mono
+    winget: Mono.Mono
   gawk:
     _bin: gawk
     _desc: An implementation of the AWK programming language
@@ -2992,7 +2863,6 @@ softwarePackages:
     _github: https://github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client
     _home: null
     _name: Google Assistant for Desktop
-    _type: application
     _when:cask: '! test -d "/Applications/Google Assistant.app"'
     ansible:windows: professormanhattan.googleassistant
     cask: google-assistant
@@ -3013,7 +2883,6 @@ softwarePackages:
     choco: gcloudsdk
     snap: google-cloud-sdk
     yay: google-cloud-sdk
-    _type: cli
   gdown:
     _bin: gdown
     _desc: Download a large file from Google Drive
@@ -3022,7 +2891,6 @@ softwarePackages:
     _home: null
     _name: null
     pipx: gdown
-    _type: cli
   gdrive:
     _bin: gdrive
     _desc: Google Drive CLI Client
@@ -3030,7 +2898,6 @@ softwarePackages:
     _github: https://github.com/prasmussen/gdrive
     _home: https://github.com/prasmussen/gdrive
     _name: gdrive
-    _type: cli
     brew: gdrive
     choco: gdrive
     github: github.com/prasmussen/gdrive
@@ -3055,7 +2922,6 @@ softwarePackages:
     go: github.com/dundee/gdu/v5/cmd/gdu@latest
     pacman: gdu
     snap: gdu-disk-usage-analyzer
-    _type: cli
   gfi:
     _bin: gfi
     _desc: Google Font Installer is a NodeJS module/CLI that lets you Search, Download and Install fonts offered by Google Web Fonts
@@ -3064,7 +2930,6 @@ softwarePackages:
     _home: null
     _name: null
     npm: google-font-installer
-    _type: cli
   gh:
     _bin: gh
     _desc: '[gh](https://cli.github.com/) is GitHub on the command line. It brings pull requests, issues, and other GitHub concepts to the terminal next to where you are already working with git and your code.'
@@ -3078,7 +2943,6 @@ softwarePackages:
     port: gh
     scoop: gh
     winget: GitHub.cli
-    _type: cli
   ghorg:
     _bin: ghorg
     _desc: "[ghorg](https://github.com/gabrie30/ghorg) allows you to quickly clone all of an org's, or user's repositories into a single directory."
@@ -3086,7 +2950,6 @@ softwarePackages:
     _github: https://github.com/gabrie30/ghorg
     _home: null
     _name: ghorg
-    _type: cli
     ansible: professormanhattan.ghorg
     brew: gabrie30/utils/ghorg
     github: github.com/gabrie30/ghorg
@@ -3108,7 +2971,6 @@ softwarePackages:
     flatpak: org.gimp.GIMP
     pacman: gimp
     snap: gimp
-    _type: cli
   gist:
     _bin: gist
     _desc: '[gist](https://github.com/defunkt/gist) provides a command that you can use from your terminal to upload content to https://gist.github.com/. This role will optionally set up a dotfile that handles authentication if you pass the appropriate configuration.'
@@ -3118,7 +2980,6 @@ softwarePackages:
     _name: gist
     ansible: professormanhattan.gist
     gem: gist
-    _type: cli
   git:
     _bin: git
     _desc: null
@@ -3130,7 +2991,6 @@ softwarePackages:
     apt: git
     brew: git
     dnf: git
-    _type: cli
   git-bug:
     _bin: git-bug
     _desc: null
@@ -3151,7 +3011,6 @@ softwarePackages:
     ansible: professormanhattan.gitfilterrepo
     brew: git-filter-repo
     pipx: git-filter-repo
-    _type: cli
   git-lfs:
     _bin: git-lfs
     _deps:
@@ -3165,7 +3024,6 @@ softwarePackages:
     ansible: professormanhattan.gitlfs
     brew: git-lfs
     scoop: git-lfs
-    _type: cli
   git-open:
     _bin: git-open
     _desc: Open the repo website (GitHub, GitLab, Bitbucket) in your browser
@@ -3174,7 +3032,6 @@ softwarePackages:
     _home: null
     _name: null
     npm: git-open
-    _type: cli
   git-secret:
     _bin: git-secret
     _desc: '[git-secret](https://git-secret.io/) is a bash tool to store your private data inside a git repo. How’s that? Basically, it just encrypts, using GPG, the tracked files with the public keys of all the users that you trust. So everyone of them can decrypt these files using only their personal secret key.'
@@ -3188,7 +3045,6 @@ softwarePackages:
     apt: git-secret
     brew: git-secret
     dnf:fedora: git-secret
-    _type: cli
   git-subrepo:
     _bin: git-subrepo
     _desc: null
@@ -3223,7 +3079,6 @@ softwarePackages:
     _when:cask: '! test -d /Applications/GitDock.app'
     ansible:darwin: professormanhattan.gitdock
     cask: gitdock
-    _type: application
   zola:
     _bin: zola
     _desc: A static site generator built with Rust
@@ -3261,7 +3116,6 @@ softwarePackages:
     brew: git-extras
     dnf: git-extras
     pacman: git-extras
-    _type: cli
   git-fuzzy:
     _bin: null
     _desc: '[git-fuzzy](https://github.com/bigH/git-fuzzy) is an interactive `git` that is built on the shoulders of [`fzf`](https://gitlab.com/megabyte-labs/ansible-roles/fzf).'
@@ -3271,7 +3125,6 @@ softwarePackages:
     _name: git-fuzzy
     _notes: Installed via dotfiles
     # ansible: professormanhattan.gitfuzzy
-    _type: cli
   git-notify:
     _bin: git-notify
     _desc: Communicate important updates to your team via git commit messages
@@ -3280,7 +3133,6 @@ softwarePackages:
     _home: null
     _name: Git Notify
     npm: git-notify
-    _type: cli
   gitify:
     _bin: null
     _desc: null
@@ -3289,7 +3141,6 @@ softwarePackages:
     _github: https://github.com/manosim/gitify
     _home: https://github.com/manosim/gitify
     _name: Gitify
-    _type: menubar
     _when:cask: '! test -d /Applications/Gitify.app'
     cask: gitify
     github: github.com/manosim/gitify
@@ -3308,7 +3159,6 @@ softwarePackages:
     choco: gitkraken
     flatpak: com.axosoft.GitKraken
     snap: gitkraken
-    _type: application
   gitlab-runner:
     _bin: gitlab-runner
     _desc: '[GitLab Runner](https://docs.gitlab.com/runner/) is an application that works with GitLab CI/CD to run jobs in a pipeline.'
@@ -3323,7 +3173,6 @@ softwarePackages:
     pacman: gitlab-runner
     port: gitlab-runner
     scoop: gitlab-runner
-    _type: cli
   gitleaks:
     _bin: gitleaks
     _desc: Extension to scan git repos (or files) for secrets using regex and entropy
@@ -3331,7 +3180,6 @@ softwarePackages:
     _github: https://github.com/zricethezav/gitleaks
     _home: null
     _name: gitleaks
-    _type: cli
     brew: gitleaks
     dnf:fedora: gitleaks
     github: github.com/zricethezav/gitleaks
@@ -3344,7 +3192,6 @@ softwarePackages:
     _github: https://github.com/muesli/gitomatic
     _home: null
     _name: git-o-matic
-    _type: cli
     ansible: professormanhattan.gitomatic
     github: github.com/muesli/gitomatic
     pacman: gitomatic
@@ -3369,7 +3216,6 @@ softwarePackages:
     _name: git-stats
     ansible: professormanhattan.gitstats
     npm: git-stats
-    _type: cli
   gitui:
     _bin: gitui
     _desc: Blazing fast TUI for git written in Rust
@@ -3377,7 +3223,6 @@ softwarePackages:
     _github: https://github.com/extrawurst/gitui
     _home: https://github.com/extrawurst/gitui
     _name: Git UI
-    _type: cli
     brew: gitui
     cargo: gitui
     choco: delta
@@ -3396,7 +3241,6 @@ softwarePackages:
     _home: null
     _name: null
     pipx: gixy
-    _type: cli
   glab:
     _bin: glab
     _desc: An open-source GitLab command line tool bringing GitLab's cool features to your command line
@@ -3404,7 +3248,6 @@ softwarePackages:
     _github: https://github.com/profclems/glab
     _home: null
     _name: glab
-    _type: cli
     apk: glab
     brew: glab
     github: github.com/profclems/glab
@@ -3445,7 +3288,6 @@ softwarePackages:
       - wireless_tools
     pipx: glances
     port: glances
-    _type: cli
   glen:
     _bin: glen
     _desc: A CLI to gather GitLab project and group variables
@@ -3454,7 +3296,6 @@ softwarePackages:
     _home: null
     _name: null
     go: github.com/lingrino/glen@latest
-    _type: cli
   glow:
     _bin: glow
     _desc: Glow is a terminal based markdown reader designed from the ground up to bring out the beauty—and power—of the CLI
@@ -3462,7 +3303,6 @@ softwarePackages:
     _github: https://github.com/charmbracelet/glow
     _home: null
     _name: glow
-    _type: cli
     brew: glow
     github: github.com/charmbracelet/glow
     pkg: glow
@@ -3499,7 +3339,6 @@ softwarePackages:
       - gnu-sed
       - gnutls
       - grep
-    _type: cli
   go:
     _bin: go
     _desc: '[Go](https://golang.org/) is a statically typed, compiled programming language designed at Google by Robert Griesemer, Rob Pike, and Ken Thompson. Go is syntactically similar to C, but with memory safety, garbage collection, structural typing, and CSP-style concurrency.'
@@ -3523,7 +3362,6 @@ softwarePackages:
     _github: https://github.com/vishen/go-chromecast
     _home: null
     _name: go-chromecast
-    _type: cli
     github: github.com/vishen/go-chromecast
     go: github.com/vishen/go-chromecast@latest
   go-outline:
@@ -3534,7 +3372,6 @@ softwarePackages:
     _home: null
     _name: null
     go: github.com/ramya-rao-a/go-outline@latest
-    _type: cli
   gojq:
     _bin: gojq
     _desc: gojq is a pure Go implementation of jq that is mostly backwards compatible (but not completely)
@@ -3542,7 +3379,6 @@ softwarePackages:
     _github: https://github.com/itchyny/gojq
     _home: null
     _name: gojq
-    _type: cli
     brew: gojq
     github: github.com/itchyny/gojq
     go: github.com/itchyny/gojq@latest
@@ -3555,7 +3391,6 @@ softwarePackages:
     _name: null
     brew: golangci-lint
     go: github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-    _type: cli
   gomodifytags:
     _bin: gomodifytags
     _desc: Go tool to modify struct field tags
@@ -3565,7 +3400,6 @@ softwarePackages:
     _name: null
     brew: gomodifytags
     go: github.com/fatih/gomodifytags@latest
-    _type: cli
   gomplate:
     _bin: gomplate
     _desc: A flexible commandline tool for template rendering. Supports lots of local and remote datasources.
@@ -3574,7 +3408,6 @@ softwarePackages:
     _github: https://github.com/hairyhenderson/gomplate
     _home: https://gomplate.ca/
     _name: Gomplate
-    _type: cli
     apk: gomplate
     brew: gomplate
     choco: gomplate
@@ -3587,7 +3420,6 @@ softwarePackages:
     _home: null
     _name: null
     go: github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest
-    _type: cli
   gopls:
     _bin: gopls
     _desc: null
@@ -3597,7 +3429,6 @@ softwarePackages:
     _name: null
     brew: gopls
     go: golang.org/x/tools/gopls@latest
-    _type: cli
   gotests:
     _bin: gotests
     _desc: Automatically generate Go test boilerplate from your source code
@@ -3607,7 +3438,6 @@ softwarePackages:
     _name: null
     brew: gotests
     go: github.com/cweill/gotests/...@latest
-    _type: cli
   gphotos-sync:
     _bin: gphotos-sync
     _desc: Google Photos Sync is a backup tool for your Google Photos cloud storage.
@@ -3617,7 +3447,6 @@ softwarePackages:
     _name: Google Photos Sync
     pacman: gphotos-sync
     pipx: gphotos-sync
-    _type: cli
   gping:
     _bin: gping
     _desc: '[gping](https://github.com/orf/gping) is like the regular ping command except it also displays a chart labeled with response timing statistics.'
@@ -3625,7 +3454,6 @@ softwarePackages:
     _github: https://github.com/orf/gping
     _home: null
     _name: gping
-    _type: cli
     ansible: professormanhattan.gping
     brew: gping
     cargo: gping
@@ -3647,7 +3475,6 @@ softwarePackages:
     port: gradle
     scoop: gradle
     snap: gradle
-    _type: cli
   grex:
     _bin: grex
     _desc: A command-line tool and library for generating regular expressions from user-provided test cases
@@ -3655,7 +3482,6 @@ softwarePackages:
     _github: https://github.com/pemistahl/grex
     _home: https://pemistahl.github.io/grex-js/
     _name: grex
-    _type: cli
     brew: grex
     cargo: grex
     choco: grex
@@ -3669,7 +3495,6 @@ softwarePackages:
     _github: https://github.com/tomnomnom/gron
     _home: null
     _name: gron
-    _type: cli
     brew: gron
     github: github.com/tomnomnom/gron
     go: github.com/tomnomnom/gron@latest
@@ -3684,7 +3509,6 @@ softwarePackages:
     choco: grype
     port: grype
     yay: grype-bin
-    _type: cli
   gtop:
     _bin: gtop
     _desc: System monitoring dashboard for terminal
@@ -3694,7 +3518,6 @@ softwarePackages:
     _name: null
     brew: gtop
     npm: gtop
-    _type: cli
   guacamole:
     _bin: null
     _desc: '[Apache Guacamole](https://guacamole.apache.org/) is a clientless remote desktop gateway. It supports standard protocols like VNC, RDP, and SSH.'
@@ -3703,7 +3526,6 @@ softwarePackages:
     _home: https://guacamole.apache.org/
     _name: Guacamole
     ansible: professormanhattan.guacamole
-    _type: webapp
   seafile-client:
     _bin: seafile-client
     _when:cask: '! test -d "/Applications/Seafile Client.app"'
@@ -3730,7 +3552,6 @@ softwarePackages:
     # Brew gulp is deprecated
     # brew: gulp
     npm: gulp
-    _type: cli
   gum:
     _bin: gum
     _desc: A tool for glamorous shell scripts. Provides styling and fancy prompts.
@@ -3738,7 +3559,6 @@ softwarePackages:
     _github: https://github.com/charmbracelet/gum
     _home: https://charm.sh/
     _name: Gum
-    _type: cli
     apk: gum
     brew: gum
     go: github.com/charmbracelet/gum@latest
@@ -3752,9 +3572,6 @@ softwarePackages:
     _github: https://github.com/allinurl/goaccess
     _home: https://goaccess.io/
     _name: GoAccess
-    _type:
-      - cli
-      - webapp
     apt: goaccess
     brew: goaccess
     dnf:fedora: goaccess
@@ -3779,7 +3596,6 @@ softwarePackages:
     _home: null
     _name: rvm
     ansible: professormanhattan.gvm
-    _type: cli
   hadolint:
     _bin: hadolint
     _desc: A smarter Dockerfile linter that helps you build best practice Docker images. The linter parses the Dockerfile into an AST and performs rules on top of the AST
@@ -3790,7 +3606,6 @@ softwarePackages:
     brew: hadolint
     dnf:fedora: hadolint
     scoop: hadolint
-    _type: cli
   hbs-cli:
     _bin: hbs
     _desc: This is a CLI tool to render handlebars templates, with the ability to require in Partials, Helpers and JSON Data
@@ -3798,7 +3613,6 @@ softwarePackages:
     _github: https://github.com/keithamus/hbs-cli
     _home: null
     npm: hbs-cli
-    _type: cli
   hclq:
     _bin: hclq
     _desc: Command-line processor for HashiCorp config files, like sed for HCL — Terraform, Consul, Nomad, Vault
@@ -3806,7 +3620,6 @@ softwarePackages:
     _github: https://github.com/mattolenik/hclq
     _home: null
     _name: hclq
-    _type: cli
     github: github.com/mattolenik/hclq
     go: github.com/mattolenik/hclq@latest
   heroku-cli:
@@ -3822,7 +3635,6 @@ softwarePackages:
     npm: heroku
     scoop: heroku-cli
     yay: heroku-cli
-    _type: cli
   hexyl:
     _bin: hexyl
     _desc: '[hexyl](https://github.com/sharkdp/hexyl) is a simple hex viewer for the terminal. It uses a colored output to distinguish different categories of bytes (NULL bytes, printable ASCII characters, ASCII whitespace characters, other ASCII characters and non-ASCII).'
@@ -3830,7 +3642,6 @@ softwarePackages:
     _github: https://github.com/sharkdp/hexyl
     _home: null
     _name: hexyl
-    _type: cli
     ansible: professormanhattan.hexyl
     apt: hexyl
     brew: hexyl
@@ -3851,7 +3662,6 @@ softwarePackages:
     _github: https://github.com/lencx/ChatGPT
     _home: https://app.nofwl.com/
     _name: ChatGPT Desktop
-    _type: app
     appimage: lencx/ChatGPT
     apt: https://github.com/lencx/ChatGPT/releases/download/v0.10.3/chat-gpt_0.10.3_amd64.deb
     # script:darwin: brew tap lencx/chatgpt https://github.com/lencx/ChatGPT.git && brew install --cask chatgpt --no-quarantine
@@ -3865,7 +3675,6 @@ softwarePackages:
     _github: https://github.com/rakyll/hey
     _home: null
     _name: hey
-    _type: cli
     brew: hey
     github: github.com/rakyll/hey
   rustdesk:
@@ -3875,7 +3684,6 @@ softwarePackages:
     _github: https://github.com/rustdesk/rustdesk
     _home: https://rustdesk.com/
     _name: RustDesk
-    _type: app
     _when:cask: '! test -d /Applications/RustDesk.app'
     apt: https://github.com/rustdesk/rustdesk/releases/download/1.1.9/rustdesk-1.1.9.deb
     cask: rustdesk
@@ -3894,7 +3702,6 @@ softwarePackages:
     ansible: professormanhattan.himalaya
     brew: himalaya
     scoop: himalaya
-    _type: cli
   hostctl:
     _bin: hostctl
     _desc: This tool gives more control over the use of hosts file
@@ -3902,7 +3709,6 @@ softwarePackages:
     _github: https://github.com/guumaster/hostctl
     _home: null
     _name: hostctl
-    _type: cli
     brew: guumaster/tap/hostctl
     github: github.com/guumaster/hostctl
     scoop: hostctl
@@ -3930,7 +3736,6 @@ softwarePackages:
     _github: https://github.com/mgdm/htmlq
     _home: null
     _name: htmlq
-    _type: cli
     brew: htmlq
     cargo: htmlq
     github: github.com/mgdm/htmlq
@@ -3948,7 +3753,6 @@ softwarePackages:
     dnf: htop
     pacman: htop
     port: htop
-    _type: cli
   http-prompt:
     _bin: http-prompt
     _desc: HTTP Prompt is an interactive command-line HTTP client featuring autocomplete and syntax highlighting, built on HTTPie and prompt_toolkit.
@@ -3958,7 +3762,6 @@ softwarePackages:
     _name: HTTP Prompt
     brew: http-prompt
     pipx: http-prompt
-    _type: cli
   httpie:
     _bin: httpie
     _desc: '[HTTPie](https://httpie.io/) is a terminal-based, user-friendly command-line HTTP client for the API era. It comes with JSON support, syntax highlighting, persistent sessions, wget-like downloads, plugins, and more.'
@@ -3974,7 +3777,6 @@ softwarePackages:
     pipx: httpie
     port: httpie
     snap: httpie
-    _type: cli
   httpstat:
     _bin: httpstat
     _desc: curl statistics made simple
@@ -3984,7 +3786,6 @@ softwarePackages:
     _name: httpstat
     brew: httpstat
     pipx: httpstat
-    _type: cli
   hub:
     _bin: hub
     _desc: Add GitHub support to git on the command-line
@@ -3999,7 +3800,6 @@ softwarePackages:
     pacman: hub
     pkg: hub
     scoop: hub
-    _type: cli
   husky:
     _bin: husky
     _desc: Husky improves your commits and more
@@ -4008,7 +3808,6 @@ softwarePackages:
     _home: https://typicode.github.io/husky/
     _name: Husky
     npm: husky
-    _type: cli
   hyper:
     _appImageName: Hyper
     _bin: null
@@ -4022,7 +3821,6 @@ softwarePackages:
     brew: hyper
     choco: hyper
     yay: hyper
-    _type: cli
   hyperfine:
     _bin: hyperfine
     _desc: '[hyperfine](https://github.com/sharkdp/hyperfine) is a cross-platform command-line benchmarking tool that can be used to determine the performance of shell commands.'
@@ -4030,7 +3828,6 @@ softwarePackages:
     _github: https://github.com/sharkdp/hyperfine
     _home: null
     _name: hyperfine
-    _type: cli
     ansible: professormanhattan.hyperfine
     apk: hyperfine
     brew: hyperfine
@@ -4064,7 +3861,6 @@ softwarePackages:
     choco: imagemagick
     dnf:fedora: imagemagick
     scoop: imagemagick
-    _type: application
   imgur-uploader:
     _bin: imgur-uploader
     _desc: Upload images to imgur
@@ -4073,7 +3869,6 @@ softwarePackages:
     _home: null
     _name: null
     npm: imgur-uploader-cli
-    _type: cli
   codeclimate:
     _bin: codeclimate
     _desc: null
@@ -4093,7 +3888,6 @@ softwarePackages:
     _home: null
     _name: null
     go: github.com/josharian/impl@latest
-    _type: cli
   infracost:
     _bin: infracost
     _desc: '[infracost](https://www.infracost.io/) provides cloud cost estimates for Terraform in pull requests'
@@ -4120,7 +3914,6 @@ softwarePackages:
     flatpak: org.inkscape.Inkscape
     pacman: inkscape
     snap: inkscape
-    _type: application
   intellij-idea-ce:
     _bin: intellij-idea-community
     _desc: '[IntelliJ IDEA](https://www.jetbrains.com/idea/) is an integrated development environment written in Java for developing computer software. It is developed by JetBrains, and is available as an Apache 2 Licensed community edition, and in a proprietary commercial edition. Both can be used for commercial development.'
@@ -4134,7 +3927,6 @@ softwarePackages:
     cask: intellij-idea-ce
     choco: intellijidea-community
     snap: intellij-idea-community
-    _type: application
   ionic:
     _bin: ionic
     _desc: '[Ionic Framework](https://ionicframework.com/) The Ionic command line interface (CLI) is your go-to tool for developing Ionic apps'
@@ -4143,7 +3935,6 @@ softwarePackages:
     _home: https://ionicframework.com/
     _name: Ionic Framework
     npm: '@ionic/cli'
-    _type: cli
   toml-sort:
     _bin: toml-sort
     _desc: A Python module that auto-formats TOML files
@@ -4161,7 +3952,6 @@ softwarePackages:
     _name: null
     brew:darwin: ios-deploy
     npm:darwin: ios-deploy
-    _type: cli
   ipfs:
     _bin: ipfs
     _desc: A peer-to-peer hypermedia protocol designed to preserve and grow humanity's knowledge by making the web upgradeable, resilient, and more open
@@ -4175,7 +3965,6 @@ softwarePackages:
     port: ipfs
     scoop: go-ipfs
     snap: ipfs
-    _type: cli
   ipfs-desktop:
     _bin: null
     _desc: An unobtrusive and user-friendly desktop application for IPFS on Windows, Mac and Linux.
@@ -4197,7 +3986,6 @@ softwarePackages:
     _home: https://ipfs.tech/
     _name: IPFS
     npm: ipfs-deploy
-    _type: cli
   is-up:
     _bin: is-up
     _desc: Check whether a website is up or down using the isitup.org API
@@ -4206,7 +3994,6 @@ softwarePackages:
     _home: null
     _name: null
     npm: is-up-cli
-    _type: cli
   iterm2:
     _bin: null
     _desc: '[iTerm2](https://eugeny.github.io/iterm2/) is a highly configurable terminal emulator, SSH and serial client for Windows, macOS and Linux.'
@@ -4217,7 +4004,6 @@ softwarePackages:
     _when:cask: '! test -d /Applications/iTerm.app'
     ansible:darwin: professormanhattan.iterm2
     cask: iterm2
-    _type: application
   kube-shell:
     _bin: kube-shell
     _desc: An integrated shell for working with the Kubernetes
@@ -4268,7 +4054,6 @@ softwarePackages:
     pacman: jdk-openjdk
     port: openjdk11
     scoop: openjdk11
-    _type: cli
   jenv:
     _bin: null
     _desc: '[jenv](https://www.jenv.be/) lets you switch between Java versions. It sets JAVA_HOME inside your shell, in a way that can be set globally, local to the current working directory or per shell.'
@@ -4277,7 +4062,6 @@ softwarePackages:
     _home: https://www.jenv.be/
     _name: jenv
     ansible: professormanhattan.jenv
-    _type: cli
   jiq:
     _bin: jiq
     _desc: Create jq queries interactively by leveraging a live reload feature in the terminal
@@ -4285,7 +4069,6 @@ softwarePackages:
     _github: https://github.com/fiatjaf/jiq
     _home: null
     _name: jiq
-    _type: cli
     github: github.com/fiatjaf/jiq/cmd/jiq
     go: github.com/fiatjaf/jiq/cmd/jiq@latest
   jitsi-meet:
@@ -4295,7 +4078,6 @@ softwarePackages:
     _github: https://github.com/jitsi/jitsi-meet-electron
     _home: null
     _name: Jitsi Meet Electron
-    _type: application
     _when:cask: '! test -d "/Applications/Jitsi Meet.app"'
     cask: jitsi-meet
     choco: jitsi-meet-electron
@@ -4310,7 +4092,6 @@ softwarePackages:
     _github: https://github.com/jpmens/jo
     _home: null
     _name: jo
-    _type: cli
     ansible: professormanhattan.jo
     apt: jo
     brew: jo
@@ -4326,7 +4107,6 @@ softwarePackages:
     _github: https://github.com/stedolan/jq
     _home: https://stedolan.github.io/jq
     _name: jq
-    _type: cli
     ansible: professormanhattan.jq
     apk: jq
     apt: jq
@@ -4345,7 +4125,6 @@ softwarePackages:
     brew: noahgorstein/tap/jqp
     port: jqp
     yay: jqp
-    _type: cli
   juju:
     _bin: juju
     _desc: '[Juju](https://juju.is/) is a Charmed Operator Framework, composed of a Charmed Operator Lifecycle Manager, and the Charmed Operator SDK. It allows you to deploy, integrate, and manage Kubernetes, container, and VM-native applications seamlessly across hybrid clouds. Juju drives Day 0 through Day 2 operations in your complex environment.'
@@ -4358,7 +4137,6 @@ softwarePackages:
     brew: juju
     choco: juju
     snap: juju
-    _type: cli
   kdash:
     _bin: kdash
     _desc: A simple and fast dashboard for Kubernetes
@@ -4366,7 +4144,6 @@ softwarePackages:
     _github: https://github.com/kdash-rs/kdash
     _home: https://kdash.cli.rs/
     _name: kdash
-    _type: cli
     brew: kdash-rs/kdash/kdash
     cargo: kdash
     choco: kdash
@@ -4388,7 +4165,6 @@ softwarePackages:
       - keybase
       - keybase-gui
     yay: keybase-bin
-    _type: application
   kitty:
     _bin: null
     _desc: '[KiTTY](https://sw.kovidgoyal.net/kitty/) is designed for power keyboard users. To that end all its controls work with the keyboard (although it fully supports mouse interactions as well). Its configuration is a simple, human editable, single file for easy reproducibility.'
@@ -4397,7 +4173,6 @@ softwarePackages:
     _home: https://sw.kovidgoyal.net/kitty/
     _name: KiTTY
     ansible: professormanhattan.kitty
-    _type: application
   kn:
     _bin: kn
     _desc: The Knative CLI (kn) provides a quick and easy interface for creating Knative resources, such as Knative Services and Event Sources
@@ -4405,7 +4180,6 @@ softwarePackages:
     _github: https://github.com/knative/client
     _home: null
     _name: kn
-    _type: cli
     brew: kn
     github: github.com/knative/client
     yay: knative-client-bin
@@ -4447,7 +4221,6 @@ softwarePackages:
     dnf: kodi
     flatpak: tv.kodi.Kodi
     pacman: kodi
-    _type: application
   kubectx:
     _bin: kubectx
     _desc: Faster way to switch between clusters and namespaces in kubectl
@@ -4466,7 +4239,6 @@ softwarePackages:
     pacman: kubectx
     port: kubectx
     snap: kubectx
-    _type: cli
   kubenav:
     _bin: null
     _desc: kubenav is the navigator for your Kubernetes clusters right in your pocket
@@ -4474,7 +4246,6 @@ softwarePackages:
     _github: https://github.com/kubenav/kubenav
     _home: https://kubenav.io/
     _name: kubenav
-    _type: application
     github: github.com/kubenav/kubenav
     yay: kubenav-bin
   kubernetes-cli:
@@ -4488,7 +4259,6 @@ softwarePackages:
     brew: kubectl
     choco: kubernetes-cli
     snap: kubectl
-    _type: cli
   kubernetes-helm:
     _bin: helm
     _desc: The Kubernetes Package Manager. Helm is the best way to find, share, and use software built for Kubernetes.
@@ -4511,7 +4281,6 @@ softwarePackages:
     brew: kompose
     choco: kubernetes-kompose
     snap: kompose
-    _type: cli
   kubeval:
     _bin: kubeval
     _desc: Validate your Kubernetes configuration files, supports multiple Kubernetes versions
@@ -4562,7 +4331,6 @@ softwarePackages:
     _github: https://github.com/chmln/handlr
     _home: https://github.com/chmln/handlr
     _name: Handlr
-    _type: cli
     cargo: handlr --locked
     yay: handlr-bin
   kvantum:
@@ -4632,7 +4400,6 @@ softwarePackages:
     port: lazygit
     scoop: lazygit
     xbps: lazygit
-    _type: cli
   ledger-live:
     _bin: null
     _desc: '[Ledger Live](https://www.ledger.com/ledger-live) is a new generation wallet desktop application providing a unique interface to maintain multiple cryptocurrencies for your Ledger Nano S / Blue. Manage your device, create accounts, receive and send cryptoassets and many more.'
@@ -4645,7 +4412,6 @@ softwarePackages:
     appimage: ledger-live-desktop
     cask: ledger-live
     choco: ledger-live
-    _type: application
   lens:
     _bin: lens
     _bin:snap: kontena-lens
@@ -4661,7 +4427,6 @@ softwarePackages:
     choco: lens
     snap: kontena-lens
     yay: lens
-    _type: application
   lepton:
     _bin: lepton
     _bin:snap: lepton
@@ -4673,7 +4438,6 @@ softwarePackages:
     _when:cask: '! test -d /Applications/Lepton.app'
     cask: lepton
     snap: lepton
-    _type: application
   lexicon:
     _bin: lexicon
     _desc: '[Lexicon](https://github.com/AnalogJ/lexicon) provides a way to manipulate DNS records on multiple DNS providers in a standardized/agnostic way.'
@@ -4683,7 +4447,6 @@ softwarePackages:
     _name: Lexicon
     ansible: professormanhattan.lexicon
     pipx: dns-lexicon[full]
-    _type: cli
   libimobiledevice:
     _bin: null
     _desc: null
@@ -4724,7 +4487,6 @@ softwarePackages:
     dnf: libreoffice
     flatpak: org.libreoffice.LibreOffice
     pacman: libreoffice
-    _type: application
   license:
     _bin: license
     _desc: Command-line license text generator
@@ -4732,7 +4494,6 @@ softwarePackages:
     _github: https://github.com/nishanths/license
     _home: null
     _name: license
-    _type: cli
     go: github.com/nishanths/license@latest
     yay: nishanths-license-git
   linkerd2:
@@ -4742,7 +4503,6 @@ softwarePackages:
     _github: https://github.com/linkerd/linkerd2
     _home: https://linkerd.io/
     _name: linkerd2
-    _type: cli
     brew: linkerd
     github: github.com/linkerd/linkerd2
     yay: linkerd
@@ -4753,7 +4513,6 @@ softwarePackages:
     _github: https://github.com/dbcli/litecli
     _home: https://litecli.com/
     _name: LiteCLI
-    _type: cli
     brew: litecli
     pipx: litecli
     yay: litecli
@@ -4764,7 +4523,6 @@ softwarePackages:
     _github: https://github.com/harttle/liquidjs
     _home: https://liquidjs.com/
     _name: LiquidJS
-    _type: cli
     npm: liquidjs
   localtunnel:
     _bin: lt
@@ -4775,7 +4533,6 @@ softwarePackages:
     _name: localtunnel
     brew: localtunnel
     npm: localtunnel
-    _type: cli
   logcli:
     _bin: logcli
     _desc: Run LogQL queries against a Loki server
@@ -4783,7 +4540,6 @@ softwarePackages:
     _github: https://github.com/grafana/loki
     _home: https://grafana.com/loki
     _name: logcli
-    _type: cli
     brew: logcli
     github: github.com/grafana/loki
     yay: logcli-git
@@ -4800,7 +4556,6 @@ softwarePackages:
     flatpak: org.gnome.Lollypop
     pacman: lollypop
     yay: lollypop-stable-git
-    _type: application
   lpass:
     _bin: null
     _desc: >-
@@ -4810,7 +4565,6 @@ softwarePackages:
     _home: null
     _name: LastPass CLI
     ansible: professormanhattan.lpass
-    _type: cli
   lsd:
     _bin: lsd
     _desc: '[LSD](https://github.com/Peltoche/lsd) (LSDeluxe), a clone of ls, is the next gen ls command with colorful output, file type icons, and more.'
@@ -4854,7 +4608,6 @@ softwarePackages:
     _github: https://github.com/rgcr/m-cli
     _home: https://github.com/rgcr/m-cli
     _name: m-cli
-    _type: cli
     brew:darwin: m-cli
   maas:
     _bin: maas
@@ -4885,7 +4638,6 @@ softwarePackages:
     _when:cask: '! test -d /Applications/Malwarebytes.app'
     cask: malwarebytes
     choco: malwarebytes
-    _type: application
   dialect:
     _bin: dialect
     flatpak: app.drey.Dialect
@@ -4934,7 +4686,6 @@ softwarePackages:
     flatpak: com.getmailspring.Mailspring
     snap: mailspring
     yay: mailspring
-    _type: application
   manta:
     _bin: null
     _desc: Flexible invoicing desktop app with beautiful & customizable templates
@@ -4942,7 +4693,6 @@ softwarePackages:
     _github: https://github.com/hql287/Manta
     _home: null
     _name: Manta
-    _type: application
     _when:cask: '! test -d /Applications/Manta.app'
     appimage: https://github.com/hql287/Manta/releases/download/v1.1.4/Manta-1.1.4-x86_64.AppImage
     cask: manta
@@ -4955,7 +4705,6 @@ softwarePackages:
     _github: https://github.com/marktext/marktext
     _home: null
     _name: MarkText
-    _type: application
     _when:cask: '! test -d /Applications/MarkText.app'
     cask: mark-text
     choco: marktext
@@ -4971,7 +4720,6 @@ softwarePackages:
     ansible:darwin: professormanhattan.mas
     brew:darwin: mas
     port: mas
-    _type: cli
   gnome-extension-manager:
     _bin: gnome-extension-manager
     flatpak: com.mattjakeman.ExtensionManager
@@ -4982,7 +4730,6 @@ softwarePackages:
     _github: https://github.com/antonreshetov/massCode
     _home: null
     _name: MassCode
-    _type: application
     _when:cask: '! test -d /Applications/massCode.app'
     cask: masscode
     github: github.com/antonreshetov/massCode
@@ -4997,7 +4744,6 @@ softwarePackages:
       # TODO
     _post:binary:windows: |
       # TODO
-    _type: cli
     binary:linux: https://dl.min.io/client/mc/release/linux-amd64/mc
     binary:windows: https://dl.min.io/client/mc/release/windows-amd64/mc.exe
     brew: minio/stable/mc
@@ -5015,7 +4761,6 @@ softwarePackages:
     port: mcfly
     script:darwin: curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | sh -s -- --git cantino/mcfly
     script:linux: curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | sh -s -- --git cantino/mcfly
-    _type: cli
   microsoft-edge:
     _bin: microsoft-edge
     _desc: '[Microsoft Edge](https://www.microsoft.com/en-us/edge) is a cross-platform web browser developed by Microsoft. It was first released for Windows 10 and Xbox One in 2015, then for Android and iOS in 2017, for macOS in 2019, and as a preview for Linux in October 2020.'
@@ -5029,7 +4774,6 @@ softwarePackages:
     choco: microsoft-edge
     flatpak: com.microsoft.Edge
     yay: microsoft-edge-stable-bin
-    _type: application
   gnome-boxes:
     _bin: gnome-boxes
     _desc: GNOME Boxes is an application of the GNOME Desktop Environment, used to access virtual systems. Boxes uses the QEMU, KVM, and libvirt virtualization technologies
@@ -5041,7 +4785,6 @@ softwarePackages:
     dnf: gnome-boxes
     flatpak: org.gnome.Boxes
     pacman: gnome-boxes
-    _type: application
   microsoft-office:
     _bin: null
     _desc: '[Microsoft Office](https://www.microsoft.com/en-us/microsoft-365/microsoft-office), or simply Office, is a family of client software, server software, and services developed by Microsoft.'
@@ -5052,7 +4795,6 @@ softwarePackages:
     _when:cask: '! test -d "/Applications/Microsoft Word.app"'
     cask: microsoft-office
     choco: office365business
-    _type: application
   microsoft-todo:
     _bin:snap: microsoft-todo-unofficial
     _desc: '[Microsoft To Do](https://todo.microsoft.com/tasks/) is a productivity application developed by Microsoft. It lets you create to do lists, reminders, and notes for any purpose. Sync lists across devices and Microsoft 365 accounts to access daily planner and task manager features anywhere.'
@@ -5064,7 +4806,6 @@ softwarePackages:
     ansible: professormanhattan.microsofttodo
     cask: ao
     snap: microsoft-todo-unofficial
-    _type: application
   minikube:
     _bin: minikube
     _desc: minikube quickly sets up a local Kubernetes cluster on macOS, Linux, and Windows
@@ -5078,7 +4819,6 @@ softwarePackages:
       - hyperkit
       - minikube
     choco: minikube
-    _type: cli
   mitmproxy:
     _bin: mitmproxy
     _desc: '[mitmproxy](https://mitmproxy.org/) is an interactive, SSL/TLS-capable intercepting proxy with a console interface for HTTP/1, HTTP/2, and WebSockets. It also includes mitmweb which is a web-based interface for mitmproxy.'
@@ -5091,7 +4831,6 @@ softwarePackages:
     brew: mitmproxy
     choco: mitmproxy
     pacman: mitmproxy
-    _type: cli
   mjml:
     _bin:npm: mjml
     _desc: The desktop app for MJML
@@ -5099,7 +4838,6 @@ softwarePackages:
     _github: https://github.com/mjmlio/mjml-app
     _home: https://mjmlio.github.io/mjml-app/
     _name: MJML App
-    _type: application
     _when:cask: '! test -d /Applications/MJML.app'
     cask: mjml
     github: github.com/mjmlio/mjml-app
@@ -5111,7 +4849,6 @@ softwarePackages:
     _github: https://github.com/FiloSottile/mkcert
     _home: null
     _name: mkcert
-    _type: cli
     brew: mkcert
     choco: mkcert
     github: github.com/FiloSottile/mkcert
@@ -5124,7 +4861,6 @@ softwarePackages:
     _github: https://github.com/mockoon/mockoon
     _home: null
     _name: Mockoon
-    _type: application
     _when:cask: '! test -d /Applications/Mockoon.app'
     cask: mockoon
     choco: mockoon
@@ -5140,7 +4876,6 @@ softwarePackages:
     _github: https://github.com/davrodpin/mole
     _home: https://davrodpin.github.io/mole/
     _name: mole
-    _type: cli
     brew: davrodpin/homebrew-mole/mole
     github: github.com/davrodpin/mole
     yay: mole-bin
@@ -5212,7 +4947,6 @@ softwarePackages:
     _github: https://github.com/agalwood/Motrix
     _home: https://motrix.app/
     _name: Motrix
-    _type: application
     _when:cask: '! test -d /Applications/Motrix.app'
     ansible: professormanhattan.motrix
     cask: motrix
@@ -5235,7 +4969,6 @@ softwarePackages:
     pacman: mpg123
     port: mpg123
     scoop: mpg123
-    _type: cli
   mqttx:
     _bin: mqttx
     _desc: MQTT X - Elegant Cross-platform MQTT 5.0 Desktop Client
@@ -5243,7 +4976,6 @@ softwarePackages:
     _github: https://github.com/emqx/MQTTX
     _home: null
     _name: MQTT X
-    _type: application
     _when:cask: '! test -d /Applications/MQTTX.app'
     cask: mqttx
     flatpak: com.emqx.MQTTX
@@ -5257,7 +4989,6 @@ softwarePackages:
     _github: https://github.com/raviqqe/muffet
     _home: null
     _name: muffet
-    _type: cli
     brew: muffet
     github: github.com/raviqqe/muffet
     go: github.com/raviqqe/muffet/v2@latest
@@ -5354,7 +5085,6 @@ softwarePackages:
     _github: https://github.com/mullvad/mullvadvpn-app
     _home: null
     _name: Mullvad VPN
-    _type: application
     _when:cask: '! test -d "/Applications/Mullvad VPN.app"'
     apt: https://github.com/mullvad/mullvadvpn-app/releases/download/2022.5/MullvadVPN-2022.5_amd64.deb
     cask: mullvadvpn
@@ -5383,7 +5113,6 @@ softwarePackages:
     _github: https://github.com/dbcli/mycli
     _home: https://www.mycli.net/
     _name: MyCLI
-    _type: cli
     apt: mycli
     brew: mycli
     pipx: mycli
@@ -5397,8 +5126,6 @@ softwarePackages:
     _home: null
     _name: nativefier
     npm: nativefier
-    _service: false
-    _type:
   nautilus-brasero:
     apt: nautilus-extension-brasero
     dnf: brasero-nautilus
@@ -5504,7 +5231,6 @@ softwarePackages:
     _name: null
     brew: ncc
     npm: '@vercel/ncc'
-    _type: cli
   nebula:
     _bin: null
     _desc: A scalable overlay networking tool with a focus on performance, simplicity and security
@@ -5512,7 +5238,6 @@ softwarePackages:
     _github: https://github.com/slackhq/nebula
     _home: null
     _name: nebula
-    _type: cli
     github: github.com/slackhq/nebula
     pacman: nebula
   nectar:
@@ -5523,7 +5248,6 @@ softwarePackages:
     _home: https://nectar.js.org/
     _name: nerctarjs
     npm: nectarjs
-    _type: cli
   neovim:
     _bin: nvim
     _desc: '[neovim](https://neovim.io/) is Vim-fork focused on extensibility and usability'
@@ -5559,7 +5283,6 @@ softwarePackages:
       - neovim
       - python-neovim
       - python3-neovim
-    _type: cli
   nest:
     _bin: nest
     _desc: CLI tool for Nest applications
@@ -5568,7 +5291,6 @@ softwarePackages:
     _home: null
     _name: nest
     npm: '@nestjs/cli'
-    _type: cli
   netcat:
     _bin: netcat
     _desc: netcat (often abbreviated to nc) is a computer networking utility for reading from and writing to network connections using TCP or UDP.
@@ -5582,7 +5304,6 @@ softwarePackages:
     dnf: netcat
     pacman: netcat
     scoop: netcat
-    _type: cli
   netdata:
     _bin: netdata
     _desc: '[Netdata](https://www.netdata.cloud/) is an open source tool designed to collect real-time metrics, such as CPU usage, disk activity, bandwidth usage, website visits, etc., and then display them in live, easy-to-interpret charts.'
@@ -5596,7 +5317,6 @@ softwarePackages:
     pacman: netdata
     port: netdata
     script: curl https://my-netdata.io/kickstart.sh > /tmp/netdata-kickstart.sh && sh /tmp/netdata-kickstart.sh
-    _type: webapp
   hurl:
     _bin: hurl
     _github: https://github.com/Orange-OpenSource/hurl
@@ -5622,7 +5342,6 @@ softwarePackages:
     _name: newman
     brew: newman
     npm: newman
-    _type: cli
   nextcloud:
     _bin: nextcloudcmd
     _desc: '[Nextcloud Client](https://nextcloud.com) is a tool to keep your files synchronized between your Nextcloud server and your desktop. Select one or more directories on your local machine and always have access to your latest files wherever you are'
@@ -5660,7 +5379,6 @@ softwarePackages:
     cask: ngrok
     choco: ngrok
     snap: ngrok
-    _type: cli
   ngxtop:
     _bin: ngxtop
     _desc: Real-time metrics for nginx server
@@ -5669,7 +5387,6 @@ softwarePackages:
     _home: null
     _name: ngxtop
     pipx: ngxtop
-    _type: cli
   nmap:
     _bin: nmap
     _desc: >-
@@ -5688,7 +5405,6 @@ softwarePackages:
     port: nmap
     scoop: nmap
     snap: nmap
-    _type: cli
   nnn:
     _bin: nnn
     _desc: A full-featured terminal file manager
@@ -5696,7 +5412,6 @@ softwarePackages:
     _github: https://github.com/jarun/nnn
     _home: null
     _name: nnn
-    _type: cli
     apk: nnn
     apt: nnn
     brew: nnn
@@ -5713,7 +5428,120 @@ softwarePackages:
     ansible: professormanhattan.nodejs
     brew: node
     scoop: nodejs
-    _type: cli
+  tea:
+    _bin: tea
+    _desc: The next-generation, cross‐platform package manager
+    _docs: https://docs.tea.xyz/
+    _github: https://github.com/teaxyz/cli
+    _home: https://tea.xyz/
+    _name: Tea
+    _post: tea --sync -n
+    brew: teaxyz/pkgs/tea-cli
+  pipedream-cli:
+    _bin: pd
+    _desc: Connect APIs, remarkably fast. Free for developers.
+    _github: https://github.com/PipedreamHQ/pipedream
+    _docs: https://pipedream.com/docs/cli/reference/
+    _home: https://pipedream.com/
+    _name: Pipedream CLI
+    brew: pipedreamhq/pd-cli/pipedream
+  notion:
+    _bin: null
+    _desc: Notion is the connected workspace where better, faster work happens.
+    _docs: https://www.notion.so/help/guides/category/documentation
+    _github: https://github.com/makenotion/notion-sdk-js
+    _home: https://www.notion.so/
+    _name: Notion AI
+    _note: Waiting on Linux install alternative.
+    _when:cask: '! test -d /Applications/Notion.app'
+    cask: notion
+    choco: notion
+  zaproxy:
+    _bin: zaproxy
+    _desc: The world’s most widely used web app scanner. Free and open source. Actively maintained by a dedicated international team of volunteers. A GitHub Top 1000 project.
+    _docs: https://www.zaproxy.org/docs/
+    _github: https://github.com/zaproxy/zaproxy
+    _home: https://www.zaproxy.org/
+    _name: OWASP ZAP
+    _snapClassic: true
+    _when:cask: '! test -d "/Applications/OWASP ZAP.app"'
+    cask: owasp-zap
+    choco: zap
+    flatpak: org.zaproxy.ZAP
+    pkg-freebsd: zaproxy
+    scoop: zaproxy
+    snap: zaproxy
+  pika:
+    _bin: null
+    _desc: An open-source colour picker app for macOS
+    _docs: https://github.com/superhighfives/pika
+    _github: https://github.com/superhighfives/pika
+    _home: https://superhighfives.com/pika
+    _name: Pika
+    _when:cask: '! test -d /Applications/Pika.app'
+    cask: pika
+  obsidian:
+    _bin: null
+    _desc: Obsidian is the private and flexible note‑taking app that adapts to the way you think.
+    _docs: https://help.obsidian.md/Home
+    _github: false
+    _home: https://obsidian.md/
+    _name: Obsidian
+    _when:cask: '! test -d /Applications/Obsidian.app'
+    appimage: Obsidian
+    cask: obsidian
+    choco: obsidian
+    flatpak: md.obsidian.Obsidian
+    scoop: extras/obsidian
+    winget: Obsidian.Obsidian
+  raycast:
+    _bin: null
+    _desc: Everything you need to extend Raycast (the search provider for macOS)
+    _docs: https://developers.raycast.com/
+    _github: https://github.com/raycast/extensions
+    _home: https://www.raycast.com/
+    _name: Raycast
+    _when:cask: '! test -d /Applications/Raycast.app'
+    cask: raycast
+  mage-ai:
+    _bin: mage
+    _desc: The modern replacement for Airflow. Build, run, and manage data pipelines for integrating and transforming data.
+    _docs: https://docs.mage.ai/introduction/overview
+    _github: https://github.com/mage-ai/mage-ai
+    _home: https://www.mage.ai
+    _name: Mage AI
+    pipx: mage-ai
+  warp-terminal:
+    _bin: null
+    _desc: Warp is a blazingly-fast modern Rust based GPU-accelerated terminal built to make you and your team more productive.
+    _docs: https://docs.warp.dev/getting-started/readme
+    _github: https://github.com/warpdotdev/Warp
+    _home: https://www.warp.dev/
+    _name: Warp Terminal
+    _when:cask: '! test -d /Applications/Warp.app'
+    cask: warp
+  figma:
+    _bin: null
+    _desc: Collaborative team software
+    _docs: https://help.figma.com/hc/en-us
+    _github: false
+    _home: https://www.figma.com/
+    _name: Figma
+    _when:cask: '! test -d /Applications/Figma.app'
+    appimage: Figma-Linux/figma-linux
+    cask: figma
+    choco: figma
+    flatpak: io.github.Figma_Linux.figma_linux
+    snap: figma-linux
+  tea-gui:
+    _bin: null
+    _desc: The open store for open source
+    _docs: https://docs.tea.xyz/appendix/tea-gui
+    _github: https://github.com/teaxyz/gui
+    _home: https://tea.xyz/
+    _name: Tea GUI
+    _when:cask: '! test -d /Applications/tea.app'
+    cask: tea
   node-prune:
     _bin: node-prune
     _desc: Extension to remove unnecessary files from node_modules
@@ -5721,7 +5549,6 @@ softwarePackages:
     _github: https://github.com/tj/node-prune
     _home: null
     _name: node-prune
-    _type: cli
     github: github.com/tj/node-prune
     go: github.com/tj/node-prune@latest
   nomad:
@@ -5735,7 +5562,6 @@ softwarePackages:
     brew: nomad
     choco: nomad
     yay: nomad-git
-    _type: cli
   nomino:
     _bin: nomino
     _desc: Batch rename utility for developers
@@ -5743,7 +5569,6 @@ softwarePackages:
     _github: https://github.com/yaa110/nomino
     _home: null
     _name: nomino
-    _type: cli
     cargo: nomino
     github: github.com/yaa110/nomino
     yay: nomino
@@ -5755,7 +5580,6 @@ softwarePackages:
     _home: https://nordvpn.com/
     _name: NordVPN
     ansible: professormanhattan.nordvpn
-    _type: application
   normit:
     _bin: normit
     _deps:
@@ -5767,7 +5591,6 @@ softwarePackages:
     _name: Normit
     ansible: professormanhattan.normit
     npm: normit
-    _type: cli
   np:
     _bin: np
     _desc: A better `npm publish`
@@ -5776,7 +5599,6 @@ softwarePackages:
     _home: null
     _name: np
     npm: np
-    _type: cli
   npm-check:
     _bin: npm-check
     _desc: Check for outdated, incorrect, and unused dependencies.
@@ -5785,7 +5607,6 @@ softwarePackages:
     _home: null
     _name: npm-check
     npm: npm-check
-    _type: cli
   nuclear:
     _bin: nuclear
     _desc: Streaming music player that finds free music
@@ -5793,7 +5614,6 @@ softwarePackages:
     _github: https://github.com/nukeop/nuclear
     _home: https://nuclear.js.org/
     _name: Nuclear
-    _type: application
     _when:cask: '! test -d /Applications/nuclear.app'
     cask: nuclear
     choco: nuclear
@@ -5809,7 +5629,6 @@ softwarePackages:
     _home: https://oclif.io/
     _name: oclif
     npm: oclif
-    _type: cli
   oh-my-posh:
     _bin: oh-my-posh
     _desc: A blazing fast cross platform/shell prompt renderer
@@ -5822,7 +5641,6 @@ softwarePackages:
     scoop:
       - clink
       - https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json
-    _type: cli
   onionshare:
     _bin: onionshare
     _desc: '[OnionShare](https://.onionshare.org/) is an open source tool that lets you securely and anonymously share files, host websites, and chat with friends using the Tor network.'
@@ -5837,7 +5655,6 @@ softwarePackages:
     dnf: onionshare
     flatpak: org.onionshare.OnionShare
     snap: onionshare
-    _type: application
   onlykey:
     _bin: onlykey
     _bin:snap: onlykey-app
@@ -5862,7 +5679,6 @@ softwarePackages:
     _github: https://github.com/Blacksmoke16/oq
     _home: https://blacksmoke16.github.io/oq/
     _name: oq
-    _type: cli
     brew: oq
     github: github.com/Blacksmoke16/oq
     snap: oq
@@ -5891,7 +5707,6 @@ softwarePackages:
     _github: https://github.com/osquery/osquery
     _home: https://osquery.io/
     _name: osquery
-    _type: cli
     _when:cask: '! test -d /usr/local/Caskroom/osquery'
     cask: osquery
     choco: osquery
@@ -5904,7 +5719,6 @@ softwarePackages:
     _github: https://github.com/sniptt-official/ots
     _home: https://ots.sniptt.com/
     _name: ots
-    _type: cli
     brew: ots
     github: github.com/sniptt-official/ots
     go: github.com/sniptt-official/ots@latest
@@ -5916,7 +5730,6 @@ softwarePackages:
     _home: null
     _name: package-size
     npm: package-size
-    _type: cli
   packer:
     _bin: packer
     _desc: '[Packer](https://www.packer.io/) is a free and open source tool for creating golden images for multiple platforms from a single source configuration. Packer is lightweight, runs on every major operating system, and is highly performant, creating machine images for multiple platforms in parallel. It is a [HashiCorp](https://www.hashicorp.com/) product.'
@@ -5929,7 +5742,6 @@ softwarePackages:
     brew: packer
     choco: packer
     pacman: packer
-    _type: cli
   page-fetch:
     _bin: page-fetch
     _desc: Fetch web pages using headless Chrome, storing all fetched resources including JavaScript files
@@ -5937,7 +5749,6 @@ softwarePackages:
     _github: https://github.com/detectify/page-fetch
     _home: null
     _name: page-fetch
-    _type: cli
     go: github.com/detectify/page-fetch@latest
   pageres:
     _bin: pageres
@@ -5947,7 +5758,6 @@ softwarePackages:
     _home: null
     _name: pageres
     npm: pageres-cli
-    _type: cli
   fury:
     _bin: fury
     _desc: null
@@ -6028,7 +5838,6 @@ softwarePackages:
     nix: pandoc
     pacman: pandoc
     winget: pandoc
-    _type: cli
   papertrail:
     _bin: papertrail
     _desc: Command-line client for Papertrail hosted log management service. Tails and searches app server logs and system syslog. Supports Boolean search and works with grep and pipe output (Unix)
@@ -6037,7 +5846,6 @@ softwarePackages:
     _home: null
     _name: papertrail
     gem: papertrail
-    _type: cli
   parallels:
     _bin: null
     _desc: '[Parallels Desktop for Mac](https://www.parallels.com/) is software providing hardware virtualization for Macintosh computers with Intel processors. It is developed by Parallels, since 2018 a subsidiary of Corel.'
@@ -6047,7 +5855,6 @@ softwarePackages:
     _name: Parallels
     _when: '! test -d "/Applications/Parallels Desktop.app"'
     ansible:darwin: professormanhattan.parallels
-    _type: application
   gnome-passwords-keys:
     _bin: seahorse
     flatpak: org.gnome.seahorse.Application
@@ -6058,7 +5865,6 @@ softwarePackages:
     _github: null
     _home: https://www.passwordstore.org/
     _name: pass
-    _type: cli
     apt: pass
     brew: pass
     dnf: pass
@@ -6071,7 +5877,6 @@ softwarePackages:
     _github: https://github.com/sharkdp/pastel
     _home: null
     _name: pastel
-    _type: cli
     brew: pastel
     cargo: pastel
     github: github.com/sharkdp/pastel
@@ -6084,7 +5889,6 @@ softwarePackages:
     _github: https://github.com/peco/peco
     _home: https://peco.github.io/
     _name: Peco
-    _type: cli
     ansible: professormanhattan.peco
     apt: peco
     brew: peco
@@ -6114,7 +5918,6 @@ softwarePackages:
       - gifski
       - peek
     yay: peek-git
-    _type: application
   pgcli:
     _bin: pgcli
     _desc: '[pgcli](https://www.pgcli.com/) is a free and open-source CLI for Postgres that does auto-completion and syntax highlighting.'
@@ -6127,7 +5930,6 @@ softwarePackages:
     choco: pgcli
     pipx: pgcli
     port: pgcli
-    _type: cli
   php:
     _deps:
       - php-extensions
@@ -6146,7 +5948,6 @@ softwarePackages:
     pacman: php
     port: php
     scoop: php
-    _type: cli
   php-extensions:
     _name: PHP Extensions
     _note: Needs testing
@@ -6240,7 +6041,6 @@ softwarePackages:
     _home: https://pip.pypa.io/en/stable/
     _name: PIP
     ansible: professormanhattan.pip
-    _type: cli
   pipx:
     _bin: pipx
     _desc: "[pipx](https://pypi.org/project/pipx/) is a tool to help you install and run end-user applications written in Python. It's roughly similar to macOS's brew, JavaScript's npx, and Linux's apt"
@@ -6258,7 +6058,6 @@ softwarePackages:
     _home: null
     _name: pkg
     npm: pkg
-    _type: cli
   playwright:
     _bin: playwright
     _desc: '[Playwright](https://playwright.dev) enables reliable end-to-end testing for modern web apps. It allows testing Chromium, Firefox and WebKit with a single API'
@@ -6267,7 +6066,6 @@ softwarePackages:
     _home: https://playwright.dev
     _name: Playwright
     npm: playwright
-    _type: cli
   plex:
     _bin: plex
     _desc: '[Plex](https://www.plex.tv/) is a global streaming service of free ad-supported video, with TV shows and movies from distributors such as Crackle, Warner Bros., MGM, Endemol Shine Group, Lionsgate, and Legendary. Plex is also a client–server media player system plus an ancillary software suite.'
@@ -6287,7 +6085,6 @@ softwarePackages:
     flatpak: tv.plex.PlexDesktop
     snap: plexmediaserver
     yay: plex-media-server
-    _type: application
   plex-htpc:
     _bin: plex-htpc
     flatpak: tv.plex.PlexHTPC
@@ -6299,7 +6096,6 @@ softwarePackages:
     _home: https://pm2.keymetrics.io/
     _name: pm2
     npm: pm2
-    _type: cli
   pnpm:
     _bin: pnpm
     _desc: '[pnpm](https://github.com/pnpm/pnpm) is a fast, disk space efficient package manager'
@@ -6312,7 +6108,6 @@ softwarePackages:
     npm: pnpm
     scoop: pnpm
     yay: pnpm
-    _type: cli
   pnpm-lock-export:
     _bin: pnpm-lock-export
     _desc: A CLI utility that reads a package.json and pnpm-lock.yaml, and outputs an npm ci compatible package-lock.json
@@ -6321,7 +6116,6 @@ softwarePackages:
     _home: null
     _name: null
     npm: pnpm-lock-export
-    _type: cli
   stacer:
     _bin: stacer
     _desc: Popular desktop GUI for monitoring and cleaning Linux systems.
@@ -6346,7 +6140,14 @@ softwarePackages:
     ansible: professormanhattan.poetry
     brew: poetry
     yay: python-poetry-git
-    _type: cli
+  jest:
+    _bin: jest
+    _desc: Delightful JavaScript testing.
+    _docs: https://jestjs.io/docs/getting-started
+    _github: https://github.com/jestjs/jest
+    _home: https://jestjs.io/
+    _name: Jest
+    npm: jest
   pony:
     _bin: pony
     _desc: Local file-based password, API key, secret, recovery code store backed by GPG
@@ -6354,7 +6155,6 @@ softwarePackages:
     _github: https://github.com/jessfraz/pony
     _home: null
     _name: pony
-    _type: cli
     github: github.com/jessfraz/pony
     go: github.com/jessfraz/pony@latest
   firewall-applet:
@@ -6382,7 +6182,6 @@ softwarePackages:
     dnf: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.rpm
     exe: https://updates.safing.io/latest/windows_amd64/packages/portmaster-installer.
     scoop: portmaster-np
-    _type: application
   pake:
     _bin: pake
     npm: pake-cli
@@ -6400,7 +6199,6 @@ softwarePackages:
     flatpak: com.getpostman.Postman
     snap: postman
     yay: postman-bin
-    _type: application
   powershell:
     _bin: powershell
     _desc: '[PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.1) is a task automation and configuration management framework from Microsoft, consisting of a command-line shell and the associated scripting language. Initially a Windows component only, known as Windows PowerShell, it was made open-source and cross-platform in 2016 with the introduction of PowerShell Core.'
@@ -6413,7 +6211,6 @@ softwarePackages:
     ansible: professormanhattan.powershell
     cask: powershell
     snap: powershell
-    _type: cli
   pre-commit:
     _bin: pre-commit
     _desc: Automatically installs a git pre-commit script in your git repository which runs your `npm test` on pre-commit
@@ -6431,6 +6228,14 @@ softwarePackages:
     _home: null
     _name: null
     ansible: professormanhattan.prepare
+  htmlhint:
+    _bin: htmlhint
+    _desc: The static code analysis tool you need for your HTML
+    _docs: https://htmlhint.com/docs/user-guide/getting-started
+    _github: https://github.com/htmlhint/HTMLHint
+    _home: https://htmlhint.com/
+    _name: HTMLHint
+    npm: htmlhint
   prettier:
     _bin: prettier
     _desc: '[Prettier](https://prettier.io/docs/en/index.html) is an opinionated code formatter. It enforces a consistent style by parsing your code and re-printing it with its own rules that take the maximum line length into account, wrapping code when necessary'
@@ -6466,7 +6271,6 @@ softwarePackages:
     _github: https://github.com/dalance/procs
     _home: null
     _name: procs
-    _type: cli
     apk: procs
     brew: procs
     cargo: procs
@@ -6501,7 +6305,6 @@ softwarePackages:
       - libappindicator-gtk3
       - protonvpn
     yay: protonvpn
-    _type: application
   protonvpn-cli:
     _bin: protonvpn
     _desc: The ProtonVPN CLI official release for Linux along with an unofficial ProtonVPN CLI for macOS
@@ -6537,7 +6340,6 @@ softwarePackages:
     _home: null
     _name: psi
     npm: psi
-    _type: cli
   psu:
     _bin: portainer-stack-utils
     _desc: CLI client for Portainer
@@ -6545,7 +6347,6 @@ softwarePackages:
     _github: https://github.com/greenled/portainer-stack-utils
     _home: https://hub.docker.com/r/greenled/portainer-stack-utils/
     _name: psu
-    _type: cli
     go: github.com/greenled/portainer-stack-utils@master
   pup:
     _bin: pup
@@ -6554,7 +6355,6 @@ softwarePackages:
     _github: https://github.com/ericchiang/pup
     _home: null
     _name: pup
-    _type: cli
     ansible: professormanhattan.pup
     brew: pup
     github: github.com/ericchiang/pup
@@ -6597,7 +6397,6 @@ softwarePackages:
     brew: pywhat
     pipx: pywhat
     port: pywhat
-    _type: cli
   qbittorrent:
     _bin: qbittorrent
     _desc: '[qBittorrent](https://www.qbittorrent.org/) is a cross-platform free and open-source BitTorrent client. qBittorrent is a native application written in C++. It uses Boost, Qt 5 toolkit, and libtorrent-rasterbar library. Its optional search engine is written in Python.'
@@ -6614,7 +6413,6 @@ softwarePackages:
     flatpak: org.qbittorrent.qBittorrent
     pacman: qbittorrent
     yay: qbittorrent-git
-    _type: application
   qlplugins:
     _bin: null
     _desc: null
@@ -6641,7 +6439,6 @@ softwarePackages:
     _home: https://github.com/quasar/Quasar
     _name: Quasar
     ansible:windows: professormanhattan.quasar
-    _type: application
   ramda:
     _bin: ramda
     _desc: A CLI tool for processing data with functional pipelines
@@ -6650,7 +6447,6 @@ softwarePackages:
     _home: https://github.com/raine/ramda-cli
     _name: Ramda
     npm: ramda-cli
-    _type: cli
   rancher-cli:
     _bin: rancher
     _desc: The Rancher Command Line Interface (CLI) is a unified tool for interacting with your Rancher Server
@@ -6658,7 +6454,6 @@ softwarePackages:
     _github: https://github.com/rancher/cli
     _home: null
     _name: rancher
-    _type: cli
     brew: rancher-cli
     github: github.com/rancher/cli
     yay: rancher-cli-bin
@@ -6677,7 +6472,6 @@ softwarePackages:
     flatpak: org.raspberrypi.rpi-imager
     snap: rpi-imager
     yay: rpi-imager
-    _type: application
   rclone:
     _bin: rclone
     _desc: '[Rclone](https://rclone.org/) is an open source, multi threaded, command line computer program to manage content on cloud and other high latency storage. Its capabilities include sync, transfer, crypt, cache, union, compress and mount. The rclone website lists [fifty supported backends](https://rclone.org/overview/) including S3 services and Google Drive.'
@@ -6698,7 +6492,6 @@ softwarePackages:
     pacman: rclone
     port: rclone
     scoop: rclone
-    _type: cli
   redis-desktop-manager:
     _bin: redis-desktop-manager
     _desc: '[Redis Desktop Manager](https://rdm.dev/) is an open source cross-platform Desktop Manager for Redis based on Qt 5.'
@@ -6709,7 +6502,6 @@ softwarePackages:
     ansible:linux: professormanhattan.rdm
     flatpak: app.resp.RESP
     snap: redis-desktop-manager
-    _type: application
   recoverpy:
     _deps:
       - coreutils
@@ -6725,7 +6517,6 @@ softwarePackages:
     _when: '! pip3 list | grep recoverpy > /dev/null'
     ansible:linux: professormanhattan.recoverpy
     script:linux: python3 -m pip install recoverpy
-    _type: cli
   coreutils:
     _bin:
       - cat
@@ -6771,7 +6562,6 @@ softwarePackages:
     pacman: remmina
     snap: remmina
     yay: remmina-git
-    _type: application
   microsoft-remote-desktop:
     _bin: null
     _desc: null
@@ -6781,7 +6571,6 @@ softwarePackages:
     _name: Microsoft Remote Desktop
     _when:cask: '! test -d "/Applications/Microsoft Remote Desktop.app"'
     cask: microsoft-remote-desktop
-    _type: application
   xrdp:
     _bin: xrdp
     _desc: null
@@ -6804,7 +6593,6 @@ softwarePackages:
     _github: https://github.com/responsively-org/responsively-app
     _home: null
     _name: Responsively
-    _type: application
     _when:cask: '! test -d /Applications/ResponsivelyApp.app'
     cask: responsively
     choco: responsively
@@ -6829,7 +6617,6 @@ softwarePackages:
     port: restic
     scoop: restic
     zypper: restic
-    _type: cli
   ripgrep:
     _bin: rg
     _desc: '[ripgrep](https://github.com/BurntSushi/ripgrep) is a line-oriented search tool that recursively searches your current directory for a regex pattern. By default, ripgrep will respect your .gitignore and automatically skip hidden files/directories and binary files. This role also installs ripgrep-all. [ripgrep-all](https://github.com/phiresky/ripgrep-all) is just like ripgrep except it also searches in PDFs, E-Books, Office documents, zip, tar.gz, etc.'
@@ -6849,7 +6636,6 @@ softwarePackages:
     port: ripgrep
     scoop: ripgrep
     zypper: ripgrep
-    _type: cli
   ripgrep-all:
     _bin: rga
     _desc: rga is a line-oriented search tool that allows you to look for a regex in a multitude of file types. rga wraps the awesome ripgrep and enables it to search in pdf, docx, sqlite, jpg, movie subtitles (mkv, mp4), etc.
@@ -6866,7 +6652,6 @@ softwarePackages:
     choco: ripgrep-all
     nix: ripgrep-all
     pacman: ripgrep-all
-    _type: cli
   rkhunter:
     _bin: rkhunter
     _desc: rkhunter is a Unix-based tool that scans for rootkits, backdoors and possible local exploits
@@ -6876,7 +6661,6 @@ softwarePackages:
     _name: rkhunter
     _post: rkhunter --propupd && rkhunter --update
     _service:pacman: cronie
-    _type: cli
     apt: rkhunter
     brew: rkhunter
     dnf: rkhunter
@@ -6891,7 +6675,6 @@ softwarePackages:
     _github: https://github.com/nivekuil/rip
     _home: https://github.com/nivekuil/rip
     _name: rip (Rm ImProved)
-    _type: cli
     brew: rm-improved
     cargo: rm-improved
     github: github.com/nivekuil/rip
@@ -6920,7 +6703,6 @@ softwarePackages:
     brew: rsync
     choco: rsync
     dnf: rsync
-    _type: cli
   ruby:
     _bin: ruby
     _desc: Ruby is an interpreted, high-level, general-purpose programming language which supports multiple programming paradigms. It was designed with an emphasis on programming productivity and simplicity. In Ruby, everything is an object, including primitive data types. It was developed in the mid-1990s in Japan.
@@ -6943,7 +6725,6 @@ softwarePackages:
     _github: https://github.com/lukehaas/RunJS
     _home: null
     _name: RunJS
-    _type: application
     _when:cask: '! test -d /Applications/RunJS.app'
     cask: runjs
     choco: runjs
@@ -7001,7 +6782,6 @@ softwarePackages:
     _github: https://github.com/peak/s5cmd
     _home: null
     _name: s5cmd
-    _type: cli
     ansible: professormanhattan.s5cmd
     brew: peak/tap/s5cmd
     github: github.com/peak/s5cmd
@@ -7015,7 +6795,6 @@ softwarePackages:
     _name: null
     brew: ms-jpq/sad/sad
     pacman: sad
-    _type: cli
   sake:
     _bin: sake
     _desc: Sake is a task runner for local and remote hosts
@@ -7065,7 +6844,6 @@ softwarePackages:
       # Unavailable on Ubuntu 22.04
       # - mhash2
       - sanoid
-    _type: cli
   x64dbg:
     _bin: x64dbg
     _desc: An open-source user mode debugger for Windows. Optimized for reverse engineering and malware analysis.
@@ -7157,7 +6935,6 @@ softwarePackages:
     _github: https://github.com/Confbase/schema
     _home: null
     _name: schema
-    _type: cli
     go: github.com/Confbase/schema@latest
   scrcpy:
     _bin: scrcpy
@@ -7166,7 +6943,6 @@ softwarePackages:
     _github: https://github.com/Genymobile/scrcpy
     _home: null
     _name: scrcpy
-    _type: cli
     ansible: professormanhattan.scrcpy
     apt: scrcpy
     brew: scrcpy
@@ -7191,7 +6967,6 @@ softwarePackages:
     _github: https://github.com/chmln/sd
     _home: null
     _name: sd
-    _type: cli
     apk: sd
     brew: sd
     cargo: sd
@@ -7225,7 +7000,6 @@ softwarePackages:
     _home: https://semantic-release.gitbook.io
     _name: semantic-release
     npm: semantic-release
-    _type: cli
   sentry-cli:
     _bin: sentry-cli
     _desc: sentry-cli can connect to the Sentry API and manage some data for your projects
@@ -7233,7 +7007,6 @@ softwarePackages:
     _github: https://github.com/getsentry/sentry-cli/
     _home: null
     _name: sentry-cli
-    _type: cli
     brew:darwin: getsentry/tools/sentry-cli
     github: github.com/getsentry/sentry-cli
     npm: '@sentry/cli'
@@ -7247,7 +7020,6 @@ softwarePackages:
     _home: null
     _name: serve
     npm: serve
-    _type: cli
   serverless:
     _bin: serverless
     _desc: Build applications with serverless architectures
@@ -7257,7 +7029,6 @@ softwarePackages:
     _name: serverless
     brew: serverless
     npm: serverless
-    _type: cli
   sftpgo:
     _bin: sftpgo
     _desc: Fully featured and highly configurable SFTP server with optional HTTP/S, FTP/S and WebDAV support - S3, Google Cloud Storage, Azure Blob
@@ -7265,7 +7036,6 @@ softwarePackages:
     _github: https://github.com/drakkan/sftpgo
     _home: null
     _name: sftpgo
-    _type: cli
     brew: sftpgo
     choco: sftpgo
     github: github.com/drakkan/sftpgo
@@ -7279,7 +7049,6 @@ softwarePackages:
     _home: null
     _name: share
     npm: share-cli
-    _type: cli
   sharex:
     _bin: null
     _desc: '[ShareX](https://getsharex.com/) is a free and open source program that lets you capture or record any area of your screen and share it with a single press of a key. It also allows uploading images, text or other types of files to many supported destinations you can choose from.'
@@ -7289,7 +7058,6 @@ softwarePackages:
     _name: ShareX
     ansible:windows: professormanhattan.sharex
     choco: sharex
-    _type: application
   sharp:
     _bin: sharp
     _desc: CLI for sharp (a Node.js image processing module)
@@ -7298,7 +7066,6 @@ softwarePackages:
     _home: null
     _name: sharp
     npm: sharp-cli
-    _type: cli
   shc:
     _bin: shc
     _desc: Shell script compiler
@@ -7310,7 +7077,6 @@ softwarePackages:
     ansible:linux: professormanhattan.shc
     brew: shc
     port: shc
-    _type: cli
   shdoc:
     _deps:script:
       - gawk
@@ -7325,7 +7091,6 @@ softwarePackages:
     script:darwin: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install
     script:linux: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install
     yay: shdoc-git
-    _type: cli
   shellcheck:
     _bin: shellcheck
     _desc: A static analysis tool for shell scripts
@@ -7334,7 +7099,6 @@ softwarePackages:
     _github: https://github.com/koalaman/shellcheck
     _home: https://www.shellcheck.net/
     _name: Shellcheck
-    _type: cli
     apt: shellcheck
     brew: shellcheck
     cabal: shellcheck
@@ -7358,7 +7122,6 @@ softwarePackages:
     _github: https://github.com/mvdan/sh
     _home: https://pkg.go.dev/mvdan.cc/sh/v3
     _name: shfmt
-    _type: cli
     ansible: professormanhattan.shfmt
     apk: shfmt
     brew: shfmt
@@ -7384,7 +7147,6 @@ softwarePackages:
     dnf: shotcut
     flatpak: org.shotcut.Shotcut
     snap: shotcut
-    _type: application
   shotwell:
     _bin: shotwell
     _desc: '[Shotwell](https://shotwell-project.org/doc/html/) is an image organizer designed to provide personal photo management for the GNOME desktop environment. In 2010, it replaced F-Spot as the standard image tool for several GNOME-based Linux distributions, including Fedora in version 13 and Ubuntu in its 10.10 Maverick Meerkat release.'
@@ -7397,7 +7159,6 @@ softwarePackages:
     dnf: shotwell
     flatpak: org.gnome.Shotwell
     pacman: shotwell
-    _type: application
   skate:
     _bin: skate
     _desc: Skate is a personal key-value store. Use it to save and retrieve anything you’d like—even binary data. It’s fully encrypted, backed up to the cloud (that you can self-host if you want) and can be synced with all your machines
@@ -7409,7 +7170,6 @@ softwarePackages:
     go: github.com/charmbracelet/skate@latest
     nix: nixpkgs.skate
     pacman: skate
-    _type: cli
   skm:
     _bin: skm
     _desc: A simple and powerful SSH keys manager
@@ -7417,7 +7177,6 @@ softwarePackages:
     _github: https://github.com/TimothyYe/skm
     _home: null
     _name: skm
-    _type: cli
     github: github.com/TimothyYe/skm
     go: github.com/TimothyYe/skm/cmd/skm@latest
   vup:
@@ -7430,7 +7189,6 @@ softwarePackages:
     _github: Not open-source
     _home: https://www.skype.com/en/
     _name: Skype
-    _type: application
     _when:cask: '! test -d /Applications/Skype.app'
     ansible: professormanhattan.skype
     cask: skype
@@ -7445,7 +7203,6 @@ softwarePackages:
     _github: https://github.com/slackhq/SlackTextViewController
     _home: https://slack.com/
     _name: Slack
-    _type: application
     _when:cask: '! test -d /Applications/Slack.app'
     ansible: professormanhattan.slack
     cask: slack
@@ -7461,7 +7218,6 @@ softwarePackages:
     _name: slack-term
     ansible: professormanhattan.slackterm
     go: github.com/erroneousboat/slack-term@latest
-    _type: cli
   sloth:
     _bin: null
     _desc: Mac app that shows all open files, directories, sockets, pipes and devices in use by all running processes. Nice GUI for lsof.
@@ -7471,7 +7227,6 @@ softwarePackages:
     _name: Sloth
     _when:cask: '! test -d /Applications/Sloth.app'
     cask: sloth
-    _type: application
   snapcraft:
     _deps:
       - snapd
@@ -7505,7 +7260,6 @@ softwarePackages:
     # Not loading on Ubuntu 22.04
     # ansible: professormanhattan.snitch
     cask: little-snitch
-    _type: application
   social-analyzer:
     _bin: social-analyzer
     _desc: API, CLI, and Web App for analyzing and finding a person's profile in 1000 social media \ websites
@@ -7514,7 +7268,6 @@ softwarePackages:
     _home: null
     _name: social-analyzer
     pipx: social-analyzer
-    _type: cli
   solidity:
     _bin: solcjs
     _desc: Javascript bindings for the Solidity compiler
@@ -7523,7 +7276,6 @@ softwarePackages:
     _home: null
     _name: solcjs
     npm: solc
-    _type: cli
   speed-test:
     _bin: speed-test
     _desc: Test your internet connection speed and ping using speedtest.net from the CLI
@@ -7532,7 +7284,6 @@ softwarePackages:
     _home: null
     _name: speed-test
     npm: speed-test
-    _type: cli
   spotdl:
     _bin: spotdl
     _deps:
@@ -7543,7 +7294,6 @@ softwarePackages:
     _home: null
     _name: spotdl
     pipx: spotdl
-    _type: cli
   gnome-eyedropper:
     _bin: eyedropper
     flatpak: com.github.finefindus.eyedropper
@@ -7557,7 +7307,6 @@ softwarePackages:
     _github: https://github.com/sqlectron/sqlectron-gui
     _home: null
     _name: SQLectron
-    _type: application
     _when:cask: '! test -d /Applications/sqlectron.app'
     cask: sqlectron
     github: github.com/sqlectron/sqlectron-gui
@@ -7575,7 +7324,6 @@ softwarePackages:
     _github: https://github.com/sqlite/sqlite
     _home: https://sqlite.org/index.html
     _name: SQLite
-    _type: cli
     apt: sqlite3
     brew: sqlite
     choco: sqlite
@@ -7602,7 +7350,6 @@ softwarePackages:
     brew: ssh-vault
     github: github.com/ssh-vault/ssh-vault
     _service: fault
-    _type: cli
   sshpass:
     _bin: sshpass
     _desc: Sshpass is a tool for non-interactivly performing password authentication with SSH's so called "interactive keyboard password authentication". Most user should use SSH's more secure public key authentiaction instead.
@@ -7613,7 +7360,6 @@ softwarePackages:
     apt: sshpass
     brew: hudochenkov/sshpass/sshpass
     dnf: sshpass
-    _type: cli
   tunnelblick:
     _desc: Tunnelblick is a macOS menubar tray application that helps you control OpenVPN.
     _docs: https://tunnelblick.net/documents.html
@@ -7642,7 +7388,6 @@ softwarePackages:
     _github: https://github.com/suyashkumar/ssl-proxy
     _home: null
     _name: ssl-proxy
-    _type: cli
     github: github.com/suyashkumar/ssl-proxy
   # Error installing aiohttp dependency
   # starred:
@@ -7656,7 +7401,6 @@ softwarePackages:
     _home: null
     _name: Starship
     ansible: professormanhattan.starship
-    _type: cli
   statcode:
     _bin: statcode
     _desc: null
@@ -7666,7 +7410,6 @@ softwarePackages:
     _name: null
     pipx: statcode
     yay: statcode
-    _type: cli
   staticcheck:
     _bin: staticcheck
     _desc: State of the art linter for the Go programming language
@@ -7680,7 +7423,6 @@ softwarePackages:
     pacman: staticcheck
     port: staticcheck
     scoop: staticcheck
-    _type: cli
   stats:
     _bin: null
     _desc: System monitor for the menu bar
@@ -7699,7 +7441,6 @@ softwarePackages:
     _home: https://stegcloak.surge.sh/
     _name: stegcloak
     npm: stegcloak
-    _type: cli
   stubby:
     _bin: stubby
     _desc: DNS privacy enabled stub resolver service based on getdns
@@ -7717,7 +7458,6 @@ softwarePackages:
     _home: null
     _name: surge
     npm: surge
-    _type: cli
   svgo:
     _bin: svgo
     _desc: SVG Optimizer is a Node.js-based tool for optimizing SVG vector graphics files.
@@ -7727,7 +7467,6 @@ softwarePackages:
     _name: svgo
     brew: svgo
     npm: svgo
-    _type: cli
   swarm:
     _bin: null
     _desc: Docker Swarm is an orchestration management tool that runs Docker applications. It helps in creating and deploying a cluster of Docker nodes
@@ -7736,7 +7475,6 @@ softwarePackages:
     _home: null
     _name: Docker Swarm
     ansible: professormanhattan.swarm
-    _type: cli
   switchhosts:
     _bin: null
     _desc: '[SwitchHosts](https://github.com/oldj/SwitchHosts) is an application for managing the etc hosts file. It allows you to easily switch between different etc hosts file configurations.'
@@ -7744,7 +7482,6 @@ softwarePackages:
     _github: https://github.com/oldj/SwitchHosts
     _home: https://swh.app/
     _name: SwitchHosts
-    _type: application
     _when:cask: '! test -d "/Applications/SwitchHosts.app"'
     ansible: professormanhattan.switchhosts
     appimage: oldj/SwitchHosts
@@ -7759,7 +7496,6 @@ softwarePackages:
     _github: https://github.com/samber/sync-ssh-keys
     _home: null
     _name: sync-ssh-keys
-    _type: cli
     github: github.com/samber/sync-ssh-keys
     yay: sync-ssh-keys-bin
   vidmerger:
@@ -7872,7 +7608,6 @@ softwarePackages:
     _home: null
     _name: synp
     npm: synp
-    _type: cli
   sysbench:
     _bin: sysbench
     _desc: System performance benchmark tool
@@ -7880,7 +7615,6 @@ softwarePackages:
     _github: https://github.com/akopytov/sysbench
     _home: null
     _name: sysbench
-    _type: cli
     apk: sysbench
     apt: sysbench
     brew: sysbench
@@ -7901,7 +7635,6 @@ softwarePackages:
     pacman:
       - sysdig
       - sysdig-dkms
-    _type: cli
   sysget:
     _bin: sysget
     _desc: One package manager to rule them all
@@ -7909,7 +7642,6 @@ softwarePackages:
     _github: https://github.com/emilengler/sysget
     _home: null
     _name: sysget
-    _type: cli
   t:
     _bin: t
     _desc: A command-line power tool for Twitter
@@ -7918,7 +7650,6 @@ softwarePackages:
     _home: null
     _name: null
     gem: t
-    _type: cli
   t-rec:
     _bin: t-rec
     _deps:cargo:
@@ -7929,7 +7660,6 @@ softwarePackages:
     _home: https://crates.io/crates/t-rec
     _name: t-rec
     _snapClassic: true
-    _type: cli
     ansible: professormanhattan.trec
     brew: t-rec
     cargo: t-rec
@@ -7943,7 +7673,6 @@ softwarePackages:
     _github: https://github.com/Eugeny/tabby
     _home: https://tabby.sh/
     _name: Tabby
-    _type: application
     _snapClassic: true
     _notes: TODO Update the direct links periodically and keep eye out for Snap / Flatpak
     _when:cask: '! test -d /Applications/Tabby.app'
@@ -7968,7 +7697,6 @@ softwarePackages:
     go: tailscale.com/cmd/tailscale{,d}@main
     pacman: tailscale
     port: tailscale
-    _type: cli
   tailscale-client:
     _bin: tailscale-client
     _desc: The Tailscale Client is a menubar app available on macOS and Windows that allows you to easily login and configure Tailscale.
@@ -7985,7 +7713,6 @@ softwarePackages:
     _github: https://github.com/go-task/task
     _home: https://taskfile.dev
     _name: Task
-    _type: cli
     brew: go-task
     choco: go-task
     github: github.com/go-task/task
@@ -8051,7 +7778,6 @@ softwarePackages:
     flatpak: com.microsoft.Teams
     snap: teams-for-linux
     yay: teams-for-linux
-    _type: application
   teamviewer:
     _bin: teamviewer
     _desc: '[TeamViewer](https://www.teamviewer.com/en-us/) is a proprietary software for remote access to as well as remote control and maintenance of computers and other devices, which was first released in 2005. The functionality has been expanded step by step, most recently for example through the integration of TeamViewer Meeting.'
@@ -8067,7 +7793,6 @@ softwarePackages:
     dnf: https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm
     yay: teamviewer
     zypper: https://download.teamviewer.com/download/linux/teamviewer-suse.x86_64.rpm
-    _type: application
   irssi:
     _bin: irssi
     _desc: Irssi is a modular text mode chat client. It comes with IRC support built in, and there are third party ICB, SILC, XMPP (Jabber), PSYC and Quassel protocol modules available.
@@ -8075,7 +7800,6 @@ softwarePackages:
     _github: https://github.com/irssi/irssi
     _home: https://irssi.org/
     _name: irssi
-    _type: cli
     apt: irssi
     brew: irssi
     dnf: irssi
@@ -8088,7 +7812,6 @@ softwarePackages:
     _github: https://github.com/gravitational/teleport
     _home: null
     _name: Teleport
-    _type: cli
     ansible: professormanhattan.teleport
     brew: teleport
     pkg: teleport
@@ -8100,7 +7823,6 @@ softwarePackages:
     _github: https://github.com/tellerops/teller
     _home: null
     _name: teller
-    _type: cli
     brew: spectralops/tap/teller
     github: github.com/tellerops/teller
   lsyncd:
@@ -8121,7 +7843,6 @@ softwarePackages:
     _github: https://github.com/jackd248/temps
     _home: null
     _name: Temps
-    _type: application
     github: github.com/jackd248/temps
   terminalizer:
     _bin: terminalizer
@@ -8131,7 +7852,6 @@ softwarePackages:
     _home: https://www.terminalizer.com/
     _name: terminalizer
     npm: terminalizer
-    _type: cli
   termius:
     _bin: termius
     _desc: '[Termius](https://www.termius.com/) is the SSH client that works on Desktop and Mobile.'
@@ -8148,7 +7868,6 @@ softwarePackages:
     pipx: termius
     snap: termius-app
     yay: termius
-    _type: application
   postfix:
     _bin: postfix
     _desc: Postfix is an e-mail server that can be used to send e-mail
@@ -8172,7 +7891,6 @@ softwarePackages:
     _name: terraform-ls
     brew: terraform-ls
     _service: false
-    _type: cli
   tfenv:
     _bin: tfenv
     _desc: '[tfenv](https://github.com/tfutils/tfenv) is a Terraform version manager inspired by [rbenv](https://github.com/rbenv/rbenv). It supports macOS, Linux, and Windows.'
@@ -8185,7 +7903,6 @@ softwarePackages:
     ansible:linux: professormanhattan.tfenv
     brew: tfenv
     port: tfenv
-    _type: cli
   tflint:
     _bin: tflint
     _desc: '[tflint](https://github.com/terraform-linters/tflint) is a framework that can help in finding possible errors for major cloud providers, warn about deprecated syntax and unused declarations and enforce best practices. This role installs tflint on nearly any platform.'
@@ -8193,7 +7910,6 @@ softwarePackages:
     _github: https://github.com/terraform-linters/tflint
     _home: null
     _name: tflint
-    _type: cli
     ansible: professormanhattan.tflint
     brew: tflint
     choco: tflint
@@ -8208,7 +7924,6 @@ softwarePackages:
     brew: tig
     nix: tig
     pkg: tig
-    _type: cli
   tilt:
     _bin: tilt
     _desc: Define your dev environment as code. For microservice apps on Kubernetes
@@ -8216,7 +7931,6 @@ softwarePackages:
     _github: https://github.com/tilt-dev/tilt
     _home: https://tilt.dev/
     _name: tilt
-    _type: webapp
     brew: tilt
     github: github.com/tilt-dev/tilt
     yay: tilt-bin
@@ -8232,7 +7946,6 @@ softwarePackages:
     apt: timeshift
     dnf:fedora: timeshift
     yay: timeshift
-    _type: application
   tinypng:
     _bin: tinypng
     _desc: Handy command line tool for shrinking PNG images using the TinyPNG API
@@ -8251,7 +7964,6 @@ softwarePackages:
     _name: tldr
     brew: tldr
     npm: tldr
-    _type: cli
   please:
     _bin: plz
     _desc:
@@ -8282,7 +7994,6 @@ softwarePackages:
       - gnu-sed
       - perl
       - tmux
-    _type: cli
   tokei:
     _bin: tokei
     _desc: Tokei is a program that displays statistics about the code
@@ -8290,7 +8001,6 @@ softwarePackages:
     _github: https://github.com/XAMPPRocky/tokei
     _home: null
     _name: tokei
-    _type: cli
     apk: tokei
     brew: tokei
     cargo: tokei
@@ -8313,7 +8023,6 @@ softwarePackages:
     dnf: privoxy
     pacman: privoxy
     port: privoxy
-    _type: cli
   tor:
     _bin: tor
     _desc: "[Tor](https://www.torproject.org/) is free and open-source software for enabling anonymous communication by directing Internet traffic through a free, worldwide, volunteer overlay network consisting of more than seven thousand relays in order to conceal a user's location and usage from anyone conducting network surveillance or traffic analysis. On Linux you can combine Tor with [Privoxy](https://www.privoxy.org/) which allows you to tunnel all of your traffic through the Tor network."
@@ -8327,7 +8036,6 @@ softwarePackages:
     dnf: tor
     pacman: tor
     port: tor
-    _type: application
   translate:
     _bin: trans
     _desc: '[Translate Shell](https://github.com/soimort/translate-shell) (formerly Google Translate CLI) is a command-line translator powered by Google Translate (default), Bing Translator, Yandex.Translate, and Apertium. It gives you easy access to these translation engines in your terminal. It is feature-rich and, although there is some overlap, it complements [Normit](https://gitlab.com/megabyte-labs/ansible-roles/normit) well.'
@@ -8341,7 +8049,6 @@ softwarePackages:
     brew: translate-shell
     dnf: translate-shell
     pacman: translate-shell
-    _type: cli
   tree:
     _bin: tree
     _desc: '[tree-cli](https://github.com/MrRaindrop/tree-cli) is a recursive directory listing program that produces a depth indented listing of files. With no arguments, tree lists the files in the current directory. When directory arguments are given, tree lists all the files and/or directories found in the given directories each in turn. Upon completion of listing all files/directories found, tree returns the total number of files and/or directories listed.'
@@ -8355,7 +8062,6 @@ softwarePackages:
     choco: tree
     dnf: tree
     pacman: tree
-    _type: cli
   tree-sitter:
     _bin: tree-sitter
     _desc: CLI tool for creating and testing tree-sitter parsers
@@ -8372,7 +8078,6 @@ softwarePackages:
     _home: https://roots.io/trellis/
     _name: trellis
     brew: roots/tap/trellis-cli
-    _type: cli
   trivy:
     _bin: trivy
     _desc: Scanner for vulnerabilities in container images, file systems, and Git repositories, as well as for configuration issues
@@ -8380,7 +8085,6 @@ softwarePackages:
     _github: https://github.com/aquasecurity/trivy
     _home: null
     _name: trivy
-    _type: cli
     brew: trivy
     github: github.com/aquasecurity/trivy
     yay: trivy-bin
@@ -8392,7 +8096,6 @@ softwarePackages:
     _home: https://trufflesecurity.com/trufflehog/
     _name: trufflehog
     brew: trufflesecurity/trufflehog/trufflehog
-    _type: cli
   ts2c:
     _bin: ts2c
     _desc: Convert Javascript/TypeScript to C
@@ -8401,7 +8104,6 @@ softwarePackages:
     _home: null
     _name: ts2c
     npm: ts2c
-    _type: cli
   typescript:
     _bin: tsc
     _desc: TypeScript is a strongly typed programming language that builds on JavaScript, giving you better tooling at any scale.
@@ -8419,7 +8121,6 @@ softwarePackages:
     _home: https://ulauncher.io/
     _name: Ulauncher
     ansible: professormanhattan.ulauncher
-    _type: cli
   unbuffer:
     _bin: unbuffer
     _desc: null
@@ -8438,7 +8139,6 @@ softwarePackages:
     _github: https://github.com/akavel/up
     _home: null
     _name: Ultimate Plumber (up)
-    _type: cli
     ansible: professormanhattan.up
     brew: up
     github: github.com/akavel/up
@@ -8452,7 +8152,6 @@ softwarePackages:
     _home: null
     _name: upt
     'cargo:': upt
-    _type: cli
     cargo: upt
   upx:
     _bin: upx
@@ -8469,7 +8168,6 @@ softwarePackages:
     pacman: upx
     port: upx
     scoop: upx
-    _type: cli
   cutter:
     _bin: cutter
     _when:cask: '! test -d "/Applications/Cutter.app"'
@@ -8502,7 +8200,6 @@ softwarePackages:
     dnf:fedora: vagrant
     pacman: vagrant
     scoop: vagrant
-    _type: cli
   vagrant-vmware-utility:
     _bin: vagrant-vmware-utility
     _desc: null
@@ -8523,7 +8220,6 @@ softwarePackages:
     _github: https://github.com/hashicorp/vault
     _home: https://vaultproject.io/
     _name: HashiCorp Vault
-    _type: cli
     ansible: professormanhattan.vault
     brew: hashicorp/tap/vault
     yay: vault-cli
@@ -8534,7 +8230,6 @@ softwarePackages:
     _github: https://github.com/vectordotdev/vector
     _home: https://vector.dev/
     _name: Vector
-    _type: cli
     # Unlisted on their website and formulae didn't seem to be registering the bin in the PATH
     # brew: vectordotdev/brew/vector
     helm: https://helm.vector.dev
@@ -8571,7 +8266,6 @@ softwarePackages:
     pacman: vim
     port: vim
     scoop: vim
-    _type: cli
   docker-langserver:
     _bin: docker-langserver
     _desc: A Docker language server
@@ -8635,7 +8329,6 @@ softwarePackages:
     choco: virtualbox
     dnf: virtualbox
     pacman: virtualbox
-    _type: cli
   virtualenv:
     _bin: virtualenv
     _desc: Tool for creating isolated virtual python environments
@@ -8645,7 +8338,6 @@ softwarePackages:
     _name: virtualenv
     brew: virtualenv
     pipx: virtualenv
-    _type: cli
   visual-studio:
     _bin: null
     _desc: '[Microsoft Visual Studio](https://visualstudio.microsoft.com/) is an integrated development environment from Microsoft. It is used to develop computer programs, as well as websites, web apps, web services and mobile apps.'
@@ -8658,7 +8350,6 @@ softwarePackages:
     ansible:windows: professormanhattan.visualstudio
     cask: visual-studio
     choco: visualstudio2022community
-    _type: application
   vscodium:
     _bin: codium
     _snapClassic: true
@@ -8686,7 +8377,6 @@ softwarePackages:
     choco: vlc
     flatpak: org.videolan.VLC
     snap: vlc
-    _type: application
   vmware:
     _bin: vmware
     _bin:cask: vmware-id
@@ -8698,7 +8388,6 @@ softwarePackages:
     _when:darwin: '! test -d "/Applications/VMware Fusion.app"'
     ansible: professormanhattan.vmware
     cask: vmware-fusion
-    _type: application
   what-ip:
     _bin: whatip
     flatpak: org.gabmus.whatip
@@ -8715,7 +8404,6 @@ softwarePackages:
     ansible: professormanhattan.volta
     brew: volta
     scoop: volta
-    _type: cli
   vpn:
     _bin: null
     _desc: You can populate a configuration to power this role. When configured properly, the system's built-in VPN client will be configured with your desired settings.
@@ -8739,7 +8427,6 @@ softwarePackages:
     flatpak: com.visualstudio.code
     snap: code
     yay: visual-studio-code-bin
-    _type: application
   w3m:
     _bin: w3m
     _desc: w3m is a pager/text-based WWW browser. You can browse local documents and/or documents on the WWW using a terminal emulator.
@@ -8753,7 +8440,6 @@ softwarePackages:
     pacman: w3m
     port: w3m
     zypper: w3m
-    _type: cli
   wails:
     _bin: wails
     _desc: '[Wails](https://github.com/wailsapp/wails) offers a different approach to providing web interfaces to Go programs: it provides the ability to wrap both Go code and a web frontend into a single binary.'
@@ -8763,7 +8449,6 @@ softwarePackages:
     _name: Wails
     ansible: professormanhattan.wails
     go: github.com/wailsapp/wails/cmd/wails@latest
-    _type: cli
   warp:
     _bin: warp-cli
     _desc: '[Cloudflare WARP Client](https://cloudflarewarp.com/) is a free app that makes your Internet safer'
@@ -8777,7 +8462,6 @@ softwarePackages:
     apt: cloudflare-warp
     cask: cloudflare-warp
     choco: warp
-    _type: application
   watchexec:
     _bin: watchexec
     _desc: Executes commands in response to file modifications.
@@ -8785,7 +8469,6 @@ softwarePackages:
     _github: https://github.com/watchexec/watchexec
     _home: https://watchexec.github.io/
     _name: Watchexec
-    _type: cli
     apk: watchexec
     # Apt is from an unofficial channel
     # apt: watchexec
@@ -8810,7 +8493,6 @@ softwarePackages:
     choco: watchman
     port: watchman
     scoop: watchman
-    _type: cli
   waypoint:
     _bin: waypoint
     _desc: '[HashiCorp Waypoint](https://www.waypointproject.io/) allows developers to deploy, manage, and observe their applications through a consistent abstraction of underlying infrastructure. Waypoint works with Kubernetes, ECS and many other platforms.'
@@ -8818,7 +8500,6 @@ softwarePackages:
     _github: https://github.com/hashicorp/waypoint
     _home: https://www.waypointproject.io/
     _name: HashiCorp Waypoint
-    _type: cli
     ansible: professormanhattan.waypoint
     brew: hashicorp/tap/waypoint
     scoop: waypoint
@@ -8842,7 +8523,6 @@ softwarePackages:
     _github: https://github.com/vi/websocat
     _home: null
     _name: websocat
-    _type: cli
     brew: websocat
     cargo: websocat
     github: github.com/vi/websocat
@@ -8855,7 +8535,6 @@ softwarePackages:
     _github: https://github.com/webtorrent/webtorrent-desktop
     _home: webtorrent.io/desktop
     _name: WebTorrent Desktop
-    _type: application
     _when:cask: '! test -d /Applications/WebTorrent.app'
     cask: webtorrent
     choco: webtorrent-desktop
@@ -8885,7 +8564,6 @@ softwarePackages:
     brew: whalebrew
     script:darwin: curl -L "https://github.com/whalebrew/whalebrew/releases/download/0.4.0/whalebrew-$(uname -s)-$(uname -m)" -o /usr/local/bin/whalebrew; chmod +x /usr/local/bin/whalebrew
     script:linux: curl -L "https://github.com/whalebrew/whalebrew/releases/download/0.4.0/whalebrew-$(uname -s)-$(uname -m)" -o /usr/local/bin/whalebrew; chmod +x /usr/local/bin/whalebrew
-    _type: cli
   wifi-password:
     _bin: wifi-password
     _desc: Get the password of the wifi you're on
@@ -8896,7 +8574,6 @@ softwarePackages:
     bpkg: rauchg/wifi-password
     brew:darwin: wifi-password
     npm: wifi-password-cli
-    _type: cli
   windows-adk:
     _bin: null
     _desc: >-
@@ -8907,7 +8584,6 @@ softwarePackages:
     _name: Windows ADK
     ansible:windows: professormanhattan.windowsadk
     choco: windows-adk
-    _type: application
   windows-admin-center:
     _bin: null
     _desc: >-
@@ -8918,7 +8594,6 @@ softwarePackages:
     _name: Windows Admin Center
     ansible:windows: professormanhattan.windowsadmincenter
     choco: windows-admin-center
-    _type: application
   windows-power-toys:
     _bin: null
     _desc: '[Microsoft PowerToys](https://docs.microsoft.com/en-us/windows/powertoys/) is a set of utilities for Windows power-users to tune and streamline their Windows 10 experience for greater productivity. It includes tools like a Color Picker, File Explorer add-ons, Keyboard Manager, Shortcut Guide, and more.'
@@ -8929,7 +8604,6 @@ softwarePackages:
     ansible:windows: professormanhattan.windowspowertoys
     choco: powertoys
     scoop: powertoys
-    _type: application
   winrm-cli:
     _bin: null
     _desc: Command-line tool to remotely execute commands on Windows machines through WinRM
@@ -8937,7 +8611,6 @@ softwarePackages:
     _github: https://github.com/masterzen/winrm-cli
     _home: null
     _name: winrm-cli
-    _type: cli
     yay: winrm-cli-git
   browserosaurus:
     _bin: null
@@ -9050,7 +8723,6 @@ softwarePackages:
     brew: wireshark
     dnf: wireshark-cli
     pacman: wireshark-cli
-    _type: cli
   wireshark:
     _bin: wireshark-gui
     _desc: '[Wireshark](https://www.wireshark.org/) is a free and open-source packet analyzer. It is used for network troubleshooting, analysis, software and communications protocol development, and education. Originally named Ethereal, the project was renamed Wireshark in May 2006 due to trademark issues.'
@@ -9065,7 +8737,6 @@ softwarePackages:
     dnf: wireshark
     flatpak: org.wireshark.Wireshark
     pacman: wireshark-qt
-    _type: application
   wkhtmltopdf:
     _bin: wkhtmltopdf
     _desc: '[wkhtmltopdf](https://github.com/wkhtmltopdf/wkhtmltopdf) is a command line tool to render HTML into PDF and various image formats using the QT Webkit rendering engine.'
@@ -9073,7 +8744,6 @@ softwarePackages:
     _github: https://github.com/wkhtmltopdf/wkhtmltopdf
     _home: null
     _name: wkhtmltopdf
-    _type: cli
     _when:cask: '! test -d /usr/local/Caskroom/wkhtmltopdf'
     # CentOS Stream 9 does not have a supported GitHub release available
     # ansible: professormanhattan.wkhtmltopdf
@@ -9090,7 +8760,6 @@ softwarePackages:
     _home: https://www.wordpressify.co/
     _name: wordpressify
     npm: wordpressify
-    _type: cli
   wp-cli:
     _bin: wp
     _desc: '[WP-CLI](https://wp-cli.org/) is the command-line interface for [WordPress](https://wordpress.org/). You can update plugins, configure multisite installations and much more. You can do all this without using a web browser.'
@@ -9101,7 +8770,6 @@ softwarePackages:
     ansible:darwin: professormanhattan.wpcli
     ansible:linux: professormanhattan.wpcli
     brew: wp-cli
-    _type: cli
   wrangler:
     _bin: wrangler
     _desc: wrangler is a CLI tool designed for folks who are interested in using Cloudflare Workers. Deploy serverless code instantly across the globe to give it exceptional performance, reliability, and scale.
@@ -9110,7 +8778,6 @@ softwarePackages:
     _home: https://workers.cloudflare.com/
     _name: wrangler
     npm: '@cloudflare/wrangler'
-    _type: cli
   wrk:
     _bin: wrk
     _desc: '[wrk](https://github.com/reconquest/wrk) is a modern HTTP benchmarking tool capable of generating significant load when run on a single multi-core CPU. It combines a multithreaded design with scalable event notification systems such as epoll and kqueue'
@@ -9147,7 +8814,6 @@ softwarePackages:
     _github: https://github.com/mvdan/xurls
     _home: null
     _name: xurls
-    _type: cli
     github: github.com/mvdan/xurls
     go: mvdan.cc/xurls/v2/cmd/xurls@latest
   yamllint:
@@ -9194,7 +8860,6 @@ softwarePackages:
     port: yank
     scoop: win32yank
     zypper: yank
-    _type: cli
   yarn:
     _bin: yarn
     _desc: "[Yarn](https://yarnpkg.com/) is a relatively new and open source JavaScript package manager developed by Facebook. Yarn is fully compatible with the npm registry (i.e. [npmjs.com](https://www.npmjs.com/)) and can work alongside npm, but it's aim it to be a safer, more secure and more reliable alternative."
@@ -9210,7 +8875,6 @@ softwarePackages:
     port: yarn
     scoop: yarn
     script: curl -o- -L https://yarnpkg.com/install.sh | bash
-    _type: cli
   yarnhook:
     _bin: yarnhook
     _desc: yarnhook keeps your node_modules up-to-date when your yarn.lock, package-lock.json or shrinkwrap.yaml changes due to git operations like checkout, merge, rebase, pull etc.
@@ -9219,7 +8883,6 @@ softwarePackages:
     _home: null
     _name: Yarnhook
     npm: yarnhook
-    _type: cli
   yj:
     _bin: yj
     _desc: CLI program that allows you to convert between YAML, TOML, JSON, and HCL.
@@ -9228,7 +8891,6 @@ softwarePackages:
     _github: https://github.com/sclevine/yj
     _home: https://github.com/sclevine/yj
     _name: YJ
-    _type: cli
     brew: yj
     go: github.com/sclevine/yj/v5@v5.1.0
   forklift:
@@ -9252,7 +8914,6 @@ softwarePackages:
     _github: https://github.com/mikefarah/yq
     _home: https://mikefarah.gitbook.io/yq/
     _name: yq
-    _type: cli
     ansible: professormanhattan.yq
     apk: yq
     brew: yq
@@ -9279,7 +8940,6 @@ softwarePackages:
     ansible:darwin: professormanhattan.yubikey
     choco: yubico-authenticator
     flatpak: com.yubico.yubioath
-    _type: application
   yubikey-manager:
     _bin: ykman
     _desc: Use the YubiKey Manager to configure FIDO2, OTP and PIV functionality on your YubiKey on Windows, macOS, and Linux operating systems.
@@ -9291,7 +8951,6 @@ softwarePackages:
     dnf:fedora: yubikey-manager
     pacman: yubikey-manager
     pipx: yubikey-manager
-    _type: cli
   yubikey-manager-qt:
     _bin: null
     _desc: Cross-platform application for configuring any YubiKey over all USB interfaces.
@@ -9306,7 +8965,6 @@ softwarePackages:
     dnf:fedora: yubikey-manager-qt
     pacman: yubikey-manager-qt
     scoop: yubikey-manager-qt
-    _type: application
   zap:
     _bin: zap
     _desc: Delightful AppImage package manager
@@ -9317,7 +8975,6 @@ softwarePackages:
     ansible:linux: professormanhattan.zap
     binary:linux: https://github.com/srevinsaju/zap/releases/download/continuous/zap-amd64
     script:linux: curl https://raw.githubusercontent.com/srevinsaju/zap/main/install.sh | sudo bash -s
-    _type: cli
   zoom:
     _bin: zoom
     _desc: '[Zoom](https://zoom.us/) is a videotelephony software program developed by Zoom Video Communications. This role installs Zoom on nearly any platform. The Zoom free plan provides a video chatting service that allows up to 100 participants concurrently, with a 40-minute time restriction.'
@@ -9332,7 +8989,6 @@ softwarePackages:
     flatpak: us.zoom.Zoom
     snap: zoom
     yay: zoom
-    _type: application
   zoxide:
     _bin: zoxide
     _desc: '[zoxide](https://github.com/ajeetdsouza/zoxide) is a blazing fast replacement for your cd command, inspired by z and autojump'
@@ -9342,7 +8998,6 @@ softwarePackages:
     _name: zoxide
     ansible: professormanhattan.zoxide
     brew: zoxide
-    _type: cli
   zsh:
     _bin: zsh
     _desc: '[Oh My Zsh](https://ohmyz.sh/) is a delightful, open source, community-driven framework for managing your Zsh configurations. It comes bundled with thousands of helpful functions, helpers, plugins, themes, and a few things that make you shout oh my zsh! This role also installs some CLI tools that accompany Oh My Zsh! to make it even more amazing.'
@@ -9357,7 +9012,6 @@ softwarePackages:
     dnf: zsh
     pacman: zsh
     port: zsh
-    _type: cli
   zx:
     _bin: zx
     _desc: Bash is great, but when it comes to writing more complex scripts, many people prefer a more convenient programming language. JavaScript is a perfect choice, but the Node.js standard library requires additional hassle before using. The zx package provides useful wrappers around child_process, escapes arguments and gives sensible defaults.
@@ -9367,7 +9021,6 @@ softwarePackages:
     _name: zx
     brew: zx
     npm: zx
-    _type: cli
   flatseal:
     _bin: flatseal
     flatpak: com.github.tchx84.Flatseal

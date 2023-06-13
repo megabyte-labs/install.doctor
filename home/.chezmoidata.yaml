@@ -40,12 +40,17 @@ docker:
 macosRemoteLogin: 'on'
 netdataClaimURL: https://app.netdata.cloud
 themeparkTheme: aquamarine
+figmaAddons:
+  - https://www.figma.com/community/plugin/1037309320238203168/DhiWise---Figma-to-Code
+  - https://www.figma.com/community/plugin/1056467900248561542/Locofy-FREE-BETA---Figma-to-React%2C-React-Native%2C-HTML%2FCSS%2C-Next.js%2C-Gatsby
 chromeExtensions:
   - automa/infppggnoaenmfagbfknfkancpbljcca
+  - bardeen-automate-manual-w/ihhkmalpkhkoedlmcnilbbhhbhnicjga
   - bitly-powerful-short-link/iabeihobmhlgpkcgjiloemdbofjbdcic
   - bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb
   - briskine-email-templates/lmcngpkjkplipamgflhioabnhnopeabf
   - buffer/noojglkidnpfjbincgijbaiedldjfbhh
+  - chatgpt-app-for-chrome-me/camppjleccjaphfdbohjdohecfnoikec
   - chatgpt-for-google/jgjaeacdkonaoafenlfkkkmbaopkbilf
   - compose-ai-ai-powered-wri/ddlbpiadoechcolndfeaonajmngmhblj
   - desktop-app-for-google-ta/lpofefdiokgmcdnnaigddelnfamkkghi
@@ -59,25 +64,32 @@ chromeExtensions:
   - gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep
   - google-dictionary-by-goog/mgijmajocgfcbeboacabfgobmjgjcoja
   - google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb
+  - google-trends-supercharge/ocmojhiloccgbpjnkeiooioedaklapap
   - grammar-spell-checker-%E2%80%94-l/oldceeleldhonbafppcapldpdifcinji
   - grepper/amaaokahonnfjjemodnpmeenfpnnbkco
   - gsconnect/jfnifeihccihocjbfcfhicmmgpjicaec
   - hunter-email-finder-exten/hgmhmanijnjhaffoampdlllchpolkdnj
   - huntr-job-search-tracker/mihdfbecejheednfigjpdacgeilhlmnf
+  - hypertype/lohojfppjeknalpoklojhfnndocgekbd
   - json-viewer-pro/eifflpmocdbdmepbjaopkkhbfmdgijcc
   - liner-chatgpt-google-assi/bmhcbmnbenmcecpmpepghooflbehcack
+  - loom-–-screen-recorder-sc/liecbddmkiiihnedobmlmillhodjkdmb
+  - magical-chatgpt-ai-writer/iibninhmiggehlcdolcilmhacighjamp
   - magical-text-expander-aut/iibninhmiggehlcdolcilmhacighjamp
   - mailvelope/kajibbejlbohfaggdiogboambcijhkke
   - markdown-here/elifhakcjgalahccnjkneoccemfahfoa
   - metamask/nkbihfbeogaeaoehlefnkodbefgpgknn
+  - notion-web-clipper/knheggckgoiihginacbkhaalnibhilkk
   - octohint/hbkpjkfdheainjkkebeoofkpgddnnbpk
   - pieces-save-code-snippets/igbgibhbfonhmjlechmeefimncpekepm
   - rakuten-get-cash-back-for/chhjbpecpncaggjpdakmflnfcopglcmi
+  - replixai/nhfededlooagdmcpamafanjolhkekbbl
   - save-to-google-drive/gmbmikajjgmnabiglmofipeabaddhgne
   - screenity-screen-recorder/kbbdabhdfibnancpjfhlkhafgdilcnji
   - search-by-image/cnojnbdhbhnkbcieeekonklommdnndci
   - sessionbox-multi-login-to/megbklhjamjbcafknkgmokldgolkdfig
   - singlefile/mpiodijhokgodhhofbcjdecpffjipkle
+  - sleek-cashback-rewards/mcjlbeekadpmcdhmagbjppkfbbjdddhn
   - sponsorblock-for-youtube/mnjggcdmjocbbbhaepdhchncahnbgone
   - toucan-language-learning/lokjgaehpcnlmkebpmjiofccpklbmoci
   - undo-closed-tabs-button/ieehkmoiljghfkejgahoheemdjpdinml
@@ -109,6 +121,7 @@ firefoxAddOns:
   - markdown-here
   - medium-unlimited-read-for-free
   - multi-account-containers
+  - notion-web-clipper
   - private-relay
   - profile-switcher
   - search_by_image
@@ -143,6 +156,7 @@ theme: Betelgeuse
 softwareGroups:
   AI-Desktop: &AI-Desktop
     - chatgpt-desktop
+    - mage-ai
   Android: &Android
     - scrcpy
   Android-Desktop: &Android-Desktop
@@ -281,6 +295,7 @@ softwareGroups:
     # - snapd
     - sql-language-server
     - task
+    - tea
     - tmux
     - tor
     - translate
@@ -438,6 +453,7 @@ softwareGroups:
     - powershell
     - redis-desktop-manager
     - visual-studio
+    - warp-terminal
     - xcode
     - xcodes
     - xcodes-app
@@ -680,6 +696,7 @@ softwareGroups:
     - java
     - libimobiledevice
     - license
+    - mono
     - ntl
     - openjdk
     - please
@@ -735,8 +752,11 @@ softwareGroups:
   Productivity-Desktop: &Productivity-Desktop
     - libreoffice
     - microsoft-office
+    - notion
+    - obsidian
     # Deprecated in favor of Google Tasks
     # - microsoft-todo
+    - raycast
     - skhd
   Python: &Python
     - flake8
@@ -835,6 +855,7 @@ softwareGroups:
     - recuva
     - sloth
     - snitch
+    - tea-gui
     - wireshark
   Templates: &Templates
     - confd
@@ -902,11 +923,13 @@ softwareGroups:
     - gfi
     - gulp
     - hey
+    - htmlhint
     - hugo
     - ionic
     - imageoptim-cli
     - ipfs
     - ipfs-deploy
+    - jest
     - json-server
     - localtunnel
     - mitmproxy
@@ -923,6 +946,7 @@ softwareGroups:
     - package-size
     - page-fetch
     - pageres
+    - pipedream-cli
     - pkg
     - playwright
     - pnpm
@@ -947,6 +971,7 @@ softwareGroups:
     - betwixt
     - electron-app
     - fiddler
+    - figma
     - imagine
     - imageoptim
     - ipfs-desktop
@@ -956,9 +981,11 @@ softwareGroups:
     - mqttx
     - pieces
     - pieces-cli
+    - pika
     - postman
     - responsively
     - runjs
+    - zaproxy
   _Basic: &_Basic
     - *CLI
     - *Essentials
@@ -1374,3 +1401,8 @@ qubes:
     - https://qubes.3isec.org/Templates_4.1/qubes-template-archlinux-4.0.6-202204171510.noarch.rpm
     - https://qubes.3isec.org/Templates_4.1/qubes-template-debian-12-4.0.6-202208292254.noarch.rpm
     - https://qubes.3isec.org/Templates_4.1/qubes-template-jammy-4.0.6-202205012228.noarch.rpm
+
+
+perfectStack:
+  darwin:
+    - warp-terminal
