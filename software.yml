@@ -5108,6 +5108,7 @@ softwarePackages:
     _github: https://github.com/meowtec/Imagine
     _home: https://github.com/meowtec/Imagine
     _name: Imagine
+    _when:script:darwin: '! test -d /Applications/Imagine.app'
     appimage: meowtec/Imagine
     exe: https://github.com/meowtec/Imagine/releases/download/v0.7.4/Imagine-Setup-0.7.4.exe
     script:darwin: curl -sSL https://github.com/meowtec/Imagine/releases/download/v0.7.4/Imagine-0.7.4.dmg > /tmp/Imagine.dmg && sudo hdiutil attach /tmp/Imagine.dmg && sudo cp -R "/Volumes/Imagine 0.7.4/Imagine.app" /Applications && sudo hdiutil detach "/Volumes/Imagine 0.7.4" && rm -f /tmp/Imagine.dmg
