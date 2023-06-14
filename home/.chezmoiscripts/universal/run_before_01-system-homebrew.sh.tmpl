@@ -14,6 +14,11 @@
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}
 
+### System upgrade on macOS
+if [ -d /Applications ] && [ -d /Library ]; then
+  sudo softwareupdate -i -a
+fi
+
 ### Install Xcode CLI tools on macOS
 if [ -d /Applications ] && [ -d /Library ]; then
   xcode-select -p >/dev/null 2>&1 || sudo xcode-select --install
