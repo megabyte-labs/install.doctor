@@ -338,11 +338,14 @@ if command -v antigen > /dev/null; then
   # antigen bundle skaffold
   antigen bundle spring
   # antigen bundle shell-proxy
-  antigen bundle sprunge
+  # On macOS, parse error 6/13/23 for sprunge
+  # antigen bundle sprunge
   # antigen bundle ssh-agent
   antigen bundle sudo
   antigen bundle terraform
-  antigen bundle thefuck
+  if command -v thefuck > /dev/null; then
+  	antigen bundle thefuck
+  fi
   antigen bundle timer
   antigen bundle tmuxinator
   antigen bundle urltools

@@ -179,6 +179,8 @@ https://github.com/rigoneri/Syte3
 * https://github.com/tauri-apps/tauri
 * https://github.com/emilengler/sysget
 * https://github.com/pocketbase/pocketbase
+* sysget
+* https://github.com/therootcompany/serviceman
 
 ## PHP
 
@@ -229,3 +231,15 @@ https://railway.app/?ref=producthunt
 
 Figure out how to use CLI for https://github.com/docker/volumes-backup-extension
 https://formulae.brew.sh/formula/docker-machine-driver-vmware#default
+https://www.npmjs.com/package/windosu
+
+Caddy
+https://webinstall.dev/xz/
+https://webinstall.dev/goreleaser/
+https://webinstall.dev/dotenv/
+https://webinstall.dev/bun/
+
+https://webinstall.dev/vim-sensible/
+https://webinstall.dev/vim-devicons/
+https://webinstall.dev/vim-nerdtree/
+https://webinstall.dev/vim-gui/

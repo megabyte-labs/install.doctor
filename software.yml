@@ -501,6 +501,18 @@ softwarePackages:
       https://www.clamav.net/ https://www.malwarebytes.com/
     _name: AntiVirus
     ansible: professormanhattan.antivirus
+  sysz:
+    _deps:
+      - fzf
+    _bin: sysz
+    _desc: An fzf terminal UI for systemctl
+    _docs: https://github.com/joehillen/sysz
+    _github: https://github.com/joehillen/sysz
+    _home: https://github.com/joehillen/sysz
+    _name: syz
+    nix-env: nixpkgs.sysz
+    paru: sysz
+    script:linux: cd /tmp && git clone https://github.com/joehillen/sysz.git && cd sysz && sudo make install && cd /tmp && rm -rf sysz
   appium:
     _bin: appium
     _desc: '[Appium](https://appium.io/) is an open source automation tool for running scripts and testing native applications, mobile-web applications and hybrid applications on Android or iOS using a webdriver.'
@@ -4576,6 +4588,7 @@ softwarePackages:
     _home: https://github.com/lsd-rs/lsd
     _name: LSD (LSDeluxe)
     _notes: Only the Chocolatey definition is included because LSD is only used on Windows (when `exa` is not available)
+    brew: lsd
     choco: lsd
   lxc:
     _bin: lxc
@@ -7498,13 +7511,13 @@ softwarePackages:
     github: github.com/oldj/SwitchHosts
     scoop: switchhosts
   sync-ssh-keys:
-    _bin: null
+    _bin: sync-ssh-keys
     _desc: Sync public ssh keys to ~/.ssh/authorized_keys, based on Github/Gitlab organization membership
     _docs: null
     _github: https://github.com/samber/sync-ssh-keys
     _home: null
     _name: sync-ssh-keys
-    github: github.com/samber/sync-ssh-keys
+    go: github.com/samber/sync-ssh-keys@latest
     yay: sync-ssh-keys-bin
   vidmerger:
     _deps:
@@ -7650,6 +7663,7 @@ softwarePackages:
     _github: https://github.com/emilengler/sysget
     _home: null
     _name: sysget
+    _note: TODO
   t:
     _bin: t
     _desc: A command-line power tool for Twitter
