@@ -8,6 +8,6 @@
 
 ### Run the VIM plugin install routine
 if command -v vim > /dev/null; then
-    vim +PlugInstall +qall
+    vim +PlugInstall +qall 2>/dev/null
 fi
 {{ end -}}

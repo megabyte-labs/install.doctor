@@ -30,20 +30,24 @@
 
 ### Ensure Chrome policies directory is present
 for POLICY_DIR in "/opt/google/chrome/policies" "/etc/chromium/policies" "/etc/brave/policies"; do
-    ### Managed policies
-    if [ ! -f "$POLICY_DIR/managed/policies.json" ]; then
-        logg info "Ensuring directory $POLICY_DIR/managed exists"
-        sudo mkdir -p "$POLICY_DIR/managed"
-        logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/chrome/managed.json to $POLICY_DIR/managed/policies.json"
-        sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/managed.json" "$POLICY_DIR/managed/policies.json"
-    fi
+    if [ -d "$(dirname "$POLICY_DIR")" ]; then
+        ### Managed policies
+        if [ ! -f "$POLICY_DIR/managed/policies.json" ]; then
+            logg info "Ensuring directory $POLICY_DIR/managed exists"
+            sudo mkdir -p "$POLICY_DIR/managed"
+            logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/chrome/managed.json to $POLICY_DIR/managed/policies.json"
+            sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/managed.json" "$POLICY_DIR/managed/policies.json"
+        fi
 
-    ### Recommended policies
-    if [ ! -f "$POLICY_DIR/recommended/policies.json" ]; then
-        logg info "Ensuring directory $POLICY_DIR/recommended exists"
-        sudo mkdir -p "$POLICY_DIR/recommended"
-        logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/chrome/recommended.json to $POLICY_DIR/recommended/policies.json"
-        sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/recommended.json" "$POLICY_DIR/recommended/policies.json"
+        ### Recommended policies
+        if [ ! -f "$POLICY_DIR/recommended/policies.json" ]; then
+            logg info "Ensuring directory $POLICY_DIR/recommended exists"
+            sudo mkdir -p "$POLICY_DIR/recommended"
+            logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/chrome/recommended.json to $POLICY_DIR/recommended/policies.json"
+            sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/recommended.json" "$POLICY_DIR/recommended/policies.json"
+        fi
+    else
+        logg info "Skipping extension injection into $POLICY_DIR - create these folders prior to running to create managed configs"
     fi
 done
 
