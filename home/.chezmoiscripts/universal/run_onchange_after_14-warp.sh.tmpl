@@ -84,17 +84,24 @@ fi
 
 
 ### Ensure certificate is installed
-### TODO: Ensure duplicate certificates are not stored in these files below
 # Source: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt
 # Source: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
 if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; then
     ### Ensure certificate installed on macOS
     sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt"
-    if [ -f /usr/local/etc/ca-certificates/cert.pem ]; then
-        echo | sudo cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> /usr/local/etc/ca-certificates/cert.pem
+    if [ -d /usr/local/etc/openssl@3/certs ]; then
+        # Location on Intel macOS
+        echo | sudo cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem
+        /usr/local/opt/openssl@3/bin/c_rehash
+    elif [ -d /opt/homebrew/etc/openssl@3/certs ]; then
+        # Location on arm64 macOS
+        echo | sudo cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> /opt/homebrew/etc/openssl@3/certs/Cloudflare_CA.pem
+        /opt/homebrew/opt/openssl@3/bin/c_rehash
     else
-        logg error 'Unable to add `Cloudflare_CA.pem` because `/usr/local/etc/ca-certificates/cert.pem` does not exist!' && exit 1
+        logg error 'Unable to add `Cloudflare_CA.pem` because `/usr/local/etc/ca-certificates/cert.pem` does not exist!'
     fi
+
+    if [ -d /opt/homebrew/etc/openssl@3]
 fi
 
 if command -v warp-cli > /dev/null; then
