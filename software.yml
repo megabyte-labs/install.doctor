@@ -104,7 +104,8 @@ installerPreference:
     - whalebrew
     - cask
     - brew
-    - port
+    # Removed because port installation from default list because encountered this error: Creating user "macports" make: *** [install] Killed: 9 --- might be due to remote managed macOS settings.
+    # - port
     - go
     - cargo
     - npm
