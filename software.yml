@@ -6123,6 +6123,7 @@ softwarePackages:
     _bin: plex-htpc
     _home: https://www.plex.tv/
     _name: Plex HTPC
+    _when:cask: '! test -d "/Applications/Plex HTPC.app"'
     cask: plex-htpc
     flatpak: tv.plex.PlexHTPC
     snap: plex-htpc
