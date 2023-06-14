@@ -37,8 +37,8 @@ if command -v vagrant > /dev/null && command -v vmware-id > /dev/null; then
         fi
     fi
 else
-    logg warn 'Vagrant is not installed so the Vagrant plugins will not be installed'
-    logg warn 'Vagrant or VMWare is not installed so the Vagrant VMWare utility will not be configured'
+    logg info 'Vagrant is not installed so the Vagrant plugins will not be installed'
+    logg info 'Vagrant or VMWare is not installed so the Vagrant VMWare utility will not be configured'
 fi
 
 {{ end -}}

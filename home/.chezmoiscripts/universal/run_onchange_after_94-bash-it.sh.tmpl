@@ -11,7 +11,8 @@
 
 ### Ensure Powerline is installed
 if ! command -v powerline > /dev/null; then
-    install-software powerline
+    logg info 'Installing powerline via install-software'
+    install-software powerline > /dev/null
 fi
 
 ### Bash-it completions / plugins
