@@ -1,0 +1,96 @@
+{{- if ne .host.distro.family "windows" -}}
+#!/usr/bin/env bash
+# @file Wazuh agent installation and registration
+# @brief Ensures Wazuh Agent is installed and the agent joined to the given Wazuh Manager
+# @description
+#     This script ensures Wazuh Agent is installed and joined to Wazuh Manager under the `default` group. If Wazuh Manager IP is not provided
+#     in the input, agent installation is skipped.
+#
+#     No configuraiton other than the Manager IP is added to the config file by this script. Please refer the
+#     [Deployment variables document](https://documentation.wazuh.com/current/user-manual/deployment-variables/deployment-variables.html),
+#     relevant to the OS you are using for more information.
+#
+#     ## Configuration Variables
+#
+#     The following chart details the input variable(s) that are used to determine the configuration of the Wazuh Agent:
+#
+#     | Variable        | Description                                                |
+#     |-----------------|------------------------------------------------------------|
+#     | `wazuh.manager` | The IP address where Wazuh Manager is available            |
+
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
+
+### Install Wazuh Agent
+if [ -n "{{ .host.wazuh.manager }}" ]; then
+    if [ -d /Applications ] && [ -d /System ]; then
+        # macOS
+        logg info 'TODO: Find the latest version of the agent from the downloads page and install. Not available in Homebrew'
+    elif command -v apt-get > /dev/null; then
+        # Debian based OS
+        logg info 'Setting up repository to install Wazuh Agent'
+        sudo apt-get update
+        sudo apt-get install -y ca-certificates curl gnupg lsb-release
+        sudo mkdir -p /etc/apt/keyrings
+        curl -fsSL "https://packages.wazuh.com/key/GPG-KEY-WAZUH" | sudo gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import
+        sudo chmod 644 /usr/share/keyrings/wazuh.gpg
+        echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | sudo tee -a /etc/apt/sources.list.d/wazuh.list > /dev/null
+        sudo apt-get update
+        logg info 'Installing and registering Wazuh Agent'
+        WAZUH_MANAGER="{{ .host.wazuh.manager }}" sudo apt-get install -y wazuh-agent
+    elif command -v dnf || command -v yum > /dev/null; then
+        # RHEL based OS
+        logg info 'Setting up repository to install Wazuh Agent'
+        sudo rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH
+        sudo tee -a /opt/wazuh.repo << EOF
+[wazuh]
+gpgcheck=1
+gpgkey=https://packages.wazuh.com/key/GPG-KEY-WAZUH
+enabled=1
+name=EL-\$releasever - Wazuh
+baseurl=https://packages.wazuh.com/4.x/yum/
+protect=1
+EOF
+        logg info 'Installing and registering Wazuh Agent'
+        WAZUH_MANAGER="{{ .host.wazuh.manager }}" sudo yum install -y wazuh-agent
+    elif command -v apk > /dev/null; then
+        # Alpine
+        logg info 'Setting up repository to install Wazuh Agent'
+        wget -O /etc/apk/keys/alpine-devel@wazuh.com-633d7457.rsa.pub https://packages.wazuh.com/key/alpine-devel%40wazuh.com-633d7457.rsa.pub
+        echo "https://packages.wazuh.com/4.x/alpine/v3.12/main" | sudo tee -a /etc/apk/repositories
+        sudo apk update
+        logg info 'Installing and Wazuh Agent'
+        sudo apk add wazuh-agent
+        logg info 'Registering Wazuh Agent'
+        export WAZUH_MANAGER="{{ .host.wazuh.manager }}" && sudo sed -i "s|MANAGER_IP|$WAZUH_MANAGER|g" /var/ossec/etc/ossec.conf
+    elif command -v pacman > /dev/null; then
+        # Archlinux
+        logg info 'TODO Manual install on ArchLinux'
+    elif command -v zypper > /dev/null; then
+        # OpenSUSE
+        logg info 'Setting up repository to install Wazuh Agent'
+        sudo rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH
+        sudo tee /etc/zypp/repos.d/wazuh.repo <<\EOF
+[wazuh]
+gpgcheck=1
+gpgkey=https://packages.wazuh.com/key/GPG-KEY-WAZUH
+enabled=1
+name=EL-$releasever - Wazuh
+baseurl=https://packages.wazuh.com/4.x/yum/
+protect=1
+EOF
+        sudo zypper refresh
+        logg info 'Installing and registering Wazuh Agent'
+        WAZUH_MANAGER="{{ .host.wazuh.manager }}" sudo zypper install wazuh-agent
+    fi
+
+    logg info 'Reloading systemd'
+    systemctl daemon-reload
+    logg info 'Enabling Wazuh Agent service'
+    systemctl enable wazuh-agent
+    logg info 'Starting Wazuh Agent service'
+    systemctl start wazuh-agent
+else
+    logg warn 'Wazuh Manager IP is not configured, skipping agent installation'
+fi
+{{ end -}}

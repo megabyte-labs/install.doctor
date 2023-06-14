@@ -161,6 +161,8 @@ data:
     restricted: {{ $restricted }}
     softwareGroup: "{{ $softwareGroup }}"
     type: "{{ $chassisType }}"
+    wazuh:
+      manager: ""
     work: {{ $work }}
   toolchains:
   {{- range $toolchain, $enabled := $toolchainsEnabled }}
