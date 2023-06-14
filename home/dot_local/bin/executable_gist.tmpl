@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-echo "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NPM_TOKEN")) }}{{ includeTemplate "secrets/NPM_TOKEN" | decrypt }}{{ else if (env "NPM_TOKEN") }}{{ env "NPM_TOKEN" }}{{ else }}${GITHUB_GIST_TOKEN}{{ end }}" > ~/.gist
+echo "{{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NPM_TOKEN")) }}{{ includeTemplate "secrets/NPM_TOKEN" | decrypt }}{{ else if (env "NPM_TOKEN") }}{{ env "NPM_TOKEN" }}{{ else }}${GITHUB_GIST_TOKEN}{{ end }}" > ~/.gist
 gist $*
 rm -f ~/.gist

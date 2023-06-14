@@ -1,5 +1,5 @@
 {
-  "slack_token": "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SLACK_API_TOKEN")) }}{{- includeTemplate "secrets/SLACK_API_TOKEN" | decrypt -}}{{ else }}{{- env "SLACK_API_TOKEN" -}}{{ end }}",
+  "slack_token": "{{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SLACK_API_TOKEN")) }}{{- includeTemplate "secrets/SLACK_API_TOKEN" | decrypt -}}{{ else }}{{- env "SLACK_API_TOKEN" -}}{{ end }}",
   "sidebar_width": 3,
   "notify": "mention",
   "emoji": true,
