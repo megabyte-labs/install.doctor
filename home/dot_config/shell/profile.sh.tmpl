@@ -142,9 +142,10 @@ elif [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
 fi
 
 ### Tea
-if command -v tea > /dev/null; then
-  source <(tea --magic)
-fi
+# TODO: Fix this so it does not cause errors as Chezmoi runs
+# if command -v tea > /dev/null; then
+#   source <(tea --magic)
+# fi
 
 ### VIM
 export GVIMINIT='let $MYGVIMRC="$XDG_CONFIG_HOME/vim/gvimrc" | source $MYGVIMRC'

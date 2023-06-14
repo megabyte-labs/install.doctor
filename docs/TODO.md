@@ -253,3 +253,7 @@ https://github.com/symless/synergy-core
 https://symless.com/synergy/features
 https://github.com/upscayl/upscayl
 https://espanso.org/
+
+## Premium
+
+* https://alternativeto.net/software/daemon-tools/about/
