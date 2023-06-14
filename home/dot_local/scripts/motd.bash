@@ -266,10 +266,15 @@ print_banner() {
       printf "       \\033[%sm%s   OS       \\033[0m         %s\\n" "$UPDATES_ZERO_COLOR" "" "macOS $(sw_vers -productVersion) / Build $(sw_vers -buildVersion)"
       printf "       \\033[%sm%s   UUID     \\033[0m         %s\\n" "$PODMAN_RUNNING_COLOR" "" "$(ioreg -d2 -c IOPlatformExpertDevice | awk -F\" '/IOPlatformUUID/{print $(NF-1)}')"
       printf "       \\033[%sm%s   LAN IP   \\033[0m         %s\\n" "$BANNER_KERNEL_COLOR" "ﯱ" "$(ifconfig en0 2>/dev/null | grep 'inet ' | cut -d ' ' -f 2)"
-      IP_ADDR_PUB="$(timeout 1 sh -c 'curl -sSL ifconfig.me')"
-      if [ -n "$IP_ADDR_PUB" ]; then
-        printf "       \\033[%sm%s   Public IP\\033[0m         %s\\n" "$UPDATES_SECURITY_COLOR" "" "$IP_ADDR_PUB"
-      fi
+      ### Disabled because it causes slight delay due to server call for public IP
+      # if command -v timeout > /dev/null; then
+      #   IP_ADDR_PUB="$(timeout 1 sh -c 'curl -sSL ifconfig.me')"
+      # else
+      #   IP_ADDR_PUB="$(sh -c 'curl -sSL ifconfig.me')"
+      # fi
+      # if [ -n "$IP_ADDR_PUB" ]; then
+      #   printf "       \\033[%sm%s   Public IP\\033[0m         %s\\n" "$UPDATES_SECURITY_COLOR" "" "$IP_ADDR_PUB"
+      # fi
     fi
   fi
 }
