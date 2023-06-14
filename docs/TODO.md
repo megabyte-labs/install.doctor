@@ -243,3 +243,13 @@ https://webinstall.dev/vim-sensible/
 https://webinstall.dev/vim-devicons/
 https://webinstall.dev/vim-nerdtree/
 https://webinstall.dev/vim-gui/
+
+https://github.com/obsproject/obs-studio
+https://espanso.org/
+https://formulae.brew.sh/cask/blender#default
+https://kdenlive.org/en/
+https://www.bluestacks.com/
+https://github.com/symless/synergy-core
+https://symless.com/synergy/features
+https://github.com/upscayl/upscayl
+https://espanso.org/
