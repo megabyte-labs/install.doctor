@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+### Enable automated updates on macOS
+if [ -f "$HOME/Library/LaunchDaemons/com.apple.automatedupdates.plist" ]; then
+    sudo launchctl load "$HOME/Library/LaunchDaemons/com.apple.automatedupdates.plist"
+fi
