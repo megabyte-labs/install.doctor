@@ -2749,11 +2749,11 @@ softwarePackages:
   fuego:
     _bin: fuego
     _desc: Fuego is a command line client for the Firestore database
-    _docs: null
+    _docs: https://github.com/sgarciac/fuego
     _github: https://github.com/sgarciac/fuego
-    _home: null
+    _home: https://github.com/sgarciac/fuego
     _name: Fuego
-    github: github.com/sgarciac/fuego
+    go: github.com/sgarciac/fuego@latest
     snap: fuego
   fuse:
     _bin: null
@@ -4242,10 +4242,12 @@ softwarePackages:
   kubenav:
     _bin: null
     _desc: kubenav is the navigator for your Kubernetes clusters right in your pocket
-    _docs: null
+    _docs: https://github.com/kubenav/kubenav
     _github: https://github.com/kubenav/kubenav
     _home: https://kubenav.io/
     _name: kubenav
+    _when:cask: '! test -d /Applications/kubenav.app'
+    cask: kubenav
     github: github.com/kubenav/kubenav
     yay: kubenav-bin
   kubernetes-cli:
