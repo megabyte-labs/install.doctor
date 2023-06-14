@@ -1036,9 +1036,10 @@ softwarePackages:
     _github: https://github.com/Barre/privaxy
     _home: false
     _name: Privaxy
+    _when:script:darwin: '! test -d /Applications/Privaxy.app'
     appimage: barre/privaxy
     apt: https://github.com/Barre/privaxy/releases/download/v0.5.2/privaxy_0.5.2_amd64.deb
-    dmg: https://github.com/Barre/privaxy/releases/download/v0.5.2/Privaxy_0.5.2_universal.dmg
+    script:darwin: curl -sSL https://github.com/Barre/privaxy/releases/download/v0.5.2/Privaxy_0.5.2_universal.dmg > /tmp/Privaxy.dmg && sudo hdiutil attach /tmp/Privaxy.dmg && sudo cp -R /Volumes/Privaxy/Privaxy.app /Applications && sudo hdiutil detach /Volumes/Privaxy && rm -f /tmp/Privaxy.dmg
   brave-browser:
     _bin: brave
     _desc: '[Brave Browser](https://brave.com/) is a free and open-source web browser developed by Brave Software, Inc. based on the Chromium web browser. It includes the ability to access Tor websites and has a built-in plugin that replaces ads and pays you to surf the web. It is a privacy-focused browser, which automatically blocks online advertisements and website trackers in its default settings. It also supports Chrome extensions.'
@@ -1396,7 +1397,7 @@ softwarePackages:
     _github: https://github.com/cert-manager/cert-manager
     _home: https://cert-manager.io/docs/usage/cmctl/
     _name: cmctl
-    github: github.com/cert-manager/cert-manager
+    brew: cmctl
   cockpit:
     _bin: cockpit
     _desc: '[Cockpit](https://cockpit-project.org/) allows you to view many aspects of system performance and make configuration changes, though the task list may depend on the particular flavor of Linux that you are using.'
@@ -5067,19 +5068,24 @@ softwarePackages:
     _docs: null
     _github: https://github.com/th-ch/youtube-music
     _home: https://th-ch.github.io/youtube-music/
+    _when:script:darwin: '! test -d "/Applications/YouTube Music.app"'
     appimage: th-ch/youtube-music
     apt: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/youtube-music_1.19.0_amd64.deb
-    dmg: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/YouTube-Music-1.19.0.dmg
     exe: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/YouTube-Music-Setup-1.19.0.exe
     scoop: extras/youtube-music
+    script:darwin: DL_URL="https://github.com/th-ch/youtube-music/releases/download/v1.20.0/YouTube-Music-1.20.0.dmg" && if [ $(arch) = 'arm64' ]; then DL_URL="https://github.com/th-ch/youtube-music/releases/download/v1.20.0/YouTube-Music-1.20.0-arm64.dmg"; fi && curl -sSL "$DL_URL" > /tmp/YouTube-Music.dmg && sudo hdiutil attach /tmp/YouTube-Music.dmg && sudo cp -R "/Volumes/YouTube Music 1.20.0/YouTube Music.app" /Applications && sudo hdiutil detach "/Volumes/YouTube Music 1.20.0" && rm -f /tmp/YouTube-Music.dmg
     winget: th-ch.YouTubeMusic
     yay: youtube-music-bin
   imagine:
+    _bin: null
     _desc: Imagine is a desktop app for compression of PNG and JPEG, with a modern and friendly UI.
+    _docs: https://github.com/meowtec/Imagine
     _github: https://github.com/meowtec/Imagine
+    _home: https://github.com/meowtec/Imagine
+    _name: Imagine
     appimage: meowtec/Imagine
-    dmg: https://github.com/meowtec/Imagine/releases/download/v0.7.3/Imagine-0.7.3.dmg
-    exe: https://github.com/meowtec/Imagine/releases/download/v0.7.3/Imagine-Setup-0.7.3.exe
+    exe: https://github.com/meowtec/Imagine/releases/download/v0.7.4/Imagine-Setup-0.7.4.exe
+    script:darwin: curl -sSL https://github.com/meowtec/Imagine/releases/download/v0.7.4/Imagine-0.7.4.dmg > /tmp/Imagine.dmg && sudo hdiutil attach /tmp/Imagine.dmg && sudo cp -R "/Volumes/Imagine 0.7.4/Imagine.app" /Applications && sudo hdiutil detach "/Volumes/Imagine 0.7.4" && rm -f /tmp/Imagine.dmg
   mullvad-vpn:
     _bin: null
     _desc: The Mullvad VPN client app for desktop and mobile
@@ -5234,13 +5240,14 @@ softwarePackages:
     brew: ncc
     npm: '@vercel/ncc'
   nebula:
-    _bin: null
+    _bin: nebula
     _desc: A scalable overlay networking tool with a focus on performance, simplicity and security
-    _docs: null
+    _docs: https://nebula.defined.net/docs/
     _github: https://github.com/slackhq/nebula
-    _home: null
+    _home: https://github.com/slackhq/nebula
     _name: nebula
-    github: github.com/slackhq/nebula
+    brew: nebula
+    dnf: nebula
     pacman: nebula
   nectar:
     _bin: nectar
@@ -5703,13 +5710,12 @@ softwarePackages:
     brew: pulumi/tap/pulumi
     choco: pulumi
   osquery:
-    _bin: osquery
+    _bin: osqueryctl
     _desc: SQL powered operating system instrumentation, monitoring, and analytics
     _docs: https://osquery.readthedocs.io/en/stable/
     _github: https://github.com/osquery/osquery
     _home: https://osquery.io/
     _name: osquery
-    _when:cask: '! test -d /usr/local/Caskroom/osquery'
     cask: osquery
     choco: osquery
     github: github.com/osquery/osquery
@@ -7390,7 +7396,7 @@ softwarePackages:
     _github: https://github.com/suyashkumar/ssl-proxy
     _home: null
     _name: ssl-proxy
-    github: github.com/suyashkumar/ssl-proxy
+    go: github.com/suyashkumar/ssl-proxy@latest
   # Error installing aiohttp dependency
   # starred:
   #   _bin: starred
@@ -8607,19 +8613,20 @@ softwarePackages:
     choco: powertoys
     scoop: powertoys
   winrm-cli:
-    _bin: null
+    _bin: winrm-cli
     _desc: Command-line tool to remotely execute commands on Windows machines through WinRM
-    _docs: null
+    _docs: https://github.com/masterzen/winrm-cli
     _github: https://github.com/masterzen/winrm-cli
-    _home: null
+    _home: https://github.com/masterzen/winrm-cli
     _name: winrm-cli
+    go: github.com/masterzen/winrm-cli@latest
     yay: winrm-cli-git
   browserosaurus:
     _bin: null
-    _desc: 
-    _docs: 
-    _github: 
-    _home: 
+    _desc: The browser prompter for macOS
+    _docs: https://github.com/will-stone/browserosaurus
+    _github: https://github.com/will-stone/browserosaurus
+    _home: https://browserosaurus.com/
     _name: Browserosaurus
     _when:cask: '! test -d /Applications/Browserosaurus.app'
     cask: browserosaurus
