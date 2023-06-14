@@ -962,8 +962,11 @@ async function ensurePackageManager(packageManager) {
     const cargo = which.sync('cargo', { nothrow: true })
     if (!cargo) {
       if (osType === 'darwin') {
-        await $`brew install rustup`
-        await $`rustup-init`
+        const rustup = which.sync('rustup-init', { nothrow: true })
+        if (!rustup) {
+          await $`brew install rustup`
+        }
+        await $`rustup-init -y`
       } else if (osType === 'windows') {
       } else {
         await ensurePackage('cargo')
