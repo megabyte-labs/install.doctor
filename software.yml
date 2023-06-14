@@ -9088,7 +9088,7 @@ softwarePackages:
     flatpak: com.github.tchx84.Flatseal
 softwarePlugins:
   docker:
-    cmd: docker extension install {PLUGIN}
+    cmd: bash -c 'docker extension install {PLUGIN}'
     plugins:
       - docker/disk-usage-extension
       - docker/logs-explorer-extension
