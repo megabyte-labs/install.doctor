@@ -226,3 +226,6 @@ https://obsidian-plugin-stats.vercel.app/most-downloaded
 https://fig.io/
 https://medusajs.com/?ref=producthunt
 https://railway.app/?ref=producthunt
+
+Figure out how to use CLI for https://github.com/docker/volumes-backup-extension
+https://formulae.brew.sh/formula/docker-machine-driver-vmware#default

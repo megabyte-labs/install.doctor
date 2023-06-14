@@ -8893,6 +8893,26 @@ softwarePackages:
     _name: YJ
     brew: yj
     go: github.com/sclevine/yj/v5@v5.1.0
+  porter:
+    _bin: porter
+    _desc: Porter enables you to package your application artifact, client tools, configuration and deployment logic together as an installer that you can distribute, and install with a single command.
+    _docs: https://getporter.org/docs/
+    _github: https://github.com/getporter/porter
+    _home: https://getporter.org/
+    _name: Porter
+    script:darwin: curl -L https://cdn.porter.sh/latest/install-mac.sh | bash
+    script:linux: curl -L https://cdn.porter.sh/latest/install-linux.sh | bash
+    script:windows: iwr "https://cdn.porter.sh/latest/install-windows.ps1" -UseBasicParsing | iex
+  docker-credential-helper:
+    _bin:darwin: docker-credential-osxkeychain
+    _bin:linux: docker-credential-secretservice
+    _bin:windows: docker-credential-wincred
+    _desc: Programs to keep Docker login credentials safe by storing in platform keystores
+    _docs: https://github.com/docker/docker-credential-helpers
+    _github: https://github.com/docker/docker-credential-helpers
+    _home: https://github.com/docker/docker-credential-helpers
+    _name: Docker Credential Helper
+    brew: docker-credential-helper
   forklift:
     _bin: forklift
     flatpak: com.github.Johnn3y.Forklift
@@ -9025,6 +9045,19 @@ softwarePackages:
     _bin: flatseal
     flatpak: com.github.tchx84.Flatseal
 softwarePlugins:
+  docker:
+    cmd: docker extension install {PLUGIN}
+    plugins:
+      - docker/disk-usage-extension
+      - docker/logs-explorer-extension
+      - docker/resource-usage-extension
+      - docker/volumes-backup-extension:main
+      - drone/drone-ci-docker-extension
+      - okteto/docker-desktop-extension
+      - portainer/portainer-docker-extension
+      - redhatdeveloper/openshift-dd-ext
+      - snyk/snyk-docker-desktop-extension
+      - tailscale/docker-extension
   dotnet:
     cmd: null
     # cmd: Handled by .chezmoiexternal.toml
