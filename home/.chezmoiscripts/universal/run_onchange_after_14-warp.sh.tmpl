@@ -41,7 +41,11 @@
 if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
     if [ -d /System ] && [ -d /Applications ]; then
         ### Install on macOS
-        brew install --cask cloudflare-warp
+        if [ ! -d "/Applications/Cloudflare WARP.app" ]; then
+            brew install --cask cloudflare-warp
+        else
+            logg info 'Cloudflare WARP already installed'
+        fi
     elif [ '{{ .host.distro.id }}' = 'debian' ]; then
         ### Add CloudFlare WARP desktop app apt-get source
         if [ ! -f /etc/apt/sources.list.d/cloudflare-client.list ]; then
