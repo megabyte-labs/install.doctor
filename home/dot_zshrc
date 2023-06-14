@@ -280,8 +280,8 @@ if command -v antigen > /dev/null; then
   antigen bundle copybuffer
   # TODO: Add as an alias available to Bash as well
   antigen bundle encode64
-  # antigen bundle fd # Added by bash completions script
-  antigen bundle flutter
+  # antigen bundle fd # Added by bash completions scriptx``
+  # antigen bundle flutter /Users/bzalewski/.local/antigen/bundles/robbyrussell/oh-my-zsh/plugins/flutter/flutter.plugin.zsh:29: no such file or directory: /Users/bzalewski/.local/antigen/bundles/robbyrussell/oh-my-zsh/cache//completions/_flutter
   # antigen bundle fzf # Added by bash completions script
   # antigen bundle gcloud # Added by bash completions script
   antigen bundle gem
@@ -313,7 +313,9 @@ if command -v antigen > /dev/null; then
   antigen bundle marktext
   antigen bundle microk8s
   antigen bundle minikube
-  antigen bundle mongo-atlas
+  # Received error so disabling mongo-atlas
+  # /Users/bzalewski/.local/antigen/bundles/robbyrussell/oh-my-zsh/plugins/mongo-atlas/mongo-atlas.plugin.zsh:14: no such file or directory: /Users/bzalewski/.local/antigen/bundles/robbyrussell/oh-my-zsh/cache//completions/atlas
+  # antigen bundle mongo-atlas
   antigen bundle mongocli
   antigen bundle mosh
   antigen bundle multipass
@@ -332,7 +334,10 @@ if command -v antigen > /dev/null; then
   antigen bundle react-native
   antigen bundle redis-cli
   antigen bundle ripgrep
-  antigen bundle rust
+  # Received error so disabling rust
+  # /Users/bzalewski/.local/antigen/bundles/robbyrussell/oh-my-zsh/plugins/rust/rust.plugin.zsh:22: no such file or directory: /Users/bzalewski/.local/antigen/bundles/robbyrussell/oh-my-zsh/cache//completions/_rustup
+  # /Users/bzalewski/.local/antigen/bundles/robbyrussell/oh-my-zsh/plugins/rust/rust.plugin.zsh:23: no such file or directory: /Users/bzalewski/.local/antigen/bundles/robbyrussell/oh-my-zsh/cache//completions/_cargo
+  # antigen bundle rust
   antigen bundle safe-paste
   antigen bundle sdk
   # antigen bundle skaffold
@@ -359,7 +364,7 @@ if command -v antigen > /dev/null; then
   antigen bundle yarn
 
   # Third-party plugins
-  antigen bundle jscutlery/nx-completion
+  # antigen bundle jscutlery/nx-completion Installing jscutlery/nx-completion... Error! Activate logging and try again.
   antigen bundle lukechilds/zsh-better-npm-completion
 
   antigen bundle zsh-interactive-cd
