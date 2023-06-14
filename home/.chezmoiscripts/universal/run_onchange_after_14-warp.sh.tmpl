@@ -90,10 +90,10 @@ fi
 if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; then
     ### Ensure certificate installed on macOS
     sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt"
-    if [ -f /usr/local/etc/ca-certificates/cert.pem ]; then
-        echo | sudo cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> /usr/local/etc/ca-certificates/cert.pem
+    if [ -f /usr/local/etc/openssl/cert.pem ]; then
+        echo | sudo cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> /usr/local/etc/openssl/cert.pem
     else
-        logg error 'Unable to add `Cloudflare_CA.pem` because `/usr/local/etc/ca-certificates/cert.pem` does not exist!' && exit 1
+        logg error 'Unable to add `Cloudflare_CA.pem` because `/usr/local/etc/openssl/cert.pem` does not exist!' && exit 1
     fi
 fi
 
