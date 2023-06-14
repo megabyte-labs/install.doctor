@@ -21,8 +21,6 @@ if [ -d /Applications ] && [ -d /System ]; then
     if [ ! -d /Applications/Docker.app ]; then
         logg info 'Installing Docker on macOS via Homebrew cask'
         brew install --cask docker
-        logg info 'Installing Docker Credential Helper'
-        brew install docker-credential-helper
         logg info 'Removing Docker.app quarantine status'
         sudo xattr -r -d com.apple.quarantine /Applications/Docker.app
     else
@@ -163,7 +161,7 @@ if [ ! -d /Applications ] || [ ! -d /System ]; then
     if ! command -v docker-credential-secretservice > /dev/null; then
         installCredentialSecretService
     fi
-    
+
     if ! command -v runsc > /dev/null; then
         # Install gVisor
         gVisorPreBuilt || PRE_BUILT_EXIT_CODE=$?
