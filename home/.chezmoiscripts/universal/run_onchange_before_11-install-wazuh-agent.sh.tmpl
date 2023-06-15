@@ -4,7 +4,7 @@
 # @brief Ensures Wazuh Agent is installed and the agent joined to the given Wazuh Manager
 # @description
 #     This script ensures Wazuh Agent is installed and joined to Wazuh Manager under the `default` group. If Wazuh Manager IP is not provided
-#     in the input, agent installation is skipped.
+#     in the input, agent installation is skipped. On MacOS and Archlinux, the script builds the agent and then installs.
 #
 #     No configuraiton other than the Manager IP is added to the config file by this script. Please refer the
 #     [Deployment variables document](https://documentation.wazuh.com/current/user-manual/deployment-variables/deployment-variables.html),
@@ -25,7 +25,29 @@
 if [ -n "{{ .host.wazuh.manager }}" ]; then
     if [ -d /Applications ] && [ -d /System ]; then
         # macOS
-        logg info 'TODO: Find the latest version of the agent from the downloads page and install. Not available in Homebrew'
+        logg info 'Installing build dependencies'
+        brew install automake autoconf libtool cmake jq
+        logg info 'Finding the latest version of Wazuh Agent'
+        WAZUH_AGENT_VERSION=$(curl -s https://api.github.com/repos/wazuh/wazuh/releases/latest | jq -r '.tag_name')
+        logg info 'Downloading the latest version of Wazuh Agent'
+        cd /tmp
+        curl -Ls "https://github.com/wazuh/wazuh/archive/$WAZUH_AGENT_VERSION.tar.gz" | tar zx
+        logg info 'Installing the latest version of Wazuh Agent'
+        cd wazuh*
+        tee -a etc/preloaded-vars.conf << EOF
+USER_LANGUAGE="en"
+USER_NO_STOP="y"
+USER_INSTALL_TYPE="agent"
+USER_DIR="/Library/Ossec"
+USER_ENABLE_SYSCHECK="y"
+USER_ENABLE_ROOTCHECK="y"
+USER_ENABLE_OPENSCAP="y"
+USER_ENABLE_ACTIVE_RESPONSE="y"
+USER_AGENT_SERVER_IP="{{ .host.wazuh.manager }}"
+USER_CA_STORE="n"
+EOF
+        sudo ./install.sh
+        sudo /Library/Ossec/bin/wazuh-control start
     elif command -v apt-get > /dev/null; then
         # Debian based OS
         logg info 'Setting up repository to install Wazuh Agent'
@@ -47,7 +69,7 @@ if [ -n "{{ .host.wazuh.manager }}" ]; then
 gpgcheck=1
 gpgkey=https://packages.wazuh.com/key/GPG-KEY-WAZUH
 enabled=1
-name=EL-\$releasever - Wazuh
+name=EL-$releasever - Wazuh
 baseurl=https://packages.wazuh.com/4.x/yum/
 protect=1
 EOF
@@ -65,12 +87,33 @@ EOF
         export WAZUH_MANAGER="{{ .host.wazuh.manager }}" && sudo sed -i "s|MANAGER_IP|$WAZUH_MANAGER|g" /var/ossec/etc/ossec.conf
     elif command -v pacman > /dev/null; then
         # Archlinux
-        logg info 'TODO Manual install on ArchLinux'
+        logg info 'Installing build dependencies'
+        sudo pacman --noconfirm -Syu curl gcc make sudo wget expect gnupg perl-base perl fakeroot python brotli automake autoconf libtool gawk libsigsegv nodejs base-devel inetutils cmake jq
+        logg info 'Finding the latest version of Wazuh Agent'
+        WAZUH_AGENT_VERSION=$(curl -s https://api.github.com/repos/wazuh/wazuh/releases/latest | jq -r '.tag_name')
+        logg info 'Downloading the latest version of Wazuh Agent'
+        cd /tmp
+        curl -Ls "https://github.com/wazuh/wazuh/archive/$WAZUH_AGENT_VERSION.tar.gz" | tar zx
+        logg info 'Installing the latest version of Wazuh Agent'
+        cd wazuh*
+        tee -a etc/preloaded-vars.conf << EOF
+USER_LANGUAGE="en"
+USER_NO_STOP="y"
+USER_INSTALL_TYPE="agent"
+USER_DIR="/var/ossec"
+USER_ENABLE_SYSCHECK="y"
+USER_ENABLE_ROOTCHECK="y"
+USER_ENABLE_OPENSCAP="y"
+USER_ENABLE_ACTIVE_RESPONSE="y"
+USER_AGENT_SERVER_IP="{{ .host.wazuh.manager }}"
+USER_CA_STORE="n"
+EOF
+        ./install.sh
     elif command -v zypper > /dev/null; then
         # OpenSUSE
         logg info 'Setting up repository to install Wazuh Agent'
         sudo rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH
-        sudo tee /etc/zypp/repos.d/wazuh.repo <<\EOF
+        sudo tee /etc/zypp/repos.d/wazuh.repo << EOF
 [wazuh]
 gpgcheck=1
 gpgkey=https://packages.wazuh.com/key/GPG-KEY-WAZUH
@@ -84,12 +127,14 @@ EOF
         WAZUH_MANAGER="{{ .host.wazuh.manager }}" sudo zypper install wazuh-agent
     fi
 
-    logg info 'Reloading systemd'
-    systemctl daemon-reload
-    logg info 'Enabling Wazuh Agent service'
-    systemctl enable wazuh-agent
-    logg info 'Starting Wazuh Agent service'
-    systemctl start wazuh-agent
+    {{- if eq .host.distro.family "linux" -}}
+        logg info 'Reloading systemd'
+        systemctl daemon-reload
+        logg info 'Enabling Wazuh Agent service'
+        systemctl enable wazuh-agent
+        logg info 'Starting Wazuh Agent service'
+        systemctl start wazuh-agent
+    {{ end -}}
 else
     logg warn 'Wazuh Manager IP is not configured, skipping agent installation'
 fi
