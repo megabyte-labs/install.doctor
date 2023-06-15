@@ -187,7 +187,7 @@ async function generateInstallOrders(pkgsToInstall) {
         normalCheck = softwarePackages[packageKey]['_' + currentSelector]
         if (doubleScoped) {
           try {
-            await $` ${doubleScoped}`
+            runSilentCommand(doubleScoped)
           } catch (e) {
             let pref
             if (softwarePackages[packageKey]['_' + currentSelector + ':' + preference + ':' + osID]) {
@@ -205,7 +205,7 @@ async function generateInstallOrders(pkgsToInstall) {
           }
         } else if (scopedPkgManager) {
           try {
-            await $` ${scopedPkgManager}`
+            runSilentCommand(scopedPkgManager)
           } catch (e) {
             const pref = preference
             log('info', 'Filter', `${pkg} is being skipped because of the _when:${pref} condition`)
@@ -214,7 +214,7 @@ async function generateInstallOrders(pkgsToInstall) {
           }
         } else if (scopedSystem) {
           try {
-            await $` ${scopedSystem}`
+            runSilentCommand(scopedSystem)
           } catch (e) {
             let pref
             if (softwarePackages[packageKey]['_' + currentSelector + ':' + osID]) {
@@ -228,7 +228,7 @@ async function generateInstallOrders(pkgsToInstall) {
           }
         } else if (normalCheck) {
           try {
-            await $` ${normalCheck}`
+            runSilentCommand(normalCheck)
           } catch (e) {
             log('info', 'Filter', `${pkg} is being skipped because of the _when condition`)
             processPluginOrders(pkg)
