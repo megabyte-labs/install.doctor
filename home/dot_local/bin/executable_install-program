@@ -1530,10 +1530,10 @@ async function addUserGroup(group) {
     }
   } else if (osType === 'darwin') {
     runCommand(`Creating the ${group} group`, `sudo dscl . create /Groups/${group}`)
-    runCommand(`Ensuring the ${group} group has a GID`, `bash -c "if [[ "$(sudo dscl . read /Groups/$GROUP gid 2>&1)" == *'No such key'* ]]; then MAX_ID_GROUP="$(dscl . -list /Groups gid | awk '{print $2}' | sort -ug | tail -1)"; GROUP_ID="$((MAX_ID_GROUP+1))"; sudo dscl . create /Groups/${group} gid "$GROUP_ID"; fi"`)
+    runCommand(`Ensuring the ${group} group has a GID`, `bash -c 'if [[ "$(sudo dscl . read /Groups/$GROUP gid 2>&1)" == *"No such key"* ]]; then MAX_ID_GROUP="$(dscl . -list /Groups gid | awk "{print $2}" | sort -ug | tail -1)"; GROUP_ID="$((MAX_ID_GROUP+1))"; sudo dscl . create /Groups/${group} gid "$GROUP_ID"; fi'`)
     runCommand(`Adding the ${group} user`, `sudo dscl . create /Users/${group}`)
-    runCommand(`Ensuring the ${group} user has a PrimaryGroupID`, `bash -c "if [[ "$(sudo dscl . read /Users/${group} PrimaryGroupID 2>&1)" == *'No such key'* ]]; then sudo dscl . create /Users/${group} PrimaryGroupID 20; fi"`)
-    runCommand(`Ensuring the ${group} user has a UniqueID`, `bash -c "if [[ "$(sudo dscl . read /Users/${group} UniqueID 2>&1)" == *'No such key'* ]]; then MAX_ID_USER="$(dscl . -list /Users UniqueID | awk '{print $2}' | sort -ug | tail -1)"; USER_ID="$((MAX_ID_USER+1))"; sudo dscl . create /Users/${group} UniqueID "$USERID"; fi"`)
+    runCommand(`Ensuring the ${group} user has a PrimaryGroupID`, `bash -c 'if [[ "$(sudo dscl . read /Users/${group} PrimaryGroupID 2>&1)" == *"No such key"* ]]; then sudo dscl . create /Users/${group} PrimaryGroupID 20; fi'`)
+    runCommand(`Ensuring the ${group} user has a UniqueID`, `bash -c 'if [[ "$(sudo dscl . read /Users/${group} UniqueID 2>&1)" == *"No such key"* ]]; then MAX_ID_USER="$(dscl . -list /Users UniqueID | awk "{print $2}" | sort -ug | tail -1)"; USER_ID="$((MAX_ID_USER+1))"; sudo dscl . create /Users/${group} UniqueID "$USERID"; fi'`)
     runCommand(`Adding the ${group} user to the ${group} group`, `sudo dseditgroup -o edit -t user -a ${group} ${group}`)
     runCommand(`Adding the ${process.env.USER} user to the ${group} group`, `sudo dseditgroup -o edit -t user -a ${process.env.USER} ${group}`)
   } else if (osType === 'windows') {
