@@ -18,8 +18,8 @@ if [ -d /Applications ] && [ -d /System ]; then
         logg info 'Installing `defaultbrowser` via Homebrew which is the preferred way of configuring the default browser'
         brew install defaultbrowser
     fi
-    logg info "Setting default browser to {{ .user.defaultBrowser }}"
-    defaultbrowser "{{ .user.defaultBrowser }}"
+    logg info "Setting default browser to {{ .user.defaultBrowserDarwin }}"
+    defaultbrowser "{{ .user.defaultBrowserDarwin }}"
 else
     logg info 'Setting default browser for `text/html` to `{{ .user.defaultBrowser }}`'
     xdg-mime default {{ .user.defaultBrowser }}.desktop text/html
