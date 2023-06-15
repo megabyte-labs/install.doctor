@@ -261,3 +261,5 @@ https://github.com/BalliAsghar/Mailsy
 https://api.slack.com/automation/cli/commands
 
 Move Gas Station into this project
+
+Fix how terminal output renders on Terminal.app on macOS
