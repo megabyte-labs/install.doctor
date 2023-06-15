@@ -96,11 +96,15 @@ if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; th
     fi
     if [ -d /usr/local/etc/openssl@3/certs ]; then
         # Location on Intel macOS
+        logg info 'Adding Cloudflare certificate to `/usr/local/etc/openssl@3/certs/Cloudflare_CA.pem`'
         echo | sudo cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem
+        logg info 'Running `/usr/local/opt/openssl@3/bin/c_rehash`'
         /usr/local/opt/openssl@3/bin/c_rehash
     elif [ -d /opt/homebrew/etc/openssl@3/certs ]; then
         # Location on arm64 macOS
+        logg info 'Adding Cloudflare certificate to `/opt/homebrew/etc/openssl@3/certs/Cloudflare_CA.pem`'
         echo | sudo cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> /opt/homebrew/etc/openssl@3/certs/Cloudflare_CA.pem
+        logg info 'Running `/opt/homebrew/opt/openssl@3/bin/c_rehash`'
         /opt/homebrew/opt/openssl@3/bin/c_rehash
     else
         logg error 'Unable to add `Cloudflare_CA.pem` because `/usr/local/etc/openssl@3/certs` and `/opt/homebrew/etc/openssl@3/certs` do not exist!'
