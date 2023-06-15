@@ -107,7 +107,7 @@ if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; th
         logg info 'Running `/opt/homebrew/opt/openssl@3/bin/c_rehash`'
         /opt/homebrew/opt/openssl@3/bin/c_rehash
     else
-        logg error 'Unable to add `Cloudflare_CA.pem` because `/usr/local/etc/openssl@3/certs` and `/opt/homebrew/etc/openssl@3/certs` do not exist!'
+        logg warn 'Unable to add `Cloudflare_CA.pem` because `/usr/local/etc/openssl@3/certs` and `/opt/homebrew/etc/openssl@3/certs` do not exist!'
     fi
 fi
 
