@@ -88,7 +88,12 @@ fi
 # Source: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
 if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; then
     ### Ensure certificate installed on macOS
-    sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt"
+    if [ ! -n "$SSH_CONNECTION" ]; then
+        logg info 'Requesting security authorization for Cloudflare trusted certificate'
+        sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt"
+    else
+        logg warn 'Session is SSH so adding Cloudflare encryption key to trusted certificates via the security program is being bypassed since it requires Touch ID / Password verification.'
+    fi
     if [ -d /usr/local/etc/openssl@3/certs ]; then
         # Location on Intel macOS
         echo | sudo cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem
@@ -98,10 +103,8 @@ if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; th
         echo | sudo cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> /opt/homebrew/etc/openssl@3/certs/Cloudflare_CA.pem
         /opt/homebrew/opt/openssl@3/bin/c_rehash
     else
-        logg error 'Unable to add `Cloudflare_CA.pem` because `/usr/local/etc/ca-certificates/cert.pem` does not exist!'
+        logg error 'Unable to add `Cloudflare_CA.pem` because `/usr/local/etc/openssl@3/certs` and `/opt/homebrew/etc/openssl@3/certs` do not exist!'
     fi
-
-    if [ -d /opt/homebrew/etc/openssl@3]
 fi
 
 if command -v warp-cli > /dev/null; then
