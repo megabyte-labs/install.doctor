@@ -257,3 +257,5 @@ https://espanso.org/
 ## Premium
 
 * https://alternativeto.net/software/daemon-tools/about/
+https://github.com/BalliAsghar/Mailsy
+https://api.slack.com/automation/cli/commands
