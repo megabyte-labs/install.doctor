@@ -3669,19 +3669,18 @@ softwarePackages:
     port: hexyl
     scoop: hexyl
     xbps: hexyl
-  chatgpt-desktop:
+  chatgpt-nofwl:
     _bin: null
     _desc: ChatGPT desktop application (Mac, Windows and Linux)
     _docs: https://app.nofwl.com/docs/chatgpt/config
-    _github: https://github.com/lencx/ChatGPT
+    _github: https://github.com/lencx/nofwl
     _home: https://app.nofwl.com/
-    _name: ChatGPT Desktop
-    appimage: lencx/ChatGPT
-    apt: https://github.com/lencx/ChatGPT/releases/download/v0.10.3/chat-gpt_0.10.3_amd64.deb
-    # script:darwin: brew tap lencx/chatgpt https://github.com/lencx/ChatGPT.git && brew install --cask chatgpt --no-quarantine
-    msi: https://github.com/lencx/ChatGPT/releases/download/v0.10.3/ChatGPT_0.10.3_x64_en-US.msi
-    pacman: chatgpt-desktop-bin
-    winget: lencx.ChatGPT
+    _name: ChatGPT Desktop (NoFWL Version)
+    _when:cask: '! test -d /Applications/NoFWL.app'
+    appimage: lencx/nofwl
+    apt: https://github.com/lencx/nofwl/releases/download/v0.1.0/NoFWL_0.1.0_linux_x86_64.deb
+    cask: lencx/nofwl/nofwl --no-quarantine
+    msi: https://github.com/lencx/nofwl/releases/download/v0.1.0/NoFWL_0.1.0_windows_x86_64.msi
   hey:
     _bin: hey
     _desc: HTTP load generator, ApacheBench (ab) replacement, formerly known as rakyll/boom
@@ -8260,9 +8259,19 @@ softwarePackages:
     _github: https://github.com/hashicorp/vault
     _home: https://vaultproject.io/
     _name: HashiCorp Vault
+    _service:brew: hashicorp/tap/vault
     ansible: professormanhattan.vault
     brew: hashicorp/tap/vault
     yay: vault-cli
+  chatgpt-menubar:
+    _bin: null
+    _desc: ChatGPT for Mac, living in your menubar.
+    _docs: https://github.com/vincelwt/chatgpt-mac
+    _github: https://github.com/vincelwt/chatgpt-mac
+    _home: https://github.com/vincelwt/chatgpt-mac
+    _name: ChatGPT Menubar for macOS
+    _when:cask: '! test -d /Applications/Chatgpt.app'
+    cask: vincelwt-chatgpt
   vector:
     _bin: vector
     _desc: Vector is a lightweight, ultra-fast tool for building observability pipelines that lets you collect, transform, and route all your logs and metrics with one simple tool.
