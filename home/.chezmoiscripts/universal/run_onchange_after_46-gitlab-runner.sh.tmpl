@@ -3,9 +3,11 @@
 # @file GitLab Runner Configuration
 # @brief Registers GitLab Runner with the given GitLab instance
 # @description
-#     This script registers the machine where the script is run as a runner with the given GitLab instance or with the SaaS GitLab
-#     if no instance information is provided.
-#     The script configures the runner to use Docker Executor. Refer [this page](https://docs.gitlab.com/runner/executors/docker.html) for more details.
+#     This script registers the runners with the given GitLab instance. SaaS GitLab can also be provided as the GitLab instance to register
+#     the runners with. The script configures the runners to use Docker Executor. Refer to
+#     [this page](https://docs.gitlab.com/runner/executors/docker.html) for details about the available configuration settings.
+#
+#     Configuring other executors is not supported by this script.
 #
 #     ## Secrets
 #
@@ -24,7 +26,7 @@
 #     | Variable            | Description                                                 |
 #     |---------------------|-------------------------------------------------------------|
 #     | `glurl`             | The URL of the Gitlab instance to associate the Runner with |
-#     | `runnerImage`       | Provide an image to use to configure the runner             |
+#     | `runnerImage`       | Docker image to use to configure the runner                 |
 #     | `runnerDescription` | Description of this runner                                  |
 #     | `runnerTags`        | Comma separated list of tags for this runner                |
 #
@@ -39,29 +41,19 @@
 if command -v gitlab-runner > /dev/null; then
   ### Check if Runner Token value is present
   if [ -v $GITLAB_RUNNER_TOKEN ]; then
-    if [ -n {{ .host.gitlab.runnerTags }} ]; then
       ### Registering runner
       logg info 'Registering GitLab Runner with the provided tags'
+      {{range .host.gitlabRunners -}}
       gitlab-runner register \
       --non-interactive \
-      --url {{ .host.gitlab.glurl }} \
+      --url {{ .glurl }} \
       --token $GITLAB_RUNNER_TOKEN \
       --executor "docker" \
-      --docker-image {{ .host.gitlab.runnerImage }} \
-      --description {{ .host.gitlab.runnerDescription }} \
-      --tag-list {{ .host.gitlab.runnerTags }}
-    else
-      ### Registering runner
-      logg info 'Registering GitLab Runner to run untagged builds'
-      gitlab-runner register \
-      --non-interactive \
-      --url {{ .host.gitlab.glurl }} \
-      --token $GITLAB_RUNNER_TOKEN \
-      --executor "docker" \
-      --docker-image {{ .host.gitlab.runnerImage }} \
-      --description {{ .host.gitlab.runnerDescription }} \
-      --run-untagged
-    fi
+      --docker-image {{ .runnerImage }} \
+      --description "{{ .runnerDescription }} - on {{ .chezmoi.hostname }}" \
+      {{if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }}"
+      {{ else }}--run-untagged{{ end }}
+      {{ end }}
   else
     logg warn 'GITLAB_RUNNER_TOKEN is not set. Not registering the runner'
   fi
