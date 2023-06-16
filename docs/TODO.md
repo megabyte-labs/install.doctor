@@ -181,6 +181,7 @@ https://github.com/rigoneri/Syte3
 * https://github.com/pocketbase/pocketbase
 * sysget
 * https://github.com/therootcompany/serviceman
+* https://github.com/vadimdemedes/ink
 
 ## PHP
 
@@ -263,3 +264,72 @@ https://api.slack.com/automation/cli/commands
 Move Gas Station into this project
 
 Fix how terminal output renders on Terminal.app on macOS
+
+
+https://github.com/TypeScriptToLua/TypeScriptToLua
+https://github.com/context-labs/autodoc
+https://github.com/projen/projen
+https://github.com/activepieces/activepieces#
+https://github.com/jupyterlab/jupyterlab-desktop
+https://github.com/alibaba/lightproxy
+https://github.com/Kanaries/Rath
+https://github.com/butlerx/wetty
+https://github.com/Nutlope/aicommits
+https://github.com/mixn/carbon-now-cli
+https://github.com/graphql-editor/graphql-editor
+https://github.com/graphql/graphql-playground
+https://github.com/voidcosmos/npkill
+https://github.com/Raathigesh/majestic
+https://github.com/raineorshine/npm-check-updates
+https://github.com/oclif/oclif
+https://github.com/vercel/serve
+https://github.com/ds300/patch-package
+https://github.com/cs01/gdbgui
+https://github.com/ionic-team/capacitor
+https://github.com/opencv/cvat
+https://github.com/amplication/amplication
+https://github.com/quicktype/quicktype
+https://github.com/ionic-team/stencil
+https://github.com/openai-translator/openai-translator
+https://github.com/wulkano/Kap
+https://github.com/NativeScript/NativeScript
+https://github.com/ionic-team/ionic-framework
+https://github.com/hoppscotch/hoppscotch
+https://github.com/nestjs/nest
+https://github.com/storybookjs/storybook
+
+Add to KDE plugins:
+https://github.com/Bismuth-Forge/bismuth
+
+## Docker
+https://github.com/erxes/erxes - CRM
+https://github.com/pawelmalak/flame - Homepage
+https://github.com/thelounge/thelounge - IRC
+https://github.com/vector-im/element-web - Matrix
+https://github.com/outline/outline - Collaborative MD
+https://github.com/nocodb/nocodb - MySQL Spreadsheet
+https://github.com/excalidraw/excalidraw - Hand-drawn Diagrams
+
+## NoCode Docker Maybe
+https://github.com/illacloud/illa-builder
+
+## Revisit
+https://github.com/microsoft/azuredatastudio
+https://github.com/Nutlope/roomGPT
+https://github.com/Zettlr/Zettlr
+https://github.com/AmruthPillai/Reactive-Resume
+https://github.com/kubeflow/kubeflow
+https://github.com/leon-ai/leon
+https://github.com/teambit/bit
+https://github.com/Budibase/budibase
+https://github.com/appsmithorg/appsmith
+https://github.com/refined-github/refined-github
+https://github.com/reworkd/AgentGPT
+https://github.com/appwrite/appwrite
+https://github.com/hoppscotch/hoppscotch
+builder.io
+
+Finish TS from 1400 stars
+Python
+Swift
+C#
