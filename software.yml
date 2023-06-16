@@ -664,6 +664,15 @@ softwarePackages:
     _home: https://astronvim.github.io/
     _name: AstroNvim
     _post: nvim --headless -c 'autocmd User PackerComplete quitall'
+  codeedit:
+    _bin: codeedit
+    _desc: 
+    _docs: 
+    _github: 
+    _home:
+    _name: CodeEdit
+    _when:cask: echo '! test -d /Applications/CodeEdit.app' | bash
+    cask: codeedit
   auto-install:
     _bin: auto-install
     _desc: '[auto-install](https://github.com/siddharthkp/auto-install) installs dependencies as you code'

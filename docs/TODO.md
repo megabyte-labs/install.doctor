@@ -325,7 +325,7 @@ https://github.com/carlospolop/PEASS-ng
 
 
 https://github.com/utmapp/UTM
-https://github.com/CodeEditApp/CodeEdit
+
 https://github.com/ianyh/Amethyst
 https://github.com/pock/pock
 https://github.com/lwouis/alt-tab-macos
