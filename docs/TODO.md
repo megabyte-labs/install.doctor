@@ -15,6 +15,12 @@ zsh completions have been installed to:
 Ansible roles
 https://github.com/altermo/vim-plugin-list
 Play with Navi and configure cheat repos
+https://github.com/kelleyma49/PSFzf
+https://github.com/jdhitsolutions/PSScriptTools
+https://github.com/devblackops/Terminal-Icons
+https://github.com/dfinke/ImportExcel
+https://github.com/Disassembler0/Win10-Initial-Setup-Script
+https://github.com/mandiant/flare-vm
 
 ## Pending
 
@@ -182,6 +188,7 @@ https://github.com/rigoneri/Syte3
 * sysget
 * https://github.com/therootcompany/serviceman
 * https://github.com/vadimdemedes/ink
+* https://github.com/ajenti/ajenti
 
 ## PHP
 
@@ -297,6 +304,47 @@ https://github.com/ionic-team/ionic-framework
 https://github.com/hoppscotch/hoppscotch
 https://github.com/nestjs/nest
 https://github.com/storybookjs/storybook
+
+https://github.com/praeclarum/Netjs
+https://github.com/PowerShell/GraphicalTools
+https://github.com/PowerShell/PSResourceGet
+https://github.com/awaescher/RepoZ
+https://github.com/PowerShell/PSScriptAnalyzer
+https://github.com/sq/JSIL
+https://github.com/dotnet/format
+https://github.com/NuGetPackageExplorer/NuGetPackageExplorer
+https://github.com/anypackage/anypackage
+https://github.com/BornToBeRoot/NETworkManager
+https://github.com/actions/runner
+https://github.com/hbons/SparkleShare
+https://github.com/gitextensions/gitextensions
+https://github.com/mRemoteNG/mRemoteNG
+https://github.com/MathewSachin/Captura
+https://github.com/felixse/FluentTerminal
+https://github.com/carlospolop/PEASS-ng
+
+
+https://github.com/utmapp/UTM
+https://github.com/CodeEditApp/CodeEdit
+https://github.com/ianyh/Amethyst
+https://github.com/pock/pock
+https://github.com/lwouis/alt-tab-macos
+https://github.com/ObuchiYuki/DevToysMac
+https://github.com/Mortennn/Dozer
+https://github.com/Clipy/Clipy
+https://github.com/Toxblh/MTMR
+https://github.com/Dimillian/RedditOS
+https://github.com/alin23/Lunar
+https://github.com/sindresorhus/Plash
+https://github.com/swiftbar/SwiftBar
+https://github.com/sindresorhus/Actions
+https://github.com/superhighfives/pika
+https://github.com/halo/LinkLiar
+https://github.com/producthunt/producthunt-osx
+https://github.com/Mortennn/FiScript
+https://github.com/zenangst/Syncalicious
+https://github.com/soduto/Soduto
+https://github.com/wulkano/Plug
 
 Add to KDE plugins:
 https://github.com/Bismuth-Forge/bismuth

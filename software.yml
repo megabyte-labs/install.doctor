@@ -609,6 +609,15 @@ softwarePackages:
   ariang:
     _when:cask: echo '! test -d "/Applications/AriaNg Native.app"' | bash
     cask: ariang
+  iina:
+    _bin: null
+    _desc: The modern video player for macOS.
+    _docs: https://iina.io/
+    _github: https://github.com/iina/iina
+    _home: https://iina.io/
+    _name: iina macOS Video Player
+    _when:cask: echo '! test -d /Applications/iina.app' | bash
+    cask: iina
   asciinema:
     _bin: asciinema
     _desc: '[Asciinema](https://asciinema.org) allows you to record and share your terminal sessions, the simple way'
