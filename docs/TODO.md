@@ -206,7 +206,7 @@ Fix how terminal output renders on Terminal.app on macOS
 
 https://github.com/TypeScriptToLua/TypeScriptToLua
 https://github.com/context-labs/autodoc
-https://github.com/projen/projen
+
 https://github.com/activepieces/activepieces#
 https://github.com/jupyterlab/jupyterlab-desktop
 https://github.com/alibaba/lightproxy
@@ -219,7 +219,7 @@ https://github.com/graphql/graphql-playground
 https://github.com/voidcosmos/npkill
 https://github.com/Raathigesh/majestic
 https://github.com/raineorshine/npm-check-updates
-https://github.com/oclif/oclif
+
 https://github.com/vercel/serve
 https://github.com/ds300/patch-package
 https://github.com/cs01/gdbgui
@@ -261,12 +261,12 @@ https://github.com/ianyh/Amethyst
 
 https://github.com/lwouis/alt-tab-macos
 https://github.com/ObuchiYuki/DevToysMac
-https://github.com/Mortennn/Dozer
+
 https://github.com/Clipy/Clipy
 
 
 
-https://github.com/swiftbar/SwiftBar
+
 
 
 https://github.com/halo/LinkLiar

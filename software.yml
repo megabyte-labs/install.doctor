@@ -2672,6 +2672,16 @@ softwarePackages:
     _home: https://github.com/XcodesOrg/xcodes
     _name: Xcodes
     brew:darwin: xcodesorg/made/xcodes
+  projen:
+    _bin: projen
+    _github: https://github.com/projen/projen
+    _name: Projen
+    npm: projen
+  swiftbar:
+    _github: https://github.com/swiftbar/SwiftBar
+    _name: SwiftBar
+    _when:cask: echo '! test -d /Applications/SwiftBar.app' | bash
+    cask: swiftbar
   crunch:
     _bin: crunch
     _desc: The crunch command line executable is a *nix executable that supports parallel PNG image optimization with local (off of the system PATH) installs of the pngquant and zopflipng project dependencies.
