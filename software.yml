@@ -324,7 +324,7 @@ softwarePackages:
     scoop: act
     yay: act
   genymotion:
-    _when:cask: echo '! test -d /Applications/Genymotion.app' | bash
+    _when:cask: '! test -d /Applications/Genymotion.app'
     cask: genymotion
     choco: genymotion
     # TODO: Figure out how to install on Android
@@ -379,7 +379,7 @@ softwarePackages:
     _github: https://github.com/altair-graphql/altair
     _home: https://altairgraphql.dev/
     _name: Altair GraphQL Client
-    _when:cask: echo '! test -d "/Applications/Altair GraphQL Client.app"' | bash
+    _when:cask: '! test -d "/Applications/Altair GraphQL Client.app"'
     cask: altair-graphql-client
     choco: altair-graphql
     snap: altair
@@ -402,7 +402,7 @@ softwarePackages:
     _github: null
     _home: https://developer.android.com/studio
     _name: Android Studio
-    _when:cask: echo '! test -d "/Applications/Android Studio.app"' | bash
+    _when:cask: '! test -d "/Applications/Android Studio.app"'
     ansible: professormanhattan.androidstudio
     cask: android-studio
     choco: androidstudio
@@ -564,7 +564,7 @@ softwarePackages:
   catlight:
     _github: https://github.com/catlightio/CatLight
     _name: Catlight
-    when: echo '! test -d /Applications/Catlight.app' | bash
+    when: '! test -d /Applications/Catlight.app'
     cask: catlight
     deb: https://catlight.io/downloads/linux/beta
   d2vm:
@@ -626,7 +626,7 @@ softwarePackages:
     _github: https://github.com/ExistentialAudio/BlackHole
     _name: BlackHole
     _desc: Audio loopback device for macOS (supports sound passthrough to screen recording software on macOS)
-    _when:cask: echo '! test -d /Library/Audio/Plug-Ins/HAL/BlackHole16ch.driver' | bash
+    _when:cask: '! test -d /Library/Audio/Plug-Ins/HAL/BlackHole16ch.driver'
     cask: blackhole-16ch
   aria2:
     _bin: aria2c
@@ -644,7 +644,7 @@ softwarePackages:
     port: aria2
     scoop: aria2
   ariang:
-    _when:cask: echo '! test -d "/Applications/AriaNg Native.app"' | bash
+    _when:cask: '! test -d "/Applications/AriaNg Native.app"'
     cask: ariang
   iina:
     _bin: null
@@ -653,7 +653,7 @@ softwarePackages:
     _github: https://github.com/iina/iina
     _home: https://iina.io/
     _name: iina macOS Video Player
-    _when:cask: echo '! test -d /Applications/iina.app' | bash
+    _when:cask: '! test -d /Applications/iina.app'
     cask: iina
   asciinema:
     _bin: asciinema
@@ -710,7 +710,7 @@ softwarePackages:
     _bin: codeedit
     _github: https://github.com/CodeEditApp/CodeEdit
     _name: CodeEdit
-    _when:cask: echo '! test -d /Applications/CodeEdit.app' | bash
+    _when:cask: '! test -d /Applications/CodeEdit.app'
     cask: codeedit
   syncalicious:
     _bin: syncalicious
@@ -719,7 +719,7 @@ softwarePackages:
     _github: https://github.com/zenangst/Syncalicious
     _home: https://github.com/zenangst/Syncalicious
     _name: Syncalicious
-    _when:cask: echo '! test -d /Applications/Syncalicious.app' | bash
+    _when:cask: '! test -d /Applications/Syncalicious.app'
     cask: syncalicious
   auto-install:
     _bin: auto-install
@@ -816,7 +816,7 @@ softwarePackages:
     _github: https://github.com/signalapp/Signal-Desktop
     _home: https://signal.org
     _name: Signal Desktop
-    _when:cask: echo '! test -d "/Applications/Signal.app"' | bash
+    _when:cask: '! test -d "/Applications/Signal.app"'
     cask: signal
     choco: signal
     flatpak: org.signal.Signal
@@ -854,7 +854,7 @@ softwarePackages:
     _github: https://github.com/balena-io/etcher
     _home: https://www.balena.io/etcher/
     _name: balenaEtcher
-    _when:cask: echo '! test -d /Applications/balenaEtcher.app' | bash
+    _when:cask: '! test -d /Applications/balenaEtcher.app'
     ansible:linux: professormanhattan.etcher
     # Waiting for zap to allow headless automation of AppImage Catalog images
     # Currently, it fails because there are multiple versions to select
@@ -950,7 +950,7 @@ softwarePackages:
     _github: https://github.com/kdzwinel/betwixt
     _home: https://github.com/kdzwinel/betwixt
     _name: Betwixt
-    _when:cask: echo '! test -d /Applications/Betwixt.app' | bash
+    _when:cask: '! test -d /Applications/Betwixt.app'
     cask: betwixt
   bin:
     _bin: bin
@@ -976,7 +976,7 @@ softwarePackages:
     _github: https://github.com/Jintin/Swimat
     _home: https://jintin.github.io/Swimat/
     _name: Swimat
-    _when:cask: echo '! test -d /Applications/Swimat.app' | bash
+    _when:cask: '! test -d /Applications/Swimat.app'
     cask: swimat
   textql:
     _bin: textql
@@ -995,7 +995,7 @@ softwarePackages:
     _github: https://github.com/brunophilipe/Cakebrew
     _home: http://www.cakebrew.com/
     _name: Cakebrew
-    _when:cask: echo '! test -d /Applications/Cakebrew.app' | bash
+    _when:cask: '! test -d /Applications/Cakebrew.app'
     cask: cakebrew
   bitwarden:
     _bin: bitwarden
@@ -1004,7 +1004,7 @@ softwarePackages:
     _github: https://github.com/bitwarden/desktop
     _home: null
     _name: BitWarden
-    _when:cask: echo '! test -d /Applications/Bitwarden.app' | bash
+    _when:cask: '! test -d /Applications/Bitwarden.app'
     cask: bitwarden
     choco: bitwarden
     flatpak: com.bitwarden.desktop
@@ -1126,7 +1126,7 @@ softwarePackages:
     _github: https://github.com/brave/brave-browser
     _home: https://brave.com/
     _name: Brave Browser
-    _when:cask: echo '! test -d "/Applications/Brave Browser.app"' | bash
+    _when:cask: '! test -d "/Applications/Brave Browser.app"'
     ansible: professormanhattan.bravebrowser
     cask: brave-browser
     choco: brave
@@ -1217,7 +1217,7 @@ softwarePackages:
     _desc: Image compressor that utilizes other applications like ImageOptim under the hood
     _github: https://github.com/ImageOptim/ImageOptim
     _home: https://imageoptim.com/mac
-    _when:cask: echo '! test -d /Applications/ImageOptim.app' | bash
+    _when:cask: '! test -d /Applications/ImageOptim.app'
     cask: imageoptim
   imageoptim-cli:
     _deps:
@@ -1236,7 +1236,7 @@ softwarePackages:
     _github: https://github.com/cerebroapp/cerebro
     _home: null
     _name: Cerebro
-    _when:cask: echo '! test -d /Applications/Cerebro.app' | bash
+    _when:cask: '! test -d /Applications/Cerebro.app'
     cask: cerebro
     choco: cerebro
     github: github.com/cerebroapp/cerebro
@@ -1321,7 +1321,7 @@ softwarePackages:
     _github: Not open-source
     _home: https://www.google.com/chrome/
     _name: Google Chrome
-    _when:cask: echo '! test -d "/Applications/Google Chrome.app"' | bash
+    _when:cask: '! test -d "/Applications/Google Chrome.app"'
     ansible: professormanhattan.chrome
     cask: google-chrome
     choco: googlechrome
@@ -1334,7 +1334,7 @@ softwarePackages:
     _github: false
     _home: https://www.google.com/drive/download/
     _name: Google Drive
-    _when:cask: echo '! test -d "/Applications/Google Drive.app"' | bash
+    _when:cask: '! test -d "/Applications/Google Drive.app"'
     cask: google-drive
     choco: googledrive
   tor-browser:
@@ -1344,7 +1344,7 @@ softwarePackages:
     _github: https://github.com/TheTorProject/gettorbrowser
     _home: https://www.torproject.org/
     _name: Tor Browser
-    _when:cask: echo '! test -d "/Applications/Tor Browser.app"' | bash
+    _when:cask: '! test -d "/Applications/Tor Browser.app"'
     cask: tor-browser
     choco: tor-browser
     flatpak: com.github.micahflee.torbrowser-launcher
@@ -1438,7 +1438,7 @@ softwarePackages:
     pacman: clang
     scoop: llvm
   clocker:
-    _when:cask: echo '! test -d /Applications/Clocker.app' | bash
+    _when:cask: '! test -d /Applications/Clocker.app'
     _bin: null
     _desc: Clocker is designed to help you keep track of your friends and colleagues in different time zones.
     _docs: null
@@ -1679,7 +1679,7 @@ softwarePackages:
     github: github.com/bcicen/ctop
     yay: ctop-bin
   cumulus:
-    _when:cask: echo '! test -d /Applications/Cumulus.app' | bash
+    _when:cask: '! test -d /Applications/Cumulus.app'
     _bin: null
     _desc: A SoundCloud player that lives in the menubar
     _docs: null
@@ -1779,7 +1779,7 @@ softwarePackages:
     github: github.com/dat-ecosystem-archive/dat
     npm: dat@next
   dat-desktop:
-    _when:cask: echo '! test -d "/Applications/Dat Desktop.app"' | bash
+    _when:cask: '! test -d "/Applications/Dat Desktop.app"'
     _bin: null
     _desc: Peer to peer data syncronization
     _docs: null
@@ -1962,7 +1962,7 @@ softwarePackages:
     _github: https://github.com/docker/compose
     _home: https://www.docker.com/
     _name: Docker Desktop
-    _when:cask: echo '! test -d /Applications/Docker.app' | bash
+    _when:cask: '! test -d /Applications/Docker.app'
     apt: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.16.2-amd64.deb
     cask: docker
     choco: docker-desktop
@@ -2185,7 +2185,7 @@ softwarePackages:
     _home: https://www.electronjs.org/
     _name: Electron
     npm: electron
-    _when:cask: echo '! test -d /Applications/Electron.app' | bash
+    _when:cask: '! test -d /Applications/Electron.app'
     cask: electron
     choco: electron
   electron-app:
@@ -2196,7 +2196,7 @@ softwarePackages:
     _github: null
     _home: null
     _name: Electron Desktop App
-    _when:cask: echo '! test -d /Applications/Electron.app' | bash
+    _when:cask: '! test -d /Applications/Electron.app'
     cask: electron
     choco: electron
   emma:
@@ -2479,7 +2479,7 @@ softwarePackages:
     _github: https://github.com/withfig/autocomplete
     _home: https://fig.io/
     _name: Fig
-    _when:cask: echo '! test -d "/Applications/Fig.app"' | bash
+    _when:cask: '! test -d "/Applications/Fig.app"'
     ansible:darwin: professormanhattan.fig
     cask: fig
   filebrowser:
@@ -2494,7 +2494,7 @@ softwarePackages:
     github: github.com/filebrowser/filebrowser
   arduino-ide:
     _bin: arduino
-    _when:cask: echo '! test -d "/Applications/Arduino.app"' | bash
+    _when:cask: '! test -d "/Applications/Arduino.app"'
     cask: arduino
     choco: arduino
     flatpak: cc.arduino.IDE2
@@ -2545,7 +2545,7 @@ softwarePackages:
     _github: null
     _home: https://www.mozilla.org/en-US/firefox/new/
     _name: Mozilla Firefox
-    _when:cask: echo '! test -d "/Applications/Firefox.app"' | bash
+    _when:cask: '! test -d "/Applications/Firefox.app"'
     ansible: professormanhattan.firefox
     apt: firefox
     apt:debian: firefox-esr
@@ -2589,7 +2589,7 @@ softwarePackages:
     _github: https://github.com/objective-see/LuLu
     _home: https://objective-see.org/products/lulu.html
     _name: LuLu
-    _when:cask: echo '! test -d /Applications/LuLu.app' | bash
+    _when:cask: '! test -d /Applications/LuLu.app'
     cask: lulu
   keycastr:
     _bin: null
@@ -2598,7 +2598,7 @@ softwarePackages:
     _github: https://github.com/keycastr/keycastr
     _home: https://github.com/keycastr/keycastr
     _name: Keycastr
-    _when:cask: echo '! test -d /Applications/KeyCastr.app' | bash
+    _when:cask: '! test -d /Applications/KeyCastr.app'
     cask: keycastr
   hiddenbar:
     _bin: null
@@ -2607,7 +2607,7 @@ softwarePackages:
     _github: https://github.com/dwarvesf/hidden
     _home: https://dwarves.foundation/opensource/
     _name: Hidden Bar
-    _when:cask: echo '! test -d "/Applications/Hidden Bar.app"' | bash
+    _when:cask: '! test -d "/Applications/Hidden Bar.app"'
     cask: hiddenbar
   flameshot:
     _bin: flameshot
@@ -2617,7 +2617,7 @@ softwarePackages:
     _home: https://flameshot.org/
     _name: Flameshot
     _scoopExtras: true
-    _when:cask: echo '! test -d "/Applications/flameshot.app"' | bash
+    _when:cask: '! test -d "/Applications/flameshot.app"'
     apt: flameshot
     cask: flameshot
     choco: flameshot
@@ -2639,7 +2639,7 @@ softwarePackages:
     _github: https://github.com/jgraph/drawio-desktop
     _home: https://www.diagrams.net/
     _name: DrawIO Desktop
-    _when:cask: echo '! test -d /Applications/draw.io.app' | bash
+    _when:cask: '! test -d /Applications/draw.io.app'
     appimage: draw.io
     cask: drawio
     choco: drawio
@@ -2662,7 +2662,7 @@ softwarePackages:
     _github: https://github.com/pock/pock
     _home: https://pock.app/
     _name: Pock
-    _when:cask: echo '! test -d /Applications/Pock.app' | bash
+    _when:cask: '! test -d /Applications/Pock.app'
     cask: pock
   xcodes:
     _bin: xcodes
@@ -2680,7 +2680,7 @@ softwarePackages:
   swiftbar:
     _github: https://github.com/swiftbar/SwiftBar
     _name: SwiftBar
-    _when:cask: echo '! test -d /Applications/SwiftBar.app' | bash
+    _when:cask: '! test -d /Applications/SwiftBar.app'
     cask: swiftbar
   crunch:
     _bin: crunch
@@ -2697,7 +2697,7 @@ softwarePackages:
     _github: https://github.com/gao-sun/eul
     _home: https://github.com/gao-sun/eul
     _name: Eul
-    _when:cask: echo '! test -d /Applications/eul.app' | bash
+    _when:cask: '! test -d /Applications/eul.app'
     cask: eul
   linkliar:
     _bin: null
@@ -2706,7 +2706,7 @@ softwarePackages:
     _home: https://halo.github.io/LinkLiar/
     _github: https://github.com/halo/LinkLiar
     _name: Link Liar
-    _when:cask: echo '! test -d /Applications/LinkLiar.app' | bash
+    _when:cask: '! test -d /Applications/LinkLiar.app'
     cask: linkliar
   monitorcontrol:
     _bin: null
@@ -2733,7 +2733,7 @@ softwarePackages:
     _github: https://github.com/chrissimpkins/Crunch
     _home: https://github.com/chrissimpkins/Crunch
     _name: Crunch macOS App
-    _when:cask: echo '! test -d /Applications/Crunch.app' | bash
+    _when:cask: '! test -d /Applications/Crunch.app'
     cask: crunch
   xcodes-app:
     _bin: null
@@ -2742,7 +2742,7 @@ softwarePackages:
     _github: https://github.com/XcodesOrg/XcodesApp
     _home: https://github.com/XcodesOrg/XcodesApp
     _name: Xcodes App
-    _when:cask: echo '! test -d /Applications/Xcodes.app' | bash
+    _when:cask: '! test -d /Applications/Xcodes.app'
     cask: xcodes
   nitroshare:
     _bin: nitroshare
@@ -2751,7 +2751,7 @@ softwarePackages:
     _github: https://github.com/nitroshare/nitroshare-desktop
     _home: https://nitroshare.net/
     _name: NitroShare
-    _when:cask: echo '! test -d /Applications/nitroshare.app' | bash
+    _when:cask: '! test -d /Applications/nitroshare.app'
     apt: nitroshare
     cask: nitroshare
     choco: nitroshare
@@ -2868,7 +2868,7 @@ softwarePackages:
     _github: null
     _home: null
     _name: Fuse
-    _when:cask: echo '! test -d /usr/local/Caskroom/macfuse' | bash
+    _when:cask: '! test -d /usr/local/Caskroom/macfuse'
     ansible:darwin: professormanhattan.fuse
     apt:
       - fuse
@@ -2942,7 +2942,7 @@ softwarePackages:
     _github: https://github.com/standardnotes/app
     _home: https://standardnotes.com/
     _name: Standard Notes
-    _when:cask: echo '! test -d "/Applications/Standard Notes.app"' | bash
+    _when:cask: '! test -d "/Applications/Standard Notes.app"'
     cask: standard-notes
     flatpak: org.standardnotes.standardnotes
   deja-dup:
@@ -2951,14 +2951,14 @@ softwarePackages:
   discord:
     _bin: discord
     _name: Discord
-    _when:cask: echo '! test -d "/Applications/Discord.app"' | bash
+    _when:cask: '! test -d "/Applications/Discord.app"'
     cask: discord
     choco: discord
     flatpak: com.discordapp.Discord
   telegram:
     _bin: telegram
     _name: Telegram
-    _when:cask: echo '! test -d "/Applications/Telegram.app"' | bash
+    _when:cask: '! test -d "/Applications/Telegram.app"'
     cask: telegram
     choco: telegram
     flatpak: org.telegram.desktop
@@ -2969,7 +2969,7 @@ softwarePackages:
     _github: https://github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client
     _home: null
     _name: Google Assistant for Desktop
-    _when:cask: echo '! test -d "/Applications/Google Assistant.app"' | bash
+    _when:cask: '! test -d "/Applications/Google Assistant.app"'
     ansible:windows: professormanhattan.googleassistant
     cask: google-assistant
     github: github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client
@@ -3068,7 +3068,7 @@ softwarePackages:
     _github: https://github.com/GNOME/gimp
     _home: https://www.gimp.org/
     _name: GIMP
-    _when:cask: echo '! test -d /Applications/GIMP.app' | bash
+    _when:cask: '! test -d /Applications/GIMP.app'
     ansible: professormanhattan.gimp
     apt: gimp
     cask: gimp
@@ -3162,13 +3162,13 @@ softwarePackages:
   gitter:
     _bin: gitter
     _name: Gitter
-    _when:cask: echo '! test -d "/Applications/Gitter.app"' | bash
+    _when:cask: '! test -d "/Applications/Gitter.app"'
     cask: gitter
     choco: gitter
     flatpak: im.gitter.Gitter
   github-desktop:
     _bin: github
-    _when:cask: echo '! test -d "/Applications/GitHub Desktop.app"' | bash
+    _when:cask: '! test -d "/Applications/GitHub Desktop.app"'
     cask: github
     choco: github-desktop
     flatpak: io.github.shiftey.Desktop
@@ -3182,7 +3182,7 @@ softwarePackages:
     _github: https://gitlab.com/mvanremmerden/gitdock
     _home: https://gitlab.com/mvanremmerden/gitdock
     _name: GitDock
-    _when:cask: echo '! test -d /Applications/GitDock.app' | bash
+    _when:cask: '! test -d /Applications/GitDock.app'
     ansible:darwin: professormanhattan.gitdock
     cask: gitdock
   zola:
@@ -3238,7 +3238,7 @@ softwarePackages:
     _github: https://github.com/manosim/gitify
     _home: https://github.com/manosim/gitify
     _name: Gitify
-    _when:cask: echo '! test -d /Applications/Gitify.app' | bash
+    _when:cask: '! test -d /Applications/Gitify.app'
     cask: gitify
     github: github.com/manosim/gitify
     yay: gitify-bin
@@ -3250,7 +3250,7 @@ softwarePackages:
     _home: https://www.gitkraken.com/
     _name: GitKraken
     _snapClassic: true
-    _when:cask: echo '! test -d /Applications/GitKraken.app' | bash
+    _when:cask: '! test -d /Applications/GitKraken.app'
     ansible: professormanhattan.gitkraken
     cask: gitkraken
     choco: gitkraken
@@ -3300,7 +3300,7 @@ softwarePackages:
     _github: https://github.com/Mudlet/Mudlet
     _home: https://www.mudlet.org/
     _name: Mudlet
-    _when:cask: echo '! test -d /Applications/mudlet.app' | bash
+    _when:cask: '! test -d /Applications/mudlet.app'
     cask: mudlet
     choco: mudlet
     snap: mudlet-linux
@@ -3625,7 +3625,7 @@ softwarePackages:
     ansible: professormanhattan.guacamole
   seafile-client:
     _bin: seafile-client
-    _when:cask: echo '! test -d "/Applications/Seafile Client.app"' | bash
+    _when:cask: '! test -d "/Applications/Seafile Client.app"'
     cask: seafile-client
     choco: seafile-client
     flatpak: com.seafile.Client
@@ -3749,7 +3749,7 @@ softwarePackages:
     _github: https://github.com/lencx/nofwl
     _home: https://app.nofwl.com/
     _name: ChatGPT Desktop (NoFWL Version)
-    _when:cask: echo '! test -d /Applications/NoFWL.app' | bash
+    _when:cask: '! test -d /Applications/NoFWL.app'
     appimage: lencx/nofwl
     apt: https://github.com/lencx/nofwl/releases/download/v0.1.0/NoFWL_0.1.0_linux_x86_64.deb
     cask: lencx/nofwl/nofwl --no-quarantine
@@ -3770,7 +3770,7 @@ softwarePackages:
     _github: https://github.com/rustdesk/rustdesk
     _home: https://rustdesk.com/
     _name: RustDesk
-    _when:cask: echo '! test -d /Applications/RustDesk.app' | bash
+    _when:cask: '! test -d /Applications/RustDesk.app'
     apt: https://github.com/rustdesk/rustdesk/releases/download/1.1.9/rustdesk-1.1.9.deb
     cask: rustdesk
     choco: rustdesk
@@ -3991,7 +3991,7 @@ softwarePackages:
     _github: https://github.com/inkscape/inkscape
     _home: https://inkscape.org
     _name: Inkscape
-    _when:cask: echo '! test -d "/Applications/Inkscape.app"' | bash
+    _when:cask: '! test -d "/Applications/Inkscape.app"'
     ansible: professormanhattan.inkscape
     apt: inkscape
     cask: inkscape
@@ -4008,7 +4008,7 @@ softwarePackages:
     _home: https://www.jetbrains.com/idea/
     _name: IntelliJ IDEA (CE)
     _snapClassic: true
-    _when:cask: echo '! test -d "/Applications/IntelliJ IDEA CE.app"' | bash
+    _when:cask: '! test -d "/Applications/IntelliJ IDEA CE.app"'
     ansible: professormanhattan.intellij
     cask: intellij-idea-ce
     choco: intellijidea-community
@@ -4058,7 +4058,7 @@ softwarePackages:
     _github: https://github.com/ipfs/ipfs-desktop
     _home: https://ipfs.tech/
     _name: IPFS Desktop
-    _when:cask: echo '! test -d "/Applications/IPFS Desktop.app"' | bash
+    _when:cask: '! test -d "/Applications/IPFS Desktop.app"'
     appimage: https://github.com/ipfs-shipyard/ipfs-desktop/releases/download/v0.28.0/ipfs-desktop-0.28.0-linux-x86_64.AppImage
     cask: ipfs
     choco: ipfs-desktop
@@ -4087,7 +4087,7 @@ softwarePackages:
     _github: https://github.com/gnachman/iTerm2
     _home: https://iterm2.com/
     _name: iTerm2
-    _when:cask: echo '! test -d /Applications/iTerm.app' | bash
+    _when:cask: '! test -d /Applications/iTerm.app'
     ansible:darwin: professormanhattan.iterm2
     cask: iterm2
   kube-shell:
@@ -4164,7 +4164,7 @@ softwarePackages:
     _github: https://github.com/jitsi/jitsi-meet-electron
     _home: null
     _name: Jitsi Meet Electron
-    _when:cask: echo '! test -d "/Applications/Jitsi Meet.app"' | bash
+    _when:cask: '! test -d "/Applications/Jitsi Meet.app"'
     cask: jitsi-meet
     choco: jitsi-meet-electron
     flatpak: org.jitsi.jitsi-meet
@@ -4243,7 +4243,7 @@ softwarePackages:
     _home: https://keybase.io/
     _name: Keybase
     _when:ansible: '! test -f /opt/keybase/Keybase'
-    _when:cask: echo '! test -d /Applications/Keybase.app' | bash
+    _when:cask: '! test -d /Applications/Keybase.app'
     ansible: professormanhattan.keybase
     cask: keybase
     choco: keybase
@@ -4291,7 +4291,7 @@ softwarePackages:
     go: github.com/weaveworks/footloose@master
   beekeeper-studio:
     _bin: beekeeper-studio
-    _when:cask: echo '! test -d "/Applications/Beekeeper Studio.app"' | bash
+    _when:cask: '! test -d "/Applications/Beekeeper Studio.app"'
     cask: beekeeper-studio
     choco: beekeeper-studio
     flatpak: io.beekeeperstudio.Studio
@@ -4302,7 +4302,7 @@ softwarePackages:
     _github: https://github.com/xbmc/xbmc
     _home: https://kodi.tv/
     _name: Kodi
-    _when:cask: echo '! test -d /Applications/Kodi.app' | bash
+    _when:cask: '! test -d /Applications/Kodi.app'
     ansible: professormanhattan.kodi
     apt: kodi
     cask: kodi
@@ -4335,7 +4335,7 @@ softwarePackages:
     _github: https://github.com/kubenav/kubenav
     _home: https://kubenav.io/
     _name: kubenav
-    _when:cask: echo '! test -d /Applications/kubenav.app' | bash
+    _when:cask: '! test -d /Applications/kubenav.app'
     cask: kubenav
     github: github.com/kubenav/kubenav
     yay: kubenav-bin
@@ -4397,7 +4397,7 @@ softwarePackages:
     _github: https://github.com/GitSquared/edex-ui
     _home: https://github.com/GitSquared/edex-ui
     _name: EDEX UI
-    _when:cask: echo '! test -d /Applications/eDEX-UI.app' | bash
+    _when:cask: '! test -d /Applications/eDEX-UI.app'
     appimage: edex-ui
     cask: edex-ui
     port: edex-ui
@@ -4498,7 +4498,7 @@ softwarePackages:
     _github: null
     _home: https://www.ledger.com/ledger-live
     _name: Ledger Live
-    _when:cask: echo '! test -d "/Applications/Ledger Live.app"' | bash
+    _when:cask: '! test -d "/Applications/Ledger Live.app"'
     ansible: professormanhattan.ledgerlive
     appimage: ledger-live-desktop
     cask: ledger-live
@@ -4512,7 +4512,7 @@ softwarePackages:
     _home: https://k8slens.dev/
     _name: Lens
     _snapClassic: true
-    _when:cask: echo '! test -d /Applications/Lens.app' | bash
+    _when:cask: '! test -d /Applications/Lens.app'
     ansible: professormanhattan.lens
     cask: lens
     choco: lens
@@ -4526,7 +4526,7 @@ softwarePackages:
     _github: https://github.com/hackjutsu/Lepton
     _home: https://hackjutsu.com/Lepton/
     _name: lepton
-    _when:cask: echo '! test -d /Applications/Lepton.app' | bash
+    _when:cask: '! test -d /Applications/Lepton.app'
     cask: lepton
     snap: lepton
   lexicon:
@@ -4545,7 +4545,7 @@ softwarePackages:
     _github: https://github.com/libimobiledevice/libimobiledevice
     _home: https://libimobiledevice.org/
     _name: null
-    _when: echo '! test -d /usr/local/Cellar/libimobiledevice' | bash
+    _when: '! test -d /usr/local/Cellar/libimobiledevice'
     brew:darwin: libimobiledevice
   kdeplasma-addons:
     apt: kdeplasma-addons
@@ -4560,7 +4560,7 @@ softwarePackages:
     pacman: kde-plasma-desktop
   krita:
     _bin: krita
-    _when:cask: echo '! test -d "/Applications/krita.app"' | bash
+    _when:cask: '! test -d "/Applications/krita.app"'
     cask: krita
     choco: krita
     flatpak: org.kde.krita
@@ -4571,7 +4571,7 @@ softwarePackages:
     _github: null
     _home: https://www.libreoffice.org/
     _name: LibreOffice
-    _when:cask: echo '! test -d /Applications/LibreOffice.app' | bash
+    _when:cask: '! test -d /Applications/LibreOffice.app'
     apt: libreoffice
     cask: libreoffice
     choco: libreoffice-fresh
@@ -4738,7 +4738,7 @@ softwarePackages:
     _github: null
     _home: https://www.malwarebytes.com/
     _name: Malwarebytes
-    _when:cask: echo '! test -d /Applications/Malwarebytes.app' | bash
+    _when:cask: '! test -d /Applications/Malwarebytes.app'
     cask: malwarebytes
     choco: malwarebytes
   dialect:
@@ -4746,13 +4746,13 @@ softwarePackages:
     flatpak: app.drey.Dialect
   meld:
     _bin: meld
-    _when:cask: echo '! test -d "/Applications/Meld.app"' | bash
+    _when:cask: '! test -d "/Applications/Meld.app"'
     cask: meld
     choco: meld
     flatpak: org.gnome.meld
   cryptomator:
     _bin: cryptomator
-    _when:cask: echo '! test -d "/Applications/Cryptomator.app"' | bash
+    _when:cask: '! test -d "/Applications/Cryptomator.app"'
     cask: cryptomator
     choco: cryptomator
     flatpak: org.cryptomator.Cryptomator
@@ -4761,13 +4761,13 @@ softwarePackages:
     flatpak: org.gnome.Connections
   ferdium:
     _bin: ferdium
-    _when:cask: echo '! test -d "/Applications/Ferdium.app"' | bash
+    _when:cask: '! test -d "/Applications/Ferdium.app"'
     cask: ferdium
     choco: ferdium
     flatpak: org.ferdium.Ferdium
   thunderbird:
     _bin: thunderbird
-    _when:cask: echo '! test -d "/Applications/Thunderbird.app"' | bash
+    _when:cask: '! test -d "/Applications/Thunderbird.app"'
     cask: thunderbird
     choco: thunderbird
     flatpak: org.mozilla.Thunderbird
@@ -4782,7 +4782,7 @@ softwarePackages:
     _github: https://github.com/Foundry376/Mailspring
     _home: https://getmailspring.com/
     _name: Mailspring
-    _when:cask: echo '! test -d /Applications/Mailspring.app' | bash
+    _when:cask: '! test -d /Applications/Mailspring.app'
     ansible: professormanhattan.mailspring
     cask: mailspring
     choco: mailspring
@@ -4796,7 +4796,7 @@ softwarePackages:
     _github: https://github.com/hql287/Manta
     _home: null
     _name: Manta
-    _when:cask: echo '! test -d /Applications/Manta.app' | bash
+    _when:cask: '! test -d /Applications/Manta.app'
     appimage: https://github.com/hql287/Manta/releases/download/v1.1.4/Manta-1.1.4-x86_64.AppImage
     cask: manta
     exe: https://github.com/hql287/Manta/releases/download/v1.1.4/Manta.Setup.1.1.4.exe
@@ -4808,7 +4808,7 @@ softwarePackages:
     _github: https://github.com/marktext/marktext
     _home: null
     _name: MarkText
-    _when:cask: echo '! test -d /Applications/MarkText.app' | bash
+    _when:cask: '! test -d /Applications/MarkText.app'
     cask: mark-text
     choco: marktext
     github: github.com/marktext/marktext
@@ -4833,7 +4833,7 @@ softwarePackages:
     _github: https://github.com/antonreshetov/massCode
     _home: null
     _name: MassCode
-    _when:cask: echo '! test -d /Applications/massCode.app' | bash
+    _when:cask: '! test -d /Applications/massCode.app'
     cask: masscode
     github: github.com/antonreshetov/massCode
   mc:
@@ -4871,7 +4871,7 @@ softwarePackages:
     _github: false
     _home: https://www.microsoft.com/en-us/edge
     _name: Microsoft Edge
-    _when:cask: echo '! test -d "/Applications/Microsoft Edge.app"' | bash
+    _when:cask: '! test -d "/Applications/Microsoft Edge.app"'
     ansible: professormanhattan.microsoftedge
     cask: microsoft-edge
     choco: microsoft-edge
@@ -4895,7 +4895,7 @@ softwarePackages:
     _github: null
     _home: https://www.office.com/
     _name: Office
-    _when:cask: echo '! test -d "/Applications/Microsoft Word.app"' | bash
+    _when:cask: '! test -d "/Applications/Microsoft Word.app"'
     cask: microsoft-office
     choco: office365business
   microsoft-todo:
@@ -4905,7 +4905,7 @@ softwarePackages:
     _github: false
     _home: https://todo.microsoft.com/tasks/
     _name: Microsoft To-Do
-    _when:cask: echo '! test -d /Applications/Ao.app' | bash
+    _when:cask: '! test -d /Applications/Ao.app'
     ansible: professormanhattan.microsofttodo
     cask: ao
     snap: microsoft-todo-unofficial
@@ -4941,7 +4941,7 @@ softwarePackages:
     _github: https://github.com/mjmlio/mjml-app
     _home: https://mjmlio.github.io/mjml-app/
     _name: MJML App
-    _when:cask: echo '! test -d /Applications/MJML.app' | bash
+    _when:cask: '! test -d /Applications/MJML.app'
     cask: mjml
     github: github.com/mjmlio/mjml-app
     npm: mjml
@@ -4964,7 +4964,7 @@ softwarePackages:
     _github: https://github.com/mockoon/mockoon
     _home: null
     _name: Mockoon
-    _when:cask: echo '! test -d /Applications/Mockoon.app' | bash
+    _when:cask: '! test -d /Applications/Mockoon.app'
     cask: mockoon
     choco: mockoon
     github: github.com/mockoon/mockoon
@@ -4988,7 +4988,7 @@ softwarePackages:
     brew: dotenv-org/brew/dotenv-vault
   privileges:
     _name: Privileges
-    _when:cask: echo '! test -d /Applications/Privileges.app' | bash
+    _when:cask: '! test -d /Applications/Privileges.app'
     cask: privileges
   hss:
     _bin: hss
@@ -5031,7 +5031,7 @@ softwarePackages:
     _name: Monero
     _restricted: true
     _service: monero
-    _when:cask: echo '! test -d /Applications/monero-wallet-gui.app' | bash
+    _when:cask: '! test -d /Applications/monero-wallet-gui.app'
     ansible: professormanhattan.monero
     cask: monero-wallet
     choco: monero
@@ -5052,7 +5052,7 @@ softwarePackages:
     _github: https://github.com/mymonero/mymonero-app-js
     _docs: https://github.com/mymonero/mymonero-app-js
     _home: https://mymonero.com/
-    _when:cask: echo '! test -d /Applications/MyMonero.app' | bash
+    _when:cask: '! test -d /Applications/MyMonero.app'
     cask: mymonero
     choco: mymonero
   motrix:
@@ -5062,7 +5062,7 @@ softwarePackages:
     _github: https://github.com/agalwood/Motrix
     _home: https://motrix.app/
     _name: Motrix
-    _when:cask: echo '! test -d /Applications/Motrix.app' | bash
+    _when:cask: '! test -d /Applications/Motrix.app'
     ansible: professormanhattan.motrix
     cask: motrix
     choco: motrix
@@ -5091,7 +5091,7 @@ softwarePackages:
     _github: https://github.com/emqx/MQTTX
     _home: null
     _name: MQTT X
-    _when:cask: echo '! test -d /Applications/MQTTX.app' | bash
+    _when:cask: '! test -d /Applications/MQTTX.app'
     cask: mqttx
     flatpak: com.emqx.MQTTX
     github: github.com/emqx/MQTTX
@@ -5154,7 +5154,7 @@ softwarePackages:
     _github: https://github.com/ProfileCreator/ProfileCreator
     _home: https://github.com/ProfileCreator/ProfileCreator
     _name: Profile Creator
-    _when:cask: echo '! test -d /Applications/ProfileCreator.app' | bash
+    _when:cask: '! test -d /Applications/ProfileCreator.app'
     cask: profilecreator
   vagrant-manager:
     _bin: null
@@ -5163,7 +5163,7 @@ softwarePackages:
     _github: https://github.com/lanayotech/vagrant-manager
     _home: https://www.vagrantmanager.com/
     _name: Vagrant Manager
-    _when:cask: echo '! test -d "/Applications/Vagrant Manager.app"' | bash
+    _when:cask: '! test -d "/Applications/Vagrant Manager.app"'
     cask: vagrant-manager
     choco: vagrant-manager
   openinterminal:
@@ -5173,7 +5173,7 @@ softwarePackages:
     _github: https://github.com/Ji4n1ng/OpenInTerminal
     _home: https://github.com/Ji4n1ng/OpenInTerminal
     _name: OpenInTerminal
-    _when:cask: echo '! test -d /Applications/OpenInTerminal.app' | bash
+    _when:cask: '! test -d /Applications/OpenInTerminal.app'
     cask: openinterminal
   youtube-music:
     _desc: YouTube Music desktop app bundled with custom plugins (and built-in ad blocker / downloader)
@@ -5206,7 +5206,7 @@ softwarePackages:
     _github: https://github.com/mullvad/mullvadvpn-app
     _home: null
     _name: Mullvad VPN
-    _when:cask: echo '! test -d "/Applications/Mullvad VPN.app"' | bash
+    _when:cask: '! test -d "/Applications/Mullvad VPN.app"'
     apt: https://github.com/mullvad/mullvadvpn-app/releases/download/2022.5/MullvadVPN-2022.5_amd64.deb
     cask: mullvadvpn
     exe: https://github.com/mullvad/mullvadvpn-app/releases/download/2022.5/MullvadVPN-2022.5.exe
@@ -5222,7 +5222,7 @@ softwarePackages:
     _name: Multipass
     _post:cask: multipass set local.driver=virtualbox
     _post:choco: multipass set local.driver=virtualbox
-    _when:cask: echo '! test -d /Applications/Multipass.app' | bash
+    _when:cask: '! test -d /Applications/Multipass.app'
     ansible: professormanhattan.multipass
     cask: multipass
     choco: multipass
@@ -5471,7 +5471,7 @@ softwarePackages:
     _github: https://github.com/nextcloud/desktop
     _home: https://nextcloud.com
     _name: Nextcloud Client
-    _when:cask: echo '! test -d /Applications/Nextcloud.app' | bash
+    _when:cask: '! test -d /Applications/Nextcloud.app'
     cask: nextcloud
     choco: nextcloud-client
     flatpak: com.nextcloud.desktopclient.nextcloud
@@ -5575,7 +5575,7 @@ softwarePackages:
     _home: https://www.notion.so/
     _name: Notion AI
     _note: Waiting on Linux install alternative.
-    _when:cask: echo '! test -d /Applications/Notion.app' | bash
+    _when:cask: '! test -d /Applications/Notion.app'
     cask: notion
     choco: notion
   zaproxy:
@@ -5586,7 +5586,7 @@ softwarePackages:
     _home: https://www.zaproxy.org/
     _name: OWASP ZAP
     _snapClassic: true
-    _when:cask: echo '! test -d "/Applications/OWASP ZAP.app"' | bash
+    _when:cask: '! test -d "/Applications/OWASP ZAP.app"'
     cask: owasp-zap
     choco: zap
     flatpak: org.zaproxy.ZAP
@@ -5600,7 +5600,7 @@ softwarePackages:
     _github: https://github.com/superhighfives/pika
     _home: https://superhighfives.com/pika
     _name: Pika
-    _when:cask: echo '! test -d /Applications/Pika.app' | bash
+    _when:cask: '! test -d /Applications/Pika.app'
     cask: pika
   obsidian:
     _bin: null
@@ -5609,7 +5609,7 @@ softwarePackages:
     _github: false
     _home: https://obsidian.md/
     _name: Obsidian
-    _when:cask: echo '! test -d /Applications/Obsidian.app' | bash
+    _when:cask: '! test -d /Applications/Obsidian.app'
     appimage: Obsidian
     cask: obsidian
     choco: obsidian
@@ -5623,7 +5623,7 @@ softwarePackages:
     _github: https://github.com/raycast/extensions
     _home: https://www.raycast.com/
     _name: Raycast
-    _when:cask: echo '! test -d /Applications/Raycast.app' | bash
+    _when:cask: '! test -d /Applications/Raycast.app'
     cask: raycast
   mage-ai:
     _bin: mage
@@ -5640,7 +5640,7 @@ softwarePackages:
     _github: https://github.com/warpdotdev/Warp
     _home: https://www.warp.dev/
     _name: Warp Terminal
-    _when:cask: echo '! test -d /Applications/Warp.app' | bash
+    _when:cask: '! test -d /Applications/Warp.app'
     cask: warp
   figma:
     _bin: null
@@ -5649,7 +5649,7 @@ softwarePackages:
     _github: false
     _home: https://www.figma.com/
     _name: Figma
-    _when:cask: echo '! test -d /Applications/Figma.app' | bash
+    _when:cask: '! test -d /Applications/Figma.app'
     appimage: Figma-Linux/figma-linux
     cask: figma
     choco: figma
@@ -5662,7 +5662,7 @@ softwarePackages:
     _github: https://github.com/teaxyz/gui
     _home: https://tea.xyz/
     _name: Tea GUI
-    _when:cask: echo '! test -d /Applications/tea.app' | bash
+    _when:cask: '! test -d /Applications/tea.app'
     cask: tea
   node-prune:
     _bin: node-prune
@@ -5736,7 +5736,7 @@ softwarePackages:
     _github: https://github.com/nukeop/nuclear
     _home: https://nuclear.js.org/
     _name: Nuclear
-    _when:cask: echo '! test -d /Applications/nuclear.app' | bash
+    _when:cask: '! test -d /Applications/nuclear.app'
     cask: nuclear
     choco: nuclear
     flatpak: org.js.nuclear.Nuclear
@@ -5910,7 +5910,7 @@ softwarePackages:
     _github: https://github.com/neovide/neovide
     _home: https://neovide.dev/
     _name: Neovide
-    _when:cask: echo '! test -d /Applications/Neovide.app' | bash
+    _when:cask: '! test -d /Applications/Neovide.app'
     cask: neovide
     pacman: neovide
     scoop: neovide
@@ -5974,7 +5974,7 @@ softwarePackages:
     _github: null
     _home: https://www.parallels.com/
     _name: Parallels
-    _when: echo '! test -d "/Applications/Parallels Desktop.app"' | bash
+    _when: '! test -d "/Applications/Parallels Desktop.app"'
     ansible:darwin: professormanhattan.parallels
   gnome-passwords-keys:
     _bin: seahorse
@@ -6194,7 +6194,7 @@ softwarePackages:
     _github: https://github.com/plexinc/plex-media-player
     _home: https://www.plex.tv/
     _name: Plex
-    _when:cask: echo '! test -d /Applications/Plex.app' | bash
+    _when:cask: '! test -d /Applications/Plex.app'
     ansible: professormanhattan.plex
     cask:
       - plex
@@ -6210,7 +6210,7 @@ softwarePackages:
     _bin: plex-htpc
     _home: https://www.plex.tv/
     _name: Plex HTPC
-    _when:cask: echo '! test -d "/Applications/Plex HTPC.app"' | bash
+    _when:cask: '! test -d "/Applications/Plex HTPC.app"'
     cask: plex-htpc
     flatpak: tv.plex.PlexHTPC
     snap: plex-htpc
@@ -6318,7 +6318,7 @@ softwarePackages:
     _github: null
     _home: https://www.postman.com/
     _name: Postman
-    _when:cask: echo '! test -d /Applications/Postman.app' | bash
+    _when:cask: '! test -d /Applications/Postman.app'
     ansible: professormanhattan.postman
     cask: postman
     choco: postman
@@ -6333,7 +6333,7 @@ softwarePackages:
     _home: null
     _name: Powershell
     _snapClassic: true
-    _when:cask: echo '! test -d /Applications/PowerShell.app' | bash
+    _when:cask: '! test -d /Applications/PowerShell.app'
     ansible: professormanhattan.powershell
     cask: powershell
     snap: powershell
@@ -6388,7 +6388,7 @@ softwarePackages:
     _home: https://github.com/amiechen/pretzel
     _name: Pretzel
     _todo: Waiting for SHASUM error on Homebrew cask to resolve
-    _when:cask: echo '! test -d /Applications/Pretzel.app' | bash
+    _when:cask: '! test -d /Applications/Pretzel.app'
     # cask: pretzel
   procs:
     _bin: procs
@@ -6416,7 +6416,7 @@ softwarePackages:
     _post:yay: sudo pacman -Syu libappindicator-gtk3 gnome-shell-extension-appindicator
     _pre:apt: sudo apt-get install -y https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3_all.deb && sudo apt-get update
     _pre:dnf: sudo dnf install -y https://repo.protonvpn.com/fedora-36-stable/release-packages/protonvpn-stable-release-1.0.1-1.noarch.rpm && sudo dnf update
-    _when:cask: echo '! test -d /Applications/ProtonVPN.app' | bash
+    _when:cask: '! test -d /Applications/ProtonVPN.app'
     # ansible: professormanhattan.proton
     apt:
       - gir1.2-appindicator3-0.1
@@ -6445,14 +6445,14 @@ softwarePackages:
     script:darwin: brew install openvpn dialog python3 || true && sudo rm -rf /usr/local/src/protonvpn-cli && sudo git clone https://github.com/phx/protonvpn-cli-macos /usr/local/src/protonvpn-cli && cd /usr/local/src/protonvpn-cli && pip3 install -r requirements.txt && sudo python3 setup.py install
   protonmail-bridge:
     _bin: protonmail-bridge
-    _when:cask: echo '! test -d "/Applications/Proton Mail Bridge.app"' | bash
+    _when:cask: '! test -d "/Applications/Proton Mail Bridge.app"'
     cask: protonmail-bridge
     choco: protonmailbridge
     flatpak: ch.protonmail.protonmail-bridge
     yay: protonmail-bridge
   protonmail-import-export:
     _bin: protonmail-import-export
-    _when:cask: echo '! test -d "/Applications/ProtonMail Import-Export app.app"' | bash
+    _when:cask: '! test -d "/Applications/ProtonMail Import-Export app.app"'
     cask: protonmail-import-export
     flatpak: ch.protonmail.protonmail-import-export-app
   bottles:
@@ -6530,7 +6530,7 @@ softwarePackages:
     _github: https://github.com/qbittorrent/qBittorrent
     _home: https://www.qbittorrent.org/
     _name: qBittorrent
-    _when:cask: echo '! test -d /Applications/qBittorrent.app' | bash
+    _when:cask: '! test -d /Applications/qBittorrent.app'
     ansible: professormanhattan.qbittorrent
     apt: qbittorrent
     cask: qbittorrent
@@ -6590,7 +6590,7 @@ softwarePackages:
     _github: https://github.com/raspberrypi/rpi-imager
     _home: https://www.raspberrypi.com/software/
     _name: Raspberry Pi Imager
-    _when:cask: echo '! test -d "/Applications/Raspberry Pi Imager.app"' | bash
+    _when:cask: '! test -d "/Applications/Raspberry Pi Imager.app"'
     ansible: professormanhattan.raspberryimager
     cask: raspberry-pi-imager
     choco: rpi-imager
@@ -6695,7 +6695,7 @@ softwarePackages:
     _github: null
     _home: null
     _name: Microsoft Remote Desktop
-    _when:cask: echo '! test -d "/Applications/Microsoft Remote Desktop.app"' | bash
+    _when:cask: '! test -d "/Applications/Microsoft Remote Desktop.app"'
     cask: microsoft-remote-desktop
   xrdp:
     _bin: xrdp
@@ -6719,7 +6719,7 @@ softwarePackages:
     _github: https://github.com/responsively-org/responsively-app
     _home: null
     _name: Responsively
-    _when:cask: echo '! test -d /Applications/ResponsivelyApp.app' | bash
+    _when:cask: '! test -d /Applications/ResponsivelyApp.app'
     cask: responsively
     choco: responsively
     github: github.com/responsively-org/responsively-app
@@ -6851,7 +6851,7 @@ softwarePackages:
     _github: https://github.com/lukehaas/RunJS
     _home: null
     _name: RunJS
-    _when:cask: echo '! test -d /Applications/RunJS.app' | bash
+    _when:cask: '! test -d /Applications/RunJS.app'
     cask: runjs
     choco: runjs
     github: github.com/lukehaas/RunJS
@@ -6987,7 +6987,7 @@ softwarePackages:
     _home: https://www.blender.org/
     _name: Blender
     _snapClassic: true
-    _when:cask: echo '! test -d /Applications/Blender.app' | bash
+    _when:cask: '! test -d /Applications/Blender.app'
     apt: blender
     cask: blender
     choco: blender
@@ -7021,7 +7021,7 @@ softwarePackages:
     _github: https://github.com/audacity/audacity
     _home: https://www.audacityteam.org/
     _name: Audacity
-    _when:cask: echo '! test -d /Applications/Audacity.app' | bash
+    _when:cask: '! test -d /Applications/Audacity.app'
     appimage: Audacity
     apt: audacity
     cask: audacity
@@ -7108,7 +7108,7 @@ softwarePackages:
     _github: https://github.com/maxgoedjen/secretive
     _home: null
     _name: null
-    _when:cask: echo '! test -d /Applications/Secretive.app' | bash
+    _when:cask: '! test -d /Applications/Secretive.app'
     cask: secretive
   security:
     _bin: null
@@ -7265,7 +7265,7 @@ softwarePackages:
     _home: https://shotcut.org/
     _name: Shotcut
     _snapClassic: true
-    _when:cask: echo '! test -d /Applications/Shotcut.app' | bash
+    _when:cask: '! test -d /Applications/Shotcut.app'
     ansible: professormanhattan.shotcut
     apt: shotcut
     cask: shotcut
@@ -7315,7 +7315,7 @@ softwarePackages:
     _github: Not open-source
     _home: https://www.skype.com/en/
     _name: Skype
-    _when:cask: echo '! test -d /Applications/Skype.app' | bash
+    _when:cask: '! test -d /Applications/Skype.app'
     ansible: professormanhattan.skype
     cask: skype
     choco: skype
@@ -7329,7 +7329,7 @@ softwarePackages:
     _github: https://github.com/slackhq/SlackTextViewController
     _home: https://slack.com/
     _name: Slack
-    _when:cask: echo '! test -d /Applications/Slack.app' | bash
+    _when:cask: '! test -d /Applications/Slack.app'
     ansible: professormanhattan.slack
     cask: slack
     choco: slack
@@ -7351,7 +7351,7 @@ softwarePackages:
     _github: https://github.com/sveinbjornt/Sloth
     _home: https://sveinbjorn.org/sloth
     _name: Sloth
-    _when:cask: echo '! test -d /Applications/Sloth.app' | bash
+    _when:cask: '! test -d /Applications/Sloth.app'
     cask: sloth
   snapcraft:
     _deps:
@@ -7382,7 +7382,7 @@ softwarePackages:
     _github: https://github.com/evilsocket/opensnitch
     _home: https://www.obdev.at/products/littlesnitch/index.html
     _name: OpenSnitch/Little Snitch
-    _when:cask: echo '! test -d "/Applications/Little Snitch.app"' | bash
+    _when:cask: '! test -d "/Applications/Little Snitch.app"'
     # Not loading on Ubuntu 22.04
     # ansible: professormanhattan.snitch
     cask: little-snitch
@@ -7433,13 +7433,13 @@ softwarePackages:
     _github: https://github.com/sqlectron/sqlectron-gui
     _home: null
     _name: SQLectron
-    _when:cask: echo '! test -d /Applications/sqlectron.app' | bash
+    _when:cask: '! test -d /Applications/sqlectron.app'
     cask: sqlectron
     github: github.com/sqlectron/sqlectron-gui
     yay: sqlectron-gui
   handbrake:
     _bin: handbrake
-    _when:cask: echo '! test -d "/Applications/HandBrake.app"' | bash
+    _when:cask: '! test -d "/Applications/HandBrake.app"'
     cask: handbrake
     choco: handbrake
     flatpak: fr.handbrake.ghb
@@ -7491,7 +7491,7 @@ softwarePackages:
     _github: https://github.com/Tunnelblick/Tunnelblick
     _home: https://tunnelblick.net/
     _name: Tunnelblick
-    _when: echo '! test -d "/Applications/Tunnelblick.app"' | bash
+    _when: '! test -d "/Applications/Tunnelblick.app"'
     cask: tunnelblick
   endlessh:
     _bin: endlessh
@@ -7555,7 +7555,7 @@ softwarePackages:
     _github: https://github.com/exelban/stats
     _home: null
     _name: stats
-    _when:cask: echo '! test -d /Applications/Stats.app' | bash
+    _when:cask: '! test -d /Applications/Stats.app'
     cask: stats
     _service: null
   stegcloak:
@@ -7607,7 +7607,7 @@ softwarePackages:
     _github: https://github.com/oldj/SwitchHosts
     _home: https://swh.app/
     _name: SwitchHosts
-    _when:cask: echo '! test -d "/Applications/SwitchHosts.app"' | bash
+    _when:cask: '! test -d "/Applications/SwitchHosts.app"'
     ansible: professormanhattan.switchhosts
     appimage: oldj/SwitchHosts
     cask: switchhosts
@@ -7641,7 +7641,7 @@ softwarePackages:
     _github: https://github.com/lapce/lapce
     _home: https://lapce.dev/
     _name: Lapce
-    _when:cask: echo '! test -d /Applications/Lapce.app' | bash
+    _when:cask: '! test -d /Applications/Lapce.app'
     brew: lapce
     emerge: app-editors/lapce
     flatpak: dev.lapce.lapce
@@ -7801,7 +7801,7 @@ softwarePackages:
     _name: Tabby
     _snapClassic: true
     _notes: TODO Update the direct links periodically and keep eye out for Snap / Flatpak
-    _when:cask: echo '! test -d /Applications/Tabby.app' | bash
+    _when:cask: '! test -d /Applications/Tabby.app'
     ansible:linux: professormanhattan.tabby
     apt: https://github.com/Eugeny/tabby/releases/download/v1.0.188/tabby-1.0.188-linux-x64.deb
     cask: tabby
@@ -7829,7 +7829,7 @@ softwarePackages:
     _github: https://github.com/tailscale/tailscale
     _home: https://tailscale.com/
     _name: Tailscale Client
-    _when:cask: echo '! test -d "/Applications/Tailscale.app"' | bash
+    _when:cask: '! test -d "/Applications/Tailscale.app"'
     cask: tailscale
     choco: tailscale
   task:
@@ -7858,7 +7858,7 @@ softwarePackages:
   soduto:
     _github: 
     _name: Soduto
-    _when:cask: echo '! test -d /Applications/Soduto.app' | bash
+    _when:cask: '! test -d /Applications/Soduto.app'
     cask: soduto
   envio:
     _bin: envio
@@ -7907,7 +7907,7 @@ softwarePackages:
     _github: null
     _home: null
     _name: Microsoft Teams
-    _when:cask: echo '! test -d "/Applications/Microsoft Teams.app"' | bash
+    _when:cask: '! test -d "/Applications/Microsoft Teams.app"'
     ansible: professormanhattan.teams
     cask: microsoft-teams
     choco: microsoft-teams
@@ -7921,7 +7921,7 @@ softwarePackages:
     _github: Not open-source
     _home: https://www.teamviewer.com/en-us/
     _name: TeamViewer
-    _when:cask: echo '! test -d /Applications/TeamViewer.app' | bash
+    _when:cask: '! test -d /Applications/TeamViewer.app'
     ansible:linux: professormanhattan.teamviewer
     apt: https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
     cask: teamviewer
@@ -8317,14 +8317,14 @@ softwarePackages:
     scoop: upx
   cutter:
     _bin: cutter
-    _when:cask: echo '! test -d "/Applications/Cutter.app"' | bash
+    _when:cask: '! test -d "/Applications/Cutter.app"'
     cask: cutter
     choco: cutter
     flatpak: re.rizin.cutter
   librewolf:
     _bin: librewolf
     _scoopExtras: true
-    _when:cask: echo '! test -d "/Applications/LibreWolf.app"' | bash
+    _when:cask: '! test -d "/Applications/LibreWolf.app"'
     cask: librewolf
     choco: librewolf
     flatpak: io.gitlab.librewolf-community
@@ -8378,7 +8378,7 @@ softwarePackages:
     _github: https://github.com/vincelwt/chatgpt-mac
     _home: https://github.com/vincelwt/chatgpt-mac
     _name: ChatGPT Menubar for macOS
-    _when:cask: echo '! test -d /Applications/Chatgpt.app' | bash
+    _when:cask: '! test -d /Applications/Chatgpt.app'
     cask: vincelwt-chatgpt
   vector:
     _bin: vector
@@ -8406,7 +8406,7 @@ softwarePackages:
     yay: velero-bin
   macvim:
     _todo: Integrate this into macOS setup
-    _when:cask: echo '! test -d /Applications/MacVim.app' | bash
+    _when:cask: '! test -d /Applications/MacVim.app'
     cask: macvim
   vim:
     _bin: vim
@@ -8479,7 +8479,7 @@ softwarePackages:
       EOF
       sudo dnf -y install @development-tools
       sudo dnf -y install kernel-headers kernel-devel dkms elfutils-libelf-devel qt5-qtx11extras
-    _when:cask: echo '! test -d /Applications/VirtualBox.app' | bash
+    _when:cask: '! test -d /Applications/VirtualBox.app'
     ansible: professormanhattan.virtualbox
     apt: virtualbox
     cask: virtualbox
@@ -8503,14 +8503,14 @@ softwarePackages:
     _home: https://visualstudio.microsoft.com/
     _name: Visual Studio
     _post:cask: 'APP_LINK="$(find /usr/local/Caskroom/visual-studio -mindepth 2 -maxdepth 2 -name "*.app*" | head -n1)" && open "$APP_LINK"'
-    _when:cask: echo '! test -d "/Applications/Visual Studio.app"' | bash
+    _when:cask: '! test -d "/Applications/Visual Studio.app"'
     ansible:windows: professormanhattan.visualstudio
     cask: visual-studio
     choco: visualstudio2022community
   vscodium:
     _bin: codium
     _snapClassic: true
-    _when:cask: echo '! test -d "/Applications/VSCodium.app"' | bash
+    _when:cask: '! test -d "/Applications/VSCodium.app"'
     appimage: vscodium/vscodium
     cask: vscodium
     choco: vscodium
@@ -8527,7 +8527,7 @@ softwarePackages:
     _github: https://github.com/videolan/vlc
     _home: https://www.videolan.org/vlc/
     _name: VLC Media Player
-    _when:cask: echo '! test -d /Applications/VLC.app' | bash
+    _when:cask: '! test -d /Applications/VLC.app'
     ansible: professormanhattan.vlc
     apt: vlc
     cask: vlc
@@ -8577,7 +8577,7 @@ softwarePackages:
     _home: https://code.visualstudio.com/
     _name: Visual Studio Code
     _snapClassic: true
-    _when:cask: echo '! test -d "/Applications/Visual Studio Code.app"' | bash
+    _when:cask: '! test -d "/Applications/Visual Studio Code.app"'
     ansible: professormanhattan.vscode
     cask: visual-studio-code
     choco: vscode
@@ -8692,7 +8692,7 @@ softwarePackages:
     _github: https://github.com/webtorrent/webtorrent-desktop
     _home: webtorrent.io/desktop
     _name: WebTorrent Desktop
-    _when:cask: echo '! test -d /Applications/WebTorrent.app' | bash
+    _when:cask: '! test -d /Applications/WebTorrent.app'
     cask: webtorrent
     choco: webtorrent-desktop
     flatpak: io.webtorrent.WebTorrent
@@ -8777,7 +8777,7 @@ softwarePackages:
     _github: https://github.com/will-stone/browserosaurus
     _home: https://browserosaurus.com/
     _name: Browserosaurus
-    _when:cask: echo '! test -d /Applications/Browserosaurus.app' | bash
+    _when:cask: '! test -d /Applications/Browserosaurus.app'
     cask: browserosaurus
   docker:
     _bin: docker
@@ -8889,7 +8889,7 @@ softwarePackages:
     _github: https://github.com/wireshark/wireshark
     _home: https://www.wireshark.org/
     _name: Wireshark
-    _when:cask: echo '! test -d /Applications/Wireshark.app' | bash
+    _when:cask: '! test -d /Applications/Wireshark.app'
     apt: wireshark
     cask: wireshark
     choco: wireshark
@@ -8903,7 +8903,7 @@ softwarePackages:
     _github: https://github.com/wkhtmltopdf/wkhtmltopdf
     _home: null
     _name: wkhtmltopdf
-    _when:cask: echo '! test -d /usr/local/Caskroom/wkhtmltopdf' | bash
+    _when:cask: '! test -d /usr/local/Caskroom/wkhtmltopdf'
     # CentOS Stream 9 does not have a supported GitHub release available
     # ansible: professormanhattan.wkhtmltopdf
     apt: wkhtmltopdf
@@ -9161,7 +9161,7 @@ softwarePackages:
     _github: Not open-source
     _home: https://zoom.us/
     _name: Zoom
-    _when:cask: echo '! test -d /Applications/zoom.us.app' | bash
+    _when:cask: '! test -d /Applications/zoom.us.app'
     ansible: professormanhattan.zoom
     cask: zoom
     choco: zoom
