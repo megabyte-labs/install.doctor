@@ -664,15 +664,26 @@ softwarePackages:
     _home: https://astronvim.github.io/
     _name: AstroNvim
     _post: nvim --headless -c 'autocmd User PackerComplete quitall'
+  devbox:
+    _bin: devbox
+    _github: https://github.com/jetpack-io/devbox
+    nix-env: nixpkgs.devbox
+    script: curl -fsSL https://get.jetpack.io/devbox | bash
   codeedit:
     _bin: codeedit
-    _desc: 
-    _docs: 
-    _github: 
-    _home:
+    _github: https://github.com/CodeEditApp/CodeEdit
     _name: CodeEdit
     _when:cask: echo '! test -d /Applications/CodeEdit.app' | bash
     cask: codeedit
+  syncalicious:
+    _bin: syncalicious
+    _desc: macOS application that syncs application settings across instances of macOS (and can also be used for backing up application settings)
+    _docs: https://github.com/zenangst/Syncalicious
+    _github: https://github.com/zenangst/Syncalicious
+    _home: https://github.com/zenangst/Syncalicious
+    _name: Syncalicious
+    _when:cask: echo '! test -d /Applications/Syncalicious.app' | bash
+    cask: syncalicious
   auto-install:
     _bin: auto-install
     _desc: '[auto-install](https://github.com/siddharthkp/auto-install) installs dependencies as you code'
@@ -4204,6 +4215,9 @@ softwarePackages:
     _home: https://github.com/zquestz/s
     _name: s
     brew: s-search
+  rancher-desktop:
+    _github: https://github.com/rancher-sandbox/rancher-desktop/
+    cask: rancher
   footloose:
     _bin: footloose
     _desc: Container Machines - Containers that look like Virtual Machines
@@ -4906,6 +4920,18 @@ softwarePackages:
     brew: davrodpin/homebrew-mole/mole
     github: github.com/davrodpin/mole
     yay: mole-bin
+  dotenv-vault:
+    _bin: dotenv-vault
+    _name: Dotenv Vault
+    brew: dotenv-org/brew/dotenv-vault
+  privileges:
+    _name: Privileges
+    _when:cask: echo '! test -d /Applications/Privileges.app' | bash
+    cask: privileges
+  hss:
+    _bin: hss
+    _github: https://github.com/six-ddc/hss
+    brew: hss
   molecule:
     _bin: molecule
     _desc: Molecule aids in the development and testing of Ansible roles
@@ -7962,6 +7988,17 @@ softwarePackages:
     brew: tig
     nix: tig
     pkg: tig
+  howdoi:
+    _bin: howdoi
+    _github: https://github.com/gleitz/howdoi
+    _name: howdoi
+    brew: howdoi
+    pipx: howdoi
+  magic-wormhole:
+    _bin: wormhole
+    _github: https://github.com/magic-wormhole/magic-wormhole
+    _name: Magic Wormhole
+    brew: magic-wormhole
   tilt:
     _bin: tilt
     _desc: Define your dev environment as code. For microservice apps on Kubernetes

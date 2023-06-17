@@ -1,3 +1,5 @@
+Integrate into PowerShell profile.ps1: https://github.com/dahlbyk/posh-git
+
 # TODOs
 
 https://github.com/search?q=vscode&type=repositories&s=stars&o=desc&p=2
@@ -175,6 +177,20 @@ https://github.com/rigoneri/Syte3
 
 * Look into tile managers
 
+## Website
+
+https://github.com/Mintplex-Labs/anything-llm
+* https://webcontainers.io/
+* https://github.com/zulip/zulip
+
+
+## Kubernetes
+
+* https://github.com/kubevirt/kubevirt
+
+## VM
+
+* https://www.cloudhypervisor.org/
 
 ## CLI
 
@@ -189,6 +205,14 @@ https://github.com/rigoneri/Syte3
 * https://github.com/therootcompany/serviceman
 * https://github.com/vadimdemedes/ink
 * https://github.com/ajenti/ajenti
+* https://github.com/linuxserver/docker-webtop
+* https://github.com/chocolatey/boxstarter
+
+## System
+
+* Include [vagrant-hostmanager](https://github.com/devopsgroup-io/vagrant-hostmanager) to register IP addresses to `/etc/hosts` files so that they have IP addresses of other machines in the same Vagrant network
+* Possible security improvement https://github.com/containers/toolbox
+* Possible security test - https://github.com/AlessandroZ/LaZagne Windows password system sniffer
 
 ## PHP
 
@@ -342,9 +366,11 @@ https://github.com/superhighfives/pika
 https://github.com/halo/LinkLiar
 https://github.com/producthunt/producthunt-osx
 https://github.com/Mortennn/FiScript
-https://github.com/zenangst/Syncalicious
+
 https://github.com/soduto/Soduto
 https://github.com/wulkano/Plug
+
+https://github.com/humblepenguinn/envio
 
 Add to KDE plugins:
 https://github.com/Bismuth-Forge/bismuth
@@ -357,6 +383,7 @@ https://github.com/vector-im/element-web - Matrix
 https://github.com/outline/outline - Collaborative MD
 https://github.com/nocodb/nocodb - MySQL Spreadsheet
 https://github.com/excalidraw/excalidraw - Hand-drawn Diagrams
+https://github.com/ansible/awx - AWX Ansible Management
 
 ## NoCode Docker Maybe
 https://github.com/illacloud/illa-builder
@@ -376,6 +403,8 @@ https://github.com/reworkd/AgentGPT
 https://github.com/appwrite/appwrite
 https://github.com/hoppscotch/hoppscotch
 builder.io
+https://github.com/hocus-dev/hocus
+https://github.com/reworkd/AgentGPT
 
 Finish TS from 1400 stars
 Python

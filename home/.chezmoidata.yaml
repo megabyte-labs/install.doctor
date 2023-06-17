@@ -218,6 +218,7 @@ softwareGroups:
     - cryptomator
     - seafile-client
     - timeshift
+    - syncalicious
   Browsers: &Browsers
     - w3m
   Browsers-Desktop: &Browsers-Desktop
@@ -336,6 +337,7 @@ softwareGroups:
     - http-prompt
     - httpie
     - httpstat
+    - howdoi
     - hurl
     - imgur-uploader
     - is-up
@@ -786,6 +788,7 @@ softwareGroups:
     - assh
     - endlessh
     - fail2ban
+    - hss
     - mosh
     - openssh-server
     - skm
@@ -798,6 +801,7 @@ softwareGroups:
     - bitwarden-cli
     - boringtun
     - debsecan
+    - dotenv-vault
     - envchain
     - envconsul
     - openssl
@@ -817,6 +821,7 @@ softwareGroups:
     - lulu
     - mullvad-vpn
     - portmaster
+    - privileges
     - protonvpn
     - santa
     - tunnelblick
@@ -880,6 +885,7 @@ softwareGroups:
     - dat
     - ffsend
     - gdown
+    - magic-wormhole
     - nitroshare
     - ots
     - portal
@@ -918,6 +924,7 @@ softwareGroups:
     - cordova
     - deno
     - deta
+    - devbox
     - electron
     - emma
     - fastify
@@ -1329,6 +1336,8 @@ softwareGroups:
   queued:
     - pkg: editly
       note: Editly NPM package is failing to install on macOS. Attempts to compile with node-gyp and fails.
+    - pkg: rancher-desktop
+      note: Conflicts with Docker Desktop
     - pkg: rear
       note: System backup utility that may be incorporated after comparing it with alternative and perhaps better alternatives.
     - pkg: frps / frpc
