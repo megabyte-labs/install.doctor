@@ -166,6 +166,7 @@ softwareGroups:
     - android-studio
     - genymotion
     - scrcpy-gui
+    - soduto
   Anon: &Anon
     - onionshare
   Ansible: &Ansible
@@ -654,7 +655,6 @@ softwareGroups:
     - _nautilus-extensions
     - cakebrew
     - clocker
-    - cumulus
     - drawio
     - eartrumpet
     - edex-ui
@@ -667,7 +667,6 @@ softwareGroups:
     - mark-text
     - meetingbar
     - monitorcontrol
-    - neovide
     - openinterminal
     - pake
     - pock
@@ -806,6 +805,7 @@ softwareGroups:
     - dotenv-vault
     - envchain
     - envconsul
+    - envio
     - openssl
     - pony
     - protonvpn-cli
@@ -821,7 +821,6 @@ softwareGroups:
   Security-Desktop: &Security-Desktop
     - bitwarden
     - lulu
-    - mullvad-vpn
     - portmaster
     - privileges
     - protonvpn
@@ -1206,6 +1205,10 @@ softwareGroups:
     - *Transfer-Desktop
     - *Virtualization-Desktop
     - *Web-Development-Desktop
+  _ID-Desktop:
+    - browsersaurus
+    - monitorcontrol
+    - warp-terminal
   __hostname__base-basic-tmpl:
     - *_Basic
     - *_Basic-Desktop
@@ -1283,6 +1286,8 @@ softwareGroups:
       note: macOS system search more native way of providing similar features. Better alternatives are available.
     - pkg: chromium
       note: Deprecated in favor of the regular Chrome.
+    - pkg: cumulus
+      note: Unnecessary menu bar widget for SoundCloud.
     - pkg: diffsofancy
       note: Deprecated in favor of `delta`
     - pkg: easyengine
@@ -1307,8 +1312,12 @@ softwareGroups:
       note: Deprecated in favor of using `exa`. `lsd` may be re-introduced when Windows support is added.
     - pkg: masscode # Deprecated in favor of Pieces
       note: Deprecated in favor of [Pieces](https://pieces.app/). The core components of Pieces are not open-source but the functionality is significantly better than massCode.
+    - pkg: mullvad-vpn
+      note: Switched to ProtonVPN exclusively
     - pkg: multipass
       note: Opens persistent menu icon on GNOME and has issues that sometimes require switching the virt driver
+    - pkg: neovide
+      note: Prefer other IDEs - neovim is good for the terminal though
     - pkg: nordvpn
       note: Deprecated in favor of leveraging ProtonVPN as the primary VPN service.
     - pkg: nvm
