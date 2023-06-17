@@ -274,7 +274,7 @@ if command -v antigen > /dev/null; then
   antigen use oh-my-zsh
   antigen bundle adb
   antigen bundle bazel
-  antigen bundle codeclimate
+  antigen bundle codeclimatefd
   # antigen bundle colored-man-pages
   antigen bundle command-not-found
   antigen bundle copybuffer
@@ -348,9 +348,6 @@ if command -v antigen > /dev/null; then
   # antigen bundle ssh-agent
   antigen bundle sudo
   antigen bundle terraform
-  if command -v thefuck > /dev/null; then
-  	antigen bundle thefuck
-  fi
   antigen bundle timer
   antigen bundle tmuxinator
   antigen bundle urltools
@@ -359,16 +356,20 @@ if command -v antigen > /dev/null; then
   # antigen bundle volta # Added by bash completions script
   antigen bundle web-search
   # antigen bundle wp-cli # Added by bash completions script
-  antigen bundle docker
-  antigen bundle docker-compose
   antigen bundle yarn
+
+  if [ ! -d /Applications ]; then
+    # Plugins that are troublesome on macOS
+    antigen bundle docker
+    antigen bundle docker-compose
+  fi
 
   # Third-party plugins
   # antigen bundle jscutlery/nx-completion Installing jscutlery/nx-completion... Error! Activate logging and try again.
-  antigen bundle lukechilds/zsh-better-npm-completion
+  # antigen bundle lukechilds/zsh-better-npm-completion
 
   antigen bundle zsh-interactive-cd
-  # antigen bundle zsh-navigation-tools
+  antigen bundle zsh-navigation-tools
   antigen bundle zsh-users/zsh-completions src
   if command -v fzf > /dev/null; then
   	antigen bundle aloxaf/fzf-tab
@@ -377,7 +378,7 @@ if command -v antigen > /dev/null; then
   antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle zsh-users/zsh-syntax-highlighting
   if [ -d /Applications ] && [ -d /System ]; then
-  	antigen bundle zsh-apple-touchbar
+    antigen bundle zsh-apple-touchbar
   fi
   antigen theme romkatv/powerlevel10k
   antigen apply
