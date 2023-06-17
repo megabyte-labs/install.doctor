@@ -237,6 +237,7 @@ softwareGroups:
     - fpm
     - gitlab-runner
     - glen
+    - tart
   CLI: &CLI
     - bash-completion
     - bandwhich
@@ -451,6 +452,7 @@ softwareGroups:
     - beekeeper-studio
     - sqlectron
   Development-Tools-Desktop: &Development-Tools-Desktop
+    - catlight
     - github-desktop
     - intellij-idea-ce
     - iterm2
@@ -903,15 +905,21 @@ softwareGroups:
   Utilities: &Utilities
     - nativefier
   Virtualization: &Virtualization
+    - d2vm
     - kvm
+    - libguestfs-tools
     - lxdc
+    - lxd-ui
     - packer
+    - quickemu
     - vagrant
     - vagrant-vmware-utility
+    - vermin
   Virtualization-Desktop: &Virtualization-Desktop
     - docker-desktop
     - gnome-boxes
     - parallels
+    - quickgui
     - vagrant-manager
     - virtualbox
     - vmware
@@ -983,6 +991,7 @@ softwareGroups:
     - electron-app
     - fiddler
     - figma
+    - http-toolkit
     - imagine
     - imageoptim
     - ipfs-desktop

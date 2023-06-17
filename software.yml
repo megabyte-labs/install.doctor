@@ -541,6 +541,43 @@ softwarePackages:
     _name: AptCacherNG
     ansible: professormanhattan.aptcacherng
     _systemd: apt-cacher-ng
+  http-toolkit:
+    _github: https://github.com/httptoolkit/httptoolkit
+    _name: HTTP Toolkit
+    cask: http-toolkit
+    winget: HTTPToolKit.HTTPToolKit
+  tart:
+    _bin: tart
+    _github: https://github.com/cirruslabs/tart
+    brew:darwin:
+      - tart
+      - cirruslabs/cli/gitlab-tart-executor
+  quickemu:
+    _bin: quickemu
+    _github: https://github.com/quickemu-project/quickemu
+    _pre: sudo apt-add-repository ppa:flexiondotorg/quickemu && sudo apt update
+    apt:ubuntu: quickemu
+  quickgui:
+    _github: https://github.com/quickemu-project/quickgui
+    _pre: sudo add-apt-repository ppa:yannick-mauray/quickgui && sudo apt update
+    apt:ubuntu: quickgui
+  catlight:
+    _github: https://github.com/catlightio/CatLight
+    _name: Catlight
+    when: echo '! test -d /Applications/Catlight.app' | bash
+    cask: catlight
+    deb: https://catlight.io/downloads/linux/beta
+  d2vm:
+    _bin: d2vm
+    _github: https://github.com/linka-cloud/d2vm
+    _name: Docker 2 VM
+    brew: linka-cloud/tap/d2vm
+  lxd-ui:
+    _bin: lxd-ui
+    _github: https://github.com/canonical/lxd-ui
+    _name: LXD UI
+    _post: lxd init && lxc config set core.https_address "[::]:8443"
+    snap: lxd
   gopass:
     _bin: gopass
     _desc: The slightly more awesome standard unix password manager for teams
@@ -2322,6 +2359,11 @@ softwarePackages:
     nix: exa
     pacman: exa
     zypper: exa
+  libguestfs-tools:
+    _bin: guestfish
+    _github: https://github.com/libguestfs/libguestfs
+    apt: libguestfs-tools
+    dnf: libguestfs-tools
   exiftool:
     _bin: exiftool
     _desc: '[exiftool](https://exiftool.org/) is a platform-independent Perl library plus a command-line application for reading, writing and editing meta information in a wide variety of files'
@@ -2456,6 +2498,11 @@ softwarePackages:
     cask: arduino
     choco: arduino
     flatpak: cc.arduino.IDE2
+  vermin:
+    _bin: vermin
+    _github: https://github.com/mhewedy/vermin
+    _name: Vermin
+    go: github.com/mhewedy/vermin@latest
   filezilla:
     _bin: filezilla
     _desc: '[FileZilla](https://filezilla-project.org/) is a free software, cross-platform FTP application, consisting of FileZilla Client and FileZilla Server. Client binaries are available for Windows, Linux, and macOS, server binaries are available for Windows only.'

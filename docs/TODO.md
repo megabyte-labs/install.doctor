@@ -182,6 +182,7 @@ https://github.com/rigoneri/Syte3
 https://github.com/Mintplex-Labs/anything-llm
 * https://webcontainers.io/
 * https://github.com/zulip/zulip
+* https://github.com/ConvoyPanel/panel
 
 
 ## Kubernetes
@@ -191,6 +192,8 @@ https://github.com/Mintplex-Labs/anything-llm
 ## VM
 
 * https://www.cloudhypervisor.org/
+* https://github.com/boxcutter/macos
+* https://github.com/canonical/ubuntu-desktop-installer
 
 ## CLI
 
