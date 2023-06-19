@@ -23,12 +23,12 @@
 
 {{ $ovpnUsername := (env "OVPN_USERNAME") }}
 {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "OVPN_USERNAME")) }}
-{{   $ovpnUsername := (includeTemplate "secrets/OVPN_USERNAME" | decrypt) }}
+{{   $ovpnUsername := (includeTemplate "secrets/OVPN_USERNAME" | decrypt | trim) }}
 {{ end }}
 
 {{ $ovpnPassword := (env "OVPN_PASSWORD") }}
 {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "OVPN_PASSWORD")) }}
-{{   $ovpnPassword := (includeTemplate "secrets/OVPN_PASSWORD" | decrypt) }}
+{{   $ovpnPassword := (includeTemplate "secrets/OVPN_PASSWORD" | decrypt | trim) }}
 {{ end }}
 
 {{ includeTemplate "universal/profile" }}

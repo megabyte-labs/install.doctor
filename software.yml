@@ -349,6 +349,17 @@ softwarePackages:
     _home: https://pieces.app/
     _name: Pieces CLI
     cask: pieces-cli
+  buildkite-agent:
+    _bin: buildkite-agent
+    _github: https://github.com/buildkite/agent
+    _name: BuildKite Agent
+    brew: buildkite/buildkite/buildkite-agent
+  multi-gitter:
+    _bin: multi-gitter
+    _github: https://github.com/lindell/multi-gitter
+    _name: Multi-Gitter
+    brew: lindell/multi-gitter/multi-gitter
+    go: github.com/lindell/multi-gitter@latest
   allure:
     _bin: allure
     _desc: '[Allure Report](https://docs.qameta.io/allure-testops/) is a flexible, lightweight multi-language test reporting tool. It provides clear graphical reports and allows everyone involved in the development process to extract the maximum of information from the everyday testing process.'
@@ -701,11 +712,17 @@ softwarePackages:
     _home: https://astronvim.github.io/
     _name: AstroNvim
     _post: nvim --headless -c 'autocmd User PackerComplete quitall'
+  devtoys:
+    _bin: devtoys
+    _github: https://github.com/ObuchiYuki/DevToysMac
+    _when:cask: echo '! test -d /Applications/DevToys.app' | bash
+    cask: devtoys
   devbox:
     _bin: devbox
     _github: https://github.com/jetpack-io/devbox
-    nix-env: nixpkgs.devbox
-    script: curl -fsSL https://get.jetpack.io/devbox | bash
+    _todo: Revisit because install via script would require expect since piping y to the installer is not working
+    # nix-env: nixpkgs.devbox
+    # script: curl -fsSL https://get.jetpack.io/devbox | bash
   codeedit:
     _bin: codeedit
     _github: https://github.com/CodeEditApp/CodeEdit
@@ -1074,6 +1091,29 @@ softwarePackages:
     _home: https://github.com/dim-an/cod
     _name: Cod
     go: github.com/dim-an/cod@master
+  utm:
+    _bin: utm
+    _github: https://github.com/utmapp/UTM
+    _name: UTM
+    cask: utm
+  amethyst:
+    _bin: amethyst
+    _github: https://github.com/ianyh/Amethyst
+    _name: Amethyst
+    _when:cask: echo '! test -d /Applications/Amethyst.app' | bash
+    cask: amethyst
+  alt-tab:
+    _bin: alt-tab
+    _github: https://github.com/lwouis/alt-tab-macos
+    _name: Alt+Tab for macOS that works like alt+tab on Windows
+    _when:cask: echo '! test -d /Applications/AltTab.app' | bash
+    cask: alt-tab
+  fiscript:
+    _bin: fiscript
+    _github: https://github.com/Mortennn/FiScript
+    _name: FiScript
+    _when:cask: echo '! test -d /Applications/FiScript.app' | bash
+    cask: fiscript
   opencommit:
     _bin: opencommit
     _desc: GPT CLI to auto-generate impressive commits in 1 second
@@ -1179,6 +1219,26 @@ softwarePackages:
     _home: null
     _name: null
     npm: caniuse-cmd
+  storybook:
+    _bin: storybook
+    _github: https://github.com/storybookjs/storybook
+    _name: Storybook
+    npm: storybook
+  k9s:
+    _bin: k9s
+    _github: https://github.com/derailed/k9s
+    _name: K9s
+    brew: derailed/k9s/k9s
+    choco: k9s
+    pacman: k9s
+    port: k9s
+    scoop: k9s
+  aicommits:
+    _bin: aicommits
+    _github: https://github.com/Nutlope/aicommits
+    _name: AI Commits
+    brew: aicommits
+    npm: aicommits
   captain:
     _bin: captain
     _desc: Helps manage docker-compose.yml files from anywhere in the file system
@@ -1186,7 +1246,13 @@ softwarePackages:
     _github: https://github.com/jenssegers/captain
     _home: null
     _name: captain
-    github: github.com/jenssegers/captain
+    go: github.com/jenssegers/captain@latest
+  lightproxy:
+    _bin: lightproxy
+    _github: https://github.com/alibaba/lightproxy
+    _name: LightProxy
+    _when:cask: echo '! test -d /Applications/LightProxy.app' | bash
+    cask: lightproxy
   carbon-now:
     _bin: carbon-now
     _desc: '[Carbon](https://carbon.now.sh/) lets you create and share beautiful images of your source code'
@@ -4090,6 +4156,11 @@ softwarePackages:
     _when:cask: '! test -d /Applications/iTerm.app'
     ansible:darwin: professormanhattan.iterm2
     cask: iterm2
+  nativescript:
+    _bin: ns
+    _github: https://github.com/NativeScript/NativeScript
+    _name: NativeScript
+    npm: nativescript
   kube-shell:
     _bin: kube-shell
     _desc: An integrated shell for working with the Kubernetes
@@ -4148,6 +4219,16 @@ softwarePackages:
     _home: https://www.jenv.be/
     _name: jenv
     ansible: professormanhattan.jenv
+  atuin:
+    _bin: atuin
+    _github: https://github.com/ellie/atuin
+    _name: Atuin
+    _post: source "$XDG_CONFIG_HOME/shell/private.sh" && atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$ATUIN_PASSWORD" && atuin import auto && atuin sync
+    brew: atuin
+    cargo: atuin
+    pacman: atuin
+    port: atuin
+    pkg-termux: atuin
   jiq:
     _bin: jiq
     _desc: Create jq queries interactively by leveraging a live reload feature in the terminal
@@ -5405,6 +5486,11 @@ softwarePackages:
       - neovim
       - python-neovim
       - python3-neovim
+  majestic:
+    _bin: majestic
+    _github: https://github.com/Raathigesh/majestic
+    _name: Majestic
+    npm: majestic
   nest:
     _bin: nest
     _desc: CLI tool for Nest applications
@@ -7506,6 +7592,17 @@ softwarePackages:
     apt: endlessh
     dnf:fedora: endlessh
     yay: endlessh-git
+  kap:
+    _bin: kap
+    _github: https://github.com/wulkano/Kap
+    _name: Kap
+    _when:cask: echo '! test -d /Applications/Kap.app' | bash
+    cask: kap
+  autodoc:
+    _bin: doc
+    _github: https://github.com/context-labs/autodoc
+    _name: Autodoc
+    npm: '@context-labs/autodoc'
   ssl-proxy:
     _bin: ssl-proxy
     _desc: Simple zero-config SSL reverse proxy with real autogenerated certificates
@@ -7518,6 +7615,36 @@ softwarePackages:
   # starred:
   #   _bin: starred
   #   pipx: starred
+  npkill:
+    _bin: npkill
+    _github: https://github.com/voidcosmos/npkill
+    _name: npkill
+    npm: npkill
+  npm-check-updates:
+    _bin: ncu
+    _github: https://github.com/raineorshine/npm-check-updates
+    _name: NPM Check Updates
+    npm: npm-check-updates
+  patch-package:
+    _bin: patch-package
+    _github: https://github.com/ds300/patch-package
+    _name: Patch Package
+    npm: patch-package
+  psscriptanalyzer:
+    _bin: psscriptanalyzer
+    _github: https://github.com/PowerShell/PSScriptAnalyzer
+    _name: PSScriptAnalyzer
+    choco: psscriptanalyzer
+  networkmanager:
+    _bin: networkmanager
+    _github: https://github.com/BornToBeRoot/NETworkManager
+    _name: NETworkManager
+    scoop: networkmanager
+    winget: BornToBeRoot.NETworkManager
+  gdbgui:
+    _bin: gdbgui
+    _github: https://github.com/cs01/gdbgui
+    pipx: gdbgui
   starship:
     _bin: null
     _desc: '[Starship](https://starship.rs/) is the minimal, blazing fast, and extremely customizable prompt for any shell! It shows the information you need, while staying sleek and minimal. Unlike most other prompts, it is compatible with nearly every type of terminal. If you want to retain the same look and feel across different terminals, then look no further.'
@@ -8929,13 +9056,19 @@ softwarePackages:
     ansible:darwin: professormanhattan.wpcli
     ansible:linux: professormanhattan.wpcli
     brew: wp-cli
+  adobe-creative-cloud:
+    _bin: adobe-creative-cloud
+    _name: Adobe Creative Cloud
+    _when:cask: '! test -d /Applications/'
+    cask: adobe-creative-cloud
   wrangler:
     _bin: wrangler
     _desc: wrangler is a CLI tool designed for folks who are interested in using Cloudflare Workers. Deploy serverless code instantly across the globe to give it exceptional performance, reliability, and scale.
-    _docs: null
+    _docs: https://developers.cloudflare.com/workers/
     _github: https://github.com/cloudflare/wrangler
     _home: https://workers.cloudflare.com/
     _name: wrangler
+    brew: cloudflare-wrangler2
     npm: '@cloudflare/wrangler'
   wrk:
     _bin: wrk
@@ -8999,6 +9132,21 @@ softwarePackages:
     port: sshfs
     scoop: sshfs-np
     brew:linux: sshfs
+  dockfmt:
+    _bin: dockfmt
+    _github: https://github.com/jessfraz/dockfmt
+    _name: dockfmt
+    go: github.com/jessfraz/dockfmt@latest
+  capacitor:
+    _bin: cap
+    _github: https://github.com/ionic-team/capacitor
+    _name: Capacitor
+    npm: '@capacitor/cli'
+  quicktype:
+    _bin: quicktype
+    _github: https://github.com/quicktype/quicktype
+    _name: Quicktype
+    npm: quicktype
   yank:
     _bin: yank
     _bin:apt: yank-cli
@@ -9100,14 +9248,6 @@ softwarePackages:
     github: github.com/stedolan/jq
     go: github.com/mikefarah/yq/v4@latest
     snap: yq
-  yubikey:
-    _bin: null
-    _desc: Installs Yubico Authenticator and YubiKey Manager
-    _docs: null
-    _github: null
-    _home: null
-    _name: yubikey
-    ansible: professormanhattan.yubikey
   yubikey-authenticator:
     _bin: yubioath
     _desc: null
@@ -9115,10 +9255,10 @@ softwarePackages:
     _github: null
     _home: https://www.yubico.com/products/yubico-authenticator/
     _name: Yubico Authenticator
-    _when:darwin: test -d "/Applications/Yubico Authenticator.app"
-    ansible:darwin: professormanhattan.yubikey
+    _when:script:darwin: test -d "/Applications/Yubico Authenticator.app"
     choco: yubico-authenticator
     flatpak: com.yubico.yubioath
+    script:darwin: curl -sSL https://developers.yubico.com/yubioath-flutter/Releases/yubico-authenticator-latest-mac.dmg > "/tmp/Yubico Authenticator.dmg" && hdiutil attach "/tmp/Yubico Authenticator.dmg" &&  sudo cp -R "/Volumes/Yubico Authenticator/Yubico Authenticator.app" /Applications && sudo hdiutil detach "/Volumes/Yubico Authenticator" && rm -f "/tmp/Yubico Authenticator.dmg"
   yubikey-manager:
     _bin: ykman
     _desc: Use the YubiKey Manager to configure FIDO2, OTP and PIV functionality on your YubiKey on Windows, macOS, and Linux operating systems.
@@ -9131,15 +9271,15 @@ softwarePackages:
     pacman: yubikey-manager
     pipx: yubikey-manager
   yubikey-manager-qt:
-    _bin: null
+    _bin: yubikey-manager-qt
     _desc: Cross-platform application for configuring any YubiKey over all USB interfaces.
     _docs: null
     _github: https://github.com/Yubico/yubikey-manager-qt
     _home: https://developers.yubico.com/yubikey-manager-qt/
     _name: YubiKey Manager
-    _when:darwin: test -d "/Applications/YubiKey Manager.app"
-    ansible:darwin: professormanhattan.yubikey
+    _when:cask: echo '! test -d "/Applications/YubiKey Manager.app"' | bash
     appimage: Yubico/yubikey-manager-qt
+    cask: yubico-yubikey-manager
     choco: yubikey-manager
     dnf:fedora: yubikey-manager-qt
     pacman: yubikey-manager-qt
@@ -9204,6 +9344,10 @@ softwarePackages:
     _bin: flatseal
     flatpak: com.github.tchx84.Flatseal
 softwarePlugins:
+  composer:
+    cmd: null
+    plugins:
+      - deployer/deployer
   docker:
     cmd: bash -c 'docker extension install {PLUGIN}'
     plugins:
@@ -9272,6 +9416,7 @@ softwarePlugins:
       - vagrant-bindfs
       - vagrant-digitalocean
       - vagrant-google
+      - vagrant-hostmanager
       - vagrant-libvirt
       - vagrant-parallels
       - vagrant-share

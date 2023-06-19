@@ -359,7 +359,7 @@ if command -v antigen > /dev/null; then
   antigen bundle yarn
 
   if [ ! -d /Applications ]; then
-    # Plugins that are troublesome on macOS
+    # Plugins that are troublesome on macOS due to Docker Desktop needing to launch
     antigen bundle docker
     antigen bundle docker-compose
   fi

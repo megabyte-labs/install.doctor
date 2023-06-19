@@ -70,6 +70,7 @@ chromeExtensions:
   - grammar-spell-checker-%E2%80%94-l/oldceeleldhonbafppcapldpdifcinji
   - grepper/amaaokahonnfjjemodnpmeenfpnnbkco
   - gsconnect/jfnifeihccihocjbfcfhicmmgpjicaec
+  - hoppscotch-browser-extens/amknoiejhlmhancpahfcfcfhllgkpbld
   - hunter-email-finder-exten/hgmhmanijnjhaffoampdlllchpolkdnj
   - huntr-job-search-tracker/mihdfbecejheednfigjpdacgeilhlmnf
   - hypertype/lohojfppjeknalpoklojhfnndocgekbd
@@ -117,6 +118,7 @@ firefoxAddOns:
   - floccus
   - giphy-for-firefox
   - gnome-shell-integration
+  - hoppscotch
   - json-lite
   - languagetool
   - mailvelope
@@ -183,7 +185,6 @@ softwareGroups:
     ## - swarm
     ## - vpn
     ## - wsl
-    ## - yubikey
     ## - antivirus
     ## - common
     # - connect
@@ -523,6 +524,7 @@ softwareGroups:
   Games-Desktop: &Games-Desktop
     - mudlet # MUD client
   Git: &Git
+    - aicommits
     - commitizen
     - gh
     - gist
@@ -540,6 +542,7 @@ softwareGroups:
     - glab
     - hub
     - lazygit
+    - multi-gitter
     - opencommit
     - starred
     - tig
@@ -582,6 +585,7 @@ softwareGroups:
     - kubernetes-helm
     - kubernetes-kompose
     - kubeval
+    - k9s
     - linkerd2
     - minikube
     - openshift-cli
@@ -591,6 +595,7 @@ softwareGroups:
     - lens
   Linting: &Linting
     - ansible-lint
+    - dockfmt
     - dotenv-linter
     - dprint
     - eslint
@@ -603,6 +608,7 @@ softwareGroups:
     - markdownlint-cli
     - prettierd
     - pre-commit
+    - psscriptanalyzer
     - ruff
     - shellcheck
     - shfmt
@@ -631,6 +637,7 @@ softwareGroups:
     - wkhtmltopdf
     - youtube-dl
   Media-Desktop: &Media-Desktop
+    - adobe-creative-cloud
     - audacity
     - balenaetcher
     - blender
@@ -655,6 +662,7 @@ softwareGroups:
     - _nautilus-extensions
     - cakebrew
     - clocker
+    - devtoys
     - drawio
     - eartrumpet
     - edex-ui
@@ -703,6 +711,7 @@ softwareGroups:
     - java
     - libimobiledevice
     - license
+    - lightproxy
     - mono
     - ntl
     - openjdk
@@ -758,6 +767,9 @@ softwareGroups:
     - ultra
     - zap
   Productivity-Desktop: &Productivity-Desktop
+    - alt-tab
+    - amethyst
+    - fiscript
     - libreoffice
     - microsoft-office
     - notion
@@ -782,6 +794,7 @@ softwareGroups:
     - vhs
   Recording-Desktop: &Recording-Desktop
     - flameshot
+    - kap
     - peek
     - sharex
   Ruby: &Ruby
@@ -862,6 +875,7 @@ softwareGroups:
     - winrm-cli
     - wireshark-cli
   Sys-Admin-Desktop: &Sys-Admin-Desktop
+    - networkmanager
     - quasar
     - recuva
     - sloth
@@ -897,7 +911,6 @@ softwareGroups:
   Transfer-Desktop: &Transfer-Desktop
     - ariang
     - dat-desktop
-    - filezilla
     - google-drive
     - motrix
     - qbittorrent
@@ -920,14 +933,17 @@ softwareGroups:
     - gnome-boxes
     - parallels
     - quickgui
+    - utm
     - vagrant-manager
     - virtualbox
     - vmware
   Web-Development: &Web-Development
     - angular-cli
+    - autodoc
     - auto-install
     - browser-sync
     - caniuse
+    - capacitor
     - coder
     - cordova
     - deno
@@ -951,8 +967,10 @@ softwareGroups:
     - jest
     - json-server
     - localtunnel
+    - majestic
     - mitmproxy
     - muffet
+    - nativescript
     - ncc
     - nectar
     - nest
@@ -960,20 +978,25 @@ softwareGroups:
     - ngrok
     - node-prune
     - np
-    - npm-check
+    - npkill
+    - npm-check # Similar to npm-check-updates
+    - npm-check-updates
     - oclif
     - package-size
     - page-fetch
     - pageres
+    - patch-package
     - pipedream-cli
     - pkg
     - playwright
     - pnpm
     - projen
     - psi
+    - quicktype
     - semantic-release
     - serve
     - serverless
+    - storybook
     - surge
     - trellis
     - ts2c
@@ -1034,6 +1057,7 @@ softwareGroups:
     - bat
     - bfg
     - boringtun
+    - buildkite-agent
     - clamav
     - cloudflared
     - cmake
@@ -1255,7 +1279,6 @@ softwareGroups:
   __hostname__util-tmpl: []
   __hostname__vault-tmpl:
     - onlykey
-    - yubikey
   __hostname__vpn-pritunl-tmpl: []
   __hostname__vpn-proton-tmpl:
     - protonvpn
@@ -1294,6 +1317,8 @@ softwareGroups:
       note: Deprecated in favor of `delta`
     - pkg: easyengine
       note: Deprecated in favor of `wordops` which is the new and improved version of EasyEngine
+    - pkg: filezilla
+      note: FileZilla has an offensive user-interface. Absolutely atrocious.
     - pkg: gdu
       note: Deprecated in favor of `duf` which is written in Rust
     - pkg: git-fuzzy

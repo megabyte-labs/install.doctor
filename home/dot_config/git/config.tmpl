@@ -154,7 +154,7 @@
   smtpuser = {{ default "" .user.gmail.username }}
   smtpencryption = tls
   smtpserverport = 587
-  smtpPass = {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GMAIL_PASSWORD")) }}{{ includeTemplate "secrets/GMAIL_PASSWORD" | decrypt }}{{ else }}{{ default "" (env "GMAIL_PASSWORD") }}{{ end }}
+  smtpPass = {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GMAIL_PASSWORD")) }}{{ includeTemplate "secrets/GMAIL_PASSWORD" | decrypt | trim }}{{ else }}{{ default "" (env "GMAIL_PASSWORD") }}{{ end }}
 [status]
   showUntrackedFiles = all
   submoduleSummary = true

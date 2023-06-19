@@ -21,7 +21,7 @@ if command -v nginx > /dev/null; then
     curl -sSL https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh > "$TMP"
 
     logg info 'Running the NGINX Amplify setup script'
-    API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NGINX_AMPLIFY_API_KEY")) }}{{- includeTemplate "secrets/NGINX_AMPLIFY_API_KEY" | decrypt -}}{{ else }}{{- env "NGINX_AMPLIFY_API_KEY" -}}{{ end }}" sh "$TMP"
+    API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NGINX_AMPLIFY_API_KEY")) }}{{- includeTemplate "secrets/NGINX_AMPLIFY_API_KEY" | decrypt | trim -}}{{ else }}{{- env "NGINX_AMPLIFY_API_KEY" -}}{{ end }}" sh "$TMP"
 fi
 
 {{ end -}}

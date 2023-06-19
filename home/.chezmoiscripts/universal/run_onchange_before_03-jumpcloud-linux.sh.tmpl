@@ -22,6 +22,6 @@
 {{ includeTemplate "universal/logg-before" }}
 
 logg info 'Enrolling device with JumpCloud by running the kickstart script'
-curl --tlsv1.2 --silent --show-error --header 'x-connect-key: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "JUMPCLOUD_CONNECT_KEY")) }}{{- includeTemplate "secrets/JUMPCLOUD_CONNECT_KEY" | decrypt -}}{{ else }}{{- env "JUMPCLOUD_CONNECT_KEY" -}}{{ end }}' https://kickstart.jumpcloud.com/Kickstart | sudo bash
+curl --tlsv1.2 --silent --show-error --header 'x-connect-key: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "JUMPCLOUD_CONNECT_KEY")) }}{{- includeTemplate "secrets/JUMPCLOUD_CONNECT_KEY" | decrypt | trim -}}{{ else }}{{- env "JUMPCLOUD_CONNECT_KEY" -}}{{ end }}' https://kickstart.jumpcloud.com/Kickstart | sudo bash
 
 {{ end -}}
