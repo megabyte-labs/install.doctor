@@ -266,84 +266,95 @@ print_banner() {
       printf "       \\033[%sm%s   OS       \\033[0m         %s\\n" "$UPDATES_ZERO_COLOR" "" "macOS $(sw_vers -productVersion) / Build $(sw_vers -buildVersion)"
       printf "       \\033[%sm%s   UUID     \\033[0m         %s\\n" "$PODMAN_RUNNING_COLOR" "" "$(ioreg -d2 -c IOPlatformExpertDevice | awk -F\" '/IOPlatformUUID/{print $(NF-1)}')"
       printf "       \\033[%sm%s   LAN IP   \\033[0m         %s\\n" "$BANNER_KERNEL_COLOR" "ﯱ" "$(ifconfig en0 2>/dev/null | grep 'inet ' | cut -d ' ' -f 2)"
-      IP_ADDR_PUB="$(timeout 1 sh -c 'curl -sSL ifconfig.me')"
-      if [ -n "$IP_ADDR_PUB" ]; then
-        printf "       \\033[%sm%s   Public IP\\033[0m         %s\\n" "$UPDATES_SECURITY_COLOR" "" "$IP_ADDR_PUB"
-      fi
+      ### Disabled because it causes slight delay due to server call for public IP
+      # if command -v timeout > /dev/null; then
+      #   IP_ADDR_PUB="$(timeout 1 sh -c 'curl -sSL ifconfig.me')"
+      # else
+      #   IP_ADDR_PUB="$(sh -c 'curl -sSL ifconfig.me')"
+      # fi
+      # if [ -n "$IP_ADDR_PUB" ]; then
+      #   printf "       \\033[%sm%s   Public IP\\033[0m         %s\\n" "$UPDATES_SECURITY_COLOR" "" "$IP_ADDR_PUB"
+      # fi
     fi
   fi
 }
 
 print_processor() {
-  printf "\\n"
-  printf "    \\033[1;37mProcessor:\\033[0m\\n"
+  if [ ! -d /Applications ] && [ ! -d /System ]; then
+    # System is not macOS
+    printf "\\n"
+    printf "    \\033[1;37mProcessor:\\033[0m\\n"
 
-  processor_loadavg="$(cut -d " " -f 1,2,3 </proc/loadavg)"
-  if [ "$(echo "$processor_loadavg" | cut -d "." -f 1)" -ge "$PROCESSOR_LOADAVG_CRITICAL_THRESHOLD" ]; then
-    processor_loadavg_color="$PROCESSOR_LOADAVG_CRITICAL_COLOR"
-  elif [ "$(echo "$processor_loadavg" | cut -d "." -f 1)" -ge "$PROCESSOR_LOADAVG_WARNING_THRESHOLD" ]; then
-    processor_loadavg_color="$PROCESSOR_LOADAVG_WARNING_COLOR"
-  else
-    processor_loadavg_color="$PROCESSOR_LOADAVG_HEALTHY_COLOR"
-  fi
-
-  processor_info=$(cat /proc/cpuinfo)
-
-  processor_arch=$(uname -m)
-
-  if [ "$processor_arch" = "x86_64" ]; then
-    processor_model="$(echo "$processor_info" | grep "model name" | sort -u | cut -d ':' -f 2)"
-    processor_count=$(echo "$processor_info" | grep "physical id" | sort -u | wc -l)
-    processor_cores=$(echo "$processor_info" | grep "cpu cores" | sort -u | cut -d ':' -f 2)
-    processor_threads=$(($(echo "$processor_info" | grep "siblings" | tail -n 1 | cut -d ':' -f 2)))
-
-    if [ ! "$processor_cores" -eq $processor_threads ]; then
-      processor_threads=", $processor_threads Threads"
+    processor_loadavg="$(cut -d " " -f 1,2,3 </proc/loadavg)"
+    if [ "$(echo "$processor_loadavg" | cut -d "." -f 1)" -ge "$PROCESSOR_LOADAVG_CRITICAL_THRESHOLD" ]; then
+      processor_loadavg_color="$PROCESSOR_LOADAVG_CRITICAL_COLOR"
+    elif [ "$(echo "$processor_loadavg" | cut -d "." -f 1)" -ge "$PROCESSOR_LOADAVG_WARNING_THRESHOLD" ]; then
+      processor_loadavg_color="$PROCESSOR_LOADAVG_WARNING_COLOR"
     else
-      processor_threads=""
+      processor_loadavg_color="$PROCESSOR_LOADAVG_HEALTHY_COLOR"
     fi
-  elif [ "$processor_arch" = "mips64" ]; then
-    processor_model="$(echo "$processor_info" | grep "cpu model" | sort -u | cut -d ':' -f 2)"
-    processor_count=$(echo "$processor_info" | grep "package" | sort -u | wc -l)
-    processor_cores=$(echo "$processor_info" | grep -c processor)
-    processor_threads=""
-  else
-    processor_model="?"
-    processor_count=0
-    processor_cores=0
-    processor_threads=0
+
+    processor_info=$(cat /proc/cpuinfo)
+
+    processor_arch=$(uname -m)
+
+    if [ "$processor_arch" = "x86_64" ]; then
+      processor_model="$(echo "$processor_info" | grep "model name" | sort -u | cut -d ':' -f 2)"
+      processor_count=$(echo "$processor_info" | grep "physical id" | sort -u | wc -l)
+      processor_cores=$(echo "$processor_info" | grep "cpu cores" | sort -u | cut -d ':' -f 2)
+      processor_threads=$(($(echo "$processor_info" | grep "siblings" | tail -n 1 | cut -d ':' -f 2)))
+
+      if [ ! "$processor_cores" -eq $processor_threads ]; then
+        processor_threads=", $processor_threads Threads"
+      else
+        processor_threads=""
+      fi
+    elif [ "$processor_arch" = "mips64" ]; then
+      processor_model="$(echo "$processor_info" | grep "cpu model" | sort -u | cut -d ':' -f 2)"
+      processor_count=$(echo "$processor_info" | grep "package" | sort -u | wc -l)
+      processor_cores=$(echo "$processor_info" | grep -c processor)
+      processor_threads=""
+    else
+      processor_model="?"
+      processor_count=0
+      processor_cores=0
+      processor_threads=0
+    fi
+
+    processor_model="${processor_model//\(R\)/}"
+    processor_model="${processor_model//\(tm\)/}"
+    processor_model="${processor_model// @/,}"
+    processor_model="${processor_model// CPU/}"
+    processor_model="${processor_model//  / }"
+    # shellcheck disable=SC2001
+    processor_model="$(echo "$processor_model" | sed "s/^ //g")"
+
+    processor_cores=$((processor_cores * processor_count))
+
+    if [ "$processor_count" -gt 1 ]; then
+      processor_count="$processor_count""x "
+    else
+      processor_count=""
+    fi
+
+    printf "       %s   \\033[%dm%s\\033[0m\\n" "$PROCESSOR_LOADAVG_ICON" "$processor_loadavg_color" "$processor_loadavg"
+    printf "       %s   %s%s  =  %s Cores%s\\n" "$PROCESSOR_MODEL_ICON" "$processor_count" "$processor_model" "$processor_cores" "$processor_threads"
   fi
-
-  processor_model="${processor_model//\(R\)/}"
-  processor_model="${processor_model//\(tm\)/}"
-  processor_model="${processor_model// @/,}"
-  processor_model="${processor_model// CPU/}"
-  processor_model="${processor_model//  / }"
-  # shellcheck disable=SC2001
-  processor_model="$(echo "$processor_model" | sed "s/^ //g")"
-
-  processor_cores=$((processor_cores * processor_count))
-
-  if [ "$processor_count" -gt 1 ]; then
-    processor_count="$processor_count""x "
-  else
-    processor_count=""
-  fi
-
-  printf "       %s   \\033[%dm%s\\033[0m\\n" "$PROCESSOR_LOADAVG_ICON" "$processor_loadavg_color" "$processor_loadavg"
-  printf "       %s   %s%s  =  %s Cores%s\\n" "$PROCESSOR_MODEL_ICON" "$processor_count" "$processor_model" "$processor_cores" "$processor_threads"
 }
 
 print_memory() {
-  printf "\\n"
-  printf "    \\033[1;37mMemory:\\033[0m\\n"
+  if [ ! -d /Applications ] && [ ! -d /System ]; then
+    # System is not macOS
+    printf "\\n"
+    printf "    \\033[1;37mMemory:\\033[0m\\n"
 
-  memory_usage=$(LANG=C free --mega | grep "Mem:")
-  memory_total=$(echo "$memory_usage" | awk '{ print $2 }')
-  memory_used=$(echo "$memory_usage" | awk '{ print $3 }')
-  memory_cached=$(echo "$memory_usage" | awk '{ print $6 }')
+    memory_usage=$(LANG=C free --mega | grep "Mem:")
+    memory_total=$(echo "$memory_usage" | awk '{ print $2 }')
+    memory_used=$(echo "$memory_usage" | awk '{ print $3 }')
+    memory_cached=$(echo "$memory_usage" | awk '{ print $6 }')
 
-  generate_bar_memory "$MEMORY_ICON" "$memory_total" "$memory_used" "$memory_cached"
+    generate_bar_memory "$MEMORY_ICON" "$memory_total" "$memory_used" "$memory_cached"
+  fi
 }
 
 print_swap() {

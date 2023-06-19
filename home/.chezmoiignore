@@ -9,18 +9,45 @@ key.txt.age
 {{- end }}
 
 {{- if ne .host.distro.family "darwin" }}
+dot_local/assets/Betelgeuse.macOS.terminal
 Library
 {{- end }}
 
 {{- if ne .host.distro.family "linux" }}
-dot_local/bin/executable_install-gnome-extensions
-dot_local/bin/executable_kde-wallpaper
-.VirtualBox
-.Xresources
-{{- end }}
-
-{{- if ne .host.qubes true }}
-dot_local/bin/executable_ramqube
+dot_config/autostart/
+dot_config/cockpit/
+dot_config/dconf/
+dot_config/firejail/
+dot_config/fontconfig/
+dot_config/gtk-1.0/
+dot_config/gtk-2.0/
+dot_config/gtk-3.0/
+dot_config/Kvantum/
+dot_config/plasma/
+dot_config/qubes/
+dot_config/rofi-user/
+dot_config/samba/
+dot_config/timeshift/
+dot_config/xfce4/
+dot_config/xsettingsd/
+dot_config/zap/
+dot_config/gtkrc
+dot_config/kcminputrc
+dot_config/kdeglobals
+dot_config/konsolerc
+dot_config/ksplashrc
+dot_config/ktimezonedrc
+dot_config/kwinrc
+dot_config/mimeapps.list
+dot_config/plasma-localerc
+dot_config/plasmarc
+dot_local/bin/firejail/
+dot_local/grub.d/
+dot_local/konsole/
+dot_local/share/kde4/
+dot_local/share/xfce4/
+dot_var/
+dot_Xresources
 {{- end }}
 
 {{- if ne .host.distro.family "windows" }}

@@ -246,6 +246,12 @@
     url = "https://gitlab.com/megabyte-labs/packer/windows-desktop.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
+# https://github.com/kholia/OSX-KVM
+[".local/src/osx-kvm"]
+    type = "git-repo"
+    url = "https://github.com/kholia/OSX-KVM.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
 ### PowerShell
 [".local/share/powershell/docker"]

@@ -38,7 +38,7 @@
 
 {{- $secretKey := "" -}}
 {{- if (stat (joinPath (.chezmoi.sourceDir ".chezmoitemplates" "secrets" "VMWARE_WORKSTATION_LICENSE_KEY"))) -}}
-{{-   $secretKey = (default "4C21U-2KK9Q-M8130-4V2QH-CF810" (includeTemplate "secrets/VMWARE_WORKSTATION_LICENSE_KEY" | decrypt)) -}}
+{{-   $secretKey = (default "4C21U-2KK9Q-M8130-4V2QH-CF810" (includeTemplate "secrets/VMWARE_WORKSTATION_LICENSE_KEY" | decrypt | trim)) -}}
 {{- else -}}
 {{-   $secretKey = (default "4C21U-2KK9Q-M8130-4V2QH-CF810" (env "VMWARE_WORKSTATION_LICENSE_KEY")) -}}
 {{- end }}

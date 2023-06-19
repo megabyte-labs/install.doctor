@@ -40,13 +40,19 @@ docker:
 macosRemoteLogin: 'on'
 netdataClaimURL: https://app.netdata.cloud
 themeparkTheme: aquamarine
+figmaAddons:
+  - https://www.figma.com/community/plugin/1037309320238203168/DhiWise---Figma-to-Code
+  - https://www.figma.com/community/plugin/1056467900248561542/Locofy-FREE-BETA---Figma-to-React%2C-React-Native%2C-HTML%2FCSS%2C-Next.js%2C-Gatsby
 chromeExtensions:
   - automa/infppggnoaenmfagbfknfkancpbljcca
+  - bardeen-automate-manual-w/ihhkmalpkhkoedlmcnilbbhhbhnicjga
   - bitly-powerful-short-link/iabeihobmhlgpkcgjiloemdbofjbdcic
   - bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb
   - briskine-email-templates/lmcngpkjkplipamgflhioabnhnopeabf
   - buffer/noojglkidnpfjbincgijbaiedldjfbhh
+  - chatgpt-app-for-chrome-me/camppjleccjaphfdbohjdohecfnoikec
   - chatgpt-for-google/jgjaeacdkonaoafenlfkkkmbaopkbilf
+  - chrome-remote-desktop/inomeogfingihgjfjlpeplalcfajhgai
   - compose-ai-ai-powered-wri/ddlbpiadoechcolndfeaonajmngmhblj
   - desktop-app-for-google-ta/lpofefdiokgmcdnnaigddelnfamkkghi
   - discoverly/dijhcpbkalfgkcebgoncjmfpbamihgaf
@@ -56,28 +62,37 @@ chromeExtensions:
   - giphy-for-chrome/jlleokkdhkflpmghiioglgmnminbekdi
   - jiffy-reader/lljedihjnnjjefafchaljkhbpfhfkdic
   - json-resume-exporter/caobgmmcpklomkcckaenhjlokpmfbdec
+  - gitako-github-file-tree/giljefjcheohhamkjphiebfjnlphnokk
   - gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep
   - google-dictionary-by-goog/mgijmajocgfcbeboacabfgobmjgjcoja
   - google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb
+  - google-trends-supercharge/ocmojhiloccgbpjnkeiooioedaklapap
   - grammar-spell-checker-%E2%80%94-l/oldceeleldhonbafppcapldpdifcinji
   - grepper/amaaokahonnfjjemodnpmeenfpnnbkco
   - gsconnect/jfnifeihccihocjbfcfhicmmgpjicaec
+  - hoppscotch-browser-extens/amknoiejhlmhancpahfcfcfhllgkpbld
   - hunter-email-finder-exten/hgmhmanijnjhaffoampdlllchpolkdnj
   - huntr-job-search-tracker/mihdfbecejheednfigjpdacgeilhlmnf
+  - hypertype/lohojfppjeknalpoklojhfnndocgekbd
   - json-viewer-pro/eifflpmocdbdmepbjaopkkhbfmdgijcc
   - liner-chatgpt-google-assi/bmhcbmnbenmcecpmpepghooflbehcack
+  - loom-–-screen-recorder-sc/liecbddmkiiihnedobmlmillhodjkdmb
+  - magical-chatgpt-ai-writer/iibninhmiggehlcdolcilmhacighjamp
   - magical-text-expander-aut/iibninhmiggehlcdolcilmhacighjamp
   - mailvelope/kajibbejlbohfaggdiogboambcijhkke
   - markdown-here/elifhakcjgalahccnjkneoccemfahfoa
   - metamask/nkbihfbeogaeaoehlefnkodbefgpgknn
+  - notion-web-clipper/knheggckgoiihginacbkhaalnibhilkk
   - octohint/hbkpjkfdheainjkkebeoofkpgddnnbpk
   - pieces-save-code-snippets/igbgibhbfonhmjlechmeefimncpekepm
   - rakuten-get-cash-back-for/chhjbpecpncaggjpdakmflnfcopglcmi
+  - replixai/nhfededlooagdmcpamafanjolhkekbbl
   - save-to-google-drive/gmbmikajjgmnabiglmofipeabaddhgne
   - screenity-screen-recorder/kbbdabhdfibnancpjfhlkhafgdilcnji
   - search-by-image/cnojnbdhbhnkbcieeekonklommdnndci
   - sessionbox-multi-login-to/megbklhjamjbcafknkgmokldgolkdfig
   - singlefile/mpiodijhokgodhhofbcjdecpffjipkle
+  - sleek-cashback-rewards/mcjlbeekadpmcdhmagbjppkfbbjdddhn
   - sponsorblock-for-youtube/mnjggcdmjocbbbhaepdhchncahnbgone
   - toucan-language-learning/lokjgaehpcnlmkebpmjiofccpklbmoci
   - undo-closed-tabs-button/ieehkmoiljghfkejgahoheemdjpdinml
@@ -103,12 +118,14 @@ firefoxAddOns:
   - floccus
   - giphy-for-firefox
   - gnome-shell-integration
+  - hoppscotch
   - json-lite
   - languagetool
   - mailvelope
   - markdown-here
   - medium-unlimited-read-for-free
   - multi-account-containers
+  - notion-web-clipper
   - private-relay
   - profile-switcher
   - search_by_image
@@ -142,13 +159,16 @@ removeLinuxShortcuts:
 theme: Betelgeuse
 softwareGroups:
   AI-Desktop: &AI-Desktop
-    - chatgpt-desktop
+    - chatgpt-nofwl
+    - chatgpt-menubar
+    - mage-ai
   Android: &Android
     - scrcpy
   Android-Desktop: &Android-Desktop
     - android-studio
     - genymotion
     - scrcpy-gui
+    - soduto
   Anon: &Anon
     - onionshare
   Ansible: &Ansible
@@ -165,7 +185,6 @@ softwareGroups:
     ## - swarm
     ## - vpn
     ## - wsl
-    ## - yubikey
     ## - antivirus
     ## - common
     # - connect
@@ -201,6 +220,7 @@ softwareGroups:
     - cryptomator
     - seafile-client
     - timeshift
+    - syncalicious
   Browsers: &Browsers
     - w3m
   Browsers-Desktop: &Browsers-Desktop
@@ -219,7 +239,9 @@ softwareGroups:
     - fpm
     - gitlab-runner
     - glen
+    - tart
   CLI: &CLI
+    - atuin
     - bash-completion
     - bandwhich
     - bat
@@ -233,6 +255,7 @@ softwareGroups:
     - direnv
     - docker-langserver
     - dog
+    - dotenv
     - dua
     - duf
     - dust
@@ -255,7 +278,6 @@ softwareGroups:
     - jq
     - lsd
     - mc
-    - mcfly
     - navi
     - nb
     - neovim
@@ -281,6 +303,7 @@ softwareGroups:
     # - snapd
     - sql-language-server
     - task
+    - tea
     - tmux
     - tor
     - translate
@@ -318,6 +341,7 @@ softwareGroups:
     - http-prompt
     - httpie
     - httpstat
+    - howdoi
     - hurl
     - imgur-uploader
     - is-up
@@ -347,6 +371,7 @@ softwareGroups:
     - tldr
     - tmuxinator
     - up
+    - xz
     - yank
   Cloud: &Cloud
     - awscli
@@ -412,6 +437,7 @@ softwareGroups:
     - jc
     - jo
     - jq
+    - miller
     - oq
     - osquery
     - pup
@@ -426,11 +452,15 @@ softwareGroups:
     - yq
   Database: &Database
     - iredis
+    - octosql
     - sqlite
+    - steampipe
+    - usql
   Database-Desktop: &Database-Desktop
     - beekeeper-studio
     - sqlectron
   Development-Tools-Desktop: &Development-Tools-Desktop
+    - catlight
     - github-desktop
     - intellij-idea-ce
     - iterm2
@@ -438,6 +468,7 @@ softwareGroups:
     - powershell
     - redis-desktop-manager
     - visual-studio
+    - warp-terminal
     - xcode
     - xcodes
     - xcodes-app
@@ -451,11 +482,11 @@ softwareGroups:
     - dockle
     - footloose
     - grype
-    - gvisor
     - trivy
     - trufflehog
   E-mail: &E-mail
     - himalaya
+    - mailsy
   E-mail-Desktop: &E-mail-Desktop
     - m-cli
     - mailspring
@@ -472,10 +503,12 @@ softwareGroups:
     - rkhunter
   Essentials-Desktop: &Essentials-Desktop
     - autokey
+    - codeedit
     - eul
     - firefox
     - flow-launcher
     - fonts
+    - iina
     - kvantum
     - lapce
     - malwarebytes
@@ -498,24 +531,27 @@ softwareGroups:
   Games-Desktop: &Games-Desktop
     - mudlet # MUD client
   Git: &Git
+    - aicommits
     - commitizen
     - gh
     - gist
     - git
+    - gitql
     - git-bug
     - git-extras
     - git-filter-repo
-    - git-fuzzy
     - git-lfs
     - git-open
     - git-secret
     - git-subrepo
+    - git-town
     - gitomatic
     - git-stats
     - gitui
     - glab
     - hub
     - lazygit
+    - multi-gitter
     - opencommit
     - starred
     - tig
@@ -536,6 +572,7 @@ softwareGroups:
   Go: &Go
     - delve
     - go
+    - goreleaser
     - go-outline
     - gomodifytags
     - gopkgs
@@ -558,6 +595,7 @@ softwareGroups:
     - kubernetes-helm
     - kubernetes-kompose
     - kubeval
+    - k9s
     - linkerd2
     - minikube
     - openshift-cli
@@ -567,6 +605,7 @@ softwareGroups:
     - lens
   Linting: &Linting
     - ansible-lint
+    - dockfmt
     - dotenv-linter
     - dprint
     - eslint
@@ -579,12 +618,15 @@ softwareGroups:
     - markdownlint-cli
     - prettierd
     - pre-commit
+    - psscriptanalyzer
     - ruff
     - shellcheck
     - shfmt
     - tflint
+    - tfsec
     - tokei
     - trunk
+    - vale
     - yamllint
     - yapf
   Logging: &Logging
@@ -593,6 +635,7 @@ softwareGroups:
     - sentry-cli
     - unbuffer
   Media: &Media
+    - alda
     - beets
     - crunch
     - exiftool
@@ -607,6 +650,7 @@ softwareGroups:
     - wkhtmltopdf
     - youtube-dl
   Media-Desktop: &Media-Desktop
+    - adobe-creative-cloud
     - audacity
     - balenaetcher
     - blender
@@ -619,11 +663,13 @@ softwareGroups:
     - krita
     - lollypop
     - nuclear
+    - obs-studio
     - plex
     - plex-htpc
     - raspberry-pi-imager
     - shotcut
     - shotwell
+    - upscayl
     - vlc
     - youtube-music
   Misc-Desktop: &Misc-Desktop
@@ -631,7 +677,8 @@ softwareGroups:
     - _nautilus-extensions
     - cakebrew
     - clocker
-    - cumulus
+    - devtoys
+    - devtoys-windows
     - drawio
     - eartrumpet
     - edex-ui
@@ -644,7 +691,6 @@ softwareGroups:
     - mark-text
     - meetingbar
     - monitorcontrol
-    - neovide
     - openinterminal
     - pake
     - pock
@@ -658,6 +704,7 @@ softwareGroups:
     - secretive
     - standard-notes
     - stats
+    - swiftbar
     - teamviewer
   Misc-Development-Tools: &Misc-Development-Tools
     - ansifilter
@@ -680,9 +727,12 @@ softwareGroups:
     - java
     - libimobiledevice
     - license
+    - lightproxy
+    - mono
     - ntl
     - openjdk
     - please
+    - porter
     - rust
     - snapcraft
     - solidity
@@ -692,6 +742,7 @@ softwareGroups:
     - windows-admin-center
     - windows-power-toys
   NGINX: &NGINX
+    - caddy
     - certbot
     - cfssl
     - gixy
@@ -733,10 +784,17 @@ softwareGroups:
     - ultra
     - zap
   Productivity-Desktop: &Productivity-Desktop
+    - alt-tab
+    - amethyst
+    - espanso
+    - fiscript
     - libreoffice
     - microsoft-office
+    - notion
+    - obsidian
     # Deprecated in favor of Google Tasks
     # - microsoft-todo
+    - raycast
     - skhd
   Python: &Python
     - flake8
@@ -754,6 +812,7 @@ softwareGroups:
     - vhs
   Recording-Desktop: &Recording-Desktop
     - flameshot
+    - kap
     - peek
     - sharex
   Ruby: &Ruby
@@ -762,6 +821,7 @@ softwareGroups:
     - assh
     - endlessh
     - fail2ban
+    - hss
     - mosh
     - openssh-server
     - skm
@@ -774,8 +834,10 @@ softwareGroups:
     - bitwarden-cli
     - boringtun
     - debsecan
+    - dotenv-vault
     - envchain
     - envconsul
+    - envio
     - openssl
     - pony
     - protonvpn-cli
@@ -791,8 +853,8 @@ softwareGroups:
   Security-Desktop: &Security-Desktop
     - bitwarden
     - lulu
-    - mullvad-vpn
     - portmaster
+    - privileges
     - protonvpn
     - santa
     - tunnelblick
@@ -826,15 +888,17 @@ softwareGroups:
     - pulumi
     - sysbench
     - sysdig
-    - sysget
+    - sysz
     - upt
     - winrm-cli
     - wireshark-cli
   Sys-Admin-Desktop: &Sys-Admin-Desktop
+    - networkmanager
     - quasar
     - recuva
     - sloth
     - snitch
+    - tea-gui
     - wireshark
   Templates: &Templates
     - confd
@@ -855,6 +919,7 @@ softwareGroups:
     - dat
     - ffsend
     - gdown
+    - magic-wormhole
     - nitroshare
     - ots
     - portal
@@ -864,7 +929,6 @@ softwareGroups:
   Transfer-Desktop: &Transfer-Desktop
     - ariang
     - dat-desktop
-    - filezilla
     - google-drive
     - motrix
     - qbittorrent
@@ -872,27 +936,38 @@ softwareGroups:
   Utilities: &Utilities
     - nativefier
   Virtualization: &Virtualization
+    - d2vm
     - kvm
+    - libguestfs-tools
     - lxdc
+    - lxd-ui
     - packer
+    - quickemu
     - vagrant
     - vagrant-vmware-utility
+    - vermin
   Virtualization-Desktop: &Virtualization-Desktop
     - docker-desktop
     - gnome-boxes
     - parallels
+    - quickgui
+    - utm
     - vagrant-manager
     - virtualbox
     - vmware
   Web-Development: &Web-Development
     - angular-cli
+    - autodoc
     - auto-install
     - browser-sync
+    - bun
     - caniuse
+    - capacitor
     - coder
     - cordova
     - deno
     - deta
+    - devbox
     - electron
     - emma
     - fastify
@@ -902,15 +977,20 @@ softwareGroups:
     - gfi
     - gulp
     - hey
+    - htmlhint
     - hugo
     - ionic
     - imageoptim-cli
     - ipfs
     - ipfs-deploy
+    - jest
     - json-server
     - localtunnel
+    - majestic
+    - medusa
     - mitmproxy
     - muffet
+    - nativescript
     - ncc
     - nectar
     - nest
@@ -918,22 +998,30 @@ softwareGroups:
     - ngrok
     - node-prune
     - np
-    - npm-check
+    - npkill
+    - npm-check # Similar to npm-check-updates
+    - npm-check-updates
     - oclif
     - package-size
     - page-fetch
     - pageres
+    - patch-package
+    - pipedream-cli
     - pkg
     - playwright
     - pnpm
+    - projen
     - psi
+    - quicktype
     - semantic-release
     - serve
     - serverless
+    - storybook
     - surge
     - trellis
     - ts2c
     - typescript
+    - typescript-to-lua
     - websocat
     - wordops
     - wordpressify
@@ -947,6 +1035,8 @@ softwareGroups:
     - betwixt
     - electron-app
     - fiddler
+    - figma
+    - http-toolkit
     - imagine
     - imageoptim
     - ipfs-desktop
@@ -956,9 +1046,11 @@ softwareGroups:
     - mqttx
     - pieces
     - pieces-cli
+    - pika
     - postman
     - responsively
     - runjs
+    - zaproxy
   _Basic: &_Basic
     - *CLI
     - *Essentials
@@ -986,6 +1078,7 @@ softwareGroups:
     - bat
     - bfg
     - boringtun
+    - buildkite-agent
     - clamav
     - cloudflared
     - cmake
@@ -1002,7 +1095,6 @@ softwareGroups:
     - git
     - git-extras
     - git-filter-repo
-    - git-fuzzy
     - git-lfs
     - git-secret
     - git-subrepo
@@ -1160,6 +1252,10 @@ softwareGroups:
     - *Transfer-Desktop
     - *Virtualization-Desktop
     - *Web-Development-Desktop
+  _ID-Desktop:
+    - browsersaurus
+    - monitorcontrol
+    - warp-terminal
   __hostname__base-basic-tmpl:
     - *_Basic
     - *_Basic-Desktop
@@ -1204,7 +1300,6 @@ softwareGroups:
   __hostname__util-tmpl: []
   __hostname__vault-tmpl:
     - onlykey
-    - yubikey
   __hostname__vpn-pritunl-tmpl: []
   __hostname__vpn-proton-tmpl:
     - protonvpn
@@ -1237,12 +1332,18 @@ softwareGroups:
       note: macOS system search more native way of providing similar features. Better alternatives are available.
     - pkg: chromium
       note: Deprecated in favor of the regular Chrome.
+    - pkg: cumulus
+      note: Unnecessary menu bar widget for SoundCloud.
     - pkg: diffsofancy
       note: Deprecated in favor of `delta`
     - pkg: easyengine
       note: Deprecated in favor of `wordops` which is the new and improved version of EasyEngine
+    - pkg: filezilla
+      note: FileZilla has an offensive user-interface. Absolutely atrocious.
     - pkg: gdu
       note: Deprecated in favor of `duf` which is written in Rust
+    - pkg: git-fuzzy
+      note: Installed via dotfiles via git
     - pkg: gvm
       note: Deprecated in favor of using ASDF.
     - pkg: hyper
@@ -1259,8 +1360,14 @@ softwareGroups:
       note: Deprecated in favor of using `exa`. `lsd` may be re-introduced when Windows support is added.
     - pkg: masscode # Deprecated in favor of Pieces
       note: Deprecated in favor of [Pieces](https://pieces.app/). The core components of Pieces are not open-source but the functionality is significantly better than massCode.
+    - pkg: mcfly
+      note: Deprecated in favor of atuin
+    - pkg: mullvad-vpn
+      note: Switched to ProtonVPN exclusively
     - pkg: multipass
       note: Opens persistent menu icon on GNOME and has issues that sometimes require switching the virt driver
+    - pkg: neovide
+      note: Prefer other IDEs - neovim is good for the terminal though
     - pkg: nordvpn
       note: Deprecated in favor of leveraging ProtonVPN as the primary VPN service.
     - pkg: nvm
@@ -1297,6 +1404,8 @@ softwareGroups:
   queued:
     - pkg: editly
       note: Editly NPM package is failing to install on macOS. Attempts to compile with node-gyp and fails.
+    - pkg: rancher-desktop
+      note: Conflicts with Docker Desktop
     - pkg: rear
       note: System backup utility that may be incorporated after comparing it with alternative and perhaps better alternatives.
     - pkg: frps / frpc
@@ -1374,3 +1483,8 @@ qubes:
     - https://qubes.3isec.org/Templates_4.1/qubes-template-archlinux-4.0.6-202204171510.noarch.rpm
     - https://qubes.3isec.org/Templates_4.1/qubes-template-debian-12-4.0.6-202208292254.noarch.rpm
     - https://qubes.3isec.org/Templates_4.1/qubes-template-jammy-4.0.6-202205012228.noarch.rpm
+
+
+perfectStack:
+  darwin:
+    - warp-terminal

@@ -21,11 +21,13 @@ if [ -d /Applications ] && [ -d /System ]; then
     if [ ! -d /Applications/Docker.app ]; then
         logg info 'Installing Docker on macOS via Homebrew cask'
         brew install --cask docker
+        logg info 'Removing Docker.app quarantine status'
+        sudo xattr -r -d com.apple.quarantine /Applications/Docker.app
     else
         logg info 'Docker appears to be installed already'
     fi
     logg info 'Opening the Docker for Desktop app so that the Docker engine starts running'
-    open --background -a Docker
+    open --background -a Docker --args --accept-license --unattended --install-privileged-components
 elif command -v apt-get > /dev/null; then
     . /etc/os-release
     if [ "$ID" == 'ubuntu' ]; then
@@ -147,9 +149,19 @@ function gVisorSource() {
     fi
 }
 
+### Install systemsecret credential helper for Linux
+function installCredentialSecretService() {
+    curl -sSL https://github.com/docker/docker-credential-helpers/releases/download/v0.7.0/docker-credential-secretservice-v0.7.0.linux-amd64 > /tmp/docker-credential-secretservice
+    sudo mv /tmp/docker-credential-secretservice /usr/local/bin/docker-credential-secretservice
+}
+
 ### Add gVisor
 if [ ! -d /Applications ] || [ ! -d /System ]; then
     # Linux
+    if ! command -v docker-credential-secretservice > /dev/null; then
+        installCredentialSecretService
+    fi
+
     if ! command -v runsc > /dev/null; then
         # Install gVisor
         gVisorPreBuilt || PRE_BUILT_EXIT_CODE=$?

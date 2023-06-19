@@ -2,8 +2,11 @@
 # @file Generate Missing Public SSH Keys
 # @brief Attempts to create missing public SSH keys for all private keys that are missing a public key file
 # @description
-#     Using private SSH keys, you can generate the corresponding public key. This script ensures that any SSH private key
+#     **Currently disabled.** Using private SSH keys, you can generate the corresponding public key. This script ensures that any SSH private key
 #     that does not have a matching `.pub` public key file has one generated.
+#
+#     This script is intended to automatically generate the public key from the decrypted private key but it does not seem to be working
+#     properly so the code is commented out. Pull requests are welcome.
 
 {{ $sshFiles := (output "find" (joinPath .chezmoi.homeDir ".ssh") "-type" "f") -}}
 {{- range $sshFile := splitList "\n" $sshFiles -}}
@@ -15,12 +18,12 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-logg info 'Ensuring public keys are present'
+# logg info 'Ensuring public keys are present'
 
-find "$HOME/.ssh" -type f -maxdepth 1 ! -name "*.pub" ! -name "authorized_keys*" ! -name "known_host*" ! -name "config" | while read FILE; do
-  if [ ! -f "${FILE}.pub" ]; then
-    logg info 'Generating missing public key for `'"$FILE"'`'
-    ssh-keygen -f "$FILE" -y > "${FILE}.pub"
-    chmod 600 "${FILE}.pub"
-  fi
-done
+# find "$HOME/.ssh" -type f -maxdepth 1 ! -name "*.pub" ! -name "*authorized_keys*" ! -name "known_host*" ! -name "config" | while read FILE; do
+#   if [ ! -f "${FILE}.pub" ]; then
+#     logg info 'Generating missing public key for `'"$FILE"'`'
+#     ssh-keygen -f "$FILE" -y > "${FILE}.pub"
+#     chmod 600 "${FILE}.pub"
+#   fi
+# done

@@ -45,21 +45,17 @@ decryptionFailure() {
 
 ### Install Age via Homebrew if not present
 installAge() {
-  if ! command -v brew > /dev/null; then
+  if ! command -v age > /dev/null; then
     logg info 'Running `brew install age`'
     brew install age
-  else
-    logg warn '`age` is not installed which is utilized in the decryption process'
   fi
 }
 
 ### Install Expect via Homebrew if not present
 installExpect() {
-  if ! command -v brew > /dev/null; then
+  if ! command -v expect > /dev/null; then
     logg info 'Running `brew install expect`'
     brew install expect
-  else
-    logg warn '`expect` is not installed which is utilized in the decryption process'
   fi
 }
 
@@ -102,7 +98,7 @@ elif [ -n "$HEADLESS_INSTALL" ] && [ -n "$AGE_PASSWORD" ]; then
   installAge
   decryptKey
 else
-  logg info 'Skipping Age key decryption process'
+  logg info 'Skipping Age key decryption process - `HEADLESS_INSTALL` and `AGE_PASSWORD` should be passed in as env variables to automate the process'
 fi
 
 ### Ensure proper permissions on private key

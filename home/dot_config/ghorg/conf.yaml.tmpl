@@ -149,7 +149,7 @@ GHORG_EXIT_CODE_ON_CLONE_ISSUES: 1
 
 # Add your GitHub token
 # flag (--token, -t) eg: --token=bGVhdmUgYSBjb21tZW50IG9uIGlzc3VlIDY2
-GHORG_GITHUB_TOKEN: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITHUB_READ_TOKEN")) }}{{ includeTemplate "secrets/GITHUB_READ_TOKEN" | decrypt }}{{ else }}{{ env "GITHUB_READ_TOKEN" }}{{ end }}
+GHORG_GITHUB_TOKEN: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITHUB_READ_TOKEN")) }}{{ includeTemplate "secrets/GITHUB_READ_TOKEN" | decrypt | trim }}{{ else }}{{ env "GITHUB_READ_TOKEN" }}{{ end }}
 
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 # |G|I|T|L|A|B| |S|P|E|C|I|F|I|C|
@@ -157,7 +157,7 @@ GHORG_GITHUB_TOKEN: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates"
 
 # Add your GitLab token
 # flag (--token, -t) eg: --token=bGVhdmUgYSBjb21tZW50IG9uIGlzc3VlIDY2
-GHORG_GITLAB_TOKEN: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_READ_TOKEN")) }}{{ includeTemplate "secrets/GITLAB_READ_TOKEN" | decrypt }}{{ else }}{{ env "GITLAB_READ_TOKEN" }}{{ end }}
+GHORG_GITLAB_TOKEN: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_READ_TOKEN")) }}{{ includeTemplate "secrets/GITLAB_READ_TOKEN" | decrypt | trim }}{{ else }}{{ env "GITLAB_READ_TOKEN" }}{{ end }}
 
 # clones repos in a directory structure that matches gitlab namespaces eg company/unit/subunit/app would clone into ghorg/org/unit/subunit/app
 # flag (--preserve-dir)
