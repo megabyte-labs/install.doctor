@@ -141,10 +141,14 @@ data:
       doRegion: nyc1
     domain: "{{ $domain }}"
     gitlabRunners:
-      glurl: "https://gitlab.com/"
-      runnerDescription: "Docker executor"
-      runnerImage: "alpine:latest"
-      runnerTags: ""
+      - glurl: "https://gitlab.com/"
+        runnerDescription: "Docker executor"
+        runnerImage: "alpine:latest"
+        runnerTags: ""
+      - glurl: "https://gitlab.com/"
+        baseVM: "debian"
+        runnerDescription: "VirtualBox executor - Debian, OpenJDK 20"
+        runnerTags: "bash,openjdk20,linux"
     headless: {{ $headless }}
     home: "{{ .chezmoi.homeDir }}"
     homeParentFolder: "{{ if eq .chezmoi.os "linux" }}/home{{ else if eq .chezmoi.os "darwin" }}/Users{{ else }}C:\Users{{ end }}"
