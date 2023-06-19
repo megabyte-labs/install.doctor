@@ -13,8 +13,8 @@
 	<key>support_url</key>
 	<string>https://megabyte.space</string>
 	<key>auth_client_id</key>
-	<string>{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_TEAMS_CLIENT_ID")) }}{{- includeTemplate "secrets/CLOUDFLARE_TEAMS_CLIENT_ID" | decrypt -}}{{ else }}{{- env "CLOUDFLARE_TEAMS_CLIENT_ID" -}}{{ end }}</string>
+	<string>{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_TEAMS_CLIENT_ID")) }}{{- includeTemplate "secrets/CLOUDFLARE_TEAMS_CLIENT_ID" | decrypt | trim -}}{{ else }}{{- env "CLOUDFLARE_TEAMS_CLIENT_ID" -}}{{ end }}</string>
 	<key>auth_client_secret</key>
-	<string>{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_TEAMS_CLIENT_SECRET")) }}{{- includeTemplate "secrets/CLOUDFLARE_TEAMS_CLIENT_SECRET" | decrypt -}}{{ else }}{{- env "CLOUDFLARE_TEAMS_CLIENT_SECRET" -}}{{ end }}</string>
+	<string>{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_TEAMS_CLIENT_SECRET")) }}{{- includeTemplate "secrets/CLOUDFLARE_TEAMS_CLIENT_SECRET" | decrypt | trim -}}{{ else }}{{- env "CLOUDFLARE_TEAMS_CLIENT_SECRET" -}}{{ end }}</string>
 </dict>
 {{ end -}}
