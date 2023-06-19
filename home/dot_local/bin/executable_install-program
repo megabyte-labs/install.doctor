@@ -1556,7 +1556,7 @@ async function updateService(service) {
         log('info', logStage, `There was an error starting / enabling the ${service} service with systemd`)
         try {
           if (brew) {
-            runCommand(`Starting / enabling ${service} with Homebrew`, `brew services start ${service}`)
+            runCommand(`Starting / enabling ${service} with Homebrew`, `sudo brew services start ${service}`)
             log('success', logStage, `Started / enabled the ${service} service with Homebrew`)
           } else {
             log('error', logStage, `Unable to start service with systemd and Homebrew is not available`)

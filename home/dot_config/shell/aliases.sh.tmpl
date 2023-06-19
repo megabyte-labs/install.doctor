@@ -239,7 +239,11 @@ alias vault-dir='find . -type f -printf "%h/\"%f\" " | xargs ansible-vault encry
 alias whaler="docker run -t --rm -v /var/run/docker.sock:/var/run/docker.sock:ro pegleg/whaler"
 
 # Shows nice looking report of weather
-alias weather='curl -A curl wttr.in'
+if command -v wego > /dev/null; then
+  alias weather='wego'
+else
+  alias weather='curl -A curl wttr.in'
+fi
 
 # Change .wget-hsts file location
 alias wget="wget --hsts-file ~/.local/wget-hsts"

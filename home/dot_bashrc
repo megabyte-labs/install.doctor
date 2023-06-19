@@ -85,6 +85,11 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     fi
   fi
 
+  ### Atuin
+  if command -v atuin > /dev/null; then
+	  eval "$(atuin init bash)"
+  fi
+
   ### Cod
   if command -v cod > /dev/null; then
 	  source <(cod init $$ bash)

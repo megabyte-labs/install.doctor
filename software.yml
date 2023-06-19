@@ -712,11 +712,22 @@ softwarePackages:
     _home: https://astronvim.github.io/
     _name: AstroNvim
     _post: nvim --headless -c 'autocmd User PackerComplete quitall'
+  typescript-to-lua:
+    _bin: tstl
+    _github: https://github.com/TypeScriptToLua/TypeScriptToLua
+    _name: TypeScript to Lua Converter
+    npm: typescript-to-lua
   devtoys:
     _bin: devtoys
     _github: https://github.com/ObuchiYuki/DevToysMac
     _when:cask: echo '! test -d /Applications/DevToys.app' | bash
     cask: devtoys
+  devtoys-windows:
+    _bin: devtoys
+    _github: https://github.com/veler/DevToys
+    _name: Windows DevToys
+    choco: devtoys
+    winget: devtoys
   devbox:
     _bin: devbox
     _github: https://github.com/jetpack-io/devbox
@@ -1471,6 +1482,23 @@ softwarePackages:
     nix-env: nixpkgs.jc
     brew: jc
     pipx: jc
+  podman:
+    _bin: podman
+    _github: https://github.com/containers/podman
+    _name: Podman
+    apk: podman
+    apt: podman
+    bitbake: podman
+    brew: podman
+    dnf: podman
+    emerge: app-containers/podman
+    pacman: podman
+    zypper: podman
+  medusa:
+    _bin: medusa
+    _github: https://github.com/medusajs/medusa
+    _name: Medusa
+    npm: '@medusajs/medusa-cli'
   clamav:
     _bin: clamav-config
     _desc: '[ClamAV](https://www.clamav.net/) is an open-source antivirus engine for detecting trojans, viruses, malware & other malicious threats.'
@@ -1779,6 +1807,15 @@ softwarePackages:
       - avahi-daemon
       - cups
     _systemd: smbd
+  upscayl:
+    _bin: upscayl
+    _github: https://github.com/upscayl/upscayl
+    _name: Upscayl
+    _todo: Recheck for Homebrew Cask
+    appimage: Upscayl
+    choco: upscayl
+    flatpak: org.upscayl.Upscayl
+    snap: upscayl
   curator:
     _bin: curator
     _desc: Elasticsearch Curator helps you curate, or manage, your Elasticsearch indices and snapshots
@@ -2022,6 +2059,25 @@ softwarePackages:
     dnf: dnsmasq
     pacman: dnsmasq
     port: dnsmasq
+  espanso:
+    _bin: espanso
+    _github: https://github.com/espanso/espanso
+    _name: Espanso
+    _snapClassic: true
+    _when:appimage: sudo espanso service register && sudo espanso start
+    _when:cask: '! test -d /Applications/Espanso.app'
+    _when:snap: sudo espanso service register && sudo espanso start
+    appimage: federico-terzi/espanso
+    cask: espanso
+    choco: espanso
+    snap: espanso --channel=latest/edge
+  bun:
+    _bin: bun
+    _github: https://github.com/oven-sh/bun
+    _name: Bun
+    brew: oven-sh/bun/bun
+    npm: bun
+    proto: bun
   docker-desktop:
     _desc: '[Docker](https://www.docker.com/) is a set of platform-as-a-service products that use OS-level virtualization to deliver software in packages called containers. Containers are isolated from one another and bundle their own software, libraries and configuration files; they can communicate with each other through well-defined channels. [Docker Desktop](https://www.docker.com/products/docker-desktop/) adds a sleek UI for Docker and makes it easier to manage Docker on macOS and Windows.'
     _docs: https://docs.docker.com/
@@ -2425,6 +2481,13 @@ softwarePackages:
     nix: exa
     pacman: exa
     zypper: exa
+  tfsec:
+    _bin: tfsec
+    _github: https://github.com/aquasecurity/tfsec
+    _name: Aqua TFSec
+    brew: tfsec
+    choco: tfsec
+    scoop: tfsec
   libguestfs-tools:
     _bin: guestfish
     _github: https://github.com/libguestfs/libguestfs
@@ -2548,6 +2611,18 @@ softwarePackages:
     _when:cask: '! test -d "/Applications/Fig.app"'
     ansible:darwin: professormanhattan.fig
     cask: fig
+  steampipe:
+    _bin: steampipe
+    _github: https://github.com/turbot/steampipe
+    _name: Steampipe
+    brew: turbot/tap/steampipe
+  vale:
+    _bin: vale
+    _github: https://github.com/errata-ai/vale
+    _name: Vale
+    brew: vale
+    choco: vale
+    go: github.com/errata-ai/vale@latest
   filebrowser:
     _bin: filebrowser
     _desc: '[File Browser](https://filebrowser.org/) is a tool that lets you browse and edit files on any mounting point in the operating system.'
@@ -2564,6 +2639,21 @@ softwarePackages:
     cask: arduino
     choco: arduino
     flatpak: cc.arduino.IDE2
+  wego:
+    _bin: wego
+    _github: https://github.com/schachmat/wego
+    _name: WeGo
+    brew: wego
+    go: github.com/schachmat/wego@latest
+  miller:
+    _bin: miller
+    _github: https://github.com/johnkerl/miller
+    _name: Miller
+    apt: miller
+    brew: miller
+    choco: miller
+    dnf: miller
+    port: miller
   vermin:
     _bin: vermin
     _github: https://github.com/mhewedy/vermin
@@ -2591,6 +2681,14 @@ softwarePackages:
     _home: null
     _name: Finish
     ansible: professormanhattan.finish
+  usql:
+    _bin: usql
+    _github: https://github.com/xo/usql
+    _name: Universal SQL CLI
+    brew: xo/xo/usql
+    choco: usql
+    go: github.com/xo/usql@latest
+    scoop: usql
   firebase:
     _bin: firebase
     _desc: The Firebase Command Line Interface (CLI) Tools can be used to test, manage, and deploy your Firebase project from the command line
@@ -4229,6 +4327,13 @@ softwarePackages:
     pacman: atuin
     port: atuin
     pkg-termux: atuin
+  git-town:
+    _bin: git-town
+    _github: https://github.com/git-town/git-town
+    _name: Git Town
+    _post: git town aliases add
+    brew: git-town
+    go: github.com/git-town/git-town@latest
   jiq:
     _bin: jiq
     _desc: Create jq queries interactively by leveraging a live reload feature in the terminal
@@ -4856,6 +4961,20 @@ softwarePackages:
     _bin: live-captions
     _desc: Linux Desktop application that provides live captioning
     flatpak: net.sapples.LiveCaptions
+  caddy:
+    _bin: caddy
+    _github: https://github.com/caddyserver/caddy
+    _name: Caddy
+    _service: caddy
+    brew: caddy
+    choco: caddy
+    scoop: caddy
+  mailsy:
+    _bin: mailsy
+    _github: https://github.com/BalliAsghar/Mailsy
+    _name: Mailsy
+    brew: mailsy
+    npm: mailsy
   mailspring:
     _bin: mailspring
     _desc: '[Mailspring](https://getmailspring.com/) comes packed with powerful features like Unified Inbox, Snooze, Send Later, Mail Rules, Templates and more. Mailspring Pro, which you can unlock with a monthly subscription, adds even more features for people who send a ton of email: link tracking, read receipts, mailbox analytics, contact and company profiles. All of these features run in the client - Mailspring does not send your email credentials to the cloud.'
@@ -6448,6 +6567,18 @@ softwarePackages:
     _home: https://htmlhint.com/
     _name: HTMLHint
     npm: htmlhint
+  xz:
+    _bin: xz
+    _github: https://github.com/xz-mirror/xz
+    _name: xz
+    apk: xz
+    apt: xz
+    brew: xz
+    choco: xz
+    dnf: xz
+    pacman: xz
+    port: xz
+    scoop: xz
   prettier:
     _bin: prettier
     _desc: '[Prettier](https://prettier.io/docs/en/index.html) is an opinionated code formatter. It enforces a consistent style by parsing your code and re-printing it with its own rules that take the maximum line length into account, wrapping code when necessary'
@@ -8166,6 +8297,22 @@ softwarePackages:
     ansible:linux: professormanhattan.tfenv
     brew: tfenv
     port: tfenv
+  alda:
+    _bin: alda
+    _github: https://github.com/alda-lang/alda
+    _name: Alda
+    brew: alda
+  gitql:
+    _bin: gitql
+    _github: https://github.com/filhodanuvem/gitql
+    _name: GitQL
+    brew: gitql
+  octosql:
+    _bin: octosql
+    _github: https://github.com/cube2222/octosql
+    _name: OctoSQL
+    brew: cube2222/octosql/octosql
+    scoop: octosql
   tflint:
     _bin: tflint
     _desc: '[tflint](https://github.com/terraform-linters/tflint) is a framework that can help in finding possible errors for major cloud providers, warn about deprecated syntax and unused declarations and enforce best practices. This role installs tflint on nearly any platform.'
@@ -9284,6 +9431,23 @@ softwarePackages:
     dnf:fedora: yubikey-manager-qt
     pacman: yubikey-manager-qt
     scoop: yubikey-manager-qt
+  goreleaser:
+    _bin: goreleaser
+    _github: https://github.com/goreleaser/goreleaser
+    _name: Go Releaser
+    _snapClassic: true
+    brew: goreleaser
+    go: github.com/goreleaser/goreleaser@latest
+    nix-env: goreleaser
+    snap: goreleaser
+    yay: goreleaser-bin
+  obs-studio:
+    _bin: obs-studio
+    _github: https://github.com/obsproject/obs-studio
+    _name: OBS Studio
+    cask: obs
+    choco: obs-studio
+    flatpak: com.obsproject.Studio
   zap:
     _bin: zap
     _desc: Delightful AppImage package manager
@@ -9344,6 +9508,10 @@ softwarePackages:
     _bin: flatseal
     flatpak: com.github.tchx84.Flatseal
 softwarePlugins:
+  alfred:
+    cmd: null
+    plugins:
+      - https://github.com/BalliAsghar/mailsy-alfred/releases/download/2.0.0/Mailsy.alfredworkflow
   composer:
     cmd: null
     plugins:
@@ -9410,6 +9578,62 @@ softwarePlugins:
       - tunnel
       - view-allocations
       - who-can
+  raycast:
+    cmd: null
+    plugins:
+      - https://www.raycast.com/BalliAsghar/mailsy
+  steampipe:
+    cmd: steampipe plugin install {PLUGIN}
+    plugins:
+      - algolia
+      - aws
+      - azure
+      - azuread
+      - azuredevops
+      - bitbucket
+      - buildkite
+      - cloudflare
+      - code
+      - config
+      - consul
+      - csv
+      - digitalocean
+      - docker
+      - gcp
+      - github
+      - googledirectory
+      - googlesheets
+      - googleworkspace
+      - grafana
+      - heroku
+      - hibp
+      - imap
+      - ipinfo
+      - jira
+      - jumpcloud
+      - kubernetes
+      - ldap
+      - linkedin
+      - net
+      - nomad
+      - openai
+      - prometheus
+      - reddit
+      - rss
+      - sentry
+      - shopify
+      - slack
+      - stripe
+      - tailscale
+      - terraform
+      - trivy
+      - twilio
+      - whois
+      - ernw/openstack
+      - theapsgroup/gitlab
+      - theapsgroup/keycloak
+      - theapsgroup/vault
+      - twitter
   vagrant:
     cmd: bash -c 'if ! vagrant plugin list | grep {PLUGIN}; then vagrant plugin install {PLUGIN}; fi'
     plugins:

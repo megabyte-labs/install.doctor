@@ -241,6 +241,7 @@ softwareGroups:
     - glen
     - tart
   CLI: &CLI
+    - atuin
     - bash-completion
     - bandwhich
     - bat
@@ -254,6 +255,7 @@ softwareGroups:
     - direnv
     - docker-langserver
     - dog
+    - dotenv
     - dua
     - duf
     - dust
@@ -276,7 +278,6 @@ softwareGroups:
     - jq
     - lsd
     - mc
-    - mcfly
     - navi
     - nb
     - neovim
@@ -370,6 +371,7 @@ softwareGroups:
     - tldr
     - tmuxinator
     - up
+    - xz
     - yank
   Cloud: &Cloud
     - awscli
@@ -435,6 +437,7 @@ softwareGroups:
     - jc
     - jo
     - jq
+    - miller
     - oq
     - osquery
     - pup
@@ -449,7 +452,10 @@ softwareGroups:
     - yq
   Database: &Database
     - iredis
+    - octosql
     - sqlite
+    - steampipe
+    - usql
   Database-Desktop: &Database-Desktop
     - beekeeper-studio
     - sqlectron
@@ -480,6 +486,7 @@ softwareGroups:
     - trufflehog
   E-mail: &E-mail
     - himalaya
+    - mailsy
   E-mail-Desktop: &E-mail-Desktop
     - m-cli
     - mailspring
@@ -529,6 +536,7 @@ softwareGroups:
     - gh
     - gist
     - git
+    - gitql
     - git-bug
     - git-extras
     - git-filter-repo
@@ -536,6 +544,7 @@ softwareGroups:
     - git-open
     - git-secret
     - git-subrepo
+    - git-town
     - gitomatic
     - git-stats
     - gitui
@@ -563,6 +572,7 @@ softwareGroups:
   Go: &Go
     - delve
     - go
+    - goreleaser
     - go-outline
     - gomodifytags
     - gopkgs
@@ -613,8 +623,10 @@ softwareGroups:
     - shellcheck
     - shfmt
     - tflint
+    - tfsec
     - tokei
     - trunk
+    - vale
     - yamllint
     - yapf
   Logging: &Logging
@@ -623,6 +635,7 @@ softwareGroups:
     - sentry-cli
     - unbuffer
   Media: &Media
+    - alda
     - beets
     - crunch
     - exiftool
@@ -650,11 +663,13 @@ softwareGroups:
     - krita
     - lollypop
     - nuclear
+    - obs-studio
     - plex
     - plex-htpc
     - raspberry-pi-imager
     - shotcut
     - shotwell
+    - upscayl
     - vlc
     - youtube-music
   Misc-Desktop: &Misc-Desktop
@@ -663,6 +678,7 @@ softwareGroups:
     - cakebrew
     - clocker
     - devtoys
+    - devtoys-windows
     - drawio
     - eartrumpet
     - edex-ui
@@ -726,6 +742,7 @@ softwareGroups:
     - windows-admin-center
     - windows-power-toys
   NGINX: &NGINX
+    - caddy
     - certbot
     - cfssl
     - gixy
@@ -769,6 +786,7 @@ softwareGroups:
   Productivity-Desktop: &Productivity-Desktop
     - alt-tab
     - amethyst
+    - espanso
     - fiscript
     - libreoffice
     - microsoft-office
@@ -942,6 +960,7 @@ softwareGroups:
     - autodoc
     - auto-install
     - browser-sync
+    - bun
     - caniuse
     - capacitor
     - coder
@@ -968,6 +987,7 @@ softwareGroups:
     - json-server
     - localtunnel
     - majestic
+    - medusa
     - mitmproxy
     - muffet
     - nativescript
@@ -1001,6 +1021,7 @@ softwareGroups:
     - trellis
     - ts2c
     - typescript
+    - typescript-to-lua
     - websocat
     - wordops
     - wordpressify
@@ -1339,6 +1360,8 @@ softwareGroups:
       note: Deprecated in favor of using `exa`. `lsd` may be re-introduced when Windows support is added.
     - pkg: masscode # Deprecated in favor of Pieces
       note: Deprecated in favor of [Pieces](https://pieces.app/). The core components of Pieces are not open-source but the functionality is significantly better than massCode.
+    - pkg: mcfly
+      note: Deprecated in favor of atuin
     - pkg: mullvad-vpn
       note: Switched to ProtonVPN exclusively
     - pkg: multipass

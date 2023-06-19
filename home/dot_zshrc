@@ -395,6 +395,11 @@ if command -v zoxide > /dev/null; then
 	zstyle ':autocomplete:recent-dirs' backend zoxide
 fi
 
+### Atuin
+if command -v atuin > /dev/null; then
+	eval "$(atuin init zsh)"
+fi
+
 ### Cod
 if command -v cod > /dev/null; then
 	source <(cod init $$ zsh)
@@ -427,11 +432,6 @@ fi
 ### Navi (Ctrl+G)
 if command -v navi > /dev/null; then
 	eval "$(navi widget zsh)"
-fi
-
-### mcfly
-if command -v mcfly > /dev/null; then
-	eval "$(mcfly init zsh)"
 fi
 
 ### Fig
