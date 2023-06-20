@@ -31,12 +31,6 @@ The following items are things we would like to include into the Install Doctor 
 
 The following links include software that need to be reviewed before including them into the Install Doctor installer.
 
-* 
-* 
-* 
-* https://symless.com/synergy/features
-* 
-
 ### Caddy
 
 * https://authp.github.io/
