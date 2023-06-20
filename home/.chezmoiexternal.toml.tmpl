@@ -210,6 +210,20 @@
     url = "https://github.com/ProfessorManhattan/ansible-modules-bitwarden/raw/master/lookup_plugins/bitwarden.py"
     refreshPeriod = "{{ $refreshPeriod }}"
 
+### Application Styles
+# Discord (TODO: Apply this to Discord automatically)
+[".local/src/fluent/discord/theme.css"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/DiscordStyles/Fluent/deploy/Fluent.theme.css"
+    refreshPeriod = "{{ $refreshPeriod }}"
+# Steam (TODO: Apply this to Steam automatically by detecting first if it is installed)
+[".local/src/fluent/steam"]
+    type = "git-repo"
+    url = "https://github.com/purogamer/Fluent-for-Steam.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
 ### Packer
 [".local/src/packer/archlinux"]
     type = "git-repo"

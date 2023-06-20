@@ -24,47 +24,33 @@ The following items are things we would like to include into the Install Doctor 
 * https://github.com/hfreire/get-me-a-date
 * Keep eye on fig.io for release to Linux and new AI features
 * Monitor https://moonrepo.dev/moon as possible mono-repo manager
+* Determine whether or not https://webinstall.dev/vim-gui/ will add value to the VIM experience
+* Wait for packages to be available for GitHub Actions https://github.com/actions/runner
 
 ## Review
 
 The following links include software that need to be reviewed before including them into the Install Doctor installer.
 
-* https://webinstall.dev/vim-sensible/
-* https://webinstall.dev/vim-devicons/
-* https://webinstall.dev/vim-nerdtree/
-* https://webinstall.dev/vim-gui/
-* https://formulae.brew.sh/cask/blender#default
-* https://kdenlive.org/en/
-* https://www.bluestacks.com/
-* https://github.com/symless/synergy-core
+* 
+* 
+* 
 * https://symless.com/synergy/features
-* https://api.slack.com/automation/cli/commands
-* https://github.com/activepieces/activepieces#
-* https://github.com/jupyterlab/jupyterlab-desktop
-* https://github.com/butlerx/wetty
-* https://github.com/graphql-editor/graphql-editor
-* https://github.com/graphql/graphql-playground
-* https://github.com/amplication/amplication
-* https://github.com/openai-translator/openai-translator
-* https://github.com/lepoco/wpfui
-* https://github.com/ModernFlyouts-Community/ModernFlyouts
-* https://github.com/purogamer/Fluent-for-Steam
-* https://github.com/files-community/Files
-* https://github.com/awaescher/RepoZ
-* https://github.com/microsoft/WinUI-Gallery
-* https://github.com/sq/JSIL
-* https://github.com/dotnet/format
-* https://github.com/NuGetPackageExplorer/NuGetPackageExplorer
-* https://github.com/Rise-Software/Rise-Media-Player
-* https://github.com/actions/runner
-* https://github.com/hbons/SparkleShare
-* https://github.com/gitextensions/gitextensions
-* https://github.com/mRemoteNG/mRemoteNG
-* https://github.com/MathewSachin/Captura
-* https://github.com/DiscordStyles/Fluent
-* https://github.com/Alex4SSB/ADB-Explorer
-* https://github.com/carlospolop/PEASS-ng
-* https://github.com/Bismuth-Forge/bismuth
+* 
+
+### Caddy
+
+* https://authp.github.io/
+* https://github.com/caddy-dns/cloudflare
+* https://github.com/caddyserver/xcaddy
+* https://github.com/luisfarzati/localdots
+* https://github.com/mholt/caddy-dynamicdns
+* https://github.com/caddyserver/cache-handler
+* https://github.com/tailscale/caddy-tailscale
+* https://github.com/caddyserver/replace-response
+* https://github.com/lindenlab/caddy-s3-proxy
+* https://github.com/greenpau/caddy-git
+* https://github.com/mholt/caddy-embed
+* https://github.com/nathan-osman/caddy-docker
 
 ## Docker
 
@@ -82,6 +68,7 @@ The following items are Docker containers that we may want to include as default
 * https://docs.rundeck.com/docs/administration/install/installing-rundeck.html - Rundeck (Self-Service Desk)
 * https://easypanel.io/ - App deployments
 * https://www.activepieces.com/docs/install/docker
+* https://github.com/activepieces/activepieces - SaaS Automations
 
 ### Kubernetes
 

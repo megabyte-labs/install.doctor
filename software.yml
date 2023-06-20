@@ -323,6 +323,41 @@ softwarePackages:
     port: act
     scoop: act
     yay: act
+  wetty:
+    _bin: wetty
+    _github: https://github.com/butlerx/wetty
+    _name: Wetty
+    npm: wetty
+  modern-flyouts:
+    _bin: modern-flyouts
+    _github: https://github.com/ModernFlyouts-Community/ModernFlyouts
+    _name: Modern Flyouts
+    choco: modernflyouts
+    winapp: modernflyouts-preview/9MT60QV066RP
+    winget: ModernFlyouts.ModernFlyouts
+  bismuth:
+    _bin: bismuth
+    _github: https://github.com/Bismuth-Forge/bismuth
+    _name: Bismuth
+    apt: kwin-bismuth
+    dnf: bismuth
+    pacman: kwin-bismuth
+  graphql-playground:
+    _bin: graphql-playground
+    _github: https://github.com/graphql/graphql-playground
+    _name: GraphQL Playground
+    _when:cask: '! test -d "/Applications/GraphQL Playground.app"'
+    appimage: graphql/graphql-playground
+    cask: graphql-playground
+    exe: https://github.com/graphql/graphql-playground/releases/download/v1.8.10/graphql-playground-electron-setup-1.8.10.exe
+  kdenlive:
+    _bin: kdenlive
+    _github: https://github.com/KDE/kdenlive
+    _name: Kdenlive
+    _when:cask: '! test -d /Applications/kdenlive.app'
+    cask: kdenlive
+    choco: kdenlive
+    flatpak: org.kde.kdenlive
   genymotion:
     _when:cask: '! test -d /Applications/Genymotion.app'
     cask: genymotion
@@ -740,6 +775,14 @@ softwarePackages:
     _name: CodeEdit
     _when:cask: '! test -d /Applications/CodeEdit.app'
     cask: codeedit
+  barrier:
+    _bin: barrier
+    _github: https://github.com/debauchee/barrier
+    _name: Barrier
+    _when:cask: '! test -d /Applications/Barrier.app'
+    cask: barrier
+    choco: barrier
+    flatpak: com.github.debauchee.barrier
   syncalicious:
     _bin: syncalicious
     _desc: macOS application that syncs application settings across instances of macOS (and can also be used for backing up application settings)
@@ -7196,6 +7239,11 @@ softwarePackages:
     _name: x64dbg
     choco: x64dbg.portable
     scoop: extras/x64dbg
+  wpfui:
+    _github: https://github.com/lepoco/wpfui
+    _name: WPF UI
+    winget: WPF UI
+    winapp: wpf-ui/9N9LKV8R9VGM
   blender:
     _bin: blender
     _desc: Blender is the free and open source 3D creation suite. It supports the entirety of the 3D pipeline-modeling, rigging, animation, simulation, rendering, compositing, motion tracking and video editing.
@@ -8158,6 +8206,20 @@ softwarePackages:
     go: github.com/charmbracelet/soft-serve/cmd/soft@latest
     nix-env: nixpkgs.soft-serve
     pacman: soft-serve
+  nugetpackageexplorer:
+    _bin: nugetpackageexplorer
+    _github: https://github.com/NuGetPackageExplorer/NuGetPackageExplorer
+    _name: NuGet Package Explorer
+    choco: nugetpackageexplorer
+    winapp: nuget-package-explorer/9WZDNCRDMDM3
+    winget: NuGet Package Explorer
+  sparkleshare:
+    _bin: sparkleshare
+    _github: https://github.com/hbons/SparkleShare
+    _name: Sparkle Share
+    cask: sparkleshare
+    choco: sparkleshare
+    flatpak: org.sparkleshare.SparkleShare
   microsoft-teams:
     _bin: teams
     _desc: '[Microsoft Teams](https://www.microsoft.com/en-us/microsoft-teams/group-chat-software) is a proprietary business communication platform developed by Microsoft, as part of the Microsoft 365 family of products. Teams primarily competes with the similar service Slack, offering workspace chat and videoconferencing, file storage, and application integration.'
@@ -9495,6 +9557,10 @@ softwarePackages:
     dnf: zsh
     pacman: zsh
     port: zsh
+  winui-gallery:
+    _github: https://github.com/microsoft/WinUI-Gallery
+    _name: WinUI Gallery
+    winapp: winui-3-gallery/9P3JFPWWDZRC
   zx:
     _bin: zx
     _desc: Bash is great, but when it comes to writing more complex scripts, many people prefer a more convenient programming language. JavaScript is a perfect choice, but the Node.js standard library requires additional hassle before using. The zx package provides useful wrappers around child_process, escapes arguments and gives sensible defaults.
@@ -9530,10 +9596,11 @@ softwarePlugins:
       - snyk/snyk-docker-desktop-extension
       - tailscale/docker-extension
   dotnet:
-    cmd: null
+    cmd: dotnet tool install -g {PLUGIN}
     # cmd: Handled by .chezmoiexternal.toml
     plugins:
       - Microsoft.CST.AttackSurfaceAnalyzer.CLI
+      - dotnet-format
   gcloud:
     cmd: bash -c 'gcloud components install {PLUGIN}'
     plugins:
@@ -9646,3 +9713,8 @@ softwarePlugins:
       - vagrant-share
       - vagrant-vbguest
       - vagrant-vmware-desktop
+  visual-studio:
+    cmd: null
+    plugins:
+      - TemplateStudio.TemplateStudioForWinUICs
+      - lepo.wpf-ui

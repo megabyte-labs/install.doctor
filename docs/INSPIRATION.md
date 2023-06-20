@@ -13,6 +13,7 @@
 * https://github.com/ajenti/ajenti
 * https://github.com/linuxserver/docker-webtop
 * https://github.com/chocolatey/boxstarter
+* https://github.com/changkun/occamy
 
 ## System
 
@@ -27,3 +28,4 @@
 * https://github.com/coder/coder
 * https://github.com/rigoneri/syte
 * https://github.com/rigoneri/Syte3
+* https://github.com/UPC/ravada
