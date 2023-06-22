@@ -7,6 +7,12 @@
 #   for its configuration. The script symlinks the `.config/mackup/.mackup/` folder to `~/.mackup` and
 #   the `.config/mackup/.mackup.cfg` file to `~/.mackup.cfg` before executing `mackup`. The symlinks
 #   are deleted after mackup runs.
+#
+#   [mackup](https://github.com/lra/mackup) is a tool that can help in keeping your application settings
+#   in sync across multiple computers. It supports many different storage solutions like Dropbox, Google Drive, etc.
+#   to store the settings and sync them across machines. It can also help in restoring settings on a new installation.
+#   A number of applications are supported out of the box. It is trivial to add more applications. Refer to the
+#   [documentation](https://github.com/lra/mackup/blob/master/doc) for details.
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
