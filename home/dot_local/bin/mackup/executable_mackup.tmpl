@@ -1,0 +1,27 @@
+{{- if ne .host.distro.family "windows" -}}
+#!/usr/bin/env bash
+# @file ~/.local/bin/mackup
+# @brief Creates a wrapper around `mackup` to add support for XDG directories
+# @description
+#   This script is a wrapper around the `mackup`. `Mackup` does not support XDG specification
+#   for its configuration. The script symlinks the `.config/mackup/.mackup/` folder to `~/.mackup` and
+#   the `.config/mackup/.mackup.cfg` file to `~/.mackup.cfg` before executing `mackup`. The symlinks
+#   are deleted after mackup runs.
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+ln -s "$HOME/.config/mackup/.mackup/" ~/.mackup
+ln -s "$HOME/.config/mackup/.mackup.cfg" ~/.mackup.cfg
+if command -v brew > /dev/null && brew list | grep mackup > /dev/null; then
+    $(brew --prefix)/bin/mackup "$@" || echo ''
+elif (command -v pip3 > /dev/null && pip3 list | grep mackup > /dev/null) || \
+     (command -v pip > dev/null && pip3 list | grep mackup > /dev/null) || \
+     (command -v pipx > dev/null && pipx list | grep mackup > /dev/null); then
+    ~/.local/bin/mackup "$@" || echo ''
+else
+    logg warn 'Homebrew/Python pip is not found. Install `mackup` using one of these methods'
+fi
+rm -f ~/.mackup
+rm -f ~/.mackup.cfg
+{{ end }}
