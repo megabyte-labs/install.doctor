@@ -124,6 +124,14 @@ fi
 #  . "$HOME/.local/scripts/fzf-tmux.bash"
 #fi
 
+### McFly
+export MCFLY_PROMPT="❯"
+if [ -d /Applications ] && [ -d /System ]; then
+  if [[ "$(defaults read -g AppleInterfaceStyle 2&>/dev/null)" != "Dark" ]]; then
+      export MCFLY_LIGHT=TRUE
+  fi
+fi
+
 ### SDKMan
 if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
   export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"
@@ -133,6 +141,27 @@ elif [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
   . "$SDKMAN_DIR/bin/sdkman-init.sh"
 fi
 
+### Tea
+# TODO: Fix this so it does not cause errors as Chezmoi runs
+# if command -v tea > /dev/null; then
+#   source <(tea --magic)
+# fi
+
 ### VIM
 export GVIMINIT='let $MYGVIMRC="$XDG_CONFIG_HOME/vim/gvimrc" | source $MYGVIMRC'
 export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
+
+### NVIM
+VIM_NEOVIM_INTEGRATION='vim.cmd([[
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
+let &packpath = &runtimepath
+source ~/.vimrc
+]])'
+if command -v nvim > /dev/null && cat ~/.config/nvim/init.lua | grep 'set runtimepath^=~/.vim runtimepath+=~/.vim/after' > /dev/null; then
+  ### Setup Neovim to work with Vim setup and plugins
+  echo -e "$VIM_NEOVIM_INTEGRATION\n$(cat ~/.config/nvim/init.lua)" > ~/.config/nvim/init.lua || echo ''
+  if -d ~/.var/app/io.neovim.nvim/config/nvim; then
+    echo -e "$VIM_NEOVIM_INTEGRATION\n$(cat ~/.var/app/io.neovim.nvim/config/nvim/init.lua)" > ~/.var/app/io.neovim.nvim/config/nvim/init.lua || echo ''
+  fi
+fi
+unset VIM_NEOVIM_INTEGRATION

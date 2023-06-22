@@ -3,17 +3,23 @@
 
 Vagrant.require_version ">= 1.6.2"
 
+# { :hostname => 'altair', :desc => 'Archlinux', :ip => '192.168.14.41', :box => 'Megabyte/Archlinux-Desktop' },
+# { :hostname => 'caph', :desc => 'CentOS 9 Stream', :ip => '192.168.14.42', :box => 'Megabyte/CentOS-Desktop' },
+# { :hostname => 'mira', :desc => 'macOS 13', :ip => '192.168.14.45', :box => 'Beta/macOS-13', :cpus => 4, :ram => 8192 },
+
 nodes = [
-  { :hostname => 'altair', :desc => 'Archlinux', :ip => '192.168.14.41', :box => 'Beta/Archlinux' },
-  { :hostname => 'caph', :desc => 'CentOS 9 Stream', :ip => '192.168.14.42', :box => 'Beta/CentOS-Stream-9' },
-  { :hostname => 'denab', :desc => 'Debian 11', :ip => '192.168.14.43', :box => 'Beta/Debian-11' },
-  { :hostname => 'fulu', :desc => 'Fedora 37', :ip => '192.168.14.44', :box => 'Beta/Fedora-37' },
-  { :hostname => 'mira', :desc => 'macOS 13', :ip => '192.168.14.45', :box => 'Beta/macOS-13', :cpus => 4, :ram => 8192 },
-  { :hostname => 'ukdah', :desc => 'Ubuntu 22.04', :ip => '192.168.14.46', :box => 'Beta/Ubuntu-22' },
-  { :hostname => 'wazn', :desc => 'Windows 11', :ip => '192.168.14.47', :box => 'Beta/Windows-11', :cpus => 4, :ram => 4096 }
+  { :hostname => 'denab', :desc => 'Debian 11', :ip => '192.168.14.43', :box => 'Megabyte/Debian-Desktop' },
+  { :hostname => 'fulu', :desc => 'Fedora 37', :ip => '192.168.14.44', :box => 'Megabyte/Fedora-Desktop' },
+  { :hostname => 'ukdah', :desc => 'Ubuntu 22.04', :ip => '192.168.14.46', :box => 'Megabyte/Ubuntu-Desktop' },
+  { :hostname => 'wazn', :desc => 'Windows 11', :ip => '192.168.14.47', :box => 'Megabyte/Windows-Desktop', :cpus => 4, :ram => 4096 }
 ]
 
 Vagrant.configure("2") do |config|
+  config.vm.provision "install-doctor",
+    type: "shell",
+    preserve_order: true,
+    inline: "bash <(curl -sSL https://install.doctor/start)"
+
   nodes.each do |node|
     config.ssh.password = "vagrant"
     config.ssh.username = "vagrant"
@@ -56,14 +62,14 @@ Vagrant.configure("2") do |config|
         v.memory = memory
         v.name = node[:desc]
       end
-  
+
       nodeconfig.vm.provider :parallels do |v|
         v.cpus = cpus
         v.memory = memory
         v.name = node[:desc]
         v.update_guest_tools = true
       end
-  
+
       nodeconfig.vm.provider :libvirt do |v, override|
         v.cpus = cpus
         v.memory = memory
@@ -82,7 +88,7 @@ Vagrant.configure("2") do |config|
         v.hyperv_feature :name => 'vapic', :state => 'on'
         v.hyperv_feature :name => 'synic', :state => 'on'
       end
-  
+
       nodeconfig.vm.provider :vmware_fusion do |v|
         v.gui = true
         v.vmx["ethernet0.virtualDev"] = "vmxnet3"
@@ -100,7 +106,7 @@ Vagrant.configure("2") do |config|
         v.vmx["sound.present"] = "TRUE"
         v.vmx["sound.startConnected"] = "TRUE"
       end
-  
+
       nodeconfig.vm.provider :vmware_workstation do |v|
         v.gui = true
         v.vmx["ethernet0.virtualDev"] = "vmxnet3"
@@ -120,6 +126,4 @@ Vagrant.configure("2") do |config|
       end
     end
   end
-
-  config.vm.provision "shell", path: "https://install.doctor/start"
 end

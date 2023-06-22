@@ -22,7 +22,7 @@ if [ -d /Applications ] && [ -d System ]; then
 fi
 
 ### Connect to Tailscale network
-TAILSCALE_AUTH_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TAILSCALE_AUTH_KEY")) }}{{ includeTemplate "secrets/TAILSCALE_AUTH_KEY" | decrypt }}{{ else }}{{ env "TAILSCALE_AUTH_KEY" }}{{ end }}"
+TAILSCALE_AUTH_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TAILSCALE_AUTH_KEY")) }}{{ includeTemplate "secrets/TAILSCALE_AUTH_KEY" | decrypt | trim }}{{ else }}{{ env "TAILSCALE_AUTH_KEY" }}{{ end }}"
 if command -v tailscale > /dev/null && [ "$TAILSCALE_AUTH_KEY" != "" ]; then
   logg info 'Connecting to Tailscale with user-defined authentication key'
   timeout 14 tailscale up --authkey="$TAILSCALE_AUTH_KEY" --accept-routes || EXIT_CODE=$?

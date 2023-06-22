@@ -37,11 +37,11 @@
 #     environment variables, this script can be run completely headlessly. This allows us to do things like test our
 #     provisioning script on a wide variety of operating systems.
 #
-#     | Variable               | Description                                                                       |
-#     |------------------------|-----------------------------------------------------------------------------------|
-#     | `START_REPO`           | Variable to specify the Git fork to use when provisioning                         |
-#     | `ANSIBLE_PROVISION_VM` | **For Qubes**, determines the name of the VM used to provision the system         |
-#     | `DEBUG_MODE`           | Set to true to enable verbose logging                                             |
+#     | Variable                  | Description                                                                       |
+#     |---------------------------|-----------------------------------------------------------------------------------|
+#     | `START_REPO` (or `REPO`)  | Variable to specify the Git fork to use when provisioning                         |
+#     | `ANSIBLE_PROVISION_VM`    | **For Qubes**, determines the name of the VM used to provision the system         |
+#     | `DEBUG_MODE` (or `DEBUG`) | Set to true to enable verbose logging                                             |
 #
 #     For a full list of variables you can use to customize Install Doctor, check out our [Customization](https://install.doctor/docs/customization)
 #     and [Secrets](https://install.doctor/docs/customization/secrets) documentation.
@@ -55,19 +55,22 @@
 export DEBIAN_FRONTEND=noninteractive
 
 # @description Detect `START_REPO` format and determine appropriate git address, otherwise use the master Install Doctor branch
-if [ -z "$START_REPO" ]; then
-    START_REPO="https://gitlab.com/megabyte-labs/install.doctor.git"
+if [ -z "$START_REPO" ] && [ -z "$REPO" ]; then
+  START_REPO="https://github.com/megabyte-labs/install.doctor.git"
 else
-    if [[ "$START_REPO == *"/"* ]]; then
-        # Either full git address or GitHubUser/RepoName
-        if [[ "$START_REPO" == *":"* ]] || [[ "$START_REPO" == *"//"* ]]; then
-            START_REPO="$START_REPO"
-        else
-            START_REPO="https://github.com/${START_REPO}.git"
-        fi
+  if [ -n "$REPO" ] && [ -z "$START_REPO" ]; then
+    START_REPO="$REPO"
+  fi
+  if [[ "$START_REPO == *"/"* ]]; then
+    # Either full git address or GitHubUser/RepoName
+    if [[ "$START_REPO" == *":"* ]] || [[ "$START_REPO" == *"//"* ]]; then
+      START_REPO="$START_REPO"
     else
-        START_REPO="https://github.com/$START_REPO/install.doctor.git"
+      START_REPO="https://github.com/${START_REPO}.git"
     fi
+  else
+    START_REPO="https://github.com/$START_REPO/install.doctor.git"
+  fi
 fi
 
 {{ include "partials" "logg" }}
@@ -202,7 +205,7 @@ fi
 # @description Ensure the ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi directory is cloned and up-to-date
 if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.git" ]; then
   cd "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
-  logg info "Pulling the latest changes from ${START_REPO:-https://gitlab.com/megabyte-labs/install.doctor.git}"
+  logg info "Pulling the latest changes from ${START_REPO:-https://github.com/megabyte-labs/install.doctor.git}"
   git pull origin master
 else
   logg info "Cloning ${START_REPO} to ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
@@ -232,9 +235,11 @@ if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml" ]; then
   chezmoi init
 fi
 
-# @description Run `chezmoi apply` and enable verbose mode if the `DEBUG_MODE` environment variable is set to true
+# @description Run `chezmoi apply` and enable verbose mode if the `DEBUG_MODE` or `DEBUG` environment variable is set to true
 logg info 'Running `chezmoi apply`'
 if [ "$DEBUG_MODE" = 'true' ]; then
+  DEBUG_MODIFIER="-vvvvv"
+elif [ "$DEBUG" = 'true' ]; then
   DEBUG_MODIFIER="-vvvvv"
 fi
 

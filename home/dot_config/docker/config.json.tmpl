@@ -1,0 +1,3 @@
+{
+    "credsStore": "{{ if (eq .host.distro.id "darwin") }}osxkeychain{{ else }}{{ if (eq .host.distro.id "windows") }}wincred{{ else }}secretservice{{ end }}{{ end }}"
+}

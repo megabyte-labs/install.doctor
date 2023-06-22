@@ -73,6 +73,10 @@ if command -v vim > /dev/null; then
   alias vi='vim'
   alias v='vim'
 fi
+### NVIM
+if command -v nvim > /dev/null; then
+  alias nvim='env -u VIMINIT nvim'
+fi
 
 ### mitmproxy / mitmweb
 if command -v mitmproxy > /dev/null; then
@@ -152,6 +156,13 @@ if ! command -v pip > /dev/null; then
   alias pip='pip3'
 fi
 
+# Link python to python3
+if [ -f /usr/bin/python3 ]; then
+  alias python='/usr/bin/python3'
+elif [ -f /usr/local/bin/python3 ]; then
+  alias python='/usr/local/bin/python3'
+fi
+
 # Masked sudo password entry
 if command -v gum > /dev/null; then
   alias please="gum input --password | sudo -nS"
@@ -224,8 +235,15 @@ fi
 # Recursively encrypts files using Ansible Vault
 alias vault-dir='find . -type f -printf "%h/\"%f\" " | xargs ansible-vault encrypt'
 
+# Reverse engineer Dockerfiles from containers
+alias whaler="docker run -t --rm -v /var/run/docker.sock:/var/run/docker.sock:ro pegleg/whaler"
+
 # Shows nice looking report of weather
-alias weather='curl -A curl wttr.in'
+if command -v wego > /dev/null; then
+  alias weather='wego'
+else
+  alias weather='curl -A curl wttr.in'
+fi
 
 # Change .wget-hsts file location
 alias wget="wget --hsts-file ~/.local/wget-hsts"

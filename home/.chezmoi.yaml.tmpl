@@ -9,7 +9,7 @@
 {{- $gmailAddress := (default "blzalewski@gmail.com" (env "GMAIL_ADDRESS")) -}}
 {{- $gpgKeyId := (default "0xF0A300E4199A1C33" (env "KEYID")) -}}
 {{- $hostname := (default (output "echo" "$HOST") (env "HOST")) -}}
-{{- $locale := (output "echo" "$LANG") }}
+{{- $locale := (default "en_US" (output "echo" "$LANG")) }}
 {{- $name := (default "Brian Zalewski" (env "FULL_NAME")) -}}
 {{- $restricted := (default false (env "WORK_ENVIRONMENT")) -}}
 {{- $snapcraftEmail := (default "brian@megabyte.space" (env "SNAPCRAFT_EMAIL"))}}
@@ -170,7 +170,8 @@ data:
     cloudflare:
       r2: "{{ $cloudflareR2AccountId }}"
       username: "{{ $cloudflareUsername }}"
-    defaultBrowser: firefox
+    defaultBrowser: chrome
+    defaultBrowserDarwin: browserosaurus
     digitalOceanClusterId: b7fc4e37-ffe7-4ea1-887a-0e19ee077f32
     # `domain` is kept here for backwards compatibility, but the .host.domain is the preferred selector
     domain: "{{ $domain }}"

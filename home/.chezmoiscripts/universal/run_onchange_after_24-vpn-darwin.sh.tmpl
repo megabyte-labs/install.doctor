@@ -24,6 +24,9 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
+# TODO - Populate Tunnelblick on macOS using the .ovpn profiles located in $HOME/.config/vpn
+# along with the secrets for the protonVPN OpenVPN (check vpn-linux.tmpl)
+
 # @description Backs up previous network settings to `/Library/Preferences/com.apple.networkextension.plist.old` before applying new VPN profiles
 if [ -f /Library/Preferences/com.apple.networkextension.plist ]; then
     logg info 'Backing up /Library/Preferences/com.apple.networkextension.plist to /Library/Preferences/com.apple.networkextension.plist.old'

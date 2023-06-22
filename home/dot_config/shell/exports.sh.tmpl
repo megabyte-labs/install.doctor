@@ -49,7 +49,7 @@ export PATH="$HOME/.local/bin/docker:$PATH"
 export PATH="$HOME/.local/bin/firejail:$PATH"
 export PATH="$HOME/.local/bin/flatpak:$PATH"
 export PATH="$HOME/.local/bin/mackup:$PATH"
-export SSH_KEY_PATH="~/.ssh/id_rsa"
+export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 
 ### Homebrew
 export HOMEBREW_NO_ENV_HINTS=true
@@ -72,11 +72,11 @@ fi
 export WHALEBREW_INSTALL_PATH="/usr/local/bin"
 
 ### Android Studio
-if [ -d ~/Library/Android ]; then
-  export PATH="$PATH:~/Library/Android/sdk/cmdline-tools/latest/bin"
-  export PATH="$PATH:~/Library/Android/sdk/platform-tools"
-  export PATH="$PATH:~/Library/Android/sdk/tools/bin"
-  export PATH="$PATH:~/Library/Android/sdk/tools"
+if [ -d "$HOME/Library/Android" ]; then
+  export PATH="$PATH:$HOME/Library/Android/sdk/cmdline-tools/latest/bin"
+  export PATH="$PATH:$HOME/Library/Android/sdk/platform-tools"
+  export PATH="$PATH:$HOME/Library/Android/sdk/tools/bin"
+  export PATH="$PATH:$HOME/Library/Android/sdk/tools"
 fi
 {{ end }}
 export ANDROID_SDK_HOME="$XDG_DATA_HOME/android-sdk"
@@ -97,6 +97,7 @@ export ASDF_DATA_DIR="$ASDF_DIR"
 export ASDF_CRATE_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-cargo-pkgs"
 export ASDF_GEM_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-ruby-pkgs"
 export ASDF_GOLANG_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-golang-pkgs"
+export ASDF_GOLANG_MOD_VERSION_ENABLED=true
 export ASDF_NPM_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-npm-packages"
 export ASDF_PYTHON_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-python-pkgs"
 
@@ -138,6 +139,11 @@ fi
 # BW_CLIENTID client_id
 # BW_CLIENTSECRET
 
+### Cheat
+if command -v fzf > /dev/null; then
+  export CHEAT_USE_FZF=true
+fi
+
 ### Deta
 export DETA_INSTALL="$XDG_DATA_HOME/deta"
 export PATH="$PATH:$DETA_INSTALL/bin"
@@ -147,6 +153,7 @@ export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 export MACHINE_STORAGE_PATH="$XDG_DATA_HOME/docker-machine"
 
 ### Dotnet
+export DOTNET_CLI_HOME="$XDG_CONFIG_HOME/dotnet"
 if [ -d /Applications ] && [ -d /Library ]; then
   export DOTNET_ROOT="/usr/local/opt/dotnet/libexec"
 elif [ -d /home/linuxbrew/.linuxbrew/opt/dotnet ]; then
@@ -228,6 +235,9 @@ export KODI_DATA="$XDG_DATA_HOME/kodi"
 ### Krew
 export KREW_ROOT="$XDG_DATA_HOME/krew"
 
+### Kube
+export KUBECONFIG="$XDG_CONFIG_HOME/kube/config"
+
 ### Maven
 export MAVEN_CONFIG="$XDG_CONFIG_HOME/maven/settings.xml"
 alias mvn="mvn -s $MAVEN_CONFIG"
@@ -240,8 +250,19 @@ export MCFLY_KEY_SCHEME=vim
 ### minikube
 export MINIKUBE_HOME="$XDG_DATA_HOME/minikube"
 
+### Monero
+if [ -f /Applications/monero-wallet-gui.app/Contents/MacOS/monerod ]; then
+  export PATH="$PATH:/Applications/monero-wallet-gui.app/Contents/MacOS"
+fi
+
 ### MySQL
 export MYSQL_HISTFILE="$XDG_DATA_HOME/mysql_history"
+
+### .netrc
+export NETRC="$XDG_CONFIG_HOME/netrc"
+
+### Navi
+export NAVI_CONFIG="$XDG_CONFIG_HOME/navi/config.yaml"
 
 ### nnn
 if command -v nnn > /dev/null; then
@@ -264,6 +285,9 @@ export NTL_RERUN_CACHE_DIR="$XDG_DATA_HOME/ntl"
 export NTL_RERUN_CACHE_NAME="cache"
 export NTL_RERUN_CACHE_MAX="100"
 
+### NuGet
+export NUGET_PACKAGES="$XDG_DATA_HOME/nuget"
+
 ### Parallels
 export PARALLEL_HOME="$XDG_CONFIG_HOME/parallel"
 
@@ -273,6 +297,10 @@ export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 ### Poetry
 export POETRY_HOME="$XDG_DATA_HOME/poetry"
 export PATH="$POETRY_HOME/bin:$PATH"
+
+### Porter
+export PORTER_HOME="$XDG_DATA_HOME/porter"
+export PATH="$PATH:$PORTER_HOME"
 
 ### Postgres
 export PSQLRC="$XDG_CONFIG_HOME/pg/psqlrc"
@@ -299,6 +327,8 @@ export REDISCLI_RCFILE="$XDG_CONFIG_HOME/redis/redisclirc"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 
 ### Ruby
+# Add Homebrew Ruby install location to PATH (for macOS and tools that require a more recent version than the bundled system version)
+export PATH="/usr/local/opt/ruby/bin:$PATH"
 export GEM_HOME="$XDG_DATA_HOME/gems"
 export PATH="$PATH:$GEM_HOME/bin"
 
@@ -316,6 +346,13 @@ export VAGRANT_HOME="$XDG_DATA_HOME/vagrant.d"
 ### Volta
 export VOLTA_HOME="$XDG_DATA_HOME/volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
+
+### Wakatime
+export WAKATIME_HOME="$XDG_CONFIG_HOME/wakatime"
+export WAKATIME_API_KEY="{{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "WAKATIME_API_KEY")) }}{{ includeTemplate "secrets/VAGRANT_CLOUD_TOKEN" | decrypt | trim }}{{ else }}{{ env "WAKATIME_API_KEY" }}{{ end }}"
+
+### Wego Weather CLI
+export WEGORC="$XDG_CONFIG_HOME/wego/wegorc"
 
 ### wget
 export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
@@ -335,8 +372,12 @@ export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
-export LESSHISTFILE=-
+export LESSHISTFILE="$XDG_STATE_HOME"/less/history
 export MANPAGER="less -X"
+
+### Magic Enter (ZSH)
+export MAGIC_ENTER_GIT_COMMAND='git status -u .'
+export MAGIC_ENTER_OTHER_COMMAND='ls -lh .'
 
 ### Line Wrap
 setterm -linewrap on 2>/dev/null
@@ -369,13 +410,14 @@ fi
 export EDITOR='vi -e'
 if command -v nvim > /dev/null; then
   export VISUAL='nvim -e'
+  export PATH="$PATH:$HOME/.local/share/nvim/bin"
 else
   export VISUAL="$EDITOR"
 fi
 {{ end }}
 
 ### Browser
-export BROWSER=brave
+export BROWSER="{{ .user.defaultBrowser }}"
 
 ### WSL
 if [ -d /proc ] && [[ "$(grep Microsoft /proc/version > /dev/null)" ]]; then

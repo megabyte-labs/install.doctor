@@ -1,3 +1,4 @@
+{{- if eq .host.distro.family "linux" -}}
 #!/bin/bash
 
 #################################################################
@@ -314,3 +315,4 @@ elif [ "$extensions_count" -eq 0 ]; then
 else
   begin_install
 fi
+{{ end -}}

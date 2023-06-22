@@ -62,8 +62,7 @@ setopt SHARE_HISTORY
 if [ ! -d "$XDG_CACHE_HOME/zsh" ]; then
 	mkdir -p "$XDG_CACHE_HOME/zsh"
 fi
-compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
-autoload -Uz compinit
+autoload -U +X compinit && compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -79,6 +78,12 @@ zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 # shellcheck disable=SC2016
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+zstyle ':completion:*:git-checkout:*' sort false
+zstyle ':completion:*:descriptions' format '[%d]'
+if command -v fzf > /dev/null && command -v exa > /dev/null; then
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+  zstyle ':fzf-tab:*' switch-group ',' '.'
+fi
 
 # Key bindings
 bindkey -e
@@ -265,50 +270,116 @@ fi
 if command -v antigen > /dev/null; then
   # Fix for oh-my-zsh overriding exa aliases
   export DISABLE_LS_COLORS=true
+  # Official Oh-My-ZSH plugins
   antigen use oh-my-zsh
   antigen bundle adb
+  antigen bundle bazel
+  antigen bundle codeclimatefd
   # antigen bundle colored-man-pages
   antigen bundle command-not-found
   antigen bundle copybuffer
   # TODO: Add as an alias available to Bash as well
   antigen bundle encode64
-  antigen bundle fd
+  # antigen bundle fd # Added by bash completions scriptx``
+  # antigen bundle flutter /Users/bzalewski/.local/antigen/bundles/robbyrussell/oh-my-zsh/plugins/flutter/flutter.plugin.zsh:29: no such file or directory: /Users/bzalewski/.local/antigen/bundles/robbyrussell/oh-my-zsh/cache//completions/_flutter
+  # antigen bundle fzf # Added by bash completions script
+  # antigen bundle gcloud # Added by bash completions script
+  antigen bundle gem
+  # antigen bundle gh # Added by bash completions script
   antigen bundle git-auto-fetch
+  antigen bundle git-extras
+  antigen bundle git-flow
+  antigen bundle gitfast
+  antigen bundle github
   # antigen bundle gnu-utils
-  # antigen bundle heroku
+  antigen bundle golang
+  # antigen bundle gpg-agent
+  # antigen bundle gradle # Added by bash completions script
+  # antigen bundle helm # Added by bash completions script
+  antigen bundle heroku
+  antigen bundle httpie
+  antigen bundle ionic
+  antigen bundle ipfs
+  antigen bundle isodate
   # antigen bundle keychain
+  antigen bundle kn
+  # antigen bundle kubectl # Added by bash completions script
   antigen bundle kubectx
+  antigen bundle last-working-dir
+  antigen bundle lxd
   antigen bundle macos
+  antigen bundle macports
   antigen bundle magic-enter
+  antigen bundle marktext
+  antigen bundle microk8s
   antigen bundle minikube
+  # Received error so disabling mongo-atlas
+  # /Users/bzalewski/.local/antigen/bundles/robbyrussell/oh-my-zsh/plugins/mongo-atlas/mongo-atlas.plugin.zsh:14: no such file or directory: /Users/bzalewski/.local/antigen/bundles/robbyrussell/oh-my-zsh/cache//completions/atlas
+  # antigen bundle mongo-atlas
+  antigen bundle mongocli
+  antigen bundle mosh
+  antigen bundle multipass
   antigen bundle ng
+  antigen bundle node-docs
   antigen bundle nomad
-  antigen bundle npm
+  # antigen bundle npm # Added by bash completions script
+  antigen bundle oc
+  antigen bundle pass
+  # antigen bundle pep8
+  antigen bundle pip
+  # antigen bundle pipenv
+  antigen bundle pm2
+  # antigen bundle poetry # Added by bash completions script
+  antigen bundle qrcode
+  antigen bundle react-native
   antigen bundle redis-cli
   antigen bundle ripgrep
-  antigen bundle rust
+  # Received error so disabling rust
+  # /Users/bzalewski/.local/antigen/bundles/robbyrussell/oh-my-zsh/plugins/rust/rust.plugin.zsh:22: no such file or directory: /Users/bzalewski/.local/antigen/bundles/robbyrussell/oh-my-zsh/cache//completions/_rustup
+  # /Users/bzalewski/.local/antigen/bundles/robbyrussell/oh-my-zsh/plugins/rust/rust.plugin.zsh:23: no such file or directory: /Users/bzalewski/.local/antigen/bundles/robbyrussell/oh-my-zsh/cache//completions/_cargo
+  # antigen bundle rust
   antigen bundle safe-paste
+  antigen bundle sdk
+  # antigen bundle skaffold
+  antigen bundle spring
   # antigen bundle shell-proxy
+  # On macOS, parse error 6/13/23 for sprunge
+  # antigen bundle sprunge
   # antigen bundle ssh-agent
   antigen bundle sudo
-  antigen bundle ufw
-  antigen bundle web-search
-  antigen bundle docker
-  antigen bundle docker-compose
-  antigen bundle ionic
-  antigen bundle multipass
-  antigen bundle pip
-  antigen bundle pm2
   antigen bundle terraform
+  antigen bundle timer
+  antigen bundle tmuxinator
+  antigen bundle urltools
+  antigen bundle ufw
   antigen bundle vagrant
+  # antigen bundle volta # Added by bash completions script
+  antigen bundle web-search
+  # antigen bundle wp-cli # Added by bash completions script
   antigen bundle yarn
 
+  if [ ! -d /Applications ]; then
+    # Plugins that are troublesome on macOS due to Docker Desktop needing to launch
+    antigen bundle docker
+    antigen bundle docker-compose
+  fi
+
+  # Third-party plugins
+  # antigen bundle jscutlery/nx-completion Installing jscutlery/nx-completion... Error! Activate logging and try again.
+  # antigen bundle lukechilds/zsh-better-npm-completion
+
   antigen bundle zsh-interactive-cd
-  # antigen bundle zsh-navigation-tools
+  antigen bundle zsh-navigation-tools
   antigen bundle zsh-users/zsh-completions src
-  antigen bundle zsh-users/zsh-syntax-highlighting
-  antigen bundle zsh-users/zsh-autosuggestions
+  if command -v fzf > /dev/null; then
+  	antigen bundle aloxaf/fzf-tab
+  fi
   antigen bundle marlonrichert/zsh-autocomplete@main
+  antigen bundle zsh-users/zsh-autosuggestions
+  antigen bundle zsh-users/zsh-syntax-highlighting
+  if [ -d /Applications ] && [ -d /System ]; then
+    antigen bundle zsh-apple-touchbar
+  fi
   antigen theme romkatv/powerlevel10k
   antigen apply
 fi
@@ -324,19 +395,43 @@ if command -v zoxide > /dev/null; then
 	zstyle ':autocomplete:recent-dirs' backend zoxide
 fi
 
+### Atuin
+if command -v atuin > /dev/null; then
+	eval "$(atuin init zsh)"
+fi
+
+### Cod
+if command -v cod > /dev/null; then
+	source <(cod init $$ zsh)
+fi
+
 ### direnv
 if command -v direnv > /dev/null; then
 	eval "$(direnv hook zsh)"
 fi
 
-### Java (asdf)
-if [ -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ]; then
-  # . "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
+### Emplace
+# Error tracking: https://github.com/tversteeg/emplace/issues/375
+# if command -v emplace > /dev/null; then
+# 	eval "$(emplace init zsh)"
+# fi
+
+### Google Cloud SDK
+if [ -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.zsh.inc" ]; then
+	source "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.zsh.inc"
+fi
+if [ -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc" ]; then
+    source "$HOMEBREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc"
 fi
 
-### mcfly
-if command -v mcfly > /dev/null; then
-	eval "$(mcfly init zsh)"
+### Java (asdf)
+# if [ -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ]; then
+#   . "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
+# fi
+
+### Navi (Ctrl+G)
+if command -v navi > /dev/null; then
+	eval "$(navi widget zsh)"
 fi
 
 ### Fig
@@ -347,6 +442,11 @@ fi
 ### Powerline
 if [ -f "$HOME/.local/scripts/p10k.zsh" ]; then
 	source "$HOME/.local/scripts/p10k.zsh"
+fi
+
+### The Fuck
+if command -v thefuck > /dev/null; then
+	eval "$(thefuck --alias)"
 fi
 
 ### Bash Completions

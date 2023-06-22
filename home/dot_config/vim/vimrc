@@ -29,7 +29,74 @@ Plug '~/.vim/plugged/zoxide.vim'
 Plug '~/.vim/plugged/vim-go'
 Plug '~/.vim/plugged/ansible-vim', {'do': './UltiSnips/generate.sh'}
 call plug#end()
-" TODO -- add executable checks around plugins
+
+" Install Coc extensions
+" TODO: Add https://github.com/yuki-yano/fzf-preview.vim
+" TODO: Add https://github.com/tpope/vim-fugitive
+if executable('node')
+  let g:coc_global_extensions = [
+    \ '@yaegassy/coc-ansible',
+    \ '@yaegassy/coc-nginx',
+    \ 'coc-angular',
+    \ 'coc-blade',
+    \ 'coc-calc',
+    \ 'coc-clangd',
+    \ 'coc-copilot',
+    \ 'coc-css',
+    \ 'coc-cssmodules',
+    \ 'coc-deno',
+    \ 'coc-diagnostic',
+    \ 'coc-docker',
+    \ 'coc-emmet',
+    \ 'coc-eslint',
+    \ 'coc-explorer',
+    \ 'coc-flutter',
+    \ 'coc-git',
+    \ 'coc-go',
+    \ 'coc-highlight',
+    \ 'coc-html-css-support',
+    \ 'coc-html',
+    \ 'coc-htmlhint',
+    \ 'coc-java',
+    \ 'coc-jedi',
+    \ 'coc-json',
+    \ 'coc-ltex',
+    \ 'coc-lua',
+    \ 'coc-markdown-preview-enhanced',
+    \ 'coc-markdownlint',
+    \ 'coc-markmap',
+    \ 'coc-phpls',
+    \ 'coc-powershell',
+    \ 'coc-prettier',
+    \ 'coc-prisma',
+    \ 'coc-pyright',
+    \ 'coc-rls',
+    \ 'coc-rust-analyzer',
+    \ 'coc-sh',
+    \ 'coc-solargraph',
+    \ 'coc-solidity',
+    \ 'coc-spell-checker',
+    \ 'coc-stylelint',
+    \ 'coc-sql',
+    \ 'coc-sqlfluff',
+    \ 'coc-svelte',
+    \ 'coc-svg',
+    \ 'coc-swagger',
+    \ 'coc-symbol-line',
+    \ 'coc-tailwindcss',
+    \ 'coc-toml',
+    \ 'coc-tsserver',
+    \ 'coc-xml',
+    \ 'coc-yaml',
+    \ 'coc-yank'
+    \]
+endif
+
+" Settings for coc-css extension
+autocmd FileType scss setl iskeyword+=@-@
+
+" Settings for coc-go extension, to add missing imports on save
+autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
 
 syntax enable
 set background=dark
@@ -50,6 +117,9 @@ let g:syntastic_check_on_wq = 0
 
 " Settings for plugin https://github.com/ryanoasis/vim-devicons.git
 set encoding=UTF-8
+
+" Set location of viminfo file
+set viminfo+=n~/.config/vim/viminfo
 
 " Automatically apply with Chezmoi anytime a source file is modified
 autocmd BufWritePost ~/.local/share/chezmoi/* ! chezmoi apply --source-path "%"

@@ -1,0 +1,35 @@
+{{- if ne .host.distro.family "windows" -}}
+#!/usr/bin/env bash
+# @file Set Default Browser
+# @brief Sets default browser to value managed in `.chezmoi.yaml.tmpl`
+# @description
+#     This script sets the default browser to the value stored in [`.chezmoi.yaml.tmpl`](https://github.com/megabyte-labs/install.doctor/tree/master/home/.chezmoi.yaml.tmpl)
+#     under the `user` section.
+#
+#     * On macOS, it uses the `defaultbrowser` Homebrew package to update the default browser.
+#     * On Linux, it uses a combination of `xdg-mime` and `xdg-settings` options to update the default browser.
+#
+#     The default browser for terminal applications is stored as the `BROWSER` value which is
+#     defined at the end of the [`exports.sh.tmpl`](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/shell/exports.sh.tmpl)
+#     file. This value is also populated from the `.chezmoi.yaml.tmpl` value.
+
+if [ -d /Applications ] && [ -d /System ]; then
+    if ! command -v defaultbrowser > /dev/null; then
+        logg info 'Installing `defaultbrowser` via Homebrew which is the preferred way of configuring the default browser'
+        brew install defaultbrowser
+    fi
+    logg info "Setting default browser to {{ .user.defaultBrowserDarwin }}"
+    defaultbrowser "{{ .user.defaultBrowserDarwin }}"
+else
+    logg info 'Setting default browser for `text/html` to `{{ .user.defaultBrowser }}`'
+    xdg-mime default {{ .user.defaultBrowser }}.desktop text/html
+    logg info 'Setting default browser for `x-scheme-handler/http` to `{{ .user.defaultBrowser }}`'
+    xdg-mime default {{ .user.defaultBrowser }}.desktop x-scheme-handler/http
+    logg info 'Setting default browser for `x-scheme-handler/https` to `{{ .user.defaultBrowser }}`'
+    xdg-mime default {{ .user.defaultBrowser }}.desktop x-scheme-handler/https
+    logg info 'Setting default browser for `x-scheme-handler/about` to `{{ .user.defaultBrowser }}`'
+    xdg-mime default {{ .user.defaultBrowser }}.desktop x-scheme-handler/about
+    logg info 'Setting default browser with `xdg-settings` to `{{ .user.defaultBrowser }}`'
+    xdg-settings set default-web-browser {{ .user.defaultBrowser }}.desktop
+fi
+{{ end -}}

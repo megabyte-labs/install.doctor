@@ -121,6 +121,26 @@
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
+{{- if eq .host.distro.id "darwin" }}
+### Crunch
+[".local/share/crunch"]
+    type = "git-repo"
+    url = "https://github.com/chrissimpkins/Crunch.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+{{- end }}
+
+{{- if (lookPath "apt") }}
+### Netdata Debsecan
+[".local/share/netdata-debsecan"]
+    type = "git-repo"
+    url = "https://gitlab.com/nodiscc/netdata-debsecan.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+{{- end }}
+
 ### Git Template
 # [".config/git/template/_/husky.sh"]
 #     type = "file"
@@ -153,6 +173,14 @@
     url = "https://github.com/rundeck-plugins/ansible-plugin/releases/download/v3.2.2/ansible-plugin-3.2.2.jar"
     refreshPeriod = "{{ $refreshPeriod }}"
 
+### Chef Bento
+[".local/src/bento"]
+    type = "git-repo"
+    url = "https://github.com/installdoc/bento.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
 ### Git Fuzzy
 [".local/src/git-fuzzy"]
     type = "git-repo"
@@ -181,6 +209,20 @@
     type = "file"
     url = "https://github.com/ProfessorManhattan/ansible-modules-bitwarden/raw/master/lookup_plugins/bitwarden.py"
     refreshPeriod = "{{ $refreshPeriod }}"
+
+### Application Styles
+# Discord (TODO: Apply this to Discord automatically)
+[".local/src/fluent/discord/theme.css"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/DiscordStyles/Fluent/deploy/Fluent.theme.css"
+    refreshPeriod = "{{ $refreshPeriod }}"
+# Steam (TODO: Apply this to Steam automatically by detecting first if it is installed)
+[".local/src/fluent/steam"]
+    type = "git-repo"
+    url = "https://github.com/purogamer/Fluent-for-Steam.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
 ### Packer
 [".local/src/packer/archlinux"]
@@ -216,6 +258,19 @@
 [".local/src/packer/windows"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/packer/windows-desktop.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+# https://github.com/kholia/OSX-KVM
+[".local/src/osx-kvm"]
+    type = "git-repo"
+    url = "https://github.com/kholia/OSX-KVM.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+### PowerShell
+[".local/share/powershell/docker"]
+    type = "git-repo"
+    url = "https://github.com/matt9ucci/DockerCompletion.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -283,19 +338,19 @@
 {{-   end }}
 ["{{ $fontDir }}/Hack-Regular-Nerd-Font.ttf"]
     type = "file"
-    url = "{{ $fontUrlBase }}/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete{{if eq .host.distro.family "windows"}}%20Windows%20Compatible{{end}}.ttf"
+    url = "{{ $fontUrlBase }}/Regular/HackNerdFont-Regular.ttf"
     refreshPeriod = "{{ $refreshPeriod }}"
 ["{{ $fontDir }}/Hack-Bold-Nerd-Font.ttf"]
     type = "file"
-    url = "{{ $fontUrlBase }}/Bold/complete/Hack%20Bold%20Nerd%20Font%20Complete{{if eq .host.distro.family "windows"}}%20Windows%20Compatible{{end}}.ttf"
+    url = "{{ $fontUrlBase }}/Bold/HackNerdFont-Bold.ttf"
     refreshPeriod = "{{ $refreshPeriod }}"
 ["{{ $fontDir }}/Hack-Italic-Nerd-Font.ttf"]
     type = "file"
-    url = "{{ $fontUrlBase }}/Italic/complete/Hack%20Italic%20Nerd%20Font%20Complete{{if eq .host.distro.family "windows"}}%20Windows%20Compatible{{end}}.ttf"
+    url = "{{ $fontUrlBase }}/Italic/HackNerdFont-Italic.ttf"
     refreshPeriod = "{{ $refreshPeriod }}"
 ["{{ $fontDir }}/Hack-Bold-Italic-Nerd-Font.ttf"]
     type = "file"
-    url = "{{ $fontUrlBase }}/BoldItalic/complete/Hack%20Bold%20Italic%20Nerd%20Font%20Complete{{if eq .host.distro.family "windows"}}%20Windows%20Compatible{{end}}.ttf"
+    url = "{{ $fontUrlBase }}/BoldItalic/HackNerdFont-BoldItalic.ttf"
     refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Montserrat Font Download

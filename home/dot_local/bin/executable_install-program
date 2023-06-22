@@ -187,7 +187,7 @@ async function generateInstallOrders(pkgsToInstall) {
         normalCheck = softwarePackages[packageKey]['_' + currentSelector]
         if (doubleScoped) {
           try {
-            await $doubleScoped
+            await runSilentCommand(doubleScoped)
           } catch (e) {
             let pref
             if (softwarePackages[packageKey]['_' + currentSelector + ':' + preference + ':' + osID]) {
@@ -205,7 +205,7 @@ async function generateInstallOrders(pkgsToInstall) {
           }
         } else if (scopedPkgManager) {
           try {
-            await $scopedPkgManager
+            await runSilentCommand(scopedPkgManager)
           } catch (e) {
             const pref = preference
             log('info', 'Filter', `${pkg} is being skipped because of the _when:${pref} condition`)
@@ -214,7 +214,7 @@ async function generateInstallOrders(pkgsToInstall) {
           }
         } else if (scopedSystem) {
           try {
-            await $scopedSystem
+            await runSilentCommand(scopedSystem)
           } catch (e) {
             let pref
             if (softwarePackages[packageKey]['_' + currentSelector + ':' + osID]) {
@@ -228,7 +228,7 @@ async function generateInstallOrders(pkgsToInstall) {
           }
         } else if (normalCheck) {
           try {
-            await $(normalCheck)
+            await runSilentCommand(normalCheck)
           } catch (e) {
             log('info', 'Filter', `${pkg} is being skipped because of the _when condition`)
             processPluginOrders(pkg)
@@ -748,9 +748,17 @@ async function beforeInstall(packageManager) {
     if (!brewUpdated) {
       brewUpdated = true
       try {
-        runCommand('Running brew update', `brew update`)
+        runCommand('Running brew update / upgrade', `brew update && brew upgrade --force`)
       } catch (e) {
-        log('error', 'Homebrew', 'Failed running brew update')
+        console.log(e)
+        log('error', 'Homebrew', 'Failed running brew update / upgrade')
+        log('info', 'Homebrew', 'Running brew tap --repair and trying again')
+        try {
+          runCommand('Repairing taps and retrying brew update / upgrade', 'brew tap --repair && brew update && brew upgrade')
+        } catch (e) {
+          console.log(e)
+          log('error', 'Homebrew', 'Failed both attempts to run brew update / upgrade')
+        }
       }
     }
   } else if (packageManager === 'cargo') {
@@ -954,8 +962,11 @@ async function ensurePackageManager(packageManager) {
     const cargo = which.sync('cargo', { nothrow: true })
     if (!cargo) {
       if (osType === 'darwin') {
-        await $`brew install rustup`
-        await $`rustup-init`
+        const rustup = which.sync('rustup-init', { nothrow: true })
+        if (!rustup) {
+          await $`brew install rustup`
+        }
+        await $`rustup-init -y`
       } else if (osType === 'windows') {
       } else {
         await ensurePackage('cargo')
@@ -1068,7 +1079,7 @@ async function ensurePackageManager(packageManager) {
       `
     }
     log('info', logStage, 'Ensuring Volt has Node.js runtime available')
-    await $`if ! volta list 2>1 | grep 'runtime node' > /dev/null; then volta install node; fi`
+    await $`if ! volta list 2>&1 | grep 'runtime node' > /dev/null; then volta install node; fi`
   } else if (packageManager === 'pacman') {
     await ensureInstalled('pacman', false)
   } else if (packageManager === 'pipx') {
@@ -1519,10 +1530,10 @@ async function addUserGroup(group) {
     }
   } else if (osType === 'darwin') {
     runCommand(`Creating the ${group} group`, `sudo dscl . create /Groups/${group}`)
-    runCommand(`Ensuring the ${group} group has a GID`, `if [[ "$(sudo dscl . read /Groups/$GROUP gid 2>&1)" == *'No such key'* ]]; then MAX_ID_GROUP="$(dscl . -list /Groups gid | awk '{print $2}' | sort -ug | tail -1)"; GROUP_ID="$((MAX_ID_GROUP+1))"; sudo dscl . create /Groups/${group} gid "$GROUP_ID"; fi`)
+    runCommand(`Ensuring the ${group} group has a GID`, `bash -c 'if [[ "$(sudo dscl . read /Groups/$GROUP gid 2>&1)" == *"No such key"* ]]; then MAX_ID_GROUP="$(dscl . -list /Groups gid | awk "{print $2}" | sort -ug | tail -1)"; GROUP_ID="$((MAX_ID_GROUP+1))"; sudo dscl . create /Groups/${group} gid "$GROUP_ID"; fi'`)
     runCommand(`Adding the ${group} user`, `sudo dscl . create /Users/${group}`)
-    runCommand(`Ensuring the ${group} user has a PrimaryGroupID`, `if [[ "$(sudo dscl . read /Users/${group} PrimaryGroupID 2>&1)" == *'No such key'* ]]; then sudo dscl . create /Users/${group} PrimaryGroupID 20; fi`)
-    runCommand(`Ensuring the ${group} user has a UniqueID`, `if [[ "$(sudo dscl . read /Users/${group} UniqueID 2>&1)" == *'No such key'* ]]; then MAX_ID_USER="$(dscl . -list /Users UniqueID | awk '{print $2}' | sort -ug | tail -1)"; USER_ID="$((MAX_ID_USER+1))"; sudo dscl . create /Users/${group} UniqueID "$USERID"; fi`)
+    runCommand(`Ensuring the ${group} user has a PrimaryGroupID`, `bash -c 'if [[ "$(sudo dscl . read /Users/${group} PrimaryGroupID 2>&1)" == *"No such key"* ]]; then sudo dscl . create /Users/${group} PrimaryGroupID 20; fi'`)
+    runCommand(`Ensuring the ${group} user has a UniqueID`, `bash -c 'if [[ "$(sudo dscl . read /Users/${group} UniqueID 2>&1)" == *"No such key"* ]]; then MAX_ID_USER="$(dscl . -list /Users UniqueID | sort -nr -k 2 | head -1 | grep -oE "[0-9]+$")"; USER_ID="$((MAX_ID_USER+1))"; sudo dscl . create /Users/${group} UniqueID "$USERID"; fi'`)
     runCommand(`Adding the ${group} user to the ${group} group`, `sudo dseditgroup -o edit -t user -a ${group} ${group}`)
     runCommand(`Adding the ${process.env.USER} user to the ${group} group`, `sudo dseditgroup -o edit -t user -a ${process.env.USER} ${group}`)
   } else if (osType === 'windows') {
@@ -1545,7 +1556,7 @@ async function updateService(service) {
         log('info', logStage, `There was an error starting / enabling the ${service} service with systemd`)
         try {
           if (brew) {
-            runCommand(`Starting / enabling ${service} with Homebrew`, `brew services start ${service}`)
+            runCommand(`Starting / enabling ${service} with Homebrew`, `sudo brew services start ${service}`)
             log('success', logStage, `Started / enabled the ${service} service with Homebrew`)
           } else {
             log('error', logStage, `Unable to start service with systemd and Homebrew is not available`)
@@ -1735,6 +1746,7 @@ async function linkBin(installOrdersBinLink) {
               log('warn', 'Bin', `Expected Homebrew cask directory not found - ${pkg}`)
             }
           } catch (e) {
+            console.log(e)
             log('warn', 'Bin', `Error creating bin shortcut link for ${pkg}`)
           }
         }
@@ -1773,6 +1785,7 @@ async function installSoftware(pkgsToInstall) {
     console.error(e)
   }
   installOrders = await pruneInstallOrders(installOrders)
+  delete installOrders._deps
   console.log('Install orders:', installOrders)
   packageManagers.length && log('info', 'Pre-Reqs', `Running package manager pre-installation steps`)
   for (const packageManager of packageManagers) {
@@ -1800,12 +1813,13 @@ async function installSoftware(pkgsToInstall) {
     binLinkRan = true
     log('info', 'Bin', 'Linking bin aliases to their installed packages')
     await linkBin(installOrdersBinLink)
-    for (const script of installOrdersPost) {
-      try {
-        await $`${script}`
-      } catch(e) {
-        log('info', 'Post-Install Hook', 'Encountered error while running post-install hook')
-      }
+  }
+  for (const script of installOrdersPost) {
+    try {
+      log('info', 'Post Hook', script)
+      runCommand('Running post-install hook', script)
+    } catch(e) {
+      log('info', 'Post-Install Hook', 'Encountered error while running post-install hook')
     }
   }
   installOrdersPlugins.length && log('info', 'Plugin', 'Installing package-specific plugins')

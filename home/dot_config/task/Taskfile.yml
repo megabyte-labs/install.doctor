@@ -39,6 +39,43 @@ tasks:
         echo "> Copying Password"
         ### Copy the password to the clipboard
         printf '%s' "$(echo "$selected" | jq -r '.login.password')" | $COPY
+  
+  build:packer:
+    desc: Builds Packer boxes using all supported virtualization platform / operating system combinations
+    summary: |
+      # {{ .AppName}} Packer Build
+
+      This command will use Packer to build all the supported virtualization platform / operating system
+      combinations. This command can be used to test {{ .AppName }} on all the various systems that are
+      supported.
+
+      ## Supported Virtualization Platforms
+
+      * KVM
+      * Hyper-V
+      * VirtualBox
+      * Parallels
+      * VMWare
+
+      ## Supported Operating Systems
+
+      * Archlinux
+      * CentOS
+      * Debian
+      * Fedora
+      * macOS
+      * Ubuntu
+      * Windows
+
+      ## Qubes Support
+
+      Qubes can leverage the assets generated from the VirtualBox builds to power HVMs.
+    cmds:
+      - |
+        cd "$HOME/.local/src/bento"
+        packer init -upgrade ./packer_templates
+        logg info 'Building Ubuntu VirtualBox VMs'
+        packer build -var-file=os_pkrvars/ubuntu/ubuntu-22.04-x86_64.pkrvars.hcl ./packer_templates
 
   brave:profile:backup:
     desc: Backs up the user's {{ .AppName }} profile to the user's S3-backed Restic repository
@@ -385,6 +422,17 @@ tasks:
           ProfileFolderWindows: %USERPROFILE%/.librewolf
           ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: librewolf
+
+  macos:plists:
+    cmds:
+      - |
+        find /usr/local/src/install.doctor/home/Library/Preferences -type f -mindepth 1 -maxdepth 1 | while read PLIST; do
+          if [[ "$PLIST" == *".plist" ]]; then
+            PLIST_FILE="$(basename "$PLIST")"
+            cp -f "$HOME/Library/Preferences/$PLIST_FILE" "/usr/local/src/install.doctor/home/Library/Preferences/$PLIST_FILE"
+            plutil -convert xml1 "/usr/local/src/install.doctor/home/Library/Preferences/$PLIST_FILE"
+          fi
+        done
 
   profile:backup:
     cmds:

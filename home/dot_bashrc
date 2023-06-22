@@ -32,6 +32,10 @@ fi
 
 ### History
 export HISTFILE="$XDG_STATE_HOME/bash/history"
+if [ -d "$HISTFILE" ]; then
+  # Remove history file if it is incorrectly created as a directory
+  rm -rf "$HISTFILE"
+fi
 
 ### /etc/bashrc
 if [ -f /etc/bashrc ]; then
@@ -81,9 +85,29 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     fi
   fi
 
+  ### Atuin
+  if command -v atuin > /dev/null; then
+	  eval "$(atuin init bash)"
+  fi
+
+  ### Cod
+  if command -v cod > /dev/null; then
+	  source <(cod init $$ bash)
+  fi
+
+  ### Google Cloud SDK
+  if [ -f "${HOMEBREW_PREFIX}/share/google-cloud-sdk/path.bash.inc" ]; then
+    . "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.bash.inc"
+  fi
+
   ### direnv
   if command -v direnv > /dev/null; then
     eval "$(direnv hook bash)"
+  fi
+
+  ### Emplace
+  if command -v emplace > /dev/null; then
+    source <(emplace init bash)
   fi
 
   ### Java (asdf)
@@ -94,6 +118,16 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   ### Fig
   if [ -f "$HOME/.fig/shell/bashrc.post.bash" ]; then
     . "$HOME/.fig/shell/bashrc.post.bash"
+  fi
+
+  ### Navi (Ctrl+G)
+  if command -v navi > /dev/null; then
+    eval "$(navi widget bash)"
+  fi
+
+  ### The Fuck
+  if command -v thefuck > /dev/null; then
+	  eval "$(thefuck --alias)"
   fi
 
   ### Vault

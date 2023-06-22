@@ -1,49 +1,171 @@
 {
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json5]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  "GitLive.Issue tracker integration": "Disabled",
+  "GitLive.Special branches": "main|master|trunk|dev|develop|qa|test|release[-/].*",
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "trunk.io"
   },
-  "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "[python]": {
+    "editor.formatOnType": true
   },
   "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "trunk.io"
   },
-  "[toml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "[shellscript]": {
+    "editor.defaultFormatter": "trunk.io"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "trunk.io"
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "trunk.io"
   },
-  "[vue]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "ansible.lightspeed.enabled": true,
+  "ansible.lightspeed.suggestions.enabled": true,
+  "arduino.useArduinoCli": true,
+  "atlascode.bitbucket.statusbar.enabled": false,
+  "atlascode.jira.enabled": true,
+  "atlascode.jira.statusbar.enabled": false,
+  "atlascode.jira.statusbar.showLogin": true,
+  "atlascode.jira.statusbar.showProduct": false,
+  "atlascode.jira.statusbar.showUser": false,
+  "aws.telemetry": false,
+  "cSpell.enabled": false,
+  "cSpell.hideAddToDictionaryCodeActions": true,
+  "cmake.configureOnOpen": true,
+  "codemetrics.basics.CodeLensEnabled": false,
+  "do.manager.dropletTemplate": [
+    {
+      "backups": false,
+      "image": "ubuntu-20-04-x64",
+      "name": "temp-droplet",
+      "region": "sgp1",
+      "size_slug": "s-1vcpu-1gb"
+    }
+  ],
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": false,
+  "editor.formatOnType": false,
+  "editor.inlineSuggest.enabled": true,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "extensions.autoUpdate": "onlyEnabledExtensions",
+  "files.exclude": {
+    "**/.trunk/*actions/": true,
+    "**/.trunk/*logs/": true,
+    "**/.trunk/*out/": true,
+    "**/.trunk/*plugins/": true
   },
-  "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "files.watcherExclude": {
+    "**/.trunk/*actions/": true,
+    "**/.trunk/*logs/": true,
+    "**/.trunk/*out/": true,
+    "**/.trunk/*plugins/": true
   },
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+  "github.codespaces.defaultExtensions": [
+    "GitHub.codespaces",
+    "GitHub.vscode-pull-request-github"
+  ],
+  "github.codespaces.showPerformanceExplorer": true,
+  "githubPullRequests.notifications": "pullRequests",
+  "githubPullRequests.quickDiff": true,
+  "githubPullRequests.setAutoMerge": true,
+  "gitlens.menus": {
+    "editor": {
+      "blame": false,
+      "clipboard": true,
+      "compare": true,
+      "history": false,
+      "remote": false
+    },
+    "editorGroup": false,
+    "editorTab": {
+      "clipboard": true,
+      "compare": true,
+      "history": true,
+      "remote": true
+    },
+    "explorer": {
+      "clipboard": true,
+      "compare": true,
+      "history": true,
+      "remote": true
+    },
+    "ghpr": {
+      "worktree": true
+    },
+    "scm": {
+      "graph": true
+    },
+    "scmGroup": {
+      "compare": true,
+      "openClose": true,
+      "stash": true
+    },
+    "scmGroupInline": {
+      "stash": true
+    },
+    "scmItemInline": {},
+    "scmRepository": {
+      "authors": true,
+      "generateCommitMessage": true,
+      "graph": false
+    },
+    "scmRepositoryInline": {
+      "graph": true
+    }
+  },
+  "go.lintTool": "golangci-lint",
+  "go.toolsManagement.checkForUpdates": "off",
+  "htmlhint.documentSelector": [
+    "html",
+    "htm"
+  ],
+  "htmlhint.options": {
+    "attr-lowercase": false,
+    "doctype-first": false
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "jest.autoRun": {},
+  "languageToolLinter.serviceType": "public",
+  "languageToolLinter.smartFormat.onSave": true,
+  "languageToolLinter.smartFormat.onType": true,
+  "ltex.additionalRules.motherTongue": "en-US",
+  "ltex.completionEnabled": true,
+  "ltex.ltex-ls.logLevel": "warning",
+  "powershell.promptToUpdatePowerShell": false,
+  "python.analysis.extraPaths": [],
+  "quokka.automaticRestart": true,
+  "quokka.colors": {
+    "covered": "#62b455",
+    "errorPath": "#ffa0a0",
+    "errorSource": "#fe536a",
+    "notCovered": "#cccccc",
+    "partiallyCovered": "#d2a032"
+  },
+  "quokka.compactMessageOutput": true,
+  "quokka.showValueOnMultilineSelection": true,
+  "quokka.suppressExpirationNotifications": true,
+  "rsp-ui.enableStartServerOnActivation": [
+    {
+      "id": "redhat.vscode-server-connector",
+      "name": "Red Hat Server Connector",
+      "startOnActivation": true
+    }
+  ],
+  "task": {
+    "checkForUpdates": false
+  },
+  "task.allowAutomaticTasks": "on",
+  "terminal.integrated.env.osx": {},
+  "trunk.inlineDecoratorsForAllExtensions": true,
+  "trunk.showWhatsNewMessage": false,
+  "trunk.trace.server": "verbose",
+  "trunk.trunkGrayOutNonBlockingIssues": true,
   "codetour.customTourDirectory": ".config/codetour.yml",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.fontFamily": "'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
-  "editor.formatOnPaste": false,
-  "editor.formatOnSave": true,
-  "editor.inlineSuggest.enabled": true,
   "editor.minimap.enabled": false,
   "editor.scrollBeyondLastLine": false,
   "eslint.alwaysShowStatus": true,
@@ -78,17 +200,13 @@
     "vue",
     "yaml"
   ],
-  "explorer.confirmDelete": false,
   "extensions.ignoreRecommendations": true,
   "files.trimTrailingWhitespace": true,
   "git.autoStash": true,
-  "git.autofetch": true,
-  "github.codespaces.showPerformanceExplorer": true,
   "gitlab.showPipelineUpdateNotifications": true,
   "gitlens.showWelcomeOnInstall": false,
   "gitlens.showWhatsNewAfterUpgrades": false,
   "go.lintFlags": ["--fast"],
-  "go.lintTool": "golangci-lint",
   "html.format.endWithNewline": true,
   "html.format.indentHandlebars": true,
   "html.format.indentInnerHtml": true,
@@ -96,7 +214,6 @@
   "javascript.format.semicolons": "remove",
   "javascript.suggest.completeFunctionCalls": true,
   "ltex.additionalRules.enablePickyRules": true,
-  "ltex.completionEnabled": true,
   "markdown-preview-enhanced.previewTheme": "solarized-light.css",
   "material-icon-theme.showWelcomeMessage": false,
   "merge-conflict.autoNavigateNextConflict.enabled": true,
@@ -155,6 +272,11 @@
   "vscode-neovim.neovimClean": true,
   "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
   "vsicons.dontShowNewVersionMessage": true,
+  "vscode-kubernetes.helm-path": "/usr/local/bin/helm",
+  "vscord.status.buttons.button1.active.enabled": true,
+  "wallaby.codeLensFeature.runTest": true,
+  "wallaby.compactMessageOutput": true,
+  "window.commandCenter": true,
   "window.menuBarVisibility": "toggle",
   "workbench.colorCustomizations": {
     "terminal.ansiBlack": "#002831",
@@ -178,10 +300,46 @@
     "terminal.selectionBackground": "#002831",
     "terminalCursor.foreground": "#708284"
   },
-  "workbench.colorTheme": "Betelgeuse Dark",
-  "workbench.iconTheme": "sweet-vscode-icons",
+  "workbench.colorTheme": "GitHub Dark",
+  "workbench.iconTheme": "material-icon-theme",
   "workbench.startupEditor": "readme",
   "workbench.welcomePage.walkthroughs.openOnInstall": false,
+  "yaml.customTags": [
+    "!And",
+    "!And sequence",
+    "!If",
+    "!If sequence",
+    "!Not",
+    "!Not sequence",
+    "!Equals",
+    "!Equals sequence",
+    "!Or",
+    "!Or sequence",
+    "!FindInMap",
+    "!FindInMap sequence",
+    "!Base64",
+    "!Join",
+    "!Join sequence",
+    "!Cidr",
+    "!Ref",
+    "!Sub",
+    "!Sub sequence",
+    "!GetAtt",
+    "!GetAZs",
+    "!ImportValue",
+    "!ImportValue sequence",
+    "!Select",
+    "!Select sequence",
+    "!Split",
+    "!Split sequence"
+  ],
   "yaml.format.printWidth": 160,
-  "yaml.format.singleQuote": true
+  "yaml.format.singleQuote": true,
+  "yaml.schemas": {
+    "file:///Users/bzalewski/.vscode/extensions/atlassian.atlascode-3.0.3/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+  },
+  "pieces.autocomplete": true,
+  "pieces.autocompleteKey": "Tab only",
+  "pieces.notifications": "Only Critical Notifications",
+  "thunder-client.workspaceRelativePath": ".config"
 }
