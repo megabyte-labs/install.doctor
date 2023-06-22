@@ -8,7 +8,11 @@
 #     [this page](https://docs.gitlab.com/runner/executors/docker.html) and [this page](https://docs.gitlab.com/runner/executors/virtualbox.html)
 #     for details about the available configuration settings.
 #
-#     Configuring other executors is not supported by this script.
+#     Runners are always tagged with these 2 values: `hostname` and `docker`/`virtualbox` depending on the type of executor. If a list of tags is provided,
+#     the runner is tagged with these values in addition to the above mentioned values. If the list of tags is empty, no additonal tags are added and the
+#     runner is configured to pickup `untagged` jobs.
+#
+#     Configuring other type of executors is not supported by this script.
 #
 #     ## Secrets
 #
@@ -29,7 +33,7 @@
 #     | `glurl`             | The URL of the Gitlab instance to associate the Runner with                                              |
 #     | `runnerImage`       | Docker image to use to configure the runner. Needed only when configuring `Docker` executor              |
 #     | `runnerDescription` | Description of this runner                                                                               |
-#     | `runnerTags`        | Comma separated list of tags for this runner                                                             |
+#     | `runnerTags`        | Comma separated list of tags for this runner. See details in the description for more info               |
 #     | `baseVM`            | Name of the VirtualBox VM to use for creating runner. Needed only when configuring `VirtualBox` executor |
 #
 #     ## Links
@@ -75,8 +79,8 @@ else
               --executor "docker" \
               --description "{{ .runnerDescription }} - on {{ .chezmoi.hostname }}" \
               --docker-image {{ .runnerImage }} \
-              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }}"
-              {{ else }}--run-untagged{{ end }} || echo 'Runner registration failed"
+              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }},{{ .chezmoi.hostname }},docker"
+              {{ else }}--tag-list "{{ .chezmoi.hostname }},docker" --run-untagged{{ end }} || echo 'Runner registration failed"
               {{ end -}}
               {{ end }}
           fi
@@ -90,8 +94,8 @@ else
               --executor "virtualbox" \
               --description "{{ .runnerDescription }} - on {{ .chezmoi.hostname }}" \
               --virtualbox-base-name "{{ .baseVM }}" \
-              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }}"
-              {{ else }}--run-untagged{{ end }} || echo 'Runner registration failed"
+              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }},{{ .chezmoi.hostname }},virtualbox"
+              {{ else }}--tag-list "{{ .chezmoi.hostname }},virtualbox" --run-untagged{{ end }} || echo 'Runner registration failed"
               {{ end -}}
               {{ end }}
           fi
