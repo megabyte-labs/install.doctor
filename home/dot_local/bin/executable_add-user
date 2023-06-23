@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+# @file ~/.local/bin/add-user
+# @brief Add a user and a group with the same name on either Linux or macOS
+# @description
+#   This script is utilized by other scripts to ensure that there is both a user and group
+#   named by the single argument that this executable accepts. It checks whether or not
+#   there is already a user / group with the name present on the system before running
+#   any code. On macOS, it assigns the user an ID that equal to the maximum user ID present
+#   on the system plus one.
+#
+#   This script was generated with ChatGPT.
+
+# Check if the script is being run as root
+if [[ $EUID -ne 0 ]]; then
+   echo -e "\e[91mThis script must be run as root\e[0m" 
+   exit 1
+fi
+
+# Check if the correct number of arguments is provided
+if [[ $# -ne 1 ]]; then
+    echo -e "\e[93mUsage: $0 <group>\e[0m"
+    exit 1
+fi
+
+GROUP=$1
+
+# Check if the operating system is macOS
+if [[ "$(uname)" == "Darwin" ]]; then
+    echo -e "\e[96mCreating group and user ${GROUP} on macOS...\e[0m"
+
+    # Check if the group already exists
+    if ! sudo dscl . read /Groups/"${GROUP}" >/dev/null 2>&1; then
+        # Create the group
+        sudo dscl . create /Groups/"${GROUP}"
+        # Ensure the group has a GID
+        if [[ "$(sudo dscl . read /Groups/"$group" gid 2>&1)" == *"No such key"* ]]; then
+            MAX_ID_GROUP=$(dscl . -list /Groups gid | awk '{print $2}' | sort -ug | tail -1)
+            GROUP_ID=$((MAX_ID_GROUP+1))
+            sudo dscl . create /Groups/"${GROUP}" gid "$GROUP_ID"
+        fi
+    else
+        echo -e "\e[93mGroup ${GROUP} already exists\e[0m"
+    fi
+
+    # Check if the user already exists
+    if ! sudo dscl . read /Users/"${GROUP}" >/dev/null 2>&1; then
+        # Create the user
+        sudo dscl . create /Users/"${GROUP}"
+        # Ensure the user has a PrimaryGroupID
+        if [[ "$(sudo dscl . read /Users/"${GROUP}" PrimaryGroupID 2>&1)" == *"No such key"* ]]; then
+            sudo dscl . create /Users/"${GROUP}" PrimaryGroupID 20
+        fi
+        # Ensure the user has a UniqueID
+        if [[ "$(sudo dscl . read /Users/"${GROUP}" UniqueID 2>&1)" == *"No such key"* ]]; then
+            MAX_ID_USER=$(dscl . -list /Users UniqueID | sort -nr -k 2 | head -1 | grep -oE "[0-9]+$")
+            USER_ID="$((MAX_ID_USER+1))"
+            sudo dscl . create /Users/"${GROUP}" UniqueID "$USER_ID"
+        fi
+
+        # Add the user to the group
+        sudo dseditgroup -o edit -t user -a "${GROUP}" "${GROUP}"
+        # Add the current user to the group
+        sudo dseditgroup -o edit -t user -a "${USER}" "${GROUP}"
+    else
+        echo -e "\e[93mUser ${GROUP} already exists\e[0m"
+    fi
+
+    echo -e "\e[92mGroup and user ${GROUP} created successfully on macOS\e[0m"
+    exit 0
+elif [[ "$(uname)" == "Linux" ]]; then
+    echo -e "\e[96mCreating group and user ${GROUP} on Linux...\e[0m"
+
+    # Check if the group already exists
+    if ! grep -qE "^${GROUP}:" /etc/group; then
+        # Create the group
+        groupadd "${GROUP}"
+    else
+        echo -e "\e[93mGroup ${GROUP} already exists\e[0m"
+    fi
+
+    # Check if the user already exists
+    if ! id -u "${GROUP}" >/dev/null 2>&1; then
+        # Create the user and assign it to the group
+        useradd -g "${GROUP}" "${GROUP}"
+    else
+        echo -e "\e[93mUser ${GROUP} already exists\e[0m"
+    fi
+
+    echo -e "\e[92mGroup and user ${GROUP} created successfully on Linux\e[0m"
+    exit 0
+fi
+
+# If the operating system is neither macOS nor Linux, display an error message
+echo -e "\e[91mUnsupported operating system\e[0m"
+exit 1

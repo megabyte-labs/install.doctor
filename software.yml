@@ -1975,6 +1975,12 @@ softwarePackages:
     pacman: git-delta
     pkg: git-delta
     scoop: delta
+  git-jump:
+    _bin: git-jump
+    _github: https://github.com/mykolaharmash/git-jump
+    _name: Git Jump
+    brew: mykolaharmash/git-jump/git-jump
+    npm: git-jump
   delve:
     _bin: dlv
     _desc: Delve is a debugger for the Go programming language.
@@ -2447,6 +2453,25 @@ softwarePackages:
     _home: null
     _name: null
     ansible: professormanhattan.environment
+  mongodb-compass:
+    _bin: mongodb-compass
+    _github: https://github.com/mongodb-js/compass
+    _name: MongoDB Compass
+    _when:cask: '! test -d "/Applications/MongoDB Compass.app"'
+    cask: mongodb-compass
+    choco: mongodb-compass
+    dnf: https://downloads.mongodb.com/compass/mongodb-compass-1.38.0.x86_64.rpm
+    apt: https://downloads.mongodb.com/compass/mongodb-compass_1.38.0_amd64.deb
+  osx-sign:
+    _bin: electron-osx-sign
+    _github: https://github.com/electron/osx-sign
+    _name: macOS Code Sign
+    npm: '@electron/osx-sign'
+  korkut:
+    _bin: korkut
+    _github: https://github.com/oguzhaninan/korkut
+    _name: Korkut
+    npm: korkut
   eslint:
     _bin: eslint
     _desc: '[ESLint](https://eslint.org/) allows you to find and fix problems in your JavaScript code'
@@ -2456,6 +2481,11 @@ softwarePackages:
     _name: ESLint
     brew: eslint
     npm: eslint
+  eslint-interactive:
+    _bin: eslint-interactive
+    _github: https://github.com/mizdra/eslint-interactive
+    _name: ESLint Interactive
+    npm: eslint-interactive
   ntl:
     _bin: ntl
     _desc: null
@@ -5749,6 +5779,11 @@ softwarePackages:
     cask: ngrok
     choco: ngrok
     snap: ngrok
+  generator-ngx-rocket:
+    _bin: ngx
+    _github: https://github.com/ngx-rocket/generator-ngx-rocket
+    _name: Angular 
+    npm: generator-ngx-rocket
   ngxtop:
     _bin: ngxtop
     _desc: Real-time metrics for nginx server
@@ -5815,6 +5850,16 @@ softwarePackages:
     _home: https://pipedream.com/
     _name: Pipedream CLI
     brew: pipedreamhq/pd-cli/pipedream
+  sddm:
+    _bin: sddm
+    _github: https://github.com/sddm/sddm
+    _name: SDDM
+    _post: sudo systemctl set-default graphical.target
+    _service: sddm
+    apt: sddm
+    dnf: sddm
+    pacman: sddm
+    zypper: sddm
   notion:
     _bin: null
     _desc: Notion is the connected workspace where better, faster work happens.
@@ -6665,6 +6710,14 @@ softwarePackages:
     pacman: procs
     scoop: procs
     snap: procs
+  gnome:
+    _bin: gnome
+    _github: https://github.com/GNOME/gnome-shell
+    _name: GNOME
+    apt: gnome
+    dnf: gnome
+    pacman: gnome
+    zypper: gnome
   protonvpn:
     _bin: protonvpn
     _desc: '[Proton](https://www.proton.org/) is a free and open-source raster graphics editor used for image manipulation and image editing, free-form drawing, transcoding between different image file formats, and more specialized tasks. Proton is released under GPLv3+ license and is available for Linux, macOS, and Microsoft Windows.'

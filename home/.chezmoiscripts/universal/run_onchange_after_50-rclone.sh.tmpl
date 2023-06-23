@@ -53,6 +53,10 @@ if command -v rclone > /dev/null; then
     logg info 'Ensuring /var/cache/rclone exists'
     sudo mkdir -p /var/cache/rclone
     sudo chmod 700 /var/cache/rclone
+    # Add user / group with script in ~/.local/bin/add-user, if it is available
+    if command -v add-user > /dev/null; then
+        sudo add-user rclone
+    fi
     sudo chown -Rf rclone:rclone /var/cache/rclone
 
     logg info 'Ensuring /var/log/rclone exists'

@@ -26,6 +26,7 @@ The following items are things we would like to include into the Install Doctor 
 * Monitor https://moonrepo.dev/moon as possible mono-repo manager
 * Determine whether or not https://webinstall.dev/vim-gui/ will add value to the VIM experience
 * Wait for packages to be available for GitHub Actions https://github.com/actions/runner
+* Find best Figma plugins here: https://www.figma.com/community/popular
 
 ## Review
 
@@ -63,6 +64,10 @@ The following items are Docker containers that we may want to include as default
 * https://easypanel.io/ - App deployments
 * https://www.activepieces.com/docs/install/docker
 * https://github.com/activepieces/activepieces - SaaS Automations
+* https://github.com/diced/zipline - ShareX / File uploads
+* https://github.com/anse-app/anse - ChatGPT interface
+* https://github.com/wireapp/wire-webapp - Internal Slack
+* https://github.com/jhaals/yopass - OTS web app
 
 ### Kubernetes
 
@@ -86,9 +91,6 @@ The projects below are software systems that might be incorporated to handle bar
 
 The following items have been reviewed but need to be revisited due to complexity or other reasons.
 
-* https://github.com/microsoft/azuredatastudio
-* https://github.com/Nutlope/roomGPT
-* https://github.com/Zettlr/Zettlr
 * https://github.com/AmruthPillai/Reactive-Resume
 * https://github.com/kubeflow/kubeflow
 * https://github.com/leon-ai/leon
@@ -102,6 +104,5 @@ The following items have been reviewed but need to be revisited due to complexit
 * builder.io
 * https://github.com/hocus-dev/hocus
 * https://github.com/Kanaries/Rath
-* https://github.com/reworkd/AgentGPT
 * cvat.io
 * https://github.com/illacloud/illa-builder
