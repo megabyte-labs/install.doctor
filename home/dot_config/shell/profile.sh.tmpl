@@ -124,6 +124,11 @@ fi
 #  . "$HOME/.local/scripts/fzf-tmux.bash"
 #fi
 
+### iTerm2
+if [ -f "$HOME/.local/src/iterm2/shell-integration.sh" ]; then
+  source "$HOME/.local/src/iterm2/shell-integration.sh"
+fi
+
 ### McFly
 export MCFLY_PROMPT="❯"
 if [ -d /Applications ] && [ -d /System ]; then
