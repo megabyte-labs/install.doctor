@@ -30,3 +30,19 @@
 * https://github.com/rigoneri/syte
 * https://github.com/rigoneri/Syte3
 * https://github.com/UPC/ravada
+* https://github.com/otoyo/astro-notion-blog
+* https://github.com/cloudflare/next-on-pages
+* https://envshare.dev/
+* https://vercel.com/templates/next.js/nextjs-ai-chatbot - chatbot
+* https://nextra.site/
+* https://github.com/cloudflare/next-on-pages
+* https://ai-code-translator.vercel.app/ - Translate code via ChatGPT
+* https://vercel.com/templates/next.js/nextjs-openai-doc-search-starter - AI search
+* https://vercel.com/templates/next.js/domains-api
+* https://supabase.com/partners/integrations - Services supabase integrates with
+* https://vercel.com/templates/next.js/notion-blog - Notion blog
+
+## Serverless
+
+* https://github.com/cloudflare/serverless-cloudflare-workers
+* https://github.com/supaflare/supaflare - Sleek short link service

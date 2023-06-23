@@ -4,14 +4,15 @@
 Vagrant.require_version ">= 1.6.2"
 
 # { :hostname => 'altair', :desc => 'Archlinux', :ip => '192.168.14.41', :box => 'Megabyte/Archlinux-Desktop' },
-# { :hostname => 'caph', :desc => 'CentOS 9 Stream', :ip => '192.168.14.42', :box => 'Megabyte/CentOS-Desktop' },
+# 
 # { :hostname => 'mira', :desc => 'macOS 13', :ip => '192.168.14.45', :box => 'Beta/macOS-13', :cpus => 4, :ram => 8192 },
+# { :hostname => 'wazn', :desc => 'Windows 11', :ip => '192.168.14.47', :box => 'Megabyte/Windows-Desktop', :cpus => 4, :ram => 4096 }
 
 nodes = [
-  { :hostname => 'denab', :desc => 'Debian 11', :ip => '192.168.14.43', :box => 'Megabyte/Debian-Desktop' },
-  { :hostname => 'fulu', :desc => 'Fedora 37', :ip => '192.168.14.44', :box => 'Megabyte/Fedora-Desktop' },
-  { :hostname => 'ukdah', :desc => 'Ubuntu 22.04', :ip => '192.168.14.46', :box => 'Megabyte/Ubuntu-Desktop' },
-  { :hostname => 'wazn', :desc => 'Windows 11', :ip => '192.168.14.47', :box => 'Megabyte/Windows-Desktop', :cpus => 4, :ram => 4096 }
+  { :hostname => 'denab', :desc => 'Debian 11', :ip => '192.168.14.43', :box => "bento/debian-12" },
+  { :hostname => 'fulu', :desc => 'Fedora 38', :ip => '192.168.14.44', :box => "bento/fedora-38" },
+  { :hostname => 'ukdah', :desc => 'Ubuntu 22.04', :ip => '192.168.14.46', :box => "bento/ubuntu-22.04" },
+  { :hostname => 'caph', :desc => 'CentOS 9 Stream', :ip => '192.168.14.42', :box => "bento/centos-stream-9" }
 ]
 
 Vagrant.configure("2") do |config|

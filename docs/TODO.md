@@ -6,6 +6,8 @@ This page outlines various projects and tasks that we are currently working on. 
 * Finish TS from 1400 stars
 * Python
 * adb must be accessible in PATH: brew install --cask android-platform-tools
+* https://github.com/Paul-Reed/cloudflare-ufw
+* Google Drive index on Cloudflare https://github.com/menukaonline/goindex-extended
 
 ## Upstream
 
@@ -69,6 +71,9 @@ The following items are Docker containers that we may want to include as default
 * https://github.com/anse-app/anse - ChatGPT interface
 * https://github.com/wireapp/wire-webapp - Internal Slack
 * https://github.com/jhaals/yopass - OTS web app
+* https://github.com/aschzero/hera - CloudFlare tunnel proxy
+* https://supabase.com/ - Firebase alternative
+* https://github.com/tiredofit/docker-traefik-cloudflare-companion - Traefik CloudFlare integration
 
 ### Kubernetes
 

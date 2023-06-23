@@ -1402,6 +1402,16 @@ softwarePackages:
     _name: CFSSL
     brew: cfssl
     pacman: cfssl
+  miniflare:
+    _bin: miniflare
+    _github: https://github.com/cloudflare/miniflare
+    _name: Miniflare
+    npm: miniflare
+  cf-terraforming:
+    _bin: cf-terraforming
+    _github: https://github.com/cloudflare/cf-terraforming
+    _name: CloudFlare Terraforming
+    cask: cloudflare/cloudflare/cf-terraforming
   cheat:
     _bin: cheat
     _desc: Cheat allows you to create and view interactive cheatsheets on the command-line. It was designed to help remind *nix system administrators of options for commands that they use frequently, but not frequently enough to remember.
@@ -9003,6 +9013,11 @@ softwarePackages:
     apt: cloudflare-warp
     cask: cloudflare-warp
     choco: warp
+  cloudflare-cli:
+    _bin: cfcli
+    _github: https://github.com/danielpigott/cloudflare-cli
+    _name: CloudFlare CLI
+    npm: cloudflare-cli
   watchexec:
     _bin: watchexec
     _desc: Executes commands in response to file modifications.
@@ -9676,6 +9691,8 @@ softwarePlugins:
     plugins:
       - https://github.com/databus23/helm-diff
       - https://github.com/jkroepke/helm-secrets
+      - repo: helm repo add cloudflare-exporter https://lablabs.github.io/cloudflare-exporter/
+        install: helm install cloudflare-exporter/cloudflare-exporter
   krew:
     plugins:
       - access-matrix
