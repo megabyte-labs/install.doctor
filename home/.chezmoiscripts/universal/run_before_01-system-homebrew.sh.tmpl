@@ -15,7 +15,7 @@
 {{ includeTemplate "universal/logg-before" }}
 
 ### System upgrade on macOS
-if [ -d /Applications ] && [ -d /Library ]; then
+if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
   if command -v gtimeout > /dev/null; then
     # Allow 8 minutes for system updates
     logg info 'Ensuring system software is upgraded (timing out after 8 minutes if system upgrade fails)'
