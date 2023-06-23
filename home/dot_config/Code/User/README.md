@@ -57,3 +57,4 @@
     "mongodb.mongodb-vscode",
     "pwabuilder.pwa-studio",
     "sidekick.sidekick-debugger",
+    "appland.appmap",
