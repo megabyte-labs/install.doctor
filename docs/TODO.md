@@ -5,6 +5,7 @@ This page outlines various projects and tasks that we are currently working on. 
 * Configure Navi to automatically download and use the best cheat repositories
 * Finish TS from 1400 stars
 * Python
+* adb must be accessible in PATH: brew install --cask android-platform-tools
 
 ## Upstream
 
