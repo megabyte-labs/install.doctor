@@ -706,7 +706,6 @@ softwareGroups:
     - pake
     - pock
     - pretzel
-    - profilecreator
     - qlplugins
     - remote-desktop
     - remmina
@@ -1393,6 +1392,8 @@ softwareGroups:
       note: The `pip` installation is handled by the `install-software` program bundled with Install Doctor.
     - pkg: pipx
       note: The `pipx` installation is handled by the `install-software` program bundled with Install Doctor.
+    - pkg: profilecreator
+      note: macOS app that allows creating profiles. Crashes on macOS with enterprise managed settings due to read-only file access.
     - pkg: pyenv
       note: Deprecated in favor of using ASDF.
     - pkg: s3filesystem
