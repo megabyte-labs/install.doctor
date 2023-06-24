@@ -854,6 +854,8 @@ softwareGroups:
     - envchain
     - envconsul
     - envio
+    - onlykey-agent
+    - onlykey-cli
     - openssl
     - pony
     - protonvpn-cli
@@ -1058,7 +1060,6 @@ softwareGroups:
   Web-Development-Desktop: &Web-Development-Desktop
     - altair
     - betwixt
-    - electron-app
     - fiddler
     - figma
     - graphql-playground
@@ -1432,6 +1433,8 @@ softwareGroups:
   # definitions in software.yml that are not included somewhere in the definitions that this file
   # maps out.
   queued:
+    - pkg: android-platform-tools
+      note: Might only be needed in headless scenarios since Android Studio will download the tools
     - pkg: editly
       note: Editly NPM package is failing to install on macOS. Attempts to compile with node-gyp and fails.
     - pkg: rancher-desktop

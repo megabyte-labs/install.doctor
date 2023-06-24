@@ -92,8 +92,8 @@ function runCommand(spinnerTitle, command) {
   execSync(command.includes('sudo') ? `sudo "$(which gum)" spin --spinner dot --title "${spinnerTitle}" -- ${command}` : `gum spin --spinner dot --title "${spinnerTitle}" -- ${command}`, {
     stdio: 'inherit',
     shell: true,
-    // Timeout of 10m
-    timeout: 1000 * 60 * 10
+    // Timeout of 30m
+    timeout: 1000 * 60 * 30
   })
 }
 

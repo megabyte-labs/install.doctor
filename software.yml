@@ -595,6 +595,7 @@ softwarePackages:
   tart:
     _bin: tart
     _github: https://github.com/cirruslabs/tart
+    _when:brew:darwin: '[ $(uname -m) = "arm64" ]'
     brew:darwin:
       - tart
       - cirruslabs/cli/gitlab-tart-executor
@@ -2389,8 +2390,8 @@ softwarePackages:
     _github: https://github.com/elastic/elastic-agent
     _home: https://www.elastic.co/
     _name: Elastic Agent
-    _when:cask: sudo which elastic-agent > /dev/null
     ansible: professormanhattan.elasticagent
+    brew: elastic/tap/elastic-agent
   electron:
     _bin: electron
     _desc: '[Electron](https://www.electronjs.org/) allows you to build cross-platform desktop apps with JavaScript, HTML, and CSS'
@@ -2399,17 +2400,6 @@ softwarePackages:
     _home: https://www.electronjs.org/
     _name: Electron
     npm: electron
-    _when:cask: '! test -d /Applications/Electron.app'
-    cask: electron
-    choco: electron
-  electron-app:
-    # TODO: Figure out if this app is necessary and add description that describes the difference between
-    # this and the regular Electron CLI installed via NPM.
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: Electron Desktop App
     _when:cask: '! test -d /Applications/Electron.app'
     cask: electron
     choco: electron
@@ -3693,6 +3683,11 @@ softwarePackages:
     apt: glusterfs-server
     dnf:fedora: glusterfs-server
     pacman: glusterfs
+  android-platform-tools:
+    _bin: adb
+    _github: null
+    _name: Android Platform Tools
+    cask: android-platform-tools
   gnu:
     _bin: null
     _desc: null
@@ -3700,7 +3695,7 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _when:brew:darwin: '(! brew list coreutils | grep coreutils) || (! brew list findutils | grep findutils) || (! brew list gawk | grep gawk) || (! brew list gnu-getopt | grep gnu-getopt) || (! brew list gnu-indent | grep gnu-indent) || (! brew list gnu-tar | grep gnu-tar) || (! brew list gnu-sed | grep gnu-sed) || (! brew list gnutls | grep gnutls) || (! brew list grep | grep grep)'
+    _when:brew:darwin: '(! brew list coreutils | grep coreutils > /dev/null) || (! brew list findutils | grep findutils > /dev/null) || (! brew list gawk | grep gawk > /dev/null) || (! brew list gnu-getopt | grep gnu-getopt > /dev/null) || (! brew list gnu-indent | grep gnu-indent > /dev/null) || (! brew list gnu-tar | grep gnu-tar > /dev/null) || (! brew list gnu-sed | grep gnu-sed > /dev/null) || (! brew list gnutls | grep gnutls > /dev/null) || (! brew list grep | grep grep > /dev/null)'
     brew:darwin:
       - coreutils
       - findutils
@@ -6114,7 +6109,7 @@ softwarePackages:
     _bin:snap: onlykey-app
     _desc: null
     _docs: null
-    _github: null
+    _github: https://github.com/trustcrypto/OnlyKey-App
     _home: null
     _name: onlykey
     _post:snap: |
@@ -6122,10 +6117,59 @@ softwarePackages:
       sudo chmod 644 /etc/udev/rules.d/49-onlykey.rules
       sudo udevadm control --reload-rules
       sudo udevadm trigger
-    _when:ansible:darwin: test -d "/Applications/OnlyKey App.app"
+    _when:script:darwin: test -d "/Applications/OnlyKey App.app"
     ansible:darwin: professormanhattan.onlykey
+    script:darwin: cd /tmp && curl -sSL https://github.com/trustcrypto/OnlyKey-App/releases/download/v5.3.6/OnlyKey.App.5.3.6.dmg > OnlyKey.dmg  && hdiutil attach "/tmp/OnlyKey.dmg" &&  sudo cp -R "/Volumes/OnlyKey App/OnlyKey App.app" /Applications && sudo hdiutil detach "/Volumes/OnlyKey App" && rm -f "/tmp/OnlyKey.dmg"
     choco: onlykey
     snap: onlykey-app
+  onlykey-agent:
+    _deps:
+      - onlykey-cli-deps
+    _bin: onlykey-agent
+    _github: https://github.com/trustcrypto/onlykey-agent
+    _name: OnlyKey Agent
+    brew: onlykey-agent
+    pipx: onlykey-agent
+  onlykey-cli:
+    _deps:
+      - onlykey-cli-deps
+    _bin: onlykey-cli
+    _github: https://github.com/trustcrypto/python-onlykey
+    _name: OnlyKey CLI
+    pipx: onlykey
+  onlykey-cli-deps:
+    _post:linux: |
+      sudo curl -sSL https://raw.githubusercontent.com/trustcrypto/trustcrypto.github.io/pages/49-onlykey.rules -o /etc/udev/rules.d/49-onlykey.rules
+      sudo chmod 644 /etc/udev/rules.d/49-onlykey.rules
+      sudo udevadm control --reload-rules
+      sudo udevadm trigger
+    apt:
+      - python3-pip
+      - python3-tk
+      - libusb-1.0-0-dev
+      - libudev-dev
+    brew:darwin:
+      - libusb
+    dnf:
+      - python3-pip
+      - python3-devel
+      - python3-tkinter
+      - libusb-devel
+      - libudev-devel
+      - gcc
+      - redhat-rpm-config
+    pacman:
+      - git
+      - python3-setuptools
+      - python3
+      - libusb
+      - python3-pip
+    zypper:
+      - python3-pip
+      - python3-devel
+      - python3-tk
+      - libusb-1_0-devel
+      - libudev-devel
   oq:
     _bin: oq
     _desc: A performant, and portable jq wrapper to facilitate the consumption and output of formats other than JSON; using jq filters to transform the data
@@ -9117,7 +9161,7 @@ softwarePackages:
     scoop: waypoint
   wazuh:
     # TODO: Add logic to .chezmoiscripts that ensures the proper Wazuh settings are in place
-    # _bin: wazuh-agent
+    _bin: wazuh-agentd
     _desc: '[Wazuh](https://wazuh.com/) is a free, open source and enterprise-ready security monitoring solution for threat detection, integrity monitoring, incident response and compliance.'
     _docs: https://documentation.wazuh.com/current/index.html
     _github: https://github.com/wazuh/wazuh
@@ -9128,6 +9172,8 @@ softwarePackages:
     _when:windows: '! test -f "C:\Program Files (x86)\ossec-agent\agent-auth.exe"'
     ansible: professormanhattan.wazuh
     choco: wazuh-agent
+    script:darwin: cd /tmp && curl -sSL https://packages.wazuh.com/4.x/macos/wazuh-agent-4.4.4-1.pkg > wazuh-agent.pkg && sudo installer -pkg wazuh-agent.pkg -target / && sudo chmod 755 /Library/Ossec && sudo chmod 755 /Library/Ossec/bin
+    script:linux: if command -v apt-get > /dev/null; then curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | sudo gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && sudo chmod 644 /usr/share/keyrings/wazuh.gpg && echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | sudo tee -a /etc/apt/sources.list.d/wazuh.list && sudo apt-get update && sudo apt-get install -y wazuh-agent; elif command -v dnf > /dev/null; then echo "[wazuh]" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "gpgcheck=1" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "gpgkey=https://packages.wazuh.com/key/GPG-KEY-WAZUH" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "enabled=1" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "name=EL-\$releasever - Wazuh" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "baseurl=https://packages.wazuh.com/4.x/yum/" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "protect=1" | sudo tee -a /etc/yum.repos.d/wazuh.repo && sudo rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH && sudo dnf install -y wazuh-agent; elif command -v zypper > /dev/null; then echo "[wazuh]" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "gpgcheck=1" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "gpgkey=https://packages.wazuh.com/key/GPG-KEY-WAZUH" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "enabled=1" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "name=EL-$releasever - Wazuh" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "baseurl=https://packages.wazuh.com/4.x/yum/" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "protect=1" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && sudo rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH && sudo zypper install -y wazuh-agent; elif command -v apk > /dev/null; then sudo wget -O /etc/apk/keys/alpine-devel@wazuh.com-633d7457.rsa.pub https://packages.wazuh.com/key/alpine-devel%40wazuh.com-633d7457.rsa.pub && echo "https://packages.wazuh.com/4.x/alpine/v3.12/main" | sudo tee -a /etc/apk/repositories && sudo apk update && sudo apk add wazuh-agent; fi
   websocat:
     _bin: websocat
     _desc: CLI for interacting with web sockets
