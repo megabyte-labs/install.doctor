@@ -12,6 +12,8 @@ This page outlines various projects and tasks that we are currently working on. 
 * https://github.com/butlerx/wetty
 * Add https://github.com/badaix/snapcast
 * JavaScript start at 10k
+* Go through https://github.com/jaywcjlove/awesome-mac
+* https://codesandbox.io/ https://github.com/firecracker-microvm/firecracker
 
 ## Upstream
 
@@ -112,6 +114,20 @@ The following items are Docker containers that we may want to include as default
 * https://spaceb.in/ - Pastebin https://github.com/WantGuns/bin
 * https://github.com/AlexSciFier/neonlink - bookmarks
 * https://github.com/josdejong/jsoneditor - JSON editor
+* https://github.com/AppFlowy-IO/AppFlowy - Notion alternative
+* https://github.com/apitable/apitable
+* https://github.com/mattermost/mattermost
+* https://github.com/duolingo/metasearch
+* https://github.com/withspectrum/spectrum
+* https://github.com/NginxProxyManager/nginx-proxy-manager
+* https://github.com/node-red/node-red
+* https://www.overleaf.com/
+
+## AI
+
+* https://github.com/hwchase17/langchain
+* https://github.com/facebookresearch/ImageBind
+* https://github.com/nomic-ai/gpt4all
 
 ### Kubernetes
 
@@ -152,3 +168,4 @@ The following items have been reviewed but need to be revisited due to complexit
 * cvat.io
 * https://github.com/illacloud/illa-builder
 * https://github.com/metrue/fx
+* https://github.com/siyuan-note/siyuan

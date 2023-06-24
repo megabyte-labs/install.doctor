@@ -424,6 +424,11 @@ if [ -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc" ]; then
     source "$HOMEBREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc"
 fi
 
+### iTerm2
+if [ -f "$HOME/.local/src/iterm2/shell-integration.zsh" ]; then
+  source "$HOME/.local/src/iterm2/shell-integration.zsh"
+fi
+
 ### Java (asdf)
 # if [ -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ]; then
 #   . "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"

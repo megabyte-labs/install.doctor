@@ -110,6 +110,11 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     source <(emplace init bash)
   fi
 
+  ### iTerm2
+  if [ -f "$HOME/.local/src/iterm2/shell-integration.bash" ]; then
+    source "$HOME/.local/src/iterm2/shell-integration.bash"
+  fi
+
   ### Java (asdf)
   if [ -f "$ASDF_DATA_DIR/plugins/java/set-java-home.bash" ]; then
     . "$ASDF_DATA_DIR/plugins/java/set-java-home.bash"

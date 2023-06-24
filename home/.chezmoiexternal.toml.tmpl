@@ -190,9 +190,13 @@
     pull.args = ["--ff-only"]
 
 ### iTerm2 Shell Integration
-[".local/src/iterm2/shell-integration.sh"]
+[".local/src/iterm2/shell-integration.zsh"]
     type = "file"
-    url = "https://iterm2.com/shell_integration/install_shell_integration.sh"
+    url = "https://iterm2.com/shell_integration/zsh"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/src/iterm2/shell-integration.bash"]
+    type = "file"
+    url = "https://iterm2.com/shell_integration/bash"
     refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Ansible Roles / Playbook

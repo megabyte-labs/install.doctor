@@ -16,6 +16,7 @@
 * https://github.com/changkun/occamy
 * https://cliffy.io/docs@v0.25.7
 * https://github.com/gotify/server
+* https://github.com/typicode/lowdb
 
 ## System
 
@@ -53,6 +54,12 @@
 * https://github.com/sorry-cypress/sorry-cypress
 * https://github.com/MauriceNino/dashdot
 * https://github.com/coralproject/talk
+* https://github.com/ijjk/notion-blog
+* https://github.com/NodeBB/NodeBB
+* https://github.com/ToolJet/ToolJet
+* https://github.com/pouchdb/pouchdb
+* https://uppy.io/docs/dashboard/
+* https://unkey.dev/
 
 ## Serverless
 
@@ -65,3 +72,5 @@
 * https://rustpad.io/
 * https://anonaddy.com/
 * https://claper.co/
+* https://namelix.com/
+* https://gchq.github.io/CyberChef

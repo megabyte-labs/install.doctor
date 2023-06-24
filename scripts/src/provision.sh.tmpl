@@ -54,6 +54,19 @@
 # @description Ensure Ubuntu / Debian run in `noninteractive` mode
 export DEBIAN_FRONTEND=noninteractive
 
+# @description Load default settings if it is in a CI setting
+if [ -n "$CI" ]; then
+  export HOST="$HOST"
+  export NO_RESTART=true
+  export HEADLESS_INSTALL=true
+  export SOFTWARE_GROUP="Full"
+  export FULL_NAME="Brian Zalewski"
+  export PRIMARY_EMAIL="help@megabyte.space"
+  export PUBLIC_SERVICES_DOMAIN="megabyte.space"
+  export RESTRICTED_ENVIRONMENT=false
+  export WORK_ENVIRONMENT=false
+fi
+
 # @description Detect `START_REPO` format and determine appropriate git address, otherwise use the master Install Doctor branch
 if [ -z "$START_REPO" ] && [ -z "$REPO" ]; then
   START_REPO="https://github.com/megabyte-labs/install.doctor.git"

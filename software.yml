@@ -1209,7 +1209,7 @@ softwarePackages:
     _github: https://github.com/Barre/privaxy
     _home: false
     _name: Privaxy
-    _when:script:darwin: test -d /Applications/Privaxy.app
+    _when:script:darwin: '! test -d /Applications/Privaxy.app'
     appimage: barre/privaxy
     apt: https://github.com/Barre/privaxy/releases/download/v0.5.2/privaxy_0.5.2_amd64.deb
     script:darwin: curl -sSL https://github.com/Barre/privaxy/releases/download/v0.5.2/Privaxy_0.5.2_universal.dmg > /tmp/Privaxy.dmg && sudo hdiutil attach /tmp/Privaxy.dmg && sudo cp -R /Volumes/Privaxy/Privaxy.app /Applications && sudo hdiutil detach /Volumes/Privaxy && rm -f /tmp/Privaxy.dmg
@@ -2346,6 +2346,39 @@ softwarePackages:
     _home: https://fleetdm.com/
     _name: Fleet CLI
     npm: fleetctl
+  prezi-video:
+    _bin: prezi-video
+    _github: null
+    _name: Prezi Video
+    _when:cask: '! test -d "/Applications/Prezi Video.app"'
+    cask: prezi-video
+  orbstack:
+    _bin: orb
+    _github: 
+    _name: OrbStack
+    _when:cask: '! test -d /Applications/OrbStack.app'
+    cask: orbstack
+  gpt-engineer:
+    _bin: gpt-engineer
+    _github: https://github.com/AntonOsika/gpt-engineer
+    _name: GPT Engineer
+    pipx: gpt-engineer
+  medis:
+    _bin: medis
+    _github: https://github.com/luin/medis
+    _name: Medis
+    _when:cask: '! test -d /Applications/Medis.app'
+    cask: medis
+  ndb:
+    _bin: ndb
+    _github: https://github.com/GoogleChromeLabs/ndb
+    _name: ndb
+    npm: ndb
+  langflow:
+    _bin: langflow
+    _github: https://github.com/logspace-ai/langflow
+    _name: LangFlow
+    pipx: langflow
   elastic-agent:
     # Elastic Agent performs some security measures that make it so that checking the bin only works
     # with sudo. So the _when condition is added to account for this circumstance.
@@ -5090,6 +5123,7 @@ softwarePackages:
     cask: mark-text
     choco: marktext
     github: github.com/marktext/marktext
+    winget: marktext
     yay: marktext
   mas:
     _bin: mas
@@ -5414,7 +5448,7 @@ softwarePackages:
     _github: https://github.com/hschmidt/EnvPane
     _home: https://github.com/hschmidt/EnvPane
     _name: EnvPane
-    _when:script: test -d "$HOME/Library/PreferencePanes/EnvPane.prefPane"
+    _when:script: '! test -d "$HOME/Library/PreferencePanes/EnvPane.prefPane"'
     script:darwin: '(cd ~/Library/PreferencePanes && rm -rf EnvPane.prefPane && curl -sL https://github.com/hschmidt/EnvPane/releases/download/releases%2F0.8/EnvPane-0.8.tar.bz2 | tar -xjf -)'
   skhd:
     _bin: skhd
@@ -5458,7 +5492,7 @@ softwarePackages:
     _docs: null
     _github: https://github.com/th-ch/youtube-music
     _home: https://th-ch.github.io/youtube-music/
-    _when:script:darwin: test -d "/Applications/YouTube Music.app"
+    _when:script:darwin: '! test -d "/Applications/YouTube Music.app"'
     appimage: th-ch/youtube-music
     apt: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/youtube-music_1.19.0_amd64.deb
     exe: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/YouTube-Music-Setup-1.19.0.exe
@@ -5473,7 +5507,7 @@ softwarePackages:
     _github: https://github.com/meowtec/Imagine
     _home: https://github.com/meowtec/Imagine
     _name: Imagine
-    _when:script:darwin: test -d /Applications/Imagine.app
+    _when:script:darwin: '! test -d /Applications/Imagine.app'
     appimage: meowtec/Imagine
     exe: https://github.com/meowtec/Imagine/releases/download/v0.7.4/Imagine-Setup-0.7.4.exe
     script:darwin: curl -sSL https://github.com/meowtec/Imagine/releases/download/v0.7.4/Imagine-0.7.4.dmg > /tmp/Imagine.dmg && sudo hdiutil attach /tmp/Imagine.dmg && sudo cp -R "/Volumes/Imagine 0.7.4/Imagine.app" /Applications && sudo hdiutil detach "/Volumes/Imagine 0.7.4" && rm -f /tmp/Imagine.dmg
@@ -6564,6 +6598,11 @@ softwarePackages:
     ansible: professormanhattan.poetry
     brew: poetry
     yay: python-poetry-git
+  lighthouse:
+    _bin: lighthouse
+    _github: https://github.com/GoogleChrome/lighthouse
+    _name: Lighthouse
+    npm: lighthouse
   jest:
     _bin: jest
     _desc: Delightful JavaScript testing.
@@ -7507,6 +7546,11 @@ softwarePackages:
     _name: ShareX
     ansible:windows: professormanhattan.sharex
     choco: sharex
+  nodemon:
+    _bin: nodemon
+    _github: https://github.com/remy/nodemon
+    _name: Nodemon
+    npm: nodemon
   sharp:
     _bin: sharp
     _desc: CLI for sharp (a Node.js image processing module)
@@ -9539,7 +9583,7 @@ softwarePackages:
     _github: null
     _home: https://www.yubico.com/products/yubico-authenticator/
     _name: Yubico Authenticator
-    _when:script:darwin: test -d "/Applications/Yubico Authenticator.app"
+    _when:script:darwin: '! test -d "/Applications/Yubico Authenticator.app"'
     choco: yubico-authenticator
     flatpak: com.yubico.yubioath
     script:darwin: curl -sSL https://developers.yubico.com/yubioath-flutter/Releases/yubico-authenticator-latest-mac.dmg > "/tmp/Yubico Authenticator.dmg" && hdiutil attach "/tmp/Yubico Authenticator.dmg" &&  sudo cp -R "/Volumes/Yubico Authenticator/Yubico Authenticator.app" /Applications && sudo hdiutil detach "/Volumes/Yubico Authenticator" && rm -f "/tmp/Yubico Authenticator.dmg"
