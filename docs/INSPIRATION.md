@@ -15,6 +15,7 @@
 * https://github.com/chocolatey/boxstarter
 * https://github.com/changkun/occamy
 * https://cliffy.io/docs@v0.25.7
+* https://github.com/gotify/server
 
 ## System
 
@@ -41,8 +42,26 @@
 * https://vercel.com/templates/next.js/domains-api
 * https://supabase.com/partners/integrations - Services supabase integrates with
 * https://vercel.com/templates/next.js/notion-blog - Notion blog
+* https://github.com/answerdev/answer
+* https://github.com/thedevs-network/kutt
+* https://github.com/makeplane/plane
+* https://github.com/knadh/listmonk
+* https://github.com/payloadcms/payload
+* https://github.com/AmruthPillai/Reactive-Resume
+* https://pocketbase.io/
+* https://github.com/rustdesk/rustdesk-server
+* https://github.com/sorry-cypress/sorry-cypress
+* https://github.com/MauriceNino/dashdot
+* https://github.com/coralproject/talk
 
 ## Serverless
 
 * https://github.com/cloudflare/serverless-cloudflare-workers
 * https://github.com/supaflare/supaflare - Sleek short link service
+
+## Bookmarks
+
+* https://send.vis.ee/
+* https://rustpad.io/
+* https://anonaddy.com/
+* https://claper.co/

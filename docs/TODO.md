@@ -8,6 +8,10 @@ This page outlines various projects and tasks that we are currently working on. 
 * adb must be accessible in PATH: brew install --cask android-platform-tools
 * https://github.com/Paul-Reed/cloudflare-ufw
 * Google Drive index on Cloudflare https://github.com/menukaonline/goindex-extended
+* Use https://github.com/0xERR0R/blocky
+* https://github.com/butlerx/wetty
+* Add https://github.com/badaix/snapcast
+* JavaScript start at 10k
 
 ## Upstream
 
@@ -70,10 +74,44 @@ The following items are Docker containers that we may want to include as default
 * https://github.com/diced/zipline - ShareX / File uploads
 * https://github.com/anse-app/anse - ChatGPT interface
 * https://github.com/wireapp/wire-webapp - Internal Slack
-* https://github.com/jhaals/yopass - OTS web app
+* https://github.com/jhaals/yopass - OTS web app https://github.com/algolia/sup3rS3cretMes5age
 * https://github.com/aschzero/hera - CloudFlare tunnel proxy
 * https://supabase.com/ - Firebase alternative
 * https://github.com/tiredofit/docker-traefik-cloudflare-companion - Traefik CloudFlare integration
+* https://github.com/erxes/erxes - HubSpot alternative
+* https://github.com/pawelmalak/flame - Start page
+* https://github.com/m1k1o/neko - Docker browser instance
+* https://github.com/gristlabs/grist-core - Modern spreadsheet
+* https://maddy.email/ / https://github.com/haraka/Haraka
+* https://github.com/umputun/remark42 - Comments
+* https://github.com/meienberger/runtipi - Home server
+* https://github.com/bytebase/bytebase
+* https://github.com/IceWhaleTech/CasaOS - Home page https://github.com/ajnart/homarr https://github.com/phntxx/dashboard https://github.com/notclickable-jordan/starbase-80
+* https://github.com/usememos/memos - Memo page
+* https://github.com/outline/outline - Team notes
+* https://github.com/directus/directus - SQL
+* https://github.com/photoprism/photoprism - AI photo manager
+* https://github.com/louislam/uptime-kuma - Uptime monitor
+* https://github.com/nocodb/nocodb - Airtable alternative
+* https://github.com/timvisee/send
+* https://github.com/TechnitiumSoftware/DnsServer - DNS proxy server
+* https://github.com/lukevella/rallly - Schedule meetings
+* https://github.com/chiefonboarding/ChiefOnboarding - Onboarding
+* Microserver status page - https://github.com/valeriansaliou/vigil
+* https://github.com/pydio/cells - document sharing
+* ticket management - https://github.com/Peppermint-Lab/peppermint
+* https://github.com/statping-ng/statping-ng
+* https://github.com/cortezaproject/corteza - Low-code block workflows
+* https://github.com/mirego/accent#-getting-started - Translation tool
+* https://github.com/muety/wakapi - Coding time tracking
+* https://github.com/subnub/myDrive - Google Drive interface 
+* https://github.com/Forceu/Gokapi - share files
+* https://github.com/gerbera/gerbera - UPnP
+* Forward server SSH - https://github.com/warp-tech/warpgate
+* https://github.com/hadmean/hadmean - Revisit
+* https://spaceb.in/ - Pastebin https://github.com/WantGuns/bin
+* https://github.com/AlexSciFier/neonlink - bookmarks
+* https://github.com/josdejong/jsoneditor - JSON editor
 
 ### Kubernetes
 
@@ -81,6 +119,7 @@ The following items may be incorporated into our Kubernetes stack:
 
 * https://github.com/kubevirt/kubevirt
 * https://atuin.sh/docs/self-hosting/k8s
+* https://github.com/gimlet-io/gimlet
 
 ## Bare Metal
 
@@ -112,3 +151,4 @@ The following items have been reviewed but need to be revisited due to complexit
 * https://github.com/Kanaries/Rath
 * cvat.io
 * https://github.com/illacloud/illa-builder
+* https://github.com/metrue/fx
