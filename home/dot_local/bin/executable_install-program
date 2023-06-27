@@ -1580,7 +1580,7 @@ async function updateService(service) {
     const brew = which.sync('brew', { nothrow: true })
     if (brew) {
       try {
-        runCommand(`Starting / enabling ${service} with Homebrew`, `brew services start ${service}`)
+        runCommand(`Starting / enabling ${service} with Homebrew`, `sudo brew services start ${service}`)
         log('success', logStage, `Started / enabled the ${service} service with Homebrew`)
       } catch (e) {
         log('error', logStage, `There was an error starting / enabling the ${service} Homebrew service`)

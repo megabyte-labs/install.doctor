@@ -122,6 +122,7 @@ The following items are Docker containers that we may want to include as default
 * https://github.com/NginxProxyManager/nginx-proxy-manager
 * https://github.com/node-red/node-red
 * https://www.overleaf.com/
+* https://github.com/caprover/caprover
 
 ## AI
 
@@ -136,6 +137,8 @@ The following items may be incorporated into our Kubernetes stack:
 * https://github.com/kubevirt/kubevirt
 * https://atuin.sh/docs/self-hosting/k8s
 * https://github.com/gimlet-io/gimlet
+* https://github.com/porter-dev/porter
+* https://github.com/spacecloud-io/space-cloud
 
 ## Bare Metal
 
@@ -169,8 +172,16 @@ The following items have been reviewed but need to be revisited due to complexit
 * https://github.com/illacloud/illa-builder
 * https://github.com/metrue/fx
 * https://github.com/siyuan-note/siyuan
-
-
+* https://github.com/shuttle-hq/shuttle
+* https://github.com/open-hand/choerodon
+* https://github.com/1backend/1backend
+* https://github.com/redkubes/otomi-core
+* https://github.com/yunionio/cloudpods
+* https://github.com/tkestack/tke
+* https://www.rancher.com/
+* https://github.com/OpenNebula/one /. https://github.com/OpenNebula/minione
+* https://github.com/ConvoyPanel/panel
+* https://github.com/hashicorp/nomad
 
 ## Docker Issue
 

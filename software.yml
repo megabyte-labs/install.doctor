@@ -371,10 +371,10 @@ softwarePackages:
     _home: https://pieces.app/
     _name: Pieces
     _post:snap: sudo snap connect pieces-os:dotnet-runtime-aspnetcore
-    _when:pkg-darwin: test -d /Applications/Pieces.app
+    _when:script:darwin: '! test -d /Applications/Pieces.app'
     # TODO - Figure out how to deal with appinstaller
     appinstaller: https://builds.pieces.app/stages/production/pieces_suite_windows/appinstaller/download
-    pkg-darwin: https://builds.pieces.app/stages/production/macos_packaging/pkg/download
+    script:darwin: cd /tmp && curl -sSL https://builds.pieces.app/stages/production/macos_packaging/pkg/download > Pieces.pkg && sudo installer -pkg Pieces.pkg -target / && rm -f /tmp/Pieces.pkg
     snap: pieces-os
   pieces-cli:
     _bin: pieces
@@ -1150,6 +1150,7 @@ softwarePackages:
     _bin: utm
     _github: https://github.com/utmapp/UTM
     _name: UTM
+    _when:cask: '! test -d /Applications/UTM.app'
     cask: utm
   amethyst:
     _bin: amethyst
@@ -7921,7 +7922,7 @@ softwarePackages:
     _bin: kap
     _github: https://github.com/wulkano/Kap
     _name: Kap
-    _when:cask: echo '! test -d /Applications/Kap.app' | bash
+    _when:cask: '! test -d /Applications/Kap.app'
     cask: kap
   autodoc:
     _bin: doc
@@ -8363,6 +8364,7 @@ softwarePackages:
     _bin: sparkleshare
     _github: https://github.com/hbons/SparkleShare
     _name: Sparkle Share
+    _when:cask: '! test -d /Applications/SparkleShare.app'
     cask: sparkleshare
     choco: sparkleshare
     flatpak: org.sparkleshare.SparkleShare
@@ -9172,7 +9174,7 @@ softwarePackages:
     _when:windows: '! test -f "C:\Program Files (x86)\ossec-agent\agent-auth.exe"'
     ansible: professormanhattan.wazuh
     choco: wazuh-agent
-    script:darwin: cd /tmp && curl -sSL https://packages.wazuh.com/4.x/macos/wazuh-agent-4.4.4-1.pkg > wazuh-agent.pkg && sudo installer -pkg wazuh-agent.pkg -target / && sudo chmod 755 /Library/Ossec && sudo chmod 755 /Library/Ossec/bin
+    script:darwin: cd /tmp && curl -sSL https://packages.wazuh.com/4.x/macos/wazuh-agent-4.4.4-1.pkg > wazuh-agent.pkg && sudo installer -pkg wazuh-agent.pkg -target / && sudo chmod 755 /Library/Ossec && sudo chmod 755 /Library/Ossec/bin && rm /tmp/wazuh-agent.pkg
     script:linux: if command -v apt-get > /dev/null; then curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | sudo gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && sudo chmod 644 /usr/share/keyrings/wazuh.gpg && echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | sudo tee -a /etc/apt/sources.list.d/wazuh.list && sudo apt-get update && sudo apt-get install -y wazuh-agent; elif command -v dnf > /dev/null; then echo "[wazuh]" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "gpgcheck=1" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "gpgkey=https://packages.wazuh.com/key/GPG-KEY-WAZUH" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "enabled=1" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "name=EL-\$releasever - Wazuh" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "baseurl=https://packages.wazuh.com/4.x/yum/" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "protect=1" | sudo tee -a /etc/yum.repos.d/wazuh.repo && sudo rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH && sudo dnf install -y wazuh-agent; elif command -v zypper > /dev/null; then echo "[wazuh]" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "gpgcheck=1" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "gpgkey=https://packages.wazuh.com/key/GPG-KEY-WAZUH" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "enabled=1" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "name=EL-$releasever - Wazuh" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "baseurl=https://packages.wazuh.com/4.x/yum/" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "protect=1" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && sudo rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH && sudo zypper install -y wazuh-agent; elif command -v apk > /dev/null; then sudo wget -O /etc/apk/keys/alpine-devel@wazuh.com-633d7457.rsa.pub https://packages.wazuh.com/key/alpine-devel%40wazuh.com-633d7457.rsa.pub && echo "https://packages.wazuh.com/4.x/alpine/v3.12/main" | sudo tee -a /etc/apk/repositories && sudo apk update && sudo apk add wazuh-agent; fi
   websocat:
     _bin: websocat
@@ -9672,9 +9674,23 @@ softwarePackages:
     _bin: obs-studio
     _github: https://github.com/obsproject/obs-studio
     _name: OBS Studio
+    _when:cask: '! test -d /Applications/OBS.app'
     cask: obs
     choco: obs-studio
     flatpak: com.obsproject.Studio
+  shell-gpt:
+    _bin: sgpt
+    _github: https://github.com/TheR1D/shell_gpt
+    _name: Shell GPT
+    pipx: shell-gpt
+  tigervnc:
+    _bin: tigervncpasswd
+    _github: https://github.com/DukeyToo/tightvnc-server
+    _name: TightVNC Server
+    apt: tigervnc-standalone-server
+    dnf: tigervnc-server
+    pacman: tigervnc
+    zypper: tigervnc
   zap:
     _bin: zap
     _desc: Delightful AppImage package manager
@@ -9761,8 +9777,7 @@ softwarePlugins:
       - snyk/snyk-docker-desktop-extension
       - tailscale/docker-extension
   dotnet:
-    cmd: dotnet tool install -g {PLUGIN}
-    # cmd: Handled by .chezmoiexternal.toml
+    cmd: sudo chown -r "$USER" "$HOME/.local/share/NuGet" && dotnet tool install -g {PLUGIN}
     plugins:
       - Microsoft.CST.AttackSurfaceAnalyzer.CLI
       - dotnet-format
@@ -9868,6 +9883,11 @@ softwarePlugins:
       - theapsgroup/keycloak
       - theapsgroup/vault
       - twitter
+  teams:
+    cmd:
+    plugins:
+      - name: Pieces
+        plugin: https://teams.microsoft.com/l/app/789f23b3-d882-45ca-b3a3-de7f850656ea
   vagrant:
     cmd: bash -c 'if ! vagrant plugin list | grep {PLUGIN}; then vagrant plugin install {PLUGIN}; fi'
     plugins:
@@ -9876,7 +9896,9 @@ softwarePlugins:
       - vagrant-google
       - vagrant-hostmanager
       - vagrant-libvirt
+      - vagrant-openstack-provider
       - vagrant-parallels
+      - vagrant-proxmox
       - vagrant-share
       - vagrant-vbguest
       - vagrant-vmware-desktop

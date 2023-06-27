@@ -164,6 +164,7 @@ softwareGroups:
     - gpt-engineer
     - langflow
     - mage-ai
+    - shell-gpt
   Android: &Android
     - scrcpy
   Android-Desktop: &Android-Desktop
@@ -274,8 +275,7 @@ softwareGroups:
     - gnu
     - gping
     - gum
-    # htmlq is used by the the Firefox script
-    - htmlq
+    - htmlq # htmlq is used by the the Firefox script
     - hyperfine
     - jq
     - lsd
@@ -301,8 +301,6 @@ softwareGroups:
     - rsync
     - sd
     - solargraph
-    # Bundled into installer
-    # - snapd
     - sql-language-server
     - task
     - tea
@@ -528,9 +526,6 @@ softwareGroups:
     - vlc
     - vscode
   File-System: &File-System
-    # After `sudo apt-get install -y fuse libfuse-dev, the following error still shows up:
-    # error: could not find system library 'fuse' required by the 'fuse' crate
-    # - catfs
     - glusterfs
     - goofys
     - sshfs
@@ -720,6 +715,7 @@ softwareGroups:
     - stats
     - swiftbar
     - teamviewer
+    - tigervnc
   Misc-Development-Tools: &Misc-Development-Tools
     - ansifilter
     - aqua
@@ -807,8 +803,6 @@ softwareGroups:
     - microsoft-office
     - notion
     - obsidian
-    # Deprecated in favor of Google Tasks
-    # - microsoft-todo
     - raycast
     - skhd
   Python: &Python
@@ -885,8 +879,6 @@ softwareGroups:
     - netdata
     - samba
     - sftpgo
-    # Headless install needs work since it is run via script
-    # - vector
     - wazuh
   Shell-Scripting: &Shell-Scripting
     - shc
@@ -1182,7 +1174,6 @@ softwareGroups:
     - gitkraken
     - jitsi-meet
     - microsoft-teams
-    - microsoft-todo
     - plex-htpc
     - slack
     - thunderbird
@@ -1389,6 +1380,8 @@ softwareGroups:
       note: Deprecated in favor of [Pieces](https://pieces.app/). The core components of Pieces are not open-source but the functionality is significantly better than massCode.
     - pkg: mcfly
       note: Deprecated in favor of atuin
+    - pkg: microsoft-todo
+      note: Deprecated in favor of Google Tasks
     - pkg: mullvad-vpn
       note: Switched to ProtonVPN exclusively
     - pkg: multipass
@@ -1443,6 +1436,12 @@ softwareGroups:
       note: System backup utility that may be incorporated after comparing it with alternative and perhaps better alternatives.
     - pkg: frps / frpc
       note: No need to integrate these packages at this time.
+    - pkg: vector
+      note: Package currently relies on bash one-liner script
+    - pkg: catfs
+      note: After `sudo apt-get install -y fuse libfuse-dev, the following error still shows up error could not find system library 'fuse' required by the 'fuse' crate
+    - pkg: snapd
+      note: Bundled into installer
   helmCharts:
     - vector
 softwarePlugins:

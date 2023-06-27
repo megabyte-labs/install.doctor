@@ -1,0 +1,50 @@
+{{- if (ne .host.distro.family "windows") }}
+#!/usr/bin/env bash
+# @file VNC Setup
+# @brief Ensures VNC is set-up if system packages are available.
+# @description
+#     This script ensures VNC is setup and enabled. It will run on macOS always since macOS includes
+#     a VNC server baked into its system. On Linux, it will check for the presence of the `tightvncserver`
+#     package before configuring and enabling VNC.
+#
+#     The script will set the VNC password using the `VNC_PASSWORD` environment variable or the encrypted
+#     equivalent stored in `home/.chezmoitemplates/secrets`. If neither are provided, then the default
+#     password will be equal to `vncpass` since the password must be between 6-8 characters long.
+#
+#     Additionally, the `VNC_READ_PASSWORD` can be defined to allow read-only VNC sessions. The default password
+#     for a read-only session is `readonly`.
+
+{{- includeTemplate "universal/profile" }}
+{{- includeTemplate "universal/logg" }}
+
+if [ -d /Applications ] && [ -d /System ]; then
+    # System is macOS
+    # Source: https://apple.stackexchange.com/questions/30238/how-to-enable-os-x-screen-sharing-vnc-through-ssh
+    # To disable, run: sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -configure -access -off
+    # Only enable when computer is not a corporate / work computer
+    {{ if (ne .host.work true) -}}
+    logg info 'Enabling VNC using the `VNC_PASSWORD` variable which is `vncpass` when nothing is specified'
+    sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts -setvncpw -vncpw {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VNC_PASSWORD")) }}{{ includeTemplate "secrets/VNC_PASSWORD" | decrypt | trim }}{{ else }}{{ default "vncpass" (env "VNC_PASSWORD") }}{{ end }} -restart -agent -privs -all
+    {{- end }}
+else
+    # System is Linux
+    if command -v vncpasswd > /dev/null; then
+        # TigerVNC (or alternative VNC program) is installed
+        logg info 'Copying VNC configuration files from ~/.config/vnc/etc to /'
+        sudo cp -Rf "${XDG_CONFIG_HOME:-$HOME/.config}/vnc/etc" /
+        sudo systemctl 
+        if [ ! -d "${XDG_CONFIG_HOME:-$HOME/.config}/vnc" ]; then
+            mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/vnc"
+        fi
+        logg info 'Adding VNC full-control password to ~/.config/vnc/passwd'
+        echo -n "{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VNC_PASSWORD")) }}{{ includeTemplate "secrets/VNC_PASSWORD" | decrypt | trim }}{{ else }}{{ default "vncpass" (env "VNC_PASSWORD") }}{{ end }}" | vncpasswd -f > "${XDG_CONFIG_HOME:-$HOME/.config}/vnc/passwd"
+        logg info 'Adding VNC read-only password to ~/.config/vnc/passwd'
+        echo -n "{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VNC_READ_PASSWORD")) }}{{ includeTemplate "secrets/VNC_READ_PASSWORD" | decrypt | trim }}{{ else }}{{ default "readonly" (env "VNC_READ_PASSWORD") }}{{ end }}" | vncpasswd -f >> "${XDG_CONFIG_HOME:-$HOME/.config}/vnc/passwd"
+        logg info 'Enabling / starting the VNC service for the current user / display 1'
+        sudo systemctl start vncserver@1
+        sudo systemctl enable vncserver@1
+    else
+        logg info 'Skipping VNC setup since the tightvncserver package is not present on the system'
+    fi
+fi
+{{ end -}}
