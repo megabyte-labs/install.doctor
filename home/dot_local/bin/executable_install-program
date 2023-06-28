@@ -449,7 +449,12 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
   }
   const portsHook = getHook(packages, 'ports', scopedPreference, preference)
   if (portsHook) {
-    installOrdersPorts = installOrdersPorts.concat(typeof portsHook === 'string' ? [portsHook] : portsHook)
+    installOrdersPorts = installOrdersPorts.concat(typeof portsHook === 'string' ? [{
+      packageKey,
+      ports: portsHook
+    }] : {
+      packageKey,
+      ports: portsHook})
   }
   processPluginOrders(pkg)
   if (!installOrders[preference]) {
@@ -1551,35 +1556,73 @@ async function addUserGroup(group) {
 /**
  * Adds the rules specified in the `_ports` key of each entry in the `software.yml` file.
  * 
- * @param rule Firewall rule in the form of 8888/tcp or 9999/udp. Can also be the XML file name stored in ~/.config/firewall/etc/firewalld/services.
+ * @param rule {packageKey: string, ports: any} Firewall rule in the form of 8888/tcp or 9999/udp. Can also be the XML file name stored in ~/.config/firewall/etc/firewalld/services.
  */
 async function addFirewallRule(rule) {
-  const logStage = 'Firewall'
-  log('info', logStage, `Ensuring the ${rule} rule is added`)
-  if (osType === 'linux') {
-    const firewallCmd = which.sync('firewall-cmd', { nothrow: true })
-    // const ufw = which.sync('ufw', { nothrow: true })
-    if (firewallCmd) {
-      if (typeof rule.substring(0, 1) === 'number') {
-        runCommand(`Adding the ${rule} to the firewall configuration`, `sudo firewall-cmd --add-port=${rule} --permanent`)
+  try {
+    const logStage = 'Firewall'
+    const packageName = installData.softwarePackages[rule.packageKey] && installData.softwarePackages[rule.packageKey]._name
+    const packageDesc = installData.softwarePackages[rule.packageKey] && installData.softwarePackages[rule.packageKey]._desc
+    log('info', logStage, `Ensuring the ${rule.packageKey} rule is added since the _ports key is defined`)
+    if (osType === 'linux') {
+      const firewallCmd = which.sync('firewall-cmd', { nothrow: true })
+      // const ufw = which.sync('ufw', { nothrow: true })
+      if (firewallCmd) {
+        const serviceFile = `${process.env.HOME}/.config/firewall/etc/firewalld/services/${rule.packageKey}.xml`
+        if (fileExists(serviceFile)) {
+          log('info', logStage, `Service file found at ${serviceFile} - using it to apply firewall-cmd configuration`)
+          runCommand(`Copying over ${serviceFile} file to /etc/firewalld/services`, `sudo cp -f "${serviceFile}" "/etc/firewalld/services/${rule.packageKey}.xml"`)
+          runCommand(`Adding the ${rule.packageKey} firewall-cmd service`, `sudo firewall-cmd --add-service=${rule.packageKey} --permanent`)
+        } else {
+          if (typeof rule.ports === 'string') {
+            runCommand(`Adding the ${rule.packageKey} ${rule.ports} rule to the firewall configuration`, `sudo firewall-cmd --add-port=${rule.ports} --permanent`)
+          } else {
+            for (const port of rule.ports) {
+              if (typeof port === 'string') {
+                runCommand(`Adding the ${rule.packageKey} ${rule.ports} rule to the firewall configuration`, `sudo firewall-cmd --add-port=${rule.ports} --permanent`)
+              } else if (port.port && port.proto) {
+                runCommand(`Adding the ${rule.packageKey} ${port.port}/${port.proto} rule to the firewall configuration`, `sudo firewall-cmd --add-port=${port.port}/${port.proto} --permanent`)
+              } else {
+                log('error', logStage, `Unable to parse the firewall definition for ${rule.packageKey}`)
+              }
+            }
+          }
+        }
       } else {
-        runCommand(`Adding the ${rule} user / group`, `sudo firewall-cmd --add-service=${rule} --permanent`)
+        log('error', logStage, `The firewall-cmd executable is not present on the system so the firewall cannot be configured`)
       }
+    } else if (osType === 'darwin') {
+      const socketFilterFw = '/usr/libexec/ApplicationFirewall/socketfilterfw'
+      const serviceFile = `${process.env.HOME}/.config/firewall/darwin/${rule.packageKey}.sh`
+      if (fileExists(serviceFile)) {
+        runCommand(`Executing the matching ${serviceFile} service file`, `sudo bash "${serviceFile}"`)
+      } else {
+        if (typeof rule.ports === 'string') {  
+          log('error', logStage, `_ports rules that are equal to strings are not yet implemented on macOS (package: ${rule.packageKey})`)
+        } else {
+          for (const port of rule.ports) {
+            if (typeof port === 'string') {
+              log('error', logStage, `_ports rules that are equal to strings are not yet implemented on macOS (package: ${rule.packageKey})`)
+            } else if (port.port && port.proto) {
+              runCommand(`Adding new service for ${rule.packageKey}`, `${socketFilterFw} --add --service "${packageName ? packageName : rule.packageKey}" --getglobalstate`)
+              if (packageDesc) {
+                runCommand(`Adding description to service defined for ${rule.packageKey}`, `${socketFilterFw} --service "${packageName ? packageName : rule.packageKey}" --setglobaldescription "${packageDesc}"`)
+              }
+              runCommand(`Adding firewall rule for ${rule.packageKey}`, `${socketFilterFw} --service "${packageName ? packageName : rule.packageKey}" --add --port ${port.port} --protocol ${port.proto}`)
+            } else {
+              log('error', logStage, `Unable to parse the firewall definition for ${rule.packageKey}`)
+            }
+          }
+        }
+      }
+    } else if (osType === 'windows') {
+      log('warn', logStage, `Windows support not yet added`)
     } else {
-      log('error', logStage, `The firewall-cmd executable is not present on the system so the firewall cannot be configured`)
+      log('warn', logStage, `Unknown operating system type`)
     }
-  } else if (osType === 'darwin') {
-    runCommand(`Creating the ${rule} group`, `sudo dscl . create /Groups/${rule}`)
-    runCommand(`Ensuring the ${rule} group has a GID`, `bash -c 'if [[ "$(sudo dscl . read /Groups/$GROUP gid 2>&1)" == *"No such key"* ]]; then MAX_ID_GROUP="$(dscl . -list /Groups gid | awk "{print $2}" | sort -ug | tail -1)"; GROUP_ID="$((MAX_ID_GROUP+1))"; sudo dscl . create /Groups/${rule} gid "$GROUP_ID"; fi'`)
-    runCommand(`Adding the ${rule} user`, `sudo dscl . create /Users/${rule}`)
-    runCommand(`Ensuring the ${rule} user has a PrimaryGroupID`, `bash -c 'if [[ "$(sudo dscl . read /Users/${rule} PrimaryGroupID 2>&1)" == *"No such key"* ]]; then sudo dscl . create /Users/${rule} PrimaryGroupID 20; fi'`)
-    runCommand(`Ensuring the ${rule} user has a UniqueID`, `bash -c 'if [[ "$(sudo dscl . read /Users/${rule} UniqueID 2>&1)" == *"No such key"* ]]; then MAX_ID_USER="$(dscl . -list /Users UniqueID | sort -nr -k 2 | head -1 | grep -oE "[0-9]+$")"; USER_ID="$((MAX_ID_USER+1))"; sudo dscl . create /Users/${rule} UniqueID "$USERID"; fi'`)
-    runCommand(`Adding the ${rule} user to the ${rule} group`, `sudo dseditgroup -o edit -t user -a ${rule} ${rule}`)
-    runCommand(`Adding the ${process.env.USER} user to the ${rule} group`, `sudo dseditgroup -o edit -t user -a ${process.env.USER} ${rule}`)
-  } else if (osType === 'windows') {
-    log('warn', logStage, `Windows support not yet added`)
-  } else {
-    log('warn', logStage, `Unknown operating system type`)
+  } catch (e) {
+    console.log(e)
+    log('error', 'Bin', `Error configuring firewall settings for ${rule.packageKey}`)
   }
 }
 

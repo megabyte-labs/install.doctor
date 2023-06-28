@@ -2,11 +2,7 @@
 <service>
   <short>Plex</short>
   <description>.</description>
-  <port protocol="tcp" port="32400"/> # Plex Media Server
   <port protocol="udp" port="1900"/> # Plex DLNA Server
   <port protocol="tcp" port="32469"/> # Plex DLNA Server
-  <port protocol="udp" port="32410"/> # GDM Network Discovery
-  <port protocol="udp" port="32412"/> # GDM Network Discovery
-  <port protocol="udp" port="32413"/> # GDM Network Discovery
-  <port protocol="udp" port="32414"/> # GDM Network Discovery
+  <port protocol="udp" port="32410-32414"/> # GDM Network Discovery
 </service>

@@ -23,6 +23,10 @@ This page outlines various projects and tasks that we are currently working on. 
 ( [Title](https://github.com/StanGirard/quivr))
 * [Title](https://github.com/PromtEngineer/localGPT)
 * [Title](https://github.com/reworkd/AgentGPT)
+* deprecate ansible roles in softwareyml
+* Create seed for Lulu
+* [Title](https://github.com/essandess/macOS-Fortress)
+
 ## Upstream
 
 The following items are things we would like to include into the Install Doctor system but are waiting on upstream changes.

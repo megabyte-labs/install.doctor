@@ -1852,6 +1852,9 @@ softwarePackages:
     _github: https://github.com/apple/cups
     _home: null
     _name: CUPS
+    _ports:
+      - port: 631
+        proto: tcp
     ansible: professormanhattan.cups
     apt:
       - avahi-daemon
@@ -5004,6 +5007,23 @@ softwarePackages:
     _github: https://github.com/maas/maas
     _home: https://maas.io/
     _name: MAAS
+    _ports:
+      - port: 5240
+        proto: tcp
+      - port: 5240
+        proto: udp
+      - port: 5248
+        proto: tcp
+      - port: 5248
+        proto: udp
+      - port: 5241-5247
+        proto: tcp
+      - port: 5241-5247
+        proto: udp
+      - port: 5250-5270
+        proto: tcp
+      - port: 5250-5270
+        proto: udp
     ansible:ubuntu: professormanhattan.maas
     snap:ubuntu: maas
   mackup:
@@ -5789,9 +5809,9 @@ softwarePackages:
     _name: NGINX
     _ports:
       - port: 80
-        proto: udp
+        proto: tcp
       - port: 443
-        proto: udp
+        proto: tcp
     ansible: professormanhattan.nginx
     apt: nginx
     brew: nginx
@@ -6564,28 +6584,46 @@ softwarePackages:
   plex:
     _bin: plex
     _desc: '[Plex](https://www.plex.tv/) is a global streaming service of free ad-supported video, with TV shows and movies from distributors such as Crackle, Warner Bros., MGM, Endemol Shine Group, Lionsgate, and Legendary. Plex is also a client–server media player system plus an ancillary software suite.'
-    _docs: https://forums.plex.tv/t/introducing-plex-htpc/703075
-    _github: https://github.com/plexinc/plex-media-player
+    _github: false
     _home: https://www.plex.tv/
     _name: Plex
     _when:cask: '! test -d /Applications/Plex.app'
     ansible: professormanhattan.plex
-    cask:
-      - plex
-      - plex-media-player
-      - plex-media-server
-    choco:
-      - plex
-      - plexmediaplayer
+    cask: plex
+    choco: plex
     flatpak: tv.plex.PlexDesktop
+  plex-media-server:
+    _bin: plex-media-server
+    _github: false
+    _name: Plex Media Server
+    _when:cask: '! test -d "/Applications/Plex Media Server.app"'
+    _ports:
+      - port: 32400
+        proto: tcp
+      - port: 3005
+        proto: tcp
+      - port: 5353
+        proto: udp
+      - port: 8324
+        proto: tcp
+      - port: 32410-32414
+        proto: udp
+      - port: 1900
+        proto: udp
+      - port: 32469
+        proto: tcp
+    cask: plex-media-server
+    choco: plexmediaserver
     snap: plexmediaserver
     yay: plex-media-server
   plex-htpc:
     _bin: plex-htpc
+    _github: false
     _home: https://www.plex.tv/
     _name: Plex HTPC
     _when:cask: '! test -d "/Applications/Plex HTPC.app"'
     cask: plex-htpc
+    choco: plex-home-theater
     flatpak: tv.plex.PlexHTPC
     snap: plex-htpc
   pm2:
@@ -7114,7 +7152,6 @@ softwarePackages:
     dnf: firewalld
     emerge: net-firewall/firewalld
     pacman: firewalld
-    script:darwin: sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
     zypper: firewalld
   xrdp:
     _bin: xrdp
@@ -9674,6 +9711,12 @@ softwarePackages:
     dnf:fedora: yubikey-manager
     pacman: yubikey-manager
     pipx: yubikey-manager
+  nginx-unit:
+    _bin: unitd
+    _github: https://github.com/nginx/unit
+    _name: NGINX Unit
+    _service:brew: nginx/unit/unit
+    brew: nginx/unit/unit
   yubikey-manager-qt:
     _bin: yubikey-manager-qt
     _desc: Cross-platform application for configuring any YubiKey over all USB interfaces.
@@ -9713,10 +9756,10 @@ softwarePackages:
     pipx: shell-gpt
   tigervnc:
     _bin: tigervncpasswd
-    _github: https://github.com/DukeyToo/tightvnc-server
-    _name: TightVNC Server
+    _github: https://github.com/TigerVNC/tigervnc
+    _name: TigerVNC Server
     _ports:
-      - port: 5900-5909
+      - port: 5900-5904
         proto: tcp
     apt: tigervnc-standalone-server
     dnf: tigervnc-server
@@ -9807,6 +9850,10 @@ softwarePlugins:
       - redhatdeveloper/openshift-dd-ext
       - snyk/snyk-docker-desktop-extension
       - tailscale/docker-extension
+  dockerImages:
+    cmd: null
+    plugins:
+      - docker.io/nginx/unit
   dotnet:
     cmd: sudo chown -r "$USER" "$HOME/.local/share/NuGet" && dotnet tool install -g {PLUGIN}
     plugins:
