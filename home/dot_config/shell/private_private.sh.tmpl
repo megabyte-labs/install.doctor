@@ -74,6 +74,11 @@ export OPENAI_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplat
 ### PyPi
 export PYPI_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "PYPI_TOKEN")) }}{{ includeTemplate "secrets/PYPI_TOKEN" | decrypt | trim }}{{ else }}{{ env "PYPI_TOKEN" }}{{ end }}"
 
+### Search GPT
+# Also relies on `OPENAI_API_KEY`
+export GOOGLE_SEARCH_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GOOGLE_SEARCH_API_KEY")) }}{{ includeTemplate "secrets/GOOGLE_SEARCH_API_KEY" | decrypt | trim }}{{ else }}{{ env "GOOGLE_SEARCH_API_KEY" }}{{ end }}"
+export GOOGLE_SEARCH_ID="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GOOGLE_SEARCH_ID")) }}{{ includeTemplate "secrets/GOOGLE_SEARCH_ID" | decrypt | trim }}{{ else }}{{ env "GOOGLE_SEARCH_ID" }}{{ end }}"
+
 ### Snapcraft
 export SNAPCRAFT_EMAIL="{{ .user.snapcraft.username }}"
 export SNAPCRAFT_MACAROON="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SNAPCRAFT_MACAROON")) }}{{ includeTemplate "secrets/SNAPCRAFT_MACAROON" | decrypt | trim }}{{ else }}{{ env "SNAPCRAFT_MACAROON" }}{{ end }}"

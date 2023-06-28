@@ -2,6 +2,7 @@
 
 This page outlines various projects and tasks that we are currently working on. Creating a GitHub issue for each of these items would be overkill.
 
+* [Title](https://github.com/KnowledgeCanvas/knowledge)
 * Configure Navi to automatically download and use the best cheat repositories
 * Finish TS from 1400 stars
 * Python
@@ -14,7 +15,14 @@ This page outlines various projects and tasks that we are currently working on. 
 * JavaScript start at 10k
 * Go through https://github.com/jaywcjlove/awesome-mac
 * https://codesandbox.io/ https://github.com/firecracker-microvm/firecracker
-
+* (https://www.kolide.com/features/checks/mac-firewall)
+* (https://github.com/tobiasbueschel/search-gpt)
+* Create IP set for CloudFlare [Title](https://firewalld.org/documentation/man-pages/firewalld.ipset.html)
+* https://chainner.app/
+* https://github.com/kyrolabs/awesome-langchain)
+( [Title](https://github.com/StanGirard/quivr))
+* [Title](https://github.com/PromtEngineer/localGPT)
+* [Title](https://github.com/reworkd/AgentGPT)
 ## Upstream
 
 The following items are things we would like to include into the Install Doctor system but are waiting on upstream changes.
@@ -182,6 +190,15 @@ The following items have been reviewed but need to be revisited due to complexit
 * https://github.com/OpenNebula/one /. https://github.com/OpenNebula/minione
 * https://github.com/ConvoyPanel/panel
 * https://github.com/hashicorp/nomad
+* [Title](https://github.com/Soft/xcolor)
+* [Title](https://github.com/Xpra-org/xpra)
+* [Title](https://github.com/ksnip/ksnip)
+* [Title](https://github.com/leftwm/leftwm)
+* [Title](https://github.com/polybar/polybar)
+* [Title](https://github.com/kingToolbox/WindTerm)
+* [Title](https://github.com/hyprwm/Hypr)
+* [Title](https://github.com/Sygil-Dev/sygil-webui)
+* [Title](https://github.com/psychic-api/psychic)
 
 ## Docker Issue
 

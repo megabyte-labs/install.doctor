@@ -60,6 +60,7 @@
 * https://github.com/pouchdb/pouchdb
 * https://uppy.io/docs/dashboard/
 * https://unkey.dev/
+* [Title](https://github.com/vercel-labs/ai-chatbot)
 
 ## Serverless
 

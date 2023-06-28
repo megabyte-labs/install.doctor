@@ -2820,14 +2820,6 @@ softwarePackages:
     dnf: firefox
     flatpak: org.mozilla.firefox
     pacman: firefox
-  firewall:
-    _bin: null
-    _desc: This role is intended to be used with the ProfessorManhattan playbook. It integrates tightly with the other roles included with the playbook.
-    _docs: null
-    _github: null
-    _home: null
-    _name: Firewall
-    ansible: professormanhattan.firewall
   fission:
     _bin: fission
     _desc: Fast and Simple Serverless Functions for Kubernetes
@@ -5795,6 +5787,11 @@ softwarePackages:
     _github: https://github.com/nginx/nginx
     _home: https://nginx.org/
     _name: NGINX
+    _ports:
+      - port: 80
+        proto: udp
+      - port: 443
+        proto: udp
     ansible: professormanhattan.nginx
     apt: nginx
     brew: nginx
@@ -7099,13 +7096,37 @@ softwarePackages:
     _name: Microsoft Remote Desktop
     _when:cask: '! test -d "/Applications/Microsoft Remote Desktop.app"'
     cask: microsoft-remote-desktop
+  aiac:
+    _bin: aiac
+    _github: https://github.com/gofireflyio/aiac
+    _name: AIAC
+    brew: gofireflyio/aiac/aiac
+    go: github.com/gofireflyio/aiac/v3@latest
+  firewalld:
+    _bin: firewall-cmd
+    _github: https://github.com/firewalld/firewalld
+    _name: FirewallD
+    _service: firewalld
+    _pre: if command -v ufw > /dev/null; then sudo ufw disable; fi
+    _service: firewalld
+    _notes: https://computingforgeeks.com/install-and-use-firewalld-on-ubuntu/
+    apt: firewalld
+    dnf: firewalld
+    emerge: net-firewall/firewalld
+    pacman: firewalld
+    script:darwin: sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
+    zypper: firewalld
   xrdp:
     _bin: xrdp
     _desc: null
     _docs: null
-    _github: null
-    _home: null
+    _github: https://github.com/neutrinolabs/xrdp
+    _home: http://www.xrdp.org/
     _name: xrdp
+    _ports:
+      - port: 3389
+        proto: tcp
+    _post: sudo adduser xrdp ssl-cert
     _service: xrdp
     _service:yay:
       - xrdp
@@ -7113,6 +7134,8 @@ softwarePackages:
     _note: Should work like professormanhattan.remotedesktop
     apt: xrdp
     dnf: xrdp
+    pacman: xrdp
+    zypper: xrdp
     yay: xrdp
   responsively:
     _bin: null
@@ -9566,6 +9589,11 @@ softwarePackages:
     _home: null
     _name: Yarnhook
     npm: yarnhook
+  search-gpt:
+    _bin: searchgpt
+    _github: https://github.com/tobiasbueschel/search-gpt
+    _name: Search GPT
+    npm: search-gpt
   yj:
     _bin: yj
     _desc: CLI program that allows you to convert between YAML, TOML, JSON, and HCL.
@@ -9687,6 +9715,9 @@ softwarePackages:
     _bin: tigervncpasswd
     _github: https://github.com/DukeyToo/tightvnc-server
     _name: TightVNC Server
+    _ports:
+      - port: 5900-5909
+        proto: tcp
     apt: tigervnc-standalone-server
     dnf: tigervnc-server
     pacman: tigervnc
@@ -9830,6 +9861,7 @@ softwarePlugins:
   raycast:
     cmd: null
     plugins:
+      - https://www.raycast.com/abielzulio/chatgpt
       - https://www.raycast.com/BalliAsghar/mailsy
   steampipe:
     cmd: steampipe plugin install {PLUGIN}

@@ -113,6 +113,7 @@ let installOrdersPre = []
 let installOrdersPost = []
 let installOrdersService = []
 let installOrdersGroups = []
+let installOrdersPorts = []
 let installOrdersPlugins = []
 let installOrdersBinLink = []
 let brewUpdated, osType, osID, snapRefreshed
@@ -445,6 +446,10 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
   const groupsHook = getHook(packages, 'groups', scopedPreference, preference)
   if (groupsHook) {
     installOrdersGroups = installOrdersGroups.concat(typeof groupsHook === 'string' ? [groupsHook] : groupsHook)
+  }
+  const portsHook = getHook(packages, 'ports', scopedPreference, preference)
+  if (portsHook) {
+    installOrdersPorts = installOrdersPorts.concat(typeof portsHook === 'string' ? [portsHook] : portsHook)
   }
   processPluginOrders(pkg)
   if (!installOrders[preference]) {
@@ -1543,6 +1548,41 @@ async function addUserGroup(group) {
   }
 }
 
+/**
+ * Adds the rules specified in the `_ports` key of each entry in the `software.yml` file.
+ * 
+ * @param rule Firewall rule in the form of 8888/tcp or 9999/udp. Can also be the XML file name stored in ~/.config/firewall/etc/firewalld/services.
+ */
+async function addFirewallRule(rule) {
+  const logStage = 'Firewall'
+  log('info', logStage, `Ensuring the ${rule} rule is added`)
+  if (osType === 'linux') {
+    const firewallCmd = which.sync('firewall-cmd', { nothrow: true })
+    // const ufw = which.sync('ufw', { nothrow: true })
+    if (firewallCmd) {
+      if (typeof rule.substring(0, 1) === 'number') {
+        runCommand(`Adding the ${rule} to the firewall configuration`, `sudo firewall-cmd --add-port=${rule} --permanent`)
+      } else {
+        runCommand(`Adding the ${rule} user / group`, `sudo firewall-cmd --add-service=${rule} --permanent`)
+      }
+    } else {
+      log('error', logStage, `The firewall-cmd executable is not present on the system so the firewall cannot be configured`)
+    }
+  } else if (osType === 'darwin') {
+    runCommand(`Creating the ${rule} group`, `sudo dscl . create /Groups/${rule}`)
+    runCommand(`Ensuring the ${rule} group has a GID`, `bash -c 'if [[ "$(sudo dscl . read /Groups/$GROUP gid 2>&1)" == *"No such key"* ]]; then MAX_ID_GROUP="$(dscl . -list /Groups gid | awk "{print $2}" | sort -ug | tail -1)"; GROUP_ID="$((MAX_ID_GROUP+1))"; sudo dscl . create /Groups/${rule} gid "$GROUP_ID"; fi'`)
+    runCommand(`Adding the ${rule} user`, `sudo dscl . create /Users/${rule}`)
+    runCommand(`Ensuring the ${rule} user has a PrimaryGroupID`, `bash -c 'if [[ "$(sudo dscl . read /Users/${rule} PrimaryGroupID 2>&1)" == *"No such key"* ]]; then sudo dscl . create /Users/${rule} PrimaryGroupID 20; fi'`)
+    runCommand(`Ensuring the ${rule} user has a UniqueID`, `bash -c 'if [[ "$(sudo dscl . read /Users/${rule} UniqueID 2>&1)" == *"No such key"* ]]; then MAX_ID_USER="$(dscl . -list /Users UniqueID | sort -nr -k 2 | head -1 | grep -oE "[0-9]+$")"; USER_ID="$((MAX_ID_USER+1))"; sudo dscl . create /Users/${rule} UniqueID "$USERID"; fi'`)
+    runCommand(`Adding the ${rule} user to the ${rule} group`, `sudo dseditgroup -o edit -t user -a ${rule} ${rule}`)
+    runCommand(`Adding the ${process.env.USER} user to the ${rule} group`, `sudo dseditgroup -o edit -t user -a ${process.env.USER} ${rule}`)
+  } else if (osType === 'windows') {
+    log('warn', logStage, `Windows support not yet added`)
+  } else {
+    log('warn', logStage, `Unknown operating system type`)
+  }
+}
+
 async function updateService(service) {
   const logStage = 'Service Service'
   if (osType === 'linux') {
@@ -1804,6 +1844,10 @@ async function installSoftware(pkgsToInstall) {
     const asyncOrders = []
     asyncOrders.push(installPackageList(packageManager, installOrders[packageManager]))
     await Promise.all(asyncOrders)
+  }
+  installOrdersPorts.length && log('info', 'Firewall', 'Configuring firewall exceptions')
+  for (const firewallRule of installOrdersPorts) {
+    await addFirewallRule(firewallRule)
   }
   installOrdersService.length && log('info', 'Post-Install', `Running package-specific post-installation steps`)
   for (const service of installOrdersService) {
