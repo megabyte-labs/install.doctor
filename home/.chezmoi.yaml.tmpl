@@ -140,6 +140,11 @@ data:
     docker:
       doRegion: nyc1
     domain: "{{ $domain }}"
+    glusterfs:
+      peers:
+        - 10.1.1.10
+        - 10.1.1.11
+        - 10.1.1.12
     headless: {{ $headless }}
     home: "{{ .chezmoi.homeDir }}"
     homeParentFolder: "{{ if eq .chezmoi.os "linux" }}/home{{ else if eq .chezmoi.os "darwin" }}/Users{{ else }}C:\Users{{ end }}"

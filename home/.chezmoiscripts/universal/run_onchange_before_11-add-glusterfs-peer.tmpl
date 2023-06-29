@@ -1,0 +1,33 @@
+{{- if (eq .host.distro.family "linux") -}}
+#!/usr/bin/env bash
+# @file GlusterFS Trusted Storage Pool
+# @brief Adds servers to GlusterFS to create/expand a Trusted Storage Pool
+# @description
+#     This script adds the given list of servers/peers to the Trusted Storage Pool. After installing Gluster
+#     on your servers and before creating a trusted storage pool, each server belongs to a storage pool
+#     consisting of only that server. This script performs 'peer probing' to add the given list of servers
+#     forming a Trusted Storage Pool. If a Trusted Storage Pool exists, the given servers are added to it.
+#
+#     ## Configuration Variables
+#
+#     The following chart details the input variable(s) that are used to determine the configuration of the glusterfs:
+#
+#     | Variable           | Description                                                |
+#     |--------------------|------------------------------------------------------------|
+#     | `glusterfs.peers`  | List of servers to be added to the Trusted Storage Pool    |
+
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
+
+### Add servers to Trusted Storage Pool
+if command -v gluster > /dev/null; then
+  logg info 'Adding servers to Gluster Trusted Storage Pool'
+  {{ if and .glusterfs.peers (gt (len .glusterfs.peers) 0) }}
+  {{- range .glusterfs.peers -}}
+  sudo gluster peer probe {{ . }} || echo 'Failed adding the peer {{ . }}'
+  {{ end }}
+  {{ end }}
+else
+  logg info 'Gluster is not installed or it is not available in the PATH'
+fi
+{{ end -}}
