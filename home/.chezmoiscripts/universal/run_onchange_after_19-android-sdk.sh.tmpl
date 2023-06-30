@@ -1,0 +1,18 @@
+{{- if ne .host.distro.family "windows" -}}
+#!/usr/bin/env bash
+# @file Android SDK Pre-Install
+# @brief Pre-installs a list of Android SDKs and Tools
+# @description
+#     This script pre-installs Android SDKs and Tools defined in [`.chezmoidata.yaml`](https://github.com/megabyte-labs/install.doctor/tree/master/home/.chezmoidata.yaml)
+#     so that the user does not have to do anything on launching Android Studio for the first time.
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+### Run `sdkmanager`, if it is installed, to install SDKs and Tools
+if command -v vim > /dev/null; then
+    {{ range .androidSDKs }}
+    echo 'y' | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --install "{{ . }}" 2>&1 /dev/null
+    {{ end }}
+fi
+{{ end -}}
