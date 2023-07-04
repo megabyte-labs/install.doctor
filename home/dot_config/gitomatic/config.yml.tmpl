@@ -1,0 +1,28 @@
+---
+### Supported input fields
+#  author: Author name for git commits (default "gitomatic")
+#  email: Email address for git commits (default "gitomatic@fribbledom.com")
+#  interval: How often to check for changes (default "1m")
+#  path: Location where the repository exists locally
+#  privkey: Location of private key used for authentication (default "~/.ssh/id_rsa")
+#  pull: Automatically pull changes (default true)
+#  push: Automatically push changes (default true)
+#  username: Username used for authentication
+#  passwordFile: File containing the Token to be used for auth in encrypted format. Needed when `username` is provided
+
+repositories:
+  - name: Repo1
+    path: "$HOME/workspace/repo1"
+    pull: true
+    push: false
+    interval: 10m
+    username: vcsuser
+    passwordFile: "$HOME/.config/gitomatic/GITHUB_TOKEN_REPO1"
+  - name: Repo2
+    path: "$HOME/workspace/repo2"
+    pull: true
+    push: true
+    interval: 30m
+    author: developer1
+    email: developer1@megabyte.space
+    privKeyFile: "$HOME/.ssh/id_rsa"
