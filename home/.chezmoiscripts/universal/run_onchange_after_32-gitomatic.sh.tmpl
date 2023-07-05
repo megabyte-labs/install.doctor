@@ -1,0 +1,68 @@
+{{- if eq .host.distro.family "linux" -}}
+#!/usr/bin/env bash
+# @file git-o-matic Configuration
+# @brief Configures and starts service(s) on Linux systems to monitor Git repositories
+# @description
+#     git-o-matic is a tool to monitor git repositories and automatically pull/push changes. Multiple repositories can be
+#     monitored by running multiple instances of `gitomatic`. Username/Token and SSH Key based authentication are supported
+#
+#     If the `gitomatic` program is installed, this script uses the configuration stored in `home/dot_config/gitomatic/config.yml.tmpl`
+#     (that unpacks with Chezmoi to `~/.config/gitomatic/config.yml`) to configure and start systemd user service(s). One service monitors
+#     one repository. It is possible to configure:
+#     * The interval between checks
+#     * The Author name and Email to use if Pushing is enabled,
+#     * Enable/disable Pushing and Pulling and
+#     * The authentication method to use
+#
+#     ## Notes
+#     * If SSH Key based authentication is to be used, ensure that the Public key is configured in Git Provider and that the Private Key
+#       file exists in the system at the path specified in the configuration
+#     * If Username/Token is to be used, provide the `username` value in plaintext in the configuration file. The Token needs to be encrypted
+#       and stored following the Install Doctor method documented [here](https://install.doctor/docs/customization/secrets), and the name of
+#       file should be provided in the configuration file against the `passwordTokenFile` field.
+#
+#     ## Links
+#
+#     * [gitomatic GitHub repository](https://github.com/muesli/gitomatic/)
+#     * [gitomatic configuration](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/gitomatic/config.yml.tmpl)
+#     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+### Create Systemd services to run gitomatic
+if command -v gitomatic > /dev/null; then
+  {{ if and (stat (joinPath .chezmoi.sourceDir "dot_config" "gitomatic" "config.yml.tmpl")) (gt (len (include "dot_config/gitomatic/config.yml.tmpl" | fromYaml ).repositories) 0) }}
+    ### Create directory to store Systemd service definition files
+    mkdir -p "$HOME/.config/systemd/user/"
+    {{ range (include "dot_config/gitomatic/config.yml.tmpl" | fromYaml ).repositories }}
+      ### Create service definition files
+      cat << EOF{{ .name }} > "$HOME/.config/systemd/user/{{ .name | lower }}.service"
+      [Unit]
+      Description=Service to watch repo {{ .path }}
+
+      [Service]
+      Type=simple
+      ExecStart=gitomatic {{- if index . "username" }} -username {{ .username }}{{ end }}
+       {{- if and (index . "passwordTokenFile") (stat (joinPath $.chezmoi.sourceDir ".chezmoitemplates" "secrets" .passwordTokenFile)) }} -password {{ includeTemplate (joinPath "secrets" .passwordTokenFile) | decrypt }}{{ end }}
+       {{- if index . "privKeyFile" }} -privkey {{ .privKeyFile }}{{ end }}
+       {{- if index . "pull" }} -pull {{ .pull }}{{ end }}
+       {{- if index . "push" }} -push {{ .push }}{{ end }}
+       {{- if index . "author" }} -author {{ .author }}{{ end }}
+       {{- if index . "email" }} -email {{.email }}{{ end }} {{ .path }}
+      Restart=on-failure
+
+      [Install]
+      WantedBy=default.target
+EOF{{ .name }}
+
+      ### Reload systemd daemon
+      systemctl --user daemon-reload
+      ### Enable and start the service to monitor the repository
+      systemctl --user enable --now {{ .name | lower }}
+    {{ end -}}
+  {{ end }}
+else
+  logg info 'Git-o-matic is not installed or it is not available in PATH'
+fi
+{{ end -}}
