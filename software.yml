@@ -3531,6 +3531,8 @@ softwarePackages:
     pacman: gitlab-runner
     port: gitlab-runner
     scoop: gitlab-runner
+    _service: gitlab-runner
+    _type: cli
   gitleaks:
     _bin: gitleaks
     _desc: Extension to scan git repos (or files) for secrets using regex and entropy
@@ -8372,7 +8374,7 @@ softwarePackages:
     scoop: dua
     xbps: dua-cli
   soduto:
-    _github: 
+    _github:
     _name: Soduto
     _when:cask: '! test -d /Applications/Soduto.app'
     cask: soduto
