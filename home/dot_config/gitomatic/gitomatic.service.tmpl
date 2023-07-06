@@ -1,0 +1,10 @@
+[Unit]
+Description=Service to watch git repositories
+
+[Service]
+Type=simple
+ExecStart={{ .chezmoi.homeDir }}/.local/bin/gitomatic_service
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
