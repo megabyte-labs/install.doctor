@@ -92,7 +92,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
 
   ### Cod
   if command -v cod > /dev/null; then
-	  source <(cod init $$ bash)
+	  . <(cod init $$ bash)
   fi
 
   ### Google Cloud SDK
@@ -107,12 +107,12 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
 
   ### Emplace
   if command -v emplace > /dev/null; then
-    source <(emplace init bash)
+    . <(emplace init bash)
   fi
 
   ### iTerm2
-  if [ -f "$HOME/.local/src/iterm2/shell-integration.bash" ]; then
-    source "$HOME/.local/src/iterm2/shell-integration.bash"
+  if [ -f "$HOME/.local/scripts/iterm2.bash" ]; then
+    . "$HOME/.local/scripts/iterm2.bash"
   fi
 
   ### Java (asdf)
