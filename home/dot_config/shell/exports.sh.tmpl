@@ -103,6 +103,9 @@ export ASDF_PYTHON_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-python-p
 ### AWS CLI
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
+if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt" ]; then
+  export AWS_CA_BUNDLE="${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt"
+fi
 
 ### Azure CLI
 export AZURE_CONFIG_DIR="$XDG_CONFIG_HOME/azure"
@@ -274,6 +277,9 @@ fi
 
 ### Node.js
 export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_repl_history"
+if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" ]; then
+  export NODE_EXTRA_CA_CERTS="${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem"
+fi
 
 ### NPM
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
@@ -314,6 +320,13 @@ export PATH="$PATH:$PNPM_HOME"
 ### Prettierd
 # Specify location of the default Prettierd configuration
 # export PRETTIERD_DEFAULT_CONFIG=""
+
+### Python
+if command -v python3 > /dev/null; then
+  export CERT_PATH="$(python3 -m certifi)"
+  export SSL_CERT_FILE="$CERT_PATH"
+  export REQUESTS_CA_BUNDLE="$CERT_PATH"
+fi
 
 ### Readline
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
