@@ -8,8 +8,6 @@
 	<string>{{ .host.cloudflare.teamsOrg }}</string>
 	<key>service_mode</key>
 	<string>warp</string>
-	<key>support_url</key>
-	<string>https://{{ .host.domain }}</string>
 	<key>auth_client_id</key>
 	<string>{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_TEAMS_CLIENT_ID")) }}{{- includeTemplate "secrets/CLOUDFLARE_TEAMS_CLIENT_ID" | decrypt | trim -}}{{ else }}{{- env "CLOUDFLARE_TEAMS_CLIENT_ID" -}}{{ end }}</string>
 	<key>auth_client_secret</key>
