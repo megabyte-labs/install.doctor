@@ -391,9 +391,6 @@ zstyle ':autocomplete:history-incremental-search-*:*' list-lines 14
 if command -v fzf > /dev/null; then
 	zstyle ':autocomplete:*' fzf-completion yes
 fi
-if command -v zoxide > /dev/null; then
-	zstyle ':autocomplete:recent-dirs' backend zoxide
-fi
 
 ### Atuin
 if command -v atuin > /dev/null; then
@@ -430,9 +427,9 @@ if [ -f "$HOME/.local/scripts/iterm2.zsh" ]; then
 fi
 
 ### Java (asdf)
-# if [ -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ]; then
-#   . "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
-# fi
+if [ -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ]; then
+  . "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
+fi
 
 ### Navi (Ctrl+G)
 if command -v navi > /dev/null; then
@@ -464,5 +461,7 @@ fi
 
 ### zoxide
 if command -v zoxide > /dev/null; then
-	eval "$(zoxide init --cmd cd zsh)" > /dev/null
+	zstyle ':autocomplete:recent-dirs' backend zoxide
+	# eval "$(zoxide init --cmd cd zsh)" > /dev/null
+	eval "$(zoxide init zsh)"
 fi

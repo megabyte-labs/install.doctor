@@ -1,12 +1,13 @@
-{{- if (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "DIGITALOCEAN_ACCESS_TOKEN")) (env "DIGITALOCEAN_ACCESS_TOKEN")) -}}
+{{- if false -}}
 #!/usr/bin/env bash
 # @file Kasm Workspaces
-# @brief Connects to DigitalOcean Kubernetes cluster
+# @brief Sets up cloud desktop server via Kasm Workspaces
 # @description
-#     This script runs when `DIGITALOCEAN_ACCESS_TOKEN` is defined as an environment variable or as an encrypted key (see
-#     [Secrets documentation](https://install.doctor/docs/customization/secrets#encrypted-secrets)). If the check passes,
-#     then the script ensures the DigitalOcean CLI is installed (i.e. `doctl`). Then, it uses `doctl` to connect to the Kubernetes
-#     cluster defined by the the configuration stored under `.user.digitalOceanClusterId` in `home/.chezmoi.yaml.tmpl`.
+#     This script configures Kasm Workspaces.
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
+
+logg info 'Coming soon..'
+
+{{ end -}}

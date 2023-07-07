@@ -17,6 +17,10 @@
 if command -v netdata-claim.sh > /dev/null; then
     NETDATA_TOKEN="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) -}}{{- includeTemplate "secrets/NETDATA_TOKEN" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_TOKEN" -}}{{- end -}}"
     NETDATA_ROOM="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_ROOM")) -}}{{- includeTemplate "secrets/NETDATA_ROOM" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_ROOM" -}}{{- end -}}"
+    # Add user / group with script in ~/.local/bin/add-user, if it is available
+    if command -v add-user > /dev/null; then
+        sudo add-user netdata
+    fi
     # netdata-claim.sh must be run as netdata user
     sudo -H -u netdata bash -c 'netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="{{ .netdataClaimURL }}"'
 

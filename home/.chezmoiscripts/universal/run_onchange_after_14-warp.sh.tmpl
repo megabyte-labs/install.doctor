@@ -94,13 +94,13 @@ if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; th
     else
         logg warn 'Session is SSH so adding Cloudflare encryption key to trusted certificates via the security program is being bypassed since it requires Touch ID / Password verification.'
     fi
-    if [ -d /usr/local/etc/openssl@3/certs ]; then
+    if [ -d "/usr/local/etc/openssl@3/certs" ]; then
         # Location on Intel macOS
         logg info 'Adding Cloudflare certificate to `/usr/local/etc/openssl@3/certs/Cloudflare_CA.pem`'
         echo | sudo cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem
         logg info 'Running `/usr/local/opt/openssl@3/bin/c_rehash`'
         /usr/local/opt/openssl@3/bin/c_rehash
-    elif [ -d /opt/homebrew/etc/openssl@3/certs ]; then
+    elif [ -d "/opt/homebrew/etc/openssl@3/certs" ]; then
         # Location on arm64 macOS
         logg info 'Adding Cloudflare certificate to `/opt/homebrew/etc/openssl@3/certs/Cloudflare_CA.pem`'
         echo | sudo cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> /opt/homebrew/etc/openssl@3/certs/Cloudflare_CA.pem
@@ -129,7 +129,7 @@ if command -v warp-cli > /dev/null; then
         logg info 'Registering CloudFlare WARP'
         warp-cli --accept-tos register
     else
-        logg info 'Already registered with CloudFlare WARP'
+        logg info 'Either there is a misconfiguration or the device is already registered with CloudFlare WARP'
     fi
 
     ### Connect CloudFlare WARP
@@ -137,7 +137,7 @@ if command -v warp-cli > /dev/null; then
         logg info 'Connecting to CloudFlare WARP'
         warp-cli --accept-tos connect
     else
-        logg info 'Already connected to CloudFlare WARP'
+        logg info 'Either there is a misconfiguration or the device is already connected with CloudFlare WARP'
     fi
 else
     logg warn '`warp-cli` was not installed so CloudFlare Zero Trust cannot be joined'

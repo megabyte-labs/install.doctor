@@ -49,7 +49,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     ### Styled Terminal
     export BASH_IT="$HOME/.local/bash_it"
     export BASH_IT_THEME="powerline"
-    if [ -f "$BASH_IT/bash_it.sh" ]; then
+    if command -v powerline-daemon > /dev/null && [ -f "$BASH_IT/bash_it.sh" ]; then
       . "$BASH_IT/bash_it.sh"
     elif command -v oh-my-posh > /dev/null; then
       # Oh My Posh (See: https://ohmyposh.dev/)
@@ -142,6 +142,6 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
 
   ### zoxide
   if command -v zoxide > /dev/null; then
-    eval "$(zoxide init --cmd cd bash)" > /dev/null
+    eval "$(zoxide init bash)"
   fi
 fi

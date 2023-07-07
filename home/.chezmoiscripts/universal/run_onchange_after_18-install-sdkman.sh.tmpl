@@ -17,4 +17,6 @@ if [ ! -d "$SDKMAN_DIR" ]; then
   bash -c 'sdk install java'
 else
   logg info 'SDKMan appears to already be installed.'
+  logg info 'Running `sdk update`'
+  sdk update
 fi
