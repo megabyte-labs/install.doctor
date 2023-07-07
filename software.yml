@@ -240,6 +240,9 @@ softwarePackages:
       - web-font-generator
       - what-ip
       - live-captions
+      - libre-menu-editor
+      - iso-image-writer
+      - trayscale
   _nautilus-extensions:
     _deps:
       - nautilus-brasero
@@ -251,6 +254,15 @@ softwarePackages:
       - nautilus-search-tool
       - nautilus-share
       - nautilus-wipe
+  trayscale:
+    _bin: trayscale
+    _desc: Unofficial Menu Bar for Tailscale on Linux
+    _name: Trayscale
+    flatpak: dev.deedles.Trayscale
+  iso-image-writer:
+    _bin: iso-image-writer
+    _name: ISO Image Writer
+    flatpak: org.kde.isoimagewriter
   pinapp:
     _bin: pinapp
     flatpak: io.github.fabrialberio.pinapp
@@ -599,6 +611,22 @@ softwarePackages:
     brew:darwin:
       - tart
       - cirruslabs/cli/gitlab-tart-executor
+  web-ext:
+    _bin: web-ext
+    _github: https://github.com/mozilla/web-ext
+    _name: Web Extension CLI by Mozilla
+    npm: web-ext
+  dockly:
+    _bin: dockly
+    _github: https://github.com/lirantal/dockly
+    _name: Dockly
+    npm: dockly
+  gitmoji-cli:
+    _bin: gitmoji
+    _github: https://github.com/carloscuesta/gitmoji-cli
+    _npm: Gitmoji CLI
+    brew: gitmoji
+    npm: gitmoji-cli
   quickemu:
     _bin: quickemu
     _github: https://github.com/quickemu-project/quickemu
@@ -1676,8 +1704,16 @@ softwarePackages:
       - libvirt-dbus
     _systemd: cockpit
     _systemd:pacman: cockpit.socket
+  libre-menu-editor:
+    _bin: libre-menu-editor
+    _github: null
+    _name: Libre Menu Editor for GNOME
+    flatpak: page.codeberg.libre_menu_editor.LibreMenuEditor
   cockpit-client:
     _bin: cockpit-client
+    _home: https://cockpit-project.org/
+    _github: https://github.com/cockpit-project/cockpit
+    _name: Cockpit Desktop Client
     flatpak: org.cockpit_project.CockpitClient
   cocoapods:
     _bin: null
@@ -5148,6 +5184,12 @@ softwarePackages:
   gnome-extension-manager:
     _bin: gnome-extension-manager
     flatpak: com.mattjakeman.ExtensionManager
+  masscan:
+    _bin: masscan
+    _github: https://github.com/robertdavidgraham/masscan
+    _name: Masscan
+    brew: masscan
+    choco: masscan
   masscode:
     _bin: null
     _desc: A free and open source code snippets manager for developers
@@ -5210,6 +5252,21 @@ softwarePackages:
     dnf: gnome-boxes
     flatpak: org.gnome.Boxes
     pacman: gnome-boxes
+  mpv:
+    _bin: mpv
+    _github: https://github.com/mpv-player/mpv
+    _name: MPV
+    brew: mpv
+    cask: mpv
+    choco: mpv
+    flatpak: io.mpv.Mpv
+  swifty:
+    _bin: swifty
+    _github: 
+    _name: Swifty
+    appimage: swiftyapp/swifty
+    cask: swifty
+    exe: https://github.com/swiftyapp/swifty/releases/download/v0.6.13/Swifty-Setup-0.6.13.exe
   microsoft-office:
     _bin: null
     _desc: '[Microsoft Office](https://www.microsoft.com/en-us/microsoft-365/microsoft-office), or simply Office, is a family of client software, server software, and services developed by Microsoft.'
@@ -5358,6 +5415,11 @@ softwarePackages:
     cask: monero-wallet
     choco: monero
     flatpak: org.getmonero.Monero
+  wallpaper-cli:
+    _bin: wallpaper
+    _github: https://github.com/sindresorhus/wallpaper-cli
+    _name: Wallpaper CLI
+    npm: wallpaper-cli
   monero-cli:
     _bin: monerod
     _desc: CLI for Monero, a leading cryptocurrency focused on private and censorship-resistant transactions.
@@ -7067,6 +7129,13 @@ softwarePackages:
     ansible:linux: professormanhattan.rdm
     flatpak: app.resp.RESP
     snap: redis-desktop-manager
+  redis-insight:
+    _bin: redis-insight
+    _github: https://github.com/RedisInsight/RedisInsight
+    _name: Redis Insight
+    _when:cask: '! test -d /Applications/RedisInsight.app'
+    cask: redisinsight
+    flatpak: com.redis.RedisInsight
   recoverpy:
     _deps:
       - coreutils

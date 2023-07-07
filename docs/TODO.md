@@ -135,6 +135,14 @@ The following items are Docker containers that we may want to include as default
 * https://github.com/node-red/node-red
 * https://www.overleaf.com/
 * https://github.com/caprover/caprover
+* [Title](https://github.com/xemle/home-gallery)
+* [Title](https://github.com/chartbrew/chartbrew)
+* [Title](https://github.com/AlexSciFier/neonlink)
+* [Title](https://github.com/ForestAdmin/lumber)
+* [Title](https://github.com/subnub/myDrive)
+* [Title](https://github.com/mickael-kerjean/filestash)
+* [Title](https://github.com/GetStream/Winds)
+* [Title](https://github.com/GladysAssistant/Gladys)
 
 ## AI
 
@@ -203,6 +211,8 @@ The following items have been reviewed but need to be revisited due to complexit
 * [Title](https://github.com/hyprwm/Hypr)
 * [Title](https://github.com/Sygil-Dev/sygil-webui)
 * [Title](https://github.com/psychic-api/psychic)
+* [Title](https://github.com/telekom-security/tpotce)
+* [Title](https://flathub.org/apps/com.airtame.Client)
 
 ## Docker Issue
 
