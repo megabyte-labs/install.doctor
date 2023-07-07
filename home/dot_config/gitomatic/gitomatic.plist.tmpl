@@ -1,0 +1,13 @@
+{{- if eq .host.distro.family "darwin" -}}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Label</key>
+        <string>com.gitomatic</string>
+        <key>Program</key>
+        <string>{{ .chezmoi.homeDir }}/.local/bin/gitomatic_service</string>
+        <key>RunAtLoad</key>
+    </dict>
+</plist>
+{{ end }}

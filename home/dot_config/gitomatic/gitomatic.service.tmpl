@@ -1,3 +1,4 @@
+{{- if eq .host.distro.family "linux" -}}
 [Unit]
 Description=Service to watch git repositories
 
@@ -8,3 +9,4 @@ Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
+{{ end }}
