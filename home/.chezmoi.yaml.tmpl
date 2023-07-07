@@ -1,5 +1,6 @@
 {{- $cloudflareR2AccountId := (default "84fa0d1b16ff8086dd958c468ce7fd59" (env "CLOUDFLARE_R2_ID")) -}}
 {{- $cloudflareUsername := (default "brian@megabyte.space" (env "CLOUDFLARE_USERNAME")) -}}
+{{- $cloudflareTeamsOrg := (default "manhattan" (env "CLOUDFLARE_TEAMS_ORG")) -}}
 {{- $desktopSession := true -}}
 {{- $domain := (default "megabyte.space" (env "PUBLIC_SERVICES_DOMAIN")) -}}
 {{- $email := (default "brian@megabyte.space" (env "PRIMARY_EMAIL")) -}}
@@ -127,6 +128,8 @@ gpg:
 data:
   host:
     arch: "{{ .chezmoi.arch }}"
+    cloudflare:
+      teamsOrg: "{{ $cloudflareTeamsOrg }}"
     cpu:
       cores: "{{ $cpuCores }}"
       threads: "{{ $cpuThreads }}"
@@ -144,7 +147,7 @@ data:
       - glurl: "https://gitlab.com/"
         runnerDescription: "Docker executor"
         runnerImage: "alpine:latest"
-        runnerTags: ""
+        runnerTags: "alpine,linux"
       - glurl: "https://gitlab.com/"
         baseVM: "debian"
         runnerDescription: "VirtualBox executor - Debian, OpenJDK 20"

@@ -7,11 +7,11 @@
 	<key>onboarding</key>
 	<false />
 	<key>organization</key>
-	<string>manhattan</string>
+	<string>{{ .host.cloudflare.teamsOrg }}</string>
 	<key>service_mode</key>
 	<string>warp</string>
 	<key>support_url</key>
-	<string>https://megabyte.space</string>
+	<string>https://{{ .host.domain }}</string>
 	<key>auth_client_id</key>
 	<string>{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_TEAMS_CLIENT_ID")) -}}{{- includeTemplate "secrets/CLOUDFLARE_TEAMS_CLIENT_ID" | decrypt | trim -}}{{- else -}}{{- env "CLOUDFLARE_TEAMS_CLIENT_ID" -}}{{- end -}}</string>
 	<key>auth_client_secret</key>
