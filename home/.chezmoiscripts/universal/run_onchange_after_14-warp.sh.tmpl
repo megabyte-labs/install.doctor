@@ -153,13 +153,13 @@ if command -v warp-cli > /dev/null; then
     
     ### Git
     if command -v git > /dev/null; then
-        logg info "Configuring git to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt""
-        git config --global http.sslcainfo "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt"
+        logg info "Configuring git to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem""
+        git config --global http.sslcainfo "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem"
     fi
 
     ### NPM
     if command -v npm > /dev/null; then
-        logg info "Configuring npm to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt""
+        logg info "Configuring npm to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem""
         npm config set cafile "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem"
     fi
 

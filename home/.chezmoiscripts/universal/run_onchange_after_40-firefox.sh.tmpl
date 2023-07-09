@@ -77,7 +77,7 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
     ### Determine executable to use
     logg info "Processing Firefox profile location $SETTINGS_DIR"
     unset FIREFOX_EXE
-    if [ "$SETTINGS_DIR" == "$HOME/.var/app/org.mozilla.firefox" ]; then
+    if [ "$SETTINGS_DIR" == "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox" ]; then
         if ! command -v org.mozilla.firefox > /dev/null || [ ! -d "$HOME/.var/app/org.mozilla.firefox" ]; then
             continue
         else
