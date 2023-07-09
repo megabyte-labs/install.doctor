@@ -579,6 +579,7 @@ softwarePackages:
     _github: https://github.com/appium/appium
     _home: https://appium.io/
     _name: Appium
+    _service: appium
     ansible: professormanhattan.appium
     brew: appium
     choco: appium-desktop
@@ -602,6 +603,7 @@ softwarePackages:
   http-toolkit:
     _github: https://github.com/httptoolkit/httptoolkit
     _name: HTTP Toolkit
+    _when:cask: '! test -d "/Applications/HTTP Toolkit.app"'
     cask: http-toolkit
     winget: HTTPToolKit.HTTPToolKit
   tart:
@@ -775,7 +777,7 @@ softwarePackages:
     _github: https://github.com/AstroNvim/AstroNvim
     _home: https://astronvim.github.io/
     _name: AstroNvim
-    _post: nvim --headless -c 'autocmd User PackerComplete quitall'
+    _post: nvim --headless -c 'autocmd User PackerComplete quitall' &
   typescript-to-lua:
     _bin: tstl
     _github: https://github.com/TypeScriptToLua/TypeScriptToLua
@@ -1589,7 +1591,7 @@ softwarePackages:
     _github: https://github.com/Cisco-Talos/clamav
     _home: https://www.clamav.net/
     _name: ClamAV
-    _post: freshclam
+    _post: if [ -f "${XDG_DATA_CONFIG:-$HOME/.config}/clamav/freshclam.conf" ]; then sudo cp -f "${XDG_DATA_CONFIG:-$HOME/.config}/clamav/freshclam.conf" /usr/local/etc/clamav/freshclam.conf; fi && freshclam
     _service:apt: clamav-freshclam
     _service:dnf: clamd-freshclam
     _service:pacman: clamav-freshclam
@@ -5865,6 +5867,7 @@ softwarePackages:
         proto: tcp
       - port: 443
         proto: tcp
+    _service: nginx
     ansible: professormanhattan.nginx
     apt: nginx
     brew: nginx
@@ -7062,7 +7065,7 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _when: echo '! ((brew list provisionql | grep ProvisionQL > /dev/null) && (brew list qlcolorcode | grep QLColorCode > /dev/null) && (brew list qlimagesize | grep qlImageSize > /dev/null) && (brew list qlmarkdown | grep QLMarkdown > /dev/null) && (brew list qlstephen | grep QLStephen > /dev/null) && (brew list qlvideo | grep QLVideo > /dev/null) && (brew list quicklook-json | grep QuickLookJSON > /dev/null) && (brew list quicklookapk | grep QuickLookAPK > /dev/null) && (brew list webpquicklook | grep WebpQuickLook > /dev/null))' | bash
+    _when: '! (brew list provisionql | grep ProvisionQL > /dev/null && brew list qlcolorcode | grep QLColorCode > /dev/null && brew list qlimagesize | grep qlImageSize > /dev/null && brew list qlmarkdown | grep QLMarkdown > /dev/null && brew list qlstephen | grep QLStephen > /dev/null && brew list qlvideo | grep QLVideo > /dev/null && brew list quicklook-json | grep QuickLookJSON > /dev/null && brew list quicklookapk | grep QuickLookAPK > /dev/null && brew list webpquicklook | grep WebpQuickLook > /dev/null)'
     cask:
       - provisionql
       - qlcolorcode
@@ -7718,6 +7721,7 @@ softwarePackages:
     _github: https://github.com/drakkan/sftpgo
     _home: null
     _name: sftpgo
+    _service: sftpgo
     brew: sftpgo
     choco: sftpgo
     github: github.com/drakkan/sftpgo
@@ -9020,8 +9024,9 @@ softwarePackages:
     _github: https://github.com/vectordotdev/vector
     _home: https://vector.dev/
     _name: Vector
+    _service: vectordotdev/brew/vector
     # Unlisted on their website and formulae didn't seem to be registering the bin in the PATH
-    # brew: vectordotdev/brew/vector
+    brew: vectordotdev/brew/vector
     helm: https://helm.vector.dev
     pacman: vector
     script:darwin: curl --proto '=https' --tlsv1.2 -sSf https://sh.vector.dev | bash
