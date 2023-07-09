@@ -37,7 +37,8 @@
 #     * Google Drive for desktop
 #
 #     Settings used to configure Firefox are housed inside of the Firefox configuration files stored as seperate configuration files
-#     outside of this script.
+#     outside of this script. **Note: The scripts that enable CloudFlare certificates for all these programs are currently commented out
+#     in this script.**
 #
 #     ## Notes
 #
@@ -150,44 +151,46 @@ fi
 
 if command -v warp-cli > /dev/null; then
     ### Application certificate configuration
-    
-    ### Git
-    if command -v git > /dev/null; then
-        logg info "Configuring git to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem""
-        git config --global http.sslcainfo "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem"
-    fi
+    # Application-specific certificate authority modification is currently commented out because
+    # it is merely for traffic inspection and `npm install` fails when configured to use the CloudFlare
+    # certificate and the WARP client is not running.
+    # ### Git
+    # if command -v git > /dev/null; then
+    #     logg info "Configuring git to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem""
+    #     git config --global http.sslcainfo "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem"
+    # fi
 
-    ### NPM
-    if command -v npm > /dev/null; then
-        logg info "Configuring npm to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem""
-        npm config set cafile "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem"
-    fi
+    # ### NPM
+    # if command -v npm > /dev/null; then
+    #     logg info "Configuring npm to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem""
+    #     npm config set cafile "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem"
+    # fi
 
-    ### Python
-    if command -v python3 > /dev/null; then
-        logg info "Configuring python3 / python to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem""
-        echo | cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> $(python3 -m certifi)
-    fi
+    # ### Python
+    # if command -v python3 > /dev/null; then
+    #     logg info "Configuring python3 / python to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem""
+    #     echo | cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> $(python3 -m certifi)
+    # fi
 
-    ### Google Cloud SDK
-    if command -v gcloud > /dev/null; then
-        logg info "Configuring gcloud to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" and "${XDG_DATA_HOME:-$HOME/.local/share}/curl/cacert.pem""
-        mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/gcloud"
-        cat cacert.pem "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" > "${XDG_DATA_HOME:-$HOME/.local/share}/gcloud/ca.pem"
-        gcloud config set core/custom_ca_certs_file "${XDG_DATA_HOME:-$HOME/.local/share}/gcloud/ca.pem"
-    fi
+    # ### Google Cloud SDK
+    # if command -v gcloud > /dev/null; then
+    #     logg info "Configuring gcloud to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" and "${XDG_DATA_HOME:-$HOME/.local/share}/curl/cacert.pem""
+    #     mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/gcloud"
+    #     cat cacert.pem "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" > "${XDG_DATA_HOME:-$HOME/.local/share}/gcloud/ca.pem"
+    #     gcloud config set core/custom_ca_certs_file "${XDG_DATA_HOME:-$HOME/.local/share}/gcloud/ca.pem"
+    # fi
 
     ### Google Drive for desktop (macOS)
-    if [ -d "/Applications/Google Drive.app" ]; then
-        if [ -d "/Applications/Google Drive.app/Contents/Resources" ]; then
-            logg info "Combining Google Drive roots.pem with CloudFlare certificate"
-            mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/google-drive"
-            cat "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" "/Applications/Google Drive.app/Contents/Resources/roots.pem" >> "${XDG_DATA_HOME:-$HOME/.local/share}/google-drive/roots.pem"
-            sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootsCertsFile -string "${XDG_DATA_HOME:-$HOME/.local/share}/google-drive/roots.pem"
-        else
-            logg warn 'Google Drive.app installed but roots.pem is not available yet'
-        fi
-    fi
+    # if [ -d "/Applications/Google Drive.app" ]; then
+    #     if [ -d "/Applications/Google Drive.app/Contents/Resources" ]; then
+    #         logg info "Combining Google Drive roots.pem with CloudFlare certificate"
+    #         mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/google-drive"
+    #         cat "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" "/Applications/Google Drive.app/Contents/Resources/roots.pem" >> "${XDG_DATA_HOME:-$HOME/.local/share}/google-drive/roots.pem"
+    #         sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootsCertsFile -string "${XDG_DATA_HOME:-$HOME/.local/share}/google-drive/roots.pem"
+    #     else
+    #         logg warn 'Google Drive.app installed but roots.pem is not available yet'
+    #     fi
+    # fi
 
 
     ### Ensure MDM settings are applied (deletes after reboot on macOS)

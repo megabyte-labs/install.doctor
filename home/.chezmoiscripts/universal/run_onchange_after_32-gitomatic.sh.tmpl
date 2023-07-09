@@ -26,9 +26,9 @@
 
 ### Clone the repositories
 logg info 'Cloning the repositories'
-{{ range .data.user.gitomatic }}
-if [ ! -d {{ .path }} ] ; then
-    git clone {{ .git }} {{ .path }}
+{{ range .user.gitomatic }}
+if [ ! -d "{{ .path }}" ]; then
+    git clone "{{ .git }}" "{{ .path }}"
 fi
 {{ end -}}
 
@@ -37,7 +37,7 @@ if command -v gitomatic > /dev/null; then
     if [ -d /Applications ] && [ -d /System ]; then
         ### macOS
         logg info 'Copying `gitomatic` plist file to /Library/LaunchDaemons'
-        sudo cp -f {{ .chezmoi.homeDir }}/.config/gitomatic/gitomatic.plist /Library/LaunchDaemons/gitomatic.plist
+        sudo cp -f "{{ .chezmoi.homeDir }}/.config/gitomatic/gitomatic.plist" /Library/LaunchDaemons/gitomatic.plist
         logg info 'Running `sudo launchctl load com.gitomatic`'
         sudo launchctl load com.gitomatic
         logg info 'Running `sudo launchctl start com.gitomatic`'
@@ -45,7 +45,7 @@ if command -v gitomatic > /dev/null; then
     else
         ### Linux
         logg info 'Copying `gitomatic` systemd unit file to /etc/systemd/system/'
-        sudo cp -f {{ .chezmoi.homeDir }}/.config/gitomatic/gitomatic.service /etc/systemd/system/gitomatic.service
+        sudo cp -f "{{ .chezmoi.homeDir }}/.config/gitomatic/gitomatic.service" /etc/systemd/system/gitomatic.service
         logg info 'Reloading systemd daemon'
         sudo systemctl daemon-reload
         logg info 'Enabling and starting `gitomatic` service'
