@@ -161,6 +161,7 @@ if [ -d /Applications ] && [ -d /Library ]; then
 elif [ -d /home/linuxbrew/.linuxbrew/opt/dotnet ]; then
   export DOTNET_ROOT="/home/linuxbrew/.linuxbrew/opt/dotnet/libexec"
 fi
+export PATH="$PATH:$XDG_CONFIG_HOME/dotnet/.dotnet/tools"
 
 ### Elastic Agent
 # https://www.elastic.co/guide/en/fleet/current/agent-environment-variables.html#env-common-vars
