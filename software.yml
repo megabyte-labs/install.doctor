@@ -6191,7 +6191,7 @@ softwarePackages:
       sudo chmod 644 /etc/udev/rules.d/49-onlykey.rules
       sudo udevadm control --reload-rules
       sudo udevadm trigger
-    _when:script:darwin: test -d "/Applications/OnlyKey App.app"
+    _when:script:darwin: '! test -d "/Applications/OnlyKey App.app"'
     ansible:darwin: professormanhattan.onlykey
     script:darwin: cd /tmp && curl -sSL https://github.com/trustcrypto/OnlyKey-App/releases/download/v5.3.6/OnlyKey.App.5.3.6.dmg > OnlyKey.dmg  && hdiutil attach "/tmp/OnlyKey.dmg" &&  sudo cp -R "/Volumes/OnlyKey App/OnlyKey App.app" /Applications && sudo hdiutil detach "/Volumes/OnlyKey App" && rm -f "/tmp/OnlyKey.dmg"
     choco: onlykey
@@ -9932,7 +9932,7 @@ softwarePlugins:
     plugins:
       - deployer/deployer
   docker:
-    cmd: bash -c 'docker extension install {PLUGIN}'
+    cmd: bash -c 'if ! docker extension list | grep {PLUGIN} > /dev/null; then echo y | docker extension install {PLUGIN}; fi'
     plugins:
       - docker/disk-usage-extension
       - docker/logs-explorer-extension
@@ -9949,12 +9949,12 @@ softwarePlugins:
     plugins:
       - docker.io/nginx/unit
   dotnet:
-    cmd: dotnet tool install -g {PLUGIN}
+    cmd: bash -c 'if dotnet tool list -g | grep {PLUGIN} > /dev/null; then dotnet tool install -g {PLUGIN}; fi'
     plugins:
-      - Microsoft.CST.AttackSurfaceAnalyzer.CLI
+      - microsoft.cst.attacksurfaceanalyzer.cli
       - dotnet-format
   gcloud:
-    cmd: bash -c 'gcloud components install {PLUGIN}'
+    cmd: bash -c 'if ! gcloud components list | grep 'Installed.*{PLUGIN}' > /dev/null; then gcloud components install {PLUGIN}; fi'
     plugins:
       - app-engine-go
       - cloud-datastore-emulator
@@ -9970,7 +9970,7 @@ softwarePlugins:
       - terraform-tools
     update: gcloud components update
   gh:
-    cmd: bash -c 'if [ -n "$GITHUB_TOKEN" ] && ! gh extension list | grep {PLUGIN}; then gh extension install {PLUGIN}; fi'
+    cmd: bash -c 'if [ -n "$GITHUB_TOKEN" ] && ! gh extension list | grep {PLUGIN} > /dev/null; then gh extension install {PLUGIN}; fi'
     plugins:
       - abdfnx/gh-tran
       - dlvhdr/gh-dash
@@ -10005,7 +10005,7 @@ softwarePlugins:
       - https://www.raycast.com/abielzulio/chatgpt
       - https://www.raycast.com/BalliAsghar/mailsy
   steampipe:
-    cmd: steampipe plugin install {PLUGIN}
+    cmd: bash -c 'if [ ! -f /tmp/steampipe-plugin-list ]; then steampipe plugin list > /tmp/steampipe-plugin-list; fi && if ! cat /tmp/steampipe-plugin-list | grep {PLUGIN} > /dev/null; then steampipe plugin install {PLUGIN}; fi'
     plugins:
       - algolia
       - aws
@@ -10069,10 +10069,12 @@ softwarePlugins:
       - vagrant-google
       - vagrant-hostmanager
       - vagrant-libvirt
+      # Dependency issues
       # - vagrant-openstack-provider
-      - vagrant-openstack
+      # - vagrant-openstack
       - vagrant-parallels
-      - vagrant-proxmox
+      # Dependency issue
+      # - vagrant-proxmox
       - vagrant-share
       - vagrant-vbguest
       - vagrant-vmware-desktop
