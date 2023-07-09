@@ -159,19 +159,19 @@ if command -v warp-cli > /dev/null; then
 
     ### NPM
     if command -v npm > /dev/null; then
-        logg info "Configuring `npm` to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt""
+        logg info "Configuring npm to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt""
         npm config set cafile "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem"
     fi
 
     ### Python
     if command -v python3 > /dev/null; then
-        logg info "Configuring `python3` / `python` to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem""
+        logg info "Configuring python3 / python to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem""
         echo | cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> $(python3 -m certifi)
     fi
 
     ### Google Cloud SDK
     if command -v gcloud > /dev/null; then
-        logg info "Configuring `gcloud` to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" and "${XDG_DATA_HOME:-$HOME/.local/share}/curl/cacert.pem""
+        logg info "Configuring gcloud to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" and "${XDG_DATA_HOME:-$HOME/.local/share}/curl/cacert.pem""
         mkdir -p "${XDG_DATA_HOME:$HOME/.local/share}/gcloud"
         cat cacert.pem "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" > "${XDG_DATA_HOME:$HOME/.local/share}/gcloud/ca.pem"
         gcloud config set core/custom_ca_certs_file "${XDG_DATA_HOME:$HOME/.local/share}/gcloud/ca.pem"

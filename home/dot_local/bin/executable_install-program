@@ -89,7 +89,9 @@ function wrapMessage(msg) {
 }
 
 function runCommand(spinnerTitle, command) {
-  execSync(command.includes('sudo') ? `sudo "$(which gum)" spin --spinner dot --title "${spinnerTitle}" -- ${command}` : `gum spin --spinner dot --title "${spinnerTitle}" -- ${command}`, {
+  // execSync(command.includes('sudo') ? `sudo "$(which gum)" spin --spinner dot --title "${spinnerTitle}" -- ${command}` : `gum spin --spinner dot --title "${spinnerTitle}" -- ${command}`, {
+  log('info', 'CMD', spinnerTitle)
+  execSync(command, {
     stdio: 'inherit',
     shell: true,
     // Timeout of 30m

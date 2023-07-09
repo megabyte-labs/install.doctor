@@ -214,6 +214,7 @@ The following items have been reviewed but need to be revisited due to complexit
 * [Title](https://github.com/telekom-security/tpotce)
 * [Title](https://flathub.org/apps/com.airtame.Client)
 * [Title](https://github.com/Aloxaf/fzf-tab)
+[Title](https://github.com/haproxy/haproxy)
 
 ## Docker Issue
 
