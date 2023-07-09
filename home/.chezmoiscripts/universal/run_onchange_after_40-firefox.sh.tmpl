@@ -78,7 +78,7 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
     logg info "Processing Firefox profile location $SETTINGS_DIR"
     unset FIREFOX_EXE
     if [ "$SETTINGS_DIR" == "$HOME/.var/app/org.mozilla.firefox" ]; then
-        if ! command -v org.mozilla.firefox > /dev/null; then
+        if ! command -v org.mozilla.firefox > /dev/null || [ ! -d "$HOME/.var/app/org.mozilla.firefox" ]; then
             continue
         else
             FIREFOX_EXE="$(which org.mozilla.firefox)"
@@ -106,14 +106,14 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
             fi
         fi
     elif [ "$SETTINGS_DIR" == "$HOME/.var/app/io.gitlab.librewolf-community/.librewolf" ]; then
-        if ! command -v io.gitlab.librewolf-community > /dev/null; then
+        if ! command -v io.gitlab.librewolf-community > /dev/null || [ ! -d "$HOME/.var/app/io.gitlab.librewolf-community" ]; then
             continue
         else
             FIREFOX_EXE="$(which io.gitlab.librewolf-community)"
         fi
     elif [ "$SETTINGS_DIR" == "$HOME/Library/Application Support/Firefox/Profiles" ]; then
         FIREFOX_EXE="/Applications/Firefox.app/Contents/MacOS/firefox"
-        if [ ! -f "$FIREFOX_EXE" ]; then
+        if [ ! -f "$FIREFOX_EXE" ] || [ ! -d /Applications ]; then
             continue
         else
             ### Download Firefox Profile Switcher
@@ -131,12 +131,12 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
         fi
     elif [ "$SETTINGS_DIR" == "$HOME/Library/Application Support/LibreWolf/Profiles" ]; then
         FIREFOX_EXE="/Applications/LibreWolf.app/Contents/MacOS/librewolf"
-        if [ ! -f "$FIREFOX_EXE" ]; then
+        if [ ! -f "$FIREFOX_EXE" ] || [ ! -d /Applications ]; then
             continue
         fi
     elif [ "$SETTINGS_DIR" == "$HOME/snap/firefox/common/.mozilla/firefox" ]; then
         FIREFOX_EXE="/snap/bin/firefox"
-        if [ ! -f "$FIREFOX_EXE" ]; then
+        if [ ! -f "$FIREFOX_EXE" ] || [ ! -d "$HOME/snap/firefox" ]; then
             continue
         else
             ### Firefox Profile Switcher
@@ -243,8 +243,7 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
             git pull origin master
         else
             logg info 'Cloning the public Firefox git profile'
-            cd "$SETTINGS_DIR"
-            git clone {{ .firefoxPublicProfile }} profile.git
+            cd "$SETTINGS_DIR" && git clone {{ .firefoxPublicProfile }} profile.git
         fi
 
         ### Copy user.js to profile.git profile

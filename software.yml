@@ -7215,7 +7215,6 @@ softwarePackages:
     _name: FirewallD
     _service: firewalld
     _pre: if command -v ufw > /dev/null; then sudo ufw disable; fi
-    _service: firewalld
     _notes: https://computingforgeeks.com/install-and-use-firewalld-on-ubuntu/
     apt: firewalld
     dnf: firewalld

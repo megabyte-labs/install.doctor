@@ -34,6 +34,9 @@ if command -v privoxy > /dev/null; then
     if [ -d  "$PRIVOXY_CONFIG_DIR" ]; then
         sudo cp -f "${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config" "$PRIVOXY_CONFIG"
         sudo chmod 600 "$PRIVOXY_CONFIG"
+        if command -v add-user > /dev/null; then
+            sudo add-user privoxy
+        fi
         sudo chown privoxy:privoxy "$PRIVOXY_CONFIG"
 
         # @description Restart Privoxy after configuration is applied
