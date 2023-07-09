@@ -193,6 +193,13 @@ data:
       email: "{{ $gcloudEmail }}"
     github:
       username: "{{ $githubUsername }}"
+    gitomatic:
+      - git: https://github.com/megabyte-labs/install.doctor
+        path: $HOME/sources/install.doctor
+      - git: https://github.com/megabyte-labs/install.doctor-docs
+        path: $HOME/sources/install.doctor-docs
+      - git: https://github.com/megabyte-labs/install.doctor-site
+        path: $HOME/sources/install.doctor-site
     gmail:
       username: "{{ $gmailAddress }}"
     gpg:
