@@ -74,7 +74,7 @@ else
   if [ -n "$REPO" ] && [ -z "$START_REPO" ]; then
     START_REPO="$REPO"
   fi
-  if [[ "$START_REPO == *"/"* ]]; then
+  if [[ "$START_REPO" == *"/"* ]]; then
     # Either full git address or GitHubUser/RepoName
     if [[ "$START_REPO" == *":"* ]] || [[ "$START_REPO" == *"//"* ]]; then
       START_REPO="$START_REPO"
