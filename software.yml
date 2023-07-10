@@ -9998,7 +9998,7 @@ softwarePlugins:
       - microsoft.cst.attacksurfaceanalyzer.cli
       - dotnet-format
   gcloud:
-    cmd: bash -c 'if ! gcloud components list | grep 'Installed.*{PLUGIN}' > /dev/null; then gcloud components install "{PLUGIN}"; fi'
+    cmd: bash -c 'if ! gcloud components list | grep 'Installed.*{PLUGIN}' &> /dev/null; then gcloud components install "{PLUGIN}"; fi'
     plugins:
       - app-engine-go
       - cloud-datastore-emulator
