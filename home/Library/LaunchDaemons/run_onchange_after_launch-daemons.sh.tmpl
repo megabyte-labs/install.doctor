@@ -1,10 +1,17 @@
 #!/usr/bin/env bash
 
-### Enable automated updates on macOS
 if [ -d /Applications ] && [ -d /System ]; then
+    ### Enable automated updates on macOS
     if [ -f "$HOME/Library/LaunchDaemons/com.apple.automatedupdates.plist" ] && [ ! -f "/Library/LaunchDaemons/com.apple.automatedupdates.plist" ]; then
         sudo mkdir -p /Library/LaunchDaemons
         sudo cp -f "$HOME/Library/LaunchDaemons/com.apple.automatedupdates.plist" "/Library/LaunchDaemons/com.apple.automatedupdates.plist"
         sudo launchctl load "/Library/LaunchDaemons/com.apple.automatedupdates.plist"
+    fi
+
+    ### Enable CloudFlare WARP credentials auto-populate (since file is deleted when not managed with MDM)
+    if [ -f "$HOME/Library/LaunchDaemons/com.cloudflare.warp.plist" ] && [ ! -f "/Library/LaunchDaemons/com.cloudflare.warp.plist" ]; then
+        sudo mkdir -p /Library/LaunchDaemons
+        sudo cp -f "$HOME/Library/LaunchDaemons/com.cloudflare.warp.plist" '/Library/LaunchDaemons/com.cloudflare.warp.plist'
+        sudo launchctl load "/Library/LaunchDaemons/com.cloudflare.warp.plist"
     fi
 fi
