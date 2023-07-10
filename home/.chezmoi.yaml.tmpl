@@ -143,6 +143,7 @@ data:
     docker:
       doRegion: nyc1
     domain: "{{ $domain }}"
+    elasticFleetServer: "https://elastic-fleet.{{ $PUBLIC_SERVICES_DOMAIN }}:8220"
     gitlabRunners:
       - glurl: "https://gitlab.com/"
         runnerDescription: "Docker executor"
