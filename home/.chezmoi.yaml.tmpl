@@ -9,8 +9,8 @@
 {{- $githubUsername := (default "ProfessorManhattan" (env "GITHUB_USERNAME")) -}}
 {{- $gmailAddress := (default "blzalewski@gmail.com" (env "GMAIL_ADDRESS")) -}}
 {{- $gpgKeyId := (default "0xF0A300E4199A1C33" (env "KEYID")) -}}
-{{- $hostname := (default (output "echo" "$HOST") (env "HOST")) -}}
-{{- $locale := (default "en_US" (output "echo" "$LANG")) }}
+{{- $hostname := (default "betelgeuse" (env "HOST")) -}}
+{{- $locale := (default "en_US" (env "LANG")) }}
 {{- $name := (default "Brian Zalewski" (env "FULL_NAME")) -}}
 {{- $restricted := (default false (env "WORK_ENVIRONMENT")) -}}
 {{- $snapcraftEmail := (default "brian@megabyte.space" (env "SNAPCRAFT_EMAIL"))}}
@@ -23,7 +23,7 @@
 {{- end -}}
 {{- $softwareGroup := (default "Standard" (env "SOFTWARE_GROUP")) -}}
 {{- if $desktopSession -}}
-{{-   $softwareGroup = list $softwareGroup "-Desktop" | join "" -}}
+{{-   $softwareGroup = replace "-Desktop-Desktop" "-Desktop" (list $softwareGroup "-Desktop" | join "") -}}
 {{- end -}}
 
 {{- $data := . }}
@@ -209,7 +209,7 @@ data:
       username: "{{ $surgeshUsername }}"
     timezone: "{{ $timezone }}"
     tinypngKey: "g355tx7dxG5yJfl0RXJnpQlQqk88dJBv"
-    username: "{{ output "echo" "$USER" }}"
+    username: "{{ default "user" (env "USER") }}"
 diff:
   format: "git"
   pager: "delta"
