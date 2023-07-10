@@ -4330,6 +4330,11 @@ softwarePackages:
     _name: null
     brew:darwin: ios-deploy
     npm:darwin: ios-deploy
+  ios-sim:
+    _bin: ios-sim
+    _github: https://github.com/ios-control/ios-sim
+    _name: ios-sim
+    npm:darwin: ios-sim
   ipfs:
     _bin: ipfs
     _desc: A peer-to-peer hypermedia protocol designed to preserve and grow humanity's knowledge by making the web upgradeable, resilient, and more open
@@ -9927,6 +9932,40 @@ softwarePlugins:
     cmd: null
     plugins:
       - https://github.com/BalliAsghar/mailsy-alfred/releases/download/2.0.0/Mailsy.alfredworkflow
+  android-studio:
+    cmd: bash -c 'if ! sdkmanager --list_installed | grep "  {PLUGIN}" > /dev/null; then sdkmanager --install "{PLUGIN}" > /dev/null; fi'
+    plugins:
+      - add-ons;addon-google_apis-google-24
+      - build-tools;33.0.0
+      - cmake;3.22.1
+      - cmdline-tools;latest
+      - emulator
+      - extras;android;m2repository
+      - extras;google;auto
+      - extras;google;google_play_services
+      - extras;google;instantapps
+      - extras;google;m2repository
+      - extras;google;market_apk_expansion
+      - extras;google;market_licensing
+      - extras;google;simulators
+      - extras;google;webdriver
+      - extras;intel;Hardware_Accelerated_Execution_Manager
+      - extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2
+      - extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2
+      - ndk-bundle
+      - patcher;v4
+      - platform-tools
+      - platforms;android-31
+      - platforms;android-32
+      - platforms;android-33
+      - skiaparser;3
+      - sources;android-33
+      - system-images;android-31;default;x86_64
+      - system-images;android-32;android-desktop;x86_64
+      - system-images;android-33;android-tv;x86
+      - system-images;android-33;google-tv;x86
+      - system-images;android-33;google_apis;x86_64
+      - system-images;android-33;google_apis_playstore;x86_64
   composer:
     cmd: null
     plugins:
