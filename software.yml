@@ -579,7 +579,6 @@ softwarePackages:
     _github: https://github.com/appium/appium
     _home: https://appium.io/
     _name: Appium
-    _service: appium
     ansible: professormanhattan.appium
     brew: appium
     choco: appium-desktop
@@ -9977,7 +9976,7 @@ softwarePlugins:
     plugins:
       - deployer/deployer
   docker:
-    cmd: bash -c 'if ! docker extension list | grep {PLUGIN} > /dev/null; then echo y | docker extension install {PLUGIN}; fi'
+    cmd: bash -c 'if ! docker extension list | grep "{PLUGIN}" > /dev/null; then echo y | docker extension install "{PLUGIN}"; fi'
     plugins:
       - docker/disk-usage-extension
       - docker/logs-explorer-extension
@@ -9994,12 +9993,12 @@ softwarePlugins:
     plugins:
       - docker.io/nginx/unit
   dotnet:
-    cmd: bash -c 'if dotnet tool list -g | grep {PLUGIN} > /dev/null; then dotnet tool install -g {PLUGIN}; fi'
+    cmd: bash -c 'if ! dotnet tool list -g | grep "{PLUGIN}" > /dev/null; then dotnet tool install -g "{PLUGIN}"; fi'
     plugins:
       - microsoft.cst.attacksurfaceanalyzer.cli
       - dotnet-format
   gcloud:
-    cmd: bash -c 'if ! gcloud components list | grep 'Installed.*{PLUGIN}' > /dev/null; then gcloud components install {PLUGIN}; fi'
+    cmd: bash -c 'if ! gcloud components list | grep 'Installed.*{PLUGIN}' > /dev/null; then gcloud components install "{PLUGIN}"; fi'
     plugins:
       - app-engine-go
       - cloud-datastore-emulator
@@ -10015,7 +10014,7 @@ softwarePlugins:
       - terraform-tools
     update: gcloud components update
   gh:
-    cmd: bash -c 'if [ -n "$GITHUB_TOKEN" ] && ! gh extension list | grep {PLUGIN} > /dev/null; then gh extension install {PLUGIN}; fi'
+    cmd: bash -c 'if [ -n "$GITHUB_TOKEN" ] && ! gh extension list | grep "{PLUGIN}" > /dev/null; then gh extension install "{PLUGIN}"; fi'
     plugins:
       - abdfnx/gh-tran
       - dlvhdr/gh-dash
@@ -10050,7 +10049,7 @@ softwarePlugins:
       - https://www.raycast.com/abielzulio/chatgpt
       - https://www.raycast.com/BalliAsghar/mailsy
   steampipe:
-    cmd: bash -c 'if [ ! -f /tmp/steampipe-plugin-list ]; then steampipe plugin list > /tmp/steampipe-plugin-list; fi && if ! cat /tmp/steampipe-plugin-list | grep {PLUGIN} > /dev/null; then steampipe plugin install {PLUGIN}; fi'
+    cmd: bash -c 'if [ ! -f /tmp/steampipe-plugin-list ]; then steampipe plugin list > /tmp/steampipe-plugin-list; fi && if ! cat /tmp/steampipe-plugin-list | grep "{PLUGIN}" > /dev/null; then steampipe plugin install "{PLUGIN}"; fi'
     plugins:
       - algolia
       - aws
@@ -10107,7 +10106,7 @@ softwarePlugins:
       - name: Pieces
         plugin: https://teams.microsoft.com/l/app/789f23b3-d882-45ca-b3a3-de7f850656ea
   vagrant:
-    cmd: bash -c 'if ! vagrant plugin list | grep {PLUGIN}; then vagrant plugin install {PLUGIN}; fi'
+    cmd: bash -c 'if ! vagrant plugin list | grep "{PLUGIN}"; then vagrant plugin install "{PLUGIN}"; fi'
     plugins:
       - vagrant-bindfs
       - vagrant-digitalocean

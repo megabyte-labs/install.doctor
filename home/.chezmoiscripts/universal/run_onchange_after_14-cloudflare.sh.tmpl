@@ -225,8 +225,8 @@ else
 fi
 
 {{- $registrationToken := "" }}
-{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .user.hostname)) -}}
-{{-   $registrationToken := (includeTemplate (joinPath "cloudflared" .user.hostname) | decrypt) -}}
+{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname)) -}}
+{{-   $registrationToken := (includeTemplate (joinPath "cloudflared" .host.hostname) | decrypt) -}}
 {{- end }}
 ### Set up CloudFlare tunnels
 if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; then
@@ -240,13 +240,13 @@ if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; 
     sudo cp -rf "$HOME/.local/etc/cloudflared/"* /usr/local/etc/cloudflared
 
     # Register tunnel (if not already registered)
-    if cloudflared tunnel list | grep "host-{{ .user.hostname }}"; then
+    if cloudflared tunnel list | grep "host-{{ .host.hostname }}"; then
         logg info 'CloudFlare tunnel is already registered'
     else
         logg info 'Creating a CloudFlare tunnel to this host'
-        sudo cloudflared tunnel create "host-{{ .user.hostname }}"
+        sudo cloudflared tunnel create "host-{{ .host.hostname }}"
     fi
-    TUNNEL_ID="$(cloudflared tunnel list | grep "host-{{ .user.hostname }}" | sed 's/ .*//')"
+    TUNNEL_ID="$(cloudflared tunnel list | grep "host-{{ .host.hostname }}" | sed 's/ .*//')"
     logg info "Tunnel ID: $TUNNEL_ID"
     if [ -f "/usr/local/etc/cloudflared/${TUNNEL_ID}.json" ]
         logg info 'Symlinking tunnel configuration to /usr/local/etc/cloudflared/credentials.json'
