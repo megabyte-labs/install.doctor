@@ -142,6 +142,9 @@ alias hash-password='mkpasswd --method=sha-512'
 # Show IP address
 alias ip-address='curl http://ipecho.net/plain; echo'
 
+# Configures Java to use ~/.config/java
+alias java='java -Djava.util.prefs.userRoot="${XDG_CONFIG_HOME:-$HOME/.config}/java"'
+
 # Shows local IP addresses
 alias local-ip-address="ifconfig | grep -Eo 'inet (addr:|adr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
 

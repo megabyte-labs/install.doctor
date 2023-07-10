@@ -1,3 +1,5 @@
+sysbench rhino platformio emscripten mkvtoolnix ncftp gauge foremost autogen duti multitail testdisk ccat qrencode autoconf-archive tomcat filebeat godep arping lua git-credential-manager rbenv-default-gems source-highlight theora shtool giter8 ipmitool saltstack squid ettercap pidcat calc mongodb wdiff dialog john reaver oath-toolkit xhyve elm icdiff polipo fcrackzip ddrescue pngcrush gitlab-ci-multi-runner tcl-tk flac elinks stunnel caddy tcpreplay fping zenity terragrunt dbus pigz grpc diffutils hping fdupes sonarqube fabric links pinentry augeas haproxy autossh binwalk unzip cabal-install cscope sonar-scanner wakeonlan tmate sshuttle solr tcptraceroute pinentry-mac swiftformat uncrustify hashcat handbrake iproute2mac 2fsprogs hydra you-get cabextract neofetch trash sphinx-doc iftop htop-osx dockutil xctool aspell w3m grc screenfetch moreutils apktool brew-cask-completion openconnect media-info lftp unison logstash pstree rpm opam peco netcat iperf3 libav gifsicle iperf colordiff lmdb mcrypt httprack  aircrack-ng ntfs-3g  glide bower glog parallel cloc mitmproxy bison rename kubernetes-helm gdbm mobile-shell geckodriver socat pv sdl swig pcre winetricks doxygen mtr graphicsmagick dos2unix highlight putty llvm bazel flow  watch hugo sqlite gdb ant mariadb  mercurial nmap pidof autoconf maven readline libtool automake chromedriver pkg-config coreutils
+
 # TODOs
 
 This page outlines various projects and tasks that we are currently working on. Creating a GitHub issue for each of these items would be overkill.
@@ -135,6 +137,14 @@ The following items are Docker containers that we may want to include as default
 * https://github.com/node-red/node-red
 * https://www.overleaf.com/
 * https://github.com/caprover/caprover
+* [Title](https://github.com/xemle/home-gallery)
+* [Title](https://github.com/chartbrew/chartbrew)
+* [Title](https://github.com/AlexSciFier/neonlink)
+* [Title](https://github.com/ForestAdmin/lumber)
+* [Title](https://github.com/subnub/myDrive)
+* [Title](https://github.com/mickael-kerjean/filestash)
+* [Title](https://github.com/GetStream/Winds)
+* [Title](https://github.com/GladysAssistant/Gladys)
 
 ## AI
 
@@ -203,6 +213,11 @@ The following items have been reviewed but need to be revisited due to complexit
 * [Title](https://github.com/hyprwm/Hypr)
 * [Title](https://github.com/Sygil-Dev/sygil-webui)
 * [Title](https://github.com/psychic-api/psychic)
+* [Title](https://github.com/telekom-security/tpotce)
+* [Title](https://flathub.org/apps/com.airtame.Client)
+* [Title](https://github.com/Aloxaf/fzf-tab)
+[Title](https://github.com/haproxy/haproxy)
+* [Title](https://frappeframework.com/docs/v14/user/en/installation)
 
 ## Docker Issue
 

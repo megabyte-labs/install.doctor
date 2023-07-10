@@ -1,4 +1,4 @@
-{{- if (ne .host.distro.family "windows") }}
+{{- if (ne .host.distro.family "windows") -}}
 #!/usr/bin/env bash
 # @file VNC Setup
 # @brief Ensures VNC is set-up if system packages are available.
@@ -22,10 +22,8 @@ if [ -d /Applications ] && [ -d /System ]; then
     # Source: https://apple.stackexchange.com/questions/30238/how-to-enable-os-x-screen-sharing-vnc-through-ssh
     # To disable, run: sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -configure -access -off
     # Only enable when computer is not a corporate / work computer
-    {{ if (ne .host.work true) -}}
     logg info 'Enabling VNC using the `VNC_PASSWORD` variable which is `vncpass` when nothing is specified'
-    sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -allowAccessFor -specifiedUsers -clientopts -setreqperm -reqperm yes -setvnclegacy -vnclegacy yes -setvncpw -vncpw {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VNC_PASSWORD")) }}{{ includeTemplate "secrets/VNC_PASSWORD" | decrypt | trim }}{{ else }}{{ default "vncpass" (env "VNC_PASSWORD") }}{{ end }} -restart -agent -privs -all -users {{ .user.name }}
-    {{- end }}
+    sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -allowAccessFor -specifiedUsers -clientopts -setreqperm -reqperm yes -setvnclegacy -vnclegacy yes -setvncpw -vncpw "{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VNC_PASSWORD")) }}{{ includeTemplate "secrets/VNC_PASSWORD" | decrypt | trim }}{{ else }}{{ default "vncpass" (env "VNC_PASSWORD") }}{{ end }}" -restart -agent -privs -all -users "$USER"
 else
     # System is Linux
     ### VNC set-up / configuration

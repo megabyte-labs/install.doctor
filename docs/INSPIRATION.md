@@ -17,6 +17,8 @@
 * https://cliffy.io/docs@v0.25.7
 * https://github.com/gotify/server
 * https://github.com/typicode/lowdb
+* https://github.com/sindresorhus/execa
+* [Title](https://github.com/mde/ejs)
 
 ## System
 
@@ -61,6 +63,8 @@
 * https://uppy.io/docs/dashboard/
 * https://unkey.dev/
 * [Title](https://github.com/vercel-labs/ai-chatbot)
+* [Title](https://github.com/apostrophecms/apostrophe)
+* [Title](https://github.com/isomorphic-git/isomorphic-git)
 
 ## Serverless
 

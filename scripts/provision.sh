@@ -69,18 +69,18 @@ fi
 
 # @description Detect `START_REPO` format and determine appropriate git address, otherwise use the master Install Doctor branch
 if [ -z "$START_REPO" ]; then
-    START_REPO="https://github.com/megabyte-labs/install.doctor.git"
+  START_REPO="https://github.com/megabyte-labs/install.doctor.git"
 else
-    if [[ "$START_REPO == *"/"* ]]; then
-        # Either full git address or GitHubUser/RepoName
-        if [[ "$START_REPO" == *":"* ]] || [[ "$START_REPO" == *"//"* ]]; then
-            START_REPO="$START_REPO"
-        else
-            START_REPO="https://github.com/${START_REPO}.git"
-        fi
+  if [[ "$START_REPO" == *"/"* ]]; then
+    # Either full git address or GitHubUser/RepoName
+    if [[ "$START_REPO" == *":"* ]] || [[ "$START_REPO" == *"//"* ]]; then
+      START_REPO="$START_REPO"
     else
-        START_REPO="https://github.com/$START_REPO/install.doctor.git"
+      START_REPO="https://github.com/${START_REPO}.git"
     fi
+  else
+    START_REPO="https://github.com/$START_REPO/install.doctor.git"
+  fi
 fi
 
 # @description Logs with style using Gum if it is installed, otherwise it uses `echo`. It also leverages Glow to render markdown.

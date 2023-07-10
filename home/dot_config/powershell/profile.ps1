@@ -24,6 +24,9 @@ foreach ($module in $modules) {
     Import-Module $module -Force
 }
 
+### Homebrew
+Add-Content -Path $PROFILE.CurrentUserAllHosts -Value '$(/usr/local/bin/brew shellenv) | Invoke-Expression'
+
 ### posh-git settings
 oh-my-posh init pwsh --config "$env:HOME/.config/oh-my-posh/Betelgeuse.omp.json" | Invoke-Expression
 

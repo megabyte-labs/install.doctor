@@ -1,5 +1,6 @@
 {{- $cloudflareR2AccountId := (default "84fa0d1b16ff8086dd958c468ce7fd59" (env "CLOUDFLARE_R2_ID")) -}}
 {{- $cloudflareUsername := (default "brian@megabyte.space" (env "CLOUDFLARE_USERNAME")) -}}
+{{- $cloudflareTeamsOrg := (default "manhattan" (env "CLOUDFLARE_TEAMS_ORG")) -}}
 {{- $desktopSession := true -}}
 {{- $domain := (default "megabyte.space" (env "PUBLIC_SERVICES_DOMAIN")) -}}
 {{- $email := (default "brian@megabyte.space" (env "PRIMARY_EMAIL")) -}}
@@ -127,6 +128,8 @@ gpg:
 data:
   host:
     arch: "{{ .chezmoi.arch }}"
+    cloudflare:
+      teamsOrg: "{{ $cloudflareTeamsOrg }}"
     cpu:
       cores: "{{ $cpuCores }}"
       threads: "{{ $cpuThreads }}"
@@ -141,6 +144,15 @@ data:
       doRegion: nyc1
     domain: "{{ $domain }}"
     elasticFleetServer: "https://elastic-fleet.{{ $PUBLIC_SERVICES_DOMAIN }}:8220"
+    gitlabRunners:
+      - glurl: "https://gitlab.com/"
+        runnerDescription: "Docker executor"
+        runnerImage: "alpine:latest"
+        runnerTags: "alpine,linux"
+      - glurl: "https://gitlab.com/"
+        baseVM: "debian"
+        runnerDescription: "VirtualBox executor - Debian, OpenJDK 20"
+        runnerTags: "bash,openjdk20,linux"
     headless: {{ $headless }}
     home: "{{ .chezmoi.homeDir }}"
     homeParentFolder: "{{ if eq .chezmoi.os "linux" }}/home{{ else if eq .chezmoi.os "darwin" }}/Users{{ else }}C:\Users{{ end }}"
@@ -172,7 +184,7 @@ data:
       r2: "{{ $cloudflareR2AccountId }}"
       username: "{{ $cloudflareUsername }}"
     defaultBrowser: chrome
-    defaultBrowserDarwin: browserosaurus
+    defaultBrowserDarwin: chrome
     digitalOceanClusterId: b7fc4e37-ffe7-4ea1-887a-0e19ee077f32
     # `domain` is kept here for backwards compatibility, but the .host.domain is the preferred selector
     domain: "{{ $domain }}"
@@ -182,6 +194,9 @@ data:
       email: "{{ $gcloudEmail }}"
     github:
       username: "{{ $githubUsername }}"
+    gitomatic:
+      - git: "{{ default "git@github.com:megabyte-labs/install.doctor.git" (env "START_REPO") }}"
+        path: /usr/local/src/install.doctor
     gmail:
       username: "{{ $gmailAddress }}"
     gpg:

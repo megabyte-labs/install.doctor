@@ -1,0 +1,36 @@
+{{- $baseDomain := (join .host.hostname "." .host.domain) -}}
+{{- if .host.qubes -}}
+{{-   $baseDomain := (join .host.hostname "-qube." .host.domain) -}}
+{{- end -}}
+---
+tunnel: {{ if .host.qubes }}qube{{ else }}host{{ end }}-{{ .host.hostname }}
+credentials-file: /usr/local/etc/cloudflared/credentials.json
+
+warp-routing:
+    enabled: true
+
+ingress:
+  - hostname: {{ $baseDomain }}
+    service: https://localhost:8014
+  - hostname: test.{{ $baseDomain }}
+    service: hello_world
+  - hostname: ssh.{{ $baseDomain }}
+    service: ssh://localhost:{{ .host.ssh.port }}
+  - hostname: rdp.{{ $baseDomain }}
+    service: rdp://localhost:3389
+  - hostname: samba.{{ $baseDomain }}
+    service: localhost:8445
+  - hostname: vnc.{{ $baseDomain }}
+    service: tcp://localhost:5901
+  # Example of an HTTP request over a Unix socket:
+  # - hostname: {{ $baseDomain }}
+  #   service: unix:/home/production/echo.sock
+  # Tunnel the baked-in Hello World test app for testing purposes
+  # Rules can match the request's path to a regular expression:
+  # - hostname: static.example.com
+  #   path: \.(jpg|png|css|js)$
+  #   service: https://localhost:8001
+  # Rules can match the request's hostname to a wildcard character:
+  # - hostname: "*.example.com"
+  #   service: https://localhost:8002
+  - service: http_status:404

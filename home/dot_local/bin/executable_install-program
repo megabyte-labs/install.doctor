@@ -89,7 +89,9 @@ function wrapMessage(msg) {
 }
 
 function runCommand(spinnerTitle, command) {
-  execSync(command.includes('sudo') ? `sudo "$(which gum)" spin --spinner dot --title "${spinnerTitle}" -- ${command}` : `gum spin --spinner dot --title "${spinnerTitle}" -- ${command}`, {
+  // execSync(command.includes('sudo') ? `sudo "$(which gum)" spin --spinner dot --title "${spinnerTitle}" -- ${command}` : `gum spin --spinner dot --title "${spinnerTitle}" -- ${command}`, {
+  log('info', 'CMD', spinnerTitle)
+  execSync(command, {
     stdio: 'inherit',
     shell: true,
     // Timeout of 30m
@@ -1639,7 +1641,7 @@ async function updateService(service) {
         log('info', logStage, `There was an error starting / enabling the ${service} service with systemd`)
         try {
           if (brew) {
-            runCommand(`Starting / enabling ${service} with Homebrew`, `sudo brew services start ${service}`)
+            runCommand(`Starting / enabling ${service} with Homebrew`, `brew services start ${service}`)
             log('success', logStage, `Started / enabled the ${service} service with Homebrew`)
           } else {
             log('error', logStage, `Unable to start service with systemd and Homebrew is not available`)
@@ -1663,7 +1665,7 @@ async function updateService(service) {
     const brew = which.sync('brew', { nothrow: true })
     if (brew) {
       try {
-        runCommand(`Starting / enabling ${service} with Homebrew`, `sudo brew services start ${service}`)
+        runCommand(`Starting / enabling ${service} with Homebrew`, `brew services start ${service}`)
         log('success', logStage, `Started / enabled the ${service} service with Homebrew`)
       } catch (e) {
         log('error', logStage, `There was an error starting / enabling the ${service} Homebrew service`)
