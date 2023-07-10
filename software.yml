@@ -993,8 +993,8 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _when:darwin: '! (brew list bash-completion | grep bash-completion)'
-    _when:linux: '! (brew list bash-completion | grep bash-completion)'
+    _when:darwin: '! brew list bash-completion | grep bash-completion > /dev/null'
+    _when:linux: '! brew list bash-completion | grep bash-completion > /dev/null'
     brew:darwin: bash-completion
     brew:linux: bash-completion
   axel:
