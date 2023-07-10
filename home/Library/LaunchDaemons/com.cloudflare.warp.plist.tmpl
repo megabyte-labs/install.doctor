@@ -8,7 +8,7 @@
        <array>
            <string>/usr/local/bin/bash</string>
            <string>-c</string>
-           <string>cp -f "{{ .data.user.home }}/Library/Managed Preferences/com.cloudflare.warp.plist" "/Library/Managed Preferences/com.cloudflare.warp.plist" && plutil -convert binary1 "/Library/Managed Preferences/com.cloudflare.warp.plist"</string>
+           <string>cp -f "{{ .host.home }}/Library/Managed Preferences/com.cloudflare.warp.plist" "/Library/Managed Preferences/com.cloudflare.warp.plist" && plutil -convert binary1 "/Library/Managed Preferences/com.cloudflare.warp.plist"</string>
        </array>
        <key>StartCalendarInterval</key>
        <dict>

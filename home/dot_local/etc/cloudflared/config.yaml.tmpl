@@ -1,9 +1,9 @@
-{{- $baseDomain := (join (join (.host.hostname ".") .host.domain)) -}}
+{{- $baseDomain := (join (join .host.hostname ".") .host.domain) -}}
 {{- if .host.qubes -}}
-{{-   $baseDomain := (join (join (.host.hostname "-qube.") .host.domain)) -}}
+{{-   $baseDomain := (join (join .host.hostname "-qube.") .host.domain) -}}
 {{- end -}}
 ---
-tunnel: {{ if .host.qubes }}qube{{ else }}host{{ end }}-{{ .host.hostname }}
+tunnel: {{ if eq .host.qubes true }}qube{{ else }}host{{ end }}-{{ .host.hostname }}
 credentials-file: /usr/local/etc/cloudflared/credentials.json
 
 warp-routing:
