@@ -218,9 +218,53 @@ The following items have been reviewed but need to be revisited due to complexit
 * [Title](https://github.com/Aloxaf/fzf-tab)
 [Title](https://github.com/haproxy/haproxy)
 * [Title](https://frappeframework.com/docs/v14/user/en/installation)
-
+* [
+    
+](https://github.com/stringer-rss/stringer)
 ## Docker Issue
 
 Compose is now a Docker plugin. For Docker to find this plugin, symlink it:
                   mkdir -p ~/.docker/cli-plugins
-                                                  ln -sfn /usr/local/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose
+                                                  ln -sfn /usr/local/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compos
+
+## Sources
+
+* [Title](https://gist.github.com/pmkay/e09034971b6f23214fd9f95a3e6d1c44)
+
+## Ruby
+[Title](https://github.com/huginn/huginn)
+[Title](https://github.com/jekyll/jekyll)
+[Title](https://github.com/orbit/orbit)
+[Title](https://github.com/didi/booster)
+[Title](https://github.com/sourcerer-io/sourcerer-app)
+[Title](https://github.com/chatwoot/chatwoot)
+[Title](https://github.com/troessner/reek)
+[Title](https://github.com/gitlabhq/gitlabhq)
+[Title](https://github.com/dogbin/dogbin)
+[Title](https://github.com/gotson/komga)
+[Title](https://github.com/tolgee/tolgee-platform)
+[Title](https://github.com/chef/chef)
+[Title](https://github.com/jitsi/jitsi-videobridge)
+[Title](https://github.com/mastodon/mastodon)
+[Title](https://github.com/thatfiredev/firecoil)
+[Title](https://github.com/fastlane/fastlane)
+[Title](https://github.com/discourse/discourse)
+[Title](https://github.com/Shopify/liquid)
+[Title](https://github.com/mina-deploy/mina)
+[Title](https://github.com/rapid7/metasploit-framework)
+[Title](https://github.com/gollum/gollum)
+[Title](https://github.com/urbanadventurer/WhatWeb)
+[Title](https://github.com/bbc/wraith)
+[Title](https://github.com/ddollar/foreman)
+[Title](https://github.com/hanami/hanami)
+[Title](https://github.com/jordansissel/fpm)
+[Title](https://github.com/diaspora/diaspora)
+[Title](https://github.com/rubocop/rubocop)
+[Title](https://github.com/simplecov-ruby/simplecov)
+[Title](https://github.com/backup/backup)
+[Title](https://github.com/jnunemaker/httparty)
+[Title](https://github.com/thoughtbot/administrate)
+[Title](https://github.com/sj26/mailcatcher)
+[Title](https://github.com/guard/guard)
+[Title](https://github.com/opf/openproject)
+[Title](https://github.com/BetterErrors/better_errors)
