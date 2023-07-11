@@ -58,4 +58,10 @@ ensurePackageManagerHomebrew() {
   fi
 }
 ensurePackageManagerHomebrew
+
+# @description Enable auto-update service
+if brew autoupdate status | grep 'Autoupdate is not configured.' > /dev/null; then
+  logg info 'Enabling Homebrew auto-update service (every 24 hours)'
+  brew autoupdate start --cleanup --upgrade
+fi
 {{ end -}}

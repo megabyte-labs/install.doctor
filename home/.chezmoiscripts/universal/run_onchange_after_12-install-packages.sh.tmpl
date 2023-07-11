@@ -21,6 +21,7 @@ if command -v install-program > /dev/null; then
     sudo echo "Sudo access granted."
     export DEBIAN_FRONTEND=noninteractive
     export HOMEBREW_NO_ENV_HINTS=true
+    export HOMEBREW_NO_ANALYTICS=1
     if ! command -v gcc-11; then
       if command -v gcc; then
         log info 'gcc-11 command missing. Symlinking to gcc'

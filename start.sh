@@ -17,6 +17,7 @@ set -eo pipefail
 DELAYED_CI_SYNC=""
 ENSURED_TASKFILES=""
 export HOMEBREW_NO_INSTALL_CLEANUP=true
+export HOMEBREW_NO_ANALYTICS=1
 
 # @description Ensure permissions in CI environments
 if [ -n "$CI" ]; then
