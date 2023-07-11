@@ -7068,24 +7068,62 @@ softwarePackages:
     flatpak: org.qbittorrent.qBittorrent
     pacman: qbittorrent
     yay: qbittorrent-git
+  provisionql:
+    _github: https://github.com/ealeksandrov/ProvisionQL
+    _name: ProvisionQL
+    _when:cask: '! test -d "$HOME/Library/QuickLook/ProvisionQL.qlgenerator"'
+    cask: provisionql
+  qlcolorcode:
+    _github: https://github.com/n8gray/QLColorCode
+    _name: QLColorCode
+    _when:cask: '! test -d "$HOME/Library/QuickLook/QLColorCode.qlgenerator"'
+    cask: qlcolorcode
+  qlmarkdown:
+    _github: https://github.com/toland/qlmarkdown
+    _name: QLMarkdown
+    _when:cask: '! test -d "$HOME/Library/QuickLook/ProvisionQL.qlgenerator"'
+    cask: qlmarkdown
+  qlstephen:
+    _github: https://github.com/whomwah/qlstephen
+    _name: QLStephen
+    _when:cask: '! test -d "$HOME/Library/QuickLook/QLStephen.qlgenerator"'
+    cask: qlstephen
+  qlvideo:
+    _github: https://github.com/Marginal/QLVideo
+    _name: QLVideo
+    _when:cask: '! test -d "$HOME/Library/QuickLook/ProvisionQL.qlgenerator"'
+    cask: qlvideo
+  quicklook-json:
+    _github: false
+    _name: QLJSON
+    _when:cask: '! test -d "$HOME/Library/QuickLook/QuickLookJSON.qlgenerator"'
+    cask: quicklook-json
+  quicklookapk:
+    _github: https://github.com/hezi/QuickLookAPK
+    _name: QLAPK
+    _when:cask: '! test -d "$HOME/Library/QuickLook/QuickLookAPK.qlgenerator"'
+    cask: quicklookapk
+  webpquicklook:
+    _github: https://github.com/emin/WebPQuickLook
+    _name: QLWebP
+    _when:cask: '! test -d "$HOME/Library/QuickLook/WebpQuickLook.qlgenerator"'
+    cask: webpquicklook
   qlplugins:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _when: '! (brew list provisionql | grep ProvisionQL > /dev/null && brew list qlcolorcode | grep QLColorCode > /dev/null && brew list qlimagesize | grep qlImageSize > /dev/null && brew list qlmarkdown | grep QLMarkdown > /dev/null && brew list qlstephen | grep QLStephen > /dev/null && brew list qlvideo | grep QLVideo > /dev/null && brew list quicklook-json | grep QuickLookJSON > /dev/null && brew list quicklookapk | grep QuickLookAPK > /dev/null && brew list webpquicklook | grep WebpQuickLook > /dev/null)'
-    cask:
+    _deps:
       - provisionql
       - qlcolorcode
-      - qlimagesize
       - qlmarkdown
       - qlstephen
       - qlvideo
       - quicklook-json
       - quicklookapk
       - webpquicklook
+    _bin: null
+    _desc: null
+    _docs: null
+    _github: null
+    _home: null
+    _name: null
   quasar:
     _bin: null
     _desc: '[Quasar](https://github.com/quasar/Quasar) is a fast and light-weight remote administration tool coded in C#. The usage ranges from user support through day-to-day administrative work to employee monitoring. Providing high stability and an easy-to-use user interface, Quasar is the perfect remote administration solution for you.'
