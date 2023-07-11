@@ -49,14 +49,17 @@ export GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoite
 export HEROKU_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "HEROKU_API_KEY")) }}{{ includeTemplate "secrets/HEROKU_API_KEY" | decrypt | trim }}{{ else }}{{ env "HEROKU_API_KEY" }}{{ end }}"
 
 ### Install Doctor
+# TODO: Replace HEADLESS_INSTALL with {{ .host.headless }} data source once headless install detection is implemented
+# export HEADLESS_INSTALL={{ .host.headless }}
 export HEADLESS_INSTALL=true
-export SOFTWARE_GROUP="Full-Desktop"
-export FULL_NAME="Brian Zalewski"
-export PRIMARY_EMAIL="help@megabyte.space"
-export PUBLIC_SERVICES_DOMAIN="megabyte.space"
-export RESTRICTED_ENVIRONMENT=false
-export WORK_ENVIRONMENT=false
-export HOST="$HOST"
+export SOFTWARE_GROUP="{{ .host.softwareGroup }}"
+export FULL_NAME="{{ .user.name }}"
+export PRIMARY_EMAIL="{{ .user.email }}"
+export PUBLIC_SERVICES_DOMAIN="{{ .host.domain }}"
+export RESTRICTED_ENVIRONMENT={{ .host.restricted }}
+export WORK_ENVIRONMENT={{ .host.work }}
+export HOST="{{ .host.hostname }}"
+export KEYID="{{ .user.gpg.id }}"
 
 # Set to work environment if Cisco applications are installed (modify this to your liking)
 if [ -d /Applications/Cisco ]; then
