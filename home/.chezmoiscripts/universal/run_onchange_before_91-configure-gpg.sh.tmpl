@@ -9,7 +9,7 @@
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}
 
-KEYID="{{ .user.gpg.id }}"
+export KEYID="{{ .user.gpg.id }}"
 
 if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
   if [ ! -d "$HOME/.gnupg" ]; then
@@ -27,25 +27,27 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
   fi
   KEYID_TRIMMED="$(echo "$KEYID" | sed 's/^0x//')"
   if ! gpg --list-secret-keys --keyid-format=long | grep "$KEYID_TRIMMED" > /dev/null; then
-    logg info 'Attempting to download the specified public GPG key (`{{ .user.gpg.id }}`) from public keyservers'
-    sudo pkill dirmngr
-    dirmngr --daemon --standard-resolver
-    gpg --keyserver https://pgp.mit.edu --recv "$KEYID" || EXIT_CODE=$?
-    if [ -n "$EXIT_CODE" ]; then
-      logg info 'Non-zero exit code received when downloading public GPG key'
-      gpg --keyserver hkps://pgp.mit.edu --recv "$KEYID" || EXIT_CODE=$?
+    LOCAL_KEYID="${KEYID^^}"
+    LOCAL_KEYID="$(echo "$LOCAL_KEYID" | sed 's/^0X/0x/')"
+    logg info 'Killing dirmngr instance and reloading daemon with standard-resolver'
+    sudo pkill dirmngr && dirmngr --daemon --standard-resolver || logg error 'Failed to launch dirmngr with standard-resolver'
+    if [ -f "$HOME/.gnupg/public/$KEYID.sig" ]; then
+      gpg --import "$HOME/.gnupg/public/$KEYID.sig"
+    else
+      logg info 'Attempting to download the specified public GPG key (`{{ .user.gpg.id }}`) from public keyservers'
+      gpg --keyserver https://pgp.mit.edu --recv "$KEYID" || EXIT_CODE=$?
       if [ -n "$EXIT_CODE" ]; then
-        logg info 'Non-zero exit code received when trying to retrieve public user GPG key on hkps://pgp.mit.edu'
-        gpgconf --kill dirmngr
-        KEYID="${KEYID^^}"
-        KEYID="$(echo "$KEYID" | sed 's/^0X/0x/')"
-        if [ -f "$HOME/.gnupg/public/$KEYID.sig" ]; then
-          gpg --import "$HOME/.gnupg/public/$KEYID.sig"
+        logg info 'Non-zero exit code received when downloading public GPG key'
+        gpg --keyserver hkps://pgp.mit.edu --recv "$KEYID" || EXIT_CODE=$?
+        if [ -n "$EXIT_CODE" ]; then
+          logg info 'Non-zero exit code received when trying to retrieve public user GPG key on hkps://pgp.mit.edu'
+        else
+          logg success 'Successfully imported configured public user GPG key'
         fi
-      else
-        logg success 'Successfully imported configured public user GPG key'
       fi
     fi
+    logg info 'Stopping dirmngr'
+    gpgconf --kill dirmngr && logg info 'Stopped dirmngr' || info warn 'Failed to stop dirmngr'
   else
     logg info 'Key is already in keyring'
   fi

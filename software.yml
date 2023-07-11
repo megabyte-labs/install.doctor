@@ -4630,6 +4630,11 @@ softwarePackages:
     dnf: kodi
     flatpak: tv.kodi.Kodi
     pacman: kodi
+  krew:
+    _bin: kubectl-krew
+    _github: https://github.com/kubernetes-sigs/krew
+    _name: KubeCTL
+    brew: krew
   kubectx:
     _bin: kubectx
     _desc: Faster way to switch between clusters and namespaces in kubectl
@@ -4642,9 +4647,6 @@ softwarePackages:
     choco:
       - kubens
       - kubectx
-    krew:
-      - ctx
-      - ns
     pacman: kubectx
     port: kubectx
     snap: kubectx
@@ -4670,7 +4672,7 @@ softwarePackages:
     brew: kubectl
     choco: kubernetes-cli
     snap: kubectl
-  kubernetes-helm:
+  helm:
     _bin: helm
     _desc: The Kubernetes Package Manager. Helm is the best way to find, share, and use software built for Kubernetes.
     _docs: https://helm.sh/docs
@@ -9972,7 +9974,7 @@ softwarePlugins:
     plugins:
       - https://github.com/BalliAsghar/mailsy-alfred/releases/download/2.0.0/Mailsy.alfredworkflow
   android-studio:
-    cmd: bash -c 'if ! sdkmanager --list_installed | grep \'  {PLUGIN}\' > /dev/null; then sdkmanager --install \'{PLUGIN}\' > /dev/null; fi'
+    cmd: bash -c 'if ! sdkmanager --list_installed | grep "  {PLUGIN}" > /dev/null; then sdkmanager --install "{PLUGIN}" > /dev/null; fi'
     plugins:
       - add-ons;addon-google_apis-google-24
       - build-tools;33.0.0
@@ -10032,7 +10034,7 @@ softwarePlugins:
       - microsoft.cst.attacksurfaceanalyzer.cli
       - dotnet-format
   gcloud:
-    cmd: bash -c 'if ! gcloud components list | grep 'Installed.*{PLUGIN}' &> /dev/null; then gcloud components install "{PLUGIN}"; fi'
+    cmd: bash -c 'if ! gcloud components list | grep "Installed.*{PLUGIN}" &> /dev/null; then gcloud components install "{PLUGIN}"; fi'
     plugins:
       - app-engine-go
       - cloud-datastore-emulator
@@ -10055,27 +10057,43 @@ softwarePlugins:
       - github/gh-net
       - mislav/gh-cp
   helm:
+    cmd: bash -c '{PLUGIN}'
     plugins:
-      - https://github.com/databus23/helm-diff
-      - https://github.com/jkroepke/helm-secrets
-      - repo: helm repo add cloudflare-exporter https://lablabs.github.io/cloudflare-exporter/
-        install: helm install cloudflare-exporter/cloudflare-exporter
+      - if ! helm plugin list | grep "Preview helm upgrade changes as a diff" > /dev/null; then helm plugin install https://github.com/databus23/helm-diff; fi
+      - if ! helm plugin list | grep "This plugin provides secrets values encryption for Helm charts secure storing" > /dev/null; then helm plugin install https://github.com/jkroepke/helm-secrets; fi
+      # - helm repo add cloudflare-exporter https://lablabs.github.io/cloudflare-exporter/ && helm install cloudflare-exporter/cloudflare-exporter
   krew:
+    cmd: bash -c 'if ! kubectl krew list | grep "{PLUGIN}" > /dev/null; then kubectl krew install "{PLUGIN}"; fi'
     plugins:
       - access-matrix
+      - cert-manager
+      - cost
+      - ctx
       - datree
       - deprecations
+      - flyte
       - get-all
+      - graph
+      - ingress-nginx
+      - karmada
       - konfig
+      - kyverno
+      - liqo
+      - minio
       - modify-secret
       - neat
       - node-shell
+      - nx
+      - oidc-login
       - resource-capacity
       - score
       - sniff
+      - tail
       - tree
       - tunnel
       - view-allocations
+      - virt
+      - warp
       - who-can
   raycast:
     cmd: null

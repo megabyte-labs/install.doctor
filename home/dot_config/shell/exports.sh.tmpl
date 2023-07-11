@@ -235,6 +235,7 @@ export KODI_DATA="$XDG_DATA_HOME/kodi"
 
 ### Krew
 export KREW_ROOT="$XDG_DATA_HOME/krew"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 ### Kube
 export KUBECONFIG="$XDG_CONFIG_HOME/kube/config"
