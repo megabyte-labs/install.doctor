@@ -609,6 +609,7 @@ softwareGroups:
     - kube-shell
     - kubernetes-cli
     - helm
+    - helm-docs
     - kubernetes-kompose
     - kubeval
     - k9s
@@ -1460,6 +1461,11 @@ softwareGroups:
       note: Bundled into installer
   helmCharts:
     - vector
+helm:
+  # helm repo add cloudflare-exporter https://lablabs.github.io/cloudflare-exporter/ && helm install cloudflare-exporter/cloudflare-exporter
+  - name: cloudflare-exporter
+    url: https://lablabs.github.io/cloudflare-exporter/
+    pkg: cloudflare-exporter/cloudflare-exporter
 softwarePlugins:
   docker:
     plugins:

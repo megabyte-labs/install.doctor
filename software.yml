@@ -637,6 +637,12 @@ softwarePackages:
     _github: https://github.com/quickemu-project/quickgui
     _pre: sudo add-apt-repository ppa:yannick-mauray/quickgui && sudo apt update
     apt:ubuntu: quickgui
+  helm-docs:
+    _bin: helm-docs
+    _github: https://github.com/norwoodj/helm-docs
+    _name: Helm Docs
+    brew: norwoodj/tap/helm-docs
+    scoop: helm-docs
   catlight:
     _github: https://github.com/catlightio/CatLight
     _name: Catlight
@@ -10060,8 +10066,8 @@ softwarePlugins:
     cmd: bash -c '{PLUGIN}'
     plugins:
       - if ! helm plugin list | grep "Preview helm upgrade changes as a diff" > /dev/null; then helm plugin install https://github.com/databus23/helm-diff; fi
+      - if ! helm plugin list | grep "Query at a given interval a Prometheus, ElasticSearch or Sentry instance." > /dev/null; then helm plugin install https://github.com/ContainerSolutions/helm-monitor; fi
       - if ! helm plugin list | grep "This plugin provides secrets values encryption for Helm charts secure storing" > /dev/null; then helm plugin install https://github.com/jkroepke/helm-secrets; fi
-      # - helm repo add cloudflare-exporter https://lablabs.github.io/cloudflare-exporter/ && helm install cloudflare-exporter/cloudflare-exporter
   krew:
     cmd: bash -c 'if ! kubectl krew list | grep "{PLUGIN}" > /dev/null; then kubectl krew install "{PLUGIN}"; fi'
     plugins:
