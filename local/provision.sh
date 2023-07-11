@@ -13,6 +13,13 @@ if [ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs" ]; then
   mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs"
 fi
 
+### Disconnect from WARP, if connected
+if command -v warp-cli > /dev/null; then
+  if warp-cli status | grep 'Connected' > /dev/null; then
+    warp-cli disconnect && echo "Disconnected WARP to prevent conflicts"
+  fi
+fi
+
 # @description Installs glow (a markdown renderer) from GitHub releases
 # @example installGlow
 installGlow() {
