@@ -760,13 +760,13 @@ async function beforeInstall(packageManager) {
     if (!brewUpdated) {
       brewUpdated = true
       try {
-        runCommand('Running brew update / upgrade', `brew update && brew upgrade --cask --greedy && brew upgrade --force`)
+        runCommand('Running brew update / upgrade', `brew update && brew upgrade --cask && brew upgrade`)
       } catch (e) {
         console.log(e)
         log('error', 'Homebrew', 'Failed running brew update / upgrade')
         log('info', 'Homebrew', 'Running brew tap --repair and trying again')
         try {
-          runCommand('Repairing taps and retrying brew update / upgrade', 'brew tap --repair && brew update && brew upgrade --cask && brew upgrade')
+          runCommand('Repairing taps and retrying brew update / upgrade', 'brew tap --repair && brew update && brew upgrade --cask --greedy && brew upgrade --force --greedy')
         } catch (e) {
           console.log(e)
           log('error', 'Homebrew', 'Failed both attempts to run brew update / upgrade')
