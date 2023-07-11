@@ -30,7 +30,8 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
     LOCAL_KEYID="${KEYID^^}"
     LOCAL_KEYID="$(echo "$LOCAL_KEYID" | sed 's/^0X/0x/')"
     logg info 'Killing dirmngr instance and reloading daemon with standard-resolver'
-    sudo pkill dirmngr && dirmngr --daemon --standard-resolver || logg error 'Failed to launch dirmngr with standard-resolver'
+    sudo pkill dirmngr
+    dirmngr --daemon --standard-resolver
     if [ -f "$HOME/.gnupg/public/$KEYID.sig" ]; then
       gpg --import "$HOME/.gnupg/public/$KEYID.sig"
     else
