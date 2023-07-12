@@ -4342,6 +4342,7 @@ softwarePackages:
     _github: https://github.com/ipfs/ipfs
     _home: https://ipfs.tech/
     _name: IPFS
+    _service: ipfs
     brew: ipfs
     choco: go-ifps
     nix: ipfs
@@ -4355,7 +4356,6 @@ softwarePackages:
     _github: https://github.com/ipfs/ipfs-desktop
     _home: https://ipfs.tech/
     _name: IPFS Desktop
-    _service:cask: ipfs
     _when:cask: '! test -d "/Applications/IPFS Desktop.app" && ! test -d "~/Applications/IPFS Desktop.app"'
     appimage: https://github.com/ipfs-shipyard/ipfs-desktop/releases/download/v0.28.0/ipfs-desktop-0.28.0-linux-x86_64.AppImage
     cask: ipfs
@@ -10032,7 +10032,7 @@ softwarePlugins:
       - docker/disk-usage-extension:0.2.7
       - docker/logs-explorer-extension:0.2.3
       - docker/resource-usage-extension
-      - docker/volumes-backup-extension:main:1.1.4
+      - docker/volumes-backup-extension:1.1.4
       - drone/drone-ci-docker-extension:0.2.0
       - okteto/docker-desktop-extension:0.3.3
       - portainer/portainer-docker-extension:2.18.4
