@@ -21,19 +21,33 @@ if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
     # logg info 'Running `source ~/.bashrc`'
     # source ~/.bashrc
     # logg success 'Imported the `~/.bashrc` profile'
-    if command -v bash-it > /dev/null; then
-        if [ -n "$BASH_IT" ]; then
-            cd "$BASH_IT" || logg warn "The $BASH_IT directory does not exist"
-            logg info 'Enabling bash-it completions'
-            yes | bash-it enable completion defaults dirs docker docker-compose export git makefile ng npm ssh system vagrant
-            logg info 'Enabling bash-it plugins'
-            yes | bash-it enable plugin base blesh browser cht-sh dirs gitstatus powerline sudo xterm
-            logg info 'Finished enabling bash-it functions'
-        else
-            logg warn 'The BASH_IT variable needs to be defined'
+    if [ -d "$BASH_IT" ]; then
+        ### Ensure bash-it is installed
+        if ! command -v bash-it > /dev/null; then
+            logg info 'Installing `bash-it` since it is not available yet as a command'
+            bash "$BASH_IT/install.sh" --silent --no-modify-config
         fi
+
+        ### Ensure completions are enabled
+        cd "$BASH_IT/enabled"
+        logg info 'Enabling bash-it completions'
+        # TODO: Move these plugins to the .chezmoidata.yaml
+        for COMPLETION in defaults dirs docker docker-compose export git makefile ng npm ssh system vagrant; do
+            if ! ls "$BASH_IT/enabled" | grep "$COMPLETION" > /dev/null; then
+                echo y | bash-it enable completion dirs > /dev/null && logg info "Enabled the bash-it $COMPLETION completion plugin" || logg error "Failed to install the $COMPLETION bash-it completion plugin"
+            fi
+        done
+
+        ### Ensure plugins are enabled
+        logg info 'Enabling bash-it plugins'
+        # TODO: Move these plugins to the .chezmoidata.yaml
+        for PLUGIN in base blesh browser cht-sh dirs gitstatus powerline sudo xterm; do
+            if ls "$BASH_IT/enabled" | grep "$PLUGIN" > /dev/null; then
+                echo y | bash-it enable plugin "$PLUGIN" > /dev/null && logg info "Enabled the bash-it $PLUGIN plugin" || logg error "Failed to install the $PLUGIN bash-it plugin"
+            fi
+        done
     else
-        logg warn '`bash-it` is not available'
+        logg warn 'The path specified by BASH_IT does not exist yet'
     fi
 else
     if ! command -v powerline > /dev/null; then

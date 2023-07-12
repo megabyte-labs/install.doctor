@@ -1,11 +1,5 @@
 # shellcheck disable=SC1090,SC1091,SC2034,SC2154,SC2296
 
-# If not running interactively, don't do anything
-case $- in
-  *i*) ;;
-    *) return;;
-esac
-
 ### Language / Fonts
 export LANG="en_US"
 export LC_ALL="en_US.UTF-8"
@@ -18,6 +12,12 @@ export XDG_CONFIG_HOME="$HOME/.config"
 if [ -f "$HOME/.config/shell/profile.sh" ]; then
   . "$XDG_CONFIG_HOME/shell/profile.sh"
 fi
+
+# If not running interactively, don't do anything
+case $- in
+  *i*) ;;
+    *) return;;
+esac
 
 ### Misc.
 export HISTFILE="$XDG_STATE_HOME/zsh/history"

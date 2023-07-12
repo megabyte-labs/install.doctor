@@ -24,34 +24,39 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-### Clone the repositories
-logg info 'Cloning the repositories'
-{{ range .user.gitomatic }}
-if [ ! -d "{{ .path }}" ]; then
-    git clone "{{ .git }}" "{{ .path }}"
-fi
-{{ end -}}
-
-### Create Systemd service to run gitomatic
-if command -v gitomatic > /dev/null; then
-    if [ -d /Applications ] && [ -d /System ]; then
-        ### macOS
-        logg info 'Copying `gitomatic` plist file to /Library/LaunchDaemons'
-        sudo cp -f "{{ .chezmoi.homeDir }}/.config/gitomatic/gitomatic.plist" /Library/LaunchDaemons/gitomatic.plist
-        logg info 'Running `sudo launchctl load com.gitomatic`'
-        sudo launchctl load com.gitomatic
-        logg info 'Running `sudo launchctl start com.gitomatic`'
-        sudo launchctl start com.gitomatic
-    else
-        ### Linux
-        logg info 'Copying `gitomatic` systemd unit file to /etc/systemd/system/'
-        sudo cp -f "{{ .chezmoi.homeDir }}/.config/gitomatic/gitomatic.service" /etc/systemd/system/gitomatic.service
-        logg info 'Reloading systemd daemon'
-        sudo systemctl daemon-reload
-        logg info 'Enabling and starting `gitomatic` service'
-        sudo systemctl enable --now gitomatic
+function gitomaticSetup() {
+    ### Clone the repositories
+    logg info 'Cloning the repositories'
+    {{ range .user.gitomatic }}
+    logg info 'Checking for presence of {{ .path }}'
+    if [ ! -d "{{ .path }}" ]; then
+        logg info 'Cloning {{ .git }} to {{ .path }}'
+        git clone "{{ .git }}" "{{ .path }}"
     fi
-else
-  logg info 'Git-o-matic is not installed or it is not available in PATH'
-fi
+    {{ end -}}
+
+    ### Create Systemd service to run gitomatic
+    if command -v gitomatic > /dev/null; then
+        if [ -d /Applications ] && [ -d /System ]; then
+            ### macOS
+            logg info 'Copying `gitomatic` plist file to /Library/LaunchDaemons'
+            sudo cp -f "{{ .chezmoi.homeDir }}/.config/gitomatic/gitomatic.plist" /Library/LaunchDaemons/gitomatic.plist
+            logg info 'Running `sudo launchctl load gitomatic`'
+            sudo launchctl load gitomatic
+            logg info 'Running `sudo launchctl start gitomatic`'
+            sudo launchctl start gitomatic
+        else
+            ### Linux
+            logg info 'Copying `gitomatic` systemd unit file to /etc/systemd/system/'
+            sudo cp -f "{{ .chezmoi.homeDir }}/.config/gitomatic/gitomatic.service" /etc/systemd/system/gitomatic.service
+            logg info 'Reloading systemd daemon'
+            sudo systemctl daemon-reload
+            logg info 'Enabling and starting `gitomatic` service'
+            sudo systemctl enable --now gitomatic
+        fi
+    else
+      logg info 'Git-o-matic is not installed or it is not available in PATH'
+    fi
+}
+gitomaticSetup
 {{ end -}}

@@ -10028,16 +10028,17 @@ softwarePlugins:
   docker:
     cmd: bash -c 'if ! docker extension list | grep "{PLUGIN}" > /dev/null; then echo y | docker extension install "{PLUGIN}"; fi'
     plugins:
-      - docker/disk-usage-extension
-      - docker/logs-explorer-extension
+      - ambassador/telepresence-docker-extension:1.0.13
+      - docker/disk-usage-extension:0.2.7
+      - docker/logs-explorer-extension:0.2.3
       - docker/resource-usage-extension
-      - docker/volumes-backup-extension:main
-      - drone/drone-ci-docker-extension
-      - okteto/docker-desktop-extension
-      - portainer/portainer-docker-extension
+      - docker/volumes-backup-extension:main:1.1.4
+      - drone/drone-ci-docker-extension:0.2.0
+      - okteto/docker-desktop-extension:0.3.3
+      - portainer/portainer-docker-extension:2.18.4
       - redhatdeveloper/openshift-dd-ext
       - snyk/snyk-docker-desktop-extension
-      - tailscale/docker-extension
+      - tailscale/docker-extension:1.0.0
   dockerImages:
     cmd: null
     plugins:

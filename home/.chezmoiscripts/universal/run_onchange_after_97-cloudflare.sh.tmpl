@@ -248,7 +248,7 @@ if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; 
     fi
     TUNNEL_ID="$(cloudflared tunnel list | grep "host-{{ .host.hostname }}" | sed 's/ .*//')"
     logg info "Tunnel ID: $TUNNEL_ID"
-    if [ -f "/usr/local/etc/cloudflared/${TUNNEL_ID}.json" ]
+    if [ -f "/usr/local/etc/cloudflared/${TUNNEL_ID}.json" ]; then
         logg info 'Symlinking tunnel configuration to /usr/local/etc/cloudflared/credentials.json'
         rm -f /usr/local/etc/cloudflared/credentials.json
         sudo ln -s "/usr/local/etc/cloudflared/${TUNNEL_ID}.json" /usr/local/etc/cloudflared/credentials.json

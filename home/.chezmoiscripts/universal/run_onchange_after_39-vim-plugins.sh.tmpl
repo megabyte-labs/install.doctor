@@ -6,8 +6,11 @@
 #     This script pre-installs the VIM plugins defined in [`.chezmoidata.yaml`](https://github.com/megabyte-labs/install.doctor/tree/master/home/.chezmoidata.yaml)
 #     so that VIM does not have to do anything on its first launch.
 
-### Run the VIM plugin install routine
-if command -v vim > /dev/null; then
-    vim +PlugInstall +qall 2>/dev/null
-fi
+function vimSetup() {
+    ### Run the VIM plugin install routine
+    if command -v vim > /dev/null; then
+        vim +PlugInstall +qall 2>/dev/null && logg success 'Successfully ran `vim +PlugInstall +qall`' || logg error 'Failed to run `vim +PlugInstall +qll`'
+    fi
+}
+vimSetup
 {{ end -}}

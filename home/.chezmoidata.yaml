@@ -980,7 +980,6 @@ softwareGroups:
   Virtualization-Desktop: &Virtualization-Desktop
     - docker-desktop
     - gnome-boxes
-    - orbstack
     - parallels
     - quickgui
     - utm
@@ -1412,6 +1411,8 @@ softwareGroups:
       note: Deprecated in favor of using ASDF.
     - pkg: nuclear
       note: Music app - UI is horrendous
+    - pkg: orbstack
+      note: Faster / better alternative to Docker Desktop on macOS. Deprecated because it does not support Docker Extensions and is only for macOS.
     - pkg: pip
       note: The `pip` installation is handled by the `install-software` program bundled with Install Doctor.
     - pkg: pipx

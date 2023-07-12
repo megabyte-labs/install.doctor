@@ -47,7 +47,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   # Prompt (on bash only)
   if [[ "$(hostname)" != *'-minimal' ]]; then
     ### Styled Terminal
-    export BASH_IT="$HOME/.local/bash_it"
+    export BASH_IT="${XDG_DATA_HOME:-$HOME/.local/share}/bash_it"
     export BASH_IT_THEME="powerline"
     if command -v powerline-daemon > /dev/null && [ -f "$BASH_IT/bash_it.sh" ]; then
       . "$BASH_IT/bash_it.sh"
