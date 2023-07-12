@@ -58,3 +58,5 @@
     "pwabuilder.pwa-studio",
     "sidekick.sidekick-debugger",
     "appland.appmap",
+    "teamsdevapp.ms-teams-vscode-extension",
+    "saposs.app-studio-toolkit",
