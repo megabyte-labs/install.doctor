@@ -2396,7 +2396,7 @@ softwarePackages:
     cask: prezi-video
   orbstack:
     _bin: orb
-    _github: 
+    _github:
     _name: OrbStack
     _when:cask: '! test -d /Applications/OrbStack.app'
     cask: orbstack
@@ -5773,7 +5773,6 @@ softwarePackages:
     dnf:
       - neovim
       - python3-neovim
-    # Need to figure out how to include neovim plugin suite
     # flatpak: io.neovim.nvim
     nix: neovim
     pacman:
@@ -5789,6 +5788,12 @@ softwarePackages:
       - neovim
       - python-neovim
       - python3-neovim
+    _post: |
+      if command -v volta > /dev/null; then
+        volta install neovim
+      elif command -v npm > /dev/null; then
+        npm install -g neovim
+      fi
   majestic:
     _bin: majestic
     _github: https://github.com/Raathigesh/majestic
@@ -5900,7 +5905,7 @@ softwarePackages:
   generator-ngx-rocket:
     _bin: ngx
     _github: https://github.com/ngx-rocket/generator-ngx-rocket
-    _name: Angular 
+    _name: Angular
     npm: generator-ngx-rocket
   ngxtop:
     _bin: ngxtop
@@ -7274,7 +7279,7 @@ softwarePackages:
     zypper: xrdp
     yay: xrdp
   kasmvnc:
-    _bin: 
+    _bin:
     dnf: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
   responsively:
     _bin: null
