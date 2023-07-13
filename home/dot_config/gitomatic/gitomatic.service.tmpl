@@ -4,8 +4,8 @@ Description=Service to watch git repositories
 
 [Service]
 Type=simple
-User={{ .user.username }}
-ExecStart={{ .chezmoi.homeDir }}/.local/bin/gitomatic-service
+User=root
+ExecStart=/usr/local/bin/gitomatic-service
 Restart=on-failure
 
 [Install]
