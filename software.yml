@@ -6853,6 +6853,7 @@ softwarePackages:
     _home: null
     _name: Powershell
     _snapClassic: true
+    _post:cask: brew install mono-libgdiplus
     _when:cask: '! test -d /Applications/PowerShell.app && ! test -d ~/Applications/PowerShell.app'
     ansible: professormanhattan.powershell
     cask: powershell
