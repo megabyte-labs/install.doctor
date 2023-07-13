@@ -60,3 +60,4 @@
     "appland.appmap",
     "teamsdevapp.ms-teams-vscode-extension",
     "saposs.app-studio-toolkit",
+    "azure-automation.vscode-azureautomation",

@@ -32,17 +32,12 @@ oh-my-posh init pwsh --config "$env:HOME/.config/oh-my-posh/Betelgeuse.omp.json"
 
 ### PSFzf settings
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
-$commandOverride = [ScriptBlock]::Create("param(\$Location) Set-Location \$Location")
-Set-PsFzfOption -AltCCommand $commandOverride
 Set-PsFzfOption -TabExpansion
 $env:_PSFZF_FZF_DEFAULT_OPTS = "--ansi --preview 'bat --color=always {}'"
-Set-PSFzfOption -EnableAlias
+Set-PSFzfOption -EnableAliasFuzzySetEverything
 
 ### zoxide
-Invoke-Expression '& {
-  $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { "prompt" } else { "pwd" }
-  (zoxide init --hook $hook powershell | Out-String)
-}'
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
 ### Aliases
 Set-Alias grep Select-String
