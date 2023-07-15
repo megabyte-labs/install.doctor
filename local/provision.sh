@@ -195,9 +195,13 @@ if [ -n "$SUDO_EXIT_CODE" ]; then
   logg info 'Note: Non-privileged installations are not yet supported'
 fi
 
-### Enable passwordless sudo
+# @description Add current user to /etc/sudoers so that headless automation is possible
 if ! sudo cat /etc/sudoers | grep '# TEMPORARY FOR INSTALL DOCTOR' > /dev/null; then
-  echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers
+  if [ -n "$SUDO_PASSWORD" ]; then
+    printf '%s\n' "$SUDO_PASSWORD" | sudo -p "" -S echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers
+  else
+    echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers
+  fi
 fi
 
 ### Qubes dom0
