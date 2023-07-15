@@ -12,13 +12,21 @@
 
 # Check if the script is being run as root
 if [[ $EUID -ne 0 ]]; then
-   echo -e "\e[91mThis script must be run as root\e[0m" 
-   exit 1
+    if command -v logg > /dev/null; then
+        logg error "This script must be run as root"
+    else
+        echo -e "\e[91mThis script must be run as root\e[0m"
+    fi
+    exit 1
 fi
 
 # Check if the correct number of arguments is provided
 if [[ $# -ne 1 ]]; then
-    echo -e "\e[93mUsage: $0 <group>\e[0m"
+    if command -v logg > /dev/null; then
+        logg info "Usage: $0 <group>"
+    else
+        echo -e "\e[93mUsage: $0 <group>\e[0m"
+    fi
     exit 1
 fi
 
@@ -26,7 +34,11 @@ GROUP=$1
 
 # Check if the operating system is macOS
 if [[ "$(uname)" == "Darwin" ]]; then
-    echo -e "\e[96mCreating group and user ${GROUP} on macOS...\e[0m"
+    if command -v logg > /dev/null; then
+        logg info "Creating group and user ${GROUP} on macOS..."
+    else
+        echo -e "\e[96mCreating group and user ${GROUP} on macOS...\e[0m"
+    fi
 
     # Check if the group already exists
     if ! sudo dscl . read /Groups/"${GROUP}" >/dev/null 2>&1; then
@@ -39,7 +51,11 @@ if [[ "$(uname)" == "Darwin" ]]; then
             sudo dscl . create /Groups/"${GROUP}" gid "$GROUP_ID"
         fi
     else
-        echo -e "\e[93mGroup ${GROUP} already exists\e[0m"
+        if command -v logg > /dev/null; then
+            logg info "Group ${GROUP} already exists."
+        else
+            echo -e "\e[93mGroup ${GROUP} already exists\e[0m"
+        fi
     fi
 
     # Check if the user already exists
@@ -62,20 +78,36 @@ if [[ "$(uname)" == "Darwin" ]]; then
         # Add the current user to the group
         sudo dseditgroup -o edit -t user -a "${USER}" "${GROUP}"
     else
-        echo -e "\e[93mUser ${GROUP} already exists\e[0m"
+        if command -v logg > /dev/null; then
+            logg info "User ${GROUP} already exists"
+        else
+            echo -e "\e[93mUser ${GROUP} already exists\e[0m"
+        fi
     fi
 
-    echo -e "\e[92mGroup and user ${GROUP} created successfully on macOS\e[0m"
+    if command -v logg > /dev/null; then
+        logg info "Group and user ${GROUP} created successfully on macOS"
+    else
+        echo -e "\e[92mGroup and user ${GROUP} created successfully on macOS\e[0m"
+    fi
     exit 0
 elif [[ "$(uname)" == "Linux" ]]; then
-    echo -e "\e[96mCreating group and user ${GROUP} on Linux...\e[0m"
+    if command -v logg > /dev/null; then
+        logg info "Creating group and user ${GROUP} on Linux..."
+    else
+        echo -e "\e[96mCreating group and user ${GROUP} on Linux...\e[0m"
+    fi
 
     # Check if the group already exists
     if ! grep -qE "^${GROUP}:" /etc/group; then
         # Create the group
         groupadd "${GROUP}"
     else
-        echo -e "\e[93mGroup ${GROUP} already exists\e[0m"
+        if command -v logg > /dev/null; then
+            logg info "Group ${GROUP} already exists"
+        else
+            echo -e "\e[93mGroup ${GROUP} already exists\e[0m"
+        fi
     fi
 
     # Check if the user already exists
@@ -83,13 +115,25 @@ elif [[ "$(uname)" == "Linux" ]]; then
         # Create the user and assign it to the group
         useradd -g "${GROUP}" "${GROUP}"
     else
-        echo -e "\e[93mUser ${GROUP} already exists\e[0m"
+        if command -v logg > /dev/null; then
+            logg info "User ${GROUP} already exists"
+        else
+            echo -e "\e[93mUser ${GROUP} already exists\e[0m"
+        fi
     fi
 
-    echo -e "\e[92mGroup and user ${GROUP} created successfully on Linux\e[0m"
+    if command -v logg > /dev/null; then
+        logg success "Group and user ${GROUP} created successfully on Linux"
+    else
+        echo -e "\e[92mGroup and user ${GROUP} created successfully on Linux\e[0m"
+    fi
     exit 0
 fi
 
 # If the operating system is neither macOS nor Linux, display an error message
-echo -e "\e[91mUnsupported operating system\e[0m"
+if command -v logg > /dev/null; then
+    logg error "Unsupported operating system"
+else
+    echo -e "\e[91mUnsupported operating system\e[0m"
+fi
 exit 1

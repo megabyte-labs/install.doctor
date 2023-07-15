@@ -17,6 +17,11 @@ if [ -f "$HOME/.config/shell/profile.sh" ]; then
   . "$HOME/.config/shell/profile.sh"
 fi
 
+### /etc/bashrc
+if [ -f /etc/bashrc ]; then
+  . /etc/bashrc
+fi
+
 ### Escape if shell not interactive
 case $- in
   *i*) ;;
@@ -35,11 +40,6 @@ export HISTFILE="$XDG_STATE_HOME/bash/history"
 if [ -d "$HISTFILE" ]; then
   # Remove history file if it is incorrectly created as a directory
   rm -rf "$HISTFILE"
-fi
-
-### /etc/bashrc
-if [ -f /etc/bashrc ]; then
-  . /etc/bashrc
 fi
 
 ### Bash Initialization Hooks
@@ -142,6 +142,6 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
 
   ### zoxide
   if command -v zoxide > /dev/null; then
-    eval "$(zoxide init --cmd cd bash )"
+    eval "$(zoxide init --cmd cd bash)"
   fi
 fi

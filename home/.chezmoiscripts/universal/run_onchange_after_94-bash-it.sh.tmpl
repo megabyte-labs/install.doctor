@@ -15,6 +15,12 @@ if ! command -v powerline > /dev/null; then
     install-software powerline > /dev/null
 fi
 
+### Ensure ble.sh installed
+if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/ble.sh" ] && [ ! ]; then
+    logg info "${XDG_DATA_HOME:-$HOME/.local/share}/ble.sh present and ${XDG_DATA_HOME:-$HOME/.local/share}/blesh not present - installing ble.sh..."
+    make -C "${XDG_DATA_HOME:-$HOME/.local/share}/ble.sh" install > /dev/null && logg success "Installed ble.sh"
+fi
+
 ### Bash-it completions / plugins
 if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
     # These three lines are probably not needed:
@@ -26,6 +32,8 @@ if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
         if ! command -v bash-it > /dev/null; then
             logg info 'Installing `bash-it` since it is not available yet as a command'
             bash "$BASH_IT/install.sh" --silent --no-modify-config
+        else
+            logg info '`bash-it` already available'
         fi
 
         ### Ensure completions are enabled
@@ -33,9 +41,10 @@ if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
         logg info 'Enabling bash-it completions'
         # TODO: Move these plugins to the .chezmoidata.yaml
         for COMPLETION in defaults dirs docker docker-compose export git makefile ng npm ssh system vagrant; do
-            if ! ls "$BASH_IT/enabled" | grep "$COMPLETION" > /dev/null; then
-                echo y | bash-it enable completion dirs > /dev/null && logg info "Enabled the bash-it $COMPLETION completion plugin" || logg error "Failed to install the $COMPLETION bash-it completion plugin"
+            if ls "$BASH_IT/enabled" | grep "$COMPLETION" > /dev/null; then
+                rm -f "$BASH_IT/enabled/"*"$COMPLETION"* > /dev/null && logg info "Removed old $COMPLETION bash-it completion symlink" || logg error "Failed to remove $COMPLETION bash-it completion symlink"
             fi
+            echo y | bash-it enable completion "$COMPLETION" > /dev/null && logg info "Enabled the bash-it $COMPLETION completion plugin" || logg error "Failed to install the $COMPLETION bash-it completion plugin"
         done
 
         ### Ensure plugins are enabled
@@ -43,8 +52,9 @@ if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
         # TODO: Move these plugins to the .chezmoidata.yaml
         for PLUGIN in base blesh browser cht-sh dirs gitstatus powerline sudo xterm; do
             if ls "$BASH_IT/enabled" | grep "$PLUGIN" > /dev/null; then
-                echo y | bash-it enable plugin "$PLUGIN" > /dev/null && logg info "Enabled the bash-it $PLUGIN plugin" || logg error "Failed to install the $PLUGIN bash-it plugin"
+                rm -f "$BASH_IT/enabled/"*"$PLUGIN"* > /dev/null && logg info "Removed old $PLUGIN bash-it plugin symlink" || logg error "Failed to remove $PLUGIN bash-it plugin symlink"
             fi
+            echo y | bash-it enable plugin "$PLUGIN" > /dev/null && logg info "Enabled the bash-it $PLUGIN plugin" || logg error "Failed to install the $PLUGIN bash-it plugin"
         done
     else
         logg warn 'The path specified by BASH_IT does not exist yet'

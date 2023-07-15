@@ -176,7 +176,7 @@ if command -v warp-cli > /dev/null; then
     if command -v gcloud > /dev/null; then
         logg info "Configuring gcloud to use "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" and "${XDG_DATA_HOME:-$HOME/.local/share}/curl/cacert.pem""
         mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/gcloud"
-        cat cacert.pem "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" > "${XDG_DATA_HOME:-$HOME/.local/share}/gcloud/ca.pem"
+        cat "${XDG_DATA_HOME:-$HOME/.local/share}/curl/cacert.pem" "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" > "${XDG_DATA_HOME:-$HOME/.local/share}/gcloud/ca.pem"
         gcloud config set core/custom_ca_certs_file "${XDG_DATA_HOME:-$HOME/.local/share}/gcloud/ca.pem"
     fi
 

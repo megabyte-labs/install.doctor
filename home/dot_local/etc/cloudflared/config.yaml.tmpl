@@ -22,6 +22,10 @@ ingress:
     service: localhost:8445
   - hostname: vnc.{{ $baseDomain }}
     service: tcp://localhost:5901
+{{- if eq .host.softwareGroup "Kubernetes" }}
+  - hostname: k8s.{{ .host.domain }}
+    service: bastion
+{{- end }}
   # Example of an HTTP request over a Unix socket:
   # - hostname: {{ $baseDomain }}
   #   service: unix:/home/production/echo.sock

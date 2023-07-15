@@ -66,6 +66,12 @@
     type = "file"
     url = "https://gitlab.com/megabyte-labs/gas-station/-/raw/master/environments/prod/group_vars/all/helm.yml"
     refreshPeriod = "{{ $refreshPeriod }}"
+[".local/share/blesh"]
+    type = "git-repo"
+    url = "https://github.com/akinomyoga/ble.sh.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 [".local/share/bash_it"]
     type = "git-repo"
     url = "https://github.com/Bash-it/bash-it.git"
