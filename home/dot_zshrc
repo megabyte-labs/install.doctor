@@ -62,7 +62,7 @@ setopt SHARE_HISTORY
 if [ ! -d "$XDG_CACHE_HOME/zsh" ]; then
 	mkdir -p "$XDG_CACHE_HOME/zsh"
 fi
-autoload -U +X compinit && compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+autoload -U +X compinit && compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION"
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
