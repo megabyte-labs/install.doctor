@@ -120,8 +120,10 @@ fi
 # fi
 
 ### emsdk
-if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/emsdk/emsdk_env.sh" ]; then
-  . "${XDG_DATA_HOME:-$HOME/.local/share}/emsdk/emsdk_env.sh"
+if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/emsdk" ]; then
+  export PATH="$PATH:${XDG_DATA_HOME:-$HOME/.local/share}/emsdk"
+  export EMSDK="${XDG_DATA_HOME:-$HOME/.local/share}/emsdk"
+  export EMSDK_QUIET=1
 fi
 
 ### fzf-tmux
