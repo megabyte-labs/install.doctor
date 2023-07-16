@@ -119,6 +119,11 @@ fi
 #   . "$HOME/.local/scripts/docker-functions.bash"
 # fi
 
+### emsdk
+if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/emsdk/emsdk_env.sh" ]; then
+  . "${XDG_DATA_HOME:-$HOME/.local/share}/emsdk/emsdk_env.sh"
+fi
+
 ### fzf-tmux
 #if [ -f "$HOME/.local/scripts/fzf-tmux.bash" ]; then
 #  . "$HOME/.local/scripts/fzf-tmux.bash"

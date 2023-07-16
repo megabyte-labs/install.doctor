@@ -1,6 +1,6 @@
 ---
 # eslint-disable eslint-comments/disable-enable-pair, max-len, max-lines, no-warning-comments
-
+# rhino   mkvtoolnix  testdisk ccat      git-credential-manager source-highlight  giter8  saltstack squid ettercap  calc mongodb wdiff dialog john reaver oath-toolkit xhyve elm icdiff   ddrescue gitlab-ci-multi-runner tcl-tk flac    zenity terragrunt dbus  grpc diffutils   sonarqube     haproxy    cabal-install  sonar-scanner wakeonlan tmate  solr tcptraceroute   hashcat handbrake iproute2mac 2fsprogs hydra you-get cabextract trash sphinx-doc iftop htop-osx dockutil xctool aspell w3m grc screenfetch moreutils brew-cask-completion openconnect media-info lftp unison logstash pstree rpm opam iperf3 libav gifsicle iperf colordiff lmdb mcrypt httprack  aircrack-ng ntfs-3g  glide  glog parallel  bison rename kubernetes-helm gdbm mobile-shell geckodriver  pv sdl swig winetricks doxygen mtr graphicsmagick dos2unix highlight putty llvm  flow  watch gdb ant mariadb  mercurial pidof autoconf maven readline libtool chromedriver pkg-config
 # `softwarePackages` is a map of possible package managers to use while installing a program. The installer will
 # look at the `installerPreference` variable and find the first package manager that is in the package's possible
 # installation method and then use that. It is also sensitive to the type of operating system so a package with
@@ -266,6 +266,12 @@ softwarePackages:
   pinapp:
     _bin: pinapp
     flatpak: io.github.fabrialberio.pinapp
+  fabric:
+    _bin: fabric
+    _github: https://github.com/fabric/fabric
+    _name: Fabric
+    brew: fabric
+    pipx: fabric
   drawing:
     _bin: drawing
     flatpak: com.github.maoschanz.drawing
@@ -407,6 +413,15 @@ softwarePackages:
     _name: Multi-Gitter
     brew: lindell/multi-gitter/multi-gitter
     go: github.com/lindell/multi-gitter@latest
+  tomcat:
+    _bin: tomcat
+    _github: https://github.com/apache/tomcat
+    _name: Tomcat
+    apt: tomcat
+    brew: tomcat
+    choco: tomcat
+    dnf: tomcat
+    pacman: tomcat
   allure:
     _bin: allure
     _desc: '[Allure Report](https://docs.qameta.io/allure-testops/) is a flexible, lightweight multi-language test reporting tool. It provides clear graphical reports and allows everyone involved in the development process to extract the maximum of information from the everyday testing process.'
@@ -442,6 +457,15 @@ softwarePackages:
     choco: altair-graphql
     snap: altair
     yay: altair
+  binwalk:
+    _bin: binwalk
+    _github: https://github.com/ReFirmLabs/binwalk
+    _name: Binwalk
+    apt: binwalk
+    brew: binwalk
+    choco: binwalk
+    dnf: binwalk
+    pacman: binwalk
   ansifilter:
     _bin: ansifilter
     _desc: null
@@ -485,6 +509,11 @@ softwarePackages:
     _name: iSort
     brew: isort
     pipx: isort
+  pidcat:
+    _bin: pidcat
+    _github: https://github.com/JakeWharton/pidcat
+    _name: PidCat
+    brew: pidcat
   openjdk:
     _bin: javac
     _desc: Latest version of the OpenJDK (Java Development Kit)
@@ -530,6 +559,11 @@ softwarePackages:
     _home: https://github.com/ansible/ansible-lint/
     _name: Ansible Lint
     pipx: ansible-lint
+  duti:
+    _bin: duti
+    _github: https://github.com/moretension/duti
+    _name: Duti
+    brew:darwin: duti
   ansibleconnect:
     _bin: ansibleconnect
     _deps:
@@ -559,6 +593,28 @@ softwarePackages:
       https://www.clamav.net/ https://www.malwarebytes.com/
     _name: AntiVirus
     ansible: professormanhattan.antivirus
+  swiftformat:
+    _bin: swiftformat
+    _github: https://github.com/nicklockwood/SwiftFormat
+    _name: SwiftFormat
+    brew: swiftformat
+  fdupes:
+    _bin: fdupes
+    _github: https://github.com/adrianlopezroche/fdupes
+    _name: fdupes
+    apt: fdupes
+    brew: fdupes
+    dnf: fdupes
+    pacman: fdupes
+  arping:
+    _bin: arping
+    _github: https://github.com/ThomasHabets/arping
+    _name: ARPing
+    apt: arping
+    brew: arping
+    dnf: arping
+    choco: arping
+    pacman: arping
   sysz:
     _deps:
       - fzf
@@ -598,6 +654,14 @@ softwarePackages:
     _name: AptCacherNG
     ansible: professormanhattan.aptcacherng
     _systemd: apt-cacher-ng
+  pigz:
+    _bin: pigz
+    _github: https://github.com/madler/pigz
+    _name: PIGZ
+    apt: pigz
+    brew: pigz
+    dnf: pigz
+    pacman: pigz
   http-toolkit:
     _github: https://github.com/httptoolkit/httptoolkit
     _name: HTTP Toolkit
@@ -616,6 +680,20 @@ softwarePackages:
     _github: https://github.com/mozilla/web-ext
     _name: Web Extension CLI by Mozilla
     npm: web-ext
+  sshuttle:
+    _bin: sshuttle
+    _github: https://github.com/sshuttle/sshuttle
+    _name: SShuttle
+    apt: sshuttle
+    brew: sshuttle
+    dnf: sshuttle
+    pacman: sshuttle
+    zypper: sshuttle
+    emerge: net-proxy/sshuttle
+    nix-env: nixos.sshuttle
+    nix-pkg: nixpkgs.sshuttle
+    pipx: sshuttle
+    port: sshuttle
   dockly:
     _bin: dockly
     _github: https://github.com/lirantal/dockly
@@ -659,6 +737,14 @@ softwarePackages:
     _name: LXD UI
     _post: lxd init && lxc config set core.https_address "[::]:8443"
     snap: lxd
+  ipmitool:
+    _bin: ipmitool
+    _github: https://github.com/ipmitool/ipmitool
+    _name: IPMI Tool
+    apt: ipmitool
+    brew: ipmitool
+    dnf: ipmitool
+    pacman: ipmitool
   gopass:
     _bin: gopass
     _desc: The slightly more awesome standard unix password manager for teams
@@ -782,6 +868,30 @@ softwarePackages:
     _home: https://astronvim.github.io/
     _name: AstroNvim
     _post: nvim --headless -c 'autocmd User PackerComplete quitall' &
+  platformio:
+    _bin: platformio
+    _github: https://github.com/platformio/platformio-core
+    _name: PlatformIO
+    brew: platformio
+    pipx: platformio
+  lua:
+    _bin: lua
+    _github: https://github.com/lua/lua
+    _name: Lua
+    apt: lua
+    brew: lua
+    choco: lua
+    dnf: lua
+    pacman: lua
+  cloc:
+    _bin: cloc
+    _github: https://github.com/AlDanial/cloc
+    _name: Cloc
+    apt: cloc
+    brew: cloc
+    choco: cloc
+    dnf: cloc
+    pacman: cloc
   typescript-to-lua:
     _bin: tstl
     _github: https://github.com/TypeScriptToLua/TypeScriptToLua
@@ -6375,6 +6485,22 @@ softwarePackages:
     _home: https://jsonresume.org/
     _name: JSON Resume CLI
     npm: resume-cli
+  neofetch:
+    _bin: neofetch
+    _github: https://github.com/dylanaraps/neofetch
+    _name: NeoFetch
+    apk: neofetch
+    pkg-termux: neofetch
+    pacman: neofetch
+    apt: neofetch
+    dnf: neofetch
+    pkg-freebsd: neofetch
+    brew: neofetch
+    nix-env: neofetch
+    eopkg: neofetch
+    xbps-install: neofetch
+    zypper: neofetch
+    scoop: neofetch
   neovide:
     _bin: neovide
     _desc: No Nonsense Neovim Client in Rust
@@ -7189,7 +7315,7 @@ softwarePackages:
     _name: Rclone
     ansible: professormanhattan.rclone
     apt: rclone
-    brew: rclone
+    brew:linux: rclone
     choco:
       - rclone
       - winfsp
@@ -7198,6 +7324,7 @@ softwarePackages:
     pacman: rclone
     port: rclone
     scoop: rclone
+    script:darwin: sudo -v ; curl https://rclone.org/install.sh | sudo bash
   redis-desktop-manager:
     _bin: redis-desktop-manager
     _desc: '[Redis Desktop Manager](https://rdm.dev/) is an open source cross-platform Desktop Manager for Redis based on Qt 5.'

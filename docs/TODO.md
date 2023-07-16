@@ -1,4 +1,6 @@
-sysbench rhino platformio emscripten mkvtoolnix ncftp gauge foremost autogen duti multitail testdisk ccat qrencode autoconf-archive tomcat filebeat godep arping lua git-credential-manager rbenv-default-gems source-highlight theora shtool giter8 ipmitool saltstack squid ettercap pidcat calc mongodb wdiff dialog john reaver oath-toolkit xhyve elm icdiff polipo fcrackzip ddrescue pngcrush gitlab-ci-multi-runner tcl-tk flac elinks stunnel caddy tcpreplay fping zenity terragrunt dbus pigz grpc diffutils hping fdupes sonarqube fabric links pinentry augeas haproxy autossh binwalk unzip cabal-install cscope sonar-scanner wakeonlan tmate sshuttle solr tcptraceroute pinentry-mac swiftformat uncrustify hashcat handbrake iproute2mac 2fsprogs hydra you-get cabextract neofetch trash sphinx-doc iftop htop-osx dockutil xctool aspell w3m grc screenfetch moreutils apktool brew-cask-completion openconnect media-info lftp unison logstash pstree rpm opam peco netcat iperf3 libav gifsicle iperf colordiff lmdb mcrypt httprack  aircrack-ng ntfs-3g  glide bower glog parallel cloc mitmproxy bison rename kubernetes-helm gdbm mobile-shell geckodriver socat pv sdl swig pcre winetricks doxygen mtr graphicsmagick dos2unix highlight putty llvm bazel flow  watch hugo sqlite gdb ant mariadb  mercurial nmap pidof autoconf maven readline libtool automake chromedriver pkg-config coreutils
+
+
+xattr -d com.apple.quarantine rclone
 
 # TODOs
 

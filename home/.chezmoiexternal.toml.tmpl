@@ -78,6 +78,12 @@
     refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
+[".local/share/emsdk"]
+    type = "git-repo"
+    url = "https://github.com/emscripten-core/emsdk.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 #[".local/oh-my-bash"]
 #    type = "git-repo"
 #    url = "https://github.com/ohmybash/oh-my-bash.git"
