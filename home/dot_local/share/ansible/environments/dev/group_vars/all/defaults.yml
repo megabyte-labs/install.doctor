@@ -1,0 +1,234 @@
+---
+# yamllint disable rule:line-length
+# Defaults are used in cases where no host is specified (i.e. in Molecule tests)
+
+default_dconf_settings:
+  - key: /org/gnome/desktop/background/picture-uri
+    value: "'file:///usr/share/backgrounds/brad-huchteman-stone-mountain.jpg'"
+  - key: /org/gnome/shell/favorite-apps
+    value: "['org.gnome.Nautilus.desktop', 'firefox.desktop', 'chromium_chromium.desktop', \
+      'brave-browser.desktop', 'mailspring_mailspring.desktop', 'code_code.desktop', \
+      'hyper.desktop', 'plexmediaserver_pms-web.desktop', 'org.gnome.Lollypop.desktop', \
+      'virt-manager.desktop', 'vmware-workstation.desktop']"
+  - key: /org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size
+    value: '40'
+  - key: /org/gnome/desktop/session/idle-delay
+    value: '600'
+  - key: /org/gnome/desktop/privacy/report-technical-problems
+    value: 'false'
+
+default_gnome_extensions:
+  - url: https://extensions.gnome.org/extension/750/openweather/
+    regex: openweather-extension
+    settings:
+      - "gsettings --schemadir ~/.local/share/gnome-shell/extensions/openweather-extension@jenslody.de\
+        /schemas/ set org.gnome.shell.extensions.openweather city '40.7970384,-74.4809492>Morristown, \
+        Morris County, New Jersey, 07960, United States of America >-1 && 40.7127281,-74.0060152>New \
+        York, United States of America >-1 && 12.9791198,77.5912997>Bengaluru, Bangalore North, \
+        Bangalore Urban, Karnataka, India >-1 && 40.4862174,-74.4518173>New Brunswick, New Jersey, \
+        United States of America >-1'"
+      - gsettings --schemadir ~/.local/share/gnome-shell/extensions/openweather-extension@jenslody.de/schemas/ set org.gnome.shell.extensions.openweather days-forecast 10
+      - gsettings --schemadir ~/.local/share/gnome-shell/extensions/openweather-extension@jenslody.de/schemas/ set org.gnome.shell.extensions.openweather show-text-in-panel true
+      - gsettings --schemadir ~/.local/share/gnome-shell/extensions/openweather-extension@jenslody.de/schemas/ set org.gnome.shell.extensions.openweather actual-city 0
+  - url: https://extensions.gnome.org/extension/771/proxy-switcher/
+    regex: ProxySwitcher
+  - url: https://extensions.gnome.org/extension/1085/simple-net-speed/
+    regex: simplenetspeed
+  - url: https://extensions.gnome.org/extension/906/sound-output-device-chooser/
+    regex: sound-output-device-chooser
+  - url: https://extensions.gnome.org/extension/2983/ip-finder/
+    regex: IP-Finder
+  - url: https://extensions.gnome.org/extension/6/applications-menu/
+    regex: apps-menu
+  - url: https://extensions.gnome.org/extension/3061/vlan-switcher/
+    regex: vlan-switcher
+  - url: https://extensions.gnome.org/extension/1762/lan-ip-address/
+    regex: lan-ip-address
+  - url: https://extensions.gnome.org/extension/2224/easy-docker-containers/
+    regex: easy_docker_containers
+
+# @var samba_allowed_hosts: 127.0.0.1
+# Restricts Samba sharing to certain IP addresses
+samba_allowed_hosts: 127.0.0.1
+# @example #
+# samba_allowed_hosts: 127.0.0.1 10.14.141. 10.14.14. 10.0.0.
+
+samba_netbios_name: HTPC
+
+# @var samba_printers: []
+# A configurable list of Samba printers to share
+samba_printers: []
+# @example #
+# samba_printers:
+#  - id: HPOfficeJetPro
+#    comment: HP OfficeJet Pro 6978 (in Garage)
+#    name: HP OfficeJet Pro 6978
+# @end
+
+# @var samba_shares: []
+# A configurable list of Samba paths to share
+samba_shares: []
+# @example #
+# samba_shares:
+#  - id: Media
+#    comment: Movies, TV Shows, and other read-only multimedia
+#    follow_symlinks: true
+#    path: /mnt/htpc
+#    public: true
+#  - id: Private
+#    comment: Authenticated share with read/write capabilities (backed up to OneDrive)
+#    follow_symlinks: true
+#    path: "/home/{{ ansible_user | default(lookup('env', 'USER')) }}/Documents"
+#    public: false
+#    users: '@sambausers'
+#    writable: true
+#  - id: Public
+#    comment: Public folder provided for file sharing on the LAN
+#    path: "/home/{{ ansible_user | default(lookup('env', 'USER')) }}/Public"
+#    public: true
+#    writable: true
+# @end
+
+# @var samba_workgroup: MEGABYTE
+# The Samba workgroup name
+samba_workgroup: MEGABYTE
+
+user_configs:
+  - username: "{{ ansible_user | default(lookup('env', 'USER')) }}"
+    # @var dconf_settings: []
+    # Key value pairs of Dconf settings to apply
+    dconf_settings: '{{ default_dconf_settings | default([]) }}'
+    # @var git_user_email: ""
+    # Email address to configure in the global Git configuration file
+    git_user_email: '{{ git_user_email | default(omit) }}'
+    # @var git_user_name: ""
+    # Username to configure in the global Git configuration file
+    git_user_name: '{{ git_user_name | default(omit) }}'
+    # @var gnome_extensions: []
+    # List of GNOME extensions to install and any optional settings to be configured
+    gnome_extensions: '{{ default_gnome_extensions | default([]) }}'
+    # @var user_configs.groups: []
+    # Groups to assign the user to (see [this link](https://wiki.debian.org/SystemGroups) for tips on determining which groups to add a user to)
+    groups: []
+    # @example #
+    # user_configs:
+    #   - username: myuser
+    #     groups:
+    #       - lpadmin # Allows members to manage printers and pending jobs sent by other users
+    # @end
+    # @var user_configs.kvm_admin: true
+    # Should this user be added to the 'kvm' group?
+    kvm_admin: true
+    # @var user_configs.netrc_hosts: []
+    # Login and initialization information used by the auto-login process
+    netrc_hosts: []
+    # @example #
+    # netrc_hosts:
+    #   - machine: surge.surge.sh
+    #     username: '{{ surgesh_username }}'
+    #     password: '{{ surgesh_password }}'
+    # @end
+    # @var user_configs.npm_author_email: ""
+    # Email address of package author to add to package.json
+    npm_author_email: '{{ npm_author_email | default(omit) }}'
+    # @var user_configs.npm_author_name: ""
+    # Name of package author to add to package.json
+    npm_author_name: '{{ npm_author_name | default(omit) }}'
+    # @var user_configs.npm_author_url: ""
+    # Website of package author to add to package.json
+    npm_author_url: https://megabyte.space
+    # @var user_configs.pips: []
+    # Python pip packages installed at the user level (the `pip_packages` variable can be modified to install global packages which has its default defined in `group_vars/desktop/pip-packages.yml`)
+    pips: []
+    # @var user_configs.rclone: []
+    # Configuration setting to create rclone services
+    rclone: []
+    # @example #
+    #  - name: Dropbox
+    #    provider: dropbox
+    #    config: |
+    #      type = dropbox
+    #      token = {"access_token":"{{ dropbox_access_token }}","token_type":"bearer","expiry":"0001-01-01T00:00:00Z"}
+    #  - name: Google
+    #    provider: google
+    #    config: |
+    #      type = drive
+    #      client_id = {{ google_drive_client_id }}
+    #      client_secret = {{ google_drive_client_secret }}
+    #      scope = drive
+    #      token = {"access_token":"{{ google_drive_access_token }}","token_type":"Bearer","refresh_token":"{{ google_drive_refresh_token }}","expiry":"2020-08-12T00:45:51.652771516-04:00"}
+    #      root_folder_id = {{ google_drive_root_folder_id }}
+    #  - name: OneDrive
+    #    provider: onedrive
+    #    config: |
+    #      type = onedrive
+    #      token = {"access_token":"{{ onedrive_access_token }}","token_type":"Bearer","refresh_token":"{{ onedrive_refresh_token }}","expiry":"2020-08-12T00:47:01.9828663-04:00"}
+    #      drive_id = {{ onedrive_drive_id }}
+    #      drive_type = personal
+    # @end
+    # @var user_configs.samba_user: true
+    # Should the user be added to 'sambausers' group?
+    samba_user: true
+    # @var user_configs.ssh_authorized_keys: []
+    # Keys to add to the authorized_keys configuration
+    ssh_authorized_keys: []
+    # @example #
+    # user_configs:
+    #   - username: myuser
+    #     ssh_authorized_keys:
+    #       - "{{ lookup('file', 'files/ssh/id_rsa_local.pub') }}"
+    # @var user_configs.ssh_private_keys: []
+    # SSH private keys
+    ssh_private_keys: []
+    # @example #
+    # user_configs:
+    #   - username: myuser
+    #     ssh_private_keys:
+    #       - files/ssh/id_rsa_dev
+    # @end
+    # @var user_configs.symlinks: []
+    # User-scoped symlinks to add
+    symlinks: []
+    # @example #
+    # user_configs:
+    #   - username: myuser
+    #     symlinks:
+    #     - path: /mnt/auxilary/Camera
+    #       link: ~/Pictures/Camera
+    #     - path: /mnt/auxilary/Games
+    #       link: ~/Games
+    #     - path: /mnt/auxilary/Music
+    #       link: ~/Music/Library
+    #     - path: /mnt/movies
+    #       link: ~/Videos/Movies
+    #     - path: /mnt/auxilary/Music Videos
+    #       link: ~/Videos/Music Videos
+    #     - path: /mnt/auxilary/Shorts
+    #       link: ~/Videos/Shorts
+    #     - path: /mnt/tv
+    #       link: ~/Videos/TV
+    #     - create: /mnt/htpc # Does not support relative paths
+    #       path: /mnt/movies
+    #       link: /mnt/htpc/Movies
+    #     - path: /mnt/auxilary/Music Videos
+    #       link: /mnt/htpc/Music Videos
+    #     - path: /mnt/tv
+    #       link: /mnt/htpc/TV
+    #     - path: /mnt/auxilary/Shorts
+    #       link: /mnt/htpc/Shorts
+    #     - path: /mnt/auxilary/Games
+    #       link: /mnt/htpc/Games
+    #     - path: /mnt/auxilary/Music
+    #       link: /mnt/htpc/Music
+    # @end
+    # @var user_configs.vscode_extensions: []
+    # VSCode extensions to install (the default list is defined in `group_vars/desktop/vscode-extensions.yml`)
+    vscode_extensions: []
+  - username: root
+    git_user_email: '{{ git_user_email | default(omit) }}'
+    git_user_name: '{{ git_user_email | default(omit) }}'
+    # ssh_private_keys:
+    #   - files/ssh/id_rsa_dev
+    # @var user_configs.system: false
+    # Set to true if the account is a system user without a home folder (root is considered a system user)
+    system: true

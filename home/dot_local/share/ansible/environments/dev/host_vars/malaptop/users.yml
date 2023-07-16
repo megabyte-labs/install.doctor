@@ -1,0 +1,150 @@
+---
+# yamllint disable rule:line-length
+user_configs:
+  - username: "{{ ansible_user | default(lookup('env', 'USER')) }}"
+    dconf_settings: '{{ default_dconf_settings | default([]) }}'
+    git_user_email: '{{ git_user_email | default(omit) }}'
+    git_user_name: '{{ git_user_email | default(omit) }}'
+    heroku_email: herokuaccount@example.com
+    heroku_api_key: HHHH-HHHHHHHH-HHHHHHHH-HHHHH
+    gnome_extensions: '{{ default_gnome_extensions | default([]) }}'
+    groups: # This link may be useful for determining which groups to add a user to https://wiki.debian.org/SystemGroups
+      - lpadmin # Allows members to manage printers and pending jobs sent by other users
+    netrc_hosts:
+      - machine: surge.surge.sh
+        username: '{{ surgesh_username }}'
+        password: '{{ surgesh_password }}'
+    ngrok_token: '{{ ngrok_token }}'
+    npm_author_email: '{{ npm_author_email }}'
+    npm_author_name: '{{ npm_author_name }}'
+    npm_author_url: https://megabyte.space
+    pips:
+      - pipx
+    sdk_installs:
+      - java 18-open
+      - scala 2.11.6
+    primary_s3_access_key_id: '{{ digitalocean_access_key_id }}'
+    primary_s3_secret_access_key: '{{ digitalocean_secret_access_key }}'
+    primary_s3_bucket: '{{ digitalocean_bucket }}'
+    secondary_s3_access_key_id: '{{ wasabi_access_key_id }}'
+    secondary_s3_secret_access_key: '{{ wasabi_secret_access_key }}'
+    secondary_s3_bucket: '{{ wasabi_bucket }}'
+    restic_password: '{{ restic_password_ansible_user }}'
+    rclone:
+      - name: Dropbox
+        provider: dropbox
+        config: |
+          type = dropbox
+          token = {"access_token":"{{ dropbox_access_token }}","token_type":"bearer","expiry":"0001-01-01T00:00:00Z"}
+      - name: Google
+        provider: google
+        config: |
+          type = drive
+          client_id = {{ google_drive_client_id }}
+          client_secret = {{ google_drive_client_secret }}
+          scope = drive
+          token = {"access_token":"{{ google_drive_access_token }}","token_type":"Bearer","refresh_token":"{{ google_drive_refresh_token }}","expiry":"2020-08-12T00:45:51.652771516-04:00"}
+          root_folder_id = {{ google_drive_root_folder_id }}
+      - name: OneDrive
+        provider: onedrive
+        config: |
+          type = onedrive
+          token = {"access_token":"{{ onedrive_access_token }}","token_type":"Bearer","refresh_token":"{{ onedrive_refresh_token }}","expiry":"2020-08-12T00:47:01.9828663-04:00"}
+          drive_id = {{ onedrive_drive_id }}
+          drive_type = personal
+    samba_user: true
+    ssh_authorized_keys:
+      - "{{ lookup('file', 'files/ssh/id_rsa_local.pub') }}"
+    ssh_private_keys:
+      - files/ssh/id_rsa
+      - files/ssh/id_rsa_local
+    symlinks: []
+    tinypng_api_key: '{{ tinypng_api_key }}'
+    vagrant_cloud_token: '{{ vagrant_cloud_token }}'
+    vscode_extensions: '{{ vscode_extensions }}'
+    lexicon_config_path: '{{ lexicon_config_path }}'
+    lexicon_config: '{{ lexicon_config }}'
+    himalaya_config: '{{ himalaya_config }}'
+    slack_api_key: '{{ slack_api_key }}'
+    github_token: '{{ github_token }}'
+    gitlab_token: '{{ gitlab_token }}'
+    github_gist_token: '{{ github_gist_token }}'
+    wails_name: "{{ ansible_user | default(lookup('env', 'USER')) }}"
+    wails_email: megabytelabs@gmail.com
+  - username: qeuser
+    dconf_settings: '{{ default_dconf_settings | default([]) }}'
+    git_user_email: '{{ git_user_email | default(omit) }}'
+    git_user_name: '{{ git_user_email | default(omit) }}'
+    heroku_email: herokuaccount@example.com
+    heroku_api_key: HHHH-HHHHHHHH-HHHHHHHH-HHHHH
+    gnome_extensions: '{{ default_gnome_extensions | default([]) }}'
+    groups: # This link may be useful for determining which groups to add a user to https://wiki.debian.org/SystemGroups
+      - lpadmin # Allows members to manage printers and pending jobs sent by other users
+    netrc_hosts:
+      - machine: surge.surge.sh
+        username: '{{ surgesh_username }}'
+        password: '{{ surgesh_password }}'
+    ngrok_token: '{{ ngrok_token }}'
+    npm_author_email: '{{ npm_author_email }}'
+    npm_author_name: '{{ npm_author_name }}'
+    npm_author_url: https://megabyte.space
+    pips:
+      - pipx
+    primary_s3_access_key_id: '{{ digitalocean_access_key_id }}'
+    primary_s3_secret_access_key: '{{ digitalocean_secret_access_key }}'
+    primary_s3_bucket: '{{ digitalocean_bucket }}'
+    secondary_s3_access_key_id: '{{ wasabi_access_key_id }}'
+    secondary_s3_secret_access_key: '{{ wasabi_secret_access_key }}'
+    secondary_s3_bucket: '{{ wasabi_bucket }}'
+    restic_password: '{{ restic_password_ansible_user }}'
+    rclone:
+      - name: Dropbox
+        provider: dropbox
+        config: |
+          type = dropbox
+          token = {"access_token":"{{ dropbox_access_token }}","token_type":"bearer","expiry":"0001-01-01T00:00:00Z"}
+      - name: Google
+        provider: google
+        config: |
+          type = drive
+          client_id = {{ google_drive_client_id }}
+          client_secret = {{ google_drive_client_secret }}
+          scope = drive
+          token = {"access_token":"{{ google_drive_access_token }}","token_type":"Bearer","refresh_token":"{{ google_drive_refresh_token }}","expiry":"2020-08-12T00:45:51.652771516-04:00"}
+          root_folder_id = {{ google_drive_root_folder_id }}
+      - name: OneDrive
+        provider: onedrive
+        config: |
+          type = onedrive
+          token = {"access_token":"{{ onedrive_access_token }}","token_type":"Bearer","refresh_token":"{{ onedrive_refresh_token }}","expiry":"2020-08-12T00:47:01.9828663-04:00"}
+          drive_id = {{ onedrive_drive_id }}
+          drive_type = personal
+    samba_user: true
+    ssh_authorized_keys:
+      - "{{ lookup('file', 'files/ssh/id_rsa_local.pub') }}"
+    ssh_private_keys:
+      - files/ssh/id_rsa
+      - files/ssh/id_rsa_local
+    symlinks: []
+    tinypng_api_key: '{{ tinypng_api_key }}'
+    vagrant_cloud_token: '{{ vagrant_cloud_token }}'
+    vscode_extensions: '{{ vscode_extensions }}'
+  - username: admin
+    git_user_email: '{{ git_user_email | default(omit) }}'
+    git_user_name: '{{ git_user_email | default(omit) }}'
+    ssh_private_keys:
+      - files/ssh/id_rsa_dev
+    system: true
+  - username: root
+    git_user_email: '{{ git_user_email | default(omit) }}'
+    git_user_name: '{{ git_user_email | default(omit) }}'
+    primary_s3_access_key_id: '{{ digitalocean_access_key_id }}'
+    primary_s3_secret_access_key: '{{ digitalocean_secret_access_key }}'
+    primary_s3_bucket: '{{ digitalocean_bucket }}'
+    secondary_s3_access_key_id: '{{ wasabi_access_key_id }}'
+    secondary_s3_secret_access_key: '{{ wasabi_secret_access_key }}'
+    secondary_s3_bucket: '{{ wasabi_bucket }}'
+    restic_password: '{{ restic_password_root_user | default(restic_password_ansible_user) }}'
+    ssh_private_keys:
+      - files/ssh/id_rsa
+    system: true

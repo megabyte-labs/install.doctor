@@ -1,0 +1,52 @@
+---
+all:
+  children:
+    desktop:
+      hosts:
+        archlinux:
+          ansible_host: 127.0.0.1
+          ansible_port: 52522
+          ansible_password: vagrant
+          ansible_sudo_pass: vagrant
+          ansible_user: vagrant
+        centos:
+          ansible_host: 127.0.0.1
+          ansible_port: 52422
+          ansible_password: vagrant
+          ansible_sudo_pass: vagrant
+          ansible_user: vagrant
+        debian:
+          ansible_host: 127.0.0.1
+          ansible_port: 52322
+          ansible_password: vagrant
+          ansible_sudo_pass: vagrant
+          ansible_user: vagrant
+        fedora:
+          ansible_host: 127.0.0.1
+          ansible_port: 52222
+          ansible_password: vagrant
+          ansible_sudo_pass: vagrant
+          ansible_user: vagrant
+        macos:
+          ansible_host: 127.0.0.1
+          ansible_port: 52122
+          ansible_password: vagrant
+          ansible_sudo_pass: vagrant
+          ansible_user: vagrant
+        ubuntu:
+          ansible_host: 127.0.0.1
+          ansible_port: 52022
+          ansible_password: vagrant
+          ansible_sudo_pass: vagrant
+          ansible_user: vagrant
+        windows:
+          ansible_host: 127.0.0.1
+          ansible_port: 55985
+          ansible_become_method: runas
+          ansible_become_password: vagrant
+          ansible_connection: winrm
+          ansible_winrm_scheme: http
+          ansible_winrm_transport: basic
+          ansible_password: vagrant
+          ansible_sudo_pass: vagrant
+          ansible_user: vagrant

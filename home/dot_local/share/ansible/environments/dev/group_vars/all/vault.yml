@@ -1,0 +1,66 @@
+---
+# controller_ip_address: 10.14.49.14          # IP address of the UniFi controller
+# home_ip_address: 10.14.14.14                # IP address hosting the services under the home_subdomain
+controller_ip_address: 172.24.24.2 # Main IP address where web requests go to first
+# netboot_ip_address: 10.14.24.44             # IP address of the Raspberry Pi that hosts Netboot.xyz
+# proxy_ip_address: 10.14.24.24               # IP address of the computer hosting apt-cacher-ng
+
+# Public IP address of the endpoint that is hosting StatPing and Healthchecks (see: https://github.com/statping/statping)
+# status_ip_address: 45.55.39.118
+
+alerts_email: dev@test.megabyte.space
+
+cloudflare_email: dev@test.megabyte.space
+# cloudflare_api_key: XXX # Global API key
+# cloudflare_api_token: XXX # NGINX Optimized token
+
+# digitalocean_access_key_id: XXX
+# digitalocean_secret_access_key: XXX
+
+git_user_email: dev@test.megabyte.space
+git_user_name: Git E2E Dev Test Username
+
+# gmail_auth_password: XXX
+# gmail_auth_username: XXX
+
+lan_network:
+  guest: 10.14.141.0/24
+  iot: 10.14.33.0/24
+  kubernetes: 10.14.24.0/24
+  management: 10.0.0.0/24
+  offline: 10.14.144.0/24
+  unifi: 10.14.49.0/24
+  work: 172.24.24.0/24
+
+vlan: work
+
+# netdata_token: XXX
+
+# nginx_amplify_api_key: XXX
+
+npm_author_email: dev@test.megabyte.space
+npm_author_name: NPM Test Author
+
+password_salt: ExtraSalty324932 # Length should not exceed 16 characters for SHA512 Hash
+# restic_repository: XXX
+# restic_password: XXX
+
+ssh_meta:
+  testssh:
+    key: id_rsa_dev
+    user: ubuntu
+  ubuntu:
+    key: id_rsa_dev
+    user: vagrant
+  windows:
+    key: id_rsa_dev
+    user: administrator
+  workstation:
+    key: id_rsa_dev
+    user: vagrant
+
+ssh_port: '6969'
+# vault_password: XXX
+
+# wasabi_access_key_id: XXX
+# wasabi_secret_access_key: XXX
