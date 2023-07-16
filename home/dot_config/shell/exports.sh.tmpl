@@ -67,19 +67,30 @@ elif [ -f /usr/local/bin/brew ]; then
   eval $(/usr/local/bin/brew shellenv)
 fi
 
-{{ if eq .host.distro.id "darwin" }}
-# Adjustment for macOS
-export WHALEBREW_INSTALL_PATH="/usr/local/bin"
-
 ### Android Studio
-if [ -d "$HOME/Library/Android" ]; then
-  export PATH="$PATH:$HOME/Library/Android/sdk/cmdline-tools/latest/bin"
-  export PATH="$PATH:$HOME/Library/Android/sdk/platform-tools"
-  export PATH="$PATH:$HOME/Library/Android/sdk/tools/bin"
-  export PATH="$PATH:$HOME/Library/Android/sdk/tools"
+export ANDROID_AVD_HOME="$XDG_DATA_HOME/android/avd"
+if [ -d /Applications ] && [ -d /System ]; then
+  ### macOS
+  export WHALEBREW_INSTALL_PATH="/usr/local/bin"
+  export ANDROID_SDK_HOME="$HOME/Library/Android/sdk"
+  export ANDROID_SDK_ROOT="$HOME/Library/Android/sdk"
+  export ANDROID_HOME="$HOME/Library/Android/sdk"
+  if [ -d "$HOME/Library/Android" ]; then
+    export PATH="$PATH:$HOME/Library/Android/sdk/cmdline-tools/latest/bin"
+    export PATH="$PATH:$HOME/Library/Android/sdk/platform-tools"
+    export PATH="$PATH:$HOME/Library/Android/sdk/tools/bin"
+    export PATH="$PATH:$HOME/Library/Android/sdk/tools"
+  fi
+else
+  ### Linux / Windows
+  export ANDROID_SDK_HOME="$XDG_DATA_HOME/android/sdk"
+  export ANDROID_SDK_ROOT="$XDG_DATA_HOME/android/sdk"
+  export ANDROID_HOME="$XDG_DATA_HOME/sdk"
+  export PATH="$PATH:$XDG_DATA_HOME/android/sdk/cmdline-tools/latest/bin"
+  export PATH="$PATH:$XDG_DATA_HOME/android/sdk/platform-tools"
+  export PATH="$PATH:$XDG_DATA_HOME/android/sdk/tools/bin"
+  export PATH="$PATH:$XDG_DATA_HOME/android/sdk/tools"
 fi
-{{ end }}
-export ANDROID_SDK_HOME="$XDG_DATA_HOME/android-sdk"
 
 ### Ansible
 export ANSIBLE_CONFIG="$XDG_DATA_HOME/ansible/ansible.cfg"
