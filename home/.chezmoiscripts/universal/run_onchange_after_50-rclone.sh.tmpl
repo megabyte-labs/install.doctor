@@ -19,10 +19,10 @@
 #
 #     | Mount Location        | Description                                                                                                           |
 #     |-----------------------|-----------------------------------------------------------------------------------------------------------------------|
-#     | `/mnt/s3-private`     | Private system-wide bucket used for any private files that should not be able to be accessed publicly over HTTPS      |
-#     | `/mnt/s3-public`      | Public system-wide bucket that can be accessed by anyone over HTTPS with the bucket's URL (provided by CloudFlare R2) |
-#     | `/mnt/s3-docker`      | Private system-wide bucket used for storing Docker-related backups / files                                            |
-#     | `/mnt/s3-system`      | Private system-wide bucket similar to `/mnt/s3-private` but intended for system file backups                          |
+#     | `/mnt/Private`        | Private system-wide bucket used for any private files that should not be able to be accessed publicly over HTTPS      |
+#     | `/mnt/Public`         | Public system-wide bucket that can be accessed by anyone over HTTPS with the bucket's URL (provided by CloudFlare R2) |
+#     | N/A                   | Private system-wide bucket used for storing Docker-related backups / files                                            |
+#     | N/A                   | Private system-wide bucket similar to `/mnt/Private` but intended for system file backups                             |
 #     | `$HOME/.local/mnt/s3` | Private user-specific bucket (used for backing up application settings)                                               |
 #
 #     ## Permissions
@@ -52,7 +52,7 @@
 if command -v rclone > /dev/null; then
     logg info 'Ensuring /var/cache/rclone exists'
     sudo mkdir -p /var/cache/rclone
-    sudo chmod 700 /var/cache/rclone
+    sudo chmod 770 /var/cache/rclone
     # Add user / group with script in ~/.local/bin/add-user, if it is available
     if command -v add-user > /dev/null; then
         sudo add-user rclone
@@ -61,7 +61,7 @@ if command -v rclone > /dev/null; then
 
     logg info 'Ensuring /var/log/rclone exists'
     sudo mkdir -p /var/log/rclone
-    sudo chmod 700 /var/log/rclone
+    sudo chmod 770 /var/log/rclone
     sudo chown -Rf rclone:rclone /var/log/rclone
 
     logg info 'Adding ~/.local/bin/rclone-mount to /usr/local/bin'
@@ -70,10 +70,11 @@ if command -v rclone > /dev/null; then
 
     logg info 'Adding ~/.config/rclone/rcloneignore to /etc/rcloneignore'
     sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/rcloneignore" /etc/rcloneignore
-    sudo chmod 644 /etc/rcloneignore
+    sudo chmod 640 /etc/rcloneignore
 
     logg info 'Adding ~/.config/rclone/system-rclone.conf to /etc/rclone.conf'
     sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system-rclone.conf" /etc/rclone.conf
+    sudo chmod 640 /etc/rclone.conf
 
     ### Add / configure service files
     if [ -d /etc/systemd/system ]; then

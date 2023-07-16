@@ -2154,6 +2154,7 @@ softwarePackages:
     _github: https://github.com/imp/dnsmasq
     _home: null
     _name: dnsmasq
+    _service: dnsmasq
     ansible: professormanhattan.dnsmasq
     apt: dnsmasq
     brew: dnsmasq
@@ -6101,6 +6102,7 @@ softwarePackages:
     _github: null
     _home: https://www.nomadproject.io/
     _name: HashiCorp Nomad
+    _service: nomad
     ansible: professormanhattan.nomad
     brew: nomad
     choco: nomad
@@ -8238,6 +8240,7 @@ softwarePackages:
     _github: null
     _home: null
     _name: Stubby
+    _service: stubby
     _post:brew:darwin: bash "$(brew --prefix stubby)/sbin/stubby-setdns-macos.sh" && brew services start stubby
     brew:darwin: stubby
   surge:
@@ -8861,6 +8864,7 @@ softwarePackages:
       - privoxy
     _home: https://www.privoxy.org/
     _name: Privoxy
+    _service: privoxy
     apt: privoxy
     brew: privoxy
     dnf: privoxy
@@ -8873,6 +8877,7 @@ softwarePackages:
     _github: https://github.com/TheTorProject
     _home: https://www.torproject.org/
     _name: TOR
+    _service: tor
     ansible:linux: professormanhattan.tor
     apt: tor
     brew: tor

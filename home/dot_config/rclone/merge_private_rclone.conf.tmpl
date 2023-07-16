@@ -18,7 +18,7 @@ tee -a "$CONFIG_FILE" > /dev/null <<EOT
 [{{ .user.username}}-s3]
 access_key_id = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID")) }}{{- includeTemplate "secrets/CLOUDFLARE_R2_ID" | decrypt | trim -}}{{ else }}{{- env "CLOUDFLARE_R2_ID" -}}{{ end }}
 acl = private
-endpoint = {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com/user
+endpoint = {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com
 provider = Cloudflare
 region = auto
 secret_access_key = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET")) }}{{- includeTemplate "secrets/CLOUDFLARE_R2_SECRET" | decrypt | trim -}}{{ else }}{{- env "CLOUDFLARE_R2_SECRET" -}}{{ end }}

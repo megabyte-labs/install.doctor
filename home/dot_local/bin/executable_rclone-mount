@@ -33,7 +33,9 @@ fi
 ### Ensure folders exist
 for FOLDER in "$CACHE_FOLDER" "$CONFIG_FOLDER" "$LOG_FOLDER" "$MOUNT_PATH"; do
     if [ ! -d "$FOLDER" ]; then
-        mkdir -p "$FOLDER" || echo "ERROR: Need permissions for $FOLDER"
+        sudo mkdir -p "$FOLDER" || echo "ERROR: Need permissions for $FOLDER"
+        sudo chmod 755 "$FOLDER"
+        sudo chown -Rf rclone:rclone "$FOLDER"
     fi
 done
 
@@ -44,7 +46,10 @@ if [ ! -f "$RCLONE_IGNORE" ] && [ -f "/etc/rcloneignore" ]; then
 fi
 
 ### Mount
-/usr/bin/rclone --config="$CONFIG_FOLDER/rclone.conf" \
+MOUNT_LOWERCASE="$(echo "$MOUNT" | tr "[:upper:]" "[:lower:]")"
+unset AWS_CA_BUNDLE
+export PATH="$PATH:/usr/local/bin:/usr/bin"
+sudo rclone --config="$CONFIG_FOLDER/rclone.conf" \
   mount \
   --cache-tmp-upload-path="$CACHE_FOLDER/$MOUNT-upload" \
   --cache-chunk-path="$CACHE_FOLDER/$MOUNT-chunks" \
@@ -52,6 +57,8 @@ fi
   --cache-writes \
   --cache-dir="$CACHE_FOLDER/$MOUNT-vfs" \
   --cache-db-path="$CACHE_FOLDER/$MOUNT-db" \
+  --daemon \
+  --noapplexattr \
   --log-file="$LOG_FILE" \
   --no-modtime \
   --drive-use-trash \
@@ -60,6 +67,7 @@ fi
   --bwlimit=40M \
   --dir-cache-time=60m \
   --vfs-cache-mode full \
+  --volname "$MOUNT" \
   --cache-info-age=60m \
-  --filter-from="$RCLONE_IGNORE"
-  "$MOUNT":/ "$MOUNT_PATH"
+  --filter-from="$RCLONE_IGNORE" \
+  "$MOUNT_LOWERCASE":"$MOUNT_LOWERCASE" "$MOUNT_PATH"

@@ -28,7 +28,7 @@
   comment = Authenticated share with read/write capabilities (backed up to S3)
   follow symlinks = yes
   guest only = no
-  path = /mnt/Network Share (Private)
+  path = /mnt/Private
   public = no
   unix extension = yes
   valid users = @sambausers
@@ -40,7 +40,16 @@
   comment = Public folder provided for file sharing on the LAN (backed up to S3)
   follow symlinks = no
   guest only = yes
-  path = /mnt/Network Share (Public)
+  path = /mnt/Public
+  public = yes
+  writable = yes
+
+[User]
+  browsable = yes
+  comment = Public user home directory folder for file sharing on the LAN
+  follow symlinks = no
+  guest only = yes
+  path = /home/{{ .user.name }}/Public
   public = yes
   writable = yes
 

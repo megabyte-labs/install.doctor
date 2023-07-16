@@ -14,4 +14,19 @@ if [ -d /Applications ] && [ -d /System ]; then
         sudo cp -f "$HOME/Library/LaunchDaemons/com.cloudflare.warp.plist" '/Library/LaunchDaemons/com.cloudflare.warp.plist'
         sudo launchctl load "/Library/LaunchDaemons/com.cloudflare.warp.plist"
     fi
+
+    ### Enable Rclone mounts
+    if [ -f "$HOME/Library/LaunchDaemons/rclone.private.plist" ] && [ ! -f "/Library/LaunchDaemons/rclone.private.plist" ]; then
+        sudo mkdir -p /Library/LaunchDaemons
+        sudo cp -f "$HOME/Library/LaunchDaemons/rclone.private.plist" '/Library/LaunchDaemons/rclone.private.plist'
+        sudo launchctl load '/Library/LaunchDaemons/rclone.private.plist'
+    fi
+    if [ -f "$HOME/Library/LaunchDaemons/rclone.public.plist" ] && [ ! -f "/Library/LaunchDaemons/rclone.public.plist" ]; then
+        sudo mkdir -p /Library/LaunchDaemons
+        sudo cp -f "$HOME/Library/LaunchDaemons/rclone.public.plist" '/Library/LaunchDaemons/rclone.public.plist'
+        sudo launchctl load '/Library/LaunchDaemons/rclone.public.plist'
+    fi
+    if [ -f "$HOME/Library/LaunchDaemons/rclone.user.plist" ]; then
+        launchctl load "$HOME/Library/LaunchDaemons/rclone.user.plist"
+    fi
 fi
