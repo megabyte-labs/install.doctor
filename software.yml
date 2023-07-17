@@ -5918,6 +5918,11 @@ softwarePackages:
     _home: https://nectar.js.org/
     _name: nerctarjs
     npm: nectarjs
+  neovim-node-host:
+    _bin: neovim-node-host
+    _github: https://github.com/neovim/node-client
+    _name: Neovim Node Host
+    npm: neovim
   neovim:
     _bin: nvim
     _desc: '[neovim](https://neovim.io/) is Vim-fork focused on extensibility and usability'
@@ -5928,6 +5933,7 @@ softwarePackages:
     _deps:
       - clangd
       - terraform-ls
+      - neovim-node-host
     apk: neovim
     apt:
       - neovim
@@ -10191,7 +10197,7 @@ softwarePlugins:
     plugins:
       - https://github.com/BalliAsghar/mailsy-alfred/releases/download/2.0.0/Mailsy.alfredworkflow
   android-studio:
-    cmd: bash -c 'if ! sdkmanager --list_installed | grep "  {PLUGIN}" > /dev/null; then sdkmanager --install "{PLUGIN}" > /dev/null; fi'
+    cmd: bash -c 'if ! sdkmanager --list_installed | grep "{PLUGIN}"; then sdkmanager --install "{PLUGIN}"; fi'
     plugins:
       - add-ons;addon-google_apis-google-24
       - build-tools;33.0.0
@@ -10229,7 +10235,7 @@ softwarePlugins:
     plugins:
       - deployer/deployer
   docker:
-    cmd: bash -c 'if ! docker extension list | grep "{PLUGIN}" > /dev/null; then echo y | docker extension install "{PLUGIN}"; fi'
+    cmd: bash -c 'if ! docker extension list | grep "$(echo "{PLUGIN}" | sed 's/\:.*//')" > /dev/null; then echo y | docker extension install "{PLUGIN}"; fi'
     plugins:
       - ambassador/telepresence-docker-extension:1.0.13
       - docker/disk-usage-extension:0.2.7
@@ -10253,7 +10259,7 @@ softwarePlugins:
       - dotnet-format
       - git-credential-manager
   gcloud:
-    cmd: bash -c 'if ! gcloud components list | grep "Installed.*{PLUGIN}" &> /dev/null; then gcloud components install "{PLUGIN}"; fi'
+    cmd: bash -c 'if ! gcloud components list | grep "Installed.*{PLUGIN}" > /dev/null; then gcloud components install "{PLUGIN}"; fi'
     plugins:
       - app-engine-go
       - cloud-datastore-emulator
@@ -10377,7 +10383,7 @@ softwarePlugins:
       - name: Pieces
         plugin: https://teams.microsoft.com/l/app/789f23b3-d882-45ca-b3a3-de7f850656ea
   vagrant:
-    cmd: bash -c 'if ! vagrant plugin list | grep "{PLUGIN}"; then vagrant plugin install "{PLUGIN}"; fi'
+    cmd: bash -c 'if ! vagrant plugin list | grep "{PLUGIN}" > /dev/null; then vagrant plugin install "{PLUGIN}"; fi'
     plugins:
       - vagrant-bindfs
       - vagrant-digitalocean

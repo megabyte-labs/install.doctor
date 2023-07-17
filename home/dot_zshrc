@@ -393,7 +393,7 @@ fi
 FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:${FPATH}"
 
 ### ZSH compinit
-autoload -Uz +X compinit && compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+autoload -Uz +X compinit && compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION"
 
 ### Bash Completions
 autoload -U +X bashcompinit && bashcompinit

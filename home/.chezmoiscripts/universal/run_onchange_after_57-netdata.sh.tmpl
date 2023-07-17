@@ -21,7 +21,18 @@ if command -v netdata-claim.sh > /dev/null; then
     if command -v add-user > /dev/null; then
         sudo add-user netdata
     fi
+
+    ### Ensure /usr/local/var/lib/netdata/cloud.d is owned by user
+    if [ -d /usr/local/var/lib/netdata/cloud.d ]; then
+        logg info 'Ensuring permissions are correct on /usr/local/var/lib/netdata/cloud.d'
+        sudo chown -Rf $USER /usr/local/var/lib/netdata/cloud.d
+    elif [ -d /var/lib/netdata/cloud.d ]; then
+        logg info 'Ensuring permissions are correct on /var/lib/netdata/cloud.d'
+        sudo chown -Rf $USER /var/lib/netdata/cloud.d
+    fi
+    
     # netdata-claim.sh must be run as netdata user
+    logg info "Netdata room: $NETDATA_ROOM"
     sudo -H -u netdata bash -c 'netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="{{ .netdataClaimURL }}"'
 
     # Kernel optimizations

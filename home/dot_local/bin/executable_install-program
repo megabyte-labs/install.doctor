@@ -1716,7 +1716,9 @@ async function pruneInstallOrders(installOrders) {
       for (const pkg of newOrders[pkgManager]) {
         try {
           await $`cat ${pkgTmp} | grep '^${pkg}$'`
+          log('info', 'Filter', 'Filtering list')
           newVal = newVal.filter((x) => x === pkg)
+          console.log('New list', newVal)
         } catch (e) {
           // Do nothing
         }
