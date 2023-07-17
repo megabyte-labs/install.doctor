@@ -35,10 +35,12 @@ function gitomaticSetup() {
             ### macOS
             logg info 'Copying `gitomatic` plist file to /Library/LaunchDaemons'
             sudo cp -f "{{ .chezmoi.homeDir }}/.config/gitomatic/gitomatic.plist" /Library/LaunchDaemons/gitomatic.plist
-            logg info 'Running `sudo launchctl load /Library/LaunchDaemons/gitomatic.plist`'
-            sudo launchctl load /Library/LaunchDaemons/gitomatic.plist
-            logg info 'Running `sudo launchctl start /Library/LaunchDaemons/gitomatic.plist`'
-            sudo launchctl start /Library/LaunchDaemons/gitomatic.plist
+            if ! sudo launchctl list | grep 'gitomatic' > /dev/null; then
+                logg info 'Running `sudo launchctl load /Library/LaunchDaemons/gitomatic.plist`'
+                sudo launchctl load /Library/LaunchDaemons/gitomatic.plist
+                logg info 'Running `sudo launchctl start /Library/LaunchDaemons/gitomatic.plist`'
+                sudo launchctl start /Library/LaunchDaemons/gitomatic.plist
+            fi
         else
             ### Linux
             logg info 'Copying `gitomatic` systemd unit file to /etc/systemd/system/'

@@ -88,9 +88,9 @@ if command -v smbd > /dev/null; then
         chmod 775 "$HOME/Public"
         chown -Rf {{ .user.username }}:rclone "$HOME/Public"
 
-        sudo sharing -a "$PRIVATE_SHARE" -S "Private (System)" -n "Private (System)" -g 000 -s 001 -E 1 -R 1 && logg success "Configured $PRIVATE_SHARE as a private Samba share"
-        sudo sharing -a "$PUBLIC_SHARE" -S "Public (System)" -n "Public (System)" -g 001 -s 001 -E 1 -R 0 && logg success "Configured $PUBLIC_SHARE as a public Samba share"
-        sudo sharing -a "$HOME/Public" -S "Public (User)" -n "Public (User)" -g 001 -s 001 -E 1 -R 0 && logg success "Configured $HOME/Public as a public Samba share"
+        sudo sharing -a "$PRIVATE_SHARE" -S "Private (System)" -n "Private (System)" -g 000 -s 001 -E 1 -R 1 && logg success "Configured $PRIVATE_SHARE as a private Samba share" || logg info '`sharing` command failed - it is likely that the share was already set up'
+        sudo sharing -a "$PUBLIC_SHARE" -S "Public (System)" -n "Public (System)" -g 001 -s 001 -E 1 -R 0 && logg success "Configured $PUBLIC_SHARE as a public Samba share" || logg info '`sharing` command failed - it is likely that the share was already set up'
+        sudo sharing -a "$HOME/Public" -S "Public (User)" -n "Public (User)" -g 001 -s 001 -E 1 -R 0 && logg success "Configured $HOME/Public as a public Samba share" || logg info '`sharing` command failed - it is likely that the share was already set up'
     else
         logg info 'Ensuring /mnt for S3 buckets and Samba shares are configured'
 

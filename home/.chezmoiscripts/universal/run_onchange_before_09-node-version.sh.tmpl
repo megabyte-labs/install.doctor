@@ -11,6 +11,9 @@
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}
 
+export VOLTA_HOME="$XDG_DATA_HOME/volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
 ### Ensure recent version of Node.js is being used
 if command -v volta > /dev/null; then
   if ! test "$(node --version | sed 's/^v//' | awk '{print $1}' | awk -F'.' ' ( $1 > 15) ')"; then

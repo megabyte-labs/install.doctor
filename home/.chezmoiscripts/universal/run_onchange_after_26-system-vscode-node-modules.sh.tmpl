@@ -57,12 +57,12 @@ if command -v code > /dev/null && command -v npm > /dev/null && [ -f "${XDG_DATA
     if sudo cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" /package.json; then
         logg info 'Successfully copied linter fallback configurations package.json to /package.json'
         logg info 'Installing system root directory node_modules'
-        cd / && sudo npm i --no-package-lock || EXIT_CODE=$?
+        cd / && sudo npm i --quiet --no-package-lock || EXIT_CODE=$?
     else
         logg warn 'Unable to successfully copy linter fallback configurations package.json to /package.json'
         logg info 'Installing linter fallback configurations node_modules to home directory instead'
         cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" "$HOME/package.json"
-        cd ~ && npm i --no-package-lock || EXIT_CODE=$?
+        cd ~ && npm i --quiet --no-package-lock || EXIT_CODE=$?
     fi
 
     ### Log message if install failed

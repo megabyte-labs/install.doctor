@@ -116,13 +116,13 @@ if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; th
         logg info 'Adding Cloudflare certificate to `/usr/local/etc/openssl@3/certs/Cloudflare_CA.pem`'
         echo | sudo cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem
         logg info 'Running `/usr/local/opt/openssl@3/bin/c_rehash`'
-        /usr/local/opt/openssl@3/bin/c_rehash
+        /usr/local/opt/openssl@3/bin/c_rehash > /dev/null && logg success 'rehash successful'
     elif [ -d "/opt/homebrew/etc/openssl@3/certs" ]; then
         # Location on arm64 macOS
         logg info 'Adding Cloudflare certificate to `/opt/homebrew/etc/openssl@3/certs/Cloudflare_CA.pem`'
         echo | sudo cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> /opt/homebrew/etc/openssl@3/certs/Cloudflare_CA.pem
         logg info 'Running `/opt/homebrew/opt/openssl@3/bin/c_rehash`'
-        /opt/homebrew/opt/openssl@3/bin/c_rehash
+        /opt/homebrew/opt/openssl@3/bin/c_rehash > /dev/null && logg success 'rehash successful'
     else
         logg warn 'Unable to add `Cloudflare_CA.pem` because `/usr/local/etc/openssl@3/certs` and `/opt/homebrew/etc/openssl@3/certs` do not exist!'
     fi
@@ -244,7 +244,8 @@ if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; 
 
     # Copy over configuration files
     logg info 'Copying over configuration files from ~/.local/etc/cloudflared to /usr/local/etc/cloudflared'
-    sudo cp -rf "$HOME/.local/etc/cloudflared/"* /usr/local/etc/cloudflared
+    sudo cp -f "$HOME/.local/etc/cloudflared/cert.pem" /usr/local/etc/cloudflared/cert.pem
+    sudo cp -f "$HOME/.local/etc/cloudflared/config.yml /usr/local/etc/cloudflared/config.yml
 
     # Register tunnel (if not already registered)
     if cloudflared tunnel list | grep "host-{{ .host.hostname }}"; then

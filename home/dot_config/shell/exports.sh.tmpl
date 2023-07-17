@@ -195,6 +195,11 @@ if command -v fd > /dev/null; then
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
 
+### gcloud
+if command -v python3 > /dev/null; then
+  export CLOUDSDK_PYTHON="$(which python3)"
+fi
+
 ### Git
 export GIT_MERGE_AUTOEDIT=no
 

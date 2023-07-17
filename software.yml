@@ -1154,7 +1154,6 @@ softwarePackages:
     _name: Bash Completion Formula
     _when: '! brew list bash-completion | grep bash-completion > /dev/null'
     brew: bash-completion@2
-    brew: bash-completion@2
   axel:
     _bin: axel
     _docs: null
@@ -9440,6 +9439,8 @@ softwarePackages:
     _home: https://volta.sh
     _name: volta-vm
     _post: |
+      export VOLTA_HOME="$XDG_DATA_HOME/volta"
+      export PATH="$VOLTA_HOME/bin:$PATH"
       volta setup
       volta install node@latest
     ansible: professormanhattan.volta

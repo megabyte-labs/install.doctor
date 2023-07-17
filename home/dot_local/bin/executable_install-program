@@ -1083,15 +1083,14 @@ async function ensurePackageManager(packageManager) {
         await $`brew install volta`
       }
       await $`
-        if [ -z "$VOLTA_HOME" ]; then
-          volta setup
-        fi
+        export VOLTA_HOME="\${XDG_DATA_HOME:-$HOME/.local/share}/volta"
         export PATH="$VOLTA_HOME/bin:$PATH"
+        volta setup
         volta install node
       `
     }
     log('info', logStage, 'Ensuring Volt has Node.js runtime available')
-    await $`if ! volta list 2>&1 | grep 'runtime node' > /dev/null; then volta install node; fi`
+    await $`export VOLTA_HOME="\${XDG_DATA_HOME:-$HOME/.local/share}/volta" && export PATH="$VOLTA_HOME/bin:$PATH" && if ! volta list 2>&1 | grep 'runtime node' > /dev/null; then volta install node; fi`
   } else if (packageManager === 'pacman') {
     await ensureInstalled('pacman', false)
   } else if (packageManager === 'pipx') {

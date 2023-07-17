@@ -15,6 +15,9 @@
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}
 
+export VOLTA_HOME="$XDG_DATA_HOME/volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
 ### Ensure node is installed
 if ! command -v node > /dev/null; then
   if command -v brew; then
