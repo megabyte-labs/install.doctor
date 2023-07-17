@@ -5,7 +5,9 @@ xattr -d com.apple.quarantine rclone
 # TODOs
 
 This page outlines various projects and tasks that we are currently working on. Creating a GitHub issue for each of these items would be overkill.
-
+* [Title](https://www.ipfire.org/)
+* `git-credential-manager configure`
+* [Title](https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/wsl.md)
 * [Title](https://github.com/KnowledgeCanvas/knowledge)
 * Configure Navi to automatically download and use the best cheat repositories
 * Finish TS from 1400 stars
@@ -76,6 +78,7 @@ The following links include software that need to be reviewed before including t
 
 The following items are Docker containers that we may want to include as default containers deployed in our system.
 
+* [Title](https://github.com/sipt/shuttle)
 * https://github.com/erxes/erxes - CRM
 * https://github.com/pawelmalak/flame - Homepage
 * https://github.com/thelounge/thelounge - IRC

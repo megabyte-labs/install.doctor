@@ -28,13 +28,67 @@ if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
   logg info 'If system updates were downloaded / installed, a reboot might be required.'
 fi
 
-### Install Xcode CLI tools on macOS
-if [ -d /Applications ] && [ -d /Library ]; then
-  logg info 'Ensuring xcode-select is installed for developer tools'
-  xcode-select -p >/dev/null 2>&1 || sudo xcode-select --install
+### Ensure dependencies are installed on Linux
+if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v expect > /dev/null || ! command -v rsync > /dev/null; then
+    if command -v apt-get > /dev/null; then
+        # @description Ensure `build-essential`, `curl`, `expect`, `git`, `rsync`, `procps`, and `file` are installed on Debian / Ubuntu
+        sudo apt-get update
+        sudo apt-get install -y build-essential curl expect git rsync procps file
+    elif command -v dnf > /dev/null; then
+        # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps-ng`, and `file` are installed on Fedora (as well as the Development Tools package)
+        sudo dnf groupinstall -y 'Development Tools'
+        sudo dnf install -y curl expect git rsync procps-ng file
+    elif command -v yum > /dev/null; then
+        # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps-ng`, and `file` are installed on CentOS (as well as the Development Tools package)
+        sudo yum groupinstall -y 'Development Tools'
+        sudo yum install -y curl expect git rsync procps-ng file
+    elif command -v pacman > /dev/null; then
+        # @description Ensure `base-devel`, `curl`, `expect`, `git`, `rsync`, `procps-ng`, and `file` are installed on Archlinux
+        sudo pacman update
+        sudo pacman -Sy base-devel curl expect git rsync procps-ng file
+    elif command -v zypper > /dev/null; then
+        # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps`, and `file` are installed on OpenSUSE (as well as the devel_basis pattern)
+        sudo zypper install -yt pattern devel_basis
+        sudo zypper install -y curl expect git rsync procps file
+    elif command -v apk > /dev/null; then
+        # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps`, and `file` are installed on Alpine
+        apk add build-base curl expect git rsync procps file
+    elif [ -d /Applications ] && [ -d /Library ]; then
+        # @description Ensure CLI developer tools are available on macOS (via `xcode-select`)
+        sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
+    elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
+        # @description Ensure `curl`, `expect`, `git`, and `rsync` are installed on Windows
+        choco install -y curl expect git rsync
+    fi
 fi
 
-### Install Homebrew
+### Ensure Linux Homebrew is loaded
+loadLinuxbrew() {
+  if ! command -v brew > /dev/null; then
+    if [ -d "$HOME/.linuxbrew" ]; then
+      eval "$("$HOME/.linuxbrew/bin/brew" shellenv)"
+    elif [ -d "/home/linuxbrew/.linuxbrew" ]; then
+      eval "(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    fi
+  fi
+}
+
+### Ensures Homebrew folders have proper owners / permissions
+fixHomebrewPermissions() {
+  if command -v brew > /dev/null; then
+    logg info 'Applying proper permissions on Homebrew folders'
+    sudo chmod -R go-w "$(brew --prefix)/share"
+    BREW_DIRS="share/man share/doc share/zsh/site-functions etc/bash_completion.d"
+    for BREW_DIR in $BREW_DIRS; do
+      if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
+        sudo chown -R "$(whoami)" "$(brew --prefix)/$BREW_DIR"
+      fi
+    done
+    brew update --force --quiet
+  fi
+}
+
+### Installs Homebrew
 ensurePackageManagerHomebrew() {
   if ! command -v brew > /dev/null; then
     if command -v sudo > /dev/null && sudo -n true; then
@@ -43,23 +97,19 @@ ensurePackageManagerHomebrew() {
       logg info 'Homebrew is not installed. Password may be required.'
       bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
       if [ -n "$BREW_EXIT_CODE" ]; then
-        if command -v brew > /dev/null; then
-          logg warn 'Homebrew was installed but part of the installation failed. Attempting to fix..'
-          BREW_DIRS="share/man share/doc share/zsh/site-functions etc/bash_completion.d"
-          for BREW_DIR in $BREW_DIRS; do
-            if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
-              sudo chown -R "$(whoami)" "$(brew --prefix)/$BREW_DIR"
-            fi
-          done
-          brew update --force --quiet
-        fi
+        logg warn 'Homebrew was installed but part of the installation failed to complete successfully.'
       fi
     fi
   fi
 }
-ensurePackageManagerHomebrew
 
-# @description Enable auto-update service
+### Logic
+loadLinuxbrew
+ensurePackageManagerHomebrew
+loadLinuxbrew
+fixHomebrewPermissions
+
+### Enable auto-update service
 if brew autoupdate status | grep 'Autoupdate is not configured.' > /dev/null; then
   logg info 'Enabling Homebrew auto-update service (every 24 hours)'
   brew autoupdate start --cleanup --greedy --upgrade

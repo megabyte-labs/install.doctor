@@ -104,6 +104,27 @@ if command -v rclone > /dev/null; then
         sudo systemctl enable "s3-${USER}"
         sudo systemctl restart "s3-${USER}"
     fi
+
+    if [ -d /Applications ] && [ -d /System ]; then
+        ### Enable Rclone mounts
+        logg info 'Ensuring Rclone mount-on-reboot definitions are in place'
+        if [ -f "$HOME/Library/LaunchDaemons/rclone.private.plist" ] && [ ! -f "/Library/LaunchDaemons/rclone.private.plist" ]; then
+            logg info 'Adding /Volumes/Private as S3 bucket mount, enabled at boot'
+            sudo mkdir -p /Library/LaunchDaemons
+            sudo cp -f "$HOME/Library/LaunchDaemons/rclone.private.plist" '/Library/LaunchDaemons/rclone.private.plist'
+            sudo launchctl load '/Library/LaunchDaemons/rclone.private.plist' && logg success 'launchctl load successful'
+        fi
+        if [ -f "$HOME/Library/LaunchDaemons/rclone.public.plist" ] && [ ! -f "/Library/LaunchDaemons/rclone.public.plist" ]; then
+            logg info 'Adding /Volumes/Public as S3 bucket mount, enabled at boot'
+            sudo mkdir -p /Library/LaunchDaemons
+            sudo cp -f "$HOME/Library/LaunchDaemons/rclone.public.plist" '/Library/LaunchDaemons/rclone.public.plist'
+            sudo launchctl load '/Library/LaunchDaemons/rclone.public.plist' && logg success 'launchctl load successful'
+        fi
+        if [ -f "$HOME/Library/LaunchDaemons/rclone.user.plist" ] && ! launchctl list | grep 'rclone.user' > /dev/null; then
+            logg info 'Adding ~/Public as S3 bucket mount, enabled at boot'
+            launchctl load "$HOME/Library/LaunchDaemons/rclone.user.plist" && logg success 'user launchctl load successful'
+        fi
+    fi
 else
     logg info '`rclone` is not available'
 fi

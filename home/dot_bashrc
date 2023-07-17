@@ -69,12 +69,8 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     fi
   fi
 
-  ### Bash Completion
-  if [ -f "/usr/local/etc/profile.d/bash_completion.sh" ]; then
-    . "/usr/local/etc/profile.d/bash_completion.sh"
-  fi
-
   ### Bash Completion (Homebrew)
+  autoload -U +X bashcompinit && bashcompinit
   if command -v brew  > /dev/null; then
     if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
       . "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
@@ -142,6 +138,6 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
 
   ### zoxide
   if command -v zoxide > /dev/null; then
-    eval "$(zoxide init --cmd cd bash)"
+    eval "$(zoxide init --cmd cd bash)" > /dev/null
   fi
 fi

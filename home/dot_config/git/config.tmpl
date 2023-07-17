@@ -61,6 +61,7 @@
   whitespace = trailing-space,space-before-tab
 [credential]
   helper = cache --timeout=3600
+  credentialStore = {{ if eq .host.distro.id "darwin" }}keychain{{ else }}{{ if eq .host.distro.id "windows" }}wincredman{{ else }}secretservice{{ end }}{{ end }}
 [credential "https://github.com"]
 	helper = !gh auth git-credential
 [credential "https://gist.github.com"]

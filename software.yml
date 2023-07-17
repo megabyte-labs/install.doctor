@@ -1,6 +1,6 @@
 ---
 # eslint-disable eslint-comments/disable-enable-pair, max-len, max-lines, no-warning-comments
-# rhino   mkvtoolnix  testdisk ccat      git-credential-manager source-highlight  giter8  saltstack squid ettercap  calc mongodb wdiff dialog john reaver oath-toolkit xhyve elm icdiff   ddrescue gitlab-ci-multi-runner tcl-tk flac    zenity terragrunt dbus  grpc diffutils   sonarqube     haproxy    cabal-install  sonar-scanner wakeonlan tmate  solr tcptraceroute   hashcat handbrake iproute2mac 2fsprogs hydra you-get cabextract trash sphinx-doc iftop htop-osx dockutil xctool aspell w3m grc screenfetch moreutils brew-cask-completion openconnect media-info lftp unison logstash pstree rpm opam iperf3 libav gifsicle iperf colordiff lmdb mcrypt httprack  aircrack-ng ntfs-3g  glide  glog parallel  bison rename kubernetes-helm gdbm mobile-shell geckodriver  pv sdl swig winetricks doxygen mtr graphicsmagick dos2unix highlight putty llvm  flow  watch gdb ant mariadb  mercurial pidof autoconf maven readline libtool chromedriver pkg-config
+#                   ettercap  calc mongodb wdiff dialog john reaver oath-toolkit xhyve elm icdiff   ddrescue gitlab-ci-multi-runner tcl-tk flac    zenity terragrunt dbus  grpc diffutils   sonarqube     haproxy    cabal-install  sonar-scanner  tmate  solr tcptraceroute   hashcat handbrake iproute2mac 2fsprogs hydra you-get cabextract trash sphinx-doc iftop htop-osx    w3m grc  moreutils brew-cask-completion openconnect media-info lftp unison logstash pstree rpm  iperf3 libav  iperf colordiff lmdb mcrypt httprack  aircrack-ng ntfs-3g    glog parallel   rename kubernetes-helm gdbm mobile-shell geckodriver  pv sdl swig winetricks doxygen mtr graphicsmagick dos2unix highlight putty llvm  flow  watch gdb ant mariadb  mercurial pidof autoconf maven readline libtool chromedriver pkg-config
 # `softwarePackages` is a map of possible package managers to use while installing a program. The installer will
 # look at the `installerPreference` variable and find the first package manager that is in the package's possible
 # installation method and then use that. It is also sensitive to the type of operating system so a package with
@@ -868,6 +868,11 @@ softwarePackages:
     _home: https://astronvim.github.io/
     _name: AstroNvim
     _post: nvim --headless -c 'autocmd User PackerComplete quitall' &
+  dockutil:
+    _bin: dockutil
+    _github: https://github.com/kcrawford/dockutil
+    _name: DockUtil
+    brew:darwin: dockutil
   platformio:
     _bin: platformio
     _github: https://github.com/platformio/platformio-core
@@ -1053,6 +1058,13 @@ softwarePackages:
     _home: https://jamiemason.github.io/syncpack/
     _name: Syncpack
     npm: syncpack
+  ccat:
+    _bin: ccat
+    _github: https://github.com/owenthereal/ccat
+    _name: ccat
+    brew: ccat
+    go: github.com/owenthereal/ccat@latest
+    pacman: ccat
   flake8:
     _bin: flake8
     _desc: Flake8 is a python tool that glues together pycodestyle, pyflakes, mccabe, and third-party plugins to check the style and quality of some python code.
@@ -1100,17 +1112,49 @@ softwarePackages:
     _name: bane
     github: github.com/genuinetools/bane
     go: github.com/genuinetools/bane@latest
+  openssl-osx-ca:
+    _bin: openssl-osx-ca
+    _github: https://github.com/raggi/openssl-osx-ca
+    _name: OpenSSL macOS CA
+    _service: openssl-osx-ca
+    brew:darwin: raggi/ale/openssl-osx-ca
+  meta-package-manager:
+    _bin: mpm
+    _github: https://github.com/kdeldycke/meta-package-manager
+    _name: Meta Package Manager
+    brew: meta-package-manager
+    pipx: meta-package-manager
+  yt-dlp:
+    _bin: yt-dlp
+    _github: https://github.com/yt-dlp/yt-dlp/wiki/Installation
+    _name: YouTube Download
+    brew: yt-dlp
+    choco: yt-dlp
+    pacman: yt-dlp
+    pipx: yt-dlp
+    scoop: yt-dlp
+    port: yt-dlp
+    winget: yt-dlp
+  brew-gem:
+    _bin: brew-gem
+    _github: https://github.com/sportngin/brew-gem
+    _name: Homebrew RubyGems
+    brew: brew-gem
+  brew-pkg:
+    _bin: brew-pkg
+    _github: https://github.com/timsutton/brew-pkg
+    _name: Homebrew Pkg
+    brew:darwin: timsutton/formulae/brew-pkg
   bash-completion:
     _bin: null
     _desc: null
     _docs: https://docs.brew.sh/Shell-Completion
     _github: null
     _home: null
-    _name: null
-    _when:darwin: '! brew list bash-completion | grep bash-completion > /dev/null'
-    _when:linux: '! brew list bash-completion | grep bash-completion > /dev/null'
-    brew:darwin: bash-completion
-    brew:linux: bash-completion
+    _name: Bash Completion Formula
+    _when: '! brew list bash-completion | grep bash-completion > /dev/null'
+    brew: bash-completion@2
+    brew: bash-completion@2
   axel:
     _bin: axel
     _docs: null
@@ -6637,6 +6681,18 @@ softwarePackages:
       - gifski
       - peek
     yay: peek-git
+
+  gifsicle:
+    _bin: gifsicle
+    _github: https://github.com/kohler/gifsicle
+    _name: Gifsicle
+    apt: gifsicle
+    brew: gifsicle
+    dnf: gifsicle
+    pacman: gifsicle
+    choco: gifsicle
+    scoop: gifsicle
+    port: gifsicle
   pgcli:
     _bin: pgcli
     _desc: '[pgcli](https://www.pgcli.com/) is a free and open-source CLI for Postgres that does auto-completion and syntax highlighting.'
@@ -10050,6 +10106,21 @@ softwarePackages:
     dnf: tigervnc-server
     pacman: tigervnc
     zypper: tigervnc
+  proxyman:
+    _bin: proxyman
+    _github: https://github.com/ProxymanApp/Proxyman
+    _name: Proxyman
+    _when:cask: '! test -d /Applications/Proxyman.app && ! test -d $HOME/Applications/Proxyman.app'
+    cask: proxyman
+  squid:
+    _bin: squid
+    _github: https://github.com/squid-cache/squid
+    _name: Squid
+    _service: squid
+    apt: squid
+    brew: squid
+    dnf: squid
+    pacman: squid
   zap:
     _bin: zap
     _desc: Delightful AppImage package manager
@@ -10179,6 +10250,7 @@ softwarePlugins:
     plugins:
       - microsoft.cst.attacksurfaceanalyzer.cli
       - dotnet-format
+      - git-credential-manager
   gcloud:
     cmd: bash -c 'if ! gcloud components list | grep "Installed.*{PLUGIN}" &> /dev/null; then gcloud components install "{PLUGIN}"; fi'
     plugins:

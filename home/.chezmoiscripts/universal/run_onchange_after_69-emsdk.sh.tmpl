@@ -12,7 +12,7 @@ if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/emsdk" ]; then
     cd "${XDG_DATA_HOME:-$HOME/.local/share}/emsdk"
     logg info 'Pulling latest changes for Emscripten source code'
     git pull && logg success 'Successfully pulled latest Emscripten source code'
-    ./emsdk install latest && logg success 'Installed latest Emscripten target'
-    ./emsdk activate latest && logg success 'Activated latest Emscripten target'
+    ./emsdk install latest > /dev/null && logg success 'Installed latest Emscripten target'
+    ./emsdk activate latest > /dev/null && logg success 'Activated latest Emscripten target'
     logg info 'Profile source inclusions are already implemented in Bash / ZSH profile'
 fi

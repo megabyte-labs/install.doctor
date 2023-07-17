@@ -31,6 +31,14 @@
     type = "file"
     url = "https://curl.se/ca/cacert.pem"
 
+### Update scripts
+[".local/bin/update"]
+    type = "git-repo"
+    url = "https://github.com/UpdateCommand/update.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+    refreshPeriod = "{{ $refreshPeriod }}"
+
 ### Betelgeuse Theme
 [".local/src/betelgeuse"]
     type = "git-repo"

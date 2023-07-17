@@ -325,10 +325,13 @@ softwareGroups:
     - axel
     - bin
     - bitly
+    - brew-gem
+    - brew-pkg
     - charm
     - cod
     - desed
     - difftastic
+    - dockutil
     - duti
     - emplace
     - emoj
@@ -518,6 +521,8 @@ softwareGroups:
   Essentials: &Essentials
     - clamav
     - docker
+    - meta-package-manager
+    - openssl-osx-ca
     - rkhunter
   Essentials-Desktop: &Essentials-Desktop
     - autokey
@@ -664,6 +669,7 @@ softwareGroups:
     - crunch
     - exiftool
     - ffmpeg
+    - gifsicle
     - imagemagick
     - jpegoptim
     - korkut
@@ -675,6 +681,7 @@ softwareGroups:
     - vidmerger
     - wkhtmltopdf
     - youtube-dl
+    - yt-dlp
   Media-Desktop: &Media-Desktop
     - adobe-creative-cloud
     - audacity
@@ -768,6 +775,7 @@ softwareGroups:
     - platformio
     - please
     - porter
+    - proxyman
     - rust
     - snapcraft
     - solidity
@@ -791,6 +799,7 @@ softwareGroups:
     - cockpit
     - cups
     - lexicon
+    - squid
   Networking: &Networking
     - etcd
     - cloudflared
@@ -1377,6 +1386,8 @@ softwareGroups:
       note: Unused Docker assistance package
     - pkg: catfs
       note: CatFS is reportedly in the alpha stage of development and we experienced issues when trying to use it.
+    - pkg: ccat
+      note: bat can be used instead and has more features
     - pkg: cerebro
       note: macOS system search more native way of providing similar features. Better alternatives are available.
     - pkg: chromium

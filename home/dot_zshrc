@@ -62,7 +62,7 @@ setopt SHARE_HISTORY
 if [ ! -d "$XDG_CACHE_HOME/zsh" ]; then
 	mkdir -p "$XDG_CACHE_HOME/zsh"
 fi
-autoload -U +X compinit && compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -259,10 +259,6 @@ xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
 	;;
 esac
 
-### Homebrew ZSH Completions
-# Must be sourced before compinit / Oh-My-ZSH inclusion
-FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:${FPATH}"
-
 ### Antigen
 if [ -f "$HOME/.local/scripts/antigen.zsh" ]; then
   source "$HOME/.local/scripts/antigen.zsh"
@@ -392,6 +388,19 @@ if command -v fzf > /dev/null; then
 	zstyle ':autocomplete:*' fzf-completion yes
 fi
 
+### Homebrew ZSH Completions
+# Must be sourced before compinit / Oh-My-ZSH inclusion
+FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:${FPATH}"
+
+### ZSH compinit
+autoload -Uz +X compinit && compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+
+### Bash Completions
+autoload -U +X bashcompinit && bashcompinit
+if [ -f "/usr/local/etc/profile.d/bash_completion.sh" ]; then
+	. "/usr/local/etc/profile.d/bash_completion.sh"
+fi
+
 ### Atuin
 if command -v atuin > /dev/null; then
 	eval "$(atuin init zsh)"
@@ -450,9 +459,6 @@ fi
 if command -v thefuck > /dev/null; then
 	eval "$(thefuck --alias)"
 fi
-
-### Bash Completions
-autoload -U +X bashcompinit && bashcompinit
 
 ### HashiCorp Vault
 if command -v vault > /dev/null; then

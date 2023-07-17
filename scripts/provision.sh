@@ -252,25 +252,28 @@ fi
 # @description Ensure basic system packages are available on the device
 if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v expect > /dev/null || ! command -v rsync > /dev/null; then
     if command -v apt-get > /dev/null; then
-        # @description Ensure `build-essential`, `curl`, `expect`, `git`, and `rsync` are installed on Debian / Ubuntu
+        # @description Ensure `build-essential`, `curl`, `expect`, `git`, `rsync`, `procps`, and `file` are installed on Debian / Ubuntu
         sudo apt-get update
-        sudo apt-get install -y build-essential curl expect git rsync
+        sudo apt-get install -y build-essential curl expect git rsync procps file
     elif command -v dnf > /dev/null; then
-        # @description Ensure `curl`, `expect`, `git`, and `rsync` are installed on Fedora
-        sudo dnf install -y curl expect git rsync
+        # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps-ng`, and `file` are installed on Fedora (as well as the Development Tools package)
+        sudo dnf groupinstall -y 'Development Tools'
+        sudo dnf install -y curl expect git rsync procps-ng file
     elif command -v yum > /dev/null; then
-        # @description Ensure `curl`, `expect`, `git`, and `rsync` are installed on CentOS
-        sudo yum install -y curl expect git rsync
+        # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps-ng`, and `file` are installed on CentOS (as well as the Development Tools package)
+        sudo yum groupinstall -y 'Development Tools'
+        sudo yum install -y curl expect git rsync procps-ng file
     elif command -v pacman > /dev/null; then
-        # @description Ensure `curl`, `expect`, `git`, and `rsync` are installed on Archlinux
+        # @description Ensure `base-devel`, `curl`, `expect`, `git`, `rsync`, `procps-ng`, and `file` are installed on Archlinux
         sudo pacman update
-        sudo pacman -Sy curl expect git rsync
+        sudo pacman -Sy base-devel curl expect git rsync procps-ng file
     elif command -v zypper > /dev/null; then
-        # @description Ensure `curl`, `expect`, `git`, and `rsync` are installed on OpenSUSE
-        sudo zypper install -y curl expect git rsync
+        # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps`, and `file` are installed on OpenSUSE (as well as the devel_basis pattern)
+        sudo zypper install -yt pattern devel_basis
+        sudo zypper install -y curl expect git rsync procps file
     elif command -v apk > /dev/null; then
-        # @description Ensure `curl`, `expect`, `git`, and `rsync` are installed on Alpine
-        apk add curl expect git rsync
+        # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps`, and `file` are installed on Alpine
+        apk add build-base curl expect git rsync procps file
     elif [ -d /Applications ] && [ -d /Library ]; then
         # @description Ensure CLI developer tools are available on macOS (via `xcode-select`)
         sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
