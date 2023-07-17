@@ -248,13 +248,13 @@ if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; 
     sudo cp -f "$HOME/.local/etc/cloudflared/config.yml" /usr/local/etc/cloudflared/config.yml
 
     # Register tunnel (if not already registered)
-    if cloudflared tunnel list | grep "host-{{ .host.hostname }}"; then
+    if sudo cloudflared tunnel list | grep "host-{{ .host.hostname }}" > /dev/null; then
         logg info 'CloudFlare tunnel is already registered'
     else
         logg info 'Creating a CloudFlare tunnel to this host'
         sudo cloudflared tunnel create "host-{{ .host.hostname }}"
     fi
-    TUNNEL_ID="$(cloudflared tunnel list | grep "host-{{ .host.hostname }}" | sed 's/ .*//')"
+    TUNNEL_ID="$(sudo cloudflared tunnel list | grep "host-{{ .host.hostname }}" | sed 's/ .*//')"
     logg info "Tunnel ID: $TUNNEL_ID"
     if [ -f "/usr/local/etc/cloudflared/${TUNNEL_ID}.json" ]; then
         logg info 'Symlinking tunnel configuration to /usr/local/etc/cloudflared/credentials.json'

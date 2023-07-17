@@ -23,12 +23,12 @@ if command -v netdata-claim.sh > /dev/null; then
     fi
 
     ### Ensure /usr/local/var/lib/netdata/cloud.d is owned by user
-    if [ -d /usr/local/var/lib/netdata/cloud.d ]; then
-        logg info 'Ensuring permissions are correct on /usr/local/var/lib/netdata/cloud.d'
-        sudo chown -Rf $USER /usr/local/var/lib/netdata/cloud.d
-    elif [ -d /var/lib/netdata/cloud.d ]; then
-        logg info 'Ensuring permissions are correct on /var/lib/netdata/cloud.d'
-        sudo chown -Rf $USER /var/lib/netdata/cloud.d
+    if [ -d /usr/local/var/lib/netdata ]; then
+        logg info 'Ensuring permissions are correct on /usr/local/var/lib/netdata'
+        sudo chown -Rf netdata:netdata /usr/local/var/lib/netdata
+    elif [ -d /var/lib/netdata ]; then
+        logg info 'Ensuring permissions are correct on /var/lib/netdata'
+        sudo chown -Rf netdata:netdata /var/lib/netdata
     fi
     
     # netdata-claim.sh must be run as netdata user

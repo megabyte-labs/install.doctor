@@ -57,9 +57,7 @@ if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
         ### Ensure plugins are enabled
         logg info 'Enabling bash-it plugins'
         # TODO: Move these plugins to the .chezmoidata.yaml
-        # Plugin: xterm causing following error so it was removed
-        # ble: Please run `stty sane' to recover the correct TTY state.
-        for PLUGIN in base blesh browser cht-sh dirs gitstatus powerline sudo; do
+        for PLUGIN in base blesh browser cht-sh dirs gitstatus powerline sudo xterm; do
             if ls "$BASH_IT/enabled" | grep "$PLUGIN" > /dev/null; then
                 rm -f "$BASH_IT/enabled/"*"$PLUGIN"* > /dev/null && logg info "Removed old $PLUGIN bash-it plugin symlink" || logg error "Failed to remove $PLUGIN bash-it plugin symlink"
             fi
@@ -68,6 +66,7 @@ if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
     else
         logg warn 'The path specified by BASH_IT does not exist yet'
     fi
+    exit 0
 else
     if ! command -v powerline > /dev/null; then
         logg warn '`powerline` is not available'

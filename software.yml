@@ -723,7 +723,7 @@ softwarePackages:
   catlight:
     _github: https://github.com/catlightio/CatLight
     _name: Catlight
-    when: '! test -d /Applications/Catlight.app && ! test -d $HOME/Applications/Catlight.app'
+    _when: '! test -d /Applications/Catlight.app && ! test -d "$HOME/Applications/Catlight.app"'
     cask: catlight
     deb: https://catlight.io/downloads/linux/beta
   d2vm:
@@ -2887,13 +2887,13 @@ softwarePackages:
     snap: ffsend
     yay: ffsend
   fig:
+    _bin: fig
     _desc: '[Fig](https://fig.io/) adds autocomplete to your terminal. As you type, Fig pops up subcommands, options, and contextually relevant arguments in your existing terminal.'
     _docs: https://fig.io/user-manual
     _github: https://github.com/withfig/autocomplete
     _home: https://fig.io/
     _name: Fig
     _when:cask: '! test -d "/Applications/Fig.app" && ! test -d "$HOME/Applications/Fig.app"'
-    ansible:darwin: professormanhattan.fig
     cask: fig
   steampipe:
     _bin: steampipe
@@ -4495,7 +4495,6 @@ softwarePackages:
     _github: https://github.com/ipfs/ipfs
     _home: https://ipfs.tech/
     _name: IPFS
-    _service: ipfs
     brew: ipfs
     choco: go-ifps
     nix: ipfs

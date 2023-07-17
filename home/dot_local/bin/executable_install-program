@@ -766,7 +766,7 @@ async function beforeInstall(packageManager) {
         log('error', 'Homebrew', 'Failed running brew update / upgrade')
         log('info', 'Homebrew', 'Running brew tap --repair and trying again')
         try {
-          runCommand('Repairing taps and retrying brew update / upgrade', 'brew tap --repair && brew update && brew upgrade --cask --greedy && brew upgrade --force --greedy')
+          runCommand('Repairing taps and retrying brew update / upgrade', 'rm -rf $(brew --cache) && brew tap --repair && brew update && brew upgrade --cask --greedy && brew upgrade --force --greedy')
         } catch (e) {
           console.log(e)
           log('error', 'Homebrew', 'Failed both attempts to run brew update / upgrade')
@@ -1717,7 +1717,7 @@ async function pruneInstallOrders(installOrders) {
         try {
           await $`cat ${pkgTmp} | grep '^${pkg}$'`
           log('info', 'Filter', 'Filtering list')
-          newVal = newVal.filter((x) => x === pkg)
+          newVal = newVal.filter((x) => x !== pkg)
           console.log('New list', newVal)
         } catch (e) {
           // Do nothing
