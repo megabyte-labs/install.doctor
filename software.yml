@@ -2551,7 +2551,7 @@ softwarePackages:
     cask: prezi-video
   orbstack:
     _bin: orb
-    _github: 
+    _github:
     _name: OrbStack
     _when:cask: '! test -d /Applications/OrbStack.app && ! test -d $HOME/Applications/OrbStack.app'
     cask: orbstack
@@ -3671,6 +3671,25 @@ softwarePackages:
     _home: null
     _name: Git Notify
     npm: git-notify
+  github-runner:
+    _bin: github-runner
+    _desc: '[GitHub Runner](https://docs.github.com/en/actions/hosting-your-own-runners) is a system that you deploy and manage to execute jobs from GitHub Actions on GitHub.com.'
+    _docs: https://docs.github.com/en/actions/hosting-your-own-runners
+    _github: https://github.com/actions/runner
+    _home: https://docs.github.com/en/actions/hosting-your-own-runners
+    _name: GitHub Runner
+    script:darwin: |
+      RELEASES=$(curl -sS "https://api.github.com/repos/actions/runner/releases/latest")
+      LATEST_VERSION=$(echo $RELEASES | grep -o '"tag_name": "[^"]*' | grep -o '[^"]*$')
+      https://github.com/actions/runner/releases/download/$LATEST_VERSION/actions-runner-linux-x64-${LATEST_VERSION:1}.tar.gz
+      sudo mkdir -p /usr/local/opt/github-runner
+      sudo tar xzf "./actions-runner-linux-x64-${LATEST_VERSION:1}.tar.gz" -C /usr/local/opt/github-runner
+    script:linux: |
+      RELEASES=$(curl -sS "https://api.github.com/repos/actions/runner/releases/latest")
+      LATEST_VERSION=$(echo $RELEASES | grep -o '"tag_name": "[^"]*' | grep -o '[^"]*$')
+      https://github.com/actions/runner/releases/download/$LATEST_VERSION/actions-runner-linux-x64-${LATEST_VERSION:1}.tar.gz
+      sudo mkdir -p /opt/github-runner
+      sudo tar xzf "./actions-runner-linux-x64-${LATEST_VERSION:1}.tar.gz" -C /opt/github-runner
   gitify:
     _bin: null
     _desc: null
@@ -6065,7 +6084,7 @@ softwarePackages:
   generator-ngx-rocket:
     _bin: ngx
     _github: https://github.com/ngx-rocket/generator-ngx-rocket
-    _name: Angular 
+    _name: Angular
     npm: generator-ngx-rocket
   ngxtop:
     _bin: ngxtop
@@ -7507,7 +7526,7 @@ softwarePackages:
     zypper: xrdp
     yay: xrdp
   kasmvnc:
-    _bin: 
+    _bin:
     dnf: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
   responsively:
     _bin: null
