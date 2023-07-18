@@ -9,7 +9,7 @@
 function vimSetup() {
     ### Run the VIM plugin install routine
     if command -v vim > /dev/null; then
-        vim +PlugInstall +qall 2>/dev/null && logg success 'Successfully ran `vim +PlugInstall +qall`' || logg error 'Failed to run `vim +PlugInstall +qll`'
+        vim +PlugInstall +qall > /dev/null && logg success 'Successfully ran `vim +PlugInstall +qall`' || logg error 'Failed to run `vim +PlugInstall +qll`'
     fi
 }
 vimSetup

@@ -432,24 +432,24 @@ export SAVEHIST=50000
 ### Editor
 {{ if not .host.headless }}
 if command -v codium > /dev/null; then
-  export EDITOR='codium --wait'
+  export EDITOR='codium'
   export VISUAL="$EDITOR"
 elif command -v code > /dev/null; then
-  export EDITOR='code --wait'
+  export EDITOR='code'
   export VISUAL="$EDITOR"
 else
   # Source: https://unix.stackexchange.com/questions/4859/visual-vs-editor-what-s-the-difference
-  export EDITOR='vi -e'
+  export EDITOR='vi'
   if command -v nvim > /dev/null; then
-    export VISUAL='nvim -e'
+    export VISUAL='nvim'
   else
     export VISUAL="$EDITOR"
   fi
 fi
 {{ else }}
-export EDITOR='vi -e'
+export EDITOR='vi'
 if command -v nvim > /dev/null; then
-  export VISUAL='nvim -e'
+  export VISUAL='nvim'
   export PATH="$PATH:$HOME/.local/share/nvim/bin"
 else
   export VISUAL="$EDITOR"

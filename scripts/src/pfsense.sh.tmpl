@@ -1,0 +1,11 @@
+#!/bin/sh
+# @file pfSense Setup
+# @brief Configures pfSense
+# @description
+#     This script sets up pfSense with features like:
+#
+#     1. [Netdata Cloud](https://learn.netdata.cloud/docs/installing/pfsense)
+
+{{ include "partials" "logg" }}
+
+{{ include "partials" "pfsense" }}

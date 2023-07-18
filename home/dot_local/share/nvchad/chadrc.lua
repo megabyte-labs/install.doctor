@@ -6,7 +6,7 @@ local highlights = require "custom.configs.highlights"
 
 M.ui = {
 
-  theme = "rxyhn",
+  theme = "sweetpastel",
   transparency = true,
 
   statusline = {

@@ -417,6 +417,7 @@ softwarePackages:
     _bin: tomcat
     _github: https://github.com/apache/tomcat
     _name: Tomcat
+    _service: tomcat
     apt: tomcat
     brew: tomcat
     choco: tomcat
@@ -867,7 +868,7 @@ softwarePackages:
     _github: https://github.com/AstroNvim/AstroNvim
     _home: https://astronvim.github.io/
     _name: AstroNvim
-    _post: nvim --headless -c 'autocmd User PackerComplete quitall' &
+    _post: nvim --headless -c 'quitall'
   dockutil:
     _bin: dockutil
     _github: https://github.com/kcrawford/dockutil
@@ -6865,6 +6866,7 @@ softwarePackages:
     _bin: xdotool
     _github: https://github.com/jordansissel/xdotool
     _name: xdotool
+    _post:brew:darwin: defaults write org.x.X11 enable_test_extensions -boolean true
     apt: xdotool
     brew: xdotool
     dnf: xdotool

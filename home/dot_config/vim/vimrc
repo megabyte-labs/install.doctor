@@ -1,40 +1,8 @@
-silent! call plug#begin()
-Plug '~/.vim/plugged/ale'
-Plug '~/.vim/plugged/copilot.vim'
-Plug '~/.vim/plugged/dockerfile.vim'
-Plug '~/.vim/plugged/editorconfig-vim'
-Plug '~/.vim/plugged/fzf.vim'
-Plug '~/.vim/plugged/fzf'
-Plug '~/.vim/plugged/lightline.vim'
-Plug '~/.vim/plugged/nerdtree'
-Plug '~/.vim/plugged/php.vim'
-Plug '~/.vim/plugged/python-syntax'
-Plug '~/.vim/plugged/syntastic'
-Plug '~/.vim/plugged/typescript-vim'
-Plug '~/.vim/plugged/vim-airline'
-Plug '~/.vim/plugged/vim-carbon-now-sh'
-Plug '~/.vim/plugged/vim-devicons'
-Plug '~/.vim/plugged/vim-five'
-Plug '~/.vim/plugged/vim-go'
-Plug '~/.vim/plugged/vim-javascript'
-Plug '~/.vim/plugged/vim-jsx'
-Plug '~/.vim/plugged/vim-markdown'
-Plug '~/.vim/plugged/vim-multiple-cursors'
-Plug '~/.vim/plugged/vim-prettier'
-Plug '~/.vim/plugged/vim-sensible'
-Plug '~/.vim/plugged/vim-surround'
-Plug '~/.vim/plugged/vimgutter'
-Plug '~/.vim/plugged/zoxide.vim'
-if executable('node')
-  Plug '~/.vim/plugged/coc.nvim'
-endif
-Plug '~/.vim/plugged/ansible-vim', {'do': './UltiSnips/generate.sh'}
-call plug#end()
-
 " Install Coc extensions
 " TODO: Add https://github.com/yuki-yano/fzf-preview.vim
 " TODO: Add https://github.com/tpope/vim-fugitive
 if executable('node')
+  let g:coc_global_config="$HOME/.config/coc/coc-settings.json"
   let g:coc_global_extensions = [
     \ '@yaegassy/coc-ansible',
     \ '@yaegassy/coc-nginx',
@@ -122,5 +90,36 @@ set encoding=UTF-8
 " Set location of viminfo file
 set viminfo+=n~/.config/vim/viminfo
 
-" Automatically apply with Chezmoi anytime a source file is modified
-autocmd BufWritePost ~/.local/share/chezmoi/* ! chezmoi apply --source-path "%"
+silent! call plug#begin()
+Plug '~/.config/vim/plugged/ale'
+Plug '~/.config/vim/plugged/copilot.vim'
+Plug '~/.config/vim/plugged/dockerfile.vim'
+Plug '~/.config/vim/plugged/editorconfig-vim'
+Plug '~/.config/vim/plugged/fzf.vim'
+Plug '~/.config/vim/plugged/fzf'
+Plug '~/.config/vim/plugged/lightline.vim'
+Plug '~/.config/vim/plugged/nerdtree'
+Plug '~/.config/vim/plugged/php.vim'
+Plug '~/.config/vim/plugged/python-syntax'
+Plug '~/.config/vim/plugged/syntastic'
+Plug '~/.config/vim/plugged/typescript-vim'
+Plug '~/.config/vim/plugged/vim-airline'
+Plug '~/.config/vim/plugged/vim-carbon-now-sh'
+Plug '~/.config/vim/plugged/vim-devicons'
+Plug '~/.config/vim/plugged/vim-five'
+Plug '~/.config/vim/plugged/vim-go'
+Plug '~/.config/vim/plugged/vim-javascript'
+Plug '~/.config/vim/plugged/vim-jsx'
+Plug '~/.config/vim/plugged/vim-markdown'
+Plug '~/.config/vim/plugged/vim-multiple-cursors'
+Plug '~/.config/vim/plugged/vim-prettier'
+Plug '~/.config/vim/plugged/vim-sensible'
+Plug '~/.config/vim/plugged/vim-surround'
+Plug '~/.config/vim/plugged/vimgutter'
+Plug '~/.config/vim/plugged/zoxide.vim'
+if executable('node')
+  Plug '~/.config/vim/plugged/coc.nvim'
+endif
+Plug '~/.config/vim/plugged/ansible-vim', {'do': './UltiSnips/generate.sh'}
+call plug#end()
+

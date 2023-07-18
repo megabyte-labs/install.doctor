@@ -13,6 +13,17 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
+ensureNetdataOwnership() {
+    ### Ensure /usr/local/var/lib/netdata/cloud.d is owned by user
+    if [ -d /usr/local/var/lib/netdata ]; then
+        logg info 'Ensuring permissions are correct on /usr/local/var/lib/netdata'
+        sudo chown -Rf netdata /usr/local/var/lib/netdata
+    elif [ -d /var/lib/netdata ]; then
+        logg info 'Ensuring permissions are correct on /var/lib/netdata'
+        sudo chown -Rf netdata /var/lib/netdata
+    fi
+}
+
 ### Claim the instance with Netdata Cloud
 if command -v netdata-claim.sh > /dev/null; then
     NETDATA_TOKEN="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) -}}{{- includeTemplate "secrets/NETDATA_TOKEN" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_TOKEN" -}}{{- end -}}"
@@ -22,14 +33,7 @@ if command -v netdata-claim.sh > /dev/null; then
         sudo add-user netdata
     fi
 
-    ### Ensure /usr/local/var/lib/netdata/cloud.d is owned by user
-    if [ -d /usr/local/var/lib/netdata ]; then
-        logg info 'Ensuring permissions are correct on /usr/local/var/lib/netdata'
-        sudo chown -Rf netdata:netdata /usr/local/var/lib/netdata
-    elif [ -d /var/lib/netdata ]; then
-        logg info 'Ensuring permissions are correct on /var/lib/netdata'
-        sudo chown -Rf netdata:netdata /var/lib/netdata
-    fi
+    ensureNetdataOwnership
     
     # netdata-claim.sh must be run as netdata user
     logg info "Netdata room: $NETDATA_ROOM"
@@ -106,18 +110,26 @@ if command -v netdata-claim.sh > /dev/null; then
             logg info 'Installing the module and configuration file'
             sudo "$DEBSECAN_GIT/debsecan.chart.py" /usr/libexec/netdata/python.d/debsecan.chart.py
             sudo "$DEBSECAN_GIT/debsecan.conf" /etc/netdata/python.d/debsecan.conf
-
-            # Restart Netdata service
-            if command -v systemctl > /dev/null; then
-                logg info 'Restarting netdata service'
-                sudo systemctl restart netdata
-            else
-                logg warn '`systemctl` is not available'
-            fi
         else
             logg warn '`apt-get` is available but `debsecan` is not available in the PATH or is not installed'
         fi
     fi
+
+    ensureNetdataOwnership
+
+    ### Restart Netdata service
+    if command -v systemctl > /dev/null; then
+        logg info 'Enabling netdata service'
+        sudo systemctl enable netdata
+        logg info 'Restarting netdata service'
+        sudo systemctl restart netdata
+    elif [ -d /Applications ] && [ -d /System ]; then
+        logg info 'Starting / enabling netdata service'
+        brew services restart netdata
+    else
+        logg warn '`systemctl` is not available'
+    fi
+    
 else
     logg info '`netdata-claim.sh` is not available in the PATH'
 fi

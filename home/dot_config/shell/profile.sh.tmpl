@@ -80,11 +80,6 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     fi
   fi
 
-  ### ASDF
-  if [ -f "$ASDF_DIR/asdf.sh" ]; then
-    . "$ASDF_DIR/asdf.sh"
-  fi
-
   ### Directory Colors
   if [ -f "$XDG_CONFIG_HOME/shell/lscolors.sh" ]; then
     . "$XDG_CONFIG_HOME/shell/lscolors.sh"
@@ -146,6 +141,11 @@ if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
 elif [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
   export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
   . "$SDKMAN_DIR/bin/sdkman-init.sh"
+fi
+
+### ASDF
+if [ -f "$ASDF_DIR/asdf.sh" ]; then
+  . "$ASDF_DIR/asdf.sh"
 fi
 
 ### Tea

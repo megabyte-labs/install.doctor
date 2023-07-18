@@ -23,7 +23,7 @@ COMPLETION_DIR="$HOME/.local/share/bash-completion/completions"
 mkdir -p "$COMPLETION_DIR"
 
 ### Aqua
-if command -v aqua &> /dev/null; then
+if command -v aqua > /dev/null; then
   aqua completion bash > "$COMPLETION_DIR/aqua.bash"
 elif [ -f "$COMPLETION_DIR/aqua.bash" ]; then
   rm -f "$COMPLETION_DIR/aqua.bash"
@@ -45,7 +45,7 @@ fi
 
 ### fd
 if command -v fd > /dev/null && command -v brew > /dev/null && [ -f "$(brew --prefix fd)/etc/bash_completion.d/fd" ]; then
-  cp "$(brew --prefix fd)/etc/bash_completion.d/fd" "$COMPLETION_DIR/fd.bash"
+  cp -f "$(brew --prefix fd)/etc/bash_completion.d/fd" "$COMPLETION_DIR/fd.bash"
 elif [ -f "$COMPLETION_DIR/fd.bash" ]; then
   rm -f "$COMPLETION_DIR/fd.bash"
 fi
@@ -59,8 +59,8 @@ fi
 
 ### fzf
 if command -v fzf > /dev/null && command -v brew > /dev/null && [ -f "$(brew --prefix fzf)/shell/completion.bash" ]; then
-  cp "$(brew --prefix fzf)/shell/completion.bash" "$COMPLETION_DIR/fzf.bash"
-  cp "$(brew --prefix fzf)/shell/key-bindings.bash" "$COMPLETION_DIR/fzf-key-bindings.bash"
+  cp -f "$(brew --prefix fzf)/shell/completion.bash" "$COMPLETION_DIR/fzf.bash"
+  cp -f "$(brew --prefix fzf)/shell/key-bindings.bash" "$COMPLETION_DIR/fzf-key-bindings.bash"
 elif [ -f "$COMPLETION_DIR/fzf.bash" ]; then
   rm -f "$COMPLETION_DIR/fzf.bash"
   rm -f "$COMPLETION_DIR/fzf-key-bindings.bash"
@@ -75,7 +75,7 @@ fi
 
 ### Googler
 if command -v googler > /dev/null && command -v brew > /dev/null && [ -f "$(brew --prefix googler)/etc/bash_completion.d/googler-completion.bash" ]; then
-  cp "$(brew --prefix googler)/etc/bash_completion.d/googler-completion.bash" "$COMPLETION_DIR/googler.bash"
+  cp -f "$(brew --prefix googler)/etc/bash_completion.d/googler-completion.bash" "$COMPLETION_DIR/googler.bash"
 elif [ -f "$COMPLETION_DIR/googler.bash" ]; then
   rm -f "$COMPLETION_DIR/googler.bash"
 fi
@@ -96,7 +96,7 @@ fi
 
 ### Hyperfine
 if command -v hyperfine > /dev/null && command -v brew > /dev/null && [ -f "$(brew --prefix hyperfine)/etc/bash_completion.d/hyperfine.bash" ]; then
-  cp "$(brew --prefix hyperfine)/etc/bash_completion.d/hyperfine.bash" "$COMPLETION_DIR/hyperfine.bash"
+  cp -f "$(brew --prefix hyperfine)/etc/bash_completion.d/hyperfine.bash" "$COMPLETION_DIR/hyperfine.bash"
 elif [ -f "$COMPLETION_DIR/hyperfine.bash" ]; then
   rm -f "$COMPLETION_DIR/hyperfine.bash"
 fi
@@ -118,7 +118,7 @@ fi
 
 ### nb
 if command -v nb > /dev/null && command -v brew > /dev/null && [ -f "$(brew --prefix nb)/etc/bash_completion.d/nb.bash" ]; then
-  cp "$(brew --prefix nb)/etc/bash_completion.d/nb.bash" "$COMPLETION_DIR/nb.bash"
+  cp -f "$(brew --prefix nb)/etc/bash_completion.d/nb.bash" "$COMPLETION_DIR/nb.bash"
 elif [ -f "$COMPLETION_DIR/nb.bash" ]; then
   rm -f "$COMPLETION_DIR/nb.bash"
 fi
@@ -132,7 +132,7 @@ fi
 
 ### nnn
 if command -v nnn > /dev/null && command -v brew > /dev/null && [ -f "$(brew --prefix nnn)/etc/bash_completion.d/nnn-completion.bash" ]; then
-  cp "$(brew --prefix nnn)/etc/bash_completion.d/nnn-completion.bash" "$COMPLETION_DIR/nnn.bash"
+  cp -f "$(brew --prefix nnn)/etc/bash_completion.d/nnn-completion.bash" "$COMPLETION_DIR/nnn.bash"
 elif [ -f "$COMPLETION_DIR/nnn.bash" ]; then
   rm -f "$COMPLETION_DIR/nnn.bash"
 fi
@@ -187,7 +187,7 @@ elif [ -f "$COMPLETION_DIR/wp.bash" ]; then
 fi
 
 ### zoxide
-if command -v zoxide >/dev/null; then
+if command -v zoxide > /dev/null; then
   zoxide init bash > "$COMPLETION_DIR/zoxide.bash"
 elif [ -f "$COMPLETION_DIR/zoxide.bash" ]; then
   rm -f "$COMPLETION_DIR/zoxide.bash"
