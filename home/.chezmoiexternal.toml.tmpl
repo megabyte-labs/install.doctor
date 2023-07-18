@@ -3,7 +3,7 @@
 {{- $vimPlugins := .softwarePlugins.vim.plugins }}
 {{- range $vimPlugin := $vimPlugins }}
 {{-   $folderName :=  trimSuffix ".git" (last (splitList "/" $vimPlugin)) }}
-[".config/vim/plugged/{{ $folderName }}"]
+[".local/share/vim/plugged/{{ $folderName }}"]
     type = "git-repo"
     url = "{{ $vimPlugin }}"
     refreshPeriod = "{{ $refreshPeriod }}"
@@ -11,7 +11,7 @@
     pull.args = ["--ff-only"]
 {{- end }}
 ### coc.nvim VIM plugin requires custom branch "release"
-[".config/vim/plugged/coc.nvim"]
+[".local/share/vim/plugged/coc.nvim"]
     type = "git-repo"
     url = "https://github.com/neoclide/coc.nvim.git"
     refreshPeriod = "{{ $refreshPeriod }}"
