@@ -1,6 +1,6 @@
 ---
 # eslint-disable eslint-comments/disable-enable-pair, max-len, max-lines, no-warning-comments
-#                   ettercap  calc mongodb  dialog john   xhyve elm icdiff   ddrescue  tcl-tk flac    zenity terragrunt dbus  grpc diffutils   sonarqube     haproxy    cabal-install  sonar-scanner  tmate  solr tcptraceroute   hashcat handbrake iproute2mac 2fsprogs hydra you-get cabextract  sphinx-doc iftop htop-osx    w3m grc  moreutils        rpm  iperf3 libav  iperf  lmdb mcrypt httprack  aircrack-ng ntfs-3g    glog parallel   rename gdbm  geckodriver  pv sdl swig doxygen mtr graphicsmagick   putty llvm  flow  watch gdb ant mariadb  mercurial  autoconf maven readline libtool chromedriver pkg-config
+#                      mongodb      xhyve elm icdiff   ddrescue  tcl-tk flac    zenity terragrunt dbus  grpc diffutils   sonarqube     haproxy    cabal-install  sonar-scanner  tmate  solr tcptraceroute   hashcat handbrake iproute2mac 2fsprogs hydra you-get cabextract  sphinx-doc iftop htop-osx    w3m grc  moreutils        rpm  iperf3 libav  iperf  lmdb mcrypt httprack  aircrack-ng ntfs-3g    glog parallel   rename gdbm  geckodriver  pv sdl swig doxygen mtr graphicsmagick   putty llvm  flow  watch gdb ant mariadb  mercurial  autoconf maven readline libtool chromedriver pkg-config
 # `softwarePackages` is a map of possible package managers to use while installing a program. The installer will
 # look at the `installerPreference` variable and find the first package manager that is in the package's possible
 # installation method and then use that. It is also sensitive to the type of operating system so a package with
@@ -327,6 +327,15 @@ softwarePackages:
     _docs: https://robotframework.org/robotframework/#user-guide
     _name: Robot Framework
     pipx: robotframework
+  ettercap:
+    _bin: ettercap
+    _github: https://github.com/Ettercap/ettercap
+    _name: Ettercap
+    apt: ettercap
+    brew: ettercap
+    choco: ettercap
+    dnf: ettercap
+    pacman: ettercap
   act:
     _bin: act
     _desc: '[Act](https://github.com/nektos/act) Run GitHub actions locally'
@@ -360,6 +369,15 @@ softwarePackages:
     apt: kwin-bismuth
     dnf: bismuth
     pacman: kwin-bismuth
+  john:
+    _bin: john
+    _github: 
+    _name: John
+    apt: john
+    brew: john
+    dnf: john
+    pacman: john
+    choco: john
   graphql-playground:
     _bin: graphql-playground
     _github: https://github.com/graphql/graphql-playground
