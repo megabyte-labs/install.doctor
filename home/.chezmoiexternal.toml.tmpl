@@ -312,15 +312,19 @@
     url = "https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub"
     refreshPeriod = "{{ $refreshPeriod }}"
 
-{{- if and (not .host.headless) (ne .chezmoi.os "windows") }}
 ### Neovim
 [".config/nvim"]
     type = "git-repo"
-    url = "https://github.com/NvChad/NvChad.git"
+    url = "https://github.com/AstroNvim/AstroNvim.git"
     refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
-{{- end }}
+[".config/nvim/lua/user"]
+    type = "git-repo"
+    url = "https://github.com/megabyte-labs/AstronVim.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
 {{- if and (eq .chezmoi.os "linux") (not .host.headless) }}
 ### Rofi

@@ -9595,6 +9595,8 @@ softwarePackages:
     _github: https://github.com/wazuh/wazuh
     _home: https://wazuh.com/
     _name: Wazuh
+    _service:windows: wazuh-agent
+    _service:linux: wazuh-agent
     _when:darwin: '! test -f /Library/Ossec/bin/agent-auth'
     _when:linux: '! test -f /var/ossec/bin/agent-auth'
     _when:windows: '! test -f "C:\Program Files (x86)\ossec-agent\agent-auth.exe"'

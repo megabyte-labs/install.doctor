@@ -386,6 +386,7 @@ export WAKATIME_HOME="$XDG_CONFIG_HOME/wakatime"
 export WAKATIME_API_KEY="{{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "WAKATIME_API_KEY")) }}{{ includeTemplate "secrets/VAGRANT_CLOUD_TOKEN" | decrypt | trim }}{{ else }}{{ env "WAKATIME_API_KEY" }}{{ end }}"
 
 ### Wazuh
+export WAZUH_MANAGER="{{ .host.wazuhManager }}"
 if [ -d /Library/Ossec/bin ]; then
   export PATH="$PATH:/Library/Ossec/bin"
 elif [ -d /var/ossec/bin ]; then
