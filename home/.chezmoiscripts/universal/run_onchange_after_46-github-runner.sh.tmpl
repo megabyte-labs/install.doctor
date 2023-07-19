@@ -1,0 +1,43 @@
+{{- if ne .host.distro.family "windows" -}}
+#!/usr/bin/env bash
+# @file GitHub Runner Configuration
+# @brief Registers GitHub Runner with the GitHub Organization
+# @description
+#     This script registers the host as a self-hosted GitHub runner with the GitHub Organization specified
+#     in the `.user.github.username` input in the `.chezmoi.yaml.tmpl` file. A self-hosted runner is a system
+#     that you deploy and manage to execute jobs from GitHub Actions on GitHub.com.
+#
+#     This script adds these 3 labels to the runner - self-hosted, _hostname_, _os family_.
+#
+#     ## Secrets
+#
+#     The following chart details the secret that is needed to configure the runner:
+#
+#     | Secret                 | Description                                                |
+#     |------------------------|------------------------------------------------------------|
+#     | `GITHUB_RUNNER_TOKEN`  | The token generated when the runner was created in GitHub  |
+#
+#     For more information about storing secrets like SSH keys and API keys, refer to our Secrets documentation provided below
+#
+#     ## Links
+#
+#     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
+
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
+GH_RUNNER_PATH={{- if eq .host.distro.family "linux" -}}/opt/github-runner{{ else }}/usr/local/opt/github-runner{{ end }}
+
+### Check if GitHub runner is installed
+if [ -f "$GH_RUNNER_PATH/config.sh" ]; then
+    logg info 'Creating runner configuration'
+    cd $GH_RUNNER_PATH
+    ./config.sh --unattended --url https://github.com/{{ .user.github.username }} --token {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITHUB_RUNNER_TOKEN")) }}{{ includeTemplate "secrets/GITHUB_RUNNER_TOKEN" | decrypt | trim }}{{ else }}{{ env "GITHUB_RUNNER_TOKEN" }}{{ end }} --labels "self-hosted,{{ .chezmoi.hostname }},{{ .host.distro.family }}" || logg info 'GitHub runner configuration failed'
+    logg info 'Configuring runner service'
+    sudo ./svc.sh install
+    logg info 'Starting runner service'
+    sudo ./svc.sh start
+else
+    logg info 'GitHub runner is not installed.'
+fi
+{{ end -}}
