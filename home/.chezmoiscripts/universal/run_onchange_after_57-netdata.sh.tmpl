@@ -34,7 +34,7 @@ if command -v netdata-claim.sh > /dev/null; then
     fi
 
     ensureNetdataOwnership
-    
+
     # netdata-claim.sh must be run as netdata user
     logg info "Netdata room: $NETDATA_ROOM"
     sudo -H -u netdata bash -c 'netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="{{ .netdataClaimURL }}"'
@@ -63,7 +63,7 @@ if command -v netdata-claim.sh > /dev/null; then
         if [ -d /usr/local/etc/netdata ]; then
             NETDATA_ETC='/usr/local/etc/netdata/'
         elif [ -d /etc/netdata ]; then
-            NETDATA_EDC='/etc/netdata'
+            NETDATA_ETC='/etc/netdata'
         else
             logg error 'No etc location found for netdata' && exit 1
         fi
@@ -91,7 +91,7 @@ if command -v netdata-claim.sh > /dev/null; then
             DEBSECAN_GIT="${XDG_DATA_HOME:-$HOME/.local/share}/netdata-debsecan"
 
             # Installing the script to generate report on CVEs in installed packages
-            logg info 'Installing script to generate on CVEs in installed packages'
+            logg info 'Installing script to generate report on CVEs in installed packages'
             sudo cp -f "$DEBSECAN_GIT/usr_local_bin_debsecan-by-type" "/usr/local/bin/debsecan-by-type"
 
             # Generate initial debsecan reports in /var/log/debsecan/
@@ -115,6 +115,17 @@ if command -v netdata-claim.sh > /dev/null; then
         fi
     fi
 
+    ### Configure Netdata to gather information about Internet connection speed
+    if command -v speedtest-cli > /dev/null; then
+        SPEEDTEST_GIT="${XDG_DATA_HOME:-$HOME/.local/share}/netdata-speedtest"
+
+        # Installing the script to generate report on Internet connection speed
+        logg info 'Installing script to generate report on Internet connection speed'
+        sudo cp -f "$SPEEDTEST_GIT/speedtest.chart.sh" "/usr/libexec/netdata/charts.d/speedtest.chart.sh"
+    else
+        logg warn '`speedtest-cli` is not available in the PATH or is not installed'
+    fi
+
     ensureNetdataOwnership
 
     ### Restart Netdata service
@@ -129,7 +140,7 @@ if command -v netdata-claim.sh > /dev/null; then
     else
         logg warn '`systemctl` is not available'
     fi
-    
+
 else
     logg info '`netdata-claim.sh` is not available in the PATH'
 fi
