@@ -119,6 +119,8 @@
 {{- $sambaNetBiosName := (default $hostname (env "SAMBA_NETBIOS_NAME")) -}}
 {{- $sambaWorkGroupName := (default "BETELGEUSE" (env "SAMBA_WORKGROUP")) -}}
 
+{{- $wazuhManager := (default (print "wazuh." $domain) (env "WAZUH_MANAGER")) -}}
+
 encryption: "age"
 age:
   identity: "{{ .chezmoi.homeDir }}/.config/age/chezmoi.txt"
@@ -173,6 +175,7 @@ data:
     restricted: {{ $restricted }}
     softwareGroup: "{{ $softwareGroup }}"
     type: "{{ $chassisType }}"
+    wazuhManager: "{{ $wazuhManager }}"
     work: {{ $work }}
   toolchains:
   {{- range $toolchain, $enabled := $toolchainsEnabled }}
