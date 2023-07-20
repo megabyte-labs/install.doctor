@@ -71,8 +71,8 @@ fi
 
 ### VIM
 if command -v vim > /dev/null; then
-  alias vi='vim'
-  alias v='vim'
+  alias vi="vim -u ${XDG_CONFIG_HOME:-HOME/.config}/vim/vimrc"
+  alias v="vim -u ${XDG_CONFIG_HOME:-HOME/.config}/vim/vimrc"
 fi
 ### NVIM
 if command -v nvim > /dev/null; then

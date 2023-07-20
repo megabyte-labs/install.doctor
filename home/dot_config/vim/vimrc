@@ -1,63 +1,65 @@
+set runtimepath=~/.config/vim,~/.config/vim/autoload,~/.config/vim/colors,$VIMRUNTIME,$VIM
+
 " Install Coc extensions
 " TODO: Add https://github.com/yuki-yano/fzf-preview.vim
 " TODO: Add https://github.com/tpope/vim-fugitive
 let g:coc_global_config="$HOME/.config/coc/coc-settings.json"
 let g:coc_global_extensions = [
-  '@yaegassy/coc-ansible',
-  '@yaegassy/coc-nginx',
-  'coc-angular',
-  'coc-blade',
-  'coc-calc',
-  'coc-clangd',
-  'coc-copilot',
-  'coc-css',
-  'coc-cssmodules',
-  'coc-deno',
-  'coc-diagnostic',
-  'coc-docker',
-  'coc-emmet',
-  'coc-eslint',
-  'coc-explorer',
-  'coc-flutter',
-  'coc-git',
-  'coc-go',
-  'coc-highlight',
-  'coc-html-css-support',
-  'coc-html',
-  'coc-htmlhint',
-  'coc-java',
-  'coc-jedi',
-  'coc-json',
-  'coc-ltex',
-  'coc-lua',
-  'coc-markdown-preview-enhanced',
-  'coc-markdownlint',
-  'coc-markmap',
-  'coc-phpls',
-  'coc-powershell',
-  'coc-prettier',
-  'coc-prisma',
-  'coc-pyright',
-  'coc-rls',
-  'coc-rust-analyzer',
-  'coc-sh',
-  'coc-solargraph',
-  'coc-solidity',
-  'coc-spell-checker',
-  'coc-stylelint',
-  'coc-sql',
-  'coc-sqlfluff',
-  'coc-svelte',
-  'coc-svg',
-  'coc-swagger',
-  'coc-symbol-line',
-  'coc-tailwindcss',
-  'coc-toml',
-  'coc-tsserver',
-  'coc-xml',
-  'coc-yaml',
-  'coc-yank'
-]
+  \'@yaegassy/coc-ansible',
+  \'@yaegassy/coc-nginx',
+  \'coc-angular',
+  \'coc-blade',
+  \'coc-calc',
+  \'coc-clangd',
+  \'coc-copilot',
+  \'coc-css',
+  \'coc-cssmodules',
+  \'coc-deno',
+  \'coc-diagnostic',
+  \'coc-docker',
+  \'coc-emmet',
+  \'coc-eslint',
+  \'coc-explorer',
+  \'coc-flutter',
+  \'coc-git',
+  \'coc-go',
+  \'coc-highlight',
+  \'coc-html-css-support',
+  \'coc-html',
+  \'coc-htmlhint',
+  \'coc-java',
+  \'coc-jedi',
+  \'coc-json',
+  \'coc-ltex',
+  \'coc-lua',
+  \'coc-markdown-preview-enhanced',
+  \'coc-markdownlint',
+  \'coc-markmap',
+  \'coc-phpls',
+  \'coc-powershell',
+  \'coc-prettier',
+  \'coc-prisma',
+  \'coc-pyright',
+  \'coc-rls',
+  \'coc-rust-analyzer',
+  \'coc-sh',
+  \'coc-solargraph',
+  \'coc-solidity',
+  \'coc-spell-checker',
+  \'coc-stylelint',
+  \'coc-sql',
+  \'coc-sqlfluff',
+  \'coc-svelte',
+  \'coc-svg',
+  \'coc-swagger',
+  \'coc-symbol-line',
+  \'coc-tailwindcss',
+  \'coc-toml',
+  \'coc-tsserver',
+  \'coc-xml',
+  \'coc-yaml',
+  \'coc-yank'
+\]
 
 " Settings for coc-css extension
 autocmd FileType scss setl iskeyword+=@-@
@@ -68,7 +70,7 @@ autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.org
 syntax enable
 set background=dark
 colorscheme Betelgeuse
-set g:lightline = { 'colorscheme': 'Betelgeuse' }
+let g:lightline = { 'colorscheme': 'Betelgeuse' }
 
 " Settings for plugin https://github.com/neoclide/coc.nvim.git
 autocmd FileType json syntax match Comment +\/\/.\+$+
@@ -86,36 +88,34 @@ let g:syntastic_check_on_wq = 0
 set encoding=UTF-8
 
 " Set location of viminfo file
-set viminfo="$HOME/.config/vim/viminfo"
+set viminfo+=n~/.config/vim/viminfo
 
-silent! call plug#begin()
-Plug '${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/ale'
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/coc.nvim"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/copilot.vim"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/dockerfile.vim"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/editorconfig-vim"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/fzf.vim"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/fzf"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/lightline.vim"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/nerdtree"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/php.vim"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/python-syntax"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/syntastic"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/typescript-vim"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/vim-airline"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/vim-carbon-now-sh"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/vim-devicons"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/vim-five"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/vim-go"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/vim-javascript"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/vim-jsx"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/vim-markdown"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/vim-multiple-cursors"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/vim-prettier"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/vim-sensible"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/vim-surround"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/vimgutter"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/zoxide.vim"
-Plug "${XDG_DATA_HOME:-$HOME/.local/share}/vim/plugged/ansible-vim", {"do": "./UltiSnips/generate.sh"}
+silent! call plug#begin('~/.local/share/vim/plugged')
+Plug '~/.local/share/vim/plugged/ale'
+Plug '~/.local/share/vim/plugged/coc.nvim'
+Plug '~/.local/share/vim/plugged/copilot.vim'
+Plug '~/.local/share/vim/plugged/dockerfile.vim'
+Plug '~/.local/share/vim/plugged/editorconfig-vim'
+Plug '~/.local/share/vim/plugged/fzf.vim'
+Plug '~/.local/share/vim/plugged/fzf'
+Plug '~/.local/share/vim/plugged/lightline.vim'
+Plug '~/.local/share/vim/plugged/nerdtree'
+Plug '~/.local/share/vim/plugged/php.vim'
+Plug '~/.local/share/vim/plugged/python-syntax'
+Plug '~/.local/share/vim/plugged/syntastic'
+Plug '~/.local/share/vim/plugged/typescript-vim'
+Plug '~/.local/share/vim/plugged/vim-airline'
+Plug '~/.local/share/vim/plugged/vim-carbon-now-sh'
+Plug '~/.local/share/vim/plugged/vim-devicons'
+Plug '~/.local/share/vim/plugged/vim-go'
+Plug '~/.local/share/vim/plugged/vim-javascript'
+Plug '~/.local/share/vim/plugged/vim-jsx'
+Plug '~/.local/share/vim/plugged/vim-markdown'
+Plug '~/.local/share/vim/plugged/vim-multiple-cursors'
+Plug '~/.local/share/vim/plugged/vim-prettier'
+Plug '~/.local/share/vim/plugged/vim-sensible'
+Plug '~/.local/share/vim/plugged/vim-surround'
+Plug '~/.local/share/vim/plugged/vim-gitgutter'
+Plug '~/.local/share/vim/plugged/zoxide.vim'
+Plug '~/.local/share/vim/plugged/ansible-vim', {'do': './UltiSnips/generate.sh'}
 call plug#end()
-
