@@ -89,7 +89,13 @@
 
 {{- if stdinIsATTY -}}
 
-{{- if not (env "WORK_ENVIRONMENT") -}}
+{{- if (eq .chezmoi.os "darwin") -}}
+    {{- if (contains "managed Mac computers" (output "/usr/libexec/ApplicationFirewall/socketfilterfw" "--getglobalstate")) -}}
+      {{- $work = true -}}
+    {{- else }}
+      {{- $work = false -}}
+    {{- end -}}
+{{- else if not (env "WORK_ENVIRONMENT") -}}
 {{-   $work = promptBoolOnce $data.host "work" "Work environment" $work -}}
 {{- end -}}
 {{- if not (env "RESTRICTED_ENVIRONMENT") -}}
