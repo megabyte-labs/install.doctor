@@ -371,7 +371,7 @@ softwarePackages:
     pacman: kwin-bismuth
   john:
     _bin: john
-    _github: 
+    _github:
     _name: John
     apt: john
     brew: john
@@ -7533,6 +7533,40 @@ softwarePackages:
   kasmvnc:
     _bin:
     dnf: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    script:linux: |
+      RELEASES=$(curl -sS "https://api.github.com/repos/kasmtech/KasmVNC/releases/latest") || :
+      LATEST_VERSION=$(echo $RELEASES | grep -o '"tag_name": "[^"]*' | grep -o '[^"]*$') || :
+      if command -v apt-get > /dev/null; then
+        . /etc/os-release
+        cd /tmp
+        case $VERSION_CODENAME in
+        bullseye )
+          wget "https://github.com/kasmtech/KasmVNC/releases/download/$LATEST_VERSION/kasmvncserver_bullseye_${LATEST_VERSION:1}_amd64.deb" || :
+          ;;
+        buster )
+          wget "https://github.com/kasmtech/KasmVNC/releases/download/$LATEST_VERSION/kasmvncserver_buster_${LATEST_VERSION:1}_amd64.deb" || :
+          ;;
+        focal )
+          wget "https://github.com/kasmtech/KasmVNC/releases/download/$LATEST_VERSION/kasmvncserver_focal_${LATEST_VERSION:1}_amd64.deb" || :
+          ;;
+        jammy )
+          wget "https://github.com/kasmtech/KasmVNC/releases/download/$LATEST_VERSION/kasmvncserver_jammy_${LATEST_VERSION:1}_amd64.deb" || :
+          ;;
+        * )
+          ;;
+        esac
+        if ls kasmvncserver*.deb > /dev/null 2>&1; then sudo apt-get install ./kasmvncserver_*.deb; sudo addgroup $USER ssl-cert; fi
+      elif command -v dnf > /dev/null; then
+        wget "https://github.com/kasmtech/KasmVNC/releases/download/$LATEST_VERSION/kasmvncserver_centos_core_${LATEST_VERSION:1}_x86_64.rpm" || :
+        if ls kasmvncserver*.rpm > /dev/null 2>&1; then sudo rpm -ivh ./kasmvncserver_*.rpm; sudo usermod -a -G kasmvnc-cert $USER; fi
+      elif command -v zypper > /dev/null; then
+        wget "https://github.com/kasmtech/KasmVNC/releases/download/$LATEST_VERSION/kasmvncserver_opensuse_15_${LATEST_VERSION:1}_x86_64.rpm" || :
+        if ls kasmvncserver*.rpm > /dev/null 2>&1; then sudo rpm -ivh ./kasmvncserver_*.rpm; sudo usermod -a -G kasmvnc-cert $USER; fi
+      elif command -v apk > /dev/null; then
+        wget "https://github.com/kasmtech/KasmVNC/releases/download/$LATEST_VERSION/kasmvnc.alpine_317_x86_64.tgz" || :
+        if ls kasmvncserver*.rpm > /dev/null 2>&1; then sudo tar -xzf "./kasmvnc.alpine_317_x86_64.tgz" -C /; fi
+      fi
+    yay: kasmvncserver-bin
   responsively:
     _bin: null
     _desc: A modified web browser that helps in responsive web development
