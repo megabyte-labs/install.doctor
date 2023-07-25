@@ -3681,13 +3681,13 @@ softwarePackages:
     script:darwin: |
       RELEASES=$(curl -sS "https://api.github.com/repos/actions/runner/releases/latest")
       LATEST_VERSION=$(echo $RELEASES | grep -o '"tag_name": "[^"]*' | grep -o '[^"]*$')
-      https://github.com/actions/runner/releases/download/$LATEST_VERSION/actions-runner-linux-x64-${LATEST_VERSION:1}.tar.gz
+      wget "https://github.com/actions/runner/releases/download/$LATEST_VERSION/actions-runner-linux-x64-${LATEST_VERSION:1}.tar.gz"
       sudo mkdir -p /usr/local/opt/github-runner
       sudo tar xzf "./actions-runner-osx-x64-${LATEST_VERSION:1}.tar.gz" -C /usr/local/opt/github-runner
     script:linux: |
       RELEASES=$(curl -sS "https://api.github.com/repos/actions/runner/releases/latest")
       LATEST_VERSION=$(echo $RELEASES | grep -o '"tag_name": "[^"]*' | grep -o '[^"]*$')
-      https://github.com/actions/runner/releases/download/$LATEST_VERSION/actions-runner-linux-x64-${LATEST_VERSION:1}.tar.gz
+      wget "https://github.com/actions/runner/releases/download/$LATEST_VERSION/actions-runner-linux-x64-${LATEST_VERSION:1}.tar.gz"
       sudo mkdir -p /opt/github-runner
       sudo tar xzf "./actions-runner-linux-x64-${LATEST_VERSION:1}.tar.gz" -C /opt/github-runner
   gitify:
