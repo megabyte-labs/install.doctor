@@ -77,6 +77,12 @@ if command -v postfix > /dev/null; then
             sudo systemctl enable postfix
             sudo systemctl restart postfix
         fi
+
+        if [ -f /etc/aliases ]; then
+            ### Set the email address to deliver System emails
+            logg info 'Set the email address to deliver System emails'
+            sed s/^root.*/root:\ {{ .user.email }}/ -i /etc/aliases && newaliases
+        fi
     else
         logg warn '/etc/postfix is not a directory! Skipping SendGrid Postfix setup.'
     fi
