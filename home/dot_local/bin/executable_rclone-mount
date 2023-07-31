@@ -86,4 +86,4 @@ sudo rclone --config "$CONFIG_FOLDER/rclone.conf" \
   --vfs-read-chunk-size 16M \
   --vfs-read-chunk-size-limit 128M \
   --volname "$MOUNT" \
-  "$MOUNT_LOWERCASE":"$MOUNT_LOWERCASE" "$MOUNT_PATH"
+  "$MOUNT_LOWERCASE":"$MOUNT" "$MOUNT_PATH"
