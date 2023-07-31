@@ -4616,7 +4616,7 @@ softwarePackages:
     port: openjdk11
     scoop: openjdk11
   jenv:
-    _bin: null
+    _bin: jenv
     _desc: '[jenv](https://www.jenv.be/) lets you switch between Java versions. It sets JAVA_HOME inside your shell, in a way that can be set globally, local to the current working directory or per shell.'
     _docs: https://github.com/gcuisinier/jenv/wiki
     _github: https://github.com/jenv/jenv
@@ -10219,7 +10219,7 @@ softwarePlugins:
     plugins:
       - https://github.com/BalliAsghar/mailsy-alfred/releases/download/2.0.0/Mailsy.alfredworkflow
   android-studio:
-    cmd: bash -c 'echo $JAVA_HOME && sdkmanager --list_installed && if ! sdkmanager --list_installed | grep "{PLUGIN}"; then sdkmanager --install "{PLUGIN}"; fi'
+    cmd: bash -c 'if [ -f "$ASDF_DIR/asdf.sh" ]; then . "$ASDF_DIR/asdf.sh"; fi && echo $JAVA_HOME && sdkmanager --list_installed && if ! sdkmanager --list_installed | grep "{PLUGIN}"; then sdkmanager --install "{PLUGIN}"; fi'
     plugins:
       - add-ons;addon-google_apis-google-24
       - build-tools;33.0.0
