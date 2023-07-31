@@ -50,6 +50,35 @@
 {{ includeTemplate "universal/logg" }}
 
 if command -v rclone > /dev/null; then
+    {{- if and (or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID"))) (env "CLOUDFLARE_R2_ID")) (or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET"))) (env "CLOUDFLARE_R2_SECRET")) (ne .user.cloudflare.r2 "") -}}
+    logg info 'Removing ~/.config/rclone/rclone.conf INSTALL DOCTOR managed block'
+    CONFIG_FILE="$HOME/.config/rclone/rclone.conf"
+    if cat "$CONFIG_FILE" | grep '# INSTALL DOCTOR MANAGED S3'; then
+        # TODO: Remove old block
+        START_LINE="$(echo `grep -n -m 1 "# INSTALL DOCTOR MANAGED S3" "$CONFIG_FILE" | cut -f1 -d ":"`)"
+        END_LINE="$(echo `grep -n -m 1 "# INSTALL DOCTOR MANAGED S3" "$CONFIG_FILE" | cut -f1 -d ":"`)"
+        if command -v gsed > /dev/null; then
+            gsed -i "$START_LINE,$END_LINEd" "$CONFIG_FILE"
+        else
+            sed -i "$START_LINE,$END_LINEd" "$CONFIG_FILE"
+        fi
+    fi
+    logg info 'Adding ~/.config/rclone/rclone.conf INSTALL DOCTOR managed block'
+    tee -a "$CONFIG_FILE" > /dev/null <<EOT
+# INSTALL DOCTOR MANAGED S3
+[{{ .user.username}}-s3]
+access_key_id = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID")) }}{{- includeTemplate "secrets/CLOUDFLARE_R2_ID" | decrypt | trim -}}{{ else }}{{- env "CLOUDFLARE_R2_ID" -}}{{ end }}
+acl = private
+endpoint = {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com
+provider = Cloudflare
+region = auto
+secret_access_key = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET")) }}{{- includeTemplate "secrets/CLOUDFLARE_R2_SECRET" | decrypt | trim -}}{{ else }}{{- env "CLOUDFLARE_R2_SECRET" -}}{{ end }}
+type = s3
+# INSTALL DOCTOR MANAGED S3
+EOT
+    {{- end -}}
+
+
     logg info 'Ensuring /var/cache/rclone exists'
     sudo mkdir -p /var/cache/rclone
     sudo chmod 770 /var/cache/rclone
