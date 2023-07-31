@@ -70,6 +70,7 @@ sudo rclone --config "$CONFIG_FOLDER/rclone.conf" \
   --drive-use-trash \
   --exclude-from "$RCLONE_IGNORE" \
   --log-file "$LOG_FILE" \
+  --log-level INFO \
   --no-modtime \
   --noapplexattr \
   --rc \
