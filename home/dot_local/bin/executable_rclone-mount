@@ -73,6 +73,7 @@ sudo rclone --config "$CONFIG_FOLDER/rclone.conf" \
   --log-level INFO \
   --no-modtime \
   --noapplexattr \
+  --poll-interval 15s \
   --rc \
   --rc-pass rclone \
   --rc-user rclone \
