@@ -10218,7 +10218,7 @@ softwarePlugins:
     plugins:
       - https://github.com/BalliAsghar/mailsy-alfred/releases/download/2.0.0/Mailsy.alfredworkflow
   android-studio:
-    cmd: bash -c 'if ! sdkmanager --list_installed | grep "{PLUGIN}"; then sdkmanager --install "{PLUGIN}"; fi'
+    cmd: bash -c 'echo $JAVA_HOME && sdkmanager --list_installed && if ! sdkmanager --list_installed | grep "{PLUGIN}"; then sdkmanager --install "{PLUGIN}"; fi'
     plugins:
       - add-ons;addon-google_apis-google-24
       - build-tools;33.0.0
