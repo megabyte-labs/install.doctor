@@ -233,7 +233,7 @@ fi
 
 {{- $registrationToken := "" }}
 {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname)) -}}
-{{-   $registrationToken := (includeTemplate (joinPath "cloudflared" .host.hostname) | decrypt) -}}
+{{-   $registrationToken := (includeTemplate (print "cloudflared/" .host.hostname) | decrypt) -}}
 {{- end }}
 ### Set up CloudFlare tunnels
 if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; then
