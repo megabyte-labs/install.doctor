@@ -17,7 +17,7 @@
 ### Configure Firewall
 if [ -d /Applications ] && [ -d /System ]; then
   logg info 'Disabling the block all incoming traffic option in the system Firewall settings'
-  /usr/libexec/ApplicationFirewall/socketfilterfw --setblockall off || logg error 'Failed to disable incoming traffic block in the system Firewall' && logg info 'Manually disable the option under "System Preferences" > "Network" > "Firewall" > "Incoming Traffic Block Toggle"'
+  /usr/libexec/ApplicationFirewall/socketfilterfw --setblockall off || (logg error 'Failed to disable incoming traffic block in the system Firewall' && logg info 'Manually disable the option under "System Preferences" > "Network" > "Firewall" > "Incoming Traffic Block Toggle"')
 fi
 
 ### System upgrade on macOS
