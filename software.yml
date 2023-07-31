@@ -2763,6 +2763,7 @@ softwarePackages:
     _github: https://github.com/etcd-io/etcd
     _home: null
     _name: etcd
+    _service: etcd
     apt: etcd
     brew: etcd
     choco: etcd
@@ -9274,7 +9275,7 @@ softwarePackages:
     _github: https://github.com/hashicorp/vault
     _home: https://vaultproject.io/
     _name: HashiCorp Vault
-    _service:brew: hashicorp/tap/vault
+    _service: vault
     ansible: professormanhattan.vault
     brew: hashicorp/tap/vault
     yay: vault-cli
@@ -9294,7 +9295,7 @@ softwarePackages:
     _github: https://github.com/vectordotdev/vector
     _home: https://vector.dev/
     _name: Vector
-    _service: vectordotdev/brew/vector
+    _service: vector
     # Unlisted on their website and formulae didn't seem to be registering the bin in the PATH
     brew: vectordotdev/brew/vector
     helm: https://helm.vector.dev
@@ -10084,7 +10085,7 @@ softwarePackages:
     _bin: unitd
     _github: https://github.com/nginx/unit
     _name: NGINX Unit
-    _service:brew: nginx/unit/unit
+    _service: unit
     brew: nginx/unit/unit
   yubikey-manager-qt:
     _bin: yubikey-manager-qt
