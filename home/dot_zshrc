@@ -26,6 +26,10 @@ export WORDCHARS=${WORDCHARS//\/}
 export PROMPT_EOL_MARK=
 export TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
 
+### .zcompdump
+# Source: https://www.reddit.com/r/zsh/comments/nwxcg4/store_zcompdump_in_specific_directory/
+export ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION"
+
 ### Antigen
 export ADOTDIR="$HOME/.local/antigen"
 
@@ -390,7 +394,7 @@ fi
 
 ### Homebrew ZSH Completions
 # Must be sourced before compinit / Oh-My-ZSH inclusion
-FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:${FPATH}"
+export FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:${FPATH}"
 
 ### ZSH compinit
 autoload -Uz +X compinit && compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION"

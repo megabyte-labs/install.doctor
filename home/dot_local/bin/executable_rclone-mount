@@ -49,25 +49,42 @@ fi
 MOUNT_LOWERCASE="$(echo "$MOUNT" | tr "[:upper:]" "[:lower:]")"
 unset AWS_CA_BUNDLE
 export PATH="$PATH:/usr/local/bin:/usr/bin"
+# TODO: Only launch with --rc-web-gui if the servers hostname is the {{ .kubernetesHost }}
+# TODO: Add more secure authentication method
 sudo rclone --config="$CONFIG_FOLDER/rclone.conf" \
   mount \
-  --cache-tmp-upload-path="$CACHE_FOLDER/$MOUNT-upload" \
+  --allow-other \
+  --buffer-size 4G \
+  --bwlimit=40M \
   --cache-chunk-path="$CACHE_FOLDER/$MOUNT-chunks" \
+  --cache-db-path="$CACHE_FOLDER/$MOUNT-db" \
+  --cache-dir="$CACHE_FOLDER/$MOUNT-vfs" \
+  --cache-info-age=60m \
+  --cache-tmp-upload-path="$CACHE_FOLDER/$MOUNT-upload" \
   --cache-workers=8 \
   --cache-writes \
-  --cache-dir="$CACHE_FOLDER/$MOUNT-vfs" \
-  --cache-db-path="$CACHE_FOLDER/$MOUNT-db" \
+  --checkers=16 \
   --daemon \
-  --noapplexattr \
+  --dir-cache-time 24h \
+  --dir-cache-time=60m \
+  --drive-use-trash \
+  --exclude-from="$RCLONE_IGNORE" \
   --log-file="$LOG_FILE" \
   --no-modtime \
-  --drive-use-trash \
+  --noapplexattr \
+  --rc \
+  --rc-pass rclone \
+  --rc-user rclone \
+  --rc-web-gui \
   --stats=0 \
-  --checkers=16 \
-  --bwlimit=40M \
-  --dir-cache-time=60m \
+  --vfs-cache-max-age 1000h \
+  --vfs-cache-max-age 1000h \
+  --vfs-cache-max-size 140G \
   --vfs-cache-mode full \
+  --vfs-cache-poll-interval 24h \
+  --vfs-fast-fingerprint \
+  --vfs-read-ahead 128M \
+  --vfs-read-chunk-size 16M \
+  --vfs-read-chunk-size-limit 128M \
   --volname "$MOUNT" \
-  --cache-info-age=60m \
-  --filter-from="$RCLONE_IGNORE" \
   "$MOUNT_LOWERCASE":"$MOUNT_LOWERCASE" "$MOUNT_PATH"

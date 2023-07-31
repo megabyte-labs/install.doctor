@@ -2,71 +2,72 @@
 
 ## Deprecated Plugins
 
-* "dart-code.dart-code", Creates a ~/.dart and ~/.dartServer folder. Does not respect XDG spec.
-* "dart-code.flutter",
- // "ibm.codewind", Creates a ~/.codewind folder. Does not respect XDG spec.
-    // "ibm.ibm-developer",
-        // "jfrog.jfrog-vscode-extension", Creates a ~/.jfrog-vscode-extension folder. Does not respect XDG spec.
-    // "lightrun.lightrunplugin-saas", Creates a ~/.lightrun folder. Does not respect XDG spec.
-    // "platformio.platformio-ide", Creates ~/.platformio folder. Does not respect XDG spec.
-// "robocorp.robocorp-code", Creates a ~/.robocorp and ~/.robocorp-code folder. Does not respect XDG spec.
-    // "robocorp.robotframework-lsp",
-    // "sonarsource.sonarlint-vscode", Creates a ~/.sonarlint folder. Does not respect XDG spec.
-        // "sprkldev.sprkl-vscode", Creates a ~/.sprkl folder. Does not respect XDG spec.
-// Creates ~/.console-ninja folder -- needs to respect XDG
-    // "wallabyjs.console-ninja",
-    "gitpod.gitpod-remote-ssh", // Bunch of errors like this during install [gitpod-remote-ssh]: Couldn't find message for key openPreview.
-    // "leonardssh.vscord", Discord presence plugin (requires embedding key in settings.json)
-    "ms-toolsai.vscode-ai-remote", [vscode-ai]: Couldn't find message for key azureml.internal.activate.title.
-    "ms-toolsai.vscode-ai",
-    "circleci.circleci", // Unneeded (not using CircleCI currently)
-    "wallabyjs.console-ninja",
-        "webhint.vscode-webhint",
-    "statelyai.stately-vscode",
-    "lottiefiles.vscode-lottie",
-    "logerfo.gitlab-notifications",
-    "antonreshetov.masscode-assistant",
-    "circleci.circleci",
-    "bridgecrew.checkov",
+The following plugins were tested but removed because the `extensions.json` already includes about 200 plugins. The plugins were tested and removed if they added too much menu clutter, created unwieldly home folder additions, or were not deemed useful.
+
+```json
+{
+    "aic.docify",
     "amazonwebservices.aws-toolkit-vscode",
-    "okteto.kubernetes-context",
-    "okteto.remote-kubernetes",
+    "antonreshetov.masscode-assistant",
+    "appland.appmap",
+    "azure-automation.vscode-azureautomation",
+    "balazs4.gitlab-pipeline-monitor",
+    "bridgecrew.checkov",
+    "chiro2001.digital-ocean-manager",
+    "circleci.circleci", // Unneeded (not using CircleCI currently)
+    "dart-code.dart-code", // Creates a ~/.dart and ~/.dartServer folder. Does not respect XDG spec.
+    "dart-code.flutter",
+    "formulahendry.docker-explorer",
+    "getporter.porter-vscode",
+    "gitpod.gitpod-desktop",
+    "gitpod.gitpod-remote-ssh", // Bunch of errors like this during install [gitpod-remote-ssh]: Couldn't find message for key openPreview.
+    "google-home.google-home-extension",
+    "ibm.codewind", // Creates a ~/.codewind folder. Does not respect XDG spec.
+    "ibm.ibm-developer",
+    "idered.npm",
+    "infracost.infracost",
+    "ionic.ionic",
+    "jasonn-porch.gitlab-mr",
+    "jfrog.jfrog-vscode-extension", // Creates a ~/.jfrog-vscode-extension folder. Does not respect XDG spec.
+    "jsayol.firebase-explorer",
+    "leonardssh.vscord", // Discord presence plugin (requires embedding key in settings.json)
+    "lightrun.lightrunplugin-saas", // Creates a ~/.lightrun folder. Does not respect XDG spec.
+    "logerfo.gitlab-notifications",
+    "lottiefiles.vscode-lottie",
     "mindaro-dev.file-downloader",
     "mindaro.mindaro",
-        "redhat.vscode-server-connector",
-    "redhat.vscode-tekton-pipelines",
-     "chiro2001.digital-ocean-manager",
-         "ms-toolsai.vscode-ai-remote",
+    "mongodb.mongodb-vscode",
+    "ms-kubernetes-tools.kind-vscode",
+    "ms-toolsai.vscode-ai-remote", // Error encountered: [vscode-ai]: Couldn't find message for key azureml.internal.activate.title.
     "ms-toolsai.vscode-ai",
     "ms-vscode.powershell",
-    "gitpod.gitpod-desktop",
-    "ms-kubernetes-tools.kind-vscode",
-    "wasteamaccount.webtemplatestudio-dev-nightly",
+    "msazurermtools.azurerm-vscode-tools",
+    "nrwl.angular-console",
+    "okteto.kubernetes-context",
+    "okteto.remote-kubernetes",
+    "owenfarrell.vscode-vault",
+    "platformio.platformio-ide", // Creates ~/.platformio folder. Does not respect XDG spec.
+    "pwabuilder.pwa-studio",
     "rangav.vscode-thunder-client",
     "rapidapi.vscode-rapidapi-client",
-    "sapos.yeoman-ui",
-    "google-home.google-home-extension",
-    "stepsize.stepsize",
-    "leonardssh.vscord",
-    "aic.docify",
-    "jsayol.firebase-explorer",
-    "balazs4.gitlab-pipeline-monitor",
-    "jasonn-porch.gitlab-mr",
-    "teamhub.teamhub",
-    "infracost.infracost",
-    "mongodb.mongodb-vscode",
-    "pwabuilder.pwa-studio",
-    "sidekick.sidekick-debugger",
-    "appland.appmap",
-    "teamsdevapp.ms-teams-vscode-extension",
-    "saposs.app-studio-toolkit",
-    "azure-automation.vscode-azureautomation",
-    "formulahendry.docker-explorer",
-    "msazurermtools.azurerm-vscode-tools",
-    "idered.npm",
     "redhat.vscode-openshift-connector",
     "redhat.vscode-redhat-account",
     "redhat.vscode-rsp-ui",
-    "ionic.ionic",
-    "nrwl.angular-console",
-    "owenfarrell.vscode-vault",
+    "redhat.vscode-server-connector",
+    "redhat.vscode-tekton-pipelines",
+    "robocorp.robocorp-code", // Creates a ~/.robocorp and ~/.robocorp-code folder. Does not respect XDG spec.
+    "robocorp.robotframework-lsp",
+    "sapos.yeoman-ui",
+    "saposs.app-studio-toolkit",
+    "sidekick.sidekick-debugger",
+    "sonarsource.sonarlint-vscode", // Creates a ~/.sonarlint folder. Does not respect XDG spec.
+    "sprkldev.sprkl-vscode", // Creates a ~/.sprkl folder. Does not respect XDG spec.
+    "statelyai.stately-vscode",
+    "stepsize.stepsize",
+    "teamhub.teamhub",
+    "teamsdevapp.ms-teams-vscode-extension",
+    "wallabyjs.console-ninja", // Creates ~/.console-ninja folder -- needs to respect XDG
+    "wasteamaccount.webtemplatestudio-dev-nightly",
+    "webhint.vscode-webhint"
+}
+```
