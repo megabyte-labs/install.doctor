@@ -40,23 +40,23 @@
     refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Betelgeuse Theme
-[".local/src/betelgeuse"]
+[".local/share/betelgeuse"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/misc/betelgeuse.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
-[".local/src/candy-icons"]
+[".local/share/candy-icons"]
     type = "git-repo"
     url = "https://github.com/ProfessorManhattan/candy-icons.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
-[".local/src/yoru"]
+[".local/share/yoru"]
     type = "git-repo"
     url = "https://github.com/rxyhn/yoru.git"
     refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
-[".local/src/dracula"]
+[".local/share/dracula"]
     type = "git-repo"
     url = "https://github.com/dracula/dracula-theme.git"
     refreshPeriod = "{{ $refreshPeriod }}"
@@ -166,15 +166,13 @@
     pull.args = ["--ff-only"]
 {{- end }}
 
-{{- if (lookPath "pipx") }}
-### Netdata Speedtest
+### Netdata Speedtest (required for Netdata speedtest plugin)
 [".local/share/netdata-speedtest"]
     type = "git-repo"
     url = "https://github.com/ohthehugemanatee/netdata-speedtest.git"
     refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
-{{- end }}
 
 ### Git Template
 # [".config/git/template/_/husky.sh"]
@@ -189,7 +187,7 @@
     refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Taskfiles
-[".local/src/shared-common"]
+[".local/share/shared-common"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/common/shared.git"
     clone.args = ["--depth", "1"]
@@ -209,7 +207,7 @@
     refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Chef Bento
-[".local/src/bento"]
+[".local/share/bento"]
     type = "git-repo"
     url = "https://github.com/installdoc/bento.git"
     refreshPeriod = "{{ $refreshPeriod }}"
@@ -217,7 +215,7 @@
     pull.args = ["--ff-only"]
 
 ### Git Fuzzy
-[".local/src/git-fuzzy"]
+[".local/share/git-fuzzy"]
     type = "git-repo"
     url = "https://github.com/bigH/git-fuzzy.git"
     refreshPeriod = "{{ $refreshPeriod }}"
@@ -225,12 +223,12 @@
     pull.args = ["--ff-only"]
 
 ### Ansible Roles / Playbook
-[".local/src/gas-station"]
+[".local/share/gas-station"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/gas-station.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
-[".local/src/ansible-qubes"]
+[".local/share/ansible-qubes"]
     type = "git-repo"
     url = "https://github.com/ProfessorManhattan/ansible-qubes.git"
     refreshPeriod = "{{ $refreshPeriod }}"
@@ -247,12 +245,12 @@
 
 ### Application Styles
 # Discord (TODO: Apply this to Discord automatically)
-[".local/src/fluent/discord/theme.css"]
+[".local/share/fluent/discord/theme.css"]
     type = "file"
     url = "https://raw.githubusercontent.com/DiscordStyles/Fluent/deploy/Fluent.theme.css"
     refreshPeriod = "{{ $refreshPeriod }}"
 # Steam (TODO: Apply this to Steam automatically by detecting first if it is installed)
-[".local/src/fluent/steam"]
+[".local/share/fluent/steam"]
     type = "git-repo"
     url = "https://github.com/purogamer/Fluent-for-Steam.git"
     refreshPeriod = "{{ $refreshPeriod }}"
@@ -260,43 +258,43 @@
     pull.args = ["--ff-only"]
 
 ### Packer
-[".local/src/packer/archlinux"]
+[".local/share/packer/archlinux"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/packer/archlinux-desktop.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
-[".local/src/packer/centos"]
+[".local/share/packer/centos"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/packer/centos-desktop.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
-[".local/src/packer/debian"]
+[".local/share/packer/debian"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/packer/debian-desktop.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
-[".local/src/packer/fedora"]
+[".local/share/packer/fedora"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/packer/fedora-desktop.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
-[".local/src/packer/macos"]
+[".local/share/packer/macos"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/packer/macos-desktop.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
-[".local/src/packer/ubuntu"]
+[".local/share/packer/ubuntu"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/packer/ubuntu-desktop.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
-[".local/src/packer/windows"]
+[".local/share/packer/windows"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/packer/windows-desktop.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 # https://github.com/kholia/OSX-KVM
-[".local/src/osx-kvm"]
+[".local/share/osx-kvm"]
     type = "git-repo"
     url = "https://github.com/kholia/OSX-KVM.git"
     clone.args = ["--depth", "1"]
@@ -310,7 +308,7 @@
     pull.args = ["--ff-only"]
 
 ### JumpUSB
-[".local/src/jumpusb"]
+[".local/share/jumpusb"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/jumpusb.git"
     clone.args = ["--depth", "1"]

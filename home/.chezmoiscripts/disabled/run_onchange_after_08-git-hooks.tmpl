@@ -12,7 +12,7 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-{{ $gitHooks := (output "find" (joinPath .chezmoi.homeDir ".local" "src" "shared-common" "common" ".config" "husky") "-mindepth" "1" "-maxdepth" "1" "-type" "f") -}}
+{{ $gitHooks := (output "find" (joinPath .chezmoi.homeDir ".local" "share" "shared-common" "common" ".config" "husky") "-mindepth" "1" "-maxdepth" "1" "-type" "f") -}}
 {{- range $gitHook := splitList "\n" $gitHooks -}}
 {{- if ne $gitHook "" -}}
 # {{ $gitHook }} hash: {{ include $gitHook | sha256sum }}
@@ -25,7 +25,7 @@ mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/git/template/hooks"
 
 ### Ensure git hooks are executable
 logg info 'Ensuring git hooks are up-to-date'
-find "$HOME/.local/src/shared-common/common/.config/husky" -mindepth 1 -maxdepth 1 -type f | while read HOOK; do
+find "${XDG_DATA_HOME:-$HOME/.local/share}/shared-common/common/.config/husky" -mindepth 1 -maxdepth 1 -type f | while read HOOK; do
     cp "$HOOK" "${XDG_CONFIG_HOME:-$HOME/.config}/git/template/hooks"
 done
 

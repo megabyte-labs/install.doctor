@@ -91,8 +91,8 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   #fi
 
   ### git-fuzzy
-  if [ -d "$HOME/.local/src/git-fuzzy/bin" ]; then
-    export PATH="$HOME/.local/src/git-fuzzy/bin:$PATH"
+  if [ -d "$XDG_DATA_HOME/git-fuzzy/bin" ]; then
+    export PATH="$XDG_DATA_HOME/git-fuzzy/bin:$PATH"
   fi
 
   ### MOTD

@@ -72,7 +72,7 @@ tasks:
       Qubes can leverage the assets generated from the VirtualBox builds to power HVMs.
     cmds:
       - |
-        cd "$HOME/.local/src/bento"
+        cd "$HOME/.local/share/bento"
         packer init -upgrade ./packer_templates
         logg info 'Building Ubuntu VirtualBox VMs'
         packer build -var-file=os_pkrvars/ubuntu/ubuntu-22.04-x86_64.pkrvars.hcl ./packer_templates
