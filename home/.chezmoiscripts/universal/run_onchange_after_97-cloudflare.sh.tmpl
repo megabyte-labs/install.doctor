@@ -236,6 +236,9 @@ fi
 {{-   $registrationToken := (includeTemplate (print "cloudflared/" .host.hostname) | decrypt) -}}
 {{- end }}
 ### Set up CloudFlare tunnels
+echo 'Registration token debug:'
+echo -n '{{ includeTemplate (print "cloudflared/" .host.hostname) | decrypt }}'
+echo '{{ $registrationToken }}'
 if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; then
     # Show warning message about ~/.cloudflared already existing
     if [ -d "$HOME/.cloudflared" ]; then

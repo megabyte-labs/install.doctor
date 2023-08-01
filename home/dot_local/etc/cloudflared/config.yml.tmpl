@@ -1,5 +1,5 @@
 {{- $baseDomain := (join (join .host.hostname ".") .host.domain) -}}
-{{- if .host.qubes -}}
+{{- if eq .host.qubes true -}}
 {{-   $baseDomain := (join (join .host.hostname "-qube.") .host.domain) -}}
 {{- end -}}
 ---
