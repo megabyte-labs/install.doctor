@@ -7532,8 +7532,8 @@ softwarePackages:
     zypper: xrdp
     yay: xrdp
   kasmvnc:
-    _bin:
-    dnf: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    _bin: kasmvncpasswd
+    _github: https://github.com/kasmtech/KasmVNC
     script:linux: |
       RELEASES=$(curl -sS "https://api.github.com/repos/kasmtech/KasmVNC/releases/latest") || :
       LATEST_VERSION=$(echo $RELEASES | grep -o '"tag_name": "[^"]*' | grep -o '[^"]*$') || :

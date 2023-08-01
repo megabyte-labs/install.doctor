@@ -41,10 +41,10 @@ else
         sudo systemctl start vncserver@1
         sudo systemctl enable vncserver@1
         if command -v update-alternatives > /dev/null; then
-            update-alternatives --set vncserver $(which kasmvncserver)
-            update-alternatives --set vncpasswd $(which kasmvncpasswd)
-            update-alternatives --set Xvnc $(which Xkasmvnc)
-            update-alternatives --set vncconfig $(which kasmvncconfig)
+            update-alternatives --set vncserver "$(which kasmvncserver)"
+            update-alternatives --set vncpasswd "$(which kasmvncpasswd)"
+            update-alternatives --set Xvnc "$(which Xkasmvnc)"
+            update-alternatives --set vncconfig "$(which kasmvncconfig)"
         fi
     fi
     if command -v tigervncpasswd > /dev/null; then
