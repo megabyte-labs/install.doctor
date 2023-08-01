@@ -9,8 +9,6 @@
         <key>ProgramArguments</key>
         <array>
                 <string>master</string>
-                <string>-e</string>
-                <string>60</string>
         </array>
         <key>QueueDirectories</key>
         <array>
@@ -22,5 +20,9 @@
         <true/>
         <key>KeepAlive</key>
         <true/>
+        <key>StandardErrorPath</key>
+	<string>/var/log/com.apple.postfix.master.plist.error.log</string>
+	<key>StandardOutPath</key>
+	<string>/var/log/ccom.apple.postfix.master.plist.debug.log</string>
 </dict>
 </plist>

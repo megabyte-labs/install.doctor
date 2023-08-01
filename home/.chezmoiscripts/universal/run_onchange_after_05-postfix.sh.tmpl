@@ -1,4 +1,4 @@
-{{- if or (and (ne .host.distro.family "windows") (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SENDGRID_API_KEY")) (env "SENDGRID_API_KEY")) -}}
+{{- if or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SENDGRID_API_KEY"))) (env "SENDGRID_API_KEY")) -}}
 #!/usr/bin/env bash
 # @file SendGrid Postfix Configuration
 # @brief Configures Postfix to use SendGrid as a relay host so you can use the `mail` program to send e-mail from the command-line
@@ -58,6 +58,43 @@ if command -v postfix > /dev/null; then
             sudo chmod 600 /etc/postfix/sasl_passwd
             logg info 'Updating Postfix hashmaps for /etc/postfix/sasl_passwd'
             sudo postmap /etc/postfix/sasl_passwd
+        else
+            logg warn '~/.config/postfix/sasl_passwd file is missing'
+        fi
+
+        ### Forward root e-mails
+        if [ -d /root ]; then
+            logg info 'Forwarding root e-mails to {{ .user.email }}'
+            echo '{{ .user.email }}' | sudo tee /root/.forward > /dev/null || logg error 'Failed to set root user .forward file'
+        elif [ -d /var/root ]; then
+            logg info 'Forwarding root e-mails to {{ .user.email }}'
+            echo '{{ .user.email }}' | sudo tee /var/root/.forward > /dev/null || logg error 'Failed to set root user .forward file'
+        else
+            logg warn 'Unable to identify root user home directory'
+        fi
+
+        ### Forward user e-mails
+
+        ### Ensure /etc/postfix/header_checks exists
+        if [ ! -d /etc/postfix/header_checks ]; then
+            logg info 'Creating /etc/postfix/header_checks since it does not exist'
+            sudo touch /etc/postfix/header_checks
+        fi
+
+        ### Re-write header From for SendGrid
+        if ! cat /etc/postfix/header_checks | grep 'no-reply@{{ .host.domain }}' > /dev/null; then
+            logg info 'Added From REPLACE to /etc/postfix/header_checks'
+            echo '/^From:.*@{{ .host.domain }}/ REPLACE From: no-reply@{{ .host.domain }}' | sudo tee -a /etc/postfix/header_checks > /dev/null
+        fi
+
+        ### Update aliases
+        if [ -f /etc/aliases ]; then
+            logg info 'Forward root e-mails to {{ .user.email }}'
+            sudo sed s/#root.*/root:\ {{ .user.email }}/ -i /etc/aliases && sudo newaliases
+            if ! cat /etc/aliases | grep '{{ .user.username }}: root' > /dev/null; then
+                logg info 'Forward user e-mail to root@localhost'
+                echo '{{ .user.username }}: root' | sudo tee -a /etc/aliases > /dev/null
+            fi
         fi
 
         if [ -d /Applications ] && [ -d /System ]; then
@@ -66,6 +103,7 @@ if command -v postfix > /dev/null; then
             if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/com.apple.postfix.master.plist" ]; then
                 logg info 'Copying com.apple.postfix.master.plist'
                 sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/com.apple.postfix.master.plist" /System/Library/LaunchDaemons/com.apple.postfix.master.plist
+                sudo launchctl load /System/Library/LaunchDaemons/com.apple.postfix.master.plist && logg success 'launchctl load of com.apple.postfix.master successful'
             fi
             logg info 'Starting postfix'
             sudo postfix start

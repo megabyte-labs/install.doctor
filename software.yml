@@ -9451,7 +9451,7 @@ softwarePackages:
     _github: null
     _home: https://www.vmware.com/
     _name: VMWare
-    _when:darwin: test -d "/Applications/VMware Fusion.app"
+    _when:darwin: '! test -d "/Applications/VMware Fusion.app" && ! test -d "$HOME/Applications/VMware Fusion.app"'
     ansible: professormanhattan.vmware
     cask: vmware-fusion
   what-ip:
