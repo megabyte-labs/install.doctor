@@ -73,8 +73,6 @@ if command -v postfix > /dev/null; then
             logg warn 'Unable to identify root user home directory'
         fi
 
-        ### Forward user e-mails
-
         ### Ensure /etc/postfix/header_checks exists
         if [ ! -d /etc/postfix/header_checks ]; then
             logg info 'Creating /etc/postfix/header_checks since it does not exist'
@@ -90,25 +88,32 @@ if command -v postfix > /dev/null; then
         ### Update aliases
         if [ -f /etc/aliases ]; then
             logg info 'Forward root e-mails to {{ .user.email }}'
-            sudo sed s/#root.*/root:\ {{ .user.email }}/ -i /etc/aliases && sudo newaliases
+            sudo sed s/#root.*/root:\ {{ .user.email }}/ -i /etc/aliases
             if ! cat /etc/aliases | grep '{{ .user.username }}: root' > /dev/null; then
                 logg info 'Forward user e-mail to root@localhost'
                 echo '{{ .user.username }}: root' | sudo tee -a /etc/aliases > /dev/null
             fi
+            logg info 'Running `newaliases` to regenerate the alias database'
+            sudo newaliases
+        else
+            logg warn '/etc/aliases does not appear to exist'
         fi
 
         if [ -d /Applications ] && [ -d /System ]; then
             ### macOS
             # Source: https://budiirawan.com/install-mail-server-mac-osx/
-            if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/com.apple.postfix.master.plist" ]; then
+            if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/com.apple.postfix.master.plist" ] && ! sudo launchctl list | grep 'postfix.master' > /dev/null; then
                 logg info 'Copying com.apple.postfix.master.plist'
                 sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/com.apple.postfix.master.plist" /System/Library/LaunchDaemons/com.apple.postfix.master.plist
                 sudo launchctl load /System/Library/LaunchDaemons/com.apple.postfix.master.plist && logg success 'launchctl load of com.apple.postfix.master successful'
             fi
-            logg info 'Starting postfix'
-            sudo postfix start
-            logg info 'Reloading postfix'
-            sudo postfix reload
+            if ! sudo postfix status > /dev/null; then
+                logg info 'Starting postfix'
+                sudo postfix start
+            else
+                logg info 'Reloading postfix'
+                sudo postfix reload
+            fi
         else
             ### Enable / restart postfix on Linux
             logg info 'Enabling / restarting postfix'
