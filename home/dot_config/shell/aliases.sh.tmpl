@@ -71,12 +71,12 @@ fi
 
 ### VIM
 if command -v vim > /dev/null; then
-  alias vi='vim'
-  alias v='vim'
+  alias vi="vim"
+  alias v="vim"
 fi
 ### NVIM
 if command -v nvim > /dev/null; then
-  alias nvim='env -u VIMINIT nvim'
+  alias nvim='env -u VIMINIT -u MYVIMRC nvim'
 fi
 
 ### mitmproxy / mitmweb
