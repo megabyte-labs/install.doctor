@@ -6012,6 +6012,9 @@ softwarePackages:
     _home: https://www.netdata.cloud/
     _name: Netdata
     _service: netdata
+    _deps:
+      - debsecan
+      - speedtest-cli
     ansible: professormanhattan.netdata
     brew: netdata
     pacman: netdata
@@ -8277,6 +8280,14 @@ softwarePackages:
     _home: null
     _name: speed-test
     npm: speed-test
+  speedtest-cli:
+    _bin: speedtest-cli
+    _desc: Command line interface for testing internet bandwidth using speedtest.net
+    _docs: null
+    _github: https://github.com/sivel/speedtest-cli
+    _home: null
+    _name: speedtest-cli
+    pipx: speedtest-cli
   spotdl:
     _bin: spotdl
     _deps:

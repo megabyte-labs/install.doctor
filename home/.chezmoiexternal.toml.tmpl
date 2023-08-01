@@ -166,6 +166,16 @@
     pull.args = ["--ff-only"]
 {{- end }}
 
+{{- if (lookPath "pipx") }}
+### Netdata Speedtest
+[".local/share/netdata-speedtest"]
+    type = "git-repo"
+    url = "https://github.com/ohthehugemanatee/netdata-speedtest.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+{{- end }}
+
 ### Git Template
 # [".config/git/template/_/husky.sh"]
 #     type = "file"
