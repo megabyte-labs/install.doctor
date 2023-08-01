@@ -9461,6 +9461,23 @@ softwarePackages:
     ansible:windows: professormanhattan.visualstudio
     cask: visual-studio
     choco: visualstudio2022community
+  github-runner:
+    _desc: '[GitHub Runner](https://docs.github.com/en/actions/hosting-your-own-runners) is a system that you deploy and manage to execute jobs from GitHub Actions on GitHub.com.'
+    _docs: https://docs.github.com/en/actions/hosting-your-own-runners
+    _github: https://github.com/actions/runner
+    _home: https://docs.github.com/en/actions/hosting-your-own-runners
+    _name: GitHub Runner
+    _when: '! test -f "$HOME/.local/github-runner/.runner"'
+    script: |
+      RELEASES="$(curl -sSL --compressed --header "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/actions/runner/releases/latest")"
+      LATEST_VERSION="$(echo "$RELEASES" | grep -o '"tag_name": "[^"]*' | grep -o '[^"]*$')"
+      ARCHITECTURE="$(uname -m | sed 's/86_//' | sed 's/v7l//')"
+      OS_FAMILY="$(test -d /Applications && echo osx || echo linux)"
+      curl -sSL "https://github.com/actions/runner/releases/download/$LATEST_VERSION/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz" > "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz"
+      mkdir -p "$HOME/.local/github-runner"
+      tar xzf "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz" -C "$HOME/.local/github-runner"
+      chown -Rf "$USER" "$HOME/.local/github-runner"
+      rm -f "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz"
   vscodium:
     _bin: codium
     _snapClassic: true

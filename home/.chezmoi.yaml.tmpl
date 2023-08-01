@@ -201,6 +201,7 @@ data:
       coreProject: "{{ $gcloudCoreProject }}"
       email: "{{ $gcloudEmail }}"
     github:
+      runnerOrg: megabyte-labs
       username: "{{ $githubUsername }}"
     gitomatic:
       - git: "{{ default "git@github.com:megabyte-labs/install.doctor.git" (env "START_REPO") }}"
