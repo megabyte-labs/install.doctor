@@ -1160,9 +1160,9 @@ softwarePackages:
     _name: Homebrew RubyGems
     brew: brew-gem
   brew-pkg:
-    _bin: brew-pkg
     _github: https://github.com/timsutton/brew-pkg
     _name: Homebrew Pkg
+    _when:darwin: '! brew pkg --help'
     brew:darwin: timsutton/formulae/brew-pkg
   bash-completion:
     _bin: null
@@ -9426,6 +9426,7 @@ softwarePackages:
     _bin: chef-workstation
     _github: https://github.com/chef/chef
     _name: Chef Workstation
+    _when:cask: '! test -d "/Applications/Chef Workstation App.app" && test -d "$HOME/Applications/Chef Workstation App.app"'
     apt: https://packages.chef.io/files/stable/chef-workstation/21.10.640/ubuntu/20.04/chef-workstation_21.10.640-1_amd64.deb
     cask: chef-workstation
     choco: chef-workstation
@@ -10389,7 +10390,7 @@ softwarePlugins:
       - dotnet-format
       - git-credential-manager
   gcloud:
-    cmd: bash -c 'if ! gcloud components list | grep "Installed.*{PLUGIN}" > /dev/null; then gcloud components install "{PLUGIN}"; fi'
+    cmd: bash -c 'if ! gcloud components list | grep "Installed.*{PLUGIN}" > /dev/null; then gcloud components install --quiet "{PLUGIN}"; fi'
     plugins:
       - app-engine-go
       - cloud-datastore-emulator
