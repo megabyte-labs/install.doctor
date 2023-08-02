@@ -1,4 +1,4 @@
-{{- if or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SENDGRID_API_KEY"))) (env "SENDGRID_API_KEY")) -}}
+{{- if or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SENDGRID_API_KEY"))) (env "SENDGRID_API_KEY") -}}
 #!/usr/bin/env bash
 # @file SendGrid Postfix Configuration
 # @brief Configures Postfix to use SendGrid as a relay host so you can use the `mail` program to send e-mail from the command-line
