@@ -31,6 +31,7 @@ This page outlines various projects and tasks that we are currently working on. 
 * deprecate ansible roles in softwareyml
 * Create seed for Lulu
 * [Title](https://github.com/essandess/macOS-Fortress)
+( https://github.com/sourcerer-io/sourcerer-app)
 
 ## Upstream
 
@@ -77,6 +78,13 @@ The following links include software that need to be reviewed before including t
 
 The following items are Docker containers that we may want to include as default containers deployed in our system.
 
+* https://github.com/jitsi/jitsi-videobridge
+* https://github.com/gitlabhq/gitlabhq
+* https://github.com/opf/openproject
+* https://github.com/mastodon/mastodon
+* https://github.com/huginn/huginn
+* https://github.com/chatwoot/chatwoot
+* https://github.com/discourse/discourse
 * [Title](https://github.com/sipt/shuttle)
 * https://github.com/erxes/erxes - CRM
 * https://github.com/pawelmalak/flame - Homepage
@@ -234,34 +242,3 @@ Compose is now a Docker plugin. For Docker to find this plugin, symlink it:
 ## Sources
 
 * [Title](https://gist.github.com/pmkay/e09034971b6f23214fd9f95a3e6d1c44)
-
-## Ruby
-[Title](https://github.com/huginn/huginn)
-[Title](https://github.com/jekyll/jekyll)
-[Title]()
-[Title]()
-[Title](https://github.com/sourcerer-io/sourcerer-app)
-[Title](https://github.com/chatwoot/chatwoot)
-[Title]()
-[Title](https://github.com/gitlabhq/gitlabhq)
-[Title]()
-[Title](https://github.com/jitsi/jitsi-videobridge)
-[Title](https://github.com/mastodon/mastodon)
-[Title](https://github.com/discourse/discourse)
-[Title](https://github.com/Shopify/liquid)
-[Title](https://github.com/mina-deploy/mina)
-[Title](https://github.com/rapid7/metasploit-framework)
-[Title]()
-[Title]()
-[Title]()
-[Title](https://github.com/ddollar/foreman)
-[Title](https://github.com/hanami/hanami)
-[Title](https://github.com/jordansissel/fpm)
-[Title](https://github.com/diaspora/diaspora)
-[Title](https://github.com/simplecov-ruby/simplecov)
-[Title](https://github.com/jnunemaker/httparty)
-[Title](https://github.com/thoughtbot/administrate)
-[Title](https://github.com/sj26/mailcatcher)
-[Title](https://github.com/guard/guard)
-[Title](https://github.com/opf/openproject)
-[Title](https://github.com/BetterErrors/better_errors)

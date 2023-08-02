@@ -3258,6 +3258,17 @@ softwarePackages:
       - epk/epk/font-sf-mono-nerd-font
       - homebrew/cask-fonts/font-hack-nerd-font
       - homebrew/cask-fonts/font-meslo-lg-nerd-font
+  metasploit:
+    _github: https://github.com/rapid7/metasploit-framework
+    _name: Metasploit Framework
+    _when: '! test -f /opt/metasploit-framework/bin/msfconsole'
+    script: curl -sSL --compressed https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > /tmp/msfinstall && chmod 755 /tmp/msfinstall && sudo /tmp/msfinstall
+  mailcatcher:
+    _bin: mailcatcher
+    _github: https://github.com/sj26/mailcatcher
+    _name: Mail Catcher
+    brew: mailcatcher
+    gem: mailcatcher
   fpm:
     _bin: fpm
     _deps:

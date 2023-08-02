@@ -1054,6 +1054,7 @@ softwareGroups:
     - json-server
     - lighthouse
     - localtunnel
+    - mailcatcher
     - majestic
     - medusa
     - mitmproxy
@@ -1487,6 +1488,8 @@ softwareGroups:
       note: Might only be needed in headless scenarios since Android Studio will download the tools
     - pkg: editly
       note: Editly NPM package is failing to install on macOS. Attempts to compile with node-gyp and fails.
+    - pkg: metasploit
+      note: Determine whether or not this will be flagged by management settings
     - pkg: rancher-desktop
       note: Conflicts with Docker Desktop
     - pkg: rear
