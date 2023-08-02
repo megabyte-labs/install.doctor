@@ -10,7 +10,109 @@
 
 {{ includeTemplate "universal/logg" }}
 
-### Prompt for sudo password
+# @description Ensure Ubuntu / Debian run in `noninteractive` mode
+export DEBIAN_FRONTEND=noninteractive
+
+# @description Load default settings if it is in a CI setting
+if [ -n "$CI" ]; then
+  export HOST="$HOST"
+  export NO_RESTART=true
+  export HEADLESS_INSTALL=true
+  export SOFTWARE_GROUP="Full"
+  export FULL_NAME="Brian Zalewski"
+  export PRIMARY_EMAIL="help@megabyte.space"
+  export PUBLIC_SERVICES_DOMAIN="megabyte.space"
+  export RESTRICTED_ENVIRONMENT=false
+  export WORK_ENVIRONMENT=false
+fi
+
+### Disconnect from WARP, if connected
+if command -v warp-cli > /dev/null; then
+  if warp-cli status | grep 'Connected' > /dev/null; then
+    warp-cli disconnect && echo "Disconnected WARP to prevent conflicts"
+  fi
+fi
+
+# @description Detect `START_REPO` format and determine appropriate git address, otherwise use the master Install Doctor branch
+if [ -z "$START_REPO" ]; then
+  START_REPO="https://github.com/megabyte-labs/install.doctor.git"
+else
+  if [[ "$START_REPO" == *"/"* ]]; then
+    # Either full git address or GitHubUser/RepoName
+    if [[ "$START_REPO" == *":"* ]] || [[ "$START_REPO" == *"//"* ]]; then
+      START_REPO="$START_REPO"
+    else
+      START_REPO="https://github.com/${START_REPO}.git"
+    fi
+  else
+    START_REPO="https://github.com/$START_REPO/install.doctor.git"
+  fi
+fi
+
+# @description Logs with style using Gum if it is installed, otherwise it uses `echo`. It also leverages Glow to render markdown.
+# When Glow is not installed, it uses `cat`.
+# @example logger info "An informative log"
+logg() {
+  TYPE="$1"
+  MSG="$2"
+  if [ "$TYPE" == 'error' ]; then
+    if command -v gum > /dev/null; then
+        gum style --border="thick" "$(gum style --foreground="#ff0000" "✖") $(gum style --bold --background="#ff0000" --foreground="#ffffff"  " ERROR ") $(gum style --bold "$MSG")"
+    else
+        echo "ERROR: $MSG"
+    fi
+  elif [ "$TYPE" == 'info' ]; then
+    if command -v gum > /dev/null; then
+        gum style " $(gum style --foreground="#00ffff" "○") $(gum style --faint --foreground="#ffffff" "$MSG")"
+    else
+        echo "INFO: $MSG"
+    fi
+  elif [ "$TYPE" == 'md' ]; then
+    if command -v glow > /dev/null; then
+        glow "$MSG"
+    else
+        cat "$MSG"
+    fi
+  elif [ "$TYPE" == 'prompt' ]; then
+    if command -v gum > /dev/null; then
+        gum style " $(gum style --foreground="#00008b" "▶") $(gum style --bold "$MSG")"
+    else
+        echo "PROMPT: $MSG"
+    fi
+  elif [ "$TYPE" == 'star' ]; then
+    if command -v gum > /dev/null; then
+        gum style " $(gum style --foreground="#d1d100" "◆") $(gum style --bold "$MSG")"
+    else
+        echo "STAR: $MSG"
+    fi
+  elif [ "$TYPE" == 'start' ]; then
+    if command -v gum > /dev/null; then
+        gum style " $(gum style --foreground="#00ff00" "▶") $(gum style --bold "$MSG")"
+    else
+        echo "START: $MSG"
+    fi
+  elif [ "$TYPE" == 'success' ]; then
+    if command -v gum > /dev/null; then
+        gum style "$(gum style --foreground="#00ff00" "✔")  $(gum style --bold "$MSG")"
+    else
+        echo "SUCCESS: $MSG"
+    fi
+  elif [ "$TYPE" == 'warn' ]; then
+    if command -v gum > /dev/null; then
+        gum style " $(gum style --foreground="#d1d100" "◆") $(gum style --bold --background="#ffff00" --foreground="#000000"  " WARNING ") $(gum style --bold "$MSG")"
+    else
+        echo "WARNING: $MSG"
+    fi
+  else
+    if command -v gum > /dev/null; then
+        gum style " $(gum style --foreground="#00ff00" "▶") $(gum style --bold "$TYPE")"
+    else
+        echo "$MSG"
+    fi
+  fi
+}
+
+# @description Notify user that they can press CTRL+C to prevent /etc/sudoers from being modified (which is currently required for headless installs on some systems)
 sudo -n true || SUDO_EXIT_CODE=$?
 logg info 'Your user will temporarily be granted passwordless sudo for the duration of the script'
 if [ -n "$SUDO_EXIT_CODE" ]; then
@@ -27,17 +129,11 @@ if ! sudo cat /etc/sudoers | grep '# TEMPORARY FOR INSTALL DOCTOR' > /dev/null; 
   fi
 fi
 
-### Ensure ~/.local/share/megabyte-labs is a directory
-if [ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs" ]; then
-  mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs"
-fi
-
-### Qubes dom0
+# @section Qubes dom0 Bootstrap
+# @description Perform Qubes dom0 specific logic like updating system packages, setting up the Tor VM, updating TemplateVMs, and
+# beginning the provisioning process using Ansible and an AppVM used to handle the provisioning process
 if command -v qubesctl > /dev/null; then
-  # The VM name that will manage the Ansible provisioning (for Qubes dom0)
-  ANSIBLE_PROVISION_VM="provision"
-
-  # Ensure sys-whonix is configured (for Qubes dom0)
+  # @description Ensure sys-whonix is configured (for Qubes dom0)
   CONFIG_WIZARD_COUNT=0
   function configureWizard() {
     if xwininfo -root -tree | grep "Anon Connection Wizard"; then
@@ -65,20 +161,20 @@ if command -v qubesctl > /dev/null; then
     fi
   }
 
-  ### Ensure dom0 is updated
+  # @description Ensure dom0 is updated
   if [ ! -f /root/dom0-updated ]; then
     sudo qubesctl --show-output state.sls update.qubes-dom0
     sudo qubes-dom0-update --clean -y
     touch /root/dom0-updated
   fi
 
-  ### Ensure sys-whonix is running
+  # @description Ensure sys-whonix is running
   if ! qvm-check --running sys-whonix; then
     qvm-start sys-whonix --skip-if-running
     configureWizard > /dev/null
   fi
 
-  ### Ensure TemplateVMs are updated
+  # @description Ensure TemplateVMs are updated
   if [ ! -f /root/templatevms-updated ]; then
     # timeout of 10 minutes is added here because the whonix-gw VM does not like to get updated
     # with this method. Anyone know how to fix this?
@@ -89,17 +185,16 @@ if command -v qubesctl > /dev/null; then
     sudo touch /root/templatevms-updated
   fi
 
-  ### Ensure provisioning VM can run commands on any VM
+  # @description Ensure provisioning VM can run commands on any VM
   echo "/bin/bash" | sudo tee /etc/qubes-rpc/qubes.VMShell
   sudo chmod 755 /etc/qubes-rpc/qubes.VMShell
-  echo "$ANSIBLE_PROVISION_VM"' dom0 allow' | sudo tee /etc/qubes-rpc/policy/qubes.VMShell
-  # shellcheck disable=SC2016
+  echo "${ANSIBLE_PROVISION_VM:=provision}"' dom0 allow' | sudo tee /etc/qubes-rpc/policy/qubes.VMShell
   echo "$ANSIBLE_PROVISION_VM"' $anyvm allow' | sudo tee -a /etc/qubes-rpc/policy/qubes.VMShell
   sudo chown "$(whoami):$(whoami)" /etc/qubes-rpc/policy/qubes.VMShell
   sudo chmod 644 /etc/qubes-rpc/policy/qubes.VMShell
 
 
-  ### Create provisioning VM and initialize the provisioning process from there
+  # @description Create provisioning VM and initialize the provisioning process from there
   qvm-create --label red --template debian-11 "$ANSIBLE_PROVISION_VM" &> /dev/null || true
   qvm-volume extend "$ANSIBLE_PROVISION_VM:private" "40G"
   if [ -f ~/.vaultpass ]; then
@@ -107,207 +202,167 @@ if command -v qubesctl > /dev/null; then
     qvm-copy-to-vm "$ANSIBLE_PROVISION_VM" ~/.vaultpass
     qvm-run "$ANSIBLE_PROVISION_VM" 'cp ~/QubesIncoming/dom0/.vaultpass ~/.vaultpass'
   fi
+
+  # @description Restart the provisioning process with the same script but from the provisioning VM
   qvm-run --pass-io "$ANSIBLE_PROVISION_VM" 'curl -sSL https://install.doctor/start > ~/start.sh && bash ~/start.sh'
   exit 0
 fi
 
-### Source Homebrew if it installed but not in PATH
-if ! command -v brew > /dev/null && [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
-
-### System package manager update / Homebrew dependencies
-if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v brew > /dev/null || ! command -v rsync > /dev/null || ! command -v unbuffer > /dev/null; then
-  # shellcheck disable=SC2016
-  logg info 'Ensuring `curl`, `expect`, `git`, and `rsync` are installed via the system package manager'
-  if command -v apt-get > /dev/null; then
-    # Debian / Ubuntu
-    sudo apt-get update
-    sudo apt-get install -y build-essential curl expect git rsync
-  elif command -v dnf > /dev/null; then
-    # Fedora
-    sudo dnf install -y curl expect git rsync
-  elif command -v yum > /dev/null; then
-    # CentOS
-    sudo yum install -y curl expect git rsync
-  elif command -v pacman > /dev/null; then
-    # Archlinux
-    sudo pacman update
-    sudo pacman -Sy curl expect git rsync
-  elif command -v zypper > /dev/null; then
-    # OpenSUSE
-    sudo zypper install -y curl expect git rsync
-  elif command -v apk > /dev/null; then
-    # Alpine
-    apk add curl expect git rsync
-  elif [ -d /Applications ] && [ -d /Library ]; then
-    # macOS
-    sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
-  elif command -v nix-env > /dev/null; then
-    # NixOS
-    echo "TODO - Add support for NixOS"
-  elif [[ "$OSTYPE" == 'freebsd'* ]]; then
-    # FreeBSD
-    echo "TODO - Add support for FreeBSD"
-  elif command -v pkg > /dev/null; then
-    # Termux
-    echo "TODO - Add support for Termux"
-  elif command -v xbps-install > /dev/null; then
-    # Void
-    echo "TODO - Add support for Void"
-  elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
-    # Windows
-    choco install -y curl expect git node rsync
-  fi
-fi
-
-### Install Homebrew
-ensurePackageManagerHomebrew() {
-  if ! command -v brew > /dev/null; then
-    logg info 'Installing Homebrew'
-    if command -v sudo > /dev/null && sudo -n true; then
-      echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        brew install gcc
-      fi
-    else
-      logg info 'Looks like the user does not have passwordless sudo privileges. A sudo password may be required.'
-      bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
-      if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        brew install gcc
-      fi
-      if [ -n "$BREW_EXIT_CODE" ]; then
-        if command -v brew > /dev/null; then
-          logg warn 'Homebrew was installed but part of the installation failed. Attempting to fix..'
-          BREW_DIRS="share/man share/doc share/zsh/site-functions etc/bash_completion.d"
-          for BREW_DIR in $BREW_DIRS; do
-            if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
-              sudo chown -R "$(whoami)" "$(brew --prefix)/$BREW_DIR"
-            fi
-          done
-          brew update --force --quiet
-        fi
-      fi
+# @description Ensure basic system packages are available on the device
+if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v expect > /dev/null || ! command -v rsync > /dev/null; then
+    if command -v apt-get > /dev/null; then
+        # @description Ensure `build-essential`, `curl`, `expect`, `git`, `rsync`, `procps`, and `file` are installed on Debian / Ubuntu
+        sudo apt-get update
+        sudo apt-get install -y build-essential curl expect git rsync procps file
+    elif command -v dnf > /dev/null; then
+        # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps-ng`, and `file` are installed on Fedora (as well as the Development Tools package)
+        sudo dnf groupinstall -y 'Development Tools'
+        sudo dnf install -y curl expect git rsync procps-ng file
+    elif command -v yum > /dev/null; then
+        # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps-ng`, and `file` are installed on CentOS (as well as the Development Tools package)
+        sudo yum groupinstall -y 'Development Tools'
+        sudo yum install -y curl expect git rsync procps-ng file
+    elif command -v pacman > /dev/null; then
+        # @description Ensure `base-devel`, `curl`, `expect`, `git`, `rsync`, `procps-ng`, and `file` are installed on Archlinux
+        sudo pacman update
+        sudo pacman -Sy base-devel curl expect git rsync procps-ng file
+    elif command -v zypper > /dev/null; then
+        # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps`, and `file` are installed on OpenSUSE (as well as the devel_basis pattern)
+        sudo zypper install -yt pattern devel_basis
+        sudo zypper install -y curl expect git rsync procps file
+    elif command -v apk > /dev/null; then
+        # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps`, and `file` are installed on Alpine
+        apk add build-base curl expect git rsync procps file
+    elif [ -d /Applications ] && [ -d /Library ]; then
+        # @description Ensure CLI developer tools are available on macOS (via `xcode-select`)
+        sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
+    elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
+        # @description Ensure `curl`, `expect`, `git`, and `rsync` are installed on Windows
+        choco install -y curl expect git rsync
     fi
-  fi
-}
-ensurePackageManagerHomebrew
-
-### Install installer dependencies via Homebrew
-installBrewPackage() {
-  if ! command -v "$1" > /dev/null; then
-    logg 'Installing `'"$1"'`'
-    brew install "$1"
-  fi
-}
-if command -v brew > /dev/null; then
-  installBrewPackage chezmoi
-  installBrewPackage glow
-  installBrewPackage gum
-  installBrewPackage node
-  installBrewPackage zx
 fi
 
-### Clones the source repository
-cloneStart() {
-  logg info "Cloning ${START_REPO:-https://gitlab.com/megabyte-labs/install.doctor.git} to /usr/local/src/install.doctor"
-  rm -rf /usr/local/src/install.doctor
-  sudo git clone ${START_REPO:-https://gitlab.com/megabyte-labs/install.doctor.git} /usr/local/src/install.doctor
-  chown -Rf "$USER":"$(id -g -n)" /usr/local/src/install.doctor
-}
+# @description Ensure Homebrew is installed and available
+if ! command -v brew > /dev/null; then
+    if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
+        eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+        if ! command -v brew > /dev/null; then
+            echo "The /home/linuxbrew/.linuxbrew directory exists but something is not right. Try removing it and running the script again." && exit 1
+        fi
+    else
+        # @description Installs Homebrew and addresses a couple potential issues
+        if command -v sudo > /dev/null && sudo -n true; then
+            echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        else
+            echo "Homebrew is not installed. The script will attempt to install Homebrew and you might be prompted for your password."
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+            if [ -n "$BREW_EXIT_CODE" ]; then
+                if command -v brew > /dev/null; then
+                    echo "Homebrew was installed but part of the installation failed. Trying a few things to fix the installation.."
+                    BREW_DIRS="share/man share/doc share/zsh/site-functions etc/bash_completion.d"
+                    for BREW_DIR in $BREW_DIRS; do
+                        if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
+                            sudo chown -R "$(whoami)" "$(brew --prefix)/$BREW_DIR"
+                        fi
+                    done
+                    brew update --force --quiet
+                fi
+            fi
+        fi
 
-### Ensure source files are present
-logg 'Ensuring /usr/local/src/install.doctor is owned by the user'
-if [ -d /usr/local/src/install.doctor ] && [ ! -w /usr/local/src/install.doctor ]; then
-  sudo chown -Rf "$USER":"$(id -g -n)" /usr/local/src/install.doctor
+        # @description Ensures the `brew` binary is available on Linux machines. macOS installs `brew` into the default `PATH`
+        # so nothing needs to be done for macOS.
+        if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
+            eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+        fi
+    fi
 fi
-if [ -d /usr/local/src/install.doctor/.git ]; then
-  cd /usr/local/src/install.doctor || exit 1
-  if [ "$(git remote get-url origin)" == 'https://gitlab.com/megabyte-labs/install.doctor.git' ]; then
-    logg info "Pulling the latest changes from ${START_REPO:-https://gitlab.com/megabyte-labs/install.doctor.git} to /usr/local/src/install.doctor"
-    git config pull.rebase false
-    git reset --hard HEAD
-    git clean -fxd
-    git pull origin master
-  else
-    logg info "The repository's origin URL has changed so /usr/local/src/install.doctor will be removed and re-cloned using the origin specified by the START_REPO variable"
-    cloneStart
-  fi
+
+# @description Ensure Chezmoi is installed
+if ! command -v chezmoi > /dev/null; then
+    brew install chezmoi
+fi
+
+# @description Ensure Node.js is installed
+if ! command -v node > /dev/null; then
+    brew install node
+fi
+
+# @description Ensure ZX is installed
+if ! command -v zx > /dev/null; then
+    brew install zx
+fi
+
+# @description Install Glow / Gum if the `HEADLESS_INSTALL` variable is not set to true
+if [ "$HEADLESS_INSTALL" != 'true' ]; then
+    # @description Ensure Gum is installed
+    if ! command -v gum > /dev/null; then
+        brew install gum
+    fi
+
+    # @description Ensure Glow is installed
+    if ! command -v glow > /dev/null; then
+        brew install glow
+    fi
+fi
+
+# @description Ensure the ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi directory is cloned and up-to-date
+if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.git" ]; then
+  cd "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
+  logg info "Pulling the latest changes from ${START_REPO:-https://github.com/megabyte-labs/install.doctor.git}"
+  git pull origin master
 else
-  cloneStart
+  logg info "Cloning ${START_REPO} to ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
+  git clone ${START_REPO} "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
 fi
 
-### Copy new files from src git repository to dotfiles with rsync
-rsyncChezmoiFiles() {
-  rsync -rtvu --delete /usr/local/src/install.doctor/docs/ "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/" &
-  rsync -rtvu --delete /usr/local/src/install.doctor/home/ "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/" &
-  rsync -rtvu --delete /usr/local/src/install.doctor/system/ "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/system/" &
-  rsync -rtvu /usr/local/src/install.doctor/.chezmoiignore "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.chezmoiignore" &
-  rsync -rtvu /usr/local/src/install.doctor/.chezmoiroot "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.chezmoiroot" &
-  rsync -rtvu /usr/local/src/install.doctor/software.yml "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/software.yml" &
-  wait
-  logg success 'Successfully updated the ~/.local/share/chezmoi folder with changes from the upstream repository'
-}
-
-### Copy files to HOME folder with rsync
-logg info 'Copying files from /usr/local/src/install.doctor to the HOME directory via rsync'
-mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
-rsyncChezmoiFiles
-### Ensure ~/.local/bin files are executable
-logg info 'Ensuring scripts in ~/.local/bin are executable'
-find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f | while read -r BINFILE; do
-  chmod +x "$BINFILE"
-done
-
-### Run chezmoi init
-if [ ! -f "$HOME/.config/chezmoi/chezmoi.yaml" ]; then
-  ### Show README.md snippet
+# @description If the `${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml` file is missing, then guide the user through the initial setup
+if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml" ]; then
+  # @description Show introduction message if Glow is installed
   if command -v glow > /dev/null; then
-    glow "$HOME/.local/share/chezmoi/docs/CHEZMOI-INTRO.md"
+    glow "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/CHEZMOI-INTRO.md"
   fi
 
-  ### Prompt for variables
+  # @description Prompt for the software group if the `SOFTWARE_GROUP` variable is not defined
   if command -v gum > /dev/null; then
     if [ -z "$SOFTWARE_GROUP" ]; then
-      logg prompt 'Select the software group you would like to install. If your environment is a macOS, Windows, or environment with the DISPLAY environment variable then desktop software will be installed too. The software groups are in the ~/.local/share/chezmoi/home/.chezmoidata.yaml file.'
+      logg prompt 'Select the software group you would like to install. If your environment is a macOS, Windows, or environment with the DISPLAY environment variable then desktop software will be installed too. The software groups are in the '"${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml"' file.'
       SOFTWARE_GROUP="$(gum choose "Basic" "Standard" "Full")"
       export SOFTWARE_GROUP
     fi
+  else
+    logg error 'Woops! Gum needs to be installed for the guided installation. Try running brew install gum' && exit 1
   fi
-  # shellcheck disable=SC2016
-  logg info 'Running `chezmoi init` since the ~/.config/chezmoi/chezmoi.yaml is not present'
+
+  # @description Run `chezmoi init` when the Chezmoi configuration is missing
+  logg info 'Running `chezmoi init` since the '"${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml"' is not present'
   chezmoi init
 fi
 
-### Ensure Debian noninteractive mode
-export DEBIAN_FRONTEND=noninteractive
-
-### Run chezmoi apply
-# shellcheck disable=SC2016
+# @description Run `chezmoi apply` and enable verbose mode if the `DEBUG_MODE` environment variable is set to true
 logg info 'Running `chezmoi apply`'
-if [ "$DEBUG_MODE" == 'true' ]; then
+if [ "$DEBUG_MODE" = 'true' ]; then
   DEBUG_MODIFIER="-vvvvv"
-else
-  DEBUG_MODIFIER=""
 fi
-if [ -n "$FORCE_CHEZMOI" ]; then
+
+# @description Save the log of the provision process to `${XDG_DATA_HOME:-$HOME/.local/share}/install.doctor.$(date +%s).log` and add the Chezmoi
+# `--force` flag if the `HEADLESS_INSTALL` variable is set to true.
+if [ "$HEADLESS_INSTALL" = 'true' ]; then
   if command -v unbuffer > /dev/null; then
-    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/install.doctor.$(date +%s).log"
   else
-    chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+    chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/install.doctor.$(date +%s).log"
   fi
 else
   if command -v unbuffer > /dev/null; then
-    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/install.doctor.$(date +%s).log"
   else
-    chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+    chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/install.doctor.$(date +%s).log"
   fi
 fi
 
-### Ensure gsed is available on macOS (for modifying /etc/sudoers to remove passwordless sudo)
-if [ -d /Applications ] && [ -d /System ]; then
+# @description Ensure gsed is available on macOS (for modifying `/etc/sudoers` to remove passwordless sudo)
+if [ -n "$REMOVE_TMP_SUDOERS" ] && [ -d /Applications ] && [ -d /System ]; then
   if ! command -v gsed > /dev/null; then
     if command -v brew > /dev/null; then
       brew install gsed
@@ -317,15 +372,15 @@ if [ -d /Applications ] && [ -d /System ]; then
   fi
 fi
 
-### Remove temporary passwordless sudo privileges
+# @description Ensure temporary passwordless sudo privileges are removed from `/etc/sudoers`
 if command -v gsed > /dev/null; then
-  sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR/d' /etc/sudoers
+    sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR/d' /etc/sudoers || logg warn 'Failed to remove passwordless sudo from the /etc/sudoers file'
 else
-  sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR/d' /etc/sudoers
+    sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR/d' /etc/sudoers || logg warn 'Failed to remove passwordless sudo from the /etc/sudoers file'
 fi
 
+# @description Render the `docs/POST-INSTALL.md` file to the terminal at the end of the provisioning process
 logg success 'Provisioning complete!'
-
-if command -v glow > /dev/null && [ -f "$HOME/.local/share/chezmoi/docs/POST-INSTALL.md" ]; then
+if command -v glow > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/POST-INSTALL.md" ]; then
   glow "$HOME/.local/share/chezmoi/docs/POST-INSTALL.md"
 fi
