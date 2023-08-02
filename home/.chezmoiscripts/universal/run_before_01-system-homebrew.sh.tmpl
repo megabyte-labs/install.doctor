@@ -20,7 +20,7 @@ if [ -d /Applications ] && [ -d /System ]; then
   # Source: https://apple.stackexchange.com/questions/287760/set-the-hostname-computer-name-for-macos
   logg info 'Setting macOS hostname / local hostname / computer name'
   sudo scutil --set HostName '{{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}' && logg success 'Changed HostName to {{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}'
-  sudo scutil --set LocalHostName '{{ .host.hostname | replace .host.domain "" | replace "." "" }}.local' && logg success 'Changed LocalHostName to {{ .host.hostname | replace .host.domain "" | replace "." "" }}.local'
+  sudo scutil --set LocalHostName '{{ .host.hostname | replace .host.domain "" | replace "." "" }}' && logg success 'Changed LocalHostName to {{ .host.hostname | replace .host.domain "" | replace "." "" }}'
   sudo scutil --set ComputerName '{{ .host.hostname | replace .host.domain "" | replace "." "" }}' && logg success 'Changed ComputerName to {{ .host.hostname | replace .host.domain "" | replace "." "" }}'
   logg info 'Flushing DNS cache'
   dscacheutil -flushcache
