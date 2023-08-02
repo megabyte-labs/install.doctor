@@ -36,6 +36,9 @@ export LEXICON_CLOUDFLARE_USERNAME="{{ .user.cloudflare.username }}"
 export DOCKERHUB_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "DOCKERHUB_TOKEN")) }}{{ includeTemplate "secrets/DOCKERHUB_TOKEN" | decrypt | trim }}{{ else }}{{ env "DOCKERHUB_TOKEN" }}{{ end }}"
 export DOCKERHUB_REGISTRY_PASSWORD="$DOCKERHUB_TOKEN"
 
+### Elevenlabs
+export ELEVENLABS_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ELEVENLABS_API_KEY")) }}{{ includeTemplate "secrets/ELEVENLABS_API_KEY" | decrypt | trim }}{{ else }}{{ env "ELEVENLABS_API_KEY" }}{{ end }}"
+
 ### GitHub
 export GH_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITHUB_TOKEN")) }}{{ includeTemplate "secrets/GITHUB_TOKEN" | decrypt | trim }}{{ else }}{{ env "GITHUB_TOKEN" }}{{ end }}"
 export GITHUB_TOKEN="$GH_TOKEN"
@@ -74,6 +77,9 @@ export NPM_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "
 
 ### OpenAI
 export OPENAI_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "OPENAI_API_KEY")) }}{{ includeTemplate "secrets/OPENAI_API_KEY" | decrypt | trim }}{{ else }}{{ env "OPENAI_API_KEY" }}{{ end }}"
+
+### Pexels
+export PEXELS_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "PEXELS_API_KEY")) }}{{ includeTemplate "secrets/PEXELS_API_KEY" | decrypt | trim }}{{ else }}{{ env "PEXELS_API_KEY" }}{{ end }}"
 
 ### PyPi
 export PYPI_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "PYPI_TOKEN")) }}{{ includeTemplate "secrets/PYPI_TOKEN" | decrypt | trim }}{{ else }}{{ env "PYPI_TOKEN" }}{{ end }}"

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# @file ~/.local/bin/shortgpt
+# @brief Setup and launch ShortGPT
+# @description
+#   This script is a script that will automatically setup and launch [ShortGPT](https://github.com/RayVentura/ShortGPT).
+#   ShortGPT allows you to create short videos automatically by leveraging AI.
+
+### Ensure repository is cloned to ~/.local/share/shortgpt
+if [ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/shortgpt" ]; then
+    git clone https://github.com/rayventura/shortgpt.git "${XDG_DATA_HOME:-$HOME/.local/share}/shortgpt"
+fi
+
+### Set working directory
+cd "${XDG_DATA_HOME:-$HOME/.local/share}/shortgpt"
+
+### Ensure virtualenv is initialized
+if [ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/shortgpt/.venv" ]; then
+    virtualenv .venv
+fi
+
+### Source the virtualenv
+source .venv/bin/activate
+
+### Install requirements
+pip3 install -r requirements.txt
+
+### Run ShortGPT
+python3 runShortGPT.py &
+
+### Wait 5 seconds and open expected web address
+sleep 5
+open http://127.0.0.1:31415

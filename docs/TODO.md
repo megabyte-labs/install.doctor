@@ -204,7 +204,7 @@ The following items have been reviewed but need to be revisited due to complexit
 * https://github.com/Kanaries/Rath
 * cvat.io
 * https://github.com/illacloud/illa-builder
-* https://github.com/metrue/fx
+* 
 * https://github.com/siyuan-note/siyuan
 * https://github.com/shuttle-hq/shuttle
 * https://github.com/open-hand/choerodon
@@ -233,11 +233,6 @@ The following items have been reviewed but need to be revisited due to complexit
 * [
     
 ](https://github.com/stringer-rss/stringer)
-## Docker Issue
-
-Compose is now a Docker plugin. For Docker to find this plugin, symlink it:
-                  mkdir -p ~/.docker/cli-plugins
-                                                  ln -sfn /usr/local/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compos
 
 ## Sources
 
