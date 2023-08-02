@@ -238,7 +238,12 @@ fi
 ### Set up CloudFlare tunnels
 echo 'Registration token debug:'
 echo -n '{{ includeTemplate (print "cloudflared/" .host.hostname) | decrypt }}'
+echo "ZZZZZZZZZZZZ"
+echo -n '{{ $registrationToken }}'
+echo "OOOOOOOOOOOOO"
 echo '{{ $registrationToken }}'
+echo '555555'
+echo '{{( stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname)) }}
 if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; then
     # Show warning message about ~/.cloudflared already existing
     if [ -d "$HOME/.cloudflared" ]; then
