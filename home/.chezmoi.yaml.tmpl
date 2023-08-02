@@ -2,7 +2,7 @@
 {{- $cloudflareUsername := (default "brian@megabyte.space" (env "CLOUDFLARE_USERNAME")) -}}
 {{- $cloudflareTeamsOrg := (default "manhattan" (env "CLOUDFLARE_TEAMS_ORG")) -}}
 {{- $desktopSession := true -}}
-{{- $domain := (default "megabyte.space" (env "PUBLIC_SERVICES_DOMAIN")) -}}
+{{- $domain := (default "lab.megabyte.space" (env "PUBLIC_SERVICES_DOMAIN")) -}}
 {{- $email := (default "brian@megabyte.space" (env "PRIMARY_EMAIL")) -}}
 {{- $gcloudCoreProject := (default "megabyte-labs" (env "CLOUDSDK_CORE_PROJECT"))}}
 {{- $gcloudEmail := (default "automation@megabyte-labs.iam.gserviceaccount.com" (env "GCE_SERVICE_ACCOUNT_EMAIL"))}}
@@ -177,7 +177,7 @@ data:
         - 10.0.0.0/24
         - 10.14.50.0/24
         - 192.168.1.0/24
-    qubes: {{ stat (joinPath "usr" "bin" "qubes-session") }}
+    qubes: {{ if (stat (joinPath "usr" "bin" "qubes-session")) }}true{{ else }}false{{ end }}
     restricted: {{ $restricted }}
     softwareGroup: "{{ $softwareGroup }}"
     type: "{{ $chassisType }}"
