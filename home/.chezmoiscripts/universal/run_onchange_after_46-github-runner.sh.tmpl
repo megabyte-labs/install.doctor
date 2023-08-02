@@ -1,4 +1,4 @@
-{{- if and (ne .host.distro.family "windows") (or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITHUB_RUNNER_TOKEN"))) (env "GITHUB_RUNNER_TOKEN"))) -}}
+{{- if and (ne .host.distro.family "windows") (or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITHUB_RUNNER_TOKEN"))) (env "GITHUB_RUNNER_TOKEN")) -}}
 #!/usr/bin/env bash
 # @file GitHub Runner Registration
 # @brief Registers a GitHub action runner with GitHub
