@@ -74,11 +74,11 @@
     type = "file"
     url = "https://gitlab.com/megabyte-labs/gas-station/-/raw/master/environments/prod/group_vars/all/helm.yml"
     refreshPeriod = "{{ $refreshPeriod }}"
-[".local/share/blesh"]
+[".local/share/blesh/src"]
     type = "git-repo"
     url = "https://github.com/akinomyoga/ble.sh.git"
     refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
+    clone.args = ["--shallow-submodules", "--recursive", "--depth", "1"]
     pull.args = ["--ff-only"]
 [".local/share/bash_it"]
     type = "git-repo"

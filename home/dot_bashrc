@@ -17,6 +17,9 @@ if [ -f "$HOME/.config/shell/profile.sh" ]; then
   . "$HOME/.config/shell/profile.sh"
 fi
 
+### Ble.sh
+[[ $- == *i* ]] && source "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/ble.sh" --noattach --rcfile "${XDG_DATA_CONFIG:-$HOME/.config}/blesh/bleshrc"
+
 ### /etc/bashrc
 if [ -f /etc/bashrc ]; then
   . /etc/bashrc
@@ -149,4 +152,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   if command -v zoxide > /dev/null; then
     eval "$(zoxide init --cmd cd bash)" > /dev/null
   fi
+
+  ### Ble.sh
+  [[ ${BLE_VERSION-} ]] && ble-attach
 fi
