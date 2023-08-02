@@ -28,5 +28,6 @@ pip3 install -r requirements.txt
 python3 runShortGPT.py &
 
 ### Wait 5 seconds and open expected web address
+echo "Waiting for shortGPT website to be available before opening it in a web browser"
 sleep 5
 open http://127.0.0.1:31415
