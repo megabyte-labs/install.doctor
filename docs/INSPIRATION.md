@@ -65,6 +65,8 @@
 * [Title](https://github.com/vercel-labs/ai-chatbot)
 * [Title](https://github.com/apostrophecms/apostrophe)
 * [Title](https://github.com/isomorphic-git/isomorphic-git)
+* https://github.com/tolgee/tolgee-platform
+* https://github.com/dogbin/dogbin
 
 ## Serverless
 

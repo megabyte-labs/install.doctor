@@ -459,6 +459,15 @@ if [ -f "$HOME/.local/scripts/p10k.zsh" ]; then
 	source "$HOME/.local/scripts/p10k.zsh"
 fi
 
+### SDKMan
+if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
+  export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"
+  . "$SDKMAN_DIR/bin/sdkman-init.sh"
+elif [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
+  export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
+  . "$SDKMAN_DIR/bin/sdkman-init.sh"
+fi
+
 ### The Fuck
 if command -v thefuck > /dev/null; then
 	eval "$(thefuck --alias)"

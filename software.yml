@@ -8422,6 +8422,18 @@ softwarePackages:
     _github: https://github.com/raineorshine/npm-check-updates
     _name: NPM Check Updates
     npm: npm-check-updates
+  backup:
+    _bin: backup
+    _github: https://github.com/backup/backup
+    _name: Backup
+    gem: backup
+  fastlane:
+    _bin: fastlane
+    _github: https://github.com/fastlane/fastlane
+    _home: https://fastlane.tools/
+    _name: Fastlane
+    brew: fastlane
+    gem: fastlane
   patch-package:
     _bin: patch-package
     _github: https://github.com/ds300/patch-package
@@ -9399,6 +9411,24 @@ softwarePackages:
     _name: SQL Language Server
     brew: sql-language-server
     npm: sql-language-server
+  chef-workstation:
+    _bin: chef-workstation
+    _github: https://github.com/chef/chef
+    _name: Chef Workstation
+    apt: https://packages.chef.io/files/stable/chef-workstation/21.10.640/ubuntu/20.04/chef-workstation_21.10.640-1_amd64.deb
+    cask: chef-workstation
+    choco: chef-workstation
+    dnf: https://packages.chef.io/files/stable/chef-workstation/21.10.640/el/8/chef-workstation-21.10.640-1.el8.x86_64.rpm
+  reek:
+    _bin: reek
+    _github: https://github.com/troessner/reek
+    _name: Reek
+    gem: reek
+  rubocop:
+    _bin: rubocop
+    _github: https://github.com/rubocop/rubocop
+    _name: Rubocop
+    gem: rubocop
   solargraph:
     _bin: solargraph
     _desc: Ruby language server
@@ -10286,7 +10316,7 @@ softwarePlugins:
     plugins:
       - https://github.com/BalliAsghar/mailsy-alfred/releases/download/2.0.0/Mailsy.alfredworkflow
   android-studio:
-    cmd: bash -c 'source "$HOME/.bashrc" && sdkmanager --list_installed && if ! sdkmanager --list_installed | grep "{PLUGIN}"; then sdkmanager --install "{PLUGIN}"; fi'
+    cmd: bash -c 'sdkmanager --list_installed && if ! sdkmanager --list_installed | grep "{PLUGIN}"; then sdkmanager --install "{PLUGIN}"; fi'
     plugins:
       - add-ons;addon-google_apis-google-24
       - build-tools;33.0.0

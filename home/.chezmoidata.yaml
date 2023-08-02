@@ -219,6 +219,7 @@ softwareGroups:
     # - maas
   Backup: &Backup
     - autorestic
+    - backup
     - ghorg
     - mackup
     - restic
@@ -650,6 +651,8 @@ softwareGroups:
     - prettierd
     - pre-commit
     - psscriptanalyzer
+    - reek
+    - rubocop
     - ruff
     - shellcheck
     - shfmt
@@ -950,6 +953,7 @@ softwareGroups:
     - winrm-cli
     - wireshark-cli
   Sys-Admin-Desktop: &Sys-Admin-Desktop
+    - chef-workstation
     - networkmanager
     - quasar
     - recuva
@@ -1032,6 +1036,7 @@ softwareGroups:
     - electron
     - emma
     - fastify
+    - fastlane
     - feathers
     - firebase
     - flutter

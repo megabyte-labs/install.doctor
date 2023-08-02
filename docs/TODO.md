@@ -11,7 +11,6 @@ This page outlines various projects and tasks that we are currently working on. 
 * [Title](https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/wsl.md)
 * [Title](https://github.com/KnowledgeCanvas/knowledge)
 * Configure Navi to automatically download and use the best cheat repositories
-* Finish TS from 1400 stars
 * Python
 * adb must be accessible in PATH: brew install --cask android-platform-tools
 * https://github.com/Paul-Reed/cloudflare-ufw
@@ -19,7 +18,6 @@ This page outlines various projects and tasks that we are currently working on. 
 * Use https://github.com/0xERR0R/blocky
 * https://github.com/butlerx/wetty
 * Add https://github.com/badaix/snapcast
-* JavaScript start at 10k
 * Go through https://github.com/jaywcjlove/awesome-mac
 * https://codesandbox.io/ https://github.com/firecracker-microvm/firecracker
 * (https://www.kolide.com/features/checks/mac-firewall)
@@ -240,34 +238,27 @@ Compose is now a Docker plugin. For Docker to find this plugin, symlink it:
 ## Ruby
 [Title](https://github.com/huginn/huginn)
 [Title](https://github.com/jekyll/jekyll)
-[Title](https://github.com/orbit/orbit)
-[Title](https://github.com/didi/booster)
+[Title]()
+[Title]()
 [Title](https://github.com/sourcerer-io/sourcerer-app)
 [Title](https://github.com/chatwoot/chatwoot)
-[Title](https://github.com/troessner/reek)
+[Title]()
 [Title](https://github.com/gitlabhq/gitlabhq)
-[Title](https://github.com/dogbin/dogbin)
-[Title](https://github.com/gotson/komga)
-[Title](https://github.com/tolgee/tolgee-platform)
-[Title](https://github.com/chef/chef)
+[Title]()
 [Title](https://github.com/jitsi/jitsi-videobridge)
 [Title](https://github.com/mastodon/mastodon)
-[Title](https://github.com/thatfiredev/firecoil)
-[Title](https://github.com/fastlane/fastlane)
 [Title](https://github.com/discourse/discourse)
 [Title](https://github.com/Shopify/liquid)
 [Title](https://github.com/mina-deploy/mina)
 [Title](https://github.com/rapid7/metasploit-framework)
-[Title](https://github.com/gollum/gollum)
-[Title](https://github.com/urbanadventurer/WhatWeb)
-[Title](https://github.com/bbc/wraith)
+[Title]()
+[Title]()
+[Title]()
 [Title](https://github.com/ddollar/foreman)
 [Title](https://github.com/hanami/hanami)
 [Title](https://github.com/jordansissel/fpm)
 [Title](https://github.com/diaspora/diaspora)
-[Title](https://github.com/rubocop/rubocop)
 [Title](https://github.com/simplecov-ruby/simplecov)
-[Title](https://github.com/backup/backup)
 [Title](https://github.com/jnunemaker/httparty)
 [Title](https://github.com/thoughtbot/administrate)
 [Title](https://github.com/sj26/mailcatcher)
