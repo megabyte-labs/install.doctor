@@ -222,6 +222,32 @@
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
+### AI / GPT
+[".local/share/agentgpt"]
+    type = "git-repo"
+    url = "https://github.com/reworkd/AgentGPT.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/share/localgpt"]
+    type = "git-repo"
+    url = "https://github.com/PromtEngineer/localGPT.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/share/shortgpt"]
+    type = "git-repo"
+    url = "https://github.com/rayventura/shortgpt.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/share/quivr"]
+    type = "git-repo"
+    url = "https://github.com/StanGirard/Quivr.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
 ### Ansible Roles / Playbook
 [".local/share/gas-station"]
     type = "git-repo"

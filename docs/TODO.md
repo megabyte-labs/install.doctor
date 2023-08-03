@@ -3,35 +3,25 @@
 xattr -d com.apple.quarantine rclone
 
 # TODOs
-[Title](https://github.com/ViktorBusk/LunarChad)
-[Title](https://github.com/highlight/highlight)
+
 This page outlines various projects and tasks that we are currently working on. Creating a GitHub issue for each of these items would be overkill.
-* [Title](https://www.ipfire.org/)
+
+* https://github.com/PromtEngineer/localGPT
+* https://github.com/StanGirard/quivr
+* [IP Fire](https://www.ipfire.org/) - Consider as alternative to pfSense on Qubes.
 * `git-credential-manager configure`
-* [Title](https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/wsl.md)
-* [Title](https://github.com/KnowledgeCanvas/knowledge)
+* [`git-credential-manager` for WSL](https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/wsl.md)
 * Configure Navi to automatically download and use the best cheat repositories
-* Python
-* adb must be accessible in PATH: brew install --cask android-platform-tools
-* https://github.com/Paul-Reed/cloudflare-ufw
 * Google Drive index on Cloudflare https://github.com/menukaonline/goindex-extended
-* Use https://github.com/0xERR0R/blocky
-* https://github.com/butlerx/wetty
-* Add https://github.com/badaix/snapcast
 * Go through https://github.com/jaywcjlove/awesome-mac
 * https://codesandbox.io/ https://github.com/firecracker-microvm/firecracker
 * (https://www.kolide.com/features/checks/mac-firewall)
-* (https://github.com/tobiasbueschel/search-gpt)
 * Create IP set for CloudFlare [Title](https://firewalld.org/documentation/man-pages/firewalld.ipset.html)
 * https://chainner.app/
-* https://github.com/kyrolabs/awesome-langchain)
-( [Title](https://github.com/StanGirard/quivr))
-* [Title](https://github.com/PromtEngineer/localGPT)
-* [Title](https://github.com/reworkd/AgentGPT)
-* deprecate ansible roles in softwareyml
+* https://github.com/kyrolabs/awesome-langchain
 * Create seed for Lulu
-* [Title](https://github.com/essandess/macOS-Fortress)
-( https://github.com/sourcerer-io/sourcerer-app)
+* https://github.com/essandess/macOS-Fortress
+* https://wakatime.com/plugins
 
 ## Upstream
 
@@ -78,6 +68,7 @@ The following links include software that need to be reviewed before including t
 
 The following items are Docker containers that we may want to include as default containers deployed in our system.
 
+* https://github.com/highlight/highlight
 * https://github.com/jitsi/jitsi-videobridge
 * https://github.com/gitlabhq/gitlabhq
 * https://github.com/opf/openproject
@@ -114,7 +105,7 @@ The following items are Docker containers that we may want to include as default
 * https://github.com/umputun/remark42 - Comments
 * https://github.com/meienberger/runtipi - Home server
 * https://github.com/bytebase/bytebase
-* https://github.com/IceWhaleTech/CasaOS - Home page https://github.com/ajnart/homarr https://github.com/phntxx/dashboard https://github.com/notclickable-jordan/starbase-80
+* https://github.com/IceWhaleTech/CasaOS - Home page https://github.com/ajnart/homarr https://github.com/phntxx/dashboard
 * https://github.com/usememos/memos - Memo page
 * https://github.com/outline/outline - Team notes
 * https://github.com/directus/directus - SQL
@@ -204,7 +195,7 @@ The following items have been reviewed but need to be revisited due to complexit
 * https://github.com/Kanaries/Rath
 * cvat.io
 * https://github.com/illacloud/illa-builder
-* 
+* https://github.com/KnowledgeCanvas/knowledge
 * https://github.com/siyuan-note/siyuan
 * https://github.com/shuttle-hq/shuttle
 * https://github.com/open-hand/choerodon

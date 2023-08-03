@@ -444,6 +444,43 @@ if [ -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ]; then
   . "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
 fi
 
+### Mamba Forge (Faster Conda Drop-In Replacement)
+# TODO: Add support for Linux
+if [ -f /usr/local/Caskroom/mambaforge/base/bin/conda ]; then
+	# >>> conda initialize >>>
+	# !! Contents within this block are managed by 'conda init' !!
+	__conda_setup="$('/usr/local/Caskroom/mambaforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+	if [ $? -eq 0 ]; then
+    	eval "$__conda_setup"
+	else
+    	if [ -f "/usr/local/Caskroom/mambaforge/base/etc/profile.d/conda.sh" ]; then
+        	. "/usr/local/Caskroom/mambaforge/base/etc/profile.d/conda.sh"
+    	else
+        	export PATH="/usr/local/Caskroom/mambaforge/base/bin:$PATH"
+    	fi
+	fi
+	unset __conda_setup
+	# <<< conda initialize <<<
+fi
+
+### Micro-Mamba
+# Generate command: micromamba shell init -s zsh -p "${XDG_DATA_HOME:-$HOME/.local/share}/micromamba"
+# TODO: Ensure Linux support
+if [ -f /usr/local/bin/micromamba ]; then
+	# >>> mamba initialize >>>
+	# !! Contents within this block are managed by 'mamba init' !!
+	export MAMBA_EXE='/usr/local/bin/micromamba';
+	export MAMBA_ROOT_PREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/micromamba";
+	__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+	if [ $? -eq 0 ]; then
+    	eval "$__mamba_setup"
+	else
+    	alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate
+	fi
+	unset __mamba_setup
+	# <<< mamba initialize <<<
+fi
+
 ### Navi (Ctrl+G)
 if command -v navi > /dev/null; then
 	eval "$(navi widget zsh)"

@@ -40,11 +40,13 @@ The following plugins were tested but removed because the `extensions.json` alre
     "ms-kubernetes-tools.kind-vscode",
     "ms-toolsai.vscode-ai-remote", // Error encountered: [vscode-ai]: Couldn't find message for key azureml.internal.activate.title.
     "ms-toolsai.vscode-ai",
+    "ms-vscode.cpptools-extension-pack",
     "ms-vscode.powershell",
     "msazurermtools.azurerm-vscode-tools",
     "nrwl.angular-console",
     "okteto.kubernetes-context",
     "okteto.remote-kubernetes",
+    "orta.vscode-jest",
     "owenfarrell.vscode-vault",
     "platformio.platformio-ide", // Creates ~/.platformio folder. Does not respect XDG spec.
     "pwabuilder.pwa-studio",

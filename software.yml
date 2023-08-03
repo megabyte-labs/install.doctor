@@ -435,6 +435,8 @@ softwarePackages:
     _bin: tomcat
     _github: https://github.com/apache/tomcat
     _name: Tomcat
+    _post:darwin: sed 's/8080/8180/g' /usr/local/etc/tomcat/server.xml > /usr/local/etc/tomcat/server.xml
+    _post:linux: sed 's/8080/8180/g' /usr/local/etc/tomcat/server.xml > /usr/local/etc/tomcat/server.xml
     _service: tomcat
     apt: tomcat
     brew: tomcat
@@ -8437,7 +8439,7 @@ softwarePackages:
     _bin: backup
     _github: https://github.com/backup/backup
     _name: Backup
-    gem: backup
+    gem: backup -v5.0.0.beta.1
   fastlane:
     _bin: fastlane
     _github: https://github.com/fastlane/fastlane
@@ -8863,6 +8865,20 @@ softwarePackages:
     cask: sparkleshare
     choco: sparkleshare
     flatpak: org.sparkleshare.SparkleShare
+  mambaforge:
+    _bin: conda
+    _github: https://github.com/mamba-org/mamba
+    _name: Mamba Forge
+    _post: echo y | conda update -n base -c conda-forge conda
+    cask: mambaforge
+    choco: mambaforge
+    script:linux: bash <(curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh")
+  micromamba:
+    _bin: micromamba
+    _github: https://github.com/mamba-org/mamba
+    _name: MicroMamba
+    _post: micromamba self-update
+    brew: micromamba
   microsoft-teams:
     _bin: teams
     _desc: '[Microsoft Teams](https://www.microsoft.com/en-us/microsoft-teams/group-chat-software) is a proprietary business communication platform developed by Microsoft, as part of the Microsoft 365 family of products. Teams primarily competes with the similar service Slack, offering workspace chat and videoconferencing, file storage, and application integration.'
