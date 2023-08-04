@@ -107,6 +107,10 @@ function fileExists(pathToFile) {
   return fs.existsSync(pathToFile)
 }
 
+function dirExists(pathToDir) {
+  return fs.existsSync(pathToDir)
+}
+
 let installData
 let installOrders = {}
 let installMeta = {}
@@ -202,7 +206,7 @@ async function generateInstallOrders(pkgsToInstall) {
             } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osType + ':' + preference]) {
               pref = osType + ':' + preference
             }
-            log('info', 'Filter', `${pkg} is being skipped because of the _when:${pref} condition`)
+            process.env.DEBUG === 'true' && log('info', 'Filter', `${pkg} is being skipped because of the _when:${pref} condition`)
             processPluginOrders(pkg)
             continue pkgFor
           }
@@ -211,7 +215,7 @@ async function generateInstallOrders(pkgsToInstall) {
             await runSilentCommand(scopedPkgManager)
           } catch (e) {
             const pref = preference
-            log('info', 'Filter', `${pkg} is being skipped because of the _when:${pref} condition`)
+            process.env.DEBUG === 'true' && log('info', 'Filter', `${pkg} is being skipped because of the _when:${pref} condition`)
             processPluginOrders(pkg)
             continue pkgFor
           }
@@ -225,7 +229,7 @@ async function generateInstallOrders(pkgsToInstall) {
             } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osType]) {
               pref = osType
             }
-            log('info', 'Filter', `${pkg} is being skipped because of the _when:${pref} condition`)
+            process.env.DEBUG === 'true' && log('info', 'Filter', `${pkg} is being skipped because of the _when:${pref} condition`)
             processPluginOrders(pkg)
             continue pkgFor
           }
@@ -233,7 +237,7 @@ async function generateInstallOrders(pkgsToInstall) {
           try {
             await runSilentCommand(normalCheck)
           } catch (e) {
-            log('info', 'Filter', `${pkg} is being skipped because of the _when condition`)
+            process.env.DEBUG === 'true' && log('info', 'Filter', `${pkg} is being skipped because of the _when condition`)
             processPluginOrders(pkg)
             continue pkgFor
           }
@@ -267,7 +271,7 @@ async function generateInstallOrders(pkgsToInstall) {
             } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osType + ':' + preference]) {
               pref = osType + ':' + preference
             }
-            log('info', 'Filter', `${bin} already in PATH (via _bin:${pref})`)
+            process.env.DEBUG === 'true' && log('info', 'Filter', `${bin} already in PATH (via _bin:${pref})`)
             processPluginOrders(pkg)
             continue pkgFor
           } else {
@@ -282,7 +286,7 @@ async function generateInstallOrders(pkgsToInstall) {
               : scopedPkgManager.map((x) => which.sync(x, { nothrow: true })).every((y) => !!y)
           if (bin) {
             const pref = preference
-            log('info', 'Filter', `${bin} already in PATH (via _bin:${pref})`)
+            process.env.DEBUG === 'true' && log('info', 'Filter', `${bin} already in PATH (via _bin:${pref})`)
             processPluginOrders(pkg)
             continue pkgFor
           } else {
@@ -302,7 +306,7 @@ async function generateInstallOrders(pkgsToInstall) {
             } else if (softwarePackages[packageKey]['_' + currentSelector + ':' + osType]) {
               pref = osType
             }
-            log('info', 'Filter', `${bin} already in PATH (via _bin:${pref})`)
+            process.env.DEBUG === 'true' && log('info', 'Filter', `${bin} already in PATH (via _bin:${pref})`)
             processPluginOrders(pkg)
             continue pkgFor
           } else {
@@ -316,7 +320,7 @@ async function generateInstallOrders(pkgsToInstall) {
               ? which.sync(normalCheck, { nothrow: true })
               : normalCheck.map((x) => which.sync(x, { nothrow: true })).every((y) => !!y)
           if (bin) {
-            log('info', 'Filter', `${bin} already in PATH (via _bin)`)
+            process.env.DEBUG === 'true' && log('info', 'Filter', `${bin} already in PATH (via _bin)`)
             processPluginOrders(pkg)
             continue pkgFor
           } else {
@@ -442,7 +446,8 @@ async function updateInstallMaps(preference, packages, scopedPreference, pkg, pa
     installOrdersPost = installOrdersPost.concat(typeof postHook === 'string' ? [postHook] : postHook)
   }
   const serviceHook = getHook(packages, 'service', scopedPreference, preference)
-  if (serviceHook) {
+  const serviceEnabledHook = getHook(packages, 'serviceEnabled', scopedPreference)
+  if (serviceHook && serviceEnabledHook) {
     installOrdersService = installOrdersService.concat(typeof serviceHook === 'string' ? [serviceHook] : serviceHook)
   }
   const groupsHook = getHook(packages, 'groups', scopedPreference, preference)
@@ -523,12 +528,7 @@ async function OSTypeInstallerKey() {
     const yum = which.sync('yum', { nothrow: true })
     const zypper = which.sync('zypper', { nothrow: true })
     if (apt) {
-      try {
-        await $`test -d /etc/ubuntu-advantage`
-        return 'ubuntu'
-      } catch (e) {
-        return 'apt'
-      }
+      return dirExists('/etc/ubuntu-advantage') ? 'ubuntu' : 'apt'
     } else if (dnf || yum) {
       return 'dnf'
     } else if (pacman) {
@@ -538,12 +538,7 @@ async function OSTypeInstallerKey() {
     } else if (freebsdPkg && freebsdVersion) {
       return 'freebsd'
     } else {
-      try {
-        await $`test -d /Applications && test -d /Library`
-        return 'darwin'
-      } catch (e) {
-        return 'windows'
-      }
+      return dirExists('/Applications') && dirExists('/Library') ? 'darwin' : 'windows'
     }
   } catch (e) {
     log('error', 'OS Detection', 'There was an error determining the type of operating system')
@@ -553,17 +548,7 @@ async function OSTypeInstallerKey() {
 
 // Acquire OS type
 async function OSType() {
-  try {
-    await $`test -d /Applications && test -d /Library`
-    return 'darwin'
-  } catch (e) {
-    try {
-      await $`test -f /etc/os-release`
-      return 'linux'
-    } catch (e) {
-      return 'windows'
-    }
-  }
+  return dirExists('/Applications') && dirExists('/Library') ? 'darwin' : (fileExists('/etc/os-release') ? 'linux' : 'windows')
 }
 
 // Acquire release ID (for Linux)

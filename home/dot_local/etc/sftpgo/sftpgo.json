@@ -1,3 +1,7 @@
+{{- $baseDomain := (join (join .host.hostname ".") .host.domain) -}}
+{{- if eq .host.qubes true -}}
+{{-   $baseDomain := (join (join .host.hostname "-qube.") .host.domain) -}}
+{{- end -}}
 {
     "common": {
       "idle_timeout": 15,
@@ -20,7 +24,7 @@
       "whitelist_file": "",
       "allow_self_connections": 0,
       "defender": {
-        "enabled": false,
+        "enabled": true,
         "driver": "memory",
         "ban_time": 30,
         "ban_time_increment": 50,
@@ -56,8 +60,8 @@
       ]
     },
     "acme": {
-      "domains": [],
-      "email": "",
+      "domains": ["sftp.{{ $baseDomain }}"],
+      "email": "{{ .user.cloudflare.username }}",
       "key_type": "4096",
       "certs_path": "certs",
       "ca_endpoint": "https://acme-v02.api.letsencrypt.org/directory",
@@ -236,7 +240,7 @@
       },
       "password_caching": true,
       "update_mode": 0,
-      "create_default_admin": false,
+      "create_default_admin": true,
       "naming_rules": 1,
       "is_shared": 0,
       "node": {
@@ -249,7 +253,7 @@
     "httpd": {
       "bindings": [
         {
-          "port": 8080,
+          "port": 11101,
           "address": "",
           "enable_web_admin": true,
           "enable_web_client": true,
@@ -354,7 +358,7 @@
         "installation_code": "",
         "installation_code_hint": "Installation code"
       },
-      "hide_support_link": false
+      "hide_support_link": true
     },
     "telemetry": {
       "bind_port": 0,
@@ -391,20 +395,20 @@
     "mfa": {
       "totp": [
         {
-          "name": "Default",
-          "issuer": "SFTPGo",
+          "name": "Install Doctor",
+          "issuer": "SFTPGo - Install Doctor",
           "algo": "sha1"
         }
       ]
     },
     "smtp": {
-      "host": "",
-      "port": 25,
-      "from": "",
-      "user": "",
-      "password": "",
+      "host": "smtp.sendgrid.net",
+      "port": 587,
+      "from": "LitOS SFTPGo <no-reply@{{ .host.domain }}",
+      "user": "apikey",
+      "password": "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SENDGRID_API_KEY")) }}{{ includeTemplate "secrets/SENDGRID_API_KEY" | decrypt | trim }}{{ else }}{{ env "SENDGRID_API_KEY" }}",
       "auth_type": 0,
-      "encryption": 0,
+      "encryption": 1,
       "domain": "",
       "templates_path": "templates"
     },

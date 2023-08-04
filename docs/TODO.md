@@ -22,6 +22,9 @@ This page outlines various projects and tasks that we are currently working on. 
 * Create seed for Lulu
 * https://github.com/essandess/macOS-Fortress
 * https://wakatime.com/plugins
+* https://github.com/containers/toolbox consider for p10k.zsh file
+* Figure out where Vector service fits in
+* Figure out if Squid can be used to improve web surfing speed
 
 ## Upstream
 

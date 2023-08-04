@@ -203,19 +203,19 @@ generate_bar_disk() {
 }
 
 print_banner() {
-  if command -v lolcat >/dev/null && command -v figlet >/dev/null; then
-    if [[ "${#HOSTNAME}" -lt 14 ]]; then
-      figlet "$(hostname)" | lolcat -f
-    else
+  if [ ! -f "$HOME/.cache/hey-banner-printed" ]; then
+    if command -v lolcat >/dev/null && command -v figlet >/dev/null; then
+      figlet "Hey" | lolcat -f
       printf "\\n"
-      printf "    \\033[1;37mHostname:\\033[0m %s\\n" "$(hostname)"
+    elif command -v figlet >/dev/null; then
+      printf "\\n%s\\n" "$(figlet -t -f "$BANNER_FONTPATH" " Hey")"
+      printf "\\n"
     fi
-  elif command -v figlet >/dev/null; then
-    printf "\\n%s\\n" "$(figlet -t -f "$BANNER_FONTPATH" " $BANNER_TEXT")"
-  else
-    printf "\\n"
-    printf "    \\033[1;37mHostname:\\033[0m %s\\n" "$(hostname)"
+    mkdir -p "$HOME/.cache"
+    touch "$HOME/.cache/hey-banner-printed"
   fi
+
+  printf "    \\033[1;37mHostname:\\033[0m %s\\n" "$(hostname)"
 
   if [ -f /etc/os-release ]; then
     . /etc/os-release

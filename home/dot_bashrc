@@ -187,7 +187,9 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
 
   ### zoxide
   if command -v zoxide > /dev/null; then
-    eval "$(zoxide init --cmd cd bash)" > /dev/null
+    eval "$(zoxide init --cmd z bash)" > /dev/null
+  else
+    alias z='cd'
   fi
 
   ### Ble.sh

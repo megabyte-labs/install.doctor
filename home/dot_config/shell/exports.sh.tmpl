@@ -232,9 +232,7 @@ export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
 
 ### Homebrew
 export HOMEBREW_BUNDLE_FILE="$XDG_CONFIG_HOME/Brewfile"
-{{ if (and (eq .host.distro.family "darwin") (.host.restricted)) }}
-export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
-{{ end }}
+export HOMEBREW_CASK_OPTS="--appdir=/Applications --display-times"
 
 ### HTTPie
 export HTTPIE_CONFIG_DIR="$XDG_CONFIG_HOME/httpie"

@@ -16,7 +16,7 @@
 
 if command -v postfix > /dev/null; then
     ### Ensure dependencies are installed
-    if command -v apt > /dev/null; then
+    if command -v apt-get > /dev/null; then
         logg info 'Installing libsasl2-modules'
         sudo apt-get update
         sudo apt-get install -y libsasl2-modules || EXIT_CODE=$?
@@ -46,8 +46,8 @@ if command -v postfix > /dev/null; then
 
             ### Add Postfix main configuration
             logg "Adding configuration from ${XDG_CONFIG_HOME:-$HOME/.config}/postfix/main.cf to /etc/postfix/main.cf"
-            echo "" | sudo tee -a "$CONFIG_FILE"
             cat "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/main.cf" | sudo tee -a "$CONFIG_FILE"
+            echo "" | sudo tee -a "$CONFIG_FILE"
         fi
 
         ### Ensure proper permissions on `sasl_passwd` and update Postfix hashmaps
@@ -58,7 +58,7 @@ if command -v postfix > /dev/null; then
             sudo chmod 600 /etc/postfix/sasl_passwd
             logg info 'Updating Postfix hashmaps for /etc/postfix/sasl_passwd'
             sudo postmap /etc/postfix/sasl_passwd
-        else
+        elseThere was an error ensuring the Postfix-SendGrid dependencies were installed
             logg warn '~/.config/postfix/sasl_passwd file is missing'
         fi
 

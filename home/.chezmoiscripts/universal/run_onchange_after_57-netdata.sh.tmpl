@@ -113,6 +113,15 @@ if command -v netdata-claim.sh > /dev/null; then
         fi
     fi
 
+    ### Ensure / report whether speedtest-cli is installed
+    if ! command -v speedtest-cli > /dev/null; then
+        if command -v pipx > /dev/null; then
+            pipx install speedtest-cli
+        else
+            logg warn 'speedtest-cli not installed and pipx is not available'
+        fi
+    fi
+
     ### Configure Netdata to gather information about Internet connection speed
     if command -v speedtest-cli > /dev/null; then
         SPEEDTEST_GIT="${XDG_DATA_HOME:-$HOME/.local/share}/netdata-speedtest"

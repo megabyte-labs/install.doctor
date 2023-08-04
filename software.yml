@@ -1137,7 +1137,8 @@ softwarePackages:
     _bin: openssl-osx-ca
     _github: https://github.com/raggi/openssl-osx-ca
     _name: OpenSSL macOS CA
-    _service: openssl-osx-ca
+    _service:brew:darwin: openssl-osx-ca
+    _serviceEnabled: true
     brew:darwin: raggi/ale/openssl-osx-ca
   meta-package-manager:
     _bin: mpm
@@ -1164,7 +1165,7 @@ softwarePackages:
   brew-pkg:
     _github: https://github.com/timsutton/brew-pkg
     _name: Homebrew Pkg
-    _when:darwin: '! brew pkg --help'
+    _when:darwin: '! brew pkg --help > /dev/null'
     brew:darwin: timsutton/formulae/brew-pkg
   bash-completion:
     _bin: null
@@ -2137,6 +2138,7 @@ softwarePackages:
     _github: https://github.com/syncthing/syncthing
     _name: Syncthing
     _service: syncthing
+    _serviceEnabled: true
     brew: syncthing
     choco: syncthing
     port: syncthing
@@ -2766,6 +2768,7 @@ softwarePackages:
     _home: null
     _name: etcd
     _service: etcd
+    _serviceEnabled: true
     apt: etcd
     brew: etcd
     choco: etcd
@@ -3737,6 +3740,7 @@ softwarePackages:
     _home: https://gitlab.com/gitlab-org/gitlab-runner
     _name: Gitlab Runner
     _service: gitlab-runner
+    _serviceEnabled: true
     ansible: professormanhattan.gitlabrunner
     brew: gitlab-runner
     choco: gitlab-runner
@@ -4974,6 +4978,7 @@ softwarePackages:
     _home: https://www.linux-kvm.org/page/Main_Page
     _name: KVM
     _service: libvirt
+    _serviceEnabled: true
     ansible: professormanhattan.kvm
     apt:
       - bridge-utils
@@ -6025,6 +6030,7 @@ softwarePackages:
     _home: https://www.netdata.cloud/
     _name: Netdata
     _service: netdata
+    _serviceEnabled: true
     _deps:
       - debsecan
       - speedtest-cli
@@ -6088,6 +6094,7 @@ softwarePackages:
       - port: 443
         proto: tcp
     _service: nginx
+    _serviceEnabled: true
     ansible: professormanhattan.nginx
     apt: nginx
     brew: nginx
@@ -8044,7 +8051,9 @@ softwarePackages:
     _github: https://github.com/drakkan/sftpgo
     _home: null
     _name: sftpgo
+    _post: cp -f "$HOME/.local/etc/sftpgo.json" /usr/local/etc/sftpgo/sftpgo.json && sudo sftpgo initprovider
     _service: sftpgo
+    _serviceEnabled: true
     brew: sftpgo
     choco: sftpgo
     github: github.com/drakkan/sftpgo
@@ -9161,6 +9170,7 @@ softwarePackages:
     _home: https://www.privoxy.org/
     _name: Privoxy
     _service: privoxy
+    _serviceEnabled: true
     apt: privoxy
     brew: privoxy
     dnf: privoxy
@@ -9174,6 +9184,7 @@ softwarePackages:
     _home: https://www.torproject.org/
     _name: TOR
     _service: tor
+    _serviceEnabled: true
     ansible:linux: professormanhattan.tor
     apt: tor
     brew: tor
@@ -9881,6 +9892,7 @@ softwarePackages:
   fail2ban:
     _bin: fail2ban-client
     _service: fail2ban
+    _serviceEnabled: true
     # fail2ban cannot be installed on Qubes Fedora 36 without messing with the qubes-firewall since firewalld is required
     _when:linux: echo '! command -v qubes-firewall > /dev/null && test -f /proc/version && ! grep Microsoft /proc/version > /dev/null' | bash
     apt: fail2ban
@@ -9888,6 +9900,33 @@ softwarePackages:
     dnf: fail2ban
     pacman: fail2ban
     port: fail2ban
+  timewarrior:
+    _bin: timewarrior
+    _github: https://github.com/GothenburgBitFactory/timewarrior
+    _name: Time Warrior
+    apt: timewarrior
+    brew: timewarrior
+    dnf: timew
+    emerge: app-misc/timew
+    nix-env: timewarrior
+    pacman: timew
+  taskwarrior:
+    _bin: taskwarrior
+    _github: https://github.com/GothenburgBitFactory/taskwarrior
+    _name: Task Warrior
+    apt: taskwarrior
+    dnf: task
+    brew:
+      - task
+      - taskd
+      - tasksh
+    nix-env: taskwarrior
+    sbopkg: task
+    port: task
+    emerge: task
+    pacman: task
+    xbps-install: task
+    zypper: taskwarrior
   boringtun:
     _bin: boringtun-cli
     _desc: BoringTun is an implementation of the WireGuard® protocol designed for portability and speed.
@@ -10406,7 +10445,7 @@ softwarePlugins:
       - dotnet-format
       - git-credential-manager
   gcloud:
-    cmd: bash -c 'if ! gcloud components list | grep "Installed.*{PLUGIN}" > /dev/null; then gcloud components install --quiet "{PLUGIN}"; fi'
+    cmd: bash -c 'if ! gcloud components list | grep "Installed.*{PLUGIN}" > /dev/null; then echo "Installing.." && gcloud components install --quiet "{PLUGIN}"; fi'
     plugins:
       - app-engine-go
       - cloud-datastore-emulator
@@ -10524,6 +10563,7 @@ softwarePlugins:
       - theapsgroup/keycloak
       - theapsgroup/vault
       - twitter
+    update: steampipe plugin update --all
   teams:
     cmd:
     plugins:

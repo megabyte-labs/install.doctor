@@ -8,6 +8,15 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
+### SDKMan ~/.bashrc settings
+if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
+  export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"
+  . "$SDKMAN_DIR/bin/sdkman-init.sh"
+elif [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
+  export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
+  . "$SDKMAN_DIR/bin/sdkman-init.sh"
+fi
+
 ### Ensure SDKMan is installed (https://sdkman.io/)
 if [ ! -d "$SDKMAN_DIR" ]; then
   logg info 'Installing SDKMan via `curl -s "https://get.sdkman.io?rcupdate=false`'

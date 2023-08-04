@@ -8,10 +8,7 @@ export LC_ALL="en_US.UTF-8"
 export BASH_SUPPORT=true
 
 ### Import Common Settings
-export XDG_CONFIG_HOME="$HOME/.config"
-if [ -f "$HOME/.config/shell/profile.sh" ]; then
-  . "$XDG_CONFIG_HOME/shell/profile.sh"
-fi
+[[ ! -f "$HOME/.config/shell/profile.sh" ]] || source "$HOME/.config/shell/profile.sh"
 
 # If not running interactively, don't do anything
 case $- in
@@ -31,15 +28,13 @@ export TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
 export ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION"
 
 ### Antigen
-export ADOTDIR="$HOME/.local/antigen"
+export ADOTDIR="${XDG_DATA_HOME:-$HOME/.local/share}/antigen"
 
 ### Powerline
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+[[ ! -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] || source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 
 ### Fig
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && source "$HOME/.fig/shell/zshrc.pre.zsh"
 
 # --------------------------------- SETTINGS ----------------------------------
 setopt AUTO_CD
@@ -110,7 +105,7 @@ bindkey ' ' magic-space
 # Plugin source helper
 _source_plugin() {
 	local plugin_name="$1"
-	for basedir in "$HOME/.local/antigen/bundles/zsh-users"; do
+	for basedir in "${XDG_DATA_HOME:-$HOME/.local/share}/antigen/bundles/zsh-users"; do
 		plugin="$basedir/$plugin_name/$plugin_name.zsh"
 		[ -f "$plugin" ] && source "$plugin" && return 0
 	done
@@ -171,7 +166,7 @@ unset -f _source_plugin
 
 # POWERLEVEL
 if ! [[ $(tty) = /dev/tty* ]]; then
-	if source "$HOME/.local/antigen/bundles/romkatv/powerlevel10k/powerlevel10k.zsh-theme" 2> /dev/null; then
+	if source "${XDG_DATA_HOME:-$HOME/.local/share}/antigen/bundles/romkatv/powerlevel10k/powerlevel10k.zsh-theme" 2> /dev/null; then
 		s=' ' # fix too wide icons
 		POWERLEVEL9K_MODE=nerdfont-complete
 		POWERLEVEL9K_SHORTEN_STRATEGY=truncate_beginning
@@ -518,5 +513,7 @@ fi
 ### zoxide
 if command -v zoxide > /dev/null; then
 	zstyle ':autocomplete:recent-dirs' backend zoxide
-	eval "$(zoxide init --cmd cd zsh)" > /dev/null
+	eval "$(zoxide init --cmd z zsh)" > /dev/null
+else
+	alias z='cd'
 fi

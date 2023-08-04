@@ -95,6 +95,10 @@ export GOOGLE_SEARCH_ID="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitempl
 ### Serper.dev
 export SERP_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SERP_API_KEY")) }}{{ includeTemplate "secrets/SERP_API_KEY" | decrypt | trim }}{{ else }}{{ env "SERP_API_KEY" }}{{ end }}"
 
+### SFTPGo
+export SFTPGO_DEFAULT_ADMIN_PASSWORD="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SFTPGO_DEFAULT_ADMIN_PASSWORD")) }}{{ includeTemplate "secrets/SFTPGO_DEFAULT_ADMIN_PASSWORD" | decrypt | trim }}{{ else }}{{ env "SFTPGO_DEFAULT_ADMIN_PASSWORD" }}{{ end }}"
+export SFTPGO_DEFAULT_ADMIN_USERNAME="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SFTPGO_DEFAULT_ADMIN_USERNAME")) }}{{ includeTemplate "secrets/SFTPGO_DEFAULT_ADMIN_USERNAME" | decrypt | trim }}{{ else }}{{ env "SFTPGO_DEFAULT_ADMIN_USERNAME" }}{{ end }}"
+
 ### Snapcraft
 export SNAPCRAFT_EMAIL="{{ .user.snapcraft.username }}"
 export SNAPCRAFT_MACAROON="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SNAPCRAFT_MACAROON")) }}{{ includeTemplate "secrets/SNAPCRAFT_MACAROON" | decrypt | trim }}{{ else }}{{ env "SNAPCRAFT_MACAROON" }}{{ end }}"
