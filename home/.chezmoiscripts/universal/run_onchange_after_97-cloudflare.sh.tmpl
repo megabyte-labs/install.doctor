@@ -232,18 +232,29 @@ else
 fi
 
 {{- $registrationToken := "" }}
+echo "{{ .host.hostname }}"
+echo "{{ joinPath .host.home ".config" "age" "chezmoi.txt" }}"
+echo "{{ joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname }}"
+echo "{{ stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname) }}"
 {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname)) -}}
+echo "IN HEREEE"
 {{-   $registrationToken := (includeTemplate (print "cloudflared/" .host.hostname) | decrypt) -}}
 {{- end }}
 ### Set up CloudFlare tunnels
 echo 'Registration token debug:'
 echo -n '{{ includeTemplate (print "cloudflared/" .host.hostname) | decrypt }}'
 echo "ZZZZZZZZZZZZ"
+echo ""
+echo ""
 echo -n '{{ $registrationToken }}'
+echo ""
 echo "OOOOOOOOOOOOO"
+echo ""
 echo '{{ $registrationToken }}'
+echo ""
 echo '555555'
-echo '{{( stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname)) }}
+set -ex
+echo '{{ stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname) }}
 if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; then
     # Show warning message about ~/.cloudflared already existing
     if [ -d "$HOME/.cloudflared" ]; then
@@ -317,6 +328,6 @@ if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; 
         # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/windows/
     fi
 else
-    logg info '`cloudflared` was not installed so CloudFlare Tunnels cannot be enabled. (Or the ~/.local/etc/cloudflared folder is not present)'
+    logg info 'cloudflared was not installed so CloudFlare Tunnels cannot be enabled. (Or the ~/.local/etc/cloudflared folder is not present)'
 fi
 {{ end -}}
