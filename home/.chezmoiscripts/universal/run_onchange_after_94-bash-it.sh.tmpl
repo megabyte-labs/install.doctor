@@ -23,9 +23,8 @@ if command -v powerline-daemon > /dev/null && [ -f "$BASH_IT/bash_it.sh" ]; then
 fi
 
 ### Ensure ble.sh installed
-if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/src" ] && [ ! ]; then
-    logg info "${XDG_DATA_HOME:-$HOME/.local/share}/ble.sh/src present and ${XDG_DATA_HOME:-$HOME/.local/share}/blesh/src not present - installing ble.sh..."
-    make -C "${XDG_DATA_HOME:-$HOME/.local/share}/ble.sh/src" install > /dev/null && logg success "Installed ble.sh"
+if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/src" ]; then
+    make -C "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/src" install > /dev/null && logg success "Installed ble.sh"
 fi
 
 ### Bash-it completions / plugins
