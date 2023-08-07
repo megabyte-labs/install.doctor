@@ -213,6 +213,10 @@ print_banner() {
     fi
     mkdir -p "$HOME/.cache"
     touch "$HOME/.cache/hey-banner-printed"
+  else
+    if command -v neofetch > /dev/null; then
+      neofetch
+    fi
   fi
 
   printf "    \\033[1;37mHostname:\\033[0m %s\\n" "$(hostname)"

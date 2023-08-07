@@ -6,8 +6,11 @@ xattr -d com.apple.quarantine rclone
 
 This page outlines various projects and tasks that we are currently working on. Creating a GitHub issue for each of these items would be overkill.
 
+* https://containertoolbx.org/install/
+* https://github.com/todotxt/todo.txt-cli
 * https://github.com/PromtEngineer/localGPT
 * https://github.com/StanGirard/quivr
+* https://github.com/containers/toolbox
 * [IP Fire](https://www.ipfire.org/) - Consider as alternative to pfSense on Qubes.
 * `git-credential-manager configure`
 * [`git-credential-manager` for WSL](https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/wsl.md)
@@ -25,6 +28,13 @@ This page outlines various projects and tasks that we are currently working on. 
 * https://github.com/containers/toolbox consider for p10k.zsh file
 * Figure out where Vector service fits in
 * Figure out if Squid can be used to improve web surfing speed
+* https://github.com/mumoshu/variant (With Task)
+* https://github.com/marshyski/quick-secure
+* https://www.haskell.org/ghcup/install/#how-to-install
+* https://github.com/material-shell/material-shell
+* https://github.com/arxanas/git-branchless
+* https://github.com/mumoshu/variant2
+* https://github.com/burnison/tasksync
 
 ## Upstream
 
@@ -167,6 +177,7 @@ The following items may be incorporated into our Kubernetes stack:
 * https://github.com/gimlet-io/gimlet
 * https://github.com/porter-dev/porter
 * https://github.com/spacecloud-io/space-cloud
+* https://github.com/meilisearch/meilisearch
 
 ## Bare Metal
 
@@ -231,3 +242,23 @@ The following items have been reviewed but need to be revisited due to complexit
 ## Sources
 
 * [Title](https://gist.github.com/pmkay/e09034971b6f23214fd9f95a3e6d1c44)
+
+## Bash
+
+* https://github.com/shellfire-dev/shellfire
+* https://github.com/joehillen/sysz
+* https://github.com/eth-p/bat-extras
+* https://github.com/ddworken/hishtory
+* https://github.com/sloria/doitlive
+* https://github.com/ncarlier/webhookd
+* https://github.com/0xacx/chatGPT-shell-cli
+* https://github.com/hectorm/hblock https://github.com/tanrax/maza-ad-blocking
+* https://github.com/rossmacarthur/sheldon
+
+## Bookmarks
+
+* https://cheatsheets.zip/
+
+## Windows
+
+* https://github.com/DDoSolitary/LxRunOffline

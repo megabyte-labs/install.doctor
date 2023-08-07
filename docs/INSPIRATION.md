@@ -1,5 +1,6 @@
 ## CLI
 
+* https://github.com/sigoden/argc
 * https://github.com/r-darwish/idnt
 * https://github.com/charmbracelet/wish
 * https://github.com/charmbracelet/skate

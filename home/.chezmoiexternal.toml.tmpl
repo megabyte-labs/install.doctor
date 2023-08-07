@@ -1,5 +1,5 @@
-### VIM
 {{- $refreshPeriod := "240h" }}
+### VIM Plugins
 {{- $vimPlugins := .softwarePlugins.vim.plugins }}
 {{- range $vimPlugin := $vimPlugins }}
 {{-   $folderName :=  trimSuffix ".git" (last (splitList "/" $vimPlugin)) }}
@@ -89,6 +89,64 @@
 [".local/share/emsdk"]
     type = "git-repo"
     url = "https://github.com/emscripten-core/emsdk.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/share/has"]
+    type = "git-repo"
+    url = "https://github.com/kdabir/has.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/share/wait-for-it"]
+    type = "git-repo"
+    url = "https://github.com/vishnubob/wait-for-it.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/share/hoard"]
+    type = "git-repo"
+    url = "https://github.com/Hyde46/hoard.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/share/shell-safe-rm"]
+    type = "git-repo"
+    url = "https://github.com/kaelzhang/shell-safe-rm.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/share/extract"]
+    type = "git-repo"
+    url = "https://github.com/xvoland/Extract.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/share/up"]
+    type = "git-repo"
+    url = "https://github.com/shannonmoeller/up.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/share/shell/sensible.bash"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/mrzool/bash-sensible/master/sensible.bash"
+    refreshPeriod = "https://raw.githubusercontent.com/mrzool/bash-sensible/master/sensible.bash"
+[".local/share/rsync-time-backup"]
+    type = "git-repo"
+    url = "https://github.com/laurent22/rsync-time-backup.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/share/tmpmail"]
+    type = "git-repo"
+    url = "https://github.com/sdushantha/tmpmail.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/share/concurrent"]
+    type = "git-repo"
+    url = "https://github.com/themattrix/bash-concurrent.git"
     refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
@@ -226,6 +284,12 @@
 [".local/share/agentgpt"]
     type = "git-repo"
     url = "https://github.com/reworkd/AgentGPT.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/share/kaguya"]
+    type = "git-repo"
+    url = "https://github.com/ykdojo/kaguya.git"
     refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]

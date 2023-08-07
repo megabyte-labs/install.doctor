@@ -389,7 +389,10 @@ fi
 
 ### Homebrew ZSH Completions
 # Must be sourced before compinit / Oh-My-ZSH inclusion
-export FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:${FPATH}"
+export FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:$FPATH"
+if [ -d "$HOMEBREW_PREFIX/share/zsh-completions" ]; then
+	export FPATH="$HOMEBREW_PREFIX/share/zsh-completions:$FPATH"
+fi
 
 ### ZSH compinit
 autoload -Uz +X compinit && compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION"
@@ -403,6 +406,13 @@ fi
 ### Atuin
 if command -v atuin > /dev/null; then
 	eval "$(atuin init zsh)"
+fi
+
+### Carapace
+if command -v carapace > /dev/null; then
+	zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+	zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
+	source <(carapace _carapace)
 fi
 
 ### Cod
@@ -427,6 +437,17 @@ if [ -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.zsh.inc" ]; then
 fi
 if [ -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc" ]; then
     source "$HOMEBREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc"
+fi
+
+### hiSHtory
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.zsh" ]; then
+	export PATH="$PATH:${XDG_CONFIG_HOME:-$HOME/.config}/hishtory"
+	source "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.zsh"
+fi
+
+### Hoard
+if command -v hoard > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/hoard/src/shell/hoard.zsh" ]; then
+	. "${XDG_DATA_HOME:-$HOME/.local/share}/hoard/src/shell/hoard.zsh"
 fi
 
 ### iTerm2
@@ -487,7 +508,7 @@ if [ -f "$HOME/.fig/shell/zshrc.post.zsh" ]; then
 fi
 
 ### Powerline
-if [ -f "$HOME/.local/scripts/p10k.zsh" ]; then
+if [ -f "${XDG_CONFIG_HOME:-$HOME.config}/scripts/p10k.zsh" ]; then
 	source "$HOME/.local/scripts/p10k.zsh"
 fi
 
@@ -500,10 +521,8 @@ elif [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
   . "$SDKMAN_DIR/bin/sdkman-init.sh"
 fi
 
-### The Fuck
-if command -v thefuck > /dev/null; then
-	eval "$(thefuck --alias)"
-fi
+### Up
+[ -f "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh"
 
 ### HashiCorp Vault
 if command -v vault > /dev/null; then
@@ -513,7 +532,7 @@ fi
 ### zoxide
 if command -v zoxide > /dev/null; then
 	zstyle ':autocomplete:recent-dirs' backend zoxide
-	eval "$(zoxide init --cmd z zsh)" > /dev/null
+	eval "$(zoxide init zsh)"
 else
 	alias z='cd'
 fi

@@ -17,17 +17,23 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
+### Create symlinks pointing to stored configurations
 ln -s "$HOME/.config/mackup/.mackup/" ~/.mackup
 ln -s "$HOME/.config/mackup/.mackup.cfg" ~/.mackup.cfg
+
+### Run original mackup executable
 if command -v brew > /dev/null && brew list | grep mackup > /dev/null; then
-    $(brew --prefix)/bin/mackup "$@" || echo ''
+    $(brew --prefix)/bin/mackup $* || echo ''
 elif (command -v pip3 > /dev/null && pip3 list | grep mackup > /dev/null) || \
      (command -v pip > dev/null && pip3 list | grep mackup > /dev/null) || \
      (command -v pipx > dev/null && pipx list | grep mackup > /dev/null); then
-    ~/.local/bin/mackup "$@" || echo ''
+    ~/.local/bin/mackup $* || echo ''
 else
     logg warn 'Homebrew/Python pip is not found. Install `mackup` using one of these methods'
 fi
+
+### Remove temporary configuration files
 rm -f ~/.mackup
 rm -f ~/.mackup.cfg
+
 {{ end }}

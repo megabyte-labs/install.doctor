@@ -1,0 +1,3 @@
+{{- if stat (joinPath .chezmoi.homeDir ".local" "share" "extract" "extract.sh") -}}
+{{ .chezmoi.homeDir }}/.local/share/extract/extract.sh
+{{- end -}}

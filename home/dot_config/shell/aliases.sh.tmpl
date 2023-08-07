@@ -26,7 +26,8 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias diff='diff --color=auto'
-alias ip='ip --color=auto'
+# iproute2mac not working with this alias
+# alias ip='ip --color=auto'
 alias pacman='pacman --color=auto'
 
 ### TOP - order based on preference of "top" application (last item will always be chosen if installed, e.g. glances)
@@ -179,6 +180,9 @@ alias plist-xml='plutil -convert xml1'
 # Recoverpy
 alias recoverpy='python3 -m recoverpy'
 
+# Performance Test
+alias perftest='mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/perftest" && curl -sL yabs.sh | bash -s -- -w "${XDG_DATA_HOME:-$HOME/.local/share}/perftest/$(date +%Y%m%d_%H%M%S)"'
+
 # Show open ports
 alias ports='sudo netstat -tulanp'
 
@@ -258,3 +262,17 @@ alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
 
 # Running this will update GPG to point to the current YubiKey
 alias yubi-stub='gpg-connect-agent "scd serialno" "learn --force" /bye'
+
+### cd aliases
+
+alias applications="cd $HOME/Applications"
+alias cloud="cd $HOME/Cloud"
+alias config="cd $HOME/.config"
+alias desktop="cd $HOME/Desktop"
+alias downloads="cd $HOME/Downloads"
+alias library="cd $HOME/Library"
+alias local="cd $HOME/.local"
+alias movies="cd $HOME/Movies"
+alias music="cd $HOME/Music"
+alias pictures="cd $HOME/Pictures"
+alias public="cd $HOME/Public"

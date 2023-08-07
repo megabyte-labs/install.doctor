@@ -1,0 +1,3 @@
+{{- if stat (joinPath .chezmoi.homeDir ".local" "share" "rsync-time-backup" "rsync-time-backup.sh") -}}
+{{ .chezmoi.homeDir }}.local/share/rsync-time-backup/rsync-time-backup.sh
+{{- end -}}

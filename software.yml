@@ -1,6 +1,6 @@
 ---
 # eslint-disable eslint-comments/disable-enable-pair, max-len, max-lines, no-warning-comments
-#                      mongodb      xhyve elm icdiff   ddrescue  tcl-tk flac    zenity terragrunt dbus  grpc diffutils   sonarqube     haproxy    cabal-install  sonar-scanner  tmate  solr tcptraceroute   hashcat handbrake iproute2mac 2fsprogs hydra you-get cabextract  sphinx-doc iftop htop-osx    w3m grc  moreutils        rpm  iperf3 libav  iperf  lmdb mcrypt httprack  aircrack-ng ntfs-3g    glog parallel   rename gdbm  geckodriver  pv sdl swig doxygen mtr graphicsmagick   putty llvm  flow  watch gdb ant mariadb  mercurial  autoconf maven readline libtool chromedriver pkg-config
+#
 # `softwarePackages` is a map of possible package managers to use while installing a program. The installer will
 # look at the `installerPreference` variable and find the first package manager that is in the package's possible
 # installation method and then use that. It is also sensitive to the type of operating system so a package with
@@ -816,6 +816,18 @@ softwarePackages:
     _desc: Audio loopback device for macOS (supports sound passthrough to screen recording software on macOS)
     _when:cask: '! test -d /Library/Audio/Plug-Ins/HAL/BlackHole16ch.driver && ! test -d ~/Library/Audio/Plug-Ins/HAL/BlackHole16ch.driver'
     cask: blackhole-16ch
+  percol:
+    _bin: percol
+    _github: https://github.com/mooz/percol
+    _name: Percol
+    pipx: percol
+  loop:
+    _bin: loop
+    _github: https://github.com/Miserlou/Loop
+    _name: Loop
+    snap: loop-rs --beta
+    pacman: loop
+    cargo: loop-rs
   aria2:
     _bin: aria2c
     _desc: '[aria2](https://aria2.github.io/) is a lightweight multi-protocol & multi-source command-line download utility. It supports HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink. [AriaNg](http://ariang.mayswind.net/) is a modern web frontend that makes working with aria2 easier.'
@@ -1162,11 +1174,30 @@ softwarePackages:
     _github: https://github.com/sportngin/brew-gem
     _name: Homebrew RubyGems
     brew: brew-gem
+  scap-security-guide:
+    _bin: oscap
+    _github: https://github.com/ComplianceAsCode/content
+    _name: OpenSCAP
+    apt:
+      - ssg-debderived
+      - ssg-applications
+    apt:debian:
+      - ssg-debian
+      - ssg-applications
+    dnf: scap-security-guide
   brew-pkg:
     _github: https://github.com/timsutton/brew-pkg
     _name: Homebrew Pkg
     _when:darwin: '! brew pkg --help > /dev/null'
     brew:darwin: timsutton/formulae/brew-pkg
+  xpanes:
+    _bin: xpanes
+    _github: https://github.com/greymd/tmux-xpanes
+    _name: xpanes
+    apt: https://github.com/greymd/tmux-xpanes/releases/download/v4.1.4/tmux-xpanes_v4.1.4.deb
+    brew: tmux-xpanes
+    dnf: xpanes
+    script: curl -sSL --compressed https://raw.githubusercontent.com/greymd/tmux-xpanes/v4.1.4/bin/xpanes > /tmp/xpanes && sudo mv /tmp/xpanes /usr/local/bin/xpanes
   bash-completion:
     _bin: null
     _desc: null
@@ -1175,7 +1206,15 @@ softwarePackages:
     _home: null
     _name: Bash Completion Formula
     _when: '! brew list bash-completion | grep bash-completion > /dev/null'
+    apt: bash-completion
     brew: bash-completion@2
+    dnf: bash-completion
+    pacman: bash-completion
+  bashly:
+    _bin: bashly
+    _github: https://github.com/DannyBen/bashly
+    _name: Bashly
+    gem: bashly
   axel:
     _bin: axel
     _docs: null
@@ -1355,6 +1394,42 @@ softwarePackages:
     _home: https://github.com/dim-an/cod
     _name: Cod
     go: github.com/dim-an/cod@master
+  iproute2mac:
+    _bin: 
+    _github: https://github.com/brona/iproute2mac
+    _name: iproute2mac
+    brew:darwin: iproute2mac
+  tmate:
+    _bin: tmate
+    _github: https://github.com/tmate-io/tmate
+    _name: tmate
+    apt: tmate
+    brew: tmate
+    dnf: tmate
+    opkg: tmate
+    pacman: tmate
+    pkg-freebsd: tmate
+    pkg_add: tmate
+    zypper: tmate
+    emerge: app-misc/tmate
+  sphinx:
+    _bin: sphinx
+    _github: https://github.com/sphinx-doc/sphinx
+    _name: Sphinx
+    apt: python3-sphinx
+    brew: sphinx-doc
+    choco: sphinx
+    conda: sphinx
+    dnf: python-sphinx
+    pipx: sphinx
+    port: py39-sphinx
+  you-get:
+    _bin: you-get
+    _github: https://github.com/soimort/you-get
+    _name: You-Get
+    brew: you-get
+    pkg-freebsd: you-get
+    pipx: you-get
   utm:
     _bin: utm
     _github: https://github.com/utmapp/UTM
@@ -2540,6 +2615,11 @@ softwarePackages:
     cargo: du-dust
     github: github.com/bootandy/dust
     pacman: dust
+  goto:
+    _bin: goto
+    _github: https://github.com/iridakos/goto
+    _name: goto
+    brew: goto
   easyengine:
     _bin: ee
     _desc: "[EasyEngine](https://easyengine.io/) is a command-line control panel for Nginx to manage WordPress sites running on Nginx, PHP, MySQL, and Let's Encrypt."
@@ -2549,6 +2629,31 @@ softwarePackages:
     _name: EasyEngine
     ansible:darwin: professormanhattan.easyengine
     ansible:linux: professormanhattan.easyengine
+  forgit:
+    _deps:
+      - fzf
+    _bin: ga
+    _github: https://github.com/wfxr/forgit
+    _name: forgit
+    brew: forgit
+  ntfy:
+    _bin: nfty
+    _github: https://github.com/dschep/ntfy
+    _name: nfty
+    pipx: nfty
+  clipboard:
+    _bin: cb
+    _github: https://github.com/Slackadays/Clipboard.git
+    _name: Clipboard
+    apk: clipboard
+    brew: clipboard
+    emerge: app-misc/clipboard
+    flatpak: app.getclipboard.Clipboard
+    nix-env: nixpkgs.clipboard-jh
+    scoop: clipboard
+    snap: clipboard
+    xbps-install: clipboard
+    yay: clipboard
   editly:
     _bin: editly
     _desc: Editly is a tool and framework for declarative NLE (non-linear video editing) using Node.js and ffmpeg. Editly allows you to easily and programmatically create a video from a set of clips, images, audio and titles, with smooth transitions and music overlaid.
@@ -2635,6 +2740,57 @@ softwarePackages:
     cargo: emplace --locked
     nix: emplace
     scoop: emplace
+  xsv:
+    _bin: xsv
+    _github: https://github.com/BurntSushi/xsv
+    _name: xsv
+    cargo: xsv
+    port: xsv
+    brew: xsv
+    nix-env: xsv
+  
+  haproxy:
+    _bin: haproxy
+    _github: https://github.com/haproxy/haproxy
+    _name: HAProxy
+    apt: haproxy
+    brew: haproxy
+    choco: haproxy
+    dnf: haproxy
+    pacman: haproxy
+    zypper: haproxy
+    apk: haproxy
+  ghcup:
+    _bin: ghcup
+    _github: https://github.com/haskell/ghcup-hs
+    _name: GHCup
+    brew: ghcup
+  zenity:
+    _bin: zenity
+    _github: https://github.com/ncruces/zenity
+    _name: Zenity
+    brew: ncruces/tap/zenity
+    scoop: https://ncruces.github.io/scoop/zenity.json
+    go: github.com/ncruces/zenity/cmd/zenity@latest
+  xhyve:
+    _bin: xhyve
+    _github: https://github.com/machyve/xhyve
+    _name: xhyve
+    brew:darwin: xhyve
+    port: xhyve
+  xxh:
+    _bin: xxh
+    _github: https://github.com/xxh/xxh
+    _name: xxh
+    pipx: xxh-xxh
+    brew: xxh
+    port: xxh
+  shml:
+    _bin: shml
+    _github: https://github.com/odb/shml
+    _name: SHML
+    brew: shml
+    npm: shml
   empty-trash:
     _bin: empty-trash
     _desc: CLI to empty trash on macOS, Windows, and Linux
@@ -2692,6 +2848,22 @@ softwarePackages:
     _home: null
     _name: null
     ansible: professormanhattan.environment
+  mariadb:
+    _bin: mariadb
+    _github: false
+    _name: MariaDB
+    brew: mariadb
+    choco: mariadb
+    dnf: mariadb-server
+    apt: mariadb-server
+    pacman: mariadb-server
+    apk: mariadb-server
+  mongodb:
+    _bin: mongod
+    _github: https://github.com/mongodb/mongo
+    _name: MongoDB
+    brew: mongodb/brew/mongodb
+    choco: mongodb
   mongodb-compass:
     _bin: mongodb-compass
     _github: https://github.com/mongodb-js/compass
@@ -4245,6 +4417,11 @@ softwarePackages:
     _name: hey
     brew: hey
     github: github.com/rakyll/hey
+  desk:
+    _bin: desk
+    _github: https://github.com/jamesob/desk
+    _name: Desk
+    brew: desk
   rustdesk:
     _bin: rustdesk
     _desc: Open source virtual / remote desktop infrastructure for everyone! The open source TeamViewer alternative. Display and control your PC and Android devices from anywhere at anytime.
@@ -4650,6 +4827,13 @@ softwarePackages:
     pacman: atuin
     port: atuin
     pkg-termux: atuin
+  hishtory:
+    _bin: hishtory
+    _github: https://github.com/ddworken/hishtory
+    _name: hiSHtory
+    _todo: Check for Homebrew version
+    _post: source "$XDG_CONFIG_HOME/shell/private.sh" && echo y | hishtory init "$HISHTORY_USER_SECRET"
+    script: curl https://hishtory.dev/install.py | python3 -
   git-town:
     _bin: git-town
     _github: https://github.com/git-town/git-town
@@ -4792,6 +4976,10 @@ softwarePackages:
     _home: https://github.com/zquestz/s
     _name: s
     brew: s-search
+  zsh-completions:
+    _github: https://github.com/zsh-users/zsh-completions
+    _name: ZSH Completions
+    brew: zsh-completions
   rancher-desktop:
     _github: https://github.com/rancher-sandbox/rancher-desktop/
     cask: rancher
@@ -5573,7 +5761,10 @@ softwarePackages:
   hss:
     _bin: hss
     _github: https://github.com/six-ddc/hss
+    _name: hss
     brew: hss
+    port: hss
+    script: cd /tmp && git clone https://github.com/six-ddc/hss.git && cd hss && make && make install && cd /tmp && rm -rf hss
   molecule:
     _bin: molecule
     _desc: Molecule aids in the development and testing of Ansible roles
@@ -6350,6 +6541,19 @@ softwarePackages:
     _home: null
     _name: np
     npm: np
+  nushell:
+    _bin: nushell
+    _github: https://github.com/nushell/nushell
+    _name: Nu
+    apk: nushell
+    apt: nushell
+    brew: nushell
+    choco: nushell
+    pacman: nushell
+    port: nushell
+    dnf: nushell
+    scoop: nushell
+    winget: nushell
   npm-check:
     _bin: npm-check
     _desc: Check for outdated, incorrect, and unused dependencies.
@@ -6581,11 +6785,21 @@ softwarePackages:
     _home: https://jsonresume.org/
     _name: JSON Resume CLI
     npm: resume-cli
+  distrobox:
+    _bin: distrobox
+    _github: https://github.com/89luca89/distrobox
+    _name: Distrobox
+    apt: distrobox
+    apk: distrobox
+    pacman: distrobox
+    dnf: distrobox
   neofetch:
     _bin: neofetch
     _github: https://github.com/dylanaraps/neofetch
     _name: NeoFetch
-    apk: neofetch
+    apk:
+      - ncurses
+      - neofetch
     pkg-termux: neofetch
     pacman: neofetch
     apt: neofetch
@@ -7479,11 +7693,21 @@ softwarePackages:
     apt: grep
     dnf: grep
     pacman: grep
+  wipe-modules:
+    _bin: wipe-modules
+    _github: https://github.com/bntzio/wipe-modules
+    _name: wipe-modules
+    npm: wipe-modules
   progress:
     _bin: progress
+    _github: https://github.com/Xfennec/progress
+    _name: Progress
     apt: progress
+    brew: progress
     dnf: progress
     pacman: progress
+    zypper: progress
+    port: progress
   util-linux:
     _bin:
       - cal
@@ -8315,6 +8539,25 @@ softwarePackages:
     _home: null
     _name: speedtest-cli
     pipx: speedtest-cli
+  carapace:
+    _bin: carapace
+    _github: https://github.com/rsteube/carapace-bin
+    _name: Carapace
+    brew: rsteube/tap/carapace
+    nix-shell: carapace
+    pacman: carapace-bin
+    scoop: extras/carapace-bin
+    winget: rsteube.Carapace
+  hoard:
+    _bin: hoard
+    _github: https://github.com/Hyde46/hoard
+    _name: Hoard
+    brew: Hyde46/hoard/hoard
+    cargo: hoard-rs
+    nix-env: hoard
+    # Might be paru instead of pacman
+    pacman: hoard
+    port: hoard-cli
   spotdl:
     _bin: spotdl
     _deps:
@@ -8751,6 +8994,65 @@ softwarePackages:
     port: t-rec
     snap: t-rec
     yay: t-rec
+  just:
+    _bin: just
+    _github: https://github.com/casey/just
+    _name: Just
+    cargo: just
+    scoop: just
+    brew: just
+    port: just
+    pacman: just
+    nix-env: nixpkgs.just
+    eopkg: just
+    xbps-install: just
+    pkg-freebsd: just
+    apk: just
+    dnf: just
+    choco: just
+    snap: --edge --classic just
+    winget: Casey.Just
+    apt: just
+  repo:
+    _bin: repo
+    _github: false
+    _name: Repo
+    apt: repo
+    dnf: repo
+    brew: repo
+    pacman: repo
+    # TODO: Include Windows install method
+  ack:
+    _bin: ack
+    _github: https://github.com/beyondgrep/ack3
+    _name: Ack
+    port: perl/p5-app-ack
+    brew: ack
+    choco: ack
+    dnf: ack
+    pacman: ack
+    apt: ack
+  cloc:
+    _bin: cloc
+    _github: https://github.com/AlDanial/cloc
+    _name: Cloc
+    npm: cloc
+    apt: cloc
+    dnf: cloc
+    pacman: cloc
+    emerge: dev-util/cloc
+    apk: cloc
+    pkg_add: cloc
+    pkg-freebsd: cloc
+    port: cloc
+    brew: cloc
+    choco: cloc
+    scoop: cloc
+  shx:
+    _bin: shx
+    _github: https://github.com/shelljs/shx
+    _name: shx
+    npm: shx
   tabby:
     _bin: tabby
     _desc: '[Tabby](https://eugeny.github.io/tabby/) is a highly configurable terminal emulator, SSH and serial client for Windows, macOS and Linux.'
@@ -8768,6 +9070,11 @@ softwarePackages:
     dnf: https://github.com/Eugeny/tabby/releases/download/v1.0.188/tabby-1.0.188-linux-x64.rpm
     github: github.com/Eugeny/tabby
     pacman: https://github.com/Eugeny/tabby/releases/download/v1.0.188/tabby-1.0.188-linux-x64.pacman
+  whereami:
+    _bin: whereami
+    _github: https://github.com/rafaelrinaldi/whereami
+    _name: Where Am I?
+    npm: '@rafaelrinaldi/whereami'
   tailscale:
     _bin: tailscale
     _desc: '[Tailscale](https://tailscale.com/) lets you easily manage access to private resources, quickly SSH into devices on your network, and work securely from anywhere in the world.'
@@ -8791,6 +9098,7 @@ softwarePackages:
     _when:cask: '! test -d "/Applications/Tailscale.app" && ! test -d "$HOME/Applications/Tailscale.app"'
     cask: tailscale
     choco: tailscale
+  
   task:
     _bin: task
     _desc: A task runner / simpler Make alternative written in Go
@@ -8814,6 +9122,20 @@ softwarePackages:
     port: dua-cli
     scoop: dua
     xbps: dua-cli
+  xh:
+    _bin: xh
+    _github: https://github.com/ducaale/xh
+    _name: XH
+    cargo: xh
+    pkg-android: xh
+    apk: xh
+    pacman: xh
+    apt: xh
+    pkg-freebsd: xh
+    nix-env: nixpkgs.xh
+    brew: xh
+    scoop: xh
+    choco: xh
   soduto:
     _github:
     _name: Soduto

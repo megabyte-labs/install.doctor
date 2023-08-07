@@ -7,6 +7,12 @@ if [[ "$(hostname)" != *'-minimal' ]]; then
   export LC_ALL="en_US.UTF-8"
 fi
 
+### Sensible Bash
+# Source: https://github.com/mrzool/bash-sensible
+if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/shell/sensible.bash" ]; then
+   . "${XDG_DATA_HOME:-$HOME/.local/share}/shell/sensible.bash"
+fi
+
 # Detect support for advanced terminal features
 if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
   export BASH_SUPPORT=true
@@ -41,6 +47,15 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   if [ -f "$HOME/.fig/shell/bashrc.pre.bash" ]; then
     . "$HOME/.fig/shell/bashrc.pre.bash"
   fi
+fi
+
+### Pre-exec
+# Source: https://github.com/rcaloras/bash-preexec
+if [ -f "$HOME/.local/scripts/pre-exec.sh" ]; then
+  export __bp_enable_subshells="true"
+  . "$HOME/.local/scripts/pre-exec.sh"
+  preexec() { echo "just typed $1"; }
+  precmd() { echo "printing the prompt"; }
 fi
 
 ### History
@@ -94,6 +109,11 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
 	  eval "$(atuin init bash)"
   fi
 
+  ### Carapace
+  if command -v carapace > /dev/null; then
+    source <(carapace _carapace)
+  fi
+
   ### Cod
   if command -v cod > /dev/null; then
 	  . <(cod init $$ bash)
@@ -112,6 +132,17 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   ### Emplace
   if command -v emplace > /dev/null; then
     . <(emplace init bash)
+  fi
+
+  ### hiSHtory
+  if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.sh" ]; then
+	  export PATH="$PATH:${XDG_CONFIG_HOME:-$HOME/.config}/hishtory"
+	  . "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.sh"
+  fi
+
+  ### Hoard
+  if command -v hoard > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/hoard/src/shell/hoard.bash" ]; then
+    . "${XDG_DATA_HOME:-$HOME/.local/share}/hoard/src/shell/hoard.bash"
   fi
 
   ### iTerm2
@@ -175,9 +206,9 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     . "$SDKMAN_DIR/bin/sdkman-init.sh"
   fi
 
-  ### The Fuck
-  if command -v thefuck > /dev/null; then
-	  eval "$(thefuck --alias)"
+  ### Up
+  if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh" ]; then
+    . "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh"
   fi
 
   ### Vault
@@ -187,7 +218,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
 
   ### zoxide
   if command -v zoxide > /dev/null; then
-    eval "$(zoxide init --cmd z bash)" > /dev/null
+    eval "$(zoxide init bash)" > /dev/null
   else
     alias z='cd'
   fi

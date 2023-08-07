@@ -170,6 +170,7 @@ softwareGroups:
     - shell-gpt
   Android: &Android
     - apktool
+    - repo
     - scrcpy
   Android-Desktop: &Android-Desktop
     - android-studio
@@ -256,11 +257,14 @@ softwareGroups:
     - bat
     - bottom
     - broot
+    - carapace
     - cheat
     - chezmoi
+    - clipboard
     - curl
     - curlie
     - delta
+    - desk
     - direnv
     - docker-langserver
     - dog
@@ -274,12 +278,16 @@ softwareGroups:
     - firefox-profile
     - fkill
     - fzf
+    - ghcup
     - git
     - glances
     - glow
     - gnu
+    - goto
     - gping
     - gum
+    - hishtory
+    - hoard
     - htmlq # htmlq is used by the the Firefox script
     - hyperfine
     - jq
@@ -289,9 +297,11 @@ softwareGroups:
     - nb
     - neovim
     - netcat
+    - nfty
     - nmap
     - nnn
     - node
+    - nushell
     - oh-my-posh
     - pass
     - postfix
@@ -315,6 +325,8 @@ softwareGroups:
     - tree
     - vim
     - volta
+    - xpanes
+    - xxh
     - watchexec
     - watchman
     - wget
@@ -324,8 +336,11 @@ softwareGroups:
     - zoxide
     - zsh
     - zx
+    - zenity
   CLI-Extras: &CLI-Extras
+    - ack
     - axel
+    - bashly
     - bin
     - bitly
     - brew-gem
@@ -358,7 +373,9 @@ softwareGroups:
     - is-up
     - jiq
     - jqp
+    - just
     - litecli
+    - loop
     - marp
     - mods
     - mycli
@@ -367,6 +384,7 @@ softwareGroups:
     - normit
     - pastel
     - peco
+    - percol
     - pidcat
     - pgcli
     - pywhat
@@ -374,6 +392,8 @@ softwareGroups:
     - s-search
     - sad
     - search-gpt
+    - shml
+    - shx
     - slack-term
     - slides
     - social-analyzer
@@ -389,8 +409,12 @@ softwareGroups:
     - tmuxinator
     - up
     - wallpaper-cli
+    - whereami
+    - wipe-modules
+    - xh
     - xz
     - yank
+    - zsh-completions
   Cloud: &Cloud
     - awscli
     - aws-shell
@@ -467,11 +491,14 @@ softwareGroups:
     - taplo
     - textql
     - toml-sort
+    - xsv
     - xurls
     - yj
     - yq
   Database: &Database
     - iredis
+    - mariadb
+    - mongodb
     - octosql
     - sqlite
     - steampipe
@@ -562,6 +589,7 @@ softwareGroups:
   Git: &Git
     - aicommits
     - commitizen
+    - forgit
     - gh
     - gist
     - git
@@ -583,6 +611,7 @@ softwareGroups:
     - lazygit
     - multi-gitter
     - opencommit
+    - repo
     - starred
     - tig
   Git-Desktop: &Git-Desktop
@@ -639,6 +668,7 @@ softwareGroups:
     - lens
   Linting: &Linting
     - ansible-lint
+    - cloc
     - dockfmt
     - dotenv-linter
     - dprint
@@ -688,6 +718,7 @@ softwareGroups:
     - tinypng
     - vidmerger
     - wkhtmltopdf
+    - you-get
     - youtube-dl
     - yt-dlp
   Media-Desktop: &Media-Desktop
@@ -885,6 +916,7 @@ softwareGroups:
     - sshpass
     - sync-ssh-keys
     - teleport
+    - tmate
     - wetty
     - wishlist
   Security: &Security
@@ -901,6 +933,7 @@ softwareGroups:
     - pony
     - protonvpn-cli
     - quark-engine
+    - scap-security-guide
     - skate
     - ssh-vault
     - sshuttle
@@ -924,6 +957,7 @@ softwareGroups:
   Server: &Server
     - cockpit
     - cups
+    - haproxy
     - netdata
     - samba
     - sftpgo
@@ -948,6 +982,7 @@ softwareGroups:
     - gtop
     - htop
     - ipmitool
+    - iproute2mac
     - masscan
     - pulumi
     - sysbench
@@ -1005,6 +1040,7 @@ softwareGroups:
     - nativefier
   Virtualization: &Virtualization
     - d2vm
+    - distrobox
     - kvm
     - libguestfs-tools
     - lxdc
@@ -1014,6 +1050,7 @@ softwareGroups:
     - vagrant
     - vagrant-vmware-utility
     - vermin
+    - xhyve
   Virtualization-Desktop: &Virtualization-Desktop
     - docker-desktop
     - gnome-boxes
@@ -1092,6 +1129,7 @@ softwareGroups:
     - semantic-release
     - serve
     - serverless
+    - sphinx
     - storybook
     - surge
     - trellis

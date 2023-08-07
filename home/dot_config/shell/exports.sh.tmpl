@@ -160,6 +160,13 @@ if command -v fzf > /dev/null; then
   export CHEAT_USE_FZF=true
 fi
 
+### Concurrent
+export CONCURRENT_LOG_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/concurrent"
+
+### Desk
+export DESK_DIR="$XDG_CONFIG_HOME/desk"
+export DESK_DESKS_DIR="$XDG_CONFIG_HOME/desk/desks"
+
 ### Deta
 export DETA_INSTALL="$XDG_DATA_HOME/deta"
 export PATH="$PATH:$DETA_INSTALL/bin"
@@ -229,6 +236,11 @@ fi
 
 ### Gradle
 export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
+
+### Hishtory
+export HISHTORY_PATH="$XDG_CONFIG_HOME/hishtory"
+export HSTR_CONFIG=hicolor
+export HSTR_TIOCSTI=y
 
 ### Homebrew
 export HOMEBREW_BUNDLE_FILE="$XDG_CONFIG_HOME/Brewfile"

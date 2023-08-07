@@ -51,6 +51,9 @@ export GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoite
 ### Heroku
 export HEROKU_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "HEROKU_API_KEY")) }}{{ includeTemplate "secrets/HEROKU_API_KEY" | decrypt | trim }}{{ else }}{{ env "HEROKU_API_KEY" }}{{ end }}"
 
+### Hishtory
+export HISHTORY_USER_SECRET="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "HISHTORY_USER_SECRET")) }}{{ includeTemplate "secrets/HISHTORY_USER_SECRET" | decrypt | trim }}{{ else }}{{ env "HISHTORY_USER_SECRET" }}{{ end }}"
+
 ### Install Doctor
 # TODO: Replace HEADLESS_INSTALL with {{ .host.headless }} data source once headless install detection is implemented
 # export HEADLESS_INSTALL={{ .host.headless }}

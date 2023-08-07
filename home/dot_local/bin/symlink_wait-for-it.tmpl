@@ -1,0 +1,3 @@
+{{- if stat (joinPath .chezmoi.homeDir ".local" "share" "wait-for-it" "wait-for-it.sh") -}}
+{{ .chezmoi.homeDir }}/.local/share/wait-for-it/wait-for-it.sh
+{{- end -}}

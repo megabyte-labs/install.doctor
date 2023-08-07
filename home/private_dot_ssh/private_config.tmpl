@@ -20,5 +20,8 @@ Host gitlab.com
     UpdateHostKeys no
 Host github.com
     UpdateHostKeys no
-
+{{ if (lookPath "fig") -}}
+Match all
+  Include ~/.fig/ssh
+{{- end -}}
 {{- end -}}
