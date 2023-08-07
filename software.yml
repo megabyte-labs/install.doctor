@@ -10390,7 +10390,8 @@ softwarePackages:
     _github: false
     _home: https://developer.apple.com/xcode/
     _name: XCode
-    ansible:darwin: professormanhattan.xcode
+    _post: sudo xcodebuild -license accept && sudo xcodebuild -runFirstLaunch
+    mas: 497799835
   xurls:
     _bin: xurls
     _desc: Extract urls from text
