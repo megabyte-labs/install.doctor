@@ -35,6 +35,11 @@ This page outlines various projects and tasks that we are currently working on. 
 * https://github.com/arxanas/git-branchless
 * https://github.com/mumoshu/variant2
 * https://github.com/burnison/tasksync
+* https://github.com/Infisical/infisical
+* https://github.com/xwmx/nb
+* https://github.com/psychic-api/psychic
+* https://github.com/pimutils/vdirsyncer
+* https://github.com/librevault/librevault
 
 ## Upstream
 
