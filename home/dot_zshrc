@@ -451,14 +451,10 @@ if command -v hoard > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/ho
 fi
 
 ### iTerm2
-if [ -f "$HOME/.local/scripts/iterm2.zsh" ]; then
-  source "$HOME/.local/scripts/iterm2.zsh"
-fi
+[ -f "$HOME/.local/scripts/iterm2.zsh" ] && source "$HOME/.local/scripts/iterm2.zsh"
 
 ### Java (asdf)
-if [ -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ]; then
-  . "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
-fi
+[ -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ] && source "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
 
 ### Mamba Forge (Faster Conda Drop-In Replacement)
 # TODO: Add support for Linux
@@ -498,19 +494,13 @@ if [ -f /usr/local/bin/micromamba ]; then
 fi
 
 ### Navi (Ctrl+G)
-if command -v navi > /dev/null; then
-	eval "$(navi widget zsh)"
-fi
+command -v navi > /dev/null && eval "$(navi widget zsh)"
 
 ### Fig
-if [ -f "$HOME/.fig/shell/zshrc.post.zsh" ]; then
-	source "$HOME/.fig/shell/zshrc.post.zsh"
-fi
+[ -f "$HOME/.fig/shell/zshrc.post.zsh" ] && source "$HOME/.fig/shell/zshrc.post.zsh"
 
 ### Powerline
-if [ -f "${XDG_CONFIG_HOME:-$HOME.config}/scripts/p10k.zsh" ]; then
-	source "$HOME/.local/scripts/p10k.zsh"
-fi
+[ -f "${XDG_CONFIG_HOME:-$HOME.config}/scripts/p10k.zsh" ] && source "$HOME/.local/scripts/p10k.zsh"
 
 ### SDKMan
 if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
@@ -525,9 +515,7 @@ fi
 [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh"
 
 ### HashiCorp Vault
-if command -v vault > /dev/null; then
-	complete -o nospace -C vault vault
-fi
+command -v vault > /dev/null && complete -o nospace -C vault vault
 
 ### zoxide
 if command -v zoxide > /dev/null; then
