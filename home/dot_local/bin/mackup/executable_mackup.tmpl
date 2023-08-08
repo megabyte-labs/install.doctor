@@ -18,8 +18,8 @@
 {{ includeTemplate "universal/logg" }}
 
 ### Create symlinks pointing to stored configurations
-ln -s "$HOME/.config/mackup/.mackup/" ~/.mackup
-ln -s "$HOME/.config/mackup/.mackup.cfg" ~/.mackup.cfg
+ln -s "${XDG_CONFIG_HOME:-$HOME/.config}/mackup/.mackup/" ~/.mackup
+ln -s "${XDG_CONFIG_HOME:-$HOME/.config}/mackup/.mackup.cfg" ~/.mackup.cfg
 
 ### Run original mackup executable
 if command -v brew > /dev/null && brew list | grep mackup > /dev/null; then

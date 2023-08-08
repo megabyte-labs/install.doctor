@@ -83,10 +83,10 @@ fi
 
 ### mitmproxy / mitmweb
 if command -v mitmproxy > /dev/null; then
-  alias mitmproxy="mitmproxy --set confdir=$XDG_CONFIG_HOME/mitmproxy"
+  alias mitmproxy="mitmproxy --set confdir=${XDG_CONFIG_HOME:-$HOME/.config}/mitmproxy"
 fi
 if command -v mitmweb > /dev/null; then
-  alias mitmweb="mitmweb --set confdir=$XDG_CONFIG_HOME/mitmproxy"
+  alias mitmweb="mitmweb --set confdir=${XDG_CONFIG_HOME:-$HOME/.config}/mitmproxy"
 fi
 
 ### ripgrep
@@ -258,7 +258,7 @@ fi
 alias wget="wget --hsts-file ~/.local/wget-hsts"
 
 ### Yarn
-alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
+alias yarn='yarn --use-yarnrc "${XDG_CONFIG_HOME:-$HOME/.config}/yarn/config"'
 
 # Running this will update GPG to point to the current YubiKey
 alias yubi-stub='gpg-connect-agent "scd serialno" "learn --force" /bye'

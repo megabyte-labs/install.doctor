@@ -1386,7 +1386,7 @@ softwarePackages:
     _name: Cod
     go: github.com/dim-an/cod@master
   iproute2mac:
-    _bin: 
+    _bin:
     _github: https://github.com/brona/iproute2mac
     _name: iproute2mac
     brew:darwin: iproute2mac
@@ -2739,7 +2739,7 @@ softwarePackages:
     port: xsv
     brew: xsv
     nix-env: xsv
-  
+
   haproxy:
     _bin: haproxy
     _github: https://github.com/haproxy/haproxy
@@ -4812,7 +4812,7 @@ softwarePackages:
     _bin: atuin
     _github: https://github.com/ellie/atuin
     _name: Atuin
-    _post: source "$XDG_CONFIG_HOME/shell/private.sh" && atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$ATUIN_PASSWORD" && atuin import auto && atuin sync
+    _post: source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh" && atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$ATUIN_PASSWORD" && atuin import auto && atuin sync
     brew: atuin
     cargo: atuin
     pacman: atuin
@@ -4823,7 +4823,7 @@ softwarePackages:
     _github: https://github.com/ddworken/hishtory
     _name: hiSHtory
     _todo: Check for Homebrew version
-    _post: source "$XDG_CONFIG_HOME/shell/private.sh" && echo y | hishtory init "$HISHTORY_USER_SECRET"
+    _post: source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh" && echo y | hishtory init "$HISHTORY_USER_SECRET"
     script: curl https://hishtory.dev/install.py | python3 -
   git-town:
     _bin: git-town
@@ -9089,7 +9089,7 @@ softwarePackages:
     _when:cask: '! test -d "/Applications/Tailscale.app" && ! test -d "$HOME/Applications/Tailscale.app"'
     cask: tailscale
     choco: tailscale
-  
+
   task:
     _bin: task
     _desc: A task runner / simpler Make alternative written in Go
@@ -9914,7 +9914,7 @@ softwarePackages:
     _home: https://volta.sh
     _name: volta-vm
     _post: |
-      export VOLTA_HOME="$XDG_DATA_HOME/volta"
+      export VOLTA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/volta"
       export PATH="$VOLTA_HOME/bin:$PATH"
       volta setup
       volta install node@latest

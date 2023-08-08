@@ -19,7 +19,7 @@ export ATUIN_USERNAME="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplat
 ### Google Cloud SDK
 export CLOUDSDK_CORE_PROJECT="{{ .user.gcloud.coreProject }}"
 export GCE_SERVICE_ACCOUNT_EMAIL="{{ .user.gcloud.email }}"
-export GCE_CREDENTIALS_FILE="$HOME/.config/gcloud/gcp.json"
+export GCE_CREDENTIALS_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/gcloud/gcp.json"
 
 ### CloudFlare
 # Source: https://github.com/cloudflare/cf-terraforming

@@ -17,13 +17,13 @@ if [ -f /tmp/install-gnome-extensions.txt ]; then
 fi
 
 ### Register temporary file for gnome.yml JSON
-if [ -f "$HOME/.config/desktop/gnome.yml" ]; then
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/desktop/gnome.yml" ]; then
     TMP_YQ="$(mktemp)"
-    cat "$HOME/.config/desktop/gnome.yml" | yq e -o=j '.' > "$TMP_YQ"
+    cat "${XDG_CONFIG_HOME:-$HOME/.config}/desktop/gnome.yml" | yq e -o=j '.' > "$TMP_YQ"
 fi
 
 ### Populate /tmp/install-gnome-extensions.txt with GNOME extensions that need to be installed
-if [ -f "$HOME/.config/desktop/gnome.yml" ]; then
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/desktop/gnome.yml" ]; then
     cat "$TMP_YQ" | jq -c '.default_gnome_extensions[] | tojson' | while read EXT; do
         TMP="$(mktemp)"
         echo "$EXT" | sed 's/^.\(.*\).$/\1/' > "$TMP"
@@ -66,7 +66,7 @@ else
 fi
 
 ### Apply plugin gsettings
-if [ -f "$HOME/.config/desktop/gnome.yml" ]; then
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/desktop/gnome.yml" ]; then
     cat "$TMP_YQ" | jq -c '.default_gnome_extensions[] | tojson' | while read EXT; do
         if [ "$DEBUG_MODE" == 'true' ]; then
             logg info 'Extension data:'

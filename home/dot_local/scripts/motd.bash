@@ -203,7 +203,7 @@ generate_bar_disk() {
 }
 
 print_banner() {
-  if [ ! -f "$HOME/.cache/hey-banner-printed" ]; then
+  if [ ! -f "${XDG_CACHE_HOME:-$HOME/.cache}/hey-banner-printed" ]; then
     if command -v lolcat >/dev/null && command -v figlet >/dev/null; then
       figlet "Hey" | lolcat -f
       printf "\\n"
@@ -211,8 +211,8 @@ print_banner() {
       printf "\\n%s\\n" "$(figlet -t -f "$BANNER_FONTPATH" " Hey")"
       printf "\\n"
     fi
-    mkdir -p "$HOME/.cache"
-    touch "$HOME/.cache/hey-banner-printed"
+    mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}"
+    touch "${XDG_CACHE_HOME:-$HOME/.cache}/hey-banner-printed"
   else
     if command -v neofetch > /dev/null; then
       neofetch

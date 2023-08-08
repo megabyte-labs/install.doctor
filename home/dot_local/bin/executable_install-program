@@ -859,8 +859,8 @@ async function ensurePackageManagerAnsible() {
     await $`pipx inject ansible-core PyObjC PyObjC-core`
   }
   await $`pipx inject ansible-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog`
-  await $`mkdir -p "$HOME/.cache/megabyte-labs"`
-  await $`touch "$HOME/.cache/megabyte-labs/ansible-installed"`
+  await $`mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte-labs"`
+  await $`touch "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte-labs/ansible-installed"`
   log('info', 'Package Manager Install', `Ansible and its supporting packages are now installed via pipx`)
 }
 
@@ -896,7 +896,7 @@ async function ensurePackageManager(packageManager) {
     }
   } else if (packageManager === 'ansible') {
     try {
-      await $`test -f "$HOME/.cache/megabyte-labs/ansible-installed"`
+      await $`test -f "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte-labs/ansible-installed"`
       const ansible = which.sync('ansible', { nothrow: true })
       if (ansible) {
         log('info', logStage, `\`ansible\` and its supporting packages appear to be installed`)
@@ -1541,7 +1541,7 @@ async function addUserGroup(group) {
 
 /**
  * Adds the rules specified in the `_ports` key of each entry in the `software.yml` file.
- * 
+ *
  * @param rule {packageKey: string, ports: any} Firewall rule in the form of 8888/tcp or 9999/udp. Can also be the XML file name stored in ~/.config/firewall/etc/firewalld/services.
  */
 async function addFirewallRule(rule) {
@@ -1583,7 +1583,7 @@ async function addFirewallRule(rule) {
       if (fileExists(serviceFile)) {
         runCommand(`Executing the matching ${serviceFile} service file`, `sudo bash "${serviceFile}"`)
       } else {
-        if (typeof rule.ports === 'string') {  
+        if (typeof rule.ports === 'string') {
           log('error', logStage, `_ports rules that are equal to strings are not yet implemented on macOS (package: ${rule.packageKey})`)
         } else {
           for (const port of rule.ports) {

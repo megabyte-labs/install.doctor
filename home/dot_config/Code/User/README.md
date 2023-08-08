@@ -22,6 +22,7 @@ The following plugins were tested but removed because the `extensions.json` alre
     "gitpod.gitpod-desktop",
     "gitpod.gitpod-remote-ssh", // Bunch of errors like this during install [gitpod-remote-ssh]: Couldn't find message for key openPreview.
     "google-home.google-home-extension",
+    "htmlhint.vscode-htmlhint", // Couldn't start client HTML-hint on macOS GitHub remote repository
     "ibm.codewind", // Creates a ~/.codewind folder. Does not respect XDG spec.
     "ibm.ibm-developer",
     "idered.npm",

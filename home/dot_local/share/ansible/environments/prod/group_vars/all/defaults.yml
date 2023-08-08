@@ -167,7 +167,7 @@ default_gnome_extensions:
       - if command -v yum > /dev/null; then sudo yum install -y libgda libgda-sqlite; fi
       - if command -v pacman > /dev/null; then sudo pacman -Sy libgda; fi
       - if command -v zypper > /dev/null; then sudo zypper install -y libgda-6_0-sqlite typelib-1_0-Gda-6_0 typelib-1_0-GSound-1_0; fi
-      - dconf write /org/gnome/shell/extensions/pano/database-location "\\\"$HOME/.local/share/pano\\\""
+      - dconf write /org/gnome/shell/extensions/pano/database-location "\\\"${XDG_DATA_HOME:-$HOME/.local/share}/pano\\\""
       - dconf write /org/gnome/shell/extensions/pano/history-length 50
       - dconf write /org/gnome/shell/extensions/pano/play-audio-on-copy true
       - dconf write /org/gnome/shell/extensions/pano/session-only-mode true

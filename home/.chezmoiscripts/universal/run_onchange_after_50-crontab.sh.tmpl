@@ -11,5 +11,5 @@
 {{ includeTemplate "universal/logg" }}
 
 logg 'Installing crontab jobs'
-crontab < "$XDG_CONFIG_HOME/crontab/config"
+crontab < "${XDG_CONFIG_HOME:-$HOME/.config}/crontab/config"
 {{ end -}}

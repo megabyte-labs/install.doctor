@@ -11,7 +11,7 @@
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}
 
-export VOLTA_HOME="$XDG_DATA_HOME/volta"
+export VOLTA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
 ### Ensure recent version of Node.js is being used

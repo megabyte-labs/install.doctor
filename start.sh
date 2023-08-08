@@ -296,18 +296,18 @@ function ensureTaskInstalled() {
       logger error "System type not recognized. You must install task manually." && exit 1
     fi
   else
-    mkdir -p "$HOME/.cache/megabyte/start.sh"
-    if [ -f "$HOME/.cache/megabyte/start.sh/bodega-update-check" ]; then
-      TASK_UPDATE_TIME="$(cat "$HOME/.cache/megabyte/start.sh/bodega-update-check")"
+    mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte/start.sh"
+    if [ -f "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte/start.sh/bodega-update-check" ]; then
+      TASK_UPDATE_TIME="$(cat "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte/start.sh/bodega-update-check")"
     else
       TASK_UPDATE_TIME="$(date +%s)"
-      echo "$TASK_UPDATE_TIME" > "$HOME/.cache/megabyte/start.sh/bodega-update-check"
+      echo "$TASK_UPDATE_TIME" > "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte/start.sh/bodega-update-check"
     fi
     # shellcheck disable=SC2004
     TIME_DIFF="$(($(date +%s) - $TASK_UPDATE_TIME))"
     # Only run if it has been at least 15 minutes since last attempt
     if [ "$TIME_DIFF" -gt 900 ] || [ "$TIME_DIFF" -lt 5 ]; then
-      date +%s > "$HOME/.cache/megabyte/start.sh/bodega-update-check"
+      date +%s > "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte/start.sh/bodega-update-check"
       logger info "Checking for latest version of Task"
       CURRENT_VERSION="$(task --version | cut -d' ' -f3 | cut -c 2-)"
       LATEST_VERSION="$(curl -s "$TASK_RELEASE_API" | grep tag_name | cut -c 17- | sed 's/\",//')"
@@ -450,12 +450,12 @@ function ensureTaskfiles() {
   if [ -z "$ENSURED_TASKFILES" ]; then
     # shellcheck disable=SC2030
     task donothing || BOOTSTRAP_EXIT_CODE=$?
-    mkdir -p "$HOME/.cache/megabyte/start.sh"
-    if [ -f "$HOME/.cache/megabyte/start.sh/ensure-taskfiles" ]; then
-      TASK_UPDATE_TIME="$(cat "$HOME/.cache/megabyte/start.sh/ensure-taskfiles")"
+    mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte/start.sh"
+    if [ -f "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte/start.sh/ensure-taskfiles" ]; then
+      TASK_UPDATE_TIME="$(cat "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte/start.sh/ensure-taskfiles")"
     else
       TASK_UPDATE_TIME="$(date +%s)"
-      echo "$TASK_UPDATE_TIME" > "$HOME/.cache/megabyte/start.sh/ensure-taskfiles"
+      echo "$TASK_UPDATE_TIME" > "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte/start.sh/ensure-taskfiles"
     fi
     # shellcheck disable=SC2004
     TIME_DIFF="$(($(date +%s) - $TASK_UPDATE_TIME))"
@@ -463,7 +463,7 @@ function ensureTaskfiles() {
     if [ -n "$BOOTSTRAP_EXIT_CODE" ] || [ "$TIME_DIFF" -gt 3600 ] || [ "$TIME_DIFF" -lt 5 ] || [ -n "$FORCE_TASKFILE_UPDATE" ]; then
       logger info 'Grabbing latest Taskfiles by downloading shared-master.tar.gz'
       # shellcheck disable=SC2031
-      date +%s > "$HOME/.cache/megabyte/start.sh/ensure-taskfiles"
+      date +%s > "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte/start.sh/ensure-taskfiles"
       ENSURED_TASKFILES="true"
       if [ -d common/.config/taskfiles ]; then
         if [[ "$OSTYPE" == 'darwin'* ]]; then

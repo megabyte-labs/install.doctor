@@ -339,7 +339,7 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 " Install Coc extensions
 " TODO: Add https://github.com/yuki-yano/fzf-preview.vim
 " TODO: Add https://github.com/tpope/vim-fugitive
-let g:coc_global_config="$HOME/.config/coc/coc-settings.json"
+let g:coc_global_config="${XDG_CONFIG_HOME:-$HOME/.config}/coc/coc-settings.json"
 let g:coc_global_extensions = [
   \'@yaegassy/coc-ansible',
   \'@yaegassy/coc-nginx',

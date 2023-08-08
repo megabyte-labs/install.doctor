@@ -16,12 +16,12 @@ if [ -d /Applications ] && [ -d /System ]; then
     logg info 'Copying fonts from ~/Library/Fonts and ~/.local/share/fonts to /Library/Fonts to make them available globally'
     FONT_DIR='/Library/Fonts'
     sudo rsync -av "$HOME/Library/Fonts" "$FONT_DIR"
-    sudo rsync -av "$HOME/.local/share/fonts" "$FONT_DIR"
+    sudo rsync -av "${XDG_DATA_HOME:-$HOME/.local/share}/fonts" "$FONT_DIR"
 else
     # Linux
     logg info 'Copying fonts from ~/.local/share/fonts to /usr/local/share/fonts to make them available globally'
     FONT_DIR='/usr/local/share/fonts'
-    sudo rsync -av "$HOME/.local/share/fonts" "$FONT_DIR"
+    sudo rsync -av "${XDG_DATA_HOME:-$HOME/.local/share}/fonts" "$FONT_DIR"
 fi
 
 ### Configure system font properties

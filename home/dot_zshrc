@@ -423,7 +423,7 @@ if command -v hoard > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/ho
 fi
 
 ### iTerm2
-[ ! -f "$HOME/.local/scripts/iterm2.zsh" ] || source "$HOME/.local/scripts/iterm2.zsh"
+[ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/iterm/iterm2.zsh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/iterm/iterm2.zsh"
 
 ### Java (asdf)
 [ ! -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ] || source "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
@@ -479,7 +479,7 @@ if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
   export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"
   . "$SDKMAN_DIR/bin/sdkman-init.sh"
 elif [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
-  export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
+  export SDKMAN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/sdkman"
   . "$SDKMAN_DIR/bin/sdkman-init.sh"
 fi
 

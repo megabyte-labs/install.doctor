@@ -420,8 +420,8 @@ else
     sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR/d' /etc/sudoers || logg warn 'Failed to remove passwordless sudo from the /etc/sudoers file'
 fi
 
-# @description Render the `docs/POST-INSTALL.md` file to the terminal at the end of the provisioning process
+# @description Render the `docs/terminal/post-install.md` file to the terminal at the end of the provisioning process
 logg success 'Provisioning complete!'
-if command -v glow > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/POST-INSTALL.md" ]; then
-  glow "$HOME/.local/share/chezmoi/docs/POST-INSTALL.md"
+if command -v glow > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/terminal/post-install.md" ]; then
+  glow "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/terminal/post-install.md"
 fi

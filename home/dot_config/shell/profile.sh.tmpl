@@ -8,16 +8,10 @@
 # shellcheck disable=SC1090,SC1091
 
 # Aliases / Functions / Exports
-export XDG_CONFIG_HOME="$HOME/.config"
-if [ -f "$XDG_CONFIG_HOME/shell/exports.sh" ]; then
-  . "$XDG_CONFIG_HOME/shell/exports.sh"
-fi
-if [ -f "$XDG_CONFIG_HOME/shell/aliases.sh" ]; then
-  . "$XDG_CONFIG_HOME/shell/aliases.sh"
-fi
-if [ -f "$XDG_CONFIG_HOME/shell/functions.sh" ]; then
-  . "$XDG_CONFIG_HOME/shell/functions.sh"
-fi
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+[ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/exports.sh" ] || . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/exports.sh"
+[ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliases.sh" ] || . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliases.sh"
+[ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/functions.sh" ] || . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/functions.sh"
 
 ### Bash / ZSH
 if [ "$BASH_SUPPORT" = 'true' ]; then
@@ -81,8 +75,8 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   fi
 
   ### Directory Colors
-  if [ -f "$XDG_CONFIG_HOME/shell/lscolors.sh" ]; then
-    . "$XDG_CONFIG_HOME/shell/lscolors.sh"
+  if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/lscolors.sh" ]; then
+    . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/lscolors.sh"
   fi
 
   ### fzf-git
@@ -91,13 +85,13 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   #fi
 
   ### git-fuzzy
-  if [ -d "$XDG_DATA_HOME/git-fuzzy/bin" ]; then
-    export PATH="$XDG_DATA_HOME/git-fuzzy/bin:$PATH"
+  if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/git-fuzzy/bin" ]; then
+    export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/git-fuzzy/bin:$PATH"
   fi
 
   ### MOTD
-  if [ -f "$XDG_CONFIG_HOME/shell/motd.sh" ]; then
-    . "$XDG_CONFIG_HOME/shell/motd.sh"
+  if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/motd.sh" ]; then
+    . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/motd.sh"
   fi
 fi
 

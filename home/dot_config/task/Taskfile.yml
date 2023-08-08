@@ -39,7 +39,12 @@ tasks:
         echo "> Copying Password"
         ### Copy the password to the clipboard
         printf '%s' "$(echo "$selected" | jq -r '.login.password')" | $COPY
-  
+
+  build:packer:
+    desc: Builds Packer boxes using all supported virtualization platform / operating system combinations
+    summary: |
+      # {{ .AppName}} Packer Build
+
   build:packer:
     desc: Builds Packer boxes using all supported virtualization platform / operating system combinations
     summary: |
@@ -72,7 +77,7 @@ tasks:
       Qubes can leverage the assets generated from the VirtualBox builds to power HVMs.
     cmds:
       - |
-        cd "$HOME/.local/share/bento"
+        cd "${XDG_DATA_HOME:-$HOME/.local/share}/bento"
         packer init -upgrade ./packer_templates
         logg info 'Building Ubuntu VirtualBox VMs'
         packer build -var-file=os_pkrvars/ubuntu/ubuntu-22.04-x86_64.pkrvars.hcl ./packer_templates
@@ -441,11 +446,11 @@ tasks:
           if [ -d "$HOME/.local/mnt/s3" ]; then
             if command -v rclone > /dev/null && command -v restic > /dev/null; then
               logg info '{{ .AppName }} profile folder exists and user S3 mount exists. Backing the profile up to user S3 bucket via Restic.'
-              if ([ -z "$(restic -r "rclone:$USER-s3:user/{{ .RcloneRepository }}" --password-file "$HOME/.config/age/chezmoi.txt" cat config)" ]) 2>/dev/null; then
+              if ([ -z "$(restic -r "rclone:$USER-s3:user/{{ .RcloneRepository }}" --password-file "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" cat config)" ]) 2>/dev/null; then
                 logg info 'Initializing {{ .AppName }} Restic repository'
-                restic -r "rclone:$USER-s3:user/{{ .RcloneRepository }}" --password-file "$HOME/.config/age/chezmoi.txt" init
+                restic -r "rclone:$USER-s3:user/{{ .RcloneRepository }}" --password-file "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" init
               fi
-              restic -r "rclone:$USER-s3:user/{{ .RcloneRepository }}" --password-file "$HOME/.config/age/chezmoi.txt" --verbose backup --tag "{{ .ProfileFolder }}" --tag {{ OS }} --tag "$HOST" "{{ .ProfileFolder }}"
+              restic -r "rclone:$USER-s3:user/{{ .RcloneRepository }}" --password-file "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" --verbose backup --tag "{{ .ProfileFolder }}" --tag {{ OS }} --tag "$HOST" "{{ .ProfileFolder }}"
             else
               logg error 'Both `rclone` and `restic` must be available' && exit 1
             fi
@@ -462,10 +467,10 @@ tasks:
         if [ -d '{{ .AppFolder }}' ]; then
           if [ -d "$HOME/.local/mnt/s3" ]; then
             if command -v rclone > /dev/null && command -v restic > /dev/null; then
-              if ([ -z "$(restic -r "rclone:$USER-s3:user/{{ .RcloneRepository }}" --password-file "$HOME/.config/age/chezmoi.txt" cat config)" ]) 2>/dev/null; then
+              if ([ -z "$(restic -r "rclone:$USER-s3:user/{{ .RcloneRepository }}" --password-file "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" cat config)" ]) 2>/dev/null; then
                 logg warn 'The {{ .AppName }} Rclone repository has not been initialized. Skipping.'
               else
-                restic -r "rclone:$USER-s3:user/{{ .RcloneRepository }}" --password-file "$HOME/.config/age/chezmoi.txt" restore latest --target '{{ .ProfileFolder }}'
+                restic -r "rclone:$USER-s3:user/{{ .RcloneRepository }}" --password-file "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" restore latest --target '{{ .ProfileFolder }}'
               fi
             else
               logg error 'Both `rclone` and `restic` must be available' && exit 1

@@ -3,8 +3,8 @@
 ### Source .bashrc if it is present
 if [ -f "$HOME/.bashrc" ]; then
   . "$HOME/.bashrc"
-elif [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/exports.sh" ]; then
-  . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/exports.sh"
+elif [ -f "$HOME/.config/shell/exports.sh" ]; then
+  . "$HOME/.config/shell/exports.sh"
 fi
 
 ### XDG

@@ -17,7 +17,7 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
 fi
 
 ### Import Common Settings
-[ ! -f "$HOME/.config/shell/profile.sh" ] || . "$HOME/.config/shell/profile.sh"
+[ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile.sh" ] || . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile.sh"
 
 ### Ble.sh
 [[ $- == *i* ]] && source "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/ble.sh" --noattach --rcfile "${XDG_DATA_CONFIG:-$HOME/.config}/blesh/bleshrc"
@@ -68,7 +68,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
       . "$BASH_IT/bash_it.sh"
     elif command -v oh-my-posh > /dev/null; then
       # Oh My Posh (See: https://ohmyposh.dev/)
-      eval "$(oh-my-posh init bash --config "$XDG_CONFIG_HOME/oh-my-posh/Betelgeuse.omp.json")"
+      eval "$(oh-my-posh init bash --config "${XDG_CONFIG_HOME:-$HOME/.config}/oh-my-posh/Betelgeuse.omp.json")"
     else
       # Basic styled terminal
       case "$TERM" in
@@ -79,9 +79,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     fi
   else
     # Minimal session
-    if command -v oh-my-posh > /dev/null; then
-      eval "$(oh-my-posh init bash --config "$XDG_CONFIG_HOME/oh-my-posh/Betelgeuse-minimal.omp.json")"
-    fi
+    ! command -v oh-my-posh > /dev/null || eval "$(oh-my-posh init bash --config "${XDG_CONFIG_HOME/.config}/oh-my-posh/Betelgeuse-minimal.omp.json")"
   fi
 
   ### Bash Completion (Homebrew)
@@ -97,34 +95,22 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   fi
 
   ### Atuin
-  if command -v atuin > /dev/null; then
-	  eval "$(atuin init bash)"
-  fi
+  ! command -v atuin > /dev/null || eval "$(atuin init bash)"
 
   ### Carapace
-  if command -v carapace > /dev/null; then
-    source <(carapace _carapace)
-  fi
+  ! command -v carapace > /dev/null || source <(carapace _carapace)
 
   ### Cod
-  if command -v cod > /dev/null; then
-	  . <(cod init $$ bash)
-  fi
+  ! command -v cod > /dev/null || . <(cod init $$ bash)
 
   ### Google Cloud SDK
-  if [ -f "${HOMEBREW_PREFIX}/share/google-cloud-sdk/path.bash.inc" ]; then
-    . "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.bash.inc"
-  fi
+  [ ! -f "${HOMEBREW_PREFIX}/share/google-cloud-sdk/path.bash.inc" ] || . "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.bash.inc"
 
   ### direnv
-  if command -v direnv > /dev/null; then
-    eval "$(direnv hook bash)"
-  fi
+  ! command -v direnv > /dev/null || eval "$(direnv hook bash)"
 
   ### Emplace
-  if command -v emplace > /dev/null; then
-    . <(emplace init bash)
-  fi
+  ! command -v emplace > /dev/null || . <(emplace init bash)
 
   ### hiSHtory
   if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.sh" ]; then
@@ -138,14 +124,10 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   fi
 
   ### iTerm2
-  if [ -f "$HOME/.local/scripts/iterm2.bash" ]; then
-    . "$HOME/.local/scripts/iterm2.bash"
-  fi
+  [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/iterm/iterm2.bash" ] || . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/iterm/iterm2.bash"
 
   ### Fig
-  if [ -f "$HOME/.fig/shell/bashrc.post.bash" ]; then
-    . "$HOME/.fig/shell/bashrc.post.bash"
-  fi
+  [ ! -f "$HOME/.fig/shell/bashrc.post.bash" ] || . "$HOME/.fig/shell/bashrc.post.bash"
 
   ### Mamba Forge (Faster Conda Drop-In Replacement)
   # TODO: Add logic for Linux
@@ -185,28 +167,22 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   fi
 
   ### Navi (Ctrl+G)
-  if command -v navi > /dev/null; then
-    eval "$(navi widget bash)"
-  fi
+  ! command -v navi > /dev/null || eval "$(navi widget bash)"
 
   ### SDKMan
   if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
     export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"
     . "$SDKMAN_DIR/bin/sdkman-init.sh"
   elif [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
-    export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
+    export SDKMAN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/sdkman"
     . "$SDKMAN_DIR/bin/sdkman-init.sh"
   fi
 
   ### Up
-  if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh" ]; then
-    . "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh"
-  fi
+  [ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh" ] || . "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh"
 
   ### Vault
-  if command -v vault > /dev/null; then
-    complete -C vault vault
-  fi
+  ! command -v vault > /dev/null || complete -C vault vault
 
   ### zoxide
   if command -v zoxide > /dev/null; then

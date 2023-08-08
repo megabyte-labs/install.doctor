@@ -53,13 +53,15 @@
     "**/.trunk/*actions/": true,
     "**/.trunk/*logs/": true,
     "**/.trunk/*out/": true,
-    "**/.trunk/*plugins/": true
+    "**/.trunk/*plugins/": true,
+    "**/.trunk/*notifications/": true
   },
   "files.watcherExclude": {
     "**/.trunk/*actions/": true,
     "**/.trunk/*logs/": true,
     "**/.trunk/*out/": true,
-    "**/.trunk/*plugins/": true
+    "**/.trunk/*plugins/": true,
+    "**/.trunk/*notifications/": true
   },
   "git.autofetch": true,
   "git.enableSmartCommit": true,
@@ -342,5 +344,26 @@
   "pieces.autocomplete": true,
   "pieces.autocompleteKey": "Tab only",
   "pieces.notifications": "Only Critical Notifications",
-  "thunder-client.workspaceRelativePath": ".config"
+  "thunder-client.workspaceRelativePath": ".config",
+  "editor.acceptSuggestionOnEnter": "off",
+  "files.associations": {
+    "**/frontmatter.json": {
+      "**/frontmatter.json": "jsonc",
+      "**/.frontmatter/config/*.json": "jsonc",
+      ".env*": "dotenv"
+    },
+    "editor.tokenColorCustomizations": {
+      "textMateRules": [
+        {
+          "scope": "keyword.other.dotenv",
+          "settings": {
+            "foreground": "#FF000000"
+          }
+        }
+      ]
+    },
+    "workbench.editorAssociations": {
+      "*.webp": "magickImageReader.readImage"
+    }
+  }
 }

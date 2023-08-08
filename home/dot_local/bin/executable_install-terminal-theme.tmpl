@@ -832,7 +832,7 @@ appy_tilixschemes() {
     # so we have to update color palette for the current profile in order to switch to the new theme
     # but only set the palette on the last loop to avoid a flashing terminal
     if ((LOOP == OPTLENGTH)); then
-      cp -f  ${scratchdir}/* "$HOME/.config/tilix/schemes/"
+      cp -f  ${scratchdir}/* "${XDG_CONFIG_HOME:-$HOME/.config}/tilix/schemes/"
       rm -rf "${scratchdir}"
       read -r -p "All done - apply new theme? [y/N] " -n 1 TILIX_RES
       if [[ ${TILIX_RES::1} =~ ^(y|Y)$ ]]; then

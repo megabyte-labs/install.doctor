@@ -19,7 +19,7 @@ if [ "$DEBUG_MODE" == 'true' ]; then
 fi
 
 ### Initialize
-COMPLETION_DIR="$HOME/.local/share/bash-completion/completions"
+COMPLETION_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/bash-completion/completions"
 mkdir -p "$COMPLETION_DIR"
 
 ### Aqua

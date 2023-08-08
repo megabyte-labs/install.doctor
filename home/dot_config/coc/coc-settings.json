@@ -1,24 +1,37 @@
 {
   "sh.enable": true,
-    "dockerfile": {
-      "command": "docker-langserver",
-      "filetypes": ["Dockerfile"],
-      "args": ["--stdio"]
-    },
-    "sql": {
-      "module": "$HOME/.local/share/nvim/lib/node_modules/sql-language-server/npm_bin/cli.js",
-      "args": ["up", "--method", "node-ipc"],
-      "filetypes": ["sql", "mysql"]
-    },
-    "terraform": {
-      "command": "terraform-ls",
-      "args": ["serve"],
-      "filetypes": [
-        "terraform",
-        "tf"
-      ],
-      "initializationOptions": {},
-      "settings": {}
-    }
+  "dockerfile": {
+    "command": "docker-langserver",
+    "filetypes": [
+      "Dockerfile"
+    ],
+    "args": [
+      "--stdio"
+    ]
+  },
+  "sql": {
+    "module": "${XDG_DATA_HOME:-$HOME/.local/share}/nvim/lib/node_modules/sql-language-server/npm_bin/cli.js",
+    "args": [
+      "up",
+      "--method",
+      "node-ipc"
+    ],
+    "filetypes": [
+      "sql",
+      "mysql"
+    ]
+  },
+  "terraform": {
+    "command": "terraform-ls",
+    "args": [
+      "serve"
+    ],
+    "filetypes": [
+      "terraform",
+      "tf"
+    ],
+    "initializationOptions": {},
+    "settings": {}
   }
+}
 }

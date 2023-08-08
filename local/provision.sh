@@ -433,10 +433,10 @@ find "$HOME/.local/bin" -maxdepth 1 -mindepth 1 -type f | while read -r BINFILE;
 done
 
 ### Run chezmoi init
-if [ ! -f "$HOME/.config/chezmoi/chezmoi.yaml" ]; then
+if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml" ]; then
   ### Show README.md snippet
   if command -v glow > /dev/null; then
-    glow "$HOME/.local/share/chezmoi/docs/CHEZMOI-INTRO.md"
+    glow "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/CHEZMOI-INTRO.md"
   fi
 
   ### Prompt for variables
@@ -497,6 +497,6 @@ fi
 
 logg success 'Provisioning complete!'
 
-if command -v glow > /dev/null && [ -f "$HOME/.local/share/chezmoi/docs/POST-INSTALL.md" ]; then
-  glow "$HOME/.local/share/chezmoi/docs/POST-INSTALL.md"
+if command -v glow > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/terminal/post-install.md" ]; then
+  glow "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/terminal/post-install.md"
 fi

@@ -28,8 +28,8 @@ dconf dump / > "$DCONF_TMP"
 logg info 'Backed up system dconf settings to '"$DCONF_TMP"
 
 ### Reset system settings / load saved configurations from ~/.config/dconf/settings
-if [ -d "$XDG_CONFIG_HOME/dconf/settings" ]; then
-    find "$XDG_CONFIG_HOME/dconf/settings" -mindepth 1 -maxdepth 1 -type f | while read DCONF_CONFIG_FILE; do
+if [ -d "${XDG_CONFIG_HOME:-$HOME/.config}/dconf/settings" ]; then
+    find "${XDG_CONFIG_HOME:-$HOME/.config}/dconf/settings" -mindepth 1 -maxdepth 1 -type f | while read DCONF_CONFIG_FILE; do
         if [ "$DEBUG_MODE" == 'true' ]; then
             logg info 'Dconf configuration file:'
             echo "$DCONF_CONFIG_FILE"

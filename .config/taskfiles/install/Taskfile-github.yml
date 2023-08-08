@@ -50,8 +50,8 @@ tasks:
     cmds:
       - .config/log info "PATH variable --> $PATH"
       - task: :install:go:bin
-      - mkdir -p "$HOME/.config/bin"
-      - jq '. | .default_path = "./.bin" | .bins = {}' <<< $(echo '{}') > "$HOME/.config/bin/config.json"
+      - mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/bin"
+      - jq '. | .default_path = "./.bin" | .bins = {}' <<< $(echo '{}') > "${XDG_CONFIG_HOME:-$HOME/.config}/bin/config.json"
       - |
         if [ -n "$CI" ]; then echo "*************** GitHub --> {{.BIN}}"; fi
       - |
