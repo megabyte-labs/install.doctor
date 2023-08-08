@@ -4,6 +4,9 @@ Santa is a macOS security tool that helps handle the process of authorizing bina
 
 The `.mobileconfig` files in this folder have to be manually clicked on to be loaded or used in conjunction with an managed device provider. For more information on what each `.mobileconfig` does, please see the [Santa Getting Started](https://santa.dev/deployment/getting-started.html) page.
 
+- `local.santa.mobileconfig` - Does not configure Santa to use a centralized server and can be run locally
+- `server.santa.mobileconfig` - Relies on a synchronization server (more details on the [Santa site](https://santa.dev))
+
 The original code used to deploy Santa via Ansible can be seen below which shows how to use `santactl` locally to block apps from loading:
 
 ```yaml
