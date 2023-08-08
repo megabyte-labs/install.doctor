@@ -294,6 +294,9 @@ export NETRC="$XDG_CONFIG_HOME/netrc"
 ### Navi
 export NAVI_CONFIG="$XDG_CONFIG_HOME/navi/config.yaml"
 
+### Nix
+export NIX_SSL_CERT_FILE="${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt"
+
 ### nnn
 if command -v nnn > /dev/null; then
   alias n='nnn -de'

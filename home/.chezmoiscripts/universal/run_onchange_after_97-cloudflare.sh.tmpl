@@ -108,6 +108,8 @@ if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; th
     if [ ! -n "$SSH_CONNECTION" ]; then
         logg info 'Requesting security authorization for Cloudflare trusted certificate'
         sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt"
+        logg info 'Updating the OpenSSL CA Store to include the Cloudflare certificate'
+        echo | sudo tee -a /etc/ssl/cert.pem < "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem"
     else
         logg warn 'Session is SSH so adding Cloudflare encryption key to trusted certificates via the security program is being bypassed since it requires Touch ID / Password verification.'
     fi

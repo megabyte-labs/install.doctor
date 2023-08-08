@@ -33,19 +33,23 @@ if command -v postfix > /dev/null; then
         ### Add the SendGrid Postfix settings to the Postfix configuration
         if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/main.cf" ]; then
             CONFIG_FILE=/etc/postfix/main.cf
-            if cat "$CONFIG_FILE" | grep '### INSTALL DOCTOR MANAGED'; then
+            if cat "$CONFIG_FILE" | grep '### INSTALL DOCTOR MANAGED' > /dev/null; then
                 logg info 'Removing Install Doctor-managed block of code in /etc/postfix/main.cf block'
                 START_LINE="$(echo `grep -n -m 1 "### INSTALL DOCTOR MANAGED ### START" "$CONFIG_FILE" | cut -f1 -d ":"`)"
                 END_LINE="$(echo `grep -n -m 1 "### INSTALL DOCTOR MANAGED ### END" "$CONFIG_FILE" | cut -f1 -d ":"`)"
-                if command -v gsed > /dev/null; then
-                    gsed -i "$START_LINE,$END_LINEd" "$CONFIG_FILE"
+                if [ -n "$START_LINE" ] && [ -n "$END_LINE" ]; then
+                    if command -v gsed > /dev/null; then
+                        sudo gsed -i "${START_LINE},${END_LINE}d" "$CONFIG_FILE"
+                    else
+                        sudo sed -i "${START_LINE},${END_LINE}d" "$CONFIG_FILE"
+                    fi
                 else
-                    sed -i "$START_LINE,$END_LINEd" "$CONFIG_FILE"
+                    logg info 'No start-line or end-line detected - configuration appears to already be clean'
                 fi
             fi
 
             ### Add Postfix main configuration
-            logg "Adding configuration from ${XDG_CONFIG_HOME:-$HOME/.config}/postfix/main.cf to /etc/postfix/main.cf"
+            logg "Adding the following configuration from ${XDG_CONFIG_HOME:-$HOME/.config}/postfix/main.cf to /etc/postfix/main.cf"
             cat "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/main.cf" | sudo tee -a "$CONFIG_FILE"
             echo "" | sudo tee -a "$CONFIG_FILE"
         fi
@@ -58,7 +62,7 @@ if command -v postfix > /dev/null; then
             sudo chmod 600 /etc/postfix/sasl_passwd
             logg info 'Updating Postfix hashmaps for /etc/postfix/sasl_passwd'
             sudo postmap /etc/postfix/sasl_passwd
-        elseThere was an error ensuring the Postfix-SendGrid dependencies were installed
+        else
             logg warn '~/.config/postfix/sasl_passwd file is missing'
         fi
 

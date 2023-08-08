@@ -9,9 +9,7 @@ fi
 
 ### Sensible Bash
 # Source: https://github.com/mrzool/bash-sensible
-if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/shell/sensible.bash" ]; then
-   . "${XDG_DATA_HOME:-$HOME/.local/share}/shell/sensible.bash"
-fi
+[ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/shell/sensible.bash" ] || . "${XDG_DATA_HOME:-$HOME/.local/share}/shell/sensible.bash"
 
 # Detect support for advanced terminal features
 if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
@@ -19,22 +17,16 @@ if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
 fi
 
 ### Import Common Settings
-if [ -f "$HOME/.config/shell/profile.sh" ]; then
-  . "$HOME/.config/shell/profile.sh"
-fi
+[ ! -f "$HOME/.config/shell/profile.sh" ] || . "$HOME/.config/shell/profile.sh"
 
 ### Ble.sh
 [[ $- == *i* ]] && source "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/ble.sh" --noattach --rcfile "${XDG_DATA_CONFIG:-$HOME/.config}/blesh/bleshrc"
 
 ### /etc/bashrc
-if [ -f /etc/bashrc ]; then
-  . /etc/bashrc
-fi
+[ ! -f /etc/bashrc ] || . /etc/bashrc
 
 ### Java (asdf)
-if [ -f "$ASDF_DATA_DIR/plugins/java/set-java-home.bash" ]; then
-  . "$ASDF_DATA_DIR/plugins/java/set-java-home.bash"
-fi
+[ ! -f "$ASDF_DATA_DIR/plugins/java/set-java-home.bash" ] || . "$ASDF_DATA_DIR/plugins/java/set-java-home.bash"
 
 ### Escape if shell not interactive
 case $- in

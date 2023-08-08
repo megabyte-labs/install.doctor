@@ -8,7 +8,7 @@ export LC_ALL="en_US.UTF-8"
 export BASH_SUPPORT=true
 
 ### Import Common Settings
-[[ ! -f "$HOME/.config/shell/profile.sh" ]] || source "$HOME/.config/shell/profile.sh"
+[ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile.sh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile.sh"
 
 # If not running interactively, don't do anything
 case $- in
@@ -34,7 +34,7 @@ export ADOTDIR="${XDG_DATA_HOME:-$HOME/.local/share}/antigen"
 [[ ! -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] || source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 
 ### Fig
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && source "$HOME/.fig/shell/zshrc.pre.zsh"
+[ ! -f "$HOME/.fig/shell/zshrc.pre.zsh" ] || source "$HOME/.fig/shell/zshrc.pre.zsh"
 
 # --------------------------------- SETTINGS ----------------------------------
 setopt AUTO_CD
@@ -58,9 +58,7 @@ setopt PROMPT_SUBST
 setopt SHARE_HISTORY
 
 # ZSH completion system
-if [ ! -d "$XDG_CACHE_HOME/zsh" ]; then
-	mkdir -p "$XDG_CACHE_HOME/zsh"
-fi
+[ -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh" ] || mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
@@ -259,9 +257,8 @@ xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
 esac
 
 ### Antigen
-if [ -f "$HOME/.local/scripts/antigen.zsh" ]; then
-  source "$HOME/.local/scripts/antigen.zsh"
-fi
+[ ! -f "$HOME/.local/scripts/antigen.zsh" ] || source "$HOME/.local/scripts/antigen.zsh"
+
 if command -v antigen > /dev/null; then
   # Fix for oh-my-zsh overriding exa aliases
   export DISABLE_LS_COLORS=true
@@ -317,14 +314,12 @@ if command -v antigen > /dev/null; then
   antigen bundle ng
   antigen bundle node-docs
   antigen bundle nomad
-  # antigen bundle npm # Added by bash completions script
   antigen bundle oc
   antigen bundle pass
   # antigen bundle pep8
   antigen bundle pip
   # antigen bundle pipenv
   antigen bundle pm2
-  # antigen bundle poetry # Added by bash completions script
   antigen bundle qrcode
   antigen bundle react-native
   antigen bundle redis-cli
@@ -366,15 +361,11 @@ if command -v antigen > /dev/null; then
   antigen bundle zsh-interactive-cd
   antigen bundle zsh-navigation-tools
   antigen bundle zsh-users/zsh-completions src
-  if command -v fzf > /dev/null; then
-  	antigen bundle aloxaf/fzf-tab
-  fi
+  ! command -v fzf > /dev/null || antigen bundle aloxaf/fzf-tab
   antigen bundle marlonrichert/zsh-autocomplete@main
   antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle zsh-users/zsh-syntax-highlighting
-  if [ -d /Applications ] && [ -d /System ]; then
-    antigen bundle zsh-apple-touchbar
-  fi
+  [ ! -d /Applications ] || antigen bundle zsh-apple-touchbar
   antigen theme romkatv/powerlevel10k
   antigen apply
 fi
@@ -383,30 +374,23 @@ fi
 zstyle ':autocomplete:*' list-lines 14
 zstyle ':autocomplete:history-search:*' list-lines 14
 zstyle ':autocomplete:history-incremental-search-*:*' list-lines 14
-if command -v fzf > /dev/null; then
-	zstyle ':autocomplete:*' fzf-completion yes
-fi
+! command -v fzf > /dev/null || zstyle ':autocomplete:*' fzf-completion yes
 
 ### Homebrew ZSH Completions
 # Must be sourced before compinit / Oh-My-ZSH inclusion
 export FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:$FPATH"
-if [ -d "$HOMEBREW_PREFIX/share/zsh-completions" ]; then
-	export FPATH="$HOMEBREW_PREFIX/share/zsh-completions:$FPATH"
-fi
+[ ! -d "$HOMEBREW_PREFIX/share/zsh-completions" ] || export FPATH="$HOMEBREW_PREFIX/share/zsh-completions:$FPATH"
+[ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/zsh-completion" ] || export FPATH="${XDG_DATA_HOME:-$HOME/.local/share}/zsh-completion:$FPATH"
 
 ### ZSH compinit
 autoload -Uz +X compinit && compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION"
 
 ### Bash Completions
 autoload -U +X bashcompinit && bashcompinit
-if [ -f "/usr/local/etc/profile.d/bash_completion.sh" ]; then
-	. "/usr/local/etc/profile.d/bash_completion.sh"
-fi
+[ ! -f "/usr/local/etc/profile.d/bash_completion.sh" ] || source "/usr/local/etc/profile.d/bash_completion.sh"
 
 ### Atuin
-if command -v atuin > /dev/null; then
-	eval "$(atuin init zsh)"
-fi
+! command -v atuin > /dev/null || eval "$(atuin init zsh)"
 
 ### Carapace
 if command -v carapace > /dev/null; then
@@ -416,45 +400,33 @@ if command -v carapace > /dev/null; then
 fi
 
 ### Cod
-if command -v cod > /dev/null; then
-	source <(cod init $$ zsh)
-fi
+! command -v cod > /dev/null || source <(cod init $$ zsh)
 
 ### direnv
-if command -v direnv > /dev/null; then
-	eval "$(direnv hook zsh)"
-fi
+! command -v direnv > /dev/null || eval "$(direnv hook zsh)"
 
 ### Emplace
 # Error tracking: https://github.com/tversteeg/emplace/issues/375
-# if command -v emplace > /dev/null; then
-# 	eval "$(emplace init zsh)"
-# fi
+# ! command -v emplace > /dev/null || eval "$(emplace init zsh)"
 
 ### Google Cloud SDK
-if [ -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.zsh.inc" ]; then
-	source "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.zsh.inc"
-fi
-if [ -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc" ]; then
-    source "$HOMEBREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc"
-fi
+[ ! -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.zsh.inc" ] || source "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.zsh.inc"
+[ ! -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc" ] || source "$HOMEBREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc"
 
 ### hiSHtory
-if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.zsh" ]; then
-	export PATH="$PATH:${XDG_CONFIG_HOME:-$HOME/.config}/hishtory"
-	source "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.zsh"
-fi
+export PATH="$PATH:${XDG_CONFIG_HOME:-$HOME/.config}/hishtory"
+[ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.zsh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.zsh"
 
 ### Hoard
 if command -v hoard > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/hoard/src/shell/hoard.zsh" ]; then
-	. "${XDG_DATA_HOME:-$HOME/.local/share}/hoard/src/shell/hoard.zsh"
+	source "${XDG_DATA_HOME:-$HOME/.local/share}/hoard/src/shell/hoard.zsh"
 fi
 
 ### iTerm2
-[ -f "$HOME/.local/scripts/iterm2.zsh" ] && source "$HOME/.local/scripts/iterm2.zsh"
+[ ! -f "$HOME/.local/scripts/iterm2.zsh" ] || source "$HOME/.local/scripts/iterm2.zsh"
 
 ### Java (asdf)
-[ -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ] && source "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
+[ ! -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ] || source "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
 
 ### Mamba Forge (Faster Conda Drop-In Replacement)
 # TODO: Add support for Linux
@@ -494,13 +466,13 @@ if [ -f /usr/local/bin/micromamba ]; then
 fi
 
 ### Navi (Ctrl+G)
-command -v navi > /dev/null && eval "$(navi widget zsh)"
+! command -v navi > /dev/null || eval "$(navi widget zsh)"
 
 ### Fig
-[ -f "$HOME/.fig/shell/zshrc.post.zsh" ] && source "$HOME/.fig/shell/zshrc.post.zsh"
+[ ! -f "$HOME/.fig/shell/zshrc.post.zsh" ] || source "$HOME/.fig/shell/zshrc.post.zsh"
 
 ### Powerline
-[ -f "${XDG_CONFIG_HOME:-$HOME.config}/scripts/p10k.zsh" ] && source "$HOME/.local/scripts/p10k.zsh"
+[ ! -f "${XDG_CONFIG_HOME:-$HOME.config}/scripts/p10k.zsh" ] || source "$HOME/.local/scripts/p10k.zsh"
 
 ### SDKMan
 if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
@@ -512,10 +484,10 @@ elif [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
 fi
 
 ### Up
-[ -f "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh"
+[ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh" ] || source "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh"
 
 ### HashiCorp Vault
-command -v vault > /dev/null && complete -o nospace -C vault vault
+! command -v vault > /dev/null || complete -o nospace -C vault vault
 
 ### zoxide
 if command -v zoxide > /dev/null; then
