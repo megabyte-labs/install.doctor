@@ -67,13 +67,6 @@ if [ -n "$CI" ]; then
   export WORK_ENVIRONMENT=false
 fi
 
-### Disconnect from WARP, if connected
-if command -v warp-cli > /dev/null; then
-  if warp-cli status | grep 'Connected' > /dev/null; then
-    warp-cli disconnect && echo "Disconnected WARP to prevent conflicts"
-  fi
-fi
-
 # @description Detect `START_REPO` format and determine appropriate git address, otherwise use the master Install Doctor branch
 if [ -z "$START_REPO" ]; then
   START_REPO="https://github.com/megabyte-labs/install.doctor.git"
