@@ -1015,6 +1015,9 @@ softwareGroups:
     - allure
     - appium
     - molecule
+  Testing-Desktop: &Testing-Desktop
+    - appium-desktop
+    - appium-inspector
   Transfer: &Transfer
     - aria2
     - croc
@@ -1364,6 +1367,7 @@ softwareGroups:
     - *Recording-Desktop
     - *Security-Desktop
     - *Sys-Admin-Desktop
+    - *Testing-Desktop
     - *Transfer-Desktop
     - *Virtualization-Desktop
     - *Web-Development-Desktop
