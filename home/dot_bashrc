@@ -1,19 +1,32 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090,SC1091
 
+### /etc/bashrc
+[ ! -f /etc/bashrc ] || . /etc/bashrc
+
 # Prefer US English
 export LANG="en_US"
 if [[ "$(hostname)" != *'-minimal' ]]; then
   export LC_ALL="en_US.UTF-8"
 fi
 
-### Sensible Bash
-# Source: https://github.com/mrzool/bash-sensible
-[ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/shell/sensible.bash" ] || . "${XDG_DATA_HOME:-$HOME/.local/share}/shell/sensible.bash"
-
 # Detect support for advanced terminal features
-if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
-  export BASH_SUPPORT=true
+if [ -t 1 ]; then
+  if [ "$0" = 'bash' ] || [ "$0" = '/bin/bash' ]; then
+    export BASH_SUPPORT=true
+
+    ### Pre-exec
+    # Source: https://github.com/rcaloras/bash-preexec
+    if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bash/pre-exec.bash" ]; then
+      export __bp_enable_subshells="true"
+      . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bash/pre-exec.bash"
+      preexec() { echo "just typed $1"; }
+      precmd() { echo "printing the prompt"; }
+    fi
+
+    ### Java (asdf)
+    [ ! -f "$ASDF_DATA_DIR/plugins/java/set-java-home.bash" ] || . "$ASDF_DATA_DIR/plugins/java/set-java-home.bash"
+  fi
 fi
 
 ### Import Common Settings
@@ -23,50 +36,32 @@ fi
 # Loaded with bash-it
 # [[ $- == *i* ]] && source "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/ble.sh" --noattach --rcfile "${XDG_DATA_CONFIG:-$HOME/.config}/blesh/bleshrc"
 
-### /etc/bashrc
-[ ! -f /etc/bashrc ] || . /etc/bashrc
-
-### Java (asdf)
-[ ! -f "$ASDF_DATA_DIR/plugins/java/set-java-home.bash" ] || . "$ASDF_DATA_DIR/plugins/java/set-java-home.bash"
-
 ### Escape if shell not interactive
 case $- in
   *i*) ;;
     *) return;;
 esac
 
-### Fig / LC_ALL
-if [ "$BASH_SUPPORT" = 'true' ]; then
-  if [ -f "$HOME/.fig/shell/bashrc.pre.bash" ]; then
-    . "$HOME/.fig/shell/bashrc.pre.bash"
-  fi
-fi
-
-### Pre-exec
-# Source: https://github.com/rcaloras/bash-preexec
-if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bash/pre-exec.bash" ]; then
-  export __bp_enable_subshells="true"
-  . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bash/pre-exec.bash"
-  preexec() { echo "just typed $1"; }
-  precmd() { echo "printing the prompt"; }
-fi
-
 ### History
 export HISTFILE="$XDG_STATE_HOME/bash/history"
-if [ -d "$HISTFILE" ]; then
-  # Remove history file if it is incorrectly created as a directory
-  rm -rf "$HISTFILE"
-fi
+[ ! -d "$HISTFILE" ] || rm -rf "$HISTFILE"
 
 ### Bash Initialization Hooks
 if [ "$BASH_SUPPORT" = 'true' ]; then
+  ### Sensible Bash
+  # Source: https://github.com/mrzool/bash-sensible
+  [ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/shell/sensible.bash" ] || source "${XDG_DATA_HOME:-$HOME/.local/share}/shell/sensible.bash"
+
+  ### Fig / LC_ALL
+  [ ! -f "$HOME/.fig/shell/bashrc.pre.bash" ] || source "$HOME/.fig/shell/bashrc.pre.bash"
+
   # Prompt (on bash only)
   if [[ "$(hostname)" != *'-minimal' ]]; then
     ### Styled Terminal
     export BASH_IT="${XDG_DATA_HOME:-$HOME/.local/share}/bash_it"
     export BASH_IT_THEME="powerline"
     if command -v powerline-daemon > /dev/null && [ -f "$BASH_IT/bash_it.sh" ]; then
-      . "$BASH_IT/bash_it.sh"
+      source "$BASH_IT/bash_it.sh"
     elif command -v oh-my-posh > /dev/null; then
       # Oh My Posh (See: https://ohmyposh.dev/)
       eval "$(oh-my-posh init bash --config "${XDG_CONFIG_HOME:-$HOME/.config}/oh-my-posh/Betelgeuse.omp.json")"
@@ -87,7 +82,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   autoload -U +X bashcompinit && bashcompinit
   if command -v brew  > /dev/null; then
     if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
-      . "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+      source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
     else
       for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
         [[ -r "${COMPLETION}" ]] && source "${COMPLETION}"
@@ -102,30 +97,30 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   ! command -v carapace > /dev/null || source <(carapace _carapace)
 
   ### Cod
-  ! command -v cod > /dev/null || . <(cod init $$ bash)
+  ! command -v cod > /dev/null || source <(cod init $$ bash)
 
   ### Google Cloud SDK
-  [ ! -f "${HOMEBREW_PREFIX}/share/google-cloud-sdk/path.bash.inc" ] || . "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.bash.inc"
+  [ ! -f "${HOMEBREW_PREFIX}/share/google-cloud-sdk/path.bash.inc" ] || source "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.bash.inc"
 
   ### direnv
   ! command -v direnv > /dev/null || eval "$(direnv hook bash)"
 
   ### Emplace
-  ! command -v emplace > /dev/null || . <(emplace init bash)
+  ! command -v emplace > /dev/null || source <(emplace init bash)
 
   ### hiSHtory
   if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.sh" ]; then
 	  export PATH="$PATH:${XDG_CONFIG_HOME:-$HOME/.config}/hishtory"
-	  . "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.sh"
+	  source "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.sh"
   fi
 
   ### Hoard
   if command -v hoard > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/hoard/src/shell/hoard.bash" ]; then
-    . "${XDG_DATA_HOME:-$HOME/.local/share}/hoard/src/shell/hoard.bash"
+    source "${XDG_DATA_HOME:-$HOME/.local/share}/hoard/src/shell/hoard.bash"
   fi
 
   ### iTerm2
-  [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/iterm/iterm2.bash" ] || . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/iterm/iterm2.bash"
+  [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/iterm/iterm2.bash" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/iterm/iterm2.bash"
 
   ### Fig
   [ ! -f "$HOME/.fig/shell/bashrc.post.bash" ] || . "$HOME/.fig/shell/bashrc.post.bash"
@@ -173,14 +168,14 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   ### SDKMan
   if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
     export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"
-    . "$SDKMAN_DIR/bin/sdkman-init.sh"
+    source "$SDKMAN_DIR/bin/sdkman-init.sh"
   elif [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
     export SDKMAN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/sdkman"
-    . "$SDKMAN_DIR/bin/sdkman-init.sh"
+    source "$SDKMAN_DIR/bin/sdkman-init.sh"
   fi
 
   ### Up
-  [ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh" ] || . "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh"
+  [ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh" ] || source "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh"
 
   ### Vault
   ! command -v vault > /dev/null || complete -C vault vault

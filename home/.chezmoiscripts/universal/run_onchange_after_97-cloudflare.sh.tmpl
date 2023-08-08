@@ -109,7 +109,7 @@ if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; th
         logg info 'Requesting security authorization for Cloudflare trusted certificate'
         sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt"
         logg info 'Updating the OpenSSL CA Store to include the Cloudflare certificate'
-        echo | sudo tee -a /etc/ssl/cert.pem < "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem"
+        echo | sudo tee -a /etc/ssl/cert.pem < "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" > /dev/null
     else
         logg warn 'Session is SSH so adding Cloudflare encryption key to trusted certificates via the security program is being bypassed since it requires Touch ID / Password verification.'
     fi
@@ -137,7 +137,7 @@ elif command -v warp-cli > /dev/null; then
             logg info '`dpkg-reconfigure` executable detected so using Debian/Ubuntu method of updating system trusted certificates to include CloudFlare Teams certificate'
             sudo dpkg-reconfigure ca-certificates
         else
-            logg warn 
+            logg warn
         fi
     elif command -v update-ca-trust > /dev/null; then
         if [ -d /etc/pki/ca-trust/source/anchors ]; then
@@ -213,7 +213,7 @@ if command -v warp-cli > /dev/null; then
         sudo mkdir -p /var/lib/cloudflare-warp
         sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/warp/mdm.xml" /var/lib/cloudflare-warp/mdm.xml
     fi
-    
+
     ### Register CloudFlare WARP
     if warp-cli --accept-tos status | grep 'Registration missing' > /dev/null; then
         logg info 'Registering CloudFlare WARP'
