@@ -240,7 +240,7 @@ echo "{{ joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hos
 echo "{{ stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname) }}"
 {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname)) -}}
 echo "IN HEREEE"
-{{-   $registrationToken := (includeTemplate (print "cloudflared/" .host.hostname) | decrypt) -}}
+{{-   $registrationToken = (includeTemplate (print "cloudflared/" .host.hostname) | decrypt) -}}
 {{- end }}
 ### Set up CloudFlare tunnels
 echo 'Registration token debug:'
