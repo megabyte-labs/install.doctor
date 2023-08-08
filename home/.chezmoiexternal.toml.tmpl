@@ -220,7 +220,7 @@
     pull.args = ["--ff-only"]
 {{- end }}
 
-{{- if (lookPath "apt") }}
+{{- if (lookPath "apt-get") }}
 ### Netdata Debsecan
 [".local/share/netdata-debsecan"]
     type = "git-repo"
@@ -254,13 +254,6 @@
 [".local/share/shared-common"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/common/shared.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-
-### NGINX
-[".local/etc/nginx"]
-    type = "git-repo"
-    url = "https://gitlab.com/megabyte-labs/cloud/nginx-configs.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -404,7 +397,7 @@
     pull.args = ["--ff-only"]
 
 ### JumpUSB
-[".local/share/jumpusb"]
+[".local/src/jumpusb"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/jumpusb.git"
     clone.args = ["--depth", "1"]
