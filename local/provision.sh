@@ -436,7 +436,7 @@ done
 if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml" ]; then
   ### Show README.md snippet
   if command -v glow > /dev/null; then
-    glow "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/CHEZMOI-INTRO.md"
+    glow "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/terminal/chezmoi-intro.md"
   fi
 
   ### Prompt for variables

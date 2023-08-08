@@ -361,7 +361,7 @@ fi
 if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml" ]; then
   # @description Show introduction message if Glow is installed
   if command -v glow > /dev/null; then
-    glow "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/CHEZMOI-INTRO.md"
+    glow "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/terminal/chezmoi-intro.md"
   fi
 
   # @description Prompt for the software group if the `SOFTWARE_GROUP` variable is not defined

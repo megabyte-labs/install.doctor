@@ -7,6 +7,7 @@ githubLocation: https://github.com/megabyte-labs/install.doctor/blob/master/scri
 scriptLocation: https://github.com/megabyte-labs/install.doctor/raw/master/scripts/provision.sh
 repoLocation: scripts/provision.sh
 ---
+
 # Quick Start
 
 Main entry point for Install Doctor that ensures Homebrew and a few dependencies are installed before cloning the repository and running Chezmoi.
@@ -26,13 +27,13 @@ Chezmoi to boost the performance in some spots by introducing asynchronous featu
 The chart below shows the dependencies we rely on to get Install Doctor going. The dependencies that are bolded
 are mandatory. The ones that are not bolded are conditionally installed only if they are required.
 
-| Dependency         | Description                                                                          |
-|--------------------|--------------------------------------------------------------------------------------|
-| **Chezmoi**        | Dotfile configuration manager (on-device provisioning)                               |
-| **Task**           | Task runner used on-device for task parallelization and dependency management        |
-| **ZX / Node.js**   | ZX is a Node.js abstraction that allows for better scripts                           |
-| Gum                | Gum is a terminal UI prompt CLI (which allows sweet, interactive prompts)            |
-| Glow               | Glow is a markdown renderer used for applying terminal-friendly styled to markdown   |
+| Dependency       | Description                                                                        |
+| ---------------- | ---------------------------------------------------------------------------------- |
+| **Chezmoi**      | Dotfile configuration manager (on-device provisioning)                             |
+| **Task**         | Task runner used on-device for task parallelization and dependency management      |
+| **ZX / Node.js** | ZX is a Node.js abstraction that allows for better scripts                         |
+| Gum              | Gum is a terminal UI prompt CLI (which allows sweet, interactive prompts)          |
+| Glow             | Glow is a markdown renderer used for applying terminal-friendly styled to markdown |
 
 There are also a handful of system packages that are installed like `curl` and `git`. Then, during the Chezmoi provisioning
 process, there are a handful of system packages that are installed to ensure things run smoothly. You can find more details
@@ -48,11 +49,11 @@ Specify certain environment variables to customize the behavior of Install Docto
 environment variables, this script can be run completely headlessly. This allows us to do things like test our
 provisioning script on a wide variety of operating systems.
 
-| Variable               | Description                                                                       |
-|------------------------|-----------------------------------------------------------------------------------|
-| `START_REPO` (or `REPO`)           | Variable to specify the Git fork to use when provisioning                         |
-| `ANSIBLE_PROVISION_VM` | **For Qubes**, determines the name of the VM used to provision the system         |
-| `DEBUG_MODE`           | Set to true to enable verbose logging                                             |
+| Variable                 | Description                                                               |
+| ------------------------ | ------------------------------------------------------------------------- |
+| `START_REPO` (or `REPO`) | Variable to specify the Git fork to use when provisioning                 |
+| `ANSIBLE_PROVISION_VM`   | **For Qubes**, determines the name of the VM used to provision the system |
+| `DEBUG_MODE`             | Set to true to enable verbose logging                                     |
 
 For a full list of variables you can use to customize Install Doctor, check out our [Customization](https://install.doctor/docs/customization)
 and [Secrets](https://install.doctor/docs/customization/secrets) documentation.
@@ -64,7 +65,7 @@ and [Secrets](https://install.doctor/docs/customization/secrets) documentation.
 
 ## Index
 
-* [logg](#logg)
+- [logg](#logg)
 
 ### logg
 
@@ -411,7 +412,7 @@ fi
 if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml" ]; then
   # @description Show introduction message if Glow is installed
   if command -v glow > /dev/null; then
-    glow "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/CHEZMOI-INTRO.md"
+    glow "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/terminal/chezmoi-intro.md"
   fi
 
   # @description Prompt for the software group if the `SOFTWARE_GROUP` variable is not defined
@@ -470,9 +471,9 @@ else
     sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR/d' /etc/sudoers || logg warn 'Failed to remove passwordless sudo from the /etc/sudoers file'
 fi
 
-# @description Render the `docs/POST-INSTALL.md` file to the terminal at the end of the provisioning process
+# @description Render the `docs/terminal/post-install.md` file to the terminal at the end of the provisioning process
 logg success 'Provisioning complete!'
-if command -v glow > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/POST-INSTALL.md" ]; then
-  glow "$HOME/.local/share/chezmoi/docs/POST-INSTALL.md"
+if command -v glow > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/terminal/post-install.md" ]; then
+  glow "$HOME/.local/share/chezmoi/docs/terminal/post-install.md"
 fi
 ```
