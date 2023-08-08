@@ -150,6 +150,12 @@
     refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
+[".local/share/install.doctor"]
+    type = "git-repo"
+    url = "https://github.com/megabyte-labs/install.doctor.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 #[".local/oh-my-bash"]
 #    type = "git-repo"
 #    url = "https://github.com/ohmybash/oh-my-bash.git"
