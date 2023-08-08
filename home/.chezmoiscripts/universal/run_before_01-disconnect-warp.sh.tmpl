@@ -13,7 +13,7 @@
 if command -v warp-cli > /dev/null; then
     if warp-cli status | grep 'Connected' > /dev/null; then
         logg info 'Disconnecting from CloudFlare Teams / WARP due to Volta ignoring CA specified in NPM configuration'
-        # warp-cli disconnect
+        warp-cli disconnect
     fi
 fi
 
