@@ -29,8 +29,8 @@ if [ ! -d /usr/local/share ]; then
 fi
 
 ### Copy theme files over to /usr/local/share
-if [ -d "$HOME/.local/src/{{ .theme | lower }}/share" ]; then
-    logg info 'Copying ~/.local/src/{{ .theme | lower }}/share to /usr/local/share'
+if [ -d "$HOME/.local/{{ .theme | lower }}/share" ]; then
+    logg info 'Copying ~/.local/{{ .theme | lower }}/share to /usr/local/share'
     sudo rsync --chown=root:root --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r -artvu --inplace "${XDG_DATA_HOME:-$HOME/.local/share}/betelgeuse/share/" "/usr/local/share/" > /dev/null
 else
     logg warn '~/.local/share/betelgeuse/share is missing'
