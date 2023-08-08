@@ -34,7 +34,6 @@ if command -v netdata-claim.sh > /dev/null; then
     ensureNetdataOwnership
 
     # netdata-claim.sh must be run as netdata user
-    logg info "Netdata room: $NETDATA_ROOM"
     sudo -H -u netdata bash -c 'export NETDATA_ROOM="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_ROOM")) -}}{{- includeTemplate "secrets/NETDATA_ROOM" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_ROOM" -}}{{- end -}}" && export NETDATA_TOKEN="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) -}}{{- includeTemplate "secrets/NETDATA_TOKEN" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_TOKEN" -}}{{- end -}}" && netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="{{ .netdataClaimURL }}"'
 
     # Kernel optimizations
@@ -124,11 +123,17 @@ if command -v netdata-claim.sh > /dev/null; then
 
     ### Configure Netdata to gather information about Internet connection speed
     if command -v speedtest-cli > /dev/null; then
-        SPEEDTEST_GIT="${XDG_DATA_HOME:-$HOME/.local/share}/netdata-speedtest"
-
         # Installing the script to generate report on Internet connection speed
         logg info 'Installing script to generate report on Internet connection speed'
-        sudo cp -f "$SPEEDTEST_GIT/speedtest.chart.sh" "/usr/libexec/netdata/charts.d/speedtest.chart.sh"
+        LIBEXEC_PATH="$(netdata -W buildinfo | grep 'Configure options' | sed "s/.*--libexecdir=\([^ \']*\).*/\1/")"
+        if [ -d /usr/libexec/netdata/charts.d ]; then
+            sudo cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/netdata-speedtest/speedtest.chart.sh" "/usr/libexec/netdata/charts.d/speedtest.chart.sh"
+        elif [ -d "$LIBEXEC_PATH/netdata/charts.d" ]; then
+            logg info "$LIBEXEC_PATH/netdata/charts.d present on system"
+            cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/netdata-speedtest/speedtest.chart.sh" "$LIBEXEC_PATH/netdata/charts.d/speedtest.chart.sh"
+        else
+            logg warn "Failed to find appropriate directory to add Netdata speedtest chart script"
+        fi
     else
         logg warn '`speedtest-cli` is not available in the PATH or is not installed'
     fi

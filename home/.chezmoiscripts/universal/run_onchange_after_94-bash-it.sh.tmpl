@@ -18,7 +18,8 @@ fi
 ### Include Bash It
 export BASH_IT="${XDG_DATA_HOME:-$HOME/.local/share}/bash_it"
 export BASH_IT_THEME="powerline"
-if command -v powerline-daemon > /dev/null && [ -f "$BASH_IT/bash_it.sh" ]; then
+if command -v powerline-daemon > /dev/null && [ -f "$BASH_IT/bash_it.sh" ] && ! command -v bash-it; then
+    logg info "Sourcing the bash_it.sh script"
     . "$BASH_IT/bash_it.sh"
 fi
 
@@ -66,7 +67,6 @@ if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
     else
         logg warn 'The path specified by BASH_IT does not exist yet'
     fi
-    exit 0
 else
     if ! command -v powerline > /dev/null; then
         logg warn '`powerline` is not available'
