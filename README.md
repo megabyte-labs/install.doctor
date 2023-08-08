@@ -1,7 +1,7 @@
 <!-- ⚠️ This README has been generated from the file(s) ".config/docs/blueprint-readme-misc.md" ⚠️--><div align="center">
   <center>
     <a href="https://github.com/megabyte-labs/install.doctor">
-      <img width="148" height="148" alt="Install Doctor logo" src="https://gitlab.com/megabyte-labs/install.doctor/-/raw/master/logo.png" />
+      <img width="148" height="148" alt="Install Doctor logo" src="https://gitlab.com/megabyte-labs/install.doctor/-/raw/master/docs/logo-full.png" />
     </a>
   </center>
 </div>

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Bash wrappers for docker run commands
 # Source: https://raw.githubusercontent.com/jessfraz/dotfiles/master/.dockerfunc
 

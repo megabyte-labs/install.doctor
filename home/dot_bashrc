@@ -20,7 +20,8 @@ fi
 [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile.sh" ] || . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile.sh"
 
 ### Ble.sh
-[[ $- == *i* ]] && source "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/ble.sh" --noattach --rcfile "${XDG_DATA_CONFIG:-$HOME/.config}/blesh/bleshrc"
+# Loaded with bash-it
+# [[ $- == *i* ]] && source "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/ble.sh" --noattach --rcfile "${XDG_DATA_CONFIG:-$HOME/.config}/blesh/bleshrc"
 
 ### /etc/bashrc
 [ ! -f /etc/bashrc ] || . /etc/bashrc
@@ -43,9 +44,9 @@ fi
 
 ### Pre-exec
 # Source: https://github.com/rcaloras/bash-preexec
-if [ -f "$HOME/.local/scripts/pre-exec.sh" ]; then
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bash/pre-exec.bash" ]; then
   export __bp_enable_subshells="true"
-  . "$HOME/.local/scripts/pre-exec.sh"
+  . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bash/pre-exec.bash"
   preexec() { echo "just typed $1"; }
   precmd() { echo "printing the prompt"; }
 fi
@@ -192,5 +193,6 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   fi
 
   ### Ble.sh
-  [[ ${BLE_VERSION-} ]] && ble-attach
+  # Loaded with bash-it
+  # [[ ${BLE_VERSION-} ]] && ble-attach
 fi

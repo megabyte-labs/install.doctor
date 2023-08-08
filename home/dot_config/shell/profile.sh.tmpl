@@ -5,7 +5,7 @@
 #     This script is included by `~/.bashrc` and `~/.zshrc` to include imports and settings that are common to both the Bash
 #     and ZSH shells.
 
-# shellcheck disable=SC1090,SC1091
+# shellcheck disable=SC1090,SC1091,SC2016
 
 # Aliases / Functions / Exports
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
@@ -65,6 +65,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     else
       OS_ICON=""
     fi
+    export OS_ICON
   else
     if [ -d /Applications ] && [ -d /Library ] && [ -d /System ]; then
       # macOS
@@ -72,6 +73,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     else
       OS_ICON=""
     fi
+    export OS_ICON
   fi
 
   ### Directory Colors
@@ -123,15 +125,13 @@ fi
 ### McFly
 export MCFLY_PROMPT="❯"
 if [ -d /Applications ] && [ -d /System ]; then
-  if [[ "$(defaults read -g AppleInterfaceStyle 2&>/dev/null)" != "Dark" ]]; then
+  if [ "$(defaults read -g AppleInterfaceStyle)" != "Dark" ]; then
       export MCFLY_LIGHT=TRUE
   fi
 fi
 
 ### ASDF
-if [ -f "$ASDF_DIR/asdf.sh" ]; then
-  . "$ASDF_DIR/asdf.sh"
-fi
+[ ! -f "$ASDF_DIR/asdf.sh" ] || . "$ASDF_DIR/asdf.sh"
 
 ### Tea
 # TODO: Fix this so it does not cause errors as Chezmoi runs

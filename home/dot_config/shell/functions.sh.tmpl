@@ -4,6 +4,8 @@
 # @description
 #     This script is included by `~/.bashrc` and `~/.zshrc` to provide various commands and functions.
 
+# shellcheck disable=SC1091
+
 ### Bash Concurrent
 if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/concurrent/concurrent.lib.sh" ]; then
   . "${XDG_DATA_HOME:-$HOME/.local/share}/concurrent/concurrent.lib.sh"
@@ -16,12 +18,6 @@ appiumwebdriver() {
   bash ./Scripts/bootstrap.sh -d
   cd /Applications/Appium.app/Contents/Resources/app/node_modules/appium/node_modules/appium-webdriveragent || return
   xcodebuild -project WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination "id=${UDID_INPUT}" test
-}
-
-asdf-update () {
-  asdf update > /dev/null 2>&1
-  asdf plugin update --all > /dev/null 2>&1
-  diff <(cat ~/.tool-versions | awk '{print $1}' | xargs -I {} bash -c 'echo {} $(asdf latest {})') <(cat ~/.tool-versions)
 }
 
 # Change directories and view contents at the same time
@@ -97,7 +93,6 @@ resetdocker() {
 # ripgrep-all
 rgafzf() {
 	RG_PREFIX="rga --files-with-matches"
-	local file
 	file="$(
 		FZF_DEFAULT_COMMAND="$RG_PREFIX '$1'" \
 			fzf --sort --preview="[[ ! -z {} ]] && rga --pretty --context 5 {q} {}" \
@@ -112,7 +107,7 @@ rgafzf() {
 #  Easy file sharing from the command line, using transfer.sh
 transfer() {
   if [ $# -eq 0 ]; then
-    echo -e "No arguments specified.\nUsage:\n  transfer <file|directory>\n  ... | transfer <file_name>" >&2
+    printf "No arguments specified.\nUsage:\n  transfer <file|directory>\n  ... | transfer <file_name>" >&2
     return 1
   fi
   if tty -s; then
@@ -134,7 +129,7 @@ transfer() {
   fi
 }
 
-update-all() {
+updateall() {
   brew update
   brew upgrade
   brew upgrade --cask --greedy

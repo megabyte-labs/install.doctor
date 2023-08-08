@@ -17,7 +17,6 @@ BANNER_DEBIAN_COLOR="95"
 BANNER_FEDORA_ICON=""
 BANNER_FEDORA_COLOR="34"
 BANNER_FONTPATH=""
-BANNER_TEXT="$(hostname -s)"
 
 PROCESSOR_LOADAVG_ICON="ﲯ"
 PROCESSOR_LOADAVG_HEALTHY_COLOR="32"
@@ -219,7 +218,9 @@ print_banner() {
     fi
   fi
 
-  printf "    \\033[1;37mHostname:\\033[0m %s\\n" "$(hostname)"
+  printf "\\n"
+  printf "       \\033[1;37mHostname:\\033[0m %s\\n" "$(hostname)"
+  printf "\\n"
 
   if [ -f /etc/os-release ]; then
     . /etc/os-release
@@ -554,13 +555,13 @@ print_updates() {
     (command dnf list updates | grep updates | wc -l > "$HOME/.local/labs/dnf-updates-reg" &)
     (command dnf updateinfo list --security --available | grep '/Sec. ' | wc -l > "$HOME/.local/labs/dnf-updates-sec" &)
     updates_count_security="0"
-    updates_count_reg="0"
+    #updates_count_reg="0"
     if [ -f "$HOME/.local/labs/dnf-updates-sec" ]; then
       updates_count_security="$(cat "$HOME/.local/labs/dnf-updates-sec")"
     fi
-    if [ -f "$HOME/.local/labs/dnf-updates-reg" ]; then
-      updates_count_reg="$(cat "$HOME/.local/labs/dnf-updates-reg")"
-    fi
+    #if [ -f "$HOME/.local/labs/dnf-updates-reg" ]; then
+    #  updates_count_reg="$(cat "$HOME/.local/labs/dnf-updates-reg")"
+    #fi
 
     if [ -n "$updates_count_regular" ] && [ "$updates_count_regular" -ne 0 ]; then
       if [ -n "$updates_count_security" ] && [ "$updates_count_security" -ne 0 ]; then

@@ -78,6 +78,8 @@ The following plugins were tested but removed because the `extensions.json` alre
     "vscjava.vscode-java-test",
     "vscjava.vscode-maven",
     "vscjava.vscode-spring-boot-dashboard",
+    "wallabyjs.quokka-vscode", // Opening new tab on install
+    "wallabyjs.wallaby-vscode", // Creating HOME directory dotfiles / folders
     "wallabyjs.console-ninja", // Creates ~/.console-ninja folder -- needs to respect XDG
     "wasteamaccount.webtemplatestudio-dev-nightly",
     "webhint.vscode-webhint"

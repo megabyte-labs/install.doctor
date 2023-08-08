@@ -4,17 +4,16 @@
 # @description
 #     This script is included by `~/.bashrc` and `~/.zshrc` to provide command aliases.
 
-{{ if eq .chezmoi.os "darwin" }}
 ### macOS Polyfills
 # Note: May cause conflicts
-if command -v brew > /dev/null; then
-  export PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
-  export PATH="$(brew --prefix)/opt/gnu-indent/libexec/gnubin:$PATH"
-  export PATH="$(brew --prefix)/opt/gnu-sed/libexec/gnubin:$PATH"
-  export PATH="$(brew --prefix)/opt/gnu-tar/libexec/gnubin:$PATH"
+if [ -d /Applications ] && command -v brew > /dev/null; then
+  PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
+  PATH="$(brew --prefix)/opt/gnu-indent/libexec/gnubin:$PATH"
+  PATH="$(brew --prefix)/opt/gnu-sed/libexec/gnubin:$PATH"
+  PATH="$(brew --prefix)/opt/gnu-tar/libexec/gnubin:$PATH"
+  export PATH
 fi
 
-{{- end }}
 # Basic command aliases for verbosity / simplicity
 alias cp='cp -v'
 alias ln='ln -sriv'
@@ -40,7 +39,7 @@ fi
 ### bat
 if command -v bat > /dev/null; then
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-  alias bathelp='bat --plain --language=help'
+  alias bat-help='bat --plain --language=help'
   alias cat='bat -pp'
   alias less='bat --paging=always'
   help() {
@@ -83,14 +82,14 @@ fi
 
 ### mitmproxy / mitmweb
 if command -v mitmproxy > /dev/null; then
-  alias mitmproxy="mitmproxy --set confdir=${XDG_CONFIG_HOME:-$HOME/.config}/mitmproxy"
+  alias mitmproxy='mitmproxy --set confdir=${XDG_CONFIG_HOME:-$HOME/.config}/mitmproxy'
 fi
 if command -v mitmweb > /dev/null; then
-  alias mitmweb="mitmweb --set confdir=${XDG_CONFIG_HOME:-$HOME/.config}/mitmproxy"
+  alias mitmweb='mitmweb --set confdir=${XDG_CONFIG_HOME:-$HOME/.config}/mitmproxy'
 fi
 
 ### ripgrep
-if command -v rg &> /dev/null; then
+if command -v rg > /dev/null; then
   alias rgrep='rg --color=auto'
 fi
 
@@ -106,7 +105,7 @@ fi
 alias sudo='sudo '
 
 # Reload current shell
-alias reload="exec ${SHELL} -l"
+alias reload='exec ${SHELL} -l'
 
 # Create an Authelia password hash
 alias authelia-password='docker run authelia/authelia:latest authelia hash-password'
@@ -265,14 +264,14 @@ alias yubi-stub='gpg-connect-agent "scd serialno" "learn --force" /bye'
 
 ### cd aliases
 
-alias applications="cd $HOME/Applications"
-alias cloud="cd $HOME/Cloud"
-alias config="cd $HOME/.config"
-alias desktop="cd $HOME/Desktop"
-alias downloads="cd $HOME/Downloads"
-alias library="cd $HOME/Library"
-alias local="cd $HOME/.local"
-alias movies="cd $HOME/Movies"
-alias music="cd $HOME/Music"
-alias pictures="cd $HOME/Pictures"
-alias public="cd $HOME/Public"
+alias applications='cd $HOME/Applications'
+alias cloud='cd $HOME/Cloud'
+alias config='cd $HOME/.config'
+alias desktop='cd $HOME/Desktop'
+alias downloads='cd $HOME/Downloads'
+alias library='cd $HOME/Library'
+alias local='cd $HOME/.local'
+alias movies='cd $HOME/Movies'
+alias music='cd $HOME/Music'
+alias pictures='cd $HOME/Pictures'
+alias public='cd $HOME/Public'

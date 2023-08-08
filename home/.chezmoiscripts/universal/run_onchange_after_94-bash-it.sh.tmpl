@@ -48,7 +48,7 @@ if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
         cd "$BASH_IT/enabled"
         logg info 'Enabling bash-it completions'
         # TODO: Move these plugins to the .chezmoidata.yaml
-        for COMPLETION in defaults dirs docker docker-compose export git makefile ng npm ssh system vagrant; do
+        for COMPLETION in defaults dirs docker docker-compose export git makefile ng ssh system vagrant; do
             if ls "$BASH_IT/enabled" | grep "$COMPLETION" > /dev/null; then
                 rm -f "$BASH_IT/enabled/"*"$COMPLETION"* > /dev/null && logg info "Removed old $COMPLETION bash-it completion symlink" || logg error "Failed to remove $COMPLETION bash-it completion symlink"
             fi
