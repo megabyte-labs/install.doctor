@@ -859,8 +859,8 @@ async function ensurePackageManagerAnsible() {
     await $`pipx inject ansible-core PyObjC PyObjC-core`
   }
   await $`pipx inject ansible-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog`
-  await $`mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte-labs"`
-  await $`touch "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte-labs/ansible-installed"`
+  await $`mkdir -p "$HOME/.cache/megabyte-labs"`
+  await $`touch "$HOME/.cache/megabyte-labs/ansible-installed"`
   log('info', 'Package Manager Install', `Ansible and its supporting packages are now installed via pipx`)
 }
 
@@ -896,7 +896,7 @@ async function ensurePackageManager(packageManager) {
     }
   } else if (packageManager === 'ansible') {
     try {
-      await $`test -f "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte-labs/ansible-installed"`
+      await $`test -f "$HOME/.cache/megabyte-labs/ansible-installed"`
       const ansible = which.sync('ansible', { nothrow: true })
       if (ansible) {
         log('info', logStage, `\`ansible\` and its supporting packages appear to be installed`)
