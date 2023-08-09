@@ -37,6 +37,11 @@
     refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Betelgeuse Theme
+[".local/src/betelgeuse"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/misc/betelgeuse.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 [".local/share/betelgeuse"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/misc/betelgeuse.git"
