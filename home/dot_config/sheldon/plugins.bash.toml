@@ -14,8 +14,9 @@ shell = "bash"
 
 [plugins]
 
-[plugins.sheldon]
-inline = 'sheldon() { sheldon completions --shell bash }'
+# TODO: Make this import the sheldon completions and cache them
+# [plugins.sheldon]
+# inline = 'sheldon() { sheldon completions --shell bash }'
 
 [plugins.wp]
 remote = "https://raw.githubusercontent.com/wp-cli/wp-cli/v2.7.1/utils/wp-completion.bash"

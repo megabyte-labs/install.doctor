@@ -1,29 +1,29 @@
 if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v expect > /dev/null || ! command -v rsync > /dev/null; then
     if command -v apt-get > /dev/null; then
-        # @description Ensure `build-essential`, `curl`, `expect`, `git`, and `rsync` are installed on Debian / Ubuntu
+        # Debian / Ubuntu
         sudo apt-get update
         sudo apt-get install -y build-essential curl expect git rsync
     elif command -v dnf > /dev/null; then
-        # @description Ensure `curl`, `expect`, `git`, and `rsync` are installed on Fedora
+        # Fedora
         sudo dnf install -y curl expect git rsync
     elif command -v yum > /dev/null; then
-        # @description Ensure `curl`, `expect`, `git`, and `rsync` are installed on CentOS
+        # CentOS
         sudo yum install -y curl expect git rsync
     elif command -v pacman > /dev/null; then
-        # @description Ensure `curl`, `expect`, `git`, and `rsync` are installed on Archlinux
+        # Archlinux
         sudo pacman update
-        sudo pacman -Sy curl expect git rsync
+        sudo pacman -Syu base-devel curl expect git rsync procps-ng file
     elif command -v zypper > /dev/null; then
-        # @description Ensure `curl`, `expect`, `git`, and `rsync` are installed on OpenSUSE
+        # OpenSUSE
         sudo zypper install -y curl expect git rsync
     elif command -v apk > /dev/null; then
-        # @description Ensure `curl`, `expect`, `git`, and `rsync` are installed on Alpine
+        # Alpine
         apk add curl expect git rsync
     elif [ -d /Applications ] && [ -d /Library ]; then
-        # @description Ensure CLI developer tools are available on macOS (via `xcode-select`)
+        # macOS
         sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
     elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
-        # @description Ensure `curl`, `expect`, `git`, and `rsync` are installed on Windows
+        # Windows
         choco install -y curl expect git rsync
     fi
 fi

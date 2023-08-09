@@ -699,6 +699,12 @@ softwarePackages:
     brew: pigz
     dnf: pigz
     pacman: pigz
+  blocky:
+    _bin: blocky
+    _github: https://github.com/0xERR0R/blocky
+    _name: Blocky
+    brew: blocky
+    go: github.com/0xERR0R/blocky@mastergithub.com/0xERR0R/blocky@master
   http-toolkit:
     _github: https://github.com/httptoolkit/httptoolkit
     _name: HTTP Toolkit
@@ -1676,10 +1682,9 @@ softwarePackages:
     _home: https://certbot.eff.org/
     _name: CertBot
     _snapClassic: true
-    ansible: professormanhattan.certbot
-    brew: certbot
-    port: certbot
-    snap: certbot
+    _post: pipx inject certbot certbot-dns-cloudflare
+    _post:windows: echo "Add method for Windows"
+    pipx: certbot
   ugm:
     _bin: ugm
     _desc: A terminal based UNIX user and group browser

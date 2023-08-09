@@ -305,7 +305,7 @@ if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v
   elif command -v pacman > /dev/null; then
     # Archlinux
     sudo pacman update
-    sudo pacman -Sy curl expect git rsync
+    sudo pacman -Syu base-devel curl expect git rsync procps-ng file
   elif command -v zypper > /dev/null; then
     # OpenSUSE
     sudo zypper install -y curl expect git rsync

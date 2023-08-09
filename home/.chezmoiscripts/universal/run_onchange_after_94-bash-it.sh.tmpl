@@ -52,7 +52,7 @@ if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
             if ls "$BASH_IT/enabled" | grep "$COMPLETION" > /dev/null; then
                 rm -f "$BASH_IT/enabled/"*"$COMPLETION"* > /dev/null && logg info "Removed old $COMPLETION bash-it completion symlink" || logg error "Failed to remove $COMPLETION bash-it completion symlink"
             fi
-            echo y | bash-it enable completion "$COMPLETION" > /dev/null && logg info "Enabled the bash-it $COMPLETION completion plugin" || logg error "Failed to install the $COMPLETION bash-it completion plugin"
+            yes | bash-it enable completion "$COMPLETION" > /dev/null && logg info "Enabled the bash-it $COMPLETION completion plugin" || logg error "Failed to install the $COMPLETION bash-it completion plugin"
         done
 
         ### Ensure plugins are enabled
@@ -62,7 +62,7 @@ if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
             if ls "$BASH_IT/enabled" | grep "$PLUGIN" > /dev/null; then
                 rm -f "$BASH_IT/enabled/"*"$PLUGIN"* > /dev/null && logg info "Removed old $PLUGIN bash-it plugin symlink" || logg error "Failed to remove $PLUGIN bash-it plugin symlink"
             fi
-            echo y | bash-it enable plugin "$PLUGIN" > /dev/null && logg info "Enabled the bash-it $PLUGIN plugin" || logg error "Failed to install the $PLUGIN bash-it plugin"
+            yes | bash-it enable plugin "$PLUGIN" > /dev/null && logg info "Enabled the bash-it $PLUGIN plugin" || logg error "Failed to install the $PLUGIN bash-it plugin"
         done
     else
         logg warn 'The path specified by BASH_IT does not exist yet'

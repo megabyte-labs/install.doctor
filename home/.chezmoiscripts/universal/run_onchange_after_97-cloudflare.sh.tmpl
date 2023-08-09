@@ -235,29 +235,10 @@ else
 fi
 
 {{- $registrationToken := "" }}
-echo "{{ .host.hostname }}"
-echo "{{ joinPath .host.home ".config" "age" "chezmoi.txt" }}"
-echo "{{ joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname }}"
-echo "{{ stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname) }}"
 {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname)) -}}
-echo "IN HEREEE"
 {{-   $registrationToken = (includeTemplate (print "cloudflared/" .host.hostname) | decrypt) -}}
 {{- end }}
 ### Set up CloudFlare tunnels
-echo 'Registration token debug:'
-echo -n '{{ includeTemplate (print "cloudflared/" .host.hostname) | decrypt }}'
-echo "ZZZZZZZZZZZZ"
-echo ""
-echo ""
-echo -n '{{ $registrationToken }}'
-echo ""
-echo "OOOOOOOOOOOOO"
-echo ""
-echo '{{ $registrationToken }}'
-echo ""
-echo '555555'
-set -ex
-echo '{{ stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname) }}
 if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; then
     # Show warning message about ~/.cloudflared already existing
     if [ -d "$HOME/.cloudflared" ]; then
@@ -276,7 +257,7 @@ if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; 
         logg info 'Creating a CloudFlare tunnel to this host'
         sudo cloudflared tunnel create "host-{{ .host.hostname }}"
     fi
-    TUNNEL_ID="$(sudo cloudflared tunnel list | grep "host-{{ .host.hostname }}" | sed 's/ .*//')"
+    TUNNEL_ID="$(sudo cloudflared tunnel list | grep 'host-{{ .host.hostname }}' | sed 's/ .*//')"
     logg info "Tunnel ID: $TUNNEL_ID"
     if [ -f "/usr/local/etc/cloudflared/${TUNNEL_ID}.json" ]; then
         logg info 'Symlinking tunnel configuration to /usr/local/etc/cloudflared/credentials.json'

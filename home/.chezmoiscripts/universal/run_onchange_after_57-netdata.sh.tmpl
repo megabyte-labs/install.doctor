@@ -34,7 +34,7 @@ if command -v netdata-claim.sh > /dev/null; then
     ensureNetdataOwnership
 
     # netdata-claim.sh must be run as netdata user
-    sudo -H -u netdata bash -c 'export NETDATA_ROOM="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_ROOM")) -}}{{- includeTemplate "secrets/NETDATA_ROOM" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_ROOM" -}}{{- end -}}" && export NETDATA_TOKEN="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) -}}{{- includeTemplate "secrets/NETDATA_TOKEN" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_TOKEN" -}}{{- end -}}" && netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="{{ .netdataClaimURL }}"'
+    sudo -H -u netdata bash -c 'export NETDATA_ROOM="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_ROOM")) -}}{{- includeTemplate "secrets/NETDATA_ROOM" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_ROOM" -}}{{- end -}}" && export NETDATA_TOKEN="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) -}}{{- includeTemplate "secrets/NETDATA_TOKEN" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_TOKEN" -}}{{- end -}}" && yes | netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="{{ .netdataClaimURL }}"'
 
     # Kernel optimizations
     # These are mentioned while installing via the kickstart.sh script method. We are using Homebrew for the installation though.

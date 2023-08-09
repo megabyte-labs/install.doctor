@@ -266,7 +266,7 @@ if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v
     elif command -v pacman > /dev/null; then
         # @description Ensure `base-devel`, `curl`, `expect`, `git`, `rsync`, `procps-ng`, and `file` are installed on Archlinux
         sudo pacman update
-        sudo pacman -Sy base-devel curl expect git rsync procps-ng file
+        sudo pacman -Syu base-devel curl expect git rsync procps-ng file
     elif command -v zypper > /dev/null; then
         # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps`, and `file` are installed on OpenSUSE (as well as the devel_basis pattern)
         sudo zypper install -yt pattern devel_basis
