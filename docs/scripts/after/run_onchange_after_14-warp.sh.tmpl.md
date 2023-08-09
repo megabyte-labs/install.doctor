@@ -7,6 +7,7 @@ githubLocation: https://github.com/megabyte-labs/install.doctor/blob/master/home
 scriptLocation: https://github.com/megabyte-labs/install.doctor/raw/master/home/.chezmoiscripts/universal/run_onchange_after_14-warp.sh.tmpl
 repoLocation: home/.chezmoiscripts/universal/run_onchange_after_14-warp.sh.tmpl
 ---
+
 # CloudFlare WARP
 
 Installs CloudFlare WARP, ensures proper security certificates are in place, and connects the device to CloudFlare WARP.
@@ -41,10 +42,8 @@ an MDM SaaS provider like JumpCloud.
 
 ## Links
 
-* [Linux managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/warp/private_mdm.xml.tmpl)
-* [macOS managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/Library/Managed%20Preferences/private_com.cloudflare.warp.plist.tmpl)
-
-
+- [Linux managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/warp/private_mdm.xml.tmpl)
+- [macOS managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/Library/Managed%20Preferences/private_com.cloudflare.warp.plist.tmpl)
 
 ## Source Code
 
@@ -136,9 +135,9 @@ fi
 # Source: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
 if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; then
     ### Ensure certificate installed on macOS
-    sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt"
+    sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
     if [ -f /usr/local/etc/ca-certificates/cert.pem ]; then
-        echo | sudo cat - "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" >> /usr/local/etc/ca-certificates/cert.pem
+        echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> /usr/local/etc/ca-certificates/cert.pem
     else
         logg error 'Unable to add `Cloudflare_CA.pem` because `/usr/local/etc/ca-certificates/cert.pem` does not exist!' && exit 1
     fi
@@ -156,7 +155,7 @@ if command -v warp-cli > /dev/null; then
         sudo mkdir -p /var/lib/cloudflare-warp
         sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/warp/mdm.xml" /var/lib/cloudflare-warp/mdm.xml
     fi
-    
+
     ### Register CloudFlare WARP
     if warp-cli --accept-tos status | grep 'Registration missing' > /dev/null; then
         logg info 'Registering CloudFlare WARP'

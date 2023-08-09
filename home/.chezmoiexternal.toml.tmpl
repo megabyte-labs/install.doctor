@@ -1,35 +1,32 @@
 {{- $refreshPeriod := "240h" }}
-### VIM Plugins
-{{- $vimPlugins := .softwarePlugins.vim.plugins }}
-{{- range $vimPlugin := $vimPlugins }}
-{{-   $folderName :=  trimSuffix ".git" (last (splitList "/" $vimPlugin)) }}
-[".local/share/vim/plugged/{{ $folderName }}"]
-    type = "git-repo"
-    url = "{{ $vimPlugin }}"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-{{- end }}
-### coc.nvim VIM plugin requires custom branch "release"
-[".local/share/vim/plugged/coc.nvim"]
-    type = "git-repo"
-    url = "https://github.com/neoclide/coc.nvim.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--branch", "release", "--depth", "1"]
-    pull.args = ["--ff-only"]
 
-### CloudFlare WARP Certificates
-[".local/share/warp/Cloudflare_CA.crt"]
+######################################
+### Security Certificates ############
+######################################
+
+### CloudFlare
+[".local/etc/ssl/cloudflare/cloudflare/Cloudflare_CA.crt"]
     type = "file"
     url = "https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt"
-[".local/share/warp/Cloudflare_CA.pem"]
+[".local/etc/ssl/cloudflare/cloudflare/Cloudflare_CA.pem"]
     type = "file"
     url = "https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem"
 
-### Curl / Google Cloud SDK
-[".local/share/curl/cacert.pem"]
+### cURL / Google Cloud SDK
+[".local/etc/ssl/curl/cacert.pem"]
     type = "file"
     url = "https://curl.se/ca/cacert.pem"
+
+### GPG
+[".gnupg/gpg.conf"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/drduh/config/master/gpg.conf"
+
+### Vagrant
+[".ssh/authorized_keys.vagrant"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub"
+    refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Update scripts
 [".local/bin/update"]
@@ -63,7 +60,14 @@
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
-### Shell
+### Shellfire
+[".local/src/shellfire"]
+    type = "git-repo"
+    url = "https://github.com/shellfire-dev/shellfire.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
 [".config/desktop/gnome.yml"]
     type = "file"
     url = "https://gitlab.com/megabyte-labs/gas-station/-/raw/master/environments/prod/group_vars/all/defaults.yml"
@@ -244,12 +248,6 @@
 #     url = "https://github.com/typicode/husky/raw/main/husky.sh"
 #     refreshPeriod = "{{ $refreshPeriod }}"
 
-### GPG
-[".gnupg/gpg.conf"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/drduh/config/master/gpg.conf"
-    refreshPeriod = "{{ $refreshPeriod }}"
-
 ### Taskfiles
 [".local/share/shared-common"]
     type = "git-repo"
@@ -403,55 +401,14 @@
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
-### Vagrant
-[".ssh/authorized_keys.vagrant"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub"
-    refreshPeriod = "{{ $refreshPeriod }}"
 
-### Neovim
-[".config/nvim"]
-    type = "git-repo"
-    url = "https://github.com/AstroNvim/AstroNvim.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".config/nvim/lua/user"]
-    type = "git-repo"
-    url = "https://github.com/megabyte-labs/AstronVim.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
 
-{{- if and (eq .chezmoi.os "linux") (not .host.headless) }}
-### Rofi
-[".local/share/fonts/GrapeNuts-Regular.ttf"]
-    type = "file"
-    url = "https://github.com/adi1090x/rofi/raw/master/fonts/GrapeNuts-Regular.ttf"
-    refreshPeriod = "{{ $refreshPeriod }}"
-[".local/share/fonts/Icomoon-Feather.ttf"]
-    type = "file"
-    url = "https://github.com/adi1090x/rofi/raw/master/fonts/Icomoon-Feather.ttf"
-    refreshPeriod = "{{ $refreshPeriod }}"
-[".local/share/fonts/Iosevka-Nerd-Font-Complete.ttf"]
-    type = "file"
-    url = "https://github.com/adi1090x/rofi/raw/master/fonts/Iosevka-Nerd-Font-Complete.ttf"
-    refreshPeriod = "{{ $refreshPeriod }}"
-[".local/share/fonts/JetBrains-Mono-Nerd-Font-Complete.ttf"]
-    type = "file"
-    url = "https://github.com/adi1090x/rofi/raw/master/fonts/JetBrains-Mono-Nerd-Font-Complete.ttf"
-    refreshPeriod = "{{ $refreshPeriod }}"
-[".config/rofi"]
-    type = "archive"
-    url = "https://github.com/adi1090x/rofi/archive/refs/heads/master.tar.gz"
-    exact = true
-    stripComponents = 2
-    refreshPeriod = "{{ $refreshPeriod }}"
-    include = ["applets/**", "colors/**", "images/**", "launchers/**", "powermenu/**", "scripts/**", "config.rasi"]
-{{- end }}
+######################################
+### Fonts ############################
+######################################
 
+### Hack Nerd Font
 {{- if not .host.headless }}
-### Hack Nerd Font Download
 {{-   $refreshPeriod := "4800h" }}
 {{-   $fontDir := "" }}
 {{-   $fontUrlBase := "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack"}}
@@ -479,7 +436,7 @@
     url = "{{ $fontUrlBase }}/BoldItalic/HackNerdFont-BoldItalic.ttf"
     refreshPeriod = "{{ $refreshPeriod }}"
 
-### Montserrat Font Download
+### Montserrat Font
 {{-   $fontUrlBase := "https://github.com/JulietaUla/Montserrat/raw/master/fonts/ttf/Montserrat-"}}
 {{-   $fonts := list "Black" "BlackItalic" "Bold" "BoldItalic" "ExtraBold" "ExtraBoldItalic" "ExtraLight" "ExtraLightItalic" "Italic" "Light" "LightItalic" "Medium" "MediumItalic" "Regular" "SemiBold" "SemiBoldItalic" "Thin" "ThinItalic" }}
 {{-   range $font := $fonts }}
@@ -489,7 +446,7 @@
     refreshPeriod = "{{ $refreshPeriod }}"
 {{-   end }}
 
-### ZillaSlab Font Download
+### ZillaSlab Font
 {{-   $fontUrlBase := "https://github.com/typotheque/zilla-slab/raw/master/fonts_TTF/ZillaSlab"}}
 {{-   $fonts := list "-Bold" "-BoldItalic" "-Italic" "-Light" "-LightItalic" "-Medium" "-MediumItalic" "-Regular" "-SemiBold" "-SemiBoldItalic" "Highlight-Bold" "Highlight-Regular" }}
 {{-   range $font := $fonts }}
@@ -499,3 +456,70 @@
     refreshPeriod = "{{ $refreshPeriod }}"
 {{-   end }}
 {{- end }}
+
+######################################
+### Rofi #############################
+######################################
+
+{{- if and (eq .chezmoi.os "linux") (not .host.headless) }}
+[".local/share/fonts/GrapeNuts-Regular.ttf"]
+    type = "file"
+    url = "https://github.com/adi1090x/rofi/raw/master/fonts/GrapeNuts-Regular.ttf"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/share/fonts/Icomoon-Feather.ttf"]
+    type = "file"
+    url = "https://github.com/adi1090x/rofi/raw/master/fonts/Icomoon-Feather.ttf"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/share/fonts/Iosevka-Nerd-Font-Complete.ttf"]
+    type = "file"
+    url = "https://github.com/adi1090x/rofi/raw/master/fonts/Iosevka-Nerd-Font-Complete.ttf"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/share/fonts/JetBrains-Mono-Nerd-Font-Complete.ttf"]
+    type = "file"
+    url = "https://github.com/adi1090x/rofi/raw/master/fonts/JetBrains-Mono-Nerd-Font-Complete.ttf"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".config/rofi"]
+    type = "archive"
+    url = "https://github.com/adi1090x/rofi/archive/refs/heads/master.tar.gz"
+    exact = true
+    stripComponents = 2
+    refreshPeriod = "{{ $refreshPeriod }}"
+    include = ["applets/**", "colors/**", "images/**", "launchers/**", "powermenu/**", "scripts/**", "config.rasi"]
+{{- end }}
+
+######################################
+### VIM / NVIM #######################
+######################################
+
+### VIM
+{{- $vimPlugins := .softwarePlugins.vim.plugins }}
+{{- range $vimPlugin := $vimPlugins }}
+{{-   $folderName :=  trimSuffix ".git" (last (splitList "/" $vimPlugin)) }}
+[".local/share/vim/plugged/{{ $folderName }}"]
+    type = "git-repo"
+    url = "{{ $vimPlugin }}"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+{{- end }}
+# coc.nvim VIM plugin requires custom branch "release"
+[".local/share/vim/plugged/coc.nvim"]
+    type = "git-repo"
+    url = "https://github.com/neoclide/coc.nvim.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--branch", "release", "--depth", "1"]
+    pull.args = ["--ff-only"]
+
+### NVIM
+[".config/nvim"]
+    type = "git-repo"
+    url = "https://github.com/AstroNvim/AstroNvim.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".config/nvim/lua/user"]
+    type = "git-repo"
+    url = "https://github.com/megabyte-labs/AstronVim.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]

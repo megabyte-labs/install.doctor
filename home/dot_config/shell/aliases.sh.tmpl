@@ -47,6 +47,10 @@ if command -v bat > /dev/null; then
   }
 fi
 
+### curl-impersonate
+# https://github.com/lwthiker/curl-impersonate
+alias curl-impersonate='docker run --rm lwthiker/curl-impersonate:0.5-chrome curl_chrome110'
+
 ### curlie
 if command -v curlie > /dev/null; then
   alias curl='curlie'

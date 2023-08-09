@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# https://github.com/ncarlier/webhookd
+alias webhookd='docker run -d --name=webhookd -v ${PWD}/scripts:/scripts -p 8080:8080 ncarlier/webhookd'

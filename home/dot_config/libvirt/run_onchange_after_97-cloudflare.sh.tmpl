@@ -177,9 +177,9 @@ if command -v warp-cli > /dev/null; then
 
     ### Google Cloud SDK
     if command -v gcloud > /dev/null; then
-        logg info "Configuring gcloud to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" and "${XDG_DATA_HOME:-$HOME/.local/share}/curl/cacert.pem""
+        logg info "Configuring gcloud to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" and "${XDG_DATA_HOME:-$HOME/.local/share}/curl/.local/etc/ssl/cloudflare""
         mkdir -p "$HOME/.local/etc/ssl/gcloud"
-        cat "$HOME/.local/etc/ssl/curl/cacert.pem" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > "$HOME/.local/etc/ssl/gcloud/ca.pem"
+        cat "$HOME/.local/etc/ssl/curl/.local/etc/ssl/cloudflare" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > "$HOME/.local/etc/ssl/gcloud/ca.pem"
         gcloud config set core/custom_ca_certs_file "${XDG_DATA_HOME:-$HOME/.local/share}/gcloud/ca.pem"
     fi
 

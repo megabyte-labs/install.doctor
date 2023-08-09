@@ -18,10 +18,14 @@ if [ -t 1 ]; then
     ### Pre-exec
     # Source: https://github.com/rcaloras/bash-preexec
     if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bash/pre-exec.bash" ]; then
-      export __bp_enable_subshells="true"
+      # export __bp_enable_subshells="true"
       . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bash/pre-exec.bash"
-      preexec() { echo "just typed $1"; }
-      precmd() { echo "printing the prompt"; }
+      preexec() {
+        true
+      }
+      precmd() {
+        true
+      }
     fi
 
     ### Java (asdf)
@@ -79,7 +83,6 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   fi
 
   ### Bash Completion (Homebrew)
-  autoload -U +X bashcompinit && bashcompinit
   if command -v brew  > /dev/null; then
     if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
       source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
@@ -125,43 +128,6 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   ### Fig
   [ ! -f "$HOME/.fig/shell/bashrc.post.bash" ] || . "$HOME/.fig/shell/bashrc.post.bash"
 
-  ### Mamba Forge (Faster Conda Drop-In Replacement)
-  # TODO: Add logic for Linux
-  if [ -f /usr/local/Caskroom/mambaforge/base/bin/conda ]; then
-    # >>> conda initialize >>>
-    # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('/usr/local/Caskroom/mambaforge/base/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-      eval "$__conda_setup"
-    else
-      if [ -f "/usr/local/Caskroom/mambaforge/base/etc/profile.d/conda.sh" ]; then
-        . "/usr/local/Caskroom/mambaforge/base/etc/profile.d/conda.sh"
-      else
-        export PATH="/usr/local/Caskroom/mambaforge/base/bin:$PATH"
-      fi
-    fi
-    unset __conda_setup
-    # <<< conda initialize <<<
-  fi
-
-  ### Micro-Mamba
-  # Generate command: micromamba shell init -s bash -p "${XDG_DATA_HOME:-$HOME/.local/share}/micromamba"
-  # TODO: Ensure Linux support
-  if [ -f /usr/local/bin/micromamba ]; then
-    # >>> mamba initialize >>>
-    # !! Contents within this block are managed by 'mamba init' !!
-    export MAMBA_EXE='/usr/local/bin/micromamba';
-    export MAMBA_ROOT_PREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/micromamba";
-    __mamba_setup="$("$MAMBA_EXE" shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-      eval "$__mamba_setup"
-    else
-      alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate
-    fi
-    unset __mamba_setup
-    # <<< mamba initialize <<<
-  fi
-
   ### Navi (Ctrl+G)
   ! command -v navi > /dev/null || eval "$(navi widget bash)"
 
@@ -173,6 +139,10 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     export SDKMAN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/sdkman"
     source "$SDKMAN_DIR/bin/sdkman-init.sh"
   fi
+
+  ### Sheldon
+  export SHELDON_CONFIG_FILE="$SHELDON_CONFIG_DIR/plugins.bash.toml"
+  ! command -v sheldon > /dev/null || eval "$(sheldon source)"
 
   ### Up
   [ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh" ] || source "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh"

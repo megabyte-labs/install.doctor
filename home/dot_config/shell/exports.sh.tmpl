@@ -117,8 +117,8 @@ export ASDF_PYTHON_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/asdf
 ### AWS CLI
 export AWS_SHARED_CREDENTIALS_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/aws/credentials"
 export AWS_CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/aws/config"
-if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt" ]; then
-  export AWS_CA_BUNDLE="${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt"
+if [ -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" ]; then
+  export AWS_CA_BUNDLE="$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
 fi
 
 ### Azure CLI
@@ -298,7 +298,7 @@ export NETRC="${XDG_CONFIG_HOME:-$HOME/.config}/netrc"
 export NAVI_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/navi/config.yaml"
 
 ### Nix
-export NIX_SSL_CERT_FILE="${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.crt"
+export NIX_SSL_CERT_FILE="$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
 
 ### nnn
 if command -v nnn > /dev/null; then
@@ -311,8 +311,8 @@ fi
 
 ### Node.js
 export NODE_REPL_HISTORY="${XDG_DATA_HOME:-$HOME/.local/share}/node_repl_history"
-if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem" ]; then
-  export NODE_EXTRA_CA_CERTS="${XDG_DATA_HOME:-$HOME/.local/share}/warp/Cloudflare_CA.pem"
+if [ -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" ]; then
+  export NODE_EXTRA_CA_CERTS="$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem"
 fi
 
 ### NPM
@@ -383,6 +383,10 @@ export RUSTUP_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/rustup"
 
 ### SDKMan
 export SDKMAN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/sdkman"
+
+### Sheldon
+export SHELDON_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/sheldon"
+export SHELDON_DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/sheldon"
 
 ### Steampipe
 export STEAMPIPE_INSTALL_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/steampipe"

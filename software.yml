@@ -646,7 +646,8 @@ softwarePackages:
     _home: https://github.com/joehillen/sysz
     _name: syz
     nix-env: nixpkgs.sysz
-    paru: sysz
+    bin: https://github.com/joehillen/sysz
+    pacman: sysz
     script:linux: cd /tmp && git clone https://github.com/joehillen/sysz.git && cd sysz && sudo make install && cd /tmp && rm -rf sysz
   appium:
     _bin: appium
@@ -1266,6 +1267,13 @@ softwarePackages:
     port: bat
     scoop: bat
     zypper: bat
+  bat-extras:
+    _bin: batman
+    _github: https://github.com/eth-p/bat-extras
+    _name: Bat Extras
+    brew: bat-extras
+    pacman: bat-extras
+    emerge: sys-apps/bat-extras
   beets:
     _bin: beet
     _desc: 'The purpose of [Beets](https://beets.io/) is to get your music collection right once and for all. It catalogs your collection, automatically improving its metadata as it goes using the MusicBrainz database. Then it provides a bouquet of tools for manipulating and accessing your music.'
@@ -9397,6 +9405,12 @@ softwarePackages:
     brew: tig
     nix: tig
     pkg: tig
+  doitlive:
+    _bin: doitlive
+    _github: https://github.com/sloria/doitlive
+    _name: Do It Live!
+    brew: doitlive
+    pipx: doitlive
   howdoi:
     _bin: howdoi
     _github: https://github.com/gleitz/howdoi
@@ -9524,6 +9538,13 @@ softwarePackages:
     dnf: tor
     pacman: tor
     port: tor
+  sheldon:
+    _bin: sheldon
+    _github: https://github.com/rossmacarthur/sheldon
+    _name: Sheldon
+    _completions: sheldon completions --shell {SHELL}
+    brew: sheldon
+    cargo: sheldon
   translate:
     _bin: trans
     _desc: '[Translate Shell](https://github.com/soimort/translate-shell) (formerly Google Translate CLI) is a command-line translator powered by Google Translate (default), Bing Translator, Yandex.Translate, and Apertium. It gives you easy access to these translation engines in your terminal. It is feature-rich and, although there is some overlap, it complements [Normit](https://gitlab.com/megabyte-labs/ansible-roles/normit) well.'

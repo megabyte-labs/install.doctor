@@ -265,8 +265,7 @@ if command -v antigen > /dev/null; then
   # Official Oh-My-ZSH plugins
   antigen use oh-my-zsh
   antigen bundle adb
-  antigen bundle bazel
-  antigen bundle codeclimatefd
+  # antigen bundle bazel # Unused
   # antigen bundle colored-man-pages
   antigen bundle command-not-found
   antigen bundle copybuffer
@@ -428,43 +427,6 @@ fi
 ### Java (asdf)
 [ ! -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ] || source "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
 
-### Mamba Forge (Faster Conda Drop-In Replacement)
-# TODO: Add support for Linux
-if [ -f /usr/local/Caskroom/mambaforge/base/bin/conda ]; then
-	# >>> conda initialize >>>
-	# !! Contents within this block are managed by 'conda init' !!
-	__conda_setup="$('/usr/local/Caskroom/mambaforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-	if [ $? -eq 0 ]; then
-    	eval "$__conda_setup"
-	else
-    	if [ -f "/usr/local/Caskroom/mambaforge/base/etc/profile.d/conda.sh" ]; then
-        	. "/usr/local/Caskroom/mambaforge/base/etc/profile.d/conda.sh"
-    	else
-        	export PATH="/usr/local/Caskroom/mambaforge/base/bin:$PATH"
-    	fi
-	fi
-	unset __conda_setup
-	# <<< conda initialize <<<
-fi
-
-### Micro-Mamba
-# Generate command: micromamba shell init -s zsh -p "${XDG_DATA_HOME:-$HOME/.local/share}/micromamba"
-# TODO: Ensure Linux support
-if [ -f /usr/local/bin/micromamba ]; then
-	# >>> mamba initialize >>>
-	# !! Contents within this block are managed by 'mamba init' !!
-	export MAMBA_EXE='/usr/local/bin/micromamba';
-	export MAMBA_ROOT_PREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/micromamba";
-	__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
-	if [ $? -eq 0 ]; then
-    	eval "$__mamba_setup"
-	else
-    	alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate
-	fi
-	unset __mamba_setup
-	# <<< mamba initialize <<<
-fi
-
 ### Navi (Ctrl+G)
 ! command -v navi > /dev/null || eval "$(navi widget zsh)"
 
@@ -472,7 +434,7 @@ fi
 [ ! -f "$HOME/.fig/shell/zshrc.post.zsh" ] || source "$HOME/.fig/shell/zshrc.post.zsh"
 
 ### Powerline
-[ ! -f "${XDG_CONFIG_HOME:-$HOME.config}/scripts/p10k.zsh" ] || source "$HOME/.local/scripts/p10k.zsh"
+[ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/p10k.zsh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/p10k.zsh"
 
 ### SDKMan
 if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
@@ -482,6 +444,10 @@ elif [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
   export SDKMAN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/sdkman"
   . "$SDKMAN_DIR/bin/sdkman-init.sh"
 fi
+
+### Sheldon
+export SHELDON_CONFIG_FILE="$SHELDON_CONFIG_DIR/plugins.zsh.toml"
+! command -v sheldon > /dev/null || eval "$(sheldon source)"
 
 ### Up
 [ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh" ] || source "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.sh"
