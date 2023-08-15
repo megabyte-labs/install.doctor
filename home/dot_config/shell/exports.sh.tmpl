@@ -38,9 +38,6 @@ export COLOR_SCHEME=dark
 export GTK_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-1.0/gtkrc"
 export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc"
 
-### PATH References
-export PATH_TASK="$(which task)"
-
 ### PATH
 export PATH="/opt/local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
@@ -68,6 +65,9 @@ elif [ -f /opt/homebrew/bin/brew ]; then
 elif [ -f /usr/local/bin/brew ]; then
   eval $(/usr/local/bin/brew shellenv)
 fi
+
+### PATH References
+export PATH_TASK="$(which task)"
 
 ### Android Studio
 export ANDROID_AVD_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/android/avd"
