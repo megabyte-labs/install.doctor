@@ -52,6 +52,11 @@ export PATH="$HOME/.local/bin/gpt:$PATH"
 export PATH="$HOME/.local/bin/mackup:$PATH"
 export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 
+### CA certificate store path
+export CERT_PATH="$HOME/.local/share/curl/cacert.pem"
+export SSL_CERT_FILE="$CERT_PATH"
+export REQUESTS_CA_BUNDLE="$CERT_PATH"
+
 ### Homebrew
 export HOMEBREW_NO_ENV_HINTS=true
 export HOMEBREW_NO_ANALYTICS=1
@@ -354,13 +359,6 @@ export PATH="$PATH:$PNPM_HOME"
 ### Prettierd
 # Specify location of the default Prettierd configuration
 # export PRETTIERD_DEFAULT_CONFIG=""
-
-### Python
-if command -v python3 > /dev/null; then
-  export CERT_PATH="$(python3 -m certifi)"
-  export SSL_CERT_FILE="$CERT_PATH"
-  export REQUESTS_CA_BUNDLE="$CERT_PATH"
-fi
 
 ### Readline
 export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/readline/inputrc"
