@@ -10798,6 +10798,7 @@ softwarePlugins:
       - redhatdeveloper/openshift-dd-ext
       - snyk/snyk-docker-desktop-extension
       - tailscale/docker-extension:1.0.0
+    when: docker extension &>2 /dev/null
   dockerImages:
     cmd: null
     plugins:
