@@ -4858,7 +4858,7 @@ softwarePackages:
     _name: hiSHtory
     _todo: Check for Homebrew version
     _post: source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh" && echo y | hishtory init "$HISHTORY_USER_SECRET"
-    script: curl https://hishtory.dev/install.py | python3 -
+    script: curl -sSL --compressed https://hishtory.dev/install.py | python3 -
   git-town:
     _bin: git-town
     _github: https://github.com/git-town/git-town
@@ -9122,7 +9122,6 @@ softwarePackages:
     _when:cask: '! test -d "/Applications/Tailscale.app" && ! test -d "$HOME/Applications/Tailscale.app"'
     cask: tailscale
     choco: tailscale
-
   task:
     _bin: task
     _desc: A task runner / simpler Make alternative written in Go

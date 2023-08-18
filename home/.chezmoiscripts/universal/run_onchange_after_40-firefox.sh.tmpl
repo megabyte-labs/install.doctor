@@ -103,7 +103,7 @@ function firefoxSetup() {
                     ### Create manifest
                     logg info 'Copying profile switcher configuration to manifest directory'
                     mkdir -p "$MANIFEST_INSTALL_DIR"
-                    cat "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profile-switcher.json" | sed 's/PATH_PLACEHOLDER/'"$BIN_INSTALL_DIR"'/' > "$MANIFEST_INSTALL_DIR/ax.nd.profile_switcher_ff.json"
+                    cat "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profile-switcher.json" | sed 's=PATH_PLACEHOLDER='"$BIN_INSTALL_DIR"'=' > "$MANIFEST_INSTALL_DIR/ax.nd.profile_switcher_ff.json"
                 fi
             fi
         elif [ "$SETTINGS_DIR" == "$HOME/.var/app/io.gitlab.librewolf-community/.librewolf" ]; then

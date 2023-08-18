@@ -408,7 +408,6 @@ softwareGroups:
     - thefuck
     - tldr
     - xdotool
-    - taskwarrior
     - timewarrior
     - tmuxinator
     - up
@@ -1522,6 +1521,8 @@ softwareGroups:
       note: Deprecated in favor of using ASDF.
     - pkg: temps
       note: macOS menu bar app for weather. Buggy software.
+    - pkg: taskwarrior
+      note: Removed from default install because the binary executable conflicts with go-task's binary executable.
     - pkg: termius
       note: Deprecated since all the interesting features require a paid subscription.
     - pkg: ugm
