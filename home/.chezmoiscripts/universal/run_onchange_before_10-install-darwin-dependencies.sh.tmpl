@@ -1,4 +1,3 @@
-{{- if (ne .host.distro.family "darwin") -}}
 #!/usr/bin/env bash
 # @file macOS Common Dependencies
 # @brief Ensures common system dependencies are installed via Homebrew on macOS
@@ -14,25 +13,27 @@
 export VOLTA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
-if command -v brew > /dev/null; then
-  logg 'Installing base dependencies for macOS using `brew bundle`'
-  logg info 'Dependencies: age asdf jq node glow go go-task/tap/go-task gnupg gum m-cli progress volta yq m-cli yq zx'
-  logg info 'GNU compatibility dependencies: coreutils findutils'
+### Ensure system is macOS
+if [ -d /Applications ] && [ -d /System ]; then
+  if command -v brew > /dev/null; then
+    logg 'Installing base dependencies for macOS using `brew bundle`'
+    logg info 'Dependencies: age asdf jq node glow go go-task/tap/go-task gnupg gum m-cli progress volta yq m-cli yq zx'
+    logg info 'GNU compatibility dependencies: coreutils findutils'
 
-  brew bundle --verbose --no-lock --file=/dev/stdin <<EOF
-  {{ includeTemplate "darwin/Brewfile" . -}}
-  EOF
+    brew bundle --verbose --no-lock --file=/dev/stdin <<EOF
+    {{ includeTemplate "darwin/Brewfile" . -}}
+    EOF
 
-  ### Ensure Python version is 3.11 or higher
-  PYTHON_VERSION="$(python3 --version | sed 's/Python //')"
-  MIN_PYTHON_VERSION="3.11.0"
-  if [ "$(printf '%s\n' "$MIN_PYTHON_VERSION" "$PYTHON_VERSION" | sort -V | head -n1)" = "$MIN_PYTHON_VERSION" ]; then
-    logg info "Minimum Python version satisfied (minimum: $MIN_PYTHON_VERSION, current: $PYTHON_VERSION)"
+    ### Ensure Python version is 3.11 or higher
+    PYTHON_VERSION="$(python3 --version | sed 's/Python //')"
+    MIN_PYTHON_VERSION="3.11.0"
+    if [ "$(printf '%s\n' "$MIN_PYTHON_VERSION" "$PYTHON_VERSION" | sort -V | head -n1)" = "$MIN_PYTHON_VERSION" ]; then
+      logg info "Minimum Python version satisfied (minimum: $MIN_PYTHON_VERSION, current: $PYTHON_VERSION)"
+    else
+      logg info 'Updating Python 3 version with `brew link --overwrite python@3.11`'
+      brew link --overwrite python@3.11
+    fi
   else
-    logg info 'Updating Python 3 version with `brew link --overwrite python@3.11`'
-    brew link --overwrite python@3.11
+    logg error '`brew` was not found in the PATH'
   fi
-else
-  logg error '`brew` was not found in the PATH'
 fi
-{{ end -}}
