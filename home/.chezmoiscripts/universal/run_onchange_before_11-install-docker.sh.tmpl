@@ -141,11 +141,11 @@ function gVisorSource() {
     sudo mkdir -p bin
     # Wait 5 minutes for build to finish, and if it does not use Go
     # TODO - Generate container-shim-runsc-v1 as well (low priority since this method is not used and is only recommended for development)
-    sudo timeout 300 make copy TARGETS=runsc DESTINATION=bin/
+    sudo timeout 600 make copy TARGETS=runsc DESTINATION=bin/
     if [ -f ./bin/runsc ]; then
         sudo cp ./bin/runsc /usr/local/bin
     else
-        logg error 'Timed out while building `runsc` from source' && exit 6
+        logg error 'Timed out while building `runsc` from source (10 minutes)' && exit 6
     fi
 }
 
