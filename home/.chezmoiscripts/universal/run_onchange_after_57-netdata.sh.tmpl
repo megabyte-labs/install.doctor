@@ -125,7 +125,7 @@ if command -v netdata-claim.sh > /dev/null; then
     if command -v speedtest-cli > /dev/null; then
         # Installing the script to generate report on Internet connection speed
         logg info 'Installing script to generate report on Internet connection speed'
-        LIBEXEC_PATH="$(netdata -W buildinfo | grep 'Configure options' | sed "s/.*--libexecdir=\([^ \']*\).*/\1/")"
+        LIBEXEC_PATH="$(netdata -W buildinfo | grep 'Configure' | sed "s/.*--libexecdir=\([^ \']*\).*/\1/")"
         if [ -d /usr/libexec/netdata/charts.d ]; then
             sudo cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/netdata-speedtest/speedtest.chart.sh" "/usr/libexec/netdata/charts.d/speedtest.chart.sh"
         elif [ -d "$LIBEXEC_PATH/netdata/charts.d" ]; then
