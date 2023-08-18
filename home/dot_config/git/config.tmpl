@@ -63,9 +63,9 @@
   helper = cache --timeout=3600
   credentialStore = {{ if eq .host.distro.id "darwin" }}keychain{{ else }}{{ if eq .host.distro.id "windows" }}wincredman{{ else }}secretservice{{ end }}{{ end }}
 [credential "https://github.com"]
-	helper = !{{- output "which" "gh" | trim -}} auth git-credential
+	helper = !{{- output "which" "gh" | trim }} auth git-credential
 [credential "https://gist.github.com"]
-	helper = !{{- output "which" "gh" | trim -}} auth git-credential
+	helper = !{{- output "which" "gh" | trim }} auth git-credential
 [delta]
   features = Betelgeuse
 [delta "Betelgeuse"]
