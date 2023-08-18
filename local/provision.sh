@@ -463,17 +463,21 @@ if [ "$DEBUG_MODE" == 'true' ]; then
 else
   DEBUG_MODIFIER=""
 fi
-if [ -n "$HEADLESS_INSTALL" ]; then
+
+# @description Save the log of the provision process to `$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log` and add the Chezmoi
+# `--force` flag if the `HEADLESS_INSTALL` variable is set to true.
+mkdir -p "$HOME/.local/var/log/install.doctor"
+if [ "$HEADLESS_INSTALL" = 'true' ]; then
   if command -v unbuffer > /dev/null; then
-    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log"
   else
-    chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+    chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log"
   fi
 else
   if command -v unbuffer > /dev/null; then
-    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log"
   else
-    chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/megabyte-labs/betelgeuse.$(date +%s).log"
+    chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log"
   fi
 fi
 

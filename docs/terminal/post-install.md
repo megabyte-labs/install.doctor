@@ -1,6 +1,6 @@
 # Post-Installation
 
-The script has finished provisioning. Enjoy! You can review the installation logs which are stored at `~/.local/share/install.doctor.$(date +%s).log`. If you come across any issues, have some good ideas, or want to get involved, feel free to open an issue on [GitHub](https://github.com/megabyte-labs/install.doctor) or check out our [Community](https://install.doctor/community). Pull requests / stars are welcome too.
+The script has finished provisioning. Enjoy! You can review the installation logs which are stored at `~/.local/var/log/install.doctor/install.doctor.$(date +%s).log`. If you come across any issues, have some good ideas, or want to get involved, feel free to open an issue on [GitHub](https://github.com/megabyte-labs/install.doctor) or check out our [Community](https://install.doctor/community). Pull requests / stars are welcome too.
 
 ## Next Steps
 
