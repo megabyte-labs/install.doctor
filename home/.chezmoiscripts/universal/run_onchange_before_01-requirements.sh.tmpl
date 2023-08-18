@@ -15,11 +15,14 @@
 {{- $additionalPackages := splitList " " (includeTemplate (joinPath .host.distro.id "common-dependencies") .) -}}
 {{- $packages = concat $packages $additionalPackages -}}
 
+# @description Ensure Ubuntu / Debian run in `noninteractive` mode
+export DEBIAN_FRONTEND=noninteractive
+
 if [ '{{ .host.distro.id }}' = 'archlinux' ]; then
     ### Print dependency list
     logg 'Installing common dependencies using `pacman`'
     logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
-    
+
     ### Install packages if they are not already present
     for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
         logg info 'Checking for presence of `'"$PACKAGE"'`'
