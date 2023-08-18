@@ -10,12 +10,15 @@
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}
 
-export VOLTA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
-
 ### Ensure system is macOS
 if [ -d /Applications ] && [ -d /System ]; then
+  ### Ensure environment variables are appropriately configured
+  export VOLTA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/volta"
+  export PATH="$VOLTA_HOME/bin:$PATH"
+
+  ### Check for presence of Homebrew
   if command -v brew > /dev/null; then
+    ### Install base dependencies
     logg 'Installing base dependencies for macOS using `brew bundle`'
     logg info 'Dependencies: age asdf jq node glow go go-task/tap/go-task gnupg gum m-cli progress volta yq m-cli yq zx'
     logg info 'GNU compatibility dependencies: coreutils findutils'
