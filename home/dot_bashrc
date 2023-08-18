@@ -141,7 +141,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   fi
 
   ### Sheldon
-  export SHELDON_CONFIG_FILE="${SHELDON_CONFIG_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/sheldon}}/plugins.bash.toml"
+  export SHELDON_CONFIG_FILE="${SHELDON_CONFIG_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/sheldon}/plugins.bash.toml"
   ! command -v sheldon > /dev/null || eval "$(command sheldon source)"
 
   ### Up
