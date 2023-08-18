@@ -210,18 +210,21 @@ function firefoxSetup() {
             fi
 
             ### Default profile (created by launching Firefox headlessly)
-            # DEFAULT_RELEASE_PROFILE="$(find "$SETTINGS_DIR" -mindepth 1 -maxdepth 1 -name "*.default-*")"
+            DEFAULT_RELEASE_PROFILE="$(find "$SETTINGS_DIR" -mindepth 1 -maxdepth 1 -name "*.default" -not -name "profile.default")"
+            if [ -n "$DEFAULT_RELEASE_PROFILE" ]; then
+                logg info "Syncing $DEFAULT_RELEASE_PROFILE to $SETTINGS_DIR/profile.default"
+                rsync -a "$DEFAULT_RELEASE_PROFILE/" "$SETTINGS_DIR/profile.default"
+            else
+                logg warn 'Unable to sync default Mozilla Firefox profile'
+            fi
+
+            ### Ensure original installs.ini is removed
             if [ -f "$SETTINGS_INI" ]; then
-                DEFAULT_PROFILE_PROFILE="$SETTINGS_DIR/$(cat "$SETTINGS_INI" | grep 'Default=' | sed 's/.*Profiles\///')"
+                # DEFAULT_PROFILE_PROFILE="$SETTINGS_DIR/$(cat "$SETTINGS_INI" | grep 'Default=' | sed 's/.*Profiles\///')"
                 logg info 'Removing previous installs.ini file'
                 rm -f "$SETTINGS_INI"
-                # DEFAULT_PROFILE="$(find "$SETTINGS_DIR" -mindepth 1 -maxdepth 1 -name "*.default" -not -name "profile.default")"
-                if [ -n "$DEFAULT_RELEASE_PROFILE" ]; then
-                    logg info "Syncing $DEFAULT_RELEASE_PROFILE to $SETTINGS_DIR/profile.default"
-                    rsync -a "$DEFAULT_RELEASE_PROFILE/" "$SETTINGS_DIR/profile.default"
-                fi
             else
-                logg error "The $SETTINGS_INI file is missing"
+                logg info 'installs.ini was not present in the Mozilla Firefox settings folder'
             fi
 
             ### Miscellaneous default profiles
