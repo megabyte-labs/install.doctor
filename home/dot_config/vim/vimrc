@@ -339,7 +339,7 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 " Install Coc extensions
 " TODO: Add https://github.com/yuki-yano/fzf-preview.vim
 " TODO: Add https://github.com/tpope/vim-fugitive
-let g:coc_global_config="${XDG_CONFIG_HOME:-$HOME/.config}/coc/coc-settings.json"
+let g:coc_config_home='~/.config/coc'
 let g:coc_global_extensions = [
   \'@yaegassy/coc-ansible',
   \'@yaegassy/coc-nginx',
@@ -424,7 +424,11 @@ let g:syntastic_check_on_wq = 0
 set encoding=UTF-8
 
 " Set location of viminfo file
-set viminfo+=n~/.config/vim/viminfo
+if !has('nvim')
+  set viminfo+=n~/.config/vim/viminfo
+else
+  set viminfo+=n~/.config/vim/nvimshada
+endif
 
 silent! call plug#begin('~/.local/share/vim/plugged')
 Plug '~/.local/share/vim/plugged/ale'

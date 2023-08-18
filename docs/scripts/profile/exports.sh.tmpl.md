@@ -7,6 +7,7 @@ githubLocation: https://github.com/megabyte-labs/install.doctor/blob/master/home
 scriptLocation: https://github.com/megabyte-labs/install.doctor/raw/master/home/dot_config/shell/exports.sh.tmpl
 repoLocation: home/dot_config/shell/exports.sh.tmpl
 ---
+
 # Environment Variables
 
 Houses the environment variables that are included by `~/.bashrc` and `~/.zshrc`
@@ -15,8 +16,6 @@ Houses the environment variables that are included by `~/.bashrc` and `~/.zshrc`
 
 This script is included by `~/.bashrc` and `~/.zshrc` to provide environment variables that play harmoniously with
 the default Install Doctor configurations.
-
-
 
 ## Source Code
 
@@ -61,9 +60,6 @@ export COLOR_SCHEME=dark
 export GTK_RC_FILES="$XDG_CONFIG_HOME/gtk-1.0/gtkrc"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 
-### PATH References
-export PATH_TASK="$(which task)"
-
 ### PATH
 export PATH="/opt/local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
@@ -88,6 +84,9 @@ elif [ -f /opt/homebrew/bin/brew ]; then
 elif [ -f /usr/local/bin/brew ]; then
   eval $(/usr/local/bin/brew shellenv)
 fi
+
+### PATH References
+export PATH_TASK="$(which task)"
 
 {{ if eq .host.distro.id "darwin" }}
 # Adjustment for macOS
