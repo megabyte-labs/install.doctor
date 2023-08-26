@@ -1,66 +1,21 @@
 {{- $refreshPeriod := "240h" }}
 
-######################################
-### Security Certificates ############
-######################################
+### Git Template
+# [".config/git/template/_/husky.sh"]
+#     type = "file"
+#     url = "https://github.com/typicode/husky/raw/main/husky.sh"
+#     refreshPeriod = "{{ $refreshPeriod }}"
 
-### CloudFlare
-[".local/etc/ssl/cloudflare/Cloudflare_CA.crt"]
+### Rundeck
+[".local/system/src/var/lib/rundeck/libext/ansible-plugin-3.2.2.jar"]
     type = "file"
-    url = "https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt"
-[".local/etc/ssl/cloudflare/Cloudflare_CA.pem"]
-    type = "file"
-    url = "https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem"
-
-### cURL / Google Cloud SDK
-[".local/etc/ssl/curl/cacert.pem"]
-    type = "file"
-    url = "https://curl.se/ca/cacert.pem"
-
-### GPG
-[".gnupg/gpg.conf"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/drduh/config/master/gpg.conf"
-
-### Vagrant
-[".ssh/authorized_keys.vagrant"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub"
+    url = "https://github.com/rundeck-plugins/ansible-plugin/releases/download/v3.2.2/ansible-plugin-3.2.2.jar"
     refreshPeriod = "{{ $refreshPeriod }}"
 
-### Update scripts
-[".local/bin/update"]
+### Chef Bento
+[".local/src/bento"]
     type = "git-repo"
-    url = "https://github.com/UpdateCommand/update.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-    refreshPeriod = "{{ $refreshPeriod }}"
-
-### Betelgeuse Theme
-[".local/src/betelgeuse"]
-    type = "git-repo"
-    url = "https://gitlab.com/megabyte-labs/misc/betelgeuse.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/betelgeuse"]
-    type = "git-repo"
-    url = "https://gitlab.com/megabyte-labs/misc/betelgeuse.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/candy-icons"]
-    type = "git-repo"
-    url = "https://github.com/ProfessorManhattan/candy-icons.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/yoru"]
-    type = "git-repo"
-    url = "https://github.com/rxyhn/yoru.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/dracula"]
-    type = "git-repo"
-    url = "https://github.com/dracula/dracula-theme.git"
+    url = "https://github.com/installdoc/bento.git"
     refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
@@ -73,61 +28,10 @@
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
-[".config/desktop/gnome.yml"]
-    type = "file"
-    url = "https://gitlab.com/megabyte-labs/gas-station/-/raw/master/environments/prod/group_vars/all/defaults.yml"
-[".config/desktop/settings.yml"]
-    type = "file"
-    url = "https://gitlab.com/megabyte-labs/gas-station/-/raw/master/roles/system/theme/vars/main.yml"
-[".config/helm/config.yml"]
-    type = "file"
-    url = "https://gitlab.com/megabyte-labs/gas-station/-/raw/master/environments/prod/group_vars/all/helm.yml"
-    refreshPeriod = "{{ $refreshPeriod }}"
-[".local/share/blesh/src"]
-    type = "git-repo"
-    url = "https://github.com/akinomyoga/ble.sh.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--shallow-submodules", "--recursive", "--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/bash_it"]
-    type = "git-repo"
-    url = "https://github.com/Bash-it/bash-it.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/emsdk"]
-    type = "git-repo"
-    url = "https://github.com/emscripten-core/emsdk.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/has"]
-    type = "git-repo"
-    url = "https://github.com/kdabir/has.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/wait-for-it"]
-    type = "git-repo"
-    url = "https://github.com/vishnubob/wait-for-it.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+
 [".local/share/hoard"]
     type = "git-repo"
     url = "https://github.com/Hyde46/hoard.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/shell-safe-rm"]
-    type = "git-repo"
-    url = "https://github.com/kaelzhang/shell-safe-rm.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/extract"]
-    type = "git-repo"
-    url = "https://github.com/xvoland/Extract.git"
     refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
@@ -137,19 +41,9 @@
     refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
-[".local/share/shell/sensible.bash"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/mrzool/bash-sensible/master/sensible.bash"
-    refreshPeriod = "{{ $refreshPeriod }}"
 [".local/share/rsync-time-backup"]
     type = "git-repo"
     url = "https://github.com/laurent22/rsync-time-backup.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/tmpmail"]
-    type = "git-repo"
-    url = "https://github.com/sdushantha/tmpmail.git"
     refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
@@ -171,53 +65,7 @@
 #    refreshPeriod = "{{ $refreshPeriod }}"
 #    clone.args = ["--depth", "1"]
 #    pull.args = ["--ff-only"]
-[".config/shell/lscolors.sh"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/trapd00r/LS_COLORS/master/lscolors.sh"
-    refreshPeriod = "{{ $refreshPeriod }}"
-[".config/tmux/tmux.conf"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf"
-    refreshPeriod = "{{ $refreshPeriod }}"
-[".config/tmux/tmux.conf.local"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf.local"
-[".local/scripts/antigen.zsh"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/zsh-users/antigen/develop/bin/antigen.zsh"
-    refreshPeriod = "{{ $refreshPeriod }}"
-[".local/scripts/fzf-git.bash"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/junegunn/fzf-git.sh/main/fzf-git.sh"
-    refreshPeriod = "{{ $refreshPeriod }}"
-[".local/scripts/fzf-tmux.bash"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux"
-    refreshPeriod = "{{ $refreshPeriod }}"
-[".local/share/delta/themes.gitconfig"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/dandavison/delta/master/themes.gitconfig"
-    refreshPeriod = "{{ $refreshPeriod }}"
-[".local/share/zsh/site-functions/fzf.zsh"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh"
-    refreshPeriod = "{{ $refreshPeriod }}"
-[".local/share/zsh/site-functions/fzf-key-bindings.zsh"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh"
-    refreshPeriod = "{{ $refreshPeriod }}"
-[".config/vim/autoload/plug.vim"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-    refreshPeriod = "{{ $refreshPeriod }}"
 
-### ASDF
-[".local/share/asdf"]
-    type = "git-repo"
-    url = "https://github.com/asdf-vm/asdf.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
 
 {{- if eq .host.distro.id "darwin" }}
 ### Crunch
@@ -229,92 +77,8 @@
     pull.args = ["--ff-only"]
 {{- end }}
 
-{{- if (lookPath "apt-get") }}
-### Netdata Debsecan
-[".local/share/netdata-debsecan"]
-    type = "git-repo"
-    url = "https://gitlab.com/nodiscc/netdata-debsecan.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-{{- end }}
-
-### Netdata Speedtest (required for Netdata speedtest plugin)
-[".local/share/netdata-speedtest"]
-    type = "git-repo"
-    url = "https://github.com/ohthehugemanatee/netdata-speedtest.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-
-### Git Template
-# [".config/git/template/_/husky.sh"]
-#     type = "file"
-#     url = "https://github.com/typicode/husky/raw/main/husky.sh"
-#     refreshPeriod = "{{ $refreshPeriod }}"
-
-### Taskfiles
-[".local/share/shared-common"]
-    type = "git-repo"
-    url = "https://gitlab.com/megabyte-labs/common/shared.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-
-### Rundeck
-[".local/system/src/var/lib/rundeck/libext/ansible-plugin-3.2.2.jar"]
-    type = "file"
-    url = "https://github.com/rundeck-plugins/ansible-plugin/releases/download/v3.2.2/ansible-plugin-3.2.2.jar"
-    refreshPeriod = "{{ $refreshPeriod }}"
-
-### Chef Bento
-[".local/share/bento"]
-    type = "git-repo"
-    url = "https://github.com/installdoc/bento.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-
-### Git Fuzzy
-[".local/share/git-fuzzy"]
-    type = "git-repo"
-    url = "https://github.com/bigH/git-fuzzy.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-
-### AI / GPT
-[".local/share/agentgpt"]
-    type = "git-repo"
-    url = "https://github.com/reworkd/AgentGPT.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/kaguya"]
-    type = "git-repo"
-    url = "https://github.com/ykdojo/kaguya.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/localgpt"]
-    type = "git-repo"
-    url = "https://github.com/PromtEngineer/localGPT.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/shortgpt"]
-    type = "git-repo"
-    url = "https://github.com/rayventura/shortgpt.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/quivr"]
-    type = "git-repo"
-    url = "https://github.com/StanGirard/Quivr.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-
 ### Ansible Roles / Playbook
+# TODO: Remove all Gas Station references
 [".local/share/gas-station"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/gas-station.git"
@@ -335,56 +99,6 @@
     url = "https://github.com/ProfessorManhattan/ansible-modules-bitwarden/raw/master/lookup_plugins/bitwarden.py"
     refreshPeriod = "{{ $refreshPeriod }}"
 
-### Application Styles
-# Discord (TODO: Apply this to Discord automatically)
-[".local/share/fluent/discord/theme.css"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/DiscordStyles/Fluent/deploy/Fluent.theme.css"
-    refreshPeriod = "{{ $refreshPeriod }}"
-# Steam (TODO: Apply this to Steam automatically by detecting first if it is installed)
-[".local/share/fluent/steam"]
-    type = "git-repo"
-    url = "https://github.com/purogamer/Fluent-for-Steam.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-
-### Packer
-[".local/share/packer/archlinux"]
-    type = "git-repo"
-    url = "https://gitlab.com/megabyte-labs/packer/archlinux-desktop.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/packer/centos"]
-    type = "git-repo"
-    url = "https://gitlab.com/megabyte-labs/packer/centos-desktop.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/packer/debian"]
-    type = "git-repo"
-    url = "https://gitlab.com/megabyte-labs/packer/debian-desktop.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/packer/fedora"]
-    type = "git-repo"
-    url = "https://gitlab.com/megabyte-labs/packer/fedora-desktop.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/packer/macos"]
-    type = "git-repo"
-    url = "https://gitlab.com/megabyte-labs/packer/macos-desktop.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/packer/ubuntu"]
-    type = "git-repo"
-    url = "https://gitlab.com/megabyte-labs/packer/ubuntu-desktop.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-[".local/share/packer/windows"]
-    type = "git-repo"
-    url = "https://gitlab.com/megabyte-labs/packer/windows-desktop.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
 # https://github.com/kholia/OSX-KVM
 [".local/share/osx-kvm"]
     type = "git-repo"
@@ -399,14 +113,146 @@
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
-### JumpUSB
-[".local/src/jumpusb"]
+######################################
+### AI / GPT #########################
+######################################
+
+### AgentGPT
+[".local/share/agentgpt"]
     type = "git-repo"
-    url = "https://gitlab.com/megabyte-labs/jumpusb.git"
+    url = "https://github.com/reworkd/AgentGPT.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
+### Kaguya
+[".local/share/kaguya"]
+    type = "git-repo"
+    url = "https://github.com/ykdojo/kaguya.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
+### LocalGPT
+[".local/share/localgpt"]
+    type = "git-repo"
+    url = "https://github.com/PromtEngineer/localGPT.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+### ShortGPT
+[".local/share/shortgpt"]
+    type = "git-repo"
+    url = "https://github.com/rayventura/shortgpt.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+### Quivr
+[".local/share/quivr"]
+    type = "git-repo"
+    url = "https://github.com/StanGirard/Quivr.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+######################################
+### CLI ##############################
+######################################
+
+### Antigen
+[".local/scripts/antigen.zsh"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/zsh-users/antigen/develop/bin/antigen.zsh"
+    refreshPeriod = "{{ $refreshPeriod }}"
+
+### ASDF
+[".local/share/asdf"]
+    type = "git-repo"
+    url = "https://github.com/asdf-vm/asdf.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+### Bash (Sensible defaults)
+[".local/share/shell/sensible.bash"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/mrzool/bash-sensible/master/sensible.bash"
+    refreshPeriod = "{{ $refreshPeriod }}"
+
+### Ble.sh
+[".local/share/blesh/src"]
+    type = "git-repo"
+    url = "https://github.com/akinomyoga/ble.sh.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--shallow-submodules", "--recursive", "--depth", "1"]
+    pull.args = ["--ff-only"]
+
+### Bash It!
+[".local/share/bash_it"]
+    type = "git-repo"
+    url = "https://github.com/Bash-it/bash-it.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+### emsdk
+[".local/share/emsdk"]
+    type = "git-repo"
+    url = "https://github.com/emscripten-core/emsdk.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+### fzf
+[".local/share/fzf/fzf-git.bash"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/junegunn/fzf-git.sh/main/fzf-git.sh"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/share/fzf/fzf-tmux.bash"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/share/zsh/site-functions/fzf.zsh"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".local/share/zsh/site-functions/fzf-key-bindings.zsh"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh"
+    refreshPeriod = "{{ $refreshPeriod }}"
+
+### Git Fuzzy
+[".local/share/git-fuzzy"]
+    type = "git-repo"
+    url = "https://github.com/bigH/git-fuzzy.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+### LSColors
+[".config/shell/lscolors.sh"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/trapd00r/LS_COLORS/master/lscolors.sh"
+    refreshPeriod = "{{ $refreshPeriod }}"
+
+### TMux
+[".config/tmux/tmux.conf"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf"
+    refreshPeriod = "{{ $refreshPeriod }}"
+[".config/tmux/tmux.conf.local"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf.local"
+
+### Update scripts
+[".local/bin/update"]
+    type = "git-repo"
+    url = "https://github.com/UpdateCommand/update.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+    refreshPeriod = "{{ $refreshPeriod }}"
 
 ######################################
 ### Fonts ############################
@@ -463,6 +309,28 @@
 {{- end }}
 
 ######################################
+### Netdata ##########################
+######################################
+
+{{- if (lookPath "apt-get") }}
+### Netdata Debsecan
+[".local/share/netdata-debsecan"]
+    type = "git-repo"
+    url = "https://gitlab.com/nodiscc/netdata-debsecan.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+{{- end }}
+
+### Netdata Speedtest (required for Netdata speedtest plugin)
+[".local/share/netdata-speedtest"]
+    type = "git-repo"
+    url = "https://github.com/ohthehugemanatee/netdata-speedtest.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+######################################
 ### Rofi #############################
 ######################################
 
@@ -493,10 +361,86 @@
 {{- end }}
 
 ######################################
+### Security Certificates ############
+######################################
+
+### CloudFlare
+[".local/etc/ssl/cloudflare/Cloudflare_CA.crt"]
+    type = "file"
+    url = "https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt"
+[".local/etc/ssl/cloudflare/Cloudflare_CA.pem"]
+    type = "file"
+    url = "https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem"
+
+### cURL / Google Cloud SDK
+[".local/etc/ssl/curl/cacert.pem"]
+    type = "file"
+    url = "https://curl.se/ca/cacert.pem"
+
+### GPG
+[".gnupg/gpg.conf"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/drduh/config/master/gpg.conf"
+
+### Vagrant
+[".ssh/authorized_keys.vagrant"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub"
+    refreshPeriod = "{{ $refreshPeriod }}"
+
+######################################
+### Theme ############################
+######################################
+
+### Betelgeuse (GNOME / KDE / GRUB / Plymouth)
+# TODO: Merge Betelgeuse theme into Install Doctor
+[".local/src/betelgeuse"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/misc/betelgeuse.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/share/betelgeuse"]
+    type = "git-repo"
+    url = "https://gitlab.com/megabyte-labs/misc/betelgeuse.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+[".local/share/candy-icons"]
+    type = "git-repo"
+    url = "https://github.com/ProfessorManhattan/candy-icons.git"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+### AwesomeWM
+[".local/share/yoru"]
+    type = "git-repo"
+    url = "https://github.com/rxyhn/yoru.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+### Windows / Fluent Application Styles
+# Discord (TODO: Apply this to Discord automatically)
+[".local/share/fluent/discord/theme.css"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/DiscordStyles/Fluent/deploy/Fluent.theme.css"
+    refreshPeriod = "{{ $refreshPeriod }}"
+# Steam (TODO: Apply this to Steam automatically by detecting first if it is installed)
+[".local/share/fluent/steam"]
+    type = "git-repo"
+    url = "https://github.com/purogamer/Fluent-for-Steam.git"
+    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+######################################
 ### VIM / NVIM #######################
 ######################################
 
 ### VIM
+[".config/vim/autoload/plug.vim"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    refreshPeriod = "{{ $refreshPeriod }}"
 {{- $vimPlugins := .softwarePlugins.vim.plugins }}
 {{- range $vimPlugin := $vimPlugins }}
 {{-   $folderName :=  trimSuffix ".git" (last (splitList "/" $vimPlugin)) }}

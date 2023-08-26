@@ -7,6 +7,7 @@ githubLocation: https://github.com/megabyte-labs/install.doctor/blob/master/home
 scriptLocation: https://github.com/megabyte-labs/install.doctor/raw/master/home/dot_config/shell/profile.sh.tmpl
 repoLocation: home/dot_config/shell/profile.sh.tmpl
 ---
+
 # Shared Profile
 
 Main shell profile that is used to combine the shared profile configurations that are used by both the `~/.bashrc` and `~/.zshrc` files
@@ -15,8 +16,6 @@ Main shell profile that is used to combine the shared profile configurations tha
 
 This script is included by `~/.bashrc` and `~/.zshrc` to include imports and settings that are common to both the Bash
 and ZSH shells.
-
-
 
 ## Source Code
 
@@ -114,9 +113,9 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   fi
 
   ### fzf-git
-  #if [ -f "$HOME/.local/scripts/fzf-git.bash" ]; then
-  #  . "$HOME/.local/scripts/fzf-git.bash"
-  #fi
+  # if [ -f "${$XDG_DATA_HOME:-$HOME/.local/share}/fzf/fzf-git.bash" ]; then
+  #   . "${$XDG_DATA_HOME:-$HOME/.local/share}/fzf/fzf-git.bash"
+  # fi
 
   ### git-fuzzy
   if [ -d "$HOME/.local/src/git-fuzzy/bin" ]; then
@@ -143,8 +142,8 @@ fi
 # fi
 
 ### fzf-tmux
-#if [ -f "$HOME/.local/scripts/fzf-tmux.bash" ]; then
-#  . "$HOME/.local/scripts/fzf-tmux.bash"
+#if [ -f "${$XDG_DATA_HOME:-$HOME/.local/share}/fzf/fzf-tmux.bash" ]; then
+#  . "${$XDG_DATA_HOME:-$HOME/.local/share}/fzf/fzf-tmux.bash"
 #fi
 
 ### McFly

@@ -216,7 +216,7 @@ export GIT_MERGE_AUTOEDIT=no
 if command -v delta > /dev/null; then
   export GF_BAT_STYLE=changes
   export GF_BAT_THEME=zenbur
-  export GF_SNAPSHOT_DIRECTORY="${XDG_DATA_HOME:-$HOME/.local/share}/git-fuzzy-snapshots"
+  export GF_SNAPSHOT_DIRECTORY="${XDG_DATA_HOME:-$HOME/.local/share}/git-fuzzy/snapshots"
   export GF_PREFERRED_PAGER="delta --theme=gruvbox --highlight-removed -w __WIDTH__"
 fi
 

@@ -21,7 +21,7 @@
 - https://github.com/gotify/server
 - https://github.com/typicode/lowdb
 - https://github.com/sindresorhus/execa
-- [Title](https://github.com/mde/ejs)
+- https://github.com/mde/ejs
 
 ## System
 

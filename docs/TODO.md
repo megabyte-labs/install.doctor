@@ -28,18 +28,10 @@ This page outlines various projects and tasks that we are currently working on. 
 - https://github.com/containers/toolbox consider for p10k.zsh file
 - Figure out where Vector service fits in
 - Figure out if Squid can be used to improve web surfing speed
-- https://github.com/mumoshu/variant (With Task)
-- https://github.com/marshyski/quick-secure
+- Consider leveraging a CLI builder powered by structured data like [https://github.com/mumoshu/variant](Variant) and / or [https://github.com/mumoshu/variant2](Variant2)
+- Consider implementing a tool like [https://github.com/marshyski/quick-secure](QuickSecure) that will ensure proper permissions on boot
 - https://www.haskell.org/ghcup/install/#how-to-install
-- https://github.com/material-shell/material-shell
-- https://github.com/arxanas/git-branchless
-- https://github.com/mumoshu/variant2
-- https://github.com/burnison/tasksync
-- https://github.com/Infisical/infisical
-- https://github.com/xwmx/nb
 - https://github.com/psychic-api/psychic
-- https://github.com/pimutils/vdirsyncer
-- https://github.com/librevault/librevault
 
 ## Upstream
 
@@ -86,6 +78,7 @@ The following links include software that need to be reviewed before including t
 
 The following items are Docker containers that we may want to include as default containers deployed in our system.
 
+- https://github.com/Infisical/infisical
 - https://github.com/highlight/highlight
 - https://github.com/jitsi/jitsi-videobridge
 - https://github.com/gitlabhq/gitlabhq

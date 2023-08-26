@@ -3780,6 +3780,19 @@ softwarePackages:
     brew: git-bug
     pkg-freebsd: git-bug
     scoop: git-bug
+  git-branchless:
+    _bin: git-branchless
+    _github: https://github.com/arxanas/git-branchless
+    _name: Git Branchless
+    _post: |
+      echo "TODO: Consider implementing:"
+      echo "echo >> ~/.bashrc "alias git='git-branchless wrap --'""
+    apk: git-branchless
+    pacman: git-branchless
+    scoop: git-branchless
+    port: git-branchless
+    brew: git-branchless
+    cargo: --locked git-branchless
   git-filter-repo:
     _bin: git-filter-repo
     _desc: '[gitfilterrepo](https://github.com/newren/git-filter-repo) is a versatile tool for rewriting history'
@@ -6102,7 +6115,18 @@ softwarePackages:
     bpkg: xwmx/nb
     brew: nb
     npm: nb.sh
-    _service: null
+  vdirsyncer:
+    _bin: vdirsyncer
+    _github: https://github.com/pimutils/vdirsyncer
+    _name: vdirsyncer
+    _pre: |
+      echo "TODO - Implement the following command after automating the process of setting up contact groups / calendars to sync"
+      echo "vdirsyncer discover contacts"
+      echo "vdirsyncer sync contacts"
+      echo "TODO - Add to cron"
+      echo "*/30 * * * * /usr/local/bin/vdirsyncer sync > /dev/null"
+      echo "This should be in _post instead of _pre - it is here for testing purposes"
+    pipx: vdirsyncer
   charm:
     _bin: charm
     _desc: The Charm Tool and Library
@@ -9247,6 +9271,11 @@ softwarePackages:
     flatpak: com.microsoft.Teams
     snap: teams-for-linux
     yay: teams-for-linux
+  has:
+    _bin: has
+    _github: https://github.com/kdabir/has
+    _name: Has
+    brew: kdabir/tap/has
   teamviewer:
     _bin: teamviewer
     _desc: '[TeamViewer](https://www.teamviewer.com/en-us/) is a proprietary software for remote access to as well as remote control and maintenance of computers and other devices, which was first released in 2005. The functionality has been expanded step by step, most recently for example through the integration of TeamViewer Meeting.'
@@ -10011,6 +10040,11 @@ softwarePackages:
     _name: Wails
     ansible: professormanhattan.wails
     go: github.com/wailsapp/wails/cmd/wails@latest
+  safe-rm:
+    _bin: safe-rm
+    _github: https://github.com/kaelzhang/shell-safe-rm
+    _name: safe-rm
+    npm: safe-rm
   warp:
     _bin: warp-cli
     _desc: '[Cloudflare WARP Client](https://cloudflarewarp.com/) is a free app that makes your Internet safer'
