@@ -2896,7 +2896,9 @@ softwarePackages:
     _bin: mongod
     _github: https://github.com/mongodb/mongo
     _name: MongoDB
-    brew: mongodb/brew/mongodb
+    _service: mongodb
+    _service:brew: mongodb/brew/mongodb-community
+    brew: mongodb/brew/mongodb-community
     choco: mongodb
   mongodb-compass:
     _bin: mongodb-compass
@@ -4898,7 +4900,7 @@ softwarePackages:
     _github: https://github.com/ddworken/hishtory
     _name: hiSHtory
     _todo: Check for Homebrew version
-    _post: source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh" && echo y | hishtory init "$HISHTORY_USER_SECRET"
+    _post: source source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh" && echo y | hishtory init "$HISHTORY_USER_SECRET"
     script: curl -sSL --compressed https://hishtory.dev/install.py | python3 -
   git-town:
     _bin: git-town
@@ -6771,7 +6773,7 @@ softwarePackages:
     _github: https://github.com/coder/coder
     _home: https://coder.com/
     _name: Coder
-    brew: cdr/coder/coder-cli
+    brew: coder
   pulumi:
     _bin: pulumi
     _desc: Pulumi - Infrastructure as Code in any programming language. Build infrastructure intuitively on any cloud using familiar languages

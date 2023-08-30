@@ -287,7 +287,6 @@ softwareGroups:
     - goto
     - gping
     - gum
-    - hishtory
     - hoard
     - htmlq # htmlq is used by the the Firefox script
     - hyperfine
@@ -1549,6 +1548,8 @@ softwareGroups:
       note: Might only be needed in headless scenarios since Android Studio will download the tools
     - pkg: editly
       note: Editly NPM package is failing to install on macOS. Attempts to compile with node-gyp and fails.
+    - pkg: hishtory
+      note: Erroring out - waiting on an alternate installation method like Homebrew to be released
     - pkg: metasploit
       note: Determine whether or not this will be flagged by management settings
     - pkg: rancher-desktop

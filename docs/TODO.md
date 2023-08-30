@@ -5,6 +5,7 @@ Create issue about setting up completions - https://github.com/rsteube/lazycompl
 
 This page outlines various projects and tasks that we are currently working on. Creating a GitHub issue for each of these items would be overkill.
 
+- Integrate Sheldon
 - Add Mamba
 - https://containertoolbx.org/install/
 - https://github.com/todotxt/todo.txt-cli

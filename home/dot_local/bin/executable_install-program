@@ -167,7 +167,7 @@ async function generateInstallOrders(pkgsToInstall) {
       packageKey = pkg
     } else {
       log('warn', logStage, `The package \`${pkg}\` was not found in the installation map`)
-      console.log('softwarePackages:', softwarePackages)
+      process.env.DEBUG === 'true' && console.log('softwarePackages:', softwarePackages)
       console.log('pkg:', pkg)
       continue
     }

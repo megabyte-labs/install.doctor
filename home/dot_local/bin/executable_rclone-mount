@@ -5,6 +5,15 @@ TYPE="$1"
 USER="$2"
 MOUNT="$3"
 
+### Mount variables
+if [ "$TYPE" = 'user' ]; then
+  MOUNT_REF="$USER-$MOUNT"
+  MOUNT_LOWERCASE="user/$USER-$MOUNT"
+else
+  MOUNT_REF="$MOUNT"
+  MOUNT_LOWERCASE="$(echo "$MOUNT" | tr "[:upper:]" "[:lower:]")"
+fi
+
 ### Path definitions
 if [ "$TYPE" = 'user' ]; then
   if [ -d /Applications ] && [ -d /System ]; then
@@ -46,13 +55,6 @@ if [ ! -f "$RCLONE_IGNORE" ] && [ -f "/etc/rcloneignore" ]; then
 fi
 
 ### Mount
-if [ "$TYPE" == 'user' ]; then
-  MOUNT_REF="$USER-$MOUNT"
-  MOUNT_LOWERCASE="user/$USER-$MOUNT"
-else
-  MOUNT_REF="$MOUNT"
-  MOUNT_LOWERCASE="$(echo "$MOUNT" | tr "[:upper:]" "[:lower:]")"
-fi
 unset AWS_CA_BUNDLE
 export PATH="$PATH:/usr/local/bin:/usr/bin"
 # TODO: Only launch with --rc-web-gui if the servers hostname is the {{ .kubernetesHost }}
@@ -79,9 +81,6 @@ sudo rclone --config "$CONFIG_FOLDER/rclone.conf" \
   --no-modtime \
   --noapplexattr \
   --poll-interval 15s \
-  --rc \
-  --rc-pass rclone \
-  --rc-user rclone \
   --stats 0 \
   --vfs-cache-max-age 1000h \
   --vfs-cache-max-size 140G \
