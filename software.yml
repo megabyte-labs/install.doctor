@@ -3348,6 +3348,7 @@ softwarePackages:
     _bin: xpra
     _github: https://github.com/Xpra-org/xpra
     _name: xpra
+    _when:cask: '! test -d "/Applications/Xpra.app" && ! test -d "$HOME/Applications/Xpra.app"'
     cask: xpra
     choco: xpra
     exe: https://xpra.org/dists/windows/Xpra-x86_64_Setup.exe

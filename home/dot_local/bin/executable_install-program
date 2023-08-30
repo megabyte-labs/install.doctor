@@ -94,8 +94,8 @@ function runCommand(spinnerTitle, command) {
   execSync(command, {
     stdio: 'inherit',
     shell: true,
-    // Timeout of 30m
-    timeout: 1000 * 60 * 30
+    // Timeout of 140m
+    timeout: 1000 * 60 * 140
   })
 }
 

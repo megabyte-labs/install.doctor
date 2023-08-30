@@ -9,8 +9,8 @@
 {{ includeTemplate "universal/logg" }}
 
 ### Ensure Plymouth system packages are installed
-if command -v install-software > /dev/null; then
-    install-software plymouth
+if command -v install-program > /dev/null; then
+    install-program plymouth
 fi
 
 ### Create /etc/plymouth/plymouthd.conf

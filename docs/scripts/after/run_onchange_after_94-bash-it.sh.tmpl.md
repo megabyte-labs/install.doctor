@@ -7,6 +7,7 @@ githubLocation: https://github.com/megabyte-labs/install.doctor/blob/master/home
 scriptLocation: https://github.com/megabyte-labs/install.doctor/raw/master/home/.chezmoiscripts/universal/run_onchange_after_94-bash-it.sh.tmpl
 repoLocation: home/.chezmoiscripts/universal/run_onchange_after_94-bash-it.sh.tmpl
 ---
+
 # Bash It!
 
 Ensures Bash is configured to use Bash It!
@@ -15,8 +16,6 @@ Ensures Bash is configured to use Bash It!
 
 This script ensures Bash is configured to use Bash It! It ensures dependencies are installed, installs completions,
 and enables Bash It! plugins. The completions and plugins are hardcoded in this script.
-
-
 
 ## Source Code
 
@@ -34,7 +33,7 @@ and enables Bash It! plugins. The completions and plugins are hardcoded in this 
 
 ### Ensure Powerline is installed
 if ! command -v powerline > /dev/null; then
-    install-software powerline
+    install-program powerline
 fi
 
 ### Bash-it completions / plugins

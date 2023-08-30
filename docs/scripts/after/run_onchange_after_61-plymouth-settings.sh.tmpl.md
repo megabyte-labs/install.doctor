@@ -7,6 +7,7 @@ githubLocation: https://github.com/megabyte-labs/install.doctor/blob/master/home
 scriptLocation: https://github.com/megabyte-labs/install.doctor/raw/master/home/.chezmoiscripts/universal/run_onchange_after_61-plymouth-settings.sh.tmpl
 repoLocation: home/.chezmoiscripts/universal/run_onchange_after_61-plymouth-settings.sh.tmpl
 ---
+
 # Plymouth Theme / Configuration
 
 Configures Plymouth to use a custom theme
@@ -14,8 +15,6 @@ Configures Plymouth to use a custom theme
 ## Overview
 
 This script installs Plymouth and then configures it to use our custom Betelgeuse theme.
-
-
 
 ## Source Code
 
@@ -31,8 +30,8 @@ This script installs Plymouth and then configures it to use our custom Betelgeus
 {{ includeTemplate "universal/logg" }}
 
 ### Ensure Plymouth system packages are installed
-if command -v install-software > /dev/null; then
-    install-software plymouth
+if command -v install-program > /dev/null; then
+    install-program plymouth
 fi
 
 ### Create /etc/plymouth/plymouthd.conf
