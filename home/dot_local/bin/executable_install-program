@@ -91,6 +91,7 @@ function wrapMessage(msg) {
 function runCommand(spinnerTitle, command) {
   // execSync(command.includes('sudo') ? `sudo "$(which gum)" spin --spinner dot --title "${spinnerTitle}" -- ${command}` : `gum spin --spinner dot --title "${spinnerTitle}" -- ${command}`, {
   log('info', 'CMD', spinnerTitle)
+  console.log(command)
   execSync(command, {
     stdio: 'inherit',
     shell: true,
@@ -1882,7 +1883,7 @@ async function installSoftware(pkgsToInstall) {
   }
   installOrdersPre.length && log('info', 'Pre-Install', `Running package-specific pre-installation steps`)
   for (const script of installOrdersPre) {
-    await $`${script.replace(/\n/g, '\n')}`
+    await $`${script.replace(/\n/g, "\\\n")}`
   }
   installOrdersGroups.length && log('info', 'Users / Groups', `Adding groups / users`)
   for (const group of installOrdersGroups) {
@@ -1910,7 +1911,7 @@ async function installSoftware(pkgsToInstall) {
   for (const script of installOrdersPost) {
     try {
       log('info', 'Post Hook', script)
-      await $`${script.replace(/\n/g, '\n')}`
+      await $`${script.replace(/\n/g, "\\\n")}`
     } catch(e) {
       log('info', 'Post-Install Hook', 'Encountered error while running post-install hook')
     }
