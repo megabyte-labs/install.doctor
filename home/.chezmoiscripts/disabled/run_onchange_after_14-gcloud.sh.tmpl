@@ -1,0 +1,40 @@
+{{- if false -}}
+#!/usr/bin/env bash
+# @file Google Cloud Platform
+# @brief Ensures S3 buckets are created
+# @description
+#     This script ensures that the S3 buckets are created on Google Cloud Platform. It creates
+#     the following buckets:
+#
+#     - gs://docker.s3.{{ .host.domain }}
+#     - gs://private.s3.{{ .host.domain }}
+#     - gs://public.s3.{{ .host.domain }}
+#     - gs://system.s3.{{ .host.domain }}
+#     - gs://user.s3.{{ .host.domain }}
+
+exit 0
+
+if command -v gcloud > /dev/null; then
+  if [ -f "${$XDG_CONFIG_HOME:-$HOME/.config}/gcloud/s3-client-secret.json" ]; then
+    logg info 'Authenticating with gcloud S3 service account'
+    echo Y | gcloud auth login --cred-file=s3-gcp.json
+    if gcloud config get-value account > /dev/null && logg info 'gcloud is authenticated'; then
+      logg info 'Disabling usage reporting' && gcloud config set disable_usage_reporting true
+      BUCKETS="$(gcloud storage buckets list | grep 'storage_url:')"
+      for BUCKET in "docker" "private" "public" "system" "user"; do
+        if logg info "Checking for $BUCKET S3 presence on GCP" && ! echo "$BUCKETS" | grep "gs://${BUCKET}.s3.{{ .host.domain }}" > /dev/null; then
+          logg info "Creating gs://${BUCKET}.s3.{{ .host.domain }}" && gcloud storage buckets create "gs://${BUCKET}.s3.{{ .host.domain }}"
+        fi
+      done
+      logg info 'Finished ensuring S3 buckets on gcloud are created'
+    else
+      logg error 'gcloud is not authenticated'
+    fi
+  else
+    logg info 'No client secret available for gcloud S3 service account'
+  fi
+else
+  logg error 'The gcloud executable is not available'
+fi
+
+{{ end -}}

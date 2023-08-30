@@ -14,7 +14,7 @@ if [ "$TYPE" = 'user' ]; then
   fi
   CACHE_FOLDER="/$USER_FOLDER/$USER/.cache/rclone"
   CONFIG_FOLDER="/$USER_FOLDER/$USER/.config/rclone"
-  LOG_FOLDER="/$USER_FOLDER/$USER/.local/log"
+  LOG_FOLDER="/$USER_FOLDER/$USER/.local/share/rclone"
   LOG_FILE="$LOG_FOLDER/$MOUNT.log"
   MOUNT_PATH="/$USER_FOLDER/$USER/.local/mnt/$MOUNT"
 else
@@ -46,7 +46,13 @@ if [ ! -f "$RCLONE_IGNORE" ] && [ -f "/etc/rcloneignore" ]; then
 fi
 
 ### Mount
-MOUNT_LOWERCASE="$(echo "$MOUNT" | tr "[:upper:]" "[:lower:]")"
+if [ "$TYPE" == 'user' ]; then
+  MOUNT_REF="$USER-$MOUNT"
+  MOUNT_LOWERCASE="user/$USER-$MOUNT"
+else
+  MOUNT_REF="$MOUNT"
+  MOUNT_LOWERCASE="$(echo "$MOUNT" | tr "[:upper:]" "[:lower:]")"
+fi
 unset AWS_CA_BUNDLE
 export PATH="$PATH:/usr/local/bin:/usr/bin"
 # TODO: Only launch with --rc-web-gui if the servers hostname is the {{ .kubernetesHost }}
@@ -56,11 +62,11 @@ sudo rclone --config "$CONFIG_FOLDER/rclone.conf" \
   --allow-other \
   --buffer-size 4G \
   --bwlimit 40M \
-  --cache-chunk-path "$CACHE_FOLDER/$MOUNT-chunks" \
-  --cache-db-path "$CACHE_FOLDER/$MOUNT-db" \
-  --cache-dir "$CACHE_FOLDER/$MOUNT-vfs" \
+  --cache-chunk-path "$CACHE_FOLDER/$MOUNT_REF-chunks" \
+  --cache-db-path "$CACHE_FOLDER/$MOUNT_REF-db" \
+  --cache-dir "$CACHE_FOLDER/$MOUNT_REF-vfs" \
   --cache-info-age 60m \
-  --cache-tmp-upload-path "$CACHE_FOLDER/$MOUNT-upload" \
+  --cache-tmp-upload-path "$CACHE_FOLDER/$MOUNT_REF-upload" \
   --cache-workers 8 \
   --cache-writes \
   --checkers 16 \
@@ -85,5 +91,5 @@ sudo rclone --config "$CONFIG_FOLDER/rclone.conf" \
   --vfs-read-ahead 128M \
   --vfs-read-chunk-size 16M \
   --vfs-read-chunk-size-limit 128M \
-  --volname "$MOUNT" \
-  "$MOUNT":"$MOUNT_LOWERCASE" "$MOUNT_PATH"
+  --volname "$MOUNT_REF" \
+  "$MOUNT_REF":"$MOUNT_LOWERCASE" "$MOUNT_PATH"
