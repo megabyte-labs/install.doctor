@@ -55,25 +55,6 @@ The following items are things we would like to include into the Install Doctor 
 - Wait for packages to be available for GitHub Actions https://github.com/actions/runner
 - Find best Figma plugins here: https://www.figma.com/community/popular
 
-## Review
-
-The following links include software that need to be reviewed before including them into the Install Doctor installer.
-
-### Caddy
-
-- https://authp.github.io/
-- https://github.com/caddy-dns/cloudflare
-- https://github.com/caddyserver/xcaddy
-- https://github.com/luisfarzati/localdots
-- https://github.com/mholt/caddy-dynamicdns
-- https://github.com/caddyserver/cache-handler
-- https://github.com/tailscale/caddy-tailscale
-- https://github.com/caddyserver/replace-response
-- https://github.com/lindenlab/caddy-s3-proxy
-- https://github.com/greenpau/caddy-git
-- https://github.com/mholt/caddy-embed
-- https://github.com/nathan-osman/caddy-docker
-
 ## Docker
 
 The following items are Docker containers that we may want to include as default containers deployed in our system.
@@ -219,23 +200,17 @@ The following items have been reviewed but need to be revisited due to complexit
 - https://github.com/OpenNebula/one /. https://github.com/OpenNebula/minione
 - https://github.com/ConvoyPanel/panel
 - https://github.com/hashicorp/nomad
-- [Title](https://github.com/Soft/xcolor)
-- [Title](https://github.com/Xpra-org/xpra)
-- [Title](https://github.com/ksnip/ksnip)
-- [Title](https://github.com/leftwm/leftwm)
-- [Title](https://github.com/polybar/polybar)
-- [Title](https://github.com/kingToolbox/WindTerm)
-- [Title](https://github.com/hyprwm/Hypr)
 - [Title](https://github.com/Sygil-Dev/sygil-webui)
 - [Title](https://github.com/psychic-api/psychic)
 - [Title](https://github.com/telekom-security/tpotce)
 - [Title](https://flathub.org/apps/com.airtame.Client)
-- [Title](https://github.com/Aloxaf/fzf-tab)
-  [Title](https://github.com/haproxy/haproxy)
 - [Title](https://frappeframework.com/docs/v14/user/en/installation)
-- [
+- https://github.com/stringer-rss/stringer
 
-](https://github.com/stringer-rss/stringer)
+## Tiling Managers
+
+- https://github.com/hyprwm/Hypr
+- https://github.com/leftwm/leftwm
 
 ## Bookmarks
 

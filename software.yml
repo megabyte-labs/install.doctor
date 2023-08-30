@@ -2773,7 +2773,6 @@ softwarePackages:
     port: xsv
     brew: xsv
     nix-env: xsv
-
   haproxy:
     _bin: haproxy
     _github: https://github.com/haproxy/haproxy
@@ -2785,6 +2784,16 @@ softwarePackages:
     pacman: haproxy
     zypper: haproxy
     apk: haproxy
+  polybar:
+    _bin: polybar
+    _github: https://github.com/polybar/polybar
+    _name: Polybar
+    apt: polybar
+    pacman: polybar
+    xbps-install: polybar
+    zypper: polybar
+    pkg-freebsd: polybar
+    dnf: polybar
   ghcup:
     _bin: ghcup
     _github: https://github.com/haskell/ghcup-hs
@@ -3326,6 +3335,24 @@ softwarePackages:
     _name: Pock
     _when:cask: '! test -d /Applications/Pock.app && ! test -d $HOME/Applications/Pock.app'
     cask: pock
+  ksnip:
+    _bin: ksnip
+    _github: https://github.com/ksnip/ksnip
+    _name: kSnip
+    _post:snap: sudo snap connect ksnip:network-observe && sudo snap connect ksnip:network-manager-observe && sudo snap connect ksnip:removable-media
+    cask: ksnip
+    flatpak: org.ksnip.ksnip
+    choco: ksnip
+    snap: ksnip
+  xpra:
+    _bin: xpra
+    _github: https://github.com/Xpra-org/xpra
+    _name: xpra
+    cask: xpra
+    choco: xpra
+    exe: https://xpra.org/dists/windows/Xpra-x86_64_Setup.exe
+    flatpak: org.xpra.xpra
+    msi: https://xpra.org/dists/windows/Xpra-x86_64.msi
   xcodes:
     _bin: xcodes
     _desc: CLI utility to download, install, and switch to alternate versions of Xcode
