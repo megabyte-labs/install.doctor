@@ -116,6 +116,7 @@ let installData
 let installOrders = {}
 let installMeta = {}
 let binLinkRan = false
+let chezmoiData = []
 let installOrdersPre = []
 let installOrdersPost = []
 let installOrdersService = []
@@ -141,6 +142,12 @@ async function downloadInstallData() {
     const text = fs.readFileSync(process.env.HOME + '/.local/share/chezmoi/software.yml').toString()
     return YAML.parse(text)
   }
+}
+
+// Download the installation map
+async function getChezmoiData() {
+  const text = fs.readFileSync(process.env.HOME + '/.local/share/chezmoi/home/.chezmoidata.yaml').toString()
+  return YAML.parse(text)
 }
 
 // Creates the installOrders object which maps package managers to arrays of packages to install
@@ -428,7 +435,7 @@ async function generateInstallOrders(pkgsToInstall) {
 }
 
 function processPluginOrders(pkg) {
-  const pluginMap = installData && installData.softwarePlugins && installData.softwarePlugins[pkg]
+  const pluginMap = chezmoiData && chezmoiData.softwarePlugins && chezmoiData.softwarePlugins[pkg]
   if (pluginMap) {
     if (pluginMap.cmd && pluginMap.plugins) {
       installOrdersPlugins.push({ package: pkg, cmd: pluginMap.cmd, plugins: pluginMap.plugins })
@@ -1858,6 +1865,7 @@ async function installSoftware(pkgsToInstall) {
   }
   log('info', 'Catalog Download', `Fetching the latest version of the installation map`)
   installData = await downloadInstallData()
+  chezmoiData = await getChezmoiData()
   log('info', 'Filter', `Calculating the install orders`)
   await generateInstallOrders(pkgsToInstall ? pkgsToInstall : process.argv.slice(3))
   const packageManagers = Object.keys(installOrders)
