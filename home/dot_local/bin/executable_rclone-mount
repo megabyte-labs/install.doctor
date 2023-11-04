@@ -83,9 +83,9 @@ sudo rclone --config "$CONFIG_FOLDER/rclone.conf" \
   --poll-interval 15s \
   --stats 0 \
   --vfs-cache-max-age 1000h \
-  --vfs-cache-max-size 140G \
+  --vfs-cache-max-size 5G \
   --vfs-cache-mode full \
-  --vfs-cache-poll-interval 24h \
+  --vfs-cache-poll-interval 30s \
   --vfs-fast-fingerprint \
   --vfs-read-ahead 128M \
   --vfs-read-chunk-size 16M \
