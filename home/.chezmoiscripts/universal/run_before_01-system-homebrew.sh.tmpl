@@ -42,6 +42,7 @@ else
 fi
 
 ### Configure Firewall
+# TODO: If this is required, notes should be added describing the pros / cons of the security
 # if [ -d /Applications ] && [ -d /System ]; then
 #   logg info 'Disabling the block all incoming traffic option in the system Firewall settings'
 #   /usr/libexec/ApplicationFirewall/socketfilterfw --setblockall off || (logg error 'Failed to disable incoming traffic block in the system Firewall' && logg info 'Manually disable the option under "System Preferences" > "Network" > "Firewall" > "Incoming Traffic Block Toggle"')
