@@ -350,6 +350,8 @@ if [ "$HEADLESS_INSTALL" != 'true' ]; then
 fi
 
 # @description Ensure the ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi directory is cloned and up-to-date
+logg info 'Setting git http.postBuffer value high for large source repository'
+git config --global http.postBuffer 524288000
 if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.git" ]; then
   cd "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
   logg info "Pulling the latest changes from ${START_REPO:-https://github.com/megabyte-labs/install.doctor.git}"
