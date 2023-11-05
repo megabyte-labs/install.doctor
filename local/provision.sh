@@ -457,7 +457,6 @@ export DEBIAN_FRONTEND=noninteractive
 
 ### Run chezmoi apply
 # shellcheck disable=SC2016
-logg info 'Running chezmoi apply'
 if [ "$DEBUG_MODE" == 'true' ]; then
   DEBUG_MODIFIER="-vvvvv"
 else

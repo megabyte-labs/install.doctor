@@ -432,7 +432,6 @@ if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml" ]; then
 fi
 
 # @description Run `chezmoi apply` and enable verbose mode if the `DEBUG_MODE` environment variable is set to true
-logg info 'Running chezmoi apply'
 if [ "$DEBUG_MODE" = 'true' ]; then
   DEBUG_MODIFIER="-vvvvv"
 fi
