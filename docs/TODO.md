@@ -7,6 +7,7 @@ This page outlines various projects and tasks that we are currently working on. 
 
 - Integrate Sheldon
 - Look at Flipper Zero
+- https://github.com/tadamcz/updates.sh/blob/main/updates.sh (Homebrew download parallelism)
 - Add Mamba
 - https://docs.pkgx.sh/using-pkgx/shell-integration
 - https://containertoolbx.org/install/
