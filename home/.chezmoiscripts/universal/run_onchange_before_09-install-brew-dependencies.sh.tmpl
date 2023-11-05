@@ -1,0 +1,65 @@
+{{- if (ne .host.distro.family "windows") -}}
+#!/usr/bin/env bash
+# @file Delta / GH (GitHub CLI) Install
+# @brief Ensures Delta and GH (the GitHub CLI) are installed via Homebrew
+# @description
+#     This script installs various libraries that are loosely required by the eco-system that Install Doctor
+#     implements. It installs the following:
+#
+#     1. `delta` - Delta is used by the git config as an alternate, improved pager terminal user-interface
+#     2. `gh` - GH (GitHub CLI) is included as a dependency for generating the global git config helper since GH provides a credential helper that can be used to authenticate calls on `github.com`.
+#     3. `go` - The Go framework
+#
+#     The script will check for the presence of each program before trying to install it via Homebrew. If any of these
+#     requirements are to be installed via native package managers, then the dependency should be declared in the system
+#     dependencies template file (i.e. `home/.chezmoitemplates/archlinux/common-dependencies` in the case of Archlinux).
+
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
+
+### Ensure Go is installed
+if ! command -v go > /dev/null; then
+  if command -v brew; then
+    logg 'Installing go via Homebrew'
+    brew install go || GO_EXIT_CODE=$?
+    if [ -n "$GO_EXIT_CODE" ]; then
+      logg error 'go was not successfully installed via Homebrew'
+    fi
+  else
+    logg 'brew is unavailable. Cannot use it to perform a system installation of node.'
+  fi
+else
+  logg 'go is available'
+fi
+
+### Ensure gh is installed
+if ! command -v gh > /dev/null; then
+  if command -v brew; then
+    logg 'Installing gh via Homebrew'
+    brew install gh || GH_EXIT_CODE=$?
+    if [ -n "$GH_EXIT_CODE" ]; then
+      logg error 'gh was not successfully installed via Homebrew'
+    fi
+  else
+    logg 'brew is unavailable. Cannot use it to perform a system installation of node.'
+  fi
+else
+  logg 'gh is available'
+fi
+
+### Ensure delta is installed
+if ! command -v delta > /dev/null; then
+  if command -v brew; then
+    logg 'Installing delta via Homebrew'
+    brew install delta || DELTA_EXIT_CODE=$?
+    if [ -n "$DELTA_EXIT_CODE" ]; then
+      logg error 'delta was not successfully installed via Homebrew'
+    fi
+  else
+    logg 'brew is unavailable. Cannot use it to perform a system installation of node.'
+  fi
+else
+  logg 'delta is available'
+fi
+
+{{ end -}}

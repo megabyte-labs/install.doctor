@@ -6,6 +6,9 @@
 #     This script ensures macOS has tools like `git` by installing the Xcode command-line developer tools if they are
 #     not already installed. Then, on both Linux and macOS, it ensures Homebrew is installed.
 #
+#     It also tries to perform a system update and there may be some manual work required since it is not possible
+#     to completely automate the system update process for macOS.
+#
 #     ## Environment Variables
 #
 #     * `NO_RESTART` - Set this variable to skip restarts triggered by system updates on macOS
@@ -52,7 +55,7 @@ fi
 if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
   if command -v gtimeout > /dev/null; then
     # Allow 8 minutes for system updates
-    logg info 'Ensuring system software is upgraded (timing out after 8 minutes if system upgrade fails)'
+    logg info 'Ensuring system software is upgraded (timing out after 50 minutes if system upgrade fails)'
     sudo gtimeout 3000 softwareupdate -i -a -R || logg warn 'The system update command timed out after 50 minutes'
   else
     # If gtimeout is unavailable, then attempt system upgrade without a timeout (which usually works on fresh systems)

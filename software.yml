@@ -6163,7 +6163,7 @@ softwarePackages:
     _bin: vdirsyncer
     _github: https://github.com/pimutils/vdirsyncer
     _name: vdirsyncer
-    _pre: echo "TODO - Implement the following command after automating the process of setting up contact groups / calendars to sync" && echo "vdirsyncer discover contacts" && echo "vdirsyncer sync contacts" && echo "TODO - Add to cron" && echo "*/30 * * * * /usr/local/bin/vdirsyncer sync > /dev/null" && echo "This should be in _post instead of _pre - it is here for testing purposes"
+    _todo: echo "TODO - Implement the following command after automating the process of setting up contact groups / calendars to sync" && echo "vdirsyncer discover contacts" && echo "vdirsyncer sync contacts" && echo "TODO - Add to cron" && echo "*/30 * * * * /usr/local/bin/vdirsyncer sync > /dev/null" && echo "This should be in _post instead of _pre - it is here for testing purposes"
     pipx: vdirsyncer
   charm:
     _bin: charm
