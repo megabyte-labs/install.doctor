@@ -61,8 +61,6 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
       if [ -n "$EXIT_CODE" ]; then
         logg info 'Non-zero exit code received when trying to retrieve public user GPG key on hkps://pgp.mit.edu'
         gpgconf --kill dirmngr
-        KEYID="${KEYID^^}"
-        KEYID="$(echo "$KEYID" | sed 's/^0X/0x/')"
         if [ -f "$HOME/.gnupg/public/$KEYID.sig" ]; then
           gpg --import "$HOME/.gnupg/public/$KEYID.sig"
         fi

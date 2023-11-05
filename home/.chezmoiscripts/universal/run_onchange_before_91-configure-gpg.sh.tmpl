@@ -27,8 +27,6 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
   fi
   KEYID_TRIMMED="$(echo "$KEYID" | sed 's/^0x//')"
   if ! gpg --list-secret-keys --keyid-format=long | grep "$KEYID_TRIMMED" > /dev/null; then
-    LOCAL_KEYID="${KEYID^^}"
-    LOCAL_KEYID="$(echo "$LOCAL_KEYID" | sed 's/^0X/0x/')"
     logg info 'Killing dirmngr instance and reloading daemon with standard-resolver'
     sudo pkill dirmngr
     dirmngr --daemon --standard-resolver
