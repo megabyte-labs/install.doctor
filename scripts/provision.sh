@@ -408,7 +408,7 @@ else
 fi
 
 # @description Ensure gsed is available on macOS (for modifying `/etc/sudoers` to remove passwordless sudo)
-if [ -n "$REMOVE_TMP_SUDOERS" ] && [ -d /Applications ] && [ -d /System ]; then
+if [ -d /Applications ] && [ -d /System ]; then
   if ! command -v gsed > /dev/null; then
     if command -v brew > /dev/null; then
       brew install gsed
