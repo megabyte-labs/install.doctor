@@ -6,7 +6,9 @@ Create issue about setting up completions - https://github.com/rsteube/lazycompl
 This page outlines various projects and tasks that we are currently working on. Creating a GitHub issue for each of these items would be overkill.
 
 - Integrate Sheldon
+- Look at Flipper Zero
 - Add Mamba
+- https://docs.pkgx.sh/using-pkgx/shell-integration
 - https://containertoolbx.org/install/
 - https://github.com/todotxt/todo.txt-cli
 - https://github.com/PromtEngineer/localGPT
@@ -67,6 +69,7 @@ The following items are Docker containers that we may want to include as default
 - https://github.com/opf/openproject
 - https://github.com/mastodon/mastodon
 - https://github.com/huginn/huginn
+- https://github.com/formbricks/formbricks
 - https://github.com/chatwoot/chatwoot
 - https://github.com/discourse/discourse
 - [Title](https://github.com/sipt/shuttle)

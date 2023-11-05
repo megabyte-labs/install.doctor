@@ -8994,6 +8994,14 @@ softwarePackages:
     _home: https://github.com/fatedier/frp
     _name: frps (server)
     brew: frps
+  koodo-reader:
+    _bin: koodo-reader
+    _github: https://github.com/koodo-reader/koodo-reader
+    _name: Koodo Reader
+    cask: koodo-reader
+    scoop: extras/koodo-reader
+    winget: AppbyTroye.KoodoReader
+    flatpak: io.github.troyeguo.koodo-reader
   ruff:
     _bin: ruff
     _desc: An extremely fast Python linter, written in Rust.
@@ -9001,6 +9009,9 @@ softwarePackages:
     _github: https://github.com/charliermarsh/ruff
     _home: https://beta.ruff.rs/docs/
     _name: Ruff
+    apk: ruff
+    brew: ruff
+    pacman: ruff
     pipx: ruff
   hugo:
     _bin: hugo
@@ -9927,6 +9938,7 @@ softwarePackages:
     _github: https://github.com/mirror/vbox
     _home: https://www.virtualbox.org/
     _name: VirtualBox
+    _todo: Add support for arm64 - currently brew install --cask virtualbox requires intel 64 bit
     _post:choco: |
       # TODO
       # TODO
