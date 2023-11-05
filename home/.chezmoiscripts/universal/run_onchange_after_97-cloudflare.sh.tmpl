@@ -171,6 +171,13 @@ if command -v warp-cli > /dev/null; then
 
     ### Python
     if command -v python3 > /dev/null; then
+        ### Ensure Certifi package is available globally
+        if ! pip3 list certifi | grep certifi > /dev/null; then
+            logg info 'Ensuring certifi is installed globally for Python 3'
+            pip3 install certifi
+        fi
+
+        ### Copy CloudFlare PEM file to Python 3 location
         logg info "Configuring python3 / python to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem""
         echo | cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> $(python3 -m certifi)
     fi

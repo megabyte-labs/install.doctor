@@ -19,6 +19,8 @@ if command -v volta > /dev/null; then
   if ! test "$(node --version | sed 's/^v//' | awk '{print $1}' | awk -F'.' ' ( $1 > 15) ')"; then
     logg info 'Installing latest version of Node.js'
     volta install node@latest
+    logg info 'Ensuring NPM is updated to latest'
+    npm install -g npm@latest
   else
     logg info 'Node.js appears to meet the minimum version requirements (version >15)'
   fi

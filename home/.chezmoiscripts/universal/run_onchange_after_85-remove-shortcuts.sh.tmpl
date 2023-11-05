@@ -12,6 +12,8 @@
 {{ $removeShortcuts := join " " .removeLinuxShortcuts }}
 # shortcuts to remove: {{ $removeShortcuts }}
 
+logg info 'Processing remove shortcuts step for Linux machines'
+
 ### Remove unnecessary desktop shortcuts
 for DESKTOP_ICON in {{ $removeShortcuts }}; do
     for SHORTCUT_FOLDER in {{ .host.home }}/.local/share/applications {{ .host.home }}/.local/share/applications/wine/Programs; do
