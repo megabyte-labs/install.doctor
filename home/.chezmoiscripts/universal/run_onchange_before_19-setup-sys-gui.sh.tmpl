@@ -6,6 +6,9 @@
 #     This script enables `sys-gui-gpu` which allows you to secure dom0 even more by seperating the GUI
 #     management from dom0 and into a seperate Qube.
 
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
+
 ### Enables sys-gui-gpu
 enableSysGUIGPU() {
   logg info 'Enabling sys-gui-gpu'

@@ -6,6 +6,9 @@
 #     This script loops through the `.removeLinuxShortcuts` value in `home/.chezmoidata.yaml` and removes
 #     desktop shortcuts that have been deemed to be unnecessary or obtrusive.
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 {{ $removeShortcuts := join " " .removeLinuxShortcuts }}
 # shortcuts to remove: {{ $removeShortcuts }}
 

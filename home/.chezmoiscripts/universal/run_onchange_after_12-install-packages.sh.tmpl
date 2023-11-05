@@ -6,6 +6,7 @@
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
+
 {{- $softwareGroup := nospace (cat "_" .host.softwareGroup) }}
 {{- $softwareList := list (index .softwareGroups $softwareGroup | toString | replace "[" "" | replace "]" "") | uniq | join " " }}
 

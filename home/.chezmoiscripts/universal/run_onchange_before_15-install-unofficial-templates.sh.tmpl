@@ -6,6 +6,9 @@
 #     This script downloads unofficial templates defined in the `.qubes.templatesUnofficial` data key of `home/.chezmoidata.yaml` and then
 #     installs them in dom0 after transferring the downloads from a temporary Qube used for downloading the templates.
 
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
+
 ### Ensure unofficial templates are installed
 for TEMPLATE_URL of {{ .qubes.templatesUnofficial | toString | replace "[" "" | replace "]" "" }}; do
   logg info "Template URL: $TEMPLATE_URL"

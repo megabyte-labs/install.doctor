@@ -12,6 +12,9 @@
 # qubes-dom0.repo hash: {{ include (joinPath .chezmoi.homeDir ".config" "qubes" "qubes-dom0.repo") | sha256sum }}
 # qubes packages: {{ .qubes.dom0Packages | toString | replace "[" "" | replace "]" "" }}
 
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
+
 ### Configure dom0 repos
 logg info 'Updating dom0 repos to include auxilary branches'
 sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/qubes/qubes-templates.repo" /etc/qubes/repo-templates/qubes-templates.repo

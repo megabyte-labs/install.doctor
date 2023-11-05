@@ -5,6 +5,9 @@
 # @description
 #     This script runs in dom0 and ensures the templates defined in `home/.chezmoidata.yaml` are all installed.
 
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
+
 ### Ensure Qubes templates exist and download if they are not present
 for TEMPLATE of {{ .qubes.templates | toString | replace "[" "" | replace "]" "" }}; do
   if [ ! -f "/var/lib/qubes/vm-templates/$TEMPLATE" ]; then

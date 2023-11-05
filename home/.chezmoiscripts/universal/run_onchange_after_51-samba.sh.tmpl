@@ -76,17 +76,17 @@ if command -v smbd > /dev/null; then
         logg info "Ensuring $PRIVATE_SHARE is created"
         sudo mkdir -p "$PRIVATE_SHARE"
         sudo chmod 770 "$PRIVATE_SHARE"
-        sudo chown -Rf rclone:rclone "$PRIVATE_SHARE"
+        sudo chown -Rf rclone:$(id -g -n) "$PRIVATE_SHARE"
 
         logg info "Ensuring $PUBLIC_SHARE is created"
         sudo mkdir -p "$PUBLIC_SHARE"
         sudo chmod 775 "$PUBLIC_SHARE"
-        sudo chown -Rf rclone:rclone "$PUBLIC_SHARE"
+        sudo chown -Rf rclone:$(id -g -n) "$PUBLIC_SHARE"
 
         logg info "Ensuring $HOME/Public is created"
         mkdir -p "$HOME/Public"
         chmod 775 "$HOME/Public"
-        chown -Rf {{ .user.username }}:rclone "$HOME/Public"
+        chown -Rf {{ .user.username }}:$(id -g -n) "$HOME/Public"
 
         sudo sharing -a "$PRIVATE_SHARE" -S "Private (System)" -n "Private (System)" -g 000 -s 001 -E 1 -R 1 && logg success "Configured $PRIVATE_SHARE as a private Samba share" || logg info 'sharing command failed - it is likely that the share was already set up'
         sudo sharing -a "$PUBLIC_SHARE" -S "Public (System)" -n "Public (System)" -g 001 -s 001 -E 1 -R 0 && logg success "Configured $PUBLIC_SHARE as a public Samba share" || logg info 'sharing command failed - it is likely that the share was already set up'

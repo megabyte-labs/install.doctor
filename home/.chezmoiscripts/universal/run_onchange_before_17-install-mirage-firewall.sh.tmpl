@@ -6,6 +6,9 @@
 #     This script first ensures the TemplateVMs are updated and then downloads the Mirage firewall. It configures
 #     Mirage firewall so it can be used as a unikernel firewall VM.
 
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
+
 ### Update TemplateVMs
 logg info 'Updating TemplateVMs via qubesctl'
 timeout 900 qubesctl --show-output --skip-dom0 --templates state.sls update.qubes-vm

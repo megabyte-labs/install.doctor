@@ -134,20 +134,23 @@ const osPlatform = osPlatformData === 'win32' ? 'windows' : osPlatformData
 async function downloadInstallData() {
   const response = await fetch('https://github.com/megabyte-labs/install.doctor/raw/master/software.yml')
   if (response.ok) {
+    log('info', 'Catalog Download', `Received ok response from download`)
     const text = await response.text()
-    return YAML.parse(text)
+    log('info', 'Catalog Download', `Parsing software.yml`)
+    return YAML.parse(text, { maxAliasCount: -1 })
   } else {
     log('error', 'Catalog Download', `Failed to download the installation map`)
     log('info', 'Catalog Download', `Falling back to local version of software.yml`)
     const text = fs.readFileSync(process.env.HOME + '/.local/share/chezmoi/software.yml').toString()
-    return YAML.parse(text)
+    log('info', 'Catalog Download', `Parsing local software.yml file`)
+    return YAML.parse(text, { maxAliasCount: -1 })
   }
 }
 
 // Download the installation map
 async function getChezmoiData() {
   const text = fs.readFileSync(process.env.HOME + '/.local/share/chezmoi/home/.chezmoidata.yaml').toString()
-  return YAML.parse(text)
+  return YAML.parse(text, { maxAliasCount: -1 })
 }
 
 // Creates the installOrders object which maps package managers to arrays of packages to install

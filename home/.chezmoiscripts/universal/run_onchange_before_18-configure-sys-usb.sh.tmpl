@@ -6,6 +6,9 @@
 #     This script ensures that Qubes uses `sys-usb` for USB connections. It also optimizes the configuration
 #     by applying security configurations that the Qubes documentation recommends.
 
+{{ includeTemplate "universal/profile-before" }}
+{{ includeTemplate "universal/logg-before" }}
+
 ### Enable sys-usb
 logg info 'Modifying Salt configuration to be able to enable sys-usb'
 qubesctl top.enabled pillar=True || EXIT_CODE=$?

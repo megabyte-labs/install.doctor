@@ -13,6 +13,9 @@
 #     defined at the end of the [`exports.sh.tmpl`](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/shell/exports.sh.tmpl)
 #     file. This value is also populated from the `.chezmoi.yaml.tmpl` value.
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 if [ -d /Applications ] && [ -d /System ]; then
     if ! command -v defaultbrowser > /dev/null; then
         logg info 'Installing defaultbrowser via Homebrew which is the preferred way of configuring the default browser'

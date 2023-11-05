@@ -8,6 +8,9 @@
 #     This script will only run when `${XDG_DATA_HOME:-$HOME/.local/share}/emsdk` is present on the system. This folder
 #     is populated via the definition in `home/.chezmoiexternal.toml.tmpl`.
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/emsdk" ]; then
     cd "${XDG_DATA_HOME:-$HOME/.local/share}/emsdk"
     logg info 'Pulling latest changes for Emscripten source code'

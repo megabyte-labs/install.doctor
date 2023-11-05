@@ -5,6 +5,9 @@
 #     This script removes various files in the `HOME` directory that are either no longer necessary
 #     or cluttery.
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 ### Remove meta sudo file
 if [ -f "$HOME/.sudo_as_admin_successful" ]; then
     rm -f "$HOME/.sudo_as_admin_successful"
