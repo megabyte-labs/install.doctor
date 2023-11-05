@@ -53,15 +53,15 @@ fi
 if command -v update-alternatives > /dev/null; then
     if [ -f "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" ]; then
         sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" 100
-        logg success 'Installed `default.plymouth`'
+        logg success 'Installed default.plymouth'
         # Required sometimes
         sudo update-alternatives --set default.plymouth "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth"
-        logg success 'Set `default.plymouth`'
+        logg success 'Set default.plymouth'
     else
         logg warn "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth does not exist!"
     fi
 else
-    logg warn '`update-alternatives` is not available'
+    logg warn 'update-alternatives is not available'
 fi
 
 ### Update /etc/plymouth/plymouthd.conf
@@ -87,12 +87,12 @@ fi
 if command -v plymouth-set-default-theme > /dev/null; then
     sudo plymouth-set-default-theme -R '{{ .theme }}' || EXIT_CODE=$?
     if [ -n "$EXIT_CODE" ]; then
-        logg warn 'There may have been an issue while setting the Plymouth default theme with `plymouth-set-default-theme`'
+        logg warn 'There may have been an issue while setting the Plymouth default theme with plymouth-set-default-theme'
     else
-        logg success 'Set Plymouth default theme with `plymouth-set-default-theme`'
+        logg success 'Set Plymouth default theme with plymouth-set-default-theme'
     fi
 else
-    logg warn 'Could not apply default Plymouth theme because `plymouth-set-default-theme` is missing'
+    logg warn 'Could not apply default Plymouth theme because plymouth-set-default-theme is missing'
 fi
 
 ### Apply update-alternatives (again - required sometimes)
@@ -100,27 +100,27 @@ if command -v update-alternatives > /dev/null; then
     if [ -f "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" ]; then
         # Required sometimes
         sudo update-alternatives --set default.plymouth "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth"
-        logg success 'Set `default.plymouth` (second time is required sometimes)'
+        logg success 'Set default.plymouth (second time is required sometimes)'
     else
         logg warn "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth does not exist!"
     fi
 else
-    logg warn '`update-alternatives` is not available'
+    logg warn 'update-alternatives is not available'
 fi
 
 ### Update kernel / initrd images
 # Set `export DEBUG_MODE=true` to bypass GRUB2 / Plymouth application
 if [ "$DEBUG_MODE" != 'true' ]; then
     if command -v update-initramfs > /dev/null; then
-        logg info 'Running `sudo update-initramfs -u`'
+        logg info 'Running sudo update-initramfs -u'
         sudo update-initramfs -u
         logg success 'Updated kernel / initrd images for Plymouth'
     elif command -v dracut > /dev/null; then
-        logg info 'Running `sudo dracut --regenerate-all -f`'
+        logg info 'Running sudo dracut --regenerate-all -f'
         sudo dracut --regenerate-all -f
         logg success 'Updated kernel / initrd images for Plymouth'
     else
-        logg warn 'Unable to update kernel / initrd images because neither `update-initramfs` or `dracut` are available'
+        logg warn 'Unable to update kernel / initrd images because neither update-initramfs or dracut are available'
     fi
 fi
 

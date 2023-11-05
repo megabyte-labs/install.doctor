@@ -61,12 +61,12 @@ if command -v vagrant > /dev/null && command -v vmware > /dev/null; then
         else
             logg info 'Generating Vagrant VMWare Utility certificates'
             sudo vagrant-vmware-utility certificate generate
-            logg success 'Generated Vagrant VMWare Utility certificates via `vagrant-vmware-utility certificate generate`'
+            logg success 'Generated Vagrant VMWare Utility certificates via vagrant-vmware-utility certificate generate'
         fi
         logg info 'Ensuring the Vagrant VMWare Utility service is enabled'
         sudo vagrant-vmware-utility service install || EXIT_CODE=$?
         if [ -n "$EXIT_CODE" ]; then
-            logg info 'The Vagrant VMWare Utility command `vagrant-vmware-utility service install` failed. It is probably already setup.'
+            logg info 'The Vagrant VMWare Utility command vagrant-vmware-utility service install failed. It is probably already setup.'
         fi
     fi
 else

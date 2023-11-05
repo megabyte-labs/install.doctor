@@ -18,9 +18,9 @@ sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/qubes/qubes-templates.repo" /etc/q
 sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/qubes/qubes-dom0.repo" /etc/yum.repos.d/qubes-dom0.repo
 
 ### Update dom0
-logg info 'Updating dom0 via `qubesctl`'
+logg info 'Updating dom0 via qubesctl'
 sudo qubesctl --show-output state.sls update.qubes-dom0
-logg info 'Updating dom0 via `qubes-dom0-update`'
+logg info 'Updating dom0 via qubes-dom0-update'
 sudo qubes-dom0-update --clean -y
 
 ### Install qubes-repo-contrib
@@ -34,6 +34,6 @@ for PACKAGE of {{ .qubes.dom0Packages | toString | replace "[" "" | replace "]" 
 done
 
 ### Ensure sys-whonix is running
-logg info 'Ensuring `sys-whonix` is running'
+logg info 'Ensuring sys-whonix is running'
 qvm-start sys-whonix --skip-if-running
 {{ end -}}

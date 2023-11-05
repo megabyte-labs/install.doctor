@@ -35,7 +35,7 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
     if [ -f "$HOME/.gnupg/public/$KEYID.sig" ]; then
       gpg --import "$HOME/.gnupg/public/$KEYID.sig"
     else
-      logg info 'Attempting to download the specified public GPG key (`{{ .user.gpg.id }}`) from public keyservers'
+      logg info 'Attempting to download the specified public GPG key ({{ .user.gpg.id }}) from public keyservers'
       gpg --keyserver https://pgp.mit.edu --recv "$KEYID" || EXIT_CODE=$?
       if [ -n "$EXIT_CODE" ]; then
         logg info 'Non-zero exit code received when downloading public GPG key'
@@ -55,5 +55,5 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
   logg 'Ensuring the trust of the provided public GPG key is set to maximum'
   echo -e "trust\n5\ny" | gpg --command-fd 0 --edit-key "$KEYID"
 else
-  logg warn '`gpg` appears to be unavailable. Is it installed and on the PATH?'
+  logg warn 'gpg appears to be unavailable. Is it installed and on the PATH?'
 fi

@@ -89,7 +89,7 @@ if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
         ### This is made for CentOS 8 and works on Fedora 36 (hopefully 36+ as well) with `nss-tools` as a dependency
         sudo dnf instal -y nss-tools || NSS_TOOL_EXIT=$?
         if [ -n "$NSS_TOOL_EXIT" ]; then
-            logg warn 'Unable to install `nss-tools` which was a requirement on Fedora 36 and assumed to be one on other systems as well.'
+            logg warn 'Unable to install nss-tools which was a requirement on Fedora 36 and assumed to be one on other systems as well.'
         fi
         ### According to the download site, this is the only version available for RedHat-based systems
         sudo rpm -ivh https://pkg.cloudflareclient.com/cloudflare-release-el8.rpm || RPM_EXIT_CODE=$?
@@ -116,18 +116,18 @@ if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; th
     fi
     if [ -d "/usr/local/etc/openssl@3/certs" ]; then
         # Location on Intel macOS
-        logg info 'Adding Cloudflare certificate to `/usr/local/etc/openssl@3/certs/Cloudflare_CA.pem`'
+        logg info 'Adding Cloudflare certificate to /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem'
         echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem
-        logg info 'Running `/usr/local/opt/openssl@3/bin/c_rehash`'
+        logg info 'Running /usr/local/opt/openssl@3/bin/c_rehash'
         /usr/local/opt/openssl@3/bin/c_rehash > /dev/null && logg success 'OpenSSL certificate rehash successful'
     elif [ -d "/opt/homebrew/etc/openssl@3/certs" ]; then
         # Location on arm64 macOS
-        logg info 'Adding Cloudflare certificate to `/opt/homebrew/etc/openssl@3/certs/Cloudflare_CA.pem`'
+        logg info 'Adding Cloudflare certificate to /opt/homebrew/etc/openssl@3/certs/Cloudflare_CA.pem'
         echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> /opt/homebrew/etc/openssl@3/certs/Cloudflare_CA.pem
-        logg info 'Running `/opt/homebrew/opt/openssl@3/bin/c_rehash`'
+        logg info 'Running /opt/homebrew/opt/openssl@3/bin/c_rehash'
         /opt/homebrew/opt/openssl@3/bin/c_rehash > /dev/null && logg success 'OpenSSL certificate rehash successful'
     else
-        logg warn 'Unable to add `Cloudflare_CA.pem` because `/usr/local/etc/openssl@3/certs` and `/opt/homebrew/etc/openssl@3/certs` do not exist!'
+        logg warn 'Unable to add Cloudflare_CA.pem because /usr/local/etc/openssl@3/certs and /opt/homebrew/etc/openssl@3/certs do not exist!'
     fi
 elif command -v warp-cli > /dev/null; then
     # System is Linux
@@ -135,7 +135,7 @@ elif command -v warp-cli > /dev/null; then
         if [ -d /usr/local/share/ca-certificates ]; then
             logg info 'Copying CloudFlare Teams PEM file to /usr/local/share/ca-certificates/Cloudflare_CA.crt'
             sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /usr/local/share/ca-certificates/Cloudflare_CA.crt
-            logg info '`dpkg-reconfigure` executable detected so using Debian/Ubuntu method of updating system trusted certificates to include CloudFlare Teams certificate'
+            logg info 'dpkg-reconfigure executable detected so using Debian/Ubuntu method of updating system trusted certificates to include CloudFlare Teams certificate'
             sudo dpkg-reconfigure ca-certificates
         else
             logg warn
@@ -144,7 +144,7 @@ elif command -v warp-cli > /dev/null; then
         if [ -d /etc/pki/ca-trust/source/anchors ]; then
             logg info 'Copying CloudFlare Teams certificates to /etc/pki/ca-trust/source/anchors'
             sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /etc/pki/ca-trust/source/anchors
-            logg info '`update-ca-trust` executable detected so using CentOS/Fedora method of updating system trusted certificates to include CloudFlare Teams certificate'
+            logg info 'update-ca-trust executable detected so using CentOS/Fedora method of updating system trusted certificates to include CloudFlare Teams certificate'
             sudo update-ca-trust
         else
             logg warn '/etc/pki/ca-trust/source/anchors does not exist so skipping the system certificate update process'
@@ -231,7 +231,7 @@ if command -v warp-cli > /dev/null; then
         logg info 'Either there is a misconfiguration or the device is already connected with CloudFlare WARP'
     fi
 else
-    logg warn '`warp-cli` was not installed so CloudFlare WARP cannot be joined'
+    logg warn 'warp-cli was not installed so CloudFlare WARP cannot be joined'
 fi
 
 {{- $registrationToken := "" }}
@@ -268,12 +268,12 @@ if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; 
         {{ if eq $registrationToken "" -}}
         logg warn 'Registration token is unavailable - you might have to delete the pre-existing tunnel or set up secrets properly'
         {{- else -}}
-        logg info 'Registration token retrieved from encrypted blob stored at `home/.chezmoitemplates/cloudflared/{{ .host.hostname }}`'
+        logg info 'Registration token retrieved from encrypted blob stored at home/.chezmoitemplates/cloudflared/{{ .host.hostname }}'
         {{ if eq (substr 0 1 $registrationToken) "{" -}}
         logg info 'Registration token stored in credential file form'
         echo -n '{{ $registrationToken }}' | sudo tee /usr/local/etc/cloudflared/credentials.json > /dev/null
         {{ else }}
-        logg info 'Registration token is in token form - it will be used in conjunction with `sudo cloudflared service install`'
+        logg info 'Registration token is in token form - it will be used in conjunction with sudo cloudflared service install'
         {{- end }}
         {{- end }}
     fi
@@ -282,9 +282,9 @@ if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; 
     if [ -d /Applications ] && [ -d /System ]; then
         # System is macOS
         if [ -f /Library/LaunchDaemons/com.cloudflare.cloudflared.plist ]; then
-            logg info '`cloudflared` service is already installed'
+            logg info 'cloudflared service is already installed'
         else
-            logg info 'Running `sudo cloudflared service install`'
+            logg info 'Running sudo cloudflared service install'
             sudo cloudflared service install{{ if and (ne $registrationToken "") (eq (substr 0 1 $registrationToken) "{") -}} {{ $registrationToken }}{{ end }}
         fi
         logg info 'Ensuring cloudflared service is installed'
@@ -294,9 +294,9 @@ if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; 
         logg info 'Copying over configuration files from ~/.local/etc/cloudflared to /usr/local/etc/cloudflared'
         sudo cp -rf "$HOME/.local/etc/cloudflared" /usr/local/etc/cloudflared
         if systemctl --all --type service | grep -q "cloudflared" > /dev/null; then
-            logg info '`cloudflared` service is already available as a service'
+            logg info 'cloudflared service is already available as a service'
         else
-            logg info 'Running `sudo cloudflared service install`'
+            logg info 'Running sudo cloudflared service install'
             sudo cloudflared service install{{ if and (ne $registrationToken "") (eq (substr 0 1 $registrationToken) "{") -}} {{ $registrationToken }}{{ end }}
         fi
         logg info 'Ensuring cloudflared service is started'

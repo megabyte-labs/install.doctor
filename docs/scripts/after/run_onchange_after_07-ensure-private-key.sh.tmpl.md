@@ -35,7 +35,7 @@ key is only readable and writable the provisioning user.
 
 ### Ensure id_rsa is present and create one if it does not exist
 if [ ! -f "$HOME/.ssh/id_rsa" ]; then
-  logg 'Generating missing default private key / public key (`~/.ssh/id_rsa`)'
+  logg 'Generating missing default private key / public key (~/.ssh/id_rsa)'
   ssh-keygen -b 4096 -t rsa -f "$HOME/.ssh/id_rsa" -q -N ""
   chmod 600 "$HOME/.ssh/id_rsa"
 fi

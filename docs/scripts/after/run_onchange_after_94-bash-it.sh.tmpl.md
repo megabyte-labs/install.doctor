@@ -38,9 +38,9 @@ fi
 
 ### Bash-it completions / plugins
 if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
-    logg info 'Running `source ~/.bashrc`'
+    logg info 'Running source ~/.bashrc'
     source ~/.bashrc
-    logg success 'Imported the `~/.bashrc` profile'
+    logg success 'Imported the ~/.bashrc profile'
     if command -v bash-it > /dev/null; then
         if [ -n "$BASH_IT" ]; then
             cd "$BASH_IT" || logg warn "The $BASH_IT directory does not exist"
@@ -53,13 +53,13 @@ if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
             logg warn 'The BASH_IT variable needs to be defined'
         fi
     else
-        logg warn '`bash-it` is not available'
+        logg warn 'bash-it is not available'
     fi
 else
     if ! command -v powerline > /dev/null; then
-        logg warn '`powerline` is not available'
+        logg warn 'powerline is not available'
     else
-        logg warn '`~/.bashrc` is missing'
+        logg warn '~/.bashrc is missing'
     fi
 fi
 

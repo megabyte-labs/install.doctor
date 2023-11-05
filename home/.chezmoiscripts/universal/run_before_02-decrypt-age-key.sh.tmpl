@@ -34,7 +34,7 @@
 
 ### Handle decryption failure
 decryptionFailure() {
-  logg info 'Proceeding without decrypting age encryption key stored at `~/.local/share/chezmoi/home/key.txt.age`'
+  logg info 'Proceeding without decrypting age encryption key stored at ~/.local/share/chezmoi/home/key.txt.age'
   logg info 'To have Chezmoi handle your encryption (so you can store your private files publicly) take a look at https://shorturl.at/jkpzG'
   logg info 'Removing all files that begin with encrypted_ because decryption failed'
   find "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi" -type f -name "encrypted_*" | while read ENCRYPTED_FILE; do
@@ -46,7 +46,7 @@ decryptionFailure() {
 ### Install Age via Homebrew if not present
 installAge() {
   if ! command -v age > /dev/null; then
-    logg info 'Running `brew install age`'
+    logg info 'Running brew install age'
     brew install age
   fi
 }
@@ -54,7 +54,7 @@ installAge() {
 ### Install Expect via Homebrew if not present
 installExpect() {
   if ! command -v expect > /dev/null; then
-    logg info 'Running `brew install expect`'
+    logg info 'Running brew install expect'
     brew install expect
   fi
 }
@@ -65,7 +65,7 @@ decryptKey() {
     if [ ! -f "${XDG_CONFIG_HOME}/age/chezmoi.txt" ]; then
       mkdir -p "${XDG_CONFIG_HOME}/age"
       if [ -z "$AGE_PASSWORD" ]; then
-        logg star '`PRESS ENTER` if you have not set up your encryption token yet'
+        logg star 'PRESS ENTER if you have not set up your encryption token yet'
         age --decrypt --output "${XDG_CONFIG_HOME}/age/chezmoi.txt" "{{ .chezmoi.sourceDir }}/key.txt.age" || EXIT_CODE=$?
         if [ -n "$EXIT_CODE" ]; then
           decryptionFailure
@@ -80,10 +80,10 @@ decryptKey() {
         send \"${AGE_PASSWORD}\r\"
         expect eof" > /dev/null || EXIT_CODE=$?
         if [ -n "$EXIT_CODE" ]; then
-          logg info 'There was an issue decrypting the `key.txt.age` file with the provided `AGE_PASSWORD`'
+          logg info 'There was an issue decrypting the key.txt.age file with the provided AGE_PASSWORD'
           decryptionFailure
         else
-          logg info 'The encryption key was successfully decrypted using expect and the provided `AGE_PASSWORD`'
+          logg info 'The encryption key was successfully decrypted using expect and the provided AGE_PASSWORD'
         fi
       fi
     fi
@@ -98,7 +98,7 @@ elif [ -n "$HEADLESS_INSTALL" ] && [ -n "$AGE_PASSWORD" ]; then
   installAge
   decryptKey
 else
-  logg info 'Skipping Age key decryption process - `HEADLESS_INSTALL` and `AGE_PASSWORD` should be passed in as env variables to automate the process'
+  logg info 'Skipping Age key decryption process - HEADLESS_INSTALL and AGE_PASSWORD should be passed in as env variables to automate the process'
 fi
 
 ### Ensure proper permissions on private key

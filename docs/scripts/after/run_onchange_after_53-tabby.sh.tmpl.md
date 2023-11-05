@@ -110,9 +110,9 @@ The following chart provides a short description of the default plugins that are
 
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json" ]; then
     if [ -d "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/node_modules" ]; then
-        logg info 'Skipping Tabby plugin installation because it looks like the plugins were already installed since `node_modules` is present in ~/.config/tabby/plugins'
+        logg info 'Skipping Tabby plugin installation because it looks like the plugins were already installed since node_modules is present in ~/.config/tabby/plugins'
     else
-        logg info 'Installing Tabby plugins defined in `'"${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json"'`'
+        logg info 'Installing Tabby plugins defined in '"${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json"''
         cd "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins"
         npm install
         logg success 'Finished installing Tabby plugins'

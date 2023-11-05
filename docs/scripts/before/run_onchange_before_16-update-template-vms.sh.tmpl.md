@@ -32,7 +32,7 @@ for the updates to finish.
 #     for the updates to finish.
 
 ### Update TemplateVMs
-logg info 'Updating TemplateVMs via `qubesctl`'
+logg info 'Updating TemplateVMs via qubesctl'
 timeout 900 qubesctl --show-output --skip-dom0 --templates state.sls update.qubes-vm
 {{ end -}}
 ```

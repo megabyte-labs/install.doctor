@@ -42,7 +42,7 @@ logg info 'Ensuring public keys are present'
 
 find "$HOME/.ssh" -type f -maxdepth 1 ! -name "*.pub" ! -name "authorized_keys*" ! -name "known_host*" ! -name "config" | while read FILE; do
   if [ ! -f "${FILE}.pub" ]; then
-    logg info 'Generating missing public key for `'"$FILE"'`'
+    logg info 'Generating missing public key for '"$FILE"''
     ssh-keygen -f "$FILE" -y > "${FILE}.pub"
     chmod 600 "${FILE}.pub"
   fi

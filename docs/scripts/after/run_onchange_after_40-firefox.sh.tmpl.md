@@ -363,13 +363,13 @@ for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app
                                 # to the user profile.
                                 # logg info 'Unzipping '"$PLUGIN_FILENAME"' ('"$FIREFOX_PLUGIN"')'
                                 # unzip "$SETTINGS_DIR/$SETTINGS_PROFILE/extensions/$PLUGIN_FILENAME" -d "$SETTINGS_DIR/$SETTINGS_PROFILE/extensions/$PLUGIN_FOLDER"
-                                logg success 'Installed `'"$FIREFOX_PLUGIN"'`'
+                                logg success 'Installed '"$FIREFOX_PLUGIN"''
                             fi
                         else
-                            logg warn 'A null Firefox add-on filename was detected for `'"$FIREFOX_PLUGIN"'`'
+                            logg warn 'A null Firefox add-on filename was detected for '"$FIREFOX_PLUGIN"''
                         fi
                     else
-                        logg warn 'A null Firefox add-on ID was detected for `'"$FIREFOX_PLUGIN"'`'
+                        logg warn 'A null Firefox add-on ID was detected for '"$FIREFOX_PLUGIN"''
                     fi
                 done
             fi

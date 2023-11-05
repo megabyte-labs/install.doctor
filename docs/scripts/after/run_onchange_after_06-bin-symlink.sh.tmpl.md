@@ -40,7 +40,7 @@ invoked with the `python` command.
 
 ### Symlink python3 to python if it is unavailable
 if ! command -v python > /dev/null && command -v python3 > /dev/null; then
-    logg info 'Symlinking `python3` to `python` since the latter is unavailable'
+    logg info 'Symlinking python3 to python since the latter is unavailable'
     sudo ln -s "$(which python3)" /usr/local/bin/python
 fi
 

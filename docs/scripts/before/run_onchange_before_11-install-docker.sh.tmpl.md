@@ -130,7 +130,7 @@ function gVisorPreBuilt() {
     mkdir /tmp/gvisor && cd /tmp/gvisor
     ARCH=$(uname -m)
     URL="https://storage.googleapis.com/gvisor/releases/release/latest/${ARCH}"
-    logg info 'Downloading gVisor `runsc` and `containerd-shim-runsc-v1` SHA signatures'
+    logg info 'Downloading gVisor runsc and containerd-shim-runsc-v1 SHA signatures'
     wget "${URL}/runsc ${URL}/runsc.sha512" "${URL}/containerd-shim-runsc-v1 ${URL}/containerd-shim-runsc-v1.sha512"
     sha512sum -c runsc.sha512 -c containerd-shim-runsc-v1.sha512
     rm -f *.sha512
@@ -172,7 +172,7 @@ function gVisorSource() {
     if [ -f ./bin/runsc ]; then
         sudo cp ./bin/runsc /usr/local/bin
     else
-        logg error 'Timed out while building `runsc` from source' && exit 6
+        logg error 'Timed out while building runsc from source' && exit 6
     fi
 }
 
@@ -200,7 +200,7 @@ if [ ! -d /Applications ] || [ ! -d /System ]; then
             logg success 'gVisor installed from pre-built Google-provided binaries'
         fi
     else
-        logg info '`runsc` is installed'
+        logg info 'runsc is installed'
     fi
 
     ### Ensure Docker is configured to use runsc
@@ -224,12 +224,12 @@ if [ ! -d /Applications ] || [ ! -d /System ]; then
         fi
 
         # Test Docker /w runsc
-        logg info 'Testing that Docker can load application with `runsc`'
+        logg info 'Testing that Docker can load application with runsc'
         docker run --rm --runtime=runsc hello-world || RUNSC_EXIT_CODE=$?
         if [ -n "$RUNSC_EXIT_CODE" ]; then
             logg error 'Failed to run the Docker hello-world container with runsc' && exit 5
         else
-            logg success 'Docker successfully ran the hello-world container with `runsc`'
+            logg success 'Docker successfully ran the hello-world container with runsc'
         fi
     fi
 fi

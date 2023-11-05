@@ -76,10 +76,10 @@ if [ -z "$HEADLESS_INSTALL" ]; then
   ### Install Age via Homebrew if not present
   if ! command -v age > /dev/null; then
     if command -v brew > /dev/null; then
-      logg info 'Running `brew install age`'
+      logg info 'Running brew install age'
       brew install age
     else
-      logg warn '`age` is not installed which is utilized in the decryption process'
+      logg warn 'age is not installed which is utilized in the decryption process'
     fi
   fi
 
@@ -87,10 +87,10 @@ if [ -z "$HEADLESS_INSTALL" ]; then
   if command -v age > /dev/null; then
     if [ ! -f "${XDG_CONFIG_HOME}/age/chezmoi.txt" ]; then
       mkdir -p "${XDG_CONFIG_HOME}/age"
-      logg star '`PRESS ENTER` if you have not set up your encryption token yet'
+      logg star 'PRESS ENTER if you have not set up your encryption token yet'
       age --decrypt --output "${XDG_CONFIG_HOME}/age/chezmoi.txt" "{{ .chezmoi.sourceDir }}/key.txt.age" || EXIT_CODE=$?
       if [ -n "$EXIT_CODE" ]; then
-        logg info 'Proceeding without decrypting age encryption key stored at `~/.local/share/chezmoi/home/key.txt.age`'
+        logg info 'Proceeding without decrypting age encryption key stored at ~/.local/share/chezmoi/home/key.txt.age'
         logg info 'To have Chezmoi handle your encryption (so you can store your private files publicly) take a look at https://shorturl.at/jkpzG'
         logg info 'Removing all files that begin with encrypted_ because decryption failed'
         find "$HOME/.local/share/chezmoi" -type f -name "encrypted_*" | while read ENCRYPTED_FILE; do

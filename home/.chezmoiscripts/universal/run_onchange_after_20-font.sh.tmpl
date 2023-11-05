@@ -29,7 +29,7 @@ if [ -d /etc/fonts ]; then
     logg info 'Copying ~/.config/fontconfig/fonts.conf to /etc/fonts/local.conf'
     sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/fontconfig/fonts.conf" /etc/fonts/local.conf
 else
-    logg warn 'The `/etc/fonts` directory is missing'
+    logg warn 'The /etc/fonts directory is missing'
 fi
 
 {{ end -}}

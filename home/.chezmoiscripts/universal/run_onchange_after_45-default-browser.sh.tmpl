@@ -15,21 +15,21 @@
 
 if [ -d /Applications ] && [ -d /System ]; then
     if ! command -v defaultbrowser > /dev/null; then
-        logg info 'Installing `defaultbrowser` via Homebrew which is the preferred way of configuring the default browser'
+        logg info 'Installing defaultbrowser via Homebrew which is the preferred way of configuring the default browser'
         brew install defaultbrowser
     fi
     logg info "Setting default browser to {{ .user.defaultBrowserDarwin }}"
     defaultbrowser "{{ .user.defaultBrowserDarwin }}"
 else
-    logg info 'Setting default browser for `text/html` to `{{ .user.defaultBrowser }}`'
+    logg info 'Setting default browser for text/html to {{ .user.defaultBrowser }}'
     xdg-mime default {{ .user.defaultBrowser }}.desktop text/html
-    logg info 'Setting default browser for `x-scheme-handler/http` to `{{ .user.defaultBrowser }}`'
+    logg info 'Setting default browser for x-scheme-handler/http to {{ .user.defaultBrowser }}'
     xdg-mime default {{ .user.defaultBrowser }}.desktop x-scheme-handler/http
-    logg info 'Setting default browser for `x-scheme-handler/https` to `{{ .user.defaultBrowser }}`'
+    logg info 'Setting default browser for x-scheme-handler/https to {{ .user.defaultBrowser }}'
     xdg-mime default {{ .user.defaultBrowser }}.desktop x-scheme-handler/https
-    logg info 'Setting default browser for `x-scheme-handler/about` to `{{ .user.defaultBrowser }}`'
+    logg info 'Setting default browser for x-scheme-handler/about to {{ .user.defaultBrowser }}'
     xdg-mime default {{ .user.defaultBrowser }}.desktop x-scheme-handler/about
-    logg info 'Setting default browser with `xdg-settings` to `{{ .user.defaultBrowser }}`'
+    logg info 'Setting default browser with xdg-settings to {{ .user.defaultBrowser }}'
     xdg-settings set default-web-browser {{ .user.defaultBrowser }}.desktop
 fi
 {{ end -}}

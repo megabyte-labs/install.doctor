@@ -50,16 +50,16 @@ if command -v netdata-claim.sh > /dev/null; then
     else
         # Linux
         if [ -d /sys/kernel/mm/ksm ]; then
-            logg info 'Adding Netdata kernel optimization for `/sys/kernel/mm/ksm/run`'
+            logg info 'Adding Netdata kernel optimization for /sys/kernel/mm/ksm/run'
             echo 1 | sudo tee /sys/kernel/mm/ksm/run
-            logg info 'Adding Netdata kernel optimization for `/sys/kernel/mm/ksm/sleep_millisecs`'
+            logg info 'Adding Netdata kernel optimization for /sys/kernel/mm/ksm/sleep_millisecs'
             echo 1000 | sudo tee /sys/kernel/mm/ksm/sleep_millisecs
         else
-            logg info 'The `/sys/kernel/mm/ksm` directory does not exist so Netdata kernel optimizations are not being applied'
+            logg info 'The /sys/kernel/mm/ksm directory does not exist so Netdata kernel optimizations are not being applied'
         fi
     fi
 else
-    logg warn '`netdata-claim.sh` is not available in the PATH'
+    logg warn 'netdata-claim.sh is not available in the PATH'
 fi
 
 {{ end -}}

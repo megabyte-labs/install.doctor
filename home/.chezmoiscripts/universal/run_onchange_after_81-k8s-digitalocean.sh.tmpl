@@ -17,15 +17,15 @@ export DIGITALOCEAN_ACCESS_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".che
 if [ -n "$DIGITALOCEAN_ACCESS_TOKEN" ] && [ -n '{{ .user.digitalOceanClusterId }}' ]; then
     ### Ensure DigitalOcean CLI is instaled
     if ! command -v doctl > /dev/null; then
-        logg info '`doctl` is missing - installing via Homebrew'
+        logg info 'doctl is missing - installing via Homebrew'
         brew install doctl
     fi
 
     ### Connect to the k8s cluster with `doctl`
-    logg info 'Connecting to the DigitalOcean k8s cluster with `doctl`'
+    logg info 'Connecting to the DigitalOcean k8s cluster with doctl'
     doctl kubernetes cluster kubeconfig save {{ .user.digitalOceanClusterId }}
 else
-    logg info 'Skipping connecting to the DigitalOcean k8s cluster because either the `DIGITALOCEAN_ACCESS_TOKEN` or the `.user.digitalOceanClusterId` is not defined'
+    logg info 'Skipping connecting to the DigitalOcean k8s cluster because either the DIGITALOCEAN_ACCESS_TOKEN or the .user.digitalOceanClusterId is not defined'
 fi
 
 {{ end -}}

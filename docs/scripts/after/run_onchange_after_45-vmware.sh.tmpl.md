@@ -37,7 +37,7 @@ if command -v vmware > /dev/null; then
     ### Build VMWare host modules
     logg info 'Building VMware host modules'
     if sudo vmware-modconfig --console --install-all; then
-      logg success 'Built VMWare host modules successfully with `sudo vmware-modconfig --console --install-all`'
+      logg success 'Built VMWare host modules successfully with sudo vmware-modconfig --console --install-all'
     else
       logg info 'Acquiring VMware version from CLI'
       VMW_VERSION="$(vmware --version | cut -f 3 -d' ')"
@@ -47,7 +47,7 @@ if command -v vmware > /dev/null; then
       curl -sSL "https://github.com/mkubecek/vmware-host-modules/archive/workstation-$VMW_VERSION.tar.gz" -o /tmp/vmw_patch/workstation.tar.gz
       tar -xzf /tmp/vmw_patch/workstation.tar.gz
       cd vmware*
-      logg info 'Running `sudo make` and `sudo make install`'
+      logg info 'Running sudo make and sudo make install'
       sudo make
       sudo make install
       logg success 'Successfully configured VMware host module patches'
@@ -84,22 +84,22 @@ if command -v vmware > /dev/null; then
 
     if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
       ### Start / enable VMWare service
-      logg info 'Ensuring `vmware.service` is enabled and running'
+      logg info 'Ensuring vmware.service is enabled and running'
       sudo systemctl enable vmware.service
       sudo systemctl restart vmware.service
 
       ### Start / enable VMWare Workstation Server service
-      logg info 'Ensuring `vmware-workstation-server.service` is enabled and running'
+      logg info 'Ensuring vmware-workstation-server.service is enabled and running'
       sudo systemctl enable vmware-workstation-server.service
       sudo systemctl restart vmware-workstation-server.service
 
       ### Start / enable VMWare USB Arbitrator service
       if command -v vmware-usbarbitrator.service > /dev/null; then
-        logg info 'Ensuring `vmware-usbarbitrator.service` is enabled and running'
+        logg info 'Ensuring vmware-usbarbitrator.service is enabled and running'
         sudo systemctl enable vmware-usbarbitrator.service
         sudo systemctl restart vmware-usbarbitrator.service
       else
-        logg warn '`vmware-usbarbitrator` does not exist in the PATH'
+        logg warn 'vmware-usbarbitrator does not exist in the PATH'
       fi
     fi
   else

@@ -65,7 +65,7 @@ if [ -f "$HOME/.config/desktop/gnome.yml" ]; then
         done
     done
 else
-    logg warn 'The `~/.config/desktop/gnome.yml` file is missing so GNOME extension install orders cannot be calculated'
+    logg warn 'The ~/.config/desktop/gnome.yml file is missing so GNOME extension install orders cannot be calculated'
 fi
 
 ### Remove /tmp/install-gnome-extensions.txt if it is empty
@@ -76,7 +76,7 @@ fi
 ### Install the GNOME extensions using the `install-gnome-extensions` script
 if command -v install-gnome-extensions > /dev/null; then
     if [ -f /tmp/install-gnome-extensions.txt ]; then
-        logg info 'Running the `install-gnome-extensions` script'
+        logg info 'Running the install-gnome-extensions script'
         cd /tmp
         install-gnome-extensions --enable --overwrite --file /tmp/install-gnome-extensions.txt
         rm -f /tmp/install-gnome-extensions.txt
@@ -85,7 +85,7 @@ if command -v install-gnome-extensions > /dev/null; then
         logg info 'No new GNOME extensions to install'
     fi
 else
-    logg warn 'Cannot install GNOME extensions because the `install-gnome-extensions` script is missing from ~/.local/bin'
+    logg warn 'Cannot install GNOME extensions because the install-gnome-extensions script is missing from ~/.local/bin'
 fi
 
 ### Apply plugin gsettings
@@ -106,7 +106,7 @@ if [ -f "$HOME/.config/desktop/gnome.yml" ]; then
         EXT_SETTINGS_TYPE="$(cat "$TMP" | jq -r '.settings | type')"
         EXT_SETTINGS="$(cat "$TMP" | jq -r '.settings')"
         if [ "$EXT_SETTINGS" != 'null' ]; then
-            logg info 'Evaluating extension settings for `'"$EXT_ID"'`'
+            logg info 'Evaluating extension settings for '"$EXT_ID"''
             if [ "$EXT_SETTINGS_TYPE" == 'array' ]; then
                 cat "$TMP" | jq -r '.settings[]' | while read EXT_SETTING; do
                     logg info 'Applying following extension setting:'
@@ -118,7 +118,7 @@ if [ -f "$HOME/.config/desktop/gnome.yml" ]; then
                 echo "$EXT_SETTINGS"
                 eval "$EXT_SETTINGS"
             fi
-            logg success 'Applied gsettings configuration for the `'"$EXT_ID"'` GNOME extension'
+            logg success 'Applied gsettings configuration for the '"$EXT_ID"' GNOME extension'
         fi
     done
 fi

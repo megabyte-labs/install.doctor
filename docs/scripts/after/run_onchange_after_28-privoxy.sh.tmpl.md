@@ -84,7 +84,7 @@ if command -v privoxy > /dev/null; then
         logg warn 'The '"$PRIVOXY_CONFIG_DIR"' directory is missing'
     fi
 else
-    logg warn '`privoxy` is missing from the PATH'
+    logg warn 'privoxy is missing from the PATH'
 fi
 
 {{ end -}}

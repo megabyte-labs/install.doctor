@@ -33,10 +33,10 @@ website](https://sdkman.io/).
 
 ### Ensure SDKMan is installed (https://sdkman.io/)
 if [ ! -d "$SDKMAN_DIR" ]; then
-  logg info 'Installing SDKMan via `curl -s "https://get.sdkman.io?rcupdate=false`'
+  logg info 'Installing SDKMan via curl -s "https://get.sdkman.io?rcupdate=false'
   logg info "Install directory: $SDKMAN_DIR"
   curl -s "https://get.sdkman.io?rcupdate=false" | bash
-  logg info 'Running `sdk install java`'
+  logg info 'Running sdk install java'
   sdk install java
 else
   logg info 'SDKMan appears to already be installed.'

@@ -41,7 +41,7 @@ fi
 
 ### Set timezone
 if command -v timedatectl > /dev/null; then
-  logg info 'Setting timezone to `{{ .user.timezone }}`'
+  logg info 'Setting timezone to {{ .user.timezone }}'
   sudo timedatectl set-timezone {{ .user.timezone }}
 fi
 

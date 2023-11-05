@@ -63,9 +63,9 @@ if command -v install-program > /dev/null; then
     # TODO - Figure out how to configure no logs to print to ~/.ansible.log -- should be printing to the value specified in the ansible.cfg
     rm -rf "$HOME/.ansible.log"
   else
-    logg error '`zx` is not available'
+    logg error 'zx is not available'
   fi
 else
-  logg error '`install-program` is not in the PATH. It should be located in ~/.local/bin.'
+  logg error 'install-program is not in the PATH. It should be located in ~/.local/bin.'
 fi
 ```

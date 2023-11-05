@@ -32,16 +32,16 @@ fi
 ### Bash-it completions / plugins
 if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
     # These three lines are probably not needed:
-    # logg info 'Running `source ~/.bashrc`'
+    # logg info 'Running source ~/.bashrc'
     # source ~/.bashrc
-    # logg success 'Imported the `~/.bashrc` profile'
+    # logg success 'Imported the ~/.bashrc profile'
     if [ -d "$BASH_IT" ]; then
         ### Ensure bash-it is installed
         if ! command -v bash-it > /dev/null; then
-            logg info 'Installing `bash-it` since it is not available yet as a command'
+            logg info 'Installing bash-it since it is not available yet as a command'
             bash "$BASH_IT/install.sh" --silent --no-modify-config
         else
-            logg info '`bash-it` already available'
+            logg info 'bash-it already available'
         fi
 
         ### Ensure completions are enabled
@@ -69,9 +69,9 @@ if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
     fi
 else
     if ! command -v powerline > /dev/null; then
-        logg warn '`powerline` is not available'
+        logg warn 'powerline is not available'
     else
-        logg warn '`~/.bashrc` is missing'
+        logg warn '~/.bashrc is missing'
     fi
 fi
 

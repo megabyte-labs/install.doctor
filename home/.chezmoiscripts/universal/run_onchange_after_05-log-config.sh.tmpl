@@ -20,7 +20,7 @@ find '{{ .host.homeParentFolder }}' -mindepth 1 -maxdepth 1 -type d | while read
   USER_FOLDER="$(echo "$HOME_DIR" | sed 's/.*\/\([^\/]*\)$/\1/')"
   if [ -d "$HOME_DIR/.local" ]; then
     if [ ! -d "/var/log/user/$USER_FOLDER" ]; then
-      logg info 'Creating `/var/log/user/'"$USER_FOLDER"'`'
+      logg info 'Creating /var/log/user/'"$USER_FOLDER"''
       sudo mkdir -p "/var/log/user/$USER_FOLDER"
     fi
   fi

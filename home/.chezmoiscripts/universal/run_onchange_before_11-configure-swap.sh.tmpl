@@ -47,7 +47,7 @@ if [ ! -f /swapfile ]; then
 
   ### Enable the /swapfile
   if [ -f /swapfile ]; then
-    logg info 'Running `sudo swapon /swapfile`'
+    logg info 'Running sudo swapon /swapfile'
     sudo swapon /swapfile
     if cat /etc/fstab | grep "/swapfile"; then
       sudo sed -i '/\/swapfile/\/swapfile none swap defaults 0 0/' /etc/fstab

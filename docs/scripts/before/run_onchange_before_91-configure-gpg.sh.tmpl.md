@@ -51,7 +51,7 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
   fi
   KEYID_TRIMMED="$(echo "$KEYID" | sed 's/^0x//')"
   if ! gpg --list-secret-keys --keyid-format=long | grep "$KEYID_TRIMMED" > /dev/null; then
-    logg info 'Attempting to download the specified public GPG key (`{{ .user.gpg.id }}`) from public keyservers'
+    logg info 'Attempting to download the specified public GPG key ({{ .user.gpg.id }}) from public keyservers'
     sudo pkill dirmngr
     dirmngr --daemon --standard-resolver
     gpg --keyserver https://pgp.mit.edu --recv "$KEYID" || EXIT_CODE=$?
@@ -76,6 +76,6 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
   logg 'Ensuring the trust of the provided public GPG key is set to maximum'
   echo -e "trust\n5\ny" | gpg --command-fd 0 --edit-key "$KEYID"
 else
-  logg warn '`gpg` appears to be unavailable. Is it installed and on the PATH?'
+  logg warn 'gpg appears to be unavailable. Is it installed and on the PATH?'
 fi
 ```

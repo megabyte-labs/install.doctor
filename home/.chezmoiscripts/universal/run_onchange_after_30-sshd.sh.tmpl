@@ -35,15 +35,15 @@ if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
         ### Restart SSH server
         if [ -d /Applications ] && [ -d /System ]; then
             # macOS
-            logg info 'Running `sudo launchctl stop com.openssh.sshd`'
+            logg info 'Running sudo launchctl stop com.openssh.sshd'
             sudo launchctl stop com.openssh.sshd
-            logg info 'Running `sudo launchctl start com.openssh.sshd`'
+            logg info 'Running sudo launchctl start com.openssh.sshd'
             sudo launchctl start com.openssh.sshd
         else
             # Linux
-            logg info 'Enabling the `sshd` service'
+            logg info 'Enabling the sshd service'
             sudo systemctl enable sshd
-            logg info 'Restarting the `sshd` service'
+            logg info 'Restarting the sshd service'
             sudo systemctl restart sshd
         fi
     else

@@ -45,12 +45,12 @@ if command -v netdata-claim.sh > /dev/null; then
     else
         # Linux
         if [ -d /sys/kernel/mm/ksm ]; then
-            logg info 'Adding Netdata kernel optimization for `/sys/kernel/mm/ksm/run`'
+            logg info 'Adding Netdata kernel optimization for /sys/kernel/mm/ksm/run'
             echo 1 | sudo tee /sys/kernel/mm/ksm/run
-            logg info 'Adding Netdata kernel optimization for `/sys/kernel/mm/ksm/sleep_millisecs`'
+            logg info 'Adding Netdata kernel optimization for /sys/kernel/mm/ksm/sleep_millisecs'
             echo 1000 | sudo tee /sys/kernel/mm/ksm/sleep_millisecs
         else
-            logg info 'The `/sys/kernel/mm/ksm` directory does not exist so Netdata kernel optimizations are not being applied'
+            logg info 'The /sys/kernel/mm/ksm directory does not exist so Netdata kernel optimizations are not being applied'
         fi
     fi
 
@@ -78,7 +78,7 @@ if command -v netdata-claim.sh > /dev/null; then
         logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health_alarm_notify.conf to $NETDATA_LIB/conf.d/health_alarm_notify.conf"
         sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health_alarm_notify.conf" "$NETDATA_LIB/conf.d/health_alarm_notify.conf"
     else
-        logg warn '`netdata` is not available in the PATH or is not installed'
+        logg warn 'netdata is not available in the PATH or is not installed'
     fi
 
     ### Ensure the apt command is available before running `debsecan` logic
@@ -108,7 +108,7 @@ if command -v netdata-claim.sh > /dev/null; then
             sudo "$DEBSECAN_GIT/debsecan.chart.py" /usr/libexec/netdata/python.d/debsecan.chart.py
             sudo "$DEBSECAN_GIT/debsecan.conf" /etc/netdata/python.d/debsecan.conf
         else
-            logg warn '`apt-get` is available but `debsecan` is not available in the PATH or is not installed'
+            logg warn 'apt-get is available but debsecan is not available in the PATH or is not installed'
         fi
     fi
 
@@ -135,7 +135,7 @@ if command -v netdata-claim.sh > /dev/null; then
             logg warn "Failed to find appropriate directory to add Netdata speedtest chart script"
         fi
     else
-        logg warn '`speedtest-cli` is not available in the PATH or is not installed'
+        logg warn 'speedtest-cli is not available in the PATH or is not installed'
     fi
 
     ensureNetdataOwnership
@@ -150,11 +150,11 @@ if command -v netdata-claim.sh > /dev/null; then
         logg info 'Starting / enabling netdata service'
         brew services restart netdata
     else
-        logg warn '`systemctl` is not available'
+        logg warn 'systemctl is not available'
     fi
 
 else
-    logg info '`netdata-claim.sh` is not available in the PATH'
+    logg info 'netdata-claim.sh is not available in the PATH'
 fi
 
 {{ end -}}

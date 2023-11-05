@@ -38,9 +38,9 @@ export CURSOR_COLOR="$FOREGROUND_COLOR" # Cursor color
 export PROFILE_NAME="Betelgeuse"
 
 if [ ! -e gconftool-2 ] && [ -f /etc/debian_version ]; then
-  logg 'Running `sudo apt-get update`'
+  logg 'Running sudo apt-get update'
   sudo apt-get update
-  logg 'Running `sudo apt-get install -y gconf2`'
+  logg 'Running sudo apt-get install -y gconf2'
   sudo apt-get install -y gconf2
 fi
 

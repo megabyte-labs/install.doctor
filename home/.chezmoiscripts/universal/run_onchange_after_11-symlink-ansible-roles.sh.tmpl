@@ -35,7 +35,7 @@ find "${XDG_DATA_HOME:-$HOME/.local/share}/gas-station/roles" -mindepth 2 -maxde
   ROLE_FOLDER="professormanhattan.$(echo "$ROLE_PATH" | sed 's/.*\/\([^\/]*\)$/\1/')"
   ALT_ROLE_FOLDER="$(echo "$ROLE_PATH" | sed 's/.*\/\([^\/]*\)$/\1/')"
   if [ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/ansible/roles/$ROLE_FOLDER" ] || [ "$(readlink -f "${XDG_DATA_HOME:-$HOME/.local/share}/ansible/roles/$ROLE_FOLDER")" != "$ROLE_PATH" ]; then
-    logg info 'Symlinking `'"$ROLE_FOLDER"'`'
+    logg info 'Symlinking '"$ROLE_FOLDER"''
     rm -f "${XDG_DATA_HOME:-$HOME/.local/share}/ansible/roles/$ROLE_FOLDER"
     ln -s "$ROLE_PATH" "${XDG_DATA_HOME:-$HOME/.local/share}/ansible/roles/$ROLE_FOLDER"
   fi
@@ -51,10 +51,10 @@ if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/gas-station/requirements.yml" ]; t
     if ! command -v pipx > /dev/null; then
       logg info 'Installing pipx via Homebrew'
       brew install pipx
-      logg info 'Running `pipx ensurepath`'
+      logg info 'Running pipx ensurepath'
       pipx ensurepath
     fi
-    logg info 'Installing `ansible-core` via pipx'
+    logg info 'Installing ansible-core via pipx'
     pipx install ansible-core
     if [ -d /Applications ] && [ -d /System ]; then
       logg info 'Injecting macOS-specific pipx dependencies via pipx'

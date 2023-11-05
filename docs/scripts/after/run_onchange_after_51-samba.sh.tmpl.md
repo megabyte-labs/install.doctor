@@ -154,7 +154,7 @@ if command -v smbd > /dev/null; then
         sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/samba/config" "/etc/samba/smb.conf"
 
         ### Reload configuration file changes
-        logg info 'Reloading the `smbd` config'
+        logg info 'Reloading the smbd config'
         smbcontrol smbd reload-config
     fi
 else

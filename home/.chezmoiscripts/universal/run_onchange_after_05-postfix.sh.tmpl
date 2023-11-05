@@ -97,7 +97,7 @@ if command -v postfix > /dev/null; then
                 logg info 'Forward user e-mail to root@localhost'
                 echo '{{ .user.username }}: root' | sudo tee -a /etc/aliases > /dev/null
             fi
-            logg info 'Running `newaliases` to regenerate the alias database'
+            logg info 'Running newaliases to regenerate the alias database'
             sudo newaliases
         else
             logg warn '/etc/aliases does not appear to exist'

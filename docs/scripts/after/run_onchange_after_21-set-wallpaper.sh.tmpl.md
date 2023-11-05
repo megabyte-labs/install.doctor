@@ -35,7 +35,7 @@ This script ensures the macOS desktop wallpaper is set to the macOS Betelgeuse w
 if command -v m > /dev/null && [ -f "$HOME/.local/src/betelgeuse/share/wallpapers/Betelgeuse-macOS/contents/source.png" ]; then
   m wallpaper "$HOME/.local/src/betelgeuse/share/wallpapers/Betelgeuse-macOS/contents/source.png"
 else
-  logg warn 'Either `m` or the macOS default wallpaper is missing.'
+  logg warn 'Either m or the macOS default wallpaper is missing.'
 fi
 {{ end -}}
 ```

@@ -35,7 +35,7 @@ This script houses bug fixes that do not yet have their own script file.
 ### Remove Ubuntu logo branding from GDM lock screen
 if [ '{{ .whiteLabel }}' == 'true' ]; then
     if [ -f /usr/share/plymouth/ubuntu-logo.png ]; then
-        logg info 'Renaming `/usr/share/plymouth/ubuntu-logo.png` to `/usr/share/plymouth/ubuntu-logo.png.bak` since the whiteLabel setting is true'
+        logg info 'Renaming /usr/share/plymouth/ubuntu-logo.png to /usr/share/plymouth/ubuntu-logo.png.bak since the whiteLabel setting is true'
         sudo mv /usr/share/plymouth/ubuntu-logo.png /usr/share/plymouth/ubuntu-logo.png.bak
     fi
 fi
@@ -60,7 +60,7 @@ if command -v rsync > /dev/null; then
         logg warn 'Skipping synchronization of Candy icons since either the target or destination folder is not present'
     fi
 else
-    logg warn '`rsync` is missing from the system!'
+    logg warn 'rsync is missing from the system!'
 fi
 
 ### Move ~/.gnome/apps/* to ~/.local/share/applications
@@ -170,7 +170,7 @@ find /var/lib/snapd/desktop/applications -mindepth 1 -maxdepth 1 -name "*.deskto
             else
                 SNAP_ICON="${DESKTOP_FILE_BASE}"
             fi
-            logg info 'Setting the .desktop shortcut Icon value equal to `'"$SNAP_ICON"'`'
+            logg info 'Setting the .desktop shortcut Icon value equal to '"$SNAP_ICON"''
             sed -i 's/^Icon=.*$/Icon='"$SNAP_ICON"'/' "${XDG_DATA_HOME:-$HOME/.local/share}/applications/${DESKTOP_FILE_BASE}.desktop"
         else
             logg info "${XDG_DATA_HOME:-$HOME/.local/share}/applications/${DESKTOP_FILE_BASE}.desktop already exists!"

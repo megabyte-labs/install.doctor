@@ -31,7 +31,7 @@ management from dom0 and into a seperate Qube.
 
 ### Enables sys-gui-gpu
 enableSysGUIGPU() {
-  logg info 'Enabling `sys-gui-gpu`'
+  logg info 'Enabling sys-gui-gpu'
   qubesctl top.enable qvm.sys-gui-gpu
   qubesctl top.enable qvm.sys-gui-gpu pillar=True
   qubesctl --all state.highstate

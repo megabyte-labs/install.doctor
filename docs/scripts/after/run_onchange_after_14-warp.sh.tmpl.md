@@ -118,7 +118,7 @@ if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
         ### This is made for CentOS 8 and works on Fedora 36 (hopefully 36+ as well) with `nss-tools` as a dependency
         sudo dnf instal -y nss-tools || NSS_TOOL_EXIT=$?
         if [ -n "$NSS_TOOL_EXIT" ]; then
-            logg warn 'Unable to install `nss-tools` which was a requirement on Fedora 36 and assumed to be one on other systems as well.'
+            logg warn 'Unable to install nss-tools which was a requirement on Fedora 36 and assumed to be one on other systems as well.'
         fi
         ### According to the download site, this is the only version available for RedHat-based systems
         sudo rpm -ivh https://pkg.cloudflareclient.com/cloudflare-release-el8.rpm || RPM_EXIT_CODE=$?
@@ -139,7 +139,7 @@ if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; th
     if [ -f /usr/local/etc/ca-certificates/cert.pem ]; then
         echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> /usr/local/etc/ca-certificates/cert.pem
     else
-        logg error 'Unable to add `Cloudflare_CA.pem` because `/usr/local/etc/ca-certificates/cert.pem` does not exist!' && exit 1
+        logg error 'Unable to add Cloudflare_CA.pem because /usr/local/etc/ca-certificates/cert.pem does not exist!' && exit 1
     fi
 fi
 
@@ -172,7 +172,7 @@ if command -v warp-cli > /dev/null; then
         logg info 'Already connected to CloudFlare WARP'
     fi
 else
-    logg warn '`warp-cli` was not installed so CloudFlare Zero Trust cannot be joined'
+    logg warn 'warp-cli was not installed so CloudFlare Zero Trust cannot be joined'
 fi
 {{ end -}}
 ```

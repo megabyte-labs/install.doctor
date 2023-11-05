@@ -43,7 +43,7 @@ if command -v keybase > /dev/null; then
         logg warn "No Keybase config located at $KEYBASE_CONFIG"
     fi
 else
-    logg info 'The `keybase` executable is not available'
+    logg info 'The keybase executable is not available'
 fi
 
 {{ end -}}

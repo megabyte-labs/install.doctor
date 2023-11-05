@@ -185,16 +185,16 @@ function ensureRootPackageInstalled() {
 # can only be invoked by non-root users.
 if [ -z "$NO_INSTALL_HOMEBREW" ] && [ "$USER" == "root" ] && [ -z "$INIT_CWD" ] && type useradd &> /dev/null; then
   # shellcheck disable=SC2016
-  logger info 'Running as root - creating seperate user named `megabyte` to run script with'
+  logger info 'Running as root - creating seperate user named megabyte to run script with'
   echo "megabyte ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
   useradd -m -s "$(which bash)" --gecos "" --disabled-login -c "Megabyte Labs" megabyte > /dev/null || ROOT_EXIT_CODE=$?
   if [ -n "$ROOT_EXIT_CODE" ]; then
     # shellcheck disable=SC2016
-    logger info 'User `megabyte` already exists'
+    logger info 'User megabyte already exists'
   fi
   ensureRootPackageInstalled "sudo"
   # shellcheck disable=SC2016
-  logger info 'Reloading the script with the `megabyte` user'
+  logger info 'Reloading the script with the megabyte user'
   exec su megabyte "$0" -- "$@"
 fi
 
@@ -391,7 +391,7 @@ function installTask() {
     mkdir -p "$TARGET_BIN_DIR"
     mv "$TMP_DIR/task/task" "$TARGET_DEST"
   fi
-  logger success 'Installed Task to `'"$TARGET_DEST"'`'
+  logger success "Installed Task to $TARGET_DEST"
   rm "$CHECKSUM_DESTINATION"
   rm "$DOWNLOAD_DESTINATION"
 }
@@ -486,7 +486,7 @@ function ensureTaskfiles() {
     if [ -n "$BOOTSTRAP_EXIT_CODE" ] && ! task donothing; then
       # task donothing still does not work so issue must be with main Taskfile.yml
       # shellcheck disable=SC2016
-      logger warn 'Something is wrong with the `Taskfile.yml` - grabbing main `Taskfile.yml`'
+      logger warn 'Something is wrong with the Taskfile.yml - grabbing main Taskfile.yml'
       git checkout HEAD~1 -- Taskfile.yml
       if ! task donothing; then
         logger error 'Error appears to be with main Taskfile.yml'
@@ -556,7 +556,7 @@ if [[ "$OSTYPE" == 'darwin'* ]]; then
   fi
   if ! type git &> /dev/null; then
     # shellcheck disable=SC2016
-    logger info 'Git is not present. A password may be required to run `sudo xcode-select --install`'
+    logger info 'Git is not present. A password may be required to run sudo xcode-select --install'
     sudo xcode-select --install
   fi
 elif [[ "$OSTYPE" == 'linux-gnu'* ]] || [[ "$OSTYPE" == 'linux-musl'* ]]; then
@@ -596,7 +596,7 @@ if [ -z "$NO_INSTALL_HOMEBREW" ]; then
       fi
       if ! (grep "/bin/brew shellenv" < "$HOME/.profile" &> /dev/null) && [[ "$OSTYPE" != 'darwin'* ]]; then
         # shellcheck disable=SC2016
-        logger info 'Adding linuxbrew source command to `~/.profile`'
+        logger info 'Adding linuxbrew source command to ~/.profile'
         # shellcheck disable=SC2016
         echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.profile"
       fi
@@ -606,15 +606,15 @@ if [ -z "$NO_INSTALL_HOMEBREW" ]; then
       fi
       if ! type poetry &> /dev/null; then
         # shellcheck disable=SC2016
-        brew install poetry || logger info 'There may have been an issue installing `poetry` with `brew`'
+        brew install poetry || logger info 'There may have been an issue installing poetry with brew'
       fi
       if ! type jq &> /dev/null; then
         # shellcheck disable=SC2016
-        brew install jq || logger info 'There may have been an issue installiny `jq` with `brew`'
+        brew install jq || logger info 'There may have been an issue installiny jq with brew'
       fi
       if ! type yq &> /dev/null; then
         # shellcheck disable=SC2016
-        brew install yq || logger info 'There may have been an issue installing `yq` with `brew`'
+        brew install yq || logger info 'There may have been an issue installing yq with brew'
       fi
       if ! type volta &> /dev/null || ! type node &> /dev/null; then
         # shellcheck disable=SC2016
@@ -658,7 +658,7 @@ if [ -d .git ] && type git &> /dev/null; then
     date +%s > .cache/start.sh/git-pull-time
     git fetch origin
     GIT_POS="$(git rev-parse --abbrev-ref HEAD)"
-    logger info 'Current branch is `'"$GIT_POS"'`'
+    logger info 'Current branch is '"$GIT_POS"''
     if [ "$GIT_POS" == 'synchronize' ] || [ "$CI_COMMIT_REF_NAME" == 'synchronize' ]; then
       git reset --hard origin/master
       git push --force origin synchronize || FORCE_SYNC_ERR=$?
@@ -693,7 +693,7 @@ if [ -d .git ] && type git &> /dev/null; then
         cd "$ROOT_DIR"
       done
       # shellcheck disable=SC2016
-      logger success 'Ensured submodules in the `.modules` folder are pointing to the master branch'
+      logger success 'Ensured submodules in the .modules folder are pointing to the master branch'
     fi
   fi
 fi
@@ -728,7 +728,7 @@ if [ -z "$CI" ] && [ -z "$START" ] && [ -z "$INIT_CWD" ]; then
       task -vvv start
     else
       # shellcheck disable=SC2016
-      logger warn 'Something appears to be wrong with the main `Taskfile.yml` - resetting to shared common version'
+      logger warn 'Something appears to be wrong with the main Taskfile.yml - resetting to shared common version'
       rm Taskfile.yml
       ensureProjectBootstrapped
     fi

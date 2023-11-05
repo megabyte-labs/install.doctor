@@ -452,7 +452,7 @@ tasks:
               fi
               restic -r "rclone:$USER-s3:user/{{ .RcloneRepository }}" --password-file "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" --verbose backup --tag "{{ .ProfileFolder }}" --tag {{ OS }} --tag "$HOST" "{{ .ProfileFolder }}"
             else
-              logg error 'Both `rclone` and `restic` must be available' && exit 1
+              logg error 'Both rclone and restic must be available' && exit 1
             fi
           else
             logg error 'User S3 bucket mount is unavailable. The presence of this folder is used to detect whether or not the user S3 Rclone configuration is in place.' && exit 1
@@ -473,7 +473,7 @@ tasks:
                 restic -r "rclone:$USER-s3:user/{{ .RcloneRepository }}" --password-file "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" restore latest --target '{{ .ProfileFolder }}'
               fi
             else
-              logg error 'Both `rclone` and `restic` must be available' && exit 1
+              logg error 'Both rclone and restic must be available' && exit 1
             fi
           else
             logg error 'User S3 bucket mount is unavailable. The presence of this folder is used to detect whether or not the user S3 Rclone configuration is in place.' && exit 1

@@ -40,7 +40,7 @@ if command -v timeshift > /dev/null; then
     logg info "Copying $TIMESHIFT_CONFIG to /etc/timeshift/timeshift.json"
     sudo cp -f "$TIMESHIFT_CONFIG" /etc/timeshift/timeshift.json
 else
-    logg info 'The `timeshift` executable is not available'
+    logg info 'The timeshift executable is not available'
 fi
 
 {{ end -}}

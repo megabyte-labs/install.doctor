@@ -50,13 +50,13 @@ the `fail2ban` configuration.
 function restartFail2Ban() {
     if [ -d /Applications ] && [ -d /System ]; then
         # macOS
-        logg info 'Enabling the `fail2ban` Homebrew service'
+        logg info 'Enabling the fail2ban Homebrew service'
         brew services start fail2ban
     else
         # Linux
-        logg info 'Enabling the `fail2ban` service'
+        logg info 'Enabling the fail2ban service'
         sudo systemctl enable fail2ban
-        logg info 'Restarting the `fail2ban` service'
+        logg info 'Restarting the fail2ban service'
         sudo systemctl restart fail2ban
     fi
 }

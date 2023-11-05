@@ -38,7 +38,7 @@ as cache-building are handled ahead of time.
 
 ### Initialize ZSH so plugin bootstrap process is done ahead of time
 if command -v zsh > /dev/null; then
-  logg info 'Bootstrapping ZSH by running `exec zsh`'
+  logg info 'Bootstrapping ZSH by running exec zsh'
   exec zsh
 fi
 {{ end -}}

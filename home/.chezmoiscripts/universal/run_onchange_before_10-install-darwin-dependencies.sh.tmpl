@@ -19,7 +19,7 @@ if [ -d /Applications ] && [ -d /System ]; then
   ### Check for presence of Homebrew
   if command -v brew > /dev/null; then
     ### Install base dependencies
-    logg 'Installing base dependencies for macOS using `brew bundle`'
+    logg 'Installing base dependencies for macOS using brew bundle'
     logg info 'Dependencies: age asdf jq node glow go go-task/tap/go-task gnupg gum m-cli progress volta yq m-cli yq zx'
     logg info 'GNU compatibility dependencies: coreutils findutils'
 
@@ -33,10 +33,10 @@ if [ -d /Applications ] && [ -d /System ]; then
     if [ "$(printf '%s\n' "$MIN_PYTHON_VERSION" "$PYTHON_VERSION" | sort -V | head -n1)" = "$MIN_PYTHON_VERSION" ]; then
       logg info "Minimum Python version satisfied (minimum: $MIN_PYTHON_VERSION, current: $PYTHON_VERSION)"
     else
-      logg info 'Updating Python 3 version with `brew link --overwrite python@3.11`'
+      logg info 'Updating Python 3 version with brew link --overwrite python@3.11'
       brew link --overwrite python@3.11
     fi
   else
-    logg error '`brew` was not found in the PATH'
+    logg error 'brew was not found in the PATH'
   fi
 fi

@@ -59,7 +59,7 @@ This script must run before the `install-packages` script because some of the An
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-{{ $roleDirs := (output "find" (joinPath .chezmoi.homeDir ".local" "src" "gas-station" "roles") "-mindepth" "2" "-maxdepth" "2" "-type" "d") -}}
+{{ $roleDirs := (output "find" (joinPath .chezmoi.homeDir ".local" "share" "gas-station" "roles") "-mindepth" "2" "-maxdepth" "2" "-type" "d") -}}
 {{- range $roleDir := splitList "\n" $roleDirs -}}
 {{- if ne $roleDir "" -}}
 # {{ $roleDir }}
@@ -68,11 +68,11 @@ This script must run before the `install-packages` script because some of the An
 
 logg info 'Ensuring Gas Station roles are symlinked to ~/.local/share/ansible/roles'
 mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/ansible/roles"
-find "$HOME/.local/src/gas-station/roles" -mindepth 2 -maxdepth 2 -type d | while read ROLE_PATH; do
+find "${XDG_DATA_HOME:-$HOME/.local/share}/gas-station/roles" -mindepth 2 -maxdepth 2 -type d | while read ROLE_PATH; do
   ROLE_FOLDER="professormanhattan.$(echo "$ROLE_PATH" | sed 's/.*\/\([^\/]*\)$/\1/')"
   ALT_ROLE_FOLDER="$(echo "$ROLE_PATH" | sed 's/.*\/\([^\/]*\)$/\1/')"
   if [ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/ansible/roles/$ROLE_FOLDER" ] || [ "$(readlink -f "${XDG_DATA_HOME:-$HOME/.local/share}/ansible/roles/$ROLE_FOLDER")" != "$ROLE_PATH" ]; then
-    logg info 'Symlinking `'"$ROLE_FOLDER"'`'
+    logg info 'Symlinking '"$ROLE_FOLDER"''
     rm -f "${XDG_DATA_HOME:-$HOME/.local/share}/ansible/roles/$ROLE_FOLDER"
     ln -s "$ROLE_PATH" "${XDG_DATA_HOME:-$HOME/.local/share}/ansible/roles/$ROLE_FOLDER"
   fi
@@ -82,16 +82,16 @@ find "$HOME/.local/src/gas-station/roles" -mindepth 2 -maxdepth 2 -type d | whil
   fi
 done
 
-if [ -f "$HOME/.local/src/gas-station/requirements.yml" ]; then
+if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/gas-station/requirements.yml" ]; then
   ### Install Ansible Galaxy and dependencies if missing
   if ! command -v ansible-galaxy > /dev/null; then
     if ! command -v pipx > /dev/null; then
       logg info 'Installing pipx via Homebrew'
       brew install pipx
-      logg info 'Running `pipx ensurepath`'
+      logg info 'Running pipx ensurepath'
       pipx ensurepath
     fi
-    logg info 'Installing `ansible-core` via pipx'
+    logg info 'Installing ansible-core via pipx'
     pipx install ansible-core
     if [ -d /Applications ] && [ -d /System ]; then
       logg info 'Injecting macOS-specific pipx dependencies via pipx'
@@ -110,19 +110,19 @@ if [ -f "$HOME/.local/src/gas-station/requirements.yml" ]; then
     ansible-galaxy install -r "${XDG_DATA_HOME:-$HOME/.local/share}/ansible/requirements.yml" || EXIT_CODE=$?
     if [ -n "$EXIT_CODE" ]; then
       logg error 'Failed to install Ansible requirements from Ansible Galaxy'
-      if [ -d "$HOME/.local/src/gas-station/collections" ]; then
+      if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/gas-station/collections" ]; then
         logg info 'Attempting to use locally stored Ansible requirements'
-        cd "$HOME/.local/src/gas-station/collections"
+        cd "${XDG_DATA_HOME:-$HOME/.local/share}/gas-station/collections"
         ansible-galaxy install -r requirements.yml || SECOND_EXIT_CODE=$?
         if [ -n "$SECOND_EXIT_CODE" ]; then
           logg error 'Failed to install requirements from both the cloud and the local copy' && exit 1
         fi
       else
-        logg warn '~/.local/src/gas-station/collections is missing'
+        logg warn "${XDG_DATA_HOME:-$HOME/.local/share}/gas-station/collections is missing"
       fi
     fi
   else
-    logg warn 'Unable to install the Ansible Galaxy requirements.yml since the ansible-galaxy executable is missing from the PATH'
+    logg warn 'Unable to install the Ansible Galaxy requirements.yml since the ansible-galaxy executable is missing from the PATH"
   fi
 else
   logg warn '~/.local/share/ansible/requirements.yml is missing'

@@ -7,7 +7,7 @@
 ### i.e. Changes to upstream will not impact the play if your configuration files are stored locally
 for TARGET in "files" "group_vars" "host_vars" "inventories" "templates"; do
   if [ -d "${XDG_CONFIG_HOME:-$HOME/.config}/ansible/$TARGET" ] && [ "$(readlink -f "${XDG_DATA_HOME:-$HOME/.local/share}/ansible/$TARGET")" != "${XDG_CONFIG_HOME:-$HOME/.config}/ansible/$TARGET" ]; then
-    logg 'Symlinking Ansible playbook `'"$TARGET"'` to ~/.config/ansible/$TARGET'
+    logg 'Symlinking Ansible playbook '"$TARGET"' to ~/.config/ansible/$TARGET'
     rm -f "${XDG_DATA_HOME:-$HOME/.local/share}/ansible/$TARGET"
     ln -s "${XDG_CONFIG_HOME:-$HOME/.config}/ansible/$TARGET" "${XDG_DATA_HOME:-$HOME/.local/share}/ansible/$TARGET"
   fi

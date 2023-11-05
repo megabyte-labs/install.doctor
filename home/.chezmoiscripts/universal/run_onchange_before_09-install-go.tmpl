@@ -11,16 +11,16 @@
 ### Ensure Go is installed
 if ! command -v go > /dev/null; then
   if command -v brew; then
-    logg 'Installing `go` via Homebrew'
+    logg 'Installing go via Homebrew'
     brew install go || GO_EXIT_CODE=$?
     if [ -n "$GO_EXIT_CODE" ]; then
-      logg error '`go` was not successfully installed via Homebrew'
+      logg error 'go was not successfully installed via Homebrew'
     fi
   else
-    logg '`brew` is unavailable. Cannot use it to perform a system installation of node.'
+    logg 'brew is unavailable. Cannot use it to perform a system installation of node.'
   fi
 else
-  logg '`go` is available'
+  logg 'go is available'
 fi
 
 {{ end -}}

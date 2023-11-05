@@ -61,7 +61,7 @@ if [ -f "$GH_RUNNER_PATH/config.sh" ]; then
                 logg info 'Starting runner service'
                 "$GH_RUNNER_PATH/svc.sh" start && logg success 'Started the GitHub Actions runner service'
             else
-                logg warn '`jq` is required by the GitHub runner configuration script'
+                logg warn 'jq is required by the GitHub runner configuration script'
             fi
         else
             logg warn 'The GITHUB_TOKEN environment variable is not present'

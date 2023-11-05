@@ -35,7 +35,7 @@ conditionally adds the completions to the Bash completions folder.
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-logg 'Updating the `~/.local/share/bash-completion/completions` folder based on the installed applications'
+logg 'Updating the ~/.local/share/bash-completion/completions folder based on the installed applications'
 
 if [ "$DEBUG_MODE" == 'true' ]; then
   set +x

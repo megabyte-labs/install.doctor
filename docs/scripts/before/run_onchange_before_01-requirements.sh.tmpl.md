@@ -40,19 +40,19 @@ where `$DISTRO_ID` is equal to the Linux distribution ID found in `/etc/os-relea
 
 if [ '{{ .host.distro.id }}' = 'archlinux' ]; then
     ### Print dependency list
-    logg 'Installing common dependencies using `pacman`'
+    logg 'Installing common dependencies using pacman'
     logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
     
     ### Install packages if they are not already present
     for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
-        logg info 'Checking for presence of `'"$PACKAGE"'`'
+        logg info 'Checking for presence of '"$PACKAGE"''
         if pacman -Qs "$PACKAGE" > /dev/null; then
             logg info 'The '"$PACKAGE"' package is already installed'
         else
-            logg info 'Installing `'"$PACKAGE"'`'
+            logg info 'Installing '"$PACKAGE"''
             sudo pacman -Sy --noconfirm --needed "$PACKAGE" || EXIT_CODE=$?
             if [ -n "$EXIT_CODE" ]; then
-                logg error 'Error installing `'"$PACKAGE"'` via pacman'
+                logg error 'Error installing '"$PACKAGE"' via pacman'
                 logg info 'Proceeding with installation..'
                 unset EXIT_CODE
             fi
@@ -61,10 +61,10 @@ if [ '{{ .host.distro.id }}' = 'archlinux' ]; then
 
     ### Install yay
     if ! command -v yay > /dev/null; then
-    logg info 'Cloning yay from `https://aur.archlinux.org/yay.git` to `/usr/local/src/yay`'
+    logg info 'Cloning yay from https://aur.archlinux.org/yay.git to /usr/local/src/yay'
     sudo git clone https://aur.archlinux.org/yay.git /usr/local/src/yay
     cd /usr/local/src/yay
-    logg info 'Installing yay via `sudo makepkg -si`'
+    logg info 'Installing yay via sudo makepkg -si'
     sudo makepkg -si
     fi
 elif [ '{{ .host.distro.id }}' = 'centos' ]; then
@@ -97,19 +97,19 @@ elif [ '{{ .host.distro.id }}' = 'centos' ]; then
     fi
 
     ### Print dependency list
-    logg 'Installing common dependencies using `'"$PKG_MANAGER"'`'
+    logg 'Installing common dependencies using '"$PKG_MANAGER"''
     logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 
     ### Install packages if they are not already present
     for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
-        logg info 'Checking for presence of `'"$PACKAGE"'`'
+        logg info 'Checking for presence of '"$PACKAGE"''
         if rpm -qa | grep "^$PACKAGE-" > /dev/null; then
             logg info 'The '"$PACKAGE"' package is already installed'
         else
-            logg info 'Installing `'"$PACKAGE"'`'
+            logg info 'Installing '"$PACKAGE"''
             sudo "$PKG_MANAGER" install -y "$PACKAGE" || EXIT_CODE=$?
             if [ -n "$EXIT_CODE" ]; then
-                logg error 'Error installing `'"$PACKAGE"'` via `'"$PKG_MANAGER"'`'
+                logg error 'Error installing '"$PACKAGE"' via '"$PKG_MANAGER"''
                 logg info 'Proceeding with installation..'
                 unset EXIT_CODE
             fi
@@ -117,11 +117,11 @@ elif [ '{{ .host.distro.id }}' = 'centos' ]; then
     done
 elif [ '{{ .host.distro.id }}' = 'debian' ]; then
     ### Print dependency list
-    logg 'Installing common dependencies using `apt-get`'
+    logg 'Installing common dependencies using apt-get'
     logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 
     ### Update apt-get cache
-    logg info 'Running `sudo apt-get update`'
+    logg info 'Running sudo apt-get update'
     sudo apt-get update
 
     ### Update debconf for non-interactive installation
@@ -132,14 +132,14 @@ elif [ '{{ .host.distro.id }}' = 'debian' ]; then
 
     ### Install packages if they are not already present
     for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
-        logg info 'Checking for presence of `'"$PACKAGE"'`'
+        logg info 'Checking for presence of '"$PACKAGE"''
         if dpkg -l "$PACKAGE" | grep -E '^ii' > /dev/null; then
             logg info 'The '"$PACKAGE"' package is already installed'
         else
-            logg info 'Installing `'"$PACKAGE"'`'
+            logg info 'Installing '"$PACKAGE"''
             sudo apt-get install -y --no-install-recommends "$PACKAGE" || EXIT_CODE=$?
             if [ -n "$EXIT_CODE" ]; then
-                logg error 'Error installing `'"$PACKAGE"'` via apt-get'
+                logg error 'Error installing '"$PACKAGE"' via apt-get'
                 logg info 'Proceeding with installation..'
                 unset EXIT_CODE
             fi
@@ -174,19 +174,19 @@ elif [ '{{ .host.distro.id }}' = 'fedora' ]; then
         logg warn 'Skipping installation of Appstream data because GNOME is not installed'
     fi
     ### Print dependency list
-    logg 'Installing common dependencies using `dnf`'
+    logg 'Installing common dependencies using dnf'
     logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 
     ### Install packages if they are not already present
     for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
-        logg info 'Checking for presence of `'"$PACKAGE"'`'
+        logg info 'Checking for presence of '"$PACKAGE"''
         if rpm -qa | grep "^$PACKAGE-" > /dev/null; then
             logg info 'The '"$PACKAGE"' package is already installed'
         else
-            logg info 'Installing `'"$PACKAGE"'`'
+            logg info 'Installing '"$PACKAGE"''
             sudo dnf install -y "$PACKAGE" || EXIT_CODE=$?
             if [ -n "$EXIT_CODE" ]; then
-                logg error 'Error installing `'"$PACKAGE"'` via dnf'
+                logg error 'Error installing '"$PACKAGE"' via dnf'
                 logg info 'Proceeding with installation..'
                 unset EXIT_CODE
             fi
@@ -194,38 +194,38 @@ elif [ '{{ .host.distro.id }}' = 'fedora' ]; then
     done
 elif [ '{{ .host.distro.id }}' = 'freebsd' ]; then
     ### Print dependency list
-    logg 'Installing common dependencies using `pkg`'
+    logg 'Installing common dependencies using pkg'
     logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 
     ### Install base dependencies
     for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
-        logg info 'Installing `'"$PACKAGE"'`'
+        logg info 'Installing '"$PACKAGE"''
         sudo pkg install -y "$PACKAGE" || EXIT_CODE=$?
         if [ -n "$EXIT_CODE" ]; then
-            logg error 'Error installing `'"$PACKAGE"'` via zypper'
+            logg error 'Error installing '"$PACKAGE"' via zypper'
             logg info 'Proceeding with installation..'
             unset EXIT_CODE
         fi
     done
 elif [ '{{ .host.distro.id }}' = 'opensuse' ]; then
     ### Print dependency list
-    logg 'Installing common dependencies using `zypper`'
+    logg 'Installing common dependencies using zypper'
     logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 
     ### Install base_devel
-    logg info 'Installing base_devel pattern with `sudo zypper install -t pattern devel_basis`'
+    logg info 'Installing base_devel pattern with sudo zypper install -t pattern devel_basis'
     sudo zypper install -t pattern devel_basis
 
     ### Install packages if they are not already present
     for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
-        logg info 'Checking for presence of `'"$PACKAGE"'`'
+        logg info 'Checking for presence of '"$PACKAGE"''
         if rpm -qa | grep "$PACKAGE" > /dev/null; then
             logg info 'The '"$PACKAGE"' package is already installed'
         else
-            logg info 'Installing `'"$PACKAGE"'`'
+            logg info 'Installing '"$PACKAGE"''
             sudo zypper install -y "$PACKAGE" || EXIT_CODE=$?
             if [ -n "$EXIT_CODE" ]; then
-                logg error 'Error installing `'"$PACKAGE"'` via zypper'
+                logg error 'Error installing '"$PACKAGE"' via zypper'
                 logg info 'Proceeding with installation..'
                 unset EXIT_CODE
             fi
@@ -233,11 +233,11 @@ elif [ '{{ .host.distro.id }}' = 'opensuse' ]; then
     done
 elif [ '{{ .host.distro.id }}' = 'ubuntu' ]; then
     ### Print dependency list
-    logg 'Installing common dependencies using `apt-get`'
+    logg 'Installing common dependencies using apt-get'
     logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
 
     ### Update apt-get cache
-    logg info 'Running `sudo apt-get update`'
+    logg info 'Running sudo apt-get update'
     sudo apt-get update
 
     ### Update debconf for non-interactive installation
@@ -248,14 +248,14 @@ elif [ '{{ .host.distro.id }}' = 'ubuntu' ]; then
 
     ### Install packages if they are not already present
     for PACKAGE in {{ $packages | sortAlpha | uniq | join " " -}}; do
-        logg info 'Checking for presence of `'"$PACKAGE"'`'
+        logg info 'Checking for presence of '"$PACKAGE"''
         if dpkg -l "$PACKAGE" | grep -E '^ii' > /dev/null; then
             logg info 'The '"$PACKAGE"' package is already installed'
         else
-            logg info 'Installing `'"$PACKAGE"'`'
+            logg info 'Installing '"$PACKAGE"''
             sudo apt-get install -y --no-install-recommends "$PACKAGE" || EXIT_CODE=$?
             if [ -n "$EXIT_CODE" ]; then
-                logg error 'Error installing `'"$PACKAGE"'` via apt-get'
+                logg error 'Error installing '"$PACKAGE"' via apt-get'
                 logg info 'Proceeding with installation..'
                 unset EXIT_CODE
             fi

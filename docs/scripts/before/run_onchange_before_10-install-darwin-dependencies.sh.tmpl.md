@@ -35,7 +35,7 @@ via Homebrew. The list of packages is defined in `home/.chezmoitemplates/darwin/
 {{ includeTemplate "universal/logg-before" }}
 
 if command -v brew > /dev/null; then
-  logg 'Installing base dependencies for macOS using `brew bundle`'
+  logg 'Installing base dependencies for macOS using brew bundle'
   logg info 'Dependencies: age asdf jq node glow go go-task/tap/go-task gnupg gum m-cli progress volta yq m-cli yq zx'
   logg info 'GNU compatibility dependencies: coreutils findutils'
 
@@ -43,7 +43,7 @@ if command -v brew > /dev/null; then
   {{ includeTemplate "darwin/Brewfile" . -}}
   EOF
 else
-  logg error '`brew` was not found in the PATH'
+  logg error 'brew was not found in the PATH'
 fi
 {{ end -}}
 ```

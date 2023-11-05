@@ -35,7 +35,7 @@ elif [ -f /etc/passwd ]; then
     logg info 'Ensuring hostname persists after reboot'
     sudo hostnamectl set-hostname '{{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}' && logg success 'Permanently changed hostname to {{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}'
   else
-    logg warn '`hostnamectl` was not available in the PATH - this operating system type might be unsupported'
+    logg warn 'hostnamectl was not available in the PATH - this operating system type might be unsupported'
   fi
 else
   logg warn 'Could not configure hostname because system type was not detectable'
@@ -57,7 +57,7 @@ if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
   else
     # If gtimeout is unavailable, then attempt system upgrade without a timeout (which usually works on fresh systems)
     logg info 'Applying OS upgrades (if available)'
-    sudo softwareupdate -i -a -R || logg error 'Failed to perform a system update via `sudo softwareupdate -i -a`'
+    sudo softwareupdate -i -a -R || logg error 'Failed to perform a system update via sudo softwareupdate -i -a'
   fi
   logg info 'If system updates were downloaded / installed, a reboot might be required.'
 fi

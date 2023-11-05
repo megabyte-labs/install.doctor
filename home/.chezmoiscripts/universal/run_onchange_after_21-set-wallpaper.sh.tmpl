@@ -12,6 +12,6 @@
 if command -v m > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/betelgeuse/share/wallpapers/Betelgeuse-macOS/contents/source.png" ]; then
   m wallpaper "${XDG_DATA_HOME:-$HOME/.local/share}/betelgeuse/share/wallpapers/Betelgeuse-macOS/contents/source.png"
 else
-  logg warn 'Either `m` or the macOS default wallpaper is missing.'
+  logg warn 'Either m or the macOS default wallpaper is missing.'
 fi
 {{ end -}}

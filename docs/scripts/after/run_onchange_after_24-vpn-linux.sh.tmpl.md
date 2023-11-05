@@ -120,7 +120,7 @@ if command -v nmcli > /dev/null; then
         done
     else
         logg info 'Either the OpenVPN username or password is undefined.'
-        logg info 'See the `docs/VARIABLES.md` file for details.'
+        logg info 'See the docs/VARIABLES.md file for details.'
     fi
 
 {{ if (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) }}
@@ -129,8 +129,8 @@ if command -v nmcli > /dev/null; then
         find "${XDG_CONFIG_HOME:-$HOME/.config}/vpn" -type f -name "*.nmconnection" | while read WG_FILE; do
             # @description Ensure the WireGuard NetworkManager plugin is available
             if [ ! -d /usr/lib/NetworkManager/nm-wireguard-service ]; then
-                logg info 'The `nm-wireguard-service` is not present'
-                logg info 'Installing the `nm-wireguard-service`'
+                logg info 'The nm-wireguard-service is not present'
+                logg info 'Installing the nm-wireguard-service'
             fi
 
             # @description Add the WireGuard profiles
@@ -158,7 +158,7 @@ if command -v nmcli > /dev/null; then
         sudo service NetworkManager restart
     fi
 else
-    logg warn '`nmcli` is unavailable'
+    logg warn 'nmcli is unavailable'
 fi
 
 {{ end -}}```

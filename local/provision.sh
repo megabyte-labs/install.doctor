@@ -191,7 +191,7 @@ logg() {
 sudo -n true || SUDO_EXIT_CODE=$?
 logg info 'Your user will temporarily be granted passwordless sudo for the duration of the script'
 if [ -n "$SUDO_EXIT_CODE" ]; then
-  logg info 'Press `CTRL+C` to bypass this prompt to either enter your password when needed or perform a non-privileged installation'
+  logg info 'Press CTRL+C to bypass this prompt to either enter your password when needed or perform a non-privileged installation'
   logg info 'Note: Non-privileged installations are not yet supported'
 fi
 
@@ -291,7 +291,7 @@ fi
 
 if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v brew > /dev/null || ! command -v rsync > /dev/null || ! command -v unbuffer > /dev/null; then
   # shellcheck disable=SC2016
-  logg info 'Ensuring `curl`, `expect`, `git`, and `rsync` are installed via the system package manager'
+  logg info 'Ensuring curl, expect, git, and rsync are installed via the system package manager'
   if command -v apt-get > /dev/null; then
     # Debian / Ubuntu
     sudo apt-get update
@@ -370,7 +370,7 @@ ensurePackageManagerHomebrew
 ### Install installer dependencies via Homebrew
 installBrewPackage() {
   if ! command -v "$1" > /dev/null; then
-    logg 'Installing `'"$1"'`'
+    logg 'Installing '"$1"''
     brew install "$1"
   fi
 }
@@ -448,7 +448,7 @@ if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml" ]; then
     fi
   fi
   # shellcheck disable=SC2016
-  logg info 'Running `chezmoi init` since the ~/.config/chezmoi/chezmoi.yaml is not present'
+  logg info 'Running chezmoi init since the ~/.config/chezmoi/chezmoi.yaml is not present'
   chezmoi init
 fi
 
@@ -457,7 +457,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 ### Run chezmoi apply
 # shellcheck disable=SC2016
-logg info 'Running `chezmoi apply`'
+logg info 'Running chezmoi apply'
 if [ "$DEBUG_MODE" == 'true' ]; then
   DEBUG_MODIFIER="-vvvvv"
 else

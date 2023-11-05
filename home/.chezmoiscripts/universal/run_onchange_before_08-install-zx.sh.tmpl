@@ -21,26 +21,26 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 ### Ensure node is installed
 if ! command -v node > /dev/null; then
   if command -v brew; then
-    logg 'Installing `node` via Homebrew'
+    logg 'Installing node via Homebrew'
     brew install node || NODE_EXIT_CODE=$?
     if [ -n "$NODE_EXIT_CODE" ]; then
-      logg warn 'Calling `brew link --overwrite node` because the Node.js installation seems to be misconfigured'
+      logg warn 'Calling brew link --overwrite node because the Node.js installation seems to be misconfigured'
       brew link --overwrite node
     fi
   else
-    logg '`brew` is unavailable. Cannot use it to perform a system installation of node.'
+    logg 'brew is unavailable. Cannot use it to perform a system installation of node.'
   fi
 else
-  logg '`node` is available'
+  logg 'node is available'
 fi
 
 ### Ensure Volta is installed
 if ! command -v volta > /dev/null; then
   if command -v brew > /dev/null; then
-    logg 'Installing `volta` via `brew`'
+    logg 'Installing volta via brew'
     brew install volta
   else
-    logg warn '`brew` needs to be available to install Volta'
+    logg warn 'brew needs to be available to install Volta'
   fi
 else
   if ! node --version > /dev/null; then
@@ -53,7 +53,7 @@ if command -v volta > /dev/null; then
   ### Handle scenario where VOLTA_HOME is not defined yet
   if [ -z "$VOLTA_HOME" ]; then
     logg warn 'VOLTA_HOME is not defined'
-    logg info 'Running `volta setup`'
+    logg info 'Running volta setup'
     volta setup
   fi
 
@@ -61,26 +61,26 @@ if command -v volta > /dev/null; then
   if [ -f "$HOME/.bashrc" ]; then
     . "$HOME/.bashrc"
   else
-    logg warn 'Could not find `~/.bashrc` to source the results of `volta setup` from'
+    logg warn 'Could not find ~/.bashrc to source the results of volta setup from'
   fi
 
   ### Set PATH and install latest Node.js version via Volta
   export PATH="$VOLTA_HOME/bin:$PATH"
-  logg 'Installing `node` via `volta`'
+  logg 'Installing node via volta'
   volta install node@latest
 else
-  logg warn '`volta` needs to be installed'
+  logg warn 'volta needs to be installed'
 fi
 
 ### Ensure zx is installed
 if ! command -v zx > /dev/null; then
   if command -v volta > /dev/null; then
-    logg 'Installing `zx` via `volta`'
+    logg 'Installing zx via volta'
     volta install zx
   else
-    logg '`volta` is missing'
+    logg 'volta is missing'
   fi
 else
-  logg '`zx` is already installed'
+  logg 'zx is already installed'
 fi
 {{ end -}}

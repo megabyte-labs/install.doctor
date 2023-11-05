@@ -30,7 +30,7 @@ Mirage firewall so it can be used as a unikernel firewall VM.
 #     Mirage firewall so it can be used as a unikernel firewall VM.
 
 ### Update TemplateVMs
-logg info 'Updating TemplateVMs via `qubesctl`'
+logg info 'Updating TemplateVMs via qubesctl'
 timeout 900 qubesctl --show-output --skip-dom0 --templates state.sls update.qubes-vm
 
 ### Ensure mirage-firewall kernel folder setup

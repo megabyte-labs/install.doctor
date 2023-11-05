@@ -42,7 +42,7 @@ For more information about storing secrets like SSH keys and API keys, refer to 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-logg info 'Decrypting SSH keys stored in the `home/.chezmoitemplates/ssh` folder of the Install Doctor repo / fork.'
+logg info 'Decrypting SSH keys stored in the home/.chezmoitemplates/ssh folder of the Install Doctor repo / fork.'
 find "{{ .chezmoi.sourceDir }}/.chezmoitemplates/ssh" -type f | while read SSH_FILE; do
     ### Decrypt SSH file with Chezmoi
     logg info 'Decrypting the $(basename "$SSH_FILE") encrypted SSH file'

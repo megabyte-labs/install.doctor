@@ -43,27 +43,27 @@ for PKG in {{ $removePackages }}; do
     elif command -v apt-get > /dev/null; then
         if dpkg -l "$PKG" | grep -E '^ii' > /dev/null; then
             sudo apt-get remove -y "$PKG"
-            logg success 'Removed `'"$PKG"'` via apt-get'
+            logg success 'Removed '"$PKG"' via apt-get'
         fi
     elif command -v dnf > /dev/null; then
         if rpm -qa | grep "$PKG" > /dev/null; then
             sudo dnf remove -y "$PKG"
-            logg success 'Removed `'"$PKG"'` via dnf'
+            logg success 'Removed '"$PKG"' via dnf'
         fi
     elif command -v yum > /dev/null; then
         if rpm -qa | grep "$PKG" > /dev/null; then
             sudo yum remove -y "$PKG"
-            logg success 'Removed `'"$PKG"'` via yum'
+            logg success 'Removed '"$PKG"' via yum'
         fi
     elif command -v pacman > /dev/null; then
         if pacman -Qs "$PKG" > /dev/null; then
             sudo pacman -R "$PKG"
-            logg success 'Removed `'"$PKG"'` via pacman'
+            logg success 'Removed '"$PKG"' via pacman'
         fi
     elif command -v zypper > /dev/null; then
         if rpm -qa | grep "$PKG" > /dev/null; then
             sudo zypper remove -y "$PKG"
-            logg success 'Removed `'"$PKG"'` via zypper'
+            logg success 'Removed '"$PKG"' via zypper'
         fi
     fi
 done

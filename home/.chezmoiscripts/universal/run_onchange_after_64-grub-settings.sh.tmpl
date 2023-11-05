@@ -175,7 +175,7 @@ if [ "$DEBUG_MODE" != 'true' ]; then
             logg success 'Applied GRUB2 theme'
         fi
     elif [ -f /usr/sbin/update-grub ]; then
-        logg info 'Running `sudo update-grub`'
+        logg info 'Running sudo update-grub'
         sudo update-grub
     else
         logg warn 'Unable to find appropriate GRUB mkconfig command'

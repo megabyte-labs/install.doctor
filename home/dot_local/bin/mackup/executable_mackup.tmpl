@@ -29,7 +29,7 @@ elif (command -v pip3 > /dev/null && pip3 list | grep mackup > /dev/null) || \
      (command -v pipx > dev/null && pipx list | grep mackup > /dev/null); then
     ~/.local/bin/mackup $* || echo ''
 else
-    logg warn 'Homebrew/Python pip is not found. Install `mackup` using one of these methods'
+    logg warn 'Homebrew/Python pip is not found. Install mackup using one of these methods'
 fi
 
 ### Remove temporary configuration files

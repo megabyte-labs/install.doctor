@@ -41,7 +41,7 @@ if command -v squash-symlink > /dev/null; then
     logg info 'Converting /usr/local/share/grub symlinks to equivalent regular files'
     sudo find /usr/local/share/grub -type l -exec squash-symlink {} +
 else
-    logg warn '`squash-symlink` is not a script in the PATH'
+    logg warn 'squash-symlink is not a script in the PATH'
 fi
 
 ### Ensure /usr/share/backgrounds/default.png is deleted
@@ -75,7 +75,7 @@ if [ -f '/usr/local/share/plymouth/themes/{{ .theme }}/icons/{{ .host.distro.id 
     sudo cp -f '/usr/local/share/plymouth/themes/{{ .theme }}/icons/{{ .host.distro.id }}.png' '/usr/local/share/plymouth/themes/{{ .theme }}/icon.png'
     logg success 'Added platform-specific icon to {{ .theme }} Plymouth theme'
 else
-    logg warn 'The `{{ .host.distro.id }}.png` icon is not available in the icons folder insider the {{ .theme }} Plymouth theme'
+    logg warn 'The {{ .host.distro.id }}.png icon is not available in the icons folder insider the {{ .theme }} Plymouth theme'
 fi
 
 {{ end -}}

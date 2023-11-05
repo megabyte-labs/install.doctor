@@ -41,12 +41,12 @@ if [ -d "${XDG_CONFIG_HOME:-$HOME/.config}/dconf/settings" ]; then
         fi
         # Reset dconf settings if environment variable RESET_DCONF is set to true
         if [ "$RESET_DCONF" == 'true' ]; then
-            logg info 'Resetting dconf settings for `'"$DCONF_SETTINGS_ID"'`'
+            logg info 'Resetting dconf settings for '"$DCONF_SETTINGS_ID"''
             dconf reset -f "$DCONF_SETTINGS_ID"
         fi
-        logg info 'Loading versioned dconf settings for `'"$DCONF_SETTINGS_ID"'`'
+        logg info 'Loading versioned dconf settings for '"$DCONF_SETTINGS_ID"''
         dconf load "$DCONF_SETTINGS_ID" < "$DCONF_CONFIG_FILE"
-        logg success 'Finished applying dconf settings for `'"$DCONF_SETTINGS_ID"'`'
+        logg success 'Finished applying dconf settings for '"$DCONF_SETTINGS_ID"''
     done
 else
     logg warn '~/.config/dconf/settings does not exist!'

@@ -163,7 +163,7 @@ if command -v rclone > /dev/null; then
         sudo systemctl restart "s3-${USER}"
     fi
 else
-    logg info '`rclone` is not available'
+    logg info 'rclone is not available'
 fi
 
 {{ end -}}

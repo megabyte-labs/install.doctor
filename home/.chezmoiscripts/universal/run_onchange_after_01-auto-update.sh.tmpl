@@ -14,7 +14,7 @@ if [ -d /Applications ] && [ -d /System ]; then
         logg info 'Configuring macOS to automatically apply system updates'
         sudo mkdir -p /Library/LaunchDaemons
         sudo cp -f "$HOME/Library/LaunchDaemons/com.apple.automatedupdates.plist" "/Library/LaunchDaemons/com.apple.automatedupdates.plist"
-        logg info 'Loading `/Library/LaunchDaemons/com.apple.automatedupdates.plist`'
+        logg info 'Loading /Library/LaunchDaemons/com.apple.automatedupdates.plist'
         sudo launchctl load "/Library/LaunchDaemons/com.apple.automatedupdates.plist" && logg success 'launchctl load successful'
     fi
 fi
