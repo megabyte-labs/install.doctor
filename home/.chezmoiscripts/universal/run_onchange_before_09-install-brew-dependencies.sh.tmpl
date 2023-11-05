@@ -6,7 +6,7 @@
 #     This script installs various libraries that are loosely required by the eco-system that Install Doctor
 #     implements. It installs the following:
 #
-#     1. `delta` - Delta is used by the git config as an alternate, improved pager terminal user-interface
+#     1. `delta` - Delta (`git-delta` on Homebrew) is used by the git config as an alternate, improved pager terminal user-interface
 #     2. `gh` - GH (GitHub CLI) is included as a dependency for generating the global git config helper since GH provides a credential helper that can be used to authenticate calls on `github.com`.
 #     3. `go` - The Go framework
 #
@@ -51,9 +51,9 @@ fi
 if ! command -v delta > /dev/null; then
   if command -v brew; then
     logg 'Installing delta via Homebrew'
-    brew install delta || DELTA_EXIT_CODE=$?
+    brew install git-delta || DELTA_EXIT_CODE=$?
     if [ -n "$DELTA_EXIT_CODE" ]; then
-      logg error 'delta was not successfully installed via Homebrew'
+      logg error 'git-delta was not successfully installed via Homebrew'
     fi
   else
     logg 'brew is unavailable. Cannot use it to perform a system installation of node.'

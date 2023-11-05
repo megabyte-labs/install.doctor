@@ -656,6 +656,7 @@ softwarePackages:
     _github: https://github.com/appium/appium
     _home: https://appium.io/
     _name: Appium
+    _service: appium
     brew: appium
     npm: appium
   appium-desktop:
@@ -703,6 +704,8 @@ softwarePackages:
     _bin: blocky
     _github: https://github.com/0xERR0R/blocky
     _name: Blocky
+    _service: blocky
+    _serviceEnabled: true
     brew: blocky
     go: github.com/0xERR0R/blocky@mastergithub.com/0xERR0R/blocky@master
   http-toolkit:
@@ -715,6 +718,7 @@ softwarePackages:
     _bin: tart
     _github: https://github.com/cirruslabs/tart
     _when:brew:darwin: '[ $(uname -m) = "arm64" ]'
+    _todo: Verify that this installs properly (error on arm64 macOS)
     brew:darwin:
       - tart
       - cirruslabs/cli/gitlab-tart-executor
@@ -1883,6 +1887,7 @@ softwarePackages:
     _service:apt: clamav-freshclam
     _service:dnf: clamd-freshclam
     _service:pacman: clamav-freshclam
+    _service:brew: clamav
     apt:
       - clamav
       - clamdscan
@@ -2072,7 +2077,6 @@ softwarePackages:
     _github: https://github.com/kelseyhightower/confd
     _home: null
     _name: confd
-    _service: consul
     brew: confd
     choco: confd
     github: github.com/kelseyhightower/confd
@@ -2084,6 +2088,7 @@ softwarePackages:
     _github: https://www.github.com/hashicorp/consul
     _home: https://www.consul.io/
     _name: Consul
+    _service: consul
     apt: consul
     brew: consul
     pkg: consul
@@ -2791,6 +2796,7 @@ softwarePackages:
     _bin: haproxy
     _github: https://github.com/haproxy/haproxy
     _name: HAProxy
+    _service: haproxy
     apt: haproxy
     brew: haproxy
     choco: haproxy
@@ -2900,6 +2906,7 @@ softwarePackages:
     _bin: mariadb
     _github: false
     _name: MariaDB
+    _service: mariadb
     brew: mariadb
     choco: mariadb
     dnf: mariadb-server
@@ -3598,7 +3605,7 @@ softwarePackages:
     _github: https://github.com/antonmedv/fx
     _home: https://github.com/antonmedv/fx
     _name: FX
-    brew: metrue/fx/fx
+    brew: fx
     go: github.com/antonmedv/fx@latest
     pacman: fx
     pkg: fx
@@ -4704,6 +4711,7 @@ softwarePackages:
     _home: null
     _name: CodeClimate
     _usesDocker: true
+    _todo: Add check to ensure Docker is loaded / running
     brew: codeclimate/formulae/codeclimate
     script:linux: cd /tmp && curl -L https://github.com/codeclimate/codeclimate/archive/master.tar.gz | tar xvz && cd codeclimate-* && sudo make install
     brew:darwin: codeclimate/formulae/codeclimate
@@ -5183,7 +5191,7 @@ softwarePackages:
     _pre:scoop: scoop bucket add instrumenta https://github.com/instrumenta/scoop-instrumenta
     binary:darwin: https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-darwin-amd64.tar.gz
     binary:linux: https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
-    brew: kubeval
+    brew: instrumenta/instrumenta/kubeval
     scoop: kubeval
   edex-ui:
     _bin: edex-ui
@@ -5767,6 +5775,7 @@ softwarePackages:
     _home: null
     _name: minikube
     _post: minikube config set driver virtualbox
+    _todo: A full installation of Xcode.app 9.0 is required. Also, hyperkit x86_64 architecture is required for this software. So automate install of Xcode.app 9.0 and add check for x86_64 prior to installing this
     brew: minikube
     brew:darwin:
       - hyperkit
@@ -6222,6 +6231,8 @@ softwarePackages:
     _github: https://github.com/slackhq/nebula
     _home: https://github.com/slackhq/nebula
     _name: nebula
+    _service: nebula
+    _serviceEnabled: true
     brew: nebula
     dnf: nebula
     pacman: nebula
@@ -6366,6 +6377,7 @@ softwarePackages:
     _github: https://github.com/nginx/nginx
     _home: https://nginx.org/
     _name: NGINX
+    _todo: Check out /opt/homebrew/etc/nginx/nginx.conf / nginx/servers
     _ports:
       - port: 80
         proto: tcp
@@ -6446,15 +6458,14 @@ softwarePackages:
     ansible: professormanhattan.nodejs
     brew: node
     scoop: nodejs
-  tea:
-    _bin: tea
+  pkgx:
+    _bin: pkgx
     _desc: The next-generation, cross‐platform package manager
-    _docs: https://docs.tea.xyz/
-    _github: https://github.com/teaxyz/cli
-    _home: https://tea.xyz/
-    _name: Tea
-    _post: tea --sync -n
-    brew: teaxyz/pkgs/tea-cli
+    _docs: https://docs.pkgx.sh/
+    _github: https://github.com/pkgxdev/pkgx
+    _home: https://pkgx.sh/
+    _name: pkgx
+    brew: pkgxdev/made/pkgx
   pipedream-cli:
     _bin: pd
     _desc: Connect APIs, remarkably fast. Free for developers.
@@ -7586,7 +7597,8 @@ softwarePackages:
     _home: null
     _name: null
     apt: python2
-    brew: python2
+    # Prepare an alternate method for installing python2 on macOS - python2 package no longer works
+    # brew: python2
     choco: python2
     dnf: python2
     pacman: python2
@@ -9709,7 +9721,8 @@ softwarePackages:
     _home: null
     _name: Unbuffer
     apt: unbuffer
-    brew: unbuffer
+    # expect package on Homebrew contains unbuffer
+    brew: expect
     dnf: unbuffer
     pacman: unbuffer
   up:
@@ -10363,6 +10376,7 @@ softwarePackages:
     _github: https://github.com/cloudflare/boringtun
     _home: null
     _name: BoringTun
+    _todo: Add sudo boringtun-cli utun
     brew: boringtun
     cargo:darwin: boringtun-cli
     cargo:linux: boringtun-cli
@@ -10417,7 +10431,9 @@ softwarePackages:
     _name: Wireshark
     _when:cask: '! test -d /Applications/Wireshark.app && ! test -d $HOME/Applications/Wireshark.app'
     apt: wireshark
-    cask: wireshark
+    cask:
+      - wireshark
+      - wireshark-chmodbpf
     choco: wireshark
     dnf: wireshark
     flatpak: org.wireshark.Wireshark
