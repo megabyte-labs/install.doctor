@@ -45,10 +45,10 @@ if command -v install-program > /dev/null; then
     export HOMEBREW_NO_ENV_HINTS=true
     if ! command -v gcc-11; then
       if command -v gcc; then
-        log info 'gcc-11 command missing. Symlinking to gcc'
+        logg info 'gcc-11 command missing. Symlinking to gcc'
         sudo ln -s "$(which gcc)" /usr/local/bin/gcc-11
       else
-        log warn 'gcc either needs to be added to the PATH or it is missing'
+        logg warn 'gcc either needs to be added to the PATH or it is missing'
       fi
     fi
     if [ -f "$HOME/.bashrc" ]; then

@@ -92,7 +92,11 @@ if command -v postfix > /dev/null; then
         ### Update aliases
         if [ -f /etc/aliases ]; then
             logg info 'Forward root e-mails to {{ .user.email }}'
-            sudo sed s/#root.*/root:\ {{ .user.email }}/ -i /etc/aliases
+            ALIASES_TMP="$(mktemp)"
+            logg info 'Setting {{ .user.email }} as root e-mail in temporary file'
+            sudo sed "s/#root.*/root:\ {{ .user.email }}/" /etc/aliases > "$ALIASES_TMP"
+            logg info 'Moving temporary file to /etc/aliases'
+            sudo mv -f "$ALIASES_TMP" /etc/aliases
             if ! cat /etc/aliases | grep '{{ .user.username }}: root' > /dev/null; then
                 logg info 'Forward user e-mail to root@localhost'
                 echo '{{ .user.username }}: root' | sudo tee -a /etc/aliases > /dev/null
