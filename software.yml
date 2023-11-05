@@ -420,6 +420,16 @@ softwarePackages:
     _home: https://pieces.app/
     _name: Pieces CLI
     cask: pieces-cli
+  pueue:
+    _bin: pueue
+    _name: Pueue
+    _github: https://github.com/Nukesor/pueue
+    brew: pueue
+    apk: pueue
+    cargo: pueue --locked
+    apt: pueue
+    dnf: pueue
+    pacman: pueue
   buildkite-agent:
     _bin: buildkite-agent
     _github: https://github.com/buildkite/agent
@@ -1798,6 +1808,7 @@ softwarePackages:
     _github: https://github.com/TheTorProject/gettorbrowser
     _home: https://www.torproject.org/
     _name: Tor Browser
+    _restricted: true
     _when:cask: '! test -d "/Applications/Tor Browser.app" && ! test -d "$HOME/Applications/Tor Browser.app"'
     cask: tor-browser
     choco: tor-browser
@@ -9628,6 +9639,7 @@ softwarePackages:
     _github: https://github.com/TheTorProject
     _home: https://www.torproject.org/
     _name: TOR
+    _restricted: true
     _service: tor
     _serviceEnabled: true
     ansible:linux: professormanhattan.tor
