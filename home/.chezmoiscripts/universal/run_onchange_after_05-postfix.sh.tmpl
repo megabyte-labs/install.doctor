@@ -111,7 +111,7 @@ if command -v postfix > /dev/null; then
 
             ### Re-generate the /etc/aliases.db file
             if [ -f /etc/aliases ]; then
-                logg info 'Ensuring proper permissions on the /etc/aliases file' && chown $(stat -c "%U:%G" /etc/sudoers) /etc/aliases
+                logg info 'Ensuring proper permissions on the /etc/aliases file' && sudo chown $(stat -c "%U:%G" /etc/sudoers) /etc/aliases
                 logg info 'Generating Postfix aliases' && sudo postalias /etc/aliases
             else
                 logg warn '/etc/aliases is missing which is required for Postfix'
