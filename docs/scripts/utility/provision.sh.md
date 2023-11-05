@@ -437,19 +437,27 @@ if [ "$DEBUG_MODE" = 'true' ]; then
   DEBUG_MODIFIER="-vvvvv"
 fi
 
-# @description Save the log of the provision process to `${XDG_DATA_HOME:-$HOME/.local/share}/install.doctor.$(date +%s).log` and add the Chezmoi
+# @description Save the log of the provision process to `$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log` and add the Chezmoi
 # `--force` flag if the `HEADLESS_INSTALL` variable is set to true.
+mkdir -p "$HOME/.local/var/log/install.doctor"
+LOG_FILE="$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log"
 if [ "$HEADLESS_INSTALL" = 'true' ]; then
+  logg info 'Running chezmoi apply forcefully'
   if command -v unbuffer > /dev/null; then
-    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/install.doctor.$(date +%s).log"
+    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
+    logg info 'Running chezmoi second time' && unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
   else
-    chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/install.doctor.$(date +%s).log"
+    chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
+    logg info 'Running chezmoi second time' && chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
   fi
 else
+  logg info 'Running chezmoi apply'
   if command -v unbuffer > /dev/null; then
-    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/install.doctor.$(date +%s).log"
+    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
+    logg info 'Running chezmoi second time' && unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
   else
-    chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "${XDG_DATA_HOME:-$HOME/.local/share}/install.doctor.$(date +%s).log"
+    chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
+    logg info 'Running chezmoi second time' && chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
   fi
 fi
 
