@@ -1677,7 +1677,7 @@ softwarePackages:
     _desc: Image compressor that utilizes other applications like ImageOptim under the hood
     _github: https://github.com/ImageOptim/ImageOptim
     _home: https://imageoptim.com/mac
-    brew:darwin: imageoptim-cli
+    brew:darwin-x86_64: imageoptim-cli
     npm:darwin: imageoptim-cli
   cerebro:
     _bin: null
@@ -3520,6 +3520,7 @@ softwarePackages:
     _bin: mailcatcher
     _github: https://github.com/sj26/mailcatcher
     _name: Mail Catcher
+    _service: mailcatcher
     brew: mailcatcher
     gem: mailcatcher
   fpm:
@@ -3896,13 +3897,14 @@ softwarePackages:
     _home: null
     _name: Git Sub Repo
     brew: git-subrepo
-  gitter:
-    _bin: gitter
-    _name: Gitter
-    _when:cask: '! test -d "/Applications/Gitter.app" && ! test -d "$HOME/Applications/Gitter.app"'
-    cask: gitter
-    choco: gitter
-    flatpak: im.gitter.Gitter
+  element:
+    _bin: element
+    _github: https://github.com/vector-im/element-web
+    _name: Element
+    _when:cask: '! test -d "/Applications/Element.app" && ! test -d "$HOME/Applications/Element.app"'
+    cask: element
+    choco: element-desktop
+    flatpak: im.riot.Riot
   github-desktop:
     _bin: github
     _when:cask: '! test -d "/Applications/GitHub Desktop.app" && ! test -d "$HOME/Applications/GitHub Desktop.app"'
@@ -4666,7 +4668,6 @@ softwarePackages:
     apk: hyperfine
     brew: hyperfine
     cargo: hyperfine
-    cask: hyperfine
     choco: hyperfine
     dnf: hyperfine
     github: github.com/sharkdp/hyperfine
@@ -4799,6 +4800,7 @@ softwarePackages:
     _github: https://github.com/ipfs/ipfs
     _home: https://ipfs.tech/
     _name: IPFS
+    _service: ipfs
     brew: ipfs
     choco: go-ifps
     nix: ipfs
@@ -5734,6 +5736,7 @@ softwarePackages:
     _bin: mpv
     _github: https://github.com/mpv-player/mpv
     _name: MPV
+    _todo: This software does not run on macOS versions other than Mojave, Catalina, Big Sur and Ventura --- probably adding support - this issue will likely fix itself
     brew: mpv
     cask: mpv
     choco: mpv
@@ -9193,6 +9196,7 @@ softwarePackages:
     _github: https://github.com/tailscale/tailscale
     _home: https://tailscale.com/
     _name: Tailscale Client
+    _pre:cask: if command -v tailscale > /dev/null; then brew uninstall tailscale; fi
     _when:cask: '! test -d "/Applications/Tailscale.app" && ! test -d "$HOME/Applications/Tailscale.app"'
     cask: tailscale
     choco: tailscale
@@ -10751,7 +10755,7 @@ softwarePackages:
     pacman: tigervnc
     zypper: tigervnc
   proxyman:
-    _bin: proxyman
+    _bin: proxyman-cli
     _github: https://github.com/ProxymanApp/Proxyman
     _name: Proxyman
     _when:cask: '! test -d /Applications/Proxyman.app && ! test -d $HOME/Applications/Proxyman.app'
