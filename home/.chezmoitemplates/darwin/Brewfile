@@ -12,6 +12,9 @@ if OS.mac?
   brew "m-cli"
 end
 brew "age"
+# Ensure macOS Bash gets upgraded to 5+
+brew "bash"
+brew "gawk"
 brew "glow"
 brew "gnupg"
 brew "go"

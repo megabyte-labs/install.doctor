@@ -1,4 +1,4 @@
-{{- if eq .host.distro.family "linux" -}}
+{{- if (eq .host.distro.family "linux") -}}
 #!/usr/bin/env bash
 # @file Linux Shortcut Removal
 # @brief Cleans up desktop shortcuts that are out of place or unwanted on Linux devices
@@ -28,4 +28,4 @@ for DESKTOP_ICON in {{ $removeShortcuts }}; do
     done
 done
 
-{{- end -}}
+{{ end -}}

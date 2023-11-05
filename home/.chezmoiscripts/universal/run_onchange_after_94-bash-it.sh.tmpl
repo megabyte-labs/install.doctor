@@ -45,7 +45,11 @@ if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
         fi
 
         ### Ensure completions are enabled
-        cd "$BASH_IT/enabled"
+        if [ -d "$BASH_IT/enabled" ]; then
+            logg info "Changing directory to $BASH_IT/enabled" && cd "$BASH_IT/enabled"
+        else
+            logg info "$BASH_IT/enabled not a directory yet"
+        fi
         logg info 'Enabling bash-it completions'
         # TODO: Move these plugins to the .chezmoidata.yaml
         for COMPLETION in defaults dirs docker docker-compose export git makefile ng ssh system vagrant; do
