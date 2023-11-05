@@ -37,3 +37,6 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 
 ### Ensure ~/.local/bin in PATH
 export PATH="$HOME/.local/bin:$PATH"
+
+### Remove ~/.bash_sessions
+export HISTFILE="$XDG_STATE_HOME/bash/history"

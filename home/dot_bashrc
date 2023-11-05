@@ -48,7 +48,6 @@ esac
 
 ### History
 export HISTFILE="$XDG_STATE_HOME/bash/history"
-[ ! -d "$HISTFILE" ] || rm -rf "$HISTFILE"
 
 ### Bash Initialization Hooks
 if [ "$BASH_SUPPORT" = 'true' ]; then
