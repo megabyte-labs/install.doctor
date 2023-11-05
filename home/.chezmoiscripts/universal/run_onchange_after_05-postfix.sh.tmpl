@@ -50,8 +50,8 @@ if command -v postfix > /dev/null; then
 
             ### Add Postfix main configuration
             logg "Adding the following configuration from ${XDG_CONFIG_HOME:-$HOME/.config}/postfix/main.cf to /etc/postfix/main.cf"
-            cat "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/main.cf" | sudo tee -a "$CONFIG_FILE"
-            echo "" | sudo tee -a "$CONFIG_FILE"
+            cat "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/main.cf" | sudo tee -a "$CONFIG_FILE" > /dev/null
+            echo "" | sudo tee -a "$CONFIG_FILE" > /dev/null
         fi
 
         ### Ensure proper permissions on `sasl_passwd` and update Postfix hashmaps
