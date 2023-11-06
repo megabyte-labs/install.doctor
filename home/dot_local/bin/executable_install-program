@@ -1610,11 +1610,12 @@ async function addFirewallRule(rule) {
             if (typeof port === 'string') {
               log('error', logStage, `_ports rules that are equal to strings are not yet implemented on macOS (package: ${rule.packageKey})`)
             } else if (port.port && port.proto) {
-              runCommand(`Adding new service for ${rule.packageKey}`, `${socketFilterFw} --add --service "${packageName ? packageName : rule.packageKey}" --getglobalstate`)
               if (packageDesc) {
-                runCommand(`Adding description to service defined for ${rule.packageKey}`, `${socketFilterFw} --service "${packageName ? packageName : rule.packageKey}" --setglobaldescription "${packageDesc}"`)
+                runCommand(`Adding new service with description populated for ${rule.packageKey}`, `${socketFilterFw} --add --service "${packageName ? packageName : rule.packageKey}" --setglobaldescription "${packageDesc} --getglobalstate"`)
+              } else {
+                runCommand(`Adding new service for ${rule.packageKey}`, `${socketFilterFw} --add --service "${packageName ? packageName : rule.packageKey}" --getglobalstate`)
               }
-              runCommand(`Adding firewall rule for ${rule.packageKey}`, `${socketFilterFw} --service "${packageName ? packageName : rule.packageKey}" --add --port ${port.port} --protocol ${port.proto}`)
+              runCommand(`Adding firewall rule for ${rule.packageKey}`, `${socketFilterFw} --add --service "${packageName ? packageName : rule.packageKey}" --port ${port.port} --protocol ${port.proto}`)
             } else {
               log('error', logStage, `Unable to parse the firewall definition for ${rule.packageKey}`)
             }
@@ -1842,12 +1843,18 @@ async function linkBin(installOrdersBinLink) {
           }
         } else if (binLink.preference === 'cask') {
           try {
-            const caskWhen = softwarePackages[binLink.package]['_when:cask']
-            const caskDir = caskWhen.replace('! test -d ', '')
-            if (fileExists(caskDir)) {
+            const caskWhen = softwarePackages[binLink.package]['_when:cask'].replace(/blue/g, "red")
+            const appName = caskWhen.replace(/ && ! test -d .*/, '').replace(/! test -d "\/Applications\//, '').replace(/! test -d \/Applications\//, '').replace('"', '')
+            log('info', 'Bin', `Checking for existence of ${appName} application in /Applications and ~/Applications`)
+            if (fileExists(`/Applications/${appName}`)) {
               runCommand(
                 `Adding shortcut bin link for ${binLink.package}`,
-                `bash -c 'mkdir -p "${process.env.HOME}/.local/bin/cask" && echo "open ${caskDir} \\\$*" > "${process.env.HOME}/.local/bin/cask/${binLink.bin}" && chmod +x "${process.env.HOME}/.local/bin/cask/${binLink.bin}"'`
+                `bash -c 'mkdir -p "${process.env.HOME}/.local/bin/cask" && echo "open \"${caskDir}\" \\\$*" > "${process.env.HOME}/.local/bin/cask/${binLink.bin}" && chmod +x "${process.env.HOME}/.local/bin/cask/${binLink.bin}"'`
+              )
+            } else if(fileExists(`${process.env.HOME}/Applications/${appName}`)) {
+              runCommand(
+                `Adding shortcut bin link for ${binLink.package}`,
+                `bash -c 'mkdir -p "${process.env.HOME}/.local/bin/cask" && echo "open \"${process.env.HOME}/Applications/${appName}\" \\\$*" > "${process.env.HOME}/.local/bin/cask/${binLink.bin}" && chmod +x "${process.env.HOME}/.local/bin/cask/${binLink.bin}"'`
               )
             } else {
               log('warn', 'Bin', `Expected Homebrew cask directory not found - ${pkg}`)
