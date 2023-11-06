@@ -215,7 +215,6 @@ print_banner() {
   else
     if command -v neofetch > /dev/null; then
       neofetch
-      exit 0
     fi
   fi
 

@@ -12,8 +12,6 @@
 #     - gs://system.s3.{{ .host.domain }}
 #     - gs://user.s3.{{ .host.domain }}
 
-exit 0
-
 if command -v gcloud > /dev/null; then
   if [ -f "${$XDG_CONFIG_HOME:-$HOME/.config}/gcloud/s3-client-secret.json" ]; then
     logg info 'Authenticating with gcloud S3 service account'
