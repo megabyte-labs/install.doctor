@@ -6066,7 +6066,7 @@ softwarePackages:
     _github: https://github.com/th-ch/youtube-music
     _home: https://th-ch.github.io/youtube-music/
     _when:script:darwin: '! test -d "/Applications/YouTube Music.app" && ! test -d "$HOME/Applications/YouTube Music.app"'
-    _todo: Might have to add _post:cask: xattr -cr /Applications/YouTube\ Music.app to fix permissions
+    _todo: Might have to add _post cask xattr -cr /Applications/YouTube\ Music.app to fix permissions
     appimage: th-ch/youtube-music
     apt: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/youtube-music_1.19.0_amd64.deb
     cask: https://raw.githubusercontent.com/th-ch/youtube-music/master/youtube-music.rb
