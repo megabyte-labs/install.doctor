@@ -1,0 +1,3 @@
+{{- if and (eq .host.distro.family "darwin") (stat "/Applications/IntelliJ IDEA CE.app/Contents/MacOS/idea") -}}
+/Applications/IntelliJ IDEA CE.app/Contents/MacOS/idea
+{{- end -}}
