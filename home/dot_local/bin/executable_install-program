@@ -1406,8 +1406,15 @@ async function installPackageList(packageManager, packages) {
           runCommand(`Installing ${pkg} via ${packageManager}`, `pipx install ${pkg}`)
           log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
-          log('error', 'Install', `There was an error installing ${pkg} with pipx`)
+          log('warn', 'Install', `There was an error installing ${pkg} with pipx, re-attempting using pip3`)
           console.error(e)
+          try {
+            runCommand(`Installing ${pkg} via pip3`, `pip3 install ${pkg}`)
+            log('success', 'Install', `${pkg} successfully installed via pip3`)
+          } catch (e) {
+            log('error', 'Install', `There was an error installing ${pkg} with both pipx and pip3`)
+            console.error(e)
+          }
         }
       }
     } else if (packageManager === 'pkg-darwin') {

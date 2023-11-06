@@ -334,6 +334,9 @@ export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/pass"
 
 ### PIPX
 export PIPX_BIN_DIR="$HOME/.local/bin/pipx"
+if command -v python3 > /dev/null; then
+  export PIPX_DEFAULT_PYTHON="$(which python3)"
+fi
 
 ### Poetry
 export POETRY_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/poetry"

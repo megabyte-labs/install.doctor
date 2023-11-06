@@ -3413,7 +3413,8 @@ softwarePackages:
     _github: https://github.com/chrissimpkins/Crunch
     _home: https://github.com/chrissimpkins/Crunch
     _name: Crunch
-    script: cd /tmp && rm -rf Crunch && git clone https://github.com/chrissimpkins/Crunch.git && make build-dependencies && make install-executable
+    cask: crunch
+    script: cd /tmp && rm -rf Crunch && git clone https://github.com/chrissimpkins/Crunch.git && make build-dependencies && make install-executable && cd /tmp && rm -rf Crunch && rm -rf ~/zopfli && rm -rf ~/pngquant && echo "TODO WARNING - The ~/zopfli and ~/pngquant directories were deleted and may be required (but were removed due to HOME directory pollution)"
   eul:
     _bin: null
     _desc: Menu bar application that shows system stats like CPU, RAM, and disk usage on macOS
@@ -3505,11 +3506,11 @@ softwarePackages:
     _bin: fm
     _desc: Terminal file manager
     _docs: null
-    _github: https://github.com/knipferrc/fm
+    _github: https://github.com/mistakenelf/fm
     _home: null
     _name: fm
-    github: github.com/knipferrc/fm
-    go: github.com/knipferrc/fm@latest
+    github: github.com/mistakenelf/fm
+    go: github.com/mistakenelf/fm@latest
   fonts:
     _bin: null
     _desc: null
@@ -4042,6 +4043,7 @@ softwarePackages:
     _name: git-o-matic
     ansible: professormanhattan.gitomatic
     github: github.com/muesli/gitomatic
+    go: github.com/muesli/gitomatic@latest
     pacman: gitomatic
     scoop: gitomatic
   mudlet:
@@ -6062,11 +6064,13 @@ softwarePackages:
     _github: https://github.com/th-ch/youtube-music
     _home: https://th-ch.github.io/youtube-music/
     _when:script:darwin: '! test -d "/Applications/YouTube Music.app" && ! test -d "$HOME/Applications/YouTube Music.app"'
+    _todo: Might have to add _post:cask: xattr -cr /Applications/YouTube\ Music.app to fix permissions
     appimage: th-ch/youtube-music
     apt: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/youtube-music_1.19.0_amd64.deb
+    cask: https://raw.githubusercontent.com/th-ch/youtube-music/master/youtube-music.rb
     exe: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/YouTube-Music-Setup-1.19.0.exe
     scoop: extras/youtube-music
-    script:darwin: DL_URL="https://github.com/th-ch/youtube-music/releases/download/v1.20.0/YouTube-Music-1.20.0.dmg" && if [ $(arch) = 'arm64' ]; then DL_URL="https://github.com/th-ch/youtube-music/releases/download/v1.20.0/YouTube-Music-1.20.0-arm64.dmg"; fi && curl -sSL "$DL_URL" > /tmp/YouTube-Music.dmg && sudo hdiutil attach /tmp/YouTube-Music.dmg && sudo cp -R "/Volumes/YouTube Music 1.20.0/YouTube Music.app" /Applications && sudo hdiutil detach "/Volumes/YouTube Music 1.20.0" && rm -f /tmp/YouTube-Music.dmg
+    script:darwin: DL_URL="https://github.com/th-ch/youtube-music/releases/download/v1.20.0/YouTube-Music-1.20.0.dmg" && if [ $(arch) = 'arm64' ]; then DL_URL="https://github.com/th-ch/youtube-music/releases/download/v1.20.0/YouTube-Music-1.20.0-arm64.dmg"; fi && curl -sSL "$DL_URL" > /tmp/YouTube-Music.dmg && sudo hdiutil attach /tmp/YouTube-Music.dmg && if [ -d "/Volumes/YouTube Music 1.20.0" ]; then sudo cp -R "/Volumes/YouTube Music 1.20.0/YouTube Music.app" /Applications && sudo hdiutil detach "/Volumes/YouTube Music 1.20.0"; elif [ -d "/Volumes/YouTube Music 1.20.0-arm64" ]; then sudo cp -R "/Volumes/YouTube Music 1.20.0-arm/YouTube Music.app" /Applications && sudo hdiutil detach "/Volumes/YouTube Music 1.20.0-arm"; fi && rm -f /tmp/YouTube-Music.dmg
     winget: th-ch.YouTubeMusic
     yay: youtube-music-bin
   imagine:
@@ -6996,6 +7000,7 @@ softwarePackages:
     _name: Parallels
     _when: '! test -d "/Applications/Parallels Desktop.app" && ! test -d "$HOME/Applications/Parallels Desktop.app"'
     ansible:darwin: professormanhattan.parallels
+    cask: parallels
   gnome-passwords-keys:
     _bin: seahorse
     flatpak: org.gnome.seahorse.Application
@@ -7751,7 +7756,7 @@ softwarePackages:
     _name: Rclone
     ansible: professormanhattan.rclone
     apt: rclone
-    brew:linux: rclone
+    brew: rclone
     choco:
       - rclone
       - winfsp
@@ -7760,7 +7765,7 @@ softwarePackages:
     pacman: rclone
     port: rclone
     scoop: rclone
-    script:darwin: sudo -v ; curl https://rclone.org/install.sh | sudo bash
+    script:darwin: sudo -v; curl https://rclone.org/install.sh | sudo bash
   redis-desktop-manager:
     _bin: redis-desktop-manager
     _desc: '[Redis Desktop Manager](https://rdm.dev/) is an open source cross-platform Desktop Manager for Redis based on Qt 5.'
@@ -8447,8 +8452,8 @@ softwarePackages:
     _name: shdoc
     ansible:darwin: professormanhattan.shdoc
     ansible:linux: professormanhattan.shdoc
-    script:darwin: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install
-    script:linux: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install
+    script:darwin: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install && cd /tmp && rm -rf shdoc
+    script:linux: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install && cd /tmp && rm -rf shdoc
     yay: shdoc-git
   shellcheck:
     _bin: shellcheck
@@ -10209,7 +10214,7 @@ softwarePackages:
     _when:linux: '! test -f /var/ossec/bin/agent-auth'
     _when:windows: '! test -f "C:\Program Files (x86)\ossec-agent\agent-auth.exe"'
     choco: wazuh-agent
-    script:darwin: cd /tmp && curl -sSL https://packages.wazuh.com/4.x/macos/wazuh-agent-4.4.4-1.pkg > wazuh-agent.pkg && sudo launchctl setenv WAZUH_MANAGER "$WAZUH_MANAGER" && sudo installer -pkg wazuh-agent.pkg -target / && sudo chmod 755 /Library/Ossec && sudo chmod 755 /Library/Ossec/bin && rm /tmp/wazuh-agent.pkg && sudo wazuh-control start
+    script:darwin: if ! csrutil status | grep enabled > /dev/null; then cd /tmp && curl -sSL https://packages.wazuh.com/4.x/macos/wazuh-agent-4.4.4-1.pkg > wazuh-agent.pkg && sudo launchctl setenv WAZUH_MANAGER "$WAZUH_MANAGER" && sudo installer -pkg wazuh-agent.pkg -target / && sudo chmod 755 /Library/Ossec && sudo chmod 755 /Library/Ossec/bin && rm /tmp/wazuh-agent.pkg && sudo wazuh-control start; else echo "WARNING - Skipping Wazuh Agent installation because System Integrity Protection is enabled. Disabling it requires booting into recovery and running csrutil disable, installing Wazuh Agent normally, and then re-enabling it again in recovery mode."; fi
     script:linux: if command -v apt-get > /dev/null; then curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | sudo gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && sudo chmod 644 /usr/share/keyrings/wazuh.gpg && echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | sudo tee -a /etc/apt/sources.list.d/wazuh.list && sudo apt-get update && sudo apt-get install -y wazuh-agent; elif command -v dnf > /dev/null; then echo "[wazuh]" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "gpgcheck=1" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "gpgkey=https://packages.wazuh.com/key/GPG-KEY-WAZUH" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "enabled=1" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "name=EL-\$releasever - Wazuh" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "baseurl=https://packages.wazuh.com/4.x/yum/" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "protect=1" | sudo tee -a /etc/yum.repos.d/wazuh.repo && sudo rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH && sudo dnf install -y wazuh-agent; elif command -v zypper > /dev/null; then echo "[wazuh]" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "gpgcheck=1" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "gpgkey=https://packages.wazuh.com/key/GPG-KEY-WAZUH" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "enabled=1" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "name=EL-$releasever - Wazuh" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "baseurl=https://packages.wazuh.com/4.x/yum/" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "protect=1" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && sudo rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH && sudo zypper install -y wazuh-agent; elif command -v apk > /dev/null; then sudo wget -O /etc/apk/keys/alpine-devel@wazuh.com-633d7457.rsa.pub https://packages.wazuh.com/key/alpine-devel%40wazuh.com-633d7457.rsa.pub && echo "https://packages.wazuh.com/4.x/alpine/v3.12/main" | sudo tee -a /etc/apk/repositories && sudo apk update && sudo apk add wazuh-agent; fi
   websocat:
     _bin: websocat
@@ -10299,6 +10304,24 @@ softwarePackages:
     ansible:windows: professormanhattan.windowspowertoys
     choco: powertoys
     scoop: powertoys
+  pick:
+    _bin: pick
+    _github: https://github.com/mptre/pick
+    _name: Pick
+    apt: pick
+    brew: pick
+    dnf: pick
+    emerge: pick
+    pkg-freebsd: pick
+    pkg_add: pick
+    port: pick
+    yay: pick
+    xbps-install: pick
+  nve:
+    _bin: nve
+    _github: https://github.com/ehmicky/nve
+    _name: nve
+    npm: nve
   winrm-cli:
     _bin: winrm-cli
     _desc: Command-line tool to remotely execute commands on Windows machines through WinRM
