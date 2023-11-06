@@ -166,6 +166,7 @@ export PATH="$PATH:$DETA_INSTALL/bin"
 ### Docker
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 export MACHINE_STORAGE_PATH="$XDG_DATA_HOME/docker-machine"
+export PATH="$DOCKER_CONFIG/cli-plugins:$PATH"
 
 ### Dotnet
 export DOTNET_CLI_HOME="$XDG_CONFIG_HOME/dotnet"

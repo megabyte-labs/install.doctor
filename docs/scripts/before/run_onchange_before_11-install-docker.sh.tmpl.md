@@ -54,7 +54,8 @@ if [ -d /Applications ] && [ -d /System ]; then
         logg info 'Docker appears to be installed already'
     fi
     logg info 'Opening the Docker for Desktop app so that the Docker engine starts running'
-    open --background -a Docker
+    # Note: At one point `--install-privileged-components` was also a flag at the end below but it no longer appears to work
+    open --background -a Docker --args --accept-license --unattended
 elif command -v apt-get > /dev/null; then
     . /etc/os-release
     if [ "$ID" == 'ubuntu' ]; then

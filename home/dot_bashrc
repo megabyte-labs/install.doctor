@@ -38,7 +38,7 @@ fi
 
 ### Ble.sh
 # Loaded with bash-it
-# [[ $- == *i* ]] && source "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/ble.sh" --noattach --rcfile "${XDG_DATA_CONFIG:-$HOME/.config}/blesh/bleshrc"
+# [[ $- == *i* ]] && source "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/ble.sh" --noattach --rcfile "${XDG_CONFIG_HOME:-$HOME/.config}/blesh/bleshrc"
 
 ### Escape if shell not interactive
 case $- in
@@ -50,7 +50,7 @@ esac
 export HISTFILE="$XDG_STATE_HOME/bash/history"
 
 ### Bash Initialization Hooks
-if [ "$BASH_SUPPORT" = 'true' ]; then
+if [ "$BASH_SUPPORT" = 'true' ] && [ -n "$BASH" ]; then
   ### Sensible Bash
   # Source: https://github.com/mrzool/bash-sensible
   [ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/shell/sensible.bash" ] || source "${XDG_DATA_HOME:-$HOME/.local/share}/shell/sensible.bash"

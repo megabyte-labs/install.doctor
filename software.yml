@@ -516,7 +516,9 @@ softwarePackages:
     _home: https://developer.android.com/studio
     _name: Android Studio
     _when:cask: '! test -d "/Applications/Android Studio.app" && ! test -d "$HOME/Applications/Android Studio.app"'
-    cask: android-studio
+    cask:
+      - android-studio
+      - android-commandlinetools
     choco: androidstudio
     flatpak: com.google.AndroidStudio
     snap: android-studio
@@ -1894,7 +1896,7 @@ softwarePackages:
     _github: https://github.com/Cisco-Talos/clamav
     _home: https://www.clamav.net/
     _name: ClamAV
-    _post: if [ -f "${XDG_DATA_CONFIG:-$HOME/.config}/clamav/freshclam.conf" ]; then sudo cp -f "${XDG_DATA_CONFIG:-$HOME/.config}/clamav/freshclam.conf" /usr/local/etc/clamav/freshclam.conf; fi && freshclam
+    _post: if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/clamav/freshclam.conf" ]; then sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/clamav/freshclam.conf" /usr/local/etc/clamav/freshclam.conf; fi && freshclam
     _service:apt: clamav-freshclam
     _service:dnf: clamd-freshclam
     _service:pacman: clamav-freshclam
@@ -3848,7 +3850,7 @@ softwarePackages:
     _bin: git-branchless
     _github: https://github.com/arxanas/git-branchless
     _name: Git Branchless
-    _post: |
+    _todo: |
       echo "TODO: Consider implementing:"
       echo "echo >> ~/.bashrc "alias git='git-branchless wrap --'""
     apk: git-branchless
@@ -6180,7 +6182,8 @@ softwarePackages:
     _github: https://github.com/xwmx/nb
     _home: https://xwmx.github.io/nb
     _name: nb
-    _post: nb completions install
+    # Permission denied: /usr/share/zsh/site-functions after running sudo nb completions install and nb completions install on macOS arm64
+    # _post: nb completions install
     ansible: professormanhattan.nb
     basher: xwmx/nb
     bpkg: xwmx/nb
@@ -8011,7 +8014,8 @@ softwarePackages:
     _github: null
     _home: https://rkhunter.sourceforge.net/
     _name: rkhunter
-    _post: rkhunter --propupd && rkhunter --update
+    _notes: The _post script removes an entry for VMware with a space in it that causes rkhunter to hiccup
+    _post: export PATH="$(echo "$PATH" | sed 's/VMware Fusion.app//')" && sudo rkhunter --update && sudo rkhunter --propupd
     _service:pacman: cronie
     apt: rkhunter
     brew: rkhunter
@@ -9945,7 +9949,6 @@ softwarePackages:
     _github: https://github.com/castwide/solargraph
     _home: https://solargraph.org/
     _name: Solargraph
-    _post: solargraph download-core
     brew: solargraph
     gem: solargraph
   virtualbox:

@@ -825,7 +825,7 @@ async function beforeInstall(packageManager) {
             logStage,
             'Attempting to open `/Applications/Docker.app` (Docker Desktop for macOS). This should take about 30 seconds.'
           )
-          const promises = [$`test -d /Applications/Docker.app`, $`open /Applications/Docker.app`]
+          const promises = [$`test -d /Applications/Docker.app`, $`open --background -a Docker --args --accept-license --unattended`]
           await Promise.all(promises)
           const gum = which.sync('gum', { nothrow: true })
           if (gum) {
@@ -1798,14 +1798,19 @@ async function installPlugins(pluginData) {
           if (pluginWhen) {
             runCommand(`Checking when condition for ${pluginData.package} plugin - ${plugin}`, pluginWhen)
           }
-          runCommand(`Installing ${pluginData.package} plugin - ${plugin}`, pluginCmd)
-          log('success', 'Plugin', `Successfully installed ${pluginData.package} plugin - ${plugin}`)
+          try {
+            runCommand(`Installing ${pluginData.package} plugin - ${plugin}`, pluginCmd)
+            log('success', 'Plugin', `Successfully installed ${pluginData.package} plugin - ${plugin}`)
+          } catch (e) {
+            log('info', 'Plugin', `Failed to install ${pluginData.package} plugin - ${plugin}`)
+            console.error(e)
+          }
         } catch (e) {
-          log('info', 'Plugin', `Failed to install ${pluginData.package} plugin - ${plugin}`)
-          console.error(e)
+          log('info', 'Plugin', `Skipping ${pluginData.package} plugin installs due to failed when condition - ${pluginWhen}`)
+          break
         }
       } catch (e) {
-        log('error', 'Plugin', `Failed to install ${pluginData.package} plugin - ${plugin}`)
+        log('error', 'Plugin', `Failed to install ${pluginData.package} plugin due to an unknown reason - ${plugin}`)
         console.error(e)
       }
 
@@ -1908,7 +1913,7 @@ async function installSoftware(pkgsToInstall) {
   }
   installOrdersPre.length && log('info', 'Pre-Install', `Running package-specific pre-installation steps`)
   for (const script of installOrdersPre) {
-    await $`${script.replace(/\n/g, "\\\n")}`
+    await $`source "${process.env.HOME}/.bashrc" && ${script.replace(/\n/g, "\\\n")}`
   }
   installOrdersGroups.length && log('info', 'Users / Groups', `Adding groups / users`)
   for (const group of installOrdersGroups) {
@@ -1936,7 +1941,7 @@ async function installSoftware(pkgsToInstall) {
   for (const script of installOrdersPost) {
     try {
       log('info', 'Post Hook', script)
-      await $`${script.replace(/\n/g, "\\\n")}`
+      await $`source "${process.env.HOME}/.bashrc" && ${script.replace(/\n/g, "\\\n")}`
     } catch(e) {
       log('info', 'Post-Install Hook', 'Encountered error while running post-install hook')
     }

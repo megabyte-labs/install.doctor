@@ -2,6 +2,7 @@
 {{- $cloudflareUsername := (default "brian@megabyte.space" (env "CLOUDFLARE_USERNAME")) -}}
 {{- $cloudflareTeamsOrg := (default "manhattan" (env "CLOUDFLARE_TEAMS_ORG")) -}}
 {{- $desktopSession := true -}}
+{{- $dockerHubUser := (default "professormanhattan" (env "DOCKERHUB_USER")) -}}
 {{- $domain := (default "lab.megabyte.space" (env "PUBLIC_SERVICES_DOMAIN")) -}}
 {{- $email := (default "brian@megabyte.space" (env "PRIMARY_EMAIL")) -}}
 {{- $gcloudCoreProject := (default "megabyte-labs" (env "CLOUDSDK_CORE_PROJECT"))}}
@@ -194,6 +195,8 @@ data:
     defaultBrowser: chrome
     defaultBrowserDarwin: chrome
     digitalOceanClusterId: b7fc4e37-ffe7-4ea1-887a-0e19ee077f32
+    docker:
+      username: "{{ $dockerHubUser }}"
     # `domain` is kept here for backwards compatibility, but the .host.domain is the preferred selector
     domain: "{{ $domain }}"
     email: "{{ $email }}"

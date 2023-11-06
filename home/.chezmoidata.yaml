@@ -1586,7 +1586,10 @@ softwarePlugins:
     cmd: bash -c 'if ! sdkmanager --list_installed | grep "{PLUGIN}" > /dev/null; then echo y | sdkmanager --install "{PLUGIN}"; fi'
     plugins:
       - add-ons;addon-google_apis-google-24
-      - build-tools;33.0.0
+      - build-tools;31.0.0
+      - build-tools;32.0.0
+      - build-tools;33.0.2
+      - build-tools;34.0.0
       - cmake;3.22.1
       - cmdline-tools;latest
       - emulator
@@ -1599,24 +1602,61 @@ softwarePlugins:
       - extras;google;market_licensing
       - extras;google;simulators
       - extras;google;webdriver
-      - extras;intel;Hardware_Accelerated_Execution_Manager
       - extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2
       - extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2
       - ndk-bundle
-      - patcher;v4
       - platform-tools
       - platforms;android-31
       - platforms;android-32
       - platforms;android-33
+      - platforms;android-34
       - skiaparser;3
+      - sources;android-31
+      - sources;android-32
       - sources;android-33
+      - sources;android-34
       - system-images;android-31;default;x86_64
       - system-images;android-32;android-desktop;x86_64
+      - system-images;android-33-ext5;google_apis_playstore;arm64-v8a                                
+      - system-images;android-33-ext5;google_apis_playstore;x86_64
+      - system-images;android-33;android-automotive;arm64-v8a
+      - system-images;android-33;android-automotive;x86_64
+      - system-images;android-33;android-desktop;arm64-v8a
+      - system-images;android-33;android-desktop;x86_64
+      - system-images;android-33;android-tv;arm64-v8a
       - system-images;android-33;android-tv;x86
+      - system-images;android-33;android-wear;arm64-v8a
+      - system-images;android-33;android-wear;x86_64
+      - system-images;android-33;aosp_atd;arm64-v8a
+      - system-images;android-33;aosp_atd;x86_64
+      - system-images;android-33;default;arm64-v8a
+      - system-images;android-33;default;x86_64
+      - system-images;android-33;google-tv;arm64-v8a
       - system-images;android-33;google-tv;x86
+      - system-images;android-33;google_apis;arm64-v8a
       - system-images;android-33;google_apis;x86_64
+      - system-images;android-33;google_apis_playstore;arm64-v8a
       - system-images;android-33;google_apis_playstore;x86_64
-      # - com.github.copilot # Unable to find a way to install automatically using CLI
+      - system-images;android-33;google_atd;arm64-v8a
+      - system-images;android-33;google_atd;x86_64
+      - system-images;android-34-ext8;google_apis_playstore;arm64-v8a
+      - system-images;android-34-ext8;google_apis_playstore;x86_64
+      - system-images;android-34;android-tv;arm64-v8a
+      - system-images;android-34;android-tv;x86
+      - system-images;android-34;default;arm64-v8a
+      - system-images;android-34;default;x86_64
+      - system-images;android-34;google-tv;arm64-v8a
+      - system-images;android-34;google-tv;x86
+      - system-images;android-34;google_apis;arm64-v8a
+      - system-images;android-34;google_apis;x86_64
+      - system-images;android-34;google_apis_playstore;arm64-v8a
+      - system-images;android-34;google_apis_playstore;x86_64
+      - system-images;android-TiramisuPrivacySandbox;google_apis;arm64-v8a
+      - system-images;android-TiramisuPrivacySandbox;google_apis;x86_64
+      - system-images;android-TiramisuPrivacySandbox;google_apis_playstore;arm64-v8a
+      - system-images;android-TiramisuPrivacySandbox;google_apis_playstore;x86_64
+      - system-images;android-UpsideDownCakePrivacySandbox;google_apis_playstore;arm64-v8a
+      - system-images;android-UpsideDownCakePrivacySandbox;google_apis_playstore;x86_64
   composer:
     cmd: null
     plugins:
@@ -1652,7 +1692,7 @@ softwarePlugins:
       - dotnet-format
       - git-credential-manager
   gcloud:
-    cmd: bash -c 'if ! gcloud components list | grep "Installed.*{PLUGIN}" > /dev/null; then echo "Installing.." && gcloud components install --quiet "{PLUGIN}"; fi'
+    cmd: bash -c 'if ! gcloud components list | grep "^..Installed.*{PLUGIN}" > /dev/null; then echo "Installing.." && gcloud components install --quiet "{PLUGIN}"; fi'
     plugins:
       - app-engine-go
       - cloud-datastore-emulator
@@ -1668,7 +1708,7 @@ softwarePlugins:
       - terraform-tools
     update: gcloud components update
   gh:
-    cmd: bash -c 'if [ -n "$GITHUB_TOKEN" ] && ! gh extension list | grep "{PLUGIN}" > /dev/null; then gh extension install "{PLUGIN}"; fi'
+    cmd: bash -c 'if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh" ]; then source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh"; fi && if [ -n "$GITHUB_TOKEN" ] && ! gh extension list | grep "{PLUGIN}" > /dev/null; then gh extension install "{PLUGIN}"; fi'
     plugins:
       - abdfnx/gh-tran
       - dlvhdr/gh-dash
@@ -1686,7 +1726,7 @@ softwarePlugins:
       - if ! helm plugin list | grep "Query at a given interval a Prometheus, ElasticSearch or Sentry instance." > /dev/null; then helm plugin install https://github.com/ContainerSolutions/helm-monitor; fi
       - if ! helm plugin list | grep "This plugin provides secrets values encryption for Helm charts secure storing" > /dev/null; then helm plugin install https://github.com/jkroepke/helm-secrets; fi
   krew:
-    cmd: bash -c 'if ! kubectl krew list | grep "{PLUGIN}" > /dev/null; then kubectl krew install "{PLUGIN}"; fi'
+    cmd: bash -c 'if ! kubectl krew list | grep "^{PLUGIN}$" > /dev/null; then kubectl krew install "{PLUGIN}"; fi'
     plugins:
       - access-matrix
       - cert-manager
@@ -1694,9 +1734,13 @@ softwarePlugins:
       - ctx
       - datree
       - deprecations
+      # flyte fails to install on macOS arm64
+      # W1105 install.go:164] failed to install plugin "flyte": plugin "flyte" does not offer installation for this platform
       - flyte
       - get-all
       - graph
+      # ingress-nginx fails to install on macOS arm64
+      # W1105 install.go:164] failed to install plugin "ingress-nginx": plugin "ingress-nginx" does not offer installation for this platform
       - ingress-nginx
       - karmada
       - konfig
@@ -1706,7 +1750,7 @@ softwarePlugins:
       - modify-secret
       - neat
       - node-shell
-      - nx
+      - ns
       - oidc-login
       - resource-capacity
       - score
@@ -1715,7 +1759,11 @@ softwarePlugins:
       - tree
       - tunnel
       - view-allocations
+      # virt fails to install on macOS arm64
+      # W1105 install.go:164] failed to install plugin "virt": plugin "virt" does not offer installation for this platform
       - virt
+      # warp fails to install on macOS arm64
+      # W1105 install.go:164] failed to install plugin "warp": plugin "warp" does not offer installation for this platform
       - warp
       - who-can
   raycast:
