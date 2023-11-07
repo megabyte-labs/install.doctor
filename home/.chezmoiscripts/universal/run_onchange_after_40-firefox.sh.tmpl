@@ -49,6 +49,7 @@
 
 # Firefox plugins: {{ list (.firefoxAddOns | toString | replace "[" "" | replace "]" "") | uniq | join " " }}
 
+logg info 'Processing post-logic for Firefox-based browsers'
 function firefoxSetup() {
     ### Installs the Firefox Profile Connector on Linux systems (Snap / Flatpak installs are not included in this function, but instead inline below)
     function installFirefoxProfileConnector() {
@@ -69,7 +70,8 @@ function firefoxSetup() {
     # TODO - figure out how to do this for other installations like Flatpak and macOS and Librewolf
     for FIREFOX_DIR in '/usr/lib/firefox' '/usr/lib/firefox-esr' '/etc/firefox' '/etc/firefox-esr' '/Applications/Firefox.app/Contents/Resources' '/Applications/LibreWolf.app/Contents/Resources/'; do
         if [ -d "$FIREFOX_DIR" ] && [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/firefox" ] && command -v rsync > /dev/null; then
-            sudo rsync -artvu "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/" "$FIREFOX_DIR"
+            logg info "Syncing enterprise profiles from ${XDG_DATA_HOME:-$HOME/.local/share}/firefox to $FIREFOX_DIR"
+            sudo rsync -artvu "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/" "$FIREFOX_DIR" > /dev/null
         fi
     done
 
@@ -133,6 +135,7 @@ function firefoxSetup() {
         elif [ "$SETTINGS_DIR" == "$HOME/Library/Application Support/LibreWolf/Profiles" ]; then
             FIREFOX_EXE="/Applications/LibreWolf.app/Contents/MacOS/librewolf"
             if [ ! -f "$FIREFOX_EXE" ] || [ ! -d /Applications ]; then
+                logg info "$FIREFOX_EXE is not a file"
                 continue
             fi
         elif [ "$SETTINGS_DIR" == "$HOME/snap/firefox/common/.mozilla/firefox" ]; then
@@ -182,21 +185,29 @@ function firefoxSetup() {
             fi
         fi
         ### Initiatize Firefox default profiles
+        logg info "Processing executable located at $FIREFOX_EXE"
         if command -v "$FIREFOX_EXE" > /dev/null; then
             ### Create default profile by launching Firefox headlessly
             logg info "Firefox executable set to $FIREFOX_EXE"
             if [ ! -d "$SETTINGS_DIR" ]; then
-                logg info 'Running Firefox headlessly to generate default profiles'
-                timeout 8 "$FIREFOX_EXE" --headless
+                logg info 'Running Firefox (or its derivative) headlessly to generate default profiles'
+                timeout 14 "$FIREFOX_EXE" --headless
                 logg info 'Finished running Firefox headlessly'
             elif [ -d /Applications ] && [ -d /System ] && [ ! -f "$SETTINGS_DIR/../installs.ini" ]; then
-                logg info 'Running Firefox headlessly to generate default profiles because install.ini is not at the macOS default location.'
-                timeout 8 "$FIREFOX_EXE" --headless
+                logg info 'Running Firefox (or its derivative) headlessly to generate default profiles because install.ini is not at the macOS default location.'
+                timeout 14 "$FIREFOX_EXE" --headless
                 logg info 'Finished running Firefox headlessly (while fixing the missing macOS installs.ini issue)'
+            fi
+
+            ### Ensure settings directory exists (since the application was brought up temporarily headlessly)
+            if [ ! -d "$SETTINGS_DIR" ]; then
+                logg warn "The settings directory located at $SETTINGS_DIR failed to be populated by running the browser headlessly"
+                continue
             fi
 
             ### Add the populated profiles.ini
             logg info "Copying "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" to profile directory"
+            logg info "The settings directory is $SETTINGS_DIR"
             if [ -d /Applications ] && [ -d /System ]; then
                 # macOS
                 logg info "Copying ~/.local/share/firefox/profiles.ini to $SETTINGS_DIR/../profiles.ini"
