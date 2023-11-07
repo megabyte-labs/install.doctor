@@ -21,6 +21,11 @@ ensureNetdataOwnership() {
     elif [ -d /var/lib/netdata ]; then
         logg info 'Ensuring permissions are correct on /var/lib/netdata'
         sudo chown -Rf netdata:netdata /var/lib/netdata || sudo chown -Rf netdata:$(id -g -n) /var/lib/netdata
+    elif [ -d "$HOMEBREW_PREFIX/var/lib/netdata" ]; then
+        logg info "Ensuring permissions are correct on $HOMEBREW_PREFIX/var/lib/netdata"
+        sudo chown -Rf netdata:netdata "$HOMEBREW_PREFIX/var/lib/netdata" || sudo chown -Rf netdata:$(id -g -n) "$HOMEBREW_PREFIX/var/lib/netdata"
+    else
+        logg warn 'No /var/lib/netdata folder found'
     fi
 }
 
@@ -61,6 +66,8 @@ if command -v netdata-claim.sh > /dev/null; then
             NETDATA_ETC='/usr/local/etc/netdata/'
         elif [ -d /etc/netdata ]; then
             NETDATA_ETC='/etc/netdata'
+        elif [ -d "$HOMEBREW_PREFIX/etc/netdata" ]; then
+            NETDATA_ETC="$HOMEBREW_PREFIX/etc/netdata"
         else
             logg error 'No etc location found for netdata' && exit 1
         fi
