@@ -10486,9 +10486,7 @@ softwarePackages:
     _pre:cask: if command -v idl2wrs > /dev/null; then brew uninstall wireshark; fi
     _when:cask: '! test -d /Applications/Wireshark.app && ! test -d $HOME/Applications/Wireshark.app'
     apt: wireshark
-    cask:
-      - wireshark
-      - wireshark-chmodbpf
+    cask: wireshark
     choco: wireshark
     dnf: wireshark
     flatpak: org.wireshark.Wireshark
