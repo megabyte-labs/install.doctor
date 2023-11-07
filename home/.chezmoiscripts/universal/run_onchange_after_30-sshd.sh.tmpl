@@ -38,13 +38,13 @@ if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
             logg info 'Running sudo launchctl stop com.openssh.sshd'
             sudo launchctl stop com.openssh.sshd
             logg info 'Running sudo launchctl start com.openssh.sshd'
-            sudo launchctl start com.openssh.sshd
+            sudo launchctl start com.openssh.sshd && logg success 'Successfully ran launchctl start com.openssh.sshd'
         else
             # Linux
             logg info 'Enabling the sshd service'
             sudo systemctl enable sshd
             logg info 'Restarting the sshd service'
-            sudo systemctl restart sshd
+            sudo systemctl restart sshd && logg success 'Successfully ran sudo systemctl restart sshd'
         fi
     else
         logg warn 'The /etc/ssh folder does not exist'

@@ -17,12 +17,15 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
+### Notify of script start
+logg info 'Configuring fail2ban'
+
 ### Restart fail2ban
 function restartFail2Ban() {
     if [ -d /Applications ] && [ -d /System ]; then
         # macOS
         logg info 'Enabling the fail2ban Homebrew service'
-        brew services start fail2ban
+        brew services restart fail2ban
     else
         # Linux
         logg info 'Enabling the fail2ban service'
@@ -33,6 +36,7 @@ function restartFail2Ban() {
 }
 
 ### Update the jail.local file if environment is not WSL
+logg info 'Checking if script is being run in WSL environment'
 if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
     if [ -d /etc/fail2ban ]; then
         logg info 'Copying ~/.ssh/fail2ban/jail.local to /etc/fail2ban/jail.local'
@@ -41,6 +45,10 @@ if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
     elif [ -d /usr/local/etc/fail2ban ]; then
         logg info 'Copying ~/.ssh/fail2ban/jail.local to /usr/local/etc/fail2ban/jail.local'
         sudo cp -f "$HOME/.ssh/fail2ban/jail.local" /usr/local/etc/fail2ban/jail.local
+        restartFail2Ban
+    elif [ -d "$HOMEBREW_PREFIX/etc/fail2ban" ]; then
+        logg info "Copying ~/.ssh/fail2ban/jail.local to $HOMEBREW_PREFIX/etc/fail2ban/jail.local"
+        sudo cp -f "$HOME/.ssh/fail2ban/jail.local" "$HOMEBREW_PREFIX/etc/fail2ban/jail.local"
         restartFail2Ban
     else
         logg warn 'Both the /etc/fail2ban (Linux) and the /usr/local/etc/fail2ban (macOS) folder do not exist'

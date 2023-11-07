@@ -1913,7 +1913,11 @@ async function installSoftware(pkgsToInstall) {
   }
   installOrdersPre.length && log('info', 'Pre-Install', `Running package-specific pre-installation steps`)
   for (const script of installOrdersPre) {
-    await $`source "${process.env.HOME}/.bashrc" && ${script.replace(/\n/g, "\\\n")}`
+    console.log(`. "${process.env.HOME}/.bashrc" && ${script.replace(/\n/g, "\\\n")}`)
+    console.log(script.toString())
+    console.log(script)
+    console.log(script.replace(/\n/g, "\\\n").replace(/^$'/, ""))
+    await $`. "${process.env.HOME}/.config/shell/profile.sh" && ${script.replace(/\n/g, "\\\n").replace(/^\$'/, "").replace(/'$/, "")}`
   }
   installOrdersGroups.length && log('info', 'Users / Groups', `Adding groups / users`)
   for (const group of installOrdersGroups) {

@@ -53,7 +53,7 @@ through Tor. This script:
 # @description Define the Privoxy configuration location based on whether system is macOS or Linux
 if [ -d /Applications ] && [ -d /System ]; then
     # macOS
-    PRIVOXY_CONFIG_DIR=/usr/local/etc/privoxy
+    PRIVOXY_CONFIG_DIR="$HOMEBREW_PREFIX/etc/privoxy"
 else
     # Linux
     PRIVOXY_CONFIG_DIR=/etc/privoxy

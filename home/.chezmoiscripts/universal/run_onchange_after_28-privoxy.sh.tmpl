@@ -22,7 +22,13 @@
 # @description Define the Privoxy configuration location based on whether system is macOS or Linux
 if [ -d /Applications ] && [ -d /System ]; then
     # macOS
-    PRIVOXY_CONFIG_DIR=/usr/local/etc/privoxy
+    if [ -d "/usr/local/etc/privoxy" ]; then
+        PRIVOXY_CONFIG_DIR=/usr/local/etc/privoxy
+    elif [ -d "$HOMEBREW_PREFIX/etc/privoxy" ]; then
+        PRIVOXY_CONFIG_DIR="$HOMEBREW_PREFIX/etc/privoxy"
+    else
+        logg warn 'Unable to detect Privoxy configuration directory'
+    fi
 else
     # Linux
     PRIVOXY_CONFIG_DIR=/etc/privoxy
