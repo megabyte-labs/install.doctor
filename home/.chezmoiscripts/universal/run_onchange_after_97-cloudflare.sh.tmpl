@@ -189,19 +189,19 @@ if command -v warp-cli > /dev/null; then
 
     ### Google Cloud SDK
     if command -v gcloud > /dev/null; then
-        logg info "Configuring gcloud to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" and "${XDG_DATA_HOME:-$HOME/.local/share}/curl/cacert.pem""
+        logg info "Configuring gcloud to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" and "$HOME/.local/etc/ssl/gcloud/ca.pem""
         mkdir -p "$HOME/.local/etc/ssl/gcloud"
         cat "$HOME/.local/etc/ssl/curl/cacert.pem" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > "$HOME/.local/etc/ssl/gcloud/ca.pem"
-        gcloud config set core/custom_ca_certs_file "${XDG_DATA_HOME:-$HOME/.local/share}/gcloud/ca.pem"
+        gcloud config set core/custom_ca_certs_file "$HOME/.local/etc/ssl/gcloud/ca.pem"
     fi
 
     ### Google Drive for desktop (macOS)
     if [ -d "/Applications/Google Drive.app" ]; then
         if [ -d "/Applications/Google Drive.app/Contents/Resources" ]; then
             logg info "Combining Google Drive roots.pem with CloudFlare certificate"
-            mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/google-drive"
-            cat "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" "/Applications/Google Drive.app/Contents/Resources/roots.pem" >> "${XDG_DATA_HOME:-$HOME/.local/share}/google-drive/roots.pem"
-            sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootsCertsFile -string "${XDG_DATA_HOME:-$HOME/.local/share}/google-drive/roots.pem"
+            mkdir -p "$HOME/.local/etc/ssl/google-drive"
+            cat "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" "/Applications/Google Drive.app/Contents/Resources/roots.pem" >> "$HOME/.local/etc/ssl/google-drive/roots.pem"
+            sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootsCertsFile -string "$HOME/.local/etc/ssl/google-drive/roots.pem"
         else
             logg warn 'Google Drive.app installed but roots.pem is not available yet'
         fi
