@@ -43,7 +43,11 @@ if command -v install-program > /dev/null; then
     env | grep JAVA
     env | grep SDKMAN
     env | grep ASDF
-    install-program {{ $softwareList }}
+    if command -v unbuffer > /dev/null; then
+      unbuffer install-program {{ $softwareList }}
+    else
+      install-program {{ $softwareList }}
+    fi
     # TODO - Figure out how to configure no logs to print to ~/.ansible.log -- should be printing to the value specified in the ansible.cfg
     rm -rf "$HOME/.ansible.log"
   else
