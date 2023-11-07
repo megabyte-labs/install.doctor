@@ -257,6 +257,12 @@ if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; 
         logg warn '~/.cloudflared is already in the home directory - to ensure proper deployment, remove previous tunnel configuration folders'
     fi
 
+    ### Ensure /usr/local/etc/cloudflared exists
+    if [ -d /usr/local/etc/cloudflared ]; then
+        logg info 'Creating folder /usr/local/etc/cloudflared'
+        sudo mkdir -p /usr/local/etc/cloudflared
+    fi
+
     # Copy over configuration files
     logg info 'Copying over configuration files from ~/.local/etc/cloudflared to /usr/local/etc/cloudflared'
     sudo cp -f "$HOME/.local/etc/cloudflared/cert.pem" /usr/local/etc/cloudflared/cert.pem
@@ -303,8 +309,6 @@ if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; 
         sudo launchctl start com.cloudflare.cloudflared
     elif [ -f /etc/os-release ]; then
         # System is Linux
-        logg info 'Copying over configuration files from ~/.local/etc/cloudflared to /usr/local/etc/cloudflared'
-        sudo cp -rf "$HOME/.local/etc/cloudflared" /usr/local/etc/cloudflared
         if systemctl --all --type service | grep -q "cloudflared" > /dev/null; then
             logg info 'cloudflared service is already available as a service'
         else
