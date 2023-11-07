@@ -397,19 +397,19 @@ if [ "$HEADLESS_INSTALL" = 'true' ]; then
   logg info 'Running chezmoi apply forcefully'
   if command -v unbuffer > /dev/null; then
     unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
-    logg info 'Running chezmoi second time' && unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
+    # logg info 'Running chezmoi second time' && unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
   else
     chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
-    logg info 'Running chezmoi second time' && chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
+    # logg info 'Running chezmoi second time' && chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
   fi
 else
   logg info 'Running chezmoi apply'
   if command -v unbuffer > /dev/null; then
     unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
-    logg info 'Running chezmoi second time' && unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
+    # logg info 'Running chezmoi second time' && unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
   else
     chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
-    logg info 'Running chezmoi second time' && chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
+    # logg info 'Running chezmoi second time' && chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
   fi
 fi
 
