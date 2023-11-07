@@ -1618,7 +1618,7 @@ softwarePlugins:
       - sources;android-34
       - system-images;android-31;default;x86_64
       - system-images;android-32;android-desktop;x86_64
-      - system-images;android-33-ext5;google_apis_playstore;arm64-v8a                                
+      - system-images;android-33-ext5;google_apis_playstore;arm64-v8a
       - system-images;android-33-ext5;google_apis_playstore;x86_64
       - system-images;android-33;android-automotive;arm64-v8a
       - system-images;android-33;android-automotive;x86_64
@@ -1716,10 +1716,10 @@ softwarePlugins:
       - github/gh-net
       - mislav/gh-cp
   intellij-idea-ce:
-    cmd: bash -c 'idea.sh installPlugins "{PLUGIN}"'
+    cmd: bash -c '/snap/intellij-idea-community/current/bin/idea.sh installPlugins "{PLUGIN}"'
     plugins:
       - com.github.copilot
-      - https://plugins.jetbrains.com/plugin/17328-pieces--save-search-share--reuse-code-snippets
+      - app.pieces.plugins.jetbrains
   helm:
     cmd: bash -c '{PLUGIN}'
     plugins:
