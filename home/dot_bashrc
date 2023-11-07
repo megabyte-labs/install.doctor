@@ -130,6 +130,9 @@ if [ "$BASH_SUPPORT" = 'true' ] && [ -n "$BASH" ]; then
   ### Navi (Ctrl+G)
   ! command -v navi > /dev/null || eval "$(navi widget bash)"
 
+  ### pkgx
+  ! command -v pkgx > /dev/null || eval "$(pkgx --shellcode)"
+
   ### SDKMan
   if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
     export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"

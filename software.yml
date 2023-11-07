@@ -424,6 +424,7 @@ softwarePackages:
     _bin: pueue
     _name: Pueue
     _github: https://github.com/Nukesor/pueue
+    _service: pueue
     brew: pueue
     apk: pueue
     cargo: pueue --locked
@@ -1146,6 +1147,7 @@ softwarePackages:
     _bin: logi-options-plus
     _github: false
     _name: Logi Options+
+    _when:cask: '! test -d "/Applications/Logi Options+.app" && ! test -d "$HOME/Applications/Logi Options+.app"'
     choco: logioptionsplus
     cask: logi-options-plus
     exe: https://download01.logi.com/web/ftp/pub/techsupport/optionsplus/logioptionsplus_installer.exe
@@ -2843,6 +2845,7 @@ softwarePackages:
     _bin: xhyve
     _github: https://github.com/machyve/xhyve
     _name: xhyve
+    _notes: Has not been modified for several years and has been disabled on Homebrew
     brew:darwin: xhyve
     port: xhyve
   xxh:
@@ -3376,6 +3379,7 @@ softwarePackages:
     _github: https://github.com/ksnip/ksnip
     _name: kSnip
     _post:snap: sudo snap connect ksnip:network-observe && sudo snap connect ksnip:network-manager-observe && sudo snap connect ksnip:removable-media
+    _when:cask: '! test -d "/Applications/ksnip.app" && ! test -d "$HOME/Applications/ksnip.app"'
     cask: ksnip
     flatpak: org.ksnip.ksnip
     choco: ksnip
@@ -3607,7 +3611,7 @@ softwarePackages:
     _github: null
     _home: null
     _name: Fuse
-    _when:cask: '! test -d /usr/local/Caskroom/macfuse && ! test -d ~/usr/local/Caskroom/macfuse'
+    _when:cask: '! test -d /usr/local/Caskroom/macfuse && ! test -d "$HOMEBREW_PREFIX/Caskroom/macfuse"'
     ansible:darwin: professormanhattan.fuse
     apt:
       - fuse
@@ -4928,7 +4932,7 @@ softwarePackages:
     _bin: atuin
     _github: https://github.com/ellie/atuin
     _name: Atuin
-    _post: source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh" && atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$ATUIN_PASSWORD" && atuin import auto && atuin sync
+    _post: atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$ATUIN_PASSWORD" && atuin import auto && atuin sync
     brew: atuin
     cargo: atuin
     pacman: atuin
@@ -4939,7 +4943,7 @@ softwarePackages:
     _github: https://github.com/ddworken/hishtory
     _name: hiSHtory
     _todo: Check for Homebrew version
-    _post: source source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh" && echo y | hishtory init "$HISHTORY_USER_SECRET"
+    _post: echo y | hishtory init "$HISHTORY_USER_SECRET"
     script: curl -sSL --compressed https://hishtory.dev/install.py | python3 -
   git-town:
     _bin: git-town
@@ -5208,7 +5212,9 @@ softwarePackages:
     _pre:scoop: scoop bucket add instrumenta https://github.com/instrumenta/scoop-instrumenta
     binary:darwin: https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-darwin-amd64.tar.gz
     binary:linux: https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
-    brew: instrumenta/instrumenta/kubeval
+    # Following Homebrew does not work properly
+    # brew: instrumenta/instrumenta/kubeval
+    go: github.com/instrumenta/kubeval@latest
     scoop: kubeval
   edex-ui:
     _bin: edex-ui
@@ -5863,6 +5869,7 @@ softwarePackages:
     _bin: dotenv-vault
     _name: Dotenv Vault
     brew: dotenv-org/brew/dotenv-vault
+    npm: dotenv-vault
   privileges:
     _name: Privileges
     _when:cask: '! test -d /Applications/Privileges.app && ! test -d $HOME/Applications/Privileges.app'
@@ -6524,7 +6531,7 @@ softwarePackages:
     _home: https://www.zaproxy.org/
     _name: OWASP ZAP
     _snapClassic: true
-    _when:cask: '! test -d "/Applications/OWASP ZAP.app" && ! test -d "$HOME/Applications/OWASP ZAP.app"'
+    _when:cask: '! test -d "/Applications/ZAP.app" && ! test -d "$HOME/Applications/ZAP.app"'
     cask: zap
     choco: zap
     flatpak: org.zaproxy.ZAP
@@ -7002,6 +7009,7 @@ softwarePackages:
     _home: https://www.parallels.com/
     _name: Parallels
     _when: '! test -d "/Applications/Parallels Desktop.app" && ! test -d "$HOME/Applications/Parallels Desktop.app"'
+    _notes: For Homebrew Cask, this requires the terminal to have full disk access
     ansible:darwin: professormanhattan.parallels
     cask: parallels
   gnome-passwords-keys:
@@ -9018,6 +9026,7 @@ softwarePackages:
     _bin: koodo-reader
     _github: https://github.com/koodo-reader/koodo-reader
     _name: Koodo Reader
+    _when:cask: '! test -d "/Applications/Koodo Reader.app" && ! test -d "$HOME/Applications/Koodo Reader.app"'
     cask: koodo-reader
     scoop: extras/koodo-reader
     winget: AppbyTroye.KoodoReader
@@ -9349,7 +9358,7 @@ softwarePackages:
     _github: null
     _home: null
     _name: Microsoft Teams
-    _when:cask: '! test -d "/Applications/Microsoft Teams.app" && ! test -d "$HOME/Applications/Microsoft Teams.app"'
+    _when:cask: '! test -d "/Applications/Microsoft Teams.app" && ! test -d "$HOME/Applications/Microsoft Teams.app" && ! test -d "/Applications/Microsoft Teams (work or school).app" && ! test -d "$HOME/Applications/Microsoft Teams (work or school).app"'
     ansible: professormanhattan.teams
     cask: microsoft-teams
     choco: microsoft-teams

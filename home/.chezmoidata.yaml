@@ -1069,7 +1069,6 @@ softwareGroups:
     - vagrant
     - vagrant-vmware-utility
     - vermin
-    - xhyve
   Virtualization-Desktop: &Virtualization-Desktop
     - docker-desktop
     - gnome-boxes
@@ -1544,6 +1543,8 @@ softwareGroups:
       note: Deprecated in favor of alternative app launchers.
     - pkg: vscodium
       note: Not all VSCode plugins work with VSCodium.
+    - pkg: xhyve
+      note: Disabled on Homebrew because it has not been modified for several years and does not build properly
     - pkg: yubikey-agent
       note: The OpenSSH library can now create native keys that integrate with the client.
   # Files below need to be reviewed before adding them to the stack. They should include all of the
