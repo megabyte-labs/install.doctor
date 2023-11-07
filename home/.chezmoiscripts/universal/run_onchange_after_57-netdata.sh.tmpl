@@ -17,10 +17,10 @@ ensureNetdataOwnership() {
     ### Ensure /usr/local/var/lib/netdata/cloud.d is owned by user
     if [ -d /usr/local/var/lib/netdata ]; then
         logg info 'Ensuring permissions are correct on /usr/local/var/lib/netdata'
-        sudo chown -Rf netdata /usr/local/var/lib/netdata
+        sudo chown -Rf netdata:netdata /usr/local/var/lib/netdata || sudo chown -Rf netdata:$(id -g -n) /usr/local/var/lib/netdata
     elif [ -d /var/lib/netdata ]; then
         logg info 'Ensuring permissions are correct on /var/lib/netdata'
-        sudo chown -Rf netdata /var/lib/netdata
+        sudo chown -Rf netdata:netdata /var/lib/netdata || sudo chown -Rf netdata:$(id -g -n) /var/lib/netdata
     fi
 }
 

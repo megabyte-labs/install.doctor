@@ -43,7 +43,7 @@ if command -v privoxy > /dev/null; then
         if command -v add-user > /dev/null; then
             sudo add-user privoxy
         fi
-        sudo chown privoxy:privoxy "$PRIVOXY_CONFIG"
+        sudo chown privoxy:privoxy "$PRIVOXY_CONFIG" || sudo chown privoxy:$(id -g -n) "$PRIVOXY_CONFIG"
 
         # @description Restart Privoxy after configuration is applied
         if [ -d /Applications ] && [ -d /System ]; then
