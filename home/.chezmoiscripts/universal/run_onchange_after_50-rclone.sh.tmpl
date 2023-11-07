@@ -58,9 +58,9 @@ if command -v rclone > /dev/null; then
         START_LINE="$(echo `grep -n -m 1 "# INSTALL DOCTOR MANAGED S3 START" "$CONFIG_FILE" | cut -f1 -d ":"`)"
         END_LINE="$(echo `grep -n -m 1 "# INSTALL DOCTOR MANAGED S3 END" "$CONFIG_FILE" | cut -f1 -d ":"`)"
         if command -v gsed > /dev/null; then
-            gsed -i "$START_LINE,${END_LINE}d" "$CONFIG_FILE"
+            gsed -i "$START_LINE,${END_LINE}d" "$CONFIG_FILE" > /dev/null
         else
-            sed -i "$START_LINE,${END_LINE}d" "$CONFIG_FILE"
+            sed -i "$START_LINE,${END_LINE}d" "$CONFIG_FILE" > /dev/null
         fi
     fi
     logg info 'Adding ~/.config/rclone/rclone.conf INSTALL DOCTOR managed block'
