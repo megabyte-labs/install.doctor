@@ -5,6 +5,7 @@ Create issue about setting up completions - https://github.com/rsteube/lazycompl
 
 This page outlines various projects and tasks that we are currently working on. Creating a GitHub issue for each of these items would be overkill.
 
+- https://community.cloudflare.com/t/allowing-either-cloudflare-ca-pem-or-regular-for-npm/578284
 - Integrate Sheldon
 - Look at Flipper Zero
 - Consider https://formulae.brew.sh/cask/parallels-client#default
