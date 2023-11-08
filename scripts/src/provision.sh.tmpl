@@ -233,6 +233,8 @@ if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.git" ]; then
   logg info "Pulling the latest changes from ${START_REPO:-https://github.com/megabyte-labs/install.doctor.git}"
   git pull origin master
 else
+  logg info "Ensuring ${XDG_DATA_HOME:-$HOME/.local/share} is a folder"
+  mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}"
   logg info "Cloning ${START_REPO} to ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
   git clone ${START_REPO} "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
 fi
@@ -274,20 +276,32 @@ LOG_FILE="$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log"
 if [ "$HEADLESS_INSTALL" = 'true' ]; then
   logg info 'Running chezmoi apply forcefully'
   if command -v unbuffer > /dev/null; then
-    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
-    logg info 'Running chezmoi second time' && unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
+    if command -v caffeinate > /dev/null; then
+      caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
+    else
+      unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
+    fi
   else
-    chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
-    logg info 'Running chezmoi second time' && chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
+    if command -v caffeinate > /dev/null; then
+      caffeinate chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
+    else
+      chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
+    fi
   fi
 else
   logg info 'Running chezmoi apply'
   if command -v unbuffer > /dev/null; then
-    unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
-    logg info 'Running chezmoi second time' && unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
+    if command -v caffeinate > /dev/null; then
+      caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
+    else
+      unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
+    fi    
   else
-    chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
-    logg info 'Running chezmoi second time' && chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
+    if command -v caffeinate > /dev/null; then
+      caffeinate chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
+    else
+      chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
+    fi    
   fi
 fi
 
