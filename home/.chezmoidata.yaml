@@ -1716,7 +1716,7 @@ softwarePlugins:
       - github/gh-net
       - mislav/gh-cp
   intellij-idea-ce:
-    cmd: bash -c '/snap/intellij-idea-community/current/bin/idea.sh installPlugins "{PLUGIN}"'
+    cmd: bash -c 'idea.sh installPlugins "{PLUGIN}"'
     plugins:
       - com.github.copilot
       - app.pieces.plugins.jetbrains
