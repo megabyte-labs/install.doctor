@@ -1913,7 +1913,12 @@ async function installSoftware(pkgsToInstall) {
   }
   installOrdersPre.length && log('info', 'Pre-Install', `Running package-specific pre-installation steps`)
   for (const script of installOrdersPre) {
-    await $`${['bash', '-c', script]}`
+    const timeoutAvail = which.sync('timeout', { nothrow: true })
+    if (timeoutAvail) {
+      await $`${['timeout', '1000', 'bash', '-c', script]}`
+    } else {
+      await $`${['bash', '-c', script]}`
+    }
   }
   installOrdersGroups.length && log('info', 'Users / Groups', `Adding groups / users`)
   for (const group of installOrdersGroups) {
@@ -1941,7 +1946,12 @@ async function installSoftware(pkgsToInstall) {
   for (const script of installOrdersPost) {
     try {
       log('info', 'Post Hook', script)
-      await $`source "${process.env.HOME}/.bashrc" && ${script.replace(/\n/g, "\\\n")}`
+      const timeoutAvail = which.sync('timeout', { nothrow: true })
+      if (timeoutAvail) {
+        await $`${['timeout', '1000', 'bash', '-c', script]}`
+      } else {
+        await $`${['bash', '-c', script]}`
+      }
     } catch(e) {
       log('info', 'Post-Install Hook', 'Encountered error while running post-install hook')
     }
