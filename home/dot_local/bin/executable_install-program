@@ -69,7 +69,8 @@ function log(type, label, msg) {
     icon = `${chalk.redBright(figures.cross)} ${chalk.black.bold.bgRedBright(' ERROR ')}`
     message = chalk.redBright(wrapMessage(msg))
   }
-  const outputMessage = `${icon} ${message}`
+  const now = new Date()
+  const outputMessage = `${icon} ${message} (${now})`
   console.log(outputMessage)
 }
 
