@@ -55,9 +55,7 @@ fi
 if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
   echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
   if command -v gtimeout > /dev/null; then
-    # Allow 8 minutes for system updates
     logg info 'Ensuring system software is upgraded (timing out after 50 minutes if system upgrade fails)'
-    sudo softwareupdate -i -a -R
     gtimeout 3000 sudo softwareupdate -i -a -R || logg warn 'The system update command timed out after 50 minutes'
   else
     # If gtimeout is unavailable, then attempt system upgrade without a timeout (which usually works on fresh systems)
