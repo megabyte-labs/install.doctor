@@ -51,7 +51,7 @@
 #     [Install Doctor homepage](https://install.doctor)
 #     [Install Doctor documentation portal](https://install.doctor/docs) (includes tips, tricks, and guides on how to customize the system to your liking)
 
-{{ include "partials" "logg" }}
+{{ include "partials" "logg" -}}
 
 # @section Environment variables and system dependencies
 # @description Ensure Ubuntu / Debian run in `noninteractive` mode. Detect `START_REPO` format and determine appropriate git address,
@@ -79,12 +79,12 @@ setEnvironmentVariables() {
 
 # @description Ensure dependencies like `git` and `curl` are installed (among a few other lightweight system packages)
 ensureBasicDeps() {
-  {{ include "partials" "basic-deps" }}
+  {{ include "partials" "basic-deps" -}}
 }
 
 # @description Ensure Homebrew is installed and available in the `PATH`
 ensureHomebrew() {
-  {{ include "partials" "homebrew" }}
+  {{ include "partials" "homebrew" -}}
 }
 
 # @description Load default settings if it is in a CI setting
@@ -294,7 +294,7 @@ initChezmoiAndPrompt() {
   if command -v gum > /dev/null; then
     if [ -z "$SOFTWARE_GROUP" ]; then
       logg prompt 'Select the software group you would like to install. If your environment is a macOS, Windows, or environment with the DISPLAY environment variable then desktop software will be installed too. The software groups are in the '"${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml"' file.'
-      SOFTWARE_GROUP="$(gum choose "General-Purpose-Server" "Basic" "Standard" "Full")"
+      SOFTWARE_GROUP="$(gum choose "Basic" "Server" "Standard" "Full")"
       export SOFTWARE_GROUP
     fi
   else
@@ -317,7 +317,7 @@ configureDebugMode() {
 }
 
 # @description Save the log of the provision process to `$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log` and add the Chezmoi
-#     `--force` flag if the `HEADLESS_INSTALL` variable is set to `true``.
+#     `--force` flag if the `HEADLESS_INSTALL` variable is set to `true`.
 runChezmoi() {
   mkdir -p "$HOME/.local/var/log/install.doctor"
   LOG_FILE="$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log"

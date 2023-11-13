@@ -1,41 +1,41 @@
 if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v expect > /dev/null || ! command -v rsync > /dev/null || ! command -v unbuffer; then
-    if command -v apt-get > /dev/null; then
-        ### Debian / Ubuntu
-        sudo apt-get update
-        sudo apt-get install -y build-essential curl expect git rsync
-    elif command -v dnf > /dev/null; then
-        ### Fedora
-        sudo dnf install -y curl expect git rsync
-    elif command -v yum > /dev/null; then
-        ### CentOS
-        sudo yum install -y curl expect git rsync
-    elif command -v pacman > /dev/null; then
-        ### Archlinux
-        sudo pacman update
-        sudo pacman -Syu base-devel curl expect git rsync procps-ng file
-    elif command -v zypper > /dev/null; then
-        ### OpenSUSE
-        sudo zypper install -y curl expect git rsync
-    elif command -v apk > /dev/null; then
-        ### Alpine
-        apk add curl expect git rsync
-    elif [ -d /Applications ] && [ -d /Library ]; then
-        ### macOS
-        sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
-    elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
-        ### Windows
-        choco install -y curl expect git rsync
-    elif command -v nix-env > /dev/null; then
-        ### NixOS
-        echo "TODO - Add support for NixOS"
-    elif [[ "$OSTYPE" == 'freebsd'* ]]; then
-        ### FreeBSD
-        echo "TODO - Add support for FreeBSD"
-    elif command -v pkg > /dev/null; then
-        ### Termux
-        echo "TODO - Add support for Termux"
-    elif command -v xbps-install > /dev/null; then
-        ### Void
-        echo "TODO - Add support for Void"
-    fi
+  if command -v apt-get > /dev/null; then
+    ### Debian / Ubuntu
+    logg info 'Running sudo apt-get update' && sudo apt-get update
+    logg info 'Running sudo apt-get install -y build-essential curl expect git rsync' && sudo apt-get install -y build-essential curl expect git rsync
+  elif command -v dnf > /dev/null; then
+    ### Fedora
+    logg info 'Running sudo dnf install -y curl expect git rsync' && sudo dnf install -y curl expect git rsync
+  elif command -v yum > /dev/null; then
+    ### CentOS
+    logg info 'Running sudo yum install -y curl expect git rsync' && sudo yum install -y curl expect git rsync
+  elif command -v pacman > /dev/null; then
+    ### Archlinux
+    logg info 'Running sudo pacman update' && sudo pacman update
+    logg info 'Running sudo pacman -Syu base-devel curl expect git rsync procps-ng file' && sudo pacman -Syu base-devel curl expect git rsync procps-ng file
+  elif command -v zypper > /dev/null; then
+    ### OpenSUSE
+    logg info 'Running sudo zypper install -y curl expect git rsync' && sudo zypper install -y curl expect git rsync
+  elif command -v apk > /dev/null; then
+    ### Alpine
+    logg info 'Running apk add curl expect git rsync' && apk add curl expect git rsync
+  elif [ -d /Applications ] && [ -d /Library ]; then
+    ### macOS
+    logg info 'Running sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install' && sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
+  elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
+    ### Windows
+    logg info 'Running choco install -y curl expect git rsync' && choco install -y curl expect git rsync
+  elif command -v nix-env > /dev/null; then
+    ### NixOS
+    logg warn "TODO - Add support for NixOS"
+  elif [[ "$OSTYPE" == 'freebsd'* ]]; then
+    ### FreeBSD
+    logg warn "TODO - Add support for FreeBSD"
+  elif command -v pkg > /dev/null; then
+    ### Termux
+    logg warn "TODO - Add support for Termux"
+  elif command -v xbps-install > /dev/null; then
+    ### Void
+    logg warn "TODO - Add support for Void"
+  fi
 fi
