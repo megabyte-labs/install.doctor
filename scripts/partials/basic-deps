@@ -7,11 +7,11 @@ if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v
     logg info 'Running sudo apt-get install -y build-essential curl expect git rsync procps file' && sudo apt-get install -y build-essential curl expect git rsync procps file
   elif command -v dnf > /dev/null; then
     ### Fedora
-    logg info 'Running sudo dnf groupinstall -y \'Development Tools\'' && sudo dnf groupinstall -y 'Development Tools'
+    logg info 'Running sudo dnf groupinstall -y "Development Tools"' && sudo dnf groupinstall -y 'Development Tools'
     logg info 'Running sudo dnf install -y curl expect git rsync procps-ng file' && sudo dnf install -y curl expect git rsync procps-ng file
   elif command -v yum > /dev/null; then
     ### CentOS
-    logg info 'Running sudo yum groupinstall -y \'Development Tools\'' && sudo yum groupinstall -y 'Development Tools'
+    logg info 'Running sudo yum groupinstall -y "Development Tools"' && sudo yum groupinstall -y 'Development Tools'
     logg info 'Running sudo yum install -y curl expect git rsync procps-ng file' && sudo yum install -y curl expect git rsync procps-ng file
   elif command -v pacman > /dev/null; then
     ### Archlinux
@@ -23,7 +23,7 @@ if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v
     logg info 'Running sudo zypper install -y curl expect git rsync procps file' && sudo zypper install -y curl expect git rsync procps file
   elif command -v apk > /dev/null; then
     ### Alpine
-    logg info 'Running apk add build-base curl expect git rsync procps file' && apk add build-base curl expect git rsync procps file
+    logg info 'Running sudo apk add build-base curl expect git rsync ruby procps file' && sudo apk add build-base curl expect git rsync ruby procps file
   elif [ -d /Applications ] && [ -d /Library ]; then
     ### macOS
     logg info "Ensuring Xcode Command Line Tools are installed.."

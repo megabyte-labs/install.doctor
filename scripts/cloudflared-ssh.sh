@@ -115,11 +115,11 @@ if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v
     logg info 'Running sudo apt-get install -y build-essential curl expect git rsync procps file' && sudo apt-get install -y build-essential curl expect git rsync procps file
   elif command -v dnf > /dev/null; then
     ### Fedora
-    logg info 'Running sudo dnf groupinstall -y \'Development Tools\'' && sudo dnf groupinstall -y 'Development Tools'
+    logg info 'Running sudo dnf groupinstall -y "Development Tools"' && sudo dnf groupinstall -y 'Development Tools'
     logg info 'Running sudo dnf install -y curl expect git rsync procps-ng file' && sudo dnf install -y curl expect git rsync procps-ng file
   elif command -v yum > /dev/null; then
     ### CentOS
-    logg info 'Running sudo yum groupinstall -y \'Development Tools\'' && sudo yum groupinstall -y 'Development Tools'
+    logg info 'Running sudo yum groupinstall -y "Development Tools"' && sudo yum groupinstall -y 'Development Tools'
     logg info 'Running sudo yum install -y curl expect git rsync procps-ng file' && sudo yum install -y curl expect git rsync procps-ng file
   elif command -v pacman > /dev/null; then
     ### Archlinux
