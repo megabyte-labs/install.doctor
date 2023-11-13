@@ -12,7 +12,7 @@ logg() {
     fi
   elif [ "$TYPE" == 'info' ]; then
     if command -v gum > /dev/null; then
-        gum style " $(gum style --foreground="#00ffff" "○") $(gum style --faint --foreground="#ffffff" "$MSG")"
+        gum style " $(gum style --foreground="#00ffff" "○") $(gum style --faint "$MSG")"
     else
         echo "INFO: $MSG"
     fi

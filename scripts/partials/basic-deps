@@ -1,29 +1,41 @@
-if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v expect > /dev/null || ! command -v rsync > /dev/null; then
+if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v expect > /dev/null || ! command -v rsync > /dev/null || ! command -v unbuffer; then
     if command -v apt-get > /dev/null; then
-        # Debian / Ubuntu
+        ### Debian / Ubuntu
         sudo apt-get update
         sudo apt-get install -y build-essential curl expect git rsync
     elif command -v dnf > /dev/null; then
-        # Fedora
+        ### Fedora
         sudo dnf install -y curl expect git rsync
     elif command -v yum > /dev/null; then
-        # CentOS
+        ### CentOS
         sudo yum install -y curl expect git rsync
     elif command -v pacman > /dev/null; then
-        # Archlinux
+        ### Archlinux
         sudo pacman update
         sudo pacman -Syu base-devel curl expect git rsync procps-ng file
     elif command -v zypper > /dev/null; then
-        # OpenSUSE
+        ### OpenSUSE
         sudo zypper install -y curl expect git rsync
     elif command -v apk > /dev/null; then
-        # Alpine
+        ### Alpine
         apk add curl expect git rsync
     elif [ -d /Applications ] && [ -d /Library ]; then
-        # macOS
+        ### macOS
         sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
     elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
-        # Windows
+        ### Windows
         choco install -y curl expect git rsync
+    elif command -v nix-env > /dev/null; then
+        ### NixOS
+        echo "TODO - Add support for NixOS"
+    elif [[ "$OSTYPE" == 'freebsd'* ]]; then
+        ### FreeBSD
+        echo "TODO - Add support for FreeBSD"
+    elif command -v pkg > /dev/null; then
+        ### Termux
+        echo "TODO - Add support for Termux"
+    elif command -v xbps-install > /dev/null; then
+        ### Void
+        echo "TODO - Add support for Void"
     fi
 fi
