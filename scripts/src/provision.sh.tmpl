@@ -382,6 +382,7 @@ provisionLogic() {
   logg info "Ensuring WARP is disconnected" && ensureWarpDisconnected
   logg info "Ensuring system Homebrew dependencies are installed" && ensureBasicDeps
   logg info "Ensuring Homebrew is available" && ensureHomebrew
+  logg info "Installing Homebrew packages" && ensureHomebrewDeps
   logg info "Applying passwordless sudo" && setupPasswordlessSudo
   logg info "Handling Qubes dom0 logic (if applicable)" && handleQubesDom0
   logg info "Cloning / updating source repository" && cloneChezmoiSourceRepo
