@@ -153,7 +153,8 @@ if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v
     ### Void
     logg warn "TODO - Add support for Void"
   fi
-fi# @description Ensure Homebrew is installed and available in the `PATH`
+fi
+# @description Ensure Homebrew is installed and available in the `PATH`
 if ! command -v brew > /dev/null; then
   if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
     logg info "Sourcing from /home/linuxbrew/.linuxbrew/bin/brew" && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

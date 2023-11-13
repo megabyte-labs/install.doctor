@@ -187,7 +187,8 @@ ensureBasicDeps() {
     ### Void
     logg warn "TODO - Add support for Void"
   fi
-fi}
+fi
+}
 
 # @description Ensure Homebrew is installed and available in the `PATH`
 ensureHomebrew() {
