@@ -17,6 +17,11 @@ if ! command -v brew > /dev/null; then
     if ! command -v brew > /dev/null; then
       logg error "The /home/linuxbrew/.linuxbrew directory exists but something is not right. Try removing it and running the script again." && exit 1
     fi
+  elif [ -d "$HOME/.linuxbrew" ]; then
+    logg info "Sourcing from $HOME/.linuxbrew/bin/brew" && eval "$($HOME/.linuxbrew/bin/brew shellenv)"
+    if ! command -v brew > /dev/null; then
+      logg error "The $HOME/.linuxbrew directory exists but something is not right. Try removing it and running the script again." && exit 1
+    fi
   else
     ### Installs Homebrew and addresses a couple potential issues
     if command -v sudo > /dev/null && sudo -n true; then

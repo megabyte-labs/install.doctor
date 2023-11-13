@@ -53,6 +53,7 @@ fi
 
 ### System upgrade on macOS
 if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
+  echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
   if command -v gtimeout > /dev/null; then
     # Allow 8 minutes for system updates
     logg info 'Ensuring system software is upgraded (timing out after 50 minutes if system upgrade fails)'
@@ -60,9 +61,14 @@ if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
   else
     # If gtimeout is unavailable, then attempt system upgrade without a timeout (which usually works on fresh systems)
     logg info 'Applying OS upgrades (if available)'
-    sudo softwareupdate -i -a -R || logg error 'Failed to perform a system update via sudo softwareupdate -i -a'
+    sudo softwareupdate -i -a -R || logg error 'Failed to perform a system update via sudo softwareupdate -i -a -R'
   fi
   logg info 'If system updates were downloaded / installed, a reboot might be required.'
+  if command -v gsed > /dev/null; then
+    sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+  else
+    sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+  fi
 fi
 
 ### Ensure dependencies are installed on Linux

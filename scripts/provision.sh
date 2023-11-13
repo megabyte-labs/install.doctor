@@ -119,6 +119,7 @@ logg() {
 #     otherwise use the master Install Doctor branch
 setEnvironmentVariables() {
   export DEBIAN_FRONTEND=noninteractive
+  export HOMEBREW_NO_ENV_HINTS=true
   if [ -z "$START_REPO" ] && [ -z "$REPO" ]; then
     export START_REPO="https://github.com/megabyte-labs/install.doctor.git"
   else
@@ -140,27 +141,32 @@ setEnvironmentVariables() {
 
 # @description Ensure dependencies like `git` and `curl` are installed (among a few other lightweight system packages)
 ensureBasicDeps() {
-  if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v expect > /dev/null || ! command -v rsync > /dev/null || ! command -v unbuffer; then
+  
+
+if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v expect > /dev/null || ! command -v rsync > /dev/null || ! command -v unbuffer; then
   if command -v apt-get > /dev/null; then
     ### Debian / Ubuntu
     logg info 'Running sudo apt-get update' && sudo apt-get update
-    logg info 'Running sudo apt-get install -y build-essential curl expect git rsync' && sudo apt-get install -y build-essential curl expect git rsync
+    logg info 'Running sudo apt-get install -y build-essential curl expect git rsync procps file' && sudo apt-get install -y build-essential curl expect git rsync procps file
   elif command -v dnf > /dev/null; then
     ### Fedora
-    logg info 'Running sudo dnf install -y curl expect git rsync' && sudo dnf install -y curl expect git rsync
+    logg info 'Running sudo dnf groupinstall -y \'Development Tools\'' && sudo dnf groupinstall -y 'Development Tools'
+    logg info 'Running sudo dnf install -y curl expect git rsync procps-ng file' && sudo dnf install -y curl expect git rsync procps-ng file
   elif command -v yum > /dev/null; then
     ### CentOS
-    logg info 'Running sudo yum install -y curl expect git rsync' && sudo yum install -y curl expect git rsync
+    logg info 'Running sudo yum groupinstall -y \'Development Tools\'' && sudo yum groupinstall -y 'Development Tools'
+    logg info 'Running sudo yum install -y curl expect git rsync procps-ng file' && sudo yum install -y curl expect git rsync procps-ng file
   elif command -v pacman > /dev/null; then
     ### Archlinux
     logg info 'Running sudo pacman update' && sudo pacman update
     logg info 'Running sudo pacman -Syu base-devel curl expect git rsync procps-ng file' && sudo pacman -Syu base-devel curl expect git rsync procps-ng file
   elif command -v zypper > /dev/null; then
     ### OpenSUSE
-    logg info 'Running sudo zypper install -y curl expect git rsync' && sudo zypper install -y curl expect git rsync
+    logg info 'Running sudo zypper install -yt pattern devel_basis' && sudo zypper install -yt pattern devel_basis
+    logg info 'Running sudo zypper install -y curl expect git rsync procps file' && sudo zypper install -y curl expect git rsync procps file
   elif command -v apk > /dev/null; then
     ### Alpine
-    logg info 'Running apk add curl expect git rsync' && apk add curl expect git rsync
+    logg info 'Running apk add build-base curl expect git rsync procps file' && apk add build-base curl expect git rsync procps file
   elif [ -d /Applications ] && [ -d /Library ]; then
     ### macOS
     logg info "Ensuring Xcode Command Line Tools are installed.."
@@ -197,6 +203,11 @@ ensureHomebrew() {
     logg info "Sourcing from /home/linuxbrew/.linuxbrew/bin/brew" && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     if ! command -v brew > /dev/null; then
       logg error "The /home/linuxbrew/.linuxbrew directory exists but something is not right. Try removing it and running the script again." && exit 1
+    fi
+  elif [ -d "$HOME/.linuxbrew" ]; then
+    logg info "Sourcing from $HOME/.linuxbrew/bin/brew" && eval "$($HOME/.linuxbrew/bin/brew shellenv)"
+    if ! command -v brew > /dev/null; then
+      logg error "The $HOME/.linuxbrew directory exists but something is not right. Try removing it and running the script again." && exit 1
     fi
   else
     ### Installs Homebrew and addresses a couple potential issues
@@ -398,7 +409,7 @@ installBrewPackage() {
 #
 #     1. Ensures Chezmoi, Node.js, and ZX are installed.
 #     2. Installs Glow and Gum if the `HEADLESS_INSTALL` environment variable is not set.
-#     3. If the system is macOS, then also install `gsed`.
+#     3. If the system is macOS, then also install `gsed` and `coreutils`.
 ensureHomebrewDeps() {
   ### TUI experience
   if [ -z "$HEADLESS_INSTALL" ]; then
@@ -414,6 +425,9 @@ ensureHomebrewDeps() {
   ### macOS
   if [ -d /Applications ] && [ -d /System ]; then
     installBrewPackage "gsed"
+    if ! command -v gtimeout > /dev/null; then
+      brew install coreutils
+    fi
   fi
 }
 

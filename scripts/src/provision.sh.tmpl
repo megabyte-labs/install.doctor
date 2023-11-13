@@ -58,6 +58,7 @@
 #     otherwise use the master Install Doctor branch
 setEnvironmentVariables() {
   export DEBIAN_FRONTEND=noninteractive
+  export HOMEBREW_NO_ENV_HINTS=true
   if [ -z "$START_REPO" ] && [ -z "$REPO" ]; then
     export START_REPO="https://github.com/megabyte-labs/install.doctor.git"
   else
@@ -246,7 +247,7 @@ installBrewPackage() {
 #
 #     1. Ensures Chezmoi, Node.js, and ZX are installed.
 #     2. Installs Glow and Gum if the `HEADLESS_INSTALL` environment variable is not set.
-#     3. If the system is macOS, then also install `gsed`.
+#     3. If the system is macOS, then also install `gsed` and `coreutils`.
 ensureHomebrewDeps() {
   ### TUI experience
   if [ -z "$HEADLESS_INSTALL" ]; then
@@ -262,6 +263,9 @@ ensureHomebrewDeps() {
   ### macOS
   if [ -d /Applications ] && [ -d /System ]; then
     installBrewPackage "gsed"
+    if ! command -v gtimeout > /dev/null; then
+      brew install coreutils
+    fi
   fi
 }
 
