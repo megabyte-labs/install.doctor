@@ -21,7 +21,14 @@ if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v
     logg info 'Running apk add curl expect git rsync' && apk add curl expect git rsync
   elif [ -d /Applications ] && [ -d /Library ]; then
     ### macOS
-    logg info 'Running sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install' && sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
+    logg info "Ensuring Xcode Command Line Tools are installed.."
+    if ! xcode-select -p >/dev/null 2>&1; then
+      logg info "Command Line Tools for Xcode not found"
+      ### This temporary file prompts the 'softwareupdate' utility to list the Command Line Tools
+      touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
+      XCODE_PKG="$(softwareupdate -l | grep "\*.*Command Line" | tail -n 1 | sed 's/^[^C]* //')"
+      logg info "Installing from softwareupdate" && softwareupdate -i "$XCODE_PKG" && logg success "Successfully installed $XCODE_PKG"
+    fi
   elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
     ### Windows
     logg info 'Running choco install -y curl expect git rsync' && choco install -y curl expect git rsync
