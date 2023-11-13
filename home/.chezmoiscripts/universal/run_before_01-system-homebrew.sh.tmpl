@@ -53,7 +53,9 @@ fi
 
 ### System upgrade on macOS
 if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
-  echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
+  if ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
+    echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
+  fi
   # TODO - Section below attempts to add timeout to macOS softwareupdate command but is failing to prompt for password (which is required even with /etc/sudoers set up
   # if command -v gtimeout > /dev/null; then
   #   logg info 'Ensuring system software is upgraded (timing out after 50 minutes if system upgrade fails)'

@@ -27,7 +27,9 @@ if [ -d /Applications ] && [ -d /System ]; then
         logg info 'Docker appears to be installed already'
     fi
     logg info 'Opening the Docker for Desktop app so that the Docker engine starts running'
-    open --background -a Docker --args --accept-license --unattended --install-privileged-components
+    # TODO - --install-privileged-components may be necessary for `docker extension` command but it causes the command to no longer work
+    # open --background -a Docker --args --accept-license --unattended --install-privileged-components
+    open --background -a Docker --args --accept-license --unattended
 elif command -v apt-get > /dev/null; then
     . /etc/os-release
     if [ "$ID" == 'ubuntu' ]; then
