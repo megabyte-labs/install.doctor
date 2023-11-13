@@ -57,7 +57,7 @@ if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
   if command -v gtimeout > /dev/null; then
     # Allow 8 minutes for system updates
     logg info 'Ensuring system software is upgraded (timing out after 50 minutes if system upgrade fails)'
-    sudo gtimeout 3000 softwareupdate -i -a -R || logg warn 'The system update command timed out after 50 minutes'
+    gtimeout 3000 sudo softwareupdate -i -a -R || logg warn 'The system update command timed out after 50 minutes'
   else
     # If gtimeout is unavailable, then attempt system upgrade without a timeout (which usually works on fresh systems)
     logg info 'Applying OS upgrades (if available)'
