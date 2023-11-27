@@ -814,7 +814,7 @@ async function beforeInstall(packageManager) {
     if (osType === 'darwin') {
       const docker = which.sync('docker', { nothrow: true })
       if (!docker) {
-        await $`brew install --cask docker`
+        await $`brew install --cask --no-quarantine docker`
       }
       try {
         await $`sudo -c 'docker run --rm hello-world' - ${process.env.USER}`
@@ -1300,7 +1300,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'cask') {
       for (let pkg of packages) {
         try {
-          runCommand(`Installing ${pkg} via ${packageManager}`, `brew install --cask ${pkg}`)
+          runCommand(`Installing ${pkg} via ${packageManager}`, `brew install --cask --no-quarantine ${pkg}`)
           log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
           log('error', 'Install', `There was an error installing ${pkg} with Homebrew Cask`)
