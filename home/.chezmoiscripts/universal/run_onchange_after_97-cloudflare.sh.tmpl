@@ -105,27 +105,31 @@ fi
 # Source: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
 if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; then
     ### Ensure certificate installed on macOS
-    if [ ! -n "$SSH_CONNECTION" ]; then
-        logg info 'Requesting security authorization for Cloudflare trusted certificate'
-        sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
+    if [ -z "$SSH_CONNECTION" ]; then
+        if [ -z "$HEADLESS_INSTALL" ]; then
+            logg info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
+            sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
+        fi
         logg info 'Updating the OpenSSL CA Store to include the Cloudflare certificate'
         echo | sudo tee -a /etc/ssl/cert.pem < "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > /dev/null
         echo "" | sudo tee -a /etc/ssl/cert.pem
     else
         logg warn 'Session is SSH so adding Cloudflare encryption key to trusted certificates via the security program is being bypassed since it requires Touch ID / Password verification.'
     fi
-    if [ -d "/usr/local/etc/openssl@3/certs" ]; then
+    if [ -f "/usr/local/opt/openssl@3/bin/c_rehash" ]; then
         # Location on Intel macOS
+        logg info 'Ensuring /usr/local/etc/openssl@3/certs directory exists' && mkdir -p /usr/local/etc/openssl@3/certs
         logg info 'Adding Cloudflare certificate to /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem'
         echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem
         logg info 'Running /usr/local/opt/openssl@3/bin/c_rehash'
         /usr/local/opt/openssl@3/bin/c_rehash > /dev/null && logg success 'OpenSSL certificate rehash successful'
-    elif [ -d "/opt/homebrew/etc/openssl@3/certs" ]; then
-        # Location on arm64 macOS
-        logg info 'Adding Cloudflare certificate to /opt/homebrew/etc/openssl@3/certs/Cloudflare_CA.pem'
-        echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> /opt/homebrew/etc/openssl@3/certs/Cloudflare_CA.pem
-        logg info 'Running /opt/homebrew/opt/openssl@3/bin/c_rehash'
-        /opt/homebrew/opt/openssl@3/bin/c_rehash > /dev/null && logg success 'OpenSSL certificate rehash successful'
+    elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash" ]; then
+        # Location on arm64 macOS and custom Homebrew locations
+        logg info "Ensuring ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs directory exists" && mkdir -p "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs"
+        logg info "Adding Cloudflare certificate to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs/Cloudflare_CA.pem"
+        echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs/Cloudflare_CA.pem"
+        logg info "Running ${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash"
+        "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash" > /dev/null && logg success 'OpenSSL certificate rehash successful'
     else
         logg warn 'Unable to add Cloudflare_CA.pem because /usr/local/etc/openssl@3/certs and /opt/homebrew/etc/openssl@3/certs do not exist!'
     fi
