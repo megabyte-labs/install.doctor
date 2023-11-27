@@ -109,7 +109,7 @@ logg() {
     fi
   elif [ "$TYPE" == 'success' ]; then
     if command -v gum > /dev/null; then
-        gum style "$(gum style --foreground="#00ff00" "✔")  $(gum style --bold "$MSG")"
+        gum style " $(gum style --foreground="#00ff00" "✔") $(gum style --bold "$MSG")"
     else
         echo "SUCCESS: $MSG"
     fi

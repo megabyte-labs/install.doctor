@@ -160,7 +160,7 @@ logger() {
   elif [ "$1" == 'start' ]; then
     "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$2")")"
   elif [ "$1" == 'success' ]; then
-    "$GUM_PATH" style "$("$GUM_PATH" style --foreground="#00ff00" "✔")  $("$GUM_PATH" style --bold "$(format "$2")")"
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "✔") $("$GUM_PATH" style --bold "$(format "$2")")"
   elif [ "$1" == 'warn' ]; then
     "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --background="#ffff00" --foreground="#000000"  " WARNING ") $("$GUM_PATH" style --bold "$(format "$2")")"
   else
