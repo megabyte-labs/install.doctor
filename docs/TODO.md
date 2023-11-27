@@ -1,6 +1,8 @@
 xattr -d com.apple.quarantine rclone
 Create issue about setting up completions - https://github.com/rsteube/lazycomplete
 
+Use minimum permissions / IAM for https://iosexample.com/a-command-line-tool-to-download-and-install-apples-xcode/
+https://github.com/tiiiecherle/osx_install_config/blob/master/03_homebrew_casks_and_mas/3b_homebrew_casks_and_mas_install/6_mas_appstore.sh
 # TODOs
 
 This page outlines various projects and tasks that we are currently working on. Creating a GitHub issue for each of these items would be overkill.

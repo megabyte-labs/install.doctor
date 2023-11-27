@@ -43,9 +43,16 @@ if command -v install-program > /dev/null; then
     env | grep JAVA
     env | grep SDKMAN
     env | grep ASDF
+    if ! command -v unbuffer > /dev/null; then
+      if command -v brew > /dev/null; then
+        logg info 'Ensuring expect is installed for the unbuffer command' && brew install expect
+      fi
+    fi
     if command -v unbuffer > /dev/null; then
+      logg info 'Running unbuffer install-program'
       unbuffer install-program {{ $softwareList }}
     else
+      logg info 'Running install-program without unbuffer'
       install-program {{ $softwareList }}
     fi
     # TODO - Figure out how to configure no logs to print to ~/.ansible.log -- should be printing to the value specified in the ansible.cfg

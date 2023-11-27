@@ -30,6 +30,7 @@ Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 carapace _carapace | Out-String | Invoke-Expression
 
 ### Homebrew
+# TODO - Add for case where value is /opt/homebrew/bin/brew shellenv
 Add-Content -Path $PROFILE.CurrentUserAllHosts -Value '$(/usr/local/bin/brew shellenv) | Invoke-Expression'
 
 ### posh-git settings

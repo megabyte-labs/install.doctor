@@ -171,7 +171,7 @@ export PATH="$DOCKER_CONFIG/cli-plugins:$PATH"
 ### Dotnet
 export DOTNET_CLI_HOME="$XDG_CONFIG_HOME/dotnet"
 if [ -d /Applications ] && [ -d /Library ]; then
-  export DOTNET_ROOT="/usr/local/opt/dotnet/libexec"
+  export DOTNET_ROOT="${HOMEBREW_PREFIX:-/opt/homebrew}/opt/dotnet/libexec"
 elif [ -d /home/linuxbrew/.linuxbrew/opt/dotnet ]; then
   export DOTNET_ROOT="/home/linuxbrew/.linuxbrew/opt/dotnet/libexec"
 fi

@@ -184,10 +184,11 @@ export PATH="$DOCKER_CONFIG/cli-plugins:$PATH"
 ### Dotnet
 export DOTNET_CLI_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/dotnet"
 if [ -d /Applications ] && [ -d /Library ]; then
-  export DOTNET_ROOT="/usr/local/opt/dotnet/libexec"
+  export DOTNET_ROOT="${HOMEBREW_PREFIX:-/opt/homebrew}/opt/dotnet/libexec"
 elif [ -d /home/linuxbrew/.linuxbrew/opt/dotnet ]; then
   export DOTNET_ROOT="/home/linuxbrew/.linuxbrew/opt/dotnet/libexec"
 fi
+export MONO_GAC_PREFIX="${HOMEBREW_PREFIX:-/opt/homebrew}"
 export PATH="$PATH:${XDG_CONFIG_HOME:-$HOME/.config}/dotnet/.dotnet/tools"
 
 ### Elastic Agent

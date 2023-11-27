@@ -16,6 +16,11 @@ export ATUIN_EMAIL="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates"
 export ATUIN_PASSWORD="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ATUIN_PASSWORD")) }}{{ includeTemplate "secrets/ATUIN_PASSWORD" | decrypt | trim }}{{ else }}{{ env "ATUIN_PASSWORD" }}{{ end }}"
 export ATUIN_USERNAME="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ATUIN_USERNAME")) }}{{ includeTemplate "secrets/ATUIN_USERNAME" | decrypt | trim }}{{ else }}{{ env "ATUIN_USERNAME" }}{{ end }}"
 
+### AWS
+export AWS_ACCESS_KEY_ID="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "AWS_ACCESS_KEY_ID")) }}{{ includeTemplate "secrets/AWS_ACCESS_KEY_ID" | decrypt | trim }}{{ else }}{{ env "AWS_ACCESS_KEY_ID" }}{{ end }}"
+export AWS_SECRET_ACCESS_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "AWS_SECRET_ACCESS_KEY")) }}{{ includeTemplate "secrets/AWS_SECRET_ACCESS_KEY" | decrypt | trim }}{{ else }}{{ env "AWS_SECRET_ACCESS_KEY" }}{{ end }}"
+export AWS_DEFAULT_REGION="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "AWS_DEFAULT_REGION")) }}{{ includeTemplate "secrets/AWS_DEFAULT_REGION" | decrypt | trim }}{{ else }}{{ env "AWS_DEFAULT_REGION" }}{{ end }}"
+
 ### Google Cloud SDK
 export CLOUDSDK_CORE_PROJECT="{{ .user.gcloud.coreProject }}"
 export GCE_SERVICE_ACCOUNT_EMAIL="{{ .user.gcloud.email }}"

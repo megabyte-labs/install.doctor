@@ -718,6 +718,9 @@ softwarePackages:
     _github: https://github.com/0xERR0R/blocky
     _name: Blocky
     _service: blocky
+    _service:brew:
+      - name: blocky
+        sudo: true
     _serviceEnabled: true
     brew: blocky
     go: github.com/0xERR0R/blocky@mastergithub.com/0xERR0R/blocky@master
@@ -730,11 +733,8 @@ softwarePackages:
   tart:
     _bin: tart
     _github: https://github.com/cirruslabs/tart
-    _when:brew:darwin: '[ $(uname -m) = "arm64" ]'
     _todo: Verify that this installs properly (error on arm64 macOS)
-    brew:darwin:
-      - tart
-      - cirruslabs/cli/gitlab-tart-executor
+    brew:darwin: gitlab-tart-executor
   web-ext:
     _bin: web-ext
     _github: https://github.com/mozilla/web-ext
@@ -1898,11 +1898,30 @@ softwarePackages:
     _github: https://github.com/Cisco-Talos/clamav
     _home: https://www.clamav.net/
     _name: ClamAV
-    _post: if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/clamav/freshclam.conf" ]; then sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/clamav/freshclam.conf" /usr/local/etc/clamav/freshclam.conf; fi && freshclam
+    _post: |
+      # Add freshclam.conf
+      if [ -f "$HOME/.local/etc/clamav/freshclam.conf" ]; then
+        sudo mkdir -p /usr/local/etc/clamav
+        sudo cp -f "$HOME/.local/etc/clamav/freshclam.conf" /usr/local/etc/clamav/freshclam.conf
+        if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav" ] && [ ! -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/freshclam.conf" ]; then
+          ln -s /usr/local/etc/clamav/freshclam.conf "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/freshclam.conf"
+        fi
+      fi
+      # Add clamd.conf
+      if [ -f "$HOME/.local/etc/clamav/clamd.conf" ]; then
+        sudo mkdir -p /usr/local/etc/clamav
+        sudo cp -f "$HOME/.local/etc/clamav/clamd.conf" /usr/local/etc/clamav/clamd.conf
+        if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav" ] && [ ! -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/clamd.conf" ]; then
+          ln -s /usr/local/etc/clamav/clamd.conf "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/clamd.conf"
+        fi
+      fi
+      # Update database
+      freshclam
     _service:apt: clamav-freshclam
     _service:dnf: clamd-freshclam
     _service:pacman: clamav-freshclam
     _service:brew: clamav
+    _serviceEnabled: true
     apt:
       - clamav
       - clamdscan
@@ -2032,7 +2051,6 @@ softwarePackages:
     _github: https://github.com/CocoaPods/CocoaPods
     _home: https://cocoapods.org/
     _name: cocoapods
-    _when:brew: test -d /usr/local/Cellar/cocoapods
     ansible:darwin: professormanhattan.cocoapods
     brew:darwin: cocoapods
     gem:darwin: cocoapods
@@ -2934,8 +2952,8 @@ softwarePackages:
     _github: https://github.com/mongodb/mongo
     _name: MongoDB
     _service: mongodb
-    _service:brew: mongodb/brew/mongodb-community
-    brew: mongodb/brew/mongodb-community
+    _service:brew: mongodb-community
+    brew: mongodb-community
     choco: mongodb
   mongodb-compass:
     _bin: mongodb-compass
@@ -3882,7 +3900,9 @@ softwarePackages:
     _github: null
     _home: null
     _name: Git LFS
-    _post: git lfs install
+    _post: |
+      sudo git lfs install --system
+      git lfs install
     ansible: professormanhattan.gitlfs
     brew: git-lfs
     scoop: git-lfs
@@ -5799,7 +5819,18 @@ softwarePackages:
     ansible: professormanhattan.microsofttodo
     cask: ao
     snap: microsoft-todo-unofficial
+  hyperkit:
+    _deps:darwin:
+      - xcode
+    _bin: hyperkit
+    _github: https://github.com/moby/hyperkit
+    _name: HyperKit
+    brew:darwin: hyperkit
   minikube:
+    _deps:darwin:
+      - hyperkit
+    _deps:
+      - docker
     _bin: minikube
     _desc: minikube quickly sets up a local Kubernetes cluster on macOS, Linux, and Windows
     _docs: https://minikube.sigs.k8s.io/docs/
@@ -5807,13 +5838,9 @@ softwarePackages:
     _home: null
     _name: minikube
     # TODO - Prefer HyperV on Windows https://minikube.sigs.k8s.io/docs/drivers/hyperv/
-    # TODO - Prefer HyperKit on macOS https://minikube.sigs.k8s.io/docs/drivers/hyperkit/
-    _post: if command -v docker > /dev/null; then minikube config set driver docker; elif command -v VBoxManage > /dev/null; then minikube config set driver virtualbox; fi
+    _post: if command -v hyperkit > /dev/null; then minikube config set driver hyperkit; elif command -v docker > /dev/null; then minikube config set driver docker; elif command -v VBoxManage > /dev/null; then minikube config set driver virtualbox; fi
     _todo: A full installation of Xcode.app 9.0 is required. Also, hyperkit x86_64 architecture is required for this software. So automate install of Xcode.app 9.0 and add check for x86_64 prior to installing this
     brew: minikube
-    brew:darwin:
-      - hyperkit
-      - minikube
     choco: minikube
   mitmproxy:
     _bin: mitmproxy
@@ -6271,6 +6298,9 @@ softwarePackages:
     _home: https://github.com/slackhq/nebula
     _name: nebula
     _service: nebula
+    _service:brew:
+      - name: nebula
+        sudo: true
     _serviceEnabled: true
     brew: nebula
     dnf: nebula
@@ -7131,6 +7161,8 @@ softwarePackages:
     port: php
     scoop: php
   php-extensions:
+    _deps:
+      - postgresql
     _name: PHP Extensions
     _note: Needs testing
     apt:
@@ -7154,8 +7186,6 @@ softwarePackages:
       - php-snmp
       - php-sqlite3
       - php-xml
-    brew:
-      - postgresql
     dnf:
       - pcre-devel
       - postgresql-devel
@@ -7215,6 +7245,17 @@ softwarePackages:
       - php-snmp
       - php-sqlite3
       - php-xml
+  postgresql:
+    _bin: postgresql
+    _name: PostgreSQL
+    _github: https://github.com/postgres/postgres
+    _service:brew: postgresql@14
+    brew: postgresql
+    zypper: postgresql
+    pacman: postgresql
+    apt: postgresql
+    dnf: postgresql
+    choco: postgresql
   pip:
     _bin: pip
     _desc: '[pip](https://pypi.org/project/pip/) is a package-management system written in Python used to install and manage software packages. It connects to an online repository of public and paid-for private packages, called the Python Package Index.'
@@ -7564,6 +7605,7 @@ softwarePackages:
       - protonvpn
     yay: protonvpn
   protonvpn-cli:
+    # TODO - Add seperate entry for openvpn (sudo brew services start openvpn)
     _bin: protonvpn
     _desc: The ProtonVPN CLI official release for Linux along with an unofficial ProtonVPN CLI for macOS
     _docs: null
@@ -8419,6 +8461,9 @@ softwarePackages:
     _name: sftpgo
     _post: sudo mkdir -p /usr/local/etc/sftpgo && sudo cp -f "$HOME/.local/etc/sftpgo/sftpgo.json" /usr/local/etc/sftpgo/sftpgo.json && sudo sftpgo initprovider
     _service: sftpgo
+    _service:brew:
+      - name: sftpgo
+        sudo: true
     _serviceEnabled: true
     brew: sftpgo
     choco: sftpgo
@@ -10420,6 +10465,9 @@ softwarePackages:
   fail2ban:
     _bin: fail2ban-client
     _service: fail2ban
+    _service:brew:
+      - name: fail2ban
+        sudo: true
     _serviceEnabled: true
     # fail2ban cannot be installed on Qubes Fedora 36 without messing with the qubes-firewall since firewalld is required
     _when:linux: echo '! command -v qubes-firewall > /dev/null && test -f /proc/version && ! grep Microsoft /proc/version > /dev/null' | bash
@@ -10598,6 +10646,8 @@ softwarePackages:
     _name: xcpretty
     gem:darwin: xcpretty
   xcode:
+    _deps:script:darwin:
+      - xcodeinstall
     _bin: xcodebuild
     _desc: "[Xcode](https://developer.apple.com/xcode/) is Apple's integrated development environment for macOS, used to develop software for macOS, iOS, iPadOS, watchOS, and tvOS."
     _docs: https://developer.apple.com/documentation/xcode
@@ -10605,7 +10655,57 @@ softwarePackages:
     _home: https://developer.apple.com/xcode/
     _name: XCode
     _post: sudo xcodebuild -license accept && sudo xcodebuild -runFirstLaunch
+    _when:darwin: '! test -d /Applications/Xcode.app'
     mas: 497799835
+    script:darwin: |
+      ### Load AWS secrets
+      source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh"
+      ### Setup passwordless sudo
+      if ! sudo cat /etc/sudoers | grep '# TEMPORARY FOR XCODEINSTALL' > /dev/null; then
+        if [ -n "$SUDO_PASSWORD" ]; then
+          printf '%s\n' "$SUDO_PASSWORD" | sudo -p "" -S echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR XCODEINSTALL" | sudo tee -a /etc/sudoers
+        else
+          echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR XCODEINSTALL" | sudo tee -a /etc/sudoers
+        fi
+      fi
+      ### Remove old files
+      rm -rf ~/.xcodeinstall
+      ### Authenticate
+      xcodeinstall authenticate -s "$AWS_DEFAULT_REGION"
+      ### Download files
+      while read XCODE_DOWNLOAD_ITEM; do
+        if [[ "$XCODE_DOWNLOAD_ITEM" != *"Command Line Tools"* ]]; then
+          DOWNLOAD_ID="$(echo "$XCODE_DOWNLOAD_ITEM" | sed 's/^\[\(.*\)\] .*/\1/')"
+          echo "$DOWNLOAD_ID" | xcodeinstall download -s "$AWS_DEFAULT_REGION" &
+        fi
+      done < <(xcodeinstall list -s "$AWS_DEFAULT_REGION" | grep --invert-match 'Release Candidate' | grep --invert-match ' beta ' | grep ' Xcode \d\d ')
+      wait
+      ### Install Xcode
+      xcodeinstall install --name "$(basename "$(find ~/.xcodeinstall/download -maxdepth 1 -name "*.xip")")"
+      ### Install Command Line Tools
+      # Commentted out because it is already installed by xcode-select in the provision.sh script
+      # xcodeinstall install --name "$(basename "$(find ~/.xcodeinstall/download -maxdepth 1 -name "*Command Line Tools*")")"
+      ### Install Additional Tools
+      while read ADDITIONAL_TOOLS; do
+        hdiutil attach "$ADDITIONAL_TOOLS"
+        rm -rf "/Applications/Additional Tools"
+        cp -rf "/Volumes/Additional Tools" "/Applications/Additional Tools"
+        hdiutil detach "$(find /Volumes -name "Additional Tools")"
+      done < <(find ~/.xcodeinstall/download -name "Additional Tools*")
+      ### Install Font Tools
+      while read FONT_TOOLS; do
+        hdiutil attach "$FONT_TOOLS"
+        cd "$(find /Volumes -maxdepth 1 -name "*Font Tools*")"
+        sudo installer -pkg "$(find . -maxdepth 1 -name "*Font Tools*.pkg")" -target /
+        cd / && hdiutil detach "$(find /Volumes -maxdepth 1 -name "*Font Tools*")"
+      done < <(find ~/.xcodeinstall/download -name "Font Tools*")
+      ### Remove cache / downloaded files
+      rm -rf ~/.xcodeinstall
+      ### Remove passwordless sudo
+      if ! command -v gsed > /dev/null; then
+        brew install gnu-sed
+      fi
+      sudo gsed -i '/# TEMPORARY FOR XCODEINSTALL/d' /etc/sudoers
   xurls:
     _bin: xurls
     _desc: Extract urls from text
@@ -10625,6 +10725,11 @@ softwarePackages:
     brew: yamllint
     pipx: yamllint
     _service: null
+  xcodeinstall:
+    _bin: xcodeinstall
+    _name: Xcode Install
+    _github: https://github.com/sebsto/xcodeinstall
+    brew: sebsto/macos/xcodeinstall
   sshfs:
     _bin: sshfs
     _desc: null
