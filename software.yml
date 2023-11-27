@@ -4932,7 +4932,7 @@ softwarePackages:
     _bin: atuin
     _github: https://github.com/ellie/atuin
     _name: Atuin
-    _post: atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$ATUIN_PASSWORD" && atuin import auto && atuin sync
+    _post: source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh" && atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$ATUIN_PASSWORD" && atuin import auto && atuin sync
     brew: atuin
     cargo: atuin
     pacman: atuin
