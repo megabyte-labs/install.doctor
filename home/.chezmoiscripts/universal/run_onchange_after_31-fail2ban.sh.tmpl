@@ -21,7 +21,7 @@
 logg info 'Configuring fail2ban'
 
 ### Restart fail2ban
-function restartFail2Ban() {
+function restartFailToBan() {
     if [ -d /Applications ] && [ -d /System ]; then
         # macOS
         logg info 'Enabling the fail2ban Homebrew service'
@@ -41,17 +41,17 @@ if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
     if [ -d /etc/fail2ban ]; then
         logg info 'Copying ~/.ssh/fail2ban/jail.local to /etc/fail2ban/jail.local'
         sudo cp -f "$HOME/.ssh/fail2ban/jail.local" /etc/fail2ban/jail.local
-        restartFail2Ban
+        restartFailToBan
     elif [ -d /usr/local/etc/fail2ban ]; then
         logg info 'Copying ~/.ssh/fail2ban/jail.local to /usr/local/etc/fail2ban/jail.local'
         sudo cp -f "$HOME/.ssh/fail2ban/jail.local" /usr/local/etc/fail2ban/jail.local
-        restartFail2Ban
-    elif [ -d "$HOMEBREW_PREFIX/etc/fail2ban" ]; then
-        logg info "Copying ~/.ssh/fail2ban/jail.local to $HOMEBREW_PREFIX/etc/fail2ban/jail.local"
-        sudo cp -f "$HOME/.ssh/fail2ban/jail.local" "$HOMEBREW_PREFIX/etc/fail2ban/jail.local"
-        restartFail2Ban
+        restartFailToBan
+    elif [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban" ]; then
+        logg info "Copying ~/.ssh/fail2ban/jail.local to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban/jail.local"
+        sudo cp -f "$HOME/.ssh/fail2ban/jail.local" "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban/jail.local"
+        restartFailToBan
     else
-        logg warn 'Both the /etc/fail2ban (Linux) and the /usr/local/etc/fail2ban (macOS) folder do not exist'
+        logg warn 'The /etc/fail2ban (Linux), the /usr/local/etc/fail2ban, and the ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban (macOS) folder do not exist'
     fi
 else
     logg info 'Skipping sshd_config application since environment is WSL'
