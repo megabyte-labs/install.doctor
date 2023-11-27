@@ -939,7 +939,7 @@ softwarePackages:
     _github: https://github.com/AstroNvim/AstroNvim
     _home: https://astronvim.github.io/
     _name: AstroNvim
-    _post: nvim --headless -c 'quitall'
+    _post: bash -ci "nvim --headless -c 'quitall'"
   dockutil:
     _bin: dockutil
     _github: https://github.com/kcrawford/dockutil
@@ -5806,7 +5806,9 @@ softwarePackages:
     _github: https://github.com/kubernetes/minikube
     _home: null
     _name: minikube
-    _post: minikube config set driver virtualbox
+    # TODO - Prefer HyperV on Windows https://minikube.sigs.k8s.io/docs/drivers/hyperv/
+    # TODO - Prefer HyperKit on macOS https://minikube.sigs.k8s.io/docs/drivers/hyperkit/
+    _post: if command -v docker > /dev/null; then minikube config set driver docker; elif command -v VBoxManage > /dev/null; then minikube config set driver virtualbox; fi
     _todo: A full installation of Xcode.app 9.0 is required. Also, hyperkit x86_64 architecture is required for this software. So automate install of Xcode.app 9.0 and add check for x86_64 prior to installing this
     brew: minikube
     brew:darwin:
