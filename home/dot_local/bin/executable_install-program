@@ -1815,42 +1815,46 @@ async function linkBin(installOrdersBinLink) {
   for (const binLink of installOrdersBinLink) {
     const pkg = softwarePackages[binLink.package][binLink.preference]
     if (typeof pkg === 'string') {
-      if (!which.sync(binLink.bin, { nothrow: true })) {
-        if (binLink.preference === 'flatpak' && flatpak) {
-          try {
-            runCommand(
-              `Adding bin link for ${pkg} (${binLink.bin})`,
-              `bash -c 'test -d ${flatpakDir}/app/${pkg} && mkdir -p "${process.env.HOME}/.local/bin/flatpak" && echo "flatpak run ${pkg} \\\$*" > "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}" && chmod +x  "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}"'`
-            )
-            log('success', 'Bin', `Linked ~/.local/bin/flatpak/${binLink.bin} to the ${pkg} Flatpak`)
-          } catch (e) {
-            log('warn', 'Bin', `Expected flatpak directory not available - ${flatpakDir}/app/${pkg}`)
-          }
-        } else if (binLink.preference === 'cask') {
-          try {
-            const caskWhen = softwarePackages[binLink.package]['_when:cask'].replace(/blue/g, "red")
-            const appName = caskWhen.replace(/ && ! test -d .*/, '').replace(/! test -d "\/Applications\//, '').replace(/! test -d \/Applications\//, '').replace('"', '')
-            log('info', 'Bin', `Checking for existence of ${appName} application in /Applications and ~/Applications`)
-            if (fileExists(`/Applications/${appName}`)) {
+      if (binLink.bin !== false) {
+        if (!which.sync(binLink.bin, { nothrow: true })) {
+          if (binLink.preference === 'flatpak' && flatpak) {
+            try {
               runCommand(
-                `Adding shortcut bin link for ${binLink.package}`,
-                `bash -c 'mkdir -p "${process.env.HOME}/.local/bin/cask" && echo "open \"${caskDir}\" \\\$*" > "${process.env.HOME}/.local/bin/cask/${binLink.bin}" && chmod +x "${process.env.HOME}/.local/bin/cask/${binLink.bin}"'`
+                `Adding bin link for ${pkg} (${binLink.bin})`,
+                `bash -c 'test -d ${flatpakDir}/app/${pkg} && mkdir -p "${process.env.HOME}/.local/bin/flatpak" && echo "flatpak run ${pkg} \\\$*" > "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}" && chmod +x  "${process.env.HOME}/.local/bin/flatpak/${binLink.bin}"'`
               )
-            } else if(fileExists(`${process.env.HOME}/Applications/${appName}`)) {
-              runCommand(
-                `Adding shortcut bin link for ${binLink.package}`,
-                `bash -c 'mkdir -p "${process.env.HOME}/.local/bin/cask" && echo "open \"${process.env.HOME}/Applications/${appName}\" \\\$*" > "${process.env.HOME}/.local/bin/cask/${binLink.bin}" && chmod +x "${process.env.HOME}/.local/bin/cask/${binLink.bin}"'`
-              )
-            } else {
-              log('warn', 'Bin', `Expected Homebrew cask directory not found - ${pkg}`)
+              log('success', 'Bin', `Linked ~/.local/bin/flatpak/${binLink.bin} to the ${pkg} Flatpak`)
+            } catch (e) {
+              log('warn', 'Bin', `Expected flatpak directory not available - ${flatpakDir}/app/${pkg}`)
             }
-          } catch (e) {
-            console.log(e)
-            log('warn', 'Bin', `Error creating bin shortcut link for ${pkg}`)
+          } else if (binLink.preference === 'cask') {
+            try {
+              const caskWhen = softwarePackages[binLink.package]['_when:cask'].replace(/blue/g, "red")
+              const appName = caskWhen.replace(/ && ! test -d .*/, '').replace(/! test -d "\/Applications\//, '').replace(/! test -d \/Applications\//, '').replace('"', '')
+              log('info', 'Bin', `Checking for existence of ${appName} application in /Applications and ~/Applications`)
+              if (fileExists(`/Applications/${appName}`)) {
+                runCommand(
+                  `Adding shortcut bin link for ${binLink.package}`,
+                  `bash -c 'mkdir -p "${process.env.HOME}/.local/bin/cask" && echo "open \"/Applications/${appName}\" \\\$*" > "${process.env.HOME}/.local/bin/cask/${binLink.bin}" && chmod +x "${process.env.HOME}/.local/bin/cask/${binLink.bin}"'`
+                )
+              } else if(fileExists(`${process.env.HOME}/Applications/${appName}`)) {
+                runCommand(
+                  `Adding shortcut bin link for ${binLink.package}`,
+                  `bash -c 'mkdir -p "${process.env.HOME}/.local/bin/cask" && echo "open \"${process.env.HOME}/Applications/${appName}\" \\\$*" > "${process.env.HOME}/.local/bin/cask/${binLink.bin}" && chmod +x "${process.env.HOME}/.local/bin/cask/${binLink.bin}"'`
+                )
+              } else {
+                log('warn', 'Bin', `Expected Homebrew cask directory not found - ${pkg}`)
+              }
+            } catch (e) {
+              console.log(e)
+              log('warn', 'Bin', `Error creating bin shortcut link for ${pkg}`)
+            }
           }
+        } else {
+          log('info', 'Bin', `Link already exists for ${binLink.package}`)
         }
       } else {
-        log('info', 'Bin', `Link already exists for ${binLink.package}`)
+        log('info', 'Bin', `Skipping ${binLink.package} because the _bin is equal to false`)
       }
     } else {
       log('info', 'Bin', `Skipping ${binLink.package} because there was more than one _bin value`)

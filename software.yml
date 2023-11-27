@@ -519,7 +519,18 @@ softwarePackages:
     brew: ansifilter
     choco: ansifilter
     port: ansifilter
+  android-commandlinetools:
+    _deps:
+      - java
+    _bin: false
+    _name: Android Studio Command Line Tools
+    _github: false
+    _when:cask: '! test -d "${HOMEBREW_PREFIX:-/opt/homebrew}/share/android-commandlinetools"'
+    cask: android-commandlinetools
   android-studio:
+    _deps:
+      - android-commandlinetools
+      - java
     _bin: android-studio
     _desc: >-
       [Android Studio](https://developer.android.com/studio) is the official integrated development environment for Google's Android operating system, built on JetBrains' IntelliJ IDEA software and designed specifically for Android development. This role installs Android Studio on nearly any operating system and also ensures a configurable list of command-line tools and SDKs are installed and seamlessly integrated with the system (i.e. the role adds the appropriate items to the `PATH` environment variable).
@@ -528,9 +539,7 @@ softwarePackages:
     _home: https://developer.android.com/studio
     _name: Android Studio
     _when:cask: '! test -d "/Applications/Android Studio.app" && ! test -d "$HOME/Applications/Android Studio.app"'
-    cask:
-      - android-studio
-      - android-commandlinetools
+    cask: android-studio
     choco: androidstudio
     flatpak: com.google.AndroidStudio
     snap: android-studio
@@ -858,7 +867,7 @@ softwarePackages:
       - argocd
       - argocd-cli
   blackhole:
-    _bin: blackhole
+    _bin: false
     _docs: https://github.com/ExistentialAudio/BlackHole#user-guides
     _home: https://github.com/ExistentialAudio/BlackHole
     _github: https://github.com/ExistentialAudio/BlackHole
@@ -979,7 +988,7 @@ softwarePackages:
   devtoys:
     _bin: devtoys
     _github: https://github.com/ObuchiYuki/DevToysMac
-    _when:cask: echo '! test -d /Applications/DevToys.app && ! test -d $HOME/Applications/DevToys.app' | bash
+    _when:cask: '! test -d /Applications/DevToys.app && ! test -d $HOME/Applications/DevToys.app'
     cask: devtoys
   devtoys-windows:
     _bin: devtoys
@@ -997,7 +1006,7 @@ softwarePackages:
     _bin: codeedit
     _github: https://github.com/CodeEditApp/CodeEdit
     _name: CodeEdit
-    _when:cask: '! test -d /Applications/CodeEdit.app && ! test -d $HOME/Applications/CodeEdit.app'
+    _when:cask: '! test -d "/Applications/CodeEdit.app" && ! test -d "$HOME/Applications/CodeEdit.app"'
     cask: codeedit
   barrier:
     _bin: barrier
@@ -1158,7 +1167,7 @@ softwarePackages:
     _bin: logi-options-plus
     _github: false
     _name: Logi Options+
-    _when:cask: '! test -d "/Applications/Logi Options+.app" && ! test -d "$HOME/Applications/Logi Options+.app"'
+    _when:cask: '! test -d "/Applications/logioptionsplus.app" && ! test -d "$HOME/Applications/logioptionsplus.app"'
     choco: logioptionsplus
     cask: logi-options-plus
     exe: https://download01.logi.com/web/ftp/pub/techsupport/optionsplus/logioptionsplus_installer.exe
@@ -1509,19 +1518,19 @@ softwarePackages:
     _bin: amethyst
     _github: https://github.com/ianyh/Amethyst
     _name: Amethyst
-    _when:cask: echo '! test -d /Applications/Amethyst.app && ! test -d $HOME/Applications/Amethyst.app' | bash
+    _when:cask: '! test -d /Applications/Amethyst.app && ! test -d $HOME/Applications/Amethyst.app'
     cask: amethyst
   alt-tab:
     _bin: alt-tab
     _github: https://github.com/lwouis/alt-tab-macos
     _name: Alt+Tab for macOS that works like alt+tab on Windows
-    _when:cask: echo '! test -d /Applications/AltTab.app && ! test -d $HOME/Applications/AltTab.app' | bash
+    _when:cask: '! test -d "/Applications/AltTab.app" && ! test -d "$HOME/Applications/AltTab.app"'
     cask: alt-tab
   fiscript:
     _bin: fiscript
     _github: https://github.com/Mortennn/FiScript
     _name: FiScript
-    _when:cask: echo '! test -d /Applications/FiScript.app && ! test -d $HOME/Applications/FiScript.app' | bash
+    _when:cask: '! test -d /Applications/FiScript.app && ! test -d $HOME/Applications/FiScript.app'
     cask: fiscript
   opencommit:
     _bin: opencommit
@@ -1660,7 +1669,7 @@ softwarePackages:
     _bin: lightproxy
     _github: https://github.com/alibaba/lightproxy
     _name: LightProxy
-    _when:cask: echo '! test -d /Applications/LightProxy.app && ! test -d $HOME/Applications/LightProxy.app' | bash
+    _when:cask: '! test -d /Applications/LightProxy.app && ! test -d $HOME/Applications/LightProxy.app'
     cask: lightproxy
   carbon-now:
     _bin: carbon-now
@@ -3449,6 +3458,7 @@ softwarePackages:
     _github: https://github.com/chrissimpkins/Crunch
     _home: https://github.com/chrissimpkins/Crunch
     _name: Crunch
+    _when:cask: '! test -d /Applications/Crunch.app && ! test -d $HOME/Applications/Crunch.app'
     cask: crunch
     script: cd /tmp && rm -rf Crunch && git clone https://github.com/chrissimpkins/Crunch.git && make build-dependencies && make install-executable && cd /tmp && rm -rf Crunch && rm -rf ~/zopfli && rm -rf ~/pngquant && echo "TODO WARNING - The ~/zopfli and ~/pngquant directories were deleted and may be required (but were removed due to HOME directory pollution)"
   eul:
@@ -3512,7 +3522,7 @@ softwarePackages:
     _github: https://github.com/nitroshare/nitroshare-desktop
     _home: https://nitroshare.net/
     _name: NitroShare
-    _when:cask: '! test -d /Applications/nitroshare.app && ! test -d $HOME/Applications/nitroshare.app'
+    _when:cask: '! test -d "/Applications/nitroshare.app" && ! test -d "$HOME/Applications/nitroshare.app"'
     apt: nitroshare
     cask: nitroshare
     choco: nitroshare
@@ -4938,15 +4948,17 @@ softwarePackages:
     _name: Ansibler
     pipx: ansibler
   java:
-    _bin: java
+    _bin: false
     _desc: '[Java](https://www.java.com/en/) is a class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.'
     _docs: https://docs.oracle.com/en/cloud/paas/nosql-cloud/index.html
     _github: https://github.com/oracle/nosql-java-sdk
     _home: https://www.java.com/en/
     _name: Java
+    _when:cask: '! java --version | grep Temurin'
     ansible: professormanhattan.java
     apt: openjdk-11-jdk
     brew: openjdk
+    cask: temurin
     choco: jdk11
     dnf: java-11-openjdk-devel.x86_64
     pacman: jdk-openjdk
@@ -4960,6 +4972,7 @@ softwarePackages:
     _home: https://www.jenv.be/
     _name: jenv
     ansible: professormanhattan.jenv
+    brew: jenv
   atuin:
     _bin: atuin
     _github: https://github.com/ellie/atuin
@@ -5707,6 +5720,7 @@ softwarePackages:
     _github: https://github.com/marktext/marktext
     _home: null
     _name: MarkText
+    _post:cask: if [ -d /Applications/MarkText.app ]; then xattr -cr /Applications/MarkText.app; elif [ -d "$HOME/Applications/MarkText.app" ]; then xattr -cr "$HOME/Applications/MarkText.app"; fi
     _when:cask: '! test -d /Applications/MarkText.app && ! test -d $HOME/Applications/MarkText.app'
     cask: mark-text
     choco: marktext
@@ -7064,6 +7078,7 @@ softwarePackages:
     _github: null
     _home: https://www.parallels.com/
     _name: Parallels
+    _notes: On macOS, full disk access is required for Terminal.
     _when: '! test -d "/Applications/Parallels Desktop.app" && ! test -d "$HOME/Applications/Parallels Desktop.app"'
     _notes: For Homebrew Cask, this requires the terminal to have full disk access
     ansible:darwin: professormanhattan.parallels
@@ -9911,7 +9926,7 @@ softwarePackages:
     pacman: vagrant
     scoop: vagrant
   vagrant-vmware-utility:
-    _bin: vagrant-vmware-utility
+    _bin: false
     _desc: null
     _docs: null
     _github: null
@@ -10906,7 +10921,7 @@ softwarePackages:
     _github: https://github.com/Yubico/yubikey-manager-qt
     _home: https://developers.yubico.com/yubikey-manager-qt/
     _name: YubiKey Manager
-    _when:cask: echo '! test -d "/Applications/YubiKey Manager.app" && ! test -d "$HOME/Applications/YubiKey Manager.app"' | bash
+    _when:cask: '! test -d "/Applications/YubiKey Manager.app" && ! test -d "$HOME/Applications/YubiKey Manager.app"'
     appimage: Yubico/yubikey-manager-qt
     cask: yubico-yubikey-manager
     choco: yubikey-manager

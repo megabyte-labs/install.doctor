@@ -106,6 +106,20 @@ if [ "$BASH_SUPPORT" = 'true' ] && [ -n "$BASH" ]; then
   ### Cod
   ! command -v cod > /dev/null || source <(cod init $$ bash)
 
+  ### Conda
+  if command -v conda > /dev/null && [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/mambaforge/base/bin/conda" ]; then
+	  __conda_setup="$("${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/mambaforge/base/bin/conda" "shell.zsh" "hook" 2> /dev/null)"
+	  if [ $? -eq 0 ]; then
+		  eval "$__conda_setup"
+	  else
+		  if [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/mambaforge/base/etc/profile.d/conda.sh" ]; then
+			  . "${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/mambaforge/base/etc/profile.d/conda.sh"
+		  else
+			  export PATH="${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/mambaforge/base/bin:$PATH"
+		  fi
+	  fi
+  fi
+
   ### Google Cloud SDK
   [ ! -f "${HOMEBREW_PREFIX}/share/google-cloud-sdk/path.bash.inc" ] || source "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.bash.inc"
 
