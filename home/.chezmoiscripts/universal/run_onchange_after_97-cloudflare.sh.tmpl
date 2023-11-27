@@ -268,6 +268,7 @@ if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; 
     fi
 
     # Copy over configuration files
+    logg info 'Ensuring /usr/local/etc/cloudflared exists' && sudo mkdir -p /usr/local/etc/cloudflared
     logg info 'Copying over configuration files from ~/.local/etc/cloudflared to /usr/local/etc/cloudflared'
     sudo cp -f "$HOME/.local/etc/cloudflared/cert.pem" /usr/local/etc/cloudflared/cert.pem
     sudo cp -f "$HOME/.local/etc/cloudflared/config.yml" /usr/local/etc/cloudflared/config.yml
