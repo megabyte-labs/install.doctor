@@ -5084,6 +5084,7 @@ softwarePackages:
     _github: https://github.com/keybase/client
     _home: https://keybase.io/
     _name: Keybase
+    _post:cask: if [ ! -f /usr/local/bin/keybase ] && [ -f /Applications/Keybase.app/Contents/SharedSupport/bin/keybase ]; then echo "Fixing missing keybase executable symlink permission issue" && sudo ln -s /Applications/Keybase.app/Contents/SharedSupport/bin/keybase /usr/local/bin/keybase; fi
     _when:ansible: '! test -f /opt/keybase/Keybase'
     _when:cask: '! test -d /Applications/Keybase.app && ! test -d $HOME/Applications/Keybase.app'
     ansible: professormanhattan.keybase
