@@ -42,13 +42,12 @@
 #
 #     [SSH with short-lived certificates](https://developers.cloudflare.com/cloudflare-one/tutorials/ssh-cert-bastion/)
 
-{{ include "partials" "logg" -}}
-
-# @description Ensure dependencies like `git` and `curl` are installed (among a few other lightweight system packages)
+{{ include "partials" "logg" }}
 {{ include "partials" "basic-deps" -}}
+ensureBasicDeps
 
-# @description Ensure Homebrew is installed and available in the `PATH`
 {{ include "partials" "homebrew" -}}
+ensureHomebrew
 
 # @description Ensures `cloudflared` is installed via Homebrew
 if ! command -v cloudflared > /dev/null; then

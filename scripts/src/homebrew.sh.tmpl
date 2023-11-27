@@ -11,4 +11,9 @@
 #
 #     **Note**: `https://install.doctor/brew` points to this file.
 
+{{ include "partials" "logg" }}
+{{ include "partials" "basic-deps" -}}
+ensureBasicDeps
+
 {{ include "partials" "homebrew" -}}
+ensureHomebrew

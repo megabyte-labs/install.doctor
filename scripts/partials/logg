@@ -1,7 +1,20 @@
-# @description Logs with style using Gum if it is installed, otherwise it uses `echo`. It also leverages Glow to render markdown.
-#     When Glow is not installed, it uses `cat`.
+# @description This function logs with style using Gum if it is installed, otherwise it uses `echo`. It is also capable of leveraging Glow to render markdown.
+#     When Glow is not installed, it uses `cat`. The following sub-commands are available:
+#
+#     | Sub-Command | Description                                                                                         |
+#     |-------------|-----------------------------------------------------------------------------------------------------|
+#     | `error`     | Logs a bright red error message                                                                     |
+#     | `info`      | Logs a regular informational message                                                                |
+#     | `md`        | Tries to render the specified file using `glow` if it is installed and uses `cat` as a fallback     |
+#     | `prompt`    | Alternative that logs a message intended to describe an upcoming user input prompt                  |
+#     | `star`      | Alternative that logs a message that starts with a star icon                                        |
+#     | `start`     | Same as `success`                                                                                   |
+#     | `success`   | Logs a success message that starts with green checkmark                                             |
+#     | `warn`      | Logs a bright yellow warning message                                                                |
 # @example
 #     logger info "An informative log"
+# @example
+#     logger md ~/README.md
 logg() {
   TYPE="$1"
   MSG="$2"

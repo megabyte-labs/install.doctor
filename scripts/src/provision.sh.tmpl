@@ -51,8 +51,7 @@
 #     [Install Doctor homepage](https://install.doctor)
 #     [Install Doctor documentation portal](https://install.doctor/docs) (includes tips, tricks, and guides on how to customize the system to your liking)
 
-{{ include "partials" "logg" -}}
-
+{{ include "partials" "logg" }}
 # @section Environment variables and system dependencies
 # @description Ensure Ubuntu / Debian run in `noninteractive` mode. Detect `START_REPO` format and determine appropriate git address,
 #     otherwise use the master Install Doctor branch
@@ -78,16 +77,8 @@ setEnvironmentVariables() {
   fi
 }
 
-# @description Ensure dependencies like `git` and `curl` are installed (among a few other lightweight system packages)
-ensureBasicDeps() {
-  {{ include "partials" "basic-deps" -}}
-}
-
-# @description Ensure Homebrew is installed and available in the `PATH`
-ensureHomebrew() {
-  {{ include "partials" "homebrew" -}}
-}
-
+{{ include "partials" "basic-deps" }}
+{{ include "partials" "homebrew" }}
 # @description Load default settings if it is in a CI setting
 setCIEnvironmentVariables() {
   if [ -n "$CI" ]; then
@@ -384,10 +375,10 @@ provisionLogic() {
   logg info "Setting environment variables" && setEnvironmentVariables
   logg info "Handling CI variables" && setCIEnvironmentVariables
   logg info "Ensuring WARP is disconnected" && ensureWarpDisconnected
+  logg info "Applying passwordless sudo" && setupPasswordlessSudo
   logg info "Ensuring system Homebrew dependencies are installed" && ensureBasicDeps
   logg info "Ensuring Homebrew is available" && ensureHomebrew
   logg info "Installing Homebrew packages" && ensureHomebrewDeps
-  logg info "Applying passwordless sudo" && setupPasswordlessSudo
   logg info "Handling Qubes dom0 logic (if applicable)" && handleQubesDom0
   logg info "Cloning / updating source repository" && cloneChezmoiSourceRepo
   logg info "Handling pre-provision logic" && initChezmoiAndPrompt
