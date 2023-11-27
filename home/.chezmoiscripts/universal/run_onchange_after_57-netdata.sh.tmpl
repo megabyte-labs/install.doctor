@@ -74,6 +74,9 @@ if command -v netdata-claim.sh > /dev/null; then
         logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/ to $NETDATA_ETC"
         sudo cp -rf "${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/" "$NETDATA_ETC"
 
+        logg info "Adding Blocky metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
+        sudo sed -i "/jobs:/a\  - name: blocky_local \n    url: 'http://127.0.0.1:4000/metrics'" "$NETDATA_ETC/go.d/prometheus.conf"
+
         # Backup current health alarm configuration and apply new one
         if [ -d /usr/local/lib/netdata ]; then
             NETDATA_LIB='/usr/local/lib/netdata'

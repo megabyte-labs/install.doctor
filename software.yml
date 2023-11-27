@@ -717,6 +717,10 @@ softwarePackages:
     _bin: blocky
     _github: https://github.com/0xERR0R/blocky
     _name: Blocky
+    _post:linux: |
+      cp -f "$HOME/.local/etc/blocky/config.yaml" /usr/local/etc/blocky/config.yaml
+      cp -f "$HOME/.local/etc/blocky/blocky.service" /usr/lib/systemd/system/blocky.service
+    _post:brew: cp -f "$HOME/.local/etc/blocky/config.yaml" "$(brew --prefix)/etc/blocky/config.yaml"
     _service: blocky
     _serviceEnabled: true
     brew: blocky
@@ -8405,7 +8409,7 @@ softwarePackages:
     _github: https://github.com/drakkan/sftpgo
     _home: null
     _name: sftpgo
-    _post: cp -f "$HOME/.local/etc/sftpgo.json" /usr/local/etc/sftpgo/sftpgo.json && sudo sftpgo initprovider
+    _post: cp -f "$HOME/.local/etc/sftpgo/sftpgo.json" /usr/local/etc/sftpgo/sftpgo.json && sudo sftpgo initprovider
     _service: sftpgo
     _serviceEnabled: true
     brew: sftpgo
