@@ -400,17 +400,28 @@ softwarePackages:
     choco: genymotion
     # TODO: Figure out how to install on Android
   pieces:
-    _bin:snap: pieces-os
+    _bin: pieces-for-developers
     _desc: Pieces is a first-in-kind productivity suite that optimizes developer tools and eliminates the chaos of context switching.
     _docs: https://docs.pieces.app/
     _github: false
     _home: https://pieces.app/
     _name: Pieces
+    _when:cask: '! test -d /Applications/Pieces.app && ! test -d $HOME/Applications/Pieces.app'
+    appinstaller: https://builds.pieces.app/stages/production/appinstaller/pieces_for_x.appinstaller
+    cask: pieces
+    exe: https://builds.pieces.app/stages/production/pieces_for_x/windows-exe/download
+    snap: pieces-for-developers
+  pieces-os:
+    _bin: pieces-os
+    _docs: https://docs.pieces.app/
+    _github: false
+    _home: https://pieces.app/
+    _name: Pieces OS
     _post:snap: sudo snap connect pieces-os:dotnet-runtime-aspnetcore
-    _when:script:darwin: '! test -d /Applications/Pieces.app && ! test -d $HOME/Applications/Pieces.app'
-    # TODO - Figure out how to deal with appinstaller
-    appinstaller: https://builds.pieces.app/stages/production/pieces_suite_windows/appinstaller/download
-    script:darwin: cd /tmp && curl -sSL https://builds.pieces.app/stages/production/macos_packaging/pkg/download > Pieces.pkg && sudo installer -pkg Pieces.pkg -target / && rm -f /tmp/Pieces.pkg
+    _when:cask: '! test -d /Applications/Pieces.app && ! test -d $HOME/Applications/Pieces.app'
+    appinstaller: https://builds.pieces.app/stages/production/appinstaller/os_server.appinstaller
+    cask: pieces-os
+    exe: https://builds.pieces.app/stages/production/os_server/windows-exe/download
     snap: pieces-os
   pieces-cli:
     _bin: pieces
@@ -3181,6 +3192,7 @@ softwarePackages:
     _github: https://github.com/withfig/autocomplete
     _home: https://fig.io/
     _name: Fig
+    _post: source ~/.config/shell/private.sh && fig login --token "$FIG_TOKEN"
     _when:cask: '! test -d "/Applications/Fig.app" && ! test -d "$HOME/Applications/Fig.app"'
     cask: fig
   steampipe:

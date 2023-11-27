@@ -44,6 +44,9 @@ export DOCKERHUB_REGISTRY_PASSWORD="$DOCKERHUB_TOKEN"
 ### Elevenlabs
 export ELEVENLABS_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ELEVENLABS_API_KEY")) }}{{ includeTemplate "secrets/ELEVENLABS_API_KEY" | decrypt | trim }}{{ else }}{{ env "ELEVENLABS_API_KEY" }}{{ end }}"
 
+### Fig
+export FIG_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "FIG_TOKEN")) }}{{ includeTemplate "secrets/FIG_TOKEN" | decrypt | trim }}{{ else }}{{ env "FIG_TOKEN" }}{{ end }}"
+
 ### GitHub
 export GH_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITHUB_TOKEN")) }}{{ includeTemplate "secrets/GITHUB_TOKEN" | decrypt | trim }}{{ else }}{{ env "GITHUB_TOKEN" }}{{ end }}"
 export GITHUB_TOKEN="$GH_TOKEN"
