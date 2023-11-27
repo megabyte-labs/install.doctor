@@ -389,7 +389,11 @@ export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/ripgrep/config"
 
 ### Ruby
 # Add Homebrew Ruby install location to PATH (for macOS and tools that require a more recent version than the bundled system version)
-export PATH="/usr/local/opt/ruby/bin:$PATH"
+if [ -d /usr/local/opt/ruby/bin ]; then
+  export PATH="/usr/local/opt/ruby/bin:$PATH"
+elif [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/ruby/bin" ]; then
+  export PATH="${HOMEBREW_PREFIX:-/opt/homebrew}/opt/ruby/bin:$PATH"
+fi
 export GEM_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/gems"
 export PATH="$PATH:$GEM_HOME/bin"
 
