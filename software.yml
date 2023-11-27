@@ -6382,7 +6382,7 @@ softwarePackages:
     _bin: mutagen
     _github: https://github.com/mutagen-io/mutagen
     _name: Mutagen
-    _post: mutagen daemon start && mutagen daemon register
+    _post: mutagen daemon register
     brew: mutagen-io/mutagen/mutagen
   newman:
     _bin: newman
@@ -8034,7 +8034,7 @@ softwarePackages:
     _home: https://rkhunter.sourceforge.net/
     _name: rkhunter
     _notes: The _post script removes an entry for VMware with a space in it that causes rkhunter to hiccup
-    _post: export PATH="$(echo "$PATH" | sed 's/VMware Fusion.app//')" && sudo rkhunter --update && sudo rkhunter --propupd
+    _post: export PATH="$(echo "$PATH" | sed 's/VMware Fusion.app//')" && sudo rkhunter --propupd && sudo rkhunter --update
     _service:pacman: cronie
     apt: rkhunter
     brew: rkhunter
@@ -8415,7 +8415,7 @@ softwarePackages:
     _github: https://github.com/drakkan/sftpgo
     _home: null
     _name: sftpgo
-    _post: cp -f "$HOME/.local/etc/sftpgo.json" /usr/local/etc/sftpgo/sftpgo.json && sudo sftpgo initprovider
+    _post: sudo mkdir -p /usr/local/etc/sftpgo && sudo cp -f "$HOME/.local/etc/sftpgo/sftpgo.json" /usr/local/etc/sftpgo/sftpgo.json && sudo sftpgo initprovider
     _service: sftpgo
     _serviceEnabled: true
     brew: sftpgo
@@ -8923,7 +8923,7 @@ softwarePackages:
     _home: null
     _name: Stubby
     _service: stubby
-    _post:brew:darwin: bash "$(brew --prefix stubby)/sbin/stubby-setdns-macos.sh" && brew services start stubby
+    _post:brew:darwin: bash "$(brew --prefix stubby)/sbin/stubby-setdns-macos.sh"
     brew:darwin: stubby
   surge:
     _bin: surge
@@ -9509,7 +9509,7 @@ softwarePackages:
     _github: https://github.com/tfutils/tfenv
     _home: https://github.com/tfutils/tfenv
     _name: tfenv
-    _post: if ! command -v terraform; then tfenv use latest; fi
+    _post: if ! command -v terraform > /dev/null; then tfenv use latest; fi
     ansible:darwin: professormanhattan.tfenv
     ansible:linux: professormanhattan.tfenv
     brew: tfenv
@@ -10033,7 +10033,8 @@ softwarePackages:
     _github: Not open-source
     _home: https://visualstudio.microsoft.com/
     _name: Visual Studio
-    _post:cask: 'APP_LINK="$(find /usr/local/Caskroom/visual-studio -mindepth 2 -maxdepth 2 -name "*.app*" | head -n1)" && open "$APP_LINK"'
+    # TODO - Figure out why we included this _post script
+    # _post:cask: 'APP_LINK="$(find "${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/visual-studio" -mindepth 2 -maxdepth 2 -name "*.app*" | head -n1)" && open "$APP_LINK"'
     _when:cask: '! test -d "/Applications/Visual Studio.app" && ! test -d "$HOME/Applications/Visual Studio.app"'
     ansible:windows: professormanhattan.visualstudio
     cask: visual-studio

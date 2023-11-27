@@ -955,7 +955,6 @@ softwareGroups:
     - skate
     - ssh-vault
     - sshuttle
-    - stubby
     - teller
     - vault
     - wireguard-client
@@ -1533,6 +1532,8 @@ softwareGroups:
       note: Deprecated because browser extensions do a better job of unifying bookmarks. Namely, the extension called Floccus allows cross-browser bookmark syncing. The Raindrop package also requires a paid subscription for advanced features.
     - pkg: rvm
       note: Deprecated in favor of using ASDF.
+    - pkg: stubby
+      note: Causes issues when other programs are modifying the DNS resolving endpoint. Might be worth reinvestigating but ideally the DNS should be encrypted on pfSense or use CloudFlare WARP to handle it.
     - pkg: temps
       note: macOS menu bar app for weather. Buggy software.
     - pkg: taskwarrior
@@ -1667,17 +1668,18 @@ softwarePlugins:
   docker:
     cmd: bash -c 'if ! docker extension list | grep "$(echo "{PLUGIN}" | sed 's/\:.*//')" > /dev/null; then echo y | docker extension install "{PLUGIN}"; fi'
     plugins:
-      - ambassador/telepresence-docker-extension:1.0.13
-      - docker/disk-usage-extension:0.2.7
-      - docker/logs-explorer-extension:0.2.3
+      - ambassador/telepresence-docker-extension:1.0.19
+      - docker/disk-usage-extension:0.2.8
+      - docker/logs-explorer-extension:0.2.5
       - docker/resource-usage-extension
       - docker/volumes-backup-extension:1.1.4
       - drone/drone-ci-docker-extension:0.2.0
+      - mutagenio/docker-desktop-extension:0.17.3
       - okteto/docker-desktop-extension:0.3.3
-      - portainer/portainer-docker-extension:2.18.4
+      - portainer/portainer-docker-extension:2.19.3
       - redhatdeveloper/openshift-dd-ext
-      - snyk/snyk-docker-desktop-extension
-      - tailscale/docker-extension:1.0.0
+      - snyk/snyk-docker-desktop-extension:0.7.4
+      - tailscale/docker-extension:1.0.1
     when: docker extension list &> /dev/null
   docker_images:
     cmd: null
