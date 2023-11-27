@@ -117,7 +117,7 @@ function gVisorPreBuilt() {
 function gVisorGo() {
     # Official build timed out - use Go method
     logg info 'Installing gVisor using the Go fallback method'
-    sudo chown -Rf "$(whoami)" /usr/local/src/gvisor
+    sudo chown -Rf sudo chown -Rf rclone:rclone "$PRIVATE_SHARE" || sudo chown -Rf rclone:$(id -g -n) "$PRIVATE_SHARE" /usr/local/src/gvisor
     cd /usr/local/src/gvisor
     echo "module runsc" > go.mod
     GO111MODULE=on go get gvisor.dev/gvisor/runsc@go

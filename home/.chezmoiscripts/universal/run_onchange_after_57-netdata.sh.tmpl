@@ -66,8 +66,8 @@ if command -v netdata-claim.sh > /dev/null; then
             NETDATA_ETC='/usr/local/etc/netdata/'
         elif [ -d /etc/netdata ]; then
             NETDATA_ETC='/etc/netdata'
-        elif [ -d "$HOMEBREW_PREFIX/etc/netdata" ]; then
-            NETDATA_ETC="$HOMEBREW_PREFIX/etc/netdata"
+        elif [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/netdata" ]; then
+            NETDATA_ETC="${HOMEBREW_PREFIX:-/opt/homebrew}/etc/netdata"
         else
             logg error 'No etc location found for netdata' && exit 1
         fi
@@ -79,6 +79,8 @@ if command -v netdata-claim.sh > /dev/null; then
             NETDATA_LIB='/usr/local/lib/netdata'
         elif [ -d /usr/lib/netdata ]; then
             NETDATA_LIB='/usr/lib/netdata'
+        elif [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/lib/netdata" ]; then
+            NETDATA_LIB="${HOMEBREW_PREFIX:-/opt/homebrew}/lib/netdata"
         else
             logg error 'No lib location found for netdata' && exit 1
         fi

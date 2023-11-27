@@ -46,8 +46,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
         sudo dscl . create /Groups/"${GROUP}"
         # Ensure the group has a GID
         if [[ "$(sudo dscl . read /Groups/"$group" gid 2>&1)" == *"No such key"* ]]; then
-            MAX_ID_GROUP=$(dscl . -list /Groups gid | awk '{print $2}' | sort -ug | tail -1)
-            GROUP_ID=$((MAX_ID_GROUP+1))
+            MAX_ID_GROUP="$(dscl . -list /Groups gid | awk '{print $2}' | sort -ug | tail -1)"
+            GROUP_ID="$((MAX_ID_GROUP+1))"
             sudo dscl . create /Groups/"${GROUP}" gid "$GROUP_ID"
         fi
     else
@@ -68,7 +68,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
         fi
         # Ensure the user has a UniqueID
         if [[ "$(sudo dscl . read /Users/"${GROUP}" UniqueID 2>&1)" == *"No such key"* ]]; then
-            MAX_ID_USER=$(dscl . -list /Users UniqueID | sort -nr -k 2 | head -1 | grep -oE "[0-9]+$")
+            MAX_ID_USER="$(dscl . -list /Users UniqueID | sort -nr -k 2 | head -1 | grep -oE "[0-9]+$")"
             USER_ID="$((MAX_ID_USER+1))"
             sudo dscl . create /Users/"${GROUP}" UniqueID "$USER_ID"
         fi
