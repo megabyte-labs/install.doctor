@@ -25,7 +25,7 @@ if [ -n "$ROOT_FOLDER" ]; then
     logg info "Copying ~/.bashrc to $ROOT_FOLDER/.bashrc" && sudo cp -f "$HOME/.bashrc" "$ROOT_FOLDER/.bashrc"
     logg info "Copying ~/.zshrc to $ROOT_FOLDER/.zshrc" && sudo cp -f "$HOME/.zshrc" "$ROOT_FOLDER/.zshrc"
     logg info "Ensuring ~/.config folder exists" && sudo mkdir -p "$ROOT_FOLDER/.config"
-    logg info "Copying ~/.config/shell to $ROOT_FOLDER/.config/shell" && sudo rm -rf "$HOME/.config/shell" && sudo cp -rf "$HOME/.config/shell" "$ROOT_FOLDER/.config/shell"
+    logg info "Copying ~/.config/shell to $ROOT_FOLDER/.config/shell" && sudo mkdir -p "$ROOT_FOLDER/.config" && sudo rm -rf "$ROOT_FOLDER/.config/shell" && sudo cp -rf "$HOME/.config/shell" "$ROOT_FOLDER/.config/shell"
 fi
 
 {{ end -}}

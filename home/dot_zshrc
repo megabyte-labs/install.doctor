@@ -25,7 +25,8 @@ case $- in
 esac
 
 ### Misc.
-export HISTFILE="$XDG_STATE_HOME/zsh/history"
+[ -d "${XDG_STATE_HOME:-$HOME/.local/state}/zsh" ] || mkdir -p "${XDG_STATE_HOME:-$HOME/.local/state}/zsh"
+export HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
 export ZLE_RPROMPT_INDENT=0
 export WORDCHARS=${WORDCHARS//\/}
 export PROMPT_EOL_MARK=
