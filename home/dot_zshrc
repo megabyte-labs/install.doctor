@@ -16,6 +16,11 @@ case $- in
     *) return;;
 esac
 
+### Escape if user is root
+if [ "$USER" = 'root' ]; then
+  return
+fi
+
 ### Misc.
 export HISTFILE="$XDG_STATE_HOME/zsh/history"
 export ZLE_RPROMPT_INDENT=0

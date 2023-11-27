@@ -40,7 +40,7 @@ if command -v gitomatic > /dev/null && command -v jq > /dev/null && command -v y
     done < <(find "$USER_FOLDER" -mindepth 1 -maxdepth 1 -type d)
 
     ### Handle root user config
-    if [ -f /root/.config/chezmoi.chezmoi.yaml ]; then
+    if [ -f /root/.config/chezmoi/chezmoi.yaml ]; then
         for IM in $(yq eval -o=j /root/.config/chezmoi.chezmoi.yaml | jq -cr '.data.user.gitomatic[]'); do
             GIT="$(echo "$IM" | jq -r '.git' -)"
             GIT_PATH="$(echo "$IM" | jq -r '.path' -)"

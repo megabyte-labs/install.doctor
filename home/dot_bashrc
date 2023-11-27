@@ -46,6 +46,11 @@ case $- in
     *) return;;
 esac
 
+### Escape if user is root
+if [ "$USER" = 'root' ]; then
+  return
+fi
+
 ### History
 export HISTFILE="$XDG_STATE_HOME/bash/history"
 

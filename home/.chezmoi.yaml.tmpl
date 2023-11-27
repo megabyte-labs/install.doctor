@@ -208,7 +208,7 @@ data:
       username: "{{ $githubUsername }}"
     gitomatic:
       - git: "{{ default "git@github.com:megabyte-labs/install.doctor.git" (env "START_REPO") }}"
-        path: /usr/local/src/install.doctor
+        path: "~/.local/share/chezmoi"
     gmail:
       username: "{{ $gmailAddress }}"
     gpg:

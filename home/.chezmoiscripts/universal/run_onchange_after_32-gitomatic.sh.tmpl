@@ -30,16 +30,21 @@ function gitomaticSetup() {
         ### Copy bin to /usr/local/bin
         logg info "Copying $HOME/.local/bin/gitomatic-service to /usr/local/bin/gitomatic-service"
         sudo cp -f "$HOME/.local/bin/gitomatic-service" /usr/local/bin/gitomatic-service
+
+        ### Copy gitomatic to global directory
+        if [ ! -f /usr/local/bin/gitomatic ]; then
+            logg info 'Copying gitomatic executable to /usr/local/bin/gitomatic' && sudo cp -f "$(which gitomatic)" /usr/local/bin/gitomatic
+        fi
         
         if [ -d /Applications ] && [ -d /System ]; then
             ### macOS
             logg info 'Copying gitomatic plist file to /Library/LaunchDaemons'
-            sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitomatic/gitomatic.plist" /Library/LaunchDaemons/gitomatic.plist
+            sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitomatic/com.github.muesli.gitomatic.plist" /Library/LaunchDaemons/com.github.muesli.gitomatic.plist
             if ! sudo launchctl list | grep 'gitomatic' > /dev/null; then
-                logg info 'Running sudo launchctl load /Library/LaunchDaemons/gitomatic.plist'
-                sudo launchctl load /Library/LaunchDaemons/gitomatic.plist
-                logg info 'Running sudo launchctl start /Library/LaunchDaemons/gitomatic.plist'
-                sudo launchctl start /Library/LaunchDaemons/gitomatic.plist
+                logg info 'Running sudo launchctl load /Library/LaunchDaemons/com.github.muesli.gitomatic.plist'
+                sudo launchctl load /Library/LaunchDaemons/com.github.muesli.gitomatic.plist
+                logg info 'Running sudo launchctl start /Library/LaunchDaemons/com.github.muesli.gitomatic.plist'
+                sudo launchctl start /Library/LaunchDaemons/com.github.muesli.gitomatic.plist
             else
                 logg info "gitomatic services appear to already be loaded"
             fi
