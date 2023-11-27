@@ -42,7 +42,7 @@ fi
 ### Ensure folders exist
 for FOLDER in "$CACHE_FOLDER" "$CONFIG_FOLDER" "$LOG_FOLDER" "$MOUNT_PATH"; do
     if [ ! -d "$FOLDER" ]; then
-        sudo mkdir -p "$FOLDER" || echo "ERROR: Need permissions for $FOLDER"
+        mkdir -p "$FOLDER" || sudo mkdir -p "$FOLDER"
         sudo chmod 755 "$FOLDER"
         if command -v own > /dev/null; then
           sudo own "$FOLDER"
