@@ -125,7 +125,7 @@ fi
 ### McFly
 export MCFLY_PROMPT="❯"
 if [ -d /Applications ] && [ -d /System ]; then
-  if [ "$(defaults read -g AppleInterfaceStyle)" != "Dark" ]; then
+  if [ "$(defaults read -g AppleInterfaceStyle 2> /dev/null)" != "Dark" ]; then
       export MCFLY_LIGHT=TRUE
   fi
 fi

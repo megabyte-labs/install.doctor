@@ -202,84 +202,86 @@ generate_bar_disk() {
 }
 
 print_banner() {
+  ### Fancy banner
   if [ ! -f "${XDG_CACHE_HOME:-$HOME/.cache}/hey-banner-printed" ]; then
-    if command -v lolcat >/dev/null && command -v figlet >/dev/null; then
-      figlet "Hey" | lolcat -f
+    if command -v lolcat > /dev/null && command -v figlet > /dev/null; then
+      figlet "Hey, wsg?" | lolcat -f
       printf "\\n"
-    elif command -v figlet >/dev/null; then
-      printf "\\n%s\\n" "$(figlet -t -f "$BANNER_FONTPATH" " Hey")"
+      mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}"
+      touch "${XDG_CACHE_HOME:-$HOME/.cache}/hey-banner-printed"
+    elif command -v figlet > /dev/null; then
+      figlet "Hey, wsg?"
       printf "\\n"
-    fi
-    mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}"
-    touch "${XDG_CACHE_HOME:-$HOME/.cache}/hey-banner-printed"
-  else
-    if command -v neofetch > /dev/null; then
-      neofetch
+      mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}"
+      touch "${XDG_CACHE_HOME:-$HOME/.cache}/hey-banner-printed"
     fi
   fi
-
-  printf "\\n"
-  printf "       \\033[1;37mHostname:\\033[0m %s\\n" "$(hostname)"
-  printf "\\n"
-
-  if [ -f /etc/os-release ]; then
-    . /etc/os-release
-
-    if [ "$ID" = "debian" ]; then
-      banner_distro_icon="$BANNER_DEBIAN_ICON"
-      banner_distro_color="$BANNER_DEBIAN_COLOR"
-      banner_distro_name="Debian"
-      banner_distro_version="$(cat /etc/debian_version)"
-    elif [ "$ID" = "fedora" ]; then
-      banner_distro_icon="$BANNER_FEDORA_ICON"
-      banner_distro_color="$BANNER_FEDORA_COLOR"
-      banner_distro_name="Fedora"
-      banner_distro_version="$VERSION_ID"
-    else
-      banner_distro_icon="$OS_ICON"
-      banner_distro_color="0"
-      if [ -n "$NAME" ]; then
-        banner_distro_name="$NAME"
-      elif [ -n "$PRETTY_NAME" ]; then
-        banner_distro_name="$PRETTY_NAME"
-      else
-        banner_distro_name="Linux"
-      fi
-      if [ -n "$VERSION" ]; then
-        banner_distro_version="$VERSION"
-      elif [ -n "$VERSION_ID" ]; then
-        banner_distro_version="$VERSION_ID"
-      elif [ -n "$BUILD_ID" ]; then
-        banner_distro_version="$BUILD_ID"
-      else
-        banner_distro_version="Version Unknown"
-      fi
-    fi
-
-    banner_distro_space="$(generate_space "$banner_distro_name" 13)"
-    if [ "$(hostname)" = 'dom0' ]; then
-      # Qubes dom0
-      banner_distro_space="$(generate_space "$NAME" 13)"
-      printf "       \\033[%sm%s   %s\\033[0m%s%s\\n" "$banner_distro_color" "" "$NAME" "$banner_distro_space" "$VERSION"
-    else
-      printf "       \\033[%sm%s   %s\\033[0m%s%s\\n" "$banner_distro_color" "$banner_distro_icon" "$banner_distro_name" "$banner_distro_space" "$banner_distro_version"
-    fi
-    printf "       \\033[%sm%s   Linux\\033[0m         %s\\n" "$BANNER_KERNEL_COLOR" "$BANNER_KERNEL_ICON" "$(cut -d ' ' -f 3 </proc/version)"
-    printf "       \\033[%sm%s   Uptime\\033[0m        %s\\n" "$BANNER_UPTIME_COLOR" "$BANNER_UPTIME_ICON" "$(uptime -p | cut -d ' ' -f 2-)"
+  
+  ### Information section
+  if command -v neofetch > /dev/null; then
+    neofetch
   else
-    if [ -d '/Applications' ] && [ -d '/System' ]; then
-      printf "       \\033[%sm%s   OS       \\033[0m         %s\\n" "$UPDATES_ZERO_COLOR" "" "macOS $(sw_vers -productVersion) / Build $(sw_vers -buildVersion)"
-      printf "       \\033[%sm%s   UUID     \\033[0m         %s\\n" "$PODMAN_RUNNING_COLOR" "" "$(ioreg -d2 -c IOPlatformExpertDevice | awk -F\" '/IOPlatformUUID/{print $(NF-1)}')"
-      printf "       \\033[%sm%s   LAN IP   \\033[0m         %s\\n" "$BANNER_KERNEL_COLOR" "ﯱ" "$(ifconfig en0 2>/dev/null | grep 'inet ' | cut -d ' ' -f 2)"
-      ### Disabled because it causes slight delay due to server call for public IP
-      # if command -v timeout > /dev/null; then
-      #   IP_ADDR_PUB="$(timeout 1 sh -c 'curl -sSL ifconfig.me')"
-      # else
-      #   IP_ADDR_PUB="$(sh -c 'curl -sSL ifconfig.me')"
-      # fi
-      # if [ -n "$IP_ADDR_PUB" ]; then
-      #   printf "       \\033[%sm%s   Public IP\\033[0m         %s\\n" "$UPDATES_SECURITY_COLOR" "" "$IP_ADDR_PUB"
-      # fi
+    ## non-neofetch
+    printf "\\n"
+    printf "       \\033[1;37mHostname:\\033[0m %s\\n" "$(hostname)"
+    printf "\\n"
+    if [ -f /etc/os-release ]; then
+      . /etc/os-release
+      if [ "$ID" = "debian" ]; then
+        banner_distro_icon="$BANNER_DEBIAN_ICON"
+        banner_distro_color="$BANNER_DEBIAN_COLOR"
+        banner_distro_name="Debian"
+        banner_distro_version="$(cat /etc/debian_version)"
+      elif [ "$ID" = "fedora" ]; then
+        banner_distro_icon="$BANNER_FEDORA_ICON"
+        banner_distro_color="$BANNER_FEDORA_COLOR"
+        banner_distro_name="Fedora"
+        banner_distro_version="$VERSION_ID"
+      else
+        banner_distro_icon="$OS_ICON"
+        banner_distro_color="0"
+        if [ -n "$NAME" ]; then
+          banner_distro_name="$NAME"
+        elif [ -n "$PRETTY_NAME" ]; then
+          banner_distro_name="$PRETTY_NAME"
+        else
+          banner_distro_name="Linux"
+        fi
+        if [ -n "$VERSION" ]; then
+          banner_distro_version="$VERSION"
+        elif [ -n "$VERSION_ID" ]; then
+          banner_distro_version="$VERSION_ID"
+        elif [ -n "$BUILD_ID" ]; then
+          banner_distro_version="$BUILD_ID"
+        else
+          banner_distro_version="Version Unknown"
+        fi
+      fi
+      banner_distro_space="$(generate_space "$banner_distro_name" 13)"
+      if [ "$(hostname)" = 'dom0' ]; then
+        # Qubes dom0
+        banner_distro_space="$(generate_space "$NAME" 13)"
+        printf "       \\033[%sm%s   %s\\033[0m%s%s\\n" "$banner_distro_color" "" "$NAME" "$banner_distro_space" "$VERSION"
+      else
+        printf "       \\033[%sm%s   %s\\033[0m%s%s\\n" "$banner_distro_color" "$banner_distro_icon" "$banner_distro_name" "$banner_distro_space" "$banner_distro_version"
+      fi
+      printf "       \\033[%sm%s   Linux\\033[0m         %s\\n" "$BANNER_KERNEL_COLOR" "$BANNER_KERNEL_ICON" "$(cut -d ' ' -f 3 </proc/version)"
+      printf "       \\033[%sm%s   Uptime\\033[0m        %s\\n" "$BANNER_UPTIME_COLOR" "$BANNER_UPTIME_ICON" "$(uptime -p | cut -d ' ' -f 2-)"
+    else
+      if [ -d '/Applications' ] && [ -d '/System' ]; then
+        printf "       \\033[%sm%s   OS       \\033[0m         %s\\n" "$UPDATES_ZERO_COLOR" "" "macOS $(sw_vers -productVersion) / Build $(sw_vers -buildVersion)"
+        printf "       \\033[%sm%s   UUID     \\033[0m         %s\\n" "$PODMAN_RUNNING_COLOR" "" "$(ioreg -d2 -c IOPlatformExpertDevice | awk -F\" '/IOPlatformUUID/{print $(NF-1)}')"
+        printf "       \\033[%sm%s   LAN IP   \\033[0m         %s\\n" "$BANNER_KERNEL_COLOR" "ﯱ" "$(ifconfig en0 2>/dev/null | grep 'inet ' | cut -d ' ' -f 2)"
+        ### Disabled because it causes slight delay due to server call for public IP
+        # if command -v timeout > /dev/null; then
+        #   IP_ADDR_PUB="$(timeout 1 sh -c 'curl -sSL ifconfig.me')"
+        # else
+        #   IP_ADDR_PUB="$(sh -c 'curl -sSL ifconfig.me')"
+        # fi
+        # if [ -n "$IP_ADDR_PUB" ]; then
+        #   printf "       \\033[%sm%s   Public IP\\033[0m         %s\\n" "$UPDATES_SECURITY_COLOR" "" "$IP_ADDR_PUB"
+        # fi
+      fi
     fi
   fi
 }
