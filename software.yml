@@ -4914,7 +4914,7 @@ softwarePackages:
     _name: Java
     ansible: professormanhattan.java
     apt: openjdk-11-jdk
-    brew: java
+    brew: openjdk
     choco: jdk11
     dnf: java-11-openjdk-devel.x86_64
     pacman: jdk-openjdk
@@ -5196,6 +5196,14 @@ softwarePackages:
     brew: kompose
     choco: kubernetes-kompose
     snap: kompose
+  kustomize:
+    _bin: kustomize
+    _github: https://github.com/kubernetes-sigs/kustomize
+    _name: Kustomize
+    brew: kustomize
+    port: kustomize
+    choco: kustomize
+    go: sigs.k8s.io/kustomize/kustomize/v5@latest
   kubeval:
     _bin: kubeval
     _desc: Validate your Kubernetes configuration files, supports multiple Kubernetes versions
@@ -8549,6 +8557,14 @@ softwarePackages:
     go: github.com/charmbracelet/skate@latest
     nix: nixpkgs.skate
     pacman: skate
+  skaffold:
+    _bin: skaffold
+    _name: Skaffold
+    _github: https://github.com/GoogleContainerTools/skaffold
+    brew: skaffold
+    port: skaffold
+    choco: skaffold
+    scoop: extras/skaffold
   skm:
     _bin: skm
     _desc: A simple and powerful SSH keys manager
@@ -9910,6 +9926,7 @@ softwarePackages:
     _github: https://github.com/vim/vim
     _home: https://www.vim.org/
     _name: VIM
+    _post: vim +PlugInstall +qall +silent > /dev/null
     ansible: professormanhattan.vim
     apt: vim
     brew: vim

@@ -27,14 +27,19 @@ if [ -t 1 ]; then
         true
       }
     fi
-
-    ### Java (asdf)
-    [ ! -f "$ASDF_DATA_DIR/plugins/java/set-java-home.bash" ] || . "$ASDF_DATA_DIR/plugins/java/set-java-home.bash"
   fi
 fi
 
 ### Import Common Settings
 [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile.sh" ] || . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile.sh"
+
+### Escape if user is root
+if [ "$USER" = 'root' ]; then
+  return
+fi
+
+### Java (asdf)
+[ ! -f "$ASDF_DATA_DIR/plugins/java/set-java-home.bash" ] || . "$ASDF_DATA_DIR/plugins/java/set-java-home.bash"
 
 ### Ble.sh
 # Loaded with bash-it
@@ -45,11 +50,6 @@ case $- in
   *i*) ;;
     *) return;;
 esac
-
-### Escape if user is root
-if [ "$USER" = 'root' ]; then
-  return
-fi
 
 ### History
 export HISTFILE="$XDG_STATE_HOME/bash/history"

@@ -10,16 +10,19 @@ export BASH_SUPPORT=true
 ### Import Common Settings
 [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile.sh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile.sh"
 
+### Escape if user is root
+if [ "$USER" = 'root' ]; then
+  return
+fi
+
+### Java (asdf)
+[ ! -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ] || source "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
+
 # If not running interactively, don't do anything
 case $- in
   *i*) ;;
     *) return;;
 esac
-
-### Escape if user is root
-if [ "$USER" = 'root' ]; then
-  return
-fi
 
 ### Misc.
 export HISTFILE="$XDG_STATE_HOME/zsh/history"
@@ -428,9 +431,6 @@ fi
 
 ### iTerm2
 [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/iterm/iterm2.zsh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/iterm/iterm2.zsh"
-
-### Java (asdf)
-[ ! -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ] || source "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
 
 ### Navi (Ctrl+G)
 ! command -v navi > /dev/null || eval "$(navi widget zsh)"

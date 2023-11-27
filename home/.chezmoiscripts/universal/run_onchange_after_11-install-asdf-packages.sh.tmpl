@@ -11,6 +11,11 @@
 {{- includeTemplate "universal/profile" }}
 {{- includeTemplate "universal/logg" }}
 
+### Re-source ~/.bashrc if necessary
+if [ -z "$ASDF_DIR" ]; then
+  logg info 'ASDF_DIR is not defined so ~/.bashrc will be sourced' && source ~/.bashrc
+fi
+
 if [ -f "$ASDF_DIR/asdf.sh" ] && [ -f ~/.tool-versions ]; then
   logg info 'Sourcing asdf.sh'
   . ${ASDF_DIR}/asdf.sh
