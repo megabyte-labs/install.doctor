@@ -17,13 +17,13 @@ ensureNetdataOwnership() {
     ### Ensure /usr/local/var/lib/netdata/cloud.d is owned by user
     if [ -d /usr/local/var/lib/netdata ]; then
         logg info 'Ensuring permissions are correct on /usr/local/var/lib/netdata'
-        sudo chown -Rf netdata:netdata /usr/local/var/lib/netdata || sudo chown -Rf netdata:$(id -g -n) /usr/local/var/lib/netdata
+        sudo chown -Rf netdata:netdata /usr/local/var/lib/netdata 2> /dev/null || sudo chown -Rf netdata:$(id -g -n) /usr/local/var/lib/netdata
     elif [ -d /var/lib/netdata ]; then
         logg info 'Ensuring permissions are correct on /var/lib/netdata'
-        sudo chown -Rf netdata:netdata /var/lib/netdata || sudo chown -Rf netdata:$(id -g -n) /var/lib/netdata
-    elif [ -d "$HOMEBREW_PREFIX/var/lib/netdata" ]; then
-        logg info "Ensuring permissions are correct on $HOMEBREW_PREFIX/var/lib/netdata"
-        sudo chown -Rf netdata:netdata "$HOMEBREW_PREFIX/var/lib/netdata" || sudo chown -Rf netdata:$(id -g -n) "$HOMEBREW_PREFIX/var/lib/netdata"
+        sudo chown -Rf netdata:netdata /var/lib/netdata 2> /dev/null || sudo chown -Rf netdata:$(id -g -n) /var/lib/netdata
+    elif [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata" ]; then
+        logg info "Ensuring permissions are correct on ${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata"
+        sudo chown -Rf netdata:netdata "${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata" 2> /dev/null || sudo chown -Rf netdata:$(id -g -n) "${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata"
     else
         logg warn 'No /var/lib/netdata folder found'
     fi

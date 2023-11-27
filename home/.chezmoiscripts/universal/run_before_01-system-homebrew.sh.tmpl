@@ -56,17 +56,14 @@ if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
   if ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
     echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
   fi
-  # TODO - Section below attempts to add timeout to macOS softwareupdate command but is failing to prompt for password (which is required even with /etc/sudoers set up
-  # if command -v gtimeout > /dev/null; then
-  #   logg info 'Ensuring system software is upgraded (timing out after 50 minutes if system upgrade fails)'
-  #   gtimeout 3000 sudo softwareupdate -i -a -R || logg warn 'The system update command timed out after 50 minutes'
-  # else
-  #   # If gtimeout is unavailable, then attempt system upgrade without a timeout (which usually works on fresh systems)
-  #   logg info 'Applying OS upgrades (if available)'
-  #   sudo softwareupdate -i -a -R || logg error 'Failed to perform a system update via sudo softwareupdate -i -a -R'
-  # fi
-  logg info 'Applying OS upgrades (if available)'
-  sudo softwareupdate -i -a -R || logg error 'Failed to perform a system update via sudo softwareupdate -i -a -R'
+  if command -v gtimeout > /dev/null; then
+    logg info 'Ensuring system software is upgraded (timing out after 50 minutes if system upgrade fails)'
+    sudo gtimeout 3000 softwareupdate -i -a -R || logg warn 'The system update command timed out after 50 minutes'
+  else
+    # If gtimeout is unavailable, then attempt system upgrade without a timeout (which usually works on fresh systems)
+    logg info 'Applying OS upgrades (if available)'
+    sudo softwareupdate -i -a -R || logg error 'Failed to perform a system update via sudo softwareupdate -i -a -R'
+  fi
   logg info 'If system updates were downloaded / installed, a reboot might be required.'
   if command -v gsed > /dev/null; then
     sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"

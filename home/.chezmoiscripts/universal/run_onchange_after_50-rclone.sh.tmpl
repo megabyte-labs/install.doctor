@@ -85,12 +85,12 @@ EOT
     if command -v add-user > /dev/null; then
         sudo add-user rclone
     fi
-    sudo chown -Rf rclone:rclone /var/cache/rclone || sudo chown -Rf rclone:$(id -g -n) /var/cache/rclone
+    sudo chown -Rf rclone:rclone /var/cache/rclone 2> /dev/null || sudo chown -Rf rclone:$(id -g -n) /var/cache/rclone
 
     logg info 'Ensuring /var/log/rclone exists'
     sudo mkdir -p /var/log/rclone
     sudo chmod 770 /var/log/rclone
-    sudo chown -Rf rclone:rclone /var/log/rclone || sudo chown -Rf rclone:$(id -g -n) /var/log/rclone
+    sudo chown -Rf rclone:rclone /var/log/rclone 2> /dev/null || sudo chown -Rf rclone:$(id -g -n) /var/log/rclone
 
     logg info 'Adding ~/.local/bin/rclone-mount to /usr/local/bin'
     sudo cp -f "$HOME/.local/bin/rclone-mount" /usr/local/bin/rclone-mount
@@ -117,7 +117,7 @@ EOT
             logg info "Ensuring /mnt/$SERVICE_ID is created with proper permissions"
             sudo mkdir -p "/mnt/$SERVICE_ID"
             sudo chmod 770 "/mnt/$SERVICE_ID"
-            sudo chown -Rf rclone:rclone "/mnt/$SERVICE_ID" || sudo chown -Rf rclone:$(id -g -n) "/mnt/$SERVICE_ID"
+            sudo chown -Rf rclone:rclone "/mnt/$SERVICE_ID" 2> /dev/null || sudo chown -Rf rclone:$(id -g -n) "/mnt/$SERVICE_ID"
 
             ### Enable / restart the service
             logg info "Enabling / restarting the $SERVICE_ID S3 service"
