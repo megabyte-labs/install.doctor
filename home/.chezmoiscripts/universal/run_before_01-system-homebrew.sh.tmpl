@@ -53,7 +53,7 @@ fi
 
 ### System upgrade on macOS
 if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
-  if ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
+  if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
     echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
   fi
   if command -v gtimeout > /dev/null; then
