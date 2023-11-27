@@ -3300,8 +3300,8 @@ softwarePackages:
     exe: https://github.com/fission/fission/releases/download/v1.19.0/fission-v1.19.0-windows-amd64.exe
     github: github.com/fission/fission
     nix-env: nixos.fission
-    script:darwin: cd /tmp && curl -Lo fission https://github.com/fission/fission/releases/download/v1.19.0/fission-v1.19.0-darwin-amd64 && chmod +x fission && sudo mv fission /usr/local/bin/
-    script:linux: cd /tmp && curl -Lo fission https://github.com/fission/fission/releases/download/v1.19.0/fission-v1.19.0-linux-amd64 && chmod +x fission && sudo mv fission /usr/local/bin/
+    script:darwin: cd /tmp && curl -sSLo fission https://github.com/fission/fission/releases/download/v1.19.0/fission-v1.19.0-darwin-amd64 && chmod +x fission && sudo mv fission /usr/local/bin/
+    script:linux: cd /tmp && curl -sSLo fission https://github.com/fission/fission/releases/download/v1.19.0/fission-v1.19.0-linux-amd64 && chmod +x fission && sudo mv fission /usr/local/bin/
   fkill:
     _bin: fkill
     _desc: Fabulously kill processes. Cross-platform
@@ -8522,8 +8522,8 @@ softwarePackages:
     _name: shdoc
     ansible:darwin: professormanhattan.shdoc
     ansible:linux: professormanhattan.shdoc
-    script:darwin: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install && cd /tmp && rm -rf shdoc
-    script:linux: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install && cd /tmp && rm -rf shdoc
+    script:darwin: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install && cd /tmp && sudo rm -rf shdoc
+    script:linux: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install && cd /tmp && sudo rm -rf shdoc
     yay: shdoc-git
   shellcheck:
     _bin: shellcheck
@@ -9291,21 +9291,14 @@ softwarePackages:
     _name: Tailscale
     _service:brew: tailscale
     _service:pacman: tailscaled
+    _when:cask: '! test -d "/Applications/Tailscale.app" && ! test -d "$HOME/Applications/Tailscale.app"'
     ansible: professormanhattan.tailscale
     brew: tailscale
+    cask: tailscale
+    choco: tailscale
     go: tailscale.com/cmd/tailscale{,d}@main
     pacman: tailscale
     port: tailscale
-  tailscale-client:
-    _bin: tailscale-client
-    _desc: The Tailscale Client is a menubar app available on macOS and Windows that allows you to easily login and configure Tailscale.
-    _github: https://github.com/tailscale/tailscale
-    _home: https://tailscale.com/
-    _name: Tailscale Client
-    _pre:cask: if command -v tailscale > /dev/null; then brew uninstall tailscale; fi
-    _when:cask: '! test -d "/Applications/Tailscale.app" && ! test -d "$HOME/Applications/Tailscale.app"'
-    cask: tailscale
-    choco: tailscale
   task:
     _bin: task
     _desc: A task runner / simpler Make alternative written in Go
