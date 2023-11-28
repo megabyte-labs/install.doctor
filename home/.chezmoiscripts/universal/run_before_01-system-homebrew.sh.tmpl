@@ -161,4 +161,9 @@ if [ -d /Applications ] && [ -d System ]; then
     brew autoupdate start --cleanup --greedy --upgrade
   fi
 fi
+
+### Scrub ~/.viminfo
+if [ -f "$HOME/.viminfo" ]; then
+  logg info 'Removing ~/.viminfo' && sudo rm -f "$HOME/.vimino"
+fi
 {{ end -}}
