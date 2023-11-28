@@ -305,12 +305,10 @@ setupPasswordlessSudo() {
     logg info 'Press CTRL+C to bypass this prompt to either enter your password when needed or perform a non-privileged installation'
     logg info 'Note: Non-privileged installations are not yet supported'
   fi
-  if ! sudo cat /etc/sudoers | grep '# TEMPORARY FOR INSTALL DOCTOR' > /dev/null; then
-    if [ -n "$SUDO_PASSWORD" ]; then
-      printf '%s\n' "$SUDO_PASSWORD" | sudo -p "" -S echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers
-    else
-      echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers
-    fi
+  if [ -n "$SUDO_PASSWORD" ]; then
+    printf '%s\n' "$SUDO_PASSWORD" | sudo -p "" -S echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers
+  else
+    echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers
   fi
 }
 
