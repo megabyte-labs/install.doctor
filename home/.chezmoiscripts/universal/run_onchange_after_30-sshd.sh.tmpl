@@ -32,6 +32,9 @@ if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
             sudo setsebool -P nis_enabled 1
         fi
 
+        ### Ensure keys are created
+        logg info 'Running sudo ssh-keygen -A' && sudo ssh-keygen -A
+
         ### Restart SSH server
         if [ -d /Applications ] && [ -d /System ]; then
             # macOS
