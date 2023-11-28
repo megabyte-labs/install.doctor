@@ -5,7 +5,6 @@ Host *
     IgnoreUnknown AddKeysToAgent,UseKeychain
     AddKeysToAgent yes
     UseKeychain yes
-    Compression no
     ExitOnForwardFailure yes
     ForwardAgent yes
     ForwardX11 no
@@ -16,6 +15,7 @@ Host *
     ServerAliveInterval 60
     ServerAliveCountMax 30
     IdentitiesOnly yes
+    IdentityFile ~/.ssh/id_rsa
 Host gitlab.com
     UpdateHostKeys no
 Host github.com

@@ -170,7 +170,7 @@ data:
       workgroup: "{{ $sambaWorkGroupName }}"
     ssh:
       allowTCPForwarding: no
-      allowUsers: {{ output "echo" "$USER" }}
+      allowUsers: {{ env "USER" }}
       endlesshPort: 22
       port: 2214
     vpn:
