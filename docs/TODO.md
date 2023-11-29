@@ -9,6 +9,7 @@ adobe-creative-cloud curl: (18) HTTP/2 stream 1 was reset
 
 * NGINX /opt/homebrew/etc/nginx/nginx.conf, on port 8080 so no sudo required, nginx will load all files in /opt/homebrew/etc/nginx/servers/, brew services might require sudo if port 443 is used, Docroot /opt/homebrew/var/www
 * Full disk access to Terminal required for Parallels
+* Reset up YubiKeys
 
 # TODOs
 
