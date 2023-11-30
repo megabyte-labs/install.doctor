@@ -536,6 +536,16 @@ softwarePackages:
     brew: lolcat
     choco: lolcat
     snap: lolcat
+  opn-cli:
+    _bin: opn-cli
+    _github: https://github.com/andeman/opn-cli
+    _name: OPNSense CLI
+    pip: opn-cli
+  pfsense-fauxapi:
+    _bin: fauxapi
+    _github: https://github.com/ndejong/pfsense_fauxapi_client_python
+    _name: pfSense CLI (fauxapi)
+    pip: pfsense-fauxapi
   android-commandlinetools:
     _deps:
       - java

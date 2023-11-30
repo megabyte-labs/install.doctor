@@ -1,22 +1,24 @@
-{{- $refreshPeriod := "240h" }}
-
 ### Git Template
 # [".config/git/template/_/husky.sh"]
 #     type = "file"
 #     url = "https://github.com/typicode/husky/raw/main/husky.sh"
-#     refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Rundeck
 [".local/system/src/var/lib/rundeck/libext/ansible-plugin-3.2.2.jar"]
     type = "file"
     url = "https://github.com/rundeck-plugins/ansible-plugin/releases/download/v3.2.2/ansible-plugin-3.2.2.jar"
-    refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Chef Bento
 [".local/src/bento"]
     type = "git-repo"
     url = "https://github.com/installdoc/bento.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+### Vagrant OPNSense
+[".local/src/vagrant-opnsense"]
+    type = "git-repo"
+    url = "https://github.com/punktDe/vagrant-opnsense.git
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -24,7 +26,6 @@
 [".local/src/shellfire"]
     type = "git-repo"
     url = "https://github.com/shellfire-dev/shellfire.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -32,37 +33,31 @@
 [".local/share/hoard"]
     type = "git-repo"
     url = "https://github.com/Hyde46/hoard.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 [".local/share/up"]
     type = "git-repo"
     url = "https://github.com/shannonmoeller/up.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 [".local/share/rsync-time-backup"]
     type = "git-repo"
     url = "https://github.com/laurent22/rsync-time-backup.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 [".local/share/concurrent"]
     type = "git-repo"
     url = "https://github.com/themattrix/bash-concurrent.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 [".local/share/install.doctor"]
     type = "git-repo"
     url = "https://github.com/megabyte-labs/install.doctor.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 #[".local/oh-my-bash"]
 #    type = "git-repo"
 #    url = "https://github.com/ohmybash/oh-my-bash.git"
-#    refreshPeriod = "{{ $refreshPeriod }}"
 #    clone.args = ["--depth", "1"]
 #    pull.args = ["--ff-only"]
 
@@ -72,7 +67,6 @@
 [".local/share/crunch"]
     type = "git-repo"
     url = "https://github.com/chrissimpkins/Crunch.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 {{- end }}
@@ -87,17 +81,14 @@
 [".local/share/ansible-qubes"]
     type = "git-repo"
     url = "https://github.com/ProfessorManhattan/ansible-qubes.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 [".local/share/ansible/plugins/callback/beautiful_output.py"]
     type = "file"
     url = "https://github.com/Townk/ansible-beautiful-output/raw/master/callback_plugins/beautiful_output.py"
-    refreshPeriod = "{{ $refreshPeriod }}"
 [".local/share/ansible/plugins/lookup/bitwarden.py"]
     type = "file"
     url = "https://github.com/ProfessorManhattan/ansible-modules-bitwarden/raw/master/lookup_plugins/bitwarden.py"
-    refreshPeriod = "{{ $refreshPeriod }}"
 
 # https://github.com/kholia/OSX-KVM
 [".local/share/osx-kvm"]
@@ -121,7 +112,6 @@
 [".local/share/agentgpt"]
     type = "git-repo"
     url = "https://github.com/reworkd/AgentGPT.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -129,7 +119,6 @@
 [".local/share/kaguya"]
     type = "git-repo"
     url = "https://github.com/ykdojo/kaguya.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -137,7 +126,6 @@
 [".local/share/localgpt"]
     type = "git-repo"
     url = "https://github.com/PromtEngineer/localGPT.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -145,7 +133,6 @@
 [".local/share/shortgpt"]
     type = "git-repo"
     url = "https://github.com/rayventura/shortgpt.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -153,7 +140,6 @@
 [".local/share/quivr"]
     type = "git-repo"
     url = "https://github.com/StanGirard/Quivr.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -165,13 +151,11 @@
 [".local/scripts/antigen.zsh"]
     type = "file"
     url = "https://raw.githubusercontent.com/zsh-users/antigen/develop/bin/antigen.zsh"
-    refreshPeriod = "{{ $refreshPeriod }}"
 
 ### ASDF
 [".local/share/asdf"]
     type = "git-repo"
     url = "https://github.com/asdf-vm/asdf.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -179,13 +163,11 @@
 [".local/share/shell/sensible.bash"]
     type = "file"
     url = "https://raw.githubusercontent.com/mrzool/bash-sensible/master/sensible.bash"
-    refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Ble.sh
 [".local/share/blesh/src"]
     type = "git-repo"
     url = "https://github.com/akinomyoga/ble.sh.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--shallow-submodules", "--recursive", "--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -193,7 +175,6 @@
 [".local/share/bash_it"]
     type = "git-repo"
     url = "https://github.com/Bash-it/bash-it.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -201,7 +182,6 @@
 [".local/share/emsdk"]
     type = "git-repo"
     url = "https://github.com/emscripten-core/emsdk.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -209,25 +189,20 @@
 [".local/share/fzf/fzf-git.bash"]
     type = "file"
     url = "https://raw.githubusercontent.com/junegunn/fzf-git.sh/main/fzf-git.sh"
-    refreshPeriod = "{{ $refreshPeriod }}"
 [".local/share/fzf/fzf-tmux.bash"]
     type = "file"
     url = "https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux"
-    refreshPeriod = "{{ $refreshPeriod }}"
 [".local/share/zsh/site-functions/fzf.zsh"]
     type = "file"
     url = "https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh"
-    refreshPeriod = "{{ $refreshPeriod }}"
 [".local/share/zsh/site-functions/fzf-key-bindings.zsh"]
     type = "file"
     url = "https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh"
-    refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Git Fuzzy
 [".local/share/git-fuzzy"]
     type = "git-repo"
     url = "https://github.com/bigH/git-fuzzy.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -235,13 +210,11 @@
 [".config/shell/lscolors.sh"]
     type = "file"
     url = "https://raw.githubusercontent.com/trapd00r/LS_COLORS/master/lscolors.sh"
-    refreshPeriod = "{{ $refreshPeriod }}"
 
 ### TMux
 [".config/tmux/tmux.conf"]
     type = "file"
     url = "https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf"
-    refreshPeriod = "{{ $refreshPeriod }}"
 [".config/tmux/tmux.conf.local"]
     type = "file"
     url = "https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf.local"
@@ -252,7 +225,6 @@
     url = "https://github.com/UpdateCommand/update.git"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
-    refreshPeriod = "{{ $refreshPeriod }}"
 
 ######################################
 ### Fonts ############################
@@ -260,7 +232,6 @@
 
 ### Hack Nerd Font
 {{- if not .host.headless }}
-{{-   $refreshPeriod := "4800h" }}
 {{-   $fontDir := "" }}
 {{-   $fontUrlBase := "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack"}}
 {{-   if eq .host.distro.family "darwin" }}
@@ -273,19 +244,15 @@
 ["{{ $fontDir }}/Hack-Regular-Nerd-Font.ttf"]
     type = "file"
     url = "{{ $fontUrlBase }}/Regular/HackNerdFont-Regular.ttf"
-    refreshPeriod = "{{ $refreshPeriod }}"
 ["{{ $fontDir }}/Hack-Bold-Nerd-Font.ttf"]
     type = "file"
     url = "{{ $fontUrlBase }}/Bold/HackNerdFont-Bold.ttf"
-    refreshPeriod = "{{ $refreshPeriod }}"
 ["{{ $fontDir }}/Hack-Italic-Nerd-Font.ttf"]
     type = "file"
     url = "{{ $fontUrlBase }}/Italic/HackNerdFont-Italic.ttf"
-    refreshPeriod = "{{ $refreshPeriod }}"
 ["{{ $fontDir }}/Hack-Bold-Italic-Nerd-Font.ttf"]
     type = "file"
     url = "{{ $fontUrlBase }}/BoldItalic/HackNerdFont-BoldItalic.ttf"
-    refreshPeriod = "{{ $refreshPeriod }}"
 
 ### Montserrat Font
 {{-   $fontUrlBase := "https://github.com/JulietaUla/Montserrat/raw/master/fonts/ttf/Montserrat-"}}
@@ -294,7 +261,6 @@
 ["{{ $fontDir }}/Montserrat-{{ $font }}.ttf"]
     type = "file"
     url = "{{ $fontUrlBase }}{{ $font }}.ttf"
-    refreshPeriod = "{{ $refreshPeriod }}"
 {{-   end }}
 
 ### ZillaSlab Font
@@ -304,7 +270,6 @@
 ["{{ $fontDir }}/ZillaSlab{{ $font }}.ttf"]
     type = "file"
     url = "{{ $fontUrlBase }}{{ $font }}.ttf"
-    refreshPeriod = "{{ $refreshPeriod }}"
 {{-   end }}
 {{- end }}
 
@@ -317,7 +282,6 @@
 [".local/share/netdata-debsecan"]
     type = "git-repo"
     url = "https://gitlab.com/nodiscc/netdata-debsecan.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 {{- end }}
@@ -326,7 +290,6 @@
 [".local/share/netdata-speedtest"]
     type = "git-repo"
     url = "https://github.com/ohthehugemanatee/netdata-speedtest.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -338,25 +301,20 @@
 [".local/share/fonts/GrapeNuts-Regular.ttf"]
     type = "file"
     url = "https://github.com/adi1090x/rofi/raw/master/fonts/GrapeNuts-Regular.ttf"
-    refreshPeriod = "{{ $refreshPeriod }}"
 [".local/share/fonts/Icomoon-Feather.ttf"]
     type = "file"
     url = "https://github.com/adi1090x/rofi/raw/master/fonts/Icomoon-Feather.ttf"
-    refreshPeriod = "{{ $refreshPeriod }}"
 [".local/share/fonts/Iosevka-Nerd-Font-Complete.ttf"]
     type = "file"
     url = "https://github.com/adi1090x/rofi/raw/master/fonts/Iosevka-Nerd-Font-Complete.ttf"
-    refreshPeriod = "{{ $refreshPeriod }}"
 [".local/share/fonts/JetBrains-Mono-Nerd-Font-Complete.ttf"]
     type = "file"
     url = "https://github.com/adi1090x/rofi/raw/master/fonts/JetBrains-Mono-Nerd-Font-Complete.ttf"
-    refreshPeriod = "{{ $refreshPeriod }}"
 [".config/rofi"]
     type = "archive"
     url = "https://github.com/adi1090x/rofi/archive/refs/heads/master.tar.gz"
     exact = true
     stripComponents = 2
-    refreshPeriod = "{{ $refreshPeriod }}"
     include = ["applets/**", "colors/**", "images/**", "launchers/**", "powermenu/**", "scripts/**", "config.rasi"]
 {{- end }}
 
@@ -386,7 +344,6 @@
 [".ssh/authorized_keys.vagrant"]
     type = "file"
     url = "https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub"
-    refreshPeriod = "{{ $refreshPeriod }}"
 
 ######################################
 ### Theme ############################
@@ -414,7 +371,6 @@
 [".local/share/yoru"]
     type = "git-repo"
     url = "https://github.com/rxyhn/yoru.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -423,12 +379,10 @@
 [".local/share/fluent/discord/theme.css"]
     type = "file"
     url = "https://raw.githubusercontent.com/DiscordStyles/Fluent/deploy/Fluent.theme.css"
-    refreshPeriod = "{{ $refreshPeriod }}"
 # Steam (TODO: Apply this to Steam automatically by detecting first if it is installed)
 [".local/share/fluent/steam"]
     type = "git-repo"
     url = "https://github.com/purogamer/Fluent-for-Steam.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -440,14 +394,12 @@
 [".config/vim/autoload/plug.vim"]
     type = "file"
     url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-    refreshPeriod = "{{ $refreshPeriod }}"
 {{- $vimPlugins := .softwarePlugins.vim.plugins }}
 {{- range $vimPlugin := $vimPlugins }}
 {{-   $folderName :=  trimSuffix ".git" (last (splitList "/" $vimPlugin)) }}
 [".local/share/vim/plugged/{{ $folderName }}"]
     type = "git-repo"
     url = "{{ $vimPlugin }}"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--depth", "1"]
     pull.args = ["--ff-only"]
 {{- end }}
@@ -455,7 +407,6 @@
 [".local/share/vim/plugged/coc.nvim"]
     type = "git-repo"
     url = "https://github.com/neoclide/coc.nvim.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
     clone.args = ["--branch", "release", "--depth", "1"]
     pull.args = ["--ff-only"]
 
@@ -463,12 +414,6 @@
 [".config/nvim"]
     type = "git-repo"
     url = "https://github.com/AstroNvim/AstroNvim.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
 [".config/nvim/lua/user"]
     type = "git-repo"
     url = "https://github.com/megabyte-labs/AstronVim.git"
-    refreshPeriod = "{{ $refreshPeriod }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
