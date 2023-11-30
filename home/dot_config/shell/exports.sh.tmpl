@@ -282,6 +282,9 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 ### Kube
 export KUBECONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/kube/config"
 
+### MacPrefs
+export MACPREFS_BACKUP_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/macprefs"
+
 ### Maven
 export MAVEN_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/maven/settings.xml"
 alias mvn="mvn -s $MAVEN_CONFIG"
