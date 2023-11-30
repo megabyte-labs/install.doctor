@@ -7115,9 +7115,8 @@ softwarePackages:
     _github: null
     _home: https://www.parallels.com/
     _name: Parallels
-    _notes: On macOS, full disk access is required for Terminal.
+    _notes: On macOS, full disk access is required for Terminal. For Homebrew Cask, this requires the terminal to have full disk access
     _when: '! test -d "/Applications/Parallels Desktop.app" && ! test -d "$HOME/Applications/Parallels Desktop.app"'
-    _notes: For Homebrew Cask, this requires the terminal to have full disk access
     ansible:darwin: professormanhattan.parallels
     cask: parallels
     mas: 1085114709
@@ -7790,6 +7789,11 @@ softwarePackages:
     _name: QLColorCode
     _when:cask: '! test -d "$HOME/Library/QuickLook/QLColorCode.qlgenerator"'
     cask: qlcolorcode
+  prefsniff:
+    _bin: prefsniff
+    _name: PrefSniff
+    _github: https://github.com/zcutlip/prefsniff
+    pipx: prefsniff
   qlmarkdown:
     _github: https://github.com/toland/qlmarkdown
     _name: QLMarkdown
@@ -8720,6 +8724,18 @@ softwarePackages:
     flatpak: com.slack.Slack
     snap: slack
     mas: 803453959
+  pppc-utility:
+    _bin: pppc-utility
+    _github: https://github.com/jamf/PPPC-Utility
+    _name: Privacy Preferences Policy Control (PPPC) Utility
+    _when:cask:
+    cask: pppc-utility
+  privileges:
+    _bin: privileges
+    _github: https://github.com/SAP/macOS-enterprise-privileges
+    _name: Privileges
+    _when:cask: '! test -d /Applications/Privileges.app && ! test -d $HOME/Applications/Privileges.app'
+    cask: privileges
   slack-term:
     _bin: slack-term
     _desc: '[slack-term](https://github.com/erroneousboat/slack-term) features a colorful interface as well as keyboard shortcuts. It is one of, if not the, most well-received [Slack](https://slack.com/) client available on GitHub.'

@@ -241,3 +241,7 @@ The following items have been reviewed but need to be revisited due to complexit
 * This might not be easily achievable since macOS encourages user input during setup but it would be nice to come up with a script that updates macOS from version 13 to 14 if an update is available (or 14 to 15 etc.). Normally, `softwareupdate` CLI command can handle 13.5 to 13.7 etc. but not major versions.
 * Configure firewall on macOS with `m firewall` on non-corp laptop
 * Link to CUPS printers (http://localhost:631/printers)
+* https://github.com/boochtek/mac_config/blob/master/os/quicklook.sh
+* open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles" --- opens to grant full disk access
+* "Terminal.app" would like to administer your computer. Administration can include modifying passwords, networking, and system settings.
+* Press ENTER vim +PlugInstall

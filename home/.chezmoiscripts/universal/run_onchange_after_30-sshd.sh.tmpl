@@ -39,7 +39,7 @@ if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
         if [ -d /Applications ] && [ -d /System ]; then
             # macOS
             logg info 'Running sudo systemsetup -setremotelogin on' && sudo systemsetup -setremotelogin on
-            logg info 'Running sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist' && sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
+            logg info 'Running sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist' && sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist 2> /dev/null
             logg info 'Running sudo launchctl stop com.openssh.sshd' && sudo launchctl stop com.openssh.sshd
             logg info 'Running sudo launchctl start com.openssh.sshd' && sudo launchctl start com.openssh.sshd && logg success 'Successfully ran launchctl start com.openssh.sshd'
         else

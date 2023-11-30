@@ -32,6 +32,8 @@
 # Note: If a shutdown is required and the `softwareupdate` command restart command does not work then `m shutdown -f` might be useful or `m restart -f`
 # Do you want to terminate running processes in this window?
 # Closing this window will terminate the running processes: softwareupdate, sudo
+# Running sudo softwareupdate -i -a -R --agree-to-license reboots just not in the script due to the running processes perhaps
+# Check for pending reboot by checking 
 if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
   if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
     echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
