@@ -159,7 +159,7 @@ logg() {
   elif [ "$TYPE" == 'start' ]; then
     "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "▶") $("$GUM_PATH" style --bold "$(format "$MSG")")"
   elif [ "$TYPE" == 'success' ]; then
-    "$GUM_PATH" style "$("$GUM_PATH" style --foreground="#00ff00" "✔")  $("$GUM_PATH" style --bold "$(format "$MSG")")"
+    "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#00ff00" "✔") $("$GUM_PATH" style --bold "$(format "$MSG")")"
   elif [ "$TYPE" == 'warn' ]; then
     "$GUM_PATH" style " $("$GUM_PATH" style --foreground="#d1d100" "◆") $("$GUM_PATH" style --bold --background="#ffff00" --foreground="#000000"  " WARNING ") $("$GUM_PATH" style --bold "$(format "$MSG")")"
   else
