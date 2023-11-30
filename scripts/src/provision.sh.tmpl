@@ -318,7 +318,7 @@ runChezmoi() {
     logg info 'Running chezmoi apply forcefully'
     if command -v unbuffer > /dev/null; then
       if command -v caffeinate > /dev/null; then
-        caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
+        unbuffer -p caffeinate chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
       else
         unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
       fi
