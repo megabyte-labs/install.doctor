@@ -9,7 +9,6 @@ adobe-creative-cloud curl: (18) HTTP/2 stream 1 was reset
 
 * NGINX /opt/homebrew/etc/nginx/nginx.conf, on port 8080 so no sudo required, nginx will load all files in /opt/homebrew/etc/nginx/servers/, brew services might require sudo if port 443 is used, Docroot /opt/homebrew/var/www
 * Full disk access to Terminal required for Parallels
-* Reset up YubiKeys
 
 # TODOs
 
@@ -236,3 +235,9 @@ The following items have been reviewed but need to be revisited due to complexit
 ## Windows
 
 - https://github.com/DDoSolitary/LxRunOffline
+
+## Notes
+
+* This might not be easily achievable since macOS encourages user input during setup but it would be nice to come up with a script that updates macOS from version 13 to 14 if an update is available (or 14 to 15 etc.). Normally, `softwareupdate` CLI command can handle 13.5 to 13.7 etc. but not major versions.
+* Configure firewall on macOS with `m firewall` on non-corp laptop
+* Link to CUPS printers (http://localhost:631/printers)

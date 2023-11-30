@@ -21,29 +21,6 @@
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}
 
-### Configure hostname
-# Source: https://www.tecmint.com/set-hostname-permanently-in-linux/
-if [ -d /Applications ] && [ -d /System ]; then
-  # Source: https://apple.stackexchange.com/questions/287760/set-the-hostname-computer-name-for-macos
-  logg info 'Setting macOS hostname / local hostname / computer name'
-  sudo scutil --set HostName '{{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}' && logg success 'Changed HostName to {{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}'
-  sudo scutil --set LocalHostName '{{ .host.hostname | replace .host.domain "" | replace "." "" }}' && logg success 'Changed LocalHostName to {{ .host.hostname | replace .host.domain "" | replace "." "" }}'
-  sudo scutil --set ComputerName '{{ .host.hostname | replace .host.domain "" | replace "." "" }}' && logg success 'Changed ComputerName to {{ .host.hostname | replace .host.domain "" | replace "." "" }}'
-  logg info 'Flushing DNS cache'
-  dscacheutil -flushcache
-elif [ -f /etc/passwd ]; then
-  logg info 'Setting Linux hostname'
-  hostname '{{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}' && logg success 'Changed hostname to {{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}'
-  if command -v hostnamectl > /dev/null; then
-    logg info 'Ensuring hostname persists after reboot'
-    sudo hostnamectl set-hostname '{{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}' && logg success 'Permanently changed hostname to {{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}'
-  else
-    logg warn 'hostnamectl was not available in the PATH - this operating system type might be unsupported'
-  fi
-else
-  logg warn 'Could not configure hostname because system type was not detectable'
-fi
-
 ### Configure Firewall
 # TODO: If this is required, notes should be added describing the pros / cons of the security
 # if [ -d /Applications ] && [ -d /System ]; then
@@ -52,6 +29,7 @@ fi
 # fi
 
 ### System upgrade on macOS
+# Note: If a shutdown is required and the `softwareupdate` command restart command does not work then `m shutdown -f` might be useful or `m restart -f`
 if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
   if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
     echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"

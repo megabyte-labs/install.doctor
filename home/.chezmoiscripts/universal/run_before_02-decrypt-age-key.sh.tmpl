@@ -75,7 +75,7 @@ decryptKey() {
       else
         installExpect
         expect -c "set timeout -1
-        spawn age --decrypt --output "${XDG_CONFIG_HOME}/age/chezmoi.txt" "/usr/local/src/install.doctor/home/key.txt.age"
+        spawn age --decrypt --output "${XDG_CONFIG_HOME}/age/chezmoi.txt" "${XDG_DATA_HOME:-$HOME/.local/share}/home/key.txt.age"
         expect \"Enter passphrase:\"
         send \"${AGE_PASSWORD}\r\"
         expect eof" > /dev/null || EXIT_CODE=$?

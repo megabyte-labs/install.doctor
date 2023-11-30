@@ -30,3 +30,10 @@ fi
 if [ -d "$HOME/.wrangler" ]; then
     rm -rf "$HOME/.wrangler"
 fi
+
+if [ -d /Applications ] && [ -d /System ]; then
+    ### Empty trash
+    if command -v m > /dev/null; then
+        logg info 'Emptying trash' && m trash clean
+    fi
+fi

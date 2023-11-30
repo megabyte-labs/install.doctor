@@ -1436,6 +1436,7 @@ softwarePackages:
     github: github.com/bitwarden/desktop
     snap: bitwarden
     yay: bitwarden-git
+    mas: 1352778147
   bitwarden-cli:
     _bin: bw
     _desc: '[Bitwarden CLI](https://github.com/bitwarden/cli) (i.e. bw) is a free and open-source official CLI for the [Bitwarden](https://bitwarden.com/) password manager. bw is available on Linux, macOS, and Microsoft Windows.'
@@ -3385,6 +3386,7 @@ softwarePackages:
     _name: Hidden Bar
     _when:cask: '! test -d "/Applications/Hidden Bar.app" && ! test -d "$HOME/Applications/Hidden Bar.app"'
     cask: hiddenbar
+    mas: 1452453066
   flameshot:
     _bin: flameshot
     _desc: Powerful yet simple to use screenshot software
@@ -3497,6 +3499,7 @@ softwarePackages:
     _name: Eul
     _when:cask: '! test -d /Applications/eul.app && ! test -d $HOME/Applications/eul.app'
     cask: eul
+    mas: 1537133867
   linkliar:
     _bin: null
     _desc: Menu bar application for macOS that allows you to spoof your MAC address
@@ -3522,8 +3525,9 @@ softwarePackages:
     _github: https://github.com/leits/MeetingBar
     _home: https://apps.apple.com/app/id1532419400
     _name: Meeting Bar
-    _when:brew: test -d /Applications/MeetingBar.app
-    brew:darwin: meetingbar
+    _when:cask: test -d /Applications/MeetingBar.app
+    cask: meetingbar
+    mas: 1532419400
   crunch-app:
     _bin: null
     _desc: The macOS companion app for the crunch CLI tool that compresses PNG images.
@@ -3772,6 +3776,7 @@ softwarePackages:
     cask: telegram
     choco: telegram
     flatpak: org.telegram.desktop
+    mas: 747648890
   google-assistant:
     _bin: g-assist
     _desc: '[Google Assistant for Desktop](https://github.com/Melvin-Abraham/Google-Assistant-Unofficial-Desktop-Client) is a cross-platform unofficial Google Assistant Client for Desktop.'
@@ -4838,6 +4843,7 @@ softwarePackages:
     flatpak: org.inkscape.Inkscape
     pacman: inkscape
     snap: inkscape
+    mas: 2146510460
   intellij-idea-ce:
     _bin: intellij-idea-community
     _desc: '[IntelliJ IDEA](https://www.jetbrains.com/idea/) is an integrated development environment written in Java for developing computer software. It is developed by JetBrains, and is available as an Apache 2 Licensed community edition, and in a proprietary commercial edition. Both can be used for commercial development.'
@@ -5486,6 +5492,7 @@ softwarePackages:
     dnf: libreoffice
     flatpak: org.libreoffice.LibreOffice
     pacman: libreoffice
+    mas: 1630474372
   license:
     _bin: license
     _desc: Command-line license text generator
@@ -5873,6 +5880,7 @@ softwarePackages:
     ansible: professormanhattan.microsofttodo
     cask: ao
     snap: microsoft-todo-unofficial
+    mas: 1274495053
   hyperkit:
     _deps:darwin:
       - xcode
@@ -6139,6 +6147,7 @@ softwarePackages:
     _name: Profile Creator
     _when:cask: '! test -d /Applications/ProfileCreator.app && ! test -d $HOME/Applications/ProfileCreator.app'
     cask: profilecreator
+    mas: 2141249187
   vagrant-manager:
     _bin: null
     _desc: Status bar menu application that allows you to manage Vagrant available on macOS and Windows
@@ -6620,6 +6629,7 @@ softwarePackages:
     _when:cask: '! test -d /Applications/Notion.app && ! test -d $HOME/Applications/Notion.app'
     cask: notion
     choco: notion
+    mas: 1559269364
   zaproxy:
     _bin: zaproxy
     _desc: The world’s most widely used web app scanner. Free and open source. Actively maintained by a dedicated international team of volunteers. A GitHub Top 1000 project.
@@ -7110,6 +7120,7 @@ softwarePackages:
     _notes: For Homebrew Cask, this requires the terminal to have full disk access
     ansible:darwin: professormanhattan.parallels
     cask: parallels
+    mas: 1085114709
   gnome-passwords-keys:
     _bin: seahorse
     flatpak: org.gnome.seahorse.Application
@@ -7904,6 +7915,7 @@ softwarePackages:
     _when:cask: '! test -d /Applications/RedisInsight.app && ! test -d $HOME/Applications/RedisInsight.app'
     cask: redisinsight
     flatpak: com.redis.RedisInsight
+    mas: 2142946629
   recoverpy:
     _deps:
       - coreutils
@@ -7983,6 +7995,7 @@ softwarePackages:
     _name: Microsoft Remote Desktop
     _when:cask: '! test -d "/Applications/Microsoft Remote Desktop.app" && ! test -d "$HOME/Applications/Microsoft Remote Desktop.app"'
     cask: microsoft-remote-desktop
+    mas: 1295203466
   aiac:
     _bin: aiac
     _github: https://github.com/gofireflyio/aiac
@@ -8706,6 +8719,7 @@ softwarePackages:
     choco: slack
     flatpak: com.slack.Slack
     snap: slack
+    mas: 803453959
   slack-term:
     _bin: slack-term
     _desc: '[slack-term](https://github.com/erroneousboat/slack-term) features a colorful interface as well as keyboard shortcuts. It is one of, if not the, most well-received [Slack](https://slack.com/) client available on GitHub.'
@@ -9354,6 +9368,7 @@ softwarePackages:
     go: tailscale.com/cmd/tailscale{,d}@main
     pacman: tailscale
     port: tailscale
+    mas: 1475387142
   task:
     _bin: task
     _desc: A task runner / simpler Make alternative written in Go
@@ -10924,6 +10939,7 @@ softwarePackages:
     choco: yubico-authenticator
     flatpak: com.yubico.yubioath
     script:darwin: curl -sSL https://developers.yubico.com/yubioath-flutter/Releases/yubico-authenticator-latest-mac.dmg > "/tmp/Yubico Authenticator.dmg" && hdiutil attach "/tmp/Yubico Authenticator.dmg" &&  sudo cp -R "/Volumes/Yubico Authenticator/Yubico Authenticator.app" /Applications && sudo hdiutil detach "/Volumes/Yubico Authenticator" && rm -f "/tmp/Yubico Authenticator.dmg"
+    mas: 1497506650
   yubikey-manager:
     _bin: ykman
     _desc: Use the YubiKey Manager to configure FIDO2, OTP and PIV functionality on your YubiKey on Windows, macOS, and Linux operating systems.

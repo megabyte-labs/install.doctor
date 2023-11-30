@@ -8,24 +8,98 @@
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}
 
-### Set hostname (if redefined)
-if command -v hostnamectl > /dev/null; then
-  # Betelgeuse is the default hostname so only change when it is different
-  if [ '{{ .host.hostname }}' != 'Betelgeuse' ]; then
-    logg info "Setting hostname to {{ .host.hostname }}"
-    sudo hostnamectl set-hostname {{ .host.hostname }}
+# @description Sets the hostname using `scutil` on macOS and using `hostname` and `hostnamectl` on Linux. On macOS, the HostName, LocalHostName, and ComputerName
+#     are set equal to the value stored in `.host.hostname` (in `.chezmoi.yaml.tmpl`) but with the `.host.domain` stripped off. On Linux, the same is done
+#     but only the hostname is set. On Linux, the hostname is set with the `hostname` command and then also with the `hostnamectl` command if it is available.
+#
+#     ## Sources
+#
+#     * [Changing Linux hostname permanently](https://www.tecmint.com/set-hostname-permanently-in-linux/)
+setHostname() {
+  if [ -d /Applications ] && [ -d /System ]; then
+    # Source: https://apple.stackexchange.com/questions/287760/set-the-hostname-computer-name-for-macos
+    logg info 'Setting macOS hostname / local hostname / computer name'
+    sudo scutil --set HostName '{{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}' && logg success 'Changed HostName to {{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}'
+    sudo scutil --set LocalHostName '{{ .host.hostname | replace .host.domain "" | replace "." "" }}' && logg success 'Changed LocalHostName to {{ .host.hostname | replace .host.domain "" | replace "." "" }}'
+    sudo scutil --set ComputerName '{{ .host.hostname | replace .host.domain "" | replace "." "" }}' && logg success 'Changed ComputerName to {{ .host.hostname | replace .host.domain "" | replace "." "" }}'
+    logg info 'Flushing DNS cache'
+    dscacheutil -flushcache
+  elif [ -f /etc/passwd ]; then
+    logg info 'Setting Linux hostname'
+    hostname '{{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}' && logg success 'Changed hostname to {{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}'
+    if command -v hostnamectl > /dev/null; then
+      logg info 'Ensuring hostname persists after reboot'
+      sudo hostnamectl set-hostname '{{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}' && logg success 'Permanently changed hostname to {{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}'
+    else
+      logg warn 'hostnamectl was not available in the PATH - this operating system type might be unsupported'
+    fi
+  else
+    logg warn 'Could not configure hostname because system type was not detectable'
   fi
-fi
+}
 
-### Set timezone
-if command -v timedatectl > /dev/null; then
-  logg info 'Setting timezone to {{ .user.timezone }}'
-  sudo timedatectl set-timezone {{ .user.timezone }}
-fi
+# @description Sets the system timezone using `timedatectl` on Linux and `m` on macOS. If neither commands are available
+#     then a warning message is printed.
+setTimezone() {
+  if command -v timedatectl > /dev/null; then
+    ### Linux
+    logg info 'Setting timezone to {{ .user.timezone }}'
+    sudo timedatectl set-timezone {{ .user.timezone }}
+  elif command -v m > /dev/null; then
+    ### macOS
+    logg info 'Setting timezone to {{ .user.timezone }}' && m timezone set {{ .user.timezone }}
+  else
+    logg warn 'Neither timedatectl (Linux) or m (macOS) were found on the system'
+}
 
-### Modify vm.max_map_count
-if command -v sysctl > /dev/null; then
-  logg info 'Increasing vm.max_map_count size to 262144'
-  sudo sysctl -w vm.max_map_count=262144 > /dev/null
-fi
+# @description Sets the NTP server using `m` on macOS
+setNtpServer() {
+  if command -v m > /dev/null; then
+    ### macOS
+    m ntp set {{ .user.ntpServer}}
+  else
+    logg warn 'Skipped setting the NTP server'
+  fi
+}
+
+# @description Increases the amount of memory a process can consume on Linux. In the case of `netdata` and other programs, many systems will suggest
+#     increasing the `vm.max_map_count`. According to a [RedHat article](https://access.redhat.com/solutions/99913), the default value is `65530`.
+#     This function increases that value to `262144` if `sysctl` is available on the system.
+increaseMapCount() {
+  if command -v sysctl > /dev/null; then
+    logg info 'Increasing vm.max_map_count size to 262144'
+    sudo sysctl -w vm.max_map_count=262144 > /dev/null
+  fi
+}
+
+# @description Configures macOS to enable the notification center
+showNotificationCenter() {
+  if command -v m > /dev/null; then
+    logg info 'Configuring macOS to show notification center' && m notification showcenter YES
+  fi
+}
+
+# @description Disable the creation of `.DS_Store` files on macOS.
+disableDStoreFileCreation() {
+  if command -v m > /dev/null; then
+    logg info 'Disabling creation of .DS_Store files'
+    echo y | m dir dsfiles off
+  fi
+}
+
+# @description Enables transparent dark-mode on macOS
+enableDarkTransparentMode() {
+  if command -v m > /dev/null; then
+    logg info 'Enabling dark mode' && m appearance darkmode YES
+    logg info 'Enabling theme transparency' && m appearance transparency YES
+  fi
+}
+
+setHostname
+setTimezone
+setNtpServer
+increaseMapCount
+showNotificationCenter
+disableDStoreFileCreation
+enableDarkTransparentMode
 {{ end -}}
