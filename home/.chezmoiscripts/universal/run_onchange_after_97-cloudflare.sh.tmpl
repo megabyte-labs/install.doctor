@@ -163,14 +163,14 @@ if command -v warp-cli > /dev/null; then
     # certificate and the WARP client is not running.
     ### Git
     if command -v git > /dev/null; then
-        logg info "Configuring git to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem""
-        git config --global http.sslcainfo "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem"
+        logg info "Configuring git to use /etc/ssl/cert.pem"
+        git config --global http.sslcainfo /etc/ssl/cert.pem
     fi
 
     ### NPM
     if command -v npm > /dev/null; then
-        logg info "Configuring npm to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem""
-        npm config set cafile "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem"
+        logg info "Configuring npm to use /etc/ssl/cert.pem"
+        npm config set cafile /etc/ssl/cert.pem
     fi
 
     ### Python
