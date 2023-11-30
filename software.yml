@@ -10728,14 +10728,14 @@ softwarePackages:
   xcode:
     _deps:script:darwin:
       - xcodeinstall
-    _bin: xcodebuild
+    _bin: xcode
     _desc: "[Xcode](https://developer.apple.com/xcode/) is Apple's integrated development environment for macOS, used to develop software for macOS, iOS, iPadOS, watchOS, and tvOS."
     _docs: https://developer.apple.com/documentation/xcode
     _github: false
     _home: https://developer.apple.com/xcode/
     _name: XCode
     _post: sudo xcodebuild -license accept && sudo xcodebuild -runFirstLaunch
-    _when:darwin: '! test -d /Applications/Xcode.app'
+    _when:script:darwin: '! test -d /Applications/Xcode.app'
     mas: 497799835
     script:darwin: |
       ### Load AWS secrets

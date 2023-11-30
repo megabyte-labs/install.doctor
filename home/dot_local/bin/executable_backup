@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+backupMacPrefs() {
+    if [ -d /Applications ] && [ -d /System ]; then
+        if command -v macprefs > /dev/null; then
+            macprefs backup -t system_preferences startup_items shared_file_lists preferences app_store_preferences internet_accounts
+        fi
+    fi
+}
+
+backupMacPrefs
