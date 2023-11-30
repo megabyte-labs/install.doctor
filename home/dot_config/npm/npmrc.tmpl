@@ -1,4 +1,7 @@
 cache={{ .chezmoi.homeDir }}/.cache/npm
+{{ if (stat (joinPath "etc" "ssl" "cert.pem")) -}}
+cafile=/etc/ssl/cert.pem
+{{ end -}}
 init-author-email={{ .user.email }}
 init-author-name={{ .user.name }} <{{ .user.email }}> ({{ .user.domain }})
 init-author-url=https://{{ .user.domain }}

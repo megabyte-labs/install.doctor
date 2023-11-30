@@ -126,6 +126,7 @@
   autocorrect = 20
 [http]
   postBuffer = 524288000
+  {{ if (stat (joinPath "etc" "ssl" "cert.pem")) -}}sslcainfo = /etc/ssl/cert.pem{{ end -}}
 [init]
   defaultBranch = master
   # templatedir = ~/.config/git/template
