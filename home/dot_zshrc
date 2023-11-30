@@ -27,7 +27,7 @@ esac
 ### Misc.
 [ -d "${XDG_STATE_HOME:-$HOME/.local/state}/zsh" ] || mkdir -p "${XDG_STATE_HOME:-$HOME/.local/state}/zsh"
 export HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
-export ZLE_RPROMPT_INDENT=0
+export ZLE_RPROMPT_INDENT=1
 export WORDCHARS=${WORDCHARS//\/}
 export PROMPT_EOL_MARK=
 export TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
