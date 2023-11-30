@@ -62,7 +62,7 @@
 [credential]
   helper = cache --timeout=3600
   credentialStore = {{ if eq .host.distro.id "darwin" }}keychain{{ else }}{{ if eq .host.distro.id "windows" }}wincredman{{ else }}secretservice{{ end }}{{ end }}
-{{ if (lookPath "asdf") -}}
+{{ if (lookPath "gh") -}}
 [credential "https://github.com"]
 	helper = !{{- output "which" "gh" | trim }} auth git-credential
 [credential "https://gist.github.com"]
@@ -126,7 +126,7 @@
   autocorrect = 20
 [http]
   postBuffer = 524288000
-  {{ if (stat (joinPath "etc" "ssl" "cert.pem")) -}}sslcainfo = /etc/ssl/cert.pem{{ end -}}
+{{ if (stat (joinPath "etc" "ssl" "cert.pem")) -}}  sslcainfo = /etc/ssl/cert.pem{{ end -}}
 [init]
   defaultBranch = master
   # templatedir = ~/.config/git/template

@@ -94,7 +94,7 @@ logg() {
 #     2. If any of the above are missing, it will then use the appropriate system package manager to satisfy the requirements. *Note that some of the requirements are not scanned for in order to keep it simple and fast.*
 #     3. On macOS, the official Xcode Command Line Tools are installed.
 ensureBasicDeps() {
-  if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v expect > /dev/null || ! command -v rsync > /dev/null || ! command -v unbuffer; then
+  if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v expect > /dev/null || ! command -v rsync > /dev/null || ! command -v unbuffer > /dev/null; then
     if command -v apt-get > /dev/null; then
       ### Debian / Ubuntu
       logg info 'Running sudo apt-get update' && sudo apt-get update
