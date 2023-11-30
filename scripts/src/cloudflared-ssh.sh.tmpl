@@ -51,7 +51,7 @@ ensureHomebrew
 
 # @description Ensures `cloudflared` is installed via Homebrew
 if ! command -v cloudflared > /dev/null; then
-    brew install cloudflared
+    brew install --quiet cloudflared
 fi
 
 # @description Detect the SSH port being used

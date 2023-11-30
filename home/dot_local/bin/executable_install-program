@@ -713,7 +713,7 @@ async function ensurePackage(dep) {
       if (updateDone['brew'] !== true) {
         await beforeInstall('brew')
       }
-      await $`brew install ${dep}`
+      await $`brew install --quiet ${dep}`
     } else if (osType === 'windows') {
       if (updateDone['choco'] !== true) {
         await beforeInstall('choco')
@@ -814,7 +814,7 @@ async function beforeInstall(packageManager) {
     if (osType === 'darwin') {
       const docker = which.sync('docker', { nothrow: true })
       if (!docker) {
-        await $`brew install --cask --no-quarantine docker`
+        await $`brew install --cask --no-quarantine --quiet docker`
       }
       try {
         await $`sudo -c 'docker run --rm hello-world' - ${process.env.USER}`
@@ -973,7 +973,7 @@ async function ensurePackageManager(packageManager) {
       if (osType === 'darwin') {
         const rustup = which.sync('rustup-init', { nothrow: true })
         if (!rustup) {
-          await $`brew install rustup`
+          await $`brew install --quiet rustup`
         }
         await $`rustup-init -y`
       } else if (osType === 'windows') {
@@ -1051,12 +1051,12 @@ async function ensurePackageManager(packageManager) {
   } else if (packageManager === 'gem') {
     const gem = which.sync('gem', { nothrow: true })
     if (!gem) {
-      await ensureInstalled('gem', $`brew install ruby`)
+      await ensureInstalled('gem', $`brew install --quiet ruby`)
     }
   } else if (packageManager === 'go') {
     const go = which.sync('go', { nothrow: true })
     if (!go) {
-      await ensureInstalled('go', $`brew install go`)
+      await ensureInstalled('go', $`brew install --quiet go`)
     }
   } else if (packageManager === 'nix') {
     await ensureInstalled(
@@ -1077,7 +1077,7 @@ async function ensurePackageManager(packageManager) {
       log('info', logStage, `\`npm\`, \`node\`, and \`volta\` are available`)
     } else {
       if (!volta) {
-        await $`brew install volta`
+        await $`brew install --quiet volta`
       }
       await $`
         export VOLTA_HOME="\${XDG_DATA_HOME:-$HOME/.local/share}/volta"
@@ -1093,7 +1093,7 @@ async function ensurePackageManager(packageManager) {
   } else if (packageManager === 'pipx') {
     const pipx = which.sync('pipx', { nothrow: true })
     if (!pipx) {
-      await ensureInstalled('pipx', $`brew install pipx`)
+      await ensureInstalled('pipx', $`brew install --quiet pipx`)
       await $`pipx ensurepath`
     }
   } else if (packageManager === 'pkg') {
@@ -1175,7 +1175,7 @@ async function ensurePackageManager(packageManager) {
     }
   } else if (packageManager === 'script') {
   } else if (packageManager === 'whalebrew') {
-    await ensureInstalled('whalebrew', $`brew install whalebrew`)
+    await ensureInstalled('whalebrew', $`brew install --quiet whalebrew`)
   } else if (packageManager === 'winget') {
     await ensureInstalled(
       'winget',
@@ -1290,7 +1290,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'brew') {
       for (let pkg of packages) {
         try {
-          runCommand(`Installing ${pkg} via ${packageManager}`, `brew install ${pkg}`)
+          runCommand(`Installing ${pkg} via ${packageManager}`, `brew install --quiet ${pkg}`)
           log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
           log('error', 'Install', `There was an error installing ${pkg} with brew`)
@@ -1300,7 +1300,7 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'cask') {
       for (let pkg of packages) {
         try {
-          runCommand(`Installing ${pkg} via ${packageManager}`, `brew install --cask --no-quarantine ${pkg}`)
+          runCommand(`Installing ${pkg} via ${packageManager}`, `brew install --cask --no-quarantine --quiet ${pkg}`)
           log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
           log('error', 'Install', `There was an error installing ${pkg} with Homebrew Cask`)

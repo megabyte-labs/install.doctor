@@ -122,7 +122,7 @@ function firefoxSetup() {
                 ### Download Firefox Profile Switcher
                 if [ ! -d /usr/local/Cellar/firefox-profile-switcher-connector ]; then
                     logg info 'Ensuring Firefox Profile Switcher is installed'
-                    brew install null-dev/firefox-profile-switcher/firefox-profile-switcher-connector
+                    brew install --quiet null-dev/firefox-profile-switcher/firefox-profile-switcher-connector
                 fi
 
                 ### Ensure Firefox Profile Switcher configuration is symlinked

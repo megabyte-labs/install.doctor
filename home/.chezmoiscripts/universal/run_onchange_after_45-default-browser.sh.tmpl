@@ -19,7 +19,7 @@
 if [ -d /Applications ] && [ -d /System ]; then
     if ! command -v defaultbrowser > /dev/null; then
         logg info 'Installing defaultbrowser via Homebrew which is the preferred way of configuring the default browser'
-        brew install defaultbrowser
+        brew install --quiet defaultbrowser
     fi
     logg info "Setting default browser to {{ .user.defaultBrowserDarwin }}"
     osascript "$HOME/Library/Scripts/default-browser.scpt" "{{ .user.defaultBrowserDarwin }}"

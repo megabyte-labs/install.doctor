@@ -18,7 +18,7 @@ if [ -n "$DIGITALOCEAN_ACCESS_TOKEN" ] && [ -n '{{ .user.digitalOceanClusterId }
     ### Ensure DigitalOcean CLI is instaled
     if ! command -v doctl > /dev/null; then
         logg info 'doctl is missing - installing via Homebrew'
-        brew install doctl
+        brew install --quiet doctl
     fi
 
     ### Connect to the k8s cluster with `doctl`

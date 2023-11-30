@@ -47,7 +47,7 @@ decryptionFailure() {
 installAge() {
   if ! command -v age > /dev/null; then
     logg info 'Running brew install age'
-    brew install age
+    brew install --quiet age
   fi
 }
 
@@ -55,7 +55,7 @@ installAge() {
 installExpect() {
   if ! command -v expect > /dev/null; then
     logg info 'Running brew install expect'
-    brew install expect
+    brew install --quiet expect
   fi
 }
 

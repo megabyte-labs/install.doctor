@@ -22,7 +22,7 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 if ! command -v node > /dev/null; then
   if command -v brew; then
     logg 'Installing node via Homebrew'
-    brew install node || NODE_EXIT_CODE=$?
+    brew install --quiet node || NODE_EXIT_CODE=$?
     if [ -n "$NODE_EXIT_CODE" ]; then
       logg warn 'Calling brew link --overwrite node because the Node.js installation seems to be misconfigured'
       brew link --overwrite node
@@ -38,7 +38,7 @@ fi
 if ! command -v volta > /dev/null; then
   if command -v brew > /dev/null; then
     logg 'Installing volta via brew'
-    brew install volta
+    brew install --quiet volta
   else
     logg warn 'brew needs to be available to install Volta'
   fi

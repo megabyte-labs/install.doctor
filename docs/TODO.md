@@ -9,6 +9,8 @@ adobe-creative-cloud curl: (18) HTTP/2 stream 1 was reset
 
 * NGINX /opt/homebrew/etc/nginx/nginx.conf, on port 8080 so no sudo required, nginx will load all files in /opt/homebrew/etc/nginx/servers/, brew services might require sudo if port 443 is used, Docroot /opt/homebrew/var/www
 * Full disk access to Terminal required for Parallels
+* export PATH="$HOME/.jenv/bin:$PATH"
+* eval "$(jenv init -)"
 
 # TODOs
 
@@ -245,3 +247,4 @@ The following items have been reviewed but need to be revisited due to complexit
 * open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles" --- opens to grant full disk access
 * "Terminal.app" would like to administer your computer. Administration can include modifying passwords, networking, and system settings.
 * Press ENTER vim +PlugInstall
+* Sheldon completions

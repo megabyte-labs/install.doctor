@@ -98,7 +98,7 @@ if [ "${container:=}" != 'docker' ]; then
   elif [ -f "$(dirname "${BASH_SOURCE[0]}")/gum" ]; then
     GUM_PATH="$(dirname "${BASH_SOURCE[0]}")/gum"
   elif type brew &> /dev/null; then
-    brew install gum
+    brew install --quiet gum
     GUM_PATH="$(which gum)"
   else
     if ! command -v qubesctl > /dev/null; then
@@ -138,7 +138,7 @@ logger() {
       elif [ -f "$(dirname "${BASH_SOURCE[0]}")/glow" ]; then
         GLOW_PATH="$(dirname "${BASH_SOURCE[0]}")/glow"
       elif type brew &> /dev/null; then
-        brew install glow
+        brew install --quiet glow
         GLOW_PATH="$(which glow)"
       else
         if ! command -v qubesctl > /dev/null; then

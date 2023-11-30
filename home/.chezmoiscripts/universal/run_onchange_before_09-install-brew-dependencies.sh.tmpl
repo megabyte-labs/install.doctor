@@ -21,7 +21,7 @@
 if ! command -v go > /dev/null; then
   if command -v brew; then
     logg 'Installing go via Homebrew'
-    brew install go || GO_EXIT_CODE=$?
+    brew install --quiet go || GO_EXIT_CODE=$?
     if [ -n "$GO_EXIT_CODE" ]; then
       logg error 'go was not successfully installed via Homebrew'
     fi
@@ -36,7 +36,7 @@ fi
 if ! command -v gh > /dev/null; then
   if command -v brew; then
     logg 'Installing gh via Homebrew'
-    brew install gh || GH_EXIT_CODE=$?
+    brew install --quiet gh || GH_EXIT_CODE=$?
     if [ -n "$GH_EXIT_CODE" ]; then
       logg error 'gh was not successfully installed via Homebrew'
     fi
@@ -51,7 +51,7 @@ fi
 if ! command -v delta > /dev/null; then
   if command -v brew; then
     logg 'Installing delta via Homebrew'
-    brew install git-delta || DELTA_EXIT_CODE=$?
+    brew install --quiet git-delta || DELTA_EXIT_CODE=$?
     if [ -n "$DELTA_EXIT_CODE" ]; then
       logg error 'git-delta was not successfully installed via Homebrew'
     fi

@@ -20,7 +20,7 @@ if [ -d /Applications ] && [ -d /System ]; then
     # macOS
     if [ ! -d /Applications/Docker.app ]; then
         logg info 'Installing Docker on macOS via Homebrew cask'
-        brew install --cask --no-quarantine docker
+        brew install --cask --quiet --no-quarantine docker
     else
         logg info 'Docker appears to be installed already'
     fi

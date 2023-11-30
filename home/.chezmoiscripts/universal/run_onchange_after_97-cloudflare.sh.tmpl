@@ -59,7 +59,7 @@ if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
     if [ -d /System ] && [ -d /Applications ]; then
         ### Install on macOS
         if [ ! -d "/Applications/Cloudflare WARP.app" ]; then
-            brew install --cask --no-quarantine cloudflare-warp
+            brew install --cask --no-quarantine --quiet cloudflare-warp
         else
             logg info 'Cloudflare WARP already installed'
         fi
@@ -179,7 +179,7 @@ if command -v warp-cli > /dev/null; then
         if ! pip3 list certifi | grep certifi > /dev/null; then
             if command -v brew > /dev/null; then
                 logg info 'Ensuring Python certifi is installed via Homebrew'
-                brew install python-certifi
+                brew install --quiet python-certifi
             else
                 logg info 'Ensuring certifi is installed globally for Python 3'
                 pip3 install certifibrew link --overwrite python-certifi

@@ -45,7 +45,7 @@ if command -v install-program > /dev/null; then
     env | grep ASDF
     if ! command -v unbuffer > /dev/null; then
       if command -v brew > /dev/null; then
-        logg info 'Ensuring expect is installed for the unbuffer command' && brew install expect
+        logg info 'Ensuring expect is installed for the unbuffer command' && brew install --quiet expect
       fi
     fi
     if command -v unbuffer > /dev/null; then

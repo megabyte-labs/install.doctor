@@ -228,7 +228,7 @@ handleQubesDom0() {
 installBrewPackage() {
   if ! command -v "$1" > /dev/null; then
     logg 'Installing '"$1"''
-    brew install "$1"
+    brew install --quiet "$1"
   fi
 }
 
@@ -254,7 +254,7 @@ ensureHomebrewDeps() {
     installBrewPackage "expect"
     installBrewPackage "gsed"
     if ! command -v gtimeout > /dev/null; then
-      brew install coreutils
+      brew install --quiet coreutils
     fi
   fi
 }

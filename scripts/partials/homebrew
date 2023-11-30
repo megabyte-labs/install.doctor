@@ -50,7 +50,7 @@ ensureHomebrew() {
   ### Ensure GCC is installed via Homebrew
   if command -v brew > /dev/null; then
     if ! brew list | grep gcc > /dev/null; then
-      logg info "Installing Homebrew gcc" && brew install gcc
+      logg info "Installing Homebrew gcc" && brew install --quiet gcc
     fi
   else
     logg error "Failed to initialize Homebrew" && exit 2

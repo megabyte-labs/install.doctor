@@ -50,7 +50,7 @@ if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/gas-station/requirements.yml" ]; t
   if ! command -v ansible-galaxy > /dev/null; then
     if ! command -v pipx > /dev/null; then
       logg info 'Installing pipx via Homebrew'
-      brew install pipx
+      brew install --quiet pipx
       logg info 'Running pipx ensurepath'
       pipx ensurepath
     fi
