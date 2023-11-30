@@ -1,3 +1,5 @@
+{{ $gitArgs := "clone.args = [\"--depth\", \"1\"]\n    pull.args = [\"--ff-only\"]" }}
+
 ### Git Template
 # [".config/git/template/_/husky.sh"]
 #     type = "file"
@@ -12,54 +14,44 @@
 [".local/src/bento"]
     type = "git-repo"
     url = "https://github.com/installdoc/bento.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ### Vagrant OPNSense
 [".local/src/vagrant-opnsense"]
     type = "git-repo"
-    url = "https://github.com/punktDe/vagrant-opnsense.git
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    url = "https://github.com/punktDe/vagrant-opnsense.git"
+    {{ $gitArgs }}
 
 ### Shellfire
 [".local/src/shellfire"]
     type = "git-repo"
     url = "https://github.com/shellfire-dev/shellfire.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
-
+    {{ $gitArgs }}
 
 [".local/share/hoard"]
     type = "git-repo"
     url = "https://github.com/Hyde46/hoard.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 [".local/share/up"]
     type = "git-repo"
     url = "https://github.com/shannonmoeller/up.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 [".local/share/rsync-time-backup"]
     type = "git-repo"
     url = "https://github.com/laurent22/rsync-time-backup.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 [".local/share/concurrent"]
     type = "git-repo"
     url = "https://github.com/themattrix/bash-concurrent.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 [".local/share/install.doctor"]
     type = "git-repo"
     url = "https://github.com/megabyte-labs/install.doctor.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 #[".local/oh-my-bash"]
 #    type = "git-repo"
 #    url = "https://github.com/ohmybash/oh-my-bash.git"
-#    clone.args = ["--depth", "1"]
-#    pull.args = ["--ff-only"]
+#    {{ $gitArgs }}
 
 
 {{- if eq .host.distro.id "darwin" }}
@@ -67,8 +59,7 @@
 [".local/share/crunch"]
     type = "git-repo"
     url = "https://github.com/chrissimpkins/Crunch.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 {{- end }}
 
 ### Ansible Roles / Playbook
@@ -76,13 +67,11 @@
 [".local/share/gas-station"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/gas-station.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 [".local/share/ansible-qubes"]
     type = "git-repo"
     url = "https://github.com/ProfessorManhattan/ansible-qubes.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 [".local/share/ansible/plugins/callback/beautiful_output.py"]
     type = "file"
     url = "https://github.com/Townk/ansible-beautiful-output/raw/master/callback_plugins/beautiful_output.py"
@@ -94,15 +83,13 @@
 [".local/share/osx-kvm"]
     type = "git-repo"
     url = "https://github.com/kholia/OSX-KVM.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ### PowerShell
 [".local/share/powershell/docker"]
     type = "git-repo"
     url = "https://github.com/matt9ucci/DockerCompletion.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ######################################
 ### AI / GPT #########################
@@ -112,36 +99,31 @@
 [".local/share/agentgpt"]
     type = "git-repo"
     url = "https://github.com/reworkd/AgentGPT.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ### Kaguya
 [".local/share/kaguya"]
     type = "git-repo"
     url = "https://github.com/ykdojo/kaguya.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ### LocalGPT
 [".local/share/localgpt"]
     type = "git-repo"
     url = "https://github.com/PromtEngineer/localGPT.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ### ShortGPT
 [".local/share/shortgpt"]
     type = "git-repo"
     url = "https://github.com/rayventura/shortgpt.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ### Quivr
 [".local/share/quivr"]
     type = "git-repo"
     url = "https://github.com/StanGirard/Quivr.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ######################################
 ### CLI ##############################
@@ -156,8 +138,7 @@
 [".local/share/asdf"]
     type = "git-repo"
     url = "https://github.com/asdf-vm/asdf.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ### Bash (Sensible defaults)
 [".local/share/shell/sensible.bash"]
@@ -168,22 +149,19 @@
 [".local/share/blesh/src"]
     type = "git-repo"
     url = "https://github.com/akinomyoga/ble.sh.git"
-    clone.args = ["--shallow-submodules", "--recursive", "--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ### Bash It!
 [".local/share/bash_it"]
     type = "git-repo"
     url = "https://github.com/Bash-it/bash-it.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ### emsdk
 [".local/share/emsdk"]
     type = "git-repo"
     url = "https://github.com/emscripten-core/emsdk.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ### fzf
 [".local/share/fzf/fzf-git.bash"]
@@ -203,8 +181,7 @@
 [".local/share/git-fuzzy"]
     type = "git-repo"
     url = "https://github.com/bigH/git-fuzzy.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ### LSColors
 [".config/shell/lscolors.sh"]
@@ -223,8 +200,7 @@
 [".local/bin/update"]
     type = "git-repo"
     url = "https://github.com/UpdateCommand/update.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ######################################
 ### Fonts ############################
@@ -282,16 +258,14 @@
 [".local/share/netdata-debsecan"]
     type = "git-repo"
     url = "https://gitlab.com/nodiscc/netdata-debsecan.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 {{- end }}
 
 ### Netdata Speedtest (required for Netdata speedtest plugin)
 [".local/share/netdata-speedtest"]
     type = "git-repo"
     url = "https://github.com/ohthehugemanatee/netdata-speedtest.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ######################################
 ### Rofi #############################
@@ -354,25 +328,21 @@
 [".local/src/betelgeuse"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/misc/betelgeuse.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 [".local/share/betelgeuse"]
     type = "git-repo"
     url = "https://gitlab.com/megabyte-labs/misc/betelgeuse.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 [".local/share/candy-icons"]
     type = "git-repo"
     url = "https://github.com/ProfessorManhattan/candy-icons.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ### AwesomeWM
 [".local/share/yoru"]
     type = "git-repo"
     url = "https://github.com/rxyhn/yoru.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ### Windows / Fluent Application Styles
 # Discord (TODO: Apply this to Discord automatically)
@@ -383,8 +353,7 @@
 [".local/share/fluent/steam"]
     type = "git-repo"
     url = "https://github.com/purogamer/Fluent-for-Steam.git"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ######################################
 ### VIM / NVIM #######################
@@ -400,15 +369,13 @@
 [".local/share/vim/plugged/{{ $folderName }}"]
     type = "git-repo"
     url = "{{ $vimPlugin }}"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 {{- end }}
 # coc.nvim VIM plugin requires custom branch "release"
 [".local/share/vim/plugged/coc.nvim"]
     type = "git-repo"
     url = "https://github.com/neoclide/coc.nvim.git"
-    clone.args = ["--branch", "release", "--depth", "1"]
-    pull.args = ["--ff-only"]
+    {{ $gitArgs }}
 
 ### NVIM
 [".config/nvim"]
