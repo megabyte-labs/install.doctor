@@ -10725,6 +10725,22 @@ softwarePackages:
     _github: https://github.com/xcpretty/xcpretty
     _name: xcpretty
     gem:darwin: xcpretty
+  airtame:
+    _bin: airtame
+    _github: false
+    _name: Airtame
+    _when:cask: '! test -d /Applications/Airtame.app && ! test -d "$HOME/Applications/Airtame.app"'
+    cask: airtame
+    choco: airtame
+    flatpak: com.airtame.Client
+    snap: airtame-application
+  shuttle:
+    _bin: shuttle
+    _github: https://github.com/shuttle-hq/shuttle
+    _name: Shuttle
+    cargo: cargo-shuttle
+    pacman: cargo-shuttle
+    script: curl -sSfL https://www.shuttle.rs/install | bash
   xcode:
     _deps:script:darwin:
       - xcodeinstall

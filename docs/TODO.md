@@ -8,7 +8,6 @@ adobe-creative-cloud curl: (18) HTTP/2 stream 1 was reset
 * Wazuh requires booting into recovery, running csrutil disable, installing agent normally, and then re-enabling it again in recovery mode
 
 * NGINX /opt/homebrew/etc/nginx/nginx.conf, on port 8080 so no sudo required, nginx will load all files in /opt/homebrew/etc/nginx/servers/, brew services might require sudo if port 443 is used, Docroot /opt/homebrew/var/www
-* Full disk access to Terminal required for Parallels
 * export PATH="$HOME/.jenv/bin:$PATH"
 * eval "$(jenv init -)"
 
@@ -197,18 +196,14 @@ The following items have been reviewed but need to be revisited due to complexit
 - https://github.com/teambit/bit
 - https://github.com/Budibase/budibase
 - https://github.com/appsmithorg/appsmith
-- https://github.com/refined-github/refined-github
 - https://github.com/reworkd/AgentGPT
 - https://github.com/appwrite/appwrite
 - https://github.com/hoppscotch/hoppscotch
 - builder.io
 - https://github.com/hocus-dev/hocus
-- https://github.com/Kanaries/Rath
 - cvat.io
 - https://github.com/illacloud/illa-builder
-- https://github.com/KnowledgeCanvas/knowledge
 - https://github.com/siyuan-note/siyuan
-- https://github.com/shuttle-hq/shuttle
 - https://github.com/open-hand/choerodon
 - https://github.com/1backend/1backend
 - https://github.com/redkubes/otomi-core
@@ -216,7 +211,6 @@ The following items have been reviewed but need to be revisited due to complexit
 - https://github.com/tkestack/tke
 - https://www.rancher.com/
 - https://github.com/OpenNebula/one /. https://github.com/OpenNebula/minione
-- https://github.com/ConvoyPanel/panel
 - https://github.com/hashicorp/nomad
 - [Title](https://github.com/Sygil-Dev/sygil-webui)
 - [Title](https://github.com/psychic-api/psychic)
@@ -248,3 +242,9 @@ The following items have been reviewed but need to be revisited due to complexit
 * "Terminal.app" would like to administer your computer. Administration can include modifying passwords, networking, and system settings.
 * Press ENTER vim +PlugInstall
 * Sheldon completions
+
+
+
+## Definitely
+
+* https://github.com/ConvoyPanel/panel
