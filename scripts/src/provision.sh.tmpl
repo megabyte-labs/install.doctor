@@ -251,6 +251,7 @@ ensureHomebrewDeps() {
 
   ### macOS
   if [ -d /Applications ] && [ -d /System ]; then
+    installBrewPackage "expect"
     installBrewPackage "gsed"
     if ! command -v gtimeout > /dev/null; then
       brew install coreutils
