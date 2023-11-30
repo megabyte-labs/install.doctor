@@ -1,4 +1,8 @@
-{{ $gitArgs := 'clone.args = ["--depth", "1"]' }}
+{{ define "gitArgs" }}
+clone.args = ["--depth", "1"]
+pull.args = ["--ff-only"]
+{{ end }}
+{{ $gitArgs := template "gitArgs" }}
 
 ### Git Template
 # [".config/git/template/_/husky.sh"]
