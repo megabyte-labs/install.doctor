@@ -1626,8 +1626,18 @@ async function updateService(service) {
         log('info', logStage, `There was an error starting / enabling the ${service} service with systemd`)
         try {
           if (brew) {
-            runCommand(`Starting / enabling ${service} with Homebrew`, `brew services start ${service}`)
-            log('success', logStage, `Started / enabled the ${service} service with Homebrew`)
+            if (typeof brew === 'object' && brew.length) {
+              brew.forEach(x => {
+                runCommand(`Starting / enabling object array ${service} with Homebrew`, `${x.sudo ? 'sudo brew' : 'brew'} services start ${x.name}`)
+                log('success', logStage, `Started / enabled the ${x.name} service with Homebrew`)
+              })
+            } else if (typeof brew === 'object') {
+              runCommand(`Starting / enabling object ${service} with Homebrew`, `${brew.sudo ? 'sudo brew' : 'brew'} services start ${brew.name}`)
+              log('success', logStage, `Started / enabled the ${brew.name} service with Homebrew`)
+            } else {
+              runCommand(`Starting / enabling ${service} with Homebrew`, `brew services start ${service}`)
+              log('success', logStage, `Started / enabled the ${service} service with Homebrew`)
+            }
           } else {
             log('error', logStage, `Unable to start service with systemd and Homebrew is not available`)
           }

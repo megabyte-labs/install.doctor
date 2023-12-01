@@ -8729,7 +8729,7 @@ softwarePackages:
     _bin: pppc-utility
     _github: https://github.com/jamf/PPPC-Utility
     _name: Privacy Preferences Policy Control (PPPC) Utility
-    _when:cask:
+    _when:cask: '! test -d "/Applications/PPPC Utility.app" && ! test -d "$HOME/Applications/PPPC Utility.app"'
     cask: pppc-utility
   privileges:
     _bin: privileges
