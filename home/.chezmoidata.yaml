@@ -1693,15 +1693,20 @@ softwarePlugins:
       - snyk/snyk-docker-desktop-extension:0.7.4
       - tailscale/docker-extension:1.0.1
     when: docker extension list &> /dev/null
-  docker_images:
-    cmd: null
+  docker-images:
+    cmd: bash -c 'if ! docker image list | awk \'{print $1 " " $2}\' | grep "{PLUGIN}" > /dev/null; then docker pull "{PLUGIN}"; fi'
     plugins:
-      - docker.io/nginx/unit
-  docker_plugins:
-    cmd: bash -c 'if ! docker plugin ls | grep "{PLUGIN}" > /dev/null; then docker plugin install "{PLUGIN}"; fi'
+      - alpine:latest
+      - postgres:10
+      - postgres:12
+      - postgres:latest
+      - ubuntu:latest
+  docker-plugins:
+    cmd: bash -c 'if ! docker plugin ls | grep "{PLUGIN}" > /dev/null; then echo y | docker plugin install "{PLUGIN}"; fi'
     plugins:
       - sapk/plugin-rclone
       - vieux/sshfs
+    when: docker plugin ls &> /dev/null
   dotnet:
     cmd: bash -c 'if ! dotnet tool list -g | grep "{PLUGIN}" > /dev/null; then dotnet tool install -g "{PLUGIN}"; fi'
     plugins:

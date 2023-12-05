@@ -10518,6 +10518,8 @@ softwarePackages:
     _app: Browserosaurus.app
     cask: browserosaurus
   docker:
+    _deps:
+      - docker-images
     _bin: docker
     _desc: null
     _docs: null
@@ -10545,6 +10547,11 @@ softwarePackages:
       - docker-ce
       - docker-ce-cli
       - docker-compose-plugin
+  docker-images:
+    _desc: This entry is used to trigger a post-installation docker image pre-load. See the `docker-images` entry in `.chezmoidata.yaml`.
+    script: echo "Enabling docker-images pre-load"
+  docker-plugins:
+    _desc: This entry is used to trigger a post-installation Docker plugin installation. See `docker-plugins` entry in `.chezmoidata.yaml`.
   openssh-server:
     _service: sshd
     _when: test -f /proc/version && ! grep Microsoft /proc/version > /dev/null && ! test -d /Applications'
