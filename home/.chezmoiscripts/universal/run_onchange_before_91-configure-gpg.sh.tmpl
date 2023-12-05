@@ -25,14 +25,14 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
     curl -sSL "{{ .config.gpg }}" > "$HOME/.gnupg/gpg.conf"
     chmod 600 "$HOME/.gnupg/gpg.conf"
   fi
+  logg info 'Killing dirmngr instance and reloading daemon with standard-resolver' && sudo pkill dirmngr
+  dirmngr --daemon --standard-resolver
   KEYID_TRIMMED="$(echo "$KEYID" | sed 's/^0x//')"
   if ! gpg --list-secret-keys --keyid-format=long | grep "$KEYID_TRIMMED" > /dev/null; then
     if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/public/${KEYID}.asc" ]; then
       logg info "Importing GPG key stored in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/public/${KEYID}.asc since its name matches the GPG key ID in .chezmoi.yaml.tmpl"
       gpg --import "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/public/${KEYID}.asc" && logg success 'Successfully imported master GPG key'
     else
-      logg info 'Killing dirmngr instance and reloading daemon with standard-resolver' && sudo pkill dirmngr
-      dirmngr --daemon --standard-resolver
       logg info 'Attempting to download the specified public GPG key ({{ .user.gpg.id }}) from public keyservers'
       gpg --keyserver https://pgp.mit.edu --recv "$KEYID" || EXIT_CODE=$?
       if [ -n "$EXIT_CODE" ]; then
@@ -44,12 +44,12 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
           logg success 'Successfully imported configured public user GPG key'
         fi
       fi
-      logg info 'Stopping dirmngr'
-      gpgconf --kill dirmngr && logg info 'Stopped dirmngr' || info warn 'Failed to stop dirmngr'
     fi
   else
     logg info 'Key is already in keyring'
   fi
+  logg info 'Stopping dirmngr'
+  gpgconf --kill dirmngr && logg info 'Stopped dirmngr' || info warn 'Failed to stop dirmngr'
   logg 'Ensuring the trust of the provided public GPG key is set to maximum'
   echo -e "trust\n5\ny" | gpg --command-fd 0 --edit-key "$KEYID"
 else
