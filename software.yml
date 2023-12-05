@@ -992,7 +992,9 @@ softwarePackages:
     _home: https://astronvim.github.io/
     _name: AstroNvim
     # TODO: Add timeouts to all commands in install-program
-    _post: bash -ci "nvim --headless -c 'quitall'"
+    _post: |
+      echo "Waiting on command that installs nvim plugins"
+      # bash -ci "nvim --headless -c 'quitall'"
   dockutil:
     _bin: dockutil
     _github: https://github.com/kcrawford/dockutil
@@ -3600,16 +3602,19 @@ softwarePackages:
     _bin: false
     _github: null
     _name: Nerd Font
+    _when:cask: '! brew list font-sf-mono-nerd-font'
     cask: epk/epk/font-sf-mono-nerd-font
   font-hack-nerd-font:
     _bin: false
     _github: null
     _name: Hack Nerd Font
+    _when:cask: '! brew list font-hack-nerd-font'
     cask: font-hack-nerd-font
   font-meslo-nerd-font:
     _bin: false
     _github: null
     _name: Meslo Nerd Font
+    _when:cask: '! brew list font-meslo-lg-nerd-font'
     cask: font-meslo-lg-nerd-font
   metasploit:
     _github: https://github.com/rapid7/metasploit-framework
@@ -4997,7 +5002,7 @@ softwarePackages:
     _github: https://github.com/oracle/nosql-java-sdk
     _home: https://www.java.com/en/
     _name: Java
-    _when:cask: '! java --version | grep Temurin'
+    _when:cask: '! brew list temurin > /dev/null'
     ansible: professormanhattan.java
     apt: openjdk-11-jdk
     brew: openjdk
@@ -9506,9 +9511,7 @@ softwarePackages:
     _github: null
     _home: null
     _name: Microsoft Teams
-    _app:
-      - Microsoft Teams.app
-      - Microsoft Teams (work or school).app
+    _app: Microsoft Teams.app
     ansible: professormanhattan.teams
     cask: microsoft-teams
     choco: microsoft-teams
@@ -10228,6 +10231,14 @@ softwarePackages:
   what-ip:
     _bin: whatip
     flatpak: org.gabmus.whatip
+  github-classroom-assistant:
+    _bin: github-classroom-assistant
+    _github: https://github.com/education/classroom-assistant
+    _name: GitHub Classroom Assistant
+    apt: https://github.com/education/classroom-assistant/releases/download/v2.0.4/classroom-assistant_2.0.4_amd64.deb
+    dnf: https://github.com/education/classroom-assistant/releases/download/v2.0.4/classroom-assistant-2.0.4-1.x86_64.rpm
+    cask: classroom-assistant
+    exe: https://github.com/education/classroom-assistant/releases/download/v2.0.4/Classroom.Assistant-2.0.4.Setup.exe
   volta:
     _bin: volta
     _desc: '[Volta](https://volta.sh/) is a hassle-free Javascript Tool Manager. It is a fast, reliable and universal tool manager. It supports multiple package managers and provides extensibility hooks for site-specific customization.'
@@ -10738,7 +10749,7 @@ softwarePackages:
     flatpak: com.airtame.Client
     snap: airtame-application
   shuttle:
-    _bin: shuttle
+    _bin: cargo-shuttle
     _github: https://github.com/shuttle-hq/shuttle
     _name: Shuttle
     cargo: cargo-shuttle
