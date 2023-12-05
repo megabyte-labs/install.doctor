@@ -772,7 +772,7 @@ async function beforeInstall(packageManager) {
         log('error', 'Homebrew', 'Failed running brew update / upgrade')
         log('info', 'Homebrew', 'Running brew tap --repair and trying again')
         try {
-          runCommand('Repairing taps and retrying brew update / upgrade', 'sudo rm -rf $(brew --cache) && brew tap --repair && brew update && brew upgrade --cask --greedy && brew upgrade --force --greedy')
+          runCommand('Repairing taps and retrying brew update / upgrade', 'export HOMEBREW_TEMP=/tmp && sudo rm -rf $(brew --cache) && brew tap --repair && brew update && brew upgrade --cask --greedy && brew upgrade --force --greedy')
         } catch (e) {
           console.log(e)
           log('error', 'Homebrew', 'Failed both attempts to run brew update / upgrade')
@@ -1789,30 +1789,31 @@ async function pruneInstallOrders(installOrders) {
 
 async function installPlugins(pluginData) {
   if (pluginData.cmd && pluginData.plugins && pluginData.plugins.length) {
-    for (const plugin of pluginData.plugins) {
-      try {
-        const pluginCmd = pluginData.cmd.replace(/{PLUGIN}/g, plugin)
-        const pluginWhen = pluginData.when
+    const pluginWhen = pluginData.when
+    try {
+      runCommand(`Checking when condition for ${pluginData.package} plugin - ${plugin}`, pluginWhen)
+      for (const plugin of pluginData.plugins) {
         try {
-          if (pluginWhen) {
-            runCommand(`Checking when condition for ${pluginData.package} plugin - ${plugin}`, pluginWhen)
-          }
+          const pluginCmd = pluginData.cmd.replace(/{PLUGIN}/g, plugin)
           try {
-            runCommand(`Installing ${pluginData.package} plugin - ${plugin}`, pluginCmd)
-            log('success', 'Plugin', `Successfully installed ${pluginData.package} plugin - ${plugin}`)
+            try {
+              runCommand(`Installing ${pluginData.package} plugin - ${plugin}`, pluginCmd)
+              log('success', 'Plugin', `Successfully installed ${pluginData.package} plugin - ${plugin}`)
+            } catch (e) {
+              log('info', 'Plugin', `Failed to install ${pluginData.package} plugin - ${plugin}`)
+              console.error(e)
+            }
           } catch (e) {
-            log('info', 'Plugin', `Failed to install ${pluginData.package} plugin - ${plugin}`)
-            console.error(e)
+            log('info', 'Plugin', `Skipping ${pluginData.package} plugin installs due to failed when condition - ${pluginWhen}`)
+            break
           }
         } catch (e) {
-          log('info', 'Plugin', `Skipping ${pluginData.package} plugin installs due to failed when condition - ${pluginWhen}`)
-          break
+          log('error', 'Plugin', `Failed to install ${pluginData.package} plugin due to an unknown reason - ${plugin}`)
+          console.error(e)
         }
-      } catch (e) {
-        log('error', 'Plugin', `Failed to install ${pluginData.package} plugin due to an unknown reason - ${plugin}`)
-        console.error(e)
       }
-
+    } catch (e) {
+      log('info', 'Plugin', 'Failed to pass when condition')
     }
   }
   if (pluginData.update) {

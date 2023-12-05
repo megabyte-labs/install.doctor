@@ -1739,7 +1739,7 @@ softwarePlugins:
       - if ! helm plugin list | grep "Query at a given interval a Prometheus, ElasticSearch or Sentry instance." > /dev/null; then helm plugin install https://github.com/ContainerSolutions/helm-monitor; fi
       - if ! helm plugin list | grep "This plugin provides secrets values encryption for Helm charts secure storing" > /dev/null; then helm plugin install https://github.com/jkroepke/helm-secrets; fi
   krew:
-    cmd: bash -c 'if ! kubectl krew list | grep "^{PLUGIN}$" > /dev/null; then if ! kubectl krew search "{PLUGIN}" | grep ' unavailable on ' > /dev/null; then kubectl krew install "{PLUGIN}"; else echo "UNSUPPORTED PLATFORM - {PLUGIN} is not supported on the current platform"; fi; fi'
+    cmd: bash -c 'if ! kubectl krew list | grep "^{PLUGIN}$" > /dev/null; then if ! kubectl krew search "{PLUGIN}" | grep " unavailable on " > /dev/null; then kubectl krew install "{PLUGIN}"; else echo "UNSUPPORTED PLATFORM - {PLUGIN} is not supported on the current platform"; fi; fi'
     plugins:
       - access-matrix
       - cert-manager

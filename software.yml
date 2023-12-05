@@ -1294,6 +1294,7 @@ softwarePackages:
   brew-pkg:
     _github: https://github.com/timsutton/brew-pkg
     _name: Homebrew Pkg
+    _when:brew:darwin: '! brew list brew-pkg'
     brew:darwin: timsutton/formulae/brew-pkg
   xpanes:
     _bin: xpanes
@@ -10235,6 +10236,7 @@ softwarePackages:
     _bin: github-classroom-assistant
     _github: https://github.com/education/classroom-assistant
     _name: GitHub Classroom Assistant
+    _app: Classroom Assistant.app
     apt: https://github.com/education/classroom-assistant/releases/download/v2.0.4/classroom-assistant_2.0.4_amd64.deb
     dnf: https://github.com/education/classroom-assistant/releases/download/v2.0.4/classroom-assistant-2.0.4-1.x86_64.rpm
     cask: classroom-assistant
