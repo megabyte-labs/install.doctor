@@ -1,4 +1,4 @@
-{{- if (ne .host.distro.family "darwin") -}}
+{{- if (eq .host.distro.family "darwin") -}}
 #!/usr/bin/env bash
 # @file macOS System Settings
 # @brief Applies an optimized set of macOS system configurations intended to provide more sensible system defaults
@@ -216,6 +216,8 @@ sudo pmset -b sleep 5
 sudo pmset -a standbydelay 86400
 
 # Never go into computer sleep mode
+sudo systemsetup -setdisplaysleep 30 > /dev/null
+sudo systemsetup -setharddisksleep Off > /dev/null
 sudo systemsetup -setcomputersleep Off > /dev/null
 
 # Hibernation mode

@@ -11,6 +11,17 @@ adobe-creative-cloud curl: (18) HTTP/2 stream 1 was reset
 * export PATH="$HOME/.jenv/bin:$PATH"
 * eval "$(jenv init -)"
 
+
+
+# Create the $HOME/opt destination folder
+mkdir -p ~/opt
+# Download the AppImage inside it
+wget -O ~/opt/Espanso.AppImage 'https://github.com/federico-terzi/espanso/releases/download/v2.1.8/Espanso-X11.AppImage'
+# Make it executable
+chmod u+x ~/opt/Espanso.AppImage
+# Create the "espanso" command alias
+sudo ~/opt/Espanso.AppImage env-path register
+
 # TODOs
 
 This page outlines various projects and tasks that we are currently working on. Creating a GitHub issue for each of these items would be overkill.
@@ -21,6 +32,7 @@ This page outlines various projects and tasks that we are currently working on. 
 - Consider https://formulae.brew.sh/cask/parallels-client#default
 - https://github.com/tadamcz/updates.sh/blob/main/updates.sh (Homebrew download parallelism)
 - Add Mamba
+- Come up with some sensible defaults for https://espanso.org/
 - https://docs.pkgx.sh/using-pkgx/shell-integration
 - https://containertoolbx.org/install/
 - https://github.com/todotxt/todo.txt-cli

@@ -79,6 +79,7 @@ setEnvironmentVariables() {
 
 {{ include "partials" "basic-deps" }}
 {{ include "partials" "homebrew" }}
+{{ include "partials" "reboot" }}
 # @description Load default settings if it is in a CI setting
 setCIEnvironmentVariables() {
   if [ -n "$CI" ]; then
@@ -385,5 +386,6 @@ provisionLogic() {
   logg info "Running the Chezmoi provisioning" && runChezmoi
   logg info "Ensuring temporary passwordless sudo is removed" && removePasswordlessSudo
   logg info "Handling post-provision logic" && postProvision
+  logg info "Determing whether or not reboot" && handleRequiredReboot
 }
 provisionLogic

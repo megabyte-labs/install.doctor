@@ -16,8 +16,7 @@
 if command -v docker > /dev/null; then
     DOCKERHUB_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "DOCKERHUB_TOKEN")) }}{{- includeTemplate "secrets/DOCKERHUB_TOKEN" | decrypt | trim -}}{{ else }}{{- env "DOCKERHUB_TOKEN" -}}{{ end }}"
     DOCKERHUB_USER="{{ .user.docker.username }}"
-    logg info 'Headlessly authenticating with DockerHub registry'
-    echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USER" --password-stdin
+    logg info 'Headlessly authenticating with DockerHub registry' && echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USER" --password-stdin > /dev/null && logg success 'Successfully authenticated with DockerHub registry'
 fi
 
 {{- end }}

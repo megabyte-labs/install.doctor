@@ -70,7 +70,7 @@ if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/gas-station/requirements.yml" ]; t
   if command -v ansible-galaxy > /dev/null; then
     logg info 'Ensuring Ansible Galaxy collections are installed'
     export ANSIBLE_CONFIG="${XDG_DATA_HOME:-$HOME/.local/share}/ansible/ansible.cfg"
-    ansible-galaxy install -r "${XDG_DATA_HOME:-$HOME/.local/share}/ansible/requirements.yml" || EXIT_CODE=$?
+    ansible-galaxy install -r "${XDG_DATA_HOME:-$HOME/.local/share}/ansible/requirements.yml" > /dev/null || EXIT_CODE=$?
     if [ -n "$EXIT_CODE" ]; then
       logg error 'Failed to install Ansible requirements from Ansible Galaxy'
       if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/gas-station/collections" ]; then

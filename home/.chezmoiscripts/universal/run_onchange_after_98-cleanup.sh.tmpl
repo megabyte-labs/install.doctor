@@ -36,4 +36,8 @@ if [ -d /Applications ] && [ -d /System ]; then
     if command -v m > /dev/null; then
         logg info 'Emptying trash' && m trash clean
     fi
+    logg info 'Checking if there is a pending update'
+    defaults read /Library/Updates/index.plist InstallAtLogout
+elif [ -f /var/run/reboot-required ]; then
+    logg info '/var/run/reboot-required is present so a reboot is required'
 fi

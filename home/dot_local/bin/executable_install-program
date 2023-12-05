@@ -342,6 +342,15 @@ async function generateInstallOrders(pkgsToInstall) {
           }
         }
 
+        // Handle the _app definition
+        const appName = softwarePackages[packageKey]['_app']
+        if (appName) {
+          if(fileExists(`/Applications/${appName}`) || fileExists(`${process.env.HOME}/Applications/${appName}`)) {
+            processPluginOrders(pkg)
+            continue pkgFor
+          }
+        }
+
         // Handle the _deps attribute
         currentSelector = 'deps'
         doubleScoped =
@@ -582,9 +591,9 @@ async function afterInstall(packageManager) {
     log('info', logStage, `Ensuring temporary passwordless sudo privileges used by Ansible are removed`)
     const gsed = which.sync('gsed', { nothrow: true })
     if (gsed) {
-      await $`sudo gsed -i '/# TEMPORARY FOR ANSIBLE INSTALL DOCTOR/d' /etc/sudoers`
+      await $`sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR ANSIBLE/d' /etc/sudoers`
     } else {
-      await $`sudo sed -i '/# TEMPORARY FOR ANSIBLE INSTALL DOCTOR/d' /etc/sudoers`
+      await $`sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR ANSIBLE/d' /etc/sudoers`
     }
   } else if (packageManager === 'apk') {
   } else if (packageManager === 'apt') {
@@ -1837,10 +1846,9 @@ async function linkBin(installOrdersBinLink) {
             } catch (e) {
               log('warn', 'Bin', `Expected flatpak directory not available - ${flatpakDir}/app/${pkg}`)
             }
-          } else if (binLink.preference === 'cask') {
+          } else if (softwarePackages[binLink.package]['_app']) {
             try {
-              const caskWhen = softwarePackages[binLink.package]['_when:cask'].replace(/blue/g, "red")
-              const appName = caskWhen.replace(/ && ! test -d .*/, '').replace(/! test -d "\/Applications\//, '').replace(/! test -d \/Applications\//, '').replace('"', '')
+              const appName = softwarePackages[binLink.package]['_app']
               log('info', 'Bin', `Checking for existence of ${appName} application in /Applications and ~/Applications`)
               if (fileExists(`/Applications/${appName}`)) {
                 runCommand(

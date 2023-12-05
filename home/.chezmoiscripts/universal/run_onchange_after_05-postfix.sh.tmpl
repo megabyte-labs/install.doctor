@@ -112,7 +112,7 @@ if command -v postfix > /dev/null; then
             ### Re-generate the /etc/aliases.db file
             if [ -f /etc/aliases ]; then
                 logg info 'Ensuring proper permissions on the /etc/aliases file' && sudo chown $(stat -c "%U:%G" /etc/sudoers) /etc/aliases
-                logg info 'Generating Postfix aliases' && sudo postalias /etc/aliases
+                logg info 'Generating Postfix aliases' && sudo postalias /etc/aliases > /dev/null
             else
                 logg warn '/etc/aliases is missing which is required for Postfix'
             fi
@@ -133,10 +133,10 @@ if command -v postfix > /dev/null; then
             fi
             if ! sudo postfix status > /dev/null; then
                 logg info 'Starting postfix'
-                sudo postfix start
+                sudo postfix start > /dev/null
             else
                 logg info 'Reloading postfix'
-                sudo postfix reload
+                sudo postfix reload > /dev/null
             fi
         else
             ### Enable / restart postfix on Linux
