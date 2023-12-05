@@ -454,7 +454,9 @@ ensureHomebrewDeps() {
 # @description Ensure the `${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi` directory is cloned and up-to-date using the previously
 #     set `START_REPO` as the source repository.
 cloneChezmoiSourceRepo() {
-  logg info 'Setting git http.postBuffer value high for large source repository' && git config --global http.postBuffer 524288000
+  if ! git config --get --global http.postBuffer > /dev/null; then
+    logg info 'Setting git http.postBuffer value high for large source repository' && git config --global http.postBuffer 524288000
+  fi
   if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.git" ]; then
     logg info "Changing directory to ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi" && cd "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
     logg info "Pulling the latest changes in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi" && git pull origin master
