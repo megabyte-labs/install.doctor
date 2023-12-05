@@ -5,6 +5,18 @@
 #     This script sets up pfSense with features like:
 #
 #     1. [Netdata Cloud](https://learn.netdata.cloud/docs/installing/pfsense)
+#
+#     ## Considerations
+#
+#     The following items are not included in this script but may be added in the future:
+#
+#     * https://github.com/pfelk/pfelk
+#
+#     ## Useful Links
+#
+#     * [pfSense to OPNSense configuration converter](https://www.pf2opn.com/)
+#     * [pfSense Ansible collection](https://github.com/pfsensible/core)
+#     * [pfSense API](https://github.com/jaredhendrickson13/pfsense-api) (Note: Need CLI or easy way of accessing it)
 
 # @description This function logs with style using Gum if it is installed, otherwise it uses `echo`. It is also capable of leveraging Glow to render markdown.
 #     When Glow is not installed, it uses `cat`. The following sub-commands are available:
@@ -140,3 +152,23 @@ EOF
     service netdata onestart
 }
 enableNetdata
+
+# @description This function installs UniFi onto a pfSense / OPNSense FreeBSD environment. It leverages scripts provided by
+#     the [unofficial pfSense UniFi project on GitHub](https://github.com/unofficial-unifi/unifi-pfsense). The script runs
+#     the script provided by the project and then enables the UniFi service.
+#
+#     If you run into issues, please see the project's GitHub link (referenced above). It may take a couple minutes for the
+#     UniFi service to start up after `service unifi.sh start` is run because the start service exits fast while booting up
+#     the UniFi service in the background.
+enableUniFi() {
+  fetch -o - https://raw.githubusercontent.com/unofficial-unifi/unifi-pfsense/master/install-unifi/install-unifi.sh | sh -s
+  service unifi.sh start
+}
+enableUniFi
+
+# @description This function adds an unofficial package that adds SAML2 support to pfSense for SSO logins over
+#     the web portal. For more information, see the project's [GitHub page](https://github.com/jaredhendrickson13/pfsense-saml2-auth).
+enablePFsenseSAML() {
+  pkg add https://github.com/jaredhendrickson13/pfsense-saml2-auth/releases/latest/download/pfSense-2.7-pkg-saml2-auth.pkg
+}
+enablePFsenseSAML

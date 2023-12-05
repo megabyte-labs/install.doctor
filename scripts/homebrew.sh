@@ -170,10 +170,10 @@ ensureHomebrew() {
       ### Installs Homebrew and addresses a couple potential issues
       if command -v sudo > /dev/null && sudo -n true; then
         logg info "Installing Homebrew"
-        echo | /bin/bash -c "$(curl -fsSL --compressed https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       else
         logg info "Homebrew is not installed. The script will attempt to install Homebrew and you might be prompted for your password."
-        /bin/bash -c "$(curl -fsSL --compressed https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
         if [ -n "$BREW_EXIT_CODE" ]; then
           if command -v brew > /dev/null; then
             logg warn "Homebrew was installed but part of the installation failed. Trying a few things to fix the installation.."
@@ -191,8 +191,10 @@ ensureHomebrew() {
       ### Ensures the `brew` binary is available on Linux machines. macOS installs `brew` into the default `PATH` so nothing needs to be done for macOS.
       if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
         logg info "Sourcing shellenv from /home/linuxbrew/.linuxbrew/bin/brew" && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-      elif [ -f /opt/homebrew/bin/brew ]; then
-        logg info "Sourcing shellenv from /opt/homebrew/bin/brew" && eval "$(/opt/homebrew/bin/brew shellenv)"
+      elif [ -f /usr/local/bin/brew ]; then
+        logg info "Sourcing shellenv from /usr/local/bin/brew" && eval "$(/usr/local/bin/brew shellenv)"
+      elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" ]; then
+        logg info "Sourcing shellenv from "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew"" && eval "$("${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" shellenv)"
       fi
     fi
   fi
@@ -200,7 +202,7 @@ ensureHomebrew() {
   ### Ensure GCC is installed via Homebrew
   if command -v brew > /dev/null; then
     if ! brew list | grep gcc > /dev/null; then
-      logg info "Installing Homebrew gcc" && brew install gcc
+      logg info "Installing Homebrew gcc" && brew install --quiet gcc
     fi
   else
     logg error "Failed to initialize Homebrew" && exit 2
