@@ -6186,7 +6186,6 @@ softwarePackages:
     _app: YouTube Music.app
     appimage: th-ch/youtube-music
     apt: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/youtube-music_1.19.0_amd64.deb
-    cask: https://raw.githubusercontent.com/th-ch/youtube-music/master/youtube-music.rb
     exe: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/YouTube-Music-Setup-1.19.0.exe
     scoop: extras/youtube-music
     script:darwin: DL_URL="https://github.com/th-ch/youtube-music/releases/download/v1.20.0/YouTube-Music-1.20.0.dmg" && if [ $(arch) = 'arm64' ]; then DL_URL="https://github.com/th-ch/youtube-music/releases/download/v1.20.0/YouTube-Music-1.20.0-arm64.dmg"; fi && curl -sSL "$DL_URL" > /tmp/YouTube-Music.dmg && sudo hdiutil attach /tmp/YouTube-Music.dmg && if [ -d "/Volumes/YouTube Music 1.20.0" ]; then sudo cp -R "/Volumes/YouTube Music 1.20.0/YouTube Music.app" /Applications && sudo hdiutil detach "/Volumes/YouTube Music 1.20.0"; elif [ -d "/Volumes/YouTube Music 1.20.0-arm64" ]; then sudo cp -R "/Volumes/YouTube Music 1.20.0-arm/YouTube Music.app" /Applications && sudo hdiutil detach "/Volumes/YouTube Music 1.20.0-arm"; fi && rm -f /tmp/YouTube-Music.dmg
