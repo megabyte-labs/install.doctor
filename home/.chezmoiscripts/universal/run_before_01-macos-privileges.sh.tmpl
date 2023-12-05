@@ -28,7 +28,7 @@ ensureFullDiskAccess() {
     if [ -d /Applications ] && [ -d /System ]; then
         if ! plutil -lint /Library/Preferences/com.apple.TimeMachine.plist > /dev/null ; then
             logg star 'Opening Full Disk Access preference pane.. Grant full-disk access for the terminal you would like to run the provisioning process with.' && open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
-            logg prompt 'Press ENTER to check for Full Disk Access again' && read -rsn
+            logg prompt 'Press ENTER to check for Full Disk Access again' && read -r
             ensureFullDiskAccess
         else
             logg success 'Current terminal has full disk access'
