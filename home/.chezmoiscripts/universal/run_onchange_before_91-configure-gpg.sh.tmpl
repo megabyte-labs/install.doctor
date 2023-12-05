@@ -22,7 +22,7 @@ if [ -n "$KEYID" ] && command -v gpg > /dev/null; then
   find "$HOME/.gnupg" -type d -exec chmod 700 {} \;
   if [ ! -f "$HOME/.gnupg/gpg.conf" ]; then
     logg 'Downloading hardened gpg.conf file to ~/.gpnupg/gpg.conf'
-    curl -sSL "{{ .config.gpg }}" > "$HOME/.gnupg/gpg.conf"
+    curl -sSL --compressed "{{ .config.gpg }}" > "$HOME/.gnupg/gpg.conf"
     chmod 600 "$HOME/.gnupg/gpg.conf"
   fi
   logg info 'Killing dirmngr instance and reloading daemon with standard-resolver' && sudo pkill dirmngr
