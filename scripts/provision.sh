@@ -234,10 +234,10 @@ ensureHomebrew() {
       ### Installs Homebrew and addresses a couple potential issues
       if command -v sudo > /dev/null && sudo -n true; then
         logg info "Installing Homebrew"
-        echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        echo | /bin/bash -c "$(curl -fsSL --compressed https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       else
         logg info "Homebrew is not installed. The script will attempt to install Homebrew and you might be prompted for your password."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+        /bin/bash -c "$(curl -fsSL --compressed https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
         if [ -n "$BREW_EXIT_CODE" ]; then
           if command -v brew > /dev/null; then
             logg warn "Homebrew was installed but part of the installation failed. Trying a few things to fix the installation.."

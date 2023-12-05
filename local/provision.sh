@@ -338,14 +338,14 @@ ensurePackageManagerHomebrew() {
   if ! command -v brew > /dev/null; then
     logg info 'Installing Homebrew'
     if command -v sudo > /dev/null && sudo -n true; then
-      echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      echo | bash -c "$(curl -fsSL --compressed https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         brew install gcc
       fi
     else
       logg info 'Looks like the user does not have passwordless sudo privileges. A sudo password may be required.'
-      bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+      bash -c "$(curl -fsSL --compressed https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
       if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         brew install gcc
