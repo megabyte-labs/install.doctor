@@ -12,9 +12,6 @@
 #
 #   [Systemd Unit file](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/gitomatic/gitomatic.service.tmpl)
 
-{{ includeTemplate "universal/profile" }}
-{{ includeTemplate "universal/logg" }}
-
 if command -v gitomatic > /dev/null && command -v jq > /dev/null && command -v yq > /dev/null && command -v git > /dev/null; then
     if [ -d /Applications ] && [ -d /System ]; then
         USER_FOLDER="/Users"
@@ -52,5 +49,5 @@ if command -v gitomatic > /dev/null && command -v jq > /dev/null && command -v y
         done
     fi
 else
-    logg error 'gitomatic, jq, yq, and git should be installed!' && exit 1
+    echo 'gitomatic, jq, yq, and git should be installed!' && exit 1
 fi

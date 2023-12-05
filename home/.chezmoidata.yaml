@@ -1733,10 +1733,21 @@ softwarePlugins:
       - github/gh-net
       - mislav/gh-cp
   intellij-idea-ce:
-    cmd: bash -c 'idea.sh installPlugins "{PLUGIN}"'
+    cmd: bash -c 'if ! cat "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor/intellij-idea-ce" | grep "${PLUGIN}" &> /dev/null; thenidea.sh installPlugins "{PLUGIN}" && mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor" && echo "{PLUGIN}" >> "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor/intellij-idea-ce"; fi'
     plugins:
+      - AngularJS
+      - app.pieces.plugins.jetbrains
+      - com.dmarcotte.handlebars
       - com.github.copilot
-      - https://plugins.jetbrains.com/plugin/17328-pieces--save-search-share--reuse-code-snippets
+      - com.jetbrains.edu
+      - com.jetbrains.rust
+      - com.wakatime.intellij.plugin
+      - Docker
+      - io.flutter
+      - NodeJS
+      - org.editorconfig.editorconfigjetbrains
+      - org.intellij.plugins.markdown
+      - org.jetbrains.completion.full.line
   helm:
     cmd: bash -c '{PLUGIN}'
     plugins:

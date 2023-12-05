@@ -37,7 +37,10 @@ if [ -d /Applications ] && [ -d /System ]; then
         logg info 'Emptying trash' && m trash clean
     fi
     logg info 'Checking if there is a pending update'
-    defaults read /Library/Updates/index.plist InstallAtLogout
+    defaults read /Library/Updates/index.plist InstallAtLogout || EXIT_CODE=$?
+    if [ -n "$EXIT_CODE" ]; then
+        logg info 'No pending update discovered by checking /Library/Updates/index.plist'
+    fi
 elif [ -f /var/run/reboot-required ]; then
     logg info '/var/run/reboot-required is present so a reboot is required'
 fi

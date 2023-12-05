@@ -118,6 +118,7 @@ ensurePackageManagerHomebrew() {
       bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
       if [ -n "$BREW_EXIT_CODE" ]; then
         logg warn 'Homebrew was installed but part of the installation failed to complete successfully.'
+        fixHomebrewPermissions
       fi
     fi
   fi
@@ -127,7 +128,6 @@ ensurePackageManagerHomebrew() {
 loadLinuxbrew
 ensurePackageManagerHomebrew
 loadLinuxbrew
-fixHomebrewPermissions
 
 ### Enable auto-update service
 if [ -d /Applications ] && [ -d System ]; then

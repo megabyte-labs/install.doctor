@@ -12,7 +12,7 @@
 {{ includeTemplate "universal/logg" }}
 
 if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/emsdk" ]; then
-    logg info 'Pulling latest changes for Emscripten source code' && git pull
+    logg info 'Pulling latest changes for Emscripten source code' && cd "${XDG_DATA_HOME:-$HOME/.local/share}/emsdk" && git pull
     logg info "Running emsdk install latest" && emsdk install latest > /dev/null
     logg info "Running emsdk activate latest" && emsdk activate latest > /dev/null
     logg info 'Profile source inclusions are already implemented in Bash / ZSH profile'
