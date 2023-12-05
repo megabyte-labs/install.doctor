@@ -2763,11 +2763,11 @@ softwarePackages:
     _github: https://github.com/wfxr/forgit
     _name: forgit
     brew: forgit
-  nfty:
-    _bin: nfty
+  ntfy:
+    _bin: ntfy
     _github: https://github.com/dschep/ntfy
-    _name: nfty
-    pipx: nfty
+    _name: ntfy
+    pipx: ntfy
   clipboard:
     _bin: cb
     _github: https://github.com/Slackadays/Clipboard.git
@@ -10756,60 +10756,61 @@ softwarePackages:
     _post: sudo xcodebuild -license accept && sudo xcodebuild -runFirstLaunch
     _app: Xcode.app
     mas: 497799835
-    script:darwin: |
-      ### Load AWS secrets
-      source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh"
-      ### Setup passwordless sudo
-      if ! sudo cat /etc/sudoers | grep '# TEMPORARY FOR INSTALL DOCTOR XCODEINSTALL' > /dev/null; then
-        if [ -n "$SUDO_PASSWORD" ]; then
-          printf '%s\n' "$SUDO_PASSWORD" | sudo -p "" -S echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR XCODEINSTALL" | sudo tee -a /etc/sudoers
-        else
-          echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR XCODEINSTALL" | sudo tee -a /etc/sudoers
-        fi
-      fi
-      ### Remove old files
-      echo "Removing old ~/.xcodeinstall folder"
-      rm -rf ~/.xcodeinstall
-      ### Authenticate
-      echo "Authenticating"
-      xcodeinstall authenticate -s "$AWS_DEFAULT_REGION"
-      ### Download files
-      while read XCODE_DOWNLOAD_ITEM; do
-        if [[ "$XCODE_DOWNLOAD_ITEM" != *"Command Line Tools"* ]]; then
-          DOWNLOAD_ID="$(echo "$XCODE_DOWNLOAD_ITEM" | sed 's/^\[\(.*\)\] .*/\1/')"
-          echo "Downloading $XCODE_DOWNLOAD_ITEM"
-          echo "$DOWNLOAD_ID" | xcodeinstall download -s "$AWS_DEFAULT_REGION"
-        fi
-      done < <(xcodeinstall list -s "$AWS_DEFAULT_REGION" | grep --invert-match 'Release Candidate' | grep --invert-match ' beta ' | grep ' Xcode \d\d ')
-      ### Install Xcode
-      echo "Installing Xcode"
-      xcodeinstall install --name "$(basename "$(find ~/.xcodeinstall/download -maxdepth 1 -name "*.xip")")"
-      ### Install Command Line Tools
-      # Commentted out because it is already installed by xcode-select in the provision.sh script
-      # xcodeinstall install --name "$(basename "$(find ~/.xcodeinstall/download -maxdepth 1 -name "*Command Line Tools*")")"
-      ### Install Additional Tools
-      echo "Installing Additional Tools"
-      while read ADDITIONAL_TOOLS; do
-        hdiutil attach "$ADDITIONAL_TOOLS"
-        rm -rf "/Applications/Additional Tools"
-        cp -rf "/Volumes/Additional Tools" "/Applications/Additional Tools"
-        hdiutil detach "$(find /Volumes -name "Additional Tools")"
-      done < <(find ~/.xcodeinstall/download -name "Additional Tools*")
-      ### Install Font Tools
-      echo "Installing Font Tools"
-      while read FONT_TOOLS; do
-        hdiutil attach "$FONT_TOOLS"
-        cd "$(find /Volumes -maxdepth 1 -name "*Font Tools*")"
-        sudo installer -pkg "$(find . -maxdepth 1 -name "*Font Tools*.pkg")" -target /
-        cd / && hdiutil detach "$(find /Volumes -maxdepth 1 -name "*Font Tools*")"
-      done < <(find ~/.xcodeinstall/download -name "Font Tools*")
-      ### Remove cache / downloaded files
-      rm -rf ~/.xcodeinstall
-      ### Remove passwordless sudo
-      if ! command -v gsed > /dev/null; then
-        brew install gnu-sed
-      fi
-      sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR XCODEINSTALL/d' /etc/sudoers
+    #script:darwin: |
+    #  echo "NOTE - This may not work headlessly due to requirement of 2FA"
+    #  ### Load AWS secrets
+    #  source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh"
+    #  ### Setup passwordless sudo
+    #  if ! sudo cat /etc/sudoers | grep '# TEMPORARY FOR INSTALL DOCTOR XCODEINSTALL' > /dev/null; then
+    #    if [ -n "$SUDO_PASSWORD" ]; then
+    #      printf '%s\n' "$SUDO_PASSWORD" | sudo -p "" -S echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR XCODEINSTALL" | sudo tee -a /etc/sudoers
+    #    else
+    #      echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR XCODEINSTALL" | sudo tee -a /etc/sudoers
+    #    fi
+    #  fi
+    #  ### Remove old files
+    #  echo "Removing old ~/.xcodeinstall folder"
+    #  rm -rf ~/.xcodeinstall
+    #  ### Authenticate
+    #  echo "Authenticating"
+    #  xcodeinstall authenticate -s "$AWS_DEFAULT_REGION"
+    #  ### Download files
+    #  while read XCODE_DOWNLOAD_ITEM; do
+    #    if [[ "$XCODE_DOWNLOAD_ITEM" != *"Command Line Tools"* ]]; then
+    #      DOWNLOAD_ID="$(echo "$XCODE_DOWNLOAD_ITEM" | sed 's/^\[\(.*\)\] .*/\1/')"
+    #      echo "Downloading $XCODE_DOWNLOAD_ITEM"
+    #      echo "$DOWNLOAD_ID" | xcodeinstall download -s "$AWS_DEFAULT_REGION"
+    #    fi
+    #  done < <(xcodeinstall list -s "$AWS_DEFAULT_REGION" | grep --invert-match 'Release Candidate' | grep --invert-match ' beta ' | grep ' Xcode \d\d ')
+    #  ### Install Xcode
+    #  echo "Installing Xcode"
+    #  xcodeinstall install --name "$(basename "$(find ~/.xcodeinstall/download -maxdepth 1 -name "*.xip")")"
+    #  ### Install Command Line Tools
+    #  # Commentted out because it is already installed by xcode-select in the provision.sh script
+    #  # xcodeinstall install --name "$(basename "$(find ~/.xcodeinstall/download -maxdepth 1 -name "*Command Line Tools*")")"
+    #  ### Install Additional Tools
+    #  echo "Installing Additional Tools"
+    #  while read ADDITIONAL_TOOLS; do
+    #    hdiutil attach "$ADDITIONAL_TOOLS"
+    #    rm -rf "/Applications/Additional Tools"
+    #    cp -rf "/Volumes/Additional Tools" "/Applications/Additional Tools"
+    #    hdiutil detach "$(find /Volumes -name "Additional Tools")"
+    #  done < <(find ~/.xcodeinstall/download -name "Additional Tools*")
+    #  ### Install Font Tools
+    #  echo "Installing Font Tools"
+    #  while read FONT_TOOLS; do
+    #    hdiutil attach "$FONT_TOOLS"
+    #    cd "$(find /Volumes -maxdepth 1 -name "*Font Tools*")"
+    #    sudo installer -pkg "$(find . -maxdepth 1 -name "*Font Tools*.pkg")" -target /
+    #    cd / && hdiutil detach "$(find /Volumes -maxdepth 1 -name "*Font Tools*")"
+    #  done < <(find ~/.xcodeinstall/download -name "Font Tools*")
+    #  ### Remove cache / downloaded files
+    #  rm -rf ~/.xcodeinstall
+    #  ### Remove passwordless sudo
+    #  if ! command -v gsed > /dev/null; then
+    #    brew install gnu-sed
+    #  fi
+    #  sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR XCODEINSTALL/d' /etc/sudoers
   xurls:
     _bin: xurls
     _desc: Extract urls from text
