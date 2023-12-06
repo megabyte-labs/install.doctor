@@ -16,6 +16,9 @@
 if command -v docker > /dev/null; then
     DOCKERHUB_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "DOCKERHUB_TOKEN")) }}{{- includeTemplate "secrets/DOCKERHUB_TOKEN" | decrypt | trim -}}{{ else }}{{- env "DOCKERHUB_TOKEN" -}}{{ end }}"
     DOCKERHUB_USER="{{ .user.docker.username }}"
+    if [ -d "/Applications/Docker.app" ] || [ -d "$HOME/Applications/Docker.app" ]; then
+        logg info 'Ensuring Docker.app is open' && open --background -a Docker --args --accept-license --unattended
+    fi
     logg info 'Headlessly authenticating with DockerHub registry' && echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USER" --password-stdin > /dev/null && logg success 'Successfully authenticated with DockerHub registry'
 fi
 
