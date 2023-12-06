@@ -380,6 +380,7 @@ if command -v brew > /dev/null; then
   installBrewPackage gum
   installBrewPackage node
   installBrewPackage zx
+  installBrewPackage expect
 fi
 
 ### Clones the source repository

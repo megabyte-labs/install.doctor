@@ -35,12 +35,17 @@
 # Running sudo softwareupdate -i -a -R --agree-to-license reboots just not in the script due to the running processes perhaps
 # Check for pending reboot by checking 
 if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
-  if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
-    echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
-  fi
   logg info 'Applying OS upgrades (if available)'
-  sudo softwareupdate -i -a --agree-to-license --background || logg error 'Failed to trigger a system update via sudo softwareupdate -i -a --agree-to-license --background'
+  sudo softwareupdate -i -a --agree-to-license || logg error 'Failed to trigger a system update via sudo softwareupdate -i -a --agree-to-license --background'
   logg info 'If system updates are downloaded / installed, a reboot might be required.'
+  ### Source: https://community.jamf.com/t5/jamf-pro/determine-if-update-requires-restart/m-p/11682
+  if softwareupdate -l | grep restart > /dev/null; then
+    if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
+      echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
+    fi
+    logg info 'Reboot required - shutting down immediately' && sudo shutdown -r now
+    # TODO - Automatically log in after reboot
+  fi
   if command -v gsed > /dev/null; then
     sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
   else
