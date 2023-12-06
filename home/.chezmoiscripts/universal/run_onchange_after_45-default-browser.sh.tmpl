@@ -22,7 +22,10 @@ if [ -d /Applications ] && [ -d /System ]; then
         brew install --quiet defaultbrowser
     fi
     logg info "Setting default browser to {{ .user.defaultBrowserDarwin }}"
-    osascript "$HOME/Library/Scripts/default-browser.scpt" "{{ .user.defaultBrowserDarwin }}"
+    osascript "$HOME/Library/Scripts/default-browser.scpt" "{{ .user.defaultBrowserDarwin }}" || EXIT_CODE=$?
+    if [ -n "$EXIT_CODE" ]; then
+        logg error 'Failed to change default browser'
+    fi
 else
     logg info 'Setting default browser for text/html to {{ .user.defaultBrowser }}'
     xdg-mime default {{ .user.defaultBrowser }}.desktop text/html
