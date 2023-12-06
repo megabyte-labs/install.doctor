@@ -304,7 +304,6 @@ handleRequiredReboot() {
 setCIEnvironmentVariables() {
   if [ -n "$CI" ]; then
     logg info "Automatically setting environment variables since the CI environment variable is defined"
-    logg info "Setting HOST to $HOST" && export HOST="$HOST"
     logg info "Setting NO_RESTART to true" && export NO_RESTART=true
     logg info "Setting HEADLESS_INSTALL to true " && export HEADLESS_INSTALL=true
     logg info "Setting SOFTWARE_GROUP to Full-Desktop" && export SOFTWARE_GROUP="Full-Desktop"
@@ -313,6 +312,7 @@ setCIEnvironmentVariables() {
     logg info "Setting PUBLIC_SERVICES_DOMAIN to lab.megabyte.space" && export PUBLIC_SERVICES_DOMAIN="lab.megabyte.space"
     logg info "Setting RESTRICTED_ENVIRONMENT to false" && export RESTRICTED_ENVIRONMENT=false
     logg info "Setting WORK_ENVIRONMENT to false" && export WORK_ENVIRONMENT=false
+    logg info "Setting HOST to $(hostname -s)" && export HOST="$(hostname -s)"
   fi
 }
 

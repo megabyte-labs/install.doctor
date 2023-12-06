@@ -84,7 +84,6 @@ setEnvironmentVariables() {
 setCIEnvironmentVariables() {
   if [ -n "$CI" ]; then
     logg info "Automatically setting environment variables since the CI environment variable is defined"
-    logg info "Setting HOST to $HOST" && export HOST="$HOST"
     logg info "Setting NO_RESTART to true" && export NO_RESTART=true
     logg info "Setting HEADLESS_INSTALL to true " && export HEADLESS_INSTALL=true
     logg info "Setting SOFTWARE_GROUP to Full-Desktop" && export SOFTWARE_GROUP="Full-Desktop"
