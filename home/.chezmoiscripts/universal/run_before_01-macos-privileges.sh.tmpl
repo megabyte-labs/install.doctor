@@ -28,10 +28,19 @@ ensureFullDiskAccess() {
     if [ -d /Applications ] && [ -d /System ]; then
         if ! plutil -lint /Library/Preferences/com.apple.TimeMachine.plist > /dev/null ; then
             logg star 'Opening Full Disk Access preference pane.. Grant full-disk access for the terminal you would like to run the provisioning process with.' && open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
+            logg info 'You may have to force quit the terminal and have it reload'
+            if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
+                echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
+            fi
             logg prompt 'Press ENTER to check for Full Disk Access again' && read -r
             ensureFullDiskAccess
         else
             logg success 'Current terminal has full disk access'
+            if command -v gsed > /dev/null; then
+                sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+            else
+                sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+            fi
         fi
     fi
 }

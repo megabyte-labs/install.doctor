@@ -93,6 +93,7 @@ setCIEnvironmentVariables() {
     logg info "Setting PUBLIC_SERVICES_DOMAIN to lab.megabyte.space" && export PUBLIC_SERVICES_DOMAIN="lab.megabyte.space"
     logg info "Setting RESTRICTED_ENVIRONMENT to false" && export RESTRICTED_ENVIRONMENT=false
     logg info "Setting WORK_ENVIRONMENT to false" && export WORK_ENVIRONMENT=false
+    logg info "Setting HOST to $(hostname -s)" && export HOST="$(hostname -s)"
   fi
 }
 
