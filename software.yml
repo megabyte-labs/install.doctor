@@ -4839,7 +4839,6 @@ softwarePackages:
     flatpak: org.inkscape.Inkscape
     pacman: inkscape
     snap: inkscape
-    mas: 2146510460
   intellij-idea-ce:
     _bin: intellij-idea-community
     _desc: '[IntelliJ IDEA](https://www.jetbrains.com/idea/) is an integrated development environment written in Java for developing computer software. It is developed by JetBrains, and is available as an Apache 2 Licensed community edition, and in a proprietary commercial edition. Both can be used for commercial development.'
@@ -11027,6 +11026,7 @@ softwarePackages:
     _home: https://www.yubico.com/products/yubico-authenticator/
     _name: Yubico Authenticator
     _app: Yubico Authenticator.app
+    cask: yubico-authenticator
     choco: yubico-authenticator
     flatpak: com.yubico.yubioath
     script:darwin: curl -sSL https://developers.yubico.com/yubioath-flutter/Releases/yubico-authenticator-latest-mac.dmg > "/tmp/Yubico Authenticator.dmg" && hdiutil attach "/tmp/Yubico Authenticator.dmg" &&  sudo cp -R "/Volumes/Yubico Authenticator/Yubico Authenticator.app" /Applications && sudo hdiutil detach "/Volumes/Yubico Authenticator" && rm -f "/tmp/Yubico Authenticator.dmg"
