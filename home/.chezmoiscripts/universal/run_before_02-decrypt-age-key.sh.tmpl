@@ -76,8 +76,8 @@ decryptKey() {
         installExpect
         expect -c "set timeout -1
         spawn age --decrypt --output "${XDG_CONFIG_HOME}/age/chezmoi.txt" "${XDG_DATA_HOME:-$HOME/.local/share}/home/key.txt.age"
-        expect \"Enter passphrase:\"
-        send \"${AGE_PASSWORD}\r\"
+        expect "Enter passphrase:"
+        send "${AGE_PASSWORD}\r"
         expect eof" &> /dev/null || EXIT_CODE=$?
         if [ -n "$EXIT_CODE" ]; then
           logg info 'There was an issue decrypting the key.txt.age file with the provided AGE_PASSWORD'
