@@ -1,9 +1,16 @@
-{{- if (eq .host.distro.family "linux") -}}
 {
+  "builder": {
+    "gc": {
+      "defaultKeepStorage": "20GB"
+      "enabled": true
+    }
+  },
+  "experimental": true,
+  {{ if (eq .host.distro.family "linux") -}}
   "runtimes": {
     "runsc": {
       "path": "/usr/local/bin/runsc"
     }
   }
+  {{ end -}}
 }
-{{- end -}}
