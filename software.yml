@@ -6439,18 +6439,7 @@ softwarePackages:
     _home: https://www.netdata.cloud/
     _name: Netdata
     _groups:
-      - netdataif (typeof service === 'object' && brew.length) {
-              brew.forEach(x => {
-                runCommand(`Starting / enabling object array ${x.name} with Homebrew`, `${x.sudo ? 'sudo brew' : 'brew'} services start ${x.name}`)
-                log('success', logStage, `Started / enabled the ${x.name} service with Homebrew`)
-              })
-            } else if (typeof service === 'object') {
-              runCommand(`Starting / enabling object ${service.name} with Homebrew`, `${service.sudo ? 'sudo brew' : 'brew'} services start ${service.name}`)
-              log('success', logStage, `Started / enabled the ${service.name} service with Homebrew`)
-            } else {
-              runCommand(`Starting / enabling ${service} with Homebrew`, `brew services start ${service}`)
-              log('success', logStage, `Started / enabled the ${service} service with Homebrew`)
-            }
+      - netdata
     _service: netdata
     _service:brew:
       - name: netdata
