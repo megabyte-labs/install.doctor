@@ -8178,7 +8178,16 @@ softwarePackages:
     _home: https://rkhunter.sourceforge.net/
     _name: rkhunter
     _notes: The _post script removes an entry for VMware with a space in it that causes rkhunter to hiccup
-    _post: export PATH="$(echo "$PATH" | sed 's/VMware Fusion.app//')" && sudo rkhunter --propupd && sudo rkhunter --update
+    _post: |
+      export PATH="$(echo "$PATH" | sed 's/VMware Fusion.app/VMwareFusion.app/')"
+      sudo rkhunter --propupd || RK_PROPUPD_EXIT_CODE=$?
+      if [ -n "$RK_PROPUPD_EXIT_CODE" ]; then
+        echo "FIXME sudo rkhunter --propupd returned non-zero exit code"
+      fi
+      sudo rkhunter --update || RK_UPDATE_EXIT_CODE=$?
+      if [ -n "$RK_UPDATE_EXIT_CODE" ]; then
+        echo "FIXME sudo rkhunter --update returned non-zero exit code"
+      fi
     _service:pacman: cronie
     apt: rkhunter
     brew: rkhunter

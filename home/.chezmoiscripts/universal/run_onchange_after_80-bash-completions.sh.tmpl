@@ -17,6 +17,7 @@ logg 'Updating the ~/.local/share/bash-completion/completions folder based on th
 if [ "$DEBUG_MODE" == 'true' ]; then
   set +x
 fi
+set +x
 
 ### Initialize
 COMPLETION_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/bash-completion/completions"

@@ -1,10 +1,10 @@
 {{- if (ne .host.distro.family "windows") -}}
-#!/usr/bin/env -S bash -i
+#!/usr/bin/env bash
 # @file Bash It!
 # @brief Ensures Bash is configured to use Bash It!
 # @description
 #     This script ensures Bash is configured to use Bash It! It ensures dependencies are installed, installs completions,
-#     and enables Bash It! plugins. The completions and plugins are hardcoded in this script.
+#     and enables Bash It! plugins. The completions and plugins are hardcoded in this script. Source file might need `#!/usr/bin/env -S bash -i`.
 
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
@@ -31,10 +31,6 @@ fi
 
 ### Bash-it completions / plugins
 if command -v powerline > /dev/null && [ -f "$HOME/.bashrc" ]; then
-    # These three lines are probably not needed:
-    # logg info 'Running source ~/.bashrc'
-    # source ~/.bashrc
-    # logg success 'Imported the ~/.bashrc profile'
     if [ -d "$BASH_IT" ]; then
         ### Ensure bash-it is installed
         if ! command -v bash-it > /dev/null; then

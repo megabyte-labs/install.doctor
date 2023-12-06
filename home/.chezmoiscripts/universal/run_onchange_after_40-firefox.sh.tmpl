@@ -302,6 +302,9 @@ function firefoxSetup() {
                         PLUGIN_HTML="$(mktemp)"
                         curl --silent "https://addons.mozilla.org/en-US/firefox/addon/$FIREFOX_PLUGIN/" > "$PLUGIN_HTML"
                         PLUGIN_TMP="$(mktemp)"
+                        if ! command -v htmlq > /dev/null && command -v brew > /dev/null; then
+                            logg info 'Installing htmlq using Homebrew since it is a dependency for populating Firefox add-ons' && brew install htmlq
+                        fi
                         cat "$PLUGIN_HTML" | htmlq '#redux-store-state' | sed 's/^<scri.*application\/json">//' | sed 's/<\/script>$//' > "$PLUGIN_TMP"
                         PLUGIN_ID="$(jq '.addons.bySlug["'"$FIREFOX_PLUGIN"'"]' "$PLUGIN_TMP")"
                         if [ "$PLUGIN_ID" != 'null' ]; then
