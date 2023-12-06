@@ -1255,7 +1255,9 @@ softwarePackages:
     _bin: openssl-osx-ca
     _github: https://github.com/raggi/openssl-osx-ca
     _name: OpenSSL macOS CA
-    _service:brew:darwin: openssl-osx-ca
+    _service:brew:darwin:
+      - name: openssl-osx-ca
+        sudo: true
     _serviceEnabled: true
     brew:darwin: raggi/ale/openssl-osx-ca
   meta-package-manager:
@@ -1973,7 +1975,9 @@ softwarePackages:
     _service:apt: clamav-freshclam
     _service:dnf: clamd-freshclam
     _service:pacman: clamav-freshclam
-    _service:brew: clamav
+    _service:brew:
+      - name: clamav
+        sudo: true
     _serviceEnabled: true
     apt:
       - clamav
@@ -3593,30 +3597,6 @@ softwarePackages:
     _name: fm
     github: github.com/mistakenelf/fm
     go: github.com/mistakenelf/fm@latest
-  fonts:
-    _deps:
-      - font-sfmono-nerd-font
-      - font-hack-nerd-font
-      - font-meslo-nerd-font
-    _bin: false
-  font-sfmono-nerd-font:
-    _bin: false
-    _github: null
-    _name: Nerd Font
-    _when:cask: '! brew list font-sf-mono-nerd-font'
-    cask: epk/epk/font-sf-mono-nerd-font
-  font-hack-nerd-font:
-    _bin: false
-    _github: null
-    _name: Hack Nerd Font
-    _when:cask: '! brew list font-hack-nerd-font'
-    cask: font-hack-nerd-font
-  font-meslo-nerd-font:
-    _bin: false
-    _github: null
-    _name: Meslo Nerd Font
-    _when:cask: '! brew list font-meslo-lg-nerd-font'
-    cask: font-meslo-lg-nerd-font
   metasploit:
     _github: https://github.com/rapid7/metasploit-framework
     _name: Metasploit Framework
@@ -5862,6 +5842,7 @@ softwarePackages:
     _github: https://github.com/mpv-player/mpv
     _name: MPV
     _todo: This software does not run on macOS versions other than Mojave, Catalina, Big Sur and Ventura --- probably adding support - this issue will likely fix itself
+    _app: mpv.app
     brew: mpv
     cask: mpv
     choco: mpv
@@ -6459,8 +6440,22 @@ softwarePackages:
     _home: https://www.netdata.cloud/
     _name: Netdata
     _groups:
-      - netdata
+      - netdataif (typeof service === 'object' && brew.length) {
+              brew.forEach(x => {
+                runCommand(`Starting / enabling object array ${x.name} with Homebrew`, `${x.sudo ? 'sudo brew' : 'brew'} services start ${x.name}`)
+                log('success', logStage, `Started / enabled the ${x.name} service with Homebrew`)
+              })
+            } else if (typeof service === 'object') {
+              runCommand(`Starting / enabling object ${service.name} with Homebrew`, `${service.sudo ? 'sudo brew' : 'brew'} services start ${service.name}`)
+              log('success', logStage, `Started / enabled the ${service.name} service with Homebrew`)
+            } else {
+              runCommand(`Starting / enabling ${service} with Homebrew`, `brew services start ${service}`)
+              log('success', logStage, `Started / enabled the ${service} service with Homebrew`)
+            }
     _service: netdata
+    _service:brew:
+      - name: netdata
+        sudo: true
     _serviceEnabled: true
     _deps:
       - debsecan
@@ -7678,7 +7673,9 @@ softwarePackages:
       - protonvpn
     yay: protonvpn
   protonvpn-cli:
-    # TODO - Add seperate entry for openvpn (sudo brew services start openvpn)
+    _deps:script:darwin:
+      - dialog
+      - openvpn
     _bin: protonvpn
     _desc: The ProtonVPN CLI official release for Linux along with an unofficial ProtonVPN CLI for macOS
     _docs: null
@@ -7689,7 +7686,30 @@ softwarePackages:
     apt: protonvpn-cli
     dnf: protonvpn-cli
     pacman: protonvpn-cli
-    script:darwin: brew install openvpn dialog python3 || true && sudo rm -rf /usr/local/src/protonvpn-cli && sudo git clone https://github.com/phx/protonvpn-cli-macos /usr/local/src/protonvpn-cli && cd /usr/local/src/protonvpn-cli && pip3 install -r requirements.txt && sudo python3 setup.py install
+    script:darwin: |
+      sudo rm -rf /usr/local/src/protonvpn-cli
+      sudo git clone https://github.com/phx/protonvpn-cli-macos /usr/local/src/protonvpn-cli
+      cd /usr/local/src/protonvpn-cli && pip3 install -r requirements.txt
+      sudo python3 setup.py install
+  openvpn:
+    _bin: openvpn
+    _github: https://github.com/OpenVPN/openvpn
+    _name: OpenVPN
+    apt: openvpn
+    dnf: openvpn
+    pacman: openvpn
+    choco: openvpn
+    brew: openvpn
+  dialog:
+    _bin: dialog
+    _github: false
+    _home: https://invisible-island.net/dialog/
+    _name: Dialog
+    apt: dialog
+    dnf: dialog
+    pacman: dialog
+    choco: dialog
+    brew: dialog
   protonmail-bridge:
     _bin: protonmail-bridge
     _app: Proton Mail Bridge.app
@@ -9643,11 +9663,12 @@ softwarePackages:
     _github: https://github.com/tfutils/tfenv
     _home: https://github.com/tfutils/tfenv
     _name: tfenv
-    _post: if ! command -v terraform > /dev/null; then tfenv use latest; fi
+    _post: tfenv use latest
     ansible:darwin: professormanhattan.tfenv
     ansible:linux: professormanhattan.tfenv
     brew: tfenv
     port: tfenv
+    yay: tfenv
   alda:
     _bin: alda
     _github: https://github.com/alda-lang/alda

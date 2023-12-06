@@ -219,6 +219,7 @@ print_banner() {
   
   ### Information section
   if command -v neofetch > /dev/null; then
+    printf "\\n"
     neofetch
   else
     ## non-neofetch

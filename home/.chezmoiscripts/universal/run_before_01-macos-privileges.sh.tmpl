@@ -36,5 +36,16 @@ ensureFullDiskAccess() {
     fi
 }
 
+# @description Applies changes that require input from the user such as using Touch ID on macOS when
+#     importing certificates into the system keychain.
+#
+#     * Ensures CloudFlare Teams certificate is imported into the system keychain
+importCloudFlareCert() {
+  if [ -d /Applications ] && [ -d /System ] && [ -z "$HEADLESS_INSTALL" ]; then
+    logg info 'Importing Cloudflare_CA.crt into System.keychain' && sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
+  fi
+}
+
 printFullDiskAccessNotice
 ensureFullDiskAccess
+importCloudFlareCert

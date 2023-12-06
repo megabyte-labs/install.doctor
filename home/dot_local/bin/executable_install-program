@@ -1635,16 +1635,16 @@ async function updateService(service) {
         log('info', logStage, `There was an error starting / enabling the ${service} service with systemd`)
         try {
           if (brew) {
-            if (typeof brew === 'object' && brew.length) {
-              brew.forEach(x => {
-                runCommand(`Starting / enabling object array ${service} with Homebrew`, `${x.sudo ? 'sudo brew' : 'brew'} services start ${x.name}`)
+            if (typeof service === 'array') {
+              service.forEach(x => {
+                runCommand(`Starting / enabling object array ${x.name} with Homebrew`, `${x.sudo ? 'sudo brew' : 'brew'} services restart ${x.name}`)
                 log('success', logStage, `Started / enabled the ${x.name} service with Homebrew`)
               })
-            } else if (typeof brew === 'object') {
-              runCommand(`Starting / enabling object ${service} with Homebrew`, `${brew.sudo ? 'sudo brew' : 'brew'} services start ${brew.name}`)
-              log('success', logStage, `Started / enabled the ${brew.name} service with Homebrew`)
+            } else if (typeof service === 'object') {
+              runCommand(`Starting / enabling object ${service.name} with Homebrew`, `${service.sudo ? 'sudo brew' : 'brew'} services restart ${service.name}`)
+              log('success', logStage, `Started / enabled the ${service.name} service with Homebrew`)
             } else {
-              runCommand(`Starting / enabling ${service} with Homebrew`, `brew services start ${service}`)
+              runCommand(`Starting / enabling ${service} with Homebrew`, `brew services restart ${service}`)
               log('success', logStage, `Started / enabled the ${service} service with Homebrew`)
             }
           } else {
@@ -1669,8 +1669,18 @@ async function updateService(service) {
     const brew = which.sync('brew', { nothrow: true })
     if (brew) {
       try {
-        runCommand(`Starting / enabling ${service} with Homebrew`, `brew services start ${service}`)
-        log('success', logStage, `Started / enabled the ${service} service with Homebrew`)
+        if (typeof service === 'array') {
+          service.forEach(x => {
+            runCommand(`Starting / enabling object array ${x.name} with Homebrew`, `${x.sudo ? 'sudo brew' : 'brew'} services restart ${x.name}`)
+            log('success', logStage, `Started / enabled the ${x.name} service with Homebrew`)
+          })
+        } else if (typeof service === 'object') {
+          runCommand(`Starting / enabling object ${service.name} with Homebrew`, `${service.sudo ? 'sudo brew' : 'brew'} services restart ${service.name}`)
+          log('success', logStage, `Started / enabled the ${service.name} service with Homebrew`)
+        } else {
+          runCommand(`Starting / enabling ${service} with Homebrew`, `brew services restart ${service}`)
+          log('success', logStage, `Started / enabled the ${service} service with Homebrew`)
+        }
       } catch (e) {
         log('error', logStage, `There was an error starting / enabling the ${service} Homebrew service`)
         console.error(e)

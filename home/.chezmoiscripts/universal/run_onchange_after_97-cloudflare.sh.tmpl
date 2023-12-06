@@ -106,10 +106,10 @@ fi
 if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; then
     ### Ensure certificate installed on macOS
     if [ -z "$SSH_CONNECTION" ]; then
-        if [ -z "$HEADLESS_INSTALL" ]; then
-            logg info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
-            sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
-        fi
+        # if [ -z "$HEADLESS_INSTALL" ]; then
+        #     logg info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
+        #     sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
+        # fi
         logg info 'Updating the OpenSSL CA Store to include the Cloudflare certificate'
         echo | sudo tee -a /etc/ssl/cert.pem < "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > /dev/null
         echo "" | sudo tee -a /etc/ssl/cert.pem

@@ -20,7 +20,7 @@ if [ -f "$ASDF_DIR/asdf.sh" ] && [ -f ~/.tool-versions ]; then
   logg info 'Sourcing asdf.sh'
   . ${ASDF_DIR}/asdf.sh
   cat .tool-versions | while read TOOL; do
-    logg info 'Installing ASDF plugin '"$(echo "$TOOL" | sed 's/ .*//')"'' && asdf plugin add "$(echo "$TOOL" | sed 's/ .*//')" > /dev/null && logg success "Successfully added $(echo "$TOOL" | sed 's/ .*//') via ASDF"
+    logg info 'Installing ASDF plugin '"$(echo "$TOOL" | sed 's/ .*//')"'' && asdf plugin add "$(echo "$TOOL" | sed 's/ .*//')" > /dev/null && logg info "Successfully added $(echo "$TOOL" | sed 's/ .*//') via ASDF"
   done
   # Only proceed with installation if either DEBUG_MODE is enabled or ~/.cache/megabyte-labs/asdf-install is missing
   # Added to save time between tests because PHP takes awhile to install
