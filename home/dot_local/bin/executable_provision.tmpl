@@ -14,7 +14,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 # @description Load default settings if it is in a CI setting
 if [ -n "$CI" ]; then
-  export HOST="$HOST"
+  export HOST="$(hostname -s)"
   export NO_RESTART=true
   export HEADLESS_INSTALL=true
   export SOFTWARE_GROUP="Full"
