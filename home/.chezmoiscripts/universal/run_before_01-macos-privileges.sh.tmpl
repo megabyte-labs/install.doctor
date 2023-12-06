@@ -36,10 +36,12 @@ ensureFullDiskAccess() {
             ensureFullDiskAccess
         else
             logg success 'Current terminal has full disk access'
-            if command -v gsed > /dev/null; then
-                sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
-            else
-                sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+            if [ -f "$HOME/.zshrc" ]; then
+                if command -v gsed > /dev/null; then
+                    sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+                else
+                    sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+                fi
             fi
         fi
     fi
