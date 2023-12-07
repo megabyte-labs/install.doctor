@@ -27,6 +27,7 @@ printFullDiskAccessNotice() {
 ensureFullDiskAccess() {
     if [ -d /Applications ] && [ -d /System ]; then
         if ! plutil -lint /Library/Preferences/com.apple.TimeMachine.plist > /dev/null ; then
+            printFullDiskAccessNotice
             logg star 'Opening Full Disk Access preference pane.. Grant full-disk access for the terminal you would like to run the provisioning process with.' && open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
             logg info 'You may have to force quit the terminal and have it reload'
             if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
@@ -76,6 +77,5 @@ importCloudFlareCert() {
   fi
 }
 
-printFullDiskAccessNotice
 ensureFullDiskAccess
 importCloudFlareCert
