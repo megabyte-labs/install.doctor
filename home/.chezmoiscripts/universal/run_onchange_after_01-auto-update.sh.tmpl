@@ -18,3 +18,10 @@ if [ -d /Applications ] && [ -d /System ]; then
         sudo launchctl load "/Library/LaunchDaemons/com.apple.automatedupdates.plist" && logg success 'launchctl load successful'
     fi
 fi
+
+### Ensure gem is updated
+if command -v gem > /dev/null; then
+    logg info 'Ensuring system gem is updated' && gem update --system
+else
+    logg info 'Could not find gem in PATH so skipping gem system update'
+fi

@@ -171,9 +171,6 @@ if [ -d /Applications ] && [ -d System ]; then
   fi
 fi
 
-### Ensure gem is updated
-gem update --system
-
 ### Scrub ~/.viminfo
 if [ -f "$HOME/.viminfo" ]; then
   logg info 'Removing ~/.viminfo' && sudo rm -f "$HOME/.vimino"
