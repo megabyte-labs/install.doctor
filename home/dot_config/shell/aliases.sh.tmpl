@@ -200,6 +200,9 @@ function pf-format() {
   docker run --rm -i ghcr.io/tkcert/pffocus "$*"
 }
 
+# Output plist in readable format
+alias plcat='plutil -convert xml1 -o -'
+
 # Show open ports
 alias ports='sudo netstat -tulanp'
 
