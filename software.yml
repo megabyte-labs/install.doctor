@@ -4938,6 +4938,11 @@ softwarePackages:
       echo "Setting iTerm2 to automatically sync with managed options" && defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile_selection -int 2
     ansible:darwin: professormanhattan.iterm2
     cask: iterm2
+  kcpassword:
+    _bin: kcpassword
+    _github: https://github.com/xfreebird/kcpassword
+    _name: kcpassword
+    brew:darwin: xfreebird/utils/kcpassword
   nativescript:
     _bin: ns
     _github: https://github.com/NativeScript/NativeScript
