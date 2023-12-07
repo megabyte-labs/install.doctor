@@ -36,15 +36,41 @@
 # Check for pending reboot by checking 
 if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
   logg info 'Applying OS upgrades (if available)'
-  sudo softwareupdate -i -a --agree-to-license || logg error 'Failed to trigger a system update via sudo softwareupdate -i -a --agree-to-license --background'
+  sudo sh -c "softwareupdate -i -a --agree-to-license" || logg error 'Failed to trigger a system update via sudo softwareupdate -i -a --agree-to-license'
   logg info 'If system updates are downloaded / installed, a reboot might be required.'
   ### Source: https://community.jamf.com/t5/jamf-pro/determine-if-update-requires-restart/m-p/11682
   if softwareupdate -l | grep restart > /dev/null; then
+    ### Add kickstart script to .zshrc so it triggers automatically
     if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
       echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
     fi
-    logg info 'Reboot required - shutting down immediately' && sudo shutdown -r now
-    # TODO - Automatically log in after reboot
+
+    ### Attempt to populate SUDO_PASSWORD from secrets
+    if [ -z "$SUDO_PASSWORD" ]; then
+      SUDO_PASSWORD="{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SUDO_PASSWORD")) -}}{{- includeTemplate "secrets/SUDO_PASSWORD" | decrypt | trim -}}{{- end -}}"
+      export SUDO_PASSWORD
+    fi
+
+    ### Prompt for SUDO_PASSWORD
+    if [ "$SUDO_PASSWORD" = "" ]; then
+      logg prompt "Enter the current user's login / admin password. Press ENTER to bypass and skip enabling auto-login. If you would like to bypass this prompt next time then pass in the password as an environment variable named SUDO_PASSWORD before running the kickstart script."
+      SUDO_PASSWORD="$(gum input --password --placeholder="Enter password..")"
+      export SUDO_PASSWORD
+    fi
+    
+    if [ -n "$SUDO_PASSWORD" ] && [ "$SUDO_PASSWORD" != "" ]; then
+      ### Install kcpassword
+      if ! command -v enable_autologin > /dev/null; then
+        logg info 'enable_autologin is not installed and it is a requirement for auto-logging in after reboot'
+        brew install xfreebird/utils/kcpassword
+      fi
+
+      ### Enable auto-login via kcpassword
+      sudo enable_autologin "$USER" "$SUDO_PASSWORD"
+    fi
+
+    ### Reboot
+    logg info 'Reboot required - shutting down immediately' && sudo sh -c 'shutdown -r now'
   fi
   if [ -f "$HOME/.zshrc" ]; then
     if command -v gsed > /dev/null; then
