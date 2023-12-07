@@ -4933,6 +4933,9 @@ softwarePackages:
     _home: https://iterm2.com/
     _name: iTerm2
     _app: iTerm.app
+    _post:cask: |
+      echo "Setting iTerm2 options location to Install Doctor Chezmoi location" && defaults write com.googlecode.iterm2 PrefsCustomFolder -string "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/Library/Preferences/com.googlecode.iterm2.plist"
+      echo "Setting iTerm2 to automatically sync with managed options" && defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile_selection -int 2
     ansible:darwin: professormanhattan.iterm2
     cask: iterm2
   nativescript:

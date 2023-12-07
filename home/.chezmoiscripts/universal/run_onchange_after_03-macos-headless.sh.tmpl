@@ -17,11 +17,16 @@ if [ -n "$HEADLESS_INSTALL" ] && [ -z "$SSH_CONNECTION" ] && [ -d /System ] && [
     # Source: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt
     # Source: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
     ### Ensure certificate installed on macOS
-    logg info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
+    logg info 'Downloading Cloudflare_CA.crt from https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt to determine if it is already in the System.keychain'
     CRT_TMP="$(mktemp)"
     curl -sSL https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt > "$CRT_TMP"
-    sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_TMP" && logg success 'Successfully imported Cloudflare_CA.crt into System.keychain'
+    security verify-cert -c "$CRT_TMP" > /dev/null 2>&1
+    if [ $? != 0 ]; then
+        logg info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
+        sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_TMP" && logg success 'Successfully imported Cloudflare_CA.crt into System.keychain'
+    fi
     rm -f "$CRT_TMP"
+    
     # Source: https://apple.stackexchange.com/questions/30238/how-to-enable-os-x-screen-sharing-vnc-through-ssh
     # To disable, run: sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -configure -access -off
     # Only enable when computer is not a corporate / work computer
