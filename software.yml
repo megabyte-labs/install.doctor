@@ -7305,6 +7305,7 @@ softwarePackages:
     _bin: postgresql
     _name: PostgreSQL
     _github: https://github.com/postgres/postgres
+    _service: postgresql
     _service:brew: postgresql@14
     brew: postgresql
     zypper: postgresql
@@ -7683,6 +7684,10 @@ softwarePackages:
     _bin: openvpn
     _github: https://github.com/OpenVPN/openvpn
     _name: OpenVPN
+    _service: openvpn
+    _service:brew:
+      - name: openvpn
+        sudo: true
     apt: openvpn
     dnf: openvpn
     pacman: openvpn
@@ -10030,6 +10035,7 @@ softwarePackages:
     _home: https://vaultproject.io/
     _name: HashiCorp Vault
     _service: vault
+    _service:brew: hashicorp/tap/vault
     ansible: professormanhattan.vault
     brew: hashicorp/tap/vault
     yay: vault-cli

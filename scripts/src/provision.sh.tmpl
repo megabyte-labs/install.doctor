@@ -235,17 +235,12 @@ installBrewPackage() {
 
 # @description Installs various dependencies using Homebrew.
 #
-#     1. Ensures Chezmoi, Node.js, and ZX are installed.
-#     2. Installs Glow and Gum if the `HEADLESS_INSTALL` environment variable is not set.
-#     3. If the system is macOS, then also install `gsed` and `coreutils`.
+#     1. Ensures Glow, Gum, Chezmoi, Node.js, and ZX are installed.
+#     2. If the system is macOS, then also install `gsed` and `coreutils`.
 ensureHomebrewDeps() {
-  ### TUI experience
-  if [ -z "$HEADLESS_INSTALL" ]; then
-    installBrewPackage "gum"
-    installBrewPackage "glow"
-  fi
-
   ### Base dependencies
+  installBrewPackage "glow"
+  installBrewPackage "gum"
   installBrewPackage "chezmoi"
   installBrewPackage "node"
   installBrewPackage "zx"
