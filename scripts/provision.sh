@@ -302,13 +302,13 @@ handleRequiredReboot() {
 }
 # @description Load default settings if it is in a CI setting
 setCIEnvironmentVariables() {
-  if [ -n "$CI" ]; then
+  if [ -n "$CI" ] || [ -n "$TEST_INSTALL" ]; then
     logg info "Automatically setting environment variables since the CI environment variable is defined"
     logg info "Setting NO_RESTART to true" && export NO_RESTART=true
     logg info "Setting HEADLESS_INSTALL to true " && export HEADLESS_INSTALL=true
     logg info "Setting SOFTWARE_GROUP to Full-Desktop" && export SOFTWARE_GROUP="Full-Desktop"
     logg info "Setting FULL_NAME to Brian Zalewski" && export FULL_NAME="Brian Zalewski"
-    logg info "Setting PRIMARY_EMAIL to help@megabyte.space" && export PRIMARY_EMAIL="help@megabyte.space"
+    logg info "Setting PRIMARY_EMAIL to brian@megabyte.space" && export PRIMARY_EMAIL="brian@megabyte.space"
     logg info "Setting PUBLIC_SERVICES_DOMAIN to lab.megabyte.space" && export PUBLIC_SERVICES_DOMAIN="lab.megabyte.space"
     logg info "Setting RESTRICTED_ENVIRONMENT to false" && export RESTRICTED_ENVIRONMENT=false
     logg info "Setting WORK_ENVIRONMENT to false" && export WORK_ENVIRONMENT=false
@@ -330,13 +330,15 @@ ensureWarpDisconnected() {
 setupPasswordlessSudo() {
   sudo -n true || SUDO_EXIT_CODE=$?
   logg info 'Your user will temporarily be granted passwordless sudo for the duration of the script'
-  if [ -n "$SUDO_EXIT_CODE" ]; then
-    logg info 'Press CTRL+C to bypass this prompt to either enter your password when needed or perform a non-privileged installation'
-    logg info 'Note: Non-privileged installations are not yet supported'
+  if [ -n "$SUDO_EXIT_CODE" ] && [ -z "$SUDO_PASSWORD" ] && command -v chezmoi > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD" ]; then
+    SUDO_PASSWORD="$(chezmoi decrypt "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD")"
+    export SUDO_PASSWORD
   fi
   if [ -n "$SUDO_PASSWORD" ]; then
     printf '%s\n' "$SUDO_PASSWORD" | sudo -p "" -S echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers > /dev/null
   else
+    logg info 'Press CTRL+C to bypass this prompt to either enter your password when needed or perform a non-privileged installation'
+    logg info 'Note: Non-privileged installations are not yet supported'
     echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers > /dev/null
   fi
 }
@@ -455,17 +457,12 @@ installBrewPackage() {
 
 # @description Installs various dependencies using Homebrew.
 #
-#     1. Ensures Chezmoi, Node.js, and ZX are installed.
-#     2. Installs Glow and Gum if the `HEADLESS_INSTALL` environment variable is not set.
-#     3. If the system is macOS, then also install `gsed` and `coreutils`.
+#     1. Ensures Glow, Gum, Chezmoi, Node.js, and ZX are installed.
+#     2. If the system is macOS, then also install `gsed` and `coreutils`.
 ensureHomebrewDeps() {
-  ### TUI experience
-  if [ -z "$HEADLESS_INSTALL" ]; then
-    installBrewPackage "gum"
-    installBrewPackage "glow"
-  fi
-
   ### Base dependencies
+  installBrewPackage "glow"
+  installBrewPackage "gum"
   installBrewPackage "chezmoi"
   installBrewPackage "node"
   installBrewPackage "zx"
