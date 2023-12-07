@@ -111,10 +111,12 @@ setupPasswordlessSudo() {
   sudo -n true || SUDO_EXIT_CODE=$?
   logg info 'Your user will temporarily be granted passwordless sudo for the duration of the script'
   if [ -n "$SUDO_EXIT_CODE" ] && [ -z "$SUDO_PASSWORD" ] && command -v chezmoi > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD" ]; then
+    logg info "Acquiring SUDO_PASSWORD by using Chezmoi to decrypt ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD"
     SUDO_PASSWORD="$(chezmoi decrypt "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD")"
     export SUDO_PASSWORD
   fi
   if [ -n "$SUDO_PASSWORD" ]; then
+    logg info 'Using the acquired sudo password to automatically grant the user passwordless sudo privileges for the duration of the script'
     printf '%s\n' "$SUDO_PASSWORD" | sudo -p "" -S echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers > /dev/null
   else
     logg info 'Press CTRL+C to bypass this prompt to either enter your password when needed or perform a non-privileged installation'
