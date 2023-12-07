@@ -332,7 +332,7 @@ setupPasswordlessSudo() {
   logg info 'Your user will temporarily be granted passwordless sudo for the duration of the script'
   if [ -n "$SUDO_EXIT_CODE" ] && [ -z "$SUDO_PASSWORD" ] && command -v chezmoi > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD" ]; then
     logg info "Acquiring SUDO_PASSWORD by using Chezmoi to decrypt ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD"
-    SUDO_PASSWORD="$(chezmoi decrypt "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD")"
+    SUDO_PASSWORD="$(cat "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD" | chezmoi decrypt)"
     export SUDO_PASSWORD
   fi
   if [ -n "$SUDO_PASSWORD" ]; then
