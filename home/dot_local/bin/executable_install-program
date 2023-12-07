@@ -1801,6 +1801,7 @@ async function installPlugins(pluginData) {
   if (pluginData.cmd && pluginData.plugins && pluginData.plugins.length) {
     const pluginWhen = pluginData.when
     try {
+      log('info', 'Plugin When', pluginWhen)
       runCommand(`Checking when condition for ${pluginData.package} plugin - ${plugin}`, pluginWhen)
       for (const plugin of pluginData.plugins) {
         try {
