@@ -122,14 +122,14 @@ if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; th
         logg info 'Adding Cloudflare certificate to /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem'
         echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem
         logg info 'Running /usr/local/opt/openssl@3/bin/c_rehash'
-        /usr/local/opt/openssl@3/bin/c_rehash > /dev/null && logg success 'OpenSSL certificate rehash successful'
+        /usr/local/opt/openssl@3/bin/c_rehash > /dev/null && logg info 'OpenSSL certificate rehash successful'
     elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash" ]; then
         # Location on arm64 macOS and custom Homebrew locations
         logg info "Ensuring ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs directory exists" && mkdir -p "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs"
         logg info "Adding Cloudflare certificate to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs/Cloudflare_CA.pem"
         echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs/Cloudflare_CA.pem"
         logg info "Running ${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash"
-        "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash" > /dev/null && logg success 'OpenSSL certificate rehash successful'
+        "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash" > /dev/null && logg info 'OpenSSL certificate rehash successful'
     else
         logg warn 'Unable to add Cloudflare_CA.pem because /usr/local/etc/openssl@3/certs and /opt/homebrew/etc/openssl@3/certs do not exist!'
     fi
