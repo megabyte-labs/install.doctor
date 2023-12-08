@@ -212,7 +212,7 @@ if [ ! -d /Applications ] || [ ! -d /System ]; then
         if [ -n "$RUNSC_EXIT_CODE" ]; then
             logg error 'Failed to run the Docker hello-world container with runsc' && exit 5
         else
-            logg success 'Docker successfully ran the hello-world container with runsc'
+            logg info 'Docker successfully ran the hello-world container with runsc'
         fi
     fi
 fi

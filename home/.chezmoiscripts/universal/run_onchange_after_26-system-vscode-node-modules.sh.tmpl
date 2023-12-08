@@ -70,7 +70,7 @@ if command -v code > /dev/null && command -v npm > /dev/null && [ -f "${XDG_DATA
         logg warn 'Possible error(s) were detected while installing linter fallback configurations to the home directory.'
         logg info "Exit code: $EXIT_CODE"
     else
-        logg success 'Installed linter fallback configuration node_modules'
+        logg info 'Installed linter fallback configuration node_modules'
     fi
 else
     logg info 'Skipping installation of fallback linter configurations because one or more of the dependencies is missing.'

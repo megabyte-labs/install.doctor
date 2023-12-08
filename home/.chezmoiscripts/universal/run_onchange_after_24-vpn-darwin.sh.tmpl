@@ -28,11 +28,11 @@
 # along with the secrets for the protonVPN OpenVPN (check vpn-linux.tmpl)
 
 # @description Backs up previous network settings to `/Library/Preferences/com.apple.networkextension.plist.old` before applying new VPN profiles
-if [ -f /Library/Preferences/com.apple.networkextension.plist ]; then
+if [ -f /Library/Preferences/com.apple.networkextension.plist ] && [ ! -f "/Library/Preferences/com.apple.networkextension.plist.old" ]; then
     logg info 'Backing up /Library/Preferences/com.apple.networkextension.plist to /Library/Preferences/com.apple.networkextension.plist.old'
     sudo cp -f /Library/Preferences/com.apple.networkextension.plist /Library/Preferences/com.apple.networkextension.plist.old
 else
-    logg info 'The /Library/Preferences/com.apple.networkextension.plist file does not exist yet'
+    logg info 'The /Library/Preferences/com.apple.networkextension.plist does not exist or is already backed up to com.apple.networkextension.plist.old'
 fi
 
 # @description Ensures the `/etc/wireguard` directory exists and has the lowest possible permission-level
