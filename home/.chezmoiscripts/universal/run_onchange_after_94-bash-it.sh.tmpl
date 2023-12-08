@@ -26,7 +26,7 @@ fi
 ### Ensure ble.sh installed
 if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/src" ]; then
     logg info 'Make installing blesh'
-    make -C "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/src" install > /dev/null && logg success "Installed ble.sh" || logg error "Error running make -C "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/src" install"
+    make -C "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/src" install > /dev/null && logg info "Installed ble.sh" || logg error "Error running make -C "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/src" install"
 fi
 
 ### Bash-it completions / plugins
