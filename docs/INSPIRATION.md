@@ -1,27 +1,11 @@
-- https://github.com/jhuckaby/Cronicle
-
 ## CLI
 
-- https://github.com/sigoden/argc
-- https://github.com/r-darwish/idnt
-- https://github.com/charmbracelet/wish
-- https://github.com/charmbracelet/skate
-- https://github.com/console-rs/indicatif
 - https://github.com/tauri-apps/tauri
-- https://github.com/emilengler/sysget
 - https://github.com/pocketbase/pocketbase
-- sysget
-- https://github.com/therootcompany/serviceman
 - https://github.com/vadimdemedes/ink
-- https://github.com/ajenti/ajenti
-- https://github.com/linuxserver/docker-webtop
-- https://github.com/chocolatey/boxstarter
-- https://github.com/changkun/occamy
 - https://cliffy.io/docs@v0.25.7
-- https://github.com/gotify/server
 - https://github.com/typicode/lowdb
 - https://github.com/sindresorhus/execa
-- https://github.com/mde/ejs
 
 ## System
 

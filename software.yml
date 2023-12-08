@@ -4117,6 +4117,55 @@ softwarePackages:
     _github: https://github.com/muesli/gitomatic
     _home: null
     _name: git-o-matic
+    _post: |
+      # @file git-o-matic Configuration
+      # @brief Starts service on Linux systems to monitor Git repositories
+      # @description
+      #     git-o-matic is a tool to monitor git repositories and automatically pull/push changes. Multiple repositories can be
+      #     monitored by running multiple instances of `gitomatic`. This script supports SSH Key based authentication only.
+      #
+      #     If the `gitomatic` program is installed, this script creates and starts a Systemd service to monitor the repositories.
+      #     The repositories are cloned if they are not available at the path.
+      #
+      #     ## Notes
+      #     * The author name and email address for commits are the same as `.user.name` and `.user.email` (configured in the `home/.chezmoi.yaml.tmpl` file)
+      #     * `gitomatic` automatically pushes and pulls changes. The script does not change this behavior
+      #     * `gitomatic` checks for changes every minute. This setting is not changed by this script
+      #     * The User's default SSH Key is used for authentication
+      #
+      #     ## Links
+      #
+      #     * [gitomatic GitHub repository](https://github.com/muesli/gitomatic/)
+      #     * [Systemd Unit file](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/gitomatic/gitomatic.service.tmpl)
+      #     * [Helper script](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_local/bin/executable_gitomatic_service.tmpl)
+
+      if command -v gitomatic > /dev/null; then
+        ### Copy bin to /usr/local/bin
+        logg info "Copying $HOME/.local/bin/gitomatic-service to /usr/local/bin/gitomatic-service" && sudo cp -f "$HOME/.local/bin/gitomatic-service" /usr/local/bin/gitomatic-service
+        
+        ### Copy gitomatic to global directory
+        if [ ! -f /usr/local/bin/gitomatic ]; then
+          logg info 'Copying gitomatic executable to /usr/local/bin/gitomatic' && sudo cp -f "$(which gitomatic)" /usr/local/bin/gitomatic
+        fi
+      
+        if [ -d /Applications ] && [ -d /System ]; then
+          ### macOS
+          logg info 'Copying gitomatic plist file to /Library/LaunchDaemons' && sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitomatic/com.github.muesli.gitomatic.plist" /Library/LaunchDaemons/com.github.muesli.gitomatic.plist
+          if ! sudo launchctl list | grep 'gitomatic' > /dev/null; then
+            logg info 'Running sudo launchctl load /Library/LaunchDaemons/com.github.muesli.gitomatic.plist' && sudo launchctl load /Library/LaunchDaemons/com.github.muesli.gitomatic.plist
+            logg info 'Running sudo launchctl start /Library/LaunchDaemons/com.github.muesli.gitomatic.plist' && sudo launchctl start /Library/LaunchDaemons/com.github.muesli.gitomatic.plist
+          else
+            logg info "gitomatic services appear to already be loaded"
+          fi
+        else
+          ### Linux
+          logg info 'Copying gitomatic systemd unit file to /etc/systemd/system/' && sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitomatic/gitomatic.service" /etc/systemd/system/gitomatic.service
+          logg info 'Reloading systemd daemon' && sudo systemctl daemon-reload
+          logg info 'Enabling and starting gitomatic service' && sudo systemctl enable --now gitomatic
+        fi
+      else
+        logg info 'gitomatic is not installed or it is not available in PATH'
+      fi
     ansible: professormanhattan.gitomatic
     github: github.com/muesli/gitomatic
     go: github.com/muesli/gitomatic@latest
@@ -8982,6 +9031,70 @@ softwarePackages:
     _home: https://github.com/skeeto/endlessh
     _name: Endlessh
     _service: endlessh
+    _post: | 
+      # @file Endlessh Configuration
+      # @brief Applies the Endlessh configuration and starts the service on Linux systems
+      # @description
+      #     Endlessh is a endless SSH tarpit that slowly shows an infinitely long SSH welcome banner on the default
+      #     SSH port. It is intended to break unsophisticated malware that targets SSH.
+      #
+      #     If the `endlessh` program is installed, this script applies the configuration stored in `home/private_dot_ssh/endlessh/config.tmpl`
+      #     (that unpacks with Chezmoi to `~/.ssh/endlessh/config`) to the system location and then starts the service.
+      #
+      #     **Note:** _This script runs under the assumption that the actual SSH port which is defined in `home/.chezmoidata.yaml`
+      #     is assigned to a non-standard port like 2214. This allows the default port to be used for `endlessh`._
+      #
+      #     ## Links
+      #
+      #     * [Endlessh GitHub repository](https://github.com/skeeto/endlessh)
+      #     * [Endlessh configuration](https://github.com/megabyte-labs/install.doctor/blob/master/home/private_dot_ssh/endlessh/config.tmpl)
+
+      ### Configures endlessh service
+      function configureEndlessh() {
+        ### Update the service configuration file
+        logg info 'Updating endlessh service configuration file'
+        sudo sed -i 's/^.*#AmbientCapabilities=CAP_NET_BIND_SERVICE/AmbientCapabilities=CAP_NET_BIND_SERVICE/' /usr/lib/systemd/system/endlessh.service
+        sudo sed -i 's/^.*PrivateUsers=true/#PrivateUsers=true/' /usr/lib/systemd/system/endlessh.service
+        logg info 'Reloading systemd' && sudo systemctl daemon-reload
+
+        ### Update capabilities of `endlessh`
+        logg info 'Updating capabilities of endlessh' && sudo setcap 'cap_net_bind_service=+ep' /usr/bin/endlessh
+
+        ### Restart / enable Endlessh
+        logg info 'Enabling the endlessh service' && sudo systemctl enable endlessh
+        logg info 'Restarting the endlessh service' && sudo systemctl restart endlessh
+      }
+
+      ### Update /etc/endlessh/config if environment is not WSL
+      if [[ ! "$(test -d proc && grep Microsoft /proc/version > /dev/null)" ]]; then
+        if command -v endlessh > /dev/null; then
+          if [ -d /etc/endlessh ]; then
+            logg info 'Copying ~/.ssh/endlessh/config to /etc/endlessh/config' && sudo cp -f "$HOME/.ssh/endlessh/config" /etc/endlessh/config
+
+            configureEndlessh || CONFIGURE_EXIT_CODE=$?
+            if [ -n "$CONFIGURE_EXIT_CODE" ]; then
+              logg error 'Configuring endlessh service failed' && exit 1
+            else
+              logg success 'Successfully configured endlessh service'
+            fi
+          elif [ -f /etc/endlessh.conf ]; then
+            logg info 'Copying ~/.ssh/endlessh/config to /etc/endlessh.conf' && sudo cp -f "$HOME/.ssh/endlessh/config" /etc/endlessh.conf
+
+            configureEndlessh || CONFIGURE_EXIT_CODE=$?
+            if [ -n "$CONFIGURE_EXIT_CODE" ]; then
+              logg error 'Configuring endlessh service failed' && exit 1
+            else
+              logg success 'Successfully configured endlessh service'
+            fi
+          else
+            logg warn 'Neither the /etc/endlessh folder nor the /etc/endlessh.conf file exist'
+          fi
+        else
+          logg info 'Skipping Endlessh configuration because the endlessh executable is not available in the PATH'
+        fi
+      else
+        logg info 'Skipping Endlessh configuration since environment is WSL'
+      fi
     # CentOS 9 not in EPEL
     # ansible:linux: professormanhattan.sshtarpit
     apt: endlessh
@@ -9307,6 +9420,11 @@ softwarePackages:
     pacman:
       - sysdig
       - sysdig-dkms
+  ejs:
+    _bin: ejs
+    _github: https://github.com/mde/ejs
+    _name: EJS
+    npm: ejs
   sysget:
     _bin: sysget
     _desc: One package manager to rule them all
@@ -9408,6 +9526,61 @@ softwarePackages:
     _snapClassic: true
     _notes: TODO Update the direct links periodically and keep eye out for Snap / Flatpak
     _app: Tabby.app
+    _post: |
+      # @file Tabby Plugins
+      # @brief This script installs the default Tabby plugins which are defined in `${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json`
+      # @description
+      #     This script pre-installs a handful of useful Tabby plugins which are defined in `${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json`.
+      #     These default plugins can be customized by editting the `package.json` file stored in your Install Doctor fork in the Tabby `plugins/package.json`
+      #     file.
+      #
+      #     ## Default Plugins Configuration
+      #
+      #     The script will install all the plugins defined in the `package.json` file by navigating to the `~/.config/tabby/plugins` folder
+      #     and then run `npm install`. The default configuration will include the following plugins:
+      #
+      #     ```json
+      #     {
+      #       ...
+      #       // Notable dependencies listed below
+      #       "dependencies": {
+      #         "tabby-docker": "^0.2.0",
+      #         "tabby-save-output": "^3.1.0",
+      #         "tabby-search-in-browser": "^0.0.1",
+      #         "tabby-workspace-manager": "^0.0.4"
+      #       },
+      #       ...
+      #     }
+      #     ```
+      #
+      #     ## Default Plugin Descriptions
+      #
+      #     The following chart provides a short description of the default plugins that are pre-installed alongside Tabby:
+      #
+      #     | NPM Package               | Description                                                         |
+      #     |---------------------------|---------------------------------------------------------------------|
+      #     | `tabby-docker`            | Allows you to shell directly into Docker containers                 |
+      #     | `tabby-save-output`       | This plugin lets you stream console output into a file.             |
+      #     | `tabby-search-in-browser` | Allows you to open a internet browser and search for selected text. |
+      #     | `tabby-workspace-manager` | Allows you to create multiple workspace profiles.                   |
+      #
+      #     ## Links
+      #
+      #     * [Tabby plugins `package.json`](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/tabby/plugins/package.json)
+      #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets) which details how to store your Tabby configuration in as an encrypted file
+
+      if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json" ]; then
+        if [ -d "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/node_modules" ]; then
+          logg info 'Skipping Tabby plugin installation because it looks like the plugins were already installed since node_modules is present in ~/.config/tabby/plugins'
+        else
+          logg info 'Installing Tabby plugins defined in '"${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json"''
+          cd "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins"
+          npm install --quiet
+          logg success 'Finished installing Tabby plugins'
+        fi
+      else
+        logg info 'Skipping Tabby plugin installation because is not present'
+      fi
     ansible:linux: professormanhattan.tabby
     apt: https://github.com/Eugeny/tabby/releases/download/v1.0.188/tabby-1.0.188-linux-x64.deb
     cask: tabby
@@ -9844,6 +10017,66 @@ softwarePackages:
     _name: Privoxy
     _service: privoxy
     _serviceEnabled: true
+    _post: |
+      # @file Privoxy Configuration
+      # @brief This script applies the Privoxy configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config` to the system and then restarts Privoxy
+      # @description
+      #     Privoxy is a web proxy that can be combined with Tor to provide an HTTPS / HTTP proxy that can funnel all traffic
+      #     through Tor. This script:
+      #
+      #     1. Determines the system configuration file location
+      #     2. Applies the configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config`
+      #     3. Enables and restarts the Privoxy service with the new configuration
+      #
+      #     ## Links
+      #
+      #     * [Privoxy configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/privoxy/config)
+      
+      ### Define the Privoxy configuration location based on whether system is macOS or Linux
+      if [ -d /Applications ] && [ -d /System ]; then
+        ### macOS
+        if [ -d "/usr/local/etc/privoxy" ]; then
+          PRIVOXY_CONFIG_DIR=/usr/local/etc/privoxy
+        elif [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/privoxy" ]; then
+          PRIVOXY_CONFIG_DIR="${HOMEBREW_PREFIX:-/opt/homebrew}/etc/privoxy"
+        else
+          logg warn 'Unable to detect Privoxy configuration directory'
+        fi
+      else
+        ### Linux
+        PRIVOXY_CONFIG_DIR=/etc/privoxy
+      fi
+      PRIVOXY_CONFIG="$PRIVOXY_CONFIG_DIR/config"
+
+      ### Copy Privoxy configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config` to the system location
+      if command -v privoxy > /dev/null; then
+        if [ -d  "$PRIVOXY_CONFIG_DIR" ]; then
+          sudo cp -f "${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config" "$PRIVOXY_CONFIG"
+          sudo chmod 600 "$PRIVOXY_CONFIG"
+          if command -v add-user > /dev/null; then
+            sudo add-user privoxy
+          fi
+          sudo chown privoxy:privoxy "$PRIVOXY_CONFIG" 2> /dev/null || sudo chown privoxy:$(id -g -n) "$PRIVOXY_CONFIG"
+          
+          ### Restart Privoxy after configuration is applied
+          if [ -d /Applications ] && [ -d /System ]; then
+            ### macOS
+            brew services restart privoxy
+          else
+            if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
+              ### Linux
+              sudo systemctl enable privoxy
+              sudo systemctl restart privoxy
+            else
+              logg info 'The system is a WSL environment so the Privoxy systemd service will not be enabled / restarted'
+            fi
+          fi
+        else
+          logg warn 'The '"$PRIVOXY_CONFIG_DIR"' directory is missing'
+        fi
+      else
+        logg logg 'privoxy is missing from the PATH - skipping configuration'
+      fi
     apt: privoxy
     brew: privoxy
     dnf: privoxy
@@ -9859,6 +10092,57 @@ softwarePackages:
     _restricted: true
     _service: tor
     _serviceEnabled: true
+    _post: |
+      # @file Tor Configuration
+      # @brief This script applies the Tor configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/tor/torrc` to the system and then restarts Tor
+      # @description
+      #     Tor is a network that uses onion routing, originally published by the US Navy. It is leveraged by privacy enthusiasts
+      #     and other characters that deal with sensitive material, like journalists and people buying drugs on the internet.
+      #     This script:
+      #
+      #     1. Determines the system configuration file location
+      #     2. Applies the configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/tor/torrc`
+      #     3. Enables and restarts the Tor service with the new configuration
+      #
+      #     ## Links
+      #
+      #     * [Tor configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/tor/torrc)
+
+      ### Determine the Tor configuration location by checking whether the system is macOS or Linux
+      if [ -d /Applications ] && [ -d /System ]; then
+        ### macOS
+        TORRC_CONFIG_DIR=/usr/local/etc/tor
+      else
+        ### Linux
+        TORRC_CONFIG_DIR=/etc/tor
+      fi
+      TORRC_CONFIG="$TORRC_CONFIG_DIR/torrc"
+
+      ### Apply the configuration if the `torrc` binary is available in the `PATH`
+      if command -v toron > /dev/null; then
+        if [ -d  "$TORRC_CONFIG_DIR" ]; then
+          ### Copy the configuration from `${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc` to the system configuration file location
+          sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc" "$TORRC_CONFIG"
+          sudo chmod 600 "$TORRC_CONFIG"
+          ### Enable and restart the Tor service
+          if [ -d /Applications ] && [ -d /System ]; then
+            ### macOS
+            brew services restart tor
+          else
+            if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
+              ### Linux
+              sudo systemctl enable tor
+              sudo systemctl restart tor
+            else
+              logg info 'Environment is WSL so the Tor systemd service will not be enabled / restarted'
+            fi
+          fi
+        else
+          logg warn 'The '"$TORRC_CONFIG_DIR"' directory is missing'
+        fi
+      else
+        logg warn 'toron is missing from the PATH'
+      fi
     ansible:linux: professormanhattan.tor
     apt: tor
     brew: tor
@@ -10149,6 +10433,11 @@ softwarePackages:
     _github: https://github.com/troessner/reek
     _name: Reek
     gem: reek
+  argc:
+    _bin: argc
+    _github: https://github.com/sigoden/argc
+    _name: Argc
+    cargo: argc
   rubocop:
     _bin: rubocop
     _github: https://github.com/rubocop/rubocop
@@ -10621,7 +10910,60 @@ softwarePackages:
       - name: fail2ban
         sudo: true
     _serviceEnabled: true
-    # fail2ban cannot be installed on Qubes Fedora 36 without messing with the qubes-firewall since firewalld is required
+    _notes: |
+      fail2ban cannot be installed on Qubes Fedora 36 without messing with the qubes-firewall since firewalld is required.
+    _post: |
+      # @file Fail2ban Configuration
+      # @brief Applies the system `fail2ban` jail configuration and then restarts the service
+      # @description
+      #     Fail2ban is an SSH security program that temporarily bans IP addresses that could possibly be
+      #     attempting to gain unauthorized system access. This script applies the "jail" configuration
+      #     located at `home/private_dot_ssh/fail2ban/` to the system location. It then enables and restarts
+      #     the `fail2ban` configuration.
+      #
+      #     ## Links
+      #
+      #     * [`fail2ban` configuration folder](https://github.com/megabyte-labs/install.doctor/tree/master/home/private_dot_ssh/fail2ban)
+      
+      ### Notify of script start
+      logg info 'Configuring fail2ban'
+
+      ### Restart fail2ban
+      function restartFailToBan() {
+        if [ -d /Applications ] && [ -d /System ]; then
+          ### macOS
+          logg info 'Enabling the fail2ban Homebrew service'
+          brew services restart fail2ban
+        else
+          # Linux
+          logg info 'Enabling the fail2ban service'
+          sudo systemctl enable fail2ban
+          logg info 'Restarting the fail2ban service'
+          sudo systemctl restart fail2ban
+        fi
+      }
+
+      ### Update the jail.local file if environment is not WSL
+      logg info 'Checking if script is being run in WSL environment'
+      if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
+        if [ -d /etc/fail2ban ]; then
+          logg info 'Copying ~/.ssh/fail2ban/jail.local to /etc/fail2ban/jail.local'
+          sudo cp -f "$HOME/.ssh/fail2ban/jail.local" /etc/fail2ban/jail.local
+          restartFailToBan
+        elif [ -d /usr/local/etc/fail2ban ]; then
+          logg info 'Copying ~/.ssh/fail2ban/jail.local to /usr/local/etc/fail2ban/jail.local'
+          sudo cp -f "$HOME/.ssh/fail2ban/jail.local" /usr/local/etc/fail2ban/jail.local
+          restartFailToBan
+        elif [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban" ]; then
+          logg info "Copying ~/.ssh/fail2ban/jail.local to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban/jail.local"
+          sudo cp -f "$HOME/.ssh/fail2ban/jail.local" "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban/jail.local"
+          restartFailToBan
+        else
+          logg warn 'The /etc/fail2ban (Linux), the /usr/local/etc/fail2ban, and the ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban (macOS) folder do not exist'
+        fi
+      else
+        logg info 'Skipping sshd_config application since environment is WSL'
+      fi
     _when:linux: '! command -v qubes-firewall > /dev/null && test -f /proc/version && ! grep Microsoft /proc/version > /dev/null'
     apt: fail2ban
     brew: fail2ban

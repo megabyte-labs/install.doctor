@@ -10,9 +10,9 @@ adobe-creative-cloud curl: (18) HTTP/2 stream 1 was reset
 * NGINX /opt/homebrew/etc/nginx/nginx.conf, on port 8080 so no sudo required, nginx will load all files in /opt/homebrew/etc/nginx/servers/, brew services might require sudo if port 443 is used, Docroot /opt/homebrew/var/www
 * export PATH="$HOME/.jenv/bin:$PATH"
 * eval "$(jenv init -)"
+- https://github.com/linuxserver/docker-webtop
 
-
-
+- https://github.com/chocolatey/boxstarter
 # Create the $HOME/opt destination folder
 mkdir -p ~/opt
 # Download the AppImage inside it
@@ -25,7 +25,7 @@ sudo ~/opt/Espanso.AppImage env-path register
 # TODOs
 
 This page outlines various projects and tasks that we are currently working on. Creating a GitHub issue for each of these items would be overkill.
-
+- [Push Notification Server](https://github.com/gotify/server)
 - https://community.cloudflare.com/t/allowing-either-cloudflare-ca-pem-or-regular-for-npm/578284
 - Integrate Sheldon
 - Look at Flipper Zero
@@ -97,7 +97,6 @@ The following items are Docker containers that we may want to include as default
 - https://github.com/formbricks/formbricks
 - https://github.com/chatwoot/chatwoot
 - https://github.com/discourse/discourse
-- [Title](https://github.com/sipt/shuttle)
 - https://github.com/erxes/erxes - CRM
 - https://github.com/pawelmalak/flame - Homepage
 - https://github.com/thelounge/thelounge - IRC
@@ -165,9 +164,6 @@ The following items are Docker containers that we may want to include as default
 - [Title](https://github.com/chartbrew/chartbrew)
 - [Title](https://github.com/AlexSciFier/neonlink)
 - [Title](https://github.com/ForestAdmin/lumber)
-- [Title](https://github.com/subnub/myDrive)
-- [Title](https://github.com/mickael-kerjean/filestash)
-- [Title](https://github.com/GetStream/Winds)
 - [Title](https://github.com/GladysAssistant/Gladys)
 
 ## AI
