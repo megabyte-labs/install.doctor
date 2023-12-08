@@ -10107,7 +10107,9 @@ softwarePackages:
     _github: https://github.com/vim/vim
     _home: https://www.vim.org/
     _name: VIM
-    _post: vim +PlugInstall +qall +silent > /dev/null
+    _post: |
+      echo "Installing VIM plugins" && vim +'PlugInstall --sync' +qall
+      echo "Updating VIM coc extensions" && vim +CocUpdateSync +qall
     ansible: professormanhattan.vim
     apt: vim
     brew: vim
