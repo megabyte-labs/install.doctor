@@ -519,6 +519,13 @@ softwarePackages:
     _home: https://altairgraphql.dev/
     _name: Altair GraphQL Client
     _app: Altair GraphQL Client.app
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Altair GraphQL Client"
+        target: "$HOME/Library/Application Support/Altair GraphQL Client"
+    _link:choco: 'TODO'
+    _link:snap:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Altair GraphQL Client"
+        target: "$HOME/snap/altair/current/.config/Altair GraphQL Client"
     cask: altair-graphql-client
     choco: altair-graphql
     snap: altair
@@ -1645,7 +1652,18 @@ softwarePackages:
     _home: https://brave.com/
     _name: Brave Browser
     _app: Brave Browser.app
-    ansible: professormanhattan.bravebrowser
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/BraveSoftware/Brave-Browser/Default"
+        target: "$HOME/Library/Application Support/BraveSoftware/Brave-Browser/Default"
+    _link:choco:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/BraveSoftware/Brave-Browser/Default"
+        target: "%APPDATA%/Local/BraveSoftware/Brave-Browser/User Data"
+    _link:flatpak:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/BraveSoftware/Brave-Browser/Default"
+        target: "$HOME/.var/app/com.brave.Browser/config/BraveSoftware/Brave-Browser/Default"
+    _link:snap:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/BraveSoftware/Brave-Browser/Default"
+        target: "$HOME/snap/brave/current/.config/BraveSoftware/Brave-Browser/Default"
     cask: brave-browser
     choco: brave
     flatpak: com.brave.Browser
@@ -1870,13 +1888,12 @@ softwarePackages:
     _home: https://www.google.com/chrome/
     _name: Google Chrome
     _app: Google Chrome.app
-    _post:cask: |
-      mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/google-chrome/Default"
-      mkdir -p "$HOME/Library/Application Support/Google/Chrome"
-      ln -s "${XDG_CONFIG_HOME:-$HOME/.config}/google-chrome/Default" "$HOME/Library/Application Support/Google/Chrome/Default"
-    _post:flatpak: |
-      mkdir -p ""
-      ln -s 
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/google-chrome/Default"
+        target: "$HOME/Library/Application Support/Google/Chrome/Default"
+    _link:flatpak:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/google-chrome/Default"
+        target: "$HOME/.var/app/com.google.Chrome/config/google-chrome/Default"
     ansible: professormanhattan.chrome
     cask: google-chrome
     choco: googlechrome
@@ -3383,7 +3400,21 @@ softwarePackages:
     _home: https://www.mozilla.org/en-US/firefox/new/
     _name: Mozilla Firefox
     _app: Firefox.app
-    ansible: professormanhattan.firefox
+    _link:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/profiles"
+        target: "$HOME/.mozilla/firefox"
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/profiles"
+        target: "$HOME/Library/Application Support/Firefox/Profiles"
+    _link:choco:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/profiles"
+        target: 'TODO'
+    _link:flatpak:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/profiles"
+        target: "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox"
+    _link:snap:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/profiles"
+        target: "$HOME/snap/firefox/common/.mozilla/firefox"
     apt: firefox
     apt:debian: firefox-esr
     cask: firefox
@@ -5793,9 +5824,20 @@ softwarePackages:
   ferdium:
     _bin: ferdium
     _app: Ferdium.app
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Ferdium"
+        target: "$HOME/Library/Application Support/Ferdium"
+    _link:choco: 'TODO'
+    _link:flatpak:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Ferdium"
+        target: "$HOME/.var/app/org.ferdium.Ferdium/config/Ferdium"
+    _link:snap:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Ferdium"
+        target: "$HOME/snap/ferdium/current/.config/Ferdium"
     cask: ferdium
     choco: ferdium
     flatpak: org.ferdium.Ferdium
+    snap: ferdium
   thunderbird:
     _bin: thunderbird
     _app: Thunderbird.app
@@ -5925,7 +5967,11 @@ softwarePackages:
     _home: https://www.microsoft.com/en-us/edge
     _name: Microsoft Edge
     _app: Microsoft Edge.app
-    ansible: professormanhattan.microsoftedge
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/microsoft-edge/Default"
+        target: "$HOME/Library/Application Support/Microsoft Edge/Default"
+    _link:choco: 'TODO'
+    _link:flatpak: 'TODO'
     cask: microsoft-edge
     choco: microsoft-edge
     flatpak: com.microsoft.Edge
@@ -8119,12 +8165,18 @@ softwarePackages:
       - remmina
       - xrdp
   remmina:
-    _bin: null
+    _bin: remmina
     _desc: Remmina is a GTK Remmina Remote Desktop Client which provides remote access, screen and file sharing to your desktop
     _docs: https://gitlab.com/Remmina/Remmina/-/wikis/home
     _github: null
     _home: https://remmina.org/
     _name: Remmina
+    _link:flatpak:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/remmina/remmina.pref"
+        target: "$HOME/.var/app/org.remmina.Remmina/config/remmina/remmina.pref"
+    _link:snap:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/remmina/remmina.pref"
+        target: "$HOME/snap/remmina/current/.config/remmina/remmina.pref"
     apt: remmina
     dnf: remmina
     flatpak: org.remmina.Remmina
