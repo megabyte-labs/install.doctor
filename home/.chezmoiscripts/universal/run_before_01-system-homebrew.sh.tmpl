@@ -115,9 +115,13 @@ if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v
     fi
 fi
 
-### Ensure Linux Homebrew is loaded
-loadLinuxbrew() {
+### Ensure Homebrew is loaded
+loadHomebrew() {
   if ! command -v brew > /dev/null; then
+    if [ -f /usr/local/bin/brew ]; then
+      eval "$(/usr/local/bin/brew shellenv)"
+    if [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" ]; then
+      eval "$("${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" shellenv)"
     if [ -d "$HOME/.linuxbrew" ]; then
       eval "$("$HOME/.linuxbrew/bin/brew" shellenv)"
     elif [ -d "/home/linuxbrew/.linuxbrew" ]; then
@@ -131,13 +135,13 @@ fixHomebrewPermissions() {
   if command -v brew > /dev/null; then
     logg info 'Applying proper permissions on Homebrew folders'
     sudo chmod -R go-w "$(brew --prefix)/share"
-    BREW_DIRS="share/man share/doc share/zsh/site-functions etc/bash_completion.d"
+    BREW_DIRS="share etc/bash_completion.d"
     for BREW_DIR in $BREW_DIRS; do
       if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
-        sudo chown -R "$(whoami)" "$(brew --prefix)/$BREW_DIR"
+        sudo chown -Rf "$(whoami)" "$(brew --prefix)/$BREW_DIR"
       fi
     done
-    brew update --force --quiet
+    logg info 'Running brew update --force --quiet' && brew update --force --quiet
   fi
 }
 
@@ -158,9 +162,10 @@ ensurePackageManagerHomebrew() {
 }
 
 ### Logic
-loadLinuxbrew
+loadHomebrew
 ensurePackageManagerHomebrew
-loadLinuxbrew
+loadHomebrew
+fixHomebrewPermissions
 
 ### Enable auto-update service
 if [ -d /Applications ] && [ -d System ]; then

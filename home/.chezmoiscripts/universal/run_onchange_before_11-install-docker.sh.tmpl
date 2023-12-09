@@ -15,6 +15,21 @@
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}
 
+# @description Ensures `~/.config/docker` is symlinked to `~/.docker` which is required for
+#     Docker Desktop compatibility since it currently does not honor XDG spec. This will
+#     remove the current configuration at `~/.docker` if it is present and not symlinked to
+#     `~/.config/docker`.
+ensureConfigSymlink() {
+    if [ "$(readlink -f "$HOME/.docker")" != "${XDG_CONFIG_HOME:-$HOME/.config}/docker" ]; then
+        logg info 'Removing ~/.docker if present' && rm -rf "$HOME/.docker"
+        logg info 'Ensuring ~/.config/docker exists' && mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/docker"
+        logg info 'Symlinking ~/.config/docker to ~/.docker for Docker Desktop compatibility' && ln -s "${XDG_CONFIG_HOME:-$HOME/.config}/docker" "$HOME/.docker"
+    else
+        logg info 'Symlink from ~/.config/docker to ~/.docker is already present'
+    fi
+}
+ensureConfigSymlink
+
 ### Install Docker
 if [ -d /Applications ] && [ -d /System ]; then
     # macOS

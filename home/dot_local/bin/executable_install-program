@@ -835,7 +835,7 @@ async function beforeInstall(packageManager) {
             logStage,
             'Attempting to open `/Applications/Docker.app` (Docker Desktop for macOS). This should take about 30 seconds.'
           )
-          const promises = [$`test -d /Applications/Docker.app`, $`open --background -a Docker --args --accept-license --unattended`]
+          const promises = [$`test -d /Applications/Docker.app`, $`rm -f ~/.docker && mkdir -p ~/.config/docker && open --background -a Docker --args --accept-license --unattended`]
           await Promise.all(promises)
           const gum = which.sync('gum', { nothrow: true })
           if (gum) {
