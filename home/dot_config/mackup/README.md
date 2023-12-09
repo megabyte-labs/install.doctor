@@ -2,7 +2,7 @@
 
 The command-line utility [`mackup`](https://github.com/lra/mackup) provides a decent starting point to enable Install Doctor to provide the capability of backing up personalized application settings. `mackup` has a shortcoming though. It was not designed to accompany configurations that end up being stored in different places on different operating systems / package managers.
 
-### Mackup
+## Mackup
 
 For this reason, we use `mackup` to handle the back-up and restore of the "golden" copy of application settings which will usually be stored in the `~/.config` directory. In some cases, we can get away with, for example, symlinking the `~/.config/ABC` to `~/Library/Application Settings/ABC`. But, in other cases like Flatpak, we need to keep the Flatpak configuration stored under `~/.var/com.abc.XYZ` synchronized with `~/.config/ABC`.
 
