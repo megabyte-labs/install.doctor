@@ -331,7 +331,7 @@ export REDISCLI_RCFILE="$XDG_CONFIG_HOME/redis/redisclirc"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 
 ### Ruby
-export GEM_HOME="$XDG_DATA_HOME/gems"
+export GEM_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/gems"
 export PATH="$PATH:$GEM_HOME/bin"
 
 ### Rustup

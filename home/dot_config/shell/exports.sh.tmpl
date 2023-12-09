@@ -101,8 +101,9 @@ else
 fi
 
 ### Ansible
-export ANSIBLE_CONFIG="${XDG_DATA_HOME:-$HOME/.local/share}/ansible/ansible.cfg"
 export ANSIBLE_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/ansible"
+export ANSIBLE_CONFIG="$ANSIBLE_HOME/ansible.cfg"
+export ANSIBLE_GALAXY_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/ansible/galaxy_cache"
 
 ### Aqua
 export AQUA_ROOT_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/aqua"
@@ -251,6 +252,9 @@ fi
 ### Gradle
 export GRADLE_USER_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/gradle"
 
+### GitLab Runner
+export CONFIG_FILE=${XDG_CONFIG_HOME:-$HOME/.config}/gitlab-runner/config.toml
+
 ### Hishtory
 export HISHTORY_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/hishtory"
 export HSTR_CONFIG=hicolor
@@ -280,7 +284,7 @@ export KREW_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}/krew"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 ### Kube
-export KUBECONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/kube/config"
+export KUBECONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/kube"
 
 ### MacPrefs
 export MACPREFS_BACKUP_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/macprefs"
@@ -301,6 +305,9 @@ export MINIKUBE_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/minikube"
 if [ -f /Applications/monero-wallet-gui.app/Contents/MacOS/monerod ]; then
   export PATH="$PATH:/Applications/monero-wallet-gui.app/Contents/MacOS"
 fi
+
+### Mutagen
+export MUTAGEN_DATA_DIRECTORY="${XDG_DATA_HOME:-$HOME/.local/share}/mutagen"
 
 ### MySQL
 export MYSQL_HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/mysql_history"
@@ -394,6 +401,11 @@ export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/readline/inputrc"
 export REDISCLI_HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/redis/rediscli_history"
 export REDISCLI_RCFILE="${XDG_CONFIG_HOME:-$HOME/.config}/redis/redisclirc"
 
+### R
+export R_HOME_USER="${XDG_CONFIG_HOME:-$HOME/.config}/R"
+export R_PROFILE_USER="${XDG_CONFIG_HOME:-$HOME/.config}/R/profile"
+export R_HISTFILE="${XDG_CONFIG_HOME:-$HOME/.config}/R/history"
+
 ### ripgrep
 export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/ripgrep/config"
 
@@ -405,6 +417,8 @@ elif [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/ruby/bin" ]; then
   export PATH="${HOMEBREW_PREFIX:-/opt/homebrew}/opt/ruby/bin:$PATH"
 fi
 export GEM_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/gems"
+export GEM_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/gems"
+export GEM_SPEC_CACHE="$GEM_HOME/specs"
 export PATH="$PATH:$GEM_HOME/bin"
 
 ### Rustup
