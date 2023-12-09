@@ -6,12 +6,12 @@ https://github.com/tiiiecherle/osx_install_config/blob/master/03_homebrew_casks_
 virtualbox blocked by C
 adobe-creative-cloud curl: (18) HTTP/2 stream 1 was reset
 * Wazuh requires booting into recovery, running csrutil disable, installing agent normally, and then re-enabling it again in recovery mode
-
+- https://app.warp.dev/referral/7PMXRV Warp referral
 * NGINX /opt/homebrew/etc/nginx/nginx.conf, on port 8080 so no sudo required, nginx will load all files in /opt/homebrew/etc/nginx/servers/, brew services might require sudo if port 443 is used, Docroot /opt/homebrew/var/www
 * export PATH="$HOME/.jenv/bin:$PATH"
 * eval "$(jenv init -)"
 - https://github.com/linuxserver/docker-webtop
-
+- https://app.warp.dev/referral/7PMXRV
 - https://github.com/chocolatey/boxstarter
 # Create the $HOME/opt destination folder
 mkdir -p ~/opt
@@ -21,7 +21,7 @@ wget -O ~/opt/Espanso.AppImage 'https://github.com/federico-terzi/espanso/releas
 chmod u+x ~/opt/Espanso.AppImage
 # Create the "espanso" command alias
 sudo ~/opt/Espanso.AppImage env-path register
-
+- Deprecate asdf in favor of rtx
 # TODOs
 
 This page outlines various projects and tasks that we are currently working on. Creating a GitHub issue for each of these items would be overkill.

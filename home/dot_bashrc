@@ -53,7 +53,15 @@ esac
 
 ### History
 export HISTFILE="$XDG_STATE_HOME/bash/history"
-
+if command -v hstr > /dev/null; then
+  ### Append new history items to .bash_history
+  shopt -s histappend
+  ### Ensure synchronization between bash memory and history file
+  export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"
+  if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
+  ### If this is interactive shell, then bind 'kill last command' to Ctrl-x k
+  if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
+fi
 ### Bash Initialization Hooks
 if [ "$BASH_SUPPORT" = 'true' ] && [ -n "$BASH" ]; then
   ### Sensible Bash
@@ -151,6 +159,9 @@ if [ "$BASH_SUPPORT" = 'true' ] && [ -n "$BASH" ]; then
 
   ### pkgx
   ! command -v pkgx > /dev/null || eval "$(pkgx --shellcode)"
+
+  ### RTX
+  ! command -v rtx > /dev/null || eval "$(rtx activate bash)"
 
   ### SDKMan
   if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then

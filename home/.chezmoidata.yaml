@@ -252,6 +252,7 @@ softwareGroups:
     - github-runner
     - gitlab-runner
     - glen
+    - pipelight
     - tart
   CLI: &CLI
     - atuin
@@ -344,9 +345,7 @@ softwareGroups:
     - zenity
   CLI-Extras: &CLI-Extras
     - ack
-    - argc
     - axel
-    - bashly
     - bin
     - bitly
     - brew-gem
@@ -374,6 +373,7 @@ softwareGroups:
     - handlr
     - helix
     - hexyl
+    - hstr
     - http-prompt
     - httpie
     - httpstat
@@ -394,6 +394,7 @@ softwareGroups:
     - nomino
     - normit
     - nve
+    - obsidian-cli
     - opn-cli
     - pastel
     - peco
@@ -806,7 +807,6 @@ softwareGroups:
     - rofi
     - rustdesk
     - secretive
-    - standard-notes
     - stats
     - swiftbar
     - teamviewer
@@ -896,6 +896,7 @@ softwareGroups:
   Package-Management: &Package-Management
     # - homebrew
     # - whalebrew
+    - rtx
     - syncpack
     - ultra
     - zap
@@ -993,6 +994,8 @@ softwareGroups:
     - sftpgo
     - wazuh
   Shell-Scripting: &Shell-Scripting
+    - argc
+    - bashly
     - shc
     - shdoc
     - shellcheck
@@ -1546,6 +1549,8 @@ softwareGroups:
       note: Deprecated because browser extensions do a better job of unifying bookmarks. Namely, the extension called Floccus allows cross-browser bookmark syncing. The Raindrop package also requires a paid subscription for advanced features.
     - pkg: rvm
       note: Deprecated in favor of using ASDF.
+    - pkg: standard-notes
+      note: Deprecated in favor of Obsidian / Notion
     - pkg: stubby
       note: Causes issues when other programs are modifying the DNS resolving endpoint. Might be worth reinvestigating but ideally the DNS should be encrypted on pfSense or use CloudFlare WARP to handle it.
     - pkg: temps

@@ -17,5 +17,8 @@ carapace _carapace | source
 ### Google Cloud SDK
 [ ! -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.fish.inc" ] || source "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.fish.inc"
 
+### RTX
+rtx activate fish | source
+
 ### Up
 source "${XDG_DATA_HOME:-$HOME/.local/share}/up/up.fish"

@@ -465,6 +465,29 @@ softwarePackages:
     choco: tomcat
     dnf: tomcat
     pacman: tomcat
+  obsidian-cli:
+    _bin: obs
+    _github: https://github.com/Yakitrak/obsidian-cli
+    _name: Obsidian CLI
+    _pre:scoop: scoop bucket add scoop-yakitrak https://github.com/yakitrak/scoop-yakitrak.git
+    brew: yakitrak/yakitrak/obs
+    scoop: obs
+  rtx:
+    _bin: rtx
+    _github: https://github.com/jdx/rtx
+    _name: RTX
+    port: rtx
+    brew: rtx
+    cargo: rtx-cli
+    npm: rtx-cli
+    apk: rtx
+    nix-env: rtx
+  pipelight:
+    _bin: pipelight
+    _github: https://github.com/pipelight/pipelight
+    _name: Pipelight
+    cargo: --git https://github.com/pipelight/pipelight
+    yay: pipelight
   allure:
     _bin: allure
     _desc: '[Allure Report](https://docs.qameta.io/allure-testops/) is a flexible, lightweight multi-language test reporting tool. It provides clear graphical reports and allows everyone involved in the development process to extract the maximum of information from the everyday testing process.'
@@ -2904,6 +2927,19 @@ softwarePackages:
     zypper: polybar
     pkg-freebsd: polybar
     dnf: polybar
+  hstr:
+    _bin: hstr
+    _github: https://github.com/dvorka/hstr
+    _name: HiSToRy
+    apt: hstr
+    dnf: hstr
+    emerge: app-shells/hstr
+    apk: hstr
+    pkg-freebsd: hstr
+    xbps-install: hstr
+    brew: hstr
+    port: histr
+    nix-env: hstr
   ghcup:
     _bin: ghcup
     _github: https://github.com/haskell/ghcup-hs

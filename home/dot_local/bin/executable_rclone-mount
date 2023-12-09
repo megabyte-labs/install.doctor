@@ -45,7 +45,7 @@ fi
 for FOLDER in "$CACHE_FOLDER" "$CONFIG_FOLDER" "$LOG_FOLDER" "$MOUNT_PATH"; do
     if [ ! -d "$FOLDER" ]; then
         $SUDO_FLAG mkdir -p "$FOLDER"
-        $SUDO_FLAG chmod 755 "$FOLDER"
+        $SUDO_FLAG chmod 775 "$FOLDER"
         $SUDO_FLAG chown -Rf rclone:rclone "$FOLDER" 2> /dev/null || sudo chown -Rf rclone:$(id -g -n) "$FOLDER"
     fi
 done
@@ -69,13 +69,12 @@ $SUDO_FLAG rclone --config "$CONFIG_FOLDER/rclone.conf" \
   --cache-chunk-path "$CACHE_FOLDER/$MOUNT_REF-chunks" \
   --cache-db-path "$CACHE_FOLDER/$MOUNT_REF-db" \
   --cache-dir "$CACHE_FOLDER/$MOUNT_REF-vfs" \
-  --cache-info-age 60m \
+  --cache-info-age 5m \
   --cache-tmp-upload-path "$CACHE_FOLDER/$MOUNT_REF-upload" \
   --cache-workers 8 \
   --cache-writes \
   --checkers 16 \
-  --dir-cache-time 24h \
-  --dir-cache-time 60m \
+  --dir-cache-time 5m \
   --drive-use-trash \
   --exclude-from "$RCLONE_IGNORE" \
   --log-file "$LOG_FILE" \
@@ -87,7 +86,7 @@ $SUDO_FLAG rclone --config "$CONFIG_FOLDER/rclone.conf" \
   --vfs-cache-max-age 1000h \
   --vfs-cache-max-size 5G \
   --vfs-cache-mode full \
-  --vfs-cache-poll-interval 30s \
+  --vfs-cache-poll-interval 14s \
   --vfs-fast-fingerprint \
   --vfs-read-ahead 128M \
   --vfs-read-chunk-size 16M \

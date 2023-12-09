@@ -459,6 +459,9 @@ fi
 ### Powerline
 [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/p10k.zsh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/p10k.zsh"
 
+### RTX
+! command -v rtx > /dev/null || eval "$(rtx activate zsh)"
+
 ### SDKMan
 if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
   export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"
