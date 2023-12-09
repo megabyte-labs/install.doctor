@@ -33,6 +33,10 @@ The keys that start with `_link` add the instructions necessary to synchronize t
 
 On a side note, once the proper application definitions are in place in the `software.yml` file and the proper configurations are made in this folder's `.mackup` folder, then you can use our convienience script located at `~/.local/bin/backup-apps` to perform the backup. It was created to avoid having to leave a `~/.mackup` folder and a `~/.mackup.cfg` file in the home directory.
 
+## Example
+
+[This commit](https://github.com/megabyte-labs/install.doctor/commit/5f3466a304bcd1c14d44557a30bcc980fe31db65) provides a clear example of the type of code that is necessary to adapt the `software.yml` and `~/.config/mackup` configurations.
+
 ## TODO
 
 We need to go through the `software.yml` file and figure out which applications would benefit from application setting synchronization. Basically, any application that has `cask` and `flatpak` options will need to be configured. It is possible that some settings might reside outside of `~/Library/Application Support`.
