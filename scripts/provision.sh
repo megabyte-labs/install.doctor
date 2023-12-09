@@ -212,6 +212,71 @@ ensureBasicDeps() {
   fi
 }
 
+### Ensure Homebrew is loaded
+loadHomebrew() {
+  if ! command -v brew > /dev/null; then
+    if [ -f /usr/local/bin/brew ]; then
+      logg info "Using /usr/local/bin/brew" && eval "$(/usr/local/bin/brew shellenv)"
+    if [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" ]; then
+      logg info "Using ${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" && eval "$("${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" shellenv)"
+    if [ -d "$HOME/.linuxbrew" ]; then
+      logg info "Using $HOME/.linuxbrew/bin/brew" && eval "$("$HOME/.linuxbrew/bin/brew" shellenv)"
+    elif [ -d "/home/linuxbrew/.linuxbrew" ]; then
+      logg info 'Using /home/linuxbrew/.linuxbrew/bin/brew' && eval "(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    else
+      logg info 'Could not find Homebrew installation'
+    fi
+  fi
+}
+
+### Ensures Homebrew folders have proper owners / permissions
+fixHomebrewPermissions() {
+  if command -v brew > /dev/null; then
+    logg info 'Applying proper permissions on Homebrew folders'
+    sudo chmod -R go-w "$(brew --prefix)/share"
+    BREW_DIRS="share etc/bash_completion.d"
+    for BREW_DIR in $BREW_DIRS; do
+      if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
+        sudo chown -Rf "$(whoami)" "$(brew --prefix)/$BREW_DIR"
+      fi
+    done
+    logg info 'Running brew update --force --quiet' && brew update --force --quiet
+  fi
+}
+
+### Installs Homebrew
+ensurePackageManagerHomebrew() {
+  if ! command -v brew > /dev/null; then
+    ### Select install type based off of whether or not sudo privileges are available
+    if command -v sudo > /dev/null && sudo -n true; then
+      logg info 'Installing Homebrew. Sudo privileges available.'
+      echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+    else
+      logg info 'Installing Homebrew. Sudo privileges not available. Password may be required.'
+      bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+    fi
+
+    ### Attempt to fix problematic installs
+    if [ -n "$BREW_EXIT_CODE" ]; then
+        logg warn 'Homebrew was installed but part of the installation failed to complete successfully.'
+        fixHomebrewPermissions
+      fi
+  fi
+}
+
+### Ensures gcc is installed
+ensureGcc() {
+  if command -v brew > /dev/null; then
+    if ! brew list | grep gcc > /dev/null; then
+      logg info 'Installing Homebrew gcc' && brew install --quiet gcc
+    else
+      logg info 'Homebrew gcc is available'
+    fi
+  else
+    logg error 'Failed to initialize Homebrew' && exit 1
+  fi
+}
+
 # @description This function ensures Homebrew is installed and available in the `PATH`. It handles the installation of Homebrew on both **Linux and macOS**.
 #     It will attempt to bypass sudo password entry if it detects that it can do so. The function also has some error handling in regards to various
 #     directories falling out of the correct ownership and permission states. Finally, it loads Homebrew into the active profile (allowing other parts of the script
@@ -219,58 +284,11 @@ ensureBasicDeps() {
 #
 #     With Homebrew installed and available, the script finishes by installing the `gcc` Homebrew package which is a very common dependency.
 ensureHomebrew() {
-  if ! command -v brew > /dev/null; then
-    if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
-      logg info "Sourcing from /home/linuxbrew/.linuxbrew/bin/brew" && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-      if ! command -v brew > /dev/null; then
-        logg error "The /home/linuxbrew/.linuxbrew directory exists but something is not right. Try removing it and running the script again." && exit 1
-      fi
-    elif [ -d "$HOME/.linuxbrew" ]; then
-      logg info "Sourcing from $HOME/.linuxbrew/bin/brew" && eval "$($HOME/.linuxbrew/bin/brew shellenv)"
-      if ! command -v brew > /dev/null; then
-        logg error "The $HOME/.linuxbrew directory exists but something is not right. Try removing it and running the script again." && exit 1
-      fi
-    else
-      ### Installs Homebrew and addresses a couple potential issues
-      if command -v sudo > /dev/null && sudo -n true; then
-        logg info "Installing Homebrew"
-        echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      else
-        logg info "Homebrew is not installed. The script will attempt to install Homebrew and you might be prompted for your password."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
-        if [ -n "$BREW_EXIT_CODE" ]; then
-          if command -v brew > /dev/null; then
-            logg warn "Homebrew was installed but part of the installation failed. Trying a few things to fix the installation.."
-            BREW_DIRS="share/man share/doc share/zsh/site-functions etc/bash_completion.d"
-            for BREW_DIR in $BREW_DIRS; do
-              if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
-                logg info "Chowning $(brew --prefix)/$BREW_DIR" && sudo chown -R "$(whoami)" "$(brew --prefix)/$BREW_DIR"
-              fi
-            done
-            logg info "Running brew update --force --quiet" && brew update --force --quiet && logg success "Successfully ran brew update --force --quiet"
-          fi
-        fi
-      fi
-
-      ### Ensures the `brew` binary is available on Linux machines. macOS installs `brew` into the default `PATH` so nothing needs to be done for macOS.
-      if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
-        logg info "Sourcing shellenv from /home/linuxbrew/.linuxbrew/bin/brew" && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-      elif [ -f /usr/local/bin/brew ]; then
-        logg info "Sourcing shellenv from /usr/local/bin/brew" && eval "$(/usr/local/bin/brew shellenv)"
-      elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" ]; then
-        logg info "Sourcing shellenv from "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew"" && eval "$("${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" shellenv)"
-      fi
-    fi
-  fi
-
-  ### Ensure GCC is installed via Homebrew
-  if command -v brew > /dev/null; then
-    if ! brew list | grep gcc > /dev/null; then
-      logg info "Installing Homebrew gcc" && brew install --quiet gcc
-    fi
-  else
-    logg error "Failed to initialize Homebrew" && exit 2
-  fi
+  loadHomebrew
+  ensurePackageManagerHomebrew
+  loadHomebrew
+  fixHomebrewPermissions
+  ensureGcc
 }
 
 # @description This function determines whether or not a reboot is required on the target system.
