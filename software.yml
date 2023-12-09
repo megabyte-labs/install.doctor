@@ -1870,6 +1870,13 @@ softwarePackages:
     _home: https://www.google.com/chrome/
     _name: Google Chrome
     _app: Google Chrome.app
+    _post:cask: |
+      mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/google-chrome/Default"
+      mkdir -p "$HOME/Library/Application Support/Google/Chrome"
+      ln -s "${XDG_CONFIG_HOME:-$HOME/.config}/google-chrome/Default" "$HOME/Library/Application Support/Google/Chrome/Default"
+    _post:flatpak: |
+      mkdir -p ""
+      ln -s 
     ansible: professormanhattan.chrome
     cask: google-chrome
     choco: googlechrome
@@ -3384,6 +3391,11 @@ softwarePackages:
     dnf: firefox
     flatpak: org.mozilla.firefox
     pacman: firefox
+  holehe:
+    _bin: holehe
+    _github: https://github.com/megadose/holehe
+    _name: Holehe
+    pipx: holehe
   fission:
     _bin: fission
     _desc: Fast and Simple Serverless Functions for Kubernetes

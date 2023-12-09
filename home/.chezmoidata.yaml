@@ -241,7 +241,6 @@ softwareGroups:
     - chrome-cli
     - ferdium
     - firefox
-    - librewolf
     - microsoft-edge
     - tor-browser
   CI: &CI
@@ -1002,6 +1001,7 @@ softwareGroups:
     - shfmt
   Social-Networking: &Social-Networking
     - enola
+    - holehe
     - social-analyzer
     - t
   Hacking: &Hacking
@@ -1507,6 +1507,8 @@ softwareGroups:
       note: Deprecated in favor of using alternative terminals such as iTerm2, Tabby, and bundled Linux terminals.
     - pkg: lepton
       note: Deprecated in favor of [Pieces](https://pieces.app/). The core components of Pieces are not open-source but the functionality is significantly better than massCode.
+    - pkg: librewolf
+      note: Creates ~/.librewolf and Firefox is preferred
     - pkg: loop
       note: Encountering error during cargo install
     - pkg: lpass
