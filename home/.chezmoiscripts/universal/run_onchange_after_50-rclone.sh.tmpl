@@ -80,7 +80,7 @@ EOT
 
     logg info 'Ensuring /var/cache/rclone exists'
     sudo mkdir -p /var/cache/rclone
-    sudo chmod 770 /var/cache/rclone
+    sudo chmod 755 /var/cache/rclone
     # Add user / group with script in ~/.local/bin/add-user, if it is available
     if command -v add-user > /dev/null; then
         sudo add-user rclone
@@ -89,7 +89,7 @@ EOT
 
     logg info 'Ensuring /var/log/rclone exists'
     sudo mkdir -p /var/log/rclone
-    sudo chmod 770 /var/log/rclone
+    sudo chmod 755 /var/log/rclone
     sudo chown -Rf rclone:rclone /var/log/rclone 2> /dev/null || sudo chown -Rf rclone:$(id -g -n) /var/log/rclone
 
     logg info 'Adding ~/.local/bin/rclone-mount to /usr/local/bin'
@@ -98,11 +98,11 @@ EOT
 
     logg info 'Adding ~/.config/rclone/rcloneignore to /etc/rcloneignore'
     sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/rcloneignore" /etc/rcloneignore
-    sudo chmod 640 /etc/rcloneignore
+    sudo chmod 644 /etc/rcloneignore
 
     logg info 'Adding ~/.config/rclone/system-rclone.conf to /etc/rclone.conf'
     sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system-rclone.conf" /etc/rclone.conf
-    sudo chmod 640 /etc/rclone.conf
+    sudo chmod 644 /etc/rclone.conf
 
     ### Add / configure service files
     if [ -d /etc/systemd/system ]; then
@@ -116,7 +116,7 @@ EOT
             ### Ensure mount folder is created
             logg info "Ensuring /mnt/$SERVICE_ID is created with proper permissions"
             sudo mkdir -p "/mnt/$SERVICE_ID"
-            sudo chmod 770 "/mnt/$SERVICE_ID"
+            sudo chmod 755 "/mnt/$SERVICE_ID"
             sudo chown -Rf rclone:rclone "/mnt/$SERVICE_ID" 2> /dev/null || sudo chown -Rf rclone:$(id -g -n) "/mnt/$SERVICE_ID"
 
             ### Enable / restart the service

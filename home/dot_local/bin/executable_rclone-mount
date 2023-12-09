@@ -9,9 +9,11 @@ MOUNT="$3"
 if [ "$TYPE" = 'user' ]; then
   MOUNT_REF="$USER-$MOUNT"
   MOUNT_LOWERCASE="user/$USER-$MOUNT"
+  SUDO_FLAG=""
 else
   MOUNT_REF="$MOUNT"
   MOUNT_LOWERCASE="$(echo "$MOUNT" | tr "[:upper:]" "[:lower:]")"
+  SUDO_FLAG="sudo"
 fi
 
 ### Path definitions
@@ -42,13 +44,9 @@ fi
 ### Ensure folders exist
 for FOLDER in "$CACHE_FOLDER" "$CONFIG_FOLDER" "$LOG_FOLDER" "$MOUNT_PATH"; do
     if [ ! -d "$FOLDER" ]; then
-        mkdir -p "$FOLDER" || sudo mkdir -p "$FOLDER"
-        sudo chmod 755 "$FOLDER"
-        if command -v own > /dev/null; then
-          sudo own "$FOLDER"
-        else
-          sudo chown -Rf rclone:rclone "$FOLDER" 2> /dev/null || sudo chown -Rf rclone:$(id -g -n) "$FOLDER"
-        fi
+        $SUDO_FLAG mkdir -p "$FOLDER"
+        $SUDO_FLAG chmod 755 "$FOLDER"
+        $SUDO_FLAG chown -Rf rclone:rclone "$FOLDER" 2> /dev/null || sudo chown -Rf rclone:$(id -g -n) "$FOLDER"
     fi
 done
 
@@ -63,7 +61,7 @@ unset AWS_CA_BUNDLE
 export PATH="$PATH:/usr/local/bin:/usr/bin"
 # TODO: Only launch with --rc-web-gui if the servers hostname is the {{ .kubernetesHost }}
 # TODO: Add more secure authentication method
-sudo rclone --config "$CONFIG_FOLDER/rclone.conf" \
+$SUDO_FLAG rclone --config "$CONFIG_FOLDER/rclone.conf" \
   mount \
   --allow-other \
   --buffer-size 4G \
