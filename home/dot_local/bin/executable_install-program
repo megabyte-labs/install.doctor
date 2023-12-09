@@ -1545,7 +1545,7 @@ async function installPackageList(packageManager, packages) {
 async function addUserGroup(group) {
   const logStage = 'Users / Groups'
   log('info', logStage, `Ensuring the ${group} group / user is added`)
-  runCommand(`Creating the ${group} user / group`, `bash -c 'sudo add-user ${group}'`)
+  runCommand(`Creating the ${group} user / group`, `sudo add-usergroup "${process.env.USER}" "${group}"`)
 }
 
 /**

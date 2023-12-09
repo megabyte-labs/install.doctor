@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# @file ~/.local/bin/add-user
+# @file ~/.local/bin/add-usergroup
 # @brief Add a user and a group with the same name on either Linux or macOS
 # @description
 #   This script is utilized by other scripts to ensure that there is both a user and group
@@ -19,19 +19,20 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # Check if the correct number of arguments is provided
-if [[ $# -ne 1 ]]; then
+if [[ $# -ne 2 ]]; then
     if command -v logg > /dev/null; then
-        logg info "Usage: $0 <group>"
+        logg info "Usage: $0 <user> <group>"
     else
-        echo -e "\e[93mUsage: $0 <group>\e[0m"
+        echo -e "\e[93mUsage: $0 <user> <group>\e[0m"
     fi
     exit 1
 fi
 
-GROUP=$1
+USER=$1
+GROUP=$2
 
 # Check if the operating system is macOS
-if [[ "$(uname)" == "Darwin" ]]; then
+if [ -d /Applications ] && [ -d /System ]; then
     if command -v logg > /dev/null; then
         logg info "Creating group and user ${GROUP} on macOS..."
     else
@@ -74,7 +75,6 @@ if [[ "$(uname)" == "Darwin" ]]; then
     else
         echo -e "\e[92mGroup and user ${GROUP} created successfully on macOS\e[0m"
     fi
-    exit 0
 elif [[ "$(uname)" == "Linux" ]]; then
     if command -v logg > /dev/null; then
         logg info "Creating group and user ${GROUP} on Linux..."
@@ -111,8 +111,6 @@ elif [[ "$(uname)" == "Linux" ]]; then
     else
         echo -e "\e[92mGroup and user ${GROUP} created successfully on Linux\e[0m"
     fi
-
-    exit 0
 fi
 
 # If the operating system is neither macOS nor Linux, display an error message
@@ -121,5 +119,3 @@ if command -v logg > /dev/null; then
 else
     echo -e "\e[91mUnsupported operating system\e[0m"
 fi
-
-exit 1

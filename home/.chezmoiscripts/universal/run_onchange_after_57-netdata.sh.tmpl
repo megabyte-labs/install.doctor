@@ -31,9 +31,9 @@ ensureNetdataOwnership() {
 
 ### Claim the instance with Netdata Cloud
 if command -v netdata-claim.sh > /dev/null; then
-    # Add user / group with script in ~/.local/bin/add-user, if it is available
-    if command -v add-user > /dev/null; then
-        sudo add-user netdata
+    # Add user / group with script in ~/.local/bin/add-usergroup, if it is available
+    if command -v add-usergroup > /dev/null; then
+        sudo add-usergroup "$USER" netdata
     fi
 
     ensureNetdataOwnership
