@@ -21,6 +21,15 @@ if [ -d "/home/linuxbrew/.linuxbrew/bin" ]; then
   export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
   export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
   export WHALEBREW_INSTALL_PATH="/home/linuxbrew/.linuxbrew/whalebrew"
+elif [ -d "$HOME/.linuxbrew/bin" ]; then
+  export HOMEBREW_PREFIX="$HOME/.linuxbrew"
+  export HOMEBREW_CELLAR="$HOME/.linuxbrew/Cellar"
+  export HOMEBREW_REPOSITORY="$HOME/.linuxbrew/Homebrew"
+  export PATH="$HOME/.linuxbrew/bin:$HOME/.linuxbrew/sbin${PATH+:$PATH}"
+  export MANPATH="$HOME/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
+  export INFOPATH="$HOME/.linuxbrew/share/info:${INFOPATH:-}"
+  export WHALEBREW_INSTALL_PATH="$HOME/.linuxbrew/whalebrew"
+  eval "$("$HOME/.linuxbrew/bin/brew" shellenv)"
 elif [ -f "/usr/local/bin/brew" ]; then
   eval "$(/usr/local/bin/brew shellenv)"
 elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" ]; then
