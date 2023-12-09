@@ -419,6 +419,11 @@ softwarePackages:
     _name: Pieces OS
     _post:snap: sudo snap connect pieces-os:dotnet-runtime-aspnetcore
     _app: Pieces.app
+    _note: Waiting for choco package
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/pieces-os"
+        target: "$HOME/Library/Application Support/com.pieces.os"
+    _link:snap: 'TODO'
     appinstaller: https://builds.pieces.app/stages/production/appinstaller/os_server.appinstaller
     cask: pieces-os
     exe: https://builds.pieces.app/stages/production/os_server/windows-exe/download
@@ -596,6 +601,10 @@ softwarePackages:
     _home: https://developer.android.com/studio
     _name: Android Studio
     _app: Android Studio.app
+    _link:cask: 'TODO'
+    _link:choco: 'TODO'
+    _link:flatpak: 'TODO'
+    _link:snap: 'TODO'
     cask: android-studio
     choco: androidstudio
     flatpak: com.google.AndroidStudio
@@ -810,8 +819,10 @@ softwarePackages:
     _github: https://github.com/httptoolkit/httptoolkit
     _name: HTTP Toolkit
     _app: HTTP Toolkit.app
+    apt: https://github.com/httptoolkit/httptoolkit-desktop/releases/download/v1.14.8/HttpToolkit-1.14.8.deb
     cask: http-toolkit
     winget: HTTPToolKit.HTTPToolKit
+    yay: httptoolkit
   tart:
     _bin: tart
     _github: https://github.com/cirruslabs/tart
@@ -1072,24 +1083,17 @@ softwarePackages:
     _github: https://github.com/CodeEditApp/CodeEdit
     _name: CodeEdit
     _app: CodeEdit.app
+    _todo: TODO once this is out of alpha
     cask: codeedit
   barrier:
     _bin: barrier
     _github: https://github.com/debauchee/barrier
     _name: Barrier
     _app: Barrier.app
+    _todo: TODO
     cask: barrier
     choco: barrier
     flatpak: com.github.debauchee.barrier
-  syncalicious:
-    _bin: syncalicious
-    _desc: macOS application that syncs application settings across instances of macOS (and can also be used for backing up application settings)
-    _docs: https://github.com/zenangst/Syncalicious
-    _github: https://github.com/zenangst/Syncalicious
-    _home: https://github.com/zenangst/Syncalicious
-    _name: Syncalicious
-    _app: Syncalicious.app
-    cask: syncalicious
   auto-install:
     _bin: auto-install
     _desc: '[auto-install](https://github.com/siddharthkp/auto-install) installs dependencies as you code'
@@ -1233,6 +1237,10 @@ softwarePackages:
     _github: false
     _name: Logi Options+
     _app: logioptionsplus.app
+    _link:choco: 'TODO'
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/LogiOptionsPlus"
+        target: "$HOME/Library/Application Support/LogiOptionsPlus"
     choco: logioptionsplus
     cask: logi-options-plus
     exe: https://download01.logi.com/web/ftp/pub/techsupport/optionsplus/logioptionsplus_installer.exe
@@ -1918,6 +1926,11 @@ softwarePackages:
     _name: Tor Browser
     _restricted: true
     _app: Tor Browser.app
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/tor-browser"
+        target: "$HOME/Library/Application Support/TorBrowser-Data/Tor"
+    _link:choco: 'TODO'
+    _link:flatpak: 'TODO'
     cask: tor-browser
     choco: tor-browser
     flatpak: com.github.micahflee.torbrowser-launcher
@@ -5870,7 +5883,12 @@ softwarePackages:
     _home: https://getmailspring.com/
     _name: Mailspring
     _app: Mailspring.app
-    ansible: professormanhattan.mailspring
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/mailspring"
+        target: "$HOME/Library/Application Support/Mailspring"
+    _link:choco: 'TODO'
+    _link:flatpak: 'TODO'
+    _link:snap: 'TODO'
     cask: mailspring
     choco: mailspring
     flatpak: com.getmailspring.Mailspring
@@ -5889,17 +5907,22 @@ softwarePackages:
     exe: https://github.com/hql287/Manta/releases/download/v1.1.4/Manta.Setup.1.1.4.exe
     github: github.com/hql287/Manta
   mark-text:
-    _bin: null
+    _bin: marktext
     _desc: A simple and elegant markdown editor, available for Linux, macOS and Windows
     _docs: null
     _github: https://github.com/marktext/marktext
     _home: null
     _name: MarkText
-    _post:cask: if [ -d /Applications/MarkText.app ]; then xattr -cr /Applications/MarkText.app; elif [ -d "$HOME/Applications/MarkText.app" ]; then xattr -cr "$HOME/Applications/MarkText.app"; fi
     _app: MarkText.app
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/marktext"
+        target: "$HOME/Library/Application Support/marktext"
+    _link:choco: 'TODO'
+    _link:flatpak: 'TODO'
+    _link:winget: 'TODO'
     cask: mark-text
     choco: marktext
-    github: github.com/marktext/marktext
+    flatpak: com.github.marktext.marktext
     winget: marktext
     yay: marktext
   mas:
@@ -6843,13 +6866,16 @@ softwarePackages:
     _name: Mage AI
     pipx: mage-ai
   warp-terminal:
-    _bin: null
+    _bin: warp
     _desc: Warp is a blazingly-fast modern Rust based GPU-accelerated terminal built to make you and your team more productive.
     _docs: https://docs.warp.dev/getting-started/readme
     _github: https://github.com/warpdotdev/Warp
     _home: https://www.warp.dev/
     _name: Warp Terminal
     _app: Warp.app
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/warp-terminal"
+        target: "$HOME/Library/Application Support/dev.warp.Warp-Stable"
     cask: warp
   figma:
     _bin: null

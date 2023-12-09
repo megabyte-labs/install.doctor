@@ -232,7 +232,6 @@ softwareGroups:
     - cryptomator
     - seafile-client
     - timeshift
-    - syncalicious
   Browsers: &Browsers
     - w3m
   Browsers-Desktop: &Browsers-Desktop
@@ -473,9 +472,8 @@ softwareGroups:
     - jitsi-meet
     - keybase
     - skype
-    - signal
     - slack
-    - telegram
+    # - telegram
     - zoom
   Crypto: &Crypto
     - cointop
@@ -528,7 +526,6 @@ softwareGroups:
     - mongodb-compass
     - sqlectron
   Development-Tools-Desktop: &Development-Tools-Desktop
-    - catlight
     - github-desktop
     - intellij-idea-ce
     - iterm2
@@ -903,7 +900,7 @@ softwareGroups:
     - alt-tab
     - amethyst
     - espanso
-    - fiscript
+    # - fiscript
     - libreoffice
     - microsoft-office
     - notion
@@ -1067,7 +1064,6 @@ softwareGroups:
     - lsyncd
     - unison
   Transfer-Desktop: &Transfer-Desktop
-    - ariang
     - dat-desktop
     - google-drive
     - motrix
@@ -1188,7 +1184,6 @@ softwareGroups:
     - betwixt
     - fiddler
     - figma
-    - graphql-playground
     - http-toolkit
     - imagine
     - imageoptim
@@ -1469,6 +1464,8 @@ softwareGroups:
   deprecated:
     - pkg: apt-cacher-ng
       note: Deprecated in favor of using Sonatype Nexus apt proxies.
+    - pkg: ariang
+      note: Not very polished and only available via cask
     - pkg: asdf
       note: ASDF is currently installed via a script rather than in the software definitions.
     - pkg: astronvim
@@ -1481,6 +1478,8 @@ softwareGroups:
       note: Unused Docker assistance package
     - pkg: catfs
       note: CatFS is reportedly in the alpha stage of development and we experienced issues when trying to use it.
+    - pkg: catlight
+      note: Free tier has strict limitations and app is not very polished
     - pkg: ccat
       note: bat can be used instead and has more features
     - pkg: cerebro
@@ -1499,6 +1498,8 @@ softwareGroups:
       note: Deprecated in favor of `duf` which is written in Rust
     - pkg: git-fuzzy
       note: Installed via dotfiles via git
+    - pkg: graphql-playground
+      note: Altair is more popular and well-maintained on GitHub
     - pkg: gvm
       note: Deprecated in favor of using ASDF.
     - pkg: hyper
@@ -1597,6 +1598,8 @@ softwareGroups:
       note: After `sudo apt-get install -y fuse libfuse-dev, the following error still shows up error could not find system library 'fuse' required by the 'fuse' crate
     - pkg: snapd
       note: Bundled into installer
+    - pkg: signal
+      note: Not needed - mostly a phone app
   helmCharts:
     - vector
 helm:
@@ -1750,15 +1753,26 @@ softwarePlugins:
       - app.pieces.plugins.jetbrains
       - com.dmarcotte.handlebars
       - com.github.copilot
+      - com.github.masahirosuzuka.PhoneGapIntelliJPlugin
       - com.jetbrains.edu
       - com.jetbrains.rust
       - com.wakatime.intellij.plugin
+      - org.intellij.plugins.hcl
+      - com.intellij.lang.jsgraphql
+      - com.chrisrm.idea.MaterialThemeUI
+      - name.kropp.intellij.makefile
+      - com.genymotion.idea
       - Docker
       - io.flutter
+      - Dart
+      - Jetbrains TeamCity Plugin
+      - com.wakatime.intellij.plugin
+      - mobi.hsz.idea.gitignore
       - NodeJS
       - org.editorconfig.editorconfigjetbrains
       - org.intellij.plugins.markdown
       - org.jetbrains.completion.full.line
+      - org.jetbrains.plugins.go-template
   helm:
     cmd: bash -c '{PLUGIN}'
     plugins:
