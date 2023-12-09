@@ -29,6 +29,8 @@ The `mackup` configurations will handle the backing up of the "golden" copy and 
 
 The keys that start with `_link` add the instructions necessary to synchronize the configurations amongst the various possible locations in the most efficient manner. The `cask` and `flatpak` have their definitions in place. The `choco` still needs some work. And the `yay` option needs no definition because the configuration is already in the proper place by default for unrestricted system package managers.
 
+It also is important to note that the `mackup` configuration for each app (in the `~/.config/mackup/.mackup` folder) should be named using the object ID you can find for each application in the `software.yml` file.
+
 ## `backup-apps` Script
 
 On a side note, once the proper application definitions are in place in the `software.yml` file and the proper configurations are made in this folder's `.mackup` folder, then you can use our convienience script located at `~/.local/bin/backup-apps` to perform the backup. It was created to avoid having to leave a `~/.mackup` folder and a `~/.mackup.cfg` file in the home directory.
