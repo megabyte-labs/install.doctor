@@ -21,7 +21,7 @@
 #     | **Task**           | Task runner used on-device for task parallelization and dependency management        |
 #     | **ZX / Node.js**   | ZX is a Node.js abstraction that allows for better scripts                           |
 #     | Gum                | Gum is a terminal UI prompt CLI (which allows sweet, interactive prompts)            |
-#     | Glow               | Glow is a markdown renderer used for applying terminal-friendly styled to markdown   |
+#     | Glow               | Glow is a markdown renderer used for applying terminal-friendly styles to markdown   |
 #
 #     There are also a handful of system packages that are installed like `curl` and `git`. Then, during the Chezmoi provisioning
 #     process, there are a handful of system packages that are installed to ensure things run smoothly. You can find more details

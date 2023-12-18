@@ -766,13 +766,17 @@ async function beforeInstall(packageManager) {
     if (!brewUpdated) {
       brewUpdated = true
       try {
-        runCommand('Running brew update / upgrade', `brew update && brew upgrade --cask && brew upgrade`)
+        runCommand('Running brew update', `brew update`)
+        runCommand('Running brew upgrade', `brew upgrade`)
+        if (osType === 'darwin'){
+          runCommand('Running brew upgrade (Casks)', `brew upgrade --cask`)
+        }
       } catch (e) {
         console.log(e)
         log('error', 'Homebrew', 'Failed running brew update / upgrade')
         log('info', 'Homebrew', 'Running brew tap --repair and trying again')
         try {
-          runCommand('Repairing taps and retrying brew update / upgrade', 'export HOMEBREW_TEMP=/tmp && sudo rm -rf $(brew --cache) && brew tap --repair && brew update && brew upgrade --cask --greedy && brew upgrade --force --greedy')
+          runCommand('Repairing taps and retrying brew update / upgrade', 'export HOMEBREW_TEMP=/tmp && sudo rm -rf $(brew --cache) && brew tap --repair && brew update && brew upgrade --force --greedy && [[ $OSTYPE != "darwin"* ]] && brew upgrade --cask --greedy')
         } catch (e) {
           console.log(e)
           log('error', 'Homebrew', 'Failed both attempts to run brew update / upgrade')
@@ -1264,10 +1268,17 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'apt') {
       for (let pkg of packages) {
         try {
-          runCommand(
-            `Installing ${pkg} via ${packageManager}`,
-            `sudo apt-get -o DPkg::Options::=--force-confdef install -y ${pkg}`
-          )
+          if (pkg.startsWith('http') && pkg.endsWith('.deb')) {
+            runCommand(
+              `Downloading and installing ${pkg}`,
+              `TMP="$(mktemp)" && curl -sSL ${pkg} -o "$TMP" && sudo dpkg -i "$TMP"`
+            )
+          } else {
+            runCommand(
+              `Installing ${pkg} via ${packageManager}`,
+              `sudo DEBIAN_FRONTEND=noninteractive apt-get -o DPkg::Options::=--force-confdef install -y ${pkg}`
+            )
+          }
           log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
           log('error', 'Install', `There was an error installing ${pkg} with apt-get`)
@@ -1545,7 +1556,7 @@ async function installPackageList(packageManager, packages) {
 async function addUserGroup(group) {
   const logStage = 'Users / Groups'
   log('info', logStage, `Ensuring the ${group} group / user is added`)
-  runCommand(`Creating the ${group} user / group`, `sudo add-usergroup "${process.env.USER}" "${group}"`)
+  runCommand(`Creating the ${group} user / group`, `sudo "${process.env.HOME}/.local/bin/add-usergroup" "${process.env.USER}" "${group}"`)
 }
 
 /**

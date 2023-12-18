@@ -3119,7 +3119,7 @@ softwarePackages:
       # @brief Logs into DockerHub for Docker Desktop
       # @description
       #     This script logs into DockerHub so that Docker Desktop is pre-authenticated. This
-      #     functionality requires that the `DOCKERHUB_USER` be passed in as an environment variable (or 
+      #     functionality requires that the `DOCKERHUB_USER` be passed in as an environment variable (or
       #     directly editted in the `~/.config/chezmoi/chezmoi.yaml` file) and that the `DOCKERHUB_TOKEN`
       #     be passed in as a secret (either via the encrypted secret method or passed in as an environment
       #     variable).
@@ -5146,6 +5146,9 @@ softwarePackages:
       #
       #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
 
+      HAS_DOCKER=0
+      HAS_VIRTUALBOX=0
+
       ### Check if Docker is installed and operational so Docker executor(s) can be registered
       if command -v docker > /dev/null && docker run --rm hello-world > /dev/null; then
         HAS_DOCKER=1
@@ -5169,7 +5172,7 @@ softwarePackages:
           ### Populate appropriate token
           case "$OSTYPE" in
             solaris*) echo "TODO" ;;
-            darwin*)  GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_DARWIN")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_DARWIN" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_DARWIN" }}{{ end }}" ;; 
+            darwin*)  GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_DARWIN")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_DARWIN" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_DARWIN" }}{{ end }}" ;;
             linux*)   GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_LINUX")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_LINUX" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_LINUX" }}{{ end }}" ;;
             bsd*)     echo "TODO" ;;
             msys*)    GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_WINDOWS")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_WINDOWS" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_WINDOWS" }}{{ end }}" ;;
@@ -5187,30 +5190,30 @@ softwarePackages:
             if [ $HAS_DOCKER -eq 1 ]; then
               logg info 'Registering GitLab Runner(s) that use Docker executor'
               {{- range .host.gitlabRunners }}
-              {{- if .runnerImage }}
+              {{- if index . "runnerImage" }}
               {{- $cmd }}
               --url {{ .glurl }} \
               --executor "docker" \
-              --description "{{ .runnerDescription }} - on {{ .chezmoi.hostname }}" \
+              --description "{{ .runnerDescription }} - on {{ $.chezmoi.hostname }}" \
               --docker-image {{ .runnerImage }} \
-              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }},{{ .chezmoi.hostname }},docker"
-              {{ else }}--tag-list "{{ .chezmoi.hostname }},docker" --run-untagged{{ end }} || echo 'Runner registration failed"
+              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }},{{ $.chezmoi.hostname }},docker"
+              {{- else }}--tag-list "{{ $.chezmoi.hostname }},docker" --run-untagged{{ end }} || echo 'Runner registration failed'
               {{ end -}}
               {{ end }}
             fi
-          
+
             ### Register VirtualBox based runners if VirtualBox is installed
             if [ $HAS_VIRTUALBOX -eq 1 ]; then
               logg info 'Registering GitLab Runner(s) that use VirtualBox executor'
               {{- range .host.gitlabRunners }}
-              {{- if .baseVM }}
+              {{- if index . "baseVM" }}
               {{- $cmd }}
               --url {{ .glurl }} \
               --executor "virtualbox" \
-              --description "{{ .runnerDescription }} - on {{ .chezmoi.hostname }}" \
+              --description "{{ .runnerDescription }} - on {{ $.chezmoi.hostname }}" \
               --virtualbox-base-name "{{ .baseVM }}" \
-              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }},{{ .chezmoi.hostname }},virtualbox"
-              {{ else }}--tag-list "{{ .chezmoi.hostname }},virtualbox" --run-untagged{{ end }} || echo 'Runner registration failed"
+              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }},{{ $.chezmoi.hostname }},virtualbox"
+              {{- else }}--tag-list "{{ $.chezmoi.hostname }},virtualbox" --run-untagged{{ end }} || echo 'Runner registration failed'
               {{ end -}}
               {{ end }}
             fi
@@ -5272,12 +5275,12 @@ softwarePackages:
       if command -v gitomatic > /dev/null; then
         ### Copy bin to /usr/local/bin
         logg info "Copying $HOME/.local/bin/gitomatic-service to /usr/local/bin/gitomatic-service" && sudo cp -f "$HOME/.local/bin/gitomatic-service" /usr/local/bin/gitomatic-service
-        
+
         ### Copy gitomatic to global directory
         if [ ! -f /usr/local/bin/gitomatic ]; then
           logg info 'Copying gitomatic executable to /usr/local/bin/gitomatic' && sudo cp -f "$(which gitomatic)" /usr/local/bin/gitomatic
         fi
-      
+
         if [ -d /Applications ] && [ -d /System ]; then
           ### macOS
           logg info 'Copying gitomatic plist file to /Library/LaunchDaemons' && sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitomatic/com.github.muesli.gitomatic.plist" /Library/LaunchDaemons/com.github.muesli.gitomatic.plist
@@ -7817,7 +7820,7 @@ softwarePackages:
 
         ### netdata-claim.sh must be run as netdata user
         sudo -H -u netdata bash -c 'export NETDATA_ROOM="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_ROOM")) -}}{{- includeTemplate "secrets/NETDATA_ROOM" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_ROOM" -}}{{- end -}}" && export NETDATA_TOKEN="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) -}}{{- includeTemplate "secrets/NETDATA_TOKEN" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_TOKEN" -}}{{- end -}}" && yes | netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="https://app.netdata.cloud"'
-        
+
         ### Kernel optimizations
         # These are mentioned while installing via the kickstart.sh script method. We are using Homebrew for the installation though.
         # Assuming these optimizations do not cause any harm.
@@ -7849,7 +7852,7 @@ softwarePackages:
             logg error 'No etc location found for netdata' && exit 1
           fi
           logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/ to $NETDATA_ETC" && sudo cp -rf "${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/" "$NETDATA_ETC"
-          
+
           if command -v gsed > /dev/null; then
             SED_UTIL="gsed"
           else
@@ -7859,7 +7862,7 @@ softwarePackages:
           ### Blocky
           logg info "Adding Blocky metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
           sudo "$SED_UTIL" -i "/jobs:/a\  - name: blocky_local \n    url: 'http://127.0.0.1:4000/metrics'" "$NETDATA_ETC/go.d/prometheus.conf"
-          
+
           ### SFTPGo
           logg info "Adding SFTPGo metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
           sudo "$SED_UTIL" -i "/jobs:/a\  - name: sftpgo_local \n    url: 'http://127.0.0.1:57500/metrics'" "$NETDATA_ETC/go.d/prometheus.conf"
@@ -9048,10 +9051,10 @@ softwarePackages:
     _when:linux: '! test -f /opt/safing/portmaster/portmaster-start'
     ansible:linux: professormanhattan.portmaster
     ansible:windows: professormanhattan.portmaster
-    apt: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.
+    apt: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.deb
     choco: portmaster
     dnf: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.rpm
-    exe: https://updates.safing.io/latest/windows_amd64/packages/portmaster-installer.
+    exe: https://updates.safing.io/latest/windows_amd64/packages/portmaster-installer.exe
     scoop: portmaster-np
   pake:
     _bin: pake
@@ -10798,7 +10801,7 @@ softwarePackages:
     _home: https://github.com/skeeto/endlessh
     _name: Endlessh
     _service: endlessh
-    _post: | 
+    _post: |
       #!/usr/bin/env bash
       # @file Endlessh Configuration
       # @brief Applies the Endlessh configuration and starts the service on Linux systems
@@ -11638,7 +11641,7 @@ softwarePackages:
     yay: termius
   dagu:
     _bin: dagu
-    _github: 
+    _github:
     _name: Dagu
     _post: |
       #!/usr/bin/env bash
@@ -12018,7 +12021,7 @@ softwarePackages:
       #     ## Links
       #
       #     * [Privoxy configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/privoxy/config)
-      
+
       ### Define the Privoxy configuration location based on whether system is macOS or Linux
       if [ -d /Applications ] && [ -d /System ]; then
         ### macOS
@@ -12044,7 +12047,7 @@ softwarePackages:
             sudo add-usergroup "$USER" privoxy
           fi
           sudo chown privoxy:privoxy "$PRIVOXY_CONFIG" 2> /dev/null || sudo chown privoxy:$(id -g -n) "$PRIVOXY_CONFIG"
-          
+
           ### Restart Privoxy after configuration is applied
           if [ -d /Applications ] && [ -d /System ]; then
             ### macOS
@@ -13099,6 +13102,8 @@ softwarePackages:
       #     * [Linux managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/warp/private_mdm.xml.tmpl)
       #     * [macOS managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/Library/Managed%20Preferences/private_com.cloudflare.warp.plist.tmpl)
 
+      SSL_CERT_PATH="/etc/ssl/cert.pem"
+
       ### Install CloudFlare WARP (on non-WSL *nix systems)
       if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
         if [ -d /System ] && [ -d /Applications ]; then
@@ -13156,8 +13161,8 @@ softwarePackages:
           #     sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
           # fi
           logg info 'Updating the OpenSSL CA Store to include the Cloudflare certificate'
-          echo | sudo tee -a /etc/ssl/cert.pem < "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > /dev/null
-          echo "" | sudo tee -a /etc/ssl/cert.pem
+          echo | sudo tee -a $SSL_CERT_PATH < "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > /dev/null
+          echo "" | sudo tee -a $SSL_CERT_PATH
         else
           logg warn 'Session is SSH so adding Cloudflare encryption key to trusted certificates via the security program is being bypassed since it requires Touch ID / Password verification.'
         fi
@@ -13185,7 +13190,8 @@ softwarePackages:
             logg info 'Copying CloudFlare Teams PEM file to /usr/local/share/ca-certificates/Cloudflare_CA.crt'
             sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /usr/local/share/ca-certificates/Cloudflare_CA.crt
             logg info 'dpkg-reconfigure executable detected so using Debian/Ubuntu method of updating system trusted certificates to include CloudFlare Teams certificate'
-            sudo dpkg-reconfigure ca-certificates
+            sudo dpkg-reconfigure ca-certificates -p high
+            SSL_CERT_PATH="/etc/ssl/certs/ca-certificates.crt"
           else
             logg warn 'No /usr/local/share/ca-certificates folder present'
           fi
@@ -13195,6 +13201,7 @@ softwarePackages:
             sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /etc/pki/ca-trust/source/anchors
             logg info 'update-ca-trust executable detected so using CentOS/Fedora method of updating system trusted certificates to include CloudFlare Teams certificate'
             sudo update-ca-trust
+            SSL_CERT_PATH="/etc/pki/tls/certs/ca-bundle.crt"
           else
             logg warn '/etc/pki/ca-trust/source/anchors does not exist so skipping the system certificate update process'
           fi
@@ -13208,14 +13215,14 @@ softwarePackages:
         # certificate and the WARP client is not running.
         ### Git
         if command -v git > /dev/null; then
-          logg info "Configuring git to use /etc/ssl/cert.pem"
-          git config --global http.sslcainfo /etc/ssl/cert.pem
+          logg info "Configuring git to use $SSL_CERT_PATH"
+          git config --global http.sslcainfo $SSL_CERT_PATH
         fi
 
         ### NPM
         if command -v npm > /dev/null; then
-          logg info "Configuring npm to use /etc/ssl/cert.pem"
-          npm config set cafile /etc/ssl/cert.pem
+          logg info "Configuring npm to use $SSL_CERT_PATH"
+          npm config set cafile $SSL_CERT_PATH
         fi
 
         ### Python
@@ -13583,7 +13590,7 @@ softwarePackages:
       #     ## Links
       #
       #     * [`fail2ban` configuration folder](https://github.com/megabyte-labs/install.doctor/tree/master/home/private_dot_ssh/fail2ban)
-      
+
       ### Notify of script start
       logg info 'Configuring fail2ban'
 
