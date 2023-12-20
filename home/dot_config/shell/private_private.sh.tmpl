@@ -65,15 +65,17 @@ export HISHTORY_USER_SECRET="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoit
 ### Install Doctor
 # TODO: Replace HEADLESS_INSTALL with {{ .host.headless }} data source once headless install detection is implemented
 # export HEADLESS_INSTALL={{ .host.headless }}
-export HEADLESS_INSTALL=true
-export SOFTWARE_GROUP="{{ .host.softwareGroup }}"
+export FIREFOX_PUBLIC_PROFILE="{{ .firefoxPublicProfile }}"
 export FULL_NAME="{{ .user.name }}"
+export HEADLESS_INSTALL=true
+export HOST="{{ .host.hostname }}"
+export KEYID="{{ .user.gpg.id }}"
 export PRIMARY_EMAIL="{{ .user.email }}"
 export PUBLIC_SERVICES_DOMAIN="{{ .host.domain }}"
 export RESTRICTED_ENVIRONMENT={{ .host.restricted }}
+export SOFTWARE_GROUP="{{ .host.softwareGroup }}"
+export USER_USERNAME="{{ .user.username }}"
 export WORK_ENVIRONMENT={{ .host.work }}
-export HOST="{{ .host.hostname }}"
-export KEYID="{{ .user.gpg.id }}"
 
 # Set to work environment if Cisco applications are installed (modify this to your liking)
 if [ -d /Applications/Cisco ]; then
@@ -103,6 +105,9 @@ export REPLICATE_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemp
 export GOOGLE_SEARCH_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GOOGLE_SEARCH_API_KEY")) }}{{ includeTemplate "secrets/GOOGLE_SEARCH_API_KEY" | decrypt | trim }}{{ else }}{{ env "GOOGLE_SEARCH_API_KEY" }}{{ end }}"
 export GOOGLE_SEARCH_ID="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GOOGLE_SEARCH_ID")) }}{{ includeTemplate "secrets/GOOGLE_SEARCH_ID" | decrypt | trim }}{{ else }}{{ env "GOOGLE_SEARCH_ID" }}{{ end }}"
 
+### SendGrid API Key
+export SENDGRID_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SENDGRID_API_KEY")) }}{{ includeTemplate "secrets/SENDGRID_API_KEY" | decrypt | trim }}{{ else }}{{ env "SENDGRID_API_KEY" }}{{ end }}"
+
 ### Serper.dev
 export SERP_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SERP_API_KEY")) }}{{ includeTemplate "secrets/SERP_API_KEY" | decrypt | trim }}{{ else }}{{ env "SERP_API_KEY" }}{{ end }}"
 
@@ -121,6 +126,9 @@ export SURGE_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates"
 
 ### Vagrant Cloud
 export VAGRANT_CLOUD_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VAGRANT_CLOUD_TOKEN")) }}{{ includeTemplate "secrets/VAGRANT_CLOUD_TOKEN" | decrypt | trim }}{{ else }}{{ env "VAGRANT_CLOUD_TOKEN" }}{{ end }}"
+
+### VMWare
+export VMWARE_WORKSTATION_LICENSE_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VMWARE_WORKSTATION_LICENSE_KEY")) }}{{ includeTemplate "secrets/VMWARE_WORKSTATION_LICENSE_KEY" | decrypt | trim }}{{ else }}{{ default "4C21U-2KK9Q-M8130-4V2QH-CF810" (env "VMWARE_WORKSTATION_LICENSE_KEY") }}{{ end }}"
 
 ### Xcodes
 # Apple ID username and password
