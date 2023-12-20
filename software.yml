@@ -4781,12 +4781,12 @@ softwarePackages:
       if command -v gitomatic > /dev/null; then
         ### Copy bin to /usr/local/bin
         logg info "Copying $HOME/.local/bin/gitomatic-service to /usr/local/bin/gitomatic-service" && sudo cp -f "$HOME/.local/bin/gitomatic-service" /usr/local/bin/gitomatic-service
-        
+
         ### Copy gitomatic to global directory
         if [ ! -f /usr/local/bin/gitomatic ]; then
           logg info 'Copying gitomatic executable to /usr/local/bin/gitomatic' && sudo cp -f "$(which gitomatic)" /usr/local/bin/gitomatic
         fi
-      
+
         if [ -d /Applications ] && [ -d /System ]; then
           ### macOS
           logg info 'Copying gitomatic plist file to /Library/LaunchDaemons' && sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitomatic/com.github.muesli.gitomatic.plist" /Library/LaunchDaemons/com.github.muesli.gitomatic.plist
@@ -7299,7 +7299,7 @@ softwarePackages:
 
         ### netdata-claim.sh must be run as netdata user
         sudo -H -u netdata bash -c 'export NETDATA_ROOM="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_ROOM")) -}}{{- includeTemplate "secrets/NETDATA_ROOM" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_ROOM" -}}{{- end -}}" && export NETDATA_TOKEN="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) -}}{{- includeTemplate "secrets/NETDATA_TOKEN" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_TOKEN" -}}{{- end -}}" && yes | netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="https://app.netdata.cloud"'
-        
+
         ### Kernel optimizations
         # These are mentioned while installing via the kickstart.sh script method. We are using Homebrew for the installation though.
         # Assuming these optimizations do not cause any harm.
@@ -9146,6 +9146,15 @@ softwarePackages:
     _name: rkhunter
     _notes: The _post script removes an entry for VMware with a space in it that causes rkhunter to hiccup
     _post: |
+      if [ -d /Applications ] && [ -d /System ]; then
+        ### macOS
+        logg info 'Updating file "$(brew --prefix)/Cellar/rkhunter/1.4.6/etc/rkhunter.conf"'
+        sed -i.bak  "s/^#WEB_CMD.*$/WEB_CMD=curl\ -L/" "$(brew --prefix)/Cellar/rkhunter/1.4.6/etc/rkhunter.conf"
+      else
+        ### Linux
+        logg info 'Updating file /etc/rkhunter.conf'
+        sed -i.bak  "s/^#WEB_CMD.*$/WEB_CMD=curl\ -L/" /etc/rkhunter.conf
+      fi
       export PATH="$(echo "$PATH" | sed 's/VMware Fusion.app/VMwareFusion.app/')"
       sudo rkhunter --propupd || RK_PROPUPD_EXIT_CODE=$?
       if [ -n "$RK_PROPUPD_EXIT_CODE" ]; then
@@ -10029,7 +10038,7 @@ softwarePackages:
     _home: https://github.com/skeeto/endlessh
     _name: Endlessh
     _service: endlessh
-    _post: | 
+    _post: |
       # @file Endlessh Configuration
       # @brief Applies the Endlessh configuration and starts the service on Linux systems
       # @description
@@ -11194,7 +11203,7 @@ softwarePackages:
       #     ## Links
       #
       #     * [Privoxy configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/privoxy/config)
-      
+
       ### Define the Privoxy configuration location based on whether system is macOS or Linux
       if [ -d /Applications ] && [ -d /System ]; then
         ### macOS
@@ -11220,7 +11229,7 @@ softwarePackages:
             sudo add-usergroup "$USER" privoxy
           fi
           sudo chown privoxy:privoxy "$PRIVOXY_CONFIG" 2> /dev/null || sudo chown privoxy:$(id -g -n) "$PRIVOXY_CONFIG"
-          
+
           ### Restart Privoxy after configuration is applied
           if [ -d /Applications ] && [ -d /System ]; then
             ### macOS
@@ -12350,7 +12359,7 @@ softwarePackages:
       #     ## Links
       #
       #     * [`fail2ban` configuration folder](https://github.com/megabyte-labs/install.doctor/tree/master/home/private_dot_ssh/fail2ban)
-      
+
       ### Notify of script start
       logg info 'Configuring fail2ban'
 
