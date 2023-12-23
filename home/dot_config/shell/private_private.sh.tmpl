@@ -124,6 +124,10 @@ export SNAPCRAFT_UNBOUND_DISCHARGE="{{ if (stat (joinPath .chezmoi.sourceDir ".c
 export SURGE_LOGIN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SURGE_LOGIN")) }}{{ includeTemplate "secrets/SURGE_LOGIN" | decrypt | trim }}{{ else }}{{ env "SURGE_LOGIN" }}{{ end }}"
 export SURGE_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SURGE_TOKEN")) }}{{ includeTemplate "secrets/SURGE_TOKEN" | decrypt | trim }}{{ else }}{{ env "SURGE_TOKEN" }}{{ end }}"
 
+### Tailscale
+export TAILSCALE_AUTH_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TAILSCALE_AUTH_KEY")) }}{{ includeTemplate "secrets/TAILSCALE_AUTH_KEY" | decrypt | trim }}{{ else }}{{ env "TAILSCALE_AUTH_KEY" }}{{ end }}"
+
+
 ### Vagrant Cloud
 export VAGRANT_CLOUD_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VAGRANT_CLOUD_TOKEN")) }}{{ includeTemplate "secrets/VAGRANT_CLOUD_TOKEN" | decrypt | trim }}{{ else }}{{ env "VAGRANT_CLOUD_TOKEN" }}{{ end }}"
 

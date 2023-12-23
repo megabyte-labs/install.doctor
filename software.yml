@@ -417,7 +417,9 @@ softwarePackages:
     _github: false
     _home: https://pieces.app/
     _name: Pieces OS
-    _post:snap: sudo snap connect pieces-os:dotnet-runtime-aspnetcore
+    _post:snap: |
+      #!/usr/bin/env bash
+      sudo snap connect pieces-os:dotnet-runtime-aspnetcore
     _app: Pieces.app
     _note: Waiting for choco package
     _link:cask:
@@ -462,8 +464,12 @@ softwarePackages:
     _bin: tomcat
     _github: https://github.com/apache/tomcat
     _name: Tomcat
-    _post:darwin: sed 's/8080/8180/g' /usr/local/etc/tomcat/server.xml > /usr/local/etc/tomcat/server.xml
-    _post:linux: sed 's/8080/8180/g' /usr/local/etc/tomcat/server.xml > /usr/local/etc/tomcat/server.xml
+    _post:darwin: |
+      #!/usr/bin/env bash
+      sed 's/8080/8180/g' /usr/local/etc/tomcat/server.xml > /usr/local/etc/tomcat/server.xml
+    _post:linux: |
+      #!/usr/bin/env bash
+      sed 's/8080/8180/g' /usr/local/etc/tomcat/server.xml > /usr/local/etc/tomcat/server.xml
     _service: tomcat
     apt: tomcat
     brew: tomcat
@@ -501,8 +507,10 @@ softwarePackages:
     _home: https://docs.qameta.io/allure-testops/
     _name: Allure
     _post:binary:darwin: |
-      # TODO
+      #!/usr/bin/env bash
+      echo "TODO"
     _post:binary:linux: |
+      #!/usr/bin/env bash
       # TODO How to pass the path of the file downloaded in `binary` step? That can replace the `wget` command below
       mkdir -p /usr/local/share/allure
       cd /usr/local/share/allure
@@ -667,7 +675,9 @@ softwarePackages:
     _github: https://github.com/ansible/ansible
     _home: https://www.ansible.com/
     _name: Ansible
-    _post:pipx: pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
+    _post:pipx: |
+      #!/usr/bin/env bash
+      pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
     # brew: ansible
     # dnf: ansible
     pipx: ansible
@@ -861,11 +871,15 @@ softwarePackages:
   quickemu:
     _bin: quickemu
     _github: https://github.com/quickemu-project/quickemu
-    _pre: sudo apt-add-repository ppa:flexiondotorg/quickemu && sudo apt update
+    _pre: |
+      #!/usr/bin/env bash
+      sudo apt-add-repository ppa:flexiondotorg/quickemu && sudo apt update
     apt:ubuntu: quickemu
   quickgui:
     _github: https://github.com/quickemu-project/quickgui
-    _pre: sudo add-apt-repository ppa:yannick-mauray/quickgui && sudo apt update
+    _pre: |
+      #!/usr/bin/env bash
+      sudo add-apt-repository ppa:yannick-mauray/quickgui && sudo apt update
     apt:ubuntu: quickgui
   helm-docs:
     _bin: helm-docs
@@ -888,7 +902,9 @@ softwarePackages:
     _bin: lxd-ui
     _github: https://github.com/canonical/lxd-ui
     _name: LXD UI
-    _post: lxd init && lxc config set core.https_address "[::]:8443"
+    _post: |
+      #!/usr/bin/env bash
+      lxd init && lxc config set core.https_address "[::]:8443"
     snap: lxd
   ipmitool:
     _bin: ipmitool
@@ -922,6 +938,21 @@ softwarePackages:
     _github: https://github.com/aquaproj/aqua
     _home: https://aquaproj.github.io
     _name: aqua
+    _post: |
+      #!/usr/bin/env bash
+      # @file Aqua Initialization
+      # @brief Updates and installs any Aqua dependencies that are defined in Aqua's configuration file.
+      # @description
+      #     This script updates Aqua and then installs any Aqua dependencies that are defined.
+
+      if command -v aqua > /dev/null; then
+        logg info 'Updating Aqua'
+        aqua update-aqua
+        logg info 'Installing Aqua dependencies (if any are defined)'
+        aqua install -a
+      else
+        logg info 'Skipping aqua install script because aqua was not installed'
+      fi
     brew: aquaproj/aqua/aqua
     binary:linux: https://github.com/aquaproj/aqua/releases/download/v2.0.0-0/aqua_linux_amd64.tar.gz
     binary:windows: https://github.com/aquaproj/aqua/releases/download/v2.0.0-0/aqua_windows_amd64.tar.gz
@@ -1034,6 +1065,7 @@ softwarePackages:
     _name: AstroNvim
     # TODO: Add timeouts to all commands in install-program
     _post: |
+      #!/usr/bin/env bash
       echo "Waiting on command that installs nvim plugins"
       # bash -ci "nvim --headless -c 'quitall'"
   dockutil:
@@ -1673,6 +1705,7 @@ softwarePackages:
       - src: "${XDG_CONFIG_HOME:-$HOME/.config}/BraveSoftware/Brave-Browser/Default"
         target: "$HOME/snap/brave/current/.config/BraveSoftware/Brave-Browser/Default"
     _post: |
+      #!/usr/bin/env bash
       # @brief See `google-chrome` `_post` script for more details
       function chromeSetUp() {
         ### Ensure Chrome policies directory is present
@@ -1882,8 +1915,12 @@ softwarePackages:
     _home: https://certbot.eff.org/
     _name: CertBot
     _snapClassic: true
-    _post: pipx inject certbot certbot-dns-cloudflare
-    _post:windows: echo "Add method for Windows"
+    _post: |
+      #!/usr/bin/env bash
+      pipx inject certbot certbot-dns-cloudflare
+    _post:windows: |
+      #!/usr/bin/env bash
+      echo "Add method for Windows"
     pipx: certbot
   ugm:
     _bin: ugm
@@ -1965,6 +2002,7 @@ softwarePackages:
       - src: "${XDG_CONFIG_HOME:-$HOME/.config}/google-chrome/Default"
         target: "$HOME/.var/app/com.google.Chrome/config/google-chrome/Default"
     _post: |
+      #!/usr/bin/env bash
       # @file Chrome Settings / Extensions
       # @brief This script configures Chrome, Brave, and Chromium system-wide managed / recommended policies settings. It also pre-loads a configurable list of Chrome extensions to Chrome, Brave, Chromium, and Edge (if they are installed).
       # @description
@@ -2090,6 +2128,7 @@ softwarePackages:
       - chrome-gnome-shell
     _bin: chromium
     _post: |
+      #!/usr/bin/env bash
       function chromeSetUp() {
         ### Ensure Chrome policies directory is present
         logg info 'Processing policy directories for Chromium based browsers'
@@ -2224,6 +2263,7 @@ softwarePackages:
     _home: https://www.clamav.net/
     _name: ClamAV
     _post: |
+      #!/usr/bin/env bash
       # Add freshclam.conf
       if [ -f "$HOME/.local/etc/clamav/freshclam.conf" ]; then
         sudo mkdir -p /usr/local/etc/clamav
@@ -2286,6 +2326,94 @@ softwarePackages:
     _github: https://github.com/cloudflare/cloudflared
     _home: null
     _name: CloudFlared
+    _post: |
+      #!/usr/bin/env bash
+
+      {{- $registrationToken := "" }}
+      {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname)) -}}
+      {{-   $registrationToken = (includeTemplate (print "cloudflared/" .host.hostname) | decrypt) -}}
+      {{- end }}
+      ### Set up CloudFlare tunnels
+      if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; then
+        # Show warning message about ~/.cloudflared already existing
+        if [ -d "$HOME/.cloudflared" ]; then
+          logg warn '~/.cloudflared is already in the home directory - to ensure proper deployment, remove previous tunnel configuration folders'
+        fi
+
+        ### Ensure /usr/local/etc/cloudflared exists
+        if [ -d /usr/local/etc/cloudflared ]; then
+          logg info 'Creating folder /usr/local/etc/cloudflared'
+          sudo mkdir -p /usr/local/etc/cloudflared
+        fi
+
+        # Copy over configuration files
+        logg info 'Ensuring /usr/local/etc/cloudflared exists' && sudo mkdir -p /usr/local/etc/cloudflared
+        logg info 'Copying over configuration files from ~/.local/etc/cloudflared to /usr/local/etc/cloudflared'
+        sudo cp -f "$HOME/.local/etc/cloudflared/cert.pem" /usr/local/etc/cloudflared/cert.pem
+        sudo cp -f "$HOME/.local/etc/cloudflared/config.yml" /usr/local/etc/cloudflared/config.yml
+
+        # Register tunnel (if not already registered)
+        if sudo cloudflared tunnel list | grep "host-{{ .host.hostname }}" > /dev/null; then
+          logg info 'CloudFlare tunnel is already registered'
+        else
+          logg info 'Creating a CloudFlare tunnel to this host'
+          sudo cloudflared tunnel create "host-{{ .host.hostname }}"
+        fi
+        TUNNEL_ID="$(sudo cloudflared tunnel list | grep 'host-{{ .host.hostname }}' | sed 's/ .*//')"
+        logg info "Tunnel ID: $TUNNEL_ID"
+        if [ -f "/usr/local/etc/cloudflared/${TUNNEL_ID}.json" ]; then
+          logg info 'Symlinking tunnel configuration to /usr/local/etc/cloudflared/credentials.json'
+          rm -f /usr/local/etc/cloudflared/credentials.json
+          sudo ln -s "/usr/local/etc/cloudflared/${TUNNEL_ID}.json" /usr/local/etc/cloudflared/credentials.json
+        else
+          logg info 'Handling case where the tunnel registration is not present in /usr/local/etc/cloudflared'
+          {{ if eq $registrationToken "" -}}
+          logg warn 'Registration token is unavailable - you might have to delete the pre-existing tunnel or set up secrets properly'
+          {{- else -}}
+          logg info 'Registration token retrieved from encrypted blob stored at home/.chezmoitemplates/cloudflared/{{ .host.hostname }}'
+          {{ if eq (substr 0 1 $registrationToken) "{" -}}
+          logg info 'Registration token stored in credential file form'
+          echo -n '{{ $registrationToken }}' | sudo tee /usr/local/etc/cloudflared/credentials.json > /dev/null
+          {{ else }}
+          logg info 'Registration token is in token form - it will be used in conjunction with sudo cloudflared service install'
+          {{- end }}
+          {{- end }}
+        fi
+
+        # Set up service
+        if [ -d /Applications ] && [ -d /System ]; then
+          # System is macOS
+          if [ -f /Library/LaunchDaemons/com.cloudflare.cloudflared.plist ]; then
+            logg info 'cloudflared service is already installed'
+          else
+            logg info 'Running sudo cloudflared service install'
+            sudo cloudflared service install{{ if and (ne $registrationToken "") (eq (substr 0 1 $registrationToken) "{") -}} {{ $registrationToken }}{{ end }}
+          fi
+          logg info 'Ensuring cloudflared service is installed'
+          sudo launchctl start com.cloudflare.cloudflared
+        elif [ -f /etc/os-release ]; then
+          # System is Linux
+          if systemctl --all --type service | grep -q "cloudflared" > /dev/null; then
+            logg info 'cloudflared service is already available as a service'
+          else
+            logg info 'Running sudo cloudflared service install'
+            sudo cloudflared service install{{ if and (ne $registrationToken "") (eq (substr 0 1 $registrationToken) "{") -}} {{ $registrationToken }}{{ end }}
+          fi
+          logg info 'Ensuring cloudflared service is started'
+          sudo systemctl start cloudflared
+          logg info 'Enabling cloudflared as a boot systemctl service'
+          sudo systemctl enable cloudflared
+        else
+          # System is Windows
+          cloudflared service install
+          mkdir C:\Windows\System32\config\systemprofile\.cloudflared
+          # Copy same cert.pem as being used above
+          # copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\systemprofile\.cloudflared\cert.pem
+          # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/windows/
+        fi
+      else
+        logg info 'cloudflared was not installed so CloudFlare Tunnels cannot be enabled. (Or the ~/.local/etc/cloudflared folder is not present)'
+      fi
     ansible: professormanhattan.cloudflared
     binary:linux: https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
     brew:darwin: cloudflare/cloudflare/cloudflared
@@ -2316,7 +2444,9 @@ softwarePackages:
     _github: https://github.com/cockpit-project/cockpit
     _home: https://cockpit-project.org/
     _name: Cockpit
-    _post: sudo usermod -a -G libvirtdbus libvirt
+    _post: |
+      #!/usr/bin/env bash
+      sudo usermod -a -G libvirtdbus libvirt
     _service:pacman: cockpit.socket
     ansible:linux: professormanhattan.cockpit
     apt:
@@ -2472,7 +2602,8 @@ softwarePackages:
     _home: null
     _name: Container Structure Tests
     _post:binary:linux: |
-      # TODO
+      #!/usr/bin/env bash
+      echo "TODO"
     binary:linux: https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
     brew: container-structure-test
     yay: container-structure-test
@@ -2791,6 +2922,102 @@ softwarePackages:
     _name: DNS
     ansible: professormanhattan.dns
   plymouth:
+    _post: |
+      #!/usr/bin/env bash
+      # @file Plymouth Theme / Configuration
+      # @brief Configures Plymouth to use a custom theme
+      # @description
+      #     This script installs Plymouth and then configures it to use our custom Betelgeuse theme.
+
+      ### Create /etc/plymouth/plymouthd.conf
+      if [ -f /etc/plymouth/plymouthd.conf ]; then
+        ### Back up original plymouthd.conf
+        if [ ! -f /etc/plymouth/plymouthd.conf.bak ]; then
+          logg info 'Backing up /etc/plymouth/plymouthd.conf to /etc/plymouth/plymouthd.conf.bak'
+          sudo cp -f /etc/plymouth/plymouthd.conf /etc/plymouth/plymouthd.conf.bak
+        fi
+
+        ### Create new plymouthd.conf
+        logg info 'Populating the /etc/plymouth/plymouthd.conf file'
+        echo "[Daemon]" | sudo tee /etc/plymouth/plymouthd.conf > /dev/null
+        echo "Theme={{ .theme }}" | sudo tee -a /etc/plymouth/plymouthd.conf > /dev/null
+        echo "ShowDelay=1" | sudo tee -a /etc/plymouth/plymouthd.conf > /dev/null
+      fi
+
+      ### Apply update-alternatives
+      if command -v update-alternatives > /dev/null; then
+        if [ -f "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" ]; then
+          sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" 100
+          logg success 'Installed default.plymouth'
+          # Required sometimes
+          sudo update-alternatives --set default.plymouth "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth"
+          logg success 'Set default.plymouth'
+        else
+          logg warn "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth does not exist!"
+        fi
+      else
+        logg warn 'update-alternatives is not available'
+      fi
+
+      ### Update /etc/plymouth/plymouthd.conf
+      # Replaced by code above
+      # if [ -f /etc/plymouth/plymouthd.conf ]; then
+      #     logg info 'Setting ShowDelay=1 in /etc/plymouth/plymouthd.conf'
+      #     if cat /etc/plymouth/plymouthd.conf | grep ShowDelay; then
+      #         sudo sed -i 's/^ShowDelay=.*/ShowDelay=1/' /etc/plymouth/plymouthd.conf
+      #     else
+      #         echo 'ShowDelay=1' | sudo tee -a /etc/plymouth/plymouthd.conf > /dev/null
+      #     fi
+      # else
+      #     logg warn '/etc/plymouth/plymouthd.conf does not exist!'
+      # fi
+
+      ### Symlink /usr/local/share/plymouth/themes to /usr/share/plymouth/themes
+      if [ ! -d '/usr/share/plymouth/themes/{{ .theme }}' ]; then
+        logg info 'Symlinking /usr/local/share/plymouth/themes/{{ .theme }} to /usr/share/plymouth/themes/{{ .theme }}'
+        sudo ln -s '/usr/local/share/plymouth/themes/{{ .theme }}' '/usr/share/plymouth/themes/{{ .theme }}'
+      fi
+
+      ### Set default Plymouth theme
+      if command -v plymouth-set-default-theme > /dev/null; then
+        sudo plymouth-set-default-theme -R '{{ .theme }}' || EXIT_CODE=$?
+        if [ -n "$EXIT_CODE" ]; then
+          logg warn 'There may have been an issue while setting the Plymouth default theme with plymouth-set-default-theme'
+        else
+          logg success 'Set Plymouth default theme with plymouth-set-default-theme'
+        fi
+      else
+        logg warn 'Could not apply default Plymouth theme because plymouth-set-default-theme is missing'
+      fi
+
+      ### Apply update-alternatives (again - required sometimes)
+      if command -v update-alternatives > /dev/null; then
+        if [ -f "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" ]; then
+          # Required sometimes
+          sudo update-alternatives --set default.plymouth "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth"
+          logg success 'Set default.plymouth (second time is required sometimes)'
+        else
+          logg warn "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth does not exist!"
+        fi
+      else
+        logg warn 'update-alternatives is not available'
+      fi
+
+      ### Update kernel / initrd images
+      # Set `export DEBUG_MODE=true` to bypass GRUB2 / Plymouth application
+      if [ "$DEBUG_MODE" != 'true' ]; then
+        if command -v update-initramfs > /dev/null; then
+          logg info 'Running sudo update-initramfs -u'
+          sudo update-initramfs -u
+          logg success 'Updated kernel / initrd images for Plymouth'
+        elif command -v dracut > /dev/null; then
+          logg info 'Running sudo dracut --regenerate-all -f'
+          sudo dracut --regenerate-all -f
+          logg success 'Updated kernel / initrd images for Plymouth'
+        else
+          logg warn 'Unable to update kernel / initrd images because neither update-initramfs or dracut are available'
+        fi
+      fi
     apt:
       - libplymouth5
       - plymouth
@@ -2822,8 +3049,12 @@ softwarePackages:
     _name: Espanso
     _snapClassic: true
     _app: Espanso.app
-    _post:snap: espanso service register && espanso start
-    _post:appimage: espanso service register && espanso start
+    _post:snap: |
+      #!/usr/bin/env bash
+      espanso service register && espanso start
+    _post:appimage: |
+      #!/usr/bin/env bash
+      espanso service register && espanso start
     appimage: federico-terzi/espanso
     cask: espanso
     choco: espanso
@@ -2842,6 +3073,26 @@ softwarePackages:
     _home: https://www.docker.com/
     _name: Docker Desktop
     _app: Docker.app
+    _post: |
+      #!/usr/bin/env bash
+      # @file DockerHub Login
+      # @brief Logs into DockerHub for Docker Desktop
+      # @description
+      #     This script logs into DockerHub so that Docker Desktop is pre-authenticated. This
+      #     functionality requires that the `DOCKERHUB_USER` be passed in as an environment variable (or 
+      #     directly editted in the `~/.config/chezmoi/chezmoi.yaml` file) and that the `DOCKERHUB_TOKEN`
+      #     be passed in as a secret (either via the encrypted secret method or passed in as an environment
+      #     variable).
+
+      ### Login to DockerHub
+      if command -v docker > /dev/null; then
+        DOCKERHUB_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "DOCKERHUB_TOKEN")) }}{{- includeTemplate "secrets/DOCKERHUB_TOKEN" | decrypt | trim -}}{{ else }}{{- env "DOCKERHUB_TOKEN" -}}{{ end }}"
+        DOCKERHUB_USER="{{ .user.docker.username }}"
+        if [ -d "/Applications/Docker.app" ] || [ -d "$HOME/Applications/Docker.app" ]; then
+          logg info 'Ensuring Docker.app is open' && open --background -a Docker --args --accept-license --unattended
+        fi
+        logg info 'Headlessly authenticating with DockerHub registry' && echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USER" --password-stdin > /dev/null && logg success 'Successfully authenticated with DockerHub registry'
+      fi
     apt: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.16.2-amd64.deb
     cask: docker
     choco: docker-desktop
@@ -2968,6 +3219,54 @@ softwarePackages:
     brew: dotnet
     choco: dotnet
     yay: dotnet-sdk-bin
+  sdkman-cli:
+    _post: |
+      #!/usr/bin/env bash
+      # @file SDKMAN Install
+      # @brief Ensures SDKMAN is installed.
+      # @description
+      #     This script ensures SDKMAN (a Java version manager) is installed using the method recommended on [their
+      #     website](https://sdkman.io/).
+
+      ### Re-source ~/.bashrc
+      if [ -z "$SDKMAN_DIR" ]; then
+        logg info 'SDKMAN_DIR is undefined so ~/.bashrc is being re-sourced' && source ~/.bashrc
+      fi
+
+      ### SDKMan ~/.bashrc settings
+      if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
+        export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"
+        . "$SDKMAN_DIR/bin/sdkman-init.sh"
+      elif [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/sdkman" ]; then
+        export SDKMAN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/sdkman"
+        . "$SDKMAN_DIR/bin/sdkman-init.sh"
+      else
+        logg logg 'Unable to find SDKMAN instance'
+      fi
+
+      ### Ensure SDKMan is installed (https://sdkman.io/)
+      if [ ! -d "$SDKMAN_DIR" ]; then
+        logg info 'Installing SDKMan via curl -s https://get.sdkman.io?rcupdate=false'
+        logg info "Install directory: $SDKMAN_DIR"
+        curl -s "https://get.sdkman.io?rcupdate=false" | bash
+        if [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
+          . "$SDKMAN_DIR/bin/sdkman-init.sh"
+          logg info 'Running sdk install java' && sdk install java
+        else
+          logg warn 'SDKMAN_DIR/bin/sdkman-init.sh is missing'
+        fi
+      else
+        logg info 'SDKMan appears to already be installed.'
+        logg info 'Running sdk update'
+        if command -v sdk > /dev/null; then
+          sdk update
+        else
+          logg warn 'Unable to run sdk update because the sdk command is unavailable'
+        fi
+      fi
+    script: |
+      #!/usr/bin/env bash
+      echo "Downloaded by Chezmoi (see .chezmoiexternal.toml.tmpl)"
   dprint:
     _bin: dprint
     _desc: '[dprint](https://dprint.dev/) is a pluggable and configurable code formatting platform written in Rust.'
@@ -3236,6 +3535,33 @@ softwarePackages:
     _github: https://github.com/sorah/envchain
     _home: https://github.com/sorah/envchain
     _name: envchain
+    _post: |
+      #!/usr/bin/env bash
+      # @file Store Secrets in Keyring
+      # @brief Stores secret environment variables into the System keyring
+      # @description
+      #     This script imports secret environment variables into the System keyring if `envchain` is installed.
+      #     Secrets stored in the folder 'home/.chezmoitemplates/secrets' following the Install Doctor method are
+      #     imported into the System keyring by this script. There is only one namespace called `default` where the
+      #     secrets are stored. Executing `envchain default env` displays all the environment variables and their values.
+      #
+      #     ## Secrets
+      #
+      #     For more information about storing secrets like SSH keys and API keys, refer to our [Secrets documentation](https://install.doctor/docs/customization/secrets).
+
+      ### Import environment variables into `envchain`
+      if command -v envchain > /dev/null; then
+        {{- if (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) }}
+        logg info 'Importing environment variables into the System keyring'
+        for file in {{ joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "*" }}; do
+          cat "$file" | chezmoi decrypt | envchain -s default "$(basename $file)" > /dev/null || logg info 'Importing "$(basename $file)" failed'
+        done
+        {{- else }}
+        logg warn 'Unable to import any variables into envchain because ~/.config/age/chezmoi.txt was not created by the secrets encryption process yet'
+        {{- end }}
+      else
+        logg info 'envchain is not installed or it is not available in the PATH'
+      fi
     brew: envchain
     github: github.com/sorah/envchain
   _envchain:deps:
@@ -3521,7 +3847,9 @@ softwarePackages:
     _github: https://github.com/withfig/autocomplete
     _home: https://fig.io/
     _name: Fig
-    _post: source ~/.config/shell/private.sh && fig login --token "$FIG_TOKEN"
+    _post: |
+      #!/usr/bin/env bash
+      source ~/.config/shell/private.sh && fig login --token "$FIG_TOKEN"
     _app: Fig.app
     cask: fig
   steampipe:
@@ -3641,6 +3969,7 @@ softwarePackages:
       - src: "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/profiles"
         target: "$HOME/snap/firefox/common/.mozilla/firefox"
     _post: |
+      #!/usr/bin/env bash
       # @file Firefox Settings / Add-Ons / Profiles
       # @brief This script configures system-wide settings, sets up Firefox Profile Switcher, creates various profiles from different sources, and installs a configurable list of Firefox Add-Ons.
       # @description
@@ -4094,7 +4423,9 @@ softwarePackages:
     _bin: ksnip
     _github: https://github.com/ksnip/ksnip
     _name: kSnip
-    _post:snap: sudo snap connect ksnip:network-observe && sudo snap connect ksnip:network-manager-observe && sudo snap connect ksnip:removable-media
+    _post:snap: |
+      #!/usr/bin/env bash
+      sudo snap connect ksnip:network-observe && sudo snap connect ksnip:network-manager-observe && sudo snap connect ksnip:removable-media
     _app: ksnip.app
     cask: ksnip
     flatpak: org.ksnip.ksnip
@@ -4468,8 +4799,11 @@ softwarePackages:
     _github: null
     _home: null
     _name: null
-    _post:brew: brew link --overwrite gdu
+    _post:brew: |
+      #!/usr/bin/env bash
+      brew link --overwrite gdu
     _post:snap: |
+      #!/usr/bin/env bash
       sudo snap connect gdu-disk-usage-analyzer:mount-observe :mount-observe
       sudo snap connect gdu-disk-usage-analyzer:system-backup :system-backup
       sudo snap alias gdu-disk-usage-analyzer.gdu gdu
@@ -4590,6 +4924,7 @@ softwarePackages:
     _home: null
     _name: Git LFS
     _post: |
+      #!/usr/bin/env bash
       sudo git lfs install --system
       git lfs install
     ansible: professormanhattan.gitlfs
@@ -4731,6 +5066,123 @@ softwarePackages:
     _name: Gitlab Runner
     _service: gitlab-runner
     _serviceEnabled: true
+    _post: |
+      #!/usr/bin/env bash
+      # @file GitLab Runner Configuration
+      # @brief Registers GitLab Runner(s) with the given GitLab instance
+      # @description
+      #     This script registers the runner(s) with the given GitLab instance. SaaS GitLab can also be provided as the GitLab instance to register
+      #     the runners with. The script configures the runners to use either Docker or VirtualBox Executor. Refer to
+      #     [this page](https://docs.gitlab.com/runner/executors/docker.html) and [this page](https://docs.gitlab.com/runner/executors/virtualbox.html)
+      #     for details about the available configuration settings.
+      #
+      #     Runners are always tagged with these 2 values: `hostname` and `docker`/`virtualbox` depending on the type of executor. If a list of tags is provided,
+      #     the runner is tagged with these values in addition to the above mentioned values. If the list of tags is empty, no additonal tags are added and the
+      #     runner is configured to pickup `untagged` jobs.
+      #
+      #     Configuring other type of executors is not supported by this script.
+      #
+      #     ## Secrets
+      #
+      #     The following chart details the secret(s) that are needed to configure the runner:
+      #
+      #     | Secret                 | Description                                                |
+      #     |------------------------|------------------------------------------------------------|
+      #     | `GITLAB_RUNNER_TOKEN`  | The token generated when the runner was created in GitLab  |
+      #
+      #     For more information about storing secrets like SSH keys and API keys, refer to our Secrets documentation provided below
+      #
+      #     ## Configuration Variables
+      #
+      #     The following chart details the input variable(s) that are used to determine the configuration of the runner:
+      #
+      #     | Variable            | Description                                                                                              |
+      #     |---------------------|----------------------------------------------------------------------------------------------------------|
+      #     | `glurl`             | The URL of the Gitlab instance to associate the Runner with                                              |
+      #     | `runnerImage`       | Docker image to use to configure the runner. Needed only when configuring `Docker` executor              |
+      #     | `runnerDescription` | Description of this runner                                                                               |
+      #     | `runnerTags`        | Comma separated list of tags for this runner. See details in the description for more info               |
+      #     | `baseVM`            | Name of the VirtualBox VM to use for creating runner. Needed only when configuring `VirtualBox` executor |
+      #
+      #     ## Links
+      #
+      #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
+
+      ### Check if Docker is installed and operational so Docker executor(s) can be registered
+      if command -v docker > /dev/null && docker run --rm hello-world > /dev/null; then
+        HAS_DOCKER=1
+      else
+        logg warn 'Docker is not installed or it is not operational'
+      fi
+
+      ### Check if VirtualBox is installed and operational so VirtualBox executor(s) can be registered
+      if command -v VirtualBox > /dev/null; then
+        HAS_VIRTUALBOX=1
+      else
+        logg warn 'VirtualBox is not installed'
+      fi
+
+      ### Configure runners if Docker or VirtualBox is installed
+      if [ $HAS_DOCKER -eq 0 ] && [ $HAS_VIRTUALBOX -eq 0 ]; then
+        logg warn 'Docker and VirtualBox are not installed. Not registering runner(s).'
+      else
+        ### Run logic if gitlab-runner is installed
+        if command -v gitlab-runner > /dev/null; then
+          ### Populate appropriate token
+          case "$OSTYPE" in
+            solaris*) echo "TODO" ;;
+            darwin*)  GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_DARWIN")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_DARWIN" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_DARWIN" }}{{ end }}" ;; 
+            linux*)   GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_LINUX")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_LINUX" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_LINUX" }}{{ end }}" ;;
+            bsd*)     echo "TODO" ;;
+            msys*)    GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_WINDOWS")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_WINDOWS" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_WINDOWS" }}{{ end }}" ;;
+            cygwin*)  GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_WINDOWS")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_WINDOWS" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_WINDOWS" }}{{ end }}" ;;
+            *)        echo "unknown: $OSTYPE" ;;
+          esac
+
+          ### Check if Runner Token value is present before attempting to register runner(s)
+          if [ $GITLAB_RUNNER_TOKEN != "" ]; then
+            ### Registering runners
+            {{ $cmd := `gitlab-runner register \
+              --non-interactive \
+              --token $GITLAB_RUNNER_TOKEN \` }}
+            ### Register Docker based runners if Docker is installed and operational
+            if [ $HAS_DOCKER -eq 1 ]; then
+              logg info 'Registering GitLab Runner(s) that use Docker executor'
+              {{- range .host.gitlabRunners }}
+              {{- if .runnerImage }}
+              {{- $cmd }}
+              --url {{ .glurl }} \
+              --executor "docker" \
+              --description "{{ .runnerDescription }} - on {{ .chezmoi.hostname }}" \
+              --docker-image {{ .runnerImage }} \
+              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }},{{ .chezmoi.hostname }},docker"
+              {{ else }}--tag-list "{{ .chezmoi.hostname }},docker" --run-untagged{{ end }} || echo 'Runner registration failed"
+              {{ end -}}
+              {{ end }}
+            fi
+          
+            ### Register VirtualBox based runners if VirtualBox is installed
+            if [ $HAS_VIRTUALBOX -eq 1 ]; then
+              logg info 'Registering GitLab Runner(s) that use VirtualBox executor'
+              {{- range .host.gitlabRunners }}
+              {{- if .baseVM }}
+              {{- $cmd }}
+              --url {{ .glurl }} \
+              --executor "virtualbox" \
+              --description "{{ .runnerDescription }} - on {{ .chezmoi.hostname }}" \
+              --virtualbox-base-name "{{ .baseVM }}" \
+              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }},{{ .chezmoi.hostname }},virtualbox"
+              {{ else }}--tag-list "{{ .chezmoi.hostname }},virtualbox" --run-untagged{{ end }} || echo 'Runner registration failed"
+              {{ end -}}
+              {{ end }}
+            fi
+          else
+            logg warn 'GITLAB_RUNNER_TOKEN is not set. Not registering runner(s)'
+          fi
+        else
+          logg warn 'gitlab-runner is not installed or is not available in PATH'
+        fi
+      fi
     ansible: professormanhattan.gitlabrunner
     brew: gitlab-runner
     choco: gitlab-runner
@@ -4757,6 +5209,7 @@ softwarePackages:
     _home: null
     _name: git-o-matic
     _post: |
+      #!/usr/bin/env bash
       # @file git-o-matic Configuration
       # @brief Starts service on Linux systems to monitor Git repositories
       # @description
@@ -4876,7 +5329,9 @@ softwarePackages:
     _github: null
     _home: null
     _name: Glances
-    _post:pipx: pipx inject glances glances[all]
+    _post:pipx: |
+      #!/usr/bin/env bash
+      pipx inject glances glances[all]
     ansible: professormanhattan.glances
     apt:ubuntu:
       - python3-dev
@@ -5622,6 +6077,7 @@ softwarePackages:
     _name: iTerm2
     _app: iTerm.app
     _post:cask: |
+      #!/usr/bin/env bash
       echo "Setting iTerm2 options location to Install Doctor Chezmoi location" && defaults write com.googlecode.iterm2 PrefsCustomFolder -string "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/Library/Preferences/com.googlecode.iterm2.plist"
       echo "Setting iTerm2 to automatically sync with managed options" && defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile_selection -int 2
     ansible:darwin: professormanhattan.iterm2
@@ -5701,7 +6157,12 @@ softwarePackages:
     _bin: atuin
     _github: https://github.com/ellie/atuin
     _name: Atuin
-    _post: source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh" && atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$ATUIN_PASSWORD" && atuin import auto && atuin sync
+    _post: |
+      #!/usr/bin/env bash
+      source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh"
+      atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$ATUIN_PASSWORD"
+      atuin import auto
+      atuin sync
     brew: atuin
     cargo: atuin
     pacman: atuin
@@ -5712,13 +6173,17 @@ softwarePackages:
     _github: https://github.com/ddworken/hishtory
     _name: hiSHtory
     _todo: Check for Homebrew version
-    _post: echo y | hishtory init "$HISHTORY_USER_SECRET"
+    _post: |
+      #!/usr/bin/env bash
+      echo y | hishtory init "$HISHTORY_USER_SECRET"
     script: curl -sSL --compressed https://hishtory.dev/install.py | python3 -
   git-town:
     _bin: git-town
     _github: https://github.com/git-town/git-town
     _name: Git Town
-    _post: git town aliases add
+    _post: |
+      #!/usr/bin/env bash
+      git town aliases add
     brew: git-town
     go: github.com/git-town/git-town@latest
   jiq:
@@ -5821,9 +6286,12 @@ softwarePackages:
     _github: https://github.com/keybase/client
     _home: https://keybase.io/
     _name: Keybase
-    _post:cask: if [ ! -f /usr/local/bin/keybase ] && [ -f /Applications/Keybase.app/Contents/SharedSupport/bin/keybase ]; then echo "Fixing missing keybase executable symlink permission issue" && sudo ln -s /Applications/Keybase.app/Contents/SharedSupport/bin/keybase /usr/local/bin/keybase; fi
+    _post:cask: |
+      #!/usr/bin/env bash
+      if [ ! -f /usr/local/bin/keybase ] && [ -f /Applications/Keybase.app/Contents/SharedSupport/bin/keybase ]; then echo "Fixing missing keybase executable symlink permission issue" && sudo ln -s /Applications/Keybase.app/Contents/SharedSupport/bin/keybase /usr/local/bin/keybase; fi
     _when:ansible: '! test -f /opt/keybase/Keybase'
     _post: |
+      #!/usr/bin/env bash
       # @file Keybase Configuration
       # @brief Updates Keybase's system configuration with the Keybase configuration stored in the `home/dot_config/keybase/config.json` location.
       # @description
@@ -5999,9 +6467,11 @@ softwarePackages:
     _home: https://www.kubeval.com/
     _name: kubeval
     _post:binary:darwin: |
+      #!/usr/bin/env bash
       tar xf kubeval-darwin-amd64.tar.gz
       sudo cp kubeval /usr/local/bin
     _post:binary:linux: |
+      #!/usr/bin/env bash
       tar xf kubeval-linux-amd64.tar.gz
       sudo cp kubeval /usr/local/bin
     _pre:scoop: scoop bucket add instrumenta https://github.com/instrumenta/scoop-instrumenta
@@ -6526,8 +6996,10 @@ softwarePackages:
     _home: https://min.io/
     _name: mc
     _post:binary:linux: |
+      #!/usr/bin/env bash
       # TODO
     _post:binary:windows: |
+      #!/usr/bin/env bash
       # TODO
     binary:linux: https://dl.min.io/client/mc/release/linux-amd64/mc
     binary:windows: https://dl.min.io/client/mc/release/windows-amd64/mc.exe
@@ -6560,6 +7032,7 @@ softwarePackages:
     _link:choco: 'TODO'
     _link:flatpak: 'TODO'
     _post: |
+      #!/usr/bin/env bash
       # @brief See `google-chrome` `_post` script for more details
       function chromeSetUp() {
         ### Ensure Chrome policies directory is present
@@ -6695,7 +7168,9 @@ softwarePackages:
     _home: null
     _name: minikube
     # TODO - Prefer HyperV on Windows https://minikube.sigs.k8s.io/docs/drivers/hyperv/
-    _post: if command -v hyperkit > /dev/null; then minikube config set driver hyperkit; elif command -v docker > /dev/null; then minikube config set driver docker; elif command -v VBoxManage > /dev/null; then minikube config set driver virtualbox; fi
+    _post: |
+      #!/usr/bin/env bash
+      if command -v hyperkit > /dev/null; then minikube config set driver hyperkit; elif command -v docker > /dev/null; then minikube config set driver docker; elif command -v VBoxManage > /dev/null; then minikube config set driver virtualbox; fi
     _todo: A full installation of Xcode.app 9.0 is required. Also, hyperkit x86_64 architecture is required for this software. So automate install of Xcode.app 9.0 and add check for x86_64 prior to installing this
     brew: minikube
     choco: minikube
@@ -6778,7 +7253,9 @@ softwarePackages:
     _github: https://github.com/ansible-community/molecule
     _home: https://molecule.readthedocs.io/en/latest/
     _name: Ansible Molecule
-    _post:pipx: pipx inject molecule ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog apache-libcloud gcloud junit-xml molecule-docker molecule-gce molecule-vagrant pycrypto
+    _post:pipx: |
+      #!/usr/bin/env bash
+      pipx inject molecule ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog apache-libcloud gcloud junit-xml molecule-docker molecule-gce molecule-vagrant pycrypto
     # brew: molecule
     pipx: molecule
   markdownlint-cli:
@@ -6926,7 +7403,9 @@ softwarePackages:
     _github: https://github.com/koekeishiya/skhd
     _home: https://github.com/koekeishiya/skhd
     _name: skhd
-    _post:brew: skhd --start-service
+    _post:brew: |
+      #!/usr/bin/env bash
+      skhd --start-service
     brew:darwin: koekeishiya/formulae/skhd
   profilecreator:
     _bin: null
@@ -7018,8 +7497,12 @@ softwarePackages:
     _github: https://github.com/canonical/multipass
     _home: https://multipass.run/
     _name: Multipass
-    _post:cask: multipass set local.driver=virtualbox
-    _post:choco: multipass set local.driver=virtualbox
+    _post:cask: |
+      #!/usr/bin/env bash
+      multipass set local.driver=virtualbox
+    _post:choco: |
+      #!/usr/bin/env bash
+      multipass set local.driver=virtualbox
     _app: Multipass.app
     ansible: professormanhattan.multipass
     cask: multipass
@@ -7264,6 +7747,7 @@ softwarePackages:
       - debsecan
       - speedtest-cli
     _post: |
+      #!/usr/bin/env bash
       # @file Netdata
       # @brief Connects Netdata with Netdata's free cloud dashboard and applies some system optimizations, if necessary
       # @description
@@ -7429,7 +7913,9 @@ softwarePackages:
     _bin: mutagen
     _github: https://github.com/mutagen-io/mutagen
     _name: Mutagen
-    _post: mutagen daemon register
+    _post: |
+      #!/usr/bin/env bash
+      mutagen daemon register
     brew: mutagen-io/mutagen/mutagen
   newman:
     _bin: newman
@@ -7471,6 +7957,27 @@ softwarePackages:
         proto: tcp
     _service: nginx
     _serviceEnabled: true
+    _post: |
+      #!/usr/bin/env bash
+      # @file NGINX Amplify Join
+      # @brief Set up NGINX Amplify and joins the cloud monitoring service dashboard
+      # @description
+      #     This script installs NGINX Amplify and connects with the user's NGINX Amplify instance, assuming the `NGINX_AMPLIFY_API_KEY`
+      #     is defined. NGINX Amplify is a free web application that serves as a way of browsing through metrics of all your connected
+      #     NGINX instances.
+      #
+      #     ## Links
+      #
+      #     * [NGINX Amplify login](https://amplify.nginx.com/login)
+      #     * [NGINX Amplify documentation](https://docs.nginx.com/nginx-amplify/#)
+
+      if command -v nginx > /dev/null; then
+        logg info 'Downloading the NGINX Amplify installer script'
+        TMP="$(mktemp)"
+        curl -sSL https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh > "$TMP"
+        logg info 'Running the NGINX Amplify setup script'
+        API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NGINX_AMPLIFY_API_KEY")) }}{{- includeTemplate "secrets/NGINX_AMPLIFY_API_KEY" | decrypt | trim -}}{{ else }}{{- env "NGINX_AMPLIFY_API_KEY" -}}{{ end }}" sh "$TMP"
+      fi
     ansible: professormanhattan.nginx
     apt: nginx
     brew: nginx
@@ -7511,7 +8018,9 @@ softwarePackages:
     _github: https://github.com/nmap/nmap
     _home: https://nmap.org/
     _name: Nmap
-    _post:snap: sudo snap connect nmap:network-control
+    _post:snap: |
+      #!/usr/bin/env bash
+      sudo snap connect nmap:network-control
     ansible: professormanhattan.nmap
     apt: nmap
     brew: nmap
@@ -7564,7 +8073,9 @@ softwarePackages:
     _bin: sddm
     _github: https://github.com/sddm/sddm
     _name: SDDM
-    _post: sudo systemctl set-default graphical.target
+    _post: |
+      #!/usr/bin/env bash
+      sudo systemctl set-default graphical.target
     _service: sddm
     apt: sddm
     dnf: sddm
@@ -7783,7 +8294,9 @@ softwarePackages:
     _github: https://github.com/jandedobbeleer/oh-my-posh
     _home: https://ohmyposh.dev/
     _name: oh-my-posh
-    _post:scoop: clink autorun install
+    _post:scoop: |
+      #!/usr/bin/env bash
+      clink autorun install
     brew: jandedobbeleer/oh-my-posh/oh-my-posh
     scoop:
       - clink
@@ -7811,6 +8324,7 @@ softwarePackages:
     _home: null
     _name: onlykey
     _post:snap: |
+      #!/usr/bin/env bash
       sudo curl -sSL https://raw.githubusercontent.com/trustcrypto/trustcrypto.github.io/pages/49-onlykey.rules -o /etc/udev/rules.d/49-onlykey.rules
       sudo chmod 644 /etc/udev/rules.d/49-onlykey.rules
       sudo udevadm control --reload-rules
@@ -7837,6 +8351,7 @@ softwarePackages:
     pipx: onlykey
   onlykey-cli-deps:
     _post:linux: |
+      #!/usr/bin/env bash
       sudo curl -sSL https://raw.githubusercontent.com/trustcrypto/trustcrypto.github.io/pages/49-onlykey.rules -o /etc/udev/rules.d/49-onlykey.rules
       sudo chmod 644 /etc/udev/rules.d/49-onlykey.rules
       sudo udevadm control --reload-rules
@@ -8296,7 +8811,9 @@ softwarePackages:
     _github: https://github.com/pypa/pipx
     _home: https://pypi.org/project/pipx/
     _name: null
-    _post:brew: pipx ensurepath
+    _post:brew: |
+      #!/usr/bin/env bash
+      pipx ensurepath
     brew: pipx
   pkg:
     _bin: pkg
@@ -8334,7 +8851,9 @@ softwarePackages:
     _bin: xdotool
     _github: https://github.com/jordansissel/xdotool
     _name: xdotool
-    _post:brew:darwin: defaults write org.x.X11 enable_test_extensions -boolean true
+    _post:brew:darwin: |
+      #!/usr/bin/env bash
+      defaults write org.x.X11 enable_test_extensions -boolean true
     apt: xdotool
     brew: xdotool
     dnf: xdotool
@@ -8510,7 +9029,9 @@ softwarePackages:
     _home: null
     _name: Powershell
     _snapClassic: true
-    _post:cask: brew install mono-libgdiplus
+    _post:cask: |
+      #!/usr/bin/env bash
+      brew install mono-libgdiplus
     _app: PowerShell.app
     ansible: professormanhattan.powershell
     cask: powershell
@@ -8610,10 +9131,18 @@ softwarePackages:
     _github: https://github.com/ProtonMail/WebClients
     _home: https://protonmail.com/
     _name: ProtonVPN
-    _post:dnf:fedora: sudo dnf install -y python3-pip && pip3 install --user 'dnspython>=1.16.0'
-    _post:yay: sudo pacman -Syu libappindicator-gtk3 gnome-shell-extension-appindicator
-    _pre:apt: sudo apt-get install -y https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3_all.deb && sudo apt-get update
-    _pre:dnf: sudo dnf install -y https://repo.protonvpn.com/fedora-36-stable/release-packages/protonvpn-stable-release-1.0.1-1.noarch.rpm && sudo dnf update
+    _post:dnf:fedora: |
+      #!/usr/bin/env bash
+      sudo dnf install -y python3-pip && pip3 install --user 'dnspython>=1.16.0'
+    _post:yay: |
+      #!/usr/bin/env bash
+      sudo pacman -Syu libappindicator-gtk3 gnome-shell-extension-appindicator
+    _pre:apt: |
+      #!/usr/bin/env bash
+      sudo apt-get install -y https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3_all.deb && sudo apt-get update
+    _pre:dnf: |
+      #!/usr/bin/env bash
+      sudo dnf install -y https://repo.protonvpn.com/fedora-36-stable/release-packages/protonvpn-stable-release-1.0.1-1.noarch.rpm && sudo dnf update
     _app: ProtonVPN.app
     # ansible: professormanhattan.proton
     apt:
@@ -8721,6 +9250,7 @@ softwarePackages:
     _home: null
     _name: null
     _post:brew: |
+      #!/usr/bin/env bash
       python3 -m pip install --upgrade setuptools
       python3 -m pip install --upgrade pip
     apt: python3-pip
@@ -8879,6 +9409,161 @@ softwarePackages:
       - rclone
     _home: https://rclone.org/
     _name: Rclone
+    _post: |
+      #!/usr/bin/env bash
+      # @file Rclone S3 Mounts
+      # @brief This script configures Rclone to provide several S3-compliant mounts by leveraging CloudFlare R2
+      # @description
+      #     Install Doctor leverages Rclone and CloudFlare R2 to provide S3-compliant bucket mounts that allow you to retain stateful files and configurations.
+      #     In general, these buckets are used for backing up files like your browser profiles, Docker backup files, and other files that cannot be stored as
+      #     as code in your Install Doctor fork.
+      #
+      #     This script sets up Rclone to provide several folders that are synchronized with S3-compliant buckets (using CloudFlare R2 by default).
+      #     The script ensures required directories are created and that proper permissions are applied. This script will only run if `rclone` is
+      #     available in the `PATH`. It also requires the user to provide `CLOUDFLARE_R2_ID` and `CLOUDFLARE_R2_SECRET` as either environment variables
+      #     or through the encrypted repository-fork-housed method detailed in the [Secrets documentation](https://install.doctor/docs/customization/secrets).
+      #
+      #     ## Mounts
+      #
+      #     The script will setup five mounts by default and enable / start `systemd` services on Linux systems so that the mounts are available
+      #     whenever the device is turned on. The mounts are:
+      #
+      #     | Mount Location        | Description                                                                                                           |
+      #     |-----------------------|-----------------------------------------------------------------------------------------------------------------------|
+      #     | `/mnt/Private`        | Private system-wide bucket used for any private files that should not be able to be accessed publicly over HTTPS      |
+      #     | `/mnt/Public`         | Public system-wide bucket that can be accessed by anyone over HTTPS with the bucket's URL (provided by CloudFlare R2) |
+      #     | N/A                   | Private system-wide bucket used for storing Docker-related backups / files                                            |
+      #     | N/A                   | Private system-wide bucket similar to `/mnt/Private` but intended for system file backups                             |
+      #     | `$HOME/Public` | Private user-specific bucket (used for backing up application settings)                                               |
+      #
+      #     ## Permissions
+      #
+      #     The system files are all assigned proper permissions and are owned by the user `rclone` with the group `rclone`. The exception to this is the
+      #     user-specific mount which uses the user's user name and user group.
+      #
+      #     ## Samba
+      #
+      #     If Samba is installed, then by default Samba will create two shares that are symlinked to the `/mnt/s3-private` and `/mnt/s3-public`
+      #     buckets. This feature allows you to easily access the two buckets from other devices in your local network. If Rclone buckets are not
+      #     available then the Samba setup script will just create regular empty folders as shares.
+      #
+      #     ## Notes
+      #
+      #     * The mount services all leverage the executable found at `$HOME/.local/bin/rclone-mount` to mount the shares.
+      #
+      #     ## Links
+      #
+      #     * [Rclone mount script](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_local/bin/executable_rclone-mount)
+      #     * [Rclone default configurations](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/rclone)
+      #     * [Rclone documentation](https://rclone.org/docs/)
+
+      if command -v rclone > /dev/null; then
+        {{- if and (or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID"))) (env "CLOUDFLARE_R2_ID")) (or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET"))) (env "CLOUDFLARE_R2_SECRET")) (ne .user.cloudflare.r2 "") }}
+        logg info 'Removing ~/.config/rclone/rclone.conf Install Doctor managed block'
+        CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/rclone/rclone.conf"
+        if cat "$CONFIG_FILE" | grep '# INSTALL DOCTOR MANAGED S3 START' > /dev/null; then
+          # TODO: Remove old block
+          START_LINE="$(echo `grep -n -m 1 "# INSTALL DOCTOR MANAGED S3 START" "$CONFIG_FILE" | cut -f1 -d ":"`)"
+          END_LINE="$(echo `grep -n -m 1 "# INSTALL DOCTOR MANAGED S3 END" "$CONFIG_FILE" | cut -f1 -d ":"`)"
+          if command -v gsed > /dev/null; then
+            gsed -i "$START_LINE,${END_LINE}d" "$CONFIG_FILE" > /dev/null
+          else
+            sed -i "$START_LINE,${END_LINE}d" "$CONFIG_FILE" > /dev/null
+          fi
+        fi
+        logg info 'Adding ~/.config/rclone/rclone.conf INSTALL DOCTOR managed block'
+        sudo tee -a "$CONFIG_FILE" > /dev/null <<EOT
+      # INSTALL DOCTOR MANAGED S3 START
+      [User-{{ .user.username}}]
+      access_key_id = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID_USER")) }}{{- includeTemplate "secrets/CLOUDFLARE_R2_ID_USER" | decrypt | trim -}}{{ else }}{{- env "CLOUDFLARE_R2_ID_USER" -}}{{ end }}
+      acl = private
+      endpoint = {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com
+      provider = Cloudflare
+      region = auto
+      secret_access_key = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET_USER")) }}{{- includeTemplate "secrets/CLOUDFLARE_R2_SECRET_USER" | decrypt | trim -}}{{ else }}{{- env "CLOUDFLARE_R2_SECRET_USER" -}}{{ end }}
+      type = s3
+      # INSTALL DOCTOR MANAGED S3 END
+      EOT
+        {{- end }}
+        sudo chown -f root "$CONFIG_FILE"
+        sudo chmod -f 600 "$CONFIG_FILE"
+
+        logg info 'Ensuring /var/cache/rclone exists'
+        sudo mkdir -p /var/cache/rclone
+        sudo chmod 750 /var/cache/rclone
+        ### Add user / group with script in ~/.local/bin/add-usergroup, if it is available
+        if command -v add-usergroup > /dev/null; then
+          sudo add-usergroup "$USER" rclone
+        fi
+        sudo chown -Rf rclone:rclone /var/cache/rclone
+
+        logg info 'Ensuring /var/log/rclone exists'
+        sudo mkdir -p /var/log/rclone
+        sudo chmod 750 /var/log/rclone
+        sudo chown -Rf rclone:rclone /var/log/rclone
+
+        logg info 'Adding ~/.local/bin/rclone-mount to /usr/local/bin'
+        sudo cp -f "$HOME/.local/bin/rclone-mount" /usr/local/bin/rclone-mount
+        sudo chmod +x /usr/local/bin/rclone-mount
+
+        logg info 'Adding ~/.config/rclone/rcloneignore to /etc/rcloneignore'
+        sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/rcloneignore" /etc/rcloneignore
+        sudo chown -Rf rclone:rclone /etc/rcloneignore
+        sudo chmod 640 /etc/rcloneignore
+
+        logg info 'Adding ~/.config/rclone/system-rclone.conf to /etc/rclone.conf'
+        sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system-rclone.conf" /etc/rclone.conf
+        sudo chown -Rf rclone:rclone /etc/rclone.conf
+        sudo chmod 600 /etc/rclone.conf
+
+        if [ -d /Applications ] && [ -d /System ]; then
+          ### Enable Rclone mounts
+          logg info 'Ensuring Rclone mount-on-reboot definitions are in place'
+          if [ -f "$HOME/Library/LaunchDaemons/rclone.private.plist" ] && [ ! -f "/Library/LaunchDaemons/rclone.private.plist" ]; then
+            logg info 'Adding /Volumes/Private as S3 bucket mount, enabled at boot'
+            sudo mkdir -p /Library/LaunchDaemons
+            sudo cp -f "$HOME/Library/LaunchDaemons/rclone.private.plist" '/Library/LaunchDaemons/rclone.private.plist'
+            sudo launchctl load '/Library/LaunchDaemons/rclone.private.plist' && logg success 'launchctl load successful'
+          fi
+          if [ -f "$HOME/Library/LaunchDaemons/rclone.public.plist" ] && [ ! -f "/Library/LaunchDaemons/rclone.public.plist" ]; then
+            logg info 'Adding /Volumes/Public as S3 bucket mount, enabled at boot'
+            sudo mkdir -p /Library/LaunchDaemons
+            sudo cp -f "$HOME/Library/LaunchDaemons/rclone.public.plist" '/Library/LaunchDaemons/rclone.public.plist'
+            sudo launchctl load '/Library/LaunchDaemons/rclone.public.plist' && logg success 'launchctl load successful'
+          fi
+          if [ -f "$HOME/Library/LaunchDaemons/rclone.user.plist" ] && ! launchctl list | grep 'rclone.user' > /dev/null; then
+            logg info 'Adding ~/Public as S3 bucket mount, enabled at boot'
+            launchctl load "$HOME/Library/LaunchDaemons/rclone.user.plist" && logg success 'user launchctl load successful'
+          fi
+        elif [ -d /etc/systemd/system ]; then
+          find "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system" -mindepth 1 -maxdepth 1 -type f | while read RCLONE_SERVICE; do
+            ### Add systemd service file
+            logg info "Adding S3 system mount service defined at $RCLONE_SERVICE"
+            FILENAME="$(basename "$RCLONE_SERVICE")"
+            SERVICE_ID="$(echo "$FILENAME" | sed 's/.service//')"
+            sudo cp -f "$RCLONE_SERVICE" "/etc/systemd/system/$(basename "$RCLONE_SERVICE")"
+
+            ### Ensure mount folder is created
+            logg info "Ensuring /mnt/$SERVICE_ID is created with proper permissions"
+            sudo mkdir -p "/mnt/$SERVICE_ID"
+            sudo chmod 750 "/mnt/$SERVICE_ID"
+
+            ### Enable / restart the service
+            logg info "Enabling / restarting the $SERVICE_ID S3 service"
+            sudo systemctl enable "$SERVICE_ID"
+            sudo systemctl restart "$SERVICE_ID"
+          done
+
+          ### Add user Rclone mount
+          logg info 'Adding user S3 rclone mount (available at ~/.local/mnt/s3)'
+          sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/s3-user.service" "/etc/systemd/system/s3-${USER}.service"
+          logg info 'Enabling / restarting the S3 user mount'
+          sudo systemctl enable "s3-${USER}"
+          sudo systemctl restart "s3-${USER}"
+        fi
+      else
+        logg info 'rclone is not available'
+      fi
     ansible: professormanhattan.rclone
     apt: rclone
     brew:linux: rclone
@@ -9006,7 +9691,9 @@ softwarePackages:
     _github: https://github.com/firewalld/firewalld
     _name: FirewallD
     _service: firewalld
-    _pre: if command -v ufw > /dev/null; then sudo ufw disable; fi
+    _pre: |
+      #!/usr/bin/env bash
+      if command -v ufw > /dev/null; then sudo ufw disable; fi
     _notes: https://computingforgeeks.com/install-and-use-firewalld-on-ubuntu/
     apt: firewalld
     dnf: firewalld
@@ -9023,7 +9710,9 @@ softwarePackages:
     _ports:
       - port: 3389
         proto: tcp
-    _post: sudo adduser xrdp ssl-cert
+    _post: |
+      #!/usr/bin/env bash
+      sudo adduser xrdp ssl-cert
     _service: xrdp
     _service:yay:
       - xrdp
@@ -9146,6 +9835,7 @@ softwarePackages:
     _name: rkhunter
     _notes: The _post script removes an entry for VMware with a space in it that causes rkhunter to hiccup
     _post: |
+      #!/usr/bin/env bash
       export PATH="$(echo "$PATH" | sed 's/VMware Fusion.app/VMwareFusion.app/')"
       sudo rkhunter --propupd || RK_PROPUPD_EXIT_CODE=$?
       if [ -n "$RK_PROPUPD_EXIT_CODE" ]; then
@@ -9232,7 +9922,9 @@ softwarePackages:
     _github: https://github.com/rust-lang/rust
     _home: https://www.rust-lang.org/
     _name: Rust
-    _post:snap: rustup toolchain install stable
+    _post:snap: |
+      #!/usr/bin/env bash
+      rustup toolchain install stable
     _snapClassic: true
     ansible: professormanhattan.rust
     brew: rust
@@ -9314,6 +10006,7 @@ softwarePackages:
     _service: smbd
     _service:dnf: smb
     _post: |
+      #!/usr/bin/env bash
       # @file Samba Configuration
       # @brief This script configures Samba by applying the configuration stored in `${XDG_DATA_HOME:-$HOME/.config}/samba/config` if the `smbd` application is available
       # @description
@@ -9631,7 +10324,9 @@ softwarePackages:
     _github: https://github.com/drakkan/sftpgo
     _home: null
     _name: sftpgo
-    _post: sudo mkdir -p /usr/local/etc/sftpgo && sudo cp -f "$HOME/.local/etc/sftpgo/sftpgo.json" /usr/local/etc/sftpgo/sftpgo.json && sudo sftpgo initprovider
+    _post: |
+      #!/usr/bin/env bash
+      sudo mkdir -p /usr/local/etc/sftpgo && sudo cp -f "$HOME/.local/etc/sftpgo/sftpgo.json" /usr/local/etc/sftpgo/sftpgo.json && sudo sftpgo initprovider
     _service: sftpgo
     _service:brew:
       - name: sftpgo
@@ -10030,6 +10725,7 @@ softwarePackages:
     _name: Endlessh
     _service: endlessh
     _post: | 
+      #!/usr/bin/env bash
       # @file Endlessh Configuration
       # @brief Applies the Endlessh configuration and starts the service on Linux systems
       # @description
@@ -10219,7 +10915,9 @@ softwarePackages:
     _home: null
     _name: Stubby
     _service: stubby
-    _post:brew:darwin: bash "$(brew --prefix stubby)/sbin/stubby-setdns-macos.sh"
+    _post:brew:darwin: |
+      #!/usr/bin/env bash
+      bash "$(brew --prefix stubby)/sbin/stubby-setdns-macos.sh"
     brew:darwin: stubby
   surge:
     _bin: surge
@@ -10525,6 +11223,7 @@ softwarePackages:
     _notes: TODO Update the direct links periodically and keep eye out for Snap / Flatpak
     _app: Tabby.app
     _post: |
+      #!/usr/bin/env bash
       # @file Tabby Plugins
       # @brief This script installs the default Tabby plugins which are defined in `${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json`
       # @description
@@ -10601,6 +11300,36 @@ softwarePackages:
     _service:brew: tailscale
     _service:pacman: tailscaled
     _app: Tailscale.app
+    _post: |
+      #!/usr/bin/env bash
+      # @file Tailscale
+      # @brief Connects the Tailscale client with the Tailscale network
+      # @description
+      #     This script ensures the `tailscaled` system daemon is installed on macOS. Then, on both macOS and Linux, it connects to the Tailscale
+      #     network if the `TAILSCALE_AUTH_KEY` variable is provided.
+
+      ### Install the Tailscale system daemon
+      if [ -d /Applications ] && [ -d System ]; then
+        ### macOS
+        if command -v tailscaled > /dev/null; then
+          logg info 'Ensuring tailscaled system daemon is installed'
+          sudo tailscaled install-system-daemon
+          logg info 'tailscaled system daemon is now installed and will load on boot'
+        else
+          logg info 'tailscaled does not appear to be installed'
+        fi
+      fi
+
+      ### Connect to Tailscale network
+      if command -v tailscale > /dev/null && [ "$TAILSCALE_AUTH_KEY" != "" ]; then
+        logg info 'Connecting to Tailscale with user-defined authentication key'
+        timeout 14 tailscale up --authkey="$TAILSCALE_AUTH_KEY" --accept-routes || EXIT_CODE=$?
+        if [ -n "$EXIT_CODE" ]; then
+          logg warn 'tailscale up timed out'
+        else
+          logg success 'Connected to Tailscale network'
+        fi
+      fi
     ansible: professormanhattan.tailscale
     brew: tailscale
     cask: tailscale
@@ -10710,7 +11439,9 @@ softwarePackages:
     _bin: conda
     _github: https://github.com/mamba-org/mamba
     _name: Mamba Forge
-    _post: echo y | conda update -n base -c conda-forge conda
+    _post: |
+      #!/usr/bin/env bash
+      echo y | conda update -n base -c conda-forge conda
     cask: mambaforge
     choco: mambaforge
     script:linux: bash <(curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh")
@@ -10718,7 +11449,9 @@ softwarePackages:
     _bin: micromamba
     _github: https://github.com/mamba-org/mamba
     _name: MicroMamba
-    _post: micromamba self-update
+    _post: |
+      #!/usr/bin/env bash
+      micromamba self-update
     brew: micromamba
   microsoft-teams:
     _bin: teams
@@ -10837,6 +11570,7 @@ softwarePackages:
     _home: https://www.postfix.org/
     _name: Postfix
     _post: |
+      #!/usr/bin/env bash
       # @file SendGrid Postfix Configuration
       # @brief Configures Postfix to use SendGrid as a relay host so you can use the `mail` program to send e-mail from the command-line
       # @description
@@ -11009,7 +11743,9 @@ softwarePackages:
     _github: https://github.com/tfutils/tfenv
     _home: https://github.com/tfutils/tfenv
     _name: tfenv
-    _post: tfenv use latest
+    _post: |
+      #!/usr/bin/env bash
+      tfenv use latest
     ansible:darwin: professormanhattan.tfenv
     ansible:linux: professormanhattan.tfenv
     brew: tfenv
@@ -11181,6 +11917,7 @@ softwarePackages:
     _service: privoxy
     _serviceEnabled: true
     _post: |
+      #!/usr/bin/env bash
       # @file Privoxy Configuration
       # @brief This script applies the Privoxy configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config` to the system and then restarts Privoxy
       # @description
@@ -11256,6 +11993,7 @@ softwarePackages:
     _service: tor
     _serviceEnabled: true
     _post: |
+      #!/usr/bin/env bash
       # @file Tor Configuration
       # @brief This script applies the Tor configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/tor/torrc` to the system and then restarts Tor
       # @description
@@ -11491,7 +12229,9 @@ softwarePackages:
     _github: null
     _home: null
     _name: Vagrant VMWare Utility
-    _post:cask: sudo ln -s /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility /usr/local/bin/vagrant-vmware-utility
+    _post:cask: |
+      #!/usr/bin/env bash
+      sudo ln -s /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility /usr/local/bin/vagrant-vmware-utility
     _when:cask: '! test -f /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility'
     ansible: professormanhattan.vmware
     cask: vagrant-vmware-utility
@@ -11555,6 +12295,7 @@ softwarePackages:
     _home: https://www.vim.org/
     _name: VIM
     _post: |
+      #!/usr/bin/env bash
       echo "Installing VIM plugins" && vim +'PlugInstall --sync' +qall
       echo "Updating VIM coc extensions" && vim +CocUpdateSync +qall
     ansible: professormanhattan.vim
@@ -11633,6 +12374,7 @@ softwarePackages:
       wget https://download.virtualbox.org/virtualbox/' + vbox_version + '/Oracle_VM_VirtualBox_Extension_Pack-' + vbox_version + '.vbox-extpack'
       echo y | VBoxManage extpack install --replace ./Oracle_VM_VirtualBox_Extension_Pack.vbox-extpack
     _post: |
+      #!/usr/bin/env bash
       # @file VirtualBox Extension Pack
       # @brief Ensures the VirtualBox extension pack is installed.
       # @description
@@ -11671,6 +12413,7 @@ softwarePackages:
         logg info 'VirtualBox is not installed so VirtualBox Extension pack will not be installed'
       fi
     _pre:dnf: |
+      #!/usr/bin/env bash
       . /etc/os-release
       cat <<EOF | sudo tee /etc/yum.repos.d/virtualbox.repo
       [virtualbox]
@@ -11719,6 +12462,72 @@ softwarePackages:
     _home: https://docs.github.com/en/actions/hosting-your-own-runners
     _name: GitHub Runner
     _when: '! test -d "$HOME/.local/github-runner"'
+    _post: |
+      #!/usr/bin/env bash
+      # @file GitHub Runner Registration
+      # @brief Registers a GitHub action runner with GitHub
+      # @description
+      #     This script registers the host as a self-hosted GitHub runner with scope set
+      #     in the `.user.github.runnerOrg` input in the `.chezmoi.yaml.tmpl` file. If your organization is `megabyte-labs`, then
+      #     the value of `.user.github.runnerOrg` should be `megabyte-labs`. A self-hosted runner is an application
+      #     that that allows you to run tasks from GitHub CI.
+      #
+      #     This script adds 3 labels to the runner: self-hosted, _hostname_, and _operating-system family_.
+      #
+      #     The script automatically acquires the GitHub Action runner token (as long as you specify your `.user.github.runnerOrg` value in `.chezmoi.yaml.tmpl`).
+      #     In order to authenticate with GitHub, you should have the `GITHUB_TOKEN` environment variable in place with the appropriate permissions
+      #     specified when you generate the token.
+      #
+      #     ## Links
+      #
+      #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
+
+      GH_RUNNER_PATH="$HOME/.local/github-runner"
+
+      ### Check if GitHub runner is installed
+      if [ -f "$GH_RUNNER_PATH/config.sh" ]; then
+        if [ -f "$GH_RUNNER_PATH/.runner" ]; then
+          logg info "GitHub Actions runner is already configured ($GH_RUNNER_PATH/.runner file is present)"
+        else
+          logg info 'Creating runner configuration'
+          ### Configure labels
+          LABELS="self-hosted,{{ .chezmoi.hostname }},{{ .host.distro.family }}"
+          if [ '{{ .host.distro.family }}' != '{{ .host.distro.id }}' ]; then
+            LABELS="${LABELS},{{ .host.distro.id }}"
+          fi
+          if command -v VirtualBox > /dev/null; then
+            LABELS="${LABELS},virtualbox"
+          fi
+          if command -v docker > /dev/null; then
+            LABELS="${LABELS},docker"
+          fi
+
+          if [ -n "$GITHUB_TOKEN" ]; then
+            if command -v jq > /dev/null; then
+              ### Acquire token
+              logg info 'Acquiring runner token'
+              RUNNER_TOKEN="$(curl -sSL -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/{{ .user.github.runnerOrg }}/actions/runners/registration-token | jq -r '.token')"
+              ### Generate the configuration
+              logg info 'Joining GitHub runner to https://github.com/{{ .user.github.runnerOrg }}'
+              "$GH_RUNNER_PATH/config.sh" --unattended --url https://github.com/{{ .user.github.runnerOrg }} --token "$RUNNER_TOKEN" --labels "$LABELS" || EXIT_CODE=$?
+              if [ -n "$EXIT_CODE" ]; then
+                logg error 'GitHub runner configuration failed' && exit 1
+              fi
+              ### Install / start the service
+              logg info 'Configuring runner service'
+              "$GH_RUNNER_PATH/svc.sh" install && logg success 'Successfully installed the GitHub Actions runner service'
+              logg info 'Starting runner service'
+              "$GH_RUNNER_PATH/svc.sh" start && logg success 'Started the GitHub Actions runner service'
+            else
+              logg warn 'jq is required by the GitHub runner configuration script'
+            fi
+          else
+            logg warn 'The GITHUB_TOKEN environment variable is not present'
+          fi
+        fi
+      else
+        logg info "The GitHub Actions runner installation is not present at $GH_RUNNER_PATH"
+      fi
     script: |
       RELEASES="$(curl -sSL --compressed --header "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/actions/runner/releases/latest")"
       LATEST_VERSION="$(echo "$RELEASES" | grep -o '"tag_name": "[^"]*' | grep -o '[^"]*$')"
@@ -11734,6 +12543,7 @@ softwarePackages:
     _snapClassic: true
     _app: VSCodium.app
     _post: |
+      #!/usr/bin/env bash
       # @brief See `_post` entry for `vscode` for a description
       export NODE_OPTIONS=--throw-deprecation
       # @description Check for the presence of the `codium` command in the `PATH` and install extensions for VSCodium if it is present
@@ -11782,6 +12592,7 @@ softwarePackages:
     _name: VMWare
     _app: VMware Fusion.app
     _post: |
+      #!/usr/bin/env bash
       # @file VMWare Configuration
       # @brief Installs VMWare Workstation Pro on Linux devices, applies a "publicly-retrieved" license key (see disclaimer), and automatically accepts the terms and conditions
       # @description
@@ -11963,6 +12774,7 @@ softwarePackages:
     _home: https://volta.sh
     _name: volta-vm
     _post: |
+      #!/usr/bin/env bash
       export VOLTA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/volta"
       export PATH="$VOLTA_HOME/bin:$PATH"
       volta setup
@@ -11988,8 +12800,9 @@ softwarePackages:
     _snapClassic: true
     _app: Visual Studio Code.app
     _post: |
-      # @file VSCode Extensions
-      # @brief Installs all of the Visual Studio Code extensions specified in the [`home/dot_config/Code/User/extensions.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/extensions.json) file.
+      #!/usr/bin/env bash
+      # @file VSCode Extensions / Global NPM Modules Fallback
+      # @brief Installs all of the Visual Studio Code extensions specified in the [`home/dot_config/Code/User/extensions.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/extensions.json) file and installs NPM packages to the system `/` directory as a catch-all for tools that recursively search upwards for shared NPM configurations.
       # @description
       #     This script loops through all the extensions listed in the [`home/dot_config/Code/User/extensions.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/extensions.json)
       #     file. It installs the extensions when either Visual Studio Code or VSCodium is installed. If both are installed, then both will
@@ -12011,8 +12824,53 @@ softwarePackages:
       #     that are catered to by the default extensions relate to TypeScript, JavaScript, Go, Python, Rust, and many more technologies.
       #     Most of the plugins are not language-specific.
       #
+      #     ## Global NPM Modules Fallback
+      #
+      #     This script makes fallback linter and code auto-fixer configurations globally available. Normally, configurations, like
+      #     the ones used for ESLint, are installed at the project level by specifying the NPM package configuration
+      #     in the `package.json` file (or via an `.eslintrc` file). However, whenever no configuration is present, IDEs like
+      #     Visual Studio Code will recursively search upwards in the directory tree, trying to find an ESLint configuration.
+      #
+      #     This script addresses this issue by installing a set of shared NPM packages that enhance the functionality of tools like ESLint
+      #     by placing a `package.json` with all the necessary settings into the highest directory possible and then installing the package's
+      #     modules. This normally results in a `package.json` file and `node_modules/` folder at the root of the system.
+      #
+      #     ## NPM Packages Included
+      #
+      #     To reduce clutter, all the configurations are mapped out in the `package.json` file. Our default `package.json` file includes
+      #     the following configuration:
+      #
+      #     ```json
+      #     <!-- AUTO-GENERATED:START (REMOTE:url=https://gitlab.com/megabyte-labs/install.doctor/-/raw/master/home/dot_config/Code/User/package.json) -->
+      #     {
+      #       ...
+      #       // Notable dependencies listed below
+      #       "dependencies": {
+      #         "eslint-config-strictlint": "latest",
+      #         "jest-preset-ts": "latest",
+      #         "prettier-config-strictlint": "latest",
+      #         "remark-preset-strictlint": "latest",
+      #         "stylelint-config-strictlint": "latest"
+      #       },
+      #       ...
+      #     }
+      #     <!-- AUTO-GENERATED:END -->
+      #     ```
+      #
+      #     ## Strict Lint
+      #
+      #     More details on the shared configurations can be found at [StrictLint.com](https://strictlint.com).
+      #     Strict Lint is another brand maintained by Megabyte Labs that is home to many of the well-crafted
+      #     shared configurations that are included in our default NPM configuration fallback settings.
+      #
+      #     ## Notes
+      #
+      #     * If the system root directory is not writable (even with `sudo`), then the shared modules are installed to the provisioning user's `$HOME` directory
+      #
       #     ## Links
       #
+      #     * [`package.json` configuration file](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/package.json)
+      #     * [StrictLint.com documentation](https://strictlint.com/docs)
       #     * [Visual Studio Code settings folder](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User)
       #     * [Visual Studio Code `extensions.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/extensions.json)
 
@@ -12035,6 +12893,30 @@ softwarePackages:
         done
       else
         logg info 'code executable not available - skipping plugin install process for it'
+      fi
+
+      if command -v code > /dev/null && command -v npm > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" ]; then
+        ### Install linter fallback node_modules / package.json to system or home directory
+        if sudo cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" /package.json; then
+          logg info 'Successfully copied linter fallback configurations package.json to /package.json'
+          logg info 'Installing system root directory node_modules'
+          cd / && sudo npm i --quiet --no-package-lock || EXIT_CODE=$?
+        else
+          logg warn 'Unable to successfully copy linter fallback configurations package.json to /package.json'
+          logg info 'Installing linter fallback configurations node_modules to home directory instead'
+          cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" "$HOME/package.json"
+          cd ~ && npm i --quiet --no-package-lock || EXIT_CODE=$?
+        fi
+
+        ### Log message if install failed
+        if [ -n "$EXIT_CODE" ]; then
+          logg warn 'Possible error(s) were detected while installing linter fallback configurations to the home directory.'
+          logg info "Exit code: $EXIT_CODE"
+        else
+          logg info 'Installed linter fallback configuration node_modules'
+        fi
+      else
+        logg info 'Skipping installation of fallback linter configurations because one or more of the dependencies is missing.'
       fi
     ansible: professormanhattan.vscode
     cask: visual-studio-code
@@ -12077,8 +12959,256 @@ softwarePackages:
     _home: https://cloudflarewarp.com/
     _name: Cloudflare WARP Client
     _app: Cloudflare WARP.app
-    # Needs tuning - possibly unrelated, but internet wasn't working on Ubuntu after installing this and removed it during debugging
-    # ansible: professormanhattan.warp
+    _post: |
+      #!/usr/bin/env bash
+      # @file CloudFlare WARP
+      # @brief Installs CloudFlare WARP, ensures proper security certificates are in place, and connects the device to CloudFlare WARP.
+      # @description
+      #     This script is intended to connect the device to CloudFlare's Zero Trust network with nearly all of its features unlocked.
+      #     Homebrew is used to install the `warp-cli` on macOS. On Linux, it can install `warp-cli` on most Debian systems and some RedHat
+      #     systems. CloudFlare WARP's [download page](https://pkg.cloudflareclient.com/packages/cloudflare-warp) is somewhat barren.
+      #
+      #     ## MDM Configuration
+      #
+      #     If CloudFlare WARP successfully installs, it first applies MDM configurations (managed configurations). If you would like CloudFlare
+      #     WARP to connect completely headlessly (while losing some "user-posture" settings), then you can populate the following three secrets:
+      #
+      #     1. `CLOUDFLARE_TEAMS_CLIENT_ID` - The ID from a CloudFlare Teams service token. See [this article](https://developers.cloudflare.com/cloudflare-one/identity/service-tokens/).
+      #     2. `CLOUDFLARE_TEAMS_CLIENT_SECRET` - The secret from a CloudFlare Teams service token.
+      #     3. `CLOUDFLARE_TEAMS_ORG` - The ID of your Zero Trust organization. This variable must be passed in as an environment variable and is housed in the `home/.chezmoi.yaml.tmpl` file. If you do not want to pass an environment variable, you can change the default value in `home/.chezmoi.yaml.tmpl` on your own fork.
+      #
+      #     The two variables above can be passed in using either of the methods described in the [Secrets documentation](https://install.doctor/docs/customization/secrets).
+      #
+      #     ## Headless CloudFlare WARP Connection
+      #
+      #     Even if you do not provide the two variables mentioned above, the script will still headlessly connect your device to the public CloudFlare WARP
+      #     network, where you will get some of the benefits of a VPN for free. Otherwise, if they were passed in, then the script
+      #     finishes by connecting to CloudFlare Teams.
+      #
+      #     ## Application Certificates
+      #
+      #     This script applies the techniques described on the [CloudFlare Zero Trust Install certificate manually page](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/)
+      #     to configure the following utilities that leverage seperate certificate authorities:
+      #
+      #     * Python
+      #     * NPM
+      #     * Git
+      #     * Google Cloud SDK
+      #     * AWS CLI
+      #     * Google Drive for desktop
+      #
+      #     Settings used to configure Firefox are housed inside of the Firefox configuration files stored as seperate configuration files
+      #     outside of this script. **Note: The scripts that enable CloudFlare certificates for all these programs are currently commented out
+      #     in this script.**
+      #
+      #     ## Notes
+      #
+      #     According to CloudFlare Teams [documentation on MDM deployment](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/),
+      #     on macOS the `com.cloudflare.warp.plist` file gets erased on reboot. Also, according to the documentation, the only way around this is to leverage
+      #     an MDM SaaS provider like JumpCloud.
+      #
+      #     ## Links
+      #
+      #     * [Linux managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/warp/private_mdm.xml.tmpl)
+      #     * [macOS managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/Library/Managed%20Preferences/private_com.cloudflare.warp.plist.tmpl)
+
+      ### Install CloudFlare WARP (on non-WSL *nix systems)
+      if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
+        if [ -d /System ] && [ -d /Applications ]; then
+          ### Install on macOS
+          if [ ! -d "/Applications/Cloudflare WARP.app" ]; then
+            brew install --cask --no-quarantine --quiet cloudflare-warp
+          else
+            logg info 'Cloudflare WARP already installed'
+          fi
+        elif [ '{{ .host.distro.id }}' = 'debian' ]; then
+          ### Add CloudFlare WARP desktop app apt-get source
+          if [ ! -f /etc/apt/sources.list.d/cloudflare-client.list ]; then
+            logg info 'Adding CloudFlare WARP keyring'
+            curl https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+            logg info 'Adding apt source reference'
+            echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+          fi
+
+          ### Update apt-get and install the CloudFlare WARP CLI
+          sudo apt-get update && sudo apt-get install -y cloudflare-warp
+        elif [ '{{ .host.distro.id }}' = 'ubuntu' ]; then
+          ### Add CloudFlare WARP desktop app apt-get source
+          if [ ! -f /etc/apt/sources.list.d/cloudflare-client.list ]; then
+            logg info 'Adding CloudFlare WARP keyring'
+            curl https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+            logg info 'Adding apt source reference'
+            echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+          fi
+
+          ### Update apt-get and install the CloudFlare WARP CLI
+          sudo apt-get update && sudo apt-get install -y cloudflare-warp
+        elif command -v dnf > /dev/null && command -v rpm > /dev/null; then
+          ### This is made for CentOS 8 and works on Fedora 36 (hopefully 36+ as well) with `nss-tools` as a dependency
+          sudo dnf instal -y nss-tools || NSS_TOOL_EXIT=$?
+          if [ -n "$NSS_TOOL_EXIT" ]; then
+            logg warn 'Unable to install nss-tools which was a requirement on Fedora 36 and assumed to be one on other systems as well.'
+          fi
+          ### According to the download site, this is the only version available for RedHat-based systems
+          sudo rpm -ivh https://pkg.cloudflareclient.com/cloudflare-release-el8.rpm || RPM_EXIT_CODE=$?
+          if [ -n "$RPM_EXIT_CODE" ]; then
+            logg error 'Unable to install CloudFlare WARP using RedHat 8 RPM package'
+          fi
+        fi
+      fi
+
+
+      ### Ensure certificate is installed
+      # Source: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt
+      # Source: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
+      if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; then
+        ### Ensure certificate installed on macOS
+        if [ -z "$SSH_CONNECTION" ]; then
+          # if [ -z "$HEADLESS_INSTALL" ]; then
+          #     logg info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
+          #     sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
+          # fi
+          logg info 'Updating the OpenSSL CA Store to include the Cloudflare certificate'
+          echo | sudo tee -a /etc/ssl/cert.pem < "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > /dev/null
+          echo "" | sudo tee -a /etc/ssl/cert.pem
+        else
+          logg warn 'Session is SSH so adding Cloudflare encryption key to trusted certificates via the security program is being bypassed since it requires Touch ID / Password verification.'
+        fi
+        if [ -f "/usr/local/opt/openssl@3/bin/c_rehash" ]; then
+          # Location on Intel macOS
+          logg info 'Ensuring /usr/local/etc/openssl@3/certs directory exists' && mkdir -p /usr/local/etc/openssl@3/certs
+          logg info 'Adding Cloudflare certificate to /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem'
+          echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem
+          logg info 'Running /usr/local/opt/openssl@3/bin/c_rehash'
+          /usr/local/opt/openssl@3/bin/c_rehash > /dev/null && logg info 'OpenSSL certificate rehash successful'
+        elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash" ]; then
+          # Location on arm64 macOS and custom Homebrew locations
+          logg info "Ensuring ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs directory exists" && mkdir -p "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs"
+          logg info "Adding Cloudflare certificate to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs/Cloudflare_CA.pem"
+          echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs/Cloudflare_CA.pem"
+          logg info "Running ${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash"
+          "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash" > /dev/null && logg info 'OpenSSL certificate rehash successful'
+        else
+          logg warn 'Unable to add Cloudflare_CA.pem because /usr/local/etc/openssl@3/certs and /opt/homebrew/etc/openssl@3/certs do not exist!'
+        fi
+      elif command -v warp-cli > /dev/null; then
+        # System is Linux
+        if command -v dpkg-reconfigure > /dev/null; then
+          if [ -d /usr/local/share/ca-certificates ]; then
+            logg info 'Copying CloudFlare Teams PEM file to /usr/local/share/ca-certificates/Cloudflare_CA.crt'
+            sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /usr/local/share/ca-certificates/Cloudflare_CA.crt
+            logg info 'dpkg-reconfigure executable detected so using Debian/Ubuntu method of updating system trusted certificates to include CloudFlare Teams certificate'
+            sudo dpkg-reconfigure ca-certificates
+          else
+            logg warn 'No /usr/local/share/ca-certificates folder present'
+          fi
+        elif command -v update-ca-trust > /dev/null; then
+          if [ -d /etc/pki/ca-trust/source/anchors ]; then
+            logg info 'Copying CloudFlare Teams certificates to /etc/pki/ca-trust/source/anchors'
+            sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /etc/pki/ca-trust/source/anchors
+            logg info 'update-ca-trust executable detected so using CentOS/Fedora method of updating system trusted certificates to include CloudFlare Teams certificate'
+            sudo update-ca-trust
+          else
+            logg warn '/etc/pki/ca-trust/source/anchors does not exist so skipping the system certificate update process'
+          fi
+        fi
+      fi
+
+      if command -v warp-cli > /dev/null; then
+        ### Application certificate configuration
+        # Application-specific certificate authority modification is currently commented out because
+        # it is merely for traffic inspection and `npm install` fails when configured to use the CloudFlare
+        # certificate and the WARP client is not running.
+        ### Git
+        if command -v git > /dev/null; then
+          logg info "Configuring git to use /etc/ssl/cert.pem"
+          git config --global http.sslcainfo /etc/ssl/cert.pem
+        fi
+
+        ### NPM
+        if command -v npm > /dev/null; then
+          logg info "Configuring npm to use /etc/ssl/cert.pem"
+          npm config set cafile /etc/ssl/cert.pem
+        fi
+
+        ### Python
+        if command -v python3 > /dev/null; then
+          ### Ensure Certifi package is available globally
+          if ! pip3 list certifi | grep certifi > /dev/null; then
+            if command -v brew > /dev/null; then
+              logg info 'Ensuring Python certifi is installed via Homebrew'
+              brew install --quiet python-certifi
+            else
+              logg info 'Ensuring certifi is installed globally for Python 3'
+              pip3 install certifibrew link --overwrite python-certifi
+            fi
+          fi
+
+          ### Copy CloudFlare PEM file to Python 3 location
+          logg info "Configuring python3 / python to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem""
+          echo | cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> $(python3 -m certifi)
+        fi
+
+        ### Google Cloud SDK
+        if command -v gcloud > /dev/null; then
+          logg info "Configuring gcloud to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" and "$HOME/.local/etc/ssl/gcloud/ca.pem""
+          mkdir -p "$HOME/.local/etc/ssl/gcloud"
+          cat "$HOME/.local/etc/ssl/curl/cacert.pem" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > "$HOME/.local/etc/ssl/gcloud/ca.pem"
+          gcloud config set core/custom_ca_certs_file "$HOME/.local/etc/ssl/gcloud/ca.pem"
+        fi
+
+        ### Google Drive for desktop (macOS)
+        if [ -d "/Applications/Google Drive.app" ]; then
+          if [ -d "/Applications/Google Drive.app/Contents/Resources" ]; then
+            logg info "Combining Google Drive roots.pem with CloudFlare certificate"
+            mkdir -p "$HOME/.local/etc/ssl/google-drive"
+            cat "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" "/Applications/Google Drive.app/Contents/Resources/roots.pem" >> "$HOME/.local/etc/ssl/google-drive/roots.pem"
+            sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootsCertsFile -string "$HOME/.local/etc/ssl/google-drive/roots.pem"
+          else
+            logg warn 'Google Drive.app installed but roots.pem is not available yet'
+          fi
+        fi
+
+
+        ### Ensure MDM settings are applied (deletes after reboot on macOS)
+        ### TODO: Ensure `.plist` can be added to `~/Library/Managed Preferences` and not just `/Library/Managed Preferences`
+        # Source: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/
+        # Source for JumpCloud: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/CloudflareWARP.mobileconfig
+        if [ -d /System ] && [ -d /Applications ]; then
+          sudo cp -f "$HOME/Library/Managed Preferences/com.cloudflare.warp.plist" '/Library/Managed Preferences/com.cloudflare.warp.plist'
+          sudo plutil -convert binary1 '/Library/Managed Preferences/com.cloudflare.warp.plist'
+
+          ### Enable CloudFlare WARP credentials auto-populate (since file is deleted when not managed with MDM)
+          if [ -f "$HOME/Library/LaunchDaemons/com.cloudflare.warp.plist" ] && [ ! -f "/Library/LaunchDaemons/com.cloudflare.warp.plist" ]; then
+            sudo mkdir -p /Library/LaunchDaemons
+            sudo cp -f "$HOME/Library/LaunchDaemons/com.cloudflare.warp.plist" '/Library/LaunchDaemons/com.cloudflare.warp.plist'
+            sudo launchctl load "/Library/LaunchDaemons/com.cloudflare.warp.plist"
+          fi
+        elif [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/warp/mdm.xml" ]; then
+          sudo mkdir -p /var/lib/cloudflare-warp
+          sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/warp/mdm.xml" /var/lib/cloudflare-warp/mdm.xml
+        fi
+
+        ### Register CloudFlare WARP
+        if warp-cli --accept-tos status | grep 'Registration missing' > /dev/null; then
+          logg info 'Registering CloudFlare WARP'
+          warp-cli --accept-tos register
+        else
+          logg info 'Either there is a misconfiguration or the device is already registered with CloudFlare WARP'
+        fi
+
+        ### Connect CloudFlare WARP
+        if warp-cli --accept-tos status | grep 'Disconnected' > /dev/null; then
+          logg info 'Connecting to CloudFlare WARP'
+          warp-cli --accept-tos connect > /dev/null && logg success 'Connected to CloudFlare WARP'
+        else
+          logg info 'Either there is a misconfiguration or the device is already connected with CloudFlare WARP'
+        fi
+      else
+        logg warn 'warp-cli was not installed so CloudFlare WARP cannot be joined'
+      fi
+      # Needs tuning - possibly unrelated, but internet wasn't working on Ubuntu after installing this and removed it during debugging
+      # ansible: professormanhattan.warp
     apt: cloudflare-warp
     cask: cloudflare-warp
     choco: warp
@@ -12310,6 +13440,21 @@ softwarePackages:
       - docker-ce
       - docker-ce-cli
       - docker-compose-plugin
+  docker-pushrm:
+    _bin: docker-pushrm
+    _name: Docker PushRM
+    _github: https://github.com/christian-korneck/docker-pushrm
+    script: |
+      if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm" ]; then
+        logg info 'Acquiring release information for Docker push-rm'
+        RELEASE_TAG="$(curl -sSL https://api.github.com/repos/christian-korneck/docker-pushrm/releases/latest | jq -r '.tag_name')"
+        mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins"
+        logg info 'Downloading Docker push-rm' && curl https://github.com/christian-korneck/docker-pushrm/releases/download/$RELEASE_TAG/docker-pushrm_darwin_amd64 -o "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm"
+        chmod +x "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm"
+        logg success 'Added Docker push-rm'
+      else
+        logg info 'Docker push-rm already added'
+      fi
   docker-images:
     _desc: This entry is used to trigger a post-installation docker image pre-load. See the `docker-images` entry in `.chezmoidata.yaml`.
     script: echo "Enabling docker-images pre-load"
@@ -12339,6 +13484,7 @@ softwarePackages:
     _notes: |
       fail2ban cannot be installed on Qubes Fedora 36 without messing with the qubes-firewall since firewalld is required.
     _post: |
+      #!/usr/bin/env bash
       # @file Fail2ban Configuration
       # @brief Applies the system `fail2ban` jail configuration and then restarts the service
       # @description
@@ -12435,6 +13581,8 @@ softwarePackages:
     cargo:darwin: boringtun-cli
     cargo:linux: boringtun-cli
   wireguard-client:
+    _deps:
+      - wireguard-tools
     _desc: null
     _docs: null
     _github: null
@@ -12451,6 +13599,54 @@ softwarePackages:
     _github: null
     _home: null
     _name: WireGuard Tools
+    _post: |
+      #!/usr/bin/env bash
+      # @file macOS WireGuard Profiles
+      # @brief Installs WireGuard VPN profiles on macOS devices
+      # @description
+      #     This script installs WireGuard VPN profiles on macOS. It scans `${XDG_CONFIG_HOME:-$HOME/.config}/vpn` for all the `*.conf` files
+      #     and then copies those profiles to `/etc/wireguard`. It also performs a couple preparation tasks like ensuring the target
+      #     WireGuard system configuration file directory exists and is assigned the proper permissions.
+      #
+      #     ## Creating VPN Profiles
+      #
+      #     More details on embedding your VPN profiles into your Install Doctor fork can be found by reading the [Secrets documentation](https://install.doctor/docs/customization/secrets#vpn-profiles).
+      #
+      #     ## TODO
+      #
+      #     * Populate Tunnelblick on macOS using the VPN profiles located in `${XDG_CONFIG_HOME:-$HOME/.config}/vpn`
+      #     * For the Tunnelblick integration, ensure the username / password is populated from the `OVPN_USERNAME` and `OVPN_PASSWORD` variables
+      #
+      #     ## Links
+      #
+      #     * [VPN profile folder](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/vpn)
+      #     * [VPN profile documentation](https://install.doctor/docs/customization/secrets#vpn-profiles)
+
+      # TODO - Populate Tunnelblick on macOS using the .ovpn profiles located in $HOME/.config/vpn (execpt in the `openvpn` entry of software.yml)
+      # along with the secrets for the protonVPN OpenVPN (check vpn-linux.tmpl)
+
+      ### Backs up previous network settings to `/Library/Preferences/com.apple.networkextension.plist.old` before applying new VPN profiles
+      if [ -f /Library/Preferences/com.apple.networkextension.plist ] && [ ! -f "/Library/Preferences/com.apple.networkextension.plist.old" ]; then
+        logg info 'Backing up /Library/Preferences/com.apple.networkextension.plist to /Library/Preferences/com.apple.networkextension.plist.old'
+        sudo cp -f /Library/Preferences/com.apple.networkextension.plist /Library/Preferences/com.apple.networkextension.plist.old
+      else
+        logg info 'The /Library/Preferences/com.apple.networkextension.plist does not exist or is already backed up to com.apple.networkextension.plist.old'
+      fi
+
+      ### Ensures the `/etc/wireguard` directory exists and has the lowest possible permission-level
+      if [ ! -d /etc/wireguard ]; then
+        logg info 'Creating /etc/wireguard since it does not exist yet'
+        sudo mkdir -p /etc/wireguard
+        sudo chmod 600 /etc/wireguard
+      fi
+
+      ### TODO - Should adding the .conf files to /etc/wireguard only be done on macOS or is this useful on Linux as well?
+      ### Cycles through the `*.conf` files in `${XDG_CONFIG_HOME:-$HOME/.config}/vpn` and adds them to the `/etc/wireguard` folder
+      find "${XDG_CONFIG_HOME:-$HOME/.config}/vpn" -mindepth 1 -maxdepth 1 -type f -name "*.conf" | while read WG_CONF; do
+        WG_FILE="$(basename "$WG_CONF")"
+        logg info 'Adding '"$WG_FILE"' to /etc/wireguard'
+        sudo cp -f "$WG_CONF" "/etc/wireguard/$WG_FILE"
+      done
     apk: wireguard-tools
     apt: wireguard
     brew: wireguard-tools
@@ -12484,7 +13680,9 @@ softwarePackages:
     _github: https://github.com/wireshark/wireshark
     _home: https://www.wireshark.org/
     _name: Wireshark
-    _pre:cask: if command -v idl2wrs > /dev/null; then brew uninstall wireshark; fi
+    _pre:cask: |
+      #!/usr/bin/env bash
+      if command -v idl2wrs > /dev/null; then brew uninstall wireshark; fi
     _app: Wireshark.app
     apt: wireshark
     cask: wireshark
@@ -12589,7 +13787,9 @@ softwarePackages:
     _github: false
     _home: https://developer.apple.com/xcode/
     _name: XCode
-    _post: sudo xcodebuild -license accept && sudo xcodebuild -runFirstLaunch
+    _post: |
+      #!/usr/bin/env bash
+      sudo xcodebuild -license accept && sudo xcodebuild -runFirstLaunch
     _app: Xcode.app
     mas: 497799835
     #script:darwin: |
