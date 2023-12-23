@@ -20,6 +20,8 @@ ingress:
     service: rdp://localhost:3389
   - hostname: samba.{{ $baseDomain }}
     service: localhost:8445
+  - hostname: sftp.{{ $baseDomain }}
+    service: tcp://localhost:2022
   - hostname: vnc.{{ $baseDomain }}
     service: tcp://localhost:5901
 {{- if eq .host.softwareGroup "Kubernetes" }}

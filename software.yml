@@ -7828,15 +7828,20 @@ softwarePackages:
           fi
           logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/ to $NETDATA_ETC" && sudo cp -rf "${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/" "$NETDATA_ETC"
           
-          ### Blocky
-          logg info "Adding Blocky metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
           if command -v gsed > /dev/null; then
             SED_UTIL="gsed"
           else
             SED_UTIL="sed"
           fi
+
+          ### Blocky
+          logg info "Adding Blocky metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
           sudo "$SED_UTIL" -i "/jobs:/a\  - name: blocky_local \n    url: 'http://127.0.0.1:4000/metrics'" "$NETDATA_ETC/go.d/prometheus.conf"
           
+          ### SFTPGo
+          logg info "Adding SFTPGo metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
+          sudo "$SED_UTIL" -i "/jobs:/a\  - name: sftpgo_local \n    url: 'http://127.0.0.1:57500/metrics'" "$NETDATA_ETC/go.d/prometheus.conf"
+
           # Backup current health alarm configuration and apply new one
           if [ -d /usr/local/lib/netdata ]; then
             NETDATA_LIB='/usr/local/lib/netdata'
@@ -10346,7 +10351,20 @@ softwarePackages:
     _name: serverless
     brew: serverless
     npm: serverless
+  sftpgo-plugin-auth:
+    _bin: sftpgo-plugin-auth
+    _desc: A plugin for SFTPGo to enable LDAP/Active Directory authentication
+    _docs: null
+    _github: https://github.com/sftpgo/sftpgo-plugin-auth
+    _home: null
+    _name: SFTPGo Authentication Plugin
+    _post: |
+      #!/usr/bin/env bash
+      sudo mv -f $(which sftpgo-plugin-auth) /usr/local/bin/sftpgo-plugin-auth
+    go: github.com/sftpgo/sftpgo-plugin-auth@latest
   sftpgo:
+    _deps:
+      - sftpgo-plugin-auth
     _bin: sftpgo
     _desc: Fully featured and highly configurable SFTP server with optional HTTP/S, FTP/S and WebDAV support - S3, Google Cloud Storage, Azure Blob
     _docs: null
@@ -10357,6 +10375,11 @@ softwarePackages:
       #!/usr/bin/env bash
       sudo mkdir -p /usr/local/etc/sftpgo
       sudo cp -f "$HOME/.local/etc/sftpgo/sftpgo.json" /usr/local/etc/sftpgo/sftpgo.json
+      sudo cp -f "$HOME/.local/etc/sftpgo/banner" /usr/local/etc/sftpgo/banner
+      sudo mkdir -p /usr/local/etc/branding
+      sudo cp -f "$HOME/.local/etc/branding/favicon.ico" /usr/local/etc/branding/favicon.ico
+      sudo cp -f "$HOME/.local/etc/branding/logo-color-256x256.png" /usr/local/etc/branding/logo-color-256x256.png
+      sudo cp -f "$HOME/.local/etc/branding/logo-color-900x900.png" /usr/local/etc/branding/logo-color-900x900.png
       sudo sftpgo initprovider
     _service: sftpgo
     _service:brew:
