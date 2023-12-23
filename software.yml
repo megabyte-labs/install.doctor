@@ -9836,6 +9836,13 @@ softwarePackages:
     _notes: The _post script removes an entry for VMware with a space in it that causes rkhunter to hiccup
     _post: |
       #!/usr/bin/env bash
+      if [ -d /Applications ] && [ -d /System ]; then
+        ### macOS
+        logg info 'Updating file "$(brew --prefix)/Cellar/rkhunter/1.4.6/etc/rkhunter.conf"' && gsed -i  "s/^#WEB_CMD.*$/WEB_CMD=curl\ -L/" "$(brew --prefix)/Cellar/rkhunter/1.4.6/etc/rkhunter.conf"
+      else
+        ### Linux
+        logg info 'Updating file /etc/rkhunter.conf' && sed -i  "s/^#WEB_CMD.*$/WEB_CMD=curl\ -L/" /etc/rkhunter.conf
+      fi
       export PATH="$(echo "$PATH" | sed 's/VMware Fusion.app/VMwareFusion.app/')"
       sudo rkhunter --propupd || RK_PROPUPD_EXIT_CODE=$?
       if [ -n "$RK_PROPUPD_EXIT_CODE" ]; then
