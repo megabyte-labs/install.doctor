@@ -217,9 +217,9 @@ loadHomebrew() {
   if ! command -v brew > /dev/null; then
     if [ -f /usr/local/bin/brew ]; then
       logg info "Using /usr/local/bin/brew" && eval "$(/usr/local/bin/brew shellenv)"
-    if [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" ]; then
+    elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" ]; then
       logg info "Using ${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" && eval "$("${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" shellenv)"
-    if [ -d "$HOME/.linuxbrew" ]; then
+    elif [ -d "$HOME/.linuxbrew" ]; then
       logg info "Using $HOME/.linuxbrew/bin/brew" && eval "$("$HOME/.linuxbrew/bin/brew" shellenv)"
     elif [ -d "/home/linuxbrew/.linuxbrew" ]; then
       logg info 'Using /home/linuxbrew/.linuxbrew/bin/brew' && eval "(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
