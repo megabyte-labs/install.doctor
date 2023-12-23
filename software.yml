@@ -823,6 +823,18 @@ softwarePackages:
       - name: blocky
         sudo: true
     _serviceEnabled: true
+    _post:linux: |
+      #!/usr/bin/env bash
+      sudo mkdir -p /usr/local/etc/blocky
+      if [ -d /usr/lib/systemd/system ]; then
+        sudo cp -f "$HOME/.local/etc/blocky/config.yaml" /usr/local/etc/blocky/config.yaml
+        sudo cp -f "$HOME/.local/etc/blocky/blocky.service" /usr/lib/systemd/system/blocky.service
+      else
+        echo "/usr/lib/systemd/system is missing from the file system"
+      fi
+    _post:brew: |
+      #!/usr/bin/env bash
+      cp -f "$HOME/.local/etc/blocky/config.yaml" "$(brew --prefix)/etc/blocky/config.yaml"
     brew: blocky
     go: github.com/0xERR0R/blocky@mastergithub.com/0xERR0R/blocky@master
   http-toolkit:
@@ -7815,6 +7827,16 @@ softwarePackages:
             logg error 'No etc location found for netdata' && exit 1
           fi
           logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/ to $NETDATA_ETC" && sudo cp -rf "${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/" "$NETDATA_ETC"
+          
+          ### Blocky
+          logg info "Adding Blocky metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
+          if command -v gsed > /dev/null; then
+            SED_UTIL="gsed"
+          else
+            SED_UTIL="sed"
+          fi
+          sudo "$SED_UTIL" -i "/jobs:/a\  - name: blocky_local \n    url: 'http://127.0.0.1:4000/metrics'" "$NETDATA_ETC/go.d/prometheus.conf"
+          
           # Backup current health alarm configuration and apply new one
           if [ -d /usr/local/lib/netdata ]; then
             NETDATA_LIB='/usr/local/lib/netdata'
@@ -10333,7 +10355,9 @@ softwarePackages:
     _name: sftpgo
     _post: |
       #!/usr/bin/env bash
-      sudo mkdir -p /usr/local/etc/sftpgo && sudo cp -f "$HOME/.local/etc/sftpgo/sftpgo.json" /usr/local/etc/sftpgo/sftpgo.json && sudo sftpgo initprovider
+      sudo mkdir -p /usr/local/etc/sftpgo
+      sudo cp -f "$HOME/.local/etc/sftpgo/sftpgo.json" /usr/local/etc/sftpgo/sftpgo.json
+      sudo sftpgo initprovider
     _service: sftpgo
     _service:brew:
       - name: sftpgo
