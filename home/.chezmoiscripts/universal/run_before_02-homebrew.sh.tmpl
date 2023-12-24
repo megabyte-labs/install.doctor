@@ -125,7 +125,7 @@ upgradeDarwin() {
     ### Run upgrade process
     logg info 'Applying OS upgrades (if available)'
     expect -c "set timeout -1
-    spawn sudo sh -c "sudo softwareupdate -i -a --agree-to-license" || logg error 'Failed to trigger a system update via sudo softwareupdate -i -a --agree-to-license'
+    spawn sudo softwareupdate -i -a --agree-to-license
     expect \"Password:\"
     send \"${SUDO_PASSWORD}\r\"
     expect eof" &> /dev/null || EXIT_CODE=$?
