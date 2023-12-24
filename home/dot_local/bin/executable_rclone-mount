@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+# @file RClone Mount
+# @brief Helper utility to aid with mounting RClone S3 buckets to the file system
+# @description
+#     This script is a helper utility to assist a system service that ensures various
+#     RClone S3 mounts are mounted properly. For more information, take a look at the
+#     RClone files stored in `~/.config/rclone`.
 
 ### Variables
 TYPE="$1"
@@ -44,7 +50,7 @@ for FOLDER in "$CACHE_FOLDER" "$CONFIG_FOLDER" "$LOG_FOLDER" "$MOUNT_PATH"; do
     if [ ! -d "$FOLDER" ]; then
         mkdir -p "$FOLDER"
         chmod 750 "$FOLDER"
-        chown -f $USER:rclone "$FOLDER"
+        chown -f "$USER:rclone" "$FOLDER"
     fi
 done
 
@@ -54,15 +60,15 @@ if [ ! -f "$RCLONE_IGNORE" ] && [ -f "/etc/rcloneignore" ]; then
   RCLONE_IGNORE='/etc/rcloneignore'
 fi
 
-sudo chown -f root "$CONFIG_FOLDER/rclone.conf"
-sudo chmod -f 600 "$CONFIG_FOLDER/rclone.conf"
+chown -f "$USER:rclone" "$CONFIG_FOLDER/rclone.conf"
+chmod -f 600 "$CONFIG_FOLDER/rclone.conf"
 
 ### Mount
 unset AWS_CA_BUNDLE
 export PATH="$PATH:/usr/local/bin:/usr/bin"
 # TODO: Only launch with --rc-web-gui if the servers hostname is the {{ .kubernetesHost }}
 # TODO: Add more secure authentication method
-sudo rclone --config "$CONFIG_FOLDER/rclone.conf" \
+rclone --config "$CONFIG_FOLDER/rclone.conf" \
   mount \
   --allow-other \
   --buffer-size 4G \

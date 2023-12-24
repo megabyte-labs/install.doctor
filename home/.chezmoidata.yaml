@@ -25,15 +25,15 @@ docker:
   healthchecks:
     allowedHosts: '*'
     defaultFromEmail: no-reply@megabyte.space
-    siteLogoUrl: https://gitlab.com/megabyte-labs/misc/assets/-/raw/master/logo/color3@10x.png
-    siteName: Megabyte Labs Healthchecks
+    siteLogoUrl: https://raw.githubusercontent.com/megabyte-labs/install.doctor/master/home/dot_local/etc/branding/black-icon-128x128.png
+    siteName: CombineOS Healthchecks
     siteRoot: '/'
   portainer:
     siteLogoUrl: https://gitlab.com/megabyte-labs/misc/assets/-/raw/master/logo/color3@10x.png
     templatesUrl: ''
   statping:
     description: Uptime monitoring for Megabyte Labs managed web services
-    name: Megabyte Labs Uptime Monitoring
+    name: CombineOS Uptime Monitoring
   wireguard:
     serverUrl: megabyte.space
     internalSubnet: 10.93.92.0
@@ -462,6 +462,7 @@ softwareGroups:
     - p7zip
     - pigz
   Communication: &Communication
+    - apprise
     - irssi
   Communication-Desktop: &Communication-Desktop
     - *Communication
@@ -719,6 +720,8 @@ softwareGroups:
   Logging: &Logging
     - fuego
     - papertrail
+    - rsyslog
+    - runitor
     - sentry-cli
     - unbuffer
   Media: &Media
@@ -882,6 +885,7 @@ softwareGroups:
     - tailscale
     - warp
   Orchestration: &Orchestration
+    - dagu
     - nomad
     - pm2
     - robotframework

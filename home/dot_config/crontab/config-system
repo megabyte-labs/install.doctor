@@ -1,8 +1,6 @@
+PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:/opt/homebrew/bin
 
-
-PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin
-
-# 0 8 * * 0 $HOME/.scripts/domingobot.sh 2>&1 >> $HOME/.log/cron.log
+*/5 * * * *      command -v autorestic > /dev/null && autorestic --ci cron > /tmp/autorestic-system.log 2>&1
 
 # * * * * * command to be executed
 # ┯ ┯ ┯ ┯ ┯

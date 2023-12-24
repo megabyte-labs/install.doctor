@@ -422,10 +422,10 @@ softwarePackages:
       sudo snap connect pieces-os:dotnet-runtime-aspnetcore
     _app: Pieces.app
     _note: Waiting for choco package
-    _link:cask:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/pieces-os"
-        target: "$HOME/Library/Application Support/com.pieces.os"
-    _link:snap: 'TODO'
+    _env:
+      PIECES_OS_APPDATA:
+        cask: "$HOME/Library/Application Support/com.pieces.os"
+        snap: "TODO"
     appinstaller: https://builds.pieces.app/stages/production/appinstaller/os_server.appinstaller
     cask: pieces-os
     exe: https://builds.pieces.app/stages/production/os_server/windows-exe/download
@@ -532,13 +532,11 @@ softwarePackages:
     _home: https://altairgraphql.dev/
     _name: Altair GraphQL Client
     _app: Altair GraphQL Client.app
-    _link:cask:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Altair GraphQL Client"
-        target: "$HOME/Library/Application Support/Altair GraphQL Client"
-    _link:choco: 'TODO'
-    _link:snap:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Altair GraphQL Client"
-        target: "$HOME/snap/altair/current/.config/Altair GraphQL Client"
+    _env:
+      ALTAIR_APPDATA:
+        cask: "$HOME/Library/Application Support/Altair GraphQL Client"
+        choco: "TODO"
+        snap: "$HOME/snap/altair/current/.config/Altair GraphQL Client"
     cask: altair-graphql-client
     choco: altair-graphql
     snap: altair
@@ -609,10 +607,12 @@ softwarePackages:
     _home: https://developer.android.com/studio
     _name: Android Studio
     _app: Android Studio.app
-    _link:cask: 'TODO'
-    _link:choco: 'TODO'
-    _link:flatpak: 'TODO'
-    _link:snap: 'TODO'
+    _env:
+      ANDROID_STUDIO_APPDATA:
+        cask: "TODO"
+        choco: "TODO"
+        flatpak: "TODO"
+        snap: "TODO"
     cask: android-studio
     choco: androidstudio
     flatpak: com.google.AndroidStudio
@@ -1179,6 +1179,11 @@ softwarePackages:
     _github: https://github.com/cupcakearmy/autorestic/
     _home: https://autorestic.vercel.app/
     _name: Autorestic
+    _post: |
+      #!/usr/bin/env bash
+      sudo mkdir -p /var/local/backups/apps
+      sudo mkdir -p /var/local/backups/home
+      sudo mkdir -p /var/local/backups/docker
     ansible: professormanhattan.autorestic
     brew: autorestic
   awscli:
@@ -1281,10 +1286,10 @@ softwarePackages:
     _github: false
     _name: Logi Options+
     _app: logioptionsplus.app
-    _link:choco: 'TODO'
-    _link:cask:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/LogiOptionsPlus"
-        target: "$HOME/Library/Application Support/LogiOptionsPlus"
+    _env:
+      LOGI_OPTIONS_PLUS_APPDATA:
+        cask: "$HOME/Library/Application Support/LogiOptionsPlus"
+        choco: "TODO"
     choco: logioptionsplus
     cask: logi-options-plus
     exe: https://download01.logi.com/web/ftp/pub/techsupport/optionsplus/logioptionsplus_installer.exe
@@ -1685,6 +1690,25 @@ softwarePackages:
     _name: MongoDB Atlas
     brew: mongodb-atlas
     choco: mongodb-atlas
+  pywin32:
+    _bin: pywin32
+    _name: Pywin32
+    _github: https://github.com/mhammond/pywin32
+    pipx:windows: pywin32
+  terminal-notifier:
+    _bin: terminal-notifier
+    _name: Terminal Notifier
+    _github: https://github.com/julienXX/terminal-notifier
+    brew:darwin: terminal-notifier
+  apprise:
+    _deps:
+      - pywin32
+      - terminal-notifier
+    _bin: apprise
+    _name: Apprise
+    _github: https://github.com/caronc/apprise
+    dnf: apprise
+    pipx: apprise
   privaxy:
     _bin: privaxy
     _desc: Privaxy is the next generation tracker and advertisement blocker. It blocks ads and trackers by MITMing HTTP(s) traffic.
@@ -1704,18 +1728,12 @@ softwarePackages:
     _home: https://brave.com/
     _name: Brave Browser
     _app: Brave Browser.app
-    _link:cask:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/BraveSoftware/Brave-Browser/Default"
-        target: "$HOME/Library/Application Support/BraveSoftware/Brave-Browser/Default"
-    _link:choco:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/BraveSoftware/Brave-Browser/Default"
-        target: "%APPDATA%/Local/BraveSoftware/Brave-Browser/User Data"
-    _link:flatpak:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/BraveSoftware/Brave-Browser/Default"
-        target: "$HOME/.var/app/com.brave.Browser/config/BraveSoftware/Brave-Browser/Default"
-    _link:snap:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/BraveSoftware/Brave-Browser/Default"
-        target: "$HOME/snap/brave/current/.config/BraveSoftware/Brave-Browser/Default"
+    _env:
+      BRAVE_BROWSER_APPDATA:
+        cask: "$HOME/Library/Application Support/BraveSoftware/Brave-Browser/Default"
+        choco: "%APPDATA%/Local/BraveSoftware/Brave-Browser/User Data"
+        flatpak: "$HOME/.var/app/com.brave.Browser/config/BraveSoftware/Brave-Browser/Default"
+        snap: "$HOME/snap/brave/current/.config/BraveSoftware/Brave-Browser/Default"
     _post: |
       #!/usr/bin/env bash
       # @brief See `google-chrome` `_post` script for more details
@@ -1797,6 +1815,18 @@ softwarePackages:
     emerge: broot
     pkgin: broot
     port: broot
+  rsyslog:
+    _bin: rsyslog
+    _github: https://github.com/rsyslog/rsyslog
+    _name: RSyslog
+    _service: rsyslog
+    _ports:
+      - port: 514
+        proto: tcp
+    apt: rsyslog
+    brew: rsyslog
+    dnf: rsyslog
+    pacman: rsyslog
   browser-sync:
     _bin: browser-sync
     _desc: '[Browsersync](https://browsersync.io/) allows you to keep multiple browsers & devices in sync when building websites'
@@ -2007,12 +2037,10 @@ softwarePackages:
     _home: https://www.google.com/chrome/
     _name: Google Chrome
     _app: Google Chrome.app
-    _link:cask:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/google-chrome/Default"
-        target: "$HOME/Library/Application Support/Google/Chrome/Default"
-    _link:flatpak:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/google-chrome/Default"
-        target: "$HOME/.var/app/com.google.Chrome/config/google-chrome/Default"
+    _env:
+      GOOGLE_CHROME_APPDATA:
+        cask: "$HOME/Library/Application Support/Google/Chrome/Default"
+        flatpak: "$HOME/.var/app/com.google.Chrome/config/google-chrome/Default"
     _post: |
       #!/usr/bin/env bash
       # @file Chrome Settings / Extensions
@@ -2124,11 +2152,11 @@ softwarePackages:
     _name: Tor Browser
     _restricted: true
     _app: Tor Browser.app
-    _link:cask:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/tor-browser"
-        target: "$HOME/Library/Application Support/TorBrowser-Data/Tor"
-    _link:choco: 'TODO'
-    _link:flatpak: 'TODO'
+    _env:
+      TOR_BROWSER_APPDATA:
+        cask: "$HOME/Library/Application Support/TorBrowser-Data/Tor"
+        choco: "TODO"
+        flatpak: "TODO"
     cask: tor-browser
     choco: tor-browser
     flatpak: com.github.micahflee.torbrowser-launcher
@@ -3965,21 +3993,15 @@ softwarePackages:
     _home: https://www.mozilla.org/en-US/firefox/new/
     _name: Mozilla Firefox
     _app: Firefox.app
-    _link:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/profiles"
-        target: "$HOME/.mozilla/firefox"
-    _link:cask:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/profiles"
-        target: "$HOME/Library/Application Support/Firefox/Profiles"
-    _link:choco:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/profiles"
-        target: 'TODO'
-    _link:flatpak:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/profiles"
-        target: "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox"
-    _link:snap:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/profiles"
-        target: "$HOME/snap/firefox/common/.mozilla/firefox"
+    _env:
+      FIREFOX_APPDATA:
+        apt: "$HOME/.mozilla/firefox"
+        cask: "$HOME/Library/Application Support/Firefox/Profiles"
+        choco: "TODO"
+        dnf: "$HOME/.mozilla/firefox"
+        flatpak: "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox"
+        pacman: "$HOME/.mozilla/firefox"
+        snap: "$HOME/snap/firefox/common/.mozilla/firefox"
     _post: |
       #!/usr/bin/env bash
       # @file Firefox Settings / Add-Ons / Profiles
@@ -4852,6 +4874,9 @@ softwarePackages:
     _github: https://github.com/gabrie30/ghorg
     _home: null
     _name: ghorg
+    _post: |
+      #!/usr/bin/env bash
+      ghorg reclone
     ansible: professormanhattan.ghorg
     brew: gabrie30/utils/ghorg
     github: github.com/gabrie30/ghorg
@@ -6883,16 +6908,12 @@ softwarePackages:
   ferdium:
     _bin: ferdium
     _app: Ferdium.app
-    _link:cask:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Ferdium"
-        target: "$HOME/Library/Application Support/Ferdium"
-    _link:choco: 'TODO'
-    _link:flatpak:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Ferdium"
-        target: "$HOME/.var/app/org.ferdium.Ferdium/config/Ferdium"
-    _link:snap:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Ferdium"
-        target: "$HOME/snap/ferdium/current/.config/Ferdium"
+    _env:
+      FERDIUM_APPDATA:
+        cask: "$HOME/Library/Application Support/Ferdium"
+        choco: TODO
+        flatpak: "$HOME/.var/app/org.ferdium.Ferdium/config/Ferdium"
+        snap: "$HOME/snap/ferdium/current/.config/Ferdium"
     cask: ferdium
     choco: ferdium
     flatpak: org.ferdium.Ferdium
@@ -6929,12 +6950,12 @@ softwarePackages:
     _home: https://getmailspring.com/
     _name: Mailspring
     _app: Mailspring.app
-    _link:cask:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/mailspring"
-        target: "$HOME/Library/Application Support/Mailspring"
-    _link:choco: 'TODO'
-    _link:flatpak: 'TODO'
-    _link:snap: 'TODO'
+    _env:
+      MAILSPRING_APPDATA:
+        cask: "$HOME/Library/Application Support/Mailspring"
+        choco: "TODO"
+        flatpak: "TODO"
+        snap: "TODO"
     cask: mailspring
     choco: mailspring
     flatpak: com.getmailspring.Mailspring
@@ -6960,12 +6981,12 @@ softwarePackages:
     _home: null
     _name: MarkText
     _app: MarkText.app
-    _link:cask:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/marktext"
-        target: "$HOME/Library/Application Support/marktext"
-    _link:choco: 'TODO'
-    _link:flatpak: 'TODO'
-    _link:winget: 'TODO'
+    _env:
+      MARK_TEXT_APPDATA:
+        cask: "$HOME/Library/Application Support/marktext"
+        choco: "TODO"
+        flatpak: "TODO"
+        winget: "TODO"
     cask: mark-text
     choco: marktext
     flatpak: com.github.marktext.marktext
@@ -7038,11 +7059,11 @@ softwarePackages:
     _home: https://www.microsoft.com/en-us/edge
     _name: Microsoft Edge
     _app: Microsoft Edge.app
-    _link:cask:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/microsoft-edge/Default"
-        target: "$HOME/Library/Application Support/Microsoft Edge/Default"
-    _link:choco: 'TODO'
-    _link:flatpak: 'TODO'
+    _env:
+      MICROSOFT_EDGE_APPDATA:
+        cask: "$HOME/Library/Application Support/Microsoft Edge/Default"
+        choco: "TODO"
+        flatpak: "TODO"
     _post: |
       #!/usr/bin/env bash
       # @brief See `google-chrome` `_post` script for more details
@@ -8117,10 +8138,10 @@ softwarePackages:
     _name: Notion AI
     _note: Waiting on Linux install alternative.
     _app: Notion.app
-    _link:cask:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/notion"
-        target: "$HOME/Library/Application Support/Notion"
-    _link:choco: 'TODO'
+    _env:
+      NOTION_APPDATA:
+        cask: "$HOME/Library/Application Support/Notion"
+        choco: "TODO"
     cask: notion
     choco: notion
     mas: 1559269364
@@ -8187,9 +8208,9 @@ softwarePackages:
     _home: https://www.warp.dev/
     _name: Warp Terminal
     _app: Warp.app
-    _link:cask:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/warp-terminal"
-        target: "$HOME/Library/Application Support/dev.warp.Warp-Stable"
+    _env:
+      WARP_TERMINAL_APPDATA:
+        cask: "$HOME/Library/Application Support/dev.warp.Warp-Stable"
     cask: warp
   figma:
     _bin: null
@@ -9685,12 +9706,10 @@ softwarePackages:
     _github: null
     _home: https://remmina.org/
     _name: Remmina
-    _link:flatpak:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/remmina/remmina.pref"
-        target: "$HOME/.var/app/org.remmina.Remmina/config/remmina/remmina.pref"
-    _link:snap:
-      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/remmina/remmina.pref"
-        target: "$HOME/snap/remmina/current/.config/remmina/remmina.pref"
+    _env:
+      REMMINA_APPDATA:
+        flatpak: "$HOME/.var/app/org.remmina.Remmina/config/remmina/remmina.pref"
+        snap: "$HOME/snap/remmina/current/.config/remmina/remmina.pref"
     apt: remmina
     dnf: remmina
     flatpak: org.remmina.Remmina
@@ -11616,6 +11635,24 @@ softwarePackages:
     pipx: termius
     snap: termius-app
     yay: termius
+  dagu:
+    _bin: dagu
+    _github: 
+    _name: Dagu
+    _post: |
+      #!/usr/bin/env bash
+      sudo mkdir -p /var/log/dagu
+      dagu start-all
+    _boot: |
+      #!/usr/bin/env bash
+      # TODO - Add _boot capability
+      dagu start-all
+    brew: yohamta/tap/dagu
+  runitor:
+    _bin: runitor
+    _github: https://github.com/bdd/runitor
+    _name: Runitor
+    go: bdd.fi/x/runitor/cmd/runitor@latest
   postfix:
     _bin: postfix
     _desc: Postfix is an e-mail server that can be used to send e-mail

@@ -1,0 +1,135 @@
+---
+version: 2
+
+extras:
+  app: &app
+    to:
+      - apps-local
+      - apps-s3
+    hooks:
+      before:
+        - 'curl -m 10 --retry 5 -X POST -H "Content-Type: text/plain" --data "Autorestic App Backup ${AUTORESTIC_LOCATION} BEFORE / Host: ${HOST} / User: ${USER} / Home: ${HOME}" https://healthchecks.{{ .host.domain }}/ping/TODO_UUID/start'
+      failure:
+        - 'curl -m 10 --retry 5 -X POST -H "Content-Type: text/plain" --data "Autorestic App Backup ${AUTORESTIC_LOCATION} BEFORE / Host: ${HOST} / User: ${USER} / Home: ${HOME}" https://healthchecks.{{ .host.domain }}/ping/TODO_UUID/fail'
+      success:
+        - 'curl -m 10 --retry 5 -X POST -H "Content-Type: text/plain" --data "Autorestic App Backup ${AUTORESTIC_LOCATION} BEFORE / Host: ${HOST} / User: ${USER} / Home: ${HOME}" https://healthchecks.{{ .host.domain }}/ping/TODO_UUID'
+    options:
+      backup:
+        exclude:
+          - .local
+          - .venv
+          - node_modules
+          - venv
+        tag:
+          - app
+      forget:
+        keep-hourly: 24
+        keep-daily: 7
+        keep-weekly: 14
+        keep-monthly: 3
+        keep-yearly: 2
+  user: &user
+    hooks:
+      before:
+        - 'curl -m 10 --retry 5 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} BEFORE / Host: ${HOST} / User: ${USER} / Home: ${HOME}" https://healthchecks.{{ .host.domain }}/ping/{{ .host.autoresticHealthcheckUuid }}/start'
+      failure:
+        - 'curl -m 10 --retry 5 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} BEFORE / Host: ${HOST} / User: ${USER} / Home: ${HOME}" https://healthchecks.{{ .host.domain }}/ping/{{ .host.autoresticHealthcheckUuid }}/fail'
+      success:
+        - 'curl -m 10 --retry 5 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} BEFORE / Host: ${HOST} / User: ${USER} / Home: ${HOME}" https://healthchecks.{{ .host.domain }}/ping/{{ .host.autoresticHealthcheckUuid }}'
+    options:
+      backup:
+        exclude:
+          - .local
+          - .venv
+          - node_modules
+          - venv
+          - Library
+        tag:
+          - user
+      forget:
+        keep-hourly: 24
+        keep-daily: 7
+        keep-weekly: 14
+        keep-monthly: 3
+        keep-yearly: 2
+ 
+locations:
+  altair:
+    from: "$ALTAIR_APPDATA"
+    <<: *app
+  android-studio:
+    from: "$ANDROID_STUDIO_APPDATA"
+    <<: *app
+  brave-browser:
+    from: "$BRAVE_BROWSER_APPDATA"
+    <<: *app
+  ferdium:
+    from: "$FERDIUM_APPDATA"
+    <<: *app
+  firefox:
+    from: "$FIREFOX_APPDATA"
+    <<: *app
+  google-chrome:
+    from: "$GOOGLE_CHROME_APPDATA"
+    <<: *app
+  logi-options-plus:
+    from: "$LOGI_OPTIONS_PLUS_APPDATA"
+    <<: *app
+  mailspring:
+    from: "$MAILSPRING_APPDATA"
+    <<: *app
+  mark-text:
+    from: "$MARK_TEXT_APPDATA"
+    <<: *app
+  microsoft-edge:
+    from: "$MICROSOFT_EDGE_APPDATA"
+    <<: *app
+  notion:
+    from: "$NOTION_APPDATA"
+    <<: *app
+  pieces-os:
+    from: "$PIECES_OS_APPDATA"
+    <<: *app
+  remmina:
+    from: "$REMMINA_APPDATA"
+    <<: *app
+  tor-browser:
+    from: "$TOR_BROWSER_APPDATA"
+    <<: *app
+  warp-terminal:
+    from: "$WARP_TERMINAL_APPDATA"
+    <<: *app
+  home-local:
+    from: ~/
+    to: home-local
+    cron: '0/15 * * * *'
+    <<: *user
+  home-s3:
+    from: ~/
+    to: home-s3
+    cron: '0 * * * *'
+    <<: *user
+
+backends:
+  apps-local:
+    type: local
+    path: /var/local/backups/user/{{ .user.username }}/apps
+    key: {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "RESTIC_PASSWORD")) }}{{ includeTemplate "secrets/RESTIC_PASSWORD" | decrypt | trim }}{{ else }}{{ default "" (env "RESTIC_PASSWORD") }}{{ end }}
+  apps-s3:
+    type: s3
+    path: {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com/user/{{ .user.username }}/Backups/apps
+    key: {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "RESTIC_PASSWORD")) }}{{ includeTemplate "secrets/RESTIC_PASSWORD" | decrypt | trim }}{{ else }}{{ default "" (env "RESTIC_PASSWORD") }}{{ end }}
+    env:
+      AWS_ACCESS_KEY_ID: {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID_USER")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_ID_USER" | decrypt | trim }}{{ else }}{{ default "" (env "CLOUDFLARE_R2_ID_USER") }}{{ end }}
+      AWS_SECRET_ACCESS_KEY: {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET_USER")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_SECRET_USER" | decrypt | trim }}{{ else }}{{ default "" (env "CLOUDFLARE_R2_SECRET_USER") }}{{ end }}
+  home-local:
+    type: local
+    path: /var/local/backups/user/{{ .user.username }}/home
+    key: {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "RESTIC_PASSWORD")) }}{{ includeTemplate "secrets/RESTIC_PASSWORD" | decrypt | trim }}{{ else }}{{ default "" (env "RESTIC_PASSWORD") }}{{ end }}
+  home-s3:
+    type: s3
+    path: {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com/user/{{ .user.username }}/Backups/home
+    key: {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "RESTIC_PASSWORD")) }}{{ includeTemplate "secrets/RESTIC_PASSWORD" | decrypt | trim }}{{ else }}{{ default "" (env "RESTIC_PASSWORD") }}{{ end }}
+    env:
+      AWS_ACCESS_KEY_ID: {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID_USER")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_ID_USER" | decrypt | trim }}{{ else }}{{ default "" (env "CLOUDFLARE_R2_ID_USER") }}{{ end }}
+      AWS_SECRET_ACCESS_KEY: {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET_USER")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_SECRET_USER" | decrypt | trim }}{{ else }}{{ default "" (env "CLOUDFLARE_R2_SECRET_USER") }}{{ end }}

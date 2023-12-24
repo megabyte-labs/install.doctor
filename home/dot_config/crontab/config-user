@@ -1,0 +1,14 @@
+PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:/opt/homebrew/bin:$HOME/.local/bin
+
+*/5 * * * *      command -v autorestic > /dev/null && . "$HOME/.config/shell/apps.sh" && autorestic -c "$HOME/.config/autorestic/autorestic-user.yml" --ci cron > /tmp/autorestic.log 2>&1
+* * * * *        command -v dagu-cron > /dev/null && dagu-cron
+* * * * *        command -v ghorg > /dev/null && ghorg reclone
+
+# * * * * * command to be executed
+# ┯ ┯ ┯ ┯ ┯
+# │ │ │ │ │
+# │ │ │ │ ╰───── day of week (0 - 6) (Sunday=0)
+# │ │ │ ╰─────── month (1 - 12)
+# │ │ ╰───────── day of month (1 - 31)
+# │ ╰─────────── hour (0 - 23)
+# ╰───────────── min (0 - 59)

@@ -24,6 +24,10 @@ ingress:
     service: tcp://localhost:2022
   - hostname: vnc.{{ $baseDomain }}
     service: tcp://localhost:5901
+  - hostname: dagu.{{ $baseDomain }}
+    service: tcp://localhost:8321
+  - hostname: rsyslog.{{ $baseDomain }}
+    service: tcp://localhost:514
 {{- if eq .host.softwareGroup "Kubernetes" }}
   - hostname: k8s.{{ .host.domain }}
     service: bastion

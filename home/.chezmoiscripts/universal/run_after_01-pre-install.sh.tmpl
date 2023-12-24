@@ -132,12 +132,17 @@ applyRootConfig() {
     logg warn 'Unable to find root user folder location'
   fi
 
-  ### Copy minimal set of profile configuration files
   if [ -n "$ROOT_FOLDER" ]; then
+    ### Copy minimal set of profile configuration files
     logg info "Copying ~/.bashrc to $ROOT_FOLDER/.bashrc" && sudo cp -f "$HOME/.bashrc" "$ROOT_FOLDER/.bashrc"
     logg info "Copying ~/.zshrc to $ROOT_FOLDER/.zshrc" && sudo cp -f "$HOME/.zshrc" "$ROOT_FOLDER/.zshrc"
     logg info "Ensuring ~/.config folder exists" && sudo mkdir -p "$ROOT_FOLDER/.config"
     logg info "Copying ~/.config/shell to $ROOT_FOLDER/.config/shell" && sudo mkdir -p "$ROOT_FOLDER/.config" && sudo rm -rf "$ROOT_FOLDER/.config/shell" && sudo cp -rf "$HOME/.config/shell" "$ROOT_FOLDER/.config/shell"
+    
+    ### Copy Autorestic configurations
+    logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/autorestic/autorestic-system.yml file to $ROOT_FOLDER/.autorestic.yml" && sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/autorestic/autorestic-system.yml" "$ROOT_FOLDER/.autorestic.yml"
+    logg info "Removing ${XDG_CONFIG_HOME:-$HOME/.config}/autorestic/autorestic-system.yml" && sudo rm -f "${XDG_CONFIG_HOME:-$HOME/.config}/autorestic/autorestic-system.yml"
+    logg info "Applying proper permissions to $ROOT_FOLDER/.autorestic.yml" && sudo chmod 600 "$ROOT_FOLDER/.autorestic.yml"
   fi
 }
 
@@ -832,10 +837,16 @@ installDockerRclonePlugin() {
 # @description
 #     This script loads crontab jobs that are defined and housed in your Install Doctor fork.
 loadCronjobs() {
-  logg 'Installing crontab jobs'
-  crontab < "${XDG_CONFIG_HOME:-$HOME/.config}/crontab/config" || EXIT_CODE=$?
+  logg info 'Installing user crontab jobs'
+  crontab < "${XDG_CONFIG_HOME:-$HOME/.config}/crontab/config-user" || EXIT_CODE=$?
   if [ -n "$EXIT_CODE" ]; then
-    logg error 'Failed to load cronjobs'
+    logg error 'Failed to load cronjobs for user'
+  fi
+
+  logg info 'Installing system crontab jobs'
+  sudo crontab < "${XDG_CONFIG_HOME:-$HOME/.config}/crontab/config-system" || EXIT_CODE=$?
+  if [ -n "$EXIT_CODE" ]; then
+    logg error 'Failed to load cronjobs for system'
   fi
 }
 

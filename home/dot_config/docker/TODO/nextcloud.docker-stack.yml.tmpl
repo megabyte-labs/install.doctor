@@ -9,7 +9,7 @@ services:
       PGID: 1000
       TZ: America/New_York
     volumes:
-      - ./config/nextcloud:/config
+      - nextcloud_config:/config
       - /mnt/auxilary/NextCloud:/data
     ports:
       - 26777:443
@@ -31,3 +31,7 @@ services:
     expose:
       - 3306
     restart: unless-stopped
+
+volumes:
+  nextcloud_config:
+    name: nextcloud_config

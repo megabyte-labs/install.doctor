@@ -6,7 +6,7 @@
 # Which provider to clone from (github, gitlab, gitea or bitbucket)
 # default: github
 # flag (--scm, -s) eg: --scm=gitlab
-GHORG_SCM_TYPE: gitlab
+GHORG_SCM_TYPE: github
 
 # How you'd like to clone the repos (https or ssh)
 # default: https
@@ -18,7 +18,7 @@ GHORG_CLONE_PROTOCOL: https
 # See https://github.com/gabrie30/ghorg#changing-clone-directories for example
 # default: YOUR_HOME_DIR/ghorg
 # flag (--path, -p) eg: --path=/tmp/ghorg
-GHORG_ABSOLUTE_PATH_TO_CLONE_TO: ~/.local/ghorg
+GHORG_ABSOLUTE_PATH_TO_CLONE_TO: ~/Projects
 
 # Folder ghorg will clone all repos into. Cloning will result in: GHORG_ABSOLUTE_PATH_TO_CLONE_TO/GHORG_OUTPUT_DIR/repo
 # See https://github.com/gabrie30/ghorg#changing-clone-directories for example
@@ -58,7 +58,7 @@ GHORG_PRUNE_NO_CONFIRM: true
 
 # Color output (enabled, disabled)
 # flag (--color) eg: --color=disabled
-GHORG_COLOR: enabled
+GHORG_COLOR: disabled
 
 # Skip archived repos, currently github/gitlab/gitea only
 # flag (--skip-archived)
@@ -70,7 +70,7 @@ GHORG_SKIP_FORKS: false
 
 # Backup mode, clone as mirror, no working copy (ignores branch parameter)
 # flag (--backup)
-GHORG_BACKUP: true
+# GHORG_BACKUP: false
 
 # Max goroutines created while cloning
 # flag (--concurrency)
@@ -99,7 +99,7 @@ GHORG_CONCURRENCY: 25
 
 # Only clones new repos and does not perform a git clean on existing repos. Useful if you don't want to lose changes made to repos in the org/user directory.
 # flag (--no-clean)
-GHORG_NO_CLEAN: false
+GHORG_NO_CLEAN: true
 
 # Additionally clone the wiki page for repo
 # flag (--clone-wiki)
@@ -107,7 +107,7 @@ GHORG_CLONE_WIKI: false
 
 # Fetches all remote branches for each repo by running a git fetch --all
 # flag (--fetch-all)
-GHORG_FETCH_ALL: false
+GHORG_FETCH_ALL: true
 
 # If you want to set a path other than $HOME/.config/ghorg/ghorgignore for your ghorgignore
 # flag (--ghorgignore-path)
@@ -115,7 +115,7 @@ GHORG_FETCH_ALL: false
 
 # Only emit critical output.
 # flag (--quiet)
-GHORG_QUIET: false
+GHORG_QUIET: true
 
 # Perform a dry run of the clone; fetches repos but does not clone them.
 # flag (--dry-run)

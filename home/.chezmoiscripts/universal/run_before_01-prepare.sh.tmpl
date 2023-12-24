@@ -1,3 +1,10 @@
+#!/usr/bin/env bash
+# @file Prepare
+# @brief Ensures commonly used system packages that are common dependencies of other packages are installed
+# @description
+#     This script installs required system packages. Each system's required packages are defined in `home/.chezmoitemplates/$DISTRO_ID`,
+#     where `$DISTRO_ID` is equal to the Linux distribution ID found in `/etc/os-release`.
+
 # @description
 #     This script pipes environment variables and a logger function to a temporary file that is included by other scripts.
 #     It is included as a temporary external file to aid in debugging since if the included files were inlined in scripts

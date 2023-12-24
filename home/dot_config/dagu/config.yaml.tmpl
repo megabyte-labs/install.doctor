@@ -1,0 +1,32 @@
+---
+### Directory path to save logs from standard output
+logDir: /var/log/dagu
+
+### History retention days (default: 30)
+histRetentionDays: 30
+
+### Email notification settings
+mailOn:
+  failure: true
+  success: false
+
+### SMTP server settings
+smtp:
+  host: smtp.sendgrid.net
+  port: 587
+  username: apikey
+  password: "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SENDGRID_API_KEY")) }}{{ includeTemplate "secrets/SENDGRID_API_KEY" | decrypt | trim }}{{ else }}{{ env "SENDGRID_API_KEY" }}{{ end }}"
+
+### Error mail configuration
+errorMail:
+  from: "{{ .host.noReplyEmail }}"
+  to: "{{ .user.email }}"
+  prefix: "[Error]"
+  attachLogs: true
+
+### Info mail configuration
+infoMail:
+  from: "{{ .host.noReplyEmail }}"
+  to: "{{ .user.email }}"
+  prefix: "[Info]"
+  attachLogs: true

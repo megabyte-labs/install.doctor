@@ -10,7 +10,7 @@ services:
       MENU_VERSION: 2.0.19 #optional
     volumes:
       - $HOME/.ssh:/home/rundeck/.ssh
-      - rundeck-data:/home/rundeck/server/data
+      - rundeck_data:/home/rundeck/server/data
     ports:
       - 3000:3000
       - 69:69/udp
@@ -18,4 +18,5 @@ services:
     restart: unless-stopped
 
 volumes:
-  rundeck-data:
+  rundeck_data:
+    name: rundeck_data

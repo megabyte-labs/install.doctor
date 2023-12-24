@@ -13,6 +13,7 @@ adobe-creative-cloud curl: (18) HTTP/2 stream 1 was reset
 - https://github.com/linuxserver/docker-webtop
 - https://app.warp.dev/referral/7PMXRV
 - https://github.com/chocolatey/boxstarter
+- https://nginxui.com/
 # Create the $HOME/opt destination folder
 mkdir -p ~/opt
 # Download the AppImage inside it

@@ -12,7 +12,7 @@ services:
       - nginx_network
     environment:
       ALLOWED_HOSTS: "{{ .docker.healthchecks.allowedHosts }}"
-      APPRISE_ENABLED: 'False'
+      APPRISE_ENABLED: 'True'
       DB_HOST: postgres
       DB_NAME_FILE: /run/secrets/healthchecks_db_name
       DB_PASSWORD_FILE: /run/secrets/healthchecks_db_password
@@ -38,6 +38,7 @@ services:
       SLACK_ENABLED: 'True'
       SUPERUSER_EMAIL_FILE: /run/secrets/healthchecks_superuser_email
       SUPERUSER_PASSWORD_FILE: /run/secrets/healthchecks_superuser_password
+      TZ: "{{ .user.timezone }}"
       WEBHOOKS_ENABLED: 'True'
     deploy:
       mode: replicated
@@ -46,6 +47,7 @@ services:
       - healthchecks_config:/config
     expose:
       - 8000
+      - 2525
     restart: unless-stopped
     secrets:
       - healthchecks_db_name
@@ -53,6 +55,8 @@ services:
       - healthchecks_db_user
       - healthchecks_secret_key
       - healthchecks_sendgrid_api_key
+      - healthchecks_slack_client_id
+      - healthchecks_slack_client_secret
       - healthchecks_superuser_email
       - healthchecks_superuser_password
 
@@ -95,6 +99,10 @@ secrets:
     external: true
   healthchecks_sendgrid_api_key:
     external: true
+  healthchecks_slack_client_id:
+    external: true
+  healthchecks_slack_client_secret:
+    external: true
   healthchecks_superuser_email:
     external: true
   healthchecks_superuser_password:
@@ -102,4 +110,6 @@ secrets:
 
 volumes:
   healthchecks_config:
+    name: healthchecks_config
   healthchecks_postgres:
+    name: healthchecks_postgres

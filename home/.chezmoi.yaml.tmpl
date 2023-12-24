@@ -137,6 +137,7 @@ gpg:
 data:
   host:
     arch: "{{ .chezmoi.arch }}"
+    autoresticHealthcheckUuid: "AddInFromHealthchecksDashboard"
     cloudflare:
       teamsOrg: "{{ $cloudflareTeamsOrg }}"
     cpu:
@@ -165,6 +166,7 @@ data:
     home: "{{ .chezmoi.homeDir }}"
     homeParentFolder: "{{ if eq .chezmoi.os "linux" }}/home{{ else if eq .chezmoi.os "darwin" }}/Users{{ else }}C:\Users{{ end }}"
     hostname: "{{ $hostname }}"
+    noReplyEmail: no-reply@megabyte.space
     samba:
       netbiosName: "{{ $sambaNetBiosName }}"
       workgroup: "{{ $sambaWorkGroupName }}"
