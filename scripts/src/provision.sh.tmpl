@@ -291,8 +291,10 @@ initChezmoiAndPrompt() {
   ### Prompt for the software group if the `SOFTWARE_GROUP` variable is not defined
   if command -v gum > /dev/null; then
     if [ -z "$SOFTWARE_GROUP" ]; then
-      logg prompt 'Select the software group you would like to install. If your environment is a macOS, Windows, or environment with the DISPLAY environment variable then desktop software will be installed too. The software groups are in the '"${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml"' file.'
-      SOFTWARE_GROUP="$(gum choose "Basic" "Server" "Standard" "Full")"
+      # logg prompt 'Select the software group you would like to install. If your environment is a macOS, Windows, or environment with the DISPLAY environment variable then desktop software will be installed too. The software groups are in the '"${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml"' file.'
+      SOFTWARE_GROUP="Full"
+      # TODO - Uncomment this when other SOFTWARE_GROUP types are implemented properly
+      # SOFTWARE_GROUP="$(gum choose "Basic" "Server" "Standard" "Full")"
       export SOFTWARE_GROUP
     fi
   else
