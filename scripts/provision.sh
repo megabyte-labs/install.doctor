@@ -287,7 +287,6 @@ ensureHomebrew() {
   loadHomebrew
   ensurePackageManagerHomebrew
   loadHomebrew
-  fixHomebrewPermissions
   ensureGcc
 }
 
