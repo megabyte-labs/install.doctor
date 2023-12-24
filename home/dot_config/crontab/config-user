@@ -2,7 +2,7 @@ PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
 */5 * * * *      command -v autorestic > /dev/null && . "$HOME/.config/shell/apps.sh" && autorestic -c "$HOME/.config/autorestic/autorestic-user.yml" --ci cron > /tmp/autorestic.log 2>&1
 * * * * *        command -v dagu-cron > /dev/null && dagu-cron
-* * * * *        command -v ghorg > /dev/null && ghorg reclone
+30 4 * * *       command -v ghorg > /dev/null && ghorg reclone
 
 # * * * * * command to be executed
 # ┯ ┯ ┯ ┯ ┯
