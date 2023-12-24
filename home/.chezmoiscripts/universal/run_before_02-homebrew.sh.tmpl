@@ -20,29 +20,94 @@
 {{ includeTemplate "universal/profile-before" }}
 {{ includeTemplate "universal/logg-before" }}
 
-### Configure Firewall
-# TODO: If this is required, notes should be added describing the pros / cons of the security
-# if [ -d /Applications ] && [ -d /System ]; then
-#   logg info 'Disabling the block all incoming traffic option in the system Firewall settings'
-#   /usr/libexec/ApplicationFirewall/socketfilterfw --setblockall off || (logg error 'Failed to disable incoming traffic block in the system Firewall' && logg info 'Manually disable the option under "System Preferences" > "Network" > "Firewall" > "Incoming Traffic Block Toggle"')
-# fi
-
-### System upgrade on macOS
-# Note: If a shutdown is required and the `softwareupdate` command restart command does not work then `m shutdown -f` might be useful or `m restart -f`
-# Do you want to terminate running processes in this window?
-# Closing this window will terminate the running processes: softwareupdate, sudo
-# Running sudo softwareupdate -i -a -R --agree-to-license reboots just not in the script due to the running processes perhaps
-# Check for pending reboot by checking 
-if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
-  logg info 'Applying OS upgrades (if available)'
-  sudo sh -c "softwareupdate -i -a --agree-to-license" || logg error 'Failed to trigger a system update via sudo softwareupdate -i -a --agree-to-license'
-  logg info 'If system updates are downloaded / installed, a reboot might be required.'
-  ### Source: https://community.jamf.com/t5/jamf-pro/determine-if-update-requires-restart/m-p/11682
-  if softwareupdate -l | grep restart > /dev/null; then
-    ### Add kickstart script to .zshrc so it triggers automatically
-    if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
-      echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
+# @description This script ensures all the system utilities necessary to install Homebrew are present on the system.
+ensureHomebrewDeps() {
+  if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v expect > /dev/null || ! command -v rsync > /dev/null; then
+    if command -v apt-get > /dev/null; then
+      # @description Ensure `build-essential`, `curl`, `expect`, `git`, `rsync`, `procps`, and `file` are installed on Debian / Ubuntu
+      sudo apt-get update
+      sudo apt-get install -y build-essential curl expect git rsync procps file
+    elif command -v dnf > /dev/null; then
+      # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps-ng`, and `file` are installed on Fedora (as well as the Development Tools package)
+      sudo dnf groupinstall -y 'Development Tools'
+      sudo dnf install -y curl expect git rsync procps-ng file
+    elif command -v yum > /dev/null; then
+      # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps-ng`, and `file` are installed on CentOS (as well as the Development Tools package)
+      sudo yum groupinstall -y 'Development Tools'
+      sudo yum install -y curl expect git rsync procps-ng file
+    elif command -v pacman > /dev/null; then
+      # @description Ensure `base-devel`, `curl`, `expect`, `git`, `rsync`, `procps-ng`, and `file` are installed on Archlinux
+      sudo pacman update
+      sudo pacman -Sy base-devel curl expect git rsync procps-ng file
+    elif command -v zypper > /dev/null; then
+      # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps`, and `file` are installed on OpenSUSE (as well as the devel_basis pattern)
+      sudo zypper install -yt pattern devel_basis
+      sudo zypper install -y curl expect git rsync procps file
+    elif command -v apk > /dev/null; then
+      # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps`, and `file` are installed on Alpine
+      apk add build-base curl expect git rsync procps file
+    elif [ -d /Applications ] && [ -d /Library ]; then
+      # @description Ensure CLI developer tools are available on macOS (via `xcode-select`)
+      sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
+    elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
+      # @description Ensure `curl`, `expect`, `git`, and `rsync` are installed on Windows
+      choco install -y curl expect git rsync
     fi
+  fi
+}
+
+# @description This script ensures Homebrew is installed.
+ensurePackageManagerHomebrew() {
+  if ! command -v brew > /dev/null; then
+    if command -v sudo > /dev/null && sudo -n true; then
+      echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    else
+      logg info 'Homebrew is not installed. Password may be required.'
+      bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+      if [ -n "$BREW_EXIT_CODE" ]; then
+        logg warn 'Homebrew was installed but part of the installation failed to complete successfully.'
+        if command -v brew > /dev/null; then
+          logg info 'Applying proper permissions on Homebrew folders'
+          sudo chmod -R go-w "$(brew --prefix)/share"
+          BREW_DIRS="share etc/bash_completion.d"
+          for BREW_DIR in $BREW_DIRS; do
+            if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
+              sudo chown -Rf "$(whoami)" "$(brew --prefix)/$BREW_DIR"
+            fi
+          done
+          logg info 'Running brew update --force --quiet' && brew update --force --quiet
+        fi
+      fi
+    fi
+  fi
+}
+
+# @description Helper function utilized by [[upgradeDarwin]] to ensure the `expect` command is available on macOS
+installExpect() {
+  if ! command -v expect > /dev/null; then
+    logg info 'Installing expect via Homebrew' && brew install expect
+  fi
+}
+
+# @description Helper function utilized by [[upgradeDarwin]] to ensure the `gsed` command is available on macOS
+installGsed() {
+  if ! command -v gsed > /dev/null; then
+    logg info 'Installing gnu-sed via Homebrew' && brew install gnu-sed
+  fi
+}
+
+# @description This script ensures `expect` and `gsed` are available. It then either extracts the escalation password by decrypting the
+#     `SUDO_PASSWORD` secret or prompts the user for the sudo password. After that, it automates the process of downloading
+#     system updates, rebooting, and re-starting the provisioning process until the system is fully updated.
+#
+#     It may be important to note that although this script attempts to make the process fully automated, there may be
+#     certain circumstances where additional user input is necessary during the process. This might be true in cases
+#     where the system settings are controlled by MDM profiles for corporate laptops.
+upgradeDarwin() {
+  if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
+    ### Ensure dependencies are installed
+    installExpect
+    installGsed
 
     ### Attempt to populate SUDO_PASSWORD from secrets
     if [ -z "$SUDO_PASSWORD" ]; then
@@ -56,65 +121,54 @@ if [ -d /Applications ] && [ -d /Library ] && [ -z "$NO_RESTART" ]; then
       SUDO_PASSWORD="$(gum input --password --placeholder="Enter password..")"
       export SUDO_PASSWORD
     fi
-    
-    if [ -n "$SUDO_PASSWORD" ] && [ "$SUDO_PASSWORD" != "" ]; then
-      ### Install kcpassword
-      if ! command -v enable_autologin > /dev/null; then
-        logg info 'enable_autologin is not installed and it is a requirement for auto-logging in after reboot'
-        brew install xfreebird/utils/kcpassword
+
+    ### Run upgrade process
+    logg info 'Applying OS upgrades (if available)'
+    expect -c "set timeout -1
+    spawn sudo sh -c "sudo softwareupdate -i -a --agree-to-license" || logg error 'Failed to trigger a system update via sudo softwareupdate -i -a --agree-to-license'
+    expect \"Password:\"
+    send \"${SUDO_PASSWORD}\r\"
+    expect eof" &> /dev/null || EXIT_CODE=$?
+    if [ -n "$EXIT_CODE" ]; then
+      logg warn 'Error running softwareupdate'
+      unset EXIT_CODE
+    fi
+    # sudo sh -c "sudo softwareupdate -i -a --agree-to-license" || logg error 'Failed to trigger a system update via sudo softwareupdate -i -a --agree-to-license'
+    logg info 'If system updates were downloaded / installed, a reboot might be required.'
+
+    ### Reboot if necessary
+    # Source: https://community.jamf.com/t5/jamf-pro/determine-if-update-requires-restart/m-p/11682
+    if softwareupdate -l | grep restart > /dev/null; then
+      ### Add kickstart script to .zshrc so it triggers automatically
+      if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
+        echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
       fi
 
-      ### Enable auto-login via kcpassword
-      sudo enable_autologin "$USER" "$SUDO_PASSWORD"
-    fi
+      if [ -n "$SUDO_PASSWORD" ] && [ "$SUDO_PASSWORD" != "" ]; then
+        ### Install kcpassword
+        if ! command -v enable_autologin > /dev/null; then
+          logg info 'enable_autologin is not installed and it is a requirement for auto-logging in after reboot'
+          brew install xfreebird/utils/kcpassword
+        fi
 
-    ### Reboot
-    logg info 'Reboot required - shutting down immediately' && sudo sh -c 'shutdown -r now'
+        ### Enable auto-login via kcpassword
+        sudo enable_autologin "$USER" "$SUDO_PASSWORD"
+      fi
+
+      ### Reboot
+      logg info 'Reboot required - shutting down immediately' && sudo sh -c 'shutdown -r now'
+    fi
+    if [ -f "$HOME/.zshrc" ]; then
+      if command -v gsed > /dev/null; then
+        sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+      else
+        sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+      fi
+    fi
   fi
-  if [ -f "$HOME/.zshrc" ]; then
-    if command -v gsed > /dev/null; then
-      sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
-    else
-      sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
-    fi
-  fi
-fi
+}
 
-### Ensure dependencies are installed on Linux
-if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v expect > /dev/null || ! command -v rsync > /dev/null; then
-    if command -v apt-get > /dev/null; then
-        # @description Ensure `build-essential`, `curl`, `expect`, `git`, `rsync`, `procps`, and `file` are installed on Debian / Ubuntu
-        sudo apt-get update
-        sudo apt-get install -y build-essential curl expect git rsync procps file
-    elif command -v dnf > /dev/null; then
-        # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps-ng`, and `file` are installed on Fedora (as well as the Development Tools package)
-        sudo dnf groupinstall -y 'Development Tools'
-        sudo dnf install -y curl expect git rsync procps-ng file
-    elif command -v yum > /dev/null; then
-        # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps-ng`, and `file` are installed on CentOS (as well as the Development Tools package)
-        sudo yum groupinstall -y 'Development Tools'
-        sudo yum install -y curl expect git rsync procps-ng file
-    elif command -v pacman > /dev/null; then
-        # @description Ensure `base-devel`, `curl`, `expect`, `git`, `rsync`, `procps-ng`, and `file` are installed on Archlinux
-        sudo pacman update
-        sudo pacman -Sy base-devel curl expect git rsync procps-ng file
-    elif command -v zypper > /dev/null; then
-        # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps`, and `file` are installed on OpenSUSE (as well as the devel_basis pattern)
-        sudo zypper install -yt pattern devel_basis
-        sudo zypper install -y curl expect git rsync procps file
-    elif command -v apk > /dev/null; then
-        # @description Ensure `curl`, `expect`, `git`, `rsync`, `procps`, and `file` are installed on Alpine
-        apk add build-base curl expect git rsync procps file
-    elif [ -d /Applications ] && [ -d /Library ]; then
-        # @description Ensure CLI developer tools are available on macOS (via `xcode-select`)
-        sudo xcode-select -p >/dev/null 2>&1 || xcode-select --install
-    elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
-        # @description Ensure `curl`, `expect`, `git`, and `rsync` are installed on Windows
-        choco install -y curl expect git rsync
-    fi
-fi
-
-### Ensure Homebrew is loaded
+# @description This script attempts to load Homebrew by checking in typical locations.
 loadHomebrew() {
   if ! command -v brew > /dev/null; then
     if [ -f /usr/local/bin/brew ]; then
@@ -129,43 +183,9 @@ loadHomebrew() {
   fi
 }
 
-### Ensures Homebrew folders have proper owners / permissions
-fixHomebrewPermissions() {
-  if command -v brew > /dev/null; then
-    logg info 'Applying proper permissions on Homebrew folders'
-    sudo chmod -R go-w "$(brew --prefix)/share"
-    BREW_DIRS="share etc/bash_completion.d"
-    for BREW_DIR in $BREW_DIRS; do
-      if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
-        sudo chown -Rf "$(whoami)" "$(brew --prefix)/$BREW_DIR"
-      fi
-    done
-    logg info 'Running brew update --force --quiet' && brew update --force --quiet
-  fi
-}
-
-### Installs Homebrew
-ensurePackageManagerHomebrew() {
-  if ! command -v brew > /dev/null; then
-    if command -v sudo > /dev/null && sudo -n true; then
-      echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    else
-      logg info 'Homebrew is not installed. Password may be required.'
-      bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
-      if [ -n "$BREW_EXIT_CODE" ]; then
-        logg warn 'Homebrew was installed but part of the installation failed to complete successfully.'
-        fixHomebrewPermissions
-      fi
-    fi
-  fi
-}
-
-### Logic
+### Logic sequence
+ensureHomebrewDeps
 loadHomebrew
 ensurePackageManagerHomebrew
 loadHomebrew
-
-### Scrub ~/.viminfo
-if [ -f "$HOME/.viminfo" ]; then
-  logg info 'Removing ~/.viminfo' && sudo rm -f "$HOME/.vimino"
-fi
+upgradeDarwin

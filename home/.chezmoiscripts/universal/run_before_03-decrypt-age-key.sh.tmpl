@@ -32,7 +32,8 @@
 {{ includeTemplate "universal/logg-before" }}
 {{ includeTemplate "universal/profile-before" }}
 
-### Handle decryption failure
+# @description Helper function utilized by [[decryptKey]] that removes all `encrypted_` files from the Chezmoi source
+#     if the Age decryption process fails due to wrong password or from not being set up yet.
 decryptionFailure() {
   logg info 'Proceeding without decrypting age encryption key stored at ~/.local/share/chezmoi/home/key.txt.age'
   logg info 'To have Chezmoi handle your encryption (so you can store your private files publicly) take a look at https://shorturl.at/jkpzG'
@@ -43,7 +44,7 @@ decryptionFailure() {
   done
 }
 
-### Install Age via Homebrew if not present
+# @description Helper function utilized by [[decryptKey]] to ensure the `age` command is available
 installAge() {
   if ! command -v age > /dev/null; then
     logg info 'Running brew install age'
@@ -51,7 +52,7 @@ installAge() {
   fi
 }
 
-### Install Expect via Homebrew if not present
+# @description Helper function utilized by [[decryptKey]] to ensure the `expect` command is available
 installExpect() {
   if ! command -v expect > /dev/null; then
     logg info 'Running brew install expect'
@@ -59,14 +60,14 @@ installExpect() {
   fi
 }
 
-### Decrypt private key if it is not already present
+# @description Decrypt private Chezmoi key if it is not already present at `${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt`
 decryptKey() {
   if command -v age > /dev/null; then
-    if [ ! -f "${XDG_CONFIG_HOME}/age/chezmoi.txt" ]; then
-      mkdir -p "${XDG_CONFIG_HOME}/age"
+    if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" ]; then
+      mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/age"
       if [ -z "$AGE_PASSWORD" ]; then
         logg star 'PRESS ENTER if you have not set up your encryption token yet'
-        age --decrypt --output "${XDG_CONFIG_HOME}/age/chezmoi.txt" "{{ .chezmoi.sourceDir }}/key.txt.age" || EXIT_CODE=$?
+        age --decrypt --output "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" "{{ .chezmoi.sourceDir }}/key.txt.age" || EXIT_CODE=$?
         if [ -n "$EXIT_CODE" ]; then
           decryptionFailure
         else
@@ -75,7 +76,7 @@ decryptKey() {
       else
         installExpect
         expect -c "set timeout -1
-        spawn age --decrypt --output "${XDG_CONFIG_HOME}/age/chezmoi.txt" "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/key.txt.age"
+        spawn age --decrypt --output "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/key.txt.age"
         expect \"Enter passphrase:\"
         send \"${AGE_PASSWORD}\r\"
         expect eof" &> /dev/null || EXIT_CODE=$?
@@ -102,8 +103,8 @@ else
 fi
 
 ### Ensure proper permissions on private key
-if [ -f "${XDG_CONFIG_HOME}/age/chezmoi.txt" ]; then
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" ]; then
   logg info 'Ensuring proper permissions on Chezmoi / age decryption key'
-  logg info 'Chezmoi / age decryption key is stored in '"${XDG_CONFIG_HOME}/age/chezmoi.txt"
-  chmod 600 "${XDG_CONFIG_HOME}/age/chezmoi.txt"
+  logg info 'Chezmoi / age decryption key is stored in '"${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt"
+  chmod 600 "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt"
 fi
