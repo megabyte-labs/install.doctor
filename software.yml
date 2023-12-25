@@ -11642,11 +11642,6 @@ softwarePackages:
     _post: |
       #!/usr/bin/env bash
       sudo mkdir -p /var/log/dagu
-      dagu start-all
-    _boot: |
-      #!/usr/bin/env bash
-      # TODO - Add _boot capability
-      dagu start-all
     brew: yohamta/tap/dagu
   runitor:
     _bin: runitor

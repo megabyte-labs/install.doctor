@@ -6,7 +6,7 @@
 #     scheduler to ensure that the Dagu service is running. Read more about Dagu on their [GitHub page](https://github.com/dagu-dev/dagu).
 
 PROCESS="dagu start-all"
-COMMAND="/usr/bin/dagu start-all"
+COMMAND="/usr/bin/dagu --config "$DAGU_HOME/admin.yaml" start-all"
 
 ### Ensure dagu is installed
 if command -v dagu > /dev/null; then
