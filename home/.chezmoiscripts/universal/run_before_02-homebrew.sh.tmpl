@@ -164,13 +164,11 @@ upgradeDarwin() {
       fi
 
       ### Reboot
-      logg info 'Reboot required'
-      logg info 'Attempting to restart gracefully'
-      gtimeout 60 osascript -e 'tell application "Finder" to shut down' || OSASCRIPT_EXIT_CODE=$?
-      if [ -n "$OSASCRIPT_EXIT_CODE" ]; then
-        logg info 'Reboot required and failed to gracefully shutdown within 1 minute, so forcing reboot' && sudo sh -c 'shutdown -r now'
-      fi
-      exit 0
+      logg info 'Reboot required' && exit 140
+      # gtimeout 60 osascript -e 'tell application "Finder" to shut down' || OSASCRIPT_EXIT_CODE=$?
+      # if [ -n "$OSASCRIPT_EXIT_CODE" ]; then
+      #   logg info 'Reboot required and failed to gracefully shutdown within 1 minute, so forcing reboot' && sudo sh -c 'shutdown -r now'
+      # fi
     else
       logg info 'No reboot required for softwareupdate'
     fi

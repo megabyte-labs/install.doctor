@@ -326,31 +326,40 @@ runChezmoi() {
     logg info 'Running chezmoi apply forcefully'
     if command -v unbuffer > /dev/null; then
       if command -v caffeinate > /dev/null; then
-        caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
+        caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
       else
-        unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
+        unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
       fi
     else
       if command -v caffeinate > /dev/null; then
-        caffeinate chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
+        caffeinate chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
       else
-        chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
+        chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
       fi
     fi
   else
     logg info 'Running chezmoi apply'
     if command -v unbuffer > /dev/null; then
       if command -v caffeinate > /dev/null; then
-        caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
+        caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
       else
-        unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
+        unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
       fi    
     else
       if command -v caffeinate > /dev/null; then
-        caffeinate chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
+        caffeinate chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
       else
-        chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
+        chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
       fi    
+    fi
+  fi
+  if [ -n "$CHEZMOI_EXIT_CODE" ]; then
+    if [ "$CHEZMOI_EXIT_CODE" = "140" ]; then
+      logg info "Chezmoi signalled that a reboot is necessary to apply a system update"
+      logg info "Running softwareupdate with the reboot flag"
+      sudo softwareupdate -i -a -R --agree-to-license && exit
+    else
+      logg error "Chezmoi encountered an error and exitted with an exit code of $CHEZMOI_EXIT_CODE"
     fi
   fi
 }
