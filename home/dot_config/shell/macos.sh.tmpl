@@ -13,10 +13,9 @@ logg info 'A sudo password is required to apply some of the macOS optimizations.
 sudo echo "Sudo access granted."
 
 # Log commands
-if [ "$DEBUG" = 'true' ]; then
+if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
 	set -x
 fi
-set -x
 
 # Enable SSH access
 sudo systemsetup -setremotelogin {{ .macosRemoteLogin }}
@@ -840,20 +839,6 @@ defaults write com.operasoftware.OperaDeveloper PMPrintingExpandedStateForPrint2
 
 # Don’t show the preferences window on next start
 # defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false
-
-###############################################################################
-# Sublime Text                                                                #
-###############################################################################
-
-# Install Sublime Text settings
-# cp -r init/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text*/Packages/User/Preferences.sublime-settings 2> /dev/null
-
-###############################################################################
-# Spectacle.app                                                               #
-###############################################################################
-
-# Set up my preferred keyboard shortcuts
-# cp -r init/spectacle.json ~/Library/Application\ Support/Spectacle/Shortcuts.json 2> /dev/null
 
 ###############################################################################
 # Transmission.app                                                            #

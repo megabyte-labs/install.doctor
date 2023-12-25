@@ -838,6 +838,15 @@ installDockerRclonePlugin() {
   fi
 }
 
+# @description Installs a terminal theme that matches across various terminals by utilizing the `~/.local/bin/install-terminal-theme` script
+installTerminalTheme() {
+  if command -v install-terminal-theme > /dev/null; then
+    install-terminal-theme
+  else
+    logg warn 'install-terminal-theme is not available'
+  fi
+}
+
 # @description
 #     This script loads crontab jobs that are defined and housed in your Install Doctor fork.
 loadCronjobs() {
@@ -1002,6 +1011,7 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   gnomeExtensionSettings
   grubSettings
   installDockerRclonePlugin
+  installTerminalTheme
   loadCronjobs
   macOSSettings
   makeLocalBinExecutable
@@ -1028,6 +1038,7 @@ else
   gnomeExtensionSettings &
   grubSettings &
   installDockerRclonePlugin &
+  installTerminalTheme &
   loadCronjobs &
   macOSSettings &
   makeLocalBinExecutable &
