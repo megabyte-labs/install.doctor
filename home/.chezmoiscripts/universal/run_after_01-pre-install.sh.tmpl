@@ -153,7 +153,7 @@ applyRootConfig() {
 #     This function ensures the Qubes desktop wallpaper is set to the Qubes Betelgeuse wallpaper on KDE by
 #     using the `ksetwallpaper` script found in `~/.local/bin/ksetwallpaper`.
 applyWallpaper() {
-  {{- if (eq .host.distro.id "qubes") -}}
+  {{ if (eq .host.distro.id "qubes") -}}
   logg info 'Setting wallpaper to /usr/local/share/wallpapers/Betelgeuse/contents/images/3440x1440.jpg'
   ksetwallpaper --file /usr/local/share/wallpapers/Betelgeuse/contents/images/3440x1440.jpg
   {{ else -}}
