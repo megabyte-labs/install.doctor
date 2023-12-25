@@ -170,6 +170,7 @@ upgradeDarwin() {
       if [ -n "$OSASCRIPT_EXIT_CODE" ]; then
         logg info 'Reboot required and failed to gracefully shutdown within 1 minute, so forcing reboot' && sudo sh -c 'shutdown -r now'
       fi
+      exit 0
     else
       logg info 'No reboot required for softwareupdate'
     fi
