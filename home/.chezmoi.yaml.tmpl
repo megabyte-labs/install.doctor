@@ -96,26 +96,6 @@
     {{- else }}
       {{- $work = false -}}
     {{- end -}}
-{{- else if not (env "WORK_ENVIRONMENT") -}}
-{{-   $work = promptBoolOnce $data.host "work" "Work environment" $work -}}
-{{- end -}}
-{{- if not (env "RESTRICTED_ENVIRONMENT") -}}
-{{-   $restricted = promptBoolOnce $data.host "restricted" "Restricted environment (i.e. no sudo)" $restricted -}}
-{{- end -}}
-{{- if not (env "SOFTWARE_GROUP") -}}
-{{-   $softwareGroup = promptStringOnce $data.host "softwareGroup" "Software group" $softwareGroup -}}
-{{- end -}}
-{{- if not (env "FULL_NAME") -}}
-{{-   $name = promptStringOnce $data.user "name" "Full name" $name -}}
-{{- end -}}
-{{- if not (env "PRIMARY_EMAIL") -}}
-{{-   $email = promptStringOnce $data.user "email" "Primary e-mail address" $email -}}
-{{- end -}}
-{{- if not (env "PUBLIC_SERVICES_DOMAIN") -}}
-{{-   $domain = promptStringOnce $data.user "domain" "Domain name" $domain -}}
-{{- end -}}
-{{- if not (env "HOST") -}}
-{{-   $hostname = promptStringOnce $data.host "hostname" "Hostname ID" $hostname -}}
 {{- end -}}
 
 {{- else -}}

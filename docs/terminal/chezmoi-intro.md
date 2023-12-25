@@ -6,10 +6,10 @@ Using this script for the first time? Check out [our documentation](https://inst
 
 Adapting this project for your own purposes basically boils down to a few steps:
 
-1. Fork our [GitHub project](https://github.com/megabyte-labs/install.doctor)
-2. Generate an Age encryption key
-3. Use the Age encryption key to populate the secrets in `home/.chezmoitemplates`
-4. Customize the values in `home/.chezmoidata.yaml` and `home/.chezmoi.yaml.tmpl`
+1. [Fork our GitHub project](https://github.com/megabyte-labs/install.doctor/fork).
+2. Generate an Age encryption key.
+3. Use the Age encryption key to populate the secrets in `home/.chezmoitemplates`. For help, check out the [Secrets documentation](https://install.doctor/docs/customization/secrets).
+4. Customize the values in `home/.chezmoidata.yaml` and `home/.chezmoi.yaml.tmpl`.
 
 ## Headless Deploy
 
