@@ -149,14 +149,14 @@ upgradeDarwin() {
     if softwareupdate -l | grep restart > /dev/null; then
       ### Add kickstart script to .zshrc so it triggers automatically
       if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
+        logg info 'Adding kickstart script to ~/.zshrc so script continues automatically if reboot is necessary'
         echo 'bash <(curl -sSL --compressed https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
       fi
 
       if [ -n "$SUDO_PASSWORD" ] && [ "$SUDO_PASSWORD" != "" ]; then
         ### Install kcpassword
         if ! command -v enable_autologin > /dev/null; then
-          logg info 'enable_autologin is not installed and it is a requirement for auto-logging in after reboot'
-          brew install xfreebird/utils/kcpassword
+          logg info 'enable_autologin is not installed and it is a requirement for auto-logging in after reboot' && brew install xfreebird/utils/kcpassword
         fi
 
         ### Enable auto-login via kcpassword
