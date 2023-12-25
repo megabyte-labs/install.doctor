@@ -55,49 +55,49 @@ extras:
  
 locations:
   altair:
-    from: "$ALTAIR_APPDATA"
+    from: "{{ env "ALTAIR_APPDATA" }}"
     <<: *app
   android-studio:
-    from: "$ANDROID_STUDIO_APPDATA"
+    from: "{{ env "ANDROID_STUDIO_APPDATA" }}"
     <<: *app
   brave-browser:
-    from: "$BRAVE_BROWSER_APPDATA"
+    from: "{{ env "BRAVE_BROWSER_APPDATA" }}"
     <<: *app
   ferdium:
-    from: "$FERDIUM_APPDATA"
+    from: "{{ env "FERDIUM_APPDATA" }}"
     <<: *app
   firefox:
-    from: "$FIREFOX_APPDATA"
+    from: "{{ env "FIREFOX_APPDATA" }}"
     <<: *app
   google-chrome:
-    from: "$GOOGLE_CHROME_APPDATA"
+    from: "{{ env "GOOGLE_CHROME_APPDATA" }}"
     <<: *app
   logi-options-plus:
-    from: "$LOGI_OPTIONS_PLUS_APPDATA"
+    from: "{{ env "LOGI_OPTIONS_PLUS_APPDATA" }}"
     <<: *app
   mailspring:
-    from: "$MAILSPRING_APPDATA"
+    from: "{{ env "MAILSPRING_APPDATA" }}"
     <<: *app
   mark-text:
-    from: "$MARK_TEXT_APPDATA"
+    from: "{{ env "MARK_TEXT_APPDATA" }}"
     <<: *app
   microsoft-edge:
-    from: "$MICROSOFT_EDGE_APPDATA"
+    from: "{{ env "MICROSOFT_EDGE_APPDATA" }}"
     <<: *app
   notion:
-    from: "$NOTION_APPDATA"
+    from: "{{ env "NOTION_APPDATA" }}"
     <<: *app
   pieces-os:
-    from: "$PIECES_OS_APPDATA"
+    from: "{{ env "PIECES_OS_APPDATA" }}"
     <<: *app
   remmina:
-    from: "$REMMINA_APPDATA"
+    from: "{{ env "REMMINA_APPDATA" }}"
     <<: *app
   tor-browser:
-    from: "$TOR_BROWSER_APPDATA"
+    from: "{{ env "TOR_BROWSER_APPDATA" }}"
     <<: *app
   warp-terminal:
-    from: "$WARP_TERMINAL_APPDATA"
+    from: "{{ env "WARP_TERMINAL_APPDATA" }}"
     <<: *app
   home-local:
     from: ~/
