@@ -298,24 +298,25 @@ ensureHomebrew() {
 #     After determining whether or not a reboot is required, the script will attempt to automatically
 #     reboot the machine.
 handleRequiredReboot() {
-    if [ -d /Applications ] && [ -d /System ]; then
-        ### macOS
-        logg info 'Checking if there is a pending update' && defaults read /Library/Updates/index.plist InstallAtLogout
-        # TODO - Uncomment this when we can determine conditions for reboot
-        # sudo shutdown -r now
-    elif [ -f /var/run/reboot-required ]; then
-        ### Linux
-        logg info '/var/run/reboot-required is present so a reboot is required'
-        if command -v systemctl > /dev/null; then
-            logg info 'systemctl present so rebooting with sudo systemctl start reboot.target' && sudo systemctl start reboot.target
-        elif command -v reboot > /dev/null; then
-            logg info 'reboot available as command so rebooting with sudo reboot' && sudo reboot
-        elif command -v shutdown > /dev/null; then
-            logg info 'shutdown command available so rebooting with sudo shutdown -r now' && sudo shutdown -r now
-        else
-            logg warn 'Reboot required but unable to determine appropriate restart command'
-        fi
+  if [ -d /Applications ] && [ -d /System ]; then
+    ### macOS
+    if ! defaults read /Library/Updates/index.plist InstallAtLogout 2>&1 | grep 'does not exist' > /dev/null; then
+      logg info 'There appears to be an update that requires a reboot'
+      logg info 'Attempting to reboot gracefully' && osascript -e 'tell application "Finder" to shut down'
     fi
+  elif [ -f /var/run/reboot-required ]; then
+    ### Linux
+    logg info '/var/run/reboot-required is present so a reboot is required'
+    if command -v systemctl > /dev/null; then
+      logg info 'systemctl present so rebooting with sudo systemctl start reboot.target' && sudo systemctl start reboot.target
+    elif command -v reboot > /dev/null; then
+      logg info 'reboot available as command so rebooting with sudo reboot' && sudo reboot
+    elif command -v shutdown > /dev/null; then
+      logg info 'shutdown command available so rebooting with sudo shutdown -r now' && sudo shutdown -r now
+    else
+      logg warn 'Reboot required but unable to determine appropriate restart command'
+    fi
+  fi
 }
 # @description Load default settings if it is in a CI setting
 setCIEnvironmentVariables() {
