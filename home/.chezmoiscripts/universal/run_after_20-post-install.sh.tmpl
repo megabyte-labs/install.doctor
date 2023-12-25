@@ -369,13 +369,28 @@ ubuntuDashToDockFix() {
   fi
 }
 
-bashItPlugins &
-candyIconTweaks &
-configureVNC &
-moveGnomeAppsToShare &
-preloadZsh &
-removeShortcutsLinux &
-removeUbuntuLogoBranding &
-setDefaultBrowser &
-ubuntuDashToDockFix &
-wait
+if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
+  logg info 'The DEBUG or DEBUG_MODE environment variable is set so the post-install tasks will be run synchronously'
+  bashItPlugins
+  candyIconTweaks
+  configureVNC
+  moveGnomeAppsToShare
+  preloadZsh
+  removeShortcutsLinux
+  removeUbuntuLogoBranding
+  setDefaultBrowser
+  ubuntuDashToDockFix
+else
+  bashItPlugins &
+  candyIconTweaks &
+  configureVNC &
+  moveGnomeAppsToShare &
+  preloadZsh &
+  removeShortcutsLinux &
+  removeUbuntuLogoBranding &
+  setDefaultBrowser &
+  ubuntuDashToDockFix &
+  wait
+fi
+
+logg success 'Finished running the post-install tasks'

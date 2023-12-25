@@ -124,7 +124,14 @@ addTemporaryIncludes
 . /tmp/tmp-logg
 . /tmp/tmp-profile
 ensureFullDiskAccess
-importCloudFlareCert
-configureMacOSVNC
-disconnectWarp
-wait
+if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
+  logg info 'The DEBUG or DEBUG_MODE environment variable is set so the prepare tasks will be run synchronously'
+  importCloudFlareCert
+  configureMacOSVNC
+  disconnectWarp
+else
+  importCloudFlareCert &
+  configureMacOSVNC &
+  disconnectWarp &
+  wait
+fi

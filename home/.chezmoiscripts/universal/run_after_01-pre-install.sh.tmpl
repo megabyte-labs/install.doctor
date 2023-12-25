@@ -977,32 +977,60 @@ userLogFolders() {
   done
 }
 
-addZshEnv &
-applyFontsToSystem &
-applyLinuxConfSettings &
-applyLinuxThemeFiles &
-applyRootConfig &
-applyWallpaper &
-asdfPluginInstall &
-configureNetworkManagerVPNProfiles &
-configureSSHD &
-dconfSettings &
-decryptSSHKeys &
-emscriptenInstall &
-enableAutoUpdateDarwin &
-ensureQtStyleOverride &
-ensureSystemGemUpdated &
-ensureZshShell &
-gnomeExtensionSettings &
-grubSettings &
-installDockerRclonePlugin &
-loadCronjobs &
-macOSSettings &
-makeLocalBinExecutable &
-symlinkAnsibleRoles &
-symlinkPython &
-userLogFolders &
+if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
+  logg info 'The DEBUG or DEBUG_MODE environment variable is set so the post-dotfile-application routine tasks will be run synchronously'
+  addZshEnv
+  applyFontsToSystem
+  applyLinuxConfSettings
+  applyLinuxThemeFiles
+  applyRootConfig
+  applyWallpaper
+  asdfPluginInstall
+  configureNetworkManagerVPNProfiles
+  configureSSHD
+  dconfSettings
+  decryptSSHKeys
+  emscriptenInstall
+  enableAutoUpdateDarwin
+  ensureQtStyleOverride
+  ensureSystemGemUpdated
+  ensureZshShell
+  gnomeExtensionSettings
+  grubSettings
+  installDockerRclonePlugin
+  loadCronjobs
+  macOSSettings
+  makeLocalBinExecutable
+  symlinkAnsibleRoles
+  symlinkPython
+  userLogFolders
+else
+  addZshEnv &
+  applyFontsToSystem &
+  applyLinuxConfSettings &
+  applyLinuxThemeFiles &
+  applyRootConfig &
+  applyWallpaper &
+  asdfPluginInstall &
+  configureNetworkManagerVPNProfiles &
+  configureSSHD &
+  dconfSettings &
+  decryptSSHKeys &
+  emscriptenInstall &
+  enableAutoUpdateDarwin &
+  ensureQtStyleOverride &
+  ensureSystemGemUpdated &
+  ensureZshShell &
+  gnomeExtensionSettings &
+  grubSettings &
+  installDockerRclonePlugin &
+  loadCronjobs &
+  macOSSettings &
+  makeLocalBinExecutable &
+  symlinkAnsibleRoles &
+  symlinkPython &
+  userLogFolders &
+  wait
+fi
 
-wait
-
-logg info 'Completed asynchronous post-dotfile-application routine'
+logg info 'Completed post-dotfile-application routine'

@@ -606,21 +606,38 @@ installBrewPackages() {
   logg success 'Finished installing auxilary Homebrew packages'
 }
 
-allocateSwap &
-configureGPG &
-disableDStoreFileCreation &
-enableDarkTransparentMode &
-ensureUserGroup &
-increaseMapCount &
-installBrewPackages &
-installDocker &
-installJumpCloud &
-removeLinuxBloatware &
-setHostname &
-setNtpServer &
-setTimezone &
-showNotificationCenter &
-
-wait
+if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
+  logg info 'The DEBUG or DEBUG_MODE environment variable is set so preliminary system tweaks will be run synchronously'
+  allocateSwap
+  configureGPG
+  disableDStoreFileCreation
+  enableDarkTransparentMode
+  ensureUserGroup
+  increaseMapCount
+  installBrewPackages
+  installDocker
+  installJumpCloud
+  removeLinuxBloatware
+  setHostname
+  setNtpServer
+  setTimezone
+  showNotificationCenter
+else
+  allocateSwap &
+  configureGPG &
+  disableDStoreFileCreation &
+  enableDarkTransparentMode &
+  ensureUserGroup &
+  increaseMapCount &
+  installBrewPackages &
+  installDocker &
+  installJumpCloud &
+  removeLinuxBloatware &
+  setHostname &
+  setNtpServer &
+  setTimezone &
+  showNotificationCenter &
+  wait
+fi
 
 logg success 'Successfully applied preliminary system tweaks'

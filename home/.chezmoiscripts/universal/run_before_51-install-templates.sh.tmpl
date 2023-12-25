@@ -69,16 +69,28 @@ updateTemplates() {
 for TEMPLATE of {{ .qubes.templates | toString | replace "[" "" | replace "]" "" }}; do
   if [ ! -f "/var/lib/qubes/vm-templates/$TEMPLATE" ]; then
     logg info "Installing $TEMPLATE"
-    sudo qubes-dom0-update "qubes-template-$TEMPLATE" &
+    if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
+      sudo qubes-dom0-update "qubes-template-$TEMPLATE"
+    else
+      sudo qubes-dom0-update "qubes-template-$TEMPLATE" &
+    fi
   fi
 done
 
 ### Ensure unofficial templates are installed
 for TEMPLATE_URL of {{ .qubes.templatesUnofficial | toString | replace "[" "" | replace "]" "" }}; do
-  installUnofficialTemplate "$TEMPLATE_URL" &
+  if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
+    installUnofficialTemplate "$TEMPLATE_URL"
+  else
+    installUnofficialTemplate "$TEMPLATE_URL" &
+  fi
 done
 
-installMirageFirewall &
+if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
+  installMirageFirewall
+else
+  installMirageFirewall &
+fi
 
 wait
 logg success 'Finished installing TemplateVMs'
