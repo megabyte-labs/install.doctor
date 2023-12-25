@@ -7,8 +7,8 @@
 
 {{ includeTemplate "universal/logg-before" }}
 
-{{- if ne .host.distro.id "darwin" -}}
 {{- $packages := splitList " " (includeTemplate "universal/common-dependencies" .) -}}
+{{- if ne .host.distro.id "darwin" -}}
 {{- $additionalPackages := splitList " " (includeTemplate (print .host.distro.id "/common-dependencies") .) -}}
 {{- $packages = concat $packages $additionalPackages -}}
 {{- end -}}
