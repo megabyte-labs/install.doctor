@@ -55,6 +55,9 @@ export PATH="$HOME/.local/bin/firejail:$PATH"
 export PATH="$HOME/.local/bin/flatpak:$PATH"
 export PATH="$HOME/.local/bin/gpt:$PATH"
 export PATH="$HOME/.local/bin/pipx:$PATH"
+if [ -f /usr/bin/qubes-session ]; then
+  export PATH="$HOME/.local/bin/qubes:$PATH"
+fi
 export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 
 ### Homebrew
@@ -112,6 +115,9 @@ fi
 export ANSIBLE_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/ansible"
 export ANSIBLE_CONFIG="$ANSIBLE_HOME/ansible.cfg"
 export ANSIBLE_GALAXY_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/ansible/galaxy_cache"
+if [ -f /usr/bin/qubes-session ]; then
+  export PATH="$PATH:$HOME/.local/share/ansible-qubes/bin"
+fi
 
 ### Aqua
 export AQUA_ROOT_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/aqua"
@@ -277,6 +283,14 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications --display-times --no-quarantin
 
 ### HTTPie
 export HTTPIE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/httpie"
+
+### IntelliJ IDEA
+if [ -f "/Applications/IntelliJ IDEA CE.app/Contents/MacOS/idea" ]; then
+  export PATH="$PATH:/Applications/IntelliJ IDEA CE.app/Contents/MacOS"
+  alias idea.sh='idea'
+elif [ -f "/snap/intellij-idea-community/current/bin/idea.sh" ]; then
+  export PATH="$PATH:/snap/intellij-idea-community/current/bin"
+fi
 
 ### IPFS
 export IPFS_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/ipfs"

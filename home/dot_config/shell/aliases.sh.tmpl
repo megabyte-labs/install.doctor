@@ -36,6 +36,11 @@ elif command -v htop > /dev/null; then
   alias top='bashtop'
 fi
 
+### batcat
+if command -v batcat > /dev/null; then
+  alias bat='batcat'
+fi
+
 ### bat
 if command -v bat > /dev/null; then
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
@@ -43,7 +48,7 @@ if command -v bat > /dev/null; then
   alias cat='bat -pp'
   alias less='bat --paging=always'
   help() {
-    "$@" --help 2>&1 | bathelp
+    "$@" --help 2>&1 | bat-help
   }
 fi
 
@@ -68,6 +73,11 @@ if command -v exa > /dev/null; then
 else
   # Show full output when using ls
   alias ls='ls -AlhF --color=auto'
+fi
+
+### fdfind
+if command -v fdfind > /dev/null; then
+  alias fd='fdfind'
 fi
 
 ### gping
@@ -101,6 +111,11 @@ if command -v mitmweb > /dev/null; then
   alias mitmweb='mitmweb --set confdir=${XDG_CONFIG_HOME:-$HOME/.config}/mitmproxy'
 fi
 
+### readlink
+if command -v greadlink > /dev/null && [ -d /Applications ] && [ -d /System ]; then
+  alias readlink='greadlink'
+fi
+
 ### ripgrep
 if command -v rg > /dev/null; then
   alias rgrep='rg --color=auto'
@@ -108,6 +123,11 @@ fi
 
 ### xclip
 alias xclip='xclip -selection c'
+
+### yank
+if command -v yank-cli > /dev/null; then
+  alias yank='yank-cli'
+fi
 
 ### Zola
 if command -v org.getzola.zola > /dev/null; then

@@ -1,4 +1,3 @@
-{{- if eq .host.qubes true -}}
 #!/usr/bin/env bash
 
 # Creates a Qube on RAM disk and opens Firefox if the Qube does not already exist.
@@ -27,4 +26,3 @@ else
   sudo rm -rf /var/log/pacat.new.log
   sudo rm -rf /var/log/qubesdb.new.log
 fi
-{{ end -}}

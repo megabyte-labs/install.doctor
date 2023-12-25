@@ -17,22 +17,22 @@
 {{ includeTemplate "universal/logg" }}
 
 if command -v mackup > /dev/null; then
-    ### Create symlinks pointing to stored configurations
-    logg info 'Symlinking ~/.mackup and ~/.mackup.cfg'
-    ln -s "${XDG_CONFIG_HOME:-$HOME/.config}/mackup/.mackup/" ~/.mackup
-    ln -s "${XDG_CONFIG_HOME:-$HOME/.config}/mackup/.mackup.cfg" ~/.mackup.cfg
+  ### Create symlinks pointing to stored configurations
+  logg info 'Symlinking ~/.mackup and ~/.mackup.cfg'
+  ln -s "${XDG_CONFIG_HOME:-$HOME/.config}/mackup/.mackup/" ~/.mackup
+  ln -s "${XDG_CONFIG_HOME:-$HOME/.config}/mackup/.mackup.cfg" ~/.mackup.cfg
 
-    ### Run mackup
-    logg info 'Running mackup'
-    mackup $* || echo ''
+  ### Run mackup
+  logg info 'Running mackup'
+  mackup $* || echo ''
 
-    ### Remove temporary configuration files
-    logg info 'Removing symlinked ~/.mackup and ~/.mackup.cfg configurations'
-    rm -f ~/.mackup
-    rm -f ~/.mackup.cfg
+  ### Remove temporary configuration files
+  logg info 'Removing symlinked ~/.mackup and ~/.mackup.cfg configurations'
+  rm -f ~/.mackup
+  rm -f ~/.mackup.cfg
 
-    ### Print success message
-    logg success 'Successfully ran backup-apps'
+  ### Print success message
+  logg success 'Successfully ran backup-apps'
 else
-    logg error 'mackup is not installed' && exit 1
+  logg error 'mackup is not installed' && exit 1
 fi

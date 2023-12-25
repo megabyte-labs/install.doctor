@@ -1,5 +1,0 @@
-{{- if (eq .host.distro.family "darwin") -}}
-/Applications/IntelliJ\ IDEA\ CE.app/Contents/MacOS/idea
-{{- else if eq .host.distro.family "linux" -}}
-/snap/intellij-idea-community/current/bin/idea.sh
-{{- end -}}
