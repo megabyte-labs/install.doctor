@@ -295,7 +295,7 @@ removeShortcutsLinux() {
     logg info 'Processing remove shortcuts step for Linux machines'
 
     ### Remove unnecessary desktop shortcuts
-    for DESKTOP_ICON in {{ $removeShortcuts }}; do
+    for DESKTOP_ICON in {{ join " " .removeLinuxShortcuts }}; do
       for SHORTCUT_FOLDER in {{ .host.home }}/.local/share/applications {{ .host.home }}/.local/share/applications/wine/Programs; do
         if [ -f "$SHORTCUT_FOLDER/$DESKTOP_ICON" ]; then
           rm -f "$SHORTCUT_FOLDER/$DESKTOP_ICON"
