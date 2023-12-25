@@ -338,6 +338,7 @@ setupPasswordlessSudo() {
   if [ -n "$SUDO_PASSWORD" ]; then
     logg info 'Using the acquired sudo password to automatically grant the user passwordless sudo privileges for the duration of the script'
     printf '%s\n' "$SUDO_PASSWORD" | sudo -p "" -S echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers > /dev/null
+    echo ""
   else
     logg info 'Press CTRL+C to bypass this prompt to either enter your password when needed or perform a non-privileged installation'
     logg info 'Note: Non-privileged installations are not yet supported'
