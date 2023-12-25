@@ -19,17 +19,18 @@ applyFontsToSystem() {
     sudo rsync -av "${XDG_DATA_HOME:-$HOME/.local/share}/fonts" "$FONT_DIR"
   else
     ### Linux
+    ### Copy fonts
     logg info 'Copying fonts from ~/.local/share/fonts to /usr/local/share/fonts to make them available globally'
     FONT_DIR='/usr/local/share/fonts'
     sudo rsync -av "${XDG_DATA_HOME:-$HOME/.local/share}/fonts" "$FONT_DIR"
-  fi
 
-  ### Configure system font properties
-  if [ -d /etc/fonts ]; then
-    logg info 'Copying ~/.config/fontconfig/fonts.conf to /etc/fonts/local.conf'
-    sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/fontconfig/fonts.conf" /etc/fonts/local.conf
-  else
-    logg warn 'The /etc/fonts directory is missing'
+    ### Configure system font properties
+    if [ -d /etc/fonts ]; then
+      logg info 'Copying ~/.config/fontconfig/fonts.conf to /etc/fonts/local.conf'
+      sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/fontconfig/fonts.conf" /etc/fonts/local.conf
+    else
+      logg warn 'The /etc/fonts directory is missing'
+    fi
   fi
 }
 
@@ -492,14 +493,17 @@ enableAutoUpdateDarwin() {
 #
 #     * `export QT_STYLE_OVERRIDE=kvantum-dark` which is required for the Linux GNOME / KDE themeing that relies on Kvantum.
 ensureQtStyleOverride() {
-  ### Ensure QT_STYLE_OVERRIDE is set in /etc/environment
-  logg info 'Ensuring QT_STYLE_OVERRIDE is set in /etc/environment'
-  if cat /etc/environment | grep QT_STYLE_OVERRIDE > /dev/null; then
-    sudo sed -i 's/.*QT_STYLE_OVERRIDE.*/export QT_STYLE_OVERRIDE=kvantum-dark/' /etc/environment
-    logg info 'Updated QT_STYLE_OVERRIDE in /etc/environment'
-  else
-    echo 'export QT_STYLE_OVERRIDE=kvantum-dark' | sudo tee -a /etc/environment
-    logg info 'Added QT_STYLE_OVERRIDE to /etc/environment'
+  if [ ! -d /Applications ] || [ ! -d /System ]; then
+    ### Linux
+    ### Ensure QT_STYLE_OVERRIDE is set in /etc/environment
+    logg info 'Ensuring QT_STYLE_OVERRIDE is set in /etc/environment'
+    if cat /etc/environment | grep QT_STYLE_OVERRIDE > /dev/null; then
+      sudo sed -i 's/.*QT_STYLE_OVERRIDE.*/export QT_STYLE_OVERRIDE=kvantum-dark/' /etc/environment
+      logg info 'Updated QT_STYLE_OVERRIDE in /etc/environment'
+    else
+      echo 'export QT_STYLE_OVERRIDE=kvantum-dark' | sudo tee -a /etc/environment
+      logg info 'Added QT_STYLE_OVERRIDE to /etc/environment'
+    fi
   fi
 }
 
@@ -507,7 +511,7 @@ ensureQtStyleOverride() {
 ensureSystemGemUpdated() {
   ### Ensure gem is updated
   if command -v gem > /dev/null; then
-    logg info 'Ensuring system gem is updated' && gem update --system
+    logg info 'Ensuring system gem is updated' && gem update --system > /dev/null
   else
     logg info 'Could not find gem in PATH so skipping gem system update'
   fi
