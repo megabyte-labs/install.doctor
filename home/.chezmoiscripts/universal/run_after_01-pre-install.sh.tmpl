@@ -346,7 +346,7 @@ configureSSHD() {
       ### Restart SSH server
       if [ -d /Applications ] && [ -d /System ]; then
         ### macOS
-        logg info 'Running sudo systemsetup -setremotelogin on' && sudo systemsetup -setremotelogin on
+        logg info 'Running sudo systemsetup -setremotelogin on' && sudo systemsetup -setremotelogin on > /dev/null
         logg info 'Running sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist' && sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist 2> /dev/null
         logg info 'Running sudo launchctl stop com.openssh.sshd' && sudo launchctl stop com.openssh.sshd
         logg info 'Running sudo launchctl start com.openssh.sshd' && sudo launchctl start com.openssh.sshd && logg info 'Successfully ran launchctl start com.openssh.sshd'
@@ -491,17 +491,17 @@ enableAutoUpdateDarwin() {
 ensurePipUpdated() {
   ### python3.10 pip update
   if command -v python3.10 > /dev/null; then
-    logg info 'Ensuring python3.10 pip is updated' && python3.10 -m pip install --upgrade pip &
+    logg info 'Ensuring python3.10 pip is updated' && python3.10 -m pip install --upgrade pip > /dev/null &
   fi
 
   ### python3.11 pip update
   if command -v python3.11 > /dev/null; then
-    logg info 'Ensuring python3.11 pip is updated' && python3.11 -m pip install --upgrade pip &
+    logg info 'Ensuring python3.11 pip is updated' && python3.11 -m pip install --upgrade pip > /dev/null &
   fi
 
   ### python3.12 pip update
   # if command -v python3.12 > /dev/null; then
-  #   logg info 'Ensuring python3.12 pip is updated' && python3.12 -m pip install --upgrade pip &
+  #   logg info 'Ensuring python3.12 pip is updated' && python3.12 -m pip install --upgrade pip > /dev/null &
   # fi
   wait
 }

@@ -18,7 +18,7 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
 fi
 
 # Enable SSH access
-sudo systemsetup -setremotelogin {{ .macosRemoteLogin }}
+sudo systemsetup -setremotelogin {{ .macosRemoteLogin }} > /dev/null
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
