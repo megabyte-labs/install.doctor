@@ -490,9 +490,9 @@ enableAutoUpdateDarwin() {
 
 ensurePipUpdated() {
   ### python3.10 pip update
-  # if command -v python3.10 > /dev/null; then
-  #   logg info 'Ensuring python3.10 pip is updated' && python3.10 -m pip install --upgrade pip &
-  # fi
+  if command -v python3.10 > /dev/null; then
+    logg info 'Ensuring python3.10 pip is updated' && python3.10 -m pip install --upgrade pip &
+  fi
 
   ### python3.11 pip update
   if command -v python3.11 > /dev/null; then
@@ -500,9 +500,9 @@ ensurePipUpdated() {
   fi
 
   ### python3.12 pip update
-  if command -v python3.12 > /dev/null; then
-    logg info 'Ensuring python3.12 pip is updated' && python3.12 -m pip install --upgrade pip &
-  fi
+  # if command -v python3.12 > /dev/null; then
+  #   logg info 'Ensuring python3.12 pip is updated' && python3.12 -m pip install --upgrade pip &
+  # fi
   wait
 }
 
