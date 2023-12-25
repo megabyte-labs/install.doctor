@@ -199,14 +199,14 @@ sudo pmset -a autorestart 1
 # Restart automatically if the computer freezes
 sudo systemsetup -setrestartfreeze on 2>/dev/null 1>&2
 
+# Disable machine sleep while charging
+sudo pmset -c sleep 0
+
 # Set machine sleep to 30 minutes on battery
 sudo pmset -b sleep 30
 
 # Sleep the display after 15 minutes
 sudo pmset -a displaysleep 15
-
-# Disable machine sleep while charging
-sudo pmset -c sleep 0
 
 # Set standby delay to 24 hours (default is 1 hour)
 sudo pmset -a standbydelay 86400
@@ -594,7 +594,15 @@ defaults write com.apple.mail SpellCheckingBehavior -string "NoSpellCheckingEnab
 # Disable Spotlight indexing for any volume that gets mounted and has not yet
 # been indexed before.
 # Use `sudo mdutil -i off "/Volumes/foo"` to stop indexing any volume.
-sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
+if [ -d /Volumes/Private ]; then
+	sudo mdutil -i off "/Volumes/Private"
+fi
+if [ -d /Volumes/Public ]; then
+	sudo mdutil -i off "/Volumes/Public"
+fi
+# ERROR: Could not write domain /.Spotlight-V100/VolumeConfiguration; exiting
+# sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
+
 # Change indexing order and disable some search results
 # Yosemite-specific search results (remove them if you are using macOS 10.9 or older):
 # 	MENU_DEFINITION
