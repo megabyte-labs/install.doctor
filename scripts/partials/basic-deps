@@ -8,26 +8,26 @@ ensureBasicDeps() {
     if command -v apt-get > /dev/null; then
       ### Debian / Ubuntu
       logg info 'Running sudo apt-get update' && sudo apt-get update
-      logg info 'Running sudo apt-get install -y build-essential curl expect git rsync procps file' && sudo apt-get install -y build-essential curl expect git rsync procps file
+      logg info 'Running sudo apt-get install -y build-essential curl expect git moreutils rsync procps file' && sudo apt-get install -y build-essential curl expect git moreutils rsync procps file
     elif command -v dnf > /dev/null; then
       ### Fedora
       logg info 'Running sudo dnf groupinstall -y "Development Tools"' && sudo dnf groupinstall -y 'Development Tools'
-      logg info 'Running sudo dnf install -y curl expect git rsync procps-ng file' && sudo dnf install -y curl expect git rsync procps-ng file
+      logg info 'Running sudo dnf install -y curl expect git moreutils rsync procps-ng file' && sudo dnf install -y curl expect git moreutils rsync procps-ng file
     elif command -v yum > /dev/null; then
       ### CentOS
       logg info 'Running sudo yum groupinstall -y "Development Tools"' && sudo yum groupinstall -y 'Development Tools'
-      logg info 'Running sudo yum install -y curl expect git rsync procps-ng file' && sudo yum install -y curl expect git rsync procps-ng file
+      logg info 'Running sudo yum install -y curl expect git moreutils rsync procps-ng file' && sudo yum install -y curl expect git moreutils rsync procps-ng file
     elif command -v pacman > /dev/null; then
       ### Archlinux
       logg info 'Running sudo pacman update' && sudo pacman update
-      logg info 'Running sudo pacman -Syu base-devel curl expect git rsync procps-ng file' && sudo pacman -Syu base-devel curl expect git rsync procps-ng file
+      logg info 'Running sudo pacman -Syu base-devel curl expect git moreutils rsync procps-ng file' && sudo pacman -Syu base-devel curl expect git moreutils rsync procps-ng file
     elif command -v zypper > /dev/null; then
       ### OpenSUSE
       logg info 'Running sudo zypper install -yt pattern devel_basis' && sudo zypper install -yt pattern devel_basis
-      logg info 'Running sudo zypper install -y curl expect git rsync procps file' && sudo zypper install -y curl expect git rsync procps file
+      logg info 'Running sudo zypper install -y curl expect git moreutils rsync procps file' && sudo zypper install -y curl expect git moreutils rsync procps file
     elif command -v apk > /dev/null; then
       ### Alpine
-      logg info 'Running sudo apk add build-base curl expect git rsync ruby procps file' && sudo apk add build-base curl expect git rsync ruby procps file
+      logg info 'Running sudo apk add build-base curl expect git moreutils rsync ruby procps file' && sudo apk add build-base curl expect git moreutils rsync ruby procps file
     elif [ -d /Applications ] && [ -d /Library ]; then
       ### macOS
       logg info "Ensuring Xcode Command Line Tools are installed.."
@@ -40,7 +40,7 @@ ensureBasicDeps() {
       fi
     elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
       ### Windows
-      logg info 'Running choco install -y curl expect git rsync' && choco install -y curl expect git rsync
+      logg info 'Running choco install -y curl expect git moreutils rsync' && choco install -y curl expect git moreutils rsync
     elif command -v nix-env > /dev/null; then
       ### NixOS
       logg warn "TODO - Add support for NixOS"

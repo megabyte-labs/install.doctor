@@ -163,26 +163,26 @@ ensureBasicDeps() {
     if command -v apt-get > /dev/null; then
       ### Debian / Ubuntu
       logg info 'Running sudo apt-get update' && sudo apt-get update
-      logg info 'Running sudo apt-get install -y build-essential curl expect git rsync procps file' && sudo apt-get install -y build-essential curl expect git rsync procps file
+      logg info 'Running sudo apt-get install -y build-essential curl expect git moreutils rsync procps file' && sudo apt-get install -y build-essential curl expect git moreutils rsync procps file
     elif command -v dnf > /dev/null; then
       ### Fedora
       logg info 'Running sudo dnf groupinstall -y "Development Tools"' && sudo dnf groupinstall -y 'Development Tools'
-      logg info 'Running sudo dnf install -y curl expect git rsync procps-ng file' && sudo dnf install -y curl expect git rsync procps-ng file
+      logg info 'Running sudo dnf install -y curl expect git moreutils rsync procps-ng file' && sudo dnf install -y curl expect git moreutils rsync procps-ng file
     elif command -v yum > /dev/null; then
       ### CentOS
       logg info 'Running sudo yum groupinstall -y "Development Tools"' && sudo yum groupinstall -y 'Development Tools'
-      logg info 'Running sudo yum install -y curl expect git rsync procps-ng file' && sudo yum install -y curl expect git rsync procps-ng file
+      logg info 'Running sudo yum install -y curl expect git moreutils rsync procps-ng file' && sudo yum install -y curl expect git moreutils rsync procps-ng file
     elif command -v pacman > /dev/null; then
       ### Archlinux
       logg info 'Running sudo pacman update' && sudo pacman update
-      logg info 'Running sudo pacman -Syu base-devel curl expect git rsync procps-ng file' && sudo pacman -Syu base-devel curl expect git rsync procps-ng file
+      logg info 'Running sudo pacman -Syu base-devel curl expect git moreutils rsync procps-ng file' && sudo pacman -Syu base-devel curl expect git moreutils rsync procps-ng file
     elif command -v zypper > /dev/null; then
       ### OpenSUSE
       logg info 'Running sudo zypper install -yt pattern devel_basis' && sudo zypper install -yt pattern devel_basis
-      logg info 'Running sudo zypper install -y curl expect git rsync procps file' && sudo zypper install -y curl expect git rsync procps file
+      logg info 'Running sudo zypper install -y curl expect git moreutils rsync procps file' && sudo zypper install -y curl expect git moreutils rsync procps file
     elif command -v apk > /dev/null; then
       ### Alpine
-      logg info 'Running sudo apk add build-base curl expect git rsync ruby procps file' && sudo apk add build-base curl expect git rsync ruby procps file
+      logg info 'Running sudo apk add build-base curl expect git moreutils rsync ruby procps file' && sudo apk add build-base curl expect git moreutils rsync ruby procps file
     elif [ -d /Applications ] && [ -d /Library ]; then
       ### macOS
       logg info "Ensuring Xcode Command Line Tools are installed.."
@@ -195,7 +195,7 @@ ensureBasicDeps() {
       fi
     elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
       ### Windows
-      logg info 'Running choco install -y curl expect git rsync' && choco install -y curl expect git rsync
+      logg info 'Running choco install -y curl expect git moreutils rsync' && choco install -y curl expect git moreutils rsync
     elif command -v nix-env > /dev/null; then
       ### NixOS
       logg warn "TODO - Add support for NixOS"
@@ -496,6 +496,9 @@ ensureHomebrewDeps() {
     if ! command -v gtimeout > /dev/null; then
       brew install --quiet coreutils
     fi
+    if ! command -v ts > /dev/null; then
+      brew install --quiet moreutils
+    fi
   fi
 }
 
@@ -546,58 +549,65 @@ initChezmoiAndPrompt() {
   fi
 }
 
-# @description Run `chezmoi apply` and enable verbose mode if the `DEBUG_MODE` or `DEBUG` environment variable is set to true
-configureDebugMode() {
+# @description Save the log of the provision process to `$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log` and add the Chezmoi
+#     `--force` flag if the `HEADLESS_INSTALL` variable is set to `true`.
+runChezmoi() {
+  ### Set up logging
+  mkdir -p "$HOME/.local/var/log/install.doctor"
+  LOG_FILE="$HOME/.local/var/log/install.doctor/chezmoi-apply-$(date +%s).log"
+
+  ### Apply command flags
+  FORCE_MODIFIER=""
+  if [ -n "$HEADLESS_INSTALL" ]; then
+    logg info 'Running chezmoi apply forcefully because HEADLESS_INSTALL is set'
+    FORCE_MODIFIER="--force"
+  fi
+  KEEP_GOING_MODIFIER=""
+  if [ -n "$KEEP_GOING" ]; then
+    logg info 'Instructing chezmoi to keep going in the case of errors because KEEP_GOING is set'
+    KEEP_GOING_MODIFIER="-k"
+  fi
+  DEBUG_MODIFIER=""
   if [ -n "$DEBUG_MODE" ] || [ -n "$DEBUG" ]; then
     logg info "Either DEBUG_MODE or DEBUG environment variables were set so Chezmoi will be run in debug mode"
     export DEBUG_MODIFIER="-vvvvv"
   fi
-}
 
-# @description Save the log of the provision process to `$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log` and add the Chezmoi
-#     `--force` flag if the `HEADLESS_INSTALL` variable is set to `true`.
-runChezmoi() {
-  mkdir -p "$HOME/.local/var/log/install.doctor"
-  LOG_FILE="$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log"
-  if [ "$HEADLESS_INSTALL" = 'true' ]; then
-    logg info 'Running chezmoi apply forcefully'
-    if command -v unbuffer > /dev/null; then
-      if command -v caffeinate > /dev/null; then
-        caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
-      else
-        unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
-      fi
+  ### Run chezmoi apply
+  if command -v unbuffer > /dev/null; then
+    if command -v caffeinate > /dev/null; then
+      logg info "Running: caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     else
-      if command -v caffeinate > /dev/null; then
-        caffeinate chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
-      else
-        chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
-      fi
+      logg info "Running: unbuffer -p chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      unbuffer -p chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     fi
+    logg info "Unbuffering log file $LOG_FILE"
+    UNBUFFER_TMP="$(mktemp)"
+    unbuffer cat "$LOG_FILE" > "$UNBUFFER_TMP"
+    mv -f "$UNBUFFER_TMP" "$LOG_FILE"
   else
-    logg info 'Running chezmoi apply'
-    if command -v unbuffer > /dev/null; then
-      if command -v caffeinate > /dev/null; then
-        caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
-      else
-        unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
-      fi    
+    if command -v caffeinate > /dev/null; then
+      logg info "Running: caffeinate chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      caffeinate chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     else
-      if command -v caffeinate > /dev/null; then
-        caffeinate chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
-      else
-        chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
-      fi    
+      logg info "Running: chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     fi
   fi
+
+  ### Handle exit codes in log
+  if cat "$LOG_FILE" | grep 'chezmoi: exit status 140' > /dev/null; then
+    logg info "Chezmoi signalled that a reboot is necessary to apply a system update"
+    logg info "Running softwareupdate with the reboot flag"
+    sudo softwareupdate -i -a -R --agree-to-license && exit
+  fi
+
+  ### Handle actual process exit code
   if [ -n "$CHEZMOI_EXIT_CODE" ]; then
-    if [ "$CHEZMOI_EXIT_CODE" = "140" ]; then
-      logg info "Chezmoi signalled that a reboot is necessary to apply a system update"
-      logg info "Running softwareupdate with the reboot flag"
-      sudo softwareupdate -i -a -R --agree-to-license && exit
-    else
-      logg error "Chezmoi encountered an error and exitted with an exit code of $CHEZMOI_EXIT_CODE"
-    fi
+    logg error "Chezmoi encountered an error and exitted with an exit code of $CHEZMOI_EXIT_CODE"
+  else
+    logg success 'Finished provisioning the system'
   fi
 }
 
@@ -634,7 +644,6 @@ provisionLogic() {
   logg info "Handling Qubes dom0 logic (if applicable)" && handleQubesDom0
   logg info "Cloning / updating source repository" && cloneChezmoiSourceRepo
   logg info "Handling pre-provision logic" && initChezmoiAndPrompt
-  logg info "Handling debug mode if DEBUG or DEBUG_MODE are defined" && configureDebugMode
   logg info "Running the Chezmoi provisioning" && runChezmoi
   logg info "Ensuring temporary passwordless sudo is removed" && removePasswordlessSudo
   logg info "Handling post-provision logic" && postProvision
