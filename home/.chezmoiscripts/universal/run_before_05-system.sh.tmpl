@@ -581,11 +581,11 @@ setTimezone() {
     ### Linux
     logg info 'Setting timezone to {{ .user.timezone }}'
     sudo timedatectl set-timezone {{ .user.timezone }}
-  elif command -v m > /dev/null; then
+  elif command -v systemsetup > /dev/null && [ -d /Applications ] && [ -d /System ]; then
     ### macOS
-    logg info 'Setting timezone to {{ .user.timezone }}' && m timezone set {{ .user.timezone }}
+    logg info 'Setting timezone to {{ .user.timezone }}' && sudo systemsetup -settimezone "{{ .user.timezone }}" 2>/dev/null 1>&2
   else
-    logg warn 'Neither timedatectl (Linux) or m (macOS) were found on the system'
+    logg warn 'Neither timedatectl (Linux) or systemsetup (macOS) were found on the system'
   fi
 }
 
