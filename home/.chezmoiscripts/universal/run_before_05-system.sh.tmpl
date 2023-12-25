@@ -236,9 +236,12 @@ ensureUserGroup() {
 #     increasing the `vm.max_map_count`. According to a [RedHat article](https://access.redhat.com/solutions/99913), the default value is `65530`.
 #     This function increases that value to `262144` if `sysctl` is available on the system.
 increaseMapCount() {
-  if command -v sysctl > /dev/null; then
-    logg info 'Increasing vm.max_map_count size to 262144'
-    sudo sysctl -w vm.max_map_count=262144 > /dev/null
+  if [ ! -d /Applications ] && [ ! -d /System ]; then
+    ### Linux
+    if command -v sysctl > /dev/null; then
+      logg info 'Increasing vm.max_map_count size to 262144'
+      sudo sysctl -w vm.max_map_count=262144 > /dev/null
+    fi
   fi
 }
 
