@@ -1752,7 +1752,7 @@ softwarePlugins:
       - github/gh-net
       - mislav/gh-cp
   intellij-idea-ce:
-    cmd: bash -c 'if [ ! -f "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor/intellij-idea-ce" ] || ! cat "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor/intellij-idea-ce" | grep "${PLUGIN}" &> /dev/null; then idea.sh installPlugins "{PLUGIN}" && mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor" && echo "{PLUGIN}" >> "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor/intellij-idea-ce"; fi'
+    cmd: bash -c 'if [ ! -f "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor/intellij-idea-ce" ] || ! cat "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor/intellij-idea-ce" | grep "${PLUGIN}" &> /dev/null; then "$HOME/.local/bin/idea.sh" installPlugins "{PLUGIN}" && mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor" && echo "{PLUGIN}" >> "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor/intellij-idea-ce"; fi'
     plugins:
       - AngularJS
       - app.pieces.plugins.jetbrains
