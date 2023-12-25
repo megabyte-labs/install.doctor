@@ -893,7 +893,9 @@ macOSSettings() {
 makeLocalBinExecutable() {
   logg info 'Ensuring all files in ~/.local/bin are executable'
   find "$HOME/.local/bin" -mindepth 1 -maxdepth 2 -type f | while read EXE_FILE; do
-    chmod +x "$EXE_FILE"
+    if [ "$(echo -n "$EXE_FILE" | tail -c 3)" != ".md" ]; then
+      chmod +x "$EXE_FILE"
+    fi
   done
 }
 
