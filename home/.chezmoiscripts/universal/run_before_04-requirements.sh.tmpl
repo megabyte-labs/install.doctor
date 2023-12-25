@@ -7,9 +7,11 @@
 
 {{ includeTemplate "universal/logg-before" }}
 
+{{- if ne .host.distro.id "darwin" -}}
 {{- $packages := splitList " " (includeTemplate "universal/common-dependencies" .) -}}
 {{- $additionalPackages := splitList " " (includeTemplate (print .host.distro.id "/common-dependencies") .) -}}
 {{- $packages = concat $packages $additionalPackages -}}
+{{- end -}}
 
 ### Ensure Ubuntu / Debian run in `noninteractive` mode
 export DEBIAN_FRONTEND=noninteractive
