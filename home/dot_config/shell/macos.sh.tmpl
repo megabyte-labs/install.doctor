@@ -181,7 +181,7 @@ defaults write NSGlobalDomain AppleMetricUnits -bool false
 sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bool true
 
 # Set the timezone; see `sudo systemsetup -listtimezones` for other values
-sudo systemsetup -settimezone "{{ .user.timezone }}" > /dev/null
+sudo systemsetup -settimezone "{{ .user.timezone }}" 2>/dev/null 1>&2
 
 # Stop iTunes from responding to the keyboard media keys
 #launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
@@ -197,7 +197,10 @@ sudo pmset -a lidwake 1
 sudo pmset -a autorestart 1
 
 # Restart automatically if the computer freezes
-sudo systemsetup -setrestartfreeze on
+sudo systemsetup -setrestartfreeze on 2>/dev/null 1>&2
+
+# Set machine sleep to 30 minutes on battery
+sudo pmset -b sleep 30
 
 # Sleep the display after 15 minutes
 sudo pmset -a displaysleep 15
@@ -205,16 +208,13 @@ sudo pmset -a displaysleep 15
 # Disable machine sleep while charging
 sudo pmset -c sleep 0
 
-# Set machine sleep to 5 minutes on battery
-sudo pmset -b sleep 5
-
 # Set standby delay to 24 hours (default is 1 hour)
 sudo pmset -a standbydelay 86400
 
 # Never go into computer sleep mode
-sudo systemsetup -setdisplaysleep 30 > /dev/null
-sudo systemsetup -setharddisksleep Off > /dev/null
-sudo systemsetup -setcomputersleep Off > /dev/null
+sudo systemsetup -setharddisksleep Off 2>/dev/null 1>&2
+sudo systemsetup -setcomputersleep Off 2>/dev/null 1>&2
+sudo systemsetup -setdisplaysleep 30 2>/dev/null 1>&2
 
 # Hibernation mode
 # 0: Disable hibernation (speeds up entering sleep mode)
@@ -353,7 +353,8 @@ defaults write com.apple.finder WarnOnEmptyTrash -bool false
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 
 # Show the ~/Library folder
-chflags nohidden ~/Library && xattr -d com.apple.FinderInfo ~/Library
+# ERROR: xattr: /Users/bzalewski/Library: No such xattr: com.apple.FinderInfo
+# chflags nohidden ~/Library && xattr -d com.apple.FinderInfo ~/Library
 
 # Show the /Volumes folder
 sudo chflags nohidden /Volumes
