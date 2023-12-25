@@ -488,6 +488,23 @@ enableAutoUpdateDarwin() {
   fi
 }
 
+ensurePipUpdated() {
+  ### python3.10 pip update
+  if command -v python3.10 > /dev/null; then
+    logg info 'Ensuring python3.10 pip is updated' && python3.10 -m pip install --upgrade pip &
+
+  ### python3.11 pip update
+  if command -v python3.11 > /dev/null; then
+    logg info 'Ensuring python3.11 pip is updated' && python3.11 -m pip install --upgrade pip &
+  fi
+
+  ### python3.12 pip update
+  if command -v python3.12 > /dev/null; then
+    logg info 'Ensuring python3.12 pip is updated' && python3.12 -m pip install --upgrade pip &
+  fi
+  wait
+}
+
 # @description
 #     This script modifies the `/etc/environment` file on Linux devices to include:
 #
