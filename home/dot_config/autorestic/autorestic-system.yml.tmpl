@@ -54,11 +54,11 @@ backends:
   docker-local:
     type: local
     path: /var/local/backups/docker
-    key: {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "RESTIC_SYSTEM_PASSWORD")) }}{{ includeTemplate "secrets/RESTIC_SYSTEM_PASSWORD" | decrypt | trim }}{{ else }}{{ default "" (env "RESTIC_SYSTEM_PASSWORD") }}{{ end }}
+    key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "RESTIC_SYSTEM_PASSWORD")) }}{{ includeTemplate "secrets/RESTIC_SYSTEM_PASSWORD" | decrypt | trim }}{{ else }}{{ default "" (env "RESTIC_SYSTEM_PASSWORD") }}{{ end }}
   docker-s3:
     type: s3
     path: {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com/docker
-    key: {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "RESTIC_SYSTEM_PASSWORD")) }}{{ includeTemplate "secrets/RESTIC_SYSTEM_PASSWORD" | decrypt | trim }}{{ else }}{{ default "" (env "RESTIC_SYSTEM_PASSWORD") }}{{ end }}
+    key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "RESTIC_SYSTEM_PASSWORD")) }}{{ includeTemplate "secrets/RESTIC_SYSTEM_PASSWORD" | decrypt | trim }}{{ else }}{{ default "" (env "RESTIC_SYSTEM_PASSWORD") }}{{ end }}
     env:
-      AWS_ACCESS_KEY_ID: {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_ID" | decrypt | trim }}{{ else }}{{ default "" (env "CLOUDFLARE_R2_ID") }}{{ end }}
-      AWS_SECRET_ACCESS_KEY: {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_SECRET" | decrypt | trim }}{{ else }}{{ default "" (env "CLOUDFLARE_R2_SECRET") }}{{ end }}
+      AWS_ACCESS_KEY_ID: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_ID" | decrypt | trim }}{{ else }}{{ default "" (env "CLOUDFLARE_R2_ID") }}{{ end }}
+      AWS_SECRET_ACCESS_KEY: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET")) }}{{ includeTemplate "secrets/CLOUDFLARE_R2_SECRET" | decrypt | trim }}{{ else }}{{ default "" (env "CLOUDFLARE_R2_SECRET") }}{{ end }}
