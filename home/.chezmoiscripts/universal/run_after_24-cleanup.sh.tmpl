@@ -25,6 +25,12 @@ if [ -f "$HOME/.wget-hsts" ]; then
     rm -f "$HOME/.wget-hsts"
 fi
 
+### Remove .viminfo
+# No idea how this is being created
+if [ -f "$HOME/.viminfo" ]; then
+    sudo rm -f "$HOME/.viminfo"
+fi
+
 ### Remove .wrangler
 # Not sure how this is populating but the proper environment variables appear to be in place and nothing breaks when its removed
 if [ -d "$HOME/.wrangler" ]; then

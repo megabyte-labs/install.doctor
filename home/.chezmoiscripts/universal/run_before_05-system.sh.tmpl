@@ -121,7 +121,7 @@ configureGPG() {
 disableDStoreFileCreation() {
   if command -v m > /dev/null; then
     logg info 'Disabling creation of .DS_Store files'
-    echo y | m dir dsfiles off
+    echo y | m dir dsfiles off > /dev/null
   fi
 }
 
