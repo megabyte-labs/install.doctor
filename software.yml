@@ -3119,7 +3119,7 @@ softwarePackages:
       # @brief Logs into DockerHub for Docker Desktop
       # @description
       #     This script logs into DockerHub so that Docker Desktop is pre-authenticated. This
-      #     functionality requires that the `DOCKERHUB_USER` be passed in as an environment variable (or 
+      #     functionality requires that the `DOCKERHUB_USER` be passed in as an environment variable (or
       #     directly editted in the `~/.config/chezmoi/chezmoi.yaml` file) and that the `DOCKERHUB_TOKEN`
       #     be passed in as a secret (either via the encrypted secret method or passed in as an environment
       #     variable).
@@ -5169,7 +5169,7 @@ softwarePackages:
           ### Populate appropriate token
           case "$OSTYPE" in
             solaris*) echo "TODO" ;;
-            darwin*)  GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_DARWIN")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_DARWIN" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_DARWIN" }}{{ end }}" ;; 
+            darwin*)  GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_DARWIN")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_DARWIN" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_DARWIN" }}{{ end }}" ;;
             linux*)   GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_LINUX")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_LINUX" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_LINUX" }}{{ end }}" ;;
             bsd*)     echo "TODO" ;;
             msys*)    GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_WINDOWS")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_WINDOWS" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_WINDOWS" }}{{ end }}" ;;
@@ -5198,7 +5198,7 @@ softwarePackages:
               {{ end -}}
               {{ end }}
             fi
-          
+
             ### Register VirtualBox based runners if VirtualBox is installed
             if [ $HAS_VIRTUALBOX -eq 1 ]; then
               logg info 'Registering GitLab Runner(s) that use VirtualBox executor'
@@ -5272,12 +5272,12 @@ softwarePackages:
       if command -v gitomatic > /dev/null; then
         ### Copy bin to /usr/local/bin
         logg info "Copying $HOME/.local/bin/gitomatic-service to /usr/local/bin/gitomatic-service" && sudo cp -f "$HOME/.local/bin/gitomatic-service" /usr/local/bin/gitomatic-service
-        
+
         ### Copy gitomatic to global directory
         if [ ! -f /usr/local/bin/gitomatic ]; then
           logg info 'Copying gitomatic executable to /usr/local/bin/gitomatic' && sudo cp -f "$(which gitomatic)" /usr/local/bin/gitomatic
         fi
-      
+
         if [ -d /Applications ] && [ -d /System ]; then
           ### macOS
           logg info 'Copying gitomatic plist file to /Library/LaunchDaemons' && sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitomatic/com.github.muesli.gitomatic.plist" /Library/LaunchDaemons/com.github.muesli.gitomatic.plist
@@ -7817,7 +7817,7 @@ softwarePackages:
 
         ### netdata-claim.sh must be run as netdata user
         sudo -H -u netdata bash -c 'export NETDATA_ROOM="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_ROOM")) -}}{{- includeTemplate "secrets/NETDATA_ROOM" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_ROOM" -}}{{- end -}}" && export NETDATA_TOKEN="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) -}}{{- includeTemplate "secrets/NETDATA_TOKEN" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_TOKEN" -}}{{- end -}}" && yes | netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="https://app.netdata.cloud"'
-        
+
         ### Kernel optimizations
         # These are mentioned while installing via the kickstart.sh script method. We are using Homebrew for the installation though.
         # Assuming these optimizations do not cause any harm.
@@ -7849,7 +7849,7 @@ softwarePackages:
             logg error 'No etc location found for netdata' && exit 1
           fi
           logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/ to $NETDATA_ETC" && sudo cp -rf "${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/" "$NETDATA_ETC"
-          
+
           if command -v gsed > /dev/null; then
             SED_UTIL="gsed"
           else
@@ -7859,7 +7859,7 @@ softwarePackages:
           ### Blocky
           logg info "Adding Blocky metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
           sudo "$SED_UTIL" -i "/jobs:/a\  - name: blocky_local \n    url: 'http://127.0.0.1:4000/metrics'" "$NETDATA_ETC/go.d/prometheus.conf"
-          
+
           ### SFTPGo
           logg info "Adding SFTPGo metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
           sudo "$SED_UTIL" -i "/jobs:/a\  - name: sftpgo_local \n    url: 'http://127.0.0.1:57500/metrics'" "$NETDATA_ETC/go.d/prometheus.conf"
@@ -10798,7 +10798,7 @@ softwarePackages:
     _home: https://github.com/skeeto/endlessh
     _name: Endlessh
     _service: endlessh
-    _post: | 
+    _post: |
       #!/usr/bin/env bash
       # @file Endlessh Configuration
       # @brief Applies the Endlessh configuration and starts the service on Linux systems
@@ -12018,7 +12018,7 @@ softwarePackages:
       #     ## Links
       #
       #     * [Privoxy configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/privoxy/config)
-      
+
       ### Define the Privoxy configuration location based on whether system is macOS or Linux
       if [ -d /Applications ] && [ -d /System ]; then
         ### macOS
@@ -12044,7 +12044,7 @@ softwarePackages:
             sudo add-usergroup "$USER" privoxy
           fi
           sudo chown privoxy:privoxy "$PRIVOXY_CONFIG" 2> /dev/null || sudo chown privoxy:$(id -g -n) "$PRIVOXY_CONFIG"
-          
+
           ### Restart Privoxy after configuration is applied
           if [ -d /Applications ] && [ -d /System ]; then
             ### macOS
@@ -12384,7 +12384,7 @@ softwarePackages:
     _post: |
       #!/usr/bin/env bash
       echo "Installing VIM plugins" && vim +'PlugInstall --sync' +qall
-      echo "Updating VIM coc extensions" && vim +CocUpdateSync +qall
+      echo "Updating VIM coc extensions" && cd "$HOME/.config/coc/extensions" && echo '{"dependencies":{}}'> package.json && npm install '@yaegassy/coc-ansible' '@yaegassy/coc-nginx' 'coc-angular' 'coc-blade' 'coc-calc' 'coc-clangd' 'coc-copilot' 'coc-css' 'coc-cssmodules' 'coc-deno' 'coc-diagnostic' 'coc-docker' 'coc-emmet' 'coc-eslint' 'coc-explorer' 'coc-flutter' 'coc-fzf-preview' 'coc-git' 'coc-go' 'coc-highlight' 'coc-html-css-support' 'coc-html' 'coc-htmlhint' 'coc-java' 'coc-jedi' 'coc-json' 'coc-ltex' 'coc-lua' 'coc-markdown-preview-enhanced' 'coc-markdownlint' 'coc-markmap' 'coc-phpls' 'coc-powershell' 'coc-prettier' 'coc-prisma' 'coc-pyright' 'coc-rls' 'coc-rust-analyzer' 'coc-sh' 'coc-solargraph' 'coc-solidity' 'coc-spell-checker' 'coc-stylelint' 'coc-sql' 'coc-sqlfluff' 'coc-svelte' 'coc-svg' 'coc-swagger' 'coc-symbol-line' 'coc-tailwindcss' 'coc-toml' 'coc-tsserver' 'coc-xml' 'coc-yaml' 'coc-yank' --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
     ansible: professormanhattan.vim
     apt: vim
     brew: vim
@@ -13221,7 +13221,7 @@ softwarePackages:
         ### Python
         if command -v python3 > /dev/null; then
           ### Ensure Certifi package is available globally
-          if ! pip3 list certifi | grep certifi > /dev/null; then
+          if ! pip3 list | grep certifi > /dev/null; then
             if command -v brew > /dev/null; then
               logg info 'Ensuring Python certifi is installed via Homebrew'
               brew install --quiet python-certifi
@@ -13583,7 +13583,7 @@ softwarePackages:
       #     ## Links
       #
       #     * [`fail2ban` configuration folder](https://github.com/megabyte-labs/install.doctor/tree/master/home/private_dot_ssh/fail2ban)
-      
+
       ### Notify of script start
       logg info 'Configuring fail2ban'
 
