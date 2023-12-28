@@ -4,27 +4,27 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>installdoctor.freshclam</string>
+  <string>clamav.clamdscan</string>
   <key>ProgramArguments</key>
   <array>
-    <string>/usr/local/bin/freshclam</string>
-    <string>-v</string>
+    <string>/usr/local/bin/clamdscan</string>
+    <string>/</string>
   </array>
   <key>StartCalendarInterval</key>
   <array>
     <dict>
       <key>Hour</key>
-      <integer>21</integer>
+      <integer>22</integer>
       <key>Minute</key>
       <integer>0</integer>
     </dict>
   </array>
   <key>UserName</key>
-  <string>{{ $.chezmoi.username }}</string>
+  <string>root</string>
   <key>StandardErrorPath</key>
-  <string>/var/log/installdoctor/freshclam.error.log</string>
+  <string>/var/log/clamav/clamdscan.error.log</string>
   <key>StandardOutPath</key>
-  <string>/var/log/installdoctor/freshclam.output.log</string>
+  <string>/var/log/clamav/clamdscan.output.log</string>
 </dict>
 </plist>
 {{- end -}}

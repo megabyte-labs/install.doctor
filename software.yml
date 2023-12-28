@@ -2306,12 +2306,12 @@ softwarePackages:
       #!/usr/bin/env bash
       # Setting up launchd services
       if [ -d /Applications ] && [ -d /System ]; then
-        sudo mkdir -p /var/log/installdoctor
-        sudo chown $USER /var/log/installdoctor
-        sudo cp -f "$HOME/.local/etc/clamav/installdoctor.clamdscan.plist.tmpl" /Library/LaunchDaemons/installdoctor.clamdscan.plist
-        sudo cp -f "$HOME/.local/etc/clamav/installdoctor.freshclam.plist.tmpl" /Library/LaunchDaemons/installdoctor.freshclam.plist
-        sudo launchctl load -w /Library/LaunchDaemons/installdoctor.clamdscan.plist
-        sudo launchctl load -w /Library/LaunchDaemons/installdoctor.freshclam.plist
+        sudo mkdir -p /var/log/clamav
+        sudo chown $USER /var/log/clamav
+        sudo cp -f "$HOME/.local/etc/clamav/clamdscan.plist.tmpl" /Library/LaunchDaemons/clamdscan.plist
+        sudo cp -f "$HOME/.local/etc/clamav/freshclam.plist.tmpl" /Library/LaunchDaemons/freshclam.plist
+        sudo launchctl load -w /Library/LaunchDaemons/clamdscan.plist
+        sudo launchctl load -w /Library/LaunchDaemons/freshclam.plist
       fi
       # Add freshclam.conf
       if [ -f "$HOME/.local/etc/clamav/freshclam.conf" ]; then
