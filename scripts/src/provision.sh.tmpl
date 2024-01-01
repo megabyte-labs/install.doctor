@@ -81,6 +81,8 @@ setEnvironmentVariables() {
 {{ include "partials" "homebrew" }}
 {{ include "partials" "reboot" }}
 {{ include "partials" "full-disk-access" }}
+{{ include "partials" "import-cloudflare-certificate" }}
+
 # @description Load default settings if it is in a CI setting
 setCIEnvironmentVariables() {
   if [ -n "$CI" ] || [ -n "$TEST_INSTALL" ]; then
@@ -255,11 +257,17 @@ ensureHomebrewDeps() {
 
   ### macOS
   if [ -d /Applications ] && [ -d /System ]; then
-    installBrewPackage "expect"
+    ### gsed
     installBrewPackage "gsed"
+    ### unbuffer / expect
+    if ! command -v unbuffer > /dev/null; then
+      installBrewPackage "expect"
+    fi
+    ### gtimeout / coreutils
     if ! command -v gtimeout > /dev/null; then
       brew install --quiet coreutils
     fi
+    ### ts / moreutils
     if ! command -v ts > /dev/null; then
       brew install --quiet moreutils
     fi
@@ -403,7 +411,11 @@ provisionLogic() {
   logg info "Applying passwordless sudo" && setupPasswordlessSudo
   logg info "Ensuring system Homebrew dependencies are installed" && ensureBasicDeps
   logg info "Cloning / updating source repository" && cloneChezmoiSourceRepo
-  logg info "Ensuring full disk access on macOS" && ensureFullDiskAccess
+  if [ -d /Applications ] && [ -d /System ]; then
+    ### macOS only
+    logg info "Ensuring full disk access from current terminal application" && ensureFullDiskAccess
+    logg info "Ensuring CloudFlare certificate imported into system certificates" && importCloudFlareCert
+  fi
   logg info "Ensuring Homebrew is available" && ensureHomebrew
   logg info "Installing Homebrew packages" && ensureHomebrewDeps
   logg info "Handling Qubes dom0 logic (if applicable)" && handleQubesDom0
