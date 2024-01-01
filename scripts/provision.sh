@@ -318,6 +318,49 @@ handleRequiredReboot() {
     fi
   fi
 }
+# @description Prints information describing why full disk access is required for the script to run on macOS.
+printFullDiskAccessNotice() {
+  if [ -d /Applications ] && [ -d /System ]; then
+    logg md "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/terminal/full-disk-access.md"
+  fi
+}
+
+# @description
+#     This script ensures the terminal running the provisioning process has full disk access permissions. It also
+#     prints information regarding the process of how to enable the permission as well as information related to
+#     the specific reasons that the terminal needs full disk access. More specifically, the scripts need full
+#     disk access to modify various system files and permissions.
+#
+#     Ensures the terminal running the provisioning process script has full disk access on macOS. It does this
+#     by attempting to read a file that requires full disk access. If it does not, the program opens the preferences
+#     pane where the user can grant access so that the script can continue.
+#
+#     ## Sources
+#
+#     * [Detecting Full Disk Access permission on macOS](https://www.dzombak.com/blog/2021/11/macOS-Scripting-How-to-tell-if-the-Terminal-app-has-Full-Disk-Access.html)
+ensureFullDiskAccess() {
+  if [ -d /Applications ] && [ -d /System ]; then
+    if ! plutil -lint /Library/Preferences/com.apple.TimeMachine.plist > /dev/null ; then
+      printFullDiskAccessNotice
+      logg star 'Opening Full Disk Access preference pane.. Grant full-disk access for the terminal you would like to run the provisioning process with.' && open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
+      logg info 'You may have to force quit the terminal and have it reload.'
+      if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
+        echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
+      fi
+      exit 0
+    else
+      logg success 'Current terminal has full disk access'
+      if [ -f "$HOME/.zshrc" ]; then
+        if command -v gsed > /dev/null; then
+          sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+        else
+          sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+        fi
+      fi
+    fi
+  fi
+}
+
 # @description Load default settings if it is in a CI setting
 setCIEnvironmentVariables() {
   if [ -n "$CI" ] || [ -n "$TEST_INSTALL" ]; then
@@ -630,7 +673,6 @@ postProvision() {
   fi
 }
 
-
 # @section Execution order
 # @description The `provisionLogic` function is used to define the order of the script. All of the functions it relies on are defined
 #     above.
@@ -640,10 +682,11 @@ provisionLogic() {
   logg info "Ensuring WARP is disconnected" && ensureWarpDisconnected
   logg info "Applying passwordless sudo" && setupPasswordlessSudo
   logg info "Ensuring system Homebrew dependencies are installed" && ensureBasicDeps
+  logg info "Cloning / updating source repository" && cloneChezmoiSourceRepo
+  logg info "Ensuring full disk access on macOS" && ensureFullDiskAccess
   logg info "Ensuring Homebrew is available" && ensureHomebrew
   logg info "Installing Homebrew packages" && ensureHomebrewDeps
   logg info "Handling Qubes dom0 logic (if applicable)" && handleQubesDom0
-  logg info "Cloning / updating source repository" && cloneChezmoiSourceRepo
   logg info "Handling pre-provision logic" && initChezmoiAndPrompt
   logg info "Running the Chezmoi provisioning" && runChezmoi
   logg info "Ensuring temporary passwordless sudo is removed" && removePasswordlessSudo

@@ -80,6 +80,7 @@ setEnvironmentVariables() {
 {{ include "partials" "basic-deps" }}
 {{ include "partials" "homebrew" }}
 {{ include "partials" "reboot" }}
+{{ include "partials" "full-disk-access" }}
 # @description Load default settings if it is in a CI setting
 setCIEnvironmentVariables() {
   if [ -n "$CI" ] || [ -n "$TEST_INSTALL" ]; then
@@ -392,7 +393,6 @@ postProvision() {
   fi
 }
 
-
 # @section Execution order
 # @description The `provisionLogic` function is used to define the order of the script. All of the functions it relies on are defined
 #     above.
@@ -402,10 +402,11 @@ provisionLogic() {
   logg info "Ensuring WARP is disconnected" && ensureWarpDisconnected
   logg info "Applying passwordless sudo" && setupPasswordlessSudo
   logg info "Ensuring system Homebrew dependencies are installed" && ensureBasicDeps
+  logg info "Cloning / updating source repository" && cloneChezmoiSourceRepo
+  logg info "Ensuring full disk access on macOS" && ensureFullDiskAccess
   logg info "Ensuring Homebrew is available" && ensureHomebrew
   logg info "Installing Homebrew packages" && ensureHomebrewDeps
   logg info "Handling Qubes dom0 logic (if applicable)" && handleQubesDom0
-  logg info "Cloning / updating source repository" && cloneChezmoiSourceRepo
   logg info "Handling pre-provision logic" && initChezmoiAndPrompt
   logg info "Running the Chezmoi provisioning" && runChezmoi
   logg info "Ensuring temporary passwordless sudo is removed" && removePasswordlessSudo
