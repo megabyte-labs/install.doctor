@@ -208,7 +208,9 @@ data:
     username: "{{ default "user" (env "USER") }}"
     weatherZipCode: 07960
 diff:
-  pager: "delta"
+  pager: delta
+  command: delta
+  args: ["--paging", "never"]
 edit:
   command: "code"
   args:
