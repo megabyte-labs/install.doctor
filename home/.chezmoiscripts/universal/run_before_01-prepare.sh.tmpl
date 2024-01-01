@@ -72,12 +72,11 @@ ensureFullDiskAccess() {
     if ! plutil -lint /Library/Preferences/com.apple.TimeMachine.plist > /dev/null ; then
       printFullDiskAccessNotice
       logg star 'Opening Full Disk Access preference pane.. Grant full-disk access for the terminal you would like to run the provisioning process with.' && open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
-      logg info 'You may have to force quit the terminal and have it reload'
+      logg info 'You may have to force quit the terminal and have it reload.'
       if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
         echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
       fi
-      logg prompt 'Press ENTER to check for Full Disk Access again' && read -r
-      ensureFullDiskAccess
+      exit 0
     else
       logg success 'Current terminal has full disk access'
       if [ -f "$HOME/.zshrc" ]; then
