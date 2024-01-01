@@ -124,7 +124,7 @@ upgradeDarwin() {
     fi
 
     ### Prompt for SUDO_PASSWORD
-    if [ "$SUDO_PASSWORD" = "" ]; then
+    if [ -z "$SUDO_PASSWORD" ] || [ "$SUDO_PASSWORD" = "" ]; then
       logg prompt "Enter the current user's login / admin password. Press ENTER to bypass and skip enabling auto-login. If you would like to bypass this prompt next time then pass in the password as an environment variable named SUDO_PASSWORD before running the kickstart script."
       SUDO_PASSWORD="$(gum input --password --placeholder="Enter password..")"
       export SUDO_PASSWORD
