@@ -569,7 +569,7 @@ ensureHomebrewDeps() {
     installBrewPackage "gsed"
     ### unbuffer / expect
     if ! command -v unbuffer > /dev/null; then
-      installBrewPackage "expect"
+      brew install --quiet expect
     fi
     ### gtimeout / coreutils
     if ! command -v gtimeout > /dev/null; then
