@@ -163,26 +163,26 @@ ensureBasicDeps() {
     if command -v apt-get > /dev/null; then
       ### Debian / Ubuntu
       logg info 'Running sudo apt-get update' && sudo apt-get update
-      logg info 'Running sudo apt-get install -y build-essential curl expect git rsync procps file' && sudo apt-get install -y build-essential curl expect git rsync procps file
+      logg info 'Running sudo apt-get install -y build-essential curl expect git moreutils rsync procps file' && sudo apt-get install -y build-essential curl expect git moreutils rsync procps file
     elif command -v dnf > /dev/null; then
       ### Fedora
       logg info 'Running sudo dnf groupinstall -y "Development Tools"' && sudo dnf groupinstall -y 'Development Tools'
-      logg info 'Running sudo dnf install -y curl expect git rsync procps-ng file' && sudo dnf install -y curl expect git rsync procps-ng file
+      logg info 'Running sudo dnf install -y curl expect git moreutils rsync procps-ng file' && sudo dnf install -y curl expect git moreutils rsync procps-ng file
     elif command -v yum > /dev/null; then
       ### CentOS
       logg info 'Running sudo yum groupinstall -y "Development Tools"' && sudo yum groupinstall -y 'Development Tools'
-      logg info 'Running sudo yum install -y curl expect git rsync procps-ng file' && sudo yum install -y curl expect git rsync procps-ng file
+      logg info 'Running sudo yum install -y curl expect git moreutils rsync procps-ng file' && sudo yum install -y curl expect git moreutils rsync procps-ng file
     elif command -v pacman > /dev/null; then
       ### Archlinux
       logg info 'Running sudo pacman update' && sudo pacman update
-      logg info 'Running sudo pacman -Syu base-devel curl expect git rsync procps-ng file' && sudo pacman -Syu base-devel curl expect git rsync procps-ng file
+      logg info 'Running sudo pacman -Syu base-devel curl expect git moreutils rsync procps-ng file' && sudo pacman -Syu base-devel curl expect git moreutils rsync procps-ng file
     elif command -v zypper > /dev/null; then
       ### OpenSUSE
       logg info 'Running sudo zypper install -yt pattern devel_basis' && sudo zypper install -yt pattern devel_basis
-      logg info 'Running sudo zypper install -y curl expect git rsync procps file' && sudo zypper install -y curl expect git rsync procps file
+      logg info 'Running sudo zypper install -y curl expect git moreutils rsync procps file' && sudo zypper install -y curl expect git moreutils rsync procps file
     elif command -v apk > /dev/null; then
       ### Alpine
-      logg info 'Running sudo apk add build-base curl expect git rsync ruby procps file' && sudo apk add build-base curl expect git rsync ruby procps file
+      logg info 'Running sudo apk add build-base curl expect git moreutils rsync ruby procps file' && sudo apk add build-base curl expect git moreutils rsync ruby procps file
     elif [ -d /Applications ] && [ -d /Library ]; then
       ### macOS
       logg info "Ensuring Xcode Command Line Tools are installed.."
@@ -195,7 +195,7 @@ ensureBasicDeps() {
       fi
     elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
       ### Windows
-      logg info 'Running choco install -y curl expect git rsync' && choco install -y curl expect git rsync
+      logg info 'Running choco install -y curl expect git moreutils rsync' && choco install -y curl expect git moreutils rsync
     elif command -v nix-env > /dev/null; then
       ### NixOS
       logg warn "TODO - Add support for NixOS"
@@ -212,6 +212,71 @@ ensureBasicDeps() {
   fi
 }
 
+### Ensure Homebrew is loaded
+loadHomebrew() {
+  if ! command -v brew > /dev/null; then
+    if [ -f /usr/local/bin/brew ]; then
+      logg info "Using /usr/local/bin/brew" && eval "$(/usr/local/bin/brew shellenv)"
+    elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" ]; then
+      logg info "Using ${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" && eval "$("${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" shellenv)"
+    elif [ -d "$HOME/.linuxbrew" ]; then
+      logg info "Using $HOME/.linuxbrew/bin/brew" && eval "$("$HOME/.linuxbrew/bin/brew" shellenv)"
+    elif [ -d "/home/linuxbrew/.linuxbrew" ]; then
+      logg info 'Using /home/linuxbrew/.linuxbrew/bin/brew' && eval "(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    else
+      logg info 'Could not find Homebrew installation'
+    fi
+  fi
+}
+
+### Ensures Homebrew folders have proper owners / permissions
+fixHomebrewPermissions() {
+  if command -v brew > /dev/null; then
+    logg info 'Applying proper permissions on Homebrew folders'
+    sudo chmod -R go-w "$(brew --prefix)/share"
+    BREW_DIRS="share etc/bash_completion.d"
+    for BREW_DIR in $BREW_DIRS; do
+      if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
+        sudo chown -Rf "$(whoami)" "$(brew --prefix)/$BREW_DIR"
+      fi
+    done
+    logg info 'Running brew update --force --quiet' && brew update --force --quiet
+  fi
+}
+
+### Installs Homebrew
+ensurePackageManagerHomebrew() {
+  if ! command -v brew > /dev/null; then
+    ### Select install type based off of whether or not sudo privileges are available
+    if command -v sudo > /dev/null && sudo -n true; then
+      logg info 'Installing Homebrew. Sudo privileges available.'
+      echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+    else
+      logg info 'Installing Homebrew. Sudo privileges not available. Password may be required.'
+      bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+    fi
+
+    ### Attempt to fix problematic installs
+    if [ -n "$BREW_EXIT_CODE" ]; then
+        logg warn 'Homebrew was installed but part of the installation failed to complete successfully.'
+        fixHomebrewPermissions
+      fi
+  fi
+}
+
+### Ensures gcc is installed
+ensureGcc() {
+  if command -v brew > /dev/null; then
+    if ! brew list | grep gcc > /dev/null; then
+      logg info 'Installing Homebrew gcc' && brew install --quiet gcc
+    else
+      logg info 'Homebrew gcc is available'
+    fi
+  else
+    logg error 'Failed to initialize Homebrew' && exit 1
+  fi
+}
+
 # @description This function ensures Homebrew is installed and available in the `PATH`. It handles the installation of Homebrew on both **Linux and macOS**.
 #     It will attempt to bypass sudo password entry if it detects that it can do so. The function also has some error handling in regards to various
 #     directories falling out of the correct ownership and permission states. Finally, it loads Homebrew into the active profile (allowing other parts of the script
@@ -219,58 +284,10 @@ ensureBasicDeps() {
 #
 #     With Homebrew installed and available, the script finishes by installing the `gcc` Homebrew package which is a very common dependency.
 ensureHomebrew() {
-  if ! command -v brew > /dev/null; then
-    if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
-      logg info "Sourcing from /home/linuxbrew/.linuxbrew/bin/brew" && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-      if ! command -v brew > /dev/null; then
-        logg error "The /home/linuxbrew/.linuxbrew directory exists but something is not right. Try removing it and running the script again." && exit 1
-      fi
-    elif [ -d "$HOME/.linuxbrew" ]; then
-      logg info "Sourcing from $HOME/.linuxbrew/bin/brew" && eval "$($HOME/.linuxbrew/bin/brew shellenv)"
-      if ! command -v brew > /dev/null; then
-        logg error "The $HOME/.linuxbrew directory exists but something is not right. Try removing it and running the script again." && exit 1
-      fi
-    else
-      ### Installs Homebrew and addresses a couple potential issues
-      if command -v sudo > /dev/null && sudo -n true; then
-        logg info "Installing Homebrew"
-        echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      else
-        logg info "Homebrew is not installed. The script will attempt to install Homebrew and you might be prompted for your password."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
-        if [ -n "$BREW_EXIT_CODE" ]; then
-          if command -v brew > /dev/null; then
-            logg warn "Homebrew was installed but part of the installation failed. Trying a few things to fix the installation.."
-            BREW_DIRS="share/man share/doc share/zsh/site-functions etc/bash_completion.d"
-            for BREW_DIR in $BREW_DIRS; do
-              if [ -d "$(brew --prefix)/$BREW_DIR" ]; then
-                logg info "Chowning $(brew --prefix)/$BREW_DIR" && sudo chown -R "$(whoami)" "$(brew --prefix)/$BREW_DIR"
-              fi
-            done
-            logg info "Running brew update --force --quiet" && brew update --force --quiet && logg success "Successfully ran brew update --force --quiet"
-          fi
-        fi
-      fi
-
-      ### Ensures the `brew` binary is available on Linux machines. macOS installs `brew` into the default `PATH` so nothing needs to be done for macOS.
-      if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
-        logg info "Sourcing shellenv from /home/linuxbrew/.linuxbrew/bin/brew" && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-      elif [ -f /usr/local/bin/brew ]; then
-        logg info "Sourcing shellenv from /usr/local/bin/brew" && eval "$(/usr/local/bin/brew shellenv)"
-      elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" ]; then
-        logg info "Sourcing shellenv from "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew"" && eval "$("${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" shellenv)"
-      fi
-    fi
-  fi
-
-  ### Ensure GCC is installed via Homebrew
-  if command -v brew > /dev/null; then
-    if ! brew list | grep gcc > /dev/null; then
-      logg info "Installing Homebrew gcc" && brew install --quiet gcc
-    fi
-  else
-    logg error "Failed to initialize Homebrew" && exit 2
-  fi
+  loadHomebrew
+  ensurePackageManagerHomebrew
+  loadHomebrew
+  ensureGcc
 }
 
 # @description This function determines whether or not a reboot is required on the target system.
@@ -281,25 +298,99 @@ ensureHomebrew() {
 #     After determining whether or not a reboot is required, the script will attempt to automatically
 #     reboot the machine.
 handleRequiredReboot() {
-    if [ -d /Applications ] && [ -d /System ]; then
-        ### macOS
-        logg info 'Checking if there is a pending update' && defaults read /Library/Updates/index.plist InstallAtLogout
-        # TODO - Uncomment this when we can determine conditions for reboot
-        # sudo shutdown -r now
-    elif [ -f /var/run/reboot-required ]; then
-        ### Linux
-        logg info '/var/run/reboot-required is present so a reboot is required'
-        if command -v systemctl > /dev/null; then
-            logg info 'systemctl present so rebooting with sudo systemctl start reboot.target' && sudo systemctl start reboot.target
-        elif command -v reboot > /dev/null; then
-            logg info 'reboot available as command so rebooting with sudo reboot' && sudo reboot
-        elif command -v shutdown > /dev/null; then
-            logg info 'shutdown command available so rebooting with sudo shutdown -r now' && sudo shutdown -r now
-        else
-            logg warn 'Reboot required but unable to determine appropriate restart command'
-        fi
+  if [ -d /Applications ] && [ -d /System ]; then
+    ### macOS
+    if ! defaults read /Library/Updates/index.plist InstallAtLogout 2>&1 | grep 'does not exist' > /dev/null; then
+      logg info 'There appears to be an update that requires a reboot'
+      logg info 'Attempting to reboot gracefully' && osascript -e 'tell application "Finder" to shut down'
     fi
+  elif [ -f /var/run/reboot-required ]; then
+    ### Linux
+    logg info '/var/run/reboot-required is present so a reboot is required'
+    if command -v systemctl > /dev/null; then
+      logg info 'systemctl present so rebooting with sudo systemctl start reboot.target' && sudo systemctl start reboot.target
+    elif command -v reboot > /dev/null; then
+      logg info 'reboot available as command so rebooting with sudo reboot' && sudo reboot
+    elif command -v shutdown > /dev/null; then
+      logg info 'shutdown command available so rebooting with sudo shutdown -r now' && sudo shutdown -r now
+    else
+      logg warn 'Reboot required but unable to determine appropriate restart command'
+    fi
+  fi
 }
+# @description Prints information describing why full disk access is required for the script to run on macOS.
+printFullDiskAccessNotice() {
+  if [ -d /Applications ] && [ -d /System ]; then
+    logg md "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/terminal/full-disk-access.md"
+  fi
+}
+
+# @description
+#     This script ensures the terminal running the provisioning process has full disk access permissions. It also
+#     prints information regarding the process of how to enable the permission as well as information related to
+#     the specific reasons that the terminal needs full disk access. More specifically, the scripts need full
+#     disk access to modify various system files and permissions.
+#
+#     Ensures the terminal running the provisioning process script has full disk access on macOS. It does this
+#     by attempting to read a file that requires full disk access. If it does not, the program opens the preferences
+#     pane where the user can grant access so that the script can continue.
+#
+#     ## Sources
+#
+#     * [Detecting Full Disk Access permission on macOS](https://www.dzombak.com/blog/2021/11/macOS-Scripting-How-to-tell-if-the-Terminal-app-has-Full-Disk-Access.html)
+ensureFullDiskAccess() {
+  if [ -d /Applications ] && [ -d /System ]; then
+    if ! plutil -lint /Library/Preferences/com.apple.TimeMachine.plist > /dev/null ; then
+      printFullDiskAccessNotice
+      logg star 'Opening Full Disk Access preference pane.. Grant full-disk access for the terminal you would like to run the provisioning process with.' && open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
+      logg info 'You may have to force quit the terminal and have it reload.'
+      if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
+        echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
+      fi
+      exit 0
+    else
+      logg success 'Current terminal has full disk access'
+      if [ -f "$HOME/.zshrc" ]; then
+        if command -v gsed > /dev/null; then
+          sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+        else
+          sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+        fi
+      fi
+    fi
+  fi
+}
+
+# @description Applies changes that require input from the user such as using Touch ID on macOS when
+#     importing certificates into the system keychain.
+#
+#     * Ensures CloudFlare Teams certificate is imported into the system keychain
+importCloudFlareCert() {
+  if [ -d /Applications ] && [ -d /System ] && [ -z "$HEADLESS_INSTALL" ]; then
+    ### Acquire certificate
+    if [ ! -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" ]; then
+      logg info 'Downloading Cloudflare_CA.crt from https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt to determine if it is already in the System.keychain'
+      CRT_TMP="$(mktemp)"
+      curl -sSL https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt > "$CRT_TMP"
+    else
+      CRT_TMP="$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
+    fi
+
+    ### Validate / import certificate
+    security verify-cert -c "$CRT_TMP" > /dev/null 2>&1
+    if [ $? != 0 ]; then
+      logg info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
+      sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_TMP" && logg success 'Successfully imported Cloudflare_CA.crt into System.keychain'
+    fi
+
+    ### Remove temporary file, if necessary
+    if [ ! -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" ]; then
+      rm -f "$CRT_TMP"
+    fi
+  fi
+}
+
+
 # @description Load default settings if it is in a CI setting
 setCIEnvironmentVariables() {
   if [ -n "$CI" ] || [ -n "$TEST_INSTALL" ]; then
@@ -332,13 +423,15 @@ setupPasswordlessSudo() {
   logg info 'Your user will temporarily be granted passwordless sudo for the duration of the script'
   if [ -n "$SUDO_EXIT_CODE" ] && [ -z "$SUDO_PASSWORD" ] && command -v chezmoi > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD" ]; then
     logg info "Acquiring SUDO_PASSWORD by using Chezmoi to decrypt ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD"
-    SUDO_PASSWORD="$(chezmoi decrypt "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD")"
+    SUDO_PASSWORD="$(cat "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD" | chezmoi decrypt)"
     export SUDO_PASSWORD
   fi
   if [ -n "$SUDO_PASSWORD" ]; then
     logg info 'Using the acquired sudo password to automatically grant the user passwordless sudo privileges for the duration of the script'
-    printf '%s\n' "$SUDO_PASSWORD" | sudo -p "" -S echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo tee -a /etc/sudoers > /dev/null
+    echo "$SUDO_PASSWORD" | sudo -S sh -c "echo '$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR' | sudo -S tee -a /etc/sudoers > /dev/null"
     echo ""
+    # Old method below does not work on macOS due to multiple sudo prompts
+    # printf '%s\n%s\n' "$SUDO_PASSWORD" | sudo -S echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR INSTALL DOCTOR" | sudo -S tee -a /etc/sudoers > /dev/null
   else
     logg info 'Press CTRL+C to bypass this prompt to either enter your password when needed or perform a non-privileged installation'
     logg info 'Note: Non-privileged installations are not yet supported'
@@ -472,10 +565,19 @@ ensureHomebrewDeps() {
 
   ### macOS
   if [ -d /Applications ] && [ -d /System ]; then
-    installBrewPackage "expect"
+    ### gsed
     installBrewPackage "gsed"
+    ### unbuffer / expect
+    if ! command -v unbuffer > /dev/null; then
+      brew install --quiet expect
+    fi
+    ### gtimeout / coreutils
     if ! command -v gtimeout > /dev/null; then
       brew install --quiet coreutils
+    fi
+    ### ts / moreutils
+    if ! command -v ts > /dev/null; then
+      brew install --quiet moreutils
     fi
   fi
 }
@@ -527,49 +629,65 @@ initChezmoiAndPrompt() {
   fi
 }
 
-# @description Run `chezmoi apply` and enable verbose mode if the `DEBUG_MODE` or `DEBUG` environment variable is set to true
-configureDebugMode() {
+# @description Save the log of the provision process to `$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log` and add the Chezmoi
+#     `--force` flag if the `HEADLESS_INSTALL` variable is set to `true`.
+runChezmoi() {
+  ### Set up logging
+  mkdir -p "$HOME/.local/var/log/install.doctor"
+  LOG_FILE="$HOME/.local/var/log/install.doctor/chezmoi-apply-$(date +%s).log"
+
+  ### Apply command flags
+  FORCE_MODIFIER=""
+  if [ -n "$HEADLESS_INSTALL" ]; then
+    logg info 'Running chezmoi apply forcefully because HEADLESS_INSTALL is set'
+    FORCE_MODIFIER="--force"
+  fi
+  KEEP_GOING_MODIFIER=""
+  if [ -n "$KEEP_GOING" ]; then
+    logg info 'Instructing chezmoi to keep going in the case of errors because KEEP_GOING is set'
+    KEEP_GOING_MODIFIER="-k"
+  fi
+  DEBUG_MODIFIER=""
   if [ -n "$DEBUG_MODE" ] || [ -n "$DEBUG" ]; then
     logg info "Either DEBUG_MODE or DEBUG environment variables were set so Chezmoi will be run in debug mode"
     export DEBUG_MODIFIER="-vvvvv"
   fi
-}
 
-# @description Save the log of the provision process to `$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log` and add the Chezmoi
-#     `--force` flag if the `HEADLESS_INSTALL` variable is set to `true`.
-runChezmoi() {
-  mkdir -p "$HOME/.local/var/log/install.doctor"
-  LOG_FILE="$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log"
-  if [ "$HEADLESS_INSTALL" = 'true' ]; then
-    logg info 'Running chezmoi apply forcefully'
-    if command -v unbuffer > /dev/null; then
-      if command -v caffeinate > /dev/null; then
-        caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
-      else
-        unbuffer -p chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
-      fi
+  ### Run chezmoi apply
+  if command -v unbuffer > /dev/null; then
+    if command -v caffeinate > /dev/null; then
+      logg info "Running: unbuffer -p caffeinate chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      unbuffer -p caffeinate chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     else
-      if command -v caffeinate > /dev/null; then
-        caffeinate chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
-      else
-        chezmoi apply $DEBUG_MODIFIER -k --force 2>&1 | tee "$LOG_FILE"
-      fi
+      logg info "Running: unbuffer -p chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      unbuffer -p chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     fi
+    logg info "Unbuffering log file $LOG_FILE"
+    UNBUFFER_TMP="$(mktemp)"
+    unbuffer cat "$LOG_FILE" > "$UNBUFFER_TMP"
+    mv -f "$UNBUFFER_TMP" "$LOG_FILE"
   else
-    logg info 'Running chezmoi apply'
-    if command -v unbuffer > /dev/null; then
-      if command -v caffeinate > /dev/null; then
-        caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
-      else
-        unbuffer -p chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
-      fi    
+    if command -v caffeinate > /dev/null; then
+      logg info "Running: caffeinate chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      caffeinate chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     else
-      if command -v caffeinate > /dev/null; then
-        caffeinate chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
-      else
-        chezmoi apply $DEBUG_MODIFIER -k 2>&1 | tee "$LOG_FILE"
-      fi    
+      logg info "Running: chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     fi
+  fi
+
+  ### Handle exit codes in log
+  if cat "$LOG_FILE" | grep 'chezmoi: exit status 140' > /dev/null; then
+    logg info "Chezmoi signalled that a reboot is necessary to apply a system update"
+    logg info "Running softwareupdate with the reboot flag"
+    sudo softwareupdate -i -a -R --agree-to-license && exit
+  fi
+
+  ### Handle actual process exit code
+  if [ -n "$CHEZMOI_EXIT_CODE" ]; then
+    logg error "Chezmoi encountered an error and exitted with an exit code of $CHEZMOI_EXIT_CODE"
+  else
+    logg success 'Finished provisioning the system'
   fi
 }
 
@@ -591,7 +709,6 @@ postProvision() {
   fi
 }
 
-
 # @section Execution order
 # @description The `provisionLogic` function is used to define the order of the script. All of the functions it relies on are defined
 #     above.
@@ -601,12 +718,16 @@ provisionLogic() {
   logg info "Ensuring WARP is disconnected" && ensureWarpDisconnected
   logg info "Applying passwordless sudo" && setupPasswordlessSudo
   logg info "Ensuring system Homebrew dependencies are installed" && ensureBasicDeps
+  logg info "Cloning / updating source repository" && cloneChezmoiSourceRepo
+  if [ -d /Applications ] && [ -d /System ]; then
+    ### macOS only
+    logg info "Ensuring full disk access from current terminal application" && ensureFullDiskAccess
+    logg info "Ensuring CloudFlare certificate imported into system certificates" && importCloudFlareCert
+  fi
   logg info "Ensuring Homebrew is available" && ensureHomebrew
   logg info "Installing Homebrew packages" && ensureHomebrewDeps
   logg info "Handling Qubes dom0 logic (if applicable)" && handleQubesDom0
-  logg info "Cloning / updating source repository" && cloneChezmoiSourceRepo
   logg info "Handling pre-provision logic" && initChezmoiAndPrompt
-  logg info "Handling debug mode if DEBUG or DEBUG_MODE are defined" && configureDebugMode
   logg info "Running the Chezmoi provisioning" && runChezmoi
   logg info "Ensuring temporary passwordless sudo is removed" && removePasswordlessSudo
   logg info "Handling post-provision logic" && postProvision
