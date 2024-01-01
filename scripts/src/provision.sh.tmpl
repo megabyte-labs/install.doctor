@@ -348,8 +348,8 @@ runChezmoi() {
   ### Run chezmoi apply
   if command -v unbuffer > /dev/null; then
     if command -v caffeinate > /dev/null; then
-      logg info "Running: caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
-      caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
+      logg info "Running: unbuffer -p caffeinate chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      unbuffer -p caffeinate chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     else
       logg info "Running: unbuffer -p chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
       unbuffer -p chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
