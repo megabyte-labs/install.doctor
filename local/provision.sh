@@ -730,7 +730,7 @@ provisionLogic() {
   logg info "Handling pre-provision logic" && initChezmoiAndPrompt
   logg info "Running the Chezmoi provisioning" && runChezmoi
   logg info "Ensuring temporary passwordless sudo is removed" && removePasswordlessSudo
-  logg info "Handling post-provision logic" && postProvision
   logg info "Determing whether or not reboot" && handleRequiredReboot
+  logg info "Handling post-provision logic" && postProvision
 }
 provisionLogic
