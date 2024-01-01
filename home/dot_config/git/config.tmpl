@@ -155,13 +155,12 @@
 [rerere]
   enabled = true
   autoupdate = true
-# TODO: Upgrade this to use SendGrid instead
 [sendemail]
-  smtpserver = smtp.gmail.com
-  smtpuser = {{ default "" .user.gmail.username }}
+  smtpserver = smtp.sendgrid.net
+  smtpuser = apikey
   smtpencryption = tls
   smtpserverport = 587
-  smtpPass = {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GMAIL_PASSWORD")) }}{{ includeTemplate "secrets/GMAIL_PASSWORD" | decrypt | trim }}{{ else }}{{ default "" (env "GMAIL_PASSWORD") }}{{ end }}
+  smtpPass = {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SENDGRID_API_KEY")) }}{{ includeTemplate "secrets/SENDGRID_API_KEY" | decrypt | trim }}{{ else }}{{ default "" (env "SENDGRID_API_KEY") }}{{ end }}
 [status]
   showUntrackedFiles = all
   submoduleSummary = true
