@@ -1,3 +1,6 @@
+
+* Move age decryption higher
+
 xattr -d com.apple.quarantine rclone
 Create issue about setting up completions - https://github.com/rsteube/lazycomplete
 pw="$(osascript -e 'Tell application "System Events" to display dialog "Password:" default answer "" with hidden answer' -e 'text returned of result' 2>/dev/null)" && echo "$pw"
