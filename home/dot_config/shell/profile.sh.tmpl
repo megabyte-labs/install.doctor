@@ -97,6 +97,11 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/motd.sh" ]; then
     . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/motd.sh"
   fi
+
+  ### SUDO_ASKPASS
+  if [ -d /Applications ] && [ -d /System ]; then
+    SUDO_ASKPASS="$HOME/.local/bin/sudo-askpass"
+  fi
 fi
 
 ### Cargo
