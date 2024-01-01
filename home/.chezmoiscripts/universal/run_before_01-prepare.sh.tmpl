@@ -23,17 +23,6 @@ EOF
 EOF
 }
 
-# @description Enables VNC early in case a user prompt is required on macOS
-configureMacOSVNC() {
-  if [ -d /Applications ] && [ -d /System ]; then
-    # Source: https://apple.stackexchange.com/questions/30238/how-to-enable-os-x-screen-sharing-vnc-through-ssh
-    # To disable, run: sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -configure -access -off
-    # Only enable when computer is not a corporate / work computer
-    logg info 'Enabling VNC using the VNC_PASSWORD variable which is vncpass when nothing is specified'
-    sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -allowAccessFor -specifiedUsers -clientopts -setreqperm -reqperm yes -setvnclegacy -vnclegacy yes -setvncpw -vncpw "{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VNC_PASSWORD")) }}{{ includeTemplate "secrets/VNC_PASSWORD" | decrypt | trim }}{{ else }}{{ default "vncpass" (env "VNC_PASSWORD") }}{{ end }}" -restart -agent -privs -all -users "$USER" && logg info 'Finished running the macOS Remote Management kickstart executable'
-  fi
-}
-
 # @description
 #     This script detects for the presence of the `warp-cli` and the WARP connection status. If `warp-cli` is installed
 #     and WARP is connected, then the service is disconnected. This feature is here to ensure programs such as `volta`
@@ -126,11 +115,9 @@ ensureFullDiskAccess
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   logg info 'The DEBUG or DEBUG_MODE environment variable is set so the prepare tasks will be run synchronously'
   importCloudFlareCert
-  configureMacOSVNC
   disconnectWarp
 else
   importCloudFlareCert &
-  configureMacOSVNC &
   disconnectWarp &
   wait
 fi
