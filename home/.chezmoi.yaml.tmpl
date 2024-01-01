@@ -208,8 +208,11 @@ data:
     username: "{{ default "user" (env "USER") }}"
     weatherZipCode: 07960
 diff:
-  format: "git"
   pager: "delta"
+edit:
+  command: "code"
+  args:
+    - "--wait"
 git:
   autoCommit: true
   autoPush: true
