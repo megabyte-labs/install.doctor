@@ -637,7 +637,7 @@ runChezmoi() {
   LOG_FILE="$HOME/.local/var/log/install.doctor/chezmoi-apply-$(date +%s).log"
 
   ### Apply command flags
-  COMMON_MODIFIERS="--no-pager"
+  COMMON_MODIFIERS=""
   FORCE_MODIFIER=""
   if [ -n "$HEADLESS_INSTALL" ]; then
     logg info 'Running chezmoi apply forcefully because HEADLESS_INSTALL is set'
