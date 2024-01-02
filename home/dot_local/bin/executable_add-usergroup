@@ -112,10 +112,3 @@ elif [[ "$(uname)" == "Linux" ]]; then
     echo -e "\e[92mGroup and user ${GROUP} created successfully on Linux\e[0m"
   fi
 fi
-
-# If the operating system is neither macOS nor Linux, display an error message
-if command -v logg > /dev/null; then
-  logg error "Unsupported operating system"
-else
-  echo -e "\e[91mUnsupported operating system\e[0m"
-fi
