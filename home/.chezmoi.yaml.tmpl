@@ -208,9 +208,12 @@ data:
     weatherZipCode: 07960
 diff:
   pager: delta
-  args: ["--paging", "never"]
+  command: delta
+  args:
+    - "--paging"
+    - never
 edit:
-  command: "code"
+  command: code
   args:
     - "--wait"
 git:
