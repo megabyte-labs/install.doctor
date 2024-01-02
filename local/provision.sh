@@ -637,6 +637,7 @@ runChezmoi() {
   LOG_FILE="$HOME/.local/var/log/install.doctor/chezmoi-apply-$(date +%s).log"
 
   ### Apply command flags
+  COMMON_MODIFIERS="--use-builtin-diff"
   FORCE_MODIFIER=""
   if [ -n "$HEADLESS_INSTALL" ]; then
     logg info 'Running chezmoi apply forcefully because HEADLESS_INSTALL is set'
@@ -656,11 +657,11 @@ runChezmoi() {
   ### Run chezmoi apply
   if command -v unbuffer > /dev/null; then
     if command -v caffeinate > /dev/null; then
-      logg info "Running: unbuffer -p caffeinate chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
-      unbuffer -p caffeinate chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
+      logg info "Running: unbuffer -p caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      unbuffer -p caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     else
-      logg info "Running: unbuffer -p chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
-      unbuffer -p chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
+      logg info "Running: unbuffer -p chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      unbuffer -p chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     fi
     logg info "Unbuffering log file $LOG_FILE"
     UNBUFFER_TMP="$(mktemp)"
@@ -668,11 +669,11 @@ runChezmoi() {
     mv -f "$UNBUFFER_TMP" "$LOG_FILE"
   else
     if command -v caffeinate > /dev/null; then
-      logg info "Running: caffeinate chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
-      caffeinate chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
+      logg info "Running: caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     else
-      logg info "Running: chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
-      chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
+      logg info "Running: chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     fi
   fi
 
@@ -713,6 +714,7 @@ postProvision() {
 # @description The `provisionLogic` function is used to define the order of the script. All of the functions it relies on are defined
 #     above.
 provisionLogic() {
+  loadHomebrew
   logg info "Setting environment variables" && setEnvironmentVariables
   logg info "Handling CI variables" && setCIEnvironmentVariables
   logg info "Ensuring WARP is disconnected" && ensureWarpDisconnected
