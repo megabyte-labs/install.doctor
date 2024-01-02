@@ -405,6 +405,7 @@ postProvision() {
 # @description The `provisionLogic` function is used to define the order of the script. All of the functions it relies on are defined
 #     above.
 provisionLogic() {
+  loadHomebrew
   logg info "Setting environment variables" && setEnvironmentVariables
   logg info "Handling CI variables" && setCIEnvironmentVariables
   logg info "Ensuring WARP is disconnected" && ensureWarpDisconnected
