@@ -207,11 +207,14 @@ data:
     username: "{{ default "user" (env "USER") }}"
     weatherZipCode: 07960
 diff:
-  pager: delta
+  pager: git
   command: delta
   args:
     - "--paging"
     - never
+  exclude:
+    - externals
+    - scripts
 edit:
   command: code
   args:

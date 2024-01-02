@@ -89,9 +89,9 @@ configureGPG() {
     dirmngr --daemon --standard-resolver
     KEYID_TRIMMED="$(echo "$KEYID" | sed 's/^0x//')"
     if ! gpg --list-secret-keys --keyid-format=long | grep "$KEYID_TRIMMED" > /dev/null; then
-      if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/public/${KEYID}.asc" ]; then
-        logg info "Importing GPG key stored in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/public/${KEYID}.asc since its name matches the GPG key ID in .chezmoi.yaml.tmpl"
-        gpg --import "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/public/${KEYID}.asc" && logg success 'Successfully imported master GPG key'
+      if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/private_public/private_${KEYID}.asc" ]; then
+        logg info "Importing GPG key stored in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/private_public/private_${KEYID}.asc since its name matches the GPG key ID in .chezmoi.yaml.tmpl"
+        gpg --import "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/private_public/private_${KEYID}.asc" && logg success 'Successfully imported master GPG key'
       else
         logg info 'Attempting to download the specified public GPG key ({{ .user.gpg.id }}) from public keyservers'
         gpg --keyserver https://pgp.mit.edu --recv "$KEYID" || EXIT_CODE=$?

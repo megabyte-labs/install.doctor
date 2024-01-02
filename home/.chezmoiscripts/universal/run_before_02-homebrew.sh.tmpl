@@ -133,7 +133,7 @@ upgradeDarwin() {
     ### Run upgrade process
     logg info 'Listing available OS upgrades'
     UPDATE_CHECK="$(softwareupdate -l)"
-    if [ "$UPDATE_CHECK" != "No new software available." ]; then
+    if ! echo "$UPDATE_CHECK" | grep "No new software available" > /dev/null; then
       logg info 'Applying OS upgrades (if available). This may take awhile..'
       expect -c "set timeout -1
       spawn sudo softwareupdate -i -a --agree-to-license
