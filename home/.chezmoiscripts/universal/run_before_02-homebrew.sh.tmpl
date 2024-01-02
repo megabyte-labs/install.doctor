@@ -131,45 +131,49 @@ upgradeDarwin() {
     fi
 
     ### Run upgrade process
-    logg info 'Listing available OS upgrades' && softwareupdate -l
-    logg info 'Applying OS upgrades (if available)'
-    logg info 'This may take awhile..'
-    expect -c "set timeout -1
-    spawn sudo softwareupdate -i -a --agree-to-license
-    expect \"Password:\"
-    send \"${SUDO_PASSWORD}\r\"
-    expect eof" &> /dev/null || EXIT_CODE=$?
-    if [ -n "$EXIT_CODE" ]; then
-      logg warn 'Error running softwareupdate'
-      unset EXIT_CODE
-    fi
-    # sudo sh -c "sudo softwareupdate -i -a --agree-to-license" || logg error 'Failed to trigger a system update via sudo softwareupdate -i -a --agree-to-license'
-
-    ### Reboot if necessary
-    # Source: https://community.jamf.com/t5/jamf-pro/determine-if-update-requires-restart/m-p/11682
-    logg info 'Checking if softwareupdate requires a reboot'
-    if softwareupdate -l | grep restart > /dev/null; then
-      ### Add kickstart script to .zshrc so it triggers automatically
-      if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
-        logg info 'Adding kickstart script to ~/.zshrc so script continues automatically if reboot is necessary'
-        echo 'bash <(curl -sSL --compressed https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
+    HEY="$(softwareupdate -l)"
+    logg info 'Listing available OS upgrades'
+    UPDATE_CHECK="$(softwareupdate -l)"
+    if [ "$UPDATE_CHECK" != "No new software available." ]; then
+      logg info 'Applying OS upgrades (if available). This may take awhile..'
+      expect -c "set timeout -1
+      spawn sudo softwareupdate -i -a --agree-to-license
+      expect \"Password:\"
+      send \"${SUDO_PASSWORD}\r\"
+      expect eof" &> /dev/null || EXIT_CODE=$?
+      if [ -n "$EXIT_CODE" ]; then
+        logg warn 'Error running softwareupdate'
+        unset EXIT_CODE
       fi
+      # sudo sh -c "sudo softwareupdate -i -a --agree-to-license" || logg error 'Failed to trigger a system update via sudo softwareupdate -i -a --agree-to-license'
 
-      if [ -n "$SUDO_PASSWORD" ] && [ "$SUDO_PASSWORD" != "" ]; then
-        ### Install kcpassword
-        if ! command -v enable_autologin > /dev/null; then
-          logg info 'enable_autologin is not installed and it is a requirement for auto-logging in after reboot' && brew install xfreebird/utils/kcpassword
+      ### Reboot if necessary
+      # Source: https://community.jamf.com/t5/jamf-pro/determine-if-update-requires-restart/m-p/11682
+      logg info 'Checking if softwareupdate requires a reboot'
+      if softwareupdate -l | grep restart > /dev/null; then
+        ### Add kickstart script to .zshrc so it triggers automatically
+        if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
+          logg info 'Adding kickstart script to ~/.zshrc so script continues automatically if reboot is necessary'
+          echo 'bash <(curl -sSL --compressed https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
         fi
 
-        ### Enable auto-login via kcpassword
-        logg info "Enabling autologin for $USER with acquired sudo password" && sudo enable_autologin "$USER" "$SUDO_PASSWORD"
-      fi
+        if [ -n "$SUDO_PASSWORD" ] && [ "$SUDO_PASSWORD" != "" ]; then
+          ### Install kcpassword
+          if ! command -v enable_autologin > /dev/null; then
+            logg info 'enable_autologin is not installed and it is a requirement for auto-logging in after reboot' && brew install xfreebird/utils/kcpassword
+          fi
 
-      ### Reboot
-      logg info 'Reboot required' && exit 140
-    else
-      logg info 'No reboot required for softwareupdate'
+          ### Enable auto-login via kcpassword
+          logg info "Enabling autologin for $USER with acquired sudo password" && sudo enable_autologin "$USER" "$SUDO_PASSWORD"
+        fi
+
+        ### Reboot
+        logg info 'Reboot required' && exit 140
+      else
+        logg info 'No reboot required for softwareupdate'
+      fi
     fi
+    
     if [ -f "$HOME/.zshrc" ]; then
       logg info 'Ensuring provision kickstart script is removed from ~/.zshrc'
       if command -v gsed > /dev/null; then
