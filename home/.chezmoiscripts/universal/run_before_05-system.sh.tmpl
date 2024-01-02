@@ -128,8 +128,8 @@ disableDStoreFileCreation() {
 # @description Enables transparent dark-mode on macOS
 enableDarkTransparentMode() {
   if command -v m > /dev/null; then
-    logg info 'Enabling dark mode' && m appearance darkmode YES
-    logg info 'Enabling theme transparency' && m appearance transparency YES
+    logg info 'Enabling dark mode' && m appearance darkmode YES > /dev/null
+    logg info 'Enabling theme transparency' && m appearance transparency YES > /dev/null
   fi
 }
 
