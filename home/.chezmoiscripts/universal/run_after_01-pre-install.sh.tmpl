@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 # @description Copies the `~/.config/shell/exports.sh` file to `/etc/zshenv` so that non-interactive ZSH sessions have all of the same
 #     environment PATH variables as interactive sessions. This was initially required to make Cakebrew work on macOS.
 addZshEnv() {

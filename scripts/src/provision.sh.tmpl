@@ -337,7 +337,8 @@ runChezmoi() {
     logg info 'Running chezmoi apply forcefully because HEADLESS_INSTALL is set'
     FORCE_MODIFIER="--force"
   fi
-  KEEP_GOING_MODIFIER=""
+  # TODO: https://github.com/twpayne/chezmoi/discussions/3448
+  KEEP_GOING_MODIFIER="-k"
   if [ -n "$KEEP_GOING" ]; then
     logg info 'Instructing chezmoi to keep going in the case of errors because KEEP_GOING is set'
     KEEP_GOING_MODIFIER="-k"
