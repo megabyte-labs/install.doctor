@@ -492,6 +492,45 @@ installJumpCloud() {
   fi
 }
 
+# @description Installs commonly depended on Python packages
+installSystemPips() {
+  ### Upgrade on macOS
+  if [ -f /Library/Developer/CommandLineTools/usr/bin/python3 ]; then
+    logg info 'Ensuring macOS system python3 has latest version of pip'
+    /Library/Developer/CommandLineTools/usr/bin/python3 -m pip install --upgrade pip
+  fi
+
+  ### Python
+  if command -v pip > /dev/null; then
+    if command -v python > /dev/null; then
+      if ! python -m certifi > /dev/null; then
+        pip install certifi
+      else
+        logg info 'certifi is available to python'
+      fi
+    else
+      logg warn 'python is not available on the system'
+    fi
+  else
+    logg warn 'pip is not available on the system'
+  fi
+  
+  ### Python 3
+  if command -v pip3 > /dev/null; then
+    if command -v python3 > /dev/null; then
+      if ! python3 -m certifi > /dev/null; then
+        pip3 install certifi
+      else
+        logg info 'certifi is available to python3'
+      fi
+    else
+      logg warn 'python3 is not available on the system'
+    fi
+  else
+    logg warn 'pip3 is not available on the system'
+  fi
+}
+
 # @description
 #     This script removes some of the software deemed to be "bloatware" by cycling through the values defined in
 #     `.removeLinuxPackages` of the `home/.chezmoidata.yaml` file.
@@ -633,6 +672,7 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   installBrewPackages
   installDocker
   installJumpCloud
+  installSystemPips
   removeLinuxBloatware
   setHostname
   setNtpServer
@@ -648,6 +688,7 @@ else
   installBrewPackages &
   installDocker &
   installJumpCloud &
+  installSystemPips &
   removeLinuxBloatware &
   setHostname &
   setNtpServer &
