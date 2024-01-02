@@ -131,9 +131,11 @@ upgradeDarwin() {
     fi
 
     ### Run upgrade process
-    logg info 'Listing available OS upgrades'
-    UPDATE_CHECK="$(softwareupdate -l)"
+    logg info 'Checking for available OS upgrades'
+    UPDATE_CHECK="$(softwareupdate -l 2>&1)"
     if ! echo "$UPDATE_CHECK" | grep "No new software available" > /dev/null; then
+      logg info 'There are available OS upgrades'
+      echo "$UPDATE_CHECK"
       logg info 'Applying OS upgrades (if available). This may take awhile..'
       expect -c "set timeout -1
       spawn sudo softwareupdate -i -a --agree-to-license
@@ -171,6 +173,8 @@ upgradeDarwin() {
       else
         logg info 'No reboot required for softwareupdate'
       fi
+    else
+      logg info 'There are no available OS upgrades'
     fi
 
     if [ -f "$HOME/.zshrc" ]; then
