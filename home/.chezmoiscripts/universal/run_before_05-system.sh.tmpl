@@ -499,21 +499,6 @@ installSystemPips() {
     logg info 'Ensuring macOS system python3 has latest version of pip'
     /Library/Developer/CommandLineTools/usr/bin/python3 -m pip install --upgrade pip
   fi
-
-  ### Python
-  if command -v pip > /dev/null; then
-    if command -v python > /dev/null; then
-      if ! python -m certifi > /dev/null; then
-        pip install certifi
-      else
-        logg info 'certifi is available to python'
-      fi
-    else
-      logg warn 'python is not available on the system'
-    fi
-  else
-    logg warn 'pip is not available on the system'
-  fi
   
   ### Python 3
   if command -v pip3 > /dev/null; then
