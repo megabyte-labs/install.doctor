@@ -626,10 +626,17 @@ setTimezone() {
   fi
 }
 
-# @description Configures macOS to enable the notification center
+# @description Configures macOS to enable the notification center. `&> /dev/null` was added to the command
+#     because the following useless error was being reported:
+#
+#     ```shell
+#     Load failed: 5: Input/output error
+#     Try running `launchctl bootstrap` as root for richer errors.
+#     Restart your computer for this to take effect
+#     ```
 showNotificationCenter() {
   if command -v m > /dev/null; then
-    logg info 'Configuring macOS to show notification center' && m notification showcenter YES
+    logg info 'Configuring macOS to show notification center' && m notification showcenter YES &> /dev/null
   fi
 }
 
