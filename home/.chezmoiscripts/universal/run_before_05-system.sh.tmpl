@@ -648,6 +648,7 @@ installBrewPackages() {
   ensureBrewPackageInstalled "zx"
   ensureBrewPackageInstalled "volta"
   volta install node@latest &
+  volta install yarn@latest &
   npm install -g npm@latest &
   wait
   logg success 'Finished installing auxilary Homebrew packages'
