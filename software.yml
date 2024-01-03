@@ -2353,7 +2353,7 @@ softwarePackages:
       ### Setting up launchd services on macOS
       if [ -d /Applications ] && [ -d /System ]; then
         sudo mkdir -p /var/log/clamav
-        sudo chown $USER /var/log/clamav
+        # sudo chown $USER /var/log/clamav
         sudo cp -f "$HOME/.local/etc/clamav/clamdscan.plist.tmpl" /Library/LaunchDaemons/clamdscan.plist
         sudo cp -f "$HOME/.local/etc/clamav/freshclam.plist.tmpl" /Library/LaunchDaemons/freshclam.plist
         sudo launchctl load -w /Library/LaunchDaemons/clamdscan.plist
