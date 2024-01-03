@@ -15,9 +15,6 @@ if [ "$USER" = 'root' ]; then
   return
 fi
 
-### Java (asdf)
-[ ! -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ] || source "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
-
 # If not running interactively, don't do anything
 case $- in
   *i*) ;;
@@ -446,6 +443,9 @@ fi
 
 ### iTerm2
 [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/iterm/iterm2.zsh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/iterm/iterm2.zsh"
+
+### mise
+! command -v mise > /dev/null || eval "$(mise activate zsh)"
 
 ### Navi (Ctrl+G)
 ! command -v navi > /dev/null || eval "$(navi widget zsh)"

@@ -2633,6 +2633,21 @@ softwarePackages:
       valet install
       valet trust
     cask: nicoverbruggen/homebrew-cask/phpmon
+  mise:
+    _bin: mise
+    _github: 
+    _name: mise
+    _post: |
+      #!/usr/bin/env bash
+      mise use --global openjdk-20
+      sudo mkdir -p /Library/Java/JavaVirtualMachines/openjdk-20.jdk
+      sudo ln -s "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" /Library/Java/JavaVirtualMachines/openjdk-20.jdk/Contents
+    apk: mise
+    brew: mise
+    cargo: mise-cli
+    nix-env: mise
+    npm: '@jdxcode/mise'
+    port: port
   composer:
     _bin: composer
     _desc: '[Composer](https://getcomposer.org/) is an application-level package manager for the PHP programming language that provides a standard format for managing dependencies of PHP software and required libraries. It was developed by Nils Adermann and Jordi Boggiano, who continue to manage the project.'

@@ -124,17 +124,6 @@ export AQUA_ROOT_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/aqua"
 export AQUA_GLOBAL_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/aqua/aqua.yaml"
 export PATH="${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin:$PATH"
 
-### ASDF
-export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/asdf/asdfrc"
-export ASDF_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/asdf"
-export ASDF_DATA_DIR="$ASDF_DIR"
-export ASDF_CRATE_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/asdf/default-cargo-pkgs"
-export ASDF_GEM_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/asdf/default-ruby-pkgs"
-export ASDF_GOLANG_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/asdf/default-golang-pkgs"
-export ASDF_GOLANG_MOD_VERSION_ENABLED=true
-export ASDF_NPM_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/asdf/default-npm-packages"
-export ASDF_PYTHON_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/asdf/default-python-pkgs"
-
 ### AWS CLI
 export AWS_SHARED_CREDENTIALS_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/aws/credentials"
 export AWS_CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/aws/config"
@@ -262,11 +251,7 @@ fi
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 export GO111MODULE=on
 export PATH="$PATH:${GOPATH}/bin"
-if command -v go > /dev/null && which go | grep -q 'asdf' > /dev/null && command -v asdf > /dev/null; then
-  GOROOT="$(asdf where golang)/go"
-  export GOROOT
-  export PATH="$PATH:${GOROOT}/bin"
-elif command -v go > /dev/null && command -v brew > /dev/null; then
+if command -v go > /dev/null && command -v brew > /dev/null; then
   GOROOT="$(brew --prefix go)/libexec"
   export GOROOT
   export PATH="$PATH:${GOROOT}/bin"
@@ -331,6 +316,12 @@ export MCFLY_KEY_SCHEME=vim
 
 ### minikube
 export MINIKUBE_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/minikube"
+
+### mise
+export MISE_GO_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/mise/default-go-pkgs"
+export MISE_NODE_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/mise/default-node-pkgs"
+export MISE_RUBY_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/mise/default-ruby-pkgs"
+export MISE_PYTHON_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/mise/default-python-pkgs"
 
 ### Monero
 if [ -f /Applications/monero-wallet-gui.app/Contents/MacOS/monerod ]; then

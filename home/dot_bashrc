@@ -38,9 +38,6 @@ if [ "$USER" = 'root' ]; then
   return
 fi
 
-### Java (asdf)
-[ ! -f "$ASDF_DATA_DIR/plugins/java/set-java-home.bash" ] || . "$ASDF_DATA_DIR/plugins/java/set-java-home.bash"
-
 ### Ble.sh
 # Loaded with bash-it
 # [[ $- == *i* ]] && source "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/ble.sh" --noattach --rcfile "${XDG_CONFIG_HOME:-$HOME/.config}/blesh/bleshrc"
@@ -153,6 +150,9 @@ if [ "$BASH_SUPPORT" = 'true' ] && [ -n "$BASH" ]; then
 
   ### Fig
   [ ! -f "$HOME/.fig/shell/bashrc.post.bash" ] || . "$HOME/.fig/shell/bashrc.post.bash"
+
+  ### mise
+  ! command -v mise > /dev/null || eval "$(mise activate bash)"
 
   ### Navi (Ctrl+G)
   ! command -v navi > /dev/null || eval "$(navi widget bash)"

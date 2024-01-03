@@ -137,9 +137,6 @@ if [ -d /Applications ] && [ -d /System ]; then
   fi
 fi
 
-### ASDF
-[ ! -f "$ASDF_DIR/asdf.sh" ] || . "$ASDF_DIR/asdf.sh"
-
 ### Tea
 # TODO: Fix this so it does not cause errors as Chezmoi runs
 # if command -v tea > /dev/null; then
