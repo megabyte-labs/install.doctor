@@ -1,0 +1,56 @@
+---
+{{ if eq .host.distro.id "darwin" }}
+backends:
+  - darwin
+  - matrix
+  - notifico
+  - slack
+  - systemlog
+{{ elif eq .host.distro.family "linux" }}
+backends:
+  - linux
+  - matrix
+  - notifico
+  - slack
+  - systemlog
+{{ elif eq .host.distro.family "windows" }}
+backends:
+  - matrix
+  - notifico
+  - slack
+  - win32
+{{ end }}
+
+darwin:
+linux:
+    icon: /usr/local/etc/branding/logo-color-256x256.png
+    # low, normal, critical
+    urgency: normal
+    transient: true
+    soundfile: /usr/local/share/sounds/notification-2.mp3
+    # 1 - system default, 0 - never expire
+    timeout: 0
+matrix:
+  url: matrix.org
+  roomId: install.doctor
+  userId: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "MATRIX_USERNAME")) }}{{- includeTemplate "secrets/MATRIX_USERNAME" | decrypt | trim -}}{{ else }}{{- env "MATRIX_USERNAME" -}}{{ end }}
+  password: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "MATRIX_PASSWORD")) }}{{- includeTemplate "secrets/MATRIX_PASSWORD" | decrypt | trim -}}{{ else }}{{- env "MATRIX_PASSWORD" -}}{{ end }}
+notifico:
+    webhook: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NOTIFICO_WEBHOOK_URL")) }}{{- includeTemplate "secrets/NOTIFICO_WEBHOOK_URL" | decrypt | trim -}}{{ else }}{{- env "NOTIFICO_WEBHOOK_URL" -}}{{ end }}
+prowl:
+    api_key: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "PROWL_API_KEY")) }}{{- includeTemplate "secrets/PROWL_API_KEY" | decrypt | trim -}}{{ else }}{{- env "PROWL_API_KEY" -}}{{ end }}
+    provider_key: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "PROWL_PROVIDER_KEY")) }}{{- includeTemplate "secrets/PROWL_PROVIDER_KEY" | decrypt | trim -}}{{ else }}{{- env "PROWL_PROVIDER_KEY" -}}{{ end }}
+    priority: normal
+    url: {{ .host.domain }}
+pushbullet:
+    access_token: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "PUSHBULLET_ACCESS_TOKEN")) }}{{- includeTemplate "secrets/PUSHBULLET_ACCESS_TOKEN" | decrypt | trim -}}{{ else }}{{- env "PUSHBULLET_ACCESS_TOKEN" -}}{{ end }}
+    email: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "PUSHBULLET_EMAIL")) }}{{- includeTemplate "secrets/PUSHBULLET_EMAIL" | decrypt | trim -}}{{ else }}{{- env "PUSHBULLET_EMAIL" -}}{{ end }}
+slack:
+    token: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SLACK_BOT_USER_OAUTH_TOKEN")) }}{{- includeTemplate "secrets/SLACK_BOT_USER_OAUTH_TOKEN" | decrypt | trim -}}{{ else }}{{- env "SLACK_BOT_USER_OAUTH_TOKEN" -}}{{ end }}
+    recipient: "#alerts"
+systemlog:
+    prio: ALERT
+    facility: LOCAL5
+    fmt: "[{title}] {message}"
+termux:
+win32:

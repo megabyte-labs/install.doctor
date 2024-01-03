@@ -124,6 +124,20 @@ urls:
     - tag: chat, slack
   {{ end }}
 
+  {{- $telegramBotToken := (default "" (env "TELEGRAM_BOT_TOKEN")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TELEGRAM_BOT_TOKEN")) -}}
+  {{-   $telegramBotToken = includeTemplate "secrets/TELEGRAM_BOT_TOKEN" | decrypt | trim -}}
+  {{- end -}}
+  {{- $telegramRecipient := (default "" (env "TELEGRAM_RECIPIENT_ID")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TELEGRAM_RECIPIENT_ID")) -}}
+  {{-   $telegramRecipient = includeTemplate "secrets/TELEGRAM_RECIPIENT_ID" | decrypt | trim -}}
+  {{- end -}}
+  {{- if and (ne $telegramBotToken "") (ne $telegramRecipient "") -}}
+  ### Telegram
+  - tgram://{{ $telegramBotToken }}/{chat_id}/
+    - tag: chat, telegram
+  {{ end }}
+
   {{- $twilioAccountSid := (default "" (env "TWILIO_ACCOUNT_SID")) -}}
   {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TWILIO_ACCOUNT_SID")) -}}
   {{-   $twilioAccountSid = includeTemplate "secrets/TWILIO_ACCOUNT_SID" | decrypt | trim -}}

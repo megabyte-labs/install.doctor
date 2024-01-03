@@ -12,21 +12,21 @@ mailOn:
 
 ### SMTP server settings
 smtp:
-  host: smtp.sendgrid.net
-  port: 587
-  username: apikey
+  host: {{ .host.smtp.host }}
+  port: {{ .host.smtp.port }}
+  username: {{ .host.smtp.user }}
   password: "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SENDGRID_API_KEY")) }}{{ includeTemplate "secrets/SENDGRID_API_KEY" | decrypt | trim }}{{ else }}{{ env "SENDGRID_API_KEY" }}{{ end }}"
 
 ### Error mail configuration
 errorMail:
-  from: "{{ .host.noReplyEmail }}"
+  from: "{{ .host.smtp.from }}"
   to: "{{ .user.email }}"
   prefix: "[Error]"
   attachLogs: true
 
 ### Info mail configuration
 infoMail:
-  from: "{{ .host.noReplyEmail }}"
+  from: "{{ .host.smtp.from }}"
   to: "{{ .user.email }}"
   prefix: "[Info]"
   attachLogs: true

@@ -1,0 +1,12 @@
+---
+global:
+  scrape_interval:     30s
+  evaluation_interval: 30s
+
+scrape_configs:
+  - job_name: 'statping'
+    scheme: https
+    scrape_interval: 30s
+    bearer_token: '{{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "STATPING_API_SECRET")) }}{{ includeTemplate "secrets/STATPING_API_SECRET" | decrypt | trim }}{{ else }}{{ default "" (env "STATPING_API_SECRET") }}{{ end }}'
+    static_configs:
+      - targets: ['status.{{ .host.domain }}']

@@ -149,6 +149,11 @@ data:
     samba:
       netbiosName: "{{ $sambaNetBiosName }}"
       workgroup: "{{ $sambaWorkGroupName }}"
+    smtp:
+      from: CombineOS <no-reply@megabyte.space>
+      host: smtp.sendgrid.net
+      port: 587
+      user: apikey
     ssh:
       allowTCPForwarding: no
       allowUsers: {{ env "USER" }}

@@ -157,6 +157,9 @@ if [ "$BASH_SUPPORT" = 'true' ] && [ -n "$BASH" ]; then
   ### Navi (Ctrl+G)
   ! command -v navi > /dev/null || eval "$(navi widget bash)"
 
+  ### ntfy
+  ! command -v ntfy > /dev/null || eval "$(ntfy shell-integration)"
+
   ### pkgx
   ! command -v pkgx > /dev/null || eval "$(pkgx --shellcode)"
 

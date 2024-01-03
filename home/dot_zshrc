@@ -450,6 +450,9 @@ fi
 ### Navi (Ctrl+G)
 ! command -v navi > /dev/null || eval "$(navi widget zsh)"
 
+### ntfy
+! command -v ntfy > /dev/null || eval "$(ntfy shell-integration)"
+
 ### Fig
 [ ! -f "$HOME/.fig/shell/zshrc.post.zsh" ] || source "$HOME/.fig/shell/zshrc.post.zsh"
 

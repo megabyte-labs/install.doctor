@@ -156,10 +156,10 @@
   enabled = true
   autoupdate = true
 [sendemail]
-  smtpserver = smtp.sendgrid.net
+  smtpserver = {{ .host.smtp.host }}
   smtpuser = apikey
   smtpencryption = tls
-  smtpserverport = 587
+  smtpserverport = {{ .host.smtp.host }}
   smtpPass = {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SENDGRID_API_KEY")) }}{{ includeTemplate "secrets/SENDGRID_API_KEY" | decrypt | trim }}{{ else }}{{ default "" (env "SENDGRID_API_KEY") }}{{ end }}
 [status]
   showUntrackedFiles = all

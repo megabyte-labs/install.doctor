@@ -404,10 +404,10 @@
     ]
   },
   "smtp": {
-    "host": "smtp.sendgrid.net",
-    "port": 587,
-    "from": "CombineOS SFTPGo <no-reply@{{ .host.domain }}",
-    "user": "apikey",
+    "host": "{{ .host.smtp.host }}",
+    "port": {{ .host.smtp.port }},
+    "from": "{{ .host.smtp.from }}",
+    "user": "{{ .host.smtp.user }}",
     "password": "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SENDGRID_API_KEY")) }}{{ includeTemplate "secrets/SENDGRID_API_KEY" | decrypt | trim }}{{ else }}{{ env "SENDGRID_API_KEY" }}{{ end }}",
     "auth_type": 0,
     "encryption": 1,

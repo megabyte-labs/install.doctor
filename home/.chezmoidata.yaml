@@ -30,10 +30,10 @@ docker:
     siteRoot: '/'
   portainer:
     siteLogoUrl: https://gitlab.com/megabyte-labs/misc/assets/-/raw/master/logo/color3@10x.png
-    templatesUrl: ''
+    templatesUrl: https://raw.githubusercontent.com/Lissy93/portainer-templates/main/templates.json
   statping:
     description: Uptime monitoring for Megabyte Labs managed web services
-    name: CombineOS Uptime Monitoring
+    name: Uptime Monitoring
   wireguard:
     serverUrl: megabyte.space
     internalSubnet: 10.93.92.0
@@ -102,6 +102,7 @@ chromeExtensions:
   - vytal/ncbknoohfjmcfneopnfkapmkblaenokb
   - web-archives/hkligngkgcpcolhcnkgccglchdafcnao
   - web-vitals/ahfhijdlegdabablpippeagghigmibma
+  - pushbullet/chlffgpmiacpedhhbkiomidkjlcfhogd
   # - headless-recorder/djeegiggegleadkkbgopoonhjimgehda
 firefoxPublicProfile: https://github.com/ProfessorManhattan/firefox-profile-with-plugins.git
 firefoxAddOns:
@@ -124,6 +125,7 @@ firefoxAddOns:
   - hoppscotch
   - json-lite
   - languagetool
+  - pushbullet
   - mailvelope
   - markdown-here
   - medium-unlimited-read-for-free
@@ -240,6 +242,7 @@ softwareGroups:
     - ferdium
     - firefox
     - microsoft-edge
+    - sidekick
     - tor-browser
   CI: &CI
     - act
@@ -282,6 +285,7 @@ softwareGroups:
     - fzf
     - ghcup
     - git
+    - microsoft-git
     - glances
     - glow
     - gnu
@@ -601,6 +605,7 @@ softwareGroups:
     - infracost
   Finance-Desktop: &Finance-Desktop
     - manta
+    - tradingview
   Games-Desktop: &Games-Desktop
     - mudlet # MUD client
   Git: &Git
@@ -837,6 +842,7 @@ softwareGroups:
     - license
     - lightproxy
     - lua
+    - meta
     - mono
     - ntl
     - nugetpackageexplorer
@@ -845,6 +851,7 @@ softwareGroups:
     - please
     - porter
     - proxyman
+    - pushpin
     - rust
     - sdkman-cli
     - snapcraft
@@ -947,6 +954,7 @@ softwareGroups:
     - skm
     - ssh-vault
     - sshpass
+    - sshs
     - sync-ssh-keys
     - teleport
     - tmate
@@ -1076,6 +1084,7 @@ softwareGroups:
     - sparkleshare
     - webtorrent
   Utilities: &Utilities
+    - blueutil
     - nativefier
   Virtualization: &Virtualization
     - d2vm
@@ -1198,6 +1207,7 @@ softwareGroups:
     - mockoon
     - mqttx
     - ndb
+    - phpmon
     - pieces
     - pieces-os
     - pieces-cli
@@ -1621,9 +1631,9 @@ softwarePlugins:
     cmd: bash -c 'if ! sdkmanager --list_installed | grep "{PLUGIN}" > /dev/null; then echo y | sdkmanager --install "{PLUGIN}"; fi'
     plugins:
       - add-ons;addon-google_apis-google-24
-      - build-tools;31.0.0
-      - build-tools;32.0.0
-      - build-tools;33.0.2
+      # - build-tools;31.0.0
+      # - build-tools;32.0.0
+      # - build-tools;33.0.2
       - build-tools;34.0.0
       - cmake;3.22.1
       - cmdline-tools;latest
@@ -1641,39 +1651,39 @@ softwarePlugins:
       - extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2
       - ndk-bundle
       - platform-tools
-      - platforms;android-31
-      - platforms;android-32
-      - platforms;android-33
+      # - platforms;android-31
+      # - platforms;android-32
+      # - platforms;android-33
       - platforms;android-34
       - skiaparser;3
-      - sources;android-31
-      - sources;android-32
-      - sources;android-33
+      # - sources;android-31
+      # - sources;android-32
+      # - sources;android-33
       - sources;android-34
-      - system-images;android-31;default;x86_64
-      - system-images;android-32;android-desktop;x86_64
-      - system-images;android-33-ext5;google_apis_playstore;arm64-v8a                                
-      - system-images;android-33-ext5;google_apis_playstore;x86_64
-      - system-images;android-33;android-automotive;arm64-v8a
-      - system-images;android-33;android-automotive;x86_64
-      - system-images;android-33;android-desktop;arm64-v8a
-      - system-images;android-33;android-desktop;x86_64
-      - system-images;android-33;android-tv;arm64-v8a
-      - system-images;android-33;android-tv;x86
-      - system-images;android-33;android-wear;arm64-v8a
-      - system-images;android-33;android-wear;x86_64
-      - system-images;android-33;aosp_atd;arm64-v8a
-      - system-images;android-33;aosp_atd;x86_64
-      - system-images;android-33;default;arm64-v8a
-      - system-images;android-33;default;x86_64
-      - system-images;android-33;google-tv;arm64-v8a
-      - system-images;android-33;google-tv;x86
-      - system-images;android-33;google_apis;arm64-v8a
-      - system-images;android-33;google_apis;x86_64
-      - system-images;android-33;google_apis_playstore;arm64-v8a
-      - system-images;android-33;google_apis_playstore;x86_64
-      - system-images;android-33;google_atd;arm64-v8a
-      - system-images;android-33;google_atd;x86_64
+      # - system-images;android-31;default;x86_64
+      # - system-images;android-32;android-desktop;x86_64
+      # - system-images;android-33-ext5;google_apis_playstore;arm64-v8a                                
+      # - system-images;android-33-ext5;google_apis_playstore;x86_64
+      # - system-images;android-33;android-automotive;arm64-v8a
+      # - system-images;android-33;android-automotive;x86_64
+      # - system-images;android-33;android-desktop;arm64-v8a
+      # - system-images;android-33;android-desktop;x86_64
+      # - system-images;android-33;android-tv;arm64-v8a
+      # - system-images;android-33;android-tv;x86
+      # - system-images;android-33;android-wear;arm64-v8a
+      # - system-images;android-33;android-wear;x86_64
+      # - system-images;android-33;aosp_atd;arm64-v8a
+      # - system-images;android-33;aosp_atd;x86_64
+      # - system-images;android-33;default;arm64-v8a
+      # - system-images;android-33;default;x86_64
+      # - system-images;android-33;google-tv;arm64-v8a
+      # - system-images;android-33;google-tv;x86
+      # - system-images;android-33;google_apis;arm64-v8a
+      # - system-images;android-33;google_apis;x86_64
+      # - system-images;android-33;google_apis_playstore;arm64-v8a
+      # - system-images;android-33;google_apis_playstore;x86_64
+      # - system-images;android-33;google_atd;arm64-v8a
+      # - system-images;android-33;google_atd;x86_64
       - system-images;android-34-ext8;google_apis_playstore;arm64-v8a
       - system-images;android-34-ext8;google_apis_playstore;x86_64
       - system-images;android-34;android-tv;arm64-v8a
@@ -1686,12 +1696,12 @@ softwarePlugins:
       - system-images;android-34;google_apis;x86_64
       - system-images;android-34;google_apis_playstore;arm64-v8a
       - system-images;android-34;google_apis_playstore;x86_64
-      - system-images;android-TiramisuPrivacySandbox;google_apis;arm64-v8a
-      - system-images;android-TiramisuPrivacySandbox;google_apis;x86_64
-      - system-images;android-TiramisuPrivacySandbox;google_apis_playstore;arm64-v8a
-      - system-images;android-TiramisuPrivacySandbox;google_apis_playstore;x86_64
-      - system-images;android-UpsideDownCakePrivacySandbox;google_apis_playstore;arm64-v8a
-      - system-images;android-UpsideDownCakePrivacySandbox;google_apis_playstore;x86_64
+      # - system-images;android-TiramisuPrivacySandbox;google_apis;arm64-v8a
+      # - system-images;android-TiramisuPrivacySandbox;google_apis;x86_64
+      # - system-images;android-TiramisuPrivacySandbox;google_apis_playstore;arm64-v8a
+      # - system-images;android-TiramisuPrivacySandbox;google_apis_playstore;x86_64
+      # - system-images;android-UpsideDownCakePrivacySandbox;google_apis_playstore;arm64-v8a
+      # - system-images;android-UpsideDownCakePrivacySandbox;google_apis_playstore;x86_64
   composer:
     cmd: null
     plugins:
@@ -1723,6 +1733,8 @@ softwarePlugins:
   docker-plugins:
     cmd: bash -c 'if ! docker plugin ls | grep "{PLUGIN}" > /dev/null; then echo y | docker plugin install "{PLUGIN}"; fi'
     plugins:
+      # TODO - Add https://github.com/ContainX/docker-volume-netshare
+      - n0r1skcom/docker-volume-cephfs
       - sapk/plugin-rclone
       - vieux/sshfs
     when: docker plugin ls &> /dev/null
@@ -1826,14 +1838,113 @@ softwarePlugins:
       - warp
       - who-can
   obsidian:
-    cmd: null
+    cmd: |
+      #!/usr/bin/env bash
+      PLUGIN_FOLDER="$(echo "{PLUGIN}" | sed 's/.*\/\(.*\)$/\1/')"
+      MAIN_TMP="$(mktemp)" && curl -sSL "{PLUGIN}/releases/latest/download/main.js" > "$MAIN_TMP"
+      MANIFEST_TMP="$(mktemp)" && curl -sSL "{PLUGIN}/releases/latest/download/manifest.json" > "$MANIFEST_TMP"
+      STYLES_TMP="$(mktemp)"
+      curl -sSL "{PLUGIN}/releases/latest/download/styles.css" > "$STYLES_TMP" || unset STYLES_TMP
+      find "$HOME/Documents" -type d -maxdepth 5 -name ".obsidian" | while read OBSIDIAN_DIR; do
+        mkdir -p "${OBSIDIAN_DIR}/plugins/${PLUGIN_FOLDER}"
+        cp -f "$MAIN_TMP" "${OBSIDIAN_DIR}/plugins/${PLUGIN_FOLDER}/main.js"
+        cp -f "$MANIFEST_TMP" "${OBSIDIAN_DIR}/plugins/${PLUGIN_FOLDER}/manifest.json"
+        if [ -n "$STYLES_TMP" ]; then
+          cp -f "$STYLES_TMP" "${OBSIDIAN_DIR}/plugins/${PLUGIN_FOLDER}/styles.css"
+        fi
+      done
     plugins:
-      - pieces-for-developers
-  raycast:
-    cmd: null
-    plugins:
-      - https://www.raycast.com/abielzulio/chatgpt
-      - https://www.raycast.com/BalliAsghar/mailsy
+      - https://github.com/aidenlx/media-extended
+      - https://github.com/alangrainger/obsidian-google-photos
+      - https://github.com/aleksey-rezvov/obsidian-local-images
+      - https://github.com/alexandru-dinu/obsidian-sortable
+      - https://github.com/AlexW00/obsidian-note-linker
+      - https://github.com/Alt-er/obsidian-sync-share
+      - https://github.com/andrewbrereton/obsidian-to-ical-plugin
+      - https://github.com/argenos/nldates-obsidian
+      - https://github.com/bingryan/obsidian-markdown-export-plugin
+      - https://github.com/blacksmithgu/obsidian-dataview
+      - https://github.com/bramses/chatgpt-md
+      - https://github.com/Canna71/obsidian-janitor
+      - https://github.com/caronchen/obsidian-epub-plugin
+      - https://github.com/CIMSTA/obsidiosaurus
+      - https://github.com/Clemens-E/obsidian-languagetool-plugin
+      - https://github.com/coddingtonbear/obsidian-local-rest-api
+      - https://github.com/dartungar/obsidian-mermaid
+      - https://github.com/davish/obsidian-full-calendar
+      - https://github.com/deathau/cm-editor-syntax-highlight-obsidian
+      - https://github.com/deathau/csv-obsidian
+      - https://github.com/denolehov/obsidian-git
+      - https://github.com/devbean/obsidian-wordpress
+      - https://github.com/dexin-qi/obsidian-sync-calendar
+      - https://github.com/dhamaniasad/obsidian-rich-links
+      - https://github.com/different-ai/obsidian-ava
+      - https://github.com/EasyChris/obsidian-to-notion
+      - https://github.com/Ellpeck/ObsidianCustomFrames
+      - https://github.com/FlorianWoelki/obsidian-iconize
+      - https://github.com/ganesshkumar/obsidian-table-editor
+      - https://github.com/getmatterapp/obsidian-matter
+      - https://github.com/HananoshikaYomaru/obsidian-publish-url
+      - https://github.com/HEmile/obsidian-search-on-internet
+      - https://github.com/hipstersmoothie/obsidian-plugin-toc
+      - https://github.com/ivan-lednev/obsidian-day-planner
+      - https://github.com/jamesmagoo/nostr-writer
+      - https://github.com/javalent/settings-search
+      - https://github.com/jmilldotdev/obsidian-wikipedia
+      - https://github.com/joethei/obsidian-rss
+      - https://github.com/jonstodle/obsius-obsidian-plugin
+      - https://github.com/khoj-ai/khoj
+      - https://github.com/LBF38/obsidian-syncthing-integration
+      - https://github.com/liamcain/obsidian-calendar-plugin
+      - https://github.com/liamcain/obsidian-periodic-notes
+      - https://github.com/linjunpop/obsidian-gist
+      - https://github.com/lukeleppan/better-word-count
+      - https://github.com/lukeleppan/obsidian-discordrpc
+      - https://github.com/Make-md/makemd
+      - https://github.com/marcjulianschwarz/obsidian-file-link
+      - https://github.com/marcusolsson/obsidian-projects
+      - https://github.com/mcndt/obsidian-quickshare
+      - https://github.com/meld-cp/obsidian-encrypt
+      - https://github.com/mgmeyers/obsidian-kanban
+      - https://github.com/mgmeyers/obsidian-style-settings
+      - https://github.com/MrGVSV/obsidian-github-embeds
+      - https://github.com/MSzturc/obsidian-advanced-slides
+      - https://github.com/noatpad/obsidian-banners
+      - https://github.com/NomarCub/obsidian-open-vscode
+      - https://github.com/nybbles/obsidian-pocket
+      - https://github.com/Obsidian-Desci/Obsidian-Desci
+      - https://github.com/obsidian-tasks-group/obsidian-tasks
+      - https://github.com/obsidianmd/obsidian-importer
+      - https://github.com/ObsidianPublisher/obsidian-github-publisher
+      - https://github.com/oeN/liquid-template
+      - https://github.com/OliverBalfour/obsidian-pandoc
+      - https://github.com/oliveryh/obsidian-emoji-toolbar
+      - https://github.com/omnivore-app/obsidian-omnivore
+      - https://github.com/ozntel/file-tree-alternative
+      - https://github.com/phibr0/obsidian-charts
+      - https://github.com/phibr0/obsidian-dictionary
+      - https://github.com/pieces-app/obsidian-pieces
+      - https://github.com/pieces-app/obsidian-pieces.git
+      - https://github.com/platers/obsidian-linter
+      - https://github.com/polyipseity/obsidian-terminal
+      - https://github.com/ravimashru/obsidian-show-file-path
+      - https://github.com/sbquinlan/obsidian-handlebars
+      - https://github.com/scambier/obsidian-omnisearch
+      - https://github.com/shabegom/buttons
+      - https://github.com/snezhig/obsidian-front-matter-title
+      - https://github.com/tadashi-aikawa/obsidian-various-complements-plugin
+      - https://github.com/trashhalo/obsidian-webhooks
+      - https://github.com/twentytwokhz/language-translator
+      - https://github.com/twibiral/obsidian-execute-code
+      - https://github.com/Vinzent03/find-unlinked-files
+      - https://github.com/Vinzent03/obsidian-advanced-uri
+      - https://github.com/weichenw/obsidian-hypothesis-plugin
+      - https://github.com/xryul/obsidian-image-converter
+      - https://github.com/YukiGasai/obsidian-google-calendar
+      - https://github.com/YukiGasai/obsidian-google-tasks
+      - https://github.com/zsviczian/excalibrain
+      - https://github.com/zsviczian/obsidian-excalidraw-plugin
+  # raycast: Manually install Raycast extensions - no CLI method
   steampipe:
     cmd: bash -c 'if [ ! -f /tmp/steampipe-plugin-list ]; then steampipe plugin list > /tmp/steampipe-plugin-list; fi && if ! cat /tmp/steampipe-plugin-list | grep "{PLUGIN}" > /dev/null; then steampipe plugin install "{PLUGIN}"; fi'
     plugins:

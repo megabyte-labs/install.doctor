@@ -20,9 +20,9 @@ services:
       DEBUG: 'False'
       DEFAULT_FROM_EMAIL: "{{ .docker.healthchecks.defaultFromEmail }}"
       EMAIL_HOST_PASSWORD_FILE: /run/secrets/healthchecks_sendgrid_api_key
-      EMAIL_HOST_USER: apikey
-      EMAIL_HOST: smtp.sendgrid.net
-      EMAIL_PORT: 587
+      EMAIL_HOST_USER: {{ .host.smtp.user }}
+      EMAIL_HOST: {{ .host.smtp.host }}
+      EMAIL_PORT: {{ .host.smtp.port }}
       EMAIL_USE_TLS: 'True'
       PGID: 1000
       PROMETHEUS_ENABLED: 'True'
@@ -46,8 +46,8 @@ services:
     volumes:
       - healthchecks_config:/config
     expose:
-      - 8000
-      - 2525
+      - "8071:8000"
+      - "2525:2525"
     restart: unless-stopped
     secrets:
       - healthchecks_db_name
