@@ -2626,6 +2626,9 @@ softwarePackages:
     _github: https://github.com/nicoverbruggen/phpmon
     _pre: |
       #!/usr/bin/env bash
+      if ! command -v composer > /dev/null; then
+        brew install composer
+      fi
       composer global require laravel/valet
       valet install
       valet trust
