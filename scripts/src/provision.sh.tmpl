@@ -323,6 +323,12 @@ initChezmoiAndPrompt() {
   fi
 }
 
+# @description When a reboot is triggered by softwareupdate on macOS, other utilities that require
+#     a reboot are also installed to save on reboots.
+beforeRebootDarwin() {
+  logg info "Ensuring macfuse is installed" && brew install --cask --no-quarantine --quiet macfuse
+}
+
 # @description Save the log of the provision process to `$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log` and add the Chezmoi
 #     `--force` flag if the `HEADLESS_INSTALL` variable is set to `true`.
 runChezmoi() {
@@ -374,6 +380,7 @@ runChezmoi() {
 
   ### Handle exit codes in log
   if cat "$LOG_FILE" | grep 'chezmoi: exit status 140' > /dev/null; then
+    beforeRebootDarwin
     logg info "Chezmoi signalled that a reboot is necessary to apply a system update"
     logg info "Running softwareupdate with the reboot flag"
     sudo softwareupdate -i -a -R --agree-to-license && exit
