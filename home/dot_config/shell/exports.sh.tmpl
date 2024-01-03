@@ -152,6 +152,12 @@ export BAT_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/bat/config"
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export PATH="$PATH:$CARGO_HOME/bin"
 
+### Composer
+export COMPOSER_BIN_DIR="$HOME/.local/bin/composer"
+# TODO
+# export COMPOSER_CAFILE=""
+export PATH="$PATH:$COMPOSER_BIN_DIR"
+
 ### Bash
 export BASH_COMPLETION_USER_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/bash-completion/bash_completion"
 
