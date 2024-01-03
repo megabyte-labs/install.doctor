@@ -3187,16 +3187,14 @@ softwarePackages:
     brew: oven-sh/bun/bun
     npm: bun
     proto: bun
-  nfty:
+  ntfy:
     _bin: nfty
     _github: https://github.com/dschep/ntfy
     _name: NFTY
     _post: |
       #!/usr/bin/env bash
       sudo mkdir -p /usr/local/etc/branding
-      sudo cp -f "$HOME/.local/etc/branding/favicon.ico" /usr/local/etc/branding/favicon.ico
       sudo cp -f "$HOME/.local/etc/branding/logo-color-256x256.png" /usr/local/etc/branding/logo-color-256x256.png
-      sudo cp -f "$HOME/.local/etc/branding/logo-color-900x900.png" /usr/local/etc/branding/logo-color-900x900.png
       sudo mkdir -p /usr/local/share/sounds
       rsync -rtvp "${XDG_DATA_HOME:-$HOME/.local/share}/sounds/"* /usr/local/share/sounds
       if command -v apt-get > /dev/null; then
@@ -3205,6 +3203,7 @@ softwarePackages:
       if command -v termux-setup-storage > /dev/null; then
         apt install termux-api
       fi
+    pip: ntfy[emoji,matrix,pid,slack]
     script: |
       #!/usr/bin/env bash
       pip3 install ntfy[emoji,matrix,pid,slack]
@@ -3499,11 +3498,6 @@ softwarePackages:
     _github: https://github.com/wfxr/forgit
     _name: forgit
     brew: forgit
-  ntfy:
-    _bin: ntfy
-    _github: https://github.com/dschep/ntfy
-    _name: ntfy
-    pipx: ntfy
   clipboard:
     _bin: cb
     _github: https://github.com/Slackadays/Clipboard.git
@@ -5269,6 +5263,7 @@ softwarePackages:
       if command -v docker > /dev/null && docker run --rm hello-world > /dev/null; then
         HAS_DOCKER=1
       else
+        HAS_DOCKER=0
         logg warn 'Docker is not installed or it is not operational'
       fi
 
@@ -5276,6 +5271,7 @@ softwarePackages:
       if command -v VirtualBox > /dev/null; then
         HAS_VIRTUALBOX=1
       else
+        HAS_VIRTUALBOX=0
         logg warn 'VirtualBox is not installed'
       fi
 
@@ -5306,14 +5302,14 @@ softwarePackages:
             if [ $HAS_DOCKER -eq 1 ]; then
               logg info 'Registering GitLab Runner(s) that use Docker executor'
               {{- range .host.gitlabRunners }}
-              {{- if .runnerImage }}
+              {{- if index . "runnerImage" }}
               {{- $cmd }}
               --url {{ .glurl }} \
               --executor "docker" \
-              --description "{{ .runnerDescription }} - on {{ .chezmoi.hostname }}" \
+              --description "{{ .runnerDescription }} - on {{ $.chezmoi.hostname }}" \
               --docker-image {{ .runnerImage }} \
-              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }},{{ .chezmoi.hostname }},docker"
-              {{ else }}--tag-list "{{ .chezmoi.hostname }},docker" --run-untagged{{ end }} || echo 'Runner registration failed"
+              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }},{{ $.chezmoi.hostname }},docker"
+              {{- else }}--tag-list "{{ $.chezmoi.hostname }},docker" --run-untagged{{ end }} || echo 'Runner registration failed"
               {{ end -}}
               {{ end }}
             fi
@@ -5322,14 +5318,14 @@ softwarePackages:
             if [ $HAS_VIRTUALBOX -eq 1 ]; then
               logg info 'Registering GitLab Runner(s) that use VirtualBox executor'
               {{- range .host.gitlabRunners }}
-              {{- if .baseVM }}
+              {{- if index . "baseVM" }}
               {{- $cmd }}
               --url {{ .glurl }} \
               --executor "virtualbox" \
-              --description "{{ .runnerDescription }} - on {{ .chezmoi.hostname }}" \
+              --description "{{ .runnerDescription }} - on {{ $.chezmoi.hostname }}" \
               --virtualbox-base-name "{{ .baseVM }}" \
-              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }},{{ .chezmoi.hostname }},virtualbox"
-              {{ else }}--tag-list "{{ .chezmoi.hostname }},virtualbox" --run-untagged{{ end }} || echo 'Runner registration failed"
+              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }},{{ $.chezmoi.hostname }},virtualbox"
+              {{- else }}--tag-list "{{ $.chezmoi.hostname }},virtualbox" --run-untagged{{ end }} || echo 'Runner registration failed"
               {{ end -}}
               {{ end }}
             fi
@@ -9170,10 +9166,10 @@ softwarePackages:
     _when:linux: '! test -f /opt/safing/portmaster/portmaster-start'
     ansible:linux: professormanhattan.portmaster
     ansible:windows: professormanhattan.portmaster
-    apt: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.
+    apt: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.deb
     choco: portmaster
     dnf: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.rpm
-    exe: https://updates.safing.io/latest/windows_amd64/packages/portmaster-installer.
+    exe: https://updates.safing.io/latest/windows_amd64/packages/portmaster-installer.exe
     scoop: portmaster-np
   pake:
     _bin: pake
@@ -12505,8 +12501,19 @@ softwarePackages:
     _name: VIM
     _post: |
       #!/usr/bin/env bash
-      echo "Installing VIM plugins" && vim +'PlugInstall --sync' +qall
-      echo "Updating VIM coc extensions" && vim +CocUpdateSync +qall
+      logg info "Installing VIM plugins" && vim +'PlugInstall --sync' +qall
+      # @description This script installs the extensions defined in `${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json`
+      #     which should correlate to the Coc extensions defined in `${XDG_CONFIG_HOME:-$HOME/.config}/vim/vimrc`.
+      installCocExtensions() {
+        if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json" ]; then
+          logg info "Running npm i --no-package-lock in ${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions"
+          cd "${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions" && npm i --no-package-lock
+          logg info "Running vim +CocUpdateSync +qall" && vim +CocUpdateSync +qall
+        else
+          logg info "Skipping Coc extension installation because ${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json is missing"
+        fi
+      }
+      logg info "Updating VIM coc extensions" && installCocExtensions
     ansible: professormanhattan.vim
     apt: vim
     brew: vim
@@ -13221,6 +13228,8 @@ softwarePackages:
       #     * [Linux managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/warp/private_mdm.xml.tmpl)
       #     * [macOS managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/Library/Managed%20Preferences/private_com.cloudflare.warp.plist.tmpl)
 
+      SSL_CERT_PATH="/etc/ssl/cert.pem"
+
       ### Install CloudFlare WARP (on non-WSL *nix systems)
       if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
         if [ -d /System ] && [ -d /Applications ]; then
@@ -13278,8 +13287,8 @@ softwarePackages:
           #     sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
           # fi
           logg info 'Updating the OpenSSL CA Store to include the Cloudflare certificate'
-          echo | sudo tee -a /etc/ssl/cert.pem < "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > /dev/null
-          echo "" | sudo tee -a /etc/ssl/cert.pem
+          echo | sudo tee -a "$SSL_CERT_PATH" < "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > /dev/null
+          echo "" | sudo tee -a "$SSL_CERT_PATH"
         else
           logg warn 'Session is SSH so adding Cloudflare encryption key to trusted certificates via the security program is being bypassed since it requires Touch ID / Password verification.'
         fi
@@ -13307,7 +13316,8 @@ softwarePackages:
             logg info 'Copying CloudFlare Teams PEM file to /usr/local/share/ca-certificates/Cloudflare_CA.crt'
             sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /usr/local/share/ca-certificates/Cloudflare_CA.crt
             logg info 'dpkg-reconfigure executable detected so using Debian/Ubuntu method of updating system trusted certificates to include CloudFlare Teams certificate'
-            sudo dpkg-reconfigure ca-certificates
+            sudo dpkg-reconfigure ca-certificates -p high
+            SSL_CERT_PATH="/etc/ssl/certs/ca-certificates.crt"
           else
             logg warn 'No /usr/local/share/ca-certificates folder present'
           fi
@@ -13317,6 +13327,7 @@ softwarePackages:
             sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /etc/pki/ca-trust/source/anchors
             logg info 'update-ca-trust executable detected so using CentOS/Fedora method of updating system trusted certificates to include CloudFlare Teams certificate'
             sudo update-ca-trust
+            SSL_CERT_PATH="/etc/pki/tls/certs/ca-bundle.crt"
           else
             logg warn '/etc/pki/ca-trust/source/anchors does not exist so skipping the system certificate update process'
           fi
@@ -13330,20 +13341,20 @@ softwarePackages:
         # certificate and the WARP client is not running.
         ### Git
         if command -v git > /dev/null; then
-          logg info "Configuring git to use /etc/ssl/cert.pem"
-          git config --global http.sslcainfo /etc/ssl/cert.pem
+          logg info "Configuring git to use $SSL_CERT_PATH"
+          git config --global http.sslcainfo "$SSL_CERT_PATH"
         fi
 
         ### NPM
         if command -v npm > /dev/null; then
-          logg info "Configuring npm to use /etc/ssl/cert.pem"
-          npm config set cafile /etc/ssl/cert.pem
+          logg info "Configuring npm to use $SSL_CERT_PATH"
+          npm config set cafile "$SSL_CERT_PATH"
         fi
 
         ### Python
         if command -v python3 > /dev/null; then
           ### Ensure Certifi package is available globally
-          if ! pip3 list certifi | grep certifi > /dev/null; then
+          if ! pip3 list | grep certifi > /dev/null; then
             if command -v brew > /dev/null; then
               logg info 'Ensuring Python certifi is installed via Homebrew'
               brew install --quiet python-certifi

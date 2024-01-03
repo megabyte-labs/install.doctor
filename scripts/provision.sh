@@ -21,7 +21,7 @@
 #     | **Task**           | Task runner used on-device for task parallelization and dependency management        |
 #     | **ZX / Node.js**   | ZX is a Node.js abstraction that allows for better scripts                           |
 #     | Gum                | Gum is a terminal UI prompt CLI (which allows sweet, interactive prompts)            |
-#     | Glow               | Glow is a markdown renderer used for applying terminal-friendly styled to markdown   |
+#     | Glow               | Glow is a markdown renderer used for applying terminal-friendly styles to markdown   |
 #
 #     There are also a handful of system packages that are installed like `curl` and `git`. Then, during the Chezmoi provisioning
 #     process, there are a handful of system packages that are installed to ensure things run smoothly. You can find more details
@@ -244,6 +244,20 @@ fixHomebrewPermissions() {
   fi
 }
 
+# @description This function removes group write permissions from the Homebrew share folder which
+#     is required for the ZSH configuration.
+fixHomebrewSharePermissions() {
+  if [ -f /usr/local/bin/brew ]; then
+    sudo chmod -R g-w /usr/local/share
+  elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" ]; then
+    sudo chmod -R g-w "${HOMEBREW_PREFIX:-/opt/homebrew}/share"
+  elif [ -d "$HOME/.linuxbrew" ]; then
+    sudo chmod -R g-w "$HOME/.linuxbrew/share"
+  elif [ -d "/home/linuxbrew/.linuxbrew" ]; then
+    sudo chmod -R g-w /home/linuxbrew/.linuxbrew/share
+  fi
+}
+
 ### Installs Homebrew
 ensurePackageManagerHomebrew() {
   if ! command -v brew > /dev/null; then
@@ -251,9 +265,11 @@ ensurePackageManagerHomebrew() {
     if command -v sudo > /dev/null && sudo -n true; then
       logg info 'Installing Homebrew. Sudo privileges available.'
       echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+      fixHomebrewSharePermissions
     else
       logg info 'Installing Homebrew. Sudo privileges not available. Password may be required.'
       bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+      fixHomebrewSharePermissions
     fi
 
     ### Attempt to fix problematic installs

@@ -244,6 +244,20 @@ fixHomebrewPermissions() {
   fi
 }
 
+# @description This function removes group write permissions from the Homebrew share folder which
+#     is required for the ZSH configuration.
+fixHomebrewSharePermissions() {
+  if [ -f /usr/local/bin/brew ]; then
+    sudo chmod -R g-w /usr/local/share
+  elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" ]; then
+    sudo chmod -R g-w "${HOMEBREW_PREFIX:-/opt/homebrew}/share"
+  elif [ -d "$HOME/.linuxbrew" ]; then
+    sudo chmod -R g-w "$HOME/.linuxbrew/share"
+  elif [ -d "/home/linuxbrew/.linuxbrew" ]; then
+    sudo chmod -R g-w /home/linuxbrew/.linuxbrew/share
+  fi
+}
+
 ### Installs Homebrew
 ensurePackageManagerHomebrew() {
   if ! command -v brew > /dev/null; then
@@ -251,9 +265,11 @@ ensurePackageManagerHomebrew() {
     if command -v sudo > /dev/null && sudo -n true; then
       logg info 'Installing Homebrew. Sudo privileges available.'
       echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+      fixHomebrewSharePermissions
     else
       logg info 'Installing Homebrew. Sudo privileges not available. Password may be required.'
       bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+      fixHomebrewSharePermissions
     fi
 
     ### Attempt to fix problematic installs
@@ -631,6 +647,12 @@ initChezmoiAndPrompt() {
   fi
 }
 
+# @description When a reboot is triggered by softwareupdate on macOS, other utilities that require
+#     a reboot are also installed to save on reboots.
+beforeRebootDarwin() {
+  logg info "Ensuring macfuse is installed" && brew install --cask --no-quarantine --quiet macfuse
+}
+
 # @description Save the log of the provision process to `$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log` and add the Chezmoi
 #     `--force` flag if the `HEADLESS_INSTALL` variable is set to `true`.
 runChezmoi() {
@@ -682,6 +704,7 @@ runChezmoi() {
 
   ### Handle exit codes in log
   if cat "$LOG_FILE" | grep 'chezmoi: exit status 140' > /dev/null; then
+    beforeRebootDarwin
     logg info "Chezmoi signalled that a reboot is necessary to apply a system update"
     logg info "Running softwareupdate with the reboot flag"
     sudo softwareupdate -i -a -R --agree-to-license && exit

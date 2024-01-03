@@ -359,11 +359,11 @@
     url = "{{ $vimPlugin }}"
     {{ $gitArgs }}
 {{- end }}
-# coc.nvim VIM plugin requires custom branch "release"
 [".local/share/vim/plugged/coc.nvim"]
     type = "git-repo"
     url = "https://github.com/neoclide/coc.nvim.git"
-    {{ $gitArgs }}
+    clone.args = ["--branch", "release", "--depth", "1"]
+    pull.args = ["--ff-only"]
 
 ### NVIM
 [".config/nvim"]
