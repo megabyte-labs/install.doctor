@@ -3187,12 +3187,9 @@ softwarePackages:
       if command -v termux-setup-storage > /dev/null; then
         apt install termux-api
       fi
-    pip:
-      - ntfy
-      - ntfy[emoji]
-      - ntfy[matrix]
-      - ntfy[pid]
-      - ntfy[slack]
+    script: |
+      #!/usr/bin/env bash
+      pip3 install ntfy[emoji,matrix,pid,slack]
   docker-desktop:
     _desc: '[Docker](https://www.docker.com/) is a set of platform-as-a-service products that use OS-level virtualization to deliver software in packages called containers. Containers are isolated from one another and bundle their own software, libraries and configuration files; they can communicate with each other through well-defined channels. [Docker Desktop](https://www.docker.com/products/docker-desktop/) adds a sleek UI for Docker and makes it easier to manage Docker on macOS and Windows.'
     _docs: https://docs.docker.com/
