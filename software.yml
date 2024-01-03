@@ -725,16 +725,6 @@ softwarePackages:
     _home: https://github.com/quark-engine/quark-engine
     _name: Quark-Engine
     pipx: quark-engine
-  antivirus:
-    _bin: null
-    _desc: >-
-      [Clam AntiVirus](https://www.clamav.net/) is a free software, cross-platform and open-source antivirus software toolkit able to detect many types of malicious software, including viruses. One of its main uses is on mail servers as a server-side email virus scanner. [rkhunter](http://rkhunter.sourceforge.net/) is a Unix-based tool that scans for rootkits, backdoors, and possible local exploits. It does this by comparing SHA-1 hashes of important files with known good ones in online databases. [Malwarebytes](https://www.malwarebytes.com/) is an anti-malware software for Microsoft Windows, macOS, Chrome OS, Android, and iOS that finds and removes malware. Made by Malwarebytes Corporation, it was first released in January 2006.
-    _docs: https://docs.clamav.net/
-    _github: https://github.com/Cisco-Talos/clamav
-    _home: >-
-      https://www.clamav.net/ https://www.malwarebytes.com/
-    _name: AntiVirus
-    ansible: professormanhattan.antivirus
   swiftformat:
     _bin: swiftformat
     _github: https://github.com/nicklockwood/SwiftFormat
@@ -2338,7 +2328,8 @@ softwarePackages:
     _name: ClamAV
     _post: |
       #!/usr/bin/env bash
-      # Add freshclam.conf
+
+      ### Add freshclam.conf
       if [ -f "$HOME/.local/etc/clamav/freshclam.conf" ]; then
         sudo mkdir -p /usr/local/etc/clamav
         sudo cp -f "$HOME/.local/etc/clamav/freshclam.conf" /usr/local/etc/clamav/freshclam.conf
@@ -2346,7 +2337,8 @@ softwarePackages:
           ln -s /usr/local/etc/clamav/freshclam.conf "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/freshclam.conf"
         fi
       fi
-      # Add clamd.conf
+
+      ### Add clamd.conf
       if [ -f "$HOME/.local/etc/clamav/clamd.conf" ]; then
         sudo mkdir -p /usr/local/etc/clamav
         sudo cp -f "$HOME/.local/etc/clamav/clamd.conf" /usr/local/etc/clamav/clamd.conf
@@ -2354,8 +2346,19 @@ softwarePackages:
           ln -s /usr/local/etc/clamav/clamd.conf "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/clamd.conf"
         fi
       fi
-      # Update database
+
+      ### Update database
       freshclam
+
+      ### Setting up launchd services on macOS
+      if [ -d /Applications ] && [ -d /System ]; then
+        sudo mkdir -p /var/log/clamav
+        sudo chown $USER /var/log/clamav
+        sudo cp -f "$HOME/.local/etc/clamav/clamdscan.plist.tmpl" /Library/LaunchDaemons/clamdscan.plist
+        sudo cp -f "$HOME/.local/etc/clamav/freshclam.plist.tmpl" /Library/LaunchDaemons/freshclam.plist
+        sudo launchctl load -w /Library/LaunchDaemons/clamdscan.plist
+        sudo launchctl load -w /Library/LaunchDaemons/freshclam.plist
+      fi
     _service:apt: clamav-freshclam
     _service:dnf: clamd-freshclam
     _service:pacman: clamav-freshclam
