@@ -6,14 +6,14 @@ backends:
   - notifico
   - slack
   - systemlog
-{{ elif eq .host.distro.family "linux" }}
+{{ else if eq .host.distro.family "linux" }}
 backends:
   - linux
   - matrix
   - notifico
   - slack
   - systemlog
-{{ elif eq .host.distro.family "windows" }}
+{{ else i eq .host.distro.family "windows" }}
 backends:
   - matrix
   - notifico
