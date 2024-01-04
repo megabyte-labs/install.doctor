@@ -8349,15 +8349,6 @@ softwarePackages:
     choco: figma
     flatpak: io.github.Figma_Linux.figma_linux
     snap: figma-linux
-  tea-gui:
-    _bin: null
-    _desc: The open store for open source
-    _docs: https://docs.tea.xyz/appendix/tea-gui
-    _github: https://github.com/teaxyz/gui
-    _home: https://tea.xyz/
-    _name: Tea GUI
-    _app: tea.app
-    cask: tea
   node-prune:
     _bin: node-prune
     _desc: Extension to remove unnecessary files from node_modules
@@ -11655,6 +11646,13 @@ softwarePackages:
       #!/usr/bin/env bash
       micromamba self-update
     brew: micromamba
+  steam:
+    _bin: steam
+    _github: false
+    _name: steam
+    choco: steam
+    cask: steam
+    flatpak: com.valvesoftware.Steam
   microsoft-teams:
     _bin: teams
     _desc: '[Microsoft Teams](https://www.microsoft.com/en-us/microsoft-teams/group-chat-software) is a proprietary business communication platform developed by Microsoft, as part of the Microsoft 365 family of products. Teams primarily competes with the similar service Slack, offering workspace chat and videoconferencing, file storage, and application integration.'
