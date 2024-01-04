@@ -3201,7 +3201,7 @@ softwarePackages:
       sudo mkdir -p /usr/local/etc/branding
       sudo cp -f "$HOME/.local/etc/branding/logo-color-256x256.png" /usr/local/etc/branding/logo-color-256x256.png
       sudo mkdir -p /usr/local/share/sounds
-      rsync -rtvp "${XDG_DATA_HOME:-$HOME/.local/share}/sounds/"* /usr/local/share/sounds
+      sudo rsync -rtvp "${XDG_DATA_HOME:-$HOME/.local/share}/sounds/" /usr/local/share/sounds
       if command -v apt-get > /dev/null; then
         sudo apt install python-dbus
       fi
@@ -12754,7 +12754,15 @@ softwarePackages:
         logg info "The GitHub Actions runner installation is not present at $GH_RUNNER_PATH"
       fi
     script: |
-      RELEASES="$(curl -sSL --compressed --header "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/actions/runner/releases/latest")"
+      #!/usr/bin/env bash
+      if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh" ]; then
+        source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh"
+      fi
+      if [ -n "$GITHUB_TOKEN" ]; then
+        RELEASES="$(curl -sSL --compressed --header "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/actions/runner/releases/latest")"
+      else
+        RELEASES="$(curl -sSL --compressed "https://api.github.com/repos/actions/runner/releases/latest")"
+      fi
       LATEST_VERSION="$(echo "$RELEASES" | grep -o '"tag_name": "[^"]*' | grep -o '[^"]*$')"
       ARCHITECTURE="$(uname -m | sed 's/86_//' | sed 's/v7l//')"
       OS_FAMILY="$(test -d /Applications && echo osx || echo linux)"
