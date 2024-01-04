@@ -2629,12 +2629,14 @@ softwarePackages:
     _github: https://github.com/nicoverbruggen/phpmon
     _pre: |
       #!/usr/bin/env bash
-      if ! command -v composer > /dev/null; then
-        brew install composer
+      if ! command -v valet > /dev/null; then
+        if ! command -v composer > /dev/null; then
+          brew install composer
+        fi
+        composer global require laravel/valet
+        valet install
+        valet trust
       fi
-      composer global require laravel/valet
-      valet install
-      valet trust
     cask: nicoverbruggen/homebrew-cask/phpmon
   mise:
     _bin: mise
@@ -9745,7 +9747,12 @@ softwarePackages:
     pacman: rclone
     port: rclone
     scoop: rclone
-    script:darwin: sudo -v; curl https://rclone.org/install.sh | sudo bash
+    script:darwin: |
+      #!/usr/bin/env bash
+      TMP="$(mktemp)"
+      curl https://rclone.org/install.sh > "$TMP"
+      sudo bash "$TMP"
+      rm -f "$TMP"
   redis-desktop-manager:
     _bin: redis-desktop-manager
     _desc: '[Redis Desktop Manager](https://rdm.dev/) is an open source cross-platform Desktop Manager for Redis based on Qt 5.'
