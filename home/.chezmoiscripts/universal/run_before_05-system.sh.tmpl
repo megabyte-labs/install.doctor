@@ -89,9 +89,9 @@ configureGPG() {
     dirmngr --daemon --standard-resolver
     KEYID_TRIMMED="$(echo "$KEYID" | sed 's/^0x//')"
     if ! gpg --list-secret-keys --keyid-format=long | grep "$KEYID_TRIMMED" > /dev/null; then
-      if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/public/${KEYID}.asc" ]; then
-        logg info "Importing GPG key stored in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/public/${KEYID}.asc since its name matches the GPG key ID in .chezmoi.yaml.tmpl"
-        gpg --import "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/public/${KEYID}.asc" && logg success 'Successfully imported master GPG key'
+      if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/private_public/private_${KEYID}.asc" ]; then
+        logg info "Importing GPG key stored in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/private_public/private_${KEYID}.asc since its name matches the GPG key ID in .chezmoi.yaml.tmpl"
+        gpg --import "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/private_public/private_${KEYID}.asc" && logg success 'Successfully imported master GPG key'
       else
         logg info 'Attempting to download the specified public GPG key ({{ .user.gpg.id }}) from public keyservers'
         gpg --keyserver https://pgp.mit.edu --recv "$KEYID" || EXIT_CODE=$?
@@ -128,8 +128,8 @@ disableDStoreFileCreation() {
 # @description Enables transparent dark-mode on macOS
 enableDarkTransparentMode() {
   if command -v m > /dev/null; then
-    logg info 'Enabling dark mode' && m appearance darkmode YES
-    logg info 'Enabling theme transparency' && m appearance transparency YES
+    logg info 'Enabling dark mode' && m appearance darkmode YES > /dev/null
+    logg info 'Enabling theme transparency' && m appearance transparency YES > /dev/null
   fi
 }
 
@@ -253,7 +253,7 @@ function gVisorPreBuilt() {
   ARCH=$(uname -m)
   URL="https://storage.googleapis.com/gvisor/releases/release/latest/${ARCH}"
   logg info 'Downloading gVisor runsc and containerd-shim-runsc-v1 SHA signatures'
-  wget "${URL}/runsc ${URL}/runsc.sha512" "${URL}/containerd-shim-runsc-v1 ${URL}/containerd-shim-runsc-v1.sha512"
+  wget "${URL}/runsc" "${URL}/runsc.sha512" "${URL}/containerd-shim-runsc-v1" "${URL}/containerd-shim-runsc-v1.sha512"
   sha512sum -c runsc.sha512 -c containerd-shim-runsc-v1.sha512
   rm -f *.sha512
   chmod a+rx runsc containerd-shim-runsc-v1
@@ -442,11 +442,11 @@ installDocker() {
       ### Create /etc/docker/daemon.json
       logg info 'Creating /etc/docker'
       sudo mkdir -p /etc/docker
-      if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/home/dot_config/docker/daemon.json" ]; then
+      if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/dot_config/docker/daemon.json.tmpl" ]; then
         logg info 'Creating /etc/docker/daemon.json'
-        sudo cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/home/dot_config/docker/daemon.json" /etc/docker/daemon.json
+        chezmoi cat "${XDG_CONFIG_HOME:-$HOME/.config}/docker/config.json" | sudo tee /etc/docker/daemon.json
       else
-        logg warn "${XDG_DATA_HOME:-$HOME/.local/share}/home/dot_config/docker/daemon.json is not available so the /etc/docker/daemon.json file cannot be populated"
+        logg warn "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/dot_config/docker/daemon.json.tmpl is not available so the /etc/docker/daemon.json file cannot be populated"
       fi
 
       ### Restart / enable Docker
@@ -489,6 +489,30 @@ installJumpCloud() {
       logg info 'Enrolling device with JumpCloud by running the kickstart script'
       curl --tlsv1.2 --silent --show-error --header 'x-connect-key: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "JUMPCLOUD_CONNECT_KEY")) }}{{- includeTemplate "secrets/JUMPCLOUD_CONNECT_KEY" | decrypt | trim -}}{{ else }}{{- env "JUMPCLOUD_CONNECT_KEY" -}}{{ end }}' https://kickstart.jumpcloud.com/Kickstart | sudo bash
     fi
+  fi
+}
+
+# @description Installs commonly depended on Python packages
+installSystemPips() {
+  ### Upgrade on macOS
+  if [ -f /Library/Developer/CommandLineTools/usr/bin/python3 ]; then
+    logg info 'Ensuring macOS system python3 has latest version of pip'
+    /Library/Developer/CommandLineTools/usr/bin/python3 -m pip install --upgrade pip
+  fi
+  
+  ### Python 3
+  if command -v pip3 > /dev/null; then
+    if command -v python3 > /dev/null; then
+      if ! python3 -m certifi > /dev/null; then
+        pip3 install certifi
+      else
+        logg info 'certifi is available to python3'
+      fi
+    else
+      logg warn 'python3 is not available on the system'
+    fi
+  else
+    logg warn 'pip3 is not available on the system'
   fi
 }
 
@@ -545,9 +569,9 @@ setHostname() {
   if [ -d /Applications ] && [ -d /System ]; then
     # Source: https://apple.stackexchange.com/questions/287760/set-the-hostname-computer-name-for-macos
     logg info 'Setting macOS hostname / local hostname / computer name'
-    sudo scutil --set HostName '{{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}' && logg success 'Changed HostName to {{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}'
-    sudo scutil --set LocalHostName '{{ .host.hostname | replace .host.domain "" | replace "." "" }}' && logg success 'Changed LocalHostName to {{ .host.hostname | replace .host.domain "" | replace "." "" }}'
-    sudo scutil --set ComputerName '{{ .host.hostname | replace .host.domain "" | replace "." "" }}' && logg success 'Changed ComputerName to {{ .host.hostname | replace .host.domain "" | replace "." "" }}'
+    logg info 'Changing HostName to {{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}.{{ .host.domain }}' && sudo scutil --set HostName '{{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}.{{ .host.domain }}' && logg info 'Changed HostName to {{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}.{{ .host.domain }}'
+    logg info 'Changing LocalHostName to {{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}' && sudo scutil --set LocalHostName '{{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}' && logg info 'Changed LocalHostName to {{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}'
+    logg info 'Changing ComputerName to {{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}' && sudo scutil --set ComputerName '{{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}' && logg info 'Changed ComputerName to {{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}'
     logg info 'Flushing DNS cache'
     dscacheutil -flushcache
   elif [ -f /etc/passwd ]; then
@@ -602,10 +626,17 @@ setTimezone() {
   fi
 }
 
-# @description Configures macOS to enable the notification center
+# @description Configures macOS to enable the notification center. `&> /dev/null` was added to the command
+#     because the following useless error was being reported:
+#
+#     ```shell
+#     Load failed: 5: Input/output error
+#     Try running `launchctl bootstrap` as root for richer errors.
+#     Restart your computer for this to take effect
+#     ```
 showNotificationCenter() {
   if command -v m > /dev/null; then
-    logg info 'Configuring macOS to show notification center' && m notification showcenter YES
+    logg info 'Configuring macOS to show notification center' && m notification showcenter YES &> /dev/null
   fi
 }
 
@@ -617,6 +648,7 @@ installBrewPackages() {
   ensureBrewPackageInstalled "zx"
   ensureBrewPackageInstalled "volta"
   volta install node@latest &
+  volta install yarn@latest &
   npm install -g npm@latest &
   wait
   logg success 'Finished installing auxilary Homebrew packages'
@@ -633,6 +665,7 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   installBrewPackages
   installDocker
   installJumpCloud
+  installSystemPips
   removeLinuxBloatware
   setHostname
   setNtpServer
@@ -648,6 +681,7 @@ else
   installBrewPackages &
   installDocker &
   installJumpCloud &
+  installSystemPips &
   removeLinuxBloatware &
   setHostname &
   setNtpServer &

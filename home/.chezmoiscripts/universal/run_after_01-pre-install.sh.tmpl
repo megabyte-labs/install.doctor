@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+{{ includeTemplate "universal/profile" }}
+{{ includeTemplate "universal/logg" }}
+
 # @description Copies the `~/.config/shell/exports.sh` file to `/etc/zshenv` so that non-interactive ZSH sessions have all of the same
 #     environment PATH variables as interactive sessions. This was initially required to make Cakebrew work on macOS.
 addZshEnv() {
@@ -15,8 +18,14 @@ applyFontsToSystem() {
     ### macOS
     logg info 'Copying fonts from ~/Library/Fonts and ~/.local/share/fonts to /Library/Fonts to make them available globally'
     FONT_DIR='/Library/Fonts'
-    sudo rsync -av "$HOME/Library/Fonts" "$FONT_DIR"
-    sudo rsync -av "${XDG_DATA_HOME:-$HOME/.local/share}/fonts" "$FONT_DIR"
+    ### ~/Library/Fonts
+    if [ -d "$HOME/Library/Fonts" ]; then
+      logg info "Syncing $HOME/Library/Fonts to $FONT_DIR" && sudo rsync -av "$HOME/Library/Fonts" "$FONT_DIR"
+    fi
+    ### ~/.local/share/fonts
+    if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/fonts" ]; then
+      logg info "Syncing ${XDG_DATA_HOME:-$HOME/.local/share}/fonts to $FONT_DIR" && sudo rsync -av "${XDG_DATA_HOME:-$HOME/.local/share}/fonts" "$FONT_DIR"
+    fi
   else
     ### Linux
     ### Copy fonts
@@ -166,37 +175,6 @@ applyWallpaper() {
     logg warn 'Either m or the macOS default wallpaper is missing.'
   fi
   {{ end -}}
-}
-
-# @description
-#     This script ensures ASDF is setup and then adds the plugins specified in the `~/.tool-versions` file. After that,
-#     it ensures the ASDF plugins are pre-installed.
-asdfPluginInstall() {
-  ### Re-source ~/.bashrc if necessary
-  if [ -z "$ASDF_DIR" ]; then
-    logg info 'ASDF_DIR is not defined so ~/.bashrc will be sourced' && source ~/.bashrc
-  fi
-
-  if [ -f "$ASDF_DIR/asdf.sh" ] && [ -f ~/.tool-versions ]; then
-    logg info 'Sourcing asdf.sh'
-    . ${ASDF_DIR}/asdf.sh
-    cat .tool-versions | while read TOOL; do
-      logg info 'Installing ASDF plugin '"$(echo "$TOOL" | sed 's/ .*//')"'' && asdf plugin add "$(echo "$TOOL" | sed 's/ .*//')" > /dev/null && logg info "Successfully added $(echo "$TOOL" | sed 's/ .*//') via ASDF"
-    done
-    # Only proceed with installation if either DEBUG_MODE is enabled or ~/.cache/megabyte-labs/asdf-install is missing
-    # Added to save time between tests because PHP takes awhile to install
-    if [ "$DEBUG_MODE" == 'true' ] || [ ! -f "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte-labs/asdf-install" ]; then
-      logg info 'Installing ASDF dependencies derived from ~/.tool-versions via asdf install'
-      asdf install || EXIT_CODE=$?
-      if [ -n "$EXIT_CODE" ]; then
-        logg error 'Error installing the ASDF plugins specified in ~/.tool-versions'
-      fi
-      mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte-labs"
-      touch "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte-labs/asdf-install"
-    fi
-  else
-    logg warn 'The $ASDF_DIR/asdf.sh or ~/.tool-versions file is not present'
-  fi
 }
 
 ### Helper function for configureNetworkManager
@@ -1018,7 +996,6 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   applyLinuxThemeFiles
   applyRootConfig
   applyWallpaper
-  asdfPluginInstall
   configureNetworkManagerVPNProfiles
   configureSSHD
   dconfSettings
@@ -1046,7 +1023,6 @@ else
   applyLinuxThemeFiles &
   applyRootConfig &
   applyWallpaper &
-  asdfPluginInstall &
   configureNetworkManagerVPNProfiles &
   configureSSHD &
   dconfSettings &

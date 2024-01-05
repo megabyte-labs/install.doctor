@@ -263,9 +263,21 @@ softwarePackages:
     _bin: iso-image-writer
     _name: ISO Image Writer
     flatpak: org.kde.isoimagewriter
+  blueutil:
+    _bin: blueutil
+    _github: https://github.com/toy/blueutil
+    _name: BlueUtil
+    brew:darwin: blueutil
   pinapp:
     _bin: pinapp
     flatpak: io.github.fabrialberio.pinapp
+  tradingview:
+    _bin: tradingview
+    _name: Trading View
+    _github: https://github.com/tradingview/lightweight-charts
+    cask: tradingview
+    msix: https://tvd-packages.tradingview.com/stable/latest/win32/TradingView.msix
+    snap: tradingview
   fabric:
     _bin: fabric
     _github: https://github.com/fabric/fabric
@@ -481,7 +493,7 @@ softwarePackages:
     _github: https://github.com/Yakitrak/obsidian-cli
     _name: Obsidian CLI
     _pre:scoop: scoop bucket add scoop-yakitrak https://github.com/yakitrak/scoop-yakitrak.git
-    brew: yakitrak/yakitrak/obs
+    brew: megabyte-labs/tap/obs-cli
     scoop: obs
   rtx:
     _bin: rtx
@@ -713,16 +725,6 @@ softwarePackages:
     _home: https://github.com/quark-engine/quark-engine
     _name: Quark-Engine
     pipx: quark-engine
-  antivirus:
-    _bin: null
-    _desc: >-
-      [Clam AntiVirus](https://www.clamav.net/) is a free software, cross-platform and open-source antivirus software toolkit able to detect many types of malicious software, including viruses. One of its main uses is on mail servers as a server-side email virus scanner. [rkhunter](http://rkhunter.sourceforge.net/) is a Unix-based tool that scans for rootkits, backdoors, and possible local exploits. It does this by comparing SHA-1 hashes of important files with known good ones in online databases. [Malwarebytes](https://www.malwarebytes.com/) is an anti-malware software for Microsoft Windows, macOS, Chrome OS, Android, and iOS that finds and removes malware. Made by Malwarebytes Corporation, it was first released in January 2006.
-    _docs: https://docs.clamav.net/
-    _github: https://github.com/Cisco-Talos/clamav
-    _home: >-
-      https://www.clamav.net/ https://www.malwarebytes.com/
-    _name: AntiVirus
-    ansible: professormanhattan.antivirus
   swiftformat:
     _bin: swiftformat
     _github: https://github.com/nicklockwood/SwiftFormat
@@ -2163,6 +2165,28 @@ softwarePackages:
   dconf-editor:
     _bin: dconf-editor
     flatpak: ca.desrt.dconf-editor
+  dokany:
+    _bin: dokany
+    _github: https://github.com/dokan-dev/dokany
+    _name: Dokany
+    _note: Required for CephFS on Windows
+    choco: dokany
+  sshs:
+    _bin: sshs
+    _github: https://github.com/quantumsheep/sshs
+    _name: SSHS
+    brew: sshs
+    choco: sshs
+  ceph:
+    _deps:
+      - dokany
+    _bin: ceph-client
+    _github: https://github.com/ceph/ceph
+    _name: CephFS
+    apt: cephadm
+    brew: megabyte-labs/tap/ceph-client
+    dnf: cephadm
+    zypper: cephadm
   chromium:
     _deps:
       - chrome-gnome-shell
@@ -2304,7 +2328,8 @@ softwarePackages:
     _name: ClamAV
     _post: |
       #!/usr/bin/env bash
-      # Add freshclam.conf
+
+      ### Add freshclam.conf
       if [ -f "$HOME/.local/etc/clamav/freshclam.conf" ]; then
         sudo mkdir -p /usr/local/etc/clamav
         sudo cp -f "$HOME/.local/etc/clamav/freshclam.conf" /usr/local/etc/clamav/freshclam.conf
@@ -2312,7 +2337,8 @@ softwarePackages:
           ln -s /usr/local/etc/clamav/freshclam.conf "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/freshclam.conf"
         fi
       fi
-      # Add clamd.conf
+
+      ### Add clamd.conf
       if [ -f "$HOME/.local/etc/clamav/clamd.conf" ]; then
         sudo mkdir -p /usr/local/etc/clamav
         sudo cp -f "$HOME/.local/etc/clamav/clamd.conf" /usr/local/etc/clamav/clamd.conf
@@ -2320,8 +2346,19 @@ softwarePackages:
           ln -s /usr/local/etc/clamav/clamd.conf "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/clamd.conf"
         fi
       fi
-      # Update database
+
+      ### Update database
       freshclam
+
+      ### Setting up launchd services on macOS
+      if [ -d /Applications ] && [ -d /System ]; then
+        sudo mkdir -p /var/log/clamav
+        # sudo chown $USER /var/log/clamav
+        sudo cp -f "$HOME/.local/etc/clamav/clamdscan.plist.tmpl" /Library/LaunchDaemons/clamdscan.plist
+        sudo cp -f "$HOME/.local/etc/clamav/freshclam.plist.tmpl" /Library/LaunchDaemons/freshclam.plist
+        sudo launchctl load -w /Library/LaunchDaemons/clamdscan.plist
+        sudo launchctl load -w /Library/LaunchDaemons/freshclam.plist
+      fi
     _service:apt: clamav-freshclam
     _service:dnf: clamd-freshclam
     _service:pacman: clamav-freshclam
@@ -2586,6 +2623,36 @@ softwarePackages:
     _home: null
     _name: Common
     ansible: professormanhattan.common
+  phpmon:
+    _bin: phpmon
+    _name: PHP Mon
+    _github: https://github.com/nicoverbruggen/phpmon
+    _pre: |
+      #!/usr/bin/env bash
+      if ! command -v valet > /dev/null; then
+        if ! command -v composer > /dev/null; then
+          brew install composer
+        fi
+        composer global require laravel/valet
+        valet install
+        valet trust
+      fi
+    cask: nicoverbruggen/homebrew-cask/phpmon
+  mise:
+    _bin: mise
+    _github: 
+    _name: mise
+    _post: |
+      #!/usr/bin/env bash
+      mise use --global openjdk-20
+      sudo mkdir -p /Library/Java/JavaVirtualMachines/openjdk-20.jdk
+      sudo ln -s "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" /Library/Java/JavaVirtualMachines/openjdk-20.jdk/Contents
+    apk: mise
+    brew: mise
+    cargo: mise-cli
+    nix-env: mise
+    npm: '@jdxcode/mise'
+    port: port
   composer:
     _bin: composer
     _desc: '[Composer](https://getcomposer.org/) is an application-level package manager for the PHP programming language that provides a standard format for managing dependencies of PHP software and required libraries. It was developed by Nils Adermann and Jordi Boggiano, who continue to manage the project.'
@@ -2634,6 +2701,25 @@ softwarePackages:
     brew: consul-template
     choco: consul-template
     scoop: main/consul
+  microsoft-git:
+    _bin: scalar
+    _name: Microsoft Git (with Git VFS)
+    _github: https://github.com/microsoft/VFSForGit
+    cask: microsoft/git/microsoft-git
+    script:linux: |
+      #!/usr/bin/env bash
+      mkdir -p "$HOME/.local/src"
+      rm -rf "$HOME/.local/src/microsoft-git"
+      git clone https://github.com/microsoft/git "$HOME/.local/src/microsoft-git"
+      cd "$HOME/.local/src/microsoft-git"
+      make -j12 prefix=/usr/local
+      sudo make -j12 prefix=/usr/local install
+    winget: microsoft.git
+  meta:
+    _bin: meta
+    _github: https://github.com/mateodelnorte/meta
+    _name: Meta
+    npm: meta
   container-structure-test:
     _bin: container-structure-test
     _desc: The Container Structure Tests provide a powerful framework to validate the structure of a container image. These tests can be used to check the output of commands in an image, as well as verify metadata and contents of the filesystem
@@ -3106,6 +3192,26 @@ softwarePackages:
     brew: oven-sh/bun/bun
     npm: bun
     proto: bun
+  ntfy:
+    _bin: nfty
+    _github: https://github.com/dschep/ntfy
+    _name: NFTY
+    _post: |
+      #!/usr/bin/env bash
+      sudo mkdir -p /usr/local/etc/branding
+      sudo cp -f "$HOME/.local/etc/branding/logo-color-256x256.png" /usr/local/etc/branding/logo-color-256x256.png
+      sudo mkdir -p /usr/local/share/sounds
+      sudo rsync -rtvp "${XDG_DATA_HOME:-$HOME/.local/share}/sounds/" /usr/local/share/sounds
+      if command -v apt-get > /dev/null; then
+        sudo apt install python-dbus
+      fi
+      if command -v termux-setup-storage > /dev/null; then
+        apt install termux-api
+      fi
+    pip: ntfy[emoji,matrix,pid,slack]
+    script: |
+      #!/usr/bin/env bash
+      pip3 install ntfy[emoji,matrix,pid,slack]
   docker-desktop:
     _desc: '[Docker](https://www.docker.com/) is a set of platform-as-a-service products that use OS-level virtualization to deliver software in packages called containers. Containers are isolated from one another and bundle their own software, libraries and configuration files; they can communicate with each other through well-defined channels. [Docker Desktop](https://www.docker.com/products/docker-desktop/) adds a sleek UI for Docker and makes it easier to manage Docker on macOS and Windows.'
     _docs: https://docs.docker.com/
@@ -3138,6 +3244,23 @@ softwarePackages:
     choco: docker-desktop
     dnf: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.16.2-x86_64.rpm
     pacman: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.16.2-x86_64.pkg.tar.zst
+  pushpin:
+    _bin: pushpin
+    _github: https://github.com/fastly/pushpin
+    _name: Pushpin
+    brew: pushpin
+  pb:
+    _bin: pushbullet
+    _github: https://github.com/sidneys/pb-for-desktop
+    _name: Pushbullet for Desktop
+    appimage: sidneys/pb-for-desktop
+    cask: pb
+    choco: pushbullet
+  sidekick:
+    _bin: sidekick
+    _github: false
+    _name: Sidekick
+    cask: pushplaylabs-sidekick
   docker-slim:
     _bin: docker-slim
     _desc: "[DockerSlim](https://dockersl.im/) will optimize and secure your containers by understanding your application and what it needs using various analysis techniques. It will throw away what you don't need, reducing the attack surface of your container. What if you need some of those extra things to debug your container? You can use dedicated debugging side-car containers for that."
@@ -3380,11 +3503,6 @@ softwarePackages:
     _github: https://github.com/wfxr/forgit
     _name: forgit
     brew: forgit
-  ntfy:
-    _bin: ntfy
-    _github: https://github.com/dschep/ntfy
-    _name: ntfy
-    pipx: ntfy
   clipboard:
     _bin: cb
     _github: https://github.com/Slackadays/Clipboard.git
@@ -5154,6 +5272,7 @@ softwarePackages:
       if command -v docker > /dev/null && docker run --rm hello-world > /dev/null; then
         HAS_DOCKER=1
       else
+        HAS_DOCKER=0
         logg warn 'Docker is not installed or it is not operational'
       fi
 
@@ -5161,6 +5280,7 @@ softwarePackages:
       if command -v VirtualBox > /dev/null; then
         HAS_VIRTUALBOX=1
       else
+        HAS_VIRTUALBOX=0
         logg warn 'VirtualBox is not installed'
       fi
 
@@ -8194,6 +8314,9 @@ softwarePackages:
     _home: https://www.raycast.com/
     _name: Raycast
     _app: Raycast.app
+    _env:
+      RAYCAST_APPDATA:
+        cask: "$HOME/Library/Application Support/com.raycast.macos"
     cask: raycast
   mage-ai:
     _bin: mage
@@ -8228,15 +8351,6 @@ softwarePackages:
     choco: figma
     flatpak: io.github.Figma_Linux.figma_linux
     snap: figma-linux
-  tea-gui:
-    _bin: null
-    _desc: The open store for open source
-    _docs: https://docs.tea.xyz/appendix/tea-gui
-    _github: https://github.com/teaxyz/gui
-    _home: https://tea.xyz/
-    _name: Tea GUI
-    _app: tea.app
-    cask: tea
   node-prune:
     _bin: node-prune
     _desc: Extension to remove unnecessary files from node_modules
@@ -9050,10 +9164,10 @@ softwarePackages:
     _when:linux: '! test -f /opt/safing/portmaster/portmaster-start'
     ansible:linux: professormanhattan.portmaster
     ansible:windows: professormanhattan.portmaster
-    apt: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.
+    apt: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.deb
     choco: portmaster
     dnf: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.rpm
-    exe: https://updates.safing.io/latest/windows_amd64/packages/portmaster-installer.
+    exe: https://updates.safing.io/latest/windows_amd64/packages/portmaster-installer.exe
     scoop: portmaster-np
   pake:
     _bin: pake
@@ -9626,7 +9740,12 @@ softwarePackages:
     pacman: rclone
     port: rclone
     scoop: rclone
-    script:darwin: sudo -v; curl https://rclone.org/install.sh | sudo bash
+    script:darwin: |
+      #!/usr/bin/env bash
+      TMP="$(mktemp)"
+      curl https://rclone.org/install.sh > "$TMP"
+      sudo bash "$TMP"
+      rm -f "$TMP"
   redis-desktop-manager:
     _bin: redis-desktop-manager
     _desc: '[Redis Desktop Manager](https://rdm.dev/) is an open source cross-platform Desktop Manager for Redis based on Qt 5.'
@@ -11529,6 +11648,13 @@ softwarePackages:
       #!/usr/bin/env bash
       micromamba self-update
     brew: micromamba
+  steam:
+    _bin: steam
+    _github: false
+    _name: steam
+    choco: steam
+    cask: steam
+    flatpak: com.valvesoftware.Steam
   microsoft-teams:
     _bin: teams
     _desc: '[Microsoft Teams](https://www.microsoft.com/en-us/microsoft-teams/group-chat-software) is a proprietary business communication platform developed by Microsoft, as part of the Microsoft 365 family of products. Teams primarily competes with the similar service Slack, offering workspace chat and videoconferencing, file storage, and application integration.'
@@ -11813,6 +11939,7 @@ softwarePackages:
     dnf: postfix
     pacman: postfix
     port: postfix
+    script:darwin: echo "Postfix is included by macOS already"
   terraform:
     _deps:
       - tfenv
@@ -12385,8 +12512,19 @@ softwarePackages:
     _name: VIM
     _post: |
       #!/usr/bin/env bash
-      echo "Installing VIM plugins" && vim +'PlugInstall --sync' +qall
-      echo "Updating VIM coc extensions" && vim +CocUpdateSync +qall
+      logg info "Installing VIM plugins" && vim +'PlugInstall --sync' +qall
+      # @description This script installs the extensions defined in `${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json`
+      #     which should correlate to the Coc extensions defined in `${XDG_CONFIG_HOME:-$HOME/.config}/vim/vimrc`.
+      installCocExtensions() {
+        if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json" ]; then
+          logg info "Running npm i --no-package-lock in ${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions"
+          cd "${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions" && npm i --no-package-lock
+          logg info "Running vim +CocUpdateSync +qall" && vim +CocUpdateSync +qall
+        else
+          logg info "Skipping Coc extension installation because ${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json is missing"
+        fi
+      }
+      logg info "Updating VIM coc extensions" && installCocExtensions
     ansible: professormanhattan.vim
     apt: vim
     brew: vim
@@ -12618,7 +12756,15 @@ softwarePackages:
         logg info "The GitHub Actions runner installation is not present at $GH_RUNNER_PATH"
       fi
     script: |
-      RELEASES="$(curl -sSL --compressed --header "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/actions/runner/releases/latest")"
+      #!/usr/bin/env bash
+      if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh" ]; then
+        source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh"
+      fi
+      if [ -n "$GITHUB_TOKEN" ]; then
+        RELEASES="$(curl -sSL --compressed --header "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/actions/runner/releases/latest")"
+      else
+        RELEASES="$(curl -sSL --compressed "https://api.github.com/repos/actions/runner/releases/latest")"
+      fi
       LATEST_VERSION="$(echo "$RELEASES" | grep -o '"tag_name": "[^"]*' | grep -o '[^"]*$')"
       ARCHITECTURE="$(uname -m | sed 's/86_//' | sed 's/v7l//')"
       OS_FAMILY="$(test -d /Applications && echo osx || echo linux)"
@@ -12868,6 +13014,7 @@ softwarePackages:
       export PATH="$VOLTA_HOME/bin:$PATH"
       volta setup
       volta install node@latest
+      volta install yarn@latest
     ansible: professormanhattan.volta
     brew: volta
     scoop: volta
@@ -13101,6 +13248,8 @@ softwarePackages:
       #     * [Linux managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/warp/private_mdm.xml.tmpl)
       #     * [macOS managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/Library/Managed%20Preferences/private_com.cloudflare.warp.plist.tmpl)
 
+      SSL_CERT_PATH="/etc/ssl/cert.pem"
+
       ### Install CloudFlare WARP (on non-WSL *nix systems)
       if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
         if [ -d /System ] && [ -d /Applications ]; then
@@ -13158,8 +13307,8 @@ softwarePackages:
           #     sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
           # fi
           logg info 'Updating the OpenSSL CA Store to include the Cloudflare certificate'
-          echo | sudo tee -a /etc/ssl/cert.pem < "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > /dev/null
-          echo "" | sudo tee -a /etc/ssl/cert.pem
+          echo | sudo tee -a "$SSL_CERT_PATH" < "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > /dev/null
+          echo "" | sudo tee -a "$SSL_CERT_PATH"
         else
           logg warn 'Session is SSH so adding Cloudflare encryption key to trusted certificates via the security program is being bypassed since it requires Touch ID / Password verification.'
         fi
@@ -13187,7 +13336,8 @@ softwarePackages:
             logg info 'Copying CloudFlare Teams PEM file to /usr/local/share/ca-certificates/Cloudflare_CA.crt'
             sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /usr/local/share/ca-certificates/Cloudflare_CA.crt
             logg info 'dpkg-reconfigure executable detected so using Debian/Ubuntu method of updating system trusted certificates to include CloudFlare Teams certificate'
-            sudo dpkg-reconfigure ca-certificates
+            sudo dpkg-reconfigure ca-certificates -p high
+            SSL_CERT_PATH="/etc/ssl/certs/ca-certificates.crt"
           else
             logg warn 'No /usr/local/share/ca-certificates folder present'
           fi
@@ -13197,6 +13347,7 @@ softwarePackages:
             sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /etc/pki/ca-trust/source/anchors
             logg info 'update-ca-trust executable detected so using CentOS/Fedora method of updating system trusted certificates to include CloudFlare Teams certificate'
             sudo update-ca-trust
+            SSL_CERT_PATH="/etc/pki/tls/certs/ca-bundle.crt"
           else
             logg warn '/etc/pki/ca-trust/source/anchors does not exist so skipping the system certificate update process'
           fi
@@ -13210,20 +13361,20 @@ softwarePackages:
         # certificate and the WARP client is not running.
         ### Git
         if command -v git > /dev/null; then
-          logg info "Configuring git to use /etc/ssl/cert.pem"
-          git config --global http.sslcainfo /etc/ssl/cert.pem
+          logg info "Configuring git to use $SSL_CERT_PATH"
+          git config --global http.sslcainfo "$SSL_CERT_PATH"
         fi
 
         ### NPM
         if command -v npm > /dev/null; then
-          logg info "Configuring npm to use /etc/ssl/cert.pem"
-          npm config set cafile /etc/ssl/cert.pem
+          logg info "Configuring npm to use $SSL_CERT_PATH"
+          npm config set cafile "$SSL_CERT_PATH"
         fi
 
         ### Python
         if command -v python3 > /dev/null; then
           ### Ensure Certifi package is available globally
-          if ! pip3 list certifi | grep certifi > /dev/null; then
+          if ! pip3 list | grep certifi > /dev/null; then
             if command -v brew > /dev/null; then
               logg info 'Ensuring Python certifi is installed via Homebrew'
               brew install --quiet python-certifi
@@ -13966,7 +14117,7 @@ softwarePackages:
     _docs: null
     _github: null
     _home: null
-    _name: SSH FS
+    _name: SSHFS
     apt: sshfs
     choco: sshfs
     dnf: sshfs
@@ -14016,6 +14167,7 @@ softwarePackages:
     _github: https://github.com/yarnpkg/berry
     _home: https://yarnpkg.com/
     _name: Yarn
+    _preload: true
     ansible: professormanhattan.yarn
     brew: yarn
     choco: yarn
@@ -14066,6 +14218,7 @@ softwarePackages:
     _github: https://github.com/docker/docker-credential-helpers
     _home: https://github.com/docker/docker-credential-helpers
     _name: Docker Credential Helper
+    _preload: true
     brew: docker-credential-helper
   forklift:
     _bin: forklift
@@ -14088,6 +14241,7 @@ softwarePackages:
     _github: https://github.com/mikefarah/yq
     _home: https://mikefarah.gitbook.io/yq/
     _name: yq
+    _preload: true
     ansible: professormanhattan.yq
     apk: yq
     brew: yq
@@ -14184,6 +14338,7 @@ softwarePackages:
     _github: https://github.com/squid-cache/squid
     _name: Squid
     _service: squid
+    _preload: true
     apt: squid
     brew: squid
     dnf: squid
@@ -14195,6 +14350,7 @@ softwarePackages:
     _github: https://github.com/srevinsaju/zap
     _home: https://zap.srev.in/
     _name: Zap
+    _preload: true
     ansible:linux: professormanhattan.zap
     binary:linux: https://github.com/srevinsaju/zap/releases/download/continuous/zap-amd64
     script:linux: curl https://raw.githubusercontent.com/srevinsaju/zap/main/install.sh | sudo bash -s
@@ -14219,6 +14375,7 @@ softwarePackages:
     _github: null
     _home: null
     _name: zoxide
+    _preload: true
     ansible: professormanhattan.zoxide
     brew: zoxide
   zsh:
@@ -14228,6 +14385,7 @@ softwarePackages:
     _github: null
     _home: null
     _name: Zsh
+    _preload: true
     ansible:darwin: professormanhattan.zsh
     ansible:linux: professormanhattan.zsh
     apt: zsh
@@ -14246,6 +14404,7 @@ softwarePackages:
     _github: https://github.com/google/zx
     _home: null
     _name: zx
+    _preload: true
     brew: zx
     npm: zx
   flatseal:

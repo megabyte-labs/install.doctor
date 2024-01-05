@@ -241,6 +241,20 @@ if ! command -v curl > /dev/null || ! command -v git > /dev/null || ! command -v
     fi
 fi
 
+# @description This function removes group write permissions from the Homebrew share folder which
+#     is required for the ZSH configuration.
+fixHomebrewPermissions() {
+  if [ -f /usr/local/bin/brew ]; then
+    sudo chmod -R g-w /usr/local/share
+  elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" ]; then
+    sudo chmod -R g-w "${HOMEBREW_PREFIX:-/opt/homebrew}/share"
+  elif [ -d "$HOME/.linuxbrew" ]; then
+    sudo chmod -R g-w "$HOME/.linuxbrew/share"
+  elif [ -d "/home/linuxbrew/.linuxbrew" ]; then
+    sudo chmod -R g-w /home/linuxbrew/.linuxbrew/share
+  fi
+}
+
 # @description Ensure Homebrew is installed and available
 if ! command -v brew > /dev/null; then
     if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
@@ -252,9 +266,11 @@ if ! command -v brew > /dev/null; then
         # @description Installs Homebrew and addresses a couple potential issues
         if command -v sudo > /dev/null && sudo -n true; then
             echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            fixHomebrewPermissions
         else
             echo "Homebrew is not installed. The script will attempt to install Homebrew and you might be prompted for your password."
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+            fixHomebrewPermissions
             if [ -n "$BREW_EXIT_CODE" ]; then
                 if command -v brew > /dev/null; then
                     echo "Homebrew was installed but part of the installation failed. Trying a few things to fix the installation.."

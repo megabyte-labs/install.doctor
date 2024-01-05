@@ -56,14 +56,30 @@ ensureHomebrewDeps() {
   fi
 }
 
+# @description This function removes group write permissions from the Homebrew share folder which
+#     is required for the ZSH configuration.
+fixHomebrewPermissions() {
+  if [ -f /usr/local/bin/brew ]; then
+    sudo chmod -R g-w /usr/local/share
+  elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" ]; then
+    sudo chmod -R g-w "${HOMEBREW_PREFIX:-/opt/homebrew}/share"
+  elif [ -d "$HOME/.linuxbrew" ]; then
+    sudo chmod -R g-w "$HOME/.linuxbrew/share"
+  elif [ -d "/home/linuxbrew/.linuxbrew" ]; then
+    sudo chmod -R g-w /home/linuxbrew/.linuxbrew/share
+  fi
+}
+
 # @description This script ensures Homebrew is installed.
 ensurePackageManagerHomebrew() {
   if ! command -v brew > /dev/null; then
     if command -v sudo > /dev/null && sudo -n true; then
       echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      fixHomebrewPermissions
     else
       logg info 'Homebrew is not installed. Password may be required.'
       bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+      fixHomebrewPermissions
       if [ -n "$BREW_EXIT_CODE" ]; then
         logg warn 'Homebrew was installed but part of the installation failed to complete successfully.'
         if command -v brew > /dev/null; then
@@ -124,54 +140,59 @@ upgradeDarwin() {
     fi
 
     ### Prompt for SUDO_PASSWORD
-    if [ "$SUDO_PASSWORD" = "" ]; then
+    if [ -z "$SUDO_PASSWORD" ] || [ "$SUDO_PASSWORD" = "" ]; then
       logg prompt "Enter the current user's login / admin password. Press ENTER to bypass and skip enabling auto-login. If you would like to bypass this prompt next time then pass in the password as an environment variable named SUDO_PASSWORD before running the kickstart script."
       SUDO_PASSWORD="$(gum input --password --placeholder="Enter password..")"
       export SUDO_PASSWORD
     fi
 
     ### Run upgrade process
-    logg info 'Applying OS upgrades (if available)'
-    expect -c "set timeout -1
-    spawn sudo softwareupdate -i -a --agree-to-license
-    expect \"Password:\"
-    send \"${SUDO_PASSWORD}\r\"
-    expect eof" &> /dev/null || EXIT_CODE=$?
-    if [ -n "$EXIT_CODE" ]; then
-      logg warn 'Error running softwareupdate'
-      unset EXIT_CODE
-    fi
-    # sudo sh -c "sudo softwareupdate -i -a --agree-to-license" || logg error 'Failed to trigger a system update via sudo softwareupdate -i -a --agree-to-license'
-
-    ### Reboot if necessary
-    # Source: https://community.jamf.com/t5/jamf-pro/determine-if-update-requires-restart/m-p/11682
-    logg info 'Checking if softwareupdate requires a reboot'
-    if softwareupdate -l | grep restart > /dev/null; then
-      ### Add kickstart script to .zshrc so it triggers automatically
-      if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
-        logg info 'Adding kickstart script to ~/.zshrc so script continues automatically if reboot is necessary'
-        echo 'bash <(curl -sSL --compressed https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
+    logg info 'Checking for available OS upgrades'
+    UPDATE_CHECK="$(softwareupdate -l 2>&1)"
+    if ! echo "$UPDATE_CHECK" | grep "No new software available" > /dev/null; then
+      logg info 'There are available OS upgrades'
+      echo "$UPDATE_CHECK"
+      logg info 'Applying OS upgrades (if available). This may take awhile..'
+      expect -c "set timeout -1
+      spawn sudo softwareupdate -i -a --agree-to-license
+      expect \"Password:\"
+      send \"${SUDO_PASSWORD}\r\"
+      expect eof" &> /dev/null || EXIT_CODE=$?
+      if [ -n "$EXIT_CODE" ]; then
+        logg warn 'Error running softwareupdate'
+        unset EXIT_CODE
       fi
+      # sudo sh -c "sudo softwareupdate -i -a --agree-to-license" || logg error 'Failed to trigger a system update via sudo softwareupdate -i -a --agree-to-license'
 
-      if [ -n "$SUDO_PASSWORD" ] && [ "$SUDO_PASSWORD" != "" ]; then
-        ### Install kcpassword
-        if ! command -v enable_autologin > /dev/null; then
-          logg info 'enable_autologin is not installed and it is a requirement for auto-logging in after reboot' && brew install xfreebird/utils/kcpassword
+      ### Reboot if necessary
+      # Source: https://community.jamf.com/t5/jamf-pro/determine-if-update-requires-restart/m-p/11682
+      logg info 'Checking if softwareupdate requires a reboot'
+      if softwareupdate -l | grep restart > /dev/null; then
+        ### Add kickstart script to .zshrc so it triggers automatically
+        if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
+          logg info 'Adding kickstart script to ~/.zshrc so script continues automatically if reboot is necessary'
+          echo 'bash <(curl -sSL --compressed https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
         fi
 
-        ### Enable auto-login via kcpassword
-        logg info "Enabling autologin for $USER with acquired sudo password" && sudo enable_autologin "$USER" "$SUDO_PASSWORD"
-      fi
+        if [ -n "$SUDO_PASSWORD" ] && [ "$SUDO_PASSWORD" != "" ]; then
+          ### Install kcpassword
+          if ! command -v enable_autologin > /dev/null; then
+            logg info 'enable_autologin is not installed and it is a requirement for auto-logging in after reboot' && brew install xfreebird/utils/kcpassword
+          fi
 
-      ### Reboot
-      logg info 'Reboot required' && exit 140
-      # gtimeout 60 osascript -e 'tell application "Finder" to shut down' || OSASCRIPT_EXIT_CODE=$?
-      # if [ -n "$OSASCRIPT_EXIT_CODE" ]; then
-      #   logg info 'Reboot required and failed to gracefully shutdown within 1 minute, so forcing reboot' && sudo sh -c 'shutdown -r now'
-      # fi
+          ### Enable auto-login via kcpassword
+          logg info "Enabling autologin for $USER with acquired sudo password" && sudo enable_autologin "$USER" "$SUDO_PASSWORD"
+        fi
+
+        ### Reboot
+        logg info 'Reboot required' && exit 140
+      else
+        logg info 'No reboot required for softwareupdate'
+      fi
     else
-      logg info 'No reboot required for softwareupdate'
+      logg info 'There are no available OS upgrades'
     fi
+
     if [ -f "$HOME/.zshrc" ]; then
       logg info 'Ensuring provision kickstart script is removed from ~/.zshrc'
       if command -v gsed > /dev/null; then

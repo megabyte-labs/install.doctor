@@ -25,7 +25,7 @@ if [ -d /Applications ] && [ -d /System ]; then
   if command -v brew > /dev/null; then
     ### Install base dependencies
     logg 'Installing base dependencies for macOS using brew bundle'
-    logg info 'Dependencies: age asdf jq node glow go go-task/tap/go-task gnupg gum m-cli progress volta yq m-cli yq zx'
+    logg info 'Dependencies: age jq node glow go go-task/tap/go-task gnupg gum m-cli progress volta yq m-cli yq zx'
     logg info 'GNU compatibility dependencies: coreutils findutils'
 
     brew bundle --verbose --no-lock --file=/dev/stdin <<EOF

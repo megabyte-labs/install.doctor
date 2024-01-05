@@ -23,17 +23,6 @@ EOF
 EOF
 }
 
-# @description Enables VNC early in case a user prompt is required on macOS
-configureMacOSVNC() {
-  if [ -d /Applications ] && [ -d /System ]; then
-    # Source: https://apple.stackexchange.com/questions/30238/how-to-enable-os-x-screen-sharing-vnc-through-ssh
-    # To disable, run: sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -configure -access -off
-    # Only enable when computer is not a corporate / work computer
-    logg info '**macOS Manual Security Permission** Enabling VNC using the VNC_PASSWORD variable which is vncpass when nothing is specified'
-    sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -allowAccessFor -specifiedUsers -clientopts -setreqperm -reqperm yes -setvnclegacy -vnclegacy yes -setvncpw -vncpw "{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VNC_PASSWORD")) }}{{ includeTemplate "secrets/VNC_PASSWORD" | decrypt | trim }}{{ else }}{{ default "vncpass" (env "VNC_PASSWORD") }}{{ end }}" -restart -agent -privs -all -users "$USER" && logg success 'Finished running the macOS Remote Management kickstart executable'
-  fi
-}
-
 # @description
 #     This script detects for the presence of the `warp-cli` and the WARP connection status. If `warp-cli` is installed
 #     and WARP is connected, then the service is disconnected. This feature is here to ensure programs such as `volta`
@@ -72,12 +61,11 @@ ensureFullDiskAccess() {
     if ! plutil -lint /Library/Preferences/com.apple.TimeMachine.plist > /dev/null ; then
       printFullDiskAccessNotice
       logg star 'Opening Full Disk Access preference pane.. Grant full-disk access for the terminal you would like to run the provisioning process with.' && open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
-      logg info 'You may have to force quit the terminal and have it reload'
+      logg info 'You may have to force quit the terminal and have it reload.'
       if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
         echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
       fi
-      logg prompt 'Press ENTER to check for Full Disk Access again' && read -r
-      ensureFullDiskAccess
+      exit 0
     else
       logg success 'Current terminal has full disk access'
       if [ -f "$HOME/.zshrc" ]; then
@@ -127,11 +115,9 @@ ensureFullDiskAccess
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   logg info 'The DEBUG or DEBUG_MODE environment variable is set so the prepare tasks will be run synchronously'
   importCloudFlareCert
-  configureMacOSVNC
   disconnectWarp
 else
   importCloudFlareCert &
-  configureMacOSVNC &
   disconnectWarp &
   wait
 fi

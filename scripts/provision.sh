@@ -21,7 +21,7 @@
 #     | **Task**           | Task runner used on-device for task parallelization and dependency management        |
 #     | **ZX / Node.js**   | ZX is a Node.js abstraction that allows for better scripts                           |
 #     | Gum                | Gum is a terminal UI prompt CLI (which allows sweet, interactive prompts)            |
-#     | Glow               | Glow is a markdown renderer used for applying terminal-friendly styled to markdown   |
+#     | Glow               | Glow is a markdown renderer used for applying terminal-friendly styles to markdown   |
 #
 #     There are also a handful of system packages that are installed like `curl` and `git`. Then, during the Chezmoi provisioning
 #     process, there are a handful of system packages that are installed to ensure things run smoothly. You can find more details
@@ -244,6 +244,20 @@ fixHomebrewPermissions() {
   fi
 }
 
+# @description This function removes group write permissions from the Homebrew share folder which
+#     is required for the ZSH configuration.
+fixHomebrewSharePermissions() {
+  if [ -f /usr/local/bin/brew ]; then
+    sudo chmod -R g-w /usr/local/share
+  elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" ]; then
+    sudo chmod -R g-w "${HOMEBREW_PREFIX:-/opt/homebrew}/share"
+  elif [ -d "$HOME/.linuxbrew" ]; then
+    sudo chmod -R g-w "$HOME/.linuxbrew/share"
+  elif [ -d "/home/linuxbrew/.linuxbrew" ]; then
+    sudo chmod -R g-w /home/linuxbrew/.linuxbrew/share
+  fi
+}
+
 ### Installs Homebrew
 ensurePackageManagerHomebrew() {
   if ! command -v brew > /dev/null; then
@@ -251,9 +265,11 @@ ensurePackageManagerHomebrew() {
     if command -v sudo > /dev/null && sudo -n true; then
       logg info 'Installing Homebrew. Sudo privileges available.'
       echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+      fixHomebrewSharePermissions
     else
       logg info 'Installing Homebrew. Sudo privileges not available. Password may be required.'
       bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+      fixHomebrewSharePermissions
     fi
 
     ### Attempt to fix problematic installs
@@ -318,6 +334,79 @@ handleRequiredReboot() {
     fi
   fi
 }
+# @description Prints information describing why full disk access is required for the script to run on macOS.
+printFullDiskAccessNotice() {
+  if [ -d /Applications ] && [ -d /System ]; then
+    logg md "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/terminal/full-disk-access.md"
+  fi
+}
+
+# @description
+#     This script ensures the terminal running the provisioning process has full disk access permissions. It also
+#     prints information regarding the process of how to enable the permission as well as information related to
+#     the specific reasons that the terminal needs full disk access. More specifically, the scripts need full
+#     disk access to modify various system files and permissions.
+#
+#     Ensures the terminal running the provisioning process script has full disk access on macOS. It does this
+#     by attempting to read a file that requires full disk access. If it does not, the program opens the preferences
+#     pane where the user can grant access so that the script can continue.
+#
+#     ## Sources
+#
+#     * [Detecting Full Disk Access permission on macOS](https://www.dzombak.com/blog/2021/11/macOS-Scripting-How-to-tell-if-the-Terminal-app-has-Full-Disk-Access.html)
+ensureFullDiskAccess() {
+  if [ -d /Applications ] && [ -d /System ]; then
+    if ! plutil -lint /Library/Preferences/com.apple.TimeMachine.plist > /dev/null ; then
+      printFullDiskAccessNotice
+      logg star 'Opening Full Disk Access preference pane.. Grant full-disk access for the terminal you would like to run the provisioning process with.' && open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
+      logg info 'You may have to force quit the terminal and have it reload.'
+      if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
+        echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
+      fi
+      exit 0
+    else
+      logg success 'Current terminal has full disk access'
+      if [ -f "$HOME/.zshrc" ]; then
+        if command -v gsed > /dev/null; then
+          sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+        else
+          sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+        fi
+      fi
+    fi
+  fi
+}
+
+# @description Applies changes that require input from the user such as using Touch ID on macOS when
+#     importing certificates into the system keychain.
+#
+#     * Ensures CloudFlare Teams certificate is imported into the system keychain
+importCloudFlareCert() {
+  if [ -d /Applications ] && [ -d /System ] && [ -z "$HEADLESS_INSTALL" ]; then
+    ### Acquire certificate
+    if [ ! -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" ]; then
+      logg info 'Downloading Cloudflare_CA.crt from https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt to determine if it is already in the System.keychain'
+      CRT_TMP="$(mktemp)"
+      curl -sSL https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt > "$CRT_TMP"
+    else
+      CRT_TMP="$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
+    fi
+
+    ### Validate / import certificate
+    security verify-cert -c "$CRT_TMP" > /dev/null 2>&1
+    if [ $? != 0 ]; then
+      logg info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
+      sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_TMP" && logg success 'Successfully imported Cloudflare_CA.crt into System.keychain'
+    fi
+
+    ### Remove temporary file, if necessary
+    if [ ! -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" ]; then
+      rm -f "$CRT_TMP"
+    fi
+  fi
+}
+
+
 # @description Load default settings if it is in a CI setting
 setCIEnvironmentVariables() {
   if [ -n "$CI" ] || [ -n "$TEST_INSTALL" ]; then
@@ -348,7 +437,7 @@ ensureWarpDisconnected() {
 setupPasswordlessSudo() {
   sudo -n true || SUDO_EXIT_CODE=$?
   logg info 'Your user will temporarily be granted passwordless sudo for the duration of the script'
-  if [ -n "$SUDO_EXIT_CODE" ] && [ -z "$SUDO_PASSWORD" ] && command -v chezmoi > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD" ]; then
+  if [ -n "$SUDO_EXIT_CODE" ] && [ -z "$SUDO_PASSWORD" ] && command -v chezmoi > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD" ] && [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" ]; then
     logg info "Acquiring SUDO_PASSWORD by using Chezmoi to decrypt ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD"
     SUDO_PASSWORD="$(cat "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SUDO_PASSWORD" | chezmoi decrypt)"
     export SUDO_PASSWORD
@@ -492,11 +581,17 @@ ensureHomebrewDeps() {
 
   ### macOS
   if [ -d /Applications ] && [ -d /System ]; then
-    installBrewPackage "expect"
+    ### gsed
     installBrewPackage "gsed"
+    ### unbuffer / expect
+    if ! command -v unbuffer > /dev/null; then
+      brew install --quiet expect
+    fi
+    ### gtimeout / coreutils
     if ! command -v gtimeout > /dev/null; then
       brew install --quiet coreutils
     fi
+    ### ts / moreutils
     if ! command -v ts > /dev/null; then
       brew install --quiet moreutils
     fi
@@ -507,15 +602,17 @@ ensureHomebrewDeps() {
 # @description Ensure the `${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi` directory is cloned and up-to-date using the previously
 #     set `START_REPO` as the source repository.
 cloneChezmoiSourceRepo() {
-  if ! git config --get --global http.postBuffer > /dev/null; then
-    logg info 'Setting git http.postBuffer value high for large source repository' && git config --global http.postBuffer 524288000
-  fi
   if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.git" ]; then
     logg info "Changing directory to ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi" && cd "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
+    if ! git config --get http.postBuffer > /dev/null; then
+      logg info 'Setting git http.postBuffer value high for large source repository' && git config http.postBuffer 524288000
+    fi
     logg info "Pulling the latest changes in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi" && git pull origin master
   else
     logg info "Ensuring ${XDG_DATA_HOME:-$HOME/.local/share} is a folder" && mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}"
     logg info "Cloning ${START_REPO} to ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi" && git clone "${START_REPO}" "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
+    logg info "Changing directory to ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi" && cd "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
+    logg info 'Setting git http.postBuffer value high for large source repository' && git config http.postBuffer 524288000
   fi
 }
 
@@ -550,6 +647,12 @@ initChezmoiAndPrompt() {
   fi
 }
 
+# @description When a reboot is triggered by softwareupdate on macOS, other utilities that require
+#     a reboot are also installed to save on reboots.
+beforeRebootDarwin() {
+  logg info "Ensuring macfuse is installed" && brew install --cask --no-quarantine --quiet macfuse
+}
+
 # @description Save the log of the provision process to `$HOME/.local/var/log/install.doctor/install.doctor.$(date +%s).log` and add the Chezmoi
 #     `--force` flag if the `HEADLESS_INSTALL` variable is set to `true`.
 runChezmoi() {
@@ -558,12 +661,14 @@ runChezmoi() {
   LOG_FILE="$HOME/.local/var/log/install.doctor/chezmoi-apply-$(date +%s).log"
 
   ### Apply command flags
+  COMMON_MODIFIERS="--no-pager"
   FORCE_MODIFIER=""
   if [ -n "$HEADLESS_INSTALL" ]; then
     logg info 'Running chezmoi apply forcefully because HEADLESS_INSTALL is set'
     FORCE_MODIFIER="--force"
   fi
-  KEEP_GOING_MODIFIER=""
+  # TODO: https://github.com/twpayne/chezmoi/discussions/3448
+  KEEP_GOING_MODIFIER="-k"
   if [ -n "$KEEP_GOING" ]; then
     logg info 'Instructing chezmoi to keep going in the case of errors because KEEP_GOING is set'
     KEEP_GOING_MODIFIER="-k"
@@ -571,17 +676,17 @@ runChezmoi() {
   DEBUG_MODIFIER=""
   if [ -n "$DEBUG_MODE" ] || [ -n "$DEBUG" ]; then
     logg info "Either DEBUG_MODE or DEBUG environment variables were set so Chezmoi will be run in debug mode"
-    export DEBUG_MODIFIER="-vvvvv"
+    export DEBUG_MODIFIER="-vvvvv --debug --verbose"
   fi
 
   ### Run chezmoi apply
   if command -v unbuffer > /dev/null; then
     if command -v caffeinate > /dev/null; then
-      logg info "Running: caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
-      caffeinate unbuffer -p chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
+      logg info "Running: unbuffer -p caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      unbuffer -p caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     else
-      logg info "Running: unbuffer -p chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
-      unbuffer -p chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
+      logg info "Running: unbuffer -p chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      unbuffer -p chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     fi
     logg info "Unbuffering log file $LOG_FILE"
     UNBUFFER_TMP="$(mktemp)"
@@ -589,16 +694,17 @@ runChezmoi() {
     mv -f "$UNBUFFER_TMP" "$LOG_FILE"
   else
     if command -v caffeinate > /dev/null; then
-      logg info "Running: caffeinate chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
-      caffeinate chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
+      logg info "Running: caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     else
-      logg info "Running: chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
-      chezmoi apply $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
+      logg info "Running: chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+      chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
     fi
   fi
 
   ### Handle exit codes in log
   if cat "$LOG_FILE" | grep 'chezmoi: exit status 140' > /dev/null; then
+    beforeRebootDarwin
     logg info "Chezmoi signalled that a reboot is necessary to apply a system update"
     logg info "Running softwareupdate with the reboot flag"
     sudo softwareupdate -i -a -R --agree-to-license && exit
@@ -630,24 +736,29 @@ postProvision() {
   fi
 }
 
-
 # @section Execution order
 # @description The `provisionLogic` function is used to define the order of the script. All of the functions it relies on are defined
 #     above.
 provisionLogic() {
+  loadHomebrew
   logg info "Setting environment variables" && setEnvironmentVariables
   logg info "Handling CI variables" && setCIEnvironmentVariables
   logg info "Ensuring WARP is disconnected" && ensureWarpDisconnected
   logg info "Applying passwordless sudo" && setupPasswordlessSudo
   logg info "Ensuring system Homebrew dependencies are installed" && ensureBasicDeps
+  logg info "Cloning / updating source repository" && cloneChezmoiSourceRepo
+  if [ -d /Applications ] && [ -d /System ]; then
+    ### macOS only
+    logg info "Ensuring full disk access from current terminal application" && ensureFullDiskAccess
+    logg info "Ensuring CloudFlare certificate imported into system certificates" && importCloudFlareCert
+  fi
   logg info "Ensuring Homebrew is available" && ensureHomebrew
   logg info "Installing Homebrew packages" && ensureHomebrewDeps
   logg info "Handling Qubes dom0 logic (if applicable)" && handleQubesDom0
-  logg info "Cloning / updating source repository" && cloneChezmoiSourceRepo
   logg info "Handling pre-provision logic" && initChezmoiAndPrompt
   logg info "Running the Chezmoi provisioning" && runChezmoi
   logg info "Ensuring temporary passwordless sudo is removed" && removePasswordlessSudo
-  logg info "Handling post-provision logic" && postProvision
   logg info "Determing whether or not reboot" && handleRequiredReboot
+  logg info "Handling post-provision logic" && postProvision
 }
 provisionLogic

@@ -384,15 +384,12 @@ let g:coc_global_extensions = [
   \'coc-sh',
   \'coc-solargraph',
   \'coc-solidity',
-  \'coc-spell-checker',
   \'coc-stylelint',
   \'coc-sql',
   \'coc-sqlfluff',
   \'coc-svelte',
   \'coc-svg',
   \'coc-swagger',
-  \'coc-symbol-line',
-  \'coc-tailwindcss',
   \'coc-toml',
   \'coc-tsserver',
   \'coc-xml',
@@ -454,7 +451,7 @@ endif
 
 silent! call plug#begin('~/.local/share/vim/plugged')
 Plug '~/.local/share/vim/plugged/ale'
-Plug '~/.local/share/vim/plugged/coc.nvim', {'branch': 'release', 'do': 'yarn install --frozen-lockfile'}
+Plug '~/.local/share/vim/plugged/coc.nvim', {'branch': 'release'}
 Plug '~/.local/share/vim/plugged/copilot.vim'
 Plug '~/.local/share/vim/plugged/dockerfile.vim'
 Plug '~/.local/share/vim/plugged/editorconfig-vim'
@@ -476,7 +473,7 @@ Plug '~/.local/share/vim/plugged/vim-jsx'
 Plug '~/.local/share/vim/plugged/vim-markdown'
 Plug '~/.local/share/vim/plugged/vim-multiple-cursors'
 Plug '~/.local/share/vim/plugged/vim-polyglot'
-Plug '~/.local/share/vim/plugged/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
+Plug '~/.local/share/vim/plugged/vim-prettier', { 'do': 'npm ci' }
 Plug '~/.local/share/vim/plugged/vim-sensible'
 Plug '~/.local/share/vim/plugged/vim-surround'
 Plug '~/.local/share/vim/plugged/vim-sneak'

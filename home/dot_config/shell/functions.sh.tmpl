@@ -134,8 +134,6 @@ updateall() {
   brew upgrade
   brew upgrade --cask --greedy
   brew cleanup --prune=1
-  asdf update || true
-  asdf plugin-update --all
   rustup self update || true
   rustup update || true
   npm update -g || true

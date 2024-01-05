@@ -117,7 +117,6 @@ gpg:
 data:
   host:
     arch: "{{ .chezmoi.arch }}"
-    autoresticHealthcheckUuid: "AddInFromHealthchecksDashboard"
     cloudflare:
       teamsOrg: "{{ $cloudflareTeamsOrg }}"
     cpu:
@@ -152,6 +151,11 @@ data:
     samba:
       netbiosName: "{{ $sambaNetBiosName }}"
       workgroup: "{{ $sambaWorkGroupName }}"
+    smtp:
+      from: CombineOS <no-reply@megabyte.space>
+      host: smtp.sendgrid.net
+      port: 587
+      user: apikey
     ssh:
       allowTCPForwarding: no
       allowUsers: {{ env "USER" }}
@@ -210,8 +214,19 @@ data:
     username: "{{ default "user" (env "USER") }}"
     weatherZipCode: 07960
 diff:
-  format: "git"
-  pager: "delta"
+  pager: delta
+  format: git
+  args:
+    - "--paging"
+    - never
+  exclude:
+    - dirs
+    - externals
+    - scripts
+edit:
+  command: code
+  args:
+    - "--wait"
 git:
   autoCommit: true
   autoPush: true

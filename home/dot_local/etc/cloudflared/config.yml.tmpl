@@ -28,6 +28,12 @@ ingress:
     service: tcp://localhost:8321
   - hostname: rsyslog.{{ $baseDomain }}
     service: tcp://localhost:514
+  - hostname: netdata.{{ $baseDomain }}
+    service: https://localhost:19999
+  - hostname: rundeck.{{ $baseDomain }}
+    service: https://localhost:4440
+  - hostname: portainer.{{ .host.domain }}
+    service: https://localhost:9439
 {{- if eq .host.softwareGroup "Kubernetes" }}
   - hostname: k8s.{{ .host.domain }}
     service: bastion

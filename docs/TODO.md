@@ -1,7 +1,11 @@
+
+* Move age decryption higher
+* Add ~/.local/share/sounds was symlink to {{ .host.home }}/.local/share/betelgeuse/share/sounds
 xattr -d com.apple.quarantine rclone
 Create issue about setting up completions - https://github.com/rsteube/lazycomplete
 pw="$(osascript -e 'Tell application "System Events" to display dialog "Password:" default answer "" with hidden answer' -e 'text returned of result' 2>/dev/null)" && echo "$pw"
-
+- [Title](https://github.com/albfan/miraclecast)
+- [Title](https://gitlab.gnome.org/GNOME/gnome-network-displays)
 Use minimum permissions / IAM for https://iosexample.com/a-command-line-tool-to-download-and-install-apples-xcode/
 https://github.com/tiiiecherle/osx_install_config/blob/master/03_homebrew_casks_and_mas/3b_homebrew_casks_and_mas_install/6_mas_appstore.sh
 virtualbox blocked by C

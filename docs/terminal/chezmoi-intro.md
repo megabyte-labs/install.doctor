@@ -19,5 +19,5 @@ With all that in order, the next time you can headlessly provision your workstat
 export AGE_PASSWORD=YourAgePassword
 export START_REPO=GitHubUsername
 export SUDO_PASSWORD=YourSudoPassword
-bash <(curl -sSL --compressed https://install.doctor/start)
+bash <(curl -sSL https://install.doctor/start)
 ```

@@ -3,7 +3,6 @@
 
 # Standard Homebrew taps
 tap "homebrew/cask-versions" # Initially added to support "visual-studio" cask
-tap "homebrew/core"
 tap "homebrew/bundle"
 
 if OS.mac?
@@ -26,11 +25,19 @@ brew "htmlq"
 brew "jq"
 brew "moreutils"
 brew "node"
+brew "pipx"
 brew "progress"
+brew "python@3.10"
 brew "python@3.11"
+brew "python@3.12"
 brew "ruby"
+brew "rust"
 tap "go-task/tap"
 brew "go-task/tap/go-task"
 brew "volta"
+brew "yarn"
 brew "yq"
 brew "zx"
+cask "docker"
+cask "java" unless system "/usr/libexec/java_home --failfast"
+cask "macfuse"

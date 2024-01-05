@@ -1,0 +1,90 @@
+---
+version: '3.7'
+
+services:
+  statup:
+    container_name: StatPing
+    image: adamboutcher/statping-ng:latest
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    networks:
+      - statping_network
+      - nginx_network
+    ports:
+      - "8072:8072"
+    volumes:
+      - statping_app:/app
+      - services.yml:/app/services.yml
+    environment:
+      VIRTUAL_HOST: localhost
+      VIRTUAL_PORT: 8072
+      DB_CONN: postgres
+      DB_HOST: postgres
+      ADMIN_USER_FILE: /run/secrets/statping_admin_user
+      ADMIN_PASSWORD_FILE: /run/secrets/statping_admin_password
+      API_SECRET_FILE: /run/secrets/statping_api_secret
+      DB_USER_FILE: /run/secrets/statping_database_user
+      DB_PASS_FILE: /run/secrets/statping_database_password
+      DB_DATABASE_FILE: /run/secrets/statping_database_name
+      NAME: "{{ .docker.statping.name }}"
+      DESCRIPTION: "{{ .docker.statping.description }}"
+      DOMAIN: "status.{{ .host.domain }}"
+    deploy:
+      mode: replicated
+      replicas: 1
+    secrets:
+     - statping_admin_user
+     - statping_admin_password
+     - statping_api_secret
+     - statping_database_name
+     - statping_database_password
+     - statping_database_user
+
+  postgres:
+    container_name: Postgres
+    image: postgres:10
+    restart: unless-stopped
+    volumes:
+      - statping_postgres:/var/lib/postgresql/data
+    networks:
+      - statping_network
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/statping_database_password
+      POSTGRES_USER_FILE: /run/secrets/statping_database_user
+      POSTGRES_DB_FILE: /run/secrets/statping_database_name
+    deploy:
+      mode: replicated
+      replicas: 1
+    secrets:
+     - statping_database_name
+     - statping_database_password
+     - statping_database_user
+
+networks:
+  statping_network:
+    driver: overlay
+    attachable: true
+    internal: true
+  nginx_network:
+    external: true
+
+secrets:
+  statping_admin_password:
+    external: true
+  statping_admin_user:
+    external: true
+  statping_api_secret:
+    external: true
+  statping_database_name:
+    external: true
+  statping_database_password:
+    external: true
+  statping_database_user:
+    external: true
+
+volumes:
+  statping_app:
+    name: statping_app
+  statping_postgres:
+    name: statping_postgres

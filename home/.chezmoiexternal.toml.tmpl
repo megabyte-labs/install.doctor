@@ -133,12 +133,6 @@
     type = "file"
     url = "https://raw.githubusercontent.com/zsh-users/antigen/develop/bin/antigen.zsh"
 
-### ASDF
-[".local/share/asdf"]
-    type = "git-repo"
-    url = "https://github.com/asdf-vm/asdf.git"
-    {{ $gitArgs }}
-
 ### Bash (Sensible defaults)
 [".local/share/shell/sensible.bash"]
     type = "file"
@@ -365,11 +359,11 @@
     url = "{{ $vimPlugin }}"
     {{ $gitArgs }}
 {{- end }}
-# coc.nvim VIM plugin requires custom branch "release"
 [".local/share/vim/plugged/coc.nvim"]
     type = "git-repo"
     url = "https://github.com/neoclide/coc.nvim.git"
-    {{ $gitArgs }}
+    clone.args = ["--branch", "release", "--depth", "1"]
+    pull.args = ["--ff-only"]
 
 ### NVIM
 [".config/nvim"]
