@@ -437,7 +437,13 @@ softwarePackages:
     _env:
       PIECES_OS_APPDATA:
         cask: "$HOME/Library/Application Support/com.pieces.os"
-        snap: "TODO"
+        snap: "$HOME/snap/pieces-os/current"
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/pieces-os"
+        target: "$HOME/Library/Application Support/com.pieces.os"
+    _link:snap:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/pieces-os"
+        target: "$HOME/snap/pieces-os/current"
     appinstaller: https://builds.pieces.app/stages/production/appinstaller/os_server.appinstaller
     cask: pieces-os
     exe: https://builds.pieces.app/stages/production/os_server/windows-exe/download
@@ -547,8 +553,17 @@ softwarePackages:
     _env:
       ALTAIR_APPDATA:
         cask: "$HOME/Library/Application Support/Altair GraphQL Client"
-        choco: "TODO"
+        choco: "%APPDATA%/Altair GraphQL Client"
         snap: "$HOME/snap/altair/current/.config/Altair GraphQL Client"
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Altair GraphQL Client"
+        target: "$HOME/Library/Application Support/Altair GraphQL Client"
+    _link:choco:
+      - src: "%APPDATA%/.config/Altair GraphQL Client"
+        target: "%APPDATA%/Altair GraphQL Client"
+    _link:snap:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Altair GraphQL Client"
+        target: "$HOME/snap/altair/current/.config/Altair GraphQL Client"
     cask: altair-graphql-client
     choco: altair-graphql
     snap: altair
@@ -621,10 +636,24 @@ softwarePackages:
     _app: Android Studio.app
     _env:
       ANDROID_STUDIO_APPDATA:
-        cask: "TODO"
-        choco: "TODO"
-        flatpak: "TODO"
-        snap: "TODO"
+        cask: "$HOME/Library/Application Support/Google/AndroidStudio2023.1"
+        choco: "%APPDATA%/Google"
+        flatpak: "$HOME/.var/app/com.google.AndroidStudio/config/Google/AndroidStudio2023.1"
+        snap: "$HOME/.config/Google/AndroidStudio2023.1"
+    _link:cask: "$HOME/Library/Application Support/Google/AndroidStudio2023.1"
+    _link:choco:
+      - src: "%APPDATA%/.config/Google"
+        target: "%APPDATA%/Google"
+    _link:flatpak:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Google/AndroidStudio2023.1"
+        target: "$HOME/.var/app/com.google.AndroidStudio/config/Google/AndroidStudio2023.1"
+      - src: "$HOME/.local/share/Google/consentOptions"
+        target: "$HOME/.var/app/com.google.AndroidStudio/data/Google/consentOptions"
+    _link:snap:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Google/AndroidStudio2023.1"
+        target: "$HOME/.config/Google/AndroidStudio2023.1"
+      - src: "$HOME/.local/share/Google/consentOptions"
+        target: "$HOME/.local/share/Google/consentOptions"
     cask: android-studio
     choco: androidstudio
     flatpak: com.google.AndroidStudio
@@ -1292,6 +1321,10 @@ softwarePackages:
       LOGI_OPTIONS_PLUS_APPDATA:
         cask: "$HOME/Library/Application Support/LogiOptionsPlus"
         choco: "TODO"
+    _link:choco: 'TODO - Installation fails, check again after the package is updated'
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/LogiOptionsPlus"
+        target: "$HOME/Library/Application Support/LogiOptionsPlus"
     choco: logioptionsplus
     cask: logi-options-plus
     exe: https://download01.logi.com/web/ftp/pub/techsupport/optionsplus/logioptionsplus_installer.exe
@@ -2157,8 +2190,17 @@ softwarePackages:
     _env:
       TOR_BROWSER_APPDATA:
         cask: "$HOME/Library/Application Support/TorBrowser-Data/Tor"
-        choco: "TODO"
-        flatpak: "TODO"
+        choco: "%PROGRAMDATA%/chocolatey/lib/tor-browser/tools/tor-browser/Browser/TorBrowser/Data"
+        flatpak: "$HOME/.var/app/com.github.micahflee.torbrowser-launcher/data/torbrowser/tbb/x86_64/tor-browser/Browser/TorBrowser/Data/"
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/tor-browser"
+        target: "$HOME/Library/Application Support/TorBrowser-Data/Tor"
+    _link:choco:
+      - src: "%APPDATA%/.config/tor-browser"
+        target: "%PROGRAMDATA%/chocolatey/lib/tor-browser/tools/tor-browser/Browser/TorBrowser/Data"
+    _link:flatpak:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/tor-browser"
+        target: "$HOME/.var/app/com.github.micahflee.torbrowser-launcher/data/torbrowser/tbb/x86_64/tor-browser/Browser/TorBrowser/Data/"
     cask: tor-browser
     choco: tor-browser
     flatpak: com.github.micahflee.torbrowser-launcher
@@ -3225,7 +3267,7 @@ softwarePackages:
       # @brief Logs into DockerHub for Docker Desktop
       # @description
       #     This script logs into DockerHub so that Docker Desktop is pre-authenticated. This
-      #     functionality requires that the `DOCKERHUB_USER` be passed in as an environment variable (or 
+      #     functionality requires that the `DOCKERHUB_USER` be passed in as an environment variable (or
       #     directly editted in the `~/.config/chezmoi/chezmoi.yaml` file) and that the `DOCKERHUB_TOKEN`
       #     be passed in as a secret (either via the encrypted secret method or passed in as an environment
       #     variable).
@@ -5289,7 +5331,7 @@ softwarePackages:
           ### Populate appropriate token
           case "$OSTYPE" in
             solaris*) echo "TODO" ;;
-            darwin*)  GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_DARWIN")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_DARWIN" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_DARWIN" }}{{ end }}" ;; 
+            darwin*)  GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_DARWIN")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_DARWIN" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_DARWIN" }}{{ end }}" ;;
             linux*)   GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_LINUX")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_LINUX" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_LINUX" }}{{ end }}" ;;
             bsd*)     echo "TODO" ;;
             msys*)    GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_WINDOWS")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_WINDOWS" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_WINDOWS" }}{{ end }}" ;;
@@ -5318,7 +5360,7 @@ softwarePackages:
               {{ end -}}
               {{ end }}
             fi
-          
+
             ### Register VirtualBox based runners if VirtualBox is installed
             if [ $HAS_VIRTUALBOX -eq 1 ]; then
               logg info 'Registering GitLab Runner(s) that use VirtualBox executor'
@@ -5392,12 +5434,12 @@ softwarePackages:
       if command -v gitomatic > /dev/null; then
         ### Copy bin to /usr/local/bin
         logg info "Copying $HOME/.local/bin/gitomatic-service to /usr/local/bin/gitomatic-service" && sudo cp -f "$HOME/.local/bin/gitomatic-service" /usr/local/bin/gitomatic-service
-        
+
         ### Copy gitomatic to global directory
         if [ ! -f /usr/local/bin/gitomatic ]; then
           logg info 'Copying gitomatic executable to /usr/local/bin/gitomatic' && sudo cp -f "$(which gitomatic)" /usr/local/bin/gitomatic
         fi
-      
+
         if [ -d /Applications ] && [ -d /System ]; then
           ### macOS
           logg info 'Copying gitomatic plist file to /Library/LaunchDaemons' && sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitomatic/com.github.muesli.gitomatic.plist" /Library/LaunchDaemons/com.github.muesli.gitomatic.plist
@@ -7032,9 +7074,21 @@ softwarePackages:
     _env:
       FERDIUM_APPDATA:
         cask: "$HOME/Library/Application Support/Ferdium"
-        choco: TODO
+        choco: "%APPDATA%/Ferdium"
         flatpak: "$HOME/.var/app/org.ferdium.Ferdium/config/Ferdium"
         snap: "$HOME/snap/ferdium/current/.config/Ferdium"
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Ferdium"
+        target: "$HOME/Library/Application Support/Ferdium"
+    _link:choco:
+      - src: "%APPDATA%/.config/Ferdium"
+        target: "%APPDATA%/Ferdium"
+    _link:flatpak:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Ferdium"
+        target: "$HOME/.var/app/org.ferdium.Ferdium/config/Ferdium"
+    _link:snap:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/Ferdium"
+        target: "$HOME/snap/ferdium/current/.config/Ferdium"
     cask: ferdium
     choco: ferdium
     flatpak: org.ferdium.Ferdium
@@ -7074,9 +7128,21 @@ softwarePackages:
     _env:
       MAILSPRING_APPDATA:
         cask: "$HOME/Library/Application Support/Mailspring"
-        choco: "TODO"
-        flatpak: "TODO"
-        snap: "TODO"
+        choco: "%APPDATA%/Mailspring"
+        flatpak: "$HOME/.var/app/com.getmailspring.Mailspring/config/Mailspring"
+        snap: "$HOME/snap/mailspring/current/.config/Mailspring"
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/mailspring"
+        target: "$HOME/Library/Application Support/Mailspring"
+    _link:choco:
+      - src: "%APPDATA%/.config/Mailspring"
+        target: "%APPDATA%/Mailspring"
+    _link:flatpak:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/mailspring"
+        target: "$HOME/.var/app/com.getmailspring.Mailspring/config/Mailspring"
+    _link:snap:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/mailspring"
+        target: "$HOME/snap/mailspring/current/.config/Mailspring"
     cask: mailspring
     choco: mailspring
     flatpak: com.getmailspring.Mailspring
@@ -7105,9 +7171,21 @@ softwarePackages:
     _env:
       MARK_TEXT_APPDATA:
         cask: "$HOME/Library/Application Support/marktext"
-        choco: "TODO"
-        flatpak: "TODO"
-        winget: "TODO"
+        choco: "%APPDATA%/marktext"
+        flatpak: "$HOME/.var/app/com.github.marktext.marktext/config/marktext"
+        winget: "%APPDATA%/marktext"
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/marktext"
+        target: "$HOME/Library/Application Support/marktext"
+    _link:choco:
+      - src: "%APPDATA%/.config/marktext"
+        target: "%APPDATA%/marktext"
+    _link:flatpak:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/marktext"
+        target: "$HOME/.var/app/com.github.marktext.marktext/config/marktext"
+    _link:winget:
+      - src: "%APPDATA%/.config/marktext"
+        target: "%APPDATA%/marktext"
     cask: mark-text
     choco: marktext
     flatpak: com.github.marktext.marktext
@@ -7183,8 +7261,8 @@ softwarePackages:
     _env:
       MICROSOFT_EDGE_APPDATA:
         cask: "$HOME/Library/Application Support/Microsoft Edge/Default"
-        choco: "TODO"
-        flatpak: "TODO"
+        choco: "%LOCALAPPDATA%/Microsoft/Edge/User Data/Default"
+        flatpak: "$HOME/.var/app/com.microsoft.Edge/config/microsoft-edge/Default"
     _post: |
       #!/usr/bin/env bash
       # @brief See `google-chrome` `_post` script for more details
@@ -7248,6 +7326,15 @@ softwarePackages:
         done
       }
       chromeSetUp
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/microsoft-edge/Default"
+        target: "$HOME/Library/Application Support/Microsoft Edge/Default"
+    _link:choco:
+      - src: "%APPDATA%/.config/microsoft-edge/Default"
+        target: "%LOCALAPPDATA%/Microsoft/Edge/User Data/Default"
+    _link:flatpak:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/microsoft-edge/Default"
+        target: "$HOME/.var/app/com.microsoft.Edge/config/microsoft-edge/Default"
     cask: microsoft-edge
     choco: microsoft-edge
     flatpak: com.microsoft.Edge
@@ -7937,7 +8024,7 @@ softwarePackages:
 
         ### netdata-claim.sh must be run as netdata user
         sudo -H -u netdata bash -c 'export NETDATA_ROOM="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_ROOM")) -}}{{- includeTemplate "secrets/NETDATA_ROOM" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_ROOM" -}}{{- end -}}" && export NETDATA_TOKEN="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) -}}{{- includeTemplate "secrets/NETDATA_TOKEN" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_TOKEN" -}}{{- end -}}" && yes | netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="https://app.netdata.cloud"'
-        
+
         ### Kernel optimizations
         # These are mentioned while installing via the kickstart.sh script method. We are using Homebrew for the installation though.
         # Assuming these optimizations do not cause any harm.
@@ -7969,7 +8056,7 @@ softwarePackages:
             logg error 'No etc location found for netdata' && exit 1
           fi
           logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/ to $NETDATA_ETC" && sudo cp -rf "${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/" "$NETDATA_ETC"
-          
+
           if command -v gsed > /dev/null; then
             SED_UTIL="gsed"
           else
@@ -7979,7 +8066,7 @@ softwarePackages:
           ### Blocky
           logg info "Adding Blocky metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
           sudo "$SED_UTIL" -i "/jobs:/a\  - name: blocky_local \n    url: 'http://127.0.0.1:4000/metrics'" "$NETDATA_ETC/go.d/prometheus.conf"
-          
+
           ### SFTPGo
           logg info "Adding SFTPGo metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
           sudo "$SED_UTIL" -i "/jobs:/a\  - name: sftpgo_local \n    url: 'http://127.0.0.1:57500/metrics'" "$NETDATA_ETC/go.d/prometheus.conf"
@@ -8262,7 +8349,13 @@ softwarePackages:
     _env:
       NOTION_APPDATA:
         cask: "$HOME/Library/Application Support/Notion"
-        choco: "TODO"
+        choco: "%APPDATA%/Notion"
+    _link:cask:
+      - src: "${XDG_CONFIG_HOME:-$HOME/.config}/notion"
+        target: "$HOME/Library/Application Support/Notion"
+    _link:choco:
+      - src: "%APPDATA%/.config/notion"
+        target: "%APPDATA%/Notion"
     cask: notion
     choco: notion
     mas: 1559269364
@@ -10917,7 +11010,7 @@ softwarePackages:
     _home: https://github.com/skeeto/endlessh
     _name: Endlessh
     _service: endlessh
-    _post: | 
+    _post: |
       #!/usr/bin/env bash
       # @file Endlessh Configuration
       # @brief Applies the Endlessh configuration and starts the service on Linux systems
@@ -11764,7 +11857,7 @@ softwarePackages:
     yay: termius
   dagu:
     _bin: dagu
-    _github: 
+    _github:
     _name: Dagu
     _post: |
       #!/usr/bin/env bash
@@ -12145,7 +12238,7 @@ softwarePackages:
       #     ## Links
       #
       #     * [Privoxy configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/privoxy/config)
-      
+
       ### Define the Privoxy configuration location based on whether system is macOS or Linux
       if [ -d /Applications ] && [ -d /System ]; then
         ### macOS
@@ -12171,7 +12264,7 @@ softwarePackages:
             sudo add-usergroup "$USER" privoxy
           fi
           sudo chown privoxy:privoxy "$PRIVOXY_CONFIG" 2> /dev/null || sudo chown privoxy:$(id -g -n) "$PRIVOXY_CONFIG"
-          
+
           ### Restart Privoxy after configuration is applied
           if [ -d /Applications ] && [ -d /System ]; then
             ### macOS
@@ -13734,7 +13827,7 @@ softwarePackages:
       #     ## Links
       #
       #     * [`fail2ban` configuration folder](https://github.com/megabyte-labs/install.doctor/tree/master/home/private_dot_ssh/fail2ban)
-      
+
       ### Notify of script start
       logg info 'Configuring fail2ban'
 
