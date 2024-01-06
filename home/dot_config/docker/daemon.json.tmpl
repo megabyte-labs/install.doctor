@@ -5,12 +5,10 @@
       "enabled": true
     }
   },
-  "experimental": true,
-  {{ if (eq .host.distro.family "linux") -}}
+  "experimental": true{{ if (eq .host.distro.family "linux") }},
   "runtimes": {
     "runsc": {
       "path": "/usr/local/bin/runsc"
     }
-  }
-{{ end -}}
+  }{{ end }}
 }

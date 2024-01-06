@@ -1,4 +1,4 @@
-
+https://github.com/harababurel/gcsf
 * Move age decryption higher
 * Add ~/.local/share/sounds was symlink to {{ .host.home }}/.local/share/betelgeuse/share/sounds
 xattr -d com.apple.quarantine rclone
@@ -18,6 +18,8 @@ adobe-creative-cloud curl: (18) HTTP/2 stream 1 was reset
 - https://github.com/linuxserver/docker-webtop
 - https://app.warp.dev/referral/7PMXRV
 - https://github.com/chocolatey/boxstarter
+- https://github.com/home-sweet-gnome/dash-to-panel
+- https://github.com/Shougo/neocomplcache.vim
 - https://nginxui.com/
 # Create the $HOME/opt destination folder
 mkdir -p ~/opt
@@ -223,6 +225,7 @@ The following items have been reviewed but need to be revisited due to complexit
 - https://github.com/open-hand/choerodon
 - https://github.com/1backend/1backend
 - https://github.com/redkubes/otomi-core
+- https://github.com/shunfei/cronsun
 - https://github.com/yunionio/cloudpods
 - https://github.com/tkestack/tke
 - https://www.rancher.com/

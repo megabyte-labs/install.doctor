@@ -1432,6 +1432,18 @@ softwarePackages:
     brew: bfg
     choco: bfg-repo-cleaner
     port: bfg
+  plumber:
+    _bin: plumber
+    _github: https://github.com/streamdal/plumber
+    _name: Plumber
+    brew: streamdal/public/plumber
+    exe: https://github.com/streamdal/plumber/releases/latest/download/plumber-windows.exe
+  bats:
+    _bin: bats
+    _github: https://github.com/bats-core/bats-core
+    _name: Bats Bash Testing
+    brew: bats-core
+    npm: bats
   bat:
     _bin: bat
     _desc: '[bat](https://github.com/sharkdp/bat) is a cat(1) clone with syntax highlighting and Git integration.'
@@ -1466,6 +1478,13 @@ softwarePackages:
     _name: Beets
     ansible: professormanhattan.beets
     pipx: beets
+  devspace:
+    _bin: devspace
+    _github: https://github.com/devspace-sh/devspace
+    _name: DevSpace
+    brew: devspace
+    npm: devspace
+    scoop: devspace
   betwixt:
     _bin: null
     _desc: Web Debugging Proxy based on Chrome DevTools Network panel
@@ -3212,6 +3231,11 @@ softwarePackages:
     script: |
       #!/usr/bin/env bash
       pip3 install ntfy[emoji,matrix,pid,slack]
+  makeself:
+    _bin: makeself
+    _github: https://github.com/megastep/makeself
+    _name: MakeSelf
+    brew: makeself
   docker-desktop:
     _desc: '[Docker](https://www.docker.com/) is a set of platform-as-a-service products that use OS-level virtualization to deliver software in packages called containers. Containers are isolated from one another and bundle their own software, libraries and configuration files; they can communicate with each other through well-defined channels. [Docker Desktop](https://www.docker.com/products/docker-desktop/) adds a sleek UI for Docker and makes it easier to manage Docker on macOS and Windows.'
     _docs: https://docs.docker.com/
@@ -10664,6 +10688,17 @@ softwarePackages:
     go: github.com/charmbracelet/skate@latest
     nix: nixpkgs.skate
     pacman: skate
+  rtop:
+    _bin: rtop
+    _name: rtop
+    _github: https://github.com/rapidloop/rtop
+    go: github.com/rapidloop/rtop@latest
+  unikraft:
+    _bin: kraft
+    _name: Unikraft
+    _github: https://github.com/unikraft/unikraft
+    brew: unikraft/cli/kraftkit
+    script: curl --proto '=https' --tlsv1.2 -sSf https://get.kraftkit.sh | sh
   skaffold:
     _bin: skaffold
     _name: Skaffold
