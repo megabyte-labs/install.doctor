@@ -274,6 +274,7 @@ softwarePackages:
   tradingview:
     _bin: tradingview
     _name: Trading View
+    _app: TradingView.app
     _github: https://github.com/tradingview/lightweight-charts
     cask: tradingview
     msix: https://tvd-packages.tradingview.com/stable/latest/win32/TradingView.msix
@@ -2646,6 +2647,7 @@ softwarePackages:
     _bin: phpmon
     _name: PHP Mon
     _github: https://github.com/nicoverbruggen/phpmon
+    _app: PHP Monitor.app
     _pre: |
       #!/usr/bin/env bash
       if ! command -v valet > /dev/null; then
@@ -3277,6 +3279,7 @@ softwarePackages:
     _bin: pushbullet
     _github: https://github.com/sidneys/pb-for-desktop
     _name: Pushbullet for Desktop
+    _app: PB for Desktop.app
     appimage: sidneys/pb-for-desktop
     cask: pb
     choco: pushbullet
@@ -3284,6 +3287,7 @@ softwarePackages:
     _bin: sidekick
     _github: false
     _name: Sidekick
+    _app: Sidekick.app
     cask: pushplaylabs-sidekick
   docker-slim:
     _bin: docker-slim
@@ -11685,6 +11689,7 @@ softwarePackages:
     _bin: steam
     _github: false
     _name: steam
+    _app: Steam.app
     choco: steam
     cask: steam
     flatpak: com.valvesoftware.Steam
