@@ -134,10 +134,12 @@ data:
     domain: "{{ $domain }}"
     gitlabRunners:
       - glurl: "https://gitlab.com/"
+        groupID: 00000000
         runnerDescription: "Docker executor"
         runnerImage: "alpine:latest"
         runnerTags: "alpine,linux"
       - glurl: "https://gitlab.com/"
+        groupID: 00000000
         baseVM: "debian"
         runnerDescription: "VirtualBox executor - Debian, OpenJDK 20"
         runnerTags: "bash,openjdk20,linux"
