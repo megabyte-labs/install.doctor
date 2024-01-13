@@ -17,19 +17,19 @@ services:
       - statping_app:/app
       - services.yml:/app/services.yml
     environment:
-      VIRTUAL_HOST: localhost
-      VIRTUAL_PORT: 8072
-      DB_CONN: postgres
-      DB_HOST: postgres
-      ADMIN_USER: admin
       ADMIN_PASSWORD_FILE: /run/secrets/statping_admin_password
+      ADMIN_USER: "admin"
       API_SECRET_FILE: /run/secrets/statping_api_secret
-      DB_USER: statuser
+      DB_CONN: "postgres"
+      DB_DATABASE: "statdb"
+      DB_HOST: "postgres"
       DB_PASS_FILE: /run/secrets/statping_database_password
-      DB_DATABASE: statdb
-      NAME: "{{ .docker.statping.name }}"
+      DB_USER: "statuser"
       DESCRIPTION: "{{ .docker.statping.description }}"
       DOMAIN: "status.{{ .host.domain }}"
+      NAME: "{{ .docker.statping.name }}"
+      VIRTUAL_HOST: "localhost"
+      VIRTUAL_PORT: "8072"
     deploy:
       mode: replicated
       replicas: 1
@@ -47,9 +47,9 @@ services:
     networks:
       - statping_network
     environment:
+      POSTGRES_DB: "statdb"
       POSTGRES_PASSWORD_FILE: /run/secrets/statping_database_password
-      POSTGRES_USER: statuser
-      POSTGRES_DB: statdb
+      POSTGRES_USER: "statuser"
     deploy:
       mode: replicated
       replicas: 1

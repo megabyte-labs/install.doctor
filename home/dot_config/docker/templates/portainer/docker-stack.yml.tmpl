@@ -24,8 +24,8 @@ services:
     volumes:
       - portainer_manager_data:/data
     networks:
+      - cloudflared_tunnel
       - portainer_agent_network
-      - nginx_network
     secrets:
       - portainer_admin_password
     deploy:
@@ -38,11 +38,13 @@ services:
     image: cloudflare/cloudflared
     command: tunnel run
     deploy:
-      replicas: 2
+      replicas: 4
     networks:
       - cloudflared_tunnel
     environment:
-      TUNNEL_TOKEN: /run/secrets/cloudflared_docker_swarm_token
+      TUNNEL_TOKEN_FILE: /run/secrets/cloudflared_docker_swarm_token
+    secrets:
+      - cloudflared_docker_swarm_token
 
 networks:
   cloudflared_tunnel:
@@ -51,8 +53,6 @@ networks:
     driver: overlay
     attachable: true
     internal: true
-  nginx_network:
-    external: true
 
 secrets:
   cloudflared_docker_swarm_token:
