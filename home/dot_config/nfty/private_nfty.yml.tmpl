@@ -31,8 +31,8 @@ linux:
     # 1 - system default, 0 - never expire
     timeout: 0
 matrix:
-  url: matrix.org
-  roomId: install.doctor
+  url: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "MATRIX_HOMESERVER")) }}{{- includeTemplate "secrets/MATRIX_HOMESERVER" | decrypt | trim -}}{{ else }}{{- env "MATRIX_HOMESERVER" -}}{{ end }}
+  roomId: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "MATRIX_ROOM_ID")) }}{{- includeTemplate "secrets/MATRIX_ROOM_ID" | decrypt | trim -}}{{ else }}{{- env "MATRIX_ROOM_ID" -}}{{ end }}
   userId: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "MATRIX_USERNAME")) }}{{- includeTemplate "secrets/MATRIX_USERNAME" | decrypt | trim -}}{{ else }}{{- env "MATRIX_USERNAME" -}}{{ end }}
   password: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "MATRIX_PASSWORD")) }}{{- includeTemplate "secrets/MATRIX_PASSWORD" | decrypt | trim -}}{{ else }}{{- env "MATRIX_PASSWORD" -}}{{ end }}
 notifico:
