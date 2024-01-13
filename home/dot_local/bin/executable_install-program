@@ -808,6 +808,7 @@ async function beforeInstall(packageManager) {
   } else if (packageManager === 'pacman') {
     runCommand('Running pacman update', `sudo pacman -Syu`)
   } else if (packageManager === 'pipx') {
+  } else if (packageManager === 'pip') {
   } else if (packageManager === 'pkg') {
     await $`sudo pkg upgrade`
   } else if (packageManager === 'port') {
@@ -1439,6 +1440,16 @@ async function installPackageList(packageManager, packages) {
             log('error', 'Install', `There was an error installing ${pkg} with both pipx and pip3`)
             console.error(e)
           }
+        }
+      }
+    } else if (packageManager === 'pip') {
+      for (let pkg of packages) {
+        try {
+          runCommand(`Installing ${pkg} via ${packageManager}`, `pip3 install ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
+        } catch (e) {
+          log('warn', 'Install', `There was an error installing ${pkg} with pip3`)
+          console.error(e)
         }
       }
     } else if (packageManager === 'pkg-darwin') {

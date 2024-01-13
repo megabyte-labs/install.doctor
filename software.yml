@@ -594,12 +594,12 @@ softwarePackages:
     _bin: opn-cli
     _github: https://github.com/andeman/opn-cli
     _name: OPNSense CLI
-    pip: opn-cli
+    pipx: opn-cli
   pfsense-fauxapi:
     _bin: fauxapi
     _github: https://github.com/ndejong/pfsense_fauxapi_client_python
     _name: pfSense CLI (fauxapi)
-    pip: pfsense-fauxapi
+    pipx: pfsense-fauxapi
   android-commandlinetools:
     _deps:
       - java
@@ -3219,7 +3219,6 @@ softwarePackages:
     _name: NFTY
     _post: |
       #!/usr/bin/env bash
-      pipx inject ntfy ntfy[emoji,matrix,pid,slack]
       sudo mkdir -p /usr/local/etc/branding
       sudo cp -f "$HOME/.local/etc/branding/logo-color-256x256.png" /usr/local/etc/branding/logo-color-256x256.png
       sudo mkdir -p /usr/local/share/sounds
@@ -3230,7 +3229,7 @@ softwarePackages:
       if command -v termux-setup-storage > /dev/null; then
         apt install termux-api
       fi
-    pipx: ntfy
+    pip: ntfy[emoji,matrix,pid,slack]
   makeself:
     _bin: makeself
     _github: https://github.com/megastep/makeself
