@@ -11,9 +11,7 @@ https://github.com/superfly/litefs
 https://github.com/Qihoo360/QConf
 https://github.com/ossec/ossec-hids
 https://github.com/search?q=system&type=repositories&s=stars&o=desc&p=59
-- https://github.com/apache/pulsar
 - https://github.com/nats-io/nats-server
-- https://github.com/foambubble/foam
 - [Title](https://github.com/albfan/miraclecast)
 - [Title](https://gitlab.gnome.org/GNOME/gnome-network-displays)
 Use minimum permissions / IAM for https://iosexample.com/a-command-line-tool-to-download-and-install-apples-xcode/
