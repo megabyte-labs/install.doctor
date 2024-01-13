@@ -13,7 +13,7 @@ backends:
   - notifico
   - slack
   - systemlog
-{{ else i eq .host.distro.family "windows" }}
+{{ else if eq .host.distro.family "windows" }}
 backends:
   - matrix
   - notifico
