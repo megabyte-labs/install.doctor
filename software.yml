@@ -10394,6 +10394,11 @@ softwarePackages:
     flatpak: org.audacityteam.Audacity
     scoop: extras/audacity
     snap: audacity
+  turbo:
+    _bin: turbo
+    _github: https://github.com/vercel/turbo
+    _name: Turbo
+    npm: turbo
   bazelisk:
     _bin: bazelisk
     _desc: A user-friendly launcher for Bazel.
@@ -11685,6 +11690,17 @@ softwarePackages:
       #!/usr/bin/env bash
       micromamba self-update
     brew: micromamba
+  sapling:
+    _bin: sl
+    _name: Sapling
+    _github: https://github.com/facebook/sapling
+    brew: sapling
+    pacman: sapling-scm-bin
+    script:windows: |
+      curl -sSL https://github.com/facebook/sapling/releases/latest > ~/Downloads/sapling_windows_0.2.20231113-145254+995db0d6_amd64.zip
+      Expand-Archive ~/Downloads/sapling_windows_0.2.20231113-145254+995db0d6_amd64.zip 'C:\Program Files'
+      setx PATH "$env:PATH;C:\Program Files\Sapling" -m
+      Set-Alias -Name sl -Value 'C:\Program Files\Sapling\sl.exe' -Force -Option Constant,ReadOnly,AllScope
   steam:
     _bin: steam
     _github: false
@@ -11707,6 +11723,36 @@ softwarePackages:
     flatpak: com.microsoft.Teams
     snap: teams-for-linux
     yay: teams-for-linux
+  ninja:
+    _bin: ninja
+    _github: https://github.com/Supervisor/supervisor
+    _name: Ninja
+    apt: ninja
+    dnf: ninja
+    brew: ninja
+    pacman: ninja
+    zypper: ninja
+  juicefs:
+    _bin: juicefs
+    _github: https://github.com/juicedata/juicefs
+    _name: JuiceFS
+    _post: |
+      #!/usr/bin/env sh
+      . "$HOME/.local/bin/installx/juicefs.sh"
+    brew: juicefs
+    scoop: juicefs
+    snap: juicefs
+    yay: juicefs
+  supervisor:
+    _bin: supervisord
+    _github: https://github.com/Supervisor/supervisor
+    _name: Supervisor
+    apt: supervisor
+    dnf: supervisor
+    brew: supervisor
+    pacman: supervisor
+    pipx: supervisor
+    zypper: supervisor
   has:
     _bin: has
     _github: https://github.com/kdabir/has

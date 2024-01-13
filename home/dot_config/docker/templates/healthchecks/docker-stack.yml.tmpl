@@ -14,12 +14,12 @@ services:
       ALLOWED_HOSTS: "{{ .docker.healthchecks.allowedHosts }}"
       APPRISE_ENABLED: 'True'
       DB_HOST: postgres
-      DB_NAME_FILE: /run/secrets/healthchecks_db_name
+      DB_NAME: healthdb
       DB_PASSWORD_FILE: /run/secrets/healthchecks_db_password
-      DB_USER_FILE: /run/secrets/healthchecks_db_user
+      DB_USER: healthuser
       DEBUG: 'False'
       DEFAULT_FROM_EMAIL: "{{ .docker.healthchecks.defaultFromEmail }}"
-      EMAIL_HOST_PASSWORD_FILE: /run/secrets/healthchecks_sendgrid_api_key
+      EMAIL_HOST_PASSWORD_FILE: /run/secrets/sendgrid_api_key
       EMAIL_HOST_USER: {{ .host.smtp.user }}
       EMAIL_HOST: {{ .host.smtp.host }}
       EMAIL_PORT: {{ .host.smtp.port }}
@@ -30,16 +30,35 @@ services:
       REGENERATE_SETTINGS: 'True'
       SECRET_KEY_FILE: /run/secrets/healthchecks_secret_key
       SHELL_ENABLED: 'True'
-      SITE_LOGO_URL: "{{ .docker.healthchecks.siteLogoUrl }}"
-      SITE_NAME: "{{ .docker.healthchecks.siteName }}"
-      SITE_ROOT: "{{ .docker.healthchecks.siteRoot }}"
-      SLACK_CLIENT_ID_FILE: /run/secrets/healthchecks_slack_client_id
-      SLACK_CLIENT_SECRET_FILE: /run/secrets/healthchecks_slack_client_secret
+      SITE_LOGO_URL: {{ .docker.healthchecks.siteLogoUrl }}
+      SITE_NAME: {{ .docker.healthchecks.siteName }}
+      SITE_ROOT: {{ .docker.healthchecks.siteRoot }}
+      SLACK_CLIENT_ID_FILE: /run/secrets/slack_client_id
+      SLACK_CLIENT_SECRET_FILE: /run/secrets/slack_client_secret
       SLACK_ENABLED: 'True'
-      SUPERUSER_EMAIL_FILE: /run/secrets/healthchecks_superuser_email
+      SUPERUSER_EMAIL: "{{ .user.email }}"
       SUPERUSER_PASSWORD_FILE: /run/secrets/healthchecks_superuser_password
       TZ: "{{ .user.timezone }}"
       WEBHOOKS_ENABLED: 'True'
+      DISCORD_CLIENT_ID: 
+      DISCORD_CLIENT_SECRET: 
+      MATRIX_HOMESERVER_FILE: /run/secrets/matrix_homeserver
+      MATRIX_USER_ID_FILE: /run/secrets/matrix_username
+      MATRIX_ACCESS_TOKEN_FILE: /run/secrets/matrix_access_token
+      APPRISE_ENABLED: 'True'
+      SHELL_ENABLED: 'True'
+      PUSHBULLET_CLIENT_ID_FILE: /run/secrets/pushbullet_client_id
+      PUSHBULLET_CLIENT_SECRET_FILE: /run/secrets/pushbullet_client_secret
+      S3_ACCESS_KEY: 
+      S3_BUCKET: 
+      S3_ENDPOINT: 
+      S3_REGION: 
+      S3_SECRET_KEY: 
+      TELEGRAM_BOT_NAME: /run/secrets/telegram_bot_name
+      TELEGRAM_TOKEN: /run/secrets/telegram_bot_token
+      TWILIO_ACCOUNT: /run/secrets/twilio_account_sid
+      TWILIO_AUTH: /run/secrets/twilio_auth_token
+      TWILIO_FROM: /run/secrets/twilio_from_number
     deploy:
       mode: replicated
       replicas: 1
@@ -50,15 +69,16 @@ services:
       - "2525:2525"
     restart: unless-stopped
     secrets:
-      - healthchecks_db_name
       - healthchecks_db_password
-      - healthchecks_db_user
       - healthchecks_secret_key
-      - healthchecks_sendgrid_api_key
-      - healthchecks_slack_client_id
-      - healthchecks_slack_client_secret
-      - healthchecks_superuser_email
+      - sendgrid_api_key
+      - slack_client_id
+      - slack_client_secret
+      - telegram_bot_name
+      - telegram_bot_token
       - healthchecks_superuser_password
+      - pushbullet_client_id
+      - pushbullet_client_secret
 
   postgres:
     container_name: Postgres
@@ -97,7 +117,7 @@ secrets:
     external: true
   healthchecks_secret_key:
     external: true
-  healthchecks_sendgrid_api_key:
+  sendgrid_api_key:
     external: true
   healthchecks_slack_client_id:
     external: true

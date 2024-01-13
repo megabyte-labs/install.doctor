@@ -37,6 +37,8 @@ docker:
   wireguard:
     serverUrl: megabyte.space
     internalSubnet: 10.93.92.0
+# All JuiceFS volumes should be postfixed with "manhattan" so you should create private-manhattan, public-manhattan, user-manhattan, and docker-manhattan
+juicefsVolumeNamePostfix: manhattan
 kubernetesHost: kochab
 macosRemoteLogin: 'on'
 themeparkTheme: aquamarine
@@ -847,6 +849,7 @@ softwareGroups:
     - makeself
     - meta
     - mono
+    - ninja
     - ntl
     - nugetpackageexplorer
     - openjdk
@@ -884,6 +887,7 @@ softwareGroups:
     - etcd
     - cloudflared
     - glusterfs
+    - juicefs
     - mole
     - mutagen
     - nebula
@@ -1036,6 +1040,7 @@ softwareGroups:
     - prefsniff
     - pulumi
     - rtop
+    - supervisor
     - sysbench
     - sysdig
     - sysz
@@ -1188,6 +1193,7 @@ softwareGroups:
     - surge
     - trellis
     - ts2c
+    - turbo
     - typescript
     - typescript-to-lua
     - web-ext
@@ -1289,6 +1295,7 @@ softwareGroups:
     - rust
     - sake
     - samba
+    - sapling
     - sftpgo
     - sharp
     - skate
@@ -1628,6 +1635,9 @@ helm:
   - name: cloudflare-exporter
     url: https://lablabs.github.io/cloudflare-exporter/
     pkg: cloudflare-exporter/cloudflare-exporter
+  - name: juicefs
+    url: https://juicedata.github.io/charts/
+    pkg: juicefs/juicefs-csi-driver
 softwarePlugins:
   alfred:
     cmd: null
@@ -1740,6 +1750,7 @@ softwarePlugins:
     cmd: bash -c 'if ! docker plugin ls | grep "{PLUGIN}" > /dev/null; then echo y | docker plugin install "{PLUGIN}"; fi'
     plugins:
       # TODO - Add https://github.com/ContainX/docker-volume-netshare
+      - juicedata/juicefs
       - n0r1skcom/docker-volume-cephfs
       - sapk/plugin-rclone
       - vieux/sshfs
@@ -1747,6 +1758,7 @@ softwarePlugins:
   dotnet:
     cmd: bash -c 'if ! dotnet tool list -g | grep "{PLUGIN}" > /dev/null; then dotnet tool install -g "{PLUGIN}"; fi'
     plugins:
+      - Cake.Tool
       - microsoft.cst.attacksurfaceanalyzer.cli
       - dotnet-format
       - git-credential-manager

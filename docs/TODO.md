@@ -4,6 +4,16 @@ https://github.com/harababurel/gcsf
 xattr -d com.apple.quarantine rclone
 Create issue about setting up completions - https://github.com/rsteube/lazycomplete
 pw="$(osascript -e 'Tell application "System Events" to display dialog "Password:" default answer "" with hidden answer' -e 'text returned of result' 2>/dev/null)" && echo "$pw"
+https://github.com/Shougo/ddc.vim
+https://github.com/harababurel/gcsf
+https://github.com/awslabs/mountpoint-s3 / https://github.com/s3fs-fuse/s3fs-fuse
+https://github.com/superfly/litefs
+https://github.com/Qihoo360/QConf
+https://github.com/ossec/ossec-hids
+https://github.com/search?q=system&type=repositories&s=stars&o=desc&p=59
+- https://github.com/apache/pulsar
+- https://github.com/nats-io/nats-server
+- https://github.com/foambubble/foam
 - [Title](https://github.com/albfan/miraclecast)
 - [Title](https://gitlab.gnome.org/GNOME/gnome-network-displays)
 Use minimum permissions / IAM for https://iosexample.com/a-command-line-tool-to-download-and-install-apples-xcode/
