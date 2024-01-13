@@ -6814,8 +6814,11 @@ softwarePackages:
     _github: https://github.com/AnalogJ/lexicon
     _home: null
     _name: Lexicon
+    _post:pipx: |
+      #!/usr/bin/env bash
+      pipx inject dns-lexicon dns-lexicon[full]
     ansible: professormanhattan.lexicon
-    pipx: dns-lexicon[full]
+    pipx: dns-lexicon
   libimobiledevice:
     _bin: null
     _desc: null

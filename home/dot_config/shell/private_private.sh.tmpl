@@ -28,14 +28,14 @@ export GCE_CREDENTIALS_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/gcloud/gcp.json"
 
 ### CloudFlare
 # Source: https://github.com/cloudflare/cf-terraforming
-export CLOUDFLARE_API_TOKEN='Hzsq3Vub-7Y-hSTlAaLH3Jq_YfTUOCcgf22_Fs-j'
+export CLOUDFLARE_API_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_API_TOKEN")) }}{{ includeTemplate "secrets/CLOUDFLARE_API_TOKEN" | decrypt | trim }}{{ else }}{{ env "CLOUDFLARE_API_TOKEN" }}{{ end }}"
 # If using API Key
 # export CLOUDFLARE_EMAIL='user@example.com'
 # export CLOUDFLARE_API_KEY='1150bed3f45247b99f7db9696fffa17cbx9'
 # Specify zone ID
 # export CLOUDFLARE_ZONE_ID='81b06ss3228f488fh84e5e993c2dc17'
-export LEXICON_CLOUDFLARE_TOKEN=""
-export LEXICON_CLOUDFLARE_USERNAME="{{ .user.cloudflare.username }}"
+export LEXICON_CLOUDFLARE_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_API_TOKEN")) }}{{ includeTemplate "secrets/CLOUDFLARE_API_TOKEN" | decrypt | trim }}{{ else }}{{ env "CLOUDFLARE_API_TOKEN" }}{{ end }}"
+export LEXICON_CLOUDFLARE_ZONE="{{ .host.domain }}"
 
 ### DockerHub
 export DOCKERHUB_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "DOCKERHUB_TOKEN")) }}{{ includeTemplate "secrets/DOCKERHUB_TOKEN" | decrypt | trim }}{{ else }}{{ env "DOCKERHUB_TOKEN" }}{{ end }}"
