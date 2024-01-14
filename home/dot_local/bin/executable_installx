@@ -1,28 +1,51 @@
 #!/usr/bin/env zx
 import osInfo from 'linux-os-info'
 
-let archType, osId, osType
+let installOrder, osArch, osId, osType, pkgs, sysType
 
 async function getOsInfo() {
     return osInfo({ mode: 'sync' })
 }
 
-function getPkgData(pref, pkg) {
-    if (pkg[`${pref}:${this.osType()}:${this.osArch()}`]) {
-        // Handles case like `pipx:windows:x64:`
-        return `${pref}:${this.osType()}:${this.osArch()}`
-    } else if (pkg[`${pref}:${this.osId()}:${this.osArch()}`]) {
-        // Handles case like `pipx:debian:x64:`
-        return `${pref}:${this.osId()}:${this.osArch()}`
-    } else if (pkg[`${pref}:${this.osType()}`]) {
-        // Handles case like `pipx:darwin:`
-        return `${pref}:${this.osType()}`
-    } else if (pkg[`${pref}:${this.osId()}`]) {
-        // Handles case like `pipx:fedora:`
-        return `${pref}:${this.osType()}`
-    } else if (pkg[`${pref}`]) {
-        // Handles case like `pipx:`
-        return `${pref}`
+function getPkgData(pref, pkg, installer) {
+    if (installer) {
+        if (pkg[`${pref}:${installer}:${osId}:${osArch}`]) {
+            return `${pref}:${installer}:${osId}:${osArch}` // Handles case like `_bin:pipx:debian:x64:`
+        } else if (pkg[`${pref}:${osId}:${installer}:${osArch}`]) {
+            return `${pref}:${osId}:${installer}:${osArch}` // Handles case like `_bin:debian:pipx:x64:`
+        } else if (pkg[`${pref}:${installer}:${osType}:${osArch}`]) {
+            return `${pref}:${installer}:${osType}:${osArch}` // Handles case like `_bin:pipx:windows:x64:`
+        } else if (pkg[`${pref}:${osType}:${installer}:${osArch}`]) {
+            return `${pref}:${osType}:${installer}:${osArch}` // Handles case like `_bin:windows:pipx:x64:`
+        } else if (pkg[`${pref}:${installer}:${osId}`]) {
+            return `${pref}:${installer}:${osType}` // Handles case like `_bin:pipx:fedora:`
+        } else if (pkg[`${pref}:${osId}:${installer}`]) {
+            return `${pref}:${osType}:${installer}` // Handles case like `_bin:fedora:pipx:`
+        } else if (pkg[`${pref}:${installer}:${osType}`]) {
+            return `${pref}:${installer}:${osType}` // Handles case like `_bin:pipx:darwin:`
+        } else if (pkg[`${pref}:${osType}:${installer}`]) {
+            return `${pref}:${osType}:${installer}` // Handles case like `_bin:darwin:pipx:`
+        } else if (pkg[`${pref}:${installer}`]) {
+            return `${pref}` // Handles case like `_bin:pipx:`
+        } else if (pkg[`${pref}`]) {
+            return `${pref}` // Handles case like `_bin:`
+        } else {
+            return false
+        }
+    } else {
+        if (pkg[`${pref}:${osId}:${osArch}`]) {
+            return `${pref}:${osId}:${osArch}` // Handles case like `pipx:debian:x64:`
+        } else if (pkg[`${pref}:${osType}:${osArch}`]) {
+            return `${pref}:${osType}:${osArch}` // Handles case like `pipx:windows:x64:`
+        } else if (pkg[`${pref}:${osId}`]) {
+            return `${pref}:${osType}` // Handles case like `pipx:fedora:`
+        } else if (pkg[`${pref}:${osType}`]) {
+            return `${pref}:${osType}` // Handles case like `pipx:darwin:`
+        } else if (pkg[`${pref}`]) {
+            return `${pref}` // Handles case like `pipx:`
+        } else {
+            return false
+        }
     }
 }
 
@@ -56,39 +79,184 @@ async function getSystemType() {
     }
 }
 
+async function getBrewFormulas() {
+    await $`brew list -1 > brew-list`
+    return fs.readFileSync('./brew-list').toString().split('\n')
+}
+
+async function getGems() {
+    await $`gem query --local > gem-list`
+    return fs.readFileSync('./gem-list').toString().split('\n').map(x => x.split(' ')[0])
+}
+
+async function getVoltaInstalls() {
+    await $`volta list --format plain > volta-list`
+    return fs.readFileSync('./volta-list').toString().split('\n').filter(x => x).map(x => x.split(' ')[1].split('@')[0])
+}
+
+async function getCrates() {
+    await $`cargo install --list | awk '/^[[:alnum:]]/ {print $1}' > cargo-list`
+    return fs.readFileSync('./cargo-list').toString().split('\n')
+}
+
+async function getPipxPackages() {
+    await $`pipx list --short > pipx-list`
+    return fs.readFileSync('./pipx-list').toString().split('\n').map(x => x.split(' ')[0])
+}
+
+async function getPips() {
+    await $`pip3 list > pip-list`
+    return fs.readFileSync('./pip-list').toString().split('\n').map(x => x.split(' ')[0])
+}
+
+function expandDeps(keys) {
+    for (const i of keys) {
+        for (const pref of installOrder[sysType]) {
+            const installKey = getPkgData(pref, pkgs[i], false)
+            if (installKey) {
+                const installType = installKey.split(':')[0]
+                const depsKey = getPkgData('_deps', pkgs[i], installType)
+                if (depsKey) {
+                    const deps = typeof pkgs[i][depsKey] === 'string' ? [pkgs[i][depsKey]] : pkgs[i][depsKey]
+                    return [...keys, ...expandDeps(deps)]
+                }
+            }
+        }
+        return [...keys]
+    }
+    return [...keys]
+}
+
+async function bundleInstall(brews, casks) {
+    const lines = []
+    for (const cask of casks) {
+        lines.push(`cask "${cask}"`)
+    }
+    for (const brew of brews) {
+        lines.push(`brew "${brew}"`)
+    }
+    fs.writeFileSync('Brewfile', lines.join('\n'))
+    await $`brew bundle --file Brewfile`
+}
+
+async function installPackages(pkgInstructions) {
+    const combined = {}
+    const promises = []
+    for (const option of installOrder[sysType]) {
+        combined[option] = pkgInstructions.filter(x => x.installType === option)
+    }
+    if (combined.brew || combined.cask) {
+        promises.push(bundleInstall(combined.brew ? combined.brew : [], combined.cask ? combined.cask : []))
+    }
+    if (combined.cargo) {
+        for (const pkg of combined.cargo) {
+            promises.push($`cargo install ${pkg}`)
+        }
+    }
+    if (combined.go) {
+        for (const pkg of combined.go) {
+            promises.push($`go install ${pkg}`)
+        }
+    }
+    if (combined.npm) {
+        for (const pkg of combined.npm) {
+            promises.push($`volta install ${pkg}`)
+        }
+    }
+    if (combined.pacman) {
+        const pacmanPkgs = combined.pacman.map(x => )
+        promises.push($`sudo pacman -Sy --noconfirm --needed ${combined.pacman.map}`)
+    }
+    if (combined.pipx) {
+        for (const pkg of combined.pipx) {
+            promises.push($`pipx install ${pkg}`)
+        }
+    }
+    console.log(combinedInstructions)
+}
+
 
 async function main() {
-    const initData = await Promise.all([getOsInfo(), getSoftwareDefinitions(), getSystemType()])
-    archType = initData[0].arch
+    cd(await $`mktemp -d`)
+    const initData = await Promise.all([
+        getOsInfo(),
+        getSoftwareDefinitions(),
+        getSystemType(),
+        getBrewFormulas(),
+        getGems(),
+        getVoltaInstalls(),
+        getCrates(),
+        getPipxPackages(),
+        getPips()
+    ])
+    osArch = initData[0].arch
     osId = process.platform === 'win32' ? 'win32' : (process.platform === 'linux' ? initData[0].id : process.platform)
     osType = process.platform === 'win32' ? 'windows' : process.platform
-    const installOrder = initData[1].installOrderPreferences
-    const softwarePackages = initData[1].softwarePackages
-    const sysType = initData[2]
+    pkgs = initData[1].softwarePackages
+    sysType = initData[2]
+    installOrder = initData[1].installerPreference
+    const managerLists = {
+        brew: initData[3],
+        cargo: initData[6],
+        gem: initData[4],
+        npm: initData[5],
+        pip: initData[8],
+        pipx: initData[7]
+    }
     const installKeys = argv._
-    const installInstructions = softwarePackages
-        .filter(i => installKeys.includes(i))
-        .filter(async i => {
-            const binField = getPkgData('_bin', i)
-            const whenField = getPkgData('_when', i)
-            const binCheck = i[binField] && await which(i[binField], { nothrow: true })
-            const whenCheck = i[whenField] && await $`${i[whenField]}`.exitCode == 0
-            return (i[binField] && !binCheck) || (i[whenField] && whenCheck)
-        })
+    const installInstructions = Object.keys(pkgs)
+        .filter(i => expandDeps(installKeys).includes(i))
         .map(i => {
-            for (const pref of installOrder) {
-                const pkgData = getPkgData(pref, i)
-                if (pkgData) {
+            for (const pref of installOrder[sysType]) {
+                const installKey = getPkgData(pref, pkgs[i], false)
+                if (installKey) {
                     return {
-                        ...x,
-                        installKey
+                        ...pkgs[i],
+                        listKey: i,
+                        installKey,
+                        installType: installKey.split(':')[0],
+                        installList: typeof pkgs[i][installKey] === 'string' ? [pkgs[i][installKey]] : pkgs[i][installKey]
                     }
                 }
             }
-            return false
+            return {
+                ...pkgs[i],
+                listKey: i,
+                installKey: false,
+                installType: false,
+                installList: []
+            }
         })
-        .filter(i => !!i)
-    console.log(installInstructions)
+        .filter(x => x.installKey)
+        .filter(x => {
+            // Filter out packages already installed by by package managers
+            return Object.keys(managerLists).includes(x.installType)
+        })
+        .filter(x => {
+            // Filter out macOS apps that already have a _app installed
+            if (x.installType === 'cask') {
+                const appField = getPkgData('_app', x, x.installType)
+                if (fs.existsSync(`/Applications/${x[appField]}`) || fs.existsSync(`${os.homedir()}/Applications/${x[appField]}`)) {
+                    return false
+                }
+            }
+            return true
+        })
+        .filter(async x => {
+            // Filter out packages that already have a bin in the PATH
+            const binField = getPkgData('_bin', x, x.installType)
+            const binCheck = x[binField] && await which(x[binField], { nothrow: true })
+            return binField ? binCheck : true
+        })
+        .filter(async x => {
+            // Filter out packages that do not pass _when check
+            const whenField = getPkgData('_when', x, x.installType)
+            const whenCheck = x[whenField] && await $`${x[whenField]}`.exitCode == 0
+            return whenField ? whenCheck : true
+        })
+    await installPackages(installInstructions)
+        //.filter(x => x.installKey)
+    console.log('install instructions', installInstructions)
 }
 
 main()
