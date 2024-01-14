@@ -94,6 +94,7 @@ installerPreference:
     - cargo
     - npm
     - pipx
+    - pip
     - gem
     - appimage
     - script
@@ -110,6 +111,7 @@ installerPreference:
     - cargo
     - npm
     - pipx
+    - pip
     - gem
     - pkg-darwin
     - script
@@ -126,6 +128,7 @@ installerPreference:
     - cargo
     - npm
     - pipx
+    - pip
     - gem
     - appimage
     - script
@@ -151,6 +154,7 @@ installerPreference:
     - cargo
     - npm
     - pipx
+    - pip
     - gem
     - appimage
     - script
@@ -167,6 +171,7 @@ installerPreference:
     - cargo
     - npm
     - pipx
+    - pip
     - gem
     - appimage
     - script
@@ -3251,6 +3256,11 @@ softwarePackages:
           logg info 'Ensuring Docker.app is open' && open --background -a Docker --args --accept-license --unattended
         fi
         logg info 'Headlessly authenticating with DockerHub registry' && echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USER" --password-stdin > /dev/null && logg success 'Successfully authenticated with DockerHub registry'
+      fi
+
+      ### Symlink on macOS
+      if [ -f "$HOME/Library/Containers/com.docker.docker/Data/docker.raw.sock" ]; then
+        logg info 'Symlinking /var/run/docker.sock to macOS Library location' && sudo ln -s "$HOME/Library/Containers/com.docker.docker/Data/docker.raw.sock" /var/run/docker.sock
       fi
     apt: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.16.2-amd64.deb
     cask: docker

@@ -1,0 +1,94 @@
+#!/usr/bin/env zx
+import osInfo from 'linux-os-info'
+
+let archType, osId, osType
+
+async function getOsInfo() {
+    return osInfo({ mode: 'sync' })
+}
+
+function getPkgData(pref, pkg) {
+    if (pkg[`${pref}:${this.osType()}:${this.osArch()}`]) {
+        // Handles case like `pipx:windows:x64:`
+        return `${pref}:${this.osType()}:${this.osArch()}`
+    } else if (pkg[`${pref}:${this.osId()}:${this.osArch()}`]) {
+        // Handles case like `pipx:debian:x64:`
+        return `${pref}:${this.osId()}:${this.osArch()}`
+    } else if (pkg[`${pref}:${this.osType()}`]) {
+        // Handles case like `pipx:darwin:`
+        return `${pref}:${this.osType()}`
+    } else if (pkg[`${pref}:${this.osId()}`]) {
+        // Handles case like `pipx:fedora:`
+        return `${pref}:${this.osType()}`
+    } else if (pkg[`${pref}`]) {
+        // Handles case like `pipx:`
+        return `${pref}`
+    }
+}
+
+async function getSoftwareDefinitions() {
+    try {
+        return YAML.parse(fs.readFileSync(`${os.homedir()}/.local/share/chezmoi/software.yml`, 'utf8'))
+    } catch (e) {
+        throw Error('Failed to load software definitions', e)
+    }
+}
+
+async function getSystemType() {
+    if (process.platform === "win32") {
+        return "windows"
+    } else if (process.platform === "linux") {
+        if (which.sync('apk')) {
+            return "apk"
+        } else if (which.sync('apt-get')) {
+            return "apt"
+        } else if (which.sync('dnf')) {
+            return "dnf"
+        } else if (which.sync('pacman')) {
+            return "pacman"
+        } else if (which.sync('zypper')) {
+            return "zypper"
+        } else {
+            return "linux"
+        }
+    } else {
+        return process.platform
+    }
+}
+
+
+async function main() {
+    const initData = await Promise.all([getOsInfo(), getSoftwareDefinitions(), getSystemType()])
+    archType = initData[0].arch
+    osId = process.platform === 'win32' ? 'win32' : (process.platform === 'linux' ? initData[0].id : process.platform)
+    osType = process.platform === 'win32' ? 'windows' : process.platform
+    const installOrder = initData[1].installOrderPreferences
+    const softwarePackages = initData[1].softwarePackages
+    const sysType = initData[2]
+    const installKeys = argv._
+    const installInstructions = softwarePackages
+        .filter(i => installKeys.includes(i))
+        .filter(async i => {
+            const binField = getPkgData('_bin', i)
+            const whenField = getPkgData('_when', i)
+            const binCheck = i[binField] && await which(i[binField], { nothrow: true })
+            const whenCheck = i[whenField] && await $`${i[whenField]}`.exitCode == 0
+            return (i[binField] && !binCheck) || (i[whenField] && whenCheck)
+        })
+        .map(i => {
+            for (const pref of installOrder) {
+                const pkgData = getPkgData(pref, i)
+                if (pkgData) {
+                    return {
+                        ...x,
+                        installKey
+                    }
+                }
+            }
+            return false
+        })
+        .filter(i => !!i)
+    console.log(installInstructions)
+}
+
+main()
