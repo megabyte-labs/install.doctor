@@ -3224,7 +3224,7 @@ softwarePackages:
       if command -v termux-setup-storage > /dev/null; then
         apt install termux-api
       fi
-    pip: ntfy[emoji,matrix,pid,slack]
+    pip3: ntfy[emoji,matrix,pid,slack]
   makeself:
     _bin: makeself
     _github: https://github.com/megastep/makeself
@@ -3539,7 +3539,7 @@ softwarePackages:
     nix-env: nixpkgs.clipboard-jh
     scoop: clipboard
     snap: clipboard
-    xbps-install: clipboard
+    xbps: clipboard
     yay: clipboard
   editly:
     _bin: editly
@@ -3653,7 +3653,7 @@ softwarePackages:
     _name: Polybar
     apt: polybar
     pacman: polybar
-    xbps-install: polybar
+    xbps: polybar
     zypper: polybar
     pkg-freebsd: polybar
     dnf: polybar
@@ -3666,7 +3666,7 @@ softwarePackages:
     emerge: app-shells/hstr
     apk: hstr
     pkg-freebsd: hstr
-    xbps-install: hstr
+    xbps: hstr
     brew: hstr
     port: histr
     nix-env: hstr
@@ -4862,7 +4862,7 @@ softwarePackages:
     pacman: fzf
     pkgin: fzf
     pkg-freebsd: fzf
-    pkg-openbsd: fzf
+    pkg_add: fzf
     port: fzf
     xbps: fzf
     zypper: fzf
@@ -5178,7 +5178,7 @@ softwarePackages:
     pacman: zola
     pkgin: zola
     pkg-freebsd: zola
-    pkg-openbsd: zola
+    pkg_add: zola
     port: zola
     scoop: zola
     snap: zola
@@ -6953,7 +6953,7 @@ softwarePackages:
     pkg-termux: lsd
     port: lsd
     scoop: lsd
-    xbps-install: lsd
+    xbps: lsd
     zypper: lsd
   lxc:
     _bin: lxc
@@ -8706,7 +8706,7 @@ softwarePackages:
     brew: neofetch
     nix-env: neofetch
     eopkg: neofetch
-    xbps-install: neofetch
+    xbps: neofetch
     zypper: neofetch
     scoop: neofetch
   neovide:
@@ -9981,7 +9981,7 @@ softwarePackages:
     nix: restic
     pacman: restic
     pkg-freebsd: restic
-    pkg-openbsd: restic
+    pkg_add: restic
     port: restic
     scoop: restic
     zypper: restic
@@ -10649,7 +10649,7 @@ softwarePackages:
     nix: nixpkgs.shellcheck
     pacman: shellcheck
     pkg-freebsd: shellcheck
-    pkg-openbsd: shellcheck
+    pkg_add: shellcheck
     port: shellcheck
     scoop: shellcheck
     snap: shellcheck
@@ -11414,7 +11414,7 @@ softwarePackages:
     pacman: just
     nix-env: nixpkgs.just
     eopkg: just
-    xbps-install: just
+    xbps: just
     pkg-freebsd: just
     apk: just
     dnf: just
@@ -11658,7 +11658,7 @@ softwarePackages:
     pacman: vhs
     port: vhs
     scoop: vhs
-    xbps-install: vhs
+    xbps: vhs
   soft-serve:
     _bin: soft
     _desc: A tasty, self-hostable Git server for the command line
@@ -13724,7 +13724,7 @@ softwarePackages:
     pkg_add: pick
     port: pick
     yay: pick
-    xbps-install: pick
+    xbps: pick
   nve:
     _bin: nve
     _github: https://github.com/ehmicky/nve
@@ -13905,7 +13905,7 @@ softwarePackages:
     port: task
     emerge: task
     pacman: task
-    xbps-install: task
+    xbps: task
     zypper: taskwarrior
   boringtun:
     _bin: boringtun-cli
@@ -14254,7 +14254,7 @@ softwarePackages:
     nix: yank
     pacman: yank
     pkg-freebsd: yank
-    pkg-openbsd: yank
+    pkg_add: yank
     port: yank
     scoop: win32yank
     zypper: yank

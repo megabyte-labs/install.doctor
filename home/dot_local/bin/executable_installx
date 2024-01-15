@@ -1,10 +1,25 @@
 #!/usr/bin/env zx
 import osInfo from 'linux-os-info'
 
+// $.verbose = false
+
 let installOrder, osArch, osId, osType, pkgs, sysType
+const cacheDir = os.homedir() + '/.cache/installx'
 
 async function getOsInfo() {
     return osInfo({ mode: 'sync' })
+}
+
+async function runSilentCommand(command) {
+    require('child_process').execSync(`${command}`, { stdio: 'inherit', shell: true })
+  }
+
+async function runScript(key, script) {
+    fs.writeFileSync(`${cacheDir}/${key}`, script)
+    const file = await $`cat ${cacheDir}/${key} | grep "^# @file" | sed 's/^# @file //'`
+    const brief = await $`cat ${cacheDir}/${key} | grep "^# @brief" | sed 's/^# @brief //'`
+    fs.writeFileSync(`${cacheDir}/${key}-glow`, "# " + file.stdout + "\n> " + brief.stdout + "\n```sh\n" + script + "\n```")
+    runSilentCommand(`glow "${cacheDir}/${key}-glow" && bash "${cacheDir}/${key}"`)
 }
 
 function getPkgData(pref, pkg, installer) {
@@ -79,36 +94,6 @@ async function getSystemType() {
     }
 }
 
-async function getBrewFormulas() {
-    await $`brew list -1 > brew-list`
-    return fs.readFileSync('./brew-list').toString().split('\n')
-}
-
-async function getGems() {
-    await $`gem query --local > gem-list`
-    return fs.readFileSync('./gem-list').toString().split('\n').map(x => x.split(' ')[0])
-}
-
-async function getVoltaInstalls() {
-    await $`volta list --format plain > volta-list`
-    return fs.readFileSync('./volta-list').toString().split('\n').filter(x => x).map(x => x.split(' ')[1].split('@')[0])
-}
-
-async function getCrates() {
-    await $`cargo install --list | awk '/^[[:alnum:]]/ {print $1}' > cargo-list`
-    return fs.readFileSync('./cargo-list').toString().split('\n')
-}
-
-async function getPipxPackages() {
-    await $`pipx list --short > pipx-list`
-    return fs.readFileSync('./pipx-list').toString().split('\n').map(x => x.split(' ')[0])
-}
-
-async function getPips() {
-    await $`pip3 list > pip-list`
-    return fs.readFileSync('./pip-list').toString().split('\n').map(x => x.split(' ')[0])
-}
-
 function expandDeps(keys) {
     for (const i of keys) {
         for (const pref of installOrder[sysType]) {
@@ -130,64 +115,144 @@ function expandDeps(keys) {
 async function bundleInstall(brews, casks) {
     const lines = []
     for (const cask of casks) {
-        lines.push(`cask "${cask}"`)
+        lines.push(`cask "${cask.cask}"`)
     }
     for (const brew of brews) {
-        lines.push(`brew "${brew}"`)
+        lines.push(`brew "${brew.brew}"`)
     }
     fs.writeFileSync('Brewfile', lines.join('\n'))
     await $`brew bundle --file Brewfile`
+}
+
+async function forEachSeries(iterable) {
+    for (const x of iterable) {
+        await x
+    }
 }
 
 async function installPackages(pkgInstructions) {
     const combined = {}
     const promises = []
     for (const option of installOrder[sysType]) {
-        combined[option] = pkgInstructions.filter(x => x.installType === option)
+        const instructions = pkgInstructions.filter(x => x.installType === option)
+        if (instructions.length) {
+            combined[option] = instructions
+        }
     }
-    if (combined.brew || combined.cask) {
+    if ((combined.brew && combined.brew.length) || (combined.cask && combined.cask.length)) {
         promises.push(bundleInstall(combined.brew ? combined.brew : [], combined.cask ? combined.cask : []))
     }
-    if (combined.cargo) {
-        for (const pkg of combined.cargo) {
-            promises.push($`cargo install ${pkg}`)
+    for (const key of Object.keys(combined)) {
+        switch(key) {
+            case 'ansible':
+                promises.push(forEachSeries(combined[key].flatMap(x => x.installList.flatMap(i => $`${key} 127.0.0.1 -v${process.env.DEBUG && 'vv'} -e '{ ansible_connection: "local", ansible_become_user: "root", ansible_user: "${process.env.USER}", ansible_family: "${osId.charAt(0).toUpperCase() + osId.slice(1)}", install_homebrew: False }' -m include_role -a name=${i}`))))
+            case 'apk':
+                promises.push($`sudo ${key} add ${combined[key].flatMap(x => x.installList).split(' ')}`)
+            case 'appimage':
+                promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => {
+                    if (x.substring(0, 4) === 'http') {
+                        return $`zap install --select-first -q --from ${i}`
+                    } else if ((x.match(/\//g) || []).length === 1) {
+                        return $`zap install --select-first -q --github --from ${i}`
+                    } else {
+                        return $`zap install --select-first -q ${i}`
+                    }
+                })))
+            case 'apt':
+                promises.push($`DEBIAN_FRONTEND=noninteractive sudo apt-get -o DPkg::Options::=--force-confdef install -y ${combined[key].flatMap(x => x.installList).split(' ')}`)
+            case 'basher':
+            case 'baulk':
+            case 'cargo':
+            case 'crew':
+            case 'gem':
+            case 'go':
+            case 'npm':
+            case 'pip':
+            case 'pipx':
+            case 'scoop': // Maybe needs forEachSeries
+            case 'winget': // Maybe needs forEachSeries
+                promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => $`${key} install ${i}`)))
+                break;
+            case 'binary':
+                // TODO
+                promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => $`TMP="$(mktemp)" && curl -sSL ${i} > "$TMP" && sudo mv "$TMP" /usr/local/src/${x._bin} && chmod +x /usr/local/src/${x._bin}`)))
+            case 'brew':
+            case 'cask': // Handled above
+                break;
+            case 'choco':
+                promises.push($`${key} install -y ${combined[key].flatMap(x => x.installList).split(' ')}`)
+            case 'dnf':
+            case 'yum':
+            case 'zypper':
+                promises.push($`sudo ${key} install -y ${combined[key].flatMap(x => x.installList).split(' ')}`)
+                break;
+            case 'emerge':
+            case 'pkg_add':
+                promises.push($`sudo ${key} ${combined[key].flatMap(x => x.installList).split(' ')}`)
+                break;
+            case 'eopkg':
+            case 'pkg-freebsd':
+            case 'pkg-termux':
+            case 'pkgin':
+            case 'port':
+            case 'snap': // TODO - snap testing.. combine with snap-classic and add appropriate logic
+                promises.push($`sudo ${key === 'pkg-freebsd' || key === 'pkg-termux' ? 'pkg' : key} install ${combined[key].flatMap(x => x.installList).split(' ')}`)
+                break;
+            case 'flatpak':
+                promises.push(forEachSeries(combined[key].flatMap(x => x.installList.flatMap(i => $`sudo ${key} install -y flathub ${i}`))))
+                break;
+            case 'github': // TODO
+                break;
+            case 'nix-env': // TODO
+            case 'nix-pkg': // TODO
+            case 'nix-shell': // TODO
+                break;
+            case 'pacman':
+                promises.push($`sudo ${key} -Sy --noconfirm --needed ${combined[key].flatMap(x => x.installList).split(' ')}`)
+                break;
+            case 'pkg-darwin':
+                break;
+            case 'sbopkg': // TODO
+                break;
+            case 'script':
+                promises.push(...combined[key].flatMap(x => x.installList.map(i => $`${i}`)))
+                break;
+            case 'snap-classic':
+                promises.push($`sudo snap install --classic ${combined[key].flatMap(x => x.installList).split(' ')}`)
+                break;
+            case 'whalebrew': // TODO
+                break;
+            case 'xbps':
+                promises.push($`sudo xbps-install -S ${combined[key].flatMap(x => x.installList).split(' ')}`)
+                break;
+            case 'yay':
+                promises.push($`yay -Sy --noconfirm --needed ${combined[key].flatMap(x => x.installList).split(' ')}`)
+                break;
+            default:
+                console.log(`Unable to find install key instructions for ${key}`)
         }
     }
-    if (combined.go) {
-        for (const pkg of combined.go) {
-            promises.push($`go install ${pkg}`)
-        }
+    await Promise.all(promises)
+}
+
+async function acquireManagerList(type, command) {
+    if (fs.existsSync(`${cacheDir}/${type}`)) {
+        setTimeout(() => {
+            require('child_process').execSync(`${command} > ${cacheDir}/${type}`)
+        }, 0)
+    } else {
+        require('child_process').execSync(`${command} > ${cacheDir}/${type}`)
     }
-    if (combined.npm) {
-        for (const pkg of combined.npm) {
-            promises.push($`volta install ${pkg}`)
-        }
-    }
-    if (combined.pacman) {
-        const pacmanPkgs = combined.pacman.map(x => )
-        promises.push($`sudo pacman -Sy --noconfirm --needed ${combined.pacman.map}`)
-    }
-    if (combined.pipx) {
-        for (const pkg of combined.pipx) {
-            promises.push($`pipx install ${pkg}`)
-        }
-    }
-    console.log(combinedInstructions)
+    return fs.readFileSync(`${cacheDir}/${type}`).toString().split('\n')
 }
 
 
 async function main() {
-    cd(await $`mktemp -d`)
+    await $`mkdir -p ${cacheDir}`
     const initData = await Promise.all([
         getOsInfo(),
         getSoftwareDefinitions(),
-        getSystemType(),
-        getBrewFormulas(),
-        getGems(),
-        getVoltaInstalls(),
-        getCrates(),
-        getPipxPackages(),
-        getPips()
+        getSystemType()
     ])
     osArch = initData[0].arch
     osId = process.platform === 'win32' ? 'win32' : (process.platform === 'linux' ? initData[0].id : process.platform)
@@ -195,17 +260,25 @@ async function main() {
     pkgs = initData[1].softwarePackages
     sysType = initData[2]
     installOrder = initData[1].installerPreference
+    const lists = [
+        acquireManagerList('brew', `brew list -1`),
+        acquireManagerList('cargo', `cargo install --list | awk '/^[[:alnum:]]/ {print $1}'`),
+        acquireManagerList('gem', `gem list | awk '{print $1}'`),
+        acquireManagerList('npm', `volta list --format plain | awk '{print $2}' | sed 's/@.*//'`),
+        acquireManagerList('pip3', `pip3 list | awk '{print $1}'`),
+        acquireManagerList('pipx', `pipx list --short | awk '{print $1}'`)
+    ]
     const managerLists = {
-        brew: initData[3],
-        cargo: initData[6],
-        gem: initData[4],
-        npm: initData[5],
-        pip: initData[8],
-        pipx: initData[7]
+        brew: lists[0],
+        cargo: lists[1],
+        gem: lists[2],
+        npm: lists[3],
+        pip3: lists[4],
+        pipx: lists[5]
     }
-    const installKeys = argv._
-    const installInstructions = Object.keys(pkgs)
-        .filter(i => expandDeps(installKeys).includes(i))
+    const installKeys = Object.keys(pkgs)
+        .filter(i => expandDeps(argv._).includes(i))
+    const installData = installKeys
         .map(i => {
             for (const pref of installOrder[sysType]) {
                 const installKey = getPkgData(pref, pkgs[i], false)
@@ -228,6 +301,7 @@ async function main() {
             }
         })
         .filter(x => x.installKey)
+    const installInstructions = installData
         .filter(x => {
             // Filter out packages already installed by by package managers
             return Object.keys(managerLists).includes(x.installType)
@@ -255,8 +329,12 @@ async function main() {
             return whenField ? whenCheck : true
         })
     await installPackages(installInstructions)
-        //.filter(x => x.installKey)
-    console.log('install instructions', installInstructions)
+    const postScripts = installData
+        .flatMap(x => {
+            const postField = getPkgData('_post', x, x.installType)
+            return (postField && runScript(x.listKey, x[postField])) || Promise.resolve()
+        })
+    await Promise.all(postScripts)
 }
 
 main()

@@ -185,6 +185,9 @@ export CURLOPT_ACCEPT_ENCODING=true
 ### Dagu
 export DAGU_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/dagu"
 
+### Debian
+export DEBIAN_FRONTEND=noninteractive
+
 ### Desk
 export DESK_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/desk"
 export DESK_DESKS_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/desk/desks"
@@ -224,6 +227,10 @@ if command -v flatpak > /dev/null; then
   export PATH="$FLATPAK_INSTALLATIONS/exports/bin:$PATH"
   export XDG_DATA_DIRS="${XDG_CONFIG_HOME:-$HOME/.local/share}/flatpak/exports/share:$FLATPAK_INSTALLATIONS/exports/share:$XDG_DATA_DIRS"
 fi
+
+### FreeBSD
+export ASSUME_ALWAYS_YES="yes"
+export DEFAULT_ALWAYS_YES="yes"
 
 ### fzf
 if command -v fd > /dev/null; then

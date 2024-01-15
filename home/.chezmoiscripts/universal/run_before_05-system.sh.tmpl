@@ -654,12 +654,25 @@ installBrewPackages() {
   logg success 'Finished installing auxilary Homebrew packages'
 }
 
+ensureMacportsInstalled() {
+  if [ -d /Applications ] && [ -d /System ]; then
+    if ! command -v port > /dev/null; then
+      logg info 'Ensuring /opt/mports/macports-base is removed' && sudo rm -rf /opt/mports/macports-base
+      logg info 'Cloning source for macports to /opt/mports/macports-base' && sudo git clone --branch v2.8.0 --depth 1 https://github.com/macports/macports-base.git /opt/mports/macports-base
+      cd /opt/mports/macports-base
+      logg info 'Building macports' && sudo bash --noprofile --norc -c './configure --enable-readline && make && make install && make distclean'
+      logg info 'Running sudo port selfupdate' && sudo port selfupdate
+    fi
+  fi
+}
+
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   logg info 'The DEBUG or DEBUG_MODE environment variable is set so preliminary system tweaks will be run synchronously'
   allocateSwap
   configureGPG
   disableDStoreFileCreation
   enableDarkTransparentMode
+  ensureMacportsInstalled
   ensureUserGroup
   increaseMapCount
   installBrewPackages
@@ -676,6 +689,7 @@ else
   configureGPG &
   disableDStoreFileCreation &
   enableDarkTransparentMode &
+  ensureMacportsInstalled &
   ensureUserGroup &
   increaseMapCount &
   installBrewPackages &
