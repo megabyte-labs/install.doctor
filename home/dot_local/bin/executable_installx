@@ -32,9 +32,9 @@ async function runSilentCommand(command) {
 
 async function runScript(key, script) {
     fs.writeFileSync(`${cacheDir}/${key}`, script)
-    const file = await $`cat ${cacheDir}/${key} | grep "^# @file" | sed 's/^# @file //'`
-    const brief = await $`cat ${cacheDir}/${key} | grep "^# @brief" | sed 's/^# @brief //'`
-    fs.writeFileSync(`${cacheDir}/${key}-glow`, "# " + file.stdout + "\n> " + brief.stdout + "\n```sh\n" + script + "\n```")
+    const file = await $`cat ${cacheDir}/${key} | ( grep "^# @file" || [ "$?" == "1" ] ) | sed 's/^# @file //'`
+    const brief = await $`cat ${cacheDir}/${key} | ( grep "^# @brief" || [ "$?" == "1" ] ) | sed 's/^# @brief //'`
+    fs.writeFileSync(`${cacheDir}/${key}-glow`, '```sh\n' + (file.stdout ? (!file.stdout && !brief.stdout ? '```sh' + '') + `# ${file.stdout}\n` : '') + (brief.stdout ? `> ${brief.stdout}\n` : '') + (file.stdout || brief.stdout ? '```sh\n' : '') + script + "\n```")
     runSilentCommand(`glow "${cacheDir}/${key}-glow" && bash "${cacheDir}/${key}"`)
 }
 
@@ -201,7 +201,9 @@ async function installPackages(pkgInstructions) {
         promises.push(bundleInstall(combined.brew ? combined.brew.flatMap(x => x.installList.flatMap(i => i)) : [], combined.cask ? combined.cask.flatMap(x => x.installList.flatMap(i => i)) : []))
     }
     for (const key of Object.keys(combined)) {
-        log(`Install orders for ${key}: ${combined[key].flatMap(i => i.installList).join(' ')}`)
+        if (key !== 'script') {
+            log(`Install orders for ${key}: ${combined[key].flatMap(i => i.installList).join(' ')}`)
+        }
         switch (key) {
             case 'ansible':
                 promises.push(forEachSeries(combined[key].flatMap(x => x.installList.flatMap(i => $`${key} 127.0.0.1 -v${process.env.DEBUG && 'vv'} -e '{ ansible_connection: "local", ansible_become_user: "root", ansible_user: "${process.env.USER}", ansible_family: "${osId.charAt(0).toUpperCase() + osId.slice(1)}", install_homebrew: False }' -m include_role -a name=${i}`))))
@@ -274,10 +276,7 @@ async function installPackages(pkgInstructions) {
             case 'sbopkg': // TODO
                 break
             case 'script':
-                promises.push(...combined[key].flatMap(x => x.installList.join(i => $`${i}`)))
-                break
-            case 'snap-classic':
-                promises.push($`sudo snap install --classic ${combined[key].flatMap(x => x.installList).join(' ')}`)
+                promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => runScript(i))))
                 break
             case 'whalebrew': // TODO
                 break
@@ -419,12 +418,12 @@ async function main() {
     log(`Running installation routine`)
     await installPackages(installInstructions)
     log(`Running post-install scripts`)
-    /*const postScripts = installData
+    const postScripts = installData
         .flatMap(x => {
             const postField = getPkgData('_post', x, x.installType)
             return (postField && runScript(x.listKey, x[postField])) || Promise.resolve()
         })
-    await Promise.all(postScripts)*/
+    await Promise.all(postScripts)
 }
 
 main()

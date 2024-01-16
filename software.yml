@@ -1967,7 +1967,6 @@ softwarePackages:
     _github: https://github.com/certbot/certbot
     _home: https://certbot.eff.org/
     _name: CertBot
-    _snapClassic: true
     _post: |
       #!/usr/bin/env bash
       pipx inject certbot certbot-dns-cloudflare
@@ -2028,14 +2027,13 @@ softwarePackages:
     _github: https://github.com/twpayne/chezmoi
     _home: https://www.chezmoi.io/
     _name: Chezmoi
-    _snapClassic: true
     apk: chezmoi
     brew: chezmoi
     choco: chezmoi
     nix: chezmoi
     pacman: chezmoi
     pkg: chezmoi
-    snap: chezmoi
+    snap: chezmoi --classic
     xbps: chezmoi
     zypper: chezmoi
   google-chrome:
@@ -2511,10 +2509,9 @@ softwarePackages:
     _github: https://github.com/Kitware/CMake
     _home: https://cmake.org/
     _name: Chezmoi
-    _snapClassic: true
     brew: cmake
     choco: cmake
-    snap: cmake
+    snap: cmake --classic
   cmctl:
     _bin: cmctl
     _desc: A CLI tool that can help you to manage cert-manager resources inside your cluster
@@ -3184,7 +3181,6 @@ softwarePackages:
     _bin: espanso
     _github: https://github.com/espanso/espanso
     _name: Espanso
-    _snapClassic: true
     _app: Espanso.app
     _post:snap: |
       #!/usr/bin/env bash
@@ -3195,7 +3191,7 @@ softwarePackages:
     appimage: federico-terzi/espanso
     cask: espanso
     choco: espanso
-    snap: espanso --channel=latest/edge
+    snap: espanso --channel=latest/edge --classic
   bun:
     _bin: bun
     _github: https://github.com/oven-sh/bun
@@ -3404,7 +3400,9 @@ softwarePackages:
     yay: dotnet-sdk-bin
   sdkman-cli:
     _bin: sdk
-    _post: |
+    _github: https://github.com/sdkman/sdkman-cli
+    _name: SDKMan
+    script: |
       #!/usr/bin/env bash
       # @file SDKMAN Install
       # @brief Ensures SDKMAN is installed.
@@ -3448,9 +3446,6 @@ softwarePackages:
           logg warn 'Unable to run sdk update because the sdk command is unavailable'
         fi
       fi
-    script: |
-      #!/usr/bin/env bash
-      echo "Downloaded by Chezmoi (see .chezmoiexternal.toml.tmpl)"
   dprint:
     _bin: dprint
     _desc: '[dprint](https://dprint.dev/) is a pluggable and configurable code formatting platform written in Rust.'
@@ -4566,10 +4561,9 @@ softwarePackages:
     _github: https://github.com/flutter/flutter
     _home: https://flutter.dev/
     _name: Flutter
-    _snapClassic: true
     cask: flutter
     choco: flutter
-    snap: flutter
+    snap: flutter --classic
     yay: flutter
   pock:
     _bin: null
@@ -4925,11 +4919,10 @@ softwarePackages:
     _github: null
     _home: null
     _name: Google Cloud SDK
-    _snapClassic: true
     ansible: professormanhattan.googlecloudsdk
     cask: google-cloud-sdk
     choco: gcloudsdk
-    snap: google-cloud-sdk
+    snap: google-cloud-sdk --classic
     yay: google-cloud-sdk
   gdown:
     _bin: gdown
@@ -5214,13 +5207,12 @@ softwarePackages:
     _github: Not open-source
     _home: https://www.gitkraken.com/
     _name: GitKraken
-    _snapClassic: true
     _app: GitKraken.app
     ansible: professormanhattan.gitkraken
     cask: gitkraken
     choco: gitkraken
     flatpak: com.axosoft.GitKraken
-    snap: gitkraken
+    snap: gitkraken --classic
   gitlab-runner:
     _bin: gitlab-runner
     _desc: '[GitLab Runner](https://docs.gitlab.com/runner/) is an application that works with GitLab CI/CD to run jobs in a pipeline.'
@@ -5593,7 +5585,6 @@ softwarePackages:
     _github: https://github.com/golang/go
     _home: https://go.dev/
     _name: Go
-    _snapClassic: true
     ansible: professormanhattan.go
     apt: golang-go
     brew: go
@@ -5601,7 +5592,7 @@ softwarePackages:
     pacman: go
     port: go
     scoop: go
-    snap: go
+    snap: go --classic
   go-chromecast:
     _bin: go-chromecast
     _desc: CLI for Google Chromecast, Home devices and Cast Groups
@@ -5715,13 +5706,12 @@ softwarePackages:
     _github: https://github.com/gradle/gradle
     _home: https://gradle.org/
     _name: Gradle
-    _snapClassic: true
     ansible: professormanhattan.gradle
     brew: gradle
     choco: gradle
     port: gradle
     scoop: gradle
-    snap: gradle
+    snap: gradle --classic
   grex:
     _bin: grex
     _desc: A command-line tool and library for generating regular expressions from user-provided test cases
@@ -6162,12 +6152,11 @@ softwarePackages:
     _github: https://github.com/JetBrains/intellij-community
     _home: https://www.jetbrains.com/idea/
     _name: IntelliJ IDEA (CE)
-    _snapClassic: true
     _app: IntelliJ IDEA CE.app
     ansible: professormanhattan.intellij
     cask: intellij-idea-ce
     choco: intellijidea-community
-    snap: intellij-idea-community
+    snap: intellij-idea-community --classic
   ionic:
     _bin: ionic
     _desc: '[Ionic Framework](https://ionicframework.com/) The Ionic command line interface (CLI) is your go-to tool for developing Ionic apps'
@@ -6435,11 +6424,10 @@ softwarePackages:
     _github: null
     _home: https://juju.is/
     _name: Juju
-    _snapClassic: true
     ansible: professormanhattan.juju
     brew: juju
     choco: juju
-    snap: juju
+    snap: juju --classic
   kdash:
     _bin: kdash
     _desc: A simple and fast dashboard for Kubernetes
@@ -6564,14 +6552,13 @@ softwarePackages:
     _github: https://github.com/ahmetb/kubectx
     _home: null
     _name: kubectx
-    _snapClassic: true
     brew: kubectx
     choco:
       - kubens
       - kubectx
     pacman: kubectx
     port: kubectx
-    snap: kubectx
+    snap: kubectx --classic
   kubenav:
     _bin: null
     _desc: kubenav is the navigator for your Kubernetes clusters right in your pocket
@@ -6590,10 +6577,9 @@ softwarePackages:
     _github: https://github.com/kubernetes/kubectl
     _home: null
     _name: kubectl
-    _snapClassic: true
     brew: kubectl
     choco: kubernetes-cli
-    snap: kubectl
+    snap: kubectl --classic
   helm:
     _bin: helm
     _desc: The Kubernetes Package Manager. Helm is the best way to find, share, and use software built for Kubernetes.
@@ -6601,11 +6587,10 @@ softwarePackages:
     _github: https://github.com/helm/helm
     _home: https://helm.sh/
     _name: Helm
-    _snapClassic: true
     brew: helm
     choco: kubernetes-helm
     scoop: helm
-    snap: helm
+    snap: helm --classic
   helmfile:
     _bin: helmfile
     _github: https://github.com/helmfile/helmfile
@@ -6776,12 +6761,11 @@ softwarePackages:
     _github: https://github.com/lensapp/lens
     _home: https://k8slens.dev/
     _name: Lens
-    _snapClassic: true
     _app: Lens.app
     ansible: professormanhattan.lens
     cask: lens
     choco: lens
-    snap: kontena-lens
+    snap: kontena-lens --classic
     yay: lens
   lepton:
     _bin: lepton
@@ -8300,14 +8284,13 @@ softwarePackages:
     _github: https://github.com/zaproxy/zaproxy
     _home: https://www.zaproxy.org/
     _name: OWASP ZAP
-    _snapClassic: true
     _app: ZAP.app
     cask: zap
     choco: zap
     flatpak: org.zaproxy.ZAP
     pkg-freebsd: zaproxy
     scoop: zaproxy
-    snap: zaproxy
+    snap: zaproxy --classic
   pika:
     _bin: null
     _desc: An open-source colour picker app for macOS
@@ -9230,14 +9213,13 @@ softwarePackages:
     _github: null
     _home: null
     _name: Powershell
-    _snapClassic: true
     _post:cask: |
       #!/usr/bin/env bash
       brew install mono-libgdiplus
     _app: PowerShell.app
     ansible: professormanhattan.powershell
     cask: powershell
-    snap: powershell
+    snap: powershell --classic
   pre-commit:
     _bin: pre-commit
     _desc: Automatically installs a git pre-commit script in your git repository which runs your `npm test` on pre-commit
@@ -10154,7 +10136,6 @@ softwarePackages:
     _post:snap: |
       #!/usr/bin/env bash
       rustup toolchain install stable
-    _snapClassic: true
     ansible: professormanhattan.rust
     brew: rust
     choco: rust
@@ -10378,7 +10359,6 @@ softwarePackages:
     _github: https://github.com/blender/blender
     _home: https://www.blender.org/
     _name: Blender
-    _snapClassic: true
     _app: Blender.app
     apt: blender
     cask: blender
@@ -10386,7 +10366,7 @@ softwarePackages:
     dnf: blender
     flatpak: org.blender.Blender
     scoop: extras/blender
-    snap: blender
+    snap: blender --classic
   fiddler:
     _bin: fiddler
     _desc: The community-trusted free Windows-only tool that logs HTTP(s) network traffic.
@@ -10693,7 +10673,6 @@ softwarePackages:
     _github: https://github.com/mltframework/shotcut
     _home: https://shotcut.org/
     _name: Shotcut
-    _snapClassic: true
     _app: Shotcut.app
     ansible: professormanhattan.shotcut
     apt: shotcut
@@ -10701,7 +10680,7 @@ softwarePackages:
     choco: shotcut
     dnf: shotcut
     flatpak: org.shotcut.Shotcut
-    snap: shotcut
+    snap: shotcut --classic
   shotwell:
     _bin: shotwell
     _desc: '[Shotwell](https://shotwell-project.org/doc/html/) is an image organizer designed to provide personal photo management for the GNOME desktop environment. In 2010, it replaced F-Spot as the standard image tool for several GNOME-based Linux distributions, including Fedora in version 13 and Ubuntu in its 10.10 Maverick Meerkat release.'
@@ -10823,9 +10802,8 @@ softwarePackages:
     _github: null
     _home: null
     _name: Snapcraft
-    _snapClassic: true
     brew: snapcraft
-    snap: snapcraft
+    snap: snapcraft --classic
   snapd:
     _bin: snap
     _desc: '[Snap](https://snapcraft.io/) is a software packaging and deployment system developed by Canonical for operating systems that use the Linux kernel. The packages, called snaps, and the tool for using them, snapd, work across a range of Linux distributions and allow upstream software developers to distribute their applications directly to users. Snaps are self-contained applications running in a sandbox with mediated access to the host system.'
@@ -11411,12 +11389,11 @@ softwarePackages:
     _github: https://github.com/sassman/t-rec-rs
     _home: https://crates.io/crates/t-rec
     _name: t-rec
-    _snapClassic: true
     ansible: professormanhattan.trec
     brew: t-rec
     cargo: t-rec
     port: t-rec
-    snap: t-rec
+    snap: t-rec --classic
     yay: t-rec
   just:
     _bin: just
@@ -11484,7 +11461,6 @@ softwarePackages:
     _github: https://github.com/Eugeny/tabby
     _home: https://tabby.sh/
     _name: Tabby
-    _snapClassic: true
     _notes: TODO Update the direct links periodically and keep eye out for Snap / Flatpak
     _app: Tabby.app
     _post: |
@@ -12542,7 +12518,6 @@ softwarePackages:
     _github: https://github.com/hashicorp/vagrant
     _home: https://www.vagrantup.com/
     _name: Vagrant
-    _snapClassic: true
     ansible: professormanhattan.vagrant
     apt: vagrant
     brew: hashicorp/tap/vagrant
@@ -12935,7 +12910,6 @@ softwarePackages:
       rm -f "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz"
   vscodium:
     _bin: codium
-    _snapClassic: true
     _app: VSCodium.app
     _post: |
       #!/usr/bin/env bash
@@ -12960,7 +12934,7 @@ softwarePackages:
     flatpak: com.vscodium.codium
     nix: nixpkgs.vscodium
     scoop: vscodium
-    snap: codium
+    snap: codium --classic
     winget: vscodium
     yay: vscodium-bin
   vlc:
@@ -13193,7 +13167,6 @@ softwarePackages:
     _github: https://github.com/microsoft/vscode
     _home: https://code.visualstudio.com/
     _name: Visual Studio Code
-    _snapClassic: true
     _app: Visual Studio Code.app
     _post: |
       #!/usr/bin/env bash
@@ -13318,7 +13291,7 @@ softwarePackages:
     cask: visual-studio-code
     choco: vscode
     flatpak: com.visualstudio.code
-    snap: code
+    snap: code --classic
     yay: visual-studio-code-bin
   w3m:
     _bin: w3m
@@ -14457,11 +14430,10 @@ softwarePackages:
     _bin: goreleaser
     _github: https://github.com/goreleaser/goreleaser
     _name: Go Releaser
-    _snapClassic: true
     brew: goreleaser
     go: github.com/goreleaser/goreleaser@latest
     nix-env: goreleaser
-    snap: goreleaser
+    snap: goreleaser --classic
     yay: goreleaser-bin
   obs-studio:
     _bin: obs-studio
