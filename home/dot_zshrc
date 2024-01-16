@@ -362,6 +362,7 @@ if command -v antigen > /dev/null; then
   # Third-party plugins
   # antigen bundle jscutlery/nx-completion Installing jscutlery/nx-completion... Error! Activate logging and try again.
   # antigen bundle lukechilds/zsh-better-npm-completion
+  antigen bundle wfxr/forgit
 
   antigen bundle zsh-interactive-cd
   antigen bundle zsh-navigation-tools
@@ -431,6 +432,9 @@ fi
 ### Google Cloud SDK
 [ ! -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.zsh.inc" ] || source "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.zsh.inc"
 [ ! -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc" ] || source "$HOMEBREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc"
+
+### Goto
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/goto.sh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/goto.sh"
 
 ### hiSHtory
 export PATH="$PATH:${XDG_CONFIG_HOME:-$HOME/.config}/hishtory"

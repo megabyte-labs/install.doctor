@@ -134,6 +134,9 @@ if [ "$BASH_SUPPORT" = 'true' ] && [ -n "$BASH" ]; then
   ### Emplace
   ! command -v emplace > /dev/null || source <(emplace init bash)
 
+  ### Goto
+  [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/goto.sh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/goto.sh"
+  
   ### hiSHtory
   if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.sh" ]; then
 	  export PATH="$PATH:${XDG_CONFIG_HOME:-$HOME/.config}/hishtory"

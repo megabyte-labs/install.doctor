@@ -285,7 +285,7 @@ softwarePackages:
     msix: https://tvd-packages.tradingview.com/stable/latest/win32/TradingView.msix
     snap: tradingview
   fabric:
-    _bin: fabric
+    _bin: fab
     _github: https://github.com/fabric/fabric
     _name: Fabric
     brew: fabric
@@ -479,7 +479,7 @@ softwarePackages:
     brew: lindell/multi-gitter/multi-gitter
     go: github.com/lindell/multi-gitter@latest
   tomcat:
-    _bin: tomcat
+    _bin: catalina
     _github: https://github.com/apache/tomcat
     _name: Tomcat
     _post:darwin: |
@@ -1614,7 +1614,7 @@ softwarePackages:
     _name: Cod
     go: github.com/dim-an/cod@master
   iproute2mac:
-    _bin:
+    _bin: ip
     _github: https://github.com/brona/iproute2mac
     _name: iproute2mac
     brew:darwin: iproute2mac
@@ -1632,16 +1632,13 @@ softwarePackages:
     zypper: tmate
     emerge: app-misc/tmate
   sphinx:
-    _bin: sphinx
+    _bin: sphinx-build
     _github: https://github.com/sphinx-doc/sphinx
     _name: Sphinx
     apt: python3-sphinx
-    brew: sphinx-doc
     choco: sphinx
-    conda: sphinx
     dnf: python-sphinx
     pipx: sphinx
-    port: py39-sphinx
   you-get:
     _bin: you-get
     _github: https://github.com/soimort/you-get
@@ -1833,7 +1830,7 @@ softwarePackages:
     pkgin: broot
     port: broot
   rsyslog:
-    _bin: rsyslog
+    _bin: rsyslogd
     _github: https://github.com/rsyslog/rsyslog
     _name: RSyslog
     _service: rsyslog
@@ -2807,8 +2804,9 @@ softwarePackages:
     _docs: https://docs.trunk.io/
     _github:
     _home: https://trunk.io/
-    brew: trunk-io
+    cask: trunk-io
     npm: '@trunkio/launcher'
+    script: curl https://get.trunk.io -fsSL | bash -s -- -y
   cups:
     _bin: cupsctl
     _desc: '[CUPS](https://www.cups.org/) is a modular printing system for Unix-like computer operating systems which allows a computer to act as a print server. A computer running CUPS is a host that can accept print jobs from client computers, process them, and send them to the appropriate printer.'
@@ -3287,7 +3285,7 @@ softwarePackages:
     _app: Sidekick.app
     cask: pushplaylabs-sidekick
   docker-slim:
-    _bin: docker-slim
+    _bin: slim
     _desc: "[DockerSlim](https://dockersl.im/) will optimize and secure your containers by understanding your application and what it needs using various analysis techniques. It will throw away what you don't need, reducing the attack surface of your container. What if you need some of those extra things to debug your container? You can use dedicated debugging side-car containers for that."
     _docs: https://github.com/docker-slim/docker-slim#basic-usage-info
     _github: https://github.com/docker-slim/docker-slim
@@ -3507,11 +3505,6 @@ softwarePackages:
     cargo: du-dust
     github: github.com/bootandy/dust
     pacman: dust
-  goto:
-    _bin: goto
-    _github: https://github.com/iridakos/goto
-    _name: goto
-    brew: goto
   easyengine:
     _bin: ee
     _desc: "[EasyEngine](https://easyengine.io/) is a command-line control panel for Nginx to manage WordPress sites running on Nginx, PHP, MySQL, and Let's Encrypt."
@@ -3521,13 +3514,6 @@ softwarePackages:
     _name: EasyEngine
     ansible:darwin: professormanhattan.easyengine
     ansible:linux: professormanhattan.easyengine
-  forgit:
-    _deps:
-      - fzf
-    _bin: ga
-    _github: https://github.com/wfxr/forgit
-    _name: forgit
-    brew: forgit
   clipboard:
     _bin: cb
     _github: https://github.com/Slackadays/Clipboard.git
@@ -4071,7 +4057,7 @@ softwarePackages:
     brew: wego
     go: github.com/schachmat/wego@latest
   miller:
-    _bin: miller
+    _bin: mlr
     _github: https://github.com/johnkerl/miller
     _name: Miller
     apt: miller
@@ -4584,7 +4570,7 @@ softwarePackages:
     _home: https://flutter.dev/
     _name: Flutter
     _snapClassic: true
-    brew: flutter
+    cask: flutter
     choco: flutter
     snap: flutter
     yay: flutter
@@ -5578,19 +5564,29 @@ softwarePackages:
     _github: null
     _name: Android Platform Tools
     cask: android-platform-tools
+  findutils:
+    _bin: gfind
+    brew: findutils
+  gawk:
+    _bin: gawk
+    brew: gawk
+  gnu-indent:
+    _bin: gindent
+    brew: gnu-indent
+  gnu-tar:
+    _bin: gtar
+    brew: gnu-tar
+  gnu-sed:
+    _bin: gsed
+    brew: gnu-sed
+  gnutls:
+    _bin: gnutls-certtool
+    brew: gnutls
   gnu:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _when:brew:darwin: '(! brew list coreutils | grep coreutils > /dev/null) || (! brew list findutils | grep findutils > /dev/null) || (! brew list gawk | grep gawk > /dev/null) || (! brew list gnu-getopt | grep gnu-getopt > /dev/null) || (! brew list gnu-indent | grep gnu-indent > /dev/null) || (! brew list gnu-tar | grep gnu-tar > /dev/null) || (! brew list gnu-sed | grep gnu-sed > /dev/null) || (! brew list gnutls | grep gnutls > /dev/null) || (! brew list grep | grep grep > /dev/null)'
-    brew:darwin:
+    _deps:darwin:
       - coreutils
       - findutils
       - gawk
-      - gnu-getopt
       - gnu-indent
       - gnu-tar
       - gnu-sed
@@ -7365,7 +7361,7 @@ softwarePackages:
     _name: mitmproxy
     ansible: professormanhattan.mitmproxy
     apt: mitmproxy
-    brew: mitmproxy
+    cask: mitmproxy
     choco: mitmproxy
     pacman: mitmproxy
   mjml:
@@ -8436,7 +8432,7 @@ softwarePackages:
     _name: np
     npm: np
   nushell:
-    _bin: nushell
+    _bin: nu
     _github: https://github.com/nushell/nushell
     _name: Nu
     apk: nushell
@@ -8741,9 +8737,17 @@ softwarePackages:
     _name: Taplo
     cargo: taplo-cli --locked
     npm: '@taplo/cli'
+  basictex:
+    _github: false
+    _name: Basictex
+    _when: '! test -d /Library/TeX'
+    cask: basictex
   pandoc:
     _bin: pandoc
     _deps:
+      - python
+    _deps:darwin:
+      - basictex
       - python
     _desc: '[Pandoc](https://pandoc.org/) is a Haskell library for converting from one documentation markup format to another. If you need to convert files from one markup format into another, then look no further. Pandoc is your swiss-army knife. It converts from and to dozens of formats like HTML, markdown, docx, JSON, YAML, and CSV, to name a few.'
     _docs: https://pandoc.org/getting-started.html
@@ -8755,7 +8759,6 @@ softwarePackages:
     brew:
       - pandoc
       - librsvg
-      - homebrew/cask/basictex
     choco:
       - pandoc
       - rsvg-convert
@@ -9810,14 +9813,18 @@ softwarePackages:
       - cat
       - ls
       - rm
+    _bin:darwin: gchown
     apt: coreutils
+    brew: coreutils
     dnf: coreutils
     pacman: coreutils
   grep:
     _bin: grep
     apt: grep
+    brew: grep
     dnf: grep
     pacman: grep
+    zypper: grep
   wipe-modules:
     _bin: wipe-modules
     _github: https://github.com/bntzio/wipe-modules
@@ -11236,7 +11243,7 @@ softwarePackages:
     _home: https://lapce.dev/
     _name: Lapce
     _app: Lapce.app
-    brew: lapce
+    cask: lapce
     emerge: app-editors/lapce
     flatpak: dev.lapce.lapce
     nix-env: nixpkgs.lapce
@@ -13881,7 +13888,7 @@ softwarePackages:
     pacman: fail2ban
     port: fail2ban
   timewarrior:
-    _bin: timewarrior
+    _bin: timew
     _github: https://github.com/GothenburgBitFactory/timewarrior
     _name: Time Warrior
     apt: timewarrior
