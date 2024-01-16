@@ -1,15 +1,18 @@
 https://github.com/harababurel/gcsf
+[text](https://github.com/gitbito/CLI)
 * Move age decryption higher
 * Add ~/.local/share/sounds was symlink to {{ .host.home }}/.local/share/betelgeuse/share/sounds
 xattr -d com.apple.quarantine rclone
 Create issue about setting up completions - https://github.com/rsteube/lazycomplete
 pw="$(osascript -e 'Tell application "System Events" to display dialog "Password:" default answer "" with hidden answer' -e 'text returned of result' 2>/dev/null)" && echo "$pw"
 https://github.com/Shougo/ddc.vim
+[text](https://instill.tech/chill/models)
 https://github.com/harababurel/gcsf
 https://github.com/awslabs/mountpoint-s3 / https://github.com/s3fs-fuse/s3fs-fuse
 https://github.com/superfly/litefs
 https://github.com/Qihoo360/QConf
 https://github.com/ossec/ossec-hids
+[text](https://github.com/invoke-ai/InvokeAI)
 https://github.com/search?q=system&type=repositories&s=stars&o=desc&p=59
 - https://github.com/nats-io/nats-server
 - [Title](https://github.com/albfan/miraclecast)

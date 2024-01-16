@@ -100,7 +100,6 @@ installerPreference:
     - script
     - ansible
     - binary
-    - _deps
   darwin:
     - whalebrew
     - cask
@@ -117,7 +116,6 @@ installerPreference:
     - script
     - ansible
     - binary
-    - _deps
   dnf:
     - flatpak
     - snap
@@ -134,7 +132,6 @@ installerPreference:
     - script
     - ansible
     - binary
-    - _deps
   freebsd:
     - pkg
     - go
@@ -142,7 +139,6 @@ installerPreference:
     - npm
     - gem
     - script
-    - _deps
   pacman:
     - flatpak
     - snap
@@ -160,7 +156,6 @@ installerPreference:
     - script
     - ansible
     - binary
-    - _deps
   ubuntu:
     - snap
     - flatpak
@@ -177,7 +172,6 @@ installerPreference:
     - script
     - ansible
     - binary
-    - _deps
   windows:
     - choco
     - scoop
@@ -190,7 +184,6 @@ installerPreference:
     - script
     - ansible
     - binary
-    - _deps
   zypper:
     - flatpak
     - snap
@@ -206,7 +199,6 @@ installerPreference:
     - script
     - ansible
     - binary
-    - _deps
 softwarePackages:
   _kde:
     _deps:
@@ -7583,7 +7575,7 @@ softwarePackages:
     _github: https://github.com/hschmidt/EnvPane
     _home: https://github.com/hschmidt/EnvPane
     _name: EnvPane
-    _when:script: '! test -d "$HOME/Library/PreferencePanes/EnvPane.prefPane" && ! test -d "~$HOME/Library/PreferencePanes/EnvPane.prefPane"'
+    _when:script: '! test -d "$HOME/Library/PreferencePanes/EnvPane.prefPane"'
     script:darwin: '(cd ~/Library/PreferencePanes && rm -rf EnvPane.prefPane && curl -sL https://github.com/hschmidt/EnvPane/releases/download/releases%2F0.8/EnvPane-0.8.tar.bz2 | tar -xjf -)'
   skhd:
     _bin: skhd
@@ -12803,13 +12795,60 @@ softwarePackages:
     ansible:windows: professormanhattan.visualstudio
     cask: visual-studio
     choco: visualstudio2022community
+  aider:
+    _bin: aider
+    _github: https://github.com/paul-gauthier/aider
+    _name: Aider AI Chat
+    pipx: aider-chat
+  poppler:
+    brew: poppler
+  csvkit:
+    brew: csvkit
+  airdrop-cli:
+    _bin: airdrop
+    _github: https://github.com/vldmrkl/airdrop-cli
+    _name: Airdrop CLI
+    brew:darwin: vldmrkl/formulae/airdrop-cli
+  rusty:
+    _bin: rusty
+    _github: https://github.com/zahidkhawaja/rusty
+    _name: Rusty AI CLI
+    _todo: Get cargo crate link once this is resolved https://github.com/zahidkhawaja/rusty/issues/7
+  aifiles:
+    _deps:
+      - pandoc
+      - exiftool
+      - poppler
+      - csvkit
+    _bin: aifiles
+    _github: https://github.com/jjuliano/aifiles
+    _name: AI Files
+    _todo: Implement this when XDG spec is supported so we can store configs in ~/.config
+    npm: aifiles
+  talksheet:
+    _bin: talksheet
+    _github: https://github.com/danthelion/talksheet
+    _name: Talksheet
+    pipx: talksheet
+  tgpt:
+    _bin: tgpt
+    _github: https://github.com/aandrew-me/tgpt
+    _name: Terminal GPT
+    yay: tgpt-bin
+    go: github.com/aandrew-me/tgpt/v2@latest
+    scoop: https://raw.githubusercontent.com/aandrew-me/tgpt/main/tgpt.json
+  ai-shell:
+    _bin: ai
+    _github: https://github.com/BuilderIO/ai-shell
+    _name: AI Shell
+    npm: '@builder.io/ai-shell'
   github-runner:
     _desc: '[GitHub Runner](https://docs.github.com/en/actions/hosting-your-own-runners) is a system that you deploy and manage to execute jobs from GitHub Actions on GitHub.com.'
     _docs: https://docs.github.com/en/actions/hosting-your-own-runners
     _github: https://github.com/actions/runner
     _home: https://docs.github.com/en/actions/hosting-your-own-runners
     _name: GitHub Runner
-    _when: '! test -d "$HOME/.local/github-runner"'
+    _when: '! test -d "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"'
     _post: |
       #!/usr/bin/env bash
       # @file GitHub Runner Registration
@@ -12830,7 +12869,7 @@ softwarePackages:
       #
       #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
 
-      GH_RUNNER_PATH="$HOME/.local/github-runner"
+      GH_RUNNER_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
 
       ### Check if GitHub runner is installed
       if [ -f "$GH_RUNNER_PATH/config.sh" ]; then
@@ -12890,9 +12929,9 @@ softwarePackages:
       ARCHITECTURE="$(uname -m | sed 's/86_//' | sed 's/v7l//')"
       OS_FAMILY="$(test -d /Applications && echo osx || echo linux)"
       curl -sSL "https://github.com/actions/runner/releases/download/$LATEST_VERSION/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz" > "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz"
-      mkdir -p "$HOME/.local/github-runner"
-      tar xzf "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz" -C "$HOME/.local/github-runner"
-      chown -Rf "$USER" "$HOME/.local/github-runner"
+      mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
+      tar xzf "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz" -C "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
+      chown -Rf "$USER" "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
       rm -f "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz"
   vscodium:
     _bin: codium

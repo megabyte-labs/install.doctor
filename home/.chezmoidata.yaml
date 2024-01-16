@@ -167,6 +167,12 @@ removeLinuxShortcuts:
   - scvim.desktop
 theme: Betelgeuse
 softwareGroups:
+  AI: &AI
+    - aider
+    - ai-shell
+    - aifiles
+    - talksheet
+    - tgpt
   AI-Desktop: &AI-Desktop
     - chatgpt-nofwl
     - chatgpt-menubar
@@ -347,6 +353,7 @@ softwareGroups:
     - zenity
   CLI-Extras: &CLI-Extras
     - ack
+    - airdrop-cli
     - axel
     - bin
     - bitly
@@ -1355,6 +1362,7 @@ softwareGroups:
     - warp
   _Full: &_Full
     - *_Standard
+    - *AI
     - *Android
     - *Ansible
     - *Backup

@@ -6,13 +6,29 @@ import osInfo from 'linux-os-info'
 let installOrder, osArch, osId, osType, pkgs, sysType
 const cacheDir = os.homedir() + '/.cache/installx'
 
+function log(message) {
+    console.log(`${chalk.cyanBright('instx->')} ${message}`)
+}
+
 async function getOsInfo() {
     return osInfo({ mode: 'sync' })
 }
 
+function execPromise(command) {
+    return new Promise(function (resolve, reject) {
+        require('child_process').exec(command, (error, stdout, stderr) => {
+            if (error) {
+                reject(error)
+                return
+            }
+            resolve(stdout.trim())
+        })
+    })
+}
+
 async function runSilentCommand(command) {
     require('child_process').execSync(`${command}`, { stdio: 'inherit', shell: true })
-  }
+}
 
 async function runScript(key, script) {
     fs.writeFileSync(`${cacheDir}/${key}`, script)
@@ -112,16 +128,55 @@ function expandDeps(keys) {
     return [...keys]
 }
 
+async function createCaskLinks() {
+    const caskApps = pkgMap(pkgs)
+        .filter(x => {
+            // Filter out macOS apps that already have a _app installed
+            if (x.installType === 'cask' || (osId === 'darwin' && x._app)) {
+                const appField = getPkgData('_app', x, x.installType)
+                const binField = getPkgData('_bin', x, x.installType)
+                const sysDir = fs.existsSync(`/Applications/${x[appField]}`)
+                const homeDir = fs.existsSync(`${os.homedir()}/Applications/${x[appField]}`)
+                const binFile = fs.existsSync(`${os.homedir()}/.local/bin/cask/${x[binField]}`)
+                return (sysDir || homeDir) && !binFile
+            }
+            return false
+        })
+    caskApps.length && await $`mkdir -p "$HOME/.local/bin/cask"`
+    for (const app of caskApps) {
+        const appField = getPkgData('_app', app, app.installType)
+        const binField = getPkgData('_bin', app, app.installType)
+        if (fs.existsSync(`${os.homedir()}/Applications/${x[appField]}`)) {
+            fs.writeFileSync(`${os.homedir()}/.local/bin/cask/${x[binField]}`, `open "$HOME/Applications/${x[appField]}" $*`)
+        } else if (fs.existsSync(`/Applications/${x[appField]}`)) {
+            fs.writeFileSync(`${os.homedir()}/.local/bin/cask/${x[binField]}`, `open "/Applications/${x[appField]}" $*`)
+        } else {
+            log(`Unable to create bin link to ${x[appField]}`)
+        }
+    }
+    caskApps.length && log(`Finished creating Homebrew cask links in ~/.local/bin/cask`)
+}
+
 async function bundleInstall(brews, casks) {
-    const lines = []
-    for (const cask of casks) {
-        lines.push(`cask "${cask.cask}"`)
+    try {
+        const lines = []
+        log(`Adding following casks to Brewfile for installation: ${casks.join(' ')}`)
+        for (const cask of casks) {
+            lines.push(`cask "${cask}"`)
+        }
+        log(`Adding following brews to Brewfile for installation: ${casks.join(' ')}`)
+        for (const brew of brews) {
+            lines.push(`brew "${brew}"`)
+        }
+        log(`Creating Brewfile to install from`)
+        fs.writeFileSync('Brewfile', lines.join('\n'))
+        log(`Installing packages via brew bundle`)
+        await $`brew bundle --file Brewfile`
+        log(`Finished installing via Brewfile`)
+        await createCaskLinks()
+    } catch (e) {
+        log(`Error occurred while installing via Brewfile`)
     }
-    for (const brew of brews) {
-        lines.push(`brew "${brew.brew}"`)
-    }
-    fs.writeFileSync('Brewfile', lines.join('\n'))
-    await $`brew bundle --file Brewfile`
 }
 
 async function forEachSeries(iterable) {
@@ -133,17 +188,21 @@ async function forEachSeries(iterable) {
 async function installPackages(pkgInstructions) {
     const combined = {}
     const promises = []
+    log(`Populating install order lists`)
     for (const option of installOrder[sysType]) {
+        console.log(installOrder[sysType])
         const instructions = pkgInstructions.filter(x => x.installType === option)
         if (instructions.length) {
             combined[option] = instructions
         }
     }
+    log(`Running Homebrew installation via Brewfile`)
     if ((combined.brew && combined.brew.length) || (combined.cask && combined.cask.length)) {
-        promises.push(bundleInstall(combined.brew ? combined.brew : [], combined.cask ? combined.cask : []))
+        promises.push(bundleInstall(combined.brew ? combined.brew.flatMap(x => x.installList.flatMap(i => i)) : [], combined.cask ? combined.cask.flatMap(x => x.installList.flatMap(i => i)) : []))
     }
     for (const key of Object.keys(combined)) {
-        switch(key) {
+        log(`Install orders for ${key}: ${combined[key].flatMap(i => i.installList).join(' ')}`)
+        switch (key) {
             case 'ansible':
                 promises.push(forEachSeries(combined[key].flatMap(x => x.installList.flatMap(i => $`${key} 127.0.0.1 -v${process.env.DEBUG && 'vv'} -e '{ ansible_connection: "local", ansible_become_user: "root", ansible_user: "${process.env.USER}", ansible_family: "${osId.charAt(0).toUpperCase() + osId.slice(1)}", install_homebrew: False }' -m include_role -a name=${i}`))))
             case 'apk':
@@ -172,67 +231,69 @@ async function installPackages(pkgInstructions) {
             case 'scoop': // Maybe needs forEachSeries
             case 'winget': // Maybe needs forEachSeries
                 promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => $`${key} install ${i}`)))
-                break;
+                break
             case 'binary':
                 // TODO
                 promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => $`TMP="$(mktemp)" && curl -sSL ${i} > "$TMP" && sudo mv "$TMP" /usr/local/src/${x._bin} && chmod +x /usr/local/src/${x._bin}`)))
             case 'brew':
             case 'cask': // Handled above
-                break;
+                break
             case 'choco':
-                promises.push($`${key} install -y ${combined[key].flatMap(x => x.installList).split(' ')}`)
+                promises.push($`${key} install -y ${combined[key].flatMap(x => x.installList).join(' ')}`)
             case 'dnf':
             case 'yum':
             case 'zypper':
-                promises.push($`sudo ${key} install -y ${combined[key].flatMap(x => x.installList).split(' ')}`)
-                break;
+                promises.push($`sudo ${key} install -y ${combined[key].flatMap(x => x.installList).join(' ')}`)
+                break
             case 'emerge':
             case 'pkg_add':
-                promises.push($`sudo ${key} ${combined[key].flatMap(x => x.installList).split(' ')}`)
-                break;
+                promises.push($`sudo ${key} ${combined[key].flatMap(x => x.installList).join(' ')}`)
+                break
             case 'eopkg':
             case 'pkg-freebsd':
             case 'pkg-termux':
             case 'pkgin':
             case 'port':
             case 'snap': // TODO - snap testing.. combine with snap-classic and add appropriate logic
-                promises.push($`sudo ${key === 'pkg-freebsd' || key === 'pkg-termux' ? 'pkg' : key} install ${combined[key].flatMap(x => x.installList).split(' ')}`)
-                break;
+                promises.push($`sudo ${key === 'pkg-freebsd' || key === 'pkg-termux' ? 'pkg' : key} install ${combined[key].flatMap(x => x.installList).join(' ')}`)
+                break
             case 'flatpak':
                 promises.push(forEachSeries(combined[key].flatMap(x => x.installList.flatMap(i => $`sudo ${key} install -y flathub ${i}`))))
-                break;
+                break
             case 'github': // TODO
-                break;
+                break
             case 'nix-env': // TODO
             case 'nix-pkg': // TODO
             case 'nix-shell': // TODO
-                break;
+                break
             case 'pacman':
-                promises.push($`sudo ${key} -Sy --noconfirm --needed ${combined[key].flatMap(x => x.installList).split(' ')}`)
-                break;
+                promises.push($`sudo ${key} -Sy --noconfirm --needed ${combined[key].flatMap(x => x.installList).join(' ')}`)
+                break
             case 'pkg-darwin':
-                break;
+                break
             case 'sbopkg': // TODO
-                break;
+                break
             case 'script':
-                promises.push(...combined[key].flatMap(x => x.installList.map(i => $`${i}`)))
-                break;
+                promises.push(...combined[key].flatMap(x => x.installList.join(i => $`${i}`)))
+                break
             case 'snap-classic':
-                promises.push($`sudo snap install --classic ${combined[key].flatMap(x => x.installList).split(' ')}`)
-                break;
+                promises.push($`sudo snap install --classic ${combined[key].flatMap(x => x.installList).join(' ')}`)
+                break
             case 'whalebrew': // TODO
-                break;
+                break
             case 'xbps':
-                promises.push($`sudo xbps-install -S ${combined[key].flatMap(x => x.installList).split(' ')}`)
-                break;
+                promises.push($`sudo xbps-install -S ${combined[key].flatMap(x => x.installList).join(' ')}`)
+                break
             case 'yay':
-                promises.push($`yay -Sy --noconfirm --needed ${combined[key].flatMap(x => x.installList).split(' ')}`)
-                break;
+                promises.push($`yay -Sy --noconfirm --needed ${combined[key].flatMap(x => x.installList).join(' ')}`)
+                break
             default:
                 console.log(`Unable to find install key instructions for ${key}`)
         }
     }
-    await Promise.all(promises)
+    const installs = await Promise.allSettled(promises)
+    log(`All of the installations have finished`)
+    console.log('Installs:', installs)
 }
 
 async function acquireManagerList(type, command) {
@@ -246,39 +307,8 @@ async function acquireManagerList(type, command) {
     return fs.readFileSync(`${cacheDir}/${type}`).toString().split('\n')
 }
 
-
-async function main() {
-    await $`mkdir -p ${cacheDir}`
-    const initData = await Promise.all([
-        getOsInfo(),
-        getSoftwareDefinitions(),
-        getSystemType()
-    ])
-    osArch = initData[0].arch
-    osId = process.platform === 'win32' ? 'win32' : (process.platform === 'linux' ? initData[0].id : process.platform)
-    osType = process.platform === 'win32' ? 'windows' : process.platform
-    pkgs = initData[1].softwarePackages
-    sysType = initData[2]
-    installOrder = initData[1].installerPreference
-    const lists = [
-        acquireManagerList('brew', `brew list -1`),
-        acquireManagerList('cargo', `cargo install --list | awk '/^[[:alnum:]]/ {print $1}'`),
-        acquireManagerList('gem', `gem list | awk '{print $1}'`),
-        acquireManagerList('npm', `volta list --format plain | awk '{print $2}' | sed 's/@.*//'`),
-        acquireManagerList('pip3', `pip3 list | awk '{print $1}'`),
-        acquireManagerList('pipx', `pipx list --short | awk '{print $1}'`)
-    ]
-    const managerLists = {
-        brew: lists[0],
-        cargo: lists[1],
-        gem: lists[2],
-        npm: lists[3],
-        pip3: lists[4],
-        pipx: lists[5]
-    }
-    const installKeys = Object.keys(pkgs)
-        .filter(i => expandDeps(argv._).includes(i))
-    const installData = installKeys
+function pkgMap(pkgDefs) {
+    return pkgDefs
         .map(i => {
             for (const pref of installOrder[sysType]) {
                 const installKey = getPkgData(pref, pkgs[i], false)
@@ -301,40 +331,100 @@ async function main() {
             }
         })
         .filter(x => x.installKey)
+}
+
+
+async function main() {
+    await $`mkdir -p ${cacheDir}`
+    log(`Acquiring software definitions and system information`)
+    const initData = await Promise.all([
+        getOsInfo(),
+        getSoftwareDefinitions(),
+        getSystemType()
+    ])
+    osArch = initData[0].arch
+    osId = process.platform === 'win32' ? 'win32' : (process.platform === 'linux' ? initData[0].id : process.platform)
+    osType = process.platform === 'win32' ? 'windows' : process.platform
+    pkgs = initData[1].softwarePackages
+    sysType = initData[2]
+    installOrder = initData[1].installerPreference
+    log(`Populating lists of pre-installed packages`)
+    const lists = [
+        acquireManagerList('brew', `brew list -1`),
+        acquireManagerList('cargo', `cargo install --list | awk '/^[[:alnum:]]/ {print $1}'`),
+        acquireManagerList('gem', `gem list | awk '{print $1}'`),
+        acquireManagerList('npm', `volta list --format plain | awk '{print $2}' | sed 's/@.*//'`),
+        acquireManagerList('pip3', `pip3 list | awk '{print $1}'`),
+        acquireManagerList('pipx', `pipx list --short | awk '{print $1}'`)
+    ]
+    const managerLists = {
+        brew: lists[0],
+        cargo: lists[1],
+        cask: lists[0],
+        gem: lists[2],
+        npm: lists[3],
+        pip3: lists[4],
+        pipx: lists[5]
+    }
+    log(`Acquiring installation keys`)
+    const installKeys = Object.keys(pkgs)
+        .filter(i => expandDeps(argv._).includes(i))
+    log(`Constructing installation data`)
+    const installData = pkgMap(installKeys)
+    log(`Filtering install instructions`)
     const installInstructions = installData
         .filter(x => {
             // Filter out packages already installed by by package managers
-            return Object.keys(managerLists).includes(x.installType)
+            return !Object.keys(managerLists).includes(x.installType)
         })
         .filter(x => {
             // Filter out macOS apps that already have a _app installed
-            if (x.installType === 'cask') {
+            if (x.installType === 'cask' || (osId === 'darwin' && x._app)) {
                 const appField = getPkgData('_app', x, x.installType)
-                if (fs.existsSync(`/Applications/${x[appField]}`) || fs.existsSync(`${os.homedir()}/Applications/${x[appField]}`)) {
-                    return false
+                return !(fs.existsSync(`/Applications/${x[appField]}`) || fs.existsSync(`${os.homedir()}/Applications/${x[appField]}`))
+            }
+            return true
+        })
+        .filter(x => {
+            // Filter out packages that already have a bin in the PATH
+            const binField = getPkgData('_bin', x, x.installType)
+            const isArray = Array.isArray(x[binField])
+            if (typeof x[binField] === 'string' || isArray) {
+                if (isArray) {
+                    log(`_bin field for ${x.listKey} is an array so the first entry will be used to check`)
+                }
+                return !(which.sync(typeof x[binField] === 'string' ? x[binField] : x[binField][0], { nothrow: true }))
+            }
+            log(`Ignoring _bin check because the _bin field for ${x.listKey} is not a string or array`)
+            return true
+        })
+        .filter(x => {
+            // Filter out packages that do not pass _when check
+            const whenField = getPkgData('_when', x, x.installType)
+            if (x[whenField]) {
+                if (typeof x[whenField] === 'string') {
+                    try {
+                        execSync(`${x[whenField]}`)
+                        return false
+                    } catch (e) {
+                        return true
+                    }
+                } else {
+                    log(`typeof _when for ${x.listKey} must be a string`)
                 }
             }
             return true
         })
-        .filter(async x => {
-            // Filter out packages that already have a bin in the PATH
-            const binField = getPkgData('_bin', x, x.installType)
-            const binCheck = x[binField] && await which(x[binField], { nothrow: true })
-            return binField ? binCheck : true
-        })
-        .filter(async x => {
-            // Filter out packages that do not pass _when check
-            const whenField = getPkgData('_when', x, x.installType)
-            const whenCheck = x[whenField] && await $`${x[whenField]}`.exitCode == 0
-            return whenField ? whenCheck : true
-        })
+    console.log(installInstructions)
+    log(`Running installation routine`)
     await installPackages(installInstructions)
-    const postScripts = installData
+    log(`Running post-install scripts`)
+    /*const postScripts = installData
         .flatMap(x => {
             const postField = getPkgData('_post', x, x.installType)
             return (postField && runScript(x.listKey, x[postField])) || Promise.resolve()
         })
-    await Promise.all(postScripts)
+    await Promise.all(postScripts)*/
 }
 
 main()
