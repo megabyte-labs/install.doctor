@@ -10547,6 +10547,8 @@ softwarePackages:
       - sftpgo-plugin-auth
     _bin: sftpgo
     _desc: Fully featured and highly configurable SFTP server with optional HTTP/S, FTP/S and WebDAV support - S3, Google Cloud Storage, Azure Blob
+    _deps:
+      - sftpgo-plugin-auth
     _docs: null
     _github: https://github.com/drakkan/sftpgo
     _home: null
@@ -10571,6 +10573,14 @@ softwarePackages:
     github: github.com/drakkan/sftpgo
     pkg: sftpgo
     yay: sftpgo-bin
+  sftpgo-plugin-auth:
+    _bin: sftpgo-plugin-auth
+    _desc: A plugin for SFTPGo to enable LDAP/Active Directory authentication
+    _docs: null
+    _github: https://github.com/sftpgo/sftpgo-plugin-auth
+    _home: null
+    _name: sftpgo-plugin-auth
+    github: github.com/sftpgo/sftpgo-plugin-auth
   share:
     _bin: share
     _desc: Quickly share files from your command line
