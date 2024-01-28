@@ -12050,7 +12050,9 @@ softwarePackages:
     _name: tfenv
     _post: |
       #!/usr/bin/env bash
-      tfenv use latest
+      if command -v tfenv > /dev/null; then
+        tfenv use latest
+      fi
     ansible:darwin: professormanhattan.tfenv
     ansible:linux: professormanhattan.tfenv
     brew: tfenv
