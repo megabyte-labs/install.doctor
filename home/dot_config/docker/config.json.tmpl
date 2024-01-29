@@ -1,8 +1,8 @@
 {
-        "auths": {
-                "https://index.docker.io/v1/": {}
-        },
-        "credsStore": "{{ if (eq .host.distro.id "darwin") }}osxkeychain{{ else }}{{ if (eq .host.distro.id "windows") }}wincred{{ else }}secretservice{{ end }}{{ end }}",
+    "auths": {
+        "https://index.docker.io/v1/": {}
+    },
+    "credsStore": "{{ if (eq .host.distro.id "darwin") }}osxkeychain{{ else }}{{ if (eq .host.distro.id "windows") }}wincred{{ else }}secretservice{{ end }}{{ end }}",
 	"plugins": {
 		"-x-cli-hints": {
 			"enabled": "true"
