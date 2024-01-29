@@ -155,13 +155,14 @@ if [ -d /Applications ] && [ -d /System ]; then
 fi
 
 ### SDKMan
-if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
-  export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"
-  . "$SDKMAN_DIR/bin/sdkman-init.sh"
-elif [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
-  export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
-  . "$SDKMAN_DIR/bin/sdkman-init.sh"
-fi
+### Deprecated in favor of mise
+# if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
+#   export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"
+#   . "$SDKMAN_DIR/bin/sdkman-init.sh"
+# elif [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
+#   export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
+#  . "$SDKMAN_DIR/bin/sdkman-init.sh"
+# fi
 
 ### VIM
 export GVIMINIT='let $MYGVIMRC="$XDG_CONFIG_HOME/vim/gvimrc" | source $MYGVIMRC'

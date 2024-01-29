@@ -584,6 +584,7 @@ async function releaseID() {
 }
 
 // Post-install hook
+/*
 async function afterInstall(packageManager) {
   const logStage = 'Post-Install Package Manager'
   if (packageManager === 'appimage') {
@@ -623,7 +624,8 @@ async function afterInstall(packageManager) {
   } else if (packageManager === 'zypper') {
   }
 }
-
+*/
+/*
 async function ensurePackage(dep) {
   const target = which.sync(dep, { nothrow: true })
   if (!target) {
@@ -639,7 +641,7 @@ async function ensurePackage(dep) {
         await $`sudo apk add ${dep}`
       } else if (apt) {
         if (updateDone['apt-get'] !== true) {
-          await beforeInstall('apt-get')
+          // await beforeInstall('apt-get')
         }
         try {
           log('info', 'apt-get Installation', `Checking if ${dep} is already installed`)
@@ -657,7 +659,7 @@ async function ensurePackage(dep) {
         }
       } else if (dnf) {
         if (updateDone['dnf'] !== true) {
-          await beforeInstall('dnf')
+          // await beforeInstall('dnf')
         }
         try {
           log('info', 'dnf Installation', `Checking if ${dep} is already installed`)
@@ -668,7 +670,7 @@ async function ensurePackage(dep) {
         }
       } else if (yum) {
         if (updateDone['yum'] !== true) {
-          await beforeInstall('yum')
+          // await beforeInstall('yum')
         }
         try {
           log('info', 'YUM Installation', `Checking if ${dep} is already installed`)
@@ -679,7 +681,7 @@ async function ensurePackage(dep) {
         }
       } else if (pacman) {
         if (updateDone['pacman'] !== true) {
-          await beforeInstall('pacman')
+          // await beforeInstall('pacman')
         }
         try {
           log('info', 'Pacman Installation', `Checking if ${dep} is already installed`)
@@ -690,7 +692,7 @@ async function ensurePackage(dep) {
         }
       } else if (zypper) {
         if (updateDone['zypper'] !== true) {
-          await beforeInstall('zypper')
+          // await beforeInstall('zypper')
         }
         try {
           log('info', 'Zypper Installation', `Checking if ${dep} is already installed`)
@@ -701,7 +703,7 @@ async function ensurePackage(dep) {
         }
       } else if (pkg) {
         if (updateDone['pkg'] !== true) {
-          await beforeInstall('pkg')
+          // await beforeInstall('pkg')
         }
         try {
           log('info', 'pkg Installation', `Checking if ${dep} is already installed`)
@@ -713,151 +715,22 @@ async function ensurePackage(dep) {
       }
     } else if (osType === 'darwin') {
       if (updateDone['brew'] !== true) {
-        await beforeInstall('brew')
+        // await beforeInstall('brew')
       }
       await $`brew install --quiet ${dep}`
     } else if (osType === 'windows') {
       if (updateDone['choco'] !== true) {
-        await beforeInstall('choco')
+        // await beforeInstall('choco')
       }
       await `choco install -y ${dep}`
     }
   }
 }
+*/
 
 // Pre-install hook
 const updateDone = {}
-async function beforeInstall(packageManager) {
-  updateDone[packageManager] = true
-  const logStage = 'Pre-Install Package Manager'
-  if (packageManager === 'appimage') {
-    if (!fileExists(`${process.env.HOME}/Applications`)) {
-      runSilentCommand(`mkdir -p "${process.env.HOME}/Applications"`)
-    }
-  } else if (packageManager === 'ansible') {
-    log('info', logStage, `Temporarily enabling passwordless sudo for Ansible role installations`)
-    await $`echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL # TEMPORARY FOR ANSIBLE INSTALL DOCTOR" | sudo tee -a /etc/sudoers`
-    log('info', logStage, 'Running Ansible setup task so facts are cached')
-    const unbuffer = which.sync('unbuffer', { nothrow: true })
-    let unbufferPrefix = ''
-    if (unbuffer) {
-      unbufferPrefix = 'unbuffer'
-    }
-    if (osPlatform === 'darwin' || osPlatform === 'linux' || osPlatform === 'windows') {
-      const capitalOsPlatform = osPlatform.charAt(0).toUpperCase() + osPlatform.slice(1)
-      await $`ANSIBLE_CONFIG=${process.env.HOME}/.local/share/ansible/ansible.cfg ${unbufferPrefix} ansible 127.0.0.1 -e '{ ansible_connection: "local", ansible_become_user: "${process.env.USER}", ansible_user: "${process.env.USER}", ansible_family: "${capitalOsPlatform}", install_homebrew: False }' -m setup`
-    } else {
-      log('warn', 'Ansible', 'Unsupported platform - ' + osPlatform)
-    }
-  } else if (packageManager === 'apk') {
-    await $`sudo apk update`
-  } else if (packageManager === 'apt') {
-    runCommand('Running apt-get update / upgrade', `sudo apt-get update && sudo apt-get upgrade -y`)
-  } else if (packageManager === 'basher') {
-  } else if (packageManager === 'binary') {
-  } else if (packageManager === 'brew' || packageManager === 'cask') {
-    if (!brewUpdated) {
-      brewUpdated = true
-      try {
-        runCommand('Running brew update / upgrade', `brew update && brew upgrade --cask && brew upgrade`)
-        runCommand('Running brew update', `brew update`)
-        runCommand('Running brew upgrade', `brew upgrade`)
-        if (osType === 'darwin'){
-          runCommand('Running brew upgrade (Casks)', `brew upgrade --cask`)
-        }
-      } catch (e) {
-        console.log(e)
-        log('error', 'Homebrew', 'Failed running brew update / upgrade')
-        log('info', 'Homebrew', 'Running brew tap --repair and trying again')
-        try {
-          runCommand('Repairing taps and retrying brew update / upgrade', 'export HOMEBREW_TEMP=/tmp && sudo rm -rf $(brew --cache) && brew tap --repair && brew update && brew upgrade --force --greedy && [[ $OSTYPE != "darwin"* ]] && brew upgrade --cask --greedy')
-        } catch (e) {
-          console.log(e)
-          log('error', 'Homebrew', 'Failed both attempts to run brew update / upgrade')
-        }
-      }
-    }
-  } else if (packageManager === 'cargo') {
-  } else if (packageManager === 'choco') {
-  } else if (packageManager === 'crew') {
-    await $`crew update`
-  } else if (packageManager === 'dnf') {
-    const dnf = which.sync('dnf', { nothrow: true })
-    const yum = which.sync('yum', { nothrow: true })
-    if (dnf) {
-      runCommand('Running dnf update', `sudo dnf update -y`)
-    } else if (yum) {
-      runCommand('Running yum update', `sudo yum update -y`)
-    }
-  } else if (packageManager === 'flatpak') {
-    // TODO - figure out why CentOS is failing to update
-    // and then switch command below for `sudo flatpak update -y`
-    runCommand('Running flatpak update', `. /etc/os-release; if [ "$ID" != "centos" ]; then sudo flatpak update -y; else echo "Skipping Flatpak update on CentOS"; fi`)
-  } else if (packageManager === 'gem') {
-  } else if (packageManager === 'go') {
-  } else if (packageManager === 'nix') {
-    runCommand('Running nix-channel --update', `nix-channel --update`)
-  } else if (packageManager === 'npm') {
-  } else if (packageManager === 'pacman') {
-    runCommand('Running pacman update', `sudo pacman -Syu`)
-  } else if (packageManager === 'pipx') {
-  } else if (packageManager === 'pip') {
-  } else if (packageManager === 'pkg') {
-    await $`sudo pkg upgrade`
-  } else if (packageManager === 'port') {
-    const port = which.sync('port', { nothrow: true })
-    if (port) {
-      runCommand('Running port sync', `sudo port sync`)
-    } else {
-      log('error', 'Port Not Installed', 'Skipping sudo port sync step because port is not installed')
-    }
-  } else if (packageManager === 'scoop') {
-    runCommand('Running scoop update', `scoop update`)
-  } else if (packageManager === 'snap' || packageManager === 'snap-classic') {
-    if (!snapRefreshed) {
-      snapRefreshed = true
-      runCommand('Ensuring snap is refreshed', `sudo snap refresh`)
-    }
-  } else if (packageManager === 'whalebrew') {
-    if (osType === 'darwin') {
-      const docker = which.sync('docker', { nothrow: true })
-      if (!docker) {
-        await $`brew install --cask --no-quarantine --quiet docker`
-      }
-      try {
-        await $`sudo -c 'docker run --rm hello-world' - ${process.env.USER}`
-      } catch (e) {
-        log('warn', logStage, `The command \`docker run --rm hello-world\` failed`)
-        try {
-          log(
-            'info',
-            logStage,
-            'Attempting to open `/Applications/Docker.app` (Docker Desktop for macOS). This should take about 30 seconds.'
-          )
-          const promises = [$`test -d /Applications/Docker.app`, $`rm -f ~/.docker && mkdir -p ~/.config/docker && open --background -a Docker --args --accept-license --unattended`]
-          await Promise.all(promises)
-          const gum = which.sync('gum', { nothrow: true })
-          if (gum) {
-            execSync('gum spin --spinner dot --title "Waiting for Docker Desktop to start up.." -- sleep 30', {
-              stdio: 'inherit',
-              shell: true
-            })
-          } else {
-            await $`sleep 30`
-          }
-        } catch (e) {
-          log('warn', logStage, `Docker Desktop appears to not be installed!`)
-        }
-      }
-    }
-  } else if (packageManager === 'winget') {
-    runCommand('Running winget source update', `winget source update`)
-  } else if (packageManager === 'yay') {
-  } else if (packageManager === 'zypper') {
-    runCommand('Running zypper update', `sudo zypper update`)
-  }
-}
-
+/*
 async function ensureInstalled(bin, callback) {
   const logStage = 'Package Manager Install'
   const installed = which.sync(bin, { nothrow: true })
@@ -871,8 +744,8 @@ async function ensureInstalled(bin, callback) {
       log('error', logStage, `There does not appear to be an installation method available for \`${bin}\``)
     }
   }
-}
-
+}*/
+/*
 async function ensurePackageManagerAnsible() {
   await $`pipx install ansible-core`
   if (osType === 'darwin') {
@@ -883,9 +756,10 @@ async function ensurePackageManagerAnsible() {
   await $`touch "$HOME/.cache/megabyte-labs/ansible-installed"`
   log('info', 'Package Manager Install', `Ansible and its supporting packages are now installed via pipx`)
 }
-
+*/
 // Ensure the package manager is available
-let packageManagerInstalled = {}
+//let packageManagerInstalled = {}
+/*
 async function ensurePackageManager(packageManager) {
   const logStage = 'Pre-Reqs'
   log('info', logStage, `Ensuring \`${packageManager}\` is set up`)
@@ -921,10 +795,10 @@ async function ensurePackageManager(packageManager) {
       if (ansible) {
         log('info', logStage, `\`ansible\` and its supporting packages appear to be installed`)
       } else {
-        await ensurePackageManagerAnsible()
+        //await ensurePackageManagerAnsible()
       }
     } catch (e) {
-      await ensurePackageManagerAnsible()
+      //await ensurePackageManagerAnsible()
     }
   } else if (packageManager === 'apk') {
     await ensureInstalled('apk', false)
@@ -1207,7 +1081,8 @@ async function ensurePackageManager(packageManager) {
     await ensureInstalled('zypper', false)
   }
 }
-
+*/
+/*
 // Installs a list of packages via the specified package manager
 async function installPackageList(packageManager, packages) {
   const logStage = 'Package Install'
@@ -1558,7 +1433,7 @@ async function installPackageList(packageManager, packages) {
     log('error', logStage, `Possibly encountered an error while installing via \`${packageManager}\``)
     log('info', logStage, `Proceeding with the installation..`)
   }
-}
+}*/
 
 async function addUserGroup(group) {
   const logStage = 'Users / Groups'
@@ -1712,6 +1587,7 @@ async function updateService(service) {
 /**
  * Filter that resolves when all asynchronous filter actions are done
  */
+/*
 const asyncFilter = async (arr, predicate) => {
   const results = await Promise.all(arr.map(predicate))
 
@@ -1814,6 +1690,7 @@ async function pruneInstallOrders(installOrders) {
   }
   return newOrders
 }
+*/
 
 async function installPlugins(pluginData) {
   if (pluginData.cmd && pluginData.plugins && pluginData.plugins.length) {
@@ -1854,7 +1731,7 @@ async function installPlugins(pluginData) {
     }
   }
 }
-
+/*
 async function linkBin(installOrdersBinLink) {
   let flatpakInstallation, flatpakDir
   const softwarePackages = installData.softwarePackages
@@ -1911,7 +1788,7 @@ async function linkBin(installOrdersBinLink) {
     }
   }
 }
-
+*/
 // main process
 async function installSoftware(pkgsToInstall) {
   osType = await OSType()
@@ -1927,7 +1804,7 @@ async function installSoftware(pkgsToInstall) {
   const packageManagers = Object.keys(installOrders)
   packageManagers.length && log('info', 'Pre-Reqs', `Ensuring any package managers that will be used are installed / configured`)
   for (const packageManager of packageManagers) {
-    await ensurePackageManager(packageManager)
+    //await ensurePackageManager(packageManager)
   }
   try {
     for (const key in installOrders) {
@@ -1938,12 +1815,12 @@ async function installSoftware(pkgsToInstall) {
     log('error', 'Filter', `There was an error reducing the duplicates in the install orders`)
     console.error(e)
   }
-  installOrders = await pruneInstallOrders(installOrders)
+  //installOrders = await pruneInstallOrders(installOrders)
   delete installOrders._deps
   console.log('Install orders:', installOrders)
   packageManagers.length && log('info', 'Pre-Reqs', `Running package manager pre-installation steps`)
   for (const packageManager of packageManagers) {
-    await beforeInstall(packageManager)
+    // await beforeInstall(packageManager)
   }
   installOrdersPre.length && log('info', 'Pre-Install', `Running package-specific pre-installation steps`)
   for (const script of installOrdersPre) {
@@ -1961,7 +1838,7 @@ async function installSoftware(pkgsToInstall) {
   packageManagers.length && log('info', 'Install', `Installing the packages`)
   for (const packageManager of packageManagers) {
     const asyncOrders = []
-    asyncOrders.push(installPackageList(packageManager, installOrders[packageManager]))
+    //asyncOrders.push(installPackageList(packageManager, installOrders[packageManager]))
     await Promise.all(asyncOrders)
   }
   installOrdersPorts.length && log('info', 'Firewall', 'Configuring firewall exceptions')
@@ -1975,7 +1852,7 @@ async function installSoftware(pkgsToInstall) {
   if (!binLinkRan) {
     binLinkRan = true
     log('info', 'Bin', 'Linking bin aliases to their installed packages')
-    await linkBin(installOrdersBinLink)
+    // await linkBin(installOrdersBinLink)
   }
   for (const script of installOrdersPost) {
     try {
@@ -1996,7 +1873,7 @@ async function installSoftware(pkgsToInstall) {
   }
   packageManagers.length && log('info', 'Post-Install', `Running package manager post-installation steps`)
   for (const packageManager of packageManagers) {
-    await afterInstall(packageManager)
+   //await afterInstall(packageManager)
   }
   log('success', 'Complete', `Done!`)
 }

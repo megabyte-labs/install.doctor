@@ -640,18 +640,42 @@ showNotificationCenter() {
   fi
 }
 
+installAnsible() {
+  if command -v pipx > /dev/null; then
+    if [ ! -f "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor/ansible-installed" ]; then
+      logg info 'Running pipx install ansible-core' && pipx install ansible-core
+      if [ -d /Applications ] && [ -d /System ]; then
+        logg info 'Injecting ansible-core pipx with ansible-core PyObjC PyObjC-core because system is macOS' && pipx inject ansible-core PyObjC PyObjC-core
+      fi
+      logg info 'Running pipx inject ansible-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog' && pipx inject ansible-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
+      mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor"
+      touch "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor/ansible-installed"
+    else
+      logg info 'Ansible installation routine appears to have already been run'
+    fi
+  else
+    logg warn 'pipx is unavailable to use for installing Ansible'
+  fi
+}
+
 installBrewPackages() {
   ensureNodeInstalled
   ensureDeltaInstalled
-  ensureBrewPackageInstalled "gh"
-  ensureBrewPackageInstalled "go"
-  ensureBrewPackageInstalled "zx"
   ensureBrewPackageInstalled "volta"
   volta install node@latest &
   volta install yarn@latest &
   npm install -g npm@latest &
+  ensureBrewPackageInstalled "pipx"
+  pipx ensurepath &
+  ensureBrewPackageInstalled "gh"
+  ensureBrewPackageInstalled "go"
+  ensureBrewPackageInstalled "ruby"
+  ensureBrewPackageInstalled "rustup"
+  ensureBrewPackageInstalled "zx"
+  ensureBrewPackageInstalled "whalebrew"
   wait
   logg success 'Finished installing auxilary Homebrew packages'
+  logg info 'Ensuring Ansible is installed (with plugins)' && installAnsible
 }
 
 ensureMacportsInstalled() {
@@ -666,8 +690,83 @@ ensureMacportsInstalled() {
   fi
 }
 
+setupSnap() {
+  if [ ! -d /Applications ] && [ ! -d /System ] && command -v snap > /dev/null; then
+    logg info 'Enabling snapd' && sudo systemctl enable snapd
+    logg info 'Starting snapd' && sudo systemctl start snapd
+    if [ -d /snap ]; then
+      logg info 'Linking /var/lib/snapd/snap to /snap' && sudo ln -s /var/lib/snapd/snap /snap
+    fi
+    logg info 'Running sudo snap info core' && sudo snap info core
+    logg info 'Running sudo snap wait system seed.loaded' && sudo snap wait system seed.loaded
+    logg info 'Running sudo snap install core' && sudo snap install core
+  fi
+}
+
+installYay() {
+  if [ -f /etc/arch-release ] && ! command -v yay > /dev/null
+    sudo rm -rf /usr/local/src/yay
+    sudo git clone https://aur.archlinux.org/yay.git /usr/local/src/yay
+    cd /usr/local/src/yay
+    sudo makepkg -si
+  fi
+}
+
+installNix() {
+  if ! command -v nix-shell > /dev/null; then
+    if [ -d /Applications ] && [ -d /System ]; then
+      ### macOS
+      logg info 'Installing nix for macOS' && sh <(curl -L https://nixos.org/nix/install) --yes
+    else
+      ### Linux
+      logg info 'Installing nix' && sh <(curl -L https://nixos.org/nix/install) --daemon --yes
+    fi
+  fi
+}
+
+rustUpInit() {
+  if command -v rustup-init > /dev/null && ! command -v rustc > /dev/null; then
+    logg info 'Running rustup-init -y' && rustup-init -y
+  fi
+}
+
+zapInstall() {
+  if ! command -v zap > /dev/null; then
+    ### Architecture
+    if [ -z ${ARCH+x} ]; then
+	    MACHINE_ARCH="$(uname -m)"
+	    if [ "$MACHINE_ARCH" = "amd64" ]; then
+		    ARCH="amd64"
+      elif [ "$MACHINE_ARCH" = "x86_64" ]; then
+        ARCH="amd64"
+	    elif [ "$MACHINE_ARCH" = "i386" ]; then
+		    ARCH="386"
+	    elif [ "$MACHINE_ARCH" = "i686" ]; then
+		    ARCH="386" # both are 32bit, should be compatible
+	    elif [ "$MACHINE_ARCH" = "aarch64" ]; then
+		    ARCH="arm64"
+	    elif [ "$MACHINE_ARCH" = "arm64" ]; then
+		    ARCH="arm64"
+	    elif [ "$MACHINE_ARCH" = "arm" ]; then
+		    ARCH="arm"
+	    fi
+      export ARCH
+    fi
+    logg info 'Downloading zap to /usr/local/bin/zap' && sudo curl -sSL --output /usr/local/bin/zap "https://github.com/srevinsaju/zap/releases/download/continuous/zap-${ARCH}"
+    logg info 'Making /usr/local/bin/zap executable' && sudo chmod +x /usr/local/bin/zap
+  fi
+}
+
+addFlathub() {
+  if command -v flatpak > /dev/null; then
+    logg info 'Adding flatpak flathub repository' && sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+  fi
+}
+
+# TODO - Add install on macOS for macports
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   logg info 'The DEBUG or DEBUG_MODE environment variable is set so preliminary system tweaks will be run synchronously'
+  addFlathub
   allocateSwap
   configureGPG
   disableDStoreFileCreation
@@ -679,12 +778,17 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   installDocker
   installJumpCloud
   installSystemPips
+  installYay
   removeLinuxBloatware
+  rustUpInit
   setHostname
   setNtpServer
   setTimezone
+  setupSnap
   showNotificationCenter
+  zapInstall
 else
+  addFlathub &
   allocateSwap &
   configureGPG &
   disableDStoreFileCreation &
@@ -696,11 +800,15 @@ else
   installDocker &
   installJumpCloud &
   installSystemPips &
+  installYay &
   removeLinuxBloatware &
+  rustUpInit &
   setHostname &
   setNtpServer &
   setTimezone &
+  setupSnap &
   showNotificationCenter &
+  zapInstall &
   wait
 fi
 

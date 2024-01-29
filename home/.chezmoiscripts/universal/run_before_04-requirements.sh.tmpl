@@ -123,6 +123,10 @@ else
       fi
     done
   elif [ '{{ .host.distro.id }}' = 'debian' ]; then
+    if command -v apt-get > /dev/null && [ -f /etc/apt/preferences.d/nosnap.pref ]; then
+      logg info 'Moving /etc/apt/preferences.d/nosnap.pref to /etc/apt/nosnap.pref.bak' && sudo mv -f /etc/apt/preferences.d/nosnap.pref /etc/apt/nosnap.pref.bak
+    fi
+
     ### Print dependency list
     logg 'Installing common dependencies using apt-get'
     logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'
@@ -239,6 +243,10 @@ else
       fi
     done
   elif [ '{{ .host.distro.id }}' = 'ubuntu' ]; then
+    if command -v apt-get > /dev/null && [ -f /etc/apt/preferences.d/nosnap.pref ]; then
+      logg info 'Moving /etc/apt/preferences.d/nosnap.pref to /etc/apt/nosnap.pref.bak' && sudo mv -f /etc/apt/preferences.d/nosnap.pref /etc/apt/nosnap.pref.bak
+    fi
+
     ### Print dependency list
     logg 'Installing common dependencies using apt-get'
     logg info 'Dependencies: {{ $packages | sortAlpha | uniq | join " " -}}'

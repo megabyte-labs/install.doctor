@@ -433,8 +433,8 @@ provisionLogic() {
   logg info "Handling Qubes dom0 logic (if applicable)" && handleQubesDom0
   logg info "Handling pre-provision logic" && initChezmoiAndPrompt
   logg info "Running the Chezmoi provisioning" && runChezmoi
-  logg info "Ensuring temporary passwordless sudo is removed" && removePasswordlessSudo
   logg info "Determing whether or not reboot" && handleRequiredReboot
+  logg info "Ensuring temporary passwordless sudo is removed" && removePasswordlessSudo
   logg info "Handling post-provision logic" && postProvision
 }
 provisionLogic

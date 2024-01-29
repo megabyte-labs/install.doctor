@@ -146,15 +146,42 @@ async function createCaskLinks() {
     for (const app of caskApps) {
         const appField = getPkgData('_app', app, app.installType)
         const binField = getPkgData('_bin', app, app.installType)
-        if (fs.existsSync(`${os.homedir()}/Applications/${x[appField]}`)) {
-            fs.writeFileSync(`${os.homedir()}/.local/bin/cask/${x[binField]}`, `open "$HOME/Applications/${x[appField]}" $*`)
-        } else if (fs.existsSync(`/Applications/${x[appField]}`)) {
-            fs.writeFileSync(`${os.homedir()}/.local/bin/cask/${x[binField]}`, `open "/Applications/${x[appField]}" $*`)
+        if (fs.existsSync(`${os.homedir()}/Applications/${app[appField]}`)) {
+            fs.writeFileSync(`${os.homedir()}/.local/bin/cask/${app[binField]}`, `#!/usr/bin/env bash\nopen "$HOME/Applications/${app[appField]}" $*`)
+            await $`chmod +x '${os.homedir()}/.local/bin/cask/${app[binField]}'`
+        } else if (fs.existsSync(`/Applications/${app[appField]}`)) {
+            fs.writeFileSync(`${os.homedir()}/.local/bin/cask/${app[binField]}`, `#!/usr/bin/env bash\nopen "/Applications/${app[appField]}" $*`)
+            await $`chmod +x '${os.homedir()}/.local/bin/cask/${app[binField]}'`
         } else {
-            log(`Unable to create bin link to ${x[appField]}`)
+            log(`Unable to create bin link to ${app[appField]}`)
         }
     }
     caskApps.length && log(`Finished creating Homebrew cask links in ~/.local/bin/cask`)
+}
+
+async function createFlatpakLinks() {
+    const flatpakInstallations = await $`flatpak --installations`
+    const flatpakDir = flatpakInstallations.stdout.replace('\n', '')
+    const flatpakApps = pkgMap(pkgs)
+        .filter(x => {
+            if (x.installType === 'flatpak') {
+                const binField = getPkgData('_bin', x, x.installType)
+                const binFile = fs.existsSync(`${os.homedir()}/.local/bin/flatpak/${x[binField]}`)
+                return !binFile
+            }
+            return false
+        })
+    flatpakApps.length && await $`mkdir -p "$HOME/.local/bin/flatpak"`
+    for (const app of flatpakApps) {
+        const binField = getPkgData('_bin', app, app.installType)
+        if (fs.existsSync(`${flatpakDir}/app/${app.installList[0]}`)) {
+            fs.writeFileSync(`${os.homedir()}/.local/bin/flatpak/${app[binField]}`, `#!/usr/bin/env bash\nflatpak run ${app.installList[0]} $*`)
+            await $`chmod +x '${os.homedir()}/.local/bin/flatpak/${app[binField]}'`
+        } else {
+            log(`Unable to create bin link to ${x.flatpak}`)
+        }
+    }
+    flatpakApps.length && log(`Finished creating Flatpak links in ~/.local/bin/flatpak`)
 }
 
 async function bundleInstall(brews, casks) {
@@ -207,8 +234,10 @@ async function installPackages(pkgInstructions) {
         switch (key) {
             case 'ansible':
                 promises.push(forEachSeries(combined[key].flatMap(x => x.installList.flatMap(i => $`${key} 127.0.0.1 -v${process.env.DEBUG && 'vv'} -e '{ ansible_connection: "local", ansible_become_user: "root", ansible_user: "${process.env.USER}", ansible_family: "${osId.charAt(0).toUpperCase() + osId.slice(1)}", install_homebrew: False }' -m include_role -a name=${i}`))))
+                break
             case 'apk':
                 promises.push($`sudo ${key} add ${combined[key].flatMap(x => x.installList).split(' ')}`)
+                break    
             case 'appimage':
                 promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => {
                     if (x.substring(0, 4) === 'http') {
@@ -219,8 +248,10 @@ async function installPackages(pkgInstructions) {
                         return $`zap install --select-first -q ${i}`
                     }
                 })))
+                break
             case 'apt':
                 promises.push($`DEBIAN_FRONTEND=noninteractive sudo apt-get -o DPkg::Options::=--force-confdef install -y ${combined[key].flatMap(x => x.installList).split(' ')}`)
+                break
             case 'basher':
             case 'baulk':
             case 'cargo':
@@ -237,11 +268,13 @@ async function installPackages(pkgInstructions) {
             case 'binary':
                 // TODO
                 promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => $`TMP="$(mktemp)" && curl -sSL ${i} > "$TMP" && sudo mv "$TMP" /usr/local/src/${x._bin} && chmod +x /usr/local/src/${x._bin}`)))
+                break
             case 'brew':
             case 'cask': // Handled above
                 break
             case 'choco':
                 promises.push($`${key} install -y ${combined[key].flatMap(x => x.installList).join(' ')}`)
+                break
             case 'dnf':
             case 'yum':
             case 'zypper':
@@ -293,17 +326,30 @@ async function installPackages(pkgInstructions) {
     const installs = await Promise.allSettled(promises)
     log(`All of the installations have finished`)
     console.log('Installs:', installs)
+    await postInstall(combined)
+}
+
+async function postInstall(combined) {
+    log(`Running post-install routine`)
+    const promises = []
+    Object.keys(combined).includes('flatpak') && promises.push(createFlatpakLinks())
+    const postInstalls = await Promise.allSettled(promises)
+    console.log('Post installs:', postInstalls)
 }
 
 async function acquireManagerList(type, command) {
-    if (fs.existsSync(`${cacheDir}/${type}`)) {
-        setTimeout(() => {
+    if (which.sync(type, { nothrow: true })) {
+        if (fs.existsSync(`${cacheDir}/${type}`)) {
+            setTimeout(() => {
+                require('child_process').execSync(`${command} > ${cacheDir}/${type}`)
+            }, 0)
+        } else {
             require('child_process').execSync(`${command} > ${cacheDir}/${type}`)
-        }, 0)
+        }
+        return fs.readFileSync(`${cacheDir}/${type}`).toString().split('\n')
     } else {
-        require('child_process').execSync(`${command} > ${cacheDir}/${type}`)
+        return []
     }
-    return fs.readFileSync(`${cacheDir}/${type}`).toString().split('\n')
 }
 
 function pkgMap(pkgDefs) {
@@ -349,21 +395,34 @@ async function main() {
     installOrder = initData[1].installerPreference
     log(`Populating lists of pre-installed packages`)
     const lists = [
+        acquireManagerList('apt', `dpkg -l`),
         acquireManagerList('brew', `brew list -1`),
         acquireManagerList('cargo', `cargo install --list | awk '/^[[:alnum:]]/ {print $1}'`),
+        acquireManagerList('dnf', `rpm -qa`),
+        acquireManagerList('flatpak', `flatpak --columns=app list`),
         acquireManagerList('gem', `gem list | awk '{print $1}'`),
         acquireManagerList('npm', `volta list --format plain | awk '{print $2}' | sed 's/@.*//'`),
+        acquireManagerList('pacman', `pacman -Qs`),
         acquireManagerList('pip3', `pip3 list | awk '{print $1}'`),
-        acquireManagerList('pipx', `pipx list --short | awk '{print $1}'`)
+        acquireManagerList('pipx', `pipx list --short | awk '{print $1}'`),
+        acquireManagerList('snap', `snap list`),
+        acquireManagerList('zap', `zap list`)
     ]
     const managerLists = {
-        brew: lists[0],
-        cargo: lists[1],
-        cask: lists[0],
-        gem: lists[2],
-        npm: lists[3],
-        pip3: lists[4],
-        pipx: lists[5]
+        appimage: lists[6],
+        apt: lists[0],
+        brew: lists[1],
+        cargo: lists[2],
+        cask: lists[1],
+        dnf: lists[3],
+        flatpak: lists[4],
+        gem: lists[5],
+        npm: lists[6],
+        pacman: lists[7],
+        pip3: lists[8],
+        pipx: lists[9],
+        snap: lists[10],
+        zap: lists[11]
     }
     log(`Acquiring installation keys`)
     const installKeys = Object.keys(pkgs)
