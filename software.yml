@@ -2646,9 +2646,11 @@ softwarePackages:
     _name: mise
     _post: |
       #!/usr/bin/env bash
-      mise use --global openjdk-20
-      sudo mkdir -p /Library/Java/JavaVirtualMachines/openjdk-20.jdk
-      sudo ln -s "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" /Library/Java/JavaVirtualMachines/openjdk-20.jdk/Contents
+      mise install
+      if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" ]; then
+        sudo mkdir -p /Library/Java/JavaVirtualMachines/openjdk-20.jdk
+        sudo ln -s "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" /Library/Java/JavaVirtualMachines/openjdk-20.jdk/Contents
+      fi
     apk: mise
     brew: mise
     cargo: mise-cli
