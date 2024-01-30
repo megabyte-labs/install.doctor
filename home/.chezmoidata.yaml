@@ -85,7 +85,7 @@ chromeExtensions:
   - mailvelope/kajibbejlbohfaggdiogboambcijhkke
   - markdown-here/elifhakcjgalahccnjkneoccemfahfoa
   - metamask/nkbihfbeogaeaoehlefnkodbefgpgknn
-  - notion-web-clipper/knheggckgoiihginacbkhaalnibhilkk
+  # - notion-web-clipper/knheggckgoiihginacbkhaalnibhilkk
   - octohint/hbkpjkfdheainjkkebeoofkpgddnnbpk
   - pieces-save-code-snippets/igbgibhbfonhmjlechmeefimncpekepm
   - rakuten-get-cash-back-for/chhjbpecpncaggjpdakmflnfcopglcmi
@@ -132,7 +132,7 @@ firefoxAddOns:
   - markdown-here
   - medium-unlimited-read-for-free
   - multi-account-containers
-  - notion-web-clipper
+  # - notion-web-clipper
   - pieces-save-code-from-the-web
   - private-relay
   - profile-switcher
@@ -930,7 +930,7 @@ softwareGroups:
     # - fiscript
     - libreoffice
     - microsoft-office
-    - notion
+    # - notion
     - obsidian
     - raycast
     - skhd
@@ -1012,6 +1012,7 @@ softwareGroups:
   Server: &Server
     - cockpit
     - cups
+    - easyengine
     - haproxy
     - netdata
     - samba
@@ -1206,7 +1207,6 @@ softwareGroups:
     - typescript-to-lua
     - web-ext
     - websocat
-    - wordops
     - wordpressify
     - wp-cli
     - wrangler
@@ -1528,8 +1528,6 @@ softwareGroups:
       note: Unnecessary menu bar widget for SoundCloud.
     - pkg: diffsofancy
       note: Deprecated in favor of `delta`
-    - pkg: easyengine
-      note: Deprecated in favor of `wordops` which is the new and improved version of EasyEngine
     - pkg: filezilla
       note: FileZilla has an offensive user-interface. Absolutely atrocious.
     - pkg: gdu
@@ -1614,6 +1612,8 @@ softwareGroups:
       note: The OpenSSH library can now create native keys that integrate with the client.
     - pkg: chef-workstation
       note: Not utilizing Chef and it automatically adds a top bar menu item that causes load delay
+    - pkg: wordops
+      note: Prefer EasyEngine instead
   # Files below need to be reviewed before adding them to the stack. They should include all of the
   # definitions in software.yml that are not included somewhere in the definitions that this file
   # maps out.

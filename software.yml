@@ -3501,8 +3501,14 @@ softwarePackages:
     _github: https://github.com/EasyEngine/easyengine
     _home: https://easyengine.io/
     _name: EasyEngine
-    ansible:darwin: professormanhattan.easyengine
-    ansible:linux: professormanhattan.easyengine
+    _post: |
+      #!/usr/bin/env bash
+      if [ -n "$CLOUDFLARE_EMAIL" ] && [ -n "$CLOUDFLARE_API_KEY" ]; then
+        ee config set le-mail "$CLOUDFLARE_EMAIL"
+        ee config set cloudflare-api-key "$CLOUDFLARE_API_KEY"
+      fi
+    brew: easyengine
+    script:linux: wget -qO ee rt.cx/ee4 && sudo bash ee
   clipboard:
     _bin: cb
     _github: https://github.com/Slackadays/Clipboard.git
