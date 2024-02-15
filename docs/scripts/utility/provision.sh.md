@@ -149,7 +149,6 @@ fi
 
 # @description Logs with style using Gum if it is installed, otherwise it uses `echo`. It also leverages Glow to render markdown.
 # When Glow is not installed, it uses `cat`.
-# @example logger info "An informative log"
 logg() {
   TYPE="$1"
   MSG="$2"

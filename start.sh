@@ -49,11 +49,6 @@ else
 fi
 
 # @description Caches values from commands
-#
-# @example
-#   cache brew --prefix golang
-#
-# @arg The command to run
 function cache() {
   local DIR="${CACHE_DIR:-.cache}"
   if ! test -d "$DIR"; then
@@ -67,11 +62,6 @@ function cache() {
 }
 
 # @description Formats log statements
-#
-# @example
-#   format 'Message to be formatted'
-#
-# @arg $1 string The message to be formatted
 function format() {
   # shellcheck disable=SC2001,SC2016
   ANSI_STR="$(echo "$1" | sed 's/^\([^`]*\)`\([^`]*\)`/\1\\e[100;1m \2 \\e[0;39m/')"
@@ -82,12 +72,6 @@ function format() {
 }
 
 # @description Proxy function for handling logs in this script
-#
-# @example
-#   logger warn "Warning message"
-#
-# @arg $1 string The type of log message (can be info, warn, success, or error)
-# @arg $2 string The message to log
 function logger() {
   if [ -f .config/log ]; then
     .config/log "$1" "$2"
@@ -156,9 +140,6 @@ function ensureRedHatPackageInstalled() {
 
 # @description Installs package when user is root on Linux
 #
-# @example
-#   ensureRootPackageInstalled "sudo"
-#
 # @arg $1 string The name of the package that must be present
 #
 # @exitcode 0 The package was successfully installed
@@ -201,9 +182,6 @@ fi
 # @description Ensures ~/.local/bin is in the PATH variable on *nix machines and
 # exits with an error on unsupported OS types
 #
-# @example
-#   ensureLocalPath
-#
 # @set PATH string The updated PATH with a reference to ~/.local/bin
 #
 # @noarg
@@ -229,9 +207,6 @@ function ensureLocalPath() {
 }
 
 # @description Ensures given package is installed on a system.
-#
-# @example
-#   ensurePackageInstalled "curl"
 #
 # @arg $1 string The name of the package that must be present
 #
@@ -274,9 +249,6 @@ function ensurePackageInstalled() {
 
 # @description Ensures the latest version of Task is installed to `/usr/local/bin` (or `~/.local/bin`, as
 # a fallback.
-#
-# @example
-#   ensureTaskInstalled
 #
 # @noarg
 #
@@ -339,9 +311,6 @@ function ensureTaskInstalled() {
 #
 # @see ensureTaskInstalled
 #
-# @example
-#   installTask
-#
 # @noarg
 #
 # @exitcode 0 If Task installs/updates properly
@@ -398,9 +367,6 @@ function installTask() {
 
 # @description Verifies the SHA256 checksum of a file
 #
-# @example
-#   sha256 myfile.tar.gz 5b30f9c042553141791ec753d2f96786c60a4968fd809f75bb0e8db6c6b4529b
-#
 # @arg $1 string Path to the file
 # @arg $2 string The SHA256 signature
 #
@@ -443,9 +409,6 @@ function sha256() {
 }
 
 # @description Ensures the Taskfile.yml is accessible
-#
-# @example
-#   ensureTaskfiles
 function ensureTaskfiles() {
   if [ -z "$ENSURED_TASKFILES" ]; then
     # shellcheck disable=SC2030
@@ -504,9 +467,6 @@ function ensureTaskfiles() {
 }
 
 # @description Ensures basic files like package.json and Taskfile.yml are present
-#
-# @example
-#   ensureProjectBootstrapped
 function ensureProjectBootstrapped() {
   if [ ! -f start.sh ] || [ ! -f package.json ] || [ ! -f Taskfile.yml ]; then
     if [ ! -f start.sh ]; then
