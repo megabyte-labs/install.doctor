@@ -7,7 +7,8 @@
 ### macOS Polyfills
 # Note: May cause conflicts
 if [ -d /Applications ] && command -v brew > /dev/null; then
-  PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
+  # Causes issues with stty
+  # PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
   PATH="$(brew --prefix)/opt/gnu-indent/libexec/gnubin:$PATH"
   PATH="$(brew --prefix)/opt/gnu-sed/libexec/gnubin:$PATH"
   PATH="$(brew --prefix)/opt/gnu-tar/libexec/gnubin:$PATH"
@@ -219,9 +220,7 @@ alias recoverpy='python3 -m recoverpy'
 alias perftest='mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/perftest" && curl -sL yabs.sh | bash -s -- -w "${XDG_DATA_HOME:-$HOME/.local/share}/perftest/$(date +%Y%m%d_%H%M%S)"'
 
 # @description Adds an alias to use Docker to run [pfFocus](https://github.com/TKCERT/pfFocus) which is a Python package that
-#     allows you to convert a pfSense export into a readable markdown file.
-# @example
-#     pf-format < input.xml > output.md
+#     allows you to convert a pfSense export into a readable markdown file. Example: `pf-format < input.xml > output.md`
 function pf-format() {
   docker run --rm -i ghcr.io/tkcert/pffocus "$*"
 }

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # @description Installs glow (a markdown renderer) from GitHub releases
-# @example installGlow
 installGlow() {
   # TODO: Add support for other architecture types
   if [ -d '/Applications' ] && [ -d '/Library' ] && [ -d '/Users' ]; then
@@ -33,7 +32,6 @@ installGlow() {
 }
 
 # @description Installs gum (a logging CLI) from GitHub releases
-# @example installGum
 installGum() {
   # TODO: Add support for other architecture types
   if [ -d '/Applications' ] && [ -d '/Library' ] && [ -d '/Users' ]; then
@@ -120,7 +118,6 @@ formatFaint() {
 }
 
 # @description Logs using Gum
-# @example logger info "An informative log"
 logg() {
   TYPE="$1"
   MSG="$2"

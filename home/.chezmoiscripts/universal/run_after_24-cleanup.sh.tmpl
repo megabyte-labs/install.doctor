@@ -8,6 +8,19 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
+cleanAptGet() {
+  if command -v apt-get > /dev/null; then
+    logg info 'Running sudo apt-get autoclean' && sudo apt-get autoclean
+    logg info 'Running sudo apt-get -y autoremove' && sudo apt-get -y autoremove
+  fi
+}
+
+cleanupBrew() {
+  if command -v brew > /dev/null; then
+    logg info 'Running brew cleanup' && brew cleanup
+  fi
+}
+
 ### Remove meta sudo file
 if [ -f "$HOME/.sudo_as_admin_successful" ]; then
     rm -f "$HOME/.sudo_as_admin_successful"
@@ -43,3 +56,9 @@ if [ -d /Applications ] && [ -d /System ]; then
         logg info 'Emptying trash' && m trash clean
     fi
 fi
+
+cleanAptGet &
+cleanupBrew &
+wait
+
+logg success 'Finished cleanup process'

@@ -94,12 +94,12 @@ installerPreference:
     - cargo
     - npm
     - pipx
+    - pip
     - gem
     - appimage
     - script
     - ansible
     - binary
-    - _deps
   darwin:
     - whalebrew
     - cask
@@ -110,12 +110,12 @@ installerPreference:
     - cargo
     - npm
     - pipx
+    - pip
     - gem
     - pkg-darwin
     - script
     - ansible
     - binary
-    - _deps
   dnf:
     - flatpak
     - snap
@@ -126,12 +126,12 @@ installerPreference:
     - cargo
     - npm
     - pipx
+    - pip
     - gem
     - appimage
     - script
     - ansible
     - binary
-    - _deps
   freebsd:
     - pkg
     - go
@@ -139,7 +139,6 @@ installerPreference:
     - npm
     - gem
     - script
-    - _deps
   pacman:
     - flatpak
     - snap
@@ -151,12 +150,12 @@ installerPreference:
     - cargo
     - npm
     - pipx
+    - pip
     - gem
     - appimage
     - script
     - ansible
     - binary
-    - _deps
   ubuntu:
     - snap
     - flatpak
@@ -167,12 +166,12 @@ installerPreference:
     - cargo
     - npm
     - pipx
+    - pip
     - gem
     - appimage
     - script
     - ansible
     - binary
-    - _deps
   windows:
     - choco
     - scoop
@@ -185,7 +184,6 @@ installerPreference:
     - script
     - ansible
     - binary
-    - _deps
   zypper:
     - flatpak
     - snap
@@ -201,7 +199,6 @@ installerPreference:
     - script
     - ansible
     - binary
-    - _deps
 softwarePackages:
   _kde:
     _deps:
@@ -263,11 +260,29 @@ softwarePackages:
     _bin: iso-image-writer
     _name: ISO Image Writer
     flatpak: org.kde.isoimagewriter
+  blueutil:
+    _bin: blueutil
+    _github: https://github.com/toy/blueutil
+    _name: BlueUtil
+    brew:darwin: blueutil
   pinapp:
     _bin: pinapp
     flatpak: io.github.fabrialberio.pinapp
+  tradingview:
+    _bin: tradingview
+    _name: Trading View
+    _app: TradingView.app
+    _github: https://github.com/tradingview/lightweight-charts
+    cask: tradingview
+    msix: https://tvd-packages.tradingview.com/stable/latest/win32/TradingView.msix
+    snap: tradingview
+  google-web-designer:
+    _bin: google-web-designer
+    _name: Google Web Designer
+    cask: google-web-designer
+    choco: google-web-designer
   fabric:
-    _bin: fabric
+    _bin: fab
     _github: https://github.com/fabric/fabric
     _name: Fabric
     brew: fabric
@@ -461,7 +476,7 @@ softwarePackages:
     brew: lindell/multi-gitter/multi-gitter
     go: github.com/lindell/multi-gitter@latest
   tomcat:
-    _bin: tomcat
+    _bin: catalina
     _github: https://github.com/apache/tomcat
     _name: Tomcat
     _post:darwin: |
@@ -481,18 +496,8 @@ softwarePackages:
     _github: https://github.com/Yakitrak/obsidian-cli
     _name: Obsidian CLI
     _pre:scoop: scoop bucket add scoop-yakitrak https://github.com/yakitrak/scoop-yakitrak.git
-    brew: yakitrak/yakitrak/obs
+    brew: megabyte-labs/tap/obs-cli
     scoop: obs
-  rtx:
-    _bin: rtx
-    _github: https://github.com/jdx/rtx
-    _name: RTX
-    port: rtx
-    brew: rtx
-    cargo: rtx-cli
-    npm: rtx-cli
-    apk: rtx
-    nix-env: rtx
   pipelight:
     _bin: pipelight
     _github: https://github.com/pipelight/pipelight
@@ -581,12 +586,12 @@ softwarePackages:
     _bin: opn-cli
     _github: https://github.com/andeman/opn-cli
     _name: OPNSense CLI
-    pip: opn-cli
+    pipx: opn-cli
   pfsense-fauxapi:
     _bin: fauxapi
     _github: https://github.com/ndejong/pfsense_fauxapi_client_python
     _name: pfSense CLI (fauxapi)
-    pip: pfsense-fauxapi
+    pipx: pfsense-fauxapi
   android-commandlinetools:
     _deps:
       - java
@@ -713,16 +718,6 @@ softwarePackages:
     _home: https://github.com/quark-engine/quark-engine
     _name: Quark-Engine
     pipx: quark-engine
-  antivirus:
-    _bin: null
-    _desc: >-
-      [Clam AntiVirus](https://www.clamav.net/) is a free software, cross-platform and open-source antivirus software toolkit able to detect many types of malicious software, including viruses. One of its main uses is on mail servers as a server-side email virus scanner. [rkhunter](http://rkhunter.sourceforge.net/) is a Unix-based tool that scans for rootkits, backdoors, and possible local exploits. It does this by comparing SHA-1 hashes of important files with known good ones in online databases. [Malwarebytes](https://www.malwarebytes.com/) is an anti-malware software for Microsoft Windows, macOS, Chrome OS, Android, and iOS that finds and removes malware. Made by Malwarebytes Corporation, it was first released in January 2006.
-    _docs: https://docs.clamav.net/
-    _github: https://github.com/Cisco-Talos/clamav
-    _home: >-
-      https://www.clamav.net/ https://www.malwarebytes.com/
-    _name: AntiVirus
-    ansible: professormanhattan.antivirus
   swiftformat:
     _bin: swiftformat
     _github: https://github.com/nicklockwood/SwiftFormat
@@ -1179,11 +1174,6 @@ softwarePackages:
     _github: https://github.com/cupcakearmy/autorestic/
     _home: https://autorestic.vercel.app/
     _name: Autorestic
-    _post: |
-      #!/usr/bin/env bash
-      sudo mkdir -p /var/local/backups/apps
-      sudo mkdir -p /var/local/backups/home
-      sudo mkdir -p /var/local/backups/docker
     ansible: professormanhattan.autorestic
     brew: autorestic
   awscli:
@@ -1430,6 +1420,18 @@ softwarePackages:
     brew: bfg
     choco: bfg-repo-cleaner
     port: bfg
+  plumber:
+    _bin: plumber
+    _github: https://github.com/streamdal/plumber
+    _name: Plumber
+    brew: streamdal/public/plumber
+    exe: https://github.com/streamdal/plumber/releases/latest/download/plumber-windows.exe
+  bats:
+    _bin: bats
+    _github: https://github.com/bats-core/bats-core
+    _name: Bats Bash Testing
+    brew: bats-core
+    npm: bats
   bat:
     _bin: bat
     _desc: '[bat](https://github.com/sharkdp/bat) is a cat(1) clone with syntax highlighting and Git integration.'
@@ -1464,6 +1466,13 @@ softwarePackages:
     _name: Beets
     ansible: professormanhattan.beets
     pipx: beets
+  devspace:
+    _bin: devspace
+    _github: https://github.com/devspace-sh/devspace
+    _name: DevSpace
+    brew: devspace
+    npm: devspace
+    scoop: devspace
   betwixt:
     _bin: null
     _desc: Web Debugging Proxy based on Chrome DevTools Network panel
@@ -1597,7 +1606,7 @@ softwarePackages:
     _name: Cod
     go: github.com/dim-an/cod@master
   iproute2mac:
-    _bin:
+    _bin: ip
     _github: https://github.com/brona/iproute2mac
     _name: iproute2mac
     brew:darwin: iproute2mac
@@ -1615,16 +1624,13 @@ softwarePackages:
     zypper: tmate
     emerge: app-misc/tmate
   sphinx:
-    _bin: sphinx
+    _bin: sphinx-build
     _github: https://github.com/sphinx-doc/sphinx
     _name: Sphinx
     apt: python3-sphinx
-    brew: sphinx-doc
     choco: sphinx
-    conda: sphinx
     dnf: python-sphinx
     pipx: sphinx
-    port: py39-sphinx
   you-get:
     _bin: you-get
     _github: https://github.com/soimort/you-get
@@ -1816,7 +1822,7 @@ softwarePackages:
     pkgin: broot
     port: broot
   rsyslog:
-    _bin: rsyslog
+    _bin: rsyslogd
     _github: https://github.com/rsyslog/rsyslog
     _name: RSyslog
     _service: rsyslog
@@ -1956,7 +1962,6 @@ softwarePackages:
     _github: https://github.com/certbot/certbot
     _home: https://certbot.eff.org/
     _name: CertBot
-    _snapClassic: true
     _post: |
       #!/usr/bin/env bash
       pipx inject certbot certbot-dns-cloudflare
@@ -2017,14 +2022,13 @@ softwarePackages:
     _github: https://github.com/twpayne/chezmoi
     _home: https://www.chezmoi.io/
     _name: Chezmoi
-    _snapClassic: true
     apk: chezmoi
     brew: chezmoi
     choco: chezmoi
     nix: chezmoi
     pacman: chezmoi
     pkg: chezmoi
-    snap: chezmoi
+    snap: chezmoi --classic
     xbps: chezmoi
     zypper: chezmoi
   google-chrome:
@@ -2163,6 +2167,28 @@ softwarePackages:
   dconf-editor:
     _bin: dconf-editor
     flatpak: ca.desrt.dconf-editor
+  dokany:
+    _bin: dokany
+    _github: https://github.com/dokan-dev/dokany
+    _name: Dokany
+    _note: Required for CephFS on Windows
+    choco: dokany
+  sshs:
+    _bin: sshs
+    _github: https://github.com/quantumsheep/sshs
+    _name: SSHS
+    brew: sshs
+    choco: sshs
+  ceph:
+    _deps:
+      - dokany
+    _bin: ceph-client
+    _github: https://github.com/ceph/ceph
+    _name: CephFS
+    apt: cephadm
+    brew: megabyte-labs/tap/ceph-client
+    dnf: cephadm
+    zypper: cephadm
   chromium:
     _deps:
       - chrome-gnome-shell
@@ -2304,7 +2330,8 @@ softwarePackages:
     _name: ClamAV
     _post: |
       #!/usr/bin/env bash
-      # Add freshclam.conf
+
+      ### Add freshclam.conf
       if [ -f "$HOME/.local/etc/clamav/freshclam.conf" ]; then
         sudo mkdir -p /usr/local/etc/clamav
         sudo cp -f "$HOME/.local/etc/clamav/freshclam.conf" /usr/local/etc/clamav/freshclam.conf
@@ -2312,7 +2339,8 @@ softwarePackages:
           ln -s /usr/local/etc/clamav/freshclam.conf "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/freshclam.conf"
         fi
       fi
-      # Add clamd.conf
+
+      ### Add clamd.conf
       if [ -f "$HOME/.local/etc/clamav/clamd.conf" ]; then
         sudo mkdir -p /usr/local/etc/clamav
         sudo cp -f "$HOME/.local/etc/clamav/clamd.conf" /usr/local/etc/clamav/clamd.conf
@@ -2320,8 +2348,19 @@ softwarePackages:
           ln -s /usr/local/etc/clamav/clamd.conf "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/clamd.conf"
         fi
       fi
-      # Update database
+
+      ### Update database
       freshclam
+
+      ### Setting up launchd services on macOS
+      if [ -d /Applications ] && [ -d /System ]; then
+        sudo mkdir -p /var/log/clamav
+        # sudo chown $USER /var/log/clamav
+        sudo cp -f "$HOME/.local/etc/clamav/clamdscan.plist.tmpl" /Library/LaunchDaemons/clamdscan.plist
+        sudo cp -f "$HOME/.local/etc/clamav/freshclam.plist.tmpl" /Library/LaunchDaemons/freshclam.plist
+        sudo launchctl load -w /Library/LaunchDaemons/clamdscan.plist
+        sudo launchctl load -w /Library/LaunchDaemons/freshclam.plist
+      fi
     _service:apt: clamav-freshclam
     _service:dnf: clamd-freshclam
     _service:pacman: clamav-freshclam
@@ -2465,10 +2504,9 @@ softwarePackages:
     _github: https://github.com/Kitware/CMake
     _home: https://cmake.org/
     _name: Chezmoi
-    _snapClassic: true
     brew: cmake
     choco: cmake
-    snap: cmake
+    snap: cmake --classic
   cmctl:
     _bin: cmctl
     _desc: A CLI tool that can help you to manage cert-manager resources inside your cluster
@@ -2586,6 +2624,39 @@ softwarePackages:
     _home: null
     _name: Common
     ansible: professormanhattan.common
+  phpmon:
+    _bin: phpmon
+    _name: PHP Mon
+    _github: https://github.com/nicoverbruggen/phpmon
+    _app: PHP Monitor.app
+    _pre: |
+      #!/usr/bin/env bash
+      if ! command -v valet > /dev/null; then
+        if ! command -v composer > /dev/null; then
+          brew install composer
+        fi
+        composer global require laravel/valet
+        valet install
+        valet trust
+      fi
+    cask: nicoverbruggen/homebrew-cask/phpmon
+  mise:
+    _bin: mise
+    _github:
+    _name: mise
+    _post: |
+      #!/usr/bin/env bash
+      mise install
+      if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" ]; then
+        sudo mkdir -p /Library/Java/JavaVirtualMachines/openjdk-20.jdk
+        sudo ln -s "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" /Library/Java/JavaVirtualMachines/openjdk-20.jdk/Contents
+      fi
+    apk: mise
+    brew: mise
+    cargo: mise-cli
+    nix-env: mise
+    npm: '@jdxcode/mise'
+    port: port
   composer:
     _bin: composer
     _desc: '[Composer](https://getcomposer.org/) is an application-level package manager for the PHP programming language that provides a standard format for managing dependencies of PHP software and required libraries. It was developed by Nils Adermann and Jordi Boggiano, who continue to manage the project.'
@@ -2634,6 +2705,25 @@ softwarePackages:
     brew: consul-template
     choco: consul-template
     scoop: main/consul
+  microsoft-git:
+    _bin: scalar
+    _name: Microsoft Git (with Git VFS)
+    _github: https://github.com/microsoft/VFSForGit
+    cask: microsoft/git/microsoft-git
+    script:linux: |
+      #!/usr/bin/env bash
+      mkdir -p "$HOME/.local/src"
+      rm -rf "$HOME/.local/src/microsoft-git"
+      git clone https://github.com/microsoft/git "$HOME/.local/src/microsoft-git"
+      cd "$HOME/.local/src/microsoft-git"
+      make -j12 prefix=/usr/local
+      sudo make -j12 prefix=/usr/local install
+    winget: microsoft.git
+  meta:
+    _bin: meta
+    _github: https://github.com/mateodelnorte/meta
+    _name: Meta
+    npm: meta
   container-structure-test:
     _bin: container-structure-test
     _desc: The Container Structure Tests provide a powerful framework to validate the structure of a container image. These tests can be used to check the output of commands in an image, as well as verify metadata and contents of the filesystem
@@ -2705,8 +2795,9 @@ softwarePackages:
     _docs: https://docs.trunk.io/
     _github:
     _home: https://trunk.io/
-    brew: trunk-io
+    cask: trunk-io
     npm: '@trunkio/launcher'
+    script: curl https://get.trunk.io -fsSL | bash -s -- -y
   cups:
     _bin: cupsctl
     _desc: '[CUPS](https://www.cups.org/) is a modular printing system for Unix-like computer operating systems which allows a computer to act as a print server. A computer running CUPS is a host that can accept print jobs from client computers, process them, and send them to the appropriate printer.'
@@ -3087,7 +3178,6 @@ softwarePackages:
     _bin: espanso
     _github: https://github.com/espanso/espanso
     _name: Espanso
-    _snapClassic: true
     _app: Espanso.app
     _post:snap: |
       #!/usr/bin/env bash
@@ -3098,7 +3188,7 @@ softwarePackages:
     appimage: federico-terzi/espanso
     cask: espanso
     choco: espanso
-    snap: espanso --channel=latest/edge
+    snap: espanso --channel=latest/edge --classic
   bun:
     _bin: bun
     _github: https://github.com/oven-sh/bun
@@ -3106,6 +3196,28 @@ softwarePackages:
     brew: oven-sh/bun/bun
     npm: bun
     proto: bun
+  ntfy:
+    _bin: nfty
+    _github: https://github.com/dschep/ntfy
+    _name: NFTY
+    _post: |
+      #!/usr/bin/env bash
+      sudo mkdir -p /usr/local/etc/branding
+      sudo cp -f "$HOME/.local/etc/branding/logo-color-256x256.png" /usr/local/etc/branding/logo-color-256x256.png
+      sudo mkdir -p /usr/local/share/sounds
+      sudo rsync -rtvp "${XDG_DATA_HOME:-$HOME/.local/share}/sounds/" /usr/local/share/sounds
+      if command -v apt-get > /dev/null; then
+        sudo apt install python-dbus
+      fi
+      if command -v termux-setup-storage > /dev/null; then
+        apt install termux-api
+      fi
+    pip3: ntfy[emoji,matrix,pid,slack]
+  makeself:
+    _bin: makeself
+    _github: https://github.com/megastep/makeself
+    _name: MakeSelf
+    brew: makeself
   docker-desktop:
     _desc: '[Docker](https://www.docker.com/) is a set of platform-as-a-service products that use OS-level virtualization to deliver software in packages called containers. Containers are isolated from one another and bundle their own software, libraries and configuration files; they can communicate with each other through well-defined channels. [Docker Desktop](https://www.docker.com/products/docker-desktop/) adds a sleek UI for Docker and makes it easier to manage Docker on macOS and Windows.'
     _docs: https://docs.docker.com/
@@ -3133,13 +3245,37 @@ softwarePackages:
         fi
         logg info 'Headlessly authenticating with DockerHub registry' && echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USER" --password-stdin > /dev/null && logg success 'Successfully authenticated with DockerHub registry'
       fi
+
+      ### Symlink on macOS
+      if [ -f "$HOME/Library/Containers/com.docker.docker/Data/docker.raw.sock" ]; then
+        logg info 'Symlinking /var/run/docker.sock to macOS Library location' && sudo ln -s "$HOME/Library/Containers/com.docker.docker/Data/docker.raw.sock" /var/run/docker.sock
+      fi
     apt: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.16.2-amd64.deb
     cask: docker
     choco: docker-desktop
     dnf: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.16.2-x86_64.rpm
     pacman: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.16.2-x86_64.pkg.tar.zst
+  pushpin:
+    _bin: pushpin
+    _github: https://github.com/fastly/pushpin
+    _name: Pushpin
+    brew: pushpin
+  pb:
+    _bin: pushbullet
+    _github: https://github.com/sidneys/pb-for-desktop
+    _name: Pushbullet for Desktop
+    _app: PB for Desktop.app
+    appimage: sidneys/pb-for-desktop
+    cask: pb
+    choco: pushbullet
+  sidekick:
+    _bin: sidekick
+    _github: false
+    _name: Sidekick
+    _app: Sidekick.app
+    cask: pushplaylabs-sidekick
   docker-slim:
-    _bin: docker-slim
+    _bin: slim
     _desc: "[DockerSlim](https://dockersl.im/) will optimize and secure your containers by understanding your application and what it needs using various analysis techniques. It will throw away what you don't need, reducing the attack surface of your container. What if you need some of those extra things to debug your container? You can use dedicated debugging side-car containers for that."
     _docs: https://github.com/docker-slim/docker-slim#basic-usage-info
     _github: https://github.com/docker-slim/docker-slim
@@ -3261,7 +3397,9 @@ softwarePackages:
     yay: dotnet-sdk-bin
   sdkman-cli:
     _bin: sdk
-    _post: |
+    _github: https://github.com/sdkman/sdkman-cli
+    _name: SDKMan
+    script: |
       #!/usr/bin/env bash
       # @file SDKMAN Install
       # @brief Ensures SDKMAN is installed.
@@ -3305,9 +3443,6 @@ softwarePackages:
           logg warn 'Unable to run sdk update because the sdk command is unavailable'
         fi
       fi
-    script: |
-      #!/usr/bin/env bash
-      echo "Downloaded by Chezmoi (see .chezmoiexternal.toml.tmpl)"
   dprint:
     _bin: dprint
     _desc: '[dprint](https://dprint.dev/) is a pluggable and configurable code formatting platform written in Rust.'
@@ -3359,11 +3494,6 @@ softwarePackages:
     cargo: du-dust
     github: github.com/bootandy/dust
     pacman: dust
-  goto:
-    _bin: goto
-    _github: https://github.com/iridakos/goto
-    _name: goto
-    brew: goto
   easyengine:
     _bin: ee
     _desc: "[EasyEngine](https://easyengine.io/) is a command-line control panel for Nginx to manage WordPress sites running on Nginx, PHP, MySQL, and Let's Encrypt."
@@ -3371,20 +3501,14 @@ softwarePackages:
     _github: https://github.com/EasyEngine/easyengine
     _home: https://easyengine.io/
     _name: EasyEngine
-    ansible:darwin: professormanhattan.easyengine
-    ansible:linux: professormanhattan.easyengine
-  forgit:
-    _deps:
-      - fzf
-    _bin: ga
-    _github: https://github.com/wfxr/forgit
-    _name: forgit
-    brew: forgit
-  ntfy:
-    _bin: ntfy
-    _github: https://github.com/dschep/ntfy
-    _name: ntfy
-    pipx: ntfy
+    _post: |
+      #!/usr/bin/env bash
+      if [ -n "$CLOUDFLARE_EMAIL" ] && [ -n "$CLOUDFLARE_API_KEY" ]; then
+        ee config set le-mail "$CLOUDFLARE_EMAIL"
+        ee config set cloudflare-api-key "$CLOUDFLARE_API_KEY"
+      fi
+    brew: easyengine
+    script:linux: wget -qO ee rt.cx/ee4 && sudo bash ee
   clipboard:
     _bin: cb
     _github: https://github.com/Slackadays/Clipboard.git
@@ -3396,7 +3520,7 @@ softwarePackages:
     nix-env: nixpkgs.clipboard-jh
     scoop: clipboard
     snap: clipboard
-    xbps-install: clipboard
+    xbps: clipboard
     yay: clipboard
   editly:
     _bin: editly
@@ -3510,7 +3634,7 @@ softwarePackages:
     _name: Polybar
     apt: polybar
     pacman: polybar
-    xbps-install: polybar
+    xbps: polybar
     zypper: polybar
     pkg-freebsd: polybar
     dnf: polybar
@@ -3523,7 +3647,7 @@ softwarePackages:
     emerge: app-shells/hstr
     apk: hstr
     pkg-freebsd: hstr
-    xbps-install: hstr
+    xbps: hstr
     brew: hstr
     port: histr
     nix-env: hstr
@@ -3928,7 +4052,7 @@ softwarePackages:
     brew: wego
     go: github.com/schachmat/wego@latest
   miller:
-    _bin: miller
+    _bin: mlr
     _github: https://github.com/johnkerl/miller
     _name: Miller
     apt: miller
@@ -4440,10 +4564,9 @@ softwarePackages:
     _github: https://github.com/flutter/flutter
     _home: https://flutter.dev/
     _name: Flutter
-    _snapClassic: true
-    brew: flutter
+    cask: flutter
     choco: flutter
-    snap: flutter
+    snap: flutter --classic
     yay: flutter
   pock:
     _bin: null
@@ -4719,7 +4842,7 @@ softwarePackages:
     pacman: fzf
     pkgin: fzf
     pkg-freebsd: fzf
-    pkg-openbsd: fzf
+    pkg_add: fzf
     port: fzf
     xbps: fzf
     zypper: fzf
@@ -4799,11 +4922,10 @@ softwarePackages:
     _github: null
     _home: null
     _name: Google Cloud SDK
-    _snapClassic: true
     ansible: professormanhattan.googlecloudsdk
     cask: google-cloud-sdk
     choco: gcloudsdk
-    snap: google-cloud-sdk
+    snap: google-cloud-sdk --classic
     yay: google-cloud-sdk
   gdown:
     _bin: gdown
@@ -5035,7 +5157,7 @@ softwarePackages:
     pacman: zola
     pkgin: zola
     pkg-freebsd: zola
-    pkg-openbsd: zola
+    pkg_add: zola
     port: zola
     scoop: zola
     snap: zola
@@ -5088,13 +5210,12 @@ softwarePackages:
     _github: Not open-source
     _home: https://www.gitkraken.com/
     _name: GitKraken
-    _snapClassic: true
     _app: GitKraken.app
     ansible: professormanhattan.gitkraken
     cask: gitkraken
     choco: gitkraken
     flatpak: com.axosoft.GitKraken
-    snap: gitkraken
+    snap: gitkraken --classic
   gitlab-runner:
     _bin: gitlab-runner
     _desc: '[GitLab Runner](https://docs.gitlab.com/runner/) is an application that works with GitLab CI/CD to run jobs in a pipeline.'
@@ -5150,6 +5271,7 @@ softwarePackages:
       if command -v docker > /dev/null && docker run --rm hello-world > /dev/null; then
         HAS_DOCKER=1
       else
+        HAS_DOCKER=0
         logg warn 'Docker is not installed or it is not operational'
       fi
 
@@ -5157,6 +5279,7 @@ softwarePackages:
       if command -v VirtualBox > /dev/null; then
         HAS_VIRTUALBOX=1
       else
+        HAS_VIRTUALBOX=0
         logg warn 'VirtualBox is not installed'
       fi
 
@@ -5187,14 +5310,14 @@ softwarePackages:
             if [ $HAS_DOCKER -eq 1 ]; then
               logg info 'Registering GitLab Runner(s) that use Docker executor'
               {{- range .host.gitlabRunners }}
-              {{- if .runnerImage }}
+              {{- if index . "runnerImage" }}
               {{- $cmd }}
               --url {{ .glurl }} \
               --executor "docker" \
-              --description "{{ .runnerDescription }} - on {{ .chezmoi.hostname }}" \
+              --description "{{ .runnerDescription }} - on {{ $.chezmoi.hostname }}" \
               --docker-image {{ .runnerImage }} \
-              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }},{{ .chezmoi.hostname }},docker"
-              {{ else }}--tag-list "{{ .chezmoi.hostname }},docker" --run-untagged{{ end }} || echo 'Runner registration failed"
+              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }},{{ $.chezmoi.hostname }},docker"
+              {{- else }}--tag-list "{{ $.chezmoi.hostname }},docker" --run-untagged{{ end }} || echo 'Runner registration failed"
               {{ end -}}
               {{ end }}
             fi
@@ -5203,14 +5326,14 @@ softwarePackages:
             if [ $HAS_VIRTUALBOX -eq 1 ]; then
               logg info 'Registering GitLab Runner(s) that use VirtualBox executor'
               {{- range .host.gitlabRunners }}
-              {{- if .baseVM }}
+              {{- if index . "baseVM" }}
               {{- $cmd }}
               --url {{ .glurl }} \
               --executor "virtualbox" \
-              --description "{{ .runnerDescription }} - on {{ .chezmoi.hostname }}" \
+              --description "{{ .runnerDescription }} - on {{ $.chezmoi.hostname }}" \
               --virtualbox-base-name "{{ .baseVM }}" \
-              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }},{{ .chezmoi.hostname }},virtualbox"
-              {{ else }}--tag-list "{{ .chezmoi.hostname }},virtualbox" --run-untagged{{ end }} || echo 'Runner registration failed"
+              {{ if and .runnerTags (gt (len .runnerTags) 0) }}--tag-list "{{ .runnerTags }},{{ $.chezmoi.hostname }},virtualbox"
+              {{- else }}--tag-list "{{ $.chezmoi.hostname }},virtualbox" --run-untagged{{ end }} || echo 'Runner registration failed"
               {{ end -}}
               {{ end }}
             fi
@@ -5433,19 +5556,26 @@ softwarePackages:
     _github: null
     _name: Android Platform Tools
     cask: android-platform-tools
+  findutils:
+    _bin: gfind
+    brew: findutils
+  gnu-indent:
+    _bin: gindent
+    brew: gnu-indent
+  gnu-tar:
+    _bin: gtar
+    brew: gnu-tar
+  gnu-sed:
+    _bin: gsed
+    brew: gnu-sed
+  gnutls:
+    _bin: gnutls-certtool
+    brew: gnutls
   gnu:
-    _bin: null
-    _desc: null
-    _docs: null
-    _github: null
-    _home: null
-    _name: null
-    _when:brew:darwin: '(! brew list coreutils | grep coreutils > /dev/null) || (! brew list findutils | grep findutils > /dev/null) || (! brew list gawk | grep gawk > /dev/null) || (! brew list gnu-getopt | grep gnu-getopt > /dev/null) || (! brew list gnu-indent | grep gnu-indent > /dev/null) || (! brew list gnu-tar | grep gnu-tar > /dev/null) || (! brew list gnu-sed | grep gnu-sed > /dev/null) || (! brew list gnutls | grep gnutls > /dev/null) || (! brew list grep | grep grep > /dev/null)'
-    brew:darwin:
+    _deps:darwin:
       - coreutils
       - findutils
       - gawk
-      - gnu-getopt
       - gnu-indent
       - gnu-tar
       - gnu-sed
@@ -5458,7 +5588,6 @@ softwarePackages:
     _github: https://github.com/golang/go
     _home: https://go.dev/
     _name: Go
-    _snapClassic: true
     ansible: professormanhattan.go
     apt: golang-go
     brew: go
@@ -5466,7 +5595,7 @@ softwarePackages:
     pacman: go
     port: go
     scoop: go
-    snap: go
+    snap: go --classic
   go-chromecast:
     _bin: go-chromecast
     _desc: CLI for Google Chromecast, Home devices and Cast Groups
@@ -5580,13 +5709,12 @@ softwarePackages:
     _github: https://github.com/gradle/gradle
     _home: https://gradle.org/
     _name: Gradle
-    _snapClassic: true
     ansible: professormanhattan.gradle
     brew: gradle
     choco: gradle
     port: gradle
     scoop: gradle
-    snap: gradle
+    snap: gradle --classic
   grex:
     _bin: grex
     _desc: A command-line tool and library for generating regular expressions from user-provided test cases
@@ -6027,12 +6155,11 @@ softwarePackages:
     _github: https://github.com/JetBrains/intellij-community
     _home: https://www.jetbrains.com/idea/
     _name: IntelliJ IDEA (CE)
-    _snapClassic: true
     _app: IntelliJ IDEA CE.app
     ansible: professormanhattan.intellij
     cask: intellij-idea-ce
     choco: intellijidea-community
-    snap: intellij-idea-community
+    snap: intellij-idea-community --classic
   ionic:
     _bin: ionic
     _desc: '[Ionic Framework](https://ionicframework.com/) The Ionic command line interface (CLI) is your go-to tool for developing Ionic apps'
@@ -6300,11 +6427,10 @@ softwarePackages:
     _github: null
     _home: https://juju.is/
     _name: Juju
-    _snapClassic: true
     ansible: professormanhattan.juju
     brew: juju
     choco: juju
-    snap: juju
+    snap: juju --classic
   kdash:
     _bin: kdash
     _desc: A simple and fast dashboard for Kubernetes
@@ -6429,14 +6555,13 @@ softwarePackages:
     _github: https://github.com/ahmetb/kubectx
     _home: null
     _name: kubectx
-    _snapClassic: true
     brew: kubectx
     choco:
       - kubens
       - kubectx
     pacman: kubectx
     port: kubectx
-    snap: kubectx
+    snap: kubectx --classic
   kubenav:
     _bin: null
     _desc: kubenav is the navigator for your Kubernetes clusters right in your pocket
@@ -6455,10 +6580,9 @@ softwarePackages:
     _github: https://github.com/kubernetes/kubectl
     _home: null
     _name: kubectl
-    _snapClassic: true
     brew: kubectl
     choco: kubernetes-cli
-    snap: kubectl
+    snap: kubectl --classic
   helm:
     _bin: helm
     _desc: The Kubernetes Package Manager. Helm is the best way to find, share, and use software built for Kubernetes.
@@ -6466,11 +6590,10 @@ softwarePackages:
     _github: https://github.com/helm/helm
     _home: https://helm.sh/
     _name: Helm
-    _snapClassic: true
     brew: helm
     choco: kubernetes-helm
     scoop: helm
-    snap: helm
+    snap: helm --classic
   helmfile:
     _bin: helmfile
     _github: https://github.com/helmfile/helmfile
@@ -6641,12 +6764,11 @@ softwarePackages:
     _github: https://github.com/lensapp/lens
     _home: https://k8slens.dev/
     _name: Lens
-    _snapClassic: true
     _app: Lens.app
     ansible: professormanhattan.lens
     cask: lens
     choco: lens
-    snap: kontena-lens
+    snap: kontena-lens --classic
     yay: lens
   lepton:
     _bin: lepton
@@ -6666,8 +6788,11 @@ softwarePackages:
     _github: https://github.com/AnalogJ/lexicon
     _home: null
     _name: Lexicon
+    _post:pipx: |
+      #!/usr/bin/env bash
+      pipx inject dns-lexicon dns-lexicon[full]
     ansible: professormanhattan.lexicon
-    pipx: dns-lexicon[full]
+    pipx: dns-lexicon
   libimobiledevice:
     _bin: null
     _desc: null
@@ -6786,6 +6911,15 @@ softwarePackages:
     _home: null
     _name: LastPass CLI
     ansible: professormanhattan.lpass
+  lux:
+    _bin: lux
+    _github:
+    _name: Lux
+    go: github.com/iawia002/lux@latest
+    brew: lux
+    xbps: lux
+    scoop: lux
+    choco: github.com/iawia002/lux
   lsd:
     _bin: lsd
     _desc: '[LSD](https://github.com/Peltoche/lsd) (LSDeluxe), a clone of ls, is the next gen ls command with colorful output, file type icons, and more.'
@@ -6805,7 +6939,7 @@ softwarePackages:
     pkg-termux: lsd
     port: lsd
     scoop: lsd
-    xbps-install: lsd
+    xbps: lsd
     zypper: lsd
   lxc:
     _bin: lxc
@@ -7217,7 +7351,7 @@ softwarePackages:
     _name: mitmproxy
     ansible: professormanhattan.mitmproxy
     apt: mitmproxy
-    brew: mitmproxy
+    cask: mitmproxy
     choco: mitmproxy
     pacman: mitmproxy
   mjml:
@@ -7273,6 +7407,11 @@ softwarePackages:
     _name: Dotenv Vault
     brew: dotenv-org/brew/dotenv-vault
     npm: dotenv-vault
+  gcsf:
+    _bin: gcsf
+    _github: https://github.com/harababurel/gcsf
+    _name: GCSF
+    cargo: gcsf
   hss:
     _bin: hss
     _github: https://github.com/six-ddc/hss
@@ -7428,7 +7567,7 @@ softwarePackages:
     _github: https://github.com/hschmidt/EnvPane
     _home: https://github.com/hschmidt/EnvPane
     _name: EnvPane
-    _when:script: '! test -d "$HOME/Library/PreferencePanes/EnvPane.prefPane" && ! test -d "~$HOME/Library/PreferencePanes/EnvPane.prefPane"'
+    _when:script: '! test -d "$HOME/Library/PreferencePanes/EnvPane.prefPane"'
     script:darwin: '(cd ~/Library/PreferencePanes && rm -rf EnvPane.prefPane && curl -sL https://github.com/hschmidt/EnvPane/releases/download/releases%2F0.8/EnvPane-0.8.tar.bz2 | tar -xjf -)'
   skhd:
     _bin: skhd
@@ -8153,14 +8292,13 @@ softwarePackages:
     _github: https://github.com/zaproxy/zaproxy
     _home: https://www.zaproxy.org/
     _name: OWASP ZAP
-    _snapClassic: true
     _app: ZAP.app
     cask: zap
     choco: zap
     flatpak: org.zaproxy.ZAP
     pkg-freebsd: zaproxy
     scoop: zaproxy
-    snap: zaproxy
+    snap: zaproxy --classic
   pika:
     _bin: null
     _desc: An open-source colour picker app for macOS
@@ -8192,6 +8330,9 @@ softwarePackages:
     _home: https://www.raycast.com/
     _name: Raycast
     _app: Raycast.app
+    _env:
+      RAYCAST_APPDATA:
+        cask: "$HOME/Library/Application Support/com.raycast.macos"
     cask: raycast
   mage-ai:
     _bin: mage
@@ -8226,15 +8367,6 @@ softwarePackages:
     choco: figma
     flatpak: io.github.Figma_Linux.figma_linux
     snap: figma-linux
-  tea-gui:
-    _bin: null
-    _desc: The open store for open source
-    _docs: https://docs.tea.xyz/appendix/tea-gui
-    _github: https://github.com/teaxyz/gui
-    _home: https://tea.xyz/
-    _name: Tea GUI
-    _app: tea.app
-    cask: tea
   node-prune:
     _bin: node-prune
     _desc: Extension to remove unnecessary files from node_modules
@@ -8294,7 +8426,7 @@ softwarePackages:
     _name: np
     npm: np
   nushell:
-    _bin: nushell
+    _bin: nu
     _github: https://github.com/nushell/nushell
     _name: Nu
     apk: nushell
@@ -8564,7 +8696,7 @@ softwarePackages:
     brew: neofetch
     nix-env: neofetch
     eopkg: neofetch
-    xbps-install: neofetch
+    xbps: neofetch
     zypper: neofetch
     scoop: neofetch
   neovide:
@@ -8599,9 +8731,17 @@ softwarePackages:
     _name: Taplo
     cargo: taplo-cli --locked
     npm: '@taplo/cli'
+  basictex:
+    _github: false
+    _name: Basictex
+    _when: '! test -d /Library/TeX'
+    cask: basictex
   pandoc:
     _bin: pandoc
     _deps:
+      - python
+    _deps:darwin:
+      - basictex
       - python
     _desc: '[Pandoc](https://pandoc.org/) is a Haskell library for converting from one documentation markup format to another. If you need to convert files from one markup format into another, then look no further. Pandoc is your swiss-army knife. It converts from and to dozens of formats like HTML, markdown, docx, JSON, YAML, and CSV, to name a few.'
     _docs: https://pandoc.org/getting-started.html
@@ -8613,7 +8753,6 @@ softwarePackages:
     brew:
       - pandoc
       - librsvg
-      - homebrew/cask/basictex
     choco:
       - pandoc
       - rsvg-convert
@@ -8954,6 +9093,11 @@ softwarePackages:
     choco: plex-home-theater
     flatpak: tv.plex.PlexHTPC
     snap: plex-htpc
+  forever:
+    _bin: forever
+    _github: https://github.com/foreversd/forever
+    _name: Forever
+    npm: forever
   pm2:
     _bin: pm2
     _desc: PM2 is a production process manager for Node.js applications with a built-in load balancer. It allows you to keep applications alive forever, to reload them without downtime and to facilitate common system admin tasks
@@ -9048,10 +9192,10 @@ softwarePackages:
     _when:linux: '! test -f /opt/safing/portmaster/portmaster-start'
     ansible:linux: professormanhattan.portmaster
     ansible:windows: professormanhattan.portmaster
-    apt: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.
+    apt: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.deb
     choco: portmaster
     dnf: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.rpm
-    exe: https://updates.safing.io/latest/windows_amd64/packages/portmaster-installer.
+    exe: https://updates.safing.io/latest/windows_amd64/packages/portmaster-installer.exe
     scoop: portmaster-np
   pake:
     _bin: pake
@@ -9077,14 +9221,13 @@ softwarePackages:
     _github: null
     _home: null
     _name: Powershell
-    _snapClassic: true
     _post:cask: |
       #!/usr/bin/env bash
       brew install mono-libgdiplus
     _app: PowerShell.app
     ansible: professormanhattan.powershell
     cask: powershell
-    snap: powershell
+    snap: powershell --classic
   pre-commit:
     _bin: pre-commit
     _desc: Automatically installs a git pre-commit script in your git repository which runs your `npm test` on pre-commit
@@ -9624,7 +9767,12 @@ softwarePackages:
     pacman: rclone
     port: rclone
     scoop: rclone
-    script:darwin: sudo -v; curl https://rclone.org/install.sh | sudo bash
+    script:darwin: |
+      #!/usr/bin/env bash
+      TMP="$(mktemp)"
+      curl https://rclone.org/install.sh > "$TMP"
+      sudo bash "$TMP"
+      rm -f "$TMP"
   redis-desktop-manager:
     _bin: redis-desktop-manager
     _desc: '[Redis Desktop Manager](https://rdm.dev/) is an open source cross-platform Desktop Manager for Redis based on Qt 5.'
@@ -9663,14 +9811,18 @@ softwarePackages:
       - cat
       - ls
       - rm
+    _bin:darwin: gchown
     apt: coreutils
+    brew: coreutils
     dnf: coreutils
     pacman: coreutils
   grep:
     _bin: grep
     apt: grep
+    brew: grep
     dnf: grep
     pacman: grep
+    zypper: grep
   wipe-modules:
     _bin: wipe-modules
     _github: https://github.com/bntzio/wipe-modules
@@ -9834,10 +9986,23 @@ softwarePackages:
     nix: restic
     pacman: restic
     pkg-freebsd: restic
-    pkg-openbsd: restic
+    pkg_add: restic
     port: restic
     scoop: restic
     zypper: restic
+  gup:
+    _bin: gup
+    _github:
+    _name: Gup
+    brew: nao1215/tap/gup
+    go: github.com/nao1215/gup@latest
+  eget:
+    _bin: eget
+    _github: https://github.com/zyedidia/eget
+    _name: eget
+    brew: eget
+    choco: eget
+    go: github.com/zyedidia/eget@latest
   ripgrep:
     _bin: rg
     _desc: '[ripgrep](https://github.com/BurntSushi/ripgrep) is a line-oriented search tool that recursively searches your current directory for a regex pattern. By default, ripgrep will respect your .gitignore and automatically skip hidden files/directories and binary files. This role also installs ripgrep-all. [ripgrep-all](https://github.com/phiresky/ripgrep-all) is just like ripgrep except it also searches in PDFs, E-Books, Office documents, zip, tar.gz, etc.'
@@ -9979,7 +10144,6 @@ softwarePackages:
     _post:snap: |
       #!/usr/bin/env bash
       rustup toolchain install stable
-    _snapClassic: true
     ansible: professormanhattan.rust
     brew: rust
     choco: rust
@@ -10203,7 +10367,6 @@ softwarePackages:
     _github: https://github.com/blender/blender
     _home: https://www.blender.org/
     _name: Blender
-    _snapClassic: true
     _app: Blender.app
     apt: blender
     cask: blender
@@ -10211,7 +10374,7 @@ softwarePackages:
     dnf: blender
     flatpak: org.blender.Blender
     scoop: extras/blender
-    snap: blender
+    snap: blender --classic
   fiddler:
     _bin: fiddler
     _desc: The community-trusted free Windows-only tool that logs HTTP(s) network traffic.
@@ -10247,6 +10410,11 @@ softwarePackages:
     flatpak: org.audacityteam.Audacity
     scoop: extras/audacity
     snap: audacity
+  turbo:
+    _bin: turbo
+    _github: https://github.com/vercel/turbo
+    _name: Turbo
+    npm: turbo
   bazelisk:
     _bin: bazelisk
     _desc: A user-friendly launcher for Bazel.
@@ -10484,7 +10652,7 @@ softwarePackages:
     nix: nixpkgs.shellcheck
     pacman: shellcheck
     pkg-freebsd: shellcheck
-    pkg-openbsd: shellcheck
+    pkg_add: shellcheck
     port: shellcheck
     scoop: shellcheck
     snap: shellcheck
@@ -10513,7 +10681,6 @@ softwarePackages:
     _github: https://github.com/mltframework/shotcut
     _home: https://shotcut.org/
     _name: Shotcut
-    _snapClassic: true
     _app: Shotcut.app
     ansible: professormanhattan.shotcut
     apt: shotcut
@@ -10521,7 +10688,7 @@ softwarePackages:
     choco: shotcut
     dnf: shotcut
     flatpak: org.shotcut.Shotcut
-    snap: shotcut
+    snap: shotcut --classic
   shotwell:
     _bin: shotwell
     _desc: '[Shotwell](https://shotwell-project.org/doc/html/) is an image organizer designed to provide personal photo management for the GNOME desktop environment. In 2010, it replaced F-Spot as the standard image tool for several GNOME-based Linux distributions, including Fedora in version 13 and Ubuntu in its 10.10 Maverick Meerkat release.'
@@ -10545,6 +10712,17 @@ softwarePackages:
     go: github.com/charmbracelet/skate@latest
     nix: nixpkgs.skate
     pacman: skate
+  rtop:
+    _bin: rtop
+    _name: rtop
+    _github: https://github.com/rapidloop/rtop
+    go: github.com/rapidloop/rtop@latest
+  unikraft:
+    _bin: kraft
+    _name: Unikraft
+    _github: https://github.com/unikraft/unikraft
+    brew: unikraft/cli/kraftkit
+    script: curl --proto '=https' --tlsv1.2 -sSf https://get.kraftkit.sh | sh
   skaffold:
     _bin: skaffold
     _name: Skaffold
@@ -10632,9 +10810,8 @@ softwarePackages:
     _github: null
     _home: null
     _name: Snapcraft
-    _snapClassic: true
     brew: snapcraft
-    snap: snapcraft
+    snap: snapcraft --classic
   snapd:
     _bin: snap
     _desc: '[Snap](https://snapcraft.io/) is a software packaging and deployment system developed by Canonical for operating systems that use the Linux kernel. The packages, called snaps, and the tool for using them, snapd, work across a range of Linux distributions and allow upstream software developers to distribute their applications directly to users. Snaps are self-contained applications running in a sandbox with mediated access to the host system.'
@@ -11060,7 +11237,7 @@ softwarePackages:
     _home: https://lapce.dev/
     _name: Lapce
     _app: Lapce.app
-    brew: lapce
+    cask: lapce
     emerge: app-editors/lapce
     flatpak: dev.lapce.lapce
     nix-env: nixpkgs.lapce
@@ -11220,12 +11397,11 @@ softwarePackages:
     _github: https://github.com/sassman/t-rec-rs
     _home: https://crates.io/crates/t-rec
     _name: t-rec
-    _snapClassic: true
     ansible: professormanhattan.trec
     brew: t-rec
     cargo: t-rec
     port: t-rec
-    snap: t-rec
+    snap: t-rec --classic
     yay: t-rec
   just:
     _bin: just
@@ -11238,7 +11414,7 @@ softwarePackages:
     pacman: just
     nix-env: nixpkgs.just
     eopkg: just
-    xbps-install: just
+    xbps: just
     pkg-freebsd: just
     apk: just
     dnf: just
@@ -11293,7 +11469,6 @@ softwarePackages:
     _github: https://github.com/Eugeny/tabby
     _home: https://tabby.sh/
     _name: Tabby
-    _snapClassic: true
     _notes: TODO Update the direct links periodically and keep eye out for Snap / Flatpak
     _app: Tabby.app
     _post: |
@@ -11482,7 +11657,7 @@ softwarePackages:
     pacman: vhs
     port: vhs
     scoop: vhs
-    xbps-install: vhs
+    xbps: vhs
   soft-serve:
     _bin: soft
     _desc: A tasty, self-hostable Git server for the command line
@@ -11527,6 +11702,25 @@ softwarePackages:
       #!/usr/bin/env bash
       micromamba self-update
     brew: micromamba
+  sapling:
+    _bin: sl
+    _name: Sapling
+    _github: https://github.com/facebook/sapling
+    brew: sapling
+    pacman: sapling-scm-bin
+    script:windows: |
+      curl -sSL https://github.com/facebook/sapling/releases/latest > ~/Downloads/sapling_windows_0.2.20231113-145254+995db0d6_amd64.zip
+      Expand-Archive ~/Downloads/sapling_windows_0.2.20231113-145254+995db0d6_amd64.zip 'C:\Program Files'
+      setx PATH "$env:PATH;C:\Program Files\Sapling" -m
+      Set-Alias -Name sl -Value 'C:\Program Files\Sapling\sl.exe' -Force -Option Constant,ReadOnly,AllScope
+  steam:
+    _bin: steam
+    _github: false
+    _name: steam
+    _app: Steam.app
+    choco: steam
+    cask: steam
+    flatpak: com.valvesoftware.Steam
   microsoft-teams:
     _bin: teams
     _desc: '[Microsoft Teams](https://www.microsoft.com/en-us/microsoft-teams/group-chat-software) is a proprietary business communication platform developed by Microsoft, as part of the Microsoft 365 family of products. Teams primarily competes with the similar service Slack, offering workspace chat and videoconferencing, file storage, and application integration.'
@@ -11541,6 +11735,37 @@ softwarePackages:
     flatpak: com.microsoft.Teams
     snap: teams-for-linux
     yay: teams-for-linux
+  ninja:
+    _bin: ninja
+    _github: https://github.com/ninja-build/ninja
+    _name: Ninja
+    apt: ninja
+    dnf: ninja
+    brew: ninja
+    pacman: ninja
+    zypper: ninja
+  juicefs:
+    _bin: juicefs
+    _github: https://github.com/juicedata/juicefs
+    _name: JuiceFS
+    _post: |
+      #!/usr/bin/env sh
+      . "$HOME/.local/bin/installx/juicefs.sh"
+    brew: juicefs
+    scoop: juicefs
+    snap: juicefs
+    yay: juicefs
+  supervisor:
+    _bin: supervisord
+    _github: https://github.com/Supervisor/supervisor
+    _name: Supervisor
+    _service: supervisor
+    apt: supervisor
+    dnf: supervisor
+    brew: supervisor
+    pacman: supervisor
+    pipx: supervisor
+    zypper: supervisor
   has:
     _bin: has
     _github: https://github.com/kdabir/has
@@ -11638,7 +11863,7 @@ softwarePackages:
     yay: termius
   dagu:
     _bin: dagu
-    _github: 
+    _github:
     _name: Dagu
     _post: |
       #!/usr/bin/env bash
@@ -11811,6 +12036,7 @@ softwarePackages:
     dnf: postfix
     pacman: postfix
     port: postfix
+    script:darwin: echo "Postfix is included by macOS already"
   terraform:
     _deps:
       - tfenv
@@ -11832,7 +12058,9 @@ softwarePackages:
     _name: tfenv
     _post: |
       #!/usr/bin/env bash
-      tfenv use latest
+      if command -v tfenv > /dev/null; then
+        tfenv use latest
+      fi
     ansible:darwin: professormanhattan.tfenv
     ansible:linux: professormanhattan.tfenv
     brew: tfenv
@@ -12300,7 +12528,6 @@ softwarePackages:
     _github: https://github.com/hashicorp/vagrant
     _home: https://www.vagrantup.com/
     _name: Vagrant
-    _snapClassic: true
     ansible: professormanhattan.vagrant
     apt: vagrant
     brew: hashicorp/tap/vagrant
@@ -12383,8 +12610,19 @@ softwarePackages:
     _name: VIM
     _post: |
       #!/usr/bin/env bash
-      echo "Installing VIM plugins" && vim +'PlugInstall --sync' +qall
-      echo "Updating VIM coc extensions" && cd "$HOME/.config/coc/extensions" && echo '{"dependencies":{}}'> package.json && npm install '@yaegassy/coc-ansible' '@yaegassy/coc-nginx' 'coc-angular' 'coc-blade' 'coc-calc' 'coc-clangd' 'coc-copilot' 'coc-css' 'coc-cssmodules' 'coc-deno' 'coc-diagnostic' 'coc-docker' 'coc-emmet' 'coc-eslint' 'coc-explorer' 'coc-flutter' 'coc-fzf-preview' 'coc-git' 'coc-go' 'coc-highlight' 'coc-html-css-support' 'coc-html' 'coc-htmlhint' 'coc-java' 'coc-jedi' 'coc-json' 'coc-ltex' 'coc-lua' 'coc-markdown-preview-enhanced' 'coc-markdownlint' 'coc-markmap' 'coc-phpls' 'coc-powershell' 'coc-prettier' 'coc-prisma' 'coc-pyright' 'coc-rls' 'coc-rust-analyzer' 'coc-sh' 'coc-solargraph' 'coc-solidity' 'coc-spell-checker' 'coc-stylelint' 'coc-sql' 'coc-sqlfluff' 'coc-svelte' 'coc-svg' 'coc-swagger' 'coc-symbol-line' 'coc-tailwindcss' 'coc-toml' 'coc-tsserver' 'coc-xml' 'coc-yaml' 'coc-yank' --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
+      logg info "Installing VIM plugins" && vim +'PlugInstall --sync' +qall
+      # @description This script installs the extensions defined in `${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json`
+      #     which should correlate to the Coc extensions defined in `${XDG_CONFIG_HOME:-$HOME/.config}/vim/vimrc`.
+      installCocExtensions() {
+        if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json" ]; then
+          logg info "Running npm i --no-package-lock in ${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions"
+          cd "${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions" && npm i --no-package-lock
+          logg info "Running vim +CocUpdateSync +qall" && vim +CocUpdateSync +qall
+        else
+          logg info "Skipping Coc extension installation because ${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json is missing"
+        fi
+      }
+      logg info "Updating VIM coc extensions" && installCocExtensions
     ansible: professormanhattan.vim
     apt: vim
     brew: vim
@@ -12542,13 +12780,61 @@ softwarePackages:
     ansible:windows: professormanhattan.visualstudio
     cask: visual-studio
     choco: visualstudio2022community
+  aider:
+    _bin: aider
+    _github: https://github.com/paul-gauthier/aider
+    _name: Aider AI Chat
+    pipx: aider-chat
+  poppler:
+    brew: poppler
+  csvkit:
+    brew: csvkit
+  airdrop-cli:
+    _bin: airdrop
+    _github: https://github.com/vldmrkl/airdrop-cli
+    _name: Airdrop CLI
+    brew:darwin: vldmrkl/formulae/airdrop-cli
+  rusty:
+    _bin: rusty
+    _github: https://github.com/zahidkhawaja/rusty
+    _name: Rusty AI CLI
+    _todo: Get cargo crate link once this is resolved https://github.com/zahidkhawaja/rusty/issues/7
+  aifiles:
+    _deps:
+      - pandoc
+      - exiftool
+      - poppler
+      - csvkit
+    _bin: aifiles
+    _github: https://github.com/jjuliano/aifiles
+    _name: AI Files
+    _todo: Implement this when XDG spec is supported so we can store configs in ~/.config
+    npm: aifiles
+  talksheet:
+    _bin: talksheet
+    _github: https://github.com/danthelion/talksheet
+    _name: Talksheet
+    pipx: talksheet
+  tgpt:
+    _bin: tgpt
+    _github: https://github.com/aandrew-me/tgpt
+    _name: Terminal GPT
+    yay: tgpt-bin
+    go: github.com/aandrew-me/tgpt/v2@latest
+    scoop: https://raw.githubusercontent.com/aandrew-me/tgpt/main/tgpt.json
+  ai-shell:
+    _bin: ai
+    _github: https://github.com/BuilderIO/ai-shell
+    _name: AI Shell
+    npm: '@builder.io/ai-shell'
   github-runner:
+    _bin: false
     _desc: '[GitHub Runner](https://docs.github.com/en/actions/hosting-your-own-runners) is a system that you deploy and manage to execute jobs from GitHub Actions on GitHub.com.'
     _docs: https://docs.github.com/en/actions/hosting-your-own-runners
     _github: https://github.com/actions/runner
     _home: https://docs.github.com/en/actions/hosting-your-own-runners
     _name: GitHub Runner
-    _when: '! test -d "$HOME/.local/github-runner"'
+    _when: '! test -d "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"'
     _post: |
       #!/usr/bin/env bash
       # @file GitHub Runner Registration
@@ -12569,12 +12855,11 @@ softwarePackages:
       #
       #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
 
-      GH_RUNNER_PATH="$HOME/.local/github-runner"
 
       ### Check if GitHub runner is installed
-      if [ -f "$GH_RUNNER_PATH/config.sh" ]; then
-        if [ -f "$GH_RUNNER_PATH/.runner" ]; then
-          logg info "GitHub Actions runner is already configured ($GH_RUNNER_PATH/.runner file is present)"
+      if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/github-runnerconfig.sh" ]; then
+        if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/.runner" ]; then
+          logg info "GitHub Actions runner is already configured (${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/.runner file is present)"
         else
           logg info 'Creating runner configuration'
           ### Configure labels
@@ -12596,15 +12881,15 @@ softwarePackages:
               RUNNER_TOKEN="$(curl -sSL -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/{{ .user.github.runnerOrg }}/actions/runners/registration-token | jq -r '.token')"
               ### Generate the configuration
               logg info 'Joining GitHub runner to https://github.com/{{ .user.github.runnerOrg }}'
-              "$GH_RUNNER_PATH/config.sh" --unattended --url https://github.com/{{ .user.github.runnerOrg }} --token "$RUNNER_TOKEN" --labels "$LABELS" || EXIT_CODE=$?
+              "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/config.sh" --unattended --url https://github.com/{{ .user.github.runnerOrg }} --token "$RUNNER_TOKEN" --labels "$LABELS" || EXIT_CODE=$?
               if [ -n "$EXIT_CODE" ]; then
                 logg error 'GitHub runner configuration failed' && exit 1
               fi
               ### Install / start the service
               logg info 'Configuring runner service'
-              "$GH_RUNNER_PATH/svc.sh" install && logg success 'Successfully installed the GitHub Actions runner service'
+              "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/svc.sh" install && logg success 'Successfully installed the GitHub Actions runner service'
               logg info 'Starting runner service'
-              "$GH_RUNNER_PATH/svc.sh" start && logg success 'Started the GitHub Actions runner service'
+              "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/svc.sh" start && logg success 'Started the GitHub Actions runner service'
             else
               logg warn 'jq is required by the GitHub runner configuration script'
             fi
@@ -12613,21 +12898,28 @@ softwarePackages:
           fi
         fi
       else
-        logg info "The GitHub Actions runner installation is not present at $GH_RUNNER_PATH"
+        logg info "The GitHub Actions runner installation is not present at ${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
       fi
     script: |
-      RELEASES="$(curl -sSL --compressed --header "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/actions/runner/releases/latest")"
+      #!/usr/bin/env bash
+      if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh" ]; then
+        source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh"
+      fi
+      if [ -n "$GITHUB_TOKEN" ]; then
+        RELEASES="$(curl -sSL --compressed --header "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/actions/runner/releases/latest")"
+      else
+        RELEASES="$(curl -sSL --compressed "https://api.github.com/repos/actions/runner/releases/latest")"
+      fi
       LATEST_VERSION="$(echo "$RELEASES" | grep -o '"tag_name": "[^"]*' | grep -o '[^"]*$')"
       ARCHITECTURE="$(uname -m | sed 's/86_//' | sed 's/v7l//')"
       OS_FAMILY="$(test -d /Applications && echo osx || echo linux)"
       curl -sSL "https://github.com/actions/runner/releases/download/$LATEST_VERSION/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz" > "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz"
-      mkdir -p "$HOME/.local/github-runner"
-      tar xzf "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz" -C "$HOME/.local/github-runner"
-      chown -Rf "$USER" "$HOME/.local/github-runner"
+      mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
+      tar xzf "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz" -C "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
+      chown -Rf "$USER" "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
       rm -f "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz"
   vscodium:
     _bin: codium
-    _snapClassic: true
     _app: VSCodium.app
     _post: |
       #!/usr/bin/env bash
@@ -12652,7 +12944,7 @@ softwarePackages:
     flatpak: com.vscodium.codium
     nix: nixpkgs.vscodium
     scoop: vscodium
-    snap: codium
+    snap: codium --classic
     winget: vscodium
     yay: vscodium-bin
   vlc:
@@ -12866,6 +13158,7 @@ softwarePackages:
       export PATH="$VOLTA_HOME/bin:$PATH"
       volta setup
       volta install node@latest
+      volta install yarn@latest
     ansible: professormanhattan.volta
     brew: volta
     scoop: volta
@@ -12884,7 +13177,6 @@ softwarePackages:
     _github: https://github.com/microsoft/vscode
     _home: https://code.visualstudio.com/
     _name: Visual Studio Code
-    _snapClassic: true
     _app: Visual Studio Code.app
     _post: |
       #!/usr/bin/env bash
@@ -13009,7 +13301,7 @@ softwarePackages:
     cask: visual-studio-code
     choco: vscode
     flatpak: com.visualstudio.code
-    snap: code
+    snap: code --classic
     yay: visual-studio-code-bin
   w3m:
     _bin: w3m
@@ -13099,6 +13391,8 @@ softwarePackages:
       #     * [Linux managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/warp/private_mdm.xml.tmpl)
       #     * [macOS managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/Library/Managed%20Preferences/private_com.cloudflare.warp.plist.tmpl)
 
+      SSL_CERT_PATH="/etc/ssl/cert.pem"
+
       ### Install CloudFlare WARP (on non-WSL *nix systems)
       if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
         if [ -d /System ] && [ -d /Applications ]; then
@@ -13156,8 +13450,8 @@ softwarePackages:
           #     sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
           # fi
           logg info 'Updating the OpenSSL CA Store to include the Cloudflare certificate'
-          echo | sudo tee -a /etc/ssl/cert.pem < "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > /dev/null
-          echo "" | sudo tee -a /etc/ssl/cert.pem
+          echo | sudo tee -a "$SSL_CERT_PATH" < "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > /dev/null
+          echo "" | sudo tee -a "$SSL_CERT_PATH"
         else
           logg warn 'Session is SSH so adding Cloudflare encryption key to trusted certificates via the security program is being bypassed since it requires Touch ID / Password verification.'
         fi
@@ -13185,7 +13479,8 @@ softwarePackages:
             logg info 'Copying CloudFlare Teams PEM file to /usr/local/share/ca-certificates/Cloudflare_CA.crt'
             sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /usr/local/share/ca-certificates/Cloudflare_CA.crt
             logg info 'dpkg-reconfigure executable detected so using Debian/Ubuntu method of updating system trusted certificates to include CloudFlare Teams certificate'
-            sudo dpkg-reconfigure ca-certificates
+            sudo dpkg-reconfigure ca-certificates -p high
+            SSL_CERT_PATH="/etc/ssl/certs/ca-certificates.crt"
           else
             logg warn 'No /usr/local/share/ca-certificates folder present'
           fi
@@ -13195,6 +13490,7 @@ softwarePackages:
             sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /etc/pki/ca-trust/source/anchors
             logg info 'update-ca-trust executable detected so using CentOS/Fedora method of updating system trusted certificates to include CloudFlare Teams certificate'
             sudo update-ca-trust
+            SSL_CERT_PATH="/etc/pki/tls/certs/ca-bundle.crt"
           else
             logg warn '/etc/pki/ca-trust/source/anchors does not exist so skipping the system certificate update process'
           fi
@@ -13208,14 +13504,14 @@ softwarePackages:
         # certificate and the WARP client is not running.
         ### Git
         if command -v git > /dev/null; then
-          logg info "Configuring git to use /etc/ssl/cert.pem"
-          git config --global http.sslcainfo /etc/ssl/cert.pem
+          logg info "Configuring git to use $SSL_CERT_PATH"
+          git config --global http.sslcainfo "$SSL_CERT_PATH"
         fi
 
         ### NPM
         if command -v npm > /dev/null; then
-          logg info "Configuring npm to use /etc/ssl/cert.pem"
-          npm config set cafile /etc/ssl/cert.pem
+          logg info "Configuring npm to use $SSL_CERT_PATH"
+          npm config set cafile "$SSL_CERT_PATH"
         fi
 
         ### Python
@@ -13473,7 +13769,7 @@ softwarePackages:
     pkg_add: pick
     port: pick
     yay: pick
-    xbps-install: pick
+    xbps: pick
   nve:
     _bin: nve
     _github: https://github.com/ehmicky/nve
@@ -13630,7 +13926,7 @@ softwarePackages:
     pacman: fail2ban
     port: fail2ban
   timewarrior:
-    _bin: timewarrior
+    _bin: timew
     _github: https://github.com/GothenburgBitFactory/timewarrior
     _name: Time Warrior
     apt: timewarrior
@@ -13654,7 +13950,7 @@ softwarePackages:
     port: task
     emerge: task
     pacman: task
-    xbps-install: task
+    xbps: task
     zypper: taskwarrior
   boringtun:
     _bin: boringtun-cli
@@ -13668,6 +13964,7 @@ softwarePackages:
     cargo:darwin: boringtun-cli
     cargo:linux: boringtun-cli
   wireguard-client:
+    _bin: wireguard-client
     _deps:
       - wireguard-tools
     _desc: null
@@ -13964,7 +14261,7 @@ softwarePackages:
     _docs: null
     _github: null
     _home: null
-    _name: SSH FS
+    _name: SSHFS
     apt: sshfs
     choco: sshfs
     dnf: sshfs
@@ -14003,7 +14300,7 @@ softwarePackages:
     nix: yank
     pacman: yank
     pkg-freebsd: yank
-    pkg-openbsd: yank
+    pkg_add: yank
     port: yank
     scoop: win32yank
     zypper: yank
@@ -14014,6 +14311,7 @@ softwarePackages:
     _github: https://github.com/yarnpkg/berry
     _home: https://yarnpkg.com/
     _name: Yarn
+    _preload: true
     ansible: professormanhattan.yarn
     brew: yarn
     choco: yarn
@@ -14064,6 +14362,7 @@ softwarePackages:
     _github: https://github.com/docker/docker-credential-helpers
     _home: https://github.com/docker/docker-credential-helpers
     _name: Docker Credential Helper
+    _preload: true
     brew: docker-credential-helper
   forklift:
     _bin: forklift
@@ -14086,6 +14385,7 @@ softwarePackages:
     _github: https://github.com/mikefarah/yq
     _home: https://mikefarah.gitbook.io/yq/
     _name: yq
+    _preload: true
     ansible: professormanhattan.yq
     apk: yq
     brew: yq
@@ -14141,11 +14441,10 @@ softwarePackages:
     _bin: goreleaser
     _github: https://github.com/goreleaser/goreleaser
     _name: Go Releaser
-    _snapClassic: true
     brew: goreleaser
     go: github.com/goreleaser/goreleaser@latest
     nix-env: goreleaser
-    snap: goreleaser
+    snap: goreleaser --classic
     yay: goreleaser-bin
   obs-studio:
     _bin: obs-studio
@@ -14182,6 +14481,7 @@ softwarePackages:
     _github: https://github.com/squid-cache/squid
     _name: Squid
     _service: squid
+    _preload: true
     apt: squid
     brew: squid
     dnf: squid
@@ -14193,6 +14493,7 @@ softwarePackages:
     _github: https://github.com/srevinsaju/zap
     _home: https://zap.srev.in/
     _name: Zap
+    _preload: true
     ansible:linux: professormanhattan.zap
     binary:linux: https://github.com/srevinsaju/zap/releases/download/continuous/zap-amd64
     script:linux: curl https://raw.githubusercontent.com/srevinsaju/zap/main/install.sh | sudo bash -s
@@ -14217,6 +14518,7 @@ softwarePackages:
     _github: null
     _home: null
     _name: zoxide
+    _preload: true
     ansible: professormanhattan.zoxide
     brew: zoxide
   zsh:
@@ -14226,6 +14528,7 @@ softwarePackages:
     _github: null
     _home: null
     _name: Zsh
+    _preload: true
     ansible:darwin: professormanhattan.zsh
     ansible:linux: professormanhattan.zsh
     apt: zsh
@@ -14244,6 +14547,7 @@ softwarePackages:
     _github: https://github.com/google/zx
     _home: null
     _name: zx
+    _preload: true
     brew: zx
     npm: zx
   flatseal:

@@ -133,12 +133,6 @@
     type = "file"
     url = "https://raw.githubusercontent.com/zsh-users/antigen/develop/bin/antigen.zsh"
 
-### ASDF
-[".local/share/asdf"]
-    type = "git-repo"
-    url = "https://github.com/asdf-vm/asdf.git"
-    {{ $gitArgs }}
-
 ### Bash (Sensible defaults)
 [".local/share/shell/sensible.bash"]
     type = "file"
@@ -181,6 +175,11 @@
     type = "git-repo"
     url = "https://github.com/bigH/git-fuzzy.git"
     {{ $gitArgs }}
+
+### Goto
+[".config/shell/goto.sh"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/iridakos/goto/master/goto.sh"
 
 ### LSColors
 [".config/shell/lscolors.sh"]
@@ -365,11 +364,11 @@
     url = "{{ $vimPlugin }}"
     {{ $gitArgs }}
 {{- end }}
-# coc.nvim VIM plugin requires custom branch "release"
 [".local/share/vim/plugged/coc.nvim"]
     type = "git-repo"
     url = "https://github.com/neoclide/coc.nvim.git"
-    clone.args = ["--branch", "release"]
+    clone.args = ["--branch", "release", "--depth", "1"]
+    pull.args = ["--ff-only"]
 
 ### NVIM
 [".config/nvim"]

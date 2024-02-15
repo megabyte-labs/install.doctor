@@ -28,14 +28,14 @@ export GCE_CREDENTIALS_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/gcloud/gcp.json"
 
 ### CloudFlare
 # Source: https://github.com/cloudflare/cf-terraforming
-export CLOUDFLARE_API_TOKEN='Hzsq3Vub-7Y-hSTlAaLH3Jq_YfTUOCcgf22_Fs-j'
+export CLOUDFLARE_API_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_API_TOKEN")) }}{{ includeTemplate "secrets/CLOUDFLARE_API_TOKEN" | decrypt | trim }}{{ else }}{{ env "CLOUDFLARE_API_TOKEN" }}{{ end }}"
 # If using API Key
 # export CLOUDFLARE_EMAIL='user@example.com'
 # export CLOUDFLARE_API_KEY='1150bed3f45247b99f7db9696fffa17cbx9'
 # Specify zone ID
 # export CLOUDFLARE_ZONE_ID='81b06ss3228f488fh84e5e993c2dc17'
-export LEXICON_CLOUDFLARE_TOKEN=""
-export LEXICON_CLOUDFLARE_USERNAME="{{ .user.cloudflare.username }}"
+export LEXICON_CLOUDFLARE_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_API_TOKEN")) }}{{ includeTemplate "secrets/CLOUDFLARE_API_TOKEN" | decrypt | trim }}{{ else }}{{ env "CLOUDFLARE_API_TOKEN" }}{{ end }}"
+export LEXICON_CLOUDFLARE_ZONE="{{ .host.domain }}"
 
 ### DockerHub
 export DOCKERHUB_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "DOCKERHUB_TOKEN")) }}{{ includeTemplate "secrets/DOCKERHUB_TOKEN" | decrypt | trim }}{{ else }}{{ env "DOCKERHUB_TOKEN" }}{{ end }}"
@@ -82,8 +82,15 @@ if [ -d /Applications/Cisco ]; then
     export WORK_ENVIRONMENT=true
 fi
 
+### JuiceFS
+export JFS_RSA_PASSPHRASE="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "JFS_RSA_PASSPHRASE")) }}{{ includeTemplate "secrets/JFS_RSA_PASSPHRASE" | decrypt | trim }}{{ else }}{{ env "JFS_RSA_PASSPHRASE" }}{{ end }}"
+
 ### Megabyte Labs
 export FULLY_AUTOMATED_TASKS=true
+
+### Minio
+export MINIO_ROOT_USER="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "MINIO_ROOT_USER")) }}{{ includeTemplate "secrets/MINIO_ROOT_USER" | decrypt | trim }}{{ else }}{{ env "MINIO_ROOT_USER" }}{{ end }}"
+export MINIO_ROOT_PASSWORD="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "MINIO_ROOT_PASSWORD")) }}{{ includeTemplate "secrets/MINIO_ROOT_PASSWORD" | decrypt | trim }}{{ else }}{{ env "MINIO_ROOT_PASSWORD" }}{{ end }}"
 
 ### NPM
 export NPM_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NPM_TOKEN")) }}{{ includeTemplate "secrets/NPM_TOKEN" | decrypt | trim }}{{ else }}{{ env "NPM_TOKEN" }}{{ end }}"
@@ -127,12 +134,15 @@ export SURGE_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates"
 ### Tailscale
 export TAILSCALE_AUTH_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TAILSCALE_AUTH_KEY")) }}{{ includeTemplate "secrets/TAILSCALE_AUTH_KEY" | decrypt | trim }}{{ else }}{{ env "TAILSCALE_AUTH_KEY" }}{{ end }}"
 
-
 ### Vagrant Cloud
 export VAGRANT_CLOUD_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VAGRANT_CLOUD_TOKEN")) }}{{ includeTemplate "secrets/VAGRANT_CLOUD_TOKEN" | decrypt | trim }}{{ else }}{{ env "VAGRANT_CLOUD_TOKEN" }}{{ end }}"
 
 ### VMWare
 export VMWARE_WORKSTATION_LICENSE_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VMWARE_WORKSTATION_LICENSE_KEY")) }}{{ includeTemplate "secrets/VMWARE_WORKSTATION_LICENSE_KEY" | decrypt | trim }}{{ else }}{{ default "4C21U-2KK9Q-M8130-4V2QH-CF810" (env "VMWARE_WORKSTATION_LICENSE_KEY") }}{{ end }}"
+
+### WebDAV
+export WEBDAV_USER="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "WEBDAV_USER")) }}{{ includeTemplate "secrets/WEBDAV_USER" | decrypt | trim }}{{ else }}{{ env "WEBDAV_USER" }}{{ end }}"
+export WEBDAV_PASSWORD="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "WEBDAV_PASSWORD")) }}{{ includeTemplate "secrets/WEBDAV_PASSWORD" | decrypt | trim }}{{ else }}{{ env "WEBDAV_PASSWORD" }}{{ end }}"
 
 ### Xcodes
 # Apple ID username and password

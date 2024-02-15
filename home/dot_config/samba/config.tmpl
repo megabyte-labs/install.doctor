@@ -10,6 +10,9 @@
   # Allow using DNS to specify allowed hosts
   # Source: https://serverfault.com/questions/702455/samba-hosts-allow-example-com
   dns proxy = yes
+  # Required for macOS JuiceFS Samba
+  ea support = yes
+  passdb backend = tdbsam
   security = user
   server role = standalone server
   server string = Samba on %L
@@ -23,12 +26,37 @@
   # unix extension = no
   # wide links = yes
 
+[default]
+  ### Source: https://gist.github.com/jbfriedrich/49b186473486ac72c4fe194af01288be
+  # Use NTFS streams if supported
+  streams = yes
+  # Soft mount by default
+  soft = yes
+  # Disable signing due to macOS bug
+  signing_required = no
+  # Disable directory caching
+  dir_cache_off = yes
+  # Lock negotiation to SMB2/3 only
+  # 7 == 0111  SMB 1/2/3 should be enabled
+  # 6 == 0110  SMB 2/3 should be enabled
+  # 4 == 0100  SMB 3 should be enabled
+  protocol_vers_map = 6
+  # No SMB1, so we disable NetBIOS
+  port445 = no_netbios
+  # Turn off notifications
+  notify_off = yes
+  # SMB Multichannel behavior
+  # To disable multichannel support completely uncomment the next line
+  # mc_on=no
+  # Some Wi-Fi networks advertise faster speeds than the connected wired network. 
+  mc_prefer_wired = yes
+
 [Private]
   browsable = yes
   comment = Authenticated share with read/write capabilities (backed up to S3)
   follow symlinks = yes
   guest only = no
-  path = /mnt/Private
+  path = /mnt/private
   public = no
   unix extension = yes
   valid users = @sambausers
@@ -40,7 +68,7 @@
   comment = Public folder provided for file sharing on the LAN (backed up to S3)
   follow symlinks = no
   guest only = yes
-  path = /mnt/Public
+  path = /mnt/public
   public = yes
   writable = yes
 

@@ -1,7 +1,22 @@
+https://github.com/harababurel/gcsf
+[text](https://github.com/gitbito/CLI)
+* Move age decryption higher
+* Add ~/.local/share/sounds was symlink to {{ .host.home }}/.local/share/betelgeuse/share/sounds
 xattr -d com.apple.quarantine rclone
 Create issue about setting up completions - https://github.com/rsteube/lazycomplete
 pw="$(osascript -e 'Tell application "System Events" to display dialog "Password:" default answer "" with hidden answer' -e 'text returned of result' 2>/dev/null)" && echo "$pw"
-
+https://github.com/Shougo/ddc.vim
+[text](https://instill.tech/chill/models)
+https://github.com/harababurel/gcsf
+https://github.com/awslabs/mountpoint-s3 / https://github.com/s3fs-fuse/s3fs-fuse
+https://github.com/superfly/litefs
+https://github.com/Qihoo360/QConf
+https://github.com/ossec/ossec-hids
+[text](https://github.com/invoke-ai/InvokeAI)
+https://github.com/search?q=system&type=repositories&s=stars&o=desc&p=59
+- https://github.com/nats-io/nats-server
+- [Title](https://github.com/albfan/miraclecast)
+- [Title](https://gitlab.gnome.org/GNOME/gnome-network-displays)
 Use minimum permissions / IAM for https://iosexample.com/a-command-line-tool-to-download-and-install-apples-xcode/
 https://github.com/tiiiecherle/osx_install_config/blob/master/03_homebrew_casks_and_mas/3b_homebrew_casks_and_mas_install/6_mas_appstore.sh
 virtualbox blocked by C
@@ -14,6 +29,8 @@ adobe-creative-cloud curl: (18) HTTP/2 stream 1 was reset
 - https://github.com/linuxserver/docker-webtop
 - https://app.warp.dev/referral/7PMXRV
 - https://github.com/chocolatey/boxstarter
+- https://github.com/home-sweet-gnome/dash-to-panel
+- https://github.com/Shougo/neocomplcache.vim
 - https://nginxui.com/
 # Create the $HOME/opt destination folder
 mkdir -p ~/opt
@@ -219,6 +236,7 @@ The following items have been reviewed but need to be revisited due to complexit
 - https://github.com/open-hand/choerodon
 - https://github.com/1backend/1backend
 - https://github.com/redkubes/otomi-core
+- https://github.com/shunfei/cronsun
 - https://github.com/yunionio/cloudpods
 - https://github.com/tkestack/tke
 - https://www.rancher.com/
@@ -260,3 +278,7 @@ The following items have been reviewed but need to be revisited due to complexit
 ## Definitely
 
 * https://github.com/ConvoyPanel/panel
+
+
+## Referral Links
+https://www.visible.com/get/?3JMZG3W

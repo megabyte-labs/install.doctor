@@ -124,17 +124,6 @@ export AQUA_ROOT_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/aqua"
 export AQUA_GLOBAL_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/aqua/aqua.yaml"
 export PATH="${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin:$PATH"
 
-### ASDF
-export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/asdf/asdfrc"
-export ASDF_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/asdf"
-export ASDF_DATA_DIR="$ASDF_DIR"
-export ASDF_CRATE_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/asdf/default-cargo-pkgs"
-export ASDF_GEM_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/asdf/default-ruby-pkgs"
-export ASDF_GOLANG_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/asdf/default-golang-pkgs"
-export ASDF_GOLANG_MOD_VERSION_ENABLED=true
-export ASDF_NPM_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/asdf/default-npm-packages"
-export ASDF_PYTHON_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/asdf/default-python-pkgs"
-
 ### AWS CLI
 export AWS_SHARED_CREDENTIALS_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/aws/credentials"
 export AWS_CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/aws/config"
@@ -151,6 +140,12 @@ export BAT_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/bat/config"
 ### Cargo
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export PATH="$PATH:$CARGO_HOME/bin"
+
+### Composer
+export COMPOSER_BIN_DIR="$HOME/.local/bin/composer"
+# TODO
+# export COMPOSER_CAFILE=""
+export PATH="$PATH:$COMPOSER_BIN_DIR"
 
 ### Bash
 export BASH_COMPLETION_USER_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/bash-completion/bash_completion"
@@ -190,6 +185,9 @@ export CURLOPT_ACCEPT_ENCODING=true
 ### Dagu
 export DAGU_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/dagu"
 
+### Debian
+export DEBIAN_FRONTEND=noninteractive
+
 ### Desk
 export DESK_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/desk"
 export DESK_DESKS_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/desk/desks"
@@ -200,6 +198,7 @@ export PATH="$PATH:$DETA_INSTALL/bin"
 
 ### Docker
 export DOCKER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/docker"
+export DOCKER_HOST="unix:///var/run/docker.sock"
 export MACHINE_STORAGE_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/docker-machine"
 export PATH="$DOCKER_CONFIG/cli-plugins:$PATH"
 
@@ -229,6 +228,10 @@ if command -v flatpak > /dev/null; then
   export XDG_DATA_DIRS="${XDG_CONFIG_HOME:-$HOME/.local/share}/flatpak/exports/share:$FLATPAK_INSTALLATIONS/exports/share:$XDG_DATA_DIRS"
 fi
 
+### FreeBSD
+export ASSUME_ALWAYS_YES="yes"
+export DEFAULT_ALWAYS_YES="yes"
+
 ### fzf
 if command -v fd > /dev/null; then
   export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
@@ -256,11 +259,7 @@ fi
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 export GO111MODULE=on
 export PATH="$PATH:${GOPATH}/bin"
-if command -v go > /dev/null && which go | grep -q 'asdf' > /dev/null && command -v asdf > /dev/null; then
-  GOROOT="$(asdf where golang)/go"
-  export GOROOT
-  export PATH="$PATH:${GOROOT}/bin"
-elif command -v go > /dev/null && command -v brew > /dev/null; then
+if command -v go > /dev/null && command -v brew > /dev/null; then
   GOROOT="$(brew --prefix go)/libexec"
   export GOROOT
   export PATH="$PATH:${GOROOT}/bin"
@@ -295,6 +294,9 @@ fi
 ### IPFS
 export IPFS_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/ipfs"
 
+### JuiceFS
+export JFS_PRIVATE_KEY="$HOME/.local/etc/juicefs/cert.pem"
+
 ### k9s
 export K9SCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/k9s"
 
@@ -311,6 +313,10 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 ### Kube
 export KUBECONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/kube"
 
+### Lexicon
+export LEXICON_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/lexicon"
+export TLDEXTRACT_CACHE_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/lexicon"
+
 ### MacPrefs
 export MACPREFS_BACKUP_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/macprefs"
 
@@ -325,6 +331,12 @@ export MCFLY_KEY_SCHEME=vim
 
 ### minikube
 export MINIKUBE_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/minikube"
+
+### mise
+export MISE_GO_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/mise/default-go-pkgs"
+export MISE_NODE_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/mise/default-node-pkgs"
+export MISE_RUBY_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/mise/default-ruby-pkgs"
+export MISE_PYTHON_DEFAULT_PACKAGES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/mise/default-python-pkgs"
 
 ### Monero
 if [ -f /Applications/monero-wallet-gui.app/Contents/MacOS/monerod ]; then
@@ -344,7 +356,8 @@ export NETRC="${XDG_CONFIG_HOME:-$HOME/.config}/netrc"
 export NAVI_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/navi/config.yaml"
 
 ### Nix
-export NIX_SSL_CERT_FILE="$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
+# TODO: Fix this
+# export NIX_SSL_CERT_FILE="$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
 
 ### nnn
 if command -v nnn > /dev/null; then
@@ -363,6 +376,9 @@ fi
 
 ### NPM
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/npm/npmrc"
+
+### ntfy
+export AUTO_NTFY_DONE_IGNORE="code nvim vim screen meld"
 
 ### NTL
 export NTL_RUNNER="pnpm"
@@ -414,7 +430,7 @@ if [ -f "$HOME/.local/etc/ssl/curl/cacert.pem" ]; then
   export SSL_CERT_FILE="$CERT_PATH"
   export REQUESTS_CA_BUNDLE="$CERT_PATH"
 elif command -v python3 > /dev/null && pip3 list | grep certifi > /dev/null; then
-  export CERT_PATH="$(python3 -m certifi)" || export CERT_PATH="$(python -m certifi)"
+  export CERT_PATH="$(python3 -m certifi)" || export CERT_PATH="$(python -m certifi)" || export CERT_PATH="$HOME/.local/etc/ssl/curl/cacert.pem"
   export SSL_CERT_FILE="$CERT_PATH"
   export REQUESTS_CA_BUNDLE="$CERT_PATH"
 fi

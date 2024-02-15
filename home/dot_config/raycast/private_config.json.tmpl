@@ -1,0 +1,4 @@
+{
+  "accesstoken" : "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "RAYCAST_ACCESS_TOKEN")) }}{{ includeTemplate "secrets/RAYCAST_ACCESS_TOKEN" | decrypt | trim }}{{ else }}{{ env "RAYCAST_ACCESS_TOKEN" }}{{ end }}",
+  "token" : "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "RAYCAST_TOKEN")) }}{{ includeTemplate "secrets/RAYCAST_TOKEN" | decrypt | trim }}{{ else }}{{ env "RAYCAST_TOKEN" }}{{ end }}"
+}

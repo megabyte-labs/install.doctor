@@ -1,0 +1,4 @@
+---
+cloudflare:
+  auth_token: "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_API_TOKEN")) }}{{ includeTemplate "secrets/CLOUDFLARE_API_TOKEN" | decrypt | trim }}{{ else }}{{ env "CLOUDFLARE_API_TOKEN" }}{{ end }}"
+  zone: {{ .host.domain }}

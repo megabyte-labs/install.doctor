@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+
+updateApk() {
+  if command -v apk > /dev/null; then
+    logg info 'Running sudo apk update' && sudo apk update || logg error 'Failed to run sudo apk update'
+  fi
+}
+
+updateAptGet() {
+  if command -v apt-get > /dev/null; then
+    logg info 'Running sudo apt-get update' && sudo apt-get update || logg error 'Failed to run sudo apt-get update'
+    logg info 'Running sudo apt-get upgrade -y' && sudo apt-get upgrade -y || logg error 'Failed to run sudo apt-get upgrade -y'
+  fi
+}
+
+updateBrew() {
+  logg info 'Running brew update' && brew update || logg error 'Failed to run brew update'
+  logg info 'Running brew upgrade' && brew upgrade || logg error 'Failed to run brew upgrade'
+  if [ -d /Applications ] && [ -d /System ]; then
+    ### macOS
+    logg info 'Running brew upgrade --cask' && brew upgrade --cask || logg error 'Failed to run brew upgrade --cask'
+  fi
+}
+
+updateCrew() {
+  if command -v crew > /dev/null; then
+    logg info 'Running crew update' && crew update || logg error 'Failed to run crew update'
+  fi
+}
+
+updateDnf() {
+  if command -v dnf > /dev/null; then
+    logg info 'Running sudo dnf update -y' && sudo dnf update -y || logg error 'Failed to run sudo dnf update -y'
+  fi
+}
+
+updateFlatpak() {
+  if command -v flatpak > /dev/null; then
+    logg info 'Running sudo flatpak update -y' && sudo flatpak update -y || logg error 'Failed to run sudo flatpak update -y'
+  fi
+}
+
+updateNix() {
+  if command -v nix-channel > /dev/null; then
+    logg info 'Running nix-channel --update' && nix-channel --update || logg error 'Failed to run nix-channel --update'
+  fi
+}
+
+updatePacman() {
+  if command -v pacman > /dev/null; then
+    logg info 'Running sudo pacman -Syu' && sudo pacman -Syu || logg error 'Failed to run sudo pacman -Syu'
+  fi
+}
+
+updatePort() {
+  if command -v port > /dev/null; then
+    logg info 'Running sudo port sync' && sudo port sync || logg error 'Failed to run sudo port sync'
+  fi
+}
+
+updateSnap() {
+  if command -v snap > /dev/null; then
+    logg info 'Running sudo snap refresh' && sudo snap refresh || logg error 'Failed to run sudo snap refresh'
+  fi
+}
+
+updateZypper() {
+  if command -v zypper > /dev/null; then
+    logg info 'Running sudo zypper update' && sudo zypper update || logg error 'Failed to run sudo zypper update'
+  fi
+}
+
+if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
+  logg info 'The DEBUG or DEBUG_MODE environment variable is set so updates will be run synchronously'
+  updateApk
+  updateAptGet
+  updateBrew
+  updateCrew
+  updateDnf
+  updateFlatpak
+  updateNix
+  updatePacman
+  updatePort
+  updateSnap
+  updateZypper
+else
+  updateApk &
+  updateAptGet &
+  updateBrew &
+  updateCrew &
+  updateDnf &
+  updateFlatpak &
+  updateNix &
+  updatePacman &
+  updatePort &
+  updateSnap &
+  updateZypper &
+  wait
+fi
+
+logg success 'Finished running update-system'

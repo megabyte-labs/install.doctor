@@ -681,7 +681,28 @@ apply_darwin() {
     # |
     # | Applying values on iTerm2
     # | ===========================================
+export COLOR_01="#282C34"           # Black
+export COLOR_02="#ED254E"           # Red
+export COLOR_03="#71F79F"           # Green
+export COLOR_04="#F9DC5C"           # Yellow
+export COLOR_05="#7CB7FF"           # Blue
+export COLOR_06="#C74D89"           # Magenta
+export COLOR_07="#00C1E4"           # Cyan
+export COLOR_08="#DCDFE4"           # Light gray
 
+export COLOR_09="#4C5058"           # Dark gray
+export COLOR_10="#FF4972"           # Light Red
+export COLOR_11="#95FFC3"           # Light Green
+export COLOR_12="#FFFF80"           # Light Yellow
+export COLOR_13="#A0DBFF"           # Light Blue
+export COLOR_14="#EB71AD"           # Light Magenta
+export COLOR_15="#24E5FF"           # Light Cyan
+export COLOR_16="#FFFFFF"           # White
+
+export BACKGROUND_COLOR="#161925"   # Background Color
+export FOREGROUND_COLOR="#C3C7D1"   # Foreground Color (text)
+export CURSOR_COLOR="$FOREGROUND_COLOR" # Cursor color
+export PROFILE_NAME="Betelgeuse"
     BACKGROUND_COLOR=$(convertNameAndRGBtoITerm "Background Color" "$BACKGROUND_COLOR")
     FOREGROUND_COLOR=$(convertNameAndRGBtoITerm "Foreground Color" "$FOREGROUND_COLOR")
     COLOR_01=$(convertNameAndRGBtoITerm "Ansi 0 Color"             "$COLOR_01")

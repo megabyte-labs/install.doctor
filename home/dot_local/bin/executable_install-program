@@ -588,13 +588,6 @@ async function afterInstall(packageManager) {
   const logStage = 'Post-Install Package Manager'
   if (packageManager === 'appimage') {
   } else if (packageManager === 'ansible') {
-    log('info', logStage, `Ensuring temporary passwordless sudo privileges used by Ansible are removed`)
-    const gsed = which.sync('gsed', { nothrow: true })
-    if (gsed) {
-      await $`sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR ANSIBLE/d' /etc/sudoers`
-    } else {
-      await $`sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR ANSIBLE/d' /etc/sudoers`
-    }
   } else if (packageManager === 'apk') {
   } else if (packageManager === 'apt') {
     try {
@@ -767,12 +760,17 @@ async function beforeInstall(packageManager) {
       brewUpdated = true
       try {
         runCommand('Running brew update / upgrade', `brew update && brew upgrade --cask && brew upgrade`)
+        runCommand('Running brew update', `brew update`)
+        runCommand('Running brew upgrade', `brew upgrade`)
+        if (osType === 'darwin'){
+          runCommand('Running brew upgrade (Casks)', `brew upgrade --cask`)
+        }
       } catch (e) {
         console.log(e)
         log('error', 'Homebrew', 'Failed running brew update / upgrade')
         log('info', 'Homebrew', 'Running brew tap --repair and trying again')
         try {
-          runCommand('Repairing taps and retrying brew update / upgrade', 'export HOMEBREW_TEMP=/tmp && sudo rm -rf $(brew --cache) && brew tap --repair && brew update && brew upgrade --cask --greedy && brew upgrade --force --greedy')
+          runCommand('Repairing taps and retrying brew update / upgrade', 'export HOMEBREW_TEMP=/tmp && sudo rm -rf $(brew --cache) && brew tap --repair && brew update && brew upgrade --force --greedy && [[ $OSTYPE != "darwin"* ]] && brew upgrade --cask --greedy')
         } catch (e) {
           console.log(e)
           log('error', 'Homebrew', 'Failed both attempts to run brew update / upgrade')
@@ -803,6 +801,7 @@ async function beforeInstall(packageManager) {
   } else if (packageManager === 'pacman') {
     runCommand('Running pacman update', `sudo pacman -Syu`)
   } else if (packageManager === 'pipx') {
+  } else if (packageManager === 'pip') {
   } else if (packageManager === 'pkg') {
     await $`sudo pkg upgrade`
   } else if (packageManager === 'port') {
@@ -957,9 +956,11 @@ async function ensurePackageManager(packageManager) {
         $`
         if command -v sudo > /dev/null && sudo -n true; then
           echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          sudo chmod -R g-w "$(brew --prefix)/share"
         else
           log('info', logStage, 'Homebrew is not installed. Password may be required.')
           bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+          sudo chmod -R g-w "$(brew --prefix)/share"
           if [ -n "$BREW_EXIT_CODE" ]; then
             if command -v brew > /dev/null; then
               log('warn', logStage, 'Homebrew was installed but part of the installation failed. Attempting to fix..')
@@ -1264,10 +1265,17 @@ async function installPackageList(packageManager, packages) {
     } else if (packageManager === 'apt') {
       for (let pkg of packages) {
         try {
-          runCommand(
-            `Installing ${pkg} via ${packageManager}`,
-            `sudo apt-get -o DPkg::Options::=--force-confdef install -y ${pkg}`
-          )
+          if (pkg.startsWith('http') && pkg.endsWith('.deb')) {
+            runCommand(
+              `Downloading and installing ${pkg}`,
+              `TMP="$(mktemp)" && curl -sSL ${pkg} -o "$TMP" && sudo dpkg -i "$TMP"`
+            )
+          } else {
+            runCommand(
+              `Installing ${pkg} via ${packageManager}`,
+              `sudo DEBIAN_FRONTEND=noninteractive apt-get -o DPkg::Options::=--force-confdef install -y ${pkg}`
+            )
+          }
           log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
         } catch (e) {
           log('error', 'Install', `There was an error installing ${pkg} with apt-get`)
@@ -1427,6 +1435,16 @@ async function installPackageList(packageManager, packages) {
           }
         }
       }
+    } else if (packageManager === 'pip') {
+      for (let pkg of packages) {
+        try {
+          runCommand(`Installing ${pkg} via ${packageManager}`, `pip3 install ${pkg}`)
+          log('success', 'Install', `${pkg} successfully installed via ${packageManager}`)
+        } catch (e) {
+          log('warn', 'Install', `There was an error installing ${pkg} with pip3`)
+          console.error(e)
+        }
+      }
     } else if (packageManager === 'pkg-darwin') {
       for (let pkg of packages) {
         try {
@@ -1545,7 +1563,7 @@ async function installPackageList(packageManager, packages) {
 async function addUserGroup(group) {
   const logStage = 'Users / Groups'
   log('info', logStage, `Ensuring the ${group} group / user is added`)
-  runCommand(`Creating the ${group} user / group`, `sudo add-usergroup "${process.env.USER}" "${group}"`)
+  runCommand(`Creating the ${group} user / group`, `sudo "${process.env.HOME}/.local/bin/add-usergroup" "${process.env.USER}" "${group}"`)
 }
 
 /**

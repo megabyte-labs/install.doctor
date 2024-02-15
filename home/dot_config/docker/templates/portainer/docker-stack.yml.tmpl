@@ -1,0 +1,65 @@
+---
+version: '3.8'
+
+services:
+  agent:
+    image: portainer/agent:2.19.4
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    networks:
+      - portainer_agent_network
+    deploy:
+      mode: global
+      placement:
+        constraints: [node.platform.os == linux]
+
+  portainer:
+    image: portainer/portainer-ce:2.19.4
+    command: -H tcp://tasks.agent:9001 --tlsskipverify --admin-password-file /run/secrets/portainer_admin_password --logo {{ .docker.portainer.siteLogoUrl }} --no-analytics true --templates {{ .docker.portainer.templatesUrl }}
+    ports:
+      - "9439:9443"
+      - "9000:9000"
+      - "8000:8000"
+    volumes:
+      - portainer_manager_data:/data
+    networks:
+      - cloudflared_tunnel
+      - portainer_agent_network
+    secrets:
+      - portainer_admin_password
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+
+  tunnel:
+    image: cloudflare/cloudflared
+    command: tunnel run
+    deploy:
+      replicas: 4
+    networks:
+      - cloudflared_tunnel
+    environment:
+      TUNNEL_TOKEN_FILE: /run/secrets/cloudflared_docker_swarm_token
+    secrets:
+      - cloudflared_docker_swarm_token
+
+networks:
+  cloudflared_tunnel:
+    external: true
+  portainer_agent_network:
+    driver: overlay
+    attachable: true
+    internal: true
+
+secrets:
+  cloudflared_docker_swarm_token:
+    external: true
+  portainer_admin_password:
+    external: true
+
+volumes:
+  portainer_manager_data:
+    name: portainer_manager_data

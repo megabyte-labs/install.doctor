@@ -1,6 +1,3 @@
-{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "ssh" "config")) -}}
-{{   includeTemplate "ssh/config" | decrypt -}}
-{{ else -}}
 Host *
     IgnoreUnknown AddKeysToAgent,UseKeychain
     AddKeysToAgent yes
@@ -15,13 +12,24 @@ Host *
     ServerAliveInterval 60
     ServerAliveCountMax 30
     IdentitiesOnly yes
+    IdentityFile ~/.ssh/ssh-13147527
+    IdentityFile ~/.ssh/ssh-13196452
+    IdentityFile ~/.ssh/ssh-5c-nano-laptop
+    IdentityFile ~/.ssh/ssh-5c-nano-green
+    IdentityFile ~/.ssh/ssh-5c-green
+    IdentityFile ~/.ssh/ssh-5-nano
+    IdentityFile ~/.ssh/ssh-5-nfc-green
+    IdentityFile ~/.ssh/ssh-5-nfc-red
+    IdentityFile ~/.ssh/ssh-5-nfc-yellow
     IdentityFile ~/.ssh/id_rsa
+Host wordpress.megabyte.space
 Host gitlab.com
     UpdateHostKeys no
+    IdentityFile ~/.ssh/id_rsa
 Host github.com
     UpdateHostKeys no
+    IdentityFile ~/.ssh/id_rsa
 {{ if (lookPath "fig") -}}
 Match all
   Include ~/.fig/ssh
-{{- end -}}
 {{- end -}}

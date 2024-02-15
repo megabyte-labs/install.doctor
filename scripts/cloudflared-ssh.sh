@@ -55,10 +55,6 @@
 #     | `start`     | Same as `success`                                                                                   |
 #     | `success`   | Logs a success message that starts with green checkmark                                             |
 #     | `warn`      | Logs a bright yellow warning message                                                                |
-# @example
-#     logger info "An informative log"
-# @example
-#     logger md ~/README.md
 logg() {
   TYPE="$1"
   MSG="$2"
@@ -211,6 +207,20 @@ fixHomebrewPermissions() {
   fi
 }
 
+# @description This function removes group write permissions from the Homebrew share folder which
+#     is required for the ZSH configuration.
+fixHomebrewSharePermissions() {
+  if [ -f /usr/local/bin/brew ]; then
+    sudo chmod -R g-w /usr/local/share
+  elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/bin/brew" ]; then
+    sudo chmod -R g-w "${HOMEBREW_PREFIX:-/opt/homebrew}/share"
+  elif [ -d "$HOME/.linuxbrew" ]; then
+    sudo chmod -R g-w "$HOME/.linuxbrew/share"
+  elif [ -d "/home/linuxbrew/.linuxbrew" ]; then
+    sudo chmod -R g-w /home/linuxbrew/.linuxbrew/share
+  fi
+}
+
 ### Installs Homebrew
 ensurePackageManagerHomebrew() {
   if ! command -v brew > /dev/null; then
@@ -218,9 +228,11 @@ ensurePackageManagerHomebrew() {
     if command -v sudo > /dev/null && sudo -n true; then
       logg info 'Installing Homebrew. Sudo privileges available.'
       echo | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+      fixHomebrewSharePermissions
     else
       logg info 'Installing Homebrew. Sudo privileges not available. Password may be required.'
       bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || BREW_EXIT_CODE="$?"
+      fixHomebrewSharePermissions
     fi
 
     ### Attempt to fix problematic installs

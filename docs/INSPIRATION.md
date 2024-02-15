@@ -10,6 +10,7 @@
 ## System
 
 - https://github.com/Andy-Python-Programmer/aero
+- https://github.com/Qihoo360/QConf/tree/master
 
 ## Website
 
@@ -54,6 +55,7 @@
 - [Title](https://github.com/isomorphic-git/isomorphic-git)
 - https://github.com/tolgee/tolgee-platform
 - https://github.com/dogbin/dogbin
+- https://github.com/judge0/judge0
 
 ## Serverless
 
@@ -69,3 +71,8 @@
 - https://namelix.com/
 - https://gchq.github.io/CyberChef
 - https://github.com/sourcerer-io/sourcerer-app
+
+## OS
+
+https://github.com/skift-org/skift
+https://github.com/MikeMcQuaid/strap/tree/main

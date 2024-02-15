@@ -54,8 +54,8 @@ installAge() {
 
 # @description Helper function utilized by [[decryptKey]] to ensure the `expect` command is available
 installExpect() {
-  if ! command -v expect > /dev/null; then
-    logg info 'Running brew install expect'
+  if ! command -v unbuffer > /dev/null; then
+    logg info 'Running brew install expect / unbuffer'
     brew install --quiet expect
   fi
 }

@@ -31,10 +31,6 @@
 #     | `start`     | Same as `success`                                                                                   |
 #     | `success`   | Logs a success message that starts with green checkmark                                             |
 #     | `warn`      | Logs a bright yellow warning message                                                                |
-# @example
-#     logger info "An informative log"
-# @example
-#     logger md ~/README.md
 logg() {
   TYPE="$1"
   MSG="$2"

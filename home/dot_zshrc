@@ -15,9 +15,6 @@ if [ "$USER" = 'root' ]; then
   return
 fi
 
-### Java (asdf)
-[ ! -f "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh" ] || source "$ASDF_DATA_DIR/plugins/java/set-java-home.zsh"
-
 # If not running interactively, don't do anything
 case $- in
   *i*) ;;
@@ -365,6 +362,7 @@ if command -v antigen > /dev/null; then
   # Third-party plugins
   # antigen bundle jscutlery/nx-completion Installing jscutlery/nx-completion... Error! Activate logging and try again.
   # antigen bundle lukechilds/zsh-better-npm-completion
+  antigen bundle wfxr/forgit
 
   antigen bundle zsh-interactive-cd
   antigen bundle zsh-navigation-tools
@@ -411,18 +409,18 @@ fi
 ! command -v cod > /dev/null || source <(cod init $$ zsh)
 
 ### Conda
-if command -v conda > /dev/null && [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/mambaforge/base/bin/conda" ]; then
-	__conda_setup="$("${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/mambaforge/base/bin/conda" "shell.zsh" "hook" 2> /dev/null)"
-	if [ $? -eq 0 ]; then
-		eval "$__conda_setup"
-	else
-		if [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/mambaforge/base/etc/profile.d/conda.sh" ]; then
-			. "${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/mambaforge/base/etc/profile.d/conda.sh"
-		else
-			export PATH="${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/mambaforge/base/bin:$PATH"
-		fi
-	fi
-fi
+# if command -v conda > /dev/null && [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/mambaforge/base/bin/conda" ]; then
+# 	__conda_setup="$("${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/mambaforge/base/bin/conda" "shell.zsh" "hook" 2> /dev/null)"
+# 	if [ $? -eq 0 ]; then
+# 		eval "$__conda_setup"
+# 	else
+# 		if [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/mambaforge/base/etc/profile.d/conda.sh" ]; then
+# 			. "${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/mambaforge/base/etc/profile.d/conda.sh"
+# 		else
+# 			export PATH="${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/mambaforge/base/bin:$PATH"
+# 		fi
+# 	fi
+# fi
 
 ### direnv
 ! command -v direnv > /dev/null || eval "$(direnv hook zsh)"
@@ -434,6 +432,9 @@ fi
 ### Google Cloud SDK
 [ ! -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.zsh.inc" ] || source "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.zsh.inc"
 [ ! -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc" ] || source "$HOMEBREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc"
+
+### Goto
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/goto.sh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/goto.sh"
 
 ### hiSHtory
 export PATH="$PATH:${XDG_CONFIG_HOME:-$HOME/.config}/hishtory"
@@ -447,8 +448,14 @@ fi
 ### iTerm2
 [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/iterm/iterm2.zsh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/iterm/iterm2.zsh"
 
+### mise
+! command -v mise > /dev/null || eval "$(mise activate zsh)"
+
 ### Navi (Ctrl+G)
 ! command -v navi > /dev/null || eval "$(navi widget zsh)"
+
+### ntfy
+! command -v ntfy > /dev/null || eval "$(ntfy shell-integration)"
 
 ### Fig
 [ ! -f "$HOME/.fig/shell/zshrc.post.zsh" ] || source "$HOME/.fig/shell/zshrc.post.zsh"
@@ -463,13 +470,14 @@ fi
 ! command -v rtx > /dev/null || eval "$(rtx activate zsh)"
 
 ### SDKMan
-if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
-  export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"
-  . "$SDKMAN_DIR/bin/sdkman-init.sh"
-elif [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
-  export SDKMAN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/sdkman"
-  . "$SDKMAN_DIR/bin/sdkman-init.sh"
-fi
+### Using mise instead for Java handling
+# if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
+#   export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"
+#   . "$SDKMAN_DIR/bin/sdkman-init.sh"
+# elif [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
+#   export SDKMAN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/sdkman"
+#   . "$SDKMAN_DIR/bin/sdkman-init.sh"
+# fi
 
 ### Sheldon
 export SHELDON_CONFIG_FILE="${SHELDON_CONFIG_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/sheldon}/plugins.zsh.toml"
