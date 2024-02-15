@@ -424,7 +424,7 @@ tasks:
           AppName: LibreWolf
           ProfileFolderDarwin: ~/Library/Application Support/LibreWolf/Profiles/profile.default
           ProfileFolderLinux: ~/.librewolf
-          ProfileFolderWindows: %USERPROFILE%/.librewolf
+          ProfileFolderWindows: '%USERPROFILE%/.librewolf'
           ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: librewolf
 
