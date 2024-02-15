@@ -162,7 +162,7 @@ tasks:
           AppName: Google Chrome
           ProfileFolderDarwin: ~/Library/Application Support/Google/Chrome/Default
           ProfileFolderLinux: ~/.config/google-chrome/default
-          ProfileFolderWindows: %LOCALAPPDATA%/Google/Chrome/User Data/Default
+          ProfileFolderWindows: '%LOCALAPPDATA%/Google/Chrome/User Data/Default'
           ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: chrome
 
@@ -190,7 +190,7 @@ tasks:
           AppName: Google Chrome
           ProfileFolderDarwin: ~/Library/Application Support/Google/Chrome/Default
           ProfileFolderLinux: ~/.config/google-chrome/default
-          ProfileFolderWindows: %LOCALAPPDATA%/Google/Chrome/User Data/Default
+          ProfileFolderWindows: '%LOCALAPPDATA%/Google/Chrome/User Data/Default'
           ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: chrome
 
@@ -218,7 +218,7 @@ tasks:
           AppName: Microsoft Edge
           ProfileFolderDarwin: ~/Library/Application Support/Microsoft Edge/Default
           ProfileFolderLinux: ~/.config/microsoft-edge/Default
-          ProfileFolderWindows: %LOCALAPPDATA%/Microsoft/Edge/User Data/Default
+          ProfileFolderWindows: '%LOCALAPPDATA%/Microsoft/Edge/User Data/Default'
           ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: edge
 
@@ -246,7 +246,7 @@ tasks:
           AppName: Microsoft Edge
           ProfileFolderDarwin: ~/Library/Application Support/Microsoft Edge/Default
           ProfileFolderLinux: ~/.config/microsoft-edge/Default
-          ProfileFolderWindows: %LOCALAPPDATA%/Microsoft/Edge/User Data/Default
+          ProfileFolderWindows: '%LOCALAPPDATA%/Microsoft/Edge/User Data/Default'
           ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: edge
 
@@ -396,7 +396,7 @@ tasks:
           AppName: LibreWolf
           ProfileFolderDarwin: ~/Library/Application Support/LibreWolf/Profiles/profile.default
           ProfileFolderLinux: ~/.librewolf
-          ProfileFolderWindows: %USERPROFILE%/.librewolf
+          ProfileFolderWindows: '%USERPROFILE%/.librewolf'
           ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: librewolf
 
