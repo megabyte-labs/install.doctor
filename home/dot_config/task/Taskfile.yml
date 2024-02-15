@@ -106,7 +106,7 @@ tasks:
           AppName: Brave Browser
           ProfileFolderDarwin: ~/Library/Application Support/BraveSoftware/Brave-Browser/Default
           ProfileFolderLinux: ~/.config/BraveSoftware/Brave-Browser/Default
-          ProfileFolderWindows: %APPDATA%/Local/BraveSoftware/Brave-Browser/Default
+          ProfileFolderWindows: '%APPDATA%/Local/BraveSoftware/Brave-Browser/Default'
           ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: brave
 
@@ -134,7 +134,7 @@ tasks:
           AppName: Brave Browser
           ProfileFolderDarwin: ~/Library/Application Support/BraveSoftware/Brave-Browser/Default
           ProfileFolderLinux: ~/.config/BraveSoftware/Brave-Browser/Default
-          ProfileFolderWindows: %APPDATA%/Local/BraveSoftware/Brave-Browser/Default
+          ProfileFolderWindows: '%APPDATA%/Local/BraveSoftware/Brave-Browser/Default'
           ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: brave
 
@@ -274,7 +274,7 @@ tasks:
           AppName: Ferdium
           ProfileFolderDarwin: ~/Library/Application Support/Ferdium
           ProfileFolderLinux: ~/.config/Ferdium/
-          ProfileFolderWindows: %APPDATA%/Ferdium
+          ProfileFolderWindows: '%APPDATA%/Ferdium'
           ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: ferdium
 
@@ -302,7 +302,7 @@ tasks:
           AppName: Ferdium
           ProfileFolderDarwin: ~/Library/Application Support/Ferdium
           ProfileFolderLinux: ~/.config/Ferdium/
-          ProfileFolderWindows: %APPDATA%/Ferdium
+          ProfileFolderWindows: '%APPDATA%/Ferdium'
           ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: ferdium
 
@@ -330,7 +330,7 @@ tasks:
           AppName: Firefox
           ProfileFolderDarwin: ~/Library/Application Support/Firefox/Profiles/profile.private
           ProfileFolderLinux: ~/.mozilla/firefox
-          ProfileFolderWindows: %APPDATA%/Mozilla/Firefox/Profiles
+          ProfileFolderWindows: '%APPDATA%/Mozilla/Firefox/Profiles'
           ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: firefox
 
@@ -358,7 +358,7 @@ tasks:
           AppName: Firefox
           ProfileFolderDarwin: ~/Library/Application Support/Firefox/Profiles/profile.private
           ProfileFolderLinux: ~/.mozilla/firefox
-          ProfileFolderWindows: %APPDATA%/Mozilla/Firefox/Profiles
+          ProfileFolderWindows: '%APPDATA%/Mozilla/Firefox/Profiles'
           ProfileFolder: '{{if eq OS "linux"}}{{.ProfileFolderLinux}}{{else if eq OS "darwin"}}{{.ProfileFolderDarwin}}{{else}}{{.ProfileFolderWindows}}{{end}}'
           RcloneRepository: firefox
 
