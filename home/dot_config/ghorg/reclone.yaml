@@ -1,7 +1,10 @@
 ---
 github:
-  cmd: "ghorg clone megabyte-labs -s github -p ~/GitHub"
+  cmd: "ghorg clone megabyte-labs -s github --output-dir 'Megabyte-Labs'"
   description: "Clones the GitHub megabyte-labs organization repositories"
+github-user:
+  cmd: ghorg clone ProfessorManhattan -s github --clone-type user --output-dir ProfessorManhattan
+  description: "Clones the GitHub user repositories"
 gitlab:
-  cmd: "ghorg clone megabyte-labs -s gitlab -p ~/GitLab"
+  cmd: "ghorg clone megabyte-labs -s gitlab --output-dir 'GitLab'"
   description: "Clones the GitLab megabyte-labs organization repositories"
