@@ -1,7 +1,7 @@
 ---
 title: Integrations
 description: An overview of the various free, cloud integrations that Install Doctor officially supports along with some information regarding the philosophy that Install Doctor uses when selecting third-party services.
-sidebar_label: Overview
+sidebar_label: Integrations
 slug: /integrations
 ---
 
