@@ -97,6 +97,8 @@ export NPM_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "
 
 ### OpenAI
 export OPENAI_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "OPENAI_API_KEY")) }}{{ includeTemplate "secrets/OPENAI_API_KEY" | decrypt | trim }}{{ else }}{{ env "OPENAI_API_KEY" }}{{ end }}"
+### OpenCommit
+export OCO_OPENAI_API_KEY="$OPENAI_API_KEY"
 
 ### Pexels
 export PEXELS_API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "PEXELS_API_KEY")) }}{{ includeTemplate "secrets/PEXELS_API_KEY" | decrypt | trim }}{{ else }}{{ env "PEXELS_API_KEY" }}{{ end }}"
