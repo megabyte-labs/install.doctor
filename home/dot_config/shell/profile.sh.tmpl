@@ -94,7 +94,7 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
   fi
 
   ### MOTD
-  if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/motd.sh" ]; then
+  if [ "$SHOW_MOTD" = 'true' ] && [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/motd.sh" ]; then
     . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/motd.sh"
   fi
 
