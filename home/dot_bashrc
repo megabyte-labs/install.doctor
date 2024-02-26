@@ -31,6 +31,7 @@ if [ -t 1 ]; then
 fi
 
 ### Import Common Settings
+export SHOW_MOTD=false
 [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile.sh" ] || . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile.sh"
 
 ### Escape if user is root
