@@ -8,6 +8,7 @@ export LC_ALL="en_US.UTF-8"
 export BASH_SUPPORT=true
 
 ### Import Common Settings
+export SHOW_MOTD=false
 [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile.sh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile.sh"
 
 ### Escape if user is root
