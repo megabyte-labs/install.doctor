@@ -5,7 +5,7 @@ sidebar_label: Getting Started
 slug: /getting-started
 ---
 
-Install Doctor is designed to be incredibly easy to use. It can provision your entire operating system with a one-liner. It supports the latest x64 releases of Archlinux, CentOS, Debian, Fedora, macOS, Qubes, and Windows. It can also be easily adapted to run on other operating systems.
+Install Doctor is designed to be incredibly easy to use. It can provision your entire operating system with a one-liner. It supports the latest x64 releases of Archlinux, CentOS, Debian, Fedora, macOS, Qubes, and Windows. It can also be adapted to run on other operating systems (pull requests encouraged).
 
 On macOS/Linux, the only requirements are that `bash` and `curl` are installed.
 
