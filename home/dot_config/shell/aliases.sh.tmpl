@@ -53,6 +53,11 @@ if command -v bat > /dev/null; then
   }
 fi
 
+### Chezmoi
+alias chezmoihome='cd "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home"'
+alias chezmoiscripts='cd "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi//home/.chezmoiscripts"'
+alias chezmoisecrets='cd "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"'
+
 ### curl-impersonate
 # https://github.com/lwthiker/curl-impersonate
 alias curl-impersonate='docker run --rm lwthiker/curl-impersonate:0.5-chrome curl_chrome110'
