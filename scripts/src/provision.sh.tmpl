@@ -52,7 +52,6 @@
 #     [Install Doctor documentation portal](https://install.doctor/docs) (includes tips, tricks, and guides on how to customize the system to your liking)
 
 {{ include "partials" "logg" }}
-# @section Environment variables and system dependencies
 # @description Ensure Ubuntu / Debian run in `noninteractive` mode. Detect `START_REPO` format and determine appropriate git address,
 #     otherwise use the master Install Doctor branch
 setEnvironmentVariables() {
@@ -131,7 +130,6 @@ setupPasswordlessSudo() {
   fi
 }
 
-# @section Qubes dom0
 # @description Ensure sys-whonix is configured (for Qubes dom0)
 ensureSysWhonix() {
   CONFIG_WIZARD_COUNT=0
@@ -233,7 +231,6 @@ handleQubesDom0() {
   fi
 }
 
-# @section Homebrew dependencies
 # @description Helper function used by [[ensureHomebrewDeps]] to ensure a Homebrew package is installed after
 #     first checking if it is already available on the system.
 installBrewPackage() {
@@ -274,7 +271,6 @@ ensureHomebrewDeps() {
   fi
 }
 
-# @section Chezmoi
 # @description Ensure the `${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi` directory is cloned and up-to-date using the previously
 #     set `START_REPO` as the source repository.
 cloneChezmoiSourceRepo() {
@@ -394,7 +390,6 @@ runChezmoi() {
   fi
 }
 
-# @section Post-provision logic
 # @description Ensure temporary passwordless sudo privileges are removed from `/etc/sudoers`
 removePasswordlessSudo() {
   if command -v gsed > /dev/null; then
@@ -412,7 +407,6 @@ postProvision() {
   fi
 }
 
-# @section Execution order
 # @description The `provisionLogic` function is used to define the order of the script. All of the functions it relies on are defined
 #     above.
 provisionLogic() {

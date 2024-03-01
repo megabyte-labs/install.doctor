@@ -201,11 +201,11 @@ ensureNetworkConfigs() {
 #     4. Bypasses the OpenVPN connection for all the networks defined in `.host.vpn.excludedSubnets` (in the `home/.chezmoi.yaml.tmpl` file)
 #     5. Repeats the process for WireGuard by looping through all the `*.nmconnection` files stored in `${XDG_CONFIG_HOME:-$HOME/.config}/vpn` (username and password should already be stored in the encrypted files)
 #
-#     ## Creating VPN Profiles
+#     #### Creating VPN Profiles
 #
 #     More details on embedding your VPN profiles into your Install Doctor fork can be found by reading the [Secrets documentation](https://install.doctor/docs/customization/secrets#vpn-profiles).
 #
-#     ## Links
+#     #### Links
 #
 #     * [VPN profile folder](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/vpn)
 #     * [VPN profile documentation](https://install.doctor/docs/customization/secrets#vpn-profiles)
@@ -305,7 +305,7 @@ configureNetworkManagerVPNProfiles() {
 #     This script applies the SSH server MOTD banner and `sshd_config` (which are housed in the `home/private_dot_ssh/system` location)
 #     to the system by copying the files to the system location and then restarting / enabling the system SSH server.
 #
-#     ## Links
+#     #### Links
 #
 #     * [System SSHD configurations](https://github.com/megabyte-labs/install.doctor/tree/master/home/private_dot_ssh/system)
 configureSSHD() {
@@ -811,7 +811,7 @@ grubSettings() {
 # @description
 #     This script sets the [Docker Rclone plugin](https://rclone.org/docker/) which allows you to mount Rclone mounts as Docker volumes
 #
-#     ## Docker Rclone
+#     #### Docker Rclone
 #
 #     The Docker Rclone installation ensures necessary system directories are initialized / created. It also copies the [Docker Rclone configuration](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/rclone/private_docker-rclone.conf.tmpl)
 #     to the proper system location.
@@ -888,12 +888,12 @@ makeLocalBinExecutable() {
 #     Some of the roles that Gas Station provides are not available via Ansible Galaxy yet. This script symlinks Gas Station
 #     roles to an Ansible Galaxy / Ansible friendly location.
 #
-#     ## Ansible Installation
+#     #### Ansible Installation
 #
 #     If Ansible is not already installed, this script will also install Ansible and all the necessary requirements using `pipx`.
 #     This script must run before the `install-packages` script because some of the Ansible roles might be leveraged by it.
 #
-#     ## TODO
+#     #### TODO
 #
 #     * Move installation logic into the ZX installer so that Ansible and its dependencies are only installed when required
 #     * Remove Ansible dependency completely

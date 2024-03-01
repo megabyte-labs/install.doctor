@@ -127,7 +127,6 @@ if ! sudo cat /etc/sudoers | grep '# TEMPORARY FOR INSTALL DOCTOR' > /dev/null; 
   fi
 fi
 
-# @section Qubes dom0 Bootstrap
 # @description Perform Qubes dom0 specific logic like updating system packages, setting up the Tor VM, updating TemplateVMs, and
 # beginning the provisioning process using Ansible and an AppVM used to handle the provisioning process
 if command -v qubesctl > /dev/null; then

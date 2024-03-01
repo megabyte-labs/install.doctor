@@ -124,7 +124,6 @@ logg() {
   fi
 }
 
-# @section Environment variables and system dependencies
 # @description Ensure Ubuntu / Debian run in `noninteractive` mode. Detect `START_REPO` format and determine appropriate git address,
 #     otherwise use the master Install Doctor branch
 setEnvironmentVariables() {
@@ -347,7 +346,7 @@ printFullDiskAccessNotice() {
 #     by attempting to read a file that requires full disk access. If it does not, the program opens the preferences
 #     pane where the user can grant access so that the script can continue.
 #
-#     ## Sources
+#     #### Links
 #
 #     * [Detecting Full Disk Access permission on macOS](https://www.dzombak.com/blog/2021/11/macOS-Scripting-How-to-tell-if-the-Terminal-app-has-Full-Disk-Access.html)
 ensureFullDiskAccess() {
@@ -451,7 +450,6 @@ setupPasswordlessSudo() {
   fi
 }
 
-# @section Qubes dom0
 # @description Ensure sys-whonix is configured (for Qubes dom0)
 ensureSysWhonix() {
   CONFIG_WIZARD_COUNT=0
@@ -553,7 +551,6 @@ handleQubesDom0() {
   fi
 }
 
-# @section Homebrew dependencies
 # @description Helper function used by [[ensureHomebrewDeps]] to ensure a Homebrew package is installed after
 #     first checking if it is already available on the system.
 installBrewPackage() {
@@ -594,7 +591,6 @@ ensureHomebrewDeps() {
   fi
 }
 
-# @section Chezmoi
 # @description Ensure the `${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi` directory is cloned and up-to-date using the previously
 #     set `START_REPO` as the source repository.
 cloneChezmoiSourceRepo() {
@@ -714,7 +710,6 @@ runChezmoi() {
   fi
 }
 
-# @section Post-provision logic
 # @description Ensure temporary passwordless sudo privileges are removed from `/etc/sudoers`
 removePasswordlessSudo() {
   if command -v gsed > /dev/null; then
@@ -732,7 +727,6 @@ postProvision() {
   fi
 }
 
-# @section Execution order
 # @description The `provisionLogic` function is used to define the order of the script. All of the functions it relies on are defined
 #     above.
 provisionLogic() {

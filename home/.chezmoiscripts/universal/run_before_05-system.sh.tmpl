@@ -17,7 +17,7 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 #
 #     After the `/swapfile` is created, it is enabled and assigned the appropriate permissions.
 #
-#     ## TODO
+#     #### TODO
 #
 #     * Add logic that creates a swapfile for ZFS-based systems
 #     * Integrate logic from https://gitlab.com/megabyte-labs/gas-station/-/blob/master/roles/system/common/tasks/linux/swap.yml
@@ -308,7 +308,7 @@ function installCredentialSecretService() {
 #     This script ensures Docker is installed and then adds the provisioning user to the `docker` group so that they can
 #     access Docker without `sudo`. It also installs and configures gVisor for use with Docker.
 #
-#     ## gVisor
+#     #### gVisor
 #
 #     gVisor is included with our Docker setup because it improves the security of Docker. gVisor is an application kernel, written in Go,
 #     that implements a substantial portion of the Linux system call interface. It provides an additional layer of isolation between running
@@ -474,7 +474,7 @@ installDocker() {
 #
 #     *Note: You should check out the supported systems before trying to enroll devices.*
 #
-#     ## JumpCloud on macOS
+#     #### JumpCloud on macOS
 #
 #     macOS offers a native device management feature offered through Apple Business. It is the preferred
 #     method since it offers most of the desirable features (like remote wipe). The [JumpCloud MDM documentation](https://support.jumpcloud.com/support/s/article/Getting-Started-MDM)
@@ -562,7 +562,7 @@ removeLinuxBloatware() {
 #     are set equal to the value stored in `.host.hostname` (in `.chezmoi.yaml.tmpl`) but with the `.host.domain` stripped off. On Linux, the same is done
 #     but only the hostname is set. On Linux, the hostname is set with the `hostname` command and then also with the `hostnamectl` command if it is available.
 #
-#     ## Sources
+#     #### Sources
 #
 #     * [Changing Linux hostname permanently](https://www.tecmint.com/set-hostname-permanently-in-linux/)
 setHostname() {
