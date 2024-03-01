@@ -15,7 +15,7 @@ The `scripts/provision.sh` script is the quick-start script referenced by the In
 bash <(curl -sSL https://install.doctor/start)
 ```
 
-More details are provided on the [Kickstart Script documentation page](https://install.doctor/docs/scripts/utility/start).
+More details are provided on the [Kickstart Script documentation page](https://install.doctor/docs/scripts/utility/provision.sh).
 
 ## Homebrew Install Script
 
@@ -25,7 +25,7 @@ The `scripts/homebrew.sh` script is a helper script that installs Homebrew on Li
 bash <(curl -sSL https://install.doctor/brew)
 ```
 
-More details are provided on the [Homebrew Install Script documentation page](https://install.doctor/docs/scripts/utility/brew).
+More details are provided on the [Homebrew Install Script documentation page](https://install.doctor/docs/scripts/utility/homebrew.sh).
 
 ## CloudFlare SSO SSH Script
 
@@ -35,4 +35,4 @@ The `scripts/cloudflared-ssh.sh` script automates the process of connecting devi
 bash <(curl -sSL https://install.doctor/ssh)
 ```
 
-More details are provided on the [CloudFlare SSO SSH Script documentation page](https://install.doctor/docs/scripts/utility/ssh).
+More details are provided on the [CloudFlare SSO SSH Script documentation page](https://install.doctor/docs/scripts/utility/cloudflared-ssh.sh).
