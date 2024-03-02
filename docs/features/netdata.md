@@ -13,7 +13,7 @@ Install Doctor allows the user to monitor detailed system metrics by leveraging 
     <source src="/docs/screenshots/netdata-localhost.webp" type="image/webp" />
     <img src="/docs/screenshots/netdata-localhost.png" alt="Netdata localhost screenshot" loading="eager" />
   </picture>
-  <figcaption>Screenshot of the localhost version of Netdata (i.e. `http://localhost:19999`</figcaption>
+  <figcaption>Screenshot of the localhost version of Netdata (i.e. http://localhost:19999)</figcaption>
 </figure>
 
 ## Configuration
