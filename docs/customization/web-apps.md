@@ -35,9 +35,9 @@ bash <(curl -sSL https://install.doctor/start)
 | VNC                     | `vnc.webdev1.example.com`    |
 | [Dagu](https://github.com/dagu-dev/dagu) | `dagu.webdev1.example.com` |
 | rsyslog                 | `rsyslog.webdev1.example.com` |
-| Netdata                 | `netdata.webdev1.example.com` |
-| Rundeck                 | `rundeck.webdev1.example.com` |
-| Portainer               | `portainer.webdev1.example.com` |
+| [Netdata](https://github.com/netdata/netdata)                 | `netdata.webdev1.example.com` |
+| [Rundeck](https://github.com/rundeck/rundeck)                 | `rundeck.webdev1.example.com` |
+| [Portainer](https://github.com/portainer/portainer)               | `portainer.webdev1.example.com` |
 
 ## `cloudflared` Configuration
 
