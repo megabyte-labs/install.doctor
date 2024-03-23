@@ -100,9 +100,11 @@ setCIEnvironmentVariables() {
 
 # @description Disconnect from WARP, if connected
 ensureWarpDisconnected() {
-  if command -v warp-cli > /dev/null; then
-    if warp-cli status | grep 'Connected' > /dev/null; then
-      logg info "Disconnecting from WARP" && warp-cli disconnect && logg success "Disconnected WARP to prevent conflicts"
+  if [ -z "$DEBUG" ]; then
+    if command -v warp-cli > /dev/null; then
+      if warp-cli status | grep 'Connected' > /dev/null; then
+        logg info "Disconnecting from WARP" && warp-cli disconnect && logg success "Disconnected WARP to prevent conflicts"
+      fi
     fi
   fi
 }
