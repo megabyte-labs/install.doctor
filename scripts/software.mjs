@@ -12,7 +12,7 @@ async function getSoftwareDefinitions() {
 
 async function writeSoftwareDefinitions() {
     try {
-        fs.writeFileSync(fs.readFileSync(`${os.homedir()}/.local/share/chezmoi/software.yml`, YAML.stringify(definitions)))
+        fs.writeFileSync(`${os.homedir()}/.local/share/chezmoi/software.yml`, YAML.stringify(definitions))
     } catch (e) {
         throw Error('Failed to write new software definitions file', e)
     }
@@ -26,23 +26,39 @@ async function populateMissing() {
             console.log(pkg)
             if (!softwarePackages[pkg]._desc) {
                 const sgptResponse = await $`sgpt "Describe ${softwarePackages[pkg]._github}. Do not say that you can find more information on its GitHub page."`
-                console.log('--- START - SGPT Response for Description Acquired ---')
+                console.log('--- START - SGPT Response for _desc Acquired ---')
                 console.log(sgptResponse.stdout)
-                console.log('--- END - SGPT Response for Description Acquired ---')
+                console.log('--- END - SGPT Response for _desc Acquired ---')
                 softwarePackages[pkg]._desc = sgptResponse.stdout
             }
 
             if (!softwarePackages[pkg]._name) {
                 const sgptResponse = await $`sgpt "What is the project name of ${softwarePackages[pkg]._github}? Only print the project name without any additional text."`
-                console.log('--- START - SGPT Response for Name Acquired ---')
+                console.log('--- START - SGPT Response for _name Acquired ---')
                 console.log(sgptResponse.stdout)
-                console.log('--- END - SGPT Response for Name Acquired ---')
+                console.log('--- END - SGPT Response for _name Acquired ---')
                 softwarePackages[pkg]._name = sgptResponse.stdout
             }
+
+            //if (!softwarePackages[pkg]._home) {
+            //    const sgptResponse = await $`sgpt "What is the project name of ${softwarePackages[pkg]._github}? Only print the project name without any additional text."`
+            //    console.log('--- START - SGPT Response for _home Acquired ---')
+            //    console.log(sgptResponse.stdout)
+            //    console.log('--- END - SGPT Response for _home Acquired ---')
+            //    softwarePackages[pkg]._home = sgptResponse.stdout
+            //}
+
+            //if (!softwarePackages[pkg]._docs) {
+            //    const sgptResponse = await $`sgpt "Print the documentation URL for ${softwarePackages[pkg]._github}. Print only the URL without 'The documentation URL for' text."`
+            //    console.log('--- START - SGPT Response for _docs Acquired ---')
+            //    console.log(sgptResponse.stdout)
+            //    console.log('--- END - SGPT Response for _docs Acquired ---')
+            //    softwarePackages[pkg]._docs = sgptResponse.stdout
+            //}
         } else if (softwarePackages[pkg]._github === false) {
             console.log('No GitHub repository for ' + pkg)
         } else {
-            console.log('MISSING GITHUB REPOSITORY INFORMATION FOR ' + pkg)
+            console.log('***** MISSING GITHUB REPOSITORY INFORMATION FOR ' + pkg + ' *****')
         }
     }
     definitions.softwarePackages = softwarePackages
@@ -50,7 +66,7 @@ async function populateMissing() {
 
 async function main() {
     await populateMissing()
-
+    await writeSoftwareDefinitions()
 }
 
 console.log('Running script..')
