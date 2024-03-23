@@ -13,6 +13,7 @@ async function getSoftwareDefinitions() {
 async function writeSoftwareDefinitions() {
     try {
         fs.writeFileSync(`${os.homedir()}/.local/share/chezmoi/software.yml`, YAML.stringify(definitions))
+        console.log('Wrote additional data to software.yml')
     } catch (e) {
         throw Error('Failed to write new software definitions file', e)
     }
@@ -23,9 +24,16 @@ async function populateMissing() {
     softwarePackages = definitions.softwarePackages
     for (const pkg in softwarePackages) {
         if (softwarePackages[pkg]._github) {
-            console.log(pkg)
+            if (!softwarePackages[pkg]._short) {
+                const sgptResponse = await $`sgpt "Describe ${softwarePackages[pkg]._github}. Make the description extremely short."`
+                console.log('--- START - SGPT Response for _short Acquired ---')
+                console.log(sgptResponse.stdout)
+                console.log('--- END - SGPT Response for _short Acquired ---')
+                softwarePackages[pkg]._short = sgptResponse.stdout
+            }
+
             if (!softwarePackages[pkg]._desc) {
-                const sgptResponse = await $`sgpt "Describe ${softwarePackages[pkg]._github}. Do not say that you can find more information on its GitHub page."`
+                const sgptResponse = await $`sgpt "Describe ${softwarePackages[pkg]._github}."`
                 console.log('--- START - SGPT Response for _desc Acquired ---')
                 console.log(sgptResponse.stdout)
                 console.log('--- END - SGPT Response for _desc Acquired ---')
