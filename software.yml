@@ -201,9 +201,11 @@ installerPreference:
     - binary
 softwarePackages:
   _kde:
+    _github: false
     _deps:
       - kde-plasma-desktop
   _misc-flatpaks:
+    _github: false
     _deps:
       - bottles
       - cockpit-client
@@ -241,6 +243,7 @@ softwarePackages:
       - iso-image-writer
       - trayscale
   _nautilus-extensions:
+    _github: false
     _deps:
       - nautilus-brasero
       - nautilus-gtkhash
@@ -255,10 +258,12 @@ softwarePackages:
     _bin: trayscale
     _desc: Unofficial Menu Bar for Tailscale on Linux
     _name: Trayscale
+    _github: https://github.com/DeedleFake/trayscale
     flatpak: dev.deedles.Trayscale
   iso-image-writer:
     _bin: iso-image-writer
     _name: ISO Image Writer
+    _github: https://github.com/KDE/isoimagewriter
     flatpak: org.kde.isoimagewriter
   blueutil:
     _bin: blueutil
@@ -267,6 +272,7 @@ softwarePackages:
     brew:darwin: blueutil
   pinapp:
     _bin: pinapp
+    _github: https://github.com/fabrialberio/PinApp
     flatpak: io.github.fabrialberio.pinapp
   tradingview:
     _bin: tradingview
@@ -279,6 +285,7 @@ softwarePackages:
   google-web-designer:
     _bin: google-web-designer
     _name: Google Web Designer
+    _github: false
     cask: google-web-designer
     choco: google-web-designer
   fabric:
@@ -289,12 +296,16 @@ softwarePackages:
     pipx: fabric
   drawing:
     _bin: drawing
+    _github: https://github.com/maoschanz/drawing
     flatpak: com.github.maoschanz.drawing
   junction:
     _bin: junction
+    _github: https://github.com/sonnyp/Junction
     flatpak: re.sonny.Junction
   gnome-sound-recorder:
     _bin: sound-recorder
+    _github: false
+    _gitlab: https://gitlab.gnome.org/World/vocalis
     flatpak: org.gnome.SoundRecorder
   gnome-text-editor:
     _bin: text-editor
@@ -14505,7 +14516,7 @@ softwarePackages:
     _bin: zoom
     _desc: '[Zoom](https://zoom.us/) is a videotelephony software program developed by Zoom Video Communications. This role installs Zoom on nearly any platform. The Zoom free plan provides a video chatting service that allows up to 100 participants concurrently, with a 40-minute time restriction.'
     _docs: https://support.zoom.us/hc/en-us/categories/200101697-Getting-Started-with-Zoom
-    _github: Not open-source
+    _github: false
     _home: https://zoom.us/
     _name: Zoom
     _app: zoom.us.app
@@ -14519,7 +14530,7 @@ softwarePackages:
     _bin: zoxide
     _desc: '[zoxide](https://github.com/ajeetdsouza/zoxide) is a blazing fast replacement for your cd command, inspired by z and autojump'
     _docs: null
-    _github: null
+    _github: https://github.com/ajeetdsouza/zoxide
     _home: null
     _name: zoxide
     _preload: true
