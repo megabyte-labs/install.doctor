@@ -31,6 +31,7 @@
     "prepare": "bash start.sh && (test -f Taskfile.yml && task npm:prepare) || true",
     "release": "bash start.sh && task publish:semantic-release",
     "repair": "bash <(curl -sS https://install.doctor/repair)",
+    "sort:software": "yq -i 'sort_keys(..)' software.yml",
     "start": "test -z $SKIP_NPM_START && bash start.sh || true",
     "test": "bash start.sh && task donothing",
     "unpack": "bash start.sh && task npm:bundle:unpack",
