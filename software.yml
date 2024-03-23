@@ -421,6 +421,7 @@ softwarePackages:
     cask: android-commandlinetools
   android-platform-tools:
     _bin: adb
+    _github: false
     _name: Android Platform Tools
     cask: android-platform-tools
   android-studio:
@@ -881,6 +882,7 @@ softwarePackages:
     _bin: null
     _docs: https://docs.brew.sh/Shell-Completion
     _name: Bash Completion Formula
+    _github: https://github.com/scop/bash-completion
     apt: bash-completion
     brew: bash-completion@2
     dnf: bash-completion
@@ -2140,7 +2142,7 @@ softwarePackages:
     brew: linka-cloud/tap/d2vm
   dagu:
     _bin: dagu
-    _github:
+    _github: https://github.com/dagu-dev/dagu
     _name: Dagu
     _post: |
       #!/usr/bin/env bash
@@ -2199,6 +2201,7 @@ softwarePackages:
     _bin: dejadup
     _home: https://apps.gnome.org/DejaDup/
     _gitlab: https://gitlab.gnome.org/World/deja-dup
+    _github: false
     flatpak: org.gnome.DejaDup
   delta:
     _bin: delta
@@ -4132,6 +4135,7 @@ softwarePackages:
     npm: git-jump
   git-lfs:
     _bin: git-lfs
+    _github: https://github.com/git-lfs/git-lfs
     _deps:
       - git
     _desc: Git LFS (Large File Storage) replaces large files such as audio samples, videos, datasets, and graphics with text pointers inside Git, while storing the file contents on a remote server like GitHub.com or GitHub Enterprise.
@@ -4210,6 +4214,7 @@ softwarePackages:
   github-desktop:
     _app: GitHub Desktop.app
     _bin: github
+    _github: https://github.com/desktop/desktop
     cask: github
     choco: github-desktop
     flatpak: io.github.shiftey.Desktop
@@ -4414,6 +4419,7 @@ softwarePackages:
     yay: gitlab-glab-bin
   glances:
     _bin: glances
+    _github: https://github.com/nicolargo/glances
     _desc: '[Glances](https://github.com/nicolargo/glances) is a cross-platform monitoring tool which aims to present a maximum of information in a minimum of space through a curses or a web interface. It can adapt the displayed information depending on the terminal size dynamically. It is a top/htop alternative for Linux, BSD, macOS, and even Windows.'
     _name: Glances
     _post:pipx: |
@@ -5241,6 +5247,8 @@ softwarePackages:
     _bin: httpie
     _desc: '[HTTPie](https://httpie.io/) is a terminal-based, user-friendly command-line HTTP client for the API era. It comes with JSON support, syntax highlighting, persistent sessions, wget-like downloads, plugins, and more.'
     _name: HTTPie
+    _github: https://github.com/httpie/cli
+    _todo: Look into https://github.com/httpie/desktop as alternative to Postman and other HTTP request clients
     ansible: professormanhattan.httpie
     brew: httpie
     choco: httpie
@@ -6705,6 +6713,7 @@ softwarePackages:
   meld:
     _app: Meld.app
     _bin: meld
+    _github: https://github.com/GNOME/meld
     cask: meld
     choco: meld
     flatpak: org.gnome.meld
@@ -9025,6 +9034,7 @@ softwarePackages:
     _bin: privoxy
     _desc: Privoxy is a non-caching web proxy with advanced filtering capabilities for enhancing privacy, modifying web page data and HTTP headers, controlling access, and removing ads and other obnoxious Internet junk
     _docs: https://www.privoxy.org/user-manual/index.html
+    _github: https://github.com/unisx/privoxy
     _groups:
       - privoxy
     _home: https://www.privoxy.org/
@@ -9275,6 +9285,7 @@ softwarePackages:
     cask: qlmarkdown
   qlplugins:
     _bin: null
+    _github: false
     _deps:
       - provisionql
       - qlcolorcode
@@ -10208,7 +10219,9 @@ softwarePackages:
       fi
   seafile-client:
     _app: Seafile Client.app
+    _github: https://github.com/haiwen/seafile-client
     _bin: seafile-client
+    _todo: Look into integration of the full Seafile stack outlined [here](https://github.com/haiwen/seafile)
     cask: seafile-client
     choco: seafile-client
     flatpak: com.seafile.Client
@@ -12800,6 +12813,8 @@ softwarePackages:
     _name: Web Extension CLI by Mozilla
     npm: web-ext
   web-font-generator:
+    _bin: web-font-generator
+    _github: https://github.com/rafaelmardojai/webfont-kit-generator
     flatpak: com.rafaelmardojai.WebfontKitGenerator
   webpquicklook:
     _github: https://github.com/emin/WebPQuickLook
