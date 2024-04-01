@@ -34,7 +34,7 @@ async function runScript(key, script) {
     fs.writeFileSync(`${cacheDir}/${key}`, script)
     const file = await $`cat ${cacheDir}/${key} | ( grep "^# @file" || [ "$?" == "1" ] ) | sed 's/^# @file //'`
     const brief = await $`cat ${cacheDir}/${key} | ( grep "^# @brief" || [ "$?" == "1" ] ) | sed 's/^# @brief //'`
-    fs.writeFileSync(`${cacheDir}/${key}-glow`, '```sh\n' + (file.stdout ? (!file.stdout && !brief.stdout ? '```sh' + '') + `# ${file.stdout}\n` : '') + (brief.stdout ? `> ${brief.stdout}\n` : '') + (file.stdout || brief.stdout ? '```sh\n' : '') + script + "\n```")
+    fs.writeFileSync(`${cacheDir}/${key}-glow`, '```sh\n' + (file.stdout ? (!file.stdout && !brief.stdout ? '```sh' : '') + `# ${file.stdout}\n` : '') + (brief.stdout ? `> ${brief.stdout}\n` : '') + (file.stdout || brief.stdout ? '```sh\n' : '') + script + "\n```")
     runSilentCommand(`glow "${cacheDir}/${key}-glow" && bash "${cacheDir}/${key}"`)
 }
 

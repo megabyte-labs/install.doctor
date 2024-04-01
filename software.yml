@@ -1215,39 +1215,38 @@ softwarePackages:
         done
 
         ### Add Chrome extension JSON
-        logg info 'Populating Chrome extension JSON'
-        for EXTENSION_DIR in "/etc/brave/extensions" "$HOME/Library/Application Support/BraveSoftware/Brave-Browser/External Extensions"; do
-          ### Ensure program-type is installed
-          if [ -d "$(dirname "$EXTENSION_DIR")" ]; then
-            ### Ensure extension directory exists
-            if [[ "$EXTENSION_DIR" == '/opt/'* ]] || [[ "$EXTENSION_DIR" == '/etc/'* ]]; then
-              if [ ! -d "$EXTENSION_DIR" ]; then
-                logg info "Creating directory $EXTENSION_DIR" && sudo mkdir -p "$EXTENSION_DIR"
-              fi
-            else
-              if [ ! -d "$EXTENSION_DIR" ]; then
-                logg info "Creating directory $EXTENSION_DIR" && mkdir -p "$EXTENSION_DIR"
-              fi
-            fi
-
-            ### Add extension JSON
-            logg info "Adding Chrome extensions to $EXTENSION_DIR"
-            for EXTENSION in {{ list (.chromeExtensions | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
-              logg info "Adding Chrome extension manifest ($EXTENSION)"
-              if ! echo "$EXTENSION" | grep 'https://chrome.google.com/webstore/detail/' > /dev/null; then
-                EXTENSION="https://chrome.google.com/webstore/detail/$EXTENSION"
-              fi
-              EXTENSION_ID="$(echo "$EXTENSION" | sed 's/^.*\/\([^\/]*\)$/\1/')"
-              if [[ "$EXTENSION_DIR" == '/opt/'* ]] || [[ "$EXTENSION_DIR" == '/etc/'* ]]; then
-                sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
-              else
-                cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
-              fi
-            done
-          else
-            logg info "$EXTENSION_DIR does not exist"
-          fi
-        done
+        # logg info 'Populating Chrome extension JSON'
+        # for EXTENSION_DIR in "/etc/brave/extensions" "$HOME/Library/Application Support/BraveSoftware/Brave-Browser/External Extensions"; do
+        #   ### Ensure program-type is installed
+        #   if [ -d "$(dirname "$EXTENSION_DIR")" ]; then
+        #     ### Ensure extension directory exists
+        #     if [[ "$EXTENSION_DIR" == '/opt/'* ]] || [[ "$EXTENSION_DIR" == '/etc/'* ]]; then
+        #       if [ ! -d "$EXTENSION_DIR" ]; then
+        #         logg info "Creating directory $EXTENSION_DIR" && sudo mkdir -p "$EXTENSION_DIR"
+        #       fi
+        #     else
+        #       if [ ! -d "$EXTENSION_DIR" ]; then
+        #         logg info "Creating directory $EXTENSION_DIR" && mkdir -p "$EXTENSION_DIR"
+        #       fi
+        #     fi
+        #     ### Add extension JSON
+        #     logg info "Adding Chrome extensions to $EXTENSION_DIR"
+        #     for EXTENSION in { { list (.chromeExtensions | toString | replace "[" "" | replace "]" "") | uniq | join " " } }; do
+        #       logg info "Adding Chrome extension manifest ($EXTENSION)"
+        #       if ! echo "$EXTENSION" | grep 'https://chrome.google.com/webstore/detail/' > /dev/null; then
+        #         EXTENSION="https://chrome.google.com/webstore/detail/$EXTENSION"
+        #       fi
+        #       EXTENSION_ID="$(echo "$EXTENSION" | sed 's/^.*\/\([^\/]*\)$/\1/')"
+        #       if [[ "$EXTENSION_DIR" == '/opt/'* ]] || [[ "$EXTENSION_DIR" == '/etc/'* ]]; then
+        #         sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
+        #       else
+        #         cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
+        #       fi
+        #     done
+        #   else
+        #     logg info "$EXTENSION_DIR does not exist"
+        #   fi
+        # done
       }
 
       chromeSetUp
@@ -1619,41 +1618,40 @@ softwarePackages:
           fi
         done
 
-        ### Add Chrome extension JSON
-        logg info 'Populating Chrome extension JSON'
-        ### TODO - Find `EXTENSION_DIR` for macOS in Application Support folder like `$HOME/Library/Application Support/Google/Chrome/External Extensions` for Google Chrome
-        for EXTENSION_DIR in "/etc/chromium/extensions"; do
-          ### Ensure program-type is installed
-          if [ -d "$(dirname "$EXTENSION_DIR")" ]; then
-            ### Ensure extension directory exists
-            if [[ "$EXTENSION_DIR" == '/opt/'* ]] || [[ "$EXTENSION_DIR" == '/etc/'* ]]; then
-              if [ ! -d "$EXTENSION_DIR" ]; then
-                logg info "Creating directory $EXTENSION_DIR" && sudo mkdir -p "$EXTENSION_DIR"
-              fi
-            else
-              if [ ! -d "$EXTENSION_DIR" ]; then
-                logg info "Creating directory $EXTENSION_DIR" && mkdir -p "$EXTENSION_DIR"
-              fi
-            fi
-
-            ### Add extension JSON
-            logg info "Adding Chrome extensions to $EXTENSION_DIR"
-            for EXTENSION in {{ list (.chromeExtensions | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
-              logg info "Adding Chrome extension manifest ($EXTENSION)"
-              if ! echo "$EXTENSION" | grep 'https://chrome.google.com/webstore/detail/' > /dev/null; then
-                EXTENSION="https://chrome.google.com/webstore/detail/$EXTENSION"
-              fi
-              EXTENSION_ID="$(echo "$EXTENSION" | sed 's/^.*\/\([^\/]*\)$/\1/')"
-              if [[ "$EXTENSION_DIR" == '/opt/'* ]] || [[ "$EXTENSION_DIR" == '/etc/'* ]]; then
-                sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
-              else
-                cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
-              fi
-            done
-          else
-            logg info "$EXTENSION_DIR does not exist"
-          fi
-        done
+        # ### Add Chrome extension JSON
+        # logg info 'Populating Chrome extension JSON'
+        # ### TODO - Find `EXTENSION_DIR` for macOS in Application Support folder like `$HOME/Library/Application Support/Google/Chrome/External Extensions` for Google Chrome
+        # for EXTENSION_DIR in "/etc/chromium/extensions"; do
+        #   ### Ensure program-type is installed
+        #   if [ -d "$(dirname "$EXTENSION_DIR")" ]; then
+        #     ### Ensure extension directory exists
+        #     if [[ "$EXTENSION_DIR" == '/opt/'* ]] || [[ "$EXTENSION_DIR" == '/etc/'* ]]; then
+        #       if [ ! -d "$EXTENSION_DIR" ]; then
+        #         logg info "Creating directory $EXTENSION_DIR" && sudo mkdir -p "$EXTENSION_DIR"
+        #       fi
+        #     else
+        #       if [ ! -d "$EXTENSION_DIR" ]; then
+        #         logg info "Creating directory $EXTENSION_DIR" && mkdir -p "$EXTENSION_DIR"
+        #       fi
+        #     fi
+        #     ### Add extension JSON
+        #     logg info "Adding Chrome extensions to $EXTENSION_DIR"
+        #     for EXTENSION in {{ list (.chromeExtensions | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
+        #       logg info "Adding Chrome extension manifest ($EXTENSION)"
+        #       if ! echo "$EXTENSION" | grep 'https://chrome.google.com/webstore/detail/' > /dev/null; then
+        #         EXTENSION="https://chrome.google.com/webstore/detail/$EXTENSION"
+        #       fi
+        #       EXTENSION_ID="$(echo "$EXTENSION" | sed 's/^.*\/\([^\/]*\)$/\1/')"
+        #       if [[ "$EXTENSION_DIR" == '/opt/'* ]] || [[ "$EXTENSION_DIR" == '/etc/'* ]]; then
+        #         sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
+        #       else
+        #         cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
+        #       fi
+        #     done
+        #   else
+        #     logg info "$EXTENSION_DIR does not exist"
+        #   fi
+        # done
       }
 
       chromeSetUp
@@ -3041,19 +3039,19 @@ softwarePackages:
 
       #     SSH port. It is intended to break unsophisticated malware that targets SSH.
 
-      #
+      # 
 
       #     If the `endlessh` program is installed, this script applies the configuration stored in `home/private_dot_ssh/endlessh/config.tmpl`
 
       #     (that unpacks with Chezmoi to `~/.ssh/endlessh/config`) to the system location and then starts the service.
 
-      #
+      # 
 
       #     **Note:** _This script runs under the assumption that the actual SSH port which is defined in `home/.chezmoidata.yaml`
 
       #     is assigned to a non-standard port like 2214. This allows the default port to be used for `endlessh`._
 
-      #
+      # 
 
       #     ## Links
 
@@ -3169,15 +3167,14 @@ softwarePackages:
       ### Import environment variables into `envchain`
 
       if command -v envchain > /dev/null; then
-
-        {{- if (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) }}
-        logg info 'Importing environment variables into the System keyring'
-        for file in {{ joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "*" }}; do
-          cat "$file" | chezmoi decrypt | envchain -s default "$(basename $file)" > /dev/null || logg info 'Importing "$(basename $file)" failed'
-        done
-        {{- else }}
-        logg warn 'Unable to import any variables into envchain because ~/.config/age/chezmoi.txt was not created by the secrets encryption process yet'
-        {{- end }}
+        if [ -f "$HOME/.config/age/chezmoi.txt" ]; then
+          logg info 'Importing environment variables into the System keyring'
+          for file in {{ joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "*" }}; do
+            cat "$file" | chezmoi decrypt | envchain -s default "$(basename $file)" > /dev/null || logg info 'Importing "$(basename $file)" failed'
+          done
+        else
+          logg warn 'Unable to import any variables into envchain because ~/.config/age/chezmoi.txt was not created by the secrets encryption process yet'
+        fi
       else
 
         logg info 'envchain is not installed or it is not available in the PATH'
@@ -4791,9 +4788,11 @@ softwarePackages:
         else
           logg info 'Creating runner configuration'
           ### Configure labels
-          LABELS="self-hosted,{{ .chezmoi.hostname }},{{ .host.distro.family }}"
-          if [ '{{ .host.distro.family }}' != '{{ .host.distro.id }}' ]; then
-            LABELS="${LABELS},{{ .host.distro.id }}"
+          HOST_DISTRO_FAMILY="$(yq '.data.host.distro.family' "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml")"
+          HOST_DISTRO_ID="$(yq '.data.host.distro.id' "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml")"
+          LABELS="self-hosted,$(yq '.data.host.hostname' "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml"),$HOST_DISTRO_FAMILY"
+          if [ "$HOST_DISTRO_FAMILY" != "$HOST_DISTRO_ID" ]; then
+            LABELS="${LABELS},$HOST_DISTRO_ID"
           fi
           if command -v VirtualBox > /dev/null; then
             LABELS="${LABELS},virtualbox"
