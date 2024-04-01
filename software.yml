@@ -1,3 +1,4 @@
+---
 installerPreference:
   apt:
     - flatpak
@@ -297,19 +298,12 @@ softwarePackages:
       echo "TODO"
     _post:binary:linux: >
       #!/usr/bin/env bash
-
       # TODO How to pass the path of the file downloaded in `binary` step? That can replace the `wget` command below
-
       mkdir -p /usr/local/share/allure
-
       cd /usr/local/share/allure
-
       wget https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.20.1/allure-commandline-2.20.1.zip -O /usr/local/share/allure/allure.zip
-
       unzip -o allure.zip
-
       ln -s /usr/local/share/allure/allure<version>/bin/allure
-
     _post:binary:windows: |
       # TODO
     _short: "Allure2 is a flexible test reporting tool that provides clear and concise test execution reports with rich visual representations.                                                                        "
@@ -528,27 +522,18 @@ softwarePackages:
     _name: aqua
     _post: >
       #!/usr/bin/env bash
-
       # @file Aqua Initialization
-
       # @brief Updates and installs any Aqua dependencies that are defined in Aqua's configuration file.
-
       # @description
-
       #     This script updates Aqua and then installs any Aqua dependencies that are defined.
-
-
       if command -v aqua > /dev/null; then
-
         logg info 'Updating Aqua'
         aqua update-aqua
         logg info 'Installing Aqua dependencies (if any are defined)'
         aqua install -a
       else
-
         logg info 'Skipping aqua install script because aqua was not installed'
       fi
-
     _short: "Aqua is a tool for secure and efficient container image scanning.                                                                                                                                         "
     binary:linux: https://github.com/aquaproj/aqua/releases/download/v2.0.0-0/aqua_linux_amd64.tar.gz
     binary:windows: https://github.com/aquaproj/aqua/releases/download/v2.0.0-0/aqua_windows_amd64.tar.gz
@@ -1095,23 +1080,16 @@ softwarePackages:
     _name: Blocky
     _post:brew: >
       #!/usr/bin/env bash
-
       cp -f "$HOME/.local/etc/blocky/config.yaml" "$(brew --prefix)/etc/blocky/config.yaml"
-
     _post:linux: >
       #!/usr/bin/env bash
-
       sudo mkdir -p /usr/local/etc/blocky
-
       if [ -d /usr/lib/systemd/system ]; then
-
         sudo cp -f "$HOME/.local/etc/blocky/config.yaml" /usr/local/etc/blocky/config.yaml
         sudo cp -f "$HOME/.local/etc/blocky/blocky.service" /usr/lib/systemd/system/blocky.service
       else
-
         echo "/usr/lib/systemd/system is missing from the file system"
       fi
-
     _service: blocky
     _service:brew:
       - name: blocky
@@ -1190,11 +1168,8 @@ softwarePackages:
     _name: Brave Browser
     _post: >
       #!/usr/bin/env bash
-
       # @brief See `google-chrome` `_post` script for more details
-
       function chromeSetUp() {
-
         ### Ensure Chrome policies directory is present
         logg info 'Processing policy directories for Chromium based browsers'
         for POLICY_DIR in "/etc/brave/policies"; do
@@ -1206,7 +1181,6 @@ softwarePackages:
               logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/chrome/managed.json to $POLICY_DIR/managed/policies.json"
               sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/managed.json" "$POLICY_DIR/managed/policies.json"
             fi
-
             ### Recommended policies
             if [ ! -f "$POLICY_DIR/recommended/policies.json" ]; then
               logg info "Ensuring directory $POLICY_DIR/recommended exists" && sudo mkdir -p "$POLICY_DIR/recommended"
@@ -1217,7 +1191,6 @@ softwarePackages:
             logg info "Skipping extension injection into $POLICY_DIR - create these folders prior to running to create managed configs"
           fi
         done
-
         ### Add Chrome extension JSON
         # logg info 'Populating Chrome extension JSON'
         # for EXTENSION_DIR in "/etc/brave/extensions" "$HOME/Library/Application Support/BraveSoftware/Brave-Browser/External Extensions"; do
@@ -1252,9 +1225,7 @@ softwarePackages:
         #   fi
         # done
       }
-
       chromeSetUp
-
     _short: "Brave Browser is an open-source web browser that focuses on privacy and security, with built-in ad-blocking and privacy features.                                                                         "
     cask: brave-browser
     choco: brave
@@ -1596,9 +1567,7 @@ softwarePackages:
     _name: "chromium                                                                                                                                                                                                  "
     _post: >
       #!/usr/bin/env bash
-
       function chromeSetUp() {
-
         ### Ensure Chrome policies directory is present
         logg info 'Processing policy directories for Chromium based browsers'
         for POLICY_DIR in "/etc/chromium/policies"; do
@@ -1610,7 +1579,6 @@ softwarePackages:
               logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/chrome/managed.json to $POLICY_DIR/managed/policies.json"
               sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/managed.json" "$POLICY_DIR/managed/policies.json"
             fi
-
             ### Recommended policies
             if [ ! -f "$POLICY_DIR/recommended/policies.json" ]; then
               logg info "Ensuring directory $POLICY_DIR/recommended exists" && sudo mkdir -p "$POLICY_DIR/recommended"
@@ -1621,7 +1589,6 @@ softwarePackages:
             logg info "Skipping extension injection into $POLICY_DIR - create these folders prior to running to create managed configs"
           fi
         done
-
         # ### Add Chrome extension JSON
         # logg info 'Populating Chrome extension JSON'
         # ### TODO - Find `EXTENSION_DIR` for macOS in Application Support folder like `$HOME/Library/Application Support/Google/Chrome/External Extensions` for Google Chrome
@@ -1657,9 +1624,7 @@ softwarePackages:
         #   fi
         # done
       }
-
       chromeSetUp
-
     _short: "https://github.com/chromium/chromium is the official repository for the Chromium web browser, an open-source project that serves as the foundation for Google Chrome.                                     "
     apt: chromium
     dnf: chromium
@@ -1683,41 +1648,26 @@ softwarePackages:
     _name: ClamAV
     _post: >
       #!/usr/bin/env bash
-
-
       ### Add freshclam.conf
-
       if [ -f "$HOME/.local/etc/clamav/freshclam.conf" ]; then
-
         sudo mkdir -p /usr/local/etc/clamav
         sudo cp -f "$HOME/.local/etc/clamav/freshclam.conf" /usr/local/etc/clamav/freshclam.conf
         if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav" ] && [ ! -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/freshclam.conf" ]; then
           ln -s /usr/local/etc/clamav/freshclam.conf "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/freshclam.conf"
         fi
       fi
-
-
       ### Add clamd.conf
-
       if [ -f "$HOME/.local/etc/clamav/clamd.conf" ]; then
-
         sudo mkdir -p /usr/local/etc/clamav
         sudo cp -f "$HOME/.local/etc/clamav/clamd.conf" /usr/local/etc/clamav/clamd.conf
         if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav" ] && [ ! -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/clamd.conf" ]; then
           ln -s /usr/local/etc/clamav/clamd.conf "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/clamd.conf"
         fi
       fi
-
-
       ### Update database
-
       freshclam
-
-
       ### Setting up launchd services on macOS
-
       if [ -d /Applications ] && [ -d /System ]; then
-
         sudo mkdir -p /var/log/clamav
         # sudo chown $USER /var/log/clamav
         sudo cp -f "$HOME/.local/etc/clamav/clamdscan.plist.tmpl" /Library/LaunchDaemons/clamdscan.plist
@@ -1725,7 +1675,6 @@ softwarePackages:
         sudo launchctl load -w /Library/LaunchDaemons/clamdscan.plist
         sudo launchctl load -w /Library/LaunchDaemons/freshclam.plist
       fi
-
     _service:apt: clamav-freshclam
     _service:brew:
       - name: clamav
@@ -1811,37 +1760,26 @@ softwarePackages:
     _name: CloudFlared
     _post: >
       #!/usr/bin/env bash
-
-
       {{- $registrationToken := "" }}
-
       {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname)) -}}
-
       {{-   $registrationToken = (includeTemplate (print "cloudflared/" .host.hostname) | decrypt) -}}
-
       {{- end }}
-
       ### Set up CloudFlare tunnels
-
       if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; then
-
         # Show warning message about ~/.cloudflared already existing
         if [ -d "$HOME/.cloudflared" ]; then
           logg warn '~/.cloudflared is already in the home directory - to ensure proper deployment, remove previous tunnel configuration folders'
         fi
-
         ### Ensure /usr/local/etc/cloudflared exists
         if [ -d /usr/local/etc/cloudflared ]; then
           logg info 'Creating folder /usr/local/etc/cloudflared'
           sudo mkdir -p /usr/local/etc/cloudflared
         fi
-
         # Copy over configuration files
         logg info 'Ensuring /usr/local/etc/cloudflared exists' && sudo mkdir -p /usr/local/etc/cloudflared
         logg info 'Copying over configuration files from ~/.local/etc/cloudflared to /usr/local/etc/cloudflared'
         sudo cp -f "$HOME/.local/etc/cloudflared/cert.pem" /usr/local/etc/cloudflared/cert.pem
         sudo cp -f "$HOME/.local/etc/cloudflared/config.yml" /usr/local/etc/cloudflared/config.yml
-
         # Register tunnel (if not already registered)
         if sudo cloudflared tunnel list | grep "host-{{ .host.hostname }}" > /dev/null; then
           logg info 'CloudFlare tunnel is already registered'
@@ -1869,7 +1807,6 @@ softwarePackages:
           {{- end }}
           {{- end }}
         fi
-
         # Set up service
         if [ -d /Applications ] && [ -d /System ]; then
           # System is macOS
@@ -1902,10 +1839,8 @@ softwarePackages:
           # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/windows/
         fi
       else
-
         logg info 'cloudflared was not installed so CloudFlare Tunnels cannot be enabled. (Or the ~/.local/etc/cloudflared folder is not present)'
       fi
-
     _short: "cloudflared is a tool by Cloudflare that allows secure and fast access to the internet.                                                                                                                   "
     ansible: professormanhattan.cloudflared
     binary:linux: https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
@@ -2686,7 +2621,6 @@ softwarePackages:
     _short: "docker-pushrm is a tool that simplifies pushing Docker images to AWS Elastic Container Registry (ECR) with reduced manual steps.                                                                          "
     script: >
       if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm" ]; then
-
         logg info 'Acquiring release information for Docker push-rm'
         RELEASE_TAG="$(curl -sSL https://api.github.com/repos/christian-korneck/docker-pushrm/releases/latest | jq -r '.tag_name')"
         mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins"
@@ -2694,10 +2628,8 @@ softwarePackages:
         chmod +x "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm"
         logg success 'Added Docker push-rm'
       else
-
         logg info 'Docker push-rm already added'
       fi
-
   docker-slim:
     _bin: slim
     _desc: "[DockerSlim](https://dockersl.im/) will optimize and secure your containers by understanding your application and what it needs using various analysis techniques. It will throw away what you don't need, reducing the attack surface of your container. What if you need some of those extra things to debug your container? You can use dedicated debugging side-car containers for that."
@@ -3030,95 +2962,7 @@ softwarePackages:
     _github: https://github.com/skeeto/endlessh
     _home: https://github.com/skeeto/endlessh
     _name: Endlessh
-    _post: >
-      #!/usr/bin/env bash
-
-      # @file Endlessh Configuration
-
-      # @brief Applies the Endlessh configuration and starts the service on Linux systems
-
-      # @description
-
-      #     Endlessh is a endless SSH tarpit that slowly shows an infinitely long SSH welcome banner on the default
-
-      #     SSH port. It is intended to break unsophisticated malware that targets SSH.
-
-      # 
-
-      #     If the `endlessh` program is installed, this script applies the configuration stored in `home/private_dot_ssh/endlessh/config.tmpl`
-
-      #     (that unpacks with Chezmoi to `~/.ssh/endlessh/config`) to the system location and then starts the service.
-
-      # 
-
-      #     **Note:** _This script runs under the assumption that the actual SSH port which is defined in `home/.chezmoidata.yaml`
-
-      #     is assigned to a non-standard port like 2214. This allows the default port to be used for `endlessh`._
-
-      # 
-
-      #     ## Links
-
-      #
-
-      #     * [Endlessh GitHub repository](https://github.com/skeeto/endlessh)
-
-      #     * [Endlessh configuration](https://github.com/megabyte-labs/install.doctor/blob/master/home/private_dot_ssh/endlessh/config.tmpl)
-
-
-      ### Configures endlessh service
-
-      function configureEndlessh() {
-
-        ### Update the service configuration file
-        logg info 'Updating endlessh service configuration file'
-        sudo sed -i 's/^.*#AmbientCapabilities=CAP_NET_BIND_SERVICE/AmbientCapabilities=CAP_NET_BIND_SERVICE/' /usr/lib/systemd/system/endlessh.service
-        sudo sed -i 's/^.*PrivateUsers=true/#PrivateUsers=true/' /usr/lib/systemd/system/endlessh.service
-        logg info 'Reloading systemd' && sudo systemctl daemon-reload
-
-        ### Update capabilities of `endlessh`
-        logg info 'Updating capabilities of endlessh' && sudo setcap 'cap_net_bind_service=+ep' /usr/bin/endlessh
-
-        ### Restart / enable Endlessh
-        logg info 'Enabling the endlessh service' && sudo systemctl enable endlessh
-        logg info 'Restarting the endlessh service' && sudo systemctl restart endlessh
-      }
-
-
-      ### Update /etc/endlessh/config if environment is not WSL
-
-      if [[ ! "$(test -d proc && grep Microsoft /proc/version > /dev/null)" ]]; then
-
-        if command -v endlessh > /dev/null; then
-          if [ -d /etc/endlessh ]; then
-            logg info 'Copying ~/.ssh/endlessh/config to /etc/endlessh/config' && sudo cp -f "$HOME/.ssh/endlessh/config" /etc/endlessh/config
-
-            configureEndlessh || CONFIGURE_EXIT_CODE=$?
-            if [ -n "$CONFIGURE_EXIT_CODE" ]; then
-              logg error 'Configuring endlessh service failed' && exit 1
-            else
-              logg success 'Successfully configured endlessh service'
-            fi
-          elif [ -f /etc/endlessh.conf ]; then
-            logg info 'Copying ~/.ssh/endlessh/config to /etc/endlessh.conf' && sudo cp -f "$HOME/.ssh/endlessh/config" /etc/endlessh.conf
-
-            configureEndlessh || CONFIGURE_EXIT_CODE=$?
-            if [ -n "$CONFIGURE_EXIT_CODE" ]; then
-              logg error 'Configuring endlessh service failed' && exit 1
-            else
-              logg success 'Successfully configured endlessh service'
-            fi
-          else
-            logg warn 'Neither the /etc/endlessh folder nor the /etc/endlessh.conf file exist'
-          fi
-        else
-          logg info 'Skipping Endlessh configuration because the endlessh executable is not available in the PATH'
-        fi
-      else
-
-        logg info 'Skipping Endlessh configuration since environment is WSL'
-      fi
-
+    _post: "#!/usr/bin/env bash\n# @file Endlessh Configuration\n# @brief Applies the Endlessh configuration and starts the service on Linux systems\n# @description\n#     Endlessh is a endless SSH tarpit that slowly shows an infinitely long SSH welcome banner on the default\n#     SSH port. It is intended to break unsophisticated malware that targets SSH.\n# \n#     If the `endlessh` program is installed, this script applies the configuration stored in `home/private_dot_ssh/endlessh/config.tmpl`\n#     (that unpacks with Chezmoi to `~/.ssh/endlessh/config`) to the system location and then starts the service.\n# \n#     **Note:** _This script runs under the assumption that the actual SSH port which is defined in `home/.chezmoidata.yaml`\n#     is assigned to a non-standard port like 2214. This allows the default port to be used for `endlessh`._\n# \n#     ## Links\n#\n#     * [Endlessh GitHub repository](https://github.com/skeeto/endlessh)\n#     * [Endlessh configuration](https://github.com/megabyte-labs/install.doctor/blob/master/home/private_dot_ssh/endlessh/config.tmpl)\n\n### Configures endlessh service\nfunction configureEndlessh() {\n\n  ### Update the service configuration file\n  logg info 'Updating endlessh service configuration file'\n  sudo sed -i 's/^.*#AmbientCapabilities=CAP_NET_BIND_SERVICE/AmbientCapabilities=CAP_NET_BIND_SERVICE/' /usr/lib/systemd/system/endlessh.service\n  sudo sed -i 's/^.*PrivateUsers=true/#PrivateUsers=true/' /usr/lib/systemd/system/endlessh.service\n  logg info 'Reloading systemd' && sudo systemctl daemon-reload\n\n  ### Update capabilities of `endlessh`\n  logg info 'Updating capabilities of endlessh' && sudo setcap 'cap_net_bind_service=+ep' /usr/bin/endlessh\n\n  ### Restart / enable Endlessh\n  logg info 'Enabling the endlessh service' && sudo systemctl enable endlessh\n  logg info 'Restarting the endlessh service' && sudo systemctl restart endlessh\n}\n\n### Update /etc/endlessh/config if environment is not WSL\nif [[ ! \"$(test -d proc && grep Microsoft /proc/version > /dev/null)\" ]]; then\n\n  if command -v endlessh > /dev/null; then\n    if [ -d /etc/endlessh ]; then\n      logg info 'Copying ~/.ssh/endlessh/config to /etc/endlessh/config' && sudo cp -f \"$HOME/.ssh/endlessh/config\" /etc/endlessh/config\n\n      configureEndlessh || CONFIGURE_EXIT_CODE=$?\n      if [ -n \"$CONFIGURE_EXIT_CODE\" ]; then\n        logg error 'Configuring endlessh service failed' && exit 1\n      else\n        logg success 'Successfully configured endlessh service'\n      fi\n    elif [ -f /etc/endlessh.conf ]; then\n      logg info 'Copying ~/.ssh/endlessh/config to /etc/endlessh.conf' && sudo cp -f \"$HOME/.ssh/endlessh/config\" /etc/endlessh.conf\n\n      configureEndlessh || CONFIGURE_EXIT_CODE=$?\n      if [ -n \"$CONFIGURE_EXIT_CODE\" ]; then\n        logg error 'Configuring endlessh service failed' && exit 1\n      else\n        logg success 'Successfully configured endlessh service'\n      fi\n    else\n      logg warn 'Neither the /etc/endlessh folder nor the /etc/endlessh.conf file exist'\n    fi\n  else\n    logg info 'Skipping Endlessh configuration because the endlessh executable is not available in the PATH'\n  fi\nelse\n\n  logg info 'Skipping Endlessh configuration since environment is WSL'\nfi\n"
     _service: endlessh
     _short: "endlessh is a tool that generates endless SSH honeypot noise to frustrate and slow down attackers.                                                                                                        "
     apt: endlessh
@@ -3144,32 +2988,18 @@ softwarePackages:
     _name: envchain
     _post: >
       #!/usr/bin/env bash
-
       # @file Store Secrets in Keyring
-
       # @brief Stores secret environment variables into the System keyring
-
       # @description
-
       #     This script imports secret environment variables into the System keyring if `envchain` is installed.
-
       #     Secrets stored in the folder 'home/.chezmoitemplates/secrets' following the Install Doctor method are
-
       #     imported into the System keyring by this script. There is only one namespace called `default` where the
-
       #     secrets are stored. Executing `envchain default env` displays all the environment variables and their values.
-
       #
-
       #     ## Secrets
-
       #
-
       #     For more information about storing secrets like SSH keys and API keys, refer to our [Secrets documentation](https://install.doctor/docs/customization/secrets).
-
-
       ### Import environment variables into `envchain`
-
       if command -v envchain > /dev/null; then
         if [ -f "$HOME/.config/age/chezmoi.txt" ]; then
           logg info 'Importing environment variables into the System keyring'
@@ -3180,10 +3010,8 @@ softwarePackages:
           logg warn 'Unable to import any variables into envchain because ~/.config/age/chezmoi.txt was not created by the secrets encryption process yet'
         fi
       else
-
         logg info 'envchain is not installed or it is not available in the PATH'
       fi
-
     _short: "envchain is a tool that securely stores and manages environment variables for command-line applications.                                                                                                  "
     brew: envchain
     github: github.com/sorah/envchain
@@ -3372,42 +3200,23 @@ softwarePackages:
     _name: "fail2ban                                                                                                                                                                                                  "
     _notes: >
       fail2ban cannot be installed on Qubes Fedora 36 without messing with the qubes-firewall since firewalld is required.
-
     _post: >
       #!/usr/bin/env bash
-
       # @file Fail2ban Configuration
-
       # @brief Applies the system `fail2ban` jail configuration and then restarts the service
-
       # @description
-
       #     Fail2ban is an SSH security program that temporarily bans IP addresses that could possibly be
-
       #     attempting to gain unauthorized system access. This script applies the "jail" configuration
-
       #     located at `home/private_dot_ssh/fail2ban/` to the system location. It then enables and restarts
-
       #     the `fail2ban` configuration.
-
       #
-
       #     ## Links
-
       #
-
       #     * [`fail2ban` configuration folder](https://github.com/megabyte-labs/install.doctor/tree/master/home/private_dot_ssh/fail2ban)
-
-
       ### Notify of script start
-
       logg info 'Configuring fail2ban'
-
-
       ### Restart fail2ban
-
       function restartFailToBan() {
-
         if [ -d /Applications ] && [ -d /System ]; then
           ### macOS
           logg info 'Enabling the fail2ban Homebrew service'
@@ -3420,14 +3229,9 @@ softwarePackages:
           sudo systemctl restart fail2ban
         fi
       }
-
-
       ### Update the jail.local file if environment is not WSL
-
       logg info 'Checking if script is being run in WSL environment'
-
       if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
-
         if [ -d /etc/fail2ban ]; then
           logg info 'Copying ~/.ssh/fail2ban/jail.local to /etc/fail2ban/jail.local'
           sudo cp -f "$HOME/.ssh/fail2ban/jail.local" /etc/fail2ban/jail.local
@@ -3444,10 +3248,8 @@ softwarePackages:
           logg warn 'The /etc/fail2ban (Linux), the /usr/local/etc/fail2ban, and the ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban (macOS) folder do not exist'
         fi
       else
-
         logg info 'Skipping sshd_config application since environment is WSL'
       fi
-
     _service: fail2ban
     _service:brew:
       - name: fail2ban
@@ -3679,96 +3481,50 @@ softwarePackages:
     _name: Mozilla Firefox
     _post: >
       #!/usr/bin/env bash
-
       # @file Firefox Settings / Add-Ons / Profiles
-
       # @brief This script configures system-wide settings, sets up Firefox Profile Switcher, creates various profiles from different sources, and installs a configurable list of Firefox Add-Ons.
-
       # @description
-
       #     The Firefox setup script performs a handful of tasks that automate the setup of Firefox as well as
-
       #     useful utilities that will benefit Firefox power-users. The script also performs the same logic on
-
       #     [LibreWolf](https://librewolf.net/) installations.
-
       #
-
       #     ## Features
-
       #
-
       #     * Installs and sets up [Firefox Profile Switcher](https://github.com/null-dev/firefox-profile-switcher)
-
       #     * Sets up system-wide enterprise settings (with configurations found in `~/.local/share/firefox`)
-
       #     * Sets up a handful of default profiles to use with the Firefox Profile Switcher
-
       #     * Automatically installs the plugins defined in the firefoxAddOns key of [`home/.chezmoidata.yaml`](https://github.com/megabyte-labs/install.doctor/blob/master/home/.chezmoidata.yaml) to the Standard and Private profiles
-
       #     * Configures the default profile to clone its settings from the profile stored in firefoxPublicProfile of `home/.chezmoidata.yaml`
-
       #     * Optionally, if the Chezmoi encryption key is present, then the default profile will be set to the contents of an encrypted `.tar.gz` that must be stored in the cloud somewhere (with the firefoxPrivateProfile key in `home/.chezmoidata.yaml` defining the URL of the encrypted `.tar.gz`)
-
       #
-
       #     ## Profiles
-
       #
-
       #     The script sets up numerous profiles for user flexibility. They can be switched by using the Firefox Profile Switcher
-
       #     that this script sets up. The map of the profiles is generated by using the template file stored in `~/.local/share/firefox/profiles.ini`.
-
       #     The following details the features of each profile:
-
       #
-
       #     | Name             | Description                                                                                 |
-
       #     |------------------|---------------------------------------------------------------------------------------------|
-
       #     | Factory          | Default browser settings (system-wide configurations still apply)                           |
-
       #     | default-release  | Same as Factory (unmodified and generated by headlessly opening Firefox / LibreWolf)        |
-
       #     | Git (Public)     | Pre-configured profile with address stored in `firefoxPublicProfile`                        |
-
       #     | Standard         | Cloned from the profile above with `firefoxAddOns` also installed                           |
-
       #     | Miscellaneous    | Cloned from the Factory profile (with the user.js found in `~/.config/firefox` applied)     |
-
       #     | Development      | Same as Miscellaneous                                                                       |
-
       #     | Automation       | Same as Miscellaneous                                                                       |
-
       #     | Private          | Populated from an encrypted profile stored in the cloud (also installs `firefoxAddOns`)     |
-
       #
-
       #     ## Notes
-
       #
-
       #     * The Firefox Profile Switcher is only compatible with Firefox and not LibreWolf
-
       #     * This script is only designed to properly provision profiles on a fresh installation (so it does not mess around with pre-existing / already configured profiles)
-
       #     * Additional profiles for LibreWolf are not added because the Firefox Profile Switcher is not compatible with LibreWolf
-
       #
-
       #     ## Links
-
       #
-
       #     * [System-wide configurations](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_local/share/firefox) as well as the location of the `profile.ini` and some other configurations
-
       #     * [User-specific configurations](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/firefox/user.js) added to all profiles except Factory
-
-
       function installFirefoxProfileConnector() {
-
         logg info 'Installing the Firefox Profile Connector'
         if command -v apt-get > /dev/null; then
           sudo apt-get install -y https://github.com/null-dev/firefox-profile-switcher-connector/releases/latest/download/linux-x64.deb
@@ -3780,10 +3536,7 @@ softwarePackages:
           logg warn 'apt-get, dnf, and yay were all unavailable so the Firefox Profile Connector helper executable could not be installed'
         fi
       }
-
-
       function firefoxSetup() {
-
         ### Installs the Firefox Profile Connector on Linux systems (Snap / Flatpak installs are not included in this function, but instead inline below)
         ### Add Firefox enterprise profile
         # TODO - figure out how to do this for other installations like Flatpak and macOS and Librewolf
@@ -3793,7 +3546,6 @@ softwarePackages:
             sudo rsync -artvu "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/" "$FIREFOX_DIR" > /dev/null
           fi
         done
-
         ### Loop through various Firefox profile locations
         for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox" "$HOME/Library/Application Support/Firefox/Profiles" "$HOME/.mozilla/firefox"; do
           ### Determine executable to use
@@ -3809,7 +3561,6 @@ softwarePackages:
               BIN_INSTALL_DIR="$BASE_DIR/data/firefoxprofileswitcher-install"
               MANIFEST_INSTALL_DIR="$BASE_DIR/.mozilla/native-messaging-hosts"
               DOWNLOAD_URL="https://github.com/null-dev/firefox-profile-switcher-connector/releases/latest/download/linux-x64.deb"
-
               ### Ensure Firefox Profile Switcher is not already installed
               if [ ! -f "$BIN_INSTALL_DIR/usr/bin/ff-pswitch-connector" ] || [ ! -f "$MANIFEST_INSTALL_DIR/ax.nd.profile_switcher_ff.json" ]; then
                 ### Download profile switcher
@@ -3819,7 +3570,6 @@ softwarePackages:
                 curl -sSL "$DOWNLOAD_URL" -o "$TMP_FILE"
                 ar p "$TMP_FILE" data.tar.xz | tar xfJ - --strip-components=2 -C "$BIN_INSTALL_DIR" usr/bin/ff-pswitch-connector
                 rm -f "$TMP_FILE"
-
                 ### Create manifest
                 logg info 'Copying profile switcher configuration to manifest directory'
                 mkdir -p "$MANIFEST_INSTALL_DIR"
@@ -3843,7 +3593,6 @@ softwarePackages:
                 logg info 'Ensuring Firefox Profile Switcher is installed'
                 brew install --quiet null-dev/firefox-profile-switcher/firefox-profile-switcher-connector
               fi
-
               ### Ensure Firefox Profile Switcher configuration is symlinked
               if [ ! -d "/Library/Application Support/Mozilla/NativeMessagingHosts/ax.nd.profile_switcher_ff.json" ]; then
                 logg info 'Ensuring Firefox Profile Switcher is configured'
@@ -3868,7 +3617,6 @@ softwarePackages:
               BIN_INSTALL_DIR="$BASE_DIR/firefoxprofileswitcher-install"
               MANIFEST_INSTALL_DIR="$BASE_DIR/.mozilla/native-messaging-hosts"
               DOWNLOAD_URL="https://github.com/null-dev/firefox-profile-switcher-connector/releases/latest/download/linux-x64.deb"
-
               ### Ensure Firefox Profile Switcher is not already installed
               if [ ! -f "$BIN_INSTALL_DIR/usr/bin/ff-pswitch-connector" ] || [ ! -f "$MANIFEST_INSTALL_DIR/ax.nd.profile_switcher_ff.json" ]; then
                 ### Download profile switcher
@@ -3878,7 +3626,6 @@ softwarePackages:
                 curl -sSL "$DOWNLOAD_URL" -o "$TMP_FILE"
                 ar p "$TMP_FILE" data.tar.xz | tar xfJ - --strip-components=2 -C "$BIN_INSTALL_DIR" usr/bin/ff-pswitch-connector
                 rm -f "$TMP_FILE"
-
                 ### Create manifest
                 logg info 'Copying profile switcher configuration to manifest directory'
                 mkdir -p "$MANIFEST_INSTALL_DIR"
@@ -3918,13 +3665,11 @@ softwarePackages:
               timeout 14 "$FIREFOX_EXE" --headless
               logg info 'Finished running Firefox headlessly (while fixing the missing macOS installs.ini issue)'
             fi
-
             ### Ensure settings directory exists (since the application was brought up temporarily headlessly)
             if [ ! -d "$SETTINGS_DIR" ]; then
               logg warn "The settings directory located at $SETTINGS_DIR failed to be populated by running the browser headlessly"
               continue
             fi
-
             ### Add the populated profiles.ini
             logg info "Copying "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" to profile directory"
             logg info "The settings directory is $SETTINGS_DIR"
@@ -3939,7 +3684,6 @@ softwarePackages:
               cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" "$SETTINGS_DIR/profiles.ini"
               SETTINGS_INI="$SETTINGS_DIR/installs.ini"
             fi
-
             ### Default profile (created by launching Firefox headlessly)
             DEFAULT_RELEASE_PROFILE="$(find "$SETTINGS_DIR" -mindepth 1 -maxdepth 1 -name "*.default" -not -name "profile.default")"
             if [ -n "$DEFAULT_RELEASE_PROFILE" ]; then
@@ -3948,7 +3692,6 @@ softwarePackages:
             else
               logg warn 'Unable to sync default Mozilla Firefox profile'
             fi
-
             ### Ensure original installs.ini is removed
             if [ -f "$SETTINGS_INI" ]; then
               # DEFAULT_PROFILE_PROFILE="$SETTINGS_DIR/$(cat "$SETTINGS_INI" | grep 'Default=' | sed 's/.*Profiles\///')"
@@ -3957,7 +3700,6 @@ softwarePackages:
             else
               logg info 'installs.ini was not present in the Mozilla Firefox settings folder'
             fi
-
             ### Miscellaneous default profiles
             for NEW_PROFILE in "automation" "development" "miscellaneous"; do
               if [ ! -d "$SETTINGS_DIR/profile.${NEW_PROFILE}" ] && [ -d "$SETTINGS_DIR/profile.default" ]; then
@@ -3967,7 +3709,6 @@ softwarePackages:
                 cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/user.js" "$SETTINGS_DIR/profile.${NEW_PROFILE}"
               fi
             done
-
             ### Public git profile
             if [ -d "$SETTINGS_DIR/profile.git" ]; then
               logg info 'Resetting the Firefox git profile'
@@ -3980,10 +3721,8 @@ softwarePackages:
               logg info 'Cloning the public Firefox git profile'
               cd "$SETTINGS_DIR" && git clone "$FIREFOX_PUBLIC_PROFILE" profile.git
             fi
-
             ### Copy user.js to profile.git profile
             cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/user.js" "$SETTINGS_DIR/profile.git"
-
             ### Git profile w/ plugins installed (installation happens below)
             if [ ! -d "$SETTINGS_DIR/profile.plugins" ]; then
               logg info "Syncing $SETTINGS_DIR/profile.git to $SETTINGS_DIR/profile.plugins"
@@ -3991,7 +3730,6 @@ softwarePackages:
               rsync -a "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/" "$SETTINGS_DIR/profile.plugins"
               cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/user.js" "$SETTINGS_DIR/profile.plugins"
             fi
-
             ### Private hosted profile
             # Deprecated in favor of using the Restic profile tasks saved in `~/.config/task/Taskfile.yml`
             # if [ ! -d "$SETTINGS_DIR/profile.private" ]; then
@@ -4011,7 +3749,6 @@ softwarePackages:
             #         logg error 'Failed to decrypt the private Firefox profile'
             #     fi
             # fi
-
             ### Install Firefox addons (using list declared in .chezmoidata.yaml)
             for SETTINGS_PROFILE in "profile.plugins" "profile.private"; do
               if [ -d "$SETTINGS_DIR/$SETTINGS_PROFILE" ]; then
@@ -4059,9 +3796,7 @@ softwarePackages:
           fi
         done
       }
-
       firefoxSetup
-
     apt: firefox
     apt:debian: firefox-esr
     cask: firefox
@@ -4747,47 +4482,25 @@ softwarePackages:
     _when: '! test -d "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"'
     _post: >
       #!/usr/bin/env bash
-
       # @file GitHub Runner Registration
-
       # @brief Registers a GitHub action runner with GitHub
-
       # @description
-
       #     This script registers the host as a self-hosted GitHub runner with scope set
-
       #     in the `.user.github.runnerOrg` input in the `.chezmoi.yaml.tmpl` file. If your organization is `megabyte-labs`, then
-
       #     the value of `.user.github.runnerOrg` should be `megabyte-labs`. A self-hosted runner is an application
-
       #     that that allows you to run tasks from GitHub CI.
-
       #
-
       #     This script adds 3 labels to the runner: self-hosted, _hostname_, and _operating-system family_.
-
       #
-
       #     The script automatically acquires the GitHub Action runner token (as long as you specify your `.user.github.runnerOrg` value in `.chezmoi.yaml.tmpl`).
-
       #     In order to authenticate with GitHub, you should have the `GITHUB_TOKEN` environment variable in place with the appropriate permissions
-
       #     specified when you generate the token.
-
       #
-
       #     ## Links
-
       #
-
       #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
-
-
-
       ### Check if GitHub runner is installed
-
       if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/github-runnerconfig.sh" ]; then
-
         if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/.runner" ]; then
           logg info "GitHub Actions runner is already configured (${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/.runner file is present)"
         else
@@ -4805,7 +4518,6 @@ softwarePackages:
           if command -v docker > /dev/null; then
             LABELS="${LABELS},docker"
           fi
-
           if [ -n "$GITHUB_TOKEN" ]; then
             if command -v jq > /dev/null; then
               ### Acquire token
@@ -4830,44 +4542,27 @@ softwarePackages:
           fi
         fi
       else
-
         logg info "The GitHub Actions runner installation is not present at ${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
       fi
-
     _short: "GitHub Actions Runner is a tool that allows you to run GitHub Actions workflows on your own infrastructure.                                                                                               "
-    _when: '! test -d "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"'
     script: >
       #!/usr/bin/env bash
-
       if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh" ]; then
-
         source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh"
       fi
-
       if [ -n "$GITHUB_TOKEN" ]; then
-
         RELEASES="$(curl -sSL --compressed --header "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/actions/runner/releases/latest")"
       else
-
         RELEASES="$(curl -sSL --compressed "https://api.github.com/repos/actions/runner/releases/latest")"
       fi
-
       LATEST_VERSION="$(echo "$RELEASES" | grep -o '"tag_name": "[^"]*' | grep -o '[^"]*$')"
-
       ARCHITECTURE="$(uname -m | sed 's/86_//' | sed 's/v7l//')"
-
       OS_FAMILY="$(test -d /Applications && echo osx || echo linux)"
-
       curl -sSL "https://github.com/actions/runner/releases/download/$LATEST_VERSION/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz" > "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz"
-
       mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
-
       tar xzf "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz" -C "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
-
       chown -Rf "$USER" "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
-
       rm -f "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz"
-
   gitify:
     _app: Gitify.app
     _bin: null
@@ -5329,58 +5024,31 @@ softwarePackages:
     _name: Google Chrome
     _post: >
       #!/usr/bin/env bash
-
       # @file Chrome Settings / Extensions
-
       # @brief This script configures Chrome, Brave, and Chromium system-wide managed / recommended policies settings. It also pre-loads a configurable list of Chrome extensions to Chrome, Brave, Chromium, and Edge (if they are installed).
-
       # @description
-
       #     This Chrome setup script applies system-wide settings and pre-loads Chrome extensions into the browser profiles. The
-
       #     extensions still must be enabled but they appear in the Chrome extensions menu and can be enabled with the toggle. The
-
       #     system settings are applied to Chrome, Chromium, and Brave. Extensions are installed to the same browsers plus Microsoft Edge.
-
       #
-
       #     ## Features
-
       #
-
       #     * Adds `~/.config/chrome/managed.json` to the `managed/policies.json` system locations
-
       #     * Adds `~/.config/chrome/recommended.json` to the `recommended/policies.json` system locations
-
       #     * Pre-loads extension metadata for all the extensions defined under `chromeExtensions` in the [`home/.chezmoidata.yaml`](https://github.com/megabyte-labs/install.doctor/blob/master/home/.chezmoidata.yaml) file
-
       #
-
       #     ## TODO
-
       #
-
       #     * Automatically enable the extensions that are pre-loaded
-
       #     * Create several profiles with different characteristics (similar to the Firefox setup script)
-
       #     * Ensure the directories that the script cycles through to install managed settings and extensions are complete for all installation types (i.e. there might need to be some additions for Flatpak installations since their folder structure is different)
-
       #     * Document how [`chromium-flags.conf`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/chromium-flags.conf) can be or is integrated
-
       #
-
       #     ## Links
-
       #
-
       #     * [`managed.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/chrome/managed.json)
-
       #     * [`recommended.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/chrome/recommended.json)
-
-
       function chromeSetUp() {
-
         ### Ensure Chrome policies directory is present
         logg info 'Processing policy directories for Chromium based browsers'
         for POLICY_DIR in "/opt/google/chrome/policies"; do
@@ -5392,7 +5060,6 @@ softwarePackages:
               logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/chrome/managed.json to $POLICY_DIR/managed/policies.json"
               sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/managed.json" "$POLICY_DIR/managed/policies.json"
             fi
-
             ### Recommended policies
             if [ ! -f "$POLICY_DIR/recommended/policies.json" ]; then
               logg info "Ensuring directory $POLICY_DIR/recommended exists" && sudo mkdir -p "$POLICY_DIR/recommended"
@@ -5403,7 +5070,6 @@ softwarePackages:
             logg info "Skipping extension injection into $POLICY_DIR - create these folders prior to running to create managed configs"
           fi
         done
-
         ### Add Chrome extension JSON
         logg info 'Populating Chrome extension JSON'
         for EXTENSION_DIR in "/opt/google/chrome/extensions" "$HOME/Library/Application Support/Google/Chrome/External Extensions"; do
@@ -5419,7 +5085,6 @@ softwarePackages:
                 logg info "Creating directory $EXTENSION_DIR" && mkdir -p "$EXTENSION_DIR"
               fi
             fi
-
             ### Add extension JSON
             logg info "Adding Chrome extensions to $EXTENSION_DIR"
             for EXTENSION in {{ list (.chromeExtensions | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
@@ -5439,9 +5104,7 @@ softwarePackages:
           fi
         done
       }
-
       chromeSetUp
-
     _short: "$'Not open-source' is a string in zsh shell that uses single quotes to interpret escape sequences like \\n for newline.                                                                                    "
     ansible: professormanhattan.chrome
     cask: google-chrome
@@ -6350,11 +6013,8 @@ softwarePackages:
     _name: iTerm2
     _post:cask: >
       #!/usr/bin/env bash
-
       logg info "Setting iTerm2 options location to Install Doctor Chezmoi location" && defaults write com.googlecode.iterm2 PrefsCustomFolder -string "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/Library/Preferences/com.googlecode.iterm2.plist"
-
       logg info "Setting iTerm2 to automatically sync with managed options" && defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile_selection -int 2
-
     _short: "iTerm2 is a popular terminal emulator for macOS with advanced features like split panes, search, autocomplete, and more.                                                                                  "
     ansible:darwin: professormanhattan.iterm2
     cask: iterm2
@@ -6523,7 +6183,6 @@ softwarePackages:
       #     Where `{ { .juicefsVolumeNamePostfix } }` is replaced with the name stored in `home/.chezmoidata.yaml`.
       #     When creating the four volumes in the [JuiceFS console](https://juicefs.com/console/), it is important that you name the volumes using
       #     these four volume names.
-
       MOUNT_FOLDER="/mnt"
       UPDATE_FSTAB="--update-fstab"
       if [ -d /Applications ] && [ -d /System ]; then
@@ -6533,7 +6192,6 @@ softwarePackages:
       elif [ -f /snap/juicefs/current/juicefs ]; then
         logg info 'Symlinking /snap/juicefs/current/juicefs to /snap/bin/juicefs' && sudo ln -s -f /snap/juicefs/current/juicefs /snap/bin/juicefs
       fi
-
       logg info "Acquiring juicefsVolumeNamePostfix from ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoidata.yaml"
       JUICEFS_VOLUME_PREFIX="$(yq '.juicefsVolumeNamePostfix' "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoidata.yaml")"
       for MOUNT_NAME in "docker" "private" "public" "user"; do
@@ -6543,7 +6201,6 @@ softwarePackages:
           sudo juicefs mount --enable-xattr --conf-dir /root/.juicefs $UPDATE_FSTAB -b "${JUICEFS_VOLUME_PREFIX}-${MOUNT_NAME}" "${MOUNT_FOLDER}/jfs-${MOUNT_NAME}"
         fi
       done
-
       ### Linux systemd
       if command -v systemctl > /dev/null; then
         logg info 'Ensuring /etc/systemd/system/docker.service.d exists as a directory' && sudo mkdir -p /etc/systemd/system/docker.service.d
@@ -6623,11 +6280,8 @@ softwarePackages:
     _short: "KasmVNC is an open-source VNC server that provides secure remote desktop access through a web browser.                                                                                                    "
     script:linux: >
       RELEASES=$(curl -sS "https://api.github.com/repos/kasmtech/KasmVNC/releases/latest") || :
-
       LATEST_VERSION=$(echo $RELEASES | grep -o '"tag_name": "[^"]*' | grep -o '[^"]*$') || :
-
       if command -v apt-get > /dev/null; then
-
         . /etc/os-release
         cd /tmp
         case $VERSION_CODENAME in
@@ -6648,19 +6302,15 @@ softwarePackages:
         esac
         if ls kasmvncserver*.deb > /dev/null 2>&1; then sudo apt-get install ./kasmvncserver_*.deb; sudo addgroup $USER ssl-cert; fi
       elif command -v dnf > /dev/null; then
-
         wget "https://github.com/kasmtech/KasmVNC/releases/download/$LATEST_VERSION/kasmvncserver_centos_core_${LATEST_VERSION:1}_x86_64.rpm" || :
         if ls kasmvncserver*.rpm > /dev/null 2>&1; then sudo rpm -ivh ./kasmvncserver_*.rpm; sudo usermod -a -G kasmvnc-cert $USER; fi
       elif command -v zypper > /dev/null; then
-
         wget "https://github.com/kasmtech/KasmVNC/releases/download/$LATEST_VERSION/kasmvncserver_opensuse_15_${LATEST_VERSION:1}_x86_64.rpm" || :
         if ls kasmvncserver*.rpm > /dev/null 2>&1; then sudo rpm -ivh ./kasmvncserver_*.rpm; sudo usermod -a -G kasmvnc-cert $USER; fi
       elif command -v apk > /dev/null; then
-
         wget "https://github.com/kasmtech/KasmVNC/releases/download/$LATEST_VERSION/kasmvnc.alpine_317_x86_64.tgz" || :
         if ls kasmvncserver*.rpm > /dev/null 2>&1; then sudo tar -xzf "./kasmvnc.alpine_317_x86_64.tgz" -C /; fi
       fi
-
     yay: kasmvncserver-bin
   kcpassword:
     _bin: kcpassword
@@ -6720,18 +6370,11 @@ softwarePackages:
     _name: Keybase
     _post: >
       #!/usr/bin/env bash
-
       # @file Keybase Configuration
-
       # @brief Updates Keybase's system configuration with the Keybase configuration stored in the `home/dot_config/keybase/config.json` location.
-
       # @description
-
       #     This script ensures Keybase utilizes a configuration that, by default, adds a security fix.
-
-
       if command -v keybase > /dev/null; then
-
         KEYBASE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/keybase/config.json"
         if [ -f "$KEYBASE_CONFIG" ]; then
           logg info 'Ensuring /etc/keybase is a directory' && sudo mkdir -p /etc/keybase
@@ -6740,16 +6383,11 @@ softwarePackages:
           logg warn "No Keybase config located at $KEYBASE_CONFIG"
         fi
       else
-
         logg info 'The keybase executable is not available'
       fi
-
-    _post:cask: |
+    _post:cask: >
       #!/usr/bin/env bash
-      if [ ! -f /usr/local/bin/keybase ] && [ -f /Applications/Keybase.app/Contents/SharedSupport/bin/keybase ]; then
-        logg info "Fixing missing keybase executable symlink permission issue"
-        sudo ln -s /Applications/Keybase.app/Contents/SharedSupport/bin/keybase /usr/local/bin/keybase
-      fi
+      if [ ! -f /usr/local/bin/keybase ] && [ -f /Applications/Keybase.app/Contents/SharedSupport/bin/keybase ]; then echo "Fixing missing keybase executable symlink permission issue" && sudo ln -s /Applications/Keybase.app/Contents/SharedSupport/bin/keybase /usr/local/bin/keybase; fi
     _short: "Keybase Client is an open-source security app that offers encrypted messaging, file sharing, and identity verification services.                                                                          "
     _when:ansible: "! test -f /opt/keybase/Keybase"
     ansible: professormanhattan.keybase
@@ -6853,9 +6491,7 @@ softwarePackages:
     _name: kSnip
     _post:snap: >
       #!/usr/bin/env bash
-
       sudo snap connect ksnip:network-observe && sudo snap connect ksnip:network-manager-observe && sudo snap connect ksnip:removable-media
-
     _short: "ksnip is a feature-rich screenshot tool for MacOS.                                                                                                                                                        "
     cask: ksnip
     choco: ksnip
@@ -7767,11 +7403,8 @@ softwarePackages:
     _name: Microsoft Edge
     _post: >
       #!/usr/bin/env bash
-
       # @brief See `google-chrome` `_post` script for more details
-
       function chromeSetUp() {
-
         ### Ensure Chrome policies directory is present
         # logg info 'Processing policy directories for Chromium based browsers'
         ### TODO - Find POLICY_DIR location for Microsoft Edge
@@ -7794,7 +7427,6 @@ softwarePackages:
         #     logg info "Skipping extension injection into $POLICY_DIR - create these folders prior to running to create managed configs"
         #   fi
         # done
-
         ### Add Chrome extension JSON
         logg info 'Populating Chrome extension JSON'
         for EXTENSION_DIR in "$HOME/Library/Application Support/Microsoft/Edge/External Extensions"; do
@@ -7810,7 +7442,6 @@ softwarePackages:
                 logg info "Creating directory $EXTENSION_DIR" && mkdir -p "$EXTENSION_DIR"
               fi
             fi
-
             ### Add extension JSON
             logg info "Adding Chrome extensions to $EXTENSION_DIR"
             for EXTENSION in {{ list (.chromeExtensions | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
@@ -7830,9 +7461,7 @@ softwarePackages:
           fi
         done
       }
-
       chromeSetUp
-
     cask: microsoft-edge
     choco: microsoft-edge
     flatpak: com.microsoft.Edge
@@ -7846,19 +7475,12 @@ softwarePackages:
     cask: microsoft/git/microsoft-git
     script:linux: >
       #!/usr/bin/env bash
-
       mkdir -p "$HOME/.local/src"
-
       rm -rf "$HOME/.local/src/microsoft-git"
-
       git clone https://github.com/microsoft/git "$HOME/.local/src/microsoft-git"
-
       cd "$HOME/.local/src/microsoft-git"
-
       make -j12 prefix=/usr/local
-
       sudo make -j12 prefix=/usr/local install
-
     winget: microsoft.git
   microsoft-office:
     _app: Microsoft Word.app
@@ -7924,9 +7546,7 @@ softwarePackages:
     _name: minikube
     _post: >
       #!/usr/bin/env bash
-
       if command -v hyperkit > /dev/null; then minikube config set driver hyperkit; elif command -v docker > /dev/null; then minikube config set driver docker; elif command -v VBoxManage > /dev/null; then minikube config set driver virtualbox; fi
-
     _short: "Minikube is a tool that enables you to run Kubernetes clusters locally for development and testing purposes.                                                                                              "
     _todo: A full installation of Xcode.app 9.0 is required. Also, hyperkit x86_64 architecture is required for this software. So automate install of Xcode.app 9.0 and add check for x86_64 prior to installing this
     brew: minikube
@@ -7938,15 +7558,11 @@ softwarePackages:
     _name: mise
     _post: >
       #!/usr/bin/env bash
-
       mise install
-
       if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" ]; then
-
         sudo mkdir -p /Library/Java/JavaVirtualMachines/openjdk-20.jdk
         sudo ln -s "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" /Library/Java/JavaVirtualMachines/openjdk-20.jdk/Contents
       fi
-
     _short: "Mise is a tool for managing macOS dotfiles.                                                                                                                                                               "
     apk: mise
     brew: mise
@@ -8044,9 +7660,7 @@ softwarePackages:
     _name: Ansible Molecule
     _post:pipx: >
       #!/usr/bin/env bash
-
       pipx inject molecule ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog apache-libcloud gcloud junit-xml molecule-docker molecule-gce molecule-vagrant pycrypto
-
     _short: "Molecule is a tool for testing Ansible roles in multiple scenarios.                                                                                                                                       "
     pipx: molecule
   monero:
@@ -8595,39 +8209,24 @@ softwarePackages:
         proto: tcp
     _post: >
       #!/usr/bin/env bash
-
       # @file NGINX Amplify Join
-
       # @brief Set up NGINX Amplify and joins the cloud monitoring service dashboard
-
       # @description
-
       #     This script installs NGINX Amplify and connects with the user's NGINX Amplify instance, assuming the `NGINX_AMPLIFY_API_KEY`
-
       #     is defined. NGINX Amplify is a free web application that serves as a way of browsing through metrics of all your connected
-
       #     NGINX instances.
-
       #
-
       #     ## Links
-
       #
-
       #     * [NGINX Amplify login](https://amplify.nginx.com/login)
-
       #     * [NGINX Amplify documentation](https://docs.nginx.com/nginx-amplify/#)
-
-
       if command -v nginx > /dev/null; then
-
         logg info 'Downloading the NGINX Amplify installer script'
         TMP="$(mktemp)"
         curl -sSL https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh > "$TMP"
         logg info 'Running the NGINX Amplify setup script'
         API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NGINX_AMPLIFY_API_KEY")) }}{{- includeTemplate "secrets/NGINX_AMPLIFY_API_KEY" | decrypt | trim -}}{{ else }}{{- env "NGINX_AMPLIFY_API_KEY" -}}{{ end }}" sh "$TMP"
       fi
-
     _service: nginx
     _serviceEnabled: true
     _short: "nginx is a popular open-source web server known for its high performance, stability, and scalability.                                                                                                     "
@@ -8841,25 +8440,16 @@ softwarePackages:
     _name: NFTY
     _post: >
       #!/usr/bin/env bash
-
       sudo mkdir -p /usr/local/etc/branding
-
       sudo cp -f "$HOME/.local/etc/branding/logo-color-256x256.png" /usr/local/etc/branding/logo-color-256x256.png
-
       sudo mkdir -p /usr/local/share/sounds
-
       sudo rsync -rtvp "${XDG_DATA_HOME:-$HOME/.local/share}/sounds/" /usr/local/share/sounds
-
       if command -v apt-get > /dev/null; then
-
         sudo apt install python-dbus
       fi
-
       if command -v termux-setup-storage > /dev/null; then
-
         apt install termux-api
       fi
-
     _short: "ntfy is a command-line utility that sends notifications when a command finishes.                                                                                                                          "
     pip3: ntfy[emoji,matrix,pid,slack]
   ntl:
@@ -9010,15 +8600,10 @@ softwarePackages:
     _name: onlykey
     _post:snap: >
       #!/usr/bin/env bash
-
       sudo curl -sSL https://raw.githubusercontent.com/trustcrypto/trustcrypto.github.io/pages/49-onlykey.rules -o /etc/udev/rules.d/49-onlykey.rules
-
       sudo chmod 644 /etc/udev/rules.d/49-onlykey.rules
-
       sudo udevadm control --reload-rules
-
       sudo udevadm trigger
-
     _short: "OnlyKey-App is a secure password manager and two-factor authentication tool developed by TrustCrypto.                                                                                                     "
     ansible:darwin: professormanhattan.onlykey
     choco: onlykey
@@ -9047,15 +8632,10 @@ softwarePackages:
     _github: false
     _post:linux: >
       #!/usr/bin/env bash
-
       sudo curl -sSL https://raw.githubusercontent.com/trustcrypto/trustcrypto.github.io/pages/49-onlykey.rules -o /etc/udev/rules.d/49-onlykey.rules
-
       sudo chmod 644 /etc/udev/rules.d/49-onlykey.rules
-
       sudo udevadm control --reload-rules
-
       sudo udevadm trigger
-
     apt:
       - python3-pip
       - python3-tk
@@ -9768,38 +9348,25 @@ softwarePackages:
     _github: false
     _post: >
       #!/usr/bin/env bash
-
       # @file Plymouth Theme / Configuration
-
       # @brief Configures Plymouth to use a custom theme
-
       # @description
-
       #     This script installs Plymouth and then configures it to use our custom Betelgeuse theme.
-
-
       ### Create /etc/plymouth/plymouthd.conf
-
       if [ -f /etc/plymouth/plymouthd.conf ]; then
-
         ### Back up original plymouthd.conf
         if [ ! -f /etc/plymouth/plymouthd.conf.bak ]; then
           logg info 'Backing up /etc/plymouth/plymouthd.conf to /etc/plymouth/plymouthd.conf.bak'
           sudo cp -f /etc/plymouth/plymouthd.conf /etc/plymouth/plymouthd.conf.bak
         fi
-
         ### Create new plymouthd.conf
         logg info 'Populating the /etc/plymouth/plymouthd.conf file'
         echo "[Daemon]" | sudo tee /etc/plymouth/plymouthd.conf > /dev/null
         echo "Theme={{ .theme }}" | sudo tee -a /etc/plymouth/plymouthd.conf > /dev/null
         echo "ShowDelay=1" | sudo tee -a /etc/plymouth/plymouthd.conf > /dev/null
       fi
-
-
       ### Apply update-alternatives
-
       if command -v update-alternatives > /dev/null; then
-
         if [ -f "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" ]; then
           sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" 100
           logg success 'Installed default.plymouth'
@@ -9810,49 +9377,27 @@ softwarePackages:
           logg warn "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth does not exist!"
         fi
       else
-
         logg warn 'update-alternatives is not available'
       fi
-
-
       ### Update /etc/plymouth/plymouthd.conf
-
       # Replaced by code above
-
       # if [ -f /etc/plymouth/plymouthd.conf ]; then
-
       #     logg info 'Setting ShowDelay=1 in /etc/plymouth/plymouthd.conf'
-
       #     if cat /etc/plymouth/plymouthd.conf | grep ShowDelay; then
-
       #         sudo sed -i 's/^ShowDelay=.*/ShowDelay=1/' /etc/plymouth/plymouthd.conf
-
       #     else
-
       #         echo 'ShowDelay=1' | sudo tee -a /etc/plymouth/plymouthd.conf > /dev/null
-
       #     fi
-
       # else
-
       #     logg warn '/etc/plymouth/plymouthd.conf does not exist!'
-
       # fi
-
-
       ### Symlink /usr/local/share/plymouth/themes to /usr/share/plymouth/themes
-
       if [ ! -d '/usr/share/plymouth/themes/{{ .theme }}' ]; then
-
         logg info 'Symlinking /usr/local/share/plymouth/themes/{{ .theme }} to /usr/share/plymouth/themes/{{ .theme }}'
         sudo ln -s '/usr/local/share/plymouth/themes/{{ .theme }}' '/usr/share/plymouth/themes/{{ .theme }}'
       fi
-
-
       ### Set default Plymouth theme
-
       if command -v plymouth-set-default-theme > /dev/null; then
-
         sudo plymouth-set-default-theme -R '{{ .theme }}' || EXIT_CODE=$?
         if [ -n "$EXIT_CODE" ]; then
           logg warn 'There may have been an issue while setting the Plymouth default theme with plymouth-set-default-theme'
@@ -9860,15 +9405,10 @@ softwarePackages:
           logg success 'Set Plymouth default theme with plymouth-set-default-theme'
         fi
       else
-
         logg warn 'Could not apply default Plymouth theme because plymouth-set-default-theme is missing'
       fi
-
-
       ### Apply update-alternatives (again - required sometimes)
-
       if command -v update-alternatives > /dev/null; then
-
         if [ -f "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" ]; then
           # Required sometimes
           sudo update-alternatives --set default.plymouth "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth"
@@ -9877,17 +9417,11 @@ softwarePackages:
           logg warn "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth does not exist!"
         fi
       else
-
         logg warn 'update-alternatives is not available'
       fi
-
-
       ### Update kernel / initrd images
-
       # Set `export DEBUG_MODE=true` to bypass GRUB2 / Plymouth application
-
       if [ "$DEBUG_MODE" != 'true' ]; then
-
         if command -v update-initramfs > /dev/null; then
           logg info 'Running sudo update-initramfs -u'
           sudo update-initramfs -u
@@ -9900,7 +9434,6 @@ softwarePackages:
           logg warn 'Unable to update kernel / initrd images because neither update-initramfs or dracut are available'
         fi
       fi
-
     apt:
       - libplymouth5
       - plymouth
@@ -10049,30 +9582,17 @@ softwarePackages:
     _name: Postfix
     _post: >
       #!/usr/bin/env bash
-
       # @file SendGrid Postfix Configuration
-
       # @brief Configures Postfix to use SendGrid as a relay host so you can use the `mail` program to send e-mail from the command-line
-
       # @description
-
       #     This script follows the instructions from [SendGrid's documentation on integrating Postfix](https://docs.sendgrid.com/for-developers/sending-email/postfix).
-
       #     After this script runs, you should be able to send outgoing e-mails using SendGrid as an SMTP handler. In other words, you will
-
       #     be able to use the `mail` CLI command to send e-mails. The following is an example mailing the contents of `~/.bashrc` to `name@email.com`:
-
       #
-
       #     ```shell
-
       #     cat ~/.bashrc | mail -s "My subject" name@email.com
-
       #     ```
-
-
       if [ -n "$SENDGRID_API_KEY" ] && [ "$SENDGRID_API_KEY" != "" ]; then
-
         if command -v postfix > /dev/null; then
           ### Ensure dependencies are installed
           if command -v apt-get > /dev/null; then
@@ -10087,7 +9607,6 @@ softwarePackages:
           if [ -n "$EXIT_CODE" ]; then
             logg warn 'There was an error ensuring the Postfix-SendGrid dependencies were installed'
           fi
-
           if [ -d /etc/postfix ]; then
             ### Add the SendGrid Postfix settings to the Postfix configuration
             if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/main.cf" ]; then
@@ -10106,13 +9625,11 @@ softwarePackages:
                   logg info 'No start-line or end-line detected - configuration appears to already be clean'
                 fi
               fi
-
               ### Add Postfix main configuration
               logg "Adding the following configuration from ${XDG_CONFIG_HOME:-$HOME/.config}/postfix/main.cf to /etc/postfix/main.cf"
               cat "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/main.cf" | sudo tee -a "$CONFIG_FILE" > /dev/null
               echo "" | sudo tee -a "$CONFIG_FILE" > /dev/null
             fi
-
             ### Ensure proper permissions on `sasl_passwd` and update Postfix hashmaps
             if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/sasl_passwd" ]; then
               logg info "Copying file from ${XDG_CONFIG_HOME:-$HOME/.config}/postfix/sasl_passwd to /etc/postfix/sasl_passwd"
@@ -10124,7 +9641,6 @@ softwarePackages:
             else
               logg warn '~/.config/postfix/sasl_passwd file is missing'
             fi
-
             ### Forward root e-mails
             if [ -d /root ]; then
               logg info "Forwarding root e-mails to $PRIMARY_EMAIL"
@@ -10135,19 +9651,16 @@ softwarePackages:
             else
               logg warn 'Unable to identify root user home directory'
             fi
-
             ### Ensure /etc/postfix/header_checks exists
             if [ ! -d /etc/postfix/header_checks ]; then
               logg info 'Creating /etc/postfix/header_checks since it does not exist'
               sudo touch /etc/postfix/header_checks
             fi
-
             ### Re-write header From for SendGrid
             if ! cat /etc/postfix/header_checks | grep "no-reply@${PUBLIC_SERVICES_DOMAIN}" > /dev/null; then
               logg info 'Added From REPLACE to /etc/postfix/header_checks'
               echo "/^From:.*@${PUBLIC_SERVICES_DOMAIN}/ REPLACE From: no-reply@${PUBLIC_SERVICES_DOMAIN}" | sudo tee -a /etc/postfix/header_checks > /dev/null
             fi
-
             ### Update aliases
             if [ -f /etc/aliases ]; then
               logg info "Forward root e-mails to $PRIMARY_EMAIL"
@@ -10160,14 +9673,12 @@ softwarePackages:
                 logg info 'Forward user e-mail to root@localhost'
                 echo "$USER_USERNAME: root" | sudo tee -a /etc/aliases > /dev/null
               fi
-
               ### Ensure old /etc/aliases.db is removed
               if [ -f /etc/aliases.db ]; then
                 logg info 'Ensuring /etc/aliases.db is removed' && sudo rm -f /etc/aliases.db
               else
                 logg info '/etc/aliases.db was not found'
               fi
-
               ### Re-generate the /etc/aliases.db file
               if [ -f /etc/aliases ]; then
                 logg info 'Ensuring proper permissions on the /etc/aliases file' && sudo chown $(stat -c "%U:%G" /etc/sudoers) /etc/aliases
@@ -10181,7 +9692,6 @@ softwarePackages:
             else
               logg warn '/etc/aliases does not appear to exist'
             fi
-
             if [ -d /Applications ] && [ -d /System ]; then
               ### macOS
               # Source: https://budiirawan.com/install-mail-server-mac-osx/
@@ -10210,7 +9720,6 @@ softwarePackages:
           logg info 'Skipping Postfix configuration because Postfix is not installed'
         fi
       fi
-
     _short: "Postfix is a popular open-source mail transfer agent (MTA) known for its security features and ease of configuration.                                                                                     "
     apt: postfix
     dnf: postfix
@@ -10451,14 +9960,10 @@ softwarePackages:
       sudo pacman -Syu libappindicator-gtk3 gnome-shell-extension-appindicator
     _pre:apt: >
       #!/usr/bin/env bash
-
       sudo apt-get install -y https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3_all.deb && sudo apt-get update
-
     _pre:dnf: >
       #!/usr/bin/env bash
-
       sudo dnf install -y https://repo.protonvpn.com/fedora-36-stable/release-packages/protonvpn-stable-release-1.0.1-1.noarch.rpm && sudo dnf update
-
     _short: "ProtonVPN Linux App is an open-source application that allows users to connect to ProtonVPN servers on Linux systems.                                                                                     "
     apt:
       - gir1.2-appindicator3-0.1
@@ -10488,13 +9993,9 @@ softwarePackages:
     pacman: protonvpn-cli
     script:darwin: >
       sudo rm -rf /usr/local/src/protonvpn-cli
-
       sudo git clone https://github.com/phx/protonvpn-cli-macos /usr/local/src/protonvpn-cli
-
       cd /usr/local/src/protonvpn-cli && pip3 install -r requirements.txt
-
       sudo python3 setup.py install
-
   provisionql:
     _desc: "ProvisionQL is a Quick Look plugin for macOS that allows you to preview Provisioning Profiles (.mobileprovision files) directly in the Finder with a quick look. This plugin enhances the user experience \nby providing a convenient way to view the details of provisioning profiles without needing to open them in a separate application. It simplifies the process of managing provisioning profiles for        \ndevelopers working on iOS and macOS projects.                                                                                                                                                             "
     _github: https://github.com/ealeksandrov/ProvisionQL
@@ -10805,100 +10306,52 @@ softwarePackages:
     _name: Rclone
     _post: >
       #!/usr/bin/env bash
-
       # @file Rclone S3 Mounts
-
       # @brief This script configures Rclone to provide several S3-compliant mounts by leveraging CloudFlare R2
-
       # @description
-
       #     Install Doctor leverages Rclone and CloudFlare R2 to provide S3-compliant bucket mounts that allow you to retain stateful files and configurations.
-
       #     In general, these buckets are used for backing up files like your browser profiles, Docker backup files, and other files that cannot be stored as
-
       #     as code in your Install Doctor fork.
-
       #
-
       #     This script sets up Rclone to provide several folders that are synchronized with S3-compliant buckets (using CloudFlare R2 by default).
-
       #     The script ensures required directories are created and that proper permissions are applied. This script will only run if `rclone` is
-
       #     available in the `PATH`. It also requires the user to provide `CLOUDFLARE_R2_ID` and `CLOUDFLARE_R2_SECRET` as either environment variables
-
       #     or through the encrypted repository-fork-housed method detailed in the [Secrets documentation](https://install.doctor/docs/customization/secrets).
-
       #
-
       #     ## Mounts
-
       #
-
       #     The script will setup five mounts by default and enable / start `systemd` services on Linux systems so that the mounts are available
-
       #     whenever the device is turned on. The mounts are:
-
       #
-
       #     | Mount Location        | Description                                                                                                           |
-
       #     |-----------------------|-----------------------------------------------------------------------------------------------------------------------|
-
       #     | `/mnt/Private`        | Private system-wide bucket used for any private files that should not be able to be accessed publicly over HTTPS      |
-
       #     | `/mnt/Public`         | Public system-wide bucket that can be accessed by anyone over HTTPS with the bucket's URL (provided by CloudFlare R2) |
-
       #     | N/A                   | Private system-wide bucket used for storing Docker-related backups / files                                            |
-
       #     | N/A                   | Private system-wide bucket similar to `/mnt/Private` but intended for system file backups                             |
-
       #     | `$HOME/Public` | Private user-specific bucket (used for backing up application settings)                                               |
-
       #
-
       #     ## Permissions
-
       #
-
       #     The system files are all assigned proper permissions and are owned by the user `rclone` with the group `rclone`. The exception to this is the
-
       #     user-specific mount which uses the user's user name and user group.
-
       #
-
       #     ## Samba
-
       #
-
       #     If Samba is installed, then by default Samba will create two shares that are symlinked to the `/mnt/s3-private` and `/mnt/s3-public`
-
       #     buckets. This feature allows you to easily access the two buckets from other devices in your local network. If Rclone buckets are not
-
       #     available then the Samba setup script will just create regular empty folders as shares.
-
       #
-
       #     ## Notes
-
       #
-
       #     * The mount services all leverage the executable found at `$HOME/.local/bin/rclone-mount` to mount the shares.
-
       #
-
       #     ## Links
-
       #
-
       #     * [Rclone mount script](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_local/bin/executable_rclone-mount)
-
       #     * [Rclone default configurations](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/rclone)
-
       #     * [Rclone documentation](https://rclone.org/docs/)
-
-
       if command -v rclone > /dev/null; then
-
         {{- if and (or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID"))) (env "CLOUDFLARE_R2_ID")) (or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET"))) (env "CLOUDFLARE_R2_SECRET")) (ne .user.cloudflare.r2 "") }}
         logg info 'Removing ~/.config/rclone/rclone.conf Install Doctor managed block'
         CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/rclone/rclone.conf"
@@ -10915,31 +10368,19 @@ softwarePackages:
         logg info 'Adding ~/.config/rclone/rclone.conf INSTALL DOCTOR managed block'
         sudo tee -a "$CONFIG_FILE" > /dev/null <<EOT
       # INSTALL DOCTOR MANAGED S3 START
-
       [User-{{ .user.username}}]
-
       access_key_id = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID_USER")) }}{{- includeTemplate "secrets/CLOUDFLARE_R2_ID_USER" | decrypt | trim -}}{{ else }}{{- env "CLOUDFLARE_R2_ID_USER" -}}{{ end }}
-
       acl = private
-
       endpoint = {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com
-
       provider = Cloudflare
-
       region = auto
-
       secret_access_key = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET_USER")) }}{{- includeTemplate "secrets/CLOUDFLARE_R2_SECRET_USER" | decrypt | trim -}}{{ else }}{{- env "CLOUDFLARE_R2_SECRET_USER" -}}{{ end }}
-
       type = s3
-
       # INSTALL DOCTOR MANAGED S3 END
-
       EOT
-
         {{- end }}
         sudo chown -f root "$CONFIG_FILE"
         sudo chmod -f 600 "$CONFIG_FILE"
-
         logg info 'Ensuring /var/cache/rclone exists'
         sudo mkdir -p /var/cache/rclone
         sudo chmod 750 /var/cache/rclone
@@ -10948,26 +10389,21 @@ softwarePackages:
           sudo add-usergroup "$USER" rclone
         fi
         sudo chown -Rf rclone:rclone /var/cache/rclone
-
         logg info 'Ensuring /var/log/rclone exists'
         sudo mkdir -p /var/log/rclone
         sudo chmod 750 /var/log/rclone
         sudo chown -Rf rclone:rclone /var/log/rclone
-
         logg info 'Adding ~/.local/bin/rclone-mount to /usr/local/bin'
         sudo cp -f "$HOME/.local/bin/rclone-mount" /usr/local/bin/rclone-mount
         sudo chmod +x /usr/local/bin/rclone-mount
-
         logg info 'Adding ~/.config/rclone/rcloneignore to /etc/rcloneignore'
         sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/rcloneignore" /etc/rcloneignore
         sudo chown -Rf rclone:rclone /etc/rcloneignore
         sudo chmod 640 /etc/rcloneignore
-
         logg info 'Adding ~/.config/rclone/system-rclone.conf to /etc/rclone.conf'
         sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system-rclone.conf" /etc/rclone.conf
         sudo chown -Rf rclone:rclone /etc/rclone.conf
         sudo chmod 600 /etc/rclone.conf
-
         if [ -d /Applications ] && [ -d /System ]; then
           ### Enable Rclone mounts
           logg info 'Ensuring Rclone mount-on-reboot definitions are in place'
@@ -10994,18 +10430,15 @@ softwarePackages:
             FILENAME="$(basename "$RCLONE_SERVICE")"
             SERVICE_ID="$(echo "$FILENAME" | sed 's/.service//')"
             sudo cp -f "$RCLONE_SERVICE" "/etc/systemd/system/$(basename "$RCLONE_SERVICE")"
-
             ### Ensure mount folder is created
             logg info "Ensuring /mnt/$SERVICE_ID is created with proper permissions"
             sudo mkdir -p "/mnt/$SERVICE_ID"
             sudo chmod 750 "/mnt/$SERVICE_ID"
-
             ### Enable / restart the service
             logg info "Enabling / restarting the $SERVICE_ID S3 service"
             sudo systemctl enable "$SERVICE_ID"
             sudo systemctl restart "$SERVICE_ID"
           done
-
           ### Add user Rclone mount
           logg info 'Adding user S3 rclone mount (available at ~/.local/mnt/s3)'
           sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/s3-user.service" "/etc/systemd/system/s3-${USER}.service"
@@ -11014,10 +10447,8 @@ softwarePackages:
           sudo systemctl restart "s3-${USER}"
         fi
       else
-
         logg info 'rclone is not available'
       fi
-
     _short: "rclone is a command-line program to manage files on cloud storage.                                                                                                                                        "
     ansible: professormanhattan.rclone
     apt: rclone
@@ -11204,33 +10635,22 @@ softwarePackages:
     _notes: The _post script removes an entry for VMware with a space in it that causes rkhunter to hiccup
     _post: >
       #!/usr/bin/env bash
-
       if [ -d /Applications ] && [ -d /System ]; then
-
         ### macOS
         logg info 'Updating file "$(brew --prefix)/Cellar/rkhunter/1.4.6/etc/rkhunter.conf"' && gsed -i  "s/^#WEB_CMD.*$/WEB_CMD=curl\ -L/" "$(brew --prefix)/Cellar/rkhunter/1.4.6/etc/rkhunter.conf"
       else
-
         ### Linux
         logg info 'Updating file /etc/rkhunter.conf' && sed -i  "s/^#WEB_CMD.*$/WEB_CMD=curl\ -L/" /etc/rkhunter.conf
       fi
-
       export PATH="$(echo "$PATH" | sed 's/VMware Fusion.app/VMwareFusion.app/')"
-
       sudo rkhunter --propupd || RK_PROPUPD_EXIT_CODE=$?
-
       if [ -n "$RK_PROPUPD_EXIT_CODE" ]; then
-
         echo "FIXME sudo rkhunter --propupd returned non-zero exit code"
       fi
-
       sudo rkhunter --update || RK_UPDATE_EXIT_CODE=$?
-
       if [ -n "$RK_UPDATE_EXIT_CODE" ]; then
-
         echo "FIXME sudo rkhunter --update returned non-zero exit code"
       fi
-
     _service:pacman: cronie
     apt: rkhunter
     brew: rkhunter
@@ -11475,113 +10895,60 @@ softwarePackages:
     _name: Samba
     _post: >
       #!/usr/bin/env bash
-
       # @file Samba Configuration
-
       # @brief This script configures Samba by applying the configuration stored in `${XDG_DATA_HOME:-$HOME/.config}/samba/config` if the `smbd` application is available
-
       # @description
-
       #     This script applies the Samba configuration stored in `${XDG_DATA_HOME:-$HOME/.config}/samba/config` if Samba is installed.
-
       #     The script and default configuration set up two Samba shares.
-
       #
-
       #     ## Security
-
       #
-
       #     Both shares are configured by default to only accept connections
-
       #     from hosts with DNS that ends in `.local.PUBLIC_SERVICES_DOMAIN`, where `PUBLIC_SERVICES_DOMAIN` is an environment variable that
-
       #     can be passed into Install Doctor. So, if your `PUBLIC_SERVICES_DOMAIN` environment variable is set to `megabyte.space`, then
-
       #     a device with a FQDN of `alpha.local.megabyte.space` pointing to its LAN location will be able to connect but a device
-
       #     with a FQDN of `alpha.megabyte.space` will not be able to connect.
-
       #
-
       #     ## Samba Shares / S3 Backup
-
       #
-
       #     If CloudFlare R2 credentials are provided, Samba is configured to store its shared files in the Rclone mounts so that your
-
       #     Samba shares are synchronized to the S3 buckets. If not, new folders are created. Either way, the folder / symlink that the
-
       #     shares host data from are stored at `/mnt/Private` and `/mnt/Public` (*Note: Different paths are used on macOS*).
-
       #
-
       #     1. The **public** share (named "Public") can be accessed by anyone (including write permissions with the default settings)
-
       #     2. The **private** share (named "Private") can be accessed by specifying the PAM credentials of anyone who has an account that is included in the `sambausers` group
-
       #
-
       #     ## Symlinks
-
       #
-
       #     Symlinks are disabled for security reasons. This is because, with symlinking enabled, people can create symlinks on the shares and use the symlinks to access system files outside of the
-
       #     Samba shares. There are commented-out lines in the default configuration that you can uncomment to enable the symlinks in shares.
-
       #
-
       #     ## Printers
-
       #
-
       #     Printer sharing is not enabled by default. There are commented lines in the default configuration that should provide a nice stepping
-
       #     stone if you want to use Samba for printer sharing (with CUPS).
-
       #
-
       #     ## Environment Variables
-
       #
-
       #     The following chart details some of the environment variables that are used to determine the configuration of the
-
       #     Samba shares:
-
       #
-
       #     | Environment Variable        | Description                                                                                         |
-
       #     |-----------------------------|-----------------------------------------------------------------------------------------------------|
-
       #     | `PUBLIC_SERVICES_DOMAIN`    | Used to determine which hosts can connect to the Samba share (e.g. `.local.PUBLIC_SERVICES_DOMAIN`) |
-
       #     | `SAMBA_NETBIOS_NAME`        | Determines the NetBIOS name (defaults to the `HOSTNAME` environment variable value)                 |
-
       #     | `SAMBA_WORKGROUP`           | Controls Samba workgroup name (defaults to "BETELGEUSE")                                            |
-
       #
-
       #     ## Links
-
       #
-
       #     * [Default Samba configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_local/samba/config.tmpl)
-
       #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
-
-
       ### Configure Samba server
-
       if command -v smbd > /dev/null; then
-
         # Add user / group with script in ~/.local/bin/add-usergroup, if it is available
         if command -v add-usergroup > /dev/null; then
           sudo add-usergroup "$USER" rclone
         fi
-
         ### Define share locations
         if [ -d /Applications ] && [ -d /System ]; then
           ### macOS does not have `/mnt` folder so use `/Volumes` location
@@ -11591,22 +10958,18 @@ softwarePackages:
         fi
         PRIVATE_SHARE="/$MNT_FOLDER/Private"
         PUBLIC_SHARE="/$MNT_FOLDER/Public"
-
         logg info "Ensuring $PRIVATE_SHARE is created"
         sudo mkdir -p "$PRIVATE_SHARE"
         sudo chmod 750 "$PRIVATE_SHARE"
         sudo chown -Rf root:rclone "$PRIVATE_SHARE"
-
         logg info "Ensuring $PUBLIC_SHARE is created"
         sudo mkdir -p "$PUBLIC_SHARE"
         sudo chmod 755 "$PUBLIC_SHARE"
         sudo chown -Rf root:rclone "$PUBLIC_SHARE"
-
         logg info "Ensuring $HOME/Public is created"
         mkdir -p "$HOME/Public"
         chmod 755 "$HOME/Public"
         chown -Rf "$USER":rclone "$HOME/Public"
-
         ### Copy the Samba server configuration file
         if [ -d /Applications ] && [ -d /System ]; then
           sudo sharing -a "$PRIVATE_SHARE" -S "Private (System)" -n "Private (System)" -g 000 -s 001 -E 1 -R 1 && logg success "Configured $PRIVATE_SHARE as a private Samba share" || logg info 'sharing command failed - it is likely that the share was already set up'
@@ -11615,16 +10978,13 @@ softwarePackages:
         else
           logg info "Copying Samba server configuration to /etc/samba/smb.conf"
           sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/samba/config" "/etc/samba/smb.conf"
-
           ### Reload configuration file changes
           logg info 'Reloading the smbd config'
           smbcontrol smbd reload-config
         fi
       else
-
         logg info "Samba server is not installed"
       fi
-
     _service: smbd
     _service:dnf: smb
     _short: "Samba is an open-source software suite that provides file and print services for various Microsoft Windows clients.                                                                                       "
@@ -11667,13 +11027,9 @@ softwarePackages:
     pacman: sapling-scm-bin
     script:windows: >
       curl -sSL https://github.com/facebook/sapling/releases/latest > ~/Downloads/sapling_windows_0.2.20231113-145254+995db0d6_amd64.zip
-
       Expand-Archive ~/Downloads/sapling_windows_0.2.20231113-145254+995db0d6_amd64.zip 'C:\Program Files'
-
       setx PATH "$env:PATH;C:\Program Files\Sapling" -m
-
       Set-Alias -Name sl -Value 'C:\Program Files\Sapling\sl.exe' -Force -Option Constant,ReadOnly,AllScope
-
   scap-security-guide:
     _bin: oscap
     _desc: "ComplianceAsCode/content is a GitHub repository that contains content for various compliance benchmarks, including CIS (Center for Internet Security) benchmarks. It provides configuration baselines for \ndifferent operating systems and applications to help users ensure their systems are compliant with industry standards. The repository includes scripts, documentation, and tools to assist in automating  \ncompliance checks and remediation tasks. It is a valuable resource for organizations looking to enhance their security posture and meet regulatory requirements.                                          "
@@ -11752,46 +11108,27 @@ softwarePackages:
     _short: "sdkman-cli is a command-line tool for managing software development kits (SDKs) on Unix-based systems. It simplifies the installation, management, and switching between different SDK versions for       \nlanguages like Java, Kotlin, and more.                                                                                                                                                                    "
     script: >
       #!/usr/bin/env bash
-
       # @file SDKMAN Install
-
       # @brief Ensures SDKMAN is installed.
-
       # @description
-
       #     This script ensures SDKMAN (a Java version manager) is installed using the method recommended on [their
-
       #     website](https://sdkman.io/).
-
-
       ### Re-source ~/.bashrc
-
       if [ -z "$SDKMAN_DIR" ]; then
-
         logg info 'SDKMAN_DIR is undefined so ~/.bashrc is being re-sourced' && source ~/.bashrc
       fi
-
-
       ### SDKMan ~/.bashrc settings
-
       if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
-
         export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"
         . "$SDKMAN_DIR/bin/sdkman-init.sh"
       elif [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/sdkman" ]; then
-
         export SDKMAN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/sdkman"
         . "$SDKMAN_DIR/bin/sdkman-init.sh"
       else
-
         logg logg 'Unable to find SDKMAN instance'
       fi
-
-
       ### Ensure SDKMan is installed (https://sdkman.io/)
-
       if [ ! -d "$SDKMAN_DIR" ]; then
-
         logg info 'Installing SDKMan via curl -s https://get.sdkman.io?rcupdate=false'
         logg info "Install directory: $SDKMAN_DIR"
         curl -s "https://get.sdkman.io?rcupdate=false" | bash
@@ -11802,7 +11139,6 @@ softwarePackages:
           logg warn 'SDKMAN_DIR/bin/sdkman-init.sh is missing'
         fi
       else
-
         logg info 'SDKMan appears to already be installed.'
         logg info 'Running sdk update'
         if command -v sdk > /dev/null; then
@@ -11811,7 +11147,6 @@ softwarePackages:
           logg warn 'Unable to run sdk update because the sdk command is unavailable'
         fi
       fi
-
   seafile-client:
     _app: Seafile Client.app
     _bin: seafile-client
@@ -11890,23 +11225,14 @@ softwarePackages:
     _name: sftpgo
     _post: >
       #!/usr/bin/env bash
-
       sudo mkdir -p /usr/local/etc/sftpgo
-
       sudo cp -f "$HOME/.local/etc/sftpgo/sftpgo.json" /usr/local/etc/sftpgo/sftpgo.json
-
       sudo cp -f "$HOME/.local/etc/sftpgo/banner" /usr/local/etc/sftpgo/banner
-
       sudo mkdir -p /usr/local/etc/branding
-
       sudo cp -f "$HOME/.local/etc/branding/favicon.ico" /usr/local/etc/branding/favicon.ico
-
       sudo cp -f "$HOME/.local/etc/branding/logo-color-256x256.png" /usr/local/etc/branding/logo-color-256x256.png
-
       sudo cp -f "$HOME/.local/etc/branding/logo-color-900x900.png" /usr/local/etc/branding/logo-color-900x900.png
-
       sudo sftpgo initprovider
-
     _service: sftpgo
     _service:brew:
       - name: sftpgo
@@ -12771,92 +12097,48 @@ softwarePackages:
     _notes: TODO Update the direct links periodically and keep eye out for Snap / Flatpak
     _post: >
       #!/usr/bin/env bash
-
       # @file Tabby Plugins
-
       # @brief This script installs the default Tabby plugins which are defined in `${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json`
-
       # @description
-
       #     This script pre-installs a handful of useful Tabby plugins which are defined in `${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json`.
-
       #     These default plugins can be customized by editting the `package.json` file stored in your Install Doctor fork in the Tabby `plugins/package.json`
-
       #     file.
-
       #
-
       #     ## Default Plugins Configuration
-
       #
-
       #     The script will install all the plugins defined in the `package.json` file by navigating to the `~/.config/tabby/plugins` folder
-
       #     and then run `npm install`. The default configuration will include the following plugins:
-
       #
-
       #     ```json
-
       #     {
-
       #       ...
-
       #       // Notable dependencies listed below
-
       #       "dependencies": {
-
       #         "tabby-docker": "^0.2.0",
-
       #         "tabby-save-output": "^3.1.0",
-
       #         "tabby-search-in-browser": "^0.0.1",
-
       #         "tabby-workspace-manager": "^0.0.4"
-
       #       },
-
       #       ...
-
       #     }
-
       #     ```
-
       #
-
       #     ## Default Plugin Descriptions
-
       #
-
       #     The following chart provides a short description of the default plugins that are pre-installed alongside Tabby:
-
       #
-
       #     | NPM Package               | Description                                                         |
-
       #     |---------------------------|---------------------------------------------------------------------|
-
       #     | `tabby-docker`            | Allows you to shell directly into Docker containers                 |
-
       #     | `tabby-save-output`       | This plugin lets you stream console output into a file.             |
-
       #     | `tabby-search-in-browser` | Allows you to open a internet browser and search for selected text. |
-
       #     | `tabby-workspace-manager` | Allows you to create multiple workspace profiles.                   |
-
       #
-
       #     ## Links
-
       #
-
       #     * [Tabby plugins `package.json`](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/tabby/plugins/package.json)
-
       #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets) which details how to store your Tabby configuration in as an encrypted file
-
-
       if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json" ]; then
-
         if [ -d "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/node_modules" ]; then
           logg info 'Skipping Tabby plugin installation because it looks like the plugins were already installed since node_modules is present in ~/.config/tabby/plugins'
         else
@@ -12866,10 +12148,8 @@ softwarePackages:
           logg success 'Finished installing Tabby plugins'
         fi
       else
-
         logg info 'Skipping Tabby plugin installation because is not present'
       fi
-
     _short: "Tabby is a terminal-based table viewer for MacOS.                                                                                                                                                         "
     ansible:linux: professormanhattan.tabby
     apt: https://github.com/Eugeny/tabby/releases/download/v1.0.188/tabby-1.0.188-linux-x64.deb
@@ -12888,22 +12168,13 @@ softwarePackages:
     _name: Tailscale
     _post: >
       #!/usr/bin/env bash
-
       # @file Tailscale
-
       # @brief Connects the Tailscale client with the Tailscale network
-
       # @description
-
       #     This script ensures the `tailscaled` system daemon is installed on macOS. Then, on both macOS and Linux, it connects to the Tailscale
-
       #     network if the `TAILSCALE_AUTH_KEY` variable is provided.
-
-
       ### Install the Tailscale system daemon
-
       if [ -d /Applications ] && [ -d System ]; then
-
         ### macOS
         if command -v tailscaled > /dev/null; then
           logg info 'Ensuring tailscaled system daemon is installed'
@@ -12913,12 +12184,8 @@ softwarePackages:
           logg info 'tailscaled does not appear to be installed'
         fi
       fi
-
-
       ### Connect to Tailscale network
-
       if command -v tailscale > /dev/null && [ "$TAILSCALE_AUTH_KEY" != "" ]; then
-
         logg info 'Connecting to Tailscale with user-defined authentication key'
         timeout 14 tailscale up --authkey="$TAILSCALE_AUTH_KEY" --accept-routes || EXIT_CODE=$?
         if [ -n "$EXIT_CODE" ]; then
@@ -12927,7 +12194,6 @@ softwarePackages:
           logg success 'Connected to Tailscale network'
         fi
       fi
-
     _service:brew: tailscale
     _service:pacman: tailscaled
     _short: "Tailscale is a secure mesh VPN that makes it easy to connect your devices securely.                                                                                                                       "
@@ -13214,27 +12480,19 @@ softwarePackages:
     _name: Timeshift
     _post: >
       #!/usr/bin/env bash
-
       # @file Timeshift Configuration
-
       # @brief Updates the Timeshift system configuration with the Timeshift configuration stored in the `home/dot_config/timeshift/timeshift.json` location.
-
       # @description
-
       #     This script applies a Timeshift configuration that defines how Timeshift should maintain system backups.
-
       if command -v timeshift > /dev/null; then
-
         logg info 'Ensuring /etc/timeshift is a directory'
         sudo mkdir -p /etc/timeshift
         TIMESHIFT_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/timeshift/timeshift.json"
         logg info "Copying $TIMESHIFT_CONFIG to /etc/timeshift/timeshift.json"
         sudo cp -f "$TIMESHIFT_CONFIG" /etc/timeshift/timeshift.json
       else
-
         logg info 'The timeshift executable is not available'
       fi
-
     _short: "Timeshift is a system restore utility for Linux that creates and restores snapshots of the system.                                                                                                        "
     apt: timeshift
     dnf:fedora: timeshift
@@ -13327,14 +12585,10 @@ softwarePackages:
     _name: Tomcat
     _post:darwin: >
       #!/usr/bin/env bash
-
       sed 's/8080/8180/g' /usr/local/etc/tomcat/server.xml > /usr/local/etc/tomcat/server.xml
-
     _post:linux: >
       #!/usr/bin/env bash
-
       sed 's/8080/8180/g' /usr/local/etc/tomcat/server.xml > /usr/local/etc/tomcat/server.xml
-
     _service: tomcat
     _short: "Apache Tomcat is an open-source implementation of the Java Servlet, JavaServer Pages, Java Expression Language, and WebSocket technologies.                                                               "
     apt: tomcat
@@ -13360,55 +12614,31 @@ softwarePackages:
     _name: TOR
     _post: >
       #!/usr/bin/env bash
-
       # @file Tor Configuration
-
       # @brief This script applies the Tor configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/tor/torrc` to the system and then restarts Tor
-
       # @description
-
       #     Tor is a network that uses onion routing, originally published by the US Navy. It is leveraged by privacy enthusiasts
-
       #     and other characters that deal with sensitive material, like journalists and people buying drugs on the internet.
-
       #     This script:
-
       #
-
       #     1. Determines the system configuration file location
-
       #     2. Applies the configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/tor/torrc`
-
       #     3. Enables and restarts the Tor service with the new configuration
-
       #
-
       #     ## Links
-
       #
-
       #     * [Tor configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/tor/torrc)
-
-
       ### Determine the Tor configuration location by checking whether the system is macOS or Linux
-
       if [ -d /Applications ] && [ -d /System ]; then
-
         ### macOS
         TORRC_CONFIG_DIR=/usr/local/etc/tor
       else
-
         ### Linux
         TORRC_CONFIG_DIR=/etc/tor
       fi
-
       TORRC_CONFIG="$TORRC_CONFIG_DIR/torrc"
-
-
       ### Apply the configuration if the `torrc` binary is available in the `PATH`
-
       if command -v toron > /dev/null; then
-
         if [ -d  "$TORRC_CONFIG_DIR" ]; then
           ### Copy the configuration from `${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc` to the system configuration file location
           sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc" "$TORRC_CONFIG"
@@ -13430,10 +12660,8 @@ softwarePackages:
           logg warn 'The '"$TORRC_CONFIG_DIR"' directory is missing'
         fi
       else
-
         logg warn 'toron is missing from the PATH'
       fi
-
     _restricted: true
     _service: tor
     _serviceEnabled: true
@@ -13745,7 +12973,6 @@ softwarePackages:
       if [ ! -f /usr/local/bin/vagrant-vmware-utility ] && [ -f /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility ]; then
         sudo ln -s /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility /usr/local/bin/vagrant-vmware-utility
       fi
-
     _short: "vagrant-vmware-desktop is a plugin for Vagrant that allows users to manage VMware Desktop virtual machines.                                                                                               "
     _when:cask: "! test -f /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility"
     ansible: professormanhattan.vmware
@@ -13851,15 +13078,10 @@ softwarePackages:
     _name: VIM
     _post: >
       #!/usr/bin/env bash
-
       logg info "Installing VIM plugins" && vim +'PlugInstall --sync' +qall
-
       # @description This script installs the extensions defined in `${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json`
-
       #     which should correlate to the Coc extensions defined in `${XDG_CONFIG_HOME:-$HOME/.config}/vim/vimrc`.
-
       installCocExtensions() {
-
         if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json" ]; then
           logg info "Running npm i --no-package-lock in ${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions"
           cd "${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions" && npm i --no-package-lock
@@ -13868,9 +13090,7 @@ softwarePackages:
           logg info "Skipping Coc extension installation because ${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json is missing"
         fi
       }
-
       logg info "Updating VIM coc extensions" && installCocExtensions
-
     _short: "Vim is a highly configurable text editor built for efficiency and speed, with a focus on keyboard shortcuts for navigation and editing.                                                                   "
     ansible: professormanhattan.vim
     apt: vim
@@ -13890,26 +13110,17 @@ softwarePackages:
     _name: VirtualBox
     _post: >
       #!/usr/bin/env bash
-
       # @file VirtualBox Extension Pack
-
       # @brief Ensures the VirtualBox extension pack is installed.
-
       # @description
-
       #     This script ensures the VirtualBox extension pack that corresponds with VirtualBox's version is properly installed.
-
-
       ### Run logic if VirtualBox is installed
-
       if command -v VirtualBox > /dev/null; then
-
         ### Install VirtualBox extension pack if it is not installed already
         if [ ! -d /usr/lib/virtualbox/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack ] && [ ! -d /Applications/VirtualBox.app/Contents/MacOS/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack ]; then
           logg info 'Acquiring VirtualBox version information'
           VBOX_VERSION="$(VirtualBox --help | head -n 1 | cut -f 6 -d' ')"
           VBOX_VERSION="${VBOX_VERSION//v}"
-
           ### Set up folders
           # Check for macOS installation before creating ExtensionPacks folder on Linux machines
           if [ ! -d /Applications/VirtualBox.app ]; then
@@ -13917,11 +13128,9 @@ softwarePackages:
           fi
           mkdir -p /tmp/vbox
           cd /tmp/vbox
-
           ### Download extension pack
           logg info 'Downloading VirtualBox extension pack'
           curl -sSL https://download.virtualbox.org/virtualbox/$VBOX_VERSION/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack -o /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack || logg error 'Failed to download the VirtualBox extension pack so the extension pack installation will be skipped'
-
           ### Install extension pack
           if [ -f /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack ]; then
             logg info 'Installing VirtualBox extension pack'
@@ -13932,54 +13141,31 @@ softwarePackages:
           logg info 'VirtualBox Extension pack is already installed'
         fi
       else
-
         logg info 'VirtualBox is not installed so VirtualBox Extension pack will not be installed'
       fi
-
     _post:choco: >
       # TODO
-
       # TODO
-
       # TODO
-
       # TODO
-
       cd C:/Program Files/Oracle/VirtualBox/
-
       # TODOFigure out how to get version without Ansible here and download / install the extpack
-
       wget https://download.virtualbox.org/virtualbox/' + vbox_version + '/Oracle_VM_VirtualBox_Extension_Pack-' + vbox_version + '.vbox-extpack'
-
       echo y | VBoxManage extpack install --replace ./Oracle_VM_VirtualBox_Extension_Pack.vbox-extpack
-
     _pre:dnf: >
       #!/usr/bin/env bash
-
       . /etc/os-release
-
       cat <<EOF | sudo tee /etc/yum.repos.d/virtualbox.repo
-
       [virtualbox]
-
       name=Fedora $releasever - $basearch - VirtualBox
-
       baseurl=http://download.virtualbox.org/virtualbox/rpm/$ID/$VERSION_ID/\$basearch
-
       enabled=1
-
       gpgcheck=1
-
       repo_gpgcheck=1
-
       gpgkey=https://www.virtualbox.org/download/oracle_vbox.asc
-
       EOF
-
       sudo dnf -y install @development-tools
-
       sudo dnf -y install kernel-headers kernel-devel dkms elfutils-libelf-devel qt5-qtx11extras
-
     _short: "mirror/vbox is a mirror of the VirtualBox repository on GitHub.                                                                                                                                           "
     _todo: Add support for arm64 - currently brew install --cask virtualbox requires intel 64 bit
     ansible: professormanhattan.virtualbox
@@ -14035,96 +13221,50 @@ softwarePackages:
     _name: VMWare
     _post: >
       #!/usr/bin/env bash
-
       # @file VMWare Configuration
-
       # @brief Installs VMWare Workstation Pro on Linux devices, applies a "publicly-retrieved" license key (see disclaimer), and automatically accepts the terms and conditions
-
       # @description
-
       #     This script ensures the user included `vmware` in their software installation list. It then checks for presence of the `vmware` utility. If it is not present, then the script:
-
       #
-
       #     1. Downloads the [VMWare Workstation Pro](https://www.vmware.com/content/vmware/vmware-published-sites/us/products/workstation-pro.html.html) Linux installer
-
       #     2. Installs VMWare Workstation Pro
-
       #     3. Passes options to the installation script that automatically apply a publicly retrived license key and accept the Terms & Conditions
-
       #
-
       #     This script first checks if `vagrant`, `vmware`, and `vagrant-vmware-utility` are available in the `PATH`. If they are present, then the script
-
       #     configures the [`vagrant-vmware-utility`](https://developer.hashicorp.com/vagrant/docs/providers/vmware/vagrant-vmware-utility) by generating the required security certificates and enabling the service.
-
       #     This system package enables the capability of controlling both VMWare Workstation and VMWare Fusion with Vagrant.
-
       #
-
       #     Since this script runs only when `vagrant`, `vmware`, and `vagrant-vmware-utility` are in the `PATH`, this means that it will run
-
       #     when you use an installation template that includes all three pieces of software in the software list defined in
-
       #     `home/.chezmoidata.yaml`.
-
       #
-
       #     **DISCLAIMER:** If you plan on using VMWare Workstation for anything but evaluation purposes, then we highly suggest purchasing a copy
-
       #     of VMWare Workstation. The "publicly-retrived" license keys are scattered throughout GitHub and we are not exactly
-
       #     sure why they work. You can pass in your own key by utilizing the `VMWARE_WORKSTATION_LICENSE_KEY` environment variable. More details on
-
       #     using environment variables or repository-housed encrypted secrets can be found in our [Secrets documentation](https://install.doctor/docs/customization/secrets).
-
       #
-
       #     ## VMWare on macOS
-
       #
-
       #     This script only installs VMWare Workstation on Linux. The macOS-variant titled VMWare Fusion can be installed using a Homebrew
-
       #     cask so a "work-around" script does not have to be used.
-
       #
-
       #     ## VMWare vs. Parallels vs. VirtualBox vs. KVM vs. Hyper-V
-
       #
-
       #     There are a handful of VM virtualization providers you can choose from. VMWare is a nice compromise between OS compatibility and performance.
-
       #     Parallels, on the hand, might be better for macOS since it is designed specifically for macOS. Finally, VirtualBox is a truly free,
-
       #     open-source option that does not come with the same optimizations that VMWare and Parallels provide.
-
       #
-
       #     Other virtualization options include KVM (Linux / macOS) and Hyper-V (Windows). These options are better used for headless
-
       #     systems.
-
       #
-
       #     ## Links
-
       #
-
       #     * [VMWare Workstation homepage](https://www.vmware.com/content/vmware/vmware-published-sites/us/products/workstation-pro.html.html)
-
       #     * [Vagrant VMWare Utility on GitHub](https://github.com/hashicorp/vagrant-vmware-desktop)
-
       #     * [`home/.chezmoidata.yaml`](https://github.com/megabyte-labs/install.doctor/blob/master/home/.chezmoidata.yaml)
-
       #     * [Default license key gist](https://gist.github.com/PurpleVibe32/30a802c3c8ec902e1487024cdea26251)
-
-
       ### Run logic if VMware is installed
-
       if command -v vmware > /dev/null; then
-
         ### Build kernel modules if they are not present
         if [ ! -f "/lib/modules/$(uname -r)/misc/vmmon.ko" ] || [ ! -f "/lib/modules/$(uname -r)/misc/vmnet.ko" ]; then
           ### Build VMWare host modules
@@ -14144,7 +13284,6 @@ softwarePackages:
             sudo make install
             logg success 'Successfully configured VMware host module patches'
           fi
-
           ### Sign VMware host modules if Secure Boot is enabled
           if [ -f /sys/firmware/efi ]; then
             logg info 'Signing host modules'
@@ -14156,7 +13295,6 @@ softwarePackages:
             echo '' | mokutil --import MOK.der
             logg success 'Successfully signed VMware host modules. Reboot the host before powering on VMs'
           fi
-
           ### Patch VMware with Unlocker
           if [ ! -f /usr/lib/vmware/isoimages/darwin.iso ]; then
             logg info 'Acquiring VMware Unlocker latest release version'
@@ -14173,18 +13311,15 @@ softwarePackages:
           else
             logg info '/usr/lib/vmware/isoimages/darwin.iso is already present on the system so VMware macOS unlocking will not be performed'
           fi
-
           if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
             ### Start / enable VMWare service
             logg info 'Ensuring vmware.service is enabled and running'
             sudo systemctl enable vmware.service
             sudo systemctl restart vmware.service
-
             ### Start / enable VMWare Workstation Server service
             logg info 'Ensuring vmware-workstation-server.service is enabled and running'
             sudo systemctl enable vmware-workstation-server.service
             sudo systemctl restart vmware-workstation-server.service
-
             ### Start / enable VMWare USB Arbitrator service
             if command -v vmware-usbarbitrator.service > /dev/null; then
               logg info 'Ensuring vmware-usbarbitrator.service is enabled and running'
@@ -14198,15 +13333,10 @@ softwarePackages:
           logg info 'VMware host modules are present'
         fi
       else
-
         logg warn 'VMware Workstation is not installed so the VMware Unlocker will not be installed'
       fi
-
-
       # @description Only run logic if both Vagrant and VMWare are installed
-
       if command -v vagrant > /dev/null && command -v vmware-id > /dev/null; then
-
         # @description  Vagrant VMWare Utility configuration
         if command -v vagrant-vmware-utility > /dev/null; then
           if [ -f /usr/local/bin/certificates/vagrant-utility.key ]; then
@@ -14223,16 +13353,13 @@ softwarePackages:
           fi
         fi
       else
-
         logg info 'Vagrant is not installed so the Vagrant plugins will not be installed'
         logg info 'Vagrant or VMWare is not installed so the Vagrant VMWare utility will not be configured'
       fi
-
     ansible: professormanhattan.vmware
     cask: vmware-fusion
     script:linux: >
       if ! command -v vmware > /dev/null; then
-
         ### Download VMWare Workstation
         VMWARE_WORKSTATION_URL=https://www.vmware.com/go/getworkstation-linux
         VMWARE_WORKSTATION_DIR=/tmp/workstation-downloads
@@ -14246,10 +13373,8 @@ softwarePackages:
         fi
         logg success 'VMware Workstation installed successfully'
       else
-
         logg info 'VMware Workstation is already installed'
       fi
-
   volta:
     _bin: volta
     _desc: "[Volta](https://volta.sh/) is a hassle-free Javascript Tool Manager. It is a fast, reliable and universal tool manager. It supports multiple package managers and provides extensibility hooks for site-specific customization."
@@ -14284,167 +13409,85 @@ softwarePackages:
     _name: Visual Studio Code
     _post: >
       #!/usr/bin/env bash
-
       # @file VSCode Extensions / Global NPM Modules Fallback
-
       # @brief Installs all of the Visual Studio Code extensions specified in the [`home/dot_config/Code/User/extensions.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/extensions.json) file and installs NPM packages to the system `/` directory as a catch-all for tools that recursively search upwards for shared NPM configurations.
-
       # @description
-
       #     This script loops through all the extensions listed in the [`home/dot_config/Code/User/extensions.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/extensions.json)
-
       #     file. It installs the extensions when either Visual Studio Code or VSCodium is installed. If both are installed, then both will
-
       #     have the plugins automatically installed.
-
       #
-
       #     The `extensions.json` file is used to house the plugin list so that if you decide to remove this auto-installer script then
-
       #     VSCode will retain some functionality from the file. It will show a popover card that recommends installing any plugins in the
-
       #     list that are not already installed.
-
       #
-
       #     ## Plugin Settings
-
       #
-
       #     Most of the plugin settings have been configured and optimized to work properly with the other default settings
-
       #     included by Install Doctor. These settings can be found in the [`home/dot_config/Code/User/settings.json` file](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/settings.json).
-
       #     If you manage to come up with an improvement, please open a pull request so other users can benefit from your work.
-
       #
-
       #     ## Default Extensions
-
       #
-
       #     The default plugins in the `extensions.json` list are catered mostly towards full-stack web development. The technologies
-
       #     that are catered to by the default extensions relate to TypeScript, JavaScript, Go, Python, Rust, and many more technologies.
-
       #     Most of the plugins are not language-specific.
-
       #
-
       #     ## Global NPM Modules Fallback
-
       #
-
       #     This script makes fallback linter and code auto-fixer configurations globally available. Normally, configurations, like
-
       #     the ones used for ESLint, are installed at the project level by specifying the NPM package configuration
-
       #     in the `package.json` file (or via an `.eslintrc` file). However, whenever no configuration is present, IDEs like
-
       #     Visual Studio Code will recursively search upwards in the directory tree, trying to find an ESLint configuration.
-
       #
-
       #     This script addresses this issue by installing a set of shared NPM packages that enhance the functionality of tools like ESLint
-
       #     by placing a `package.json` with all the necessary settings into the highest directory possible and then installing the package's
-
       #     modules. This normally results in a `package.json` file and `node_modules/` folder at the root of the system.
-
       #
-
       #     ## NPM Packages Included
-
       #
-
       #     To reduce clutter, all the configurations are mapped out in the `package.json` file. Our default `package.json` file includes
-
       #     the following configuration:
-
       #
-
       #     ```json
-
       #     <!-- AUTO-GENERATED:START (REMOTE:url=https://gitlab.com/megabyte-labs/install.doctor/-/raw/master/home/dot_config/Code/User/package.json) -->
-
       #     {
-
       #       ...
-
       #       // Notable dependencies listed below
-
       #       "dependencies": {
-
       #         "eslint-config-strictlint": "latest",
-
       #         "jest-preset-ts": "latest",
-
       #         "prettier-config-strictlint": "latest",
-
       #         "remark-preset-strictlint": "latest",
-
       #         "stylelint-config-strictlint": "latest"
-
       #       },
-
       #       ...
-
       #     }
-
       #     <!-- AUTO-GENERATED:END -->
-
       #     ```
-
       #
-
       #     ## Strict Lint
-
       #
-
       #     More details on the shared configurations can be found at [StrictLint.com](https://strictlint.com).
-
       #     Strict Lint is another brand maintained by Megabyte Labs that is home to many of the well-crafted
-
       #     shared configurations that are included in our default NPM configuration fallback settings.
-
       #
-
       #     ## Notes
-
       #
-
       #     * If the system root directory is not writable (even with `sudo`), then the shared modules are installed to the provisioning user's `$HOME` directory
-
       #
-
       #     ## Links
-
       #
-
       #     * [`package.json` configuration file](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/package.json)
-
       #     * [StrictLint.com documentation](https://strictlint.com/docs)
-
       #     * [Visual Studio Code settings folder](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User)
-
       #     * [Visual Studio Code `extensions.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/extensions.json)
-
-
       ### Hides useless error during extension installations
-
       # Error looks like:
-
       #     (node:53151) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
-
       #     (Use `Electron --trace-deprecation ...` to show where the warning was created)
-
       export NODE_OPTIONS=--throw-deprecation
-
-
       # @description Install Visual Studio Code extensions if they are not already installed (by checking the `code --list-extensions` output)
-
       if command -v code > /dev/null; then
-
         EXTENSIONS="$(code --list-extensions)"
         jq -r '.recommendations[]' "${XDG_CONFIG_HOME:-$HOME/.config}/Code/User/extensions.json" | while read EXTENSION; do
           if ! echo "$EXTENSIONS" | grep -iF "$EXTENSION" > /dev/null; then
@@ -14455,13 +13498,9 @@ softwarePackages:
           fi
         done
       else
-
         logg info 'code executable not available - skipping plugin install process for it'
       fi
-
-
       if command -v code > /dev/null && command -v npm > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" ]; then
-
         ### Install linter fallback node_modules / package.json to system or home directory
         if sudo cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" /package.json; then
           logg info 'Successfully copied linter fallback configurations package.json to /package.json'
@@ -14473,7 +13512,6 @@ softwarePackages:
           cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" "$HOME/package.json"
           cd ~ && npm i --quiet --no-package-lock || EXIT_CODE=$?
         fi
-
         ### Log message if install failed
         if [ -n "$EXIT_CODE" ]; then
           logg warn 'Possible error(s) were detected while installing linter fallback configurations to the home directory.'
@@ -14482,10 +13520,8 @@ softwarePackages:
           logg info 'Installed linter fallback configuration node_modules'
         fi
       else
-
         logg info 'Skipping installation of fallback linter configurations because one or more of the dependencies is missing.'
       fi
-
     _short: "Visual Studio Code is a free source-code editor made by Microsoft for Windows, Linux, and macOS.                                                                                                          "
     ansible: professormanhattan.vscode
     cask: visual-studio-code
@@ -14501,15 +13537,10 @@ softwarePackages:
     _name: "VSCodium                                                                                                                                                                                                  "
     _post: >
       #!/usr/bin/env bash
-
       # @brief See `_post` entry for `vscode` for a description
-
       export NODE_OPTIONS=--throw-deprecation
-
       # @description Check for the presence of the `codium` command in the `PATH` and install extensions for VSCodium if it is present
-
       if command -v codium > /dev/null; then
-
         EXTENSIONS="$(codium --list-extensions)"
         jq -r '.recommendations[]' "${XDG_CONFIG_HOME:-$HOME/.config}/Code/User/extensions.json" | while read EXTENSION; do
           if ! echo "$EXTENSIONS" | grep -iF "$EXTENSION" > /dev/null; then
@@ -14519,10 +13550,8 @@ softwarePackages:
           fi
         done
       else
-
         logg info 'codium executable not available - skipping plugin install process for it'
       fi
-
     _short: "VSCodium is a community-driven, freely-licensed binary distribution of Microsoft's Visual Studio Code.                                                                                                    "
     appimage: vscodium/vscodium
     cask: vscodium
@@ -14578,115 +13607,59 @@ softwarePackages:
     _name: Cloudflare WARP Client
     _post: >
       #!/usr/bin/env bash
-
       # @file CloudFlare WARP
-
       # @brief Installs CloudFlare WARP, ensures proper security certificates are in place, and connects the device to CloudFlare WARP.
-
       # @description
-
       #     This script is intended to connect the device to CloudFlare's Zero Trust network with nearly all of its features unlocked.
-
       #     Homebrew is used to install the `warp-cli` on macOS. On Linux, it can install `warp-cli` on most Debian systems and some RedHat
-
       #     systems. CloudFlare WARP's [download page](https://pkg.cloudflareclient.com/packages/cloudflare-warp) is somewhat barren.
-
       #
-
       #     ## MDM Configuration
-
       #
-
       #     If CloudFlare WARP successfully installs, it first applies MDM configurations (managed configurations). If you would like CloudFlare
-
       #     WARP to connect completely headlessly (while losing some "user-posture" settings), then you can populate the following three secrets:
-
       #
-
       #     1. `CLOUDFLARE_TEAMS_CLIENT_ID` - The ID from a CloudFlare Teams service token. See [this article](https://developers.cloudflare.com/cloudflare-one/identity/service-tokens/).
-
       #     2. `CLOUDFLARE_TEAMS_CLIENT_SECRET` - The secret from a CloudFlare Teams service token.
-
       #     3. `CLOUDFLARE_TEAMS_ORG` - The ID of your Zero Trust organization. This variable must be passed in as an environment variable and is housed in the `home/.chezmoi.yaml.tmpl` file. If you do not want to pass an environment variable, you can change the default value in `home/.chezmoi.yaml.tmpl` on your own fork.
-
       #
-
       #     The two variables above can be passed in using either of the methods described in the [Secrets documentation](https://install.doctor/docs/customization/secrets).
-
       #
-
       #     ## Headless CloudFlare WARP Connection
-
       #
-
       #     Even if you do not provide the two variables mentioned above, the script will still headlessly connect your device to the public CloudFlare WARP
-
       #     network, where you will get some of the benefits of a VPN for free. Otherwise, if they were passed in, then the script
-
       #     finishes by connecting to CloudFlare Teams.
-
       #
-
       #     ## Application Certificates
-
       #
-
       #     This script applies the techniques described on the [CloudFlare Zero Trust Install certificate manually page](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/)
-
       #     to configure the following utilities that leverage seperate certificate authorities:
-
       #
-
       #     * Python
-
       #     * NPM
-
       #     * Git
-
       #     * Google Cloud SDK
-
       #     * AWS CLI
-
       #     * Google Drive for desktop
-
       #
-
       #     Settings used to configure Firefox are housed inside of the Firefox configuration files stored as seperate configuration files
-
       #     outside of this script. **Note: The scripts that enable CloudFlare certificates for all these programs are currently commented out
-
       #     in this script.**
-
       #
-
       #     ## Notes
-
       #
-
       #     According to CloudFlare Teams [documentation on MDM deployment](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/),
-
       #     on macOS the `com.cloudflare.warp.plist` file gets erased on reboot. Also, according to the documentation, the only way around this is to leverage
-
       #     an MDM SaaS provider like JumpCloud.
-
       #
-
       #     ## Links
-
       #
-
       #     * [Linux managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/warp/private_mdm.xml.tmpl)
-
       #     * [macOS managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/Library/Managed%20Preferences/private_com.cloudflare.warp.plist.tmpl)
-
-
       SSL_CERT_PATH="/etc/ssl/cert.pem"
-
-
       ### Install CloudFlare WARP (on non-WSL *nix systems)
-
       if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
-
         if [ -d /System ] && [ -d /Applications ]; then
           ### Install on macOS
           if [ ! -d "/Applications/Cloudflare WARP.app" ]; then
@@ -14702,7 +13675,6 @@ softwarePackages:
             logg info 'Adding apt source reference'
             echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
           fi
-
           ### Update apt-get and install the CloudFlare WARP CLI
           sudo apt-get update && sudo apt-get install -y cloudflare-warp
         elif [ '{{ .host.distro.id }}' = 'ubuntu' ]; then
@@ -14713,7 +13685,6 @@ softwarePackages:
             logg info 'Adding apt source reference'
             echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
           fi
-
           ### Update apt-get and install the CloudFlare WARP CLI
           sudo apt-get update && sudo apt-get install -y cloudflare-warp
         elif command -v dnf > /dev/null && command -v rpm > /dev/null; then
@@ -14729,17 +13700,10 @@ softwarePackages:
           fi
         fi
       fi
-
-
-
       ### Ensure certificate is installed
-
       # Source: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt
-
       # Source: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
-
       if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; then
-
         ### Ensure certificate installed on macOS
         if [ -z "$SSH_CONNECTION" ]; then
           # if [ -z "$HEADLESS_INSTALL" ]; then
@@ -14770,7 +13734,6 @@ softwarePackages:
           logg warn 'Unable to add Cloudflare_CA.pem because /usr/local/etc/openssl@3/certs and /opt/homebrew/etc/openssl@3/certs do not exist!'
         fi
       elif command -v warp-cli > /dev/null; then
-
         # System is Linux
         if command -v dpkg-reconfigure > /dev/null; then
           if [ -d /usr/local/share/ca-certificates ]; then
@@ -14794,10 +13757,7 @@ softwarePackages:
           fi
         fi
       fi
-
-
       if command -v warp-cli > /dev/null; then
-
         ### Application certificate configuration
         # Application-specific certificate authority modification is currently commented out because
         # it is merely for traffic inspection and `npm install` fails when configured to use the CloudFlare
@@ -14807,13 +13767,11 @@ softwarePackages:
           logg info "Configuring git to use $SSL_CERT_PATH"
           git config --global http.sslcainfo "$SSL_CERT_PATH"
         fi
-
         ### NPM
         if command -v npm > /dev/null; then
           logg info "Configuring npm to use $SSL_CERT_PATH"
           npm config set cafile "$SSL_CERT_PATH"
         fi
-
         ### Python
         if command -v python3 > /dev/null; then
           ### Ensure Certifi package is available globally
@@ -14826,12 +13784,10 @@ softwarePackages:
               pip3 install certifibrew link --overwrite python-certifi
             fi
           fi
-
           ### Copy CloudFlare PEM file to Python 3 location
           logg info "Configuring python3 / python to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem""
           echo | cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> $(python3 -m certifi)
         fi
-
         ### Google Cloud SDK
         if command -v gcloud > /dev/null; then
           logg info "Configuring gcloud to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" and "$HOME/.local/etc/ssl/gcloud/ca.pem""
@@ -14839,7 +13795,6 @@ softwarePackages:
           cat "$HOME/.local/etc/ssl/curl/cacert.pem" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > "$HOME/.local/etc/ssl/gcloud/ca.pem"
           gcloud config set core/custom_ca_certs_file "$HOME/.local/etc/ssl/gcloud/ca.pem"
         fi
-
         ### Google Drive for desktop (macOS)
         if [ -d "/Applications/Google Drive.app" ]; then
           if [ -d "/Applications/Google Drive.app/Contents/Resources" ]; then
@@ -14851,8 +13806,6 @@ softwarePackages:
             logg warn 'Google Drive.app installed but roots.pem is not available yet'
           fi
         fi
-
-
         ### Ensure MDM settings are applied (deletes after reboot on macOS)
         ### TODO: Ensure `.plist` can be added to `~/Library/Managed Preferences` and not just `/Library/Managed Preferences`
         # Source: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/
@@ -14860,7 +13813,6 @@ softwarePackages:
         if [ -d /System ] && [ -d /Applications ]; then
           sudo cp -f "$HOME/Library/Managed Preferences/com.cloudflare.warp.plist" '/Library/Managed Preferences/com.cloudflare.warp.plist'
           sudo plutil -convert binary1 '/Library/Managed Preferences/com.cloudflare.warp.plist'
-
           ### Enable CloudFlare WARP credentials auto-populate (since file is deleted when not managed with MDM)
           if [ -f "$HOME/Library/LaunchDaemons/com.cloudflare.warp.plist" ] && [ ! -f "/Library/LaunchDaemons/com.cloudflare.warp.plist" ]; then
             sudo mkdir -p /Library/LaunchDaemons
@@ -14871,7 +13823,6 @@ softwarePackages:
           sudo mkdir -p /var/lib/cloudflare-warp
           sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/warp/mdm.xml" /var/lib/cloudflare-warp/mdm.xml
         fi
-
         ### Register CloudFlare WARP
         if warp-cli --accept-tos status | grep 'Registration missing' > /dev/null; then
           logg info 'Registering CloudFlare WARP'
@@ -14879,7 +13830,6 @@ softwarePackages:
         else
           logg info 'Either there is a misconfiguration or the device is already registered with CloudFlare WARP'
         fi
-
         ### Connect CloudFlare WARP
         if warp-cli --accept-tos status | grep 'Disconnected' > /dev/null; then
           logg info 'Connecting to CloudFlare WARP'
@@ -14888,14 +13838,10 @@ softwarePackages:
           logg info 'Either there is a misconfiguration or the device is already connected with CloudFlare WARP'
         fi
       else
-
         logg warn 'warp-cli was not installed so CloudFlare WARP cannot be joined'
       fi
-
       # Needs tuning - possibly unrelated, but internet wasn't working on Ubuntu after installing this and removed it during debugging
-
       # ansible: professormanhattan.warp
-
     apt: cloudflare-warp
     cask: cloudflare-warp
     choco: warp
@@ -15150,86 +14096,48 @@ softwarePackages:
     _name: WireGuard Tools
     _post: >
       #!/usr/bin/env bash
-
       # @file macOS WireGuard Profiles
-
       # @brief Installs WireGuard VPN profiles on macOS devices
-
       # @description
-
       #     This script installs WireGuard VPN profiles on macOS. It scans `${XDG_CONFIG_HOME:-$HOME/.config}/vpn` for all the `*.conf` files
-
       #     and then copies those profiles to `/etc/wireguard`. It also performs a couple preparation tasks like ensuring the target
-
       #     WireGuard system configuration file directory exists and is assigned the proper permissions.
-
       #
-
       #     ## Creating VPN Profiles
-
       #
-
       #     More details on embedding your VPN profiles into your Install Doctor fork can be found by reading the [Secrets documentation](https://install.doctor/docs/customization/secrets#vpn-profiles).
-
       #
-
       #     ## TODO
-
       #
-
       #     * Populate Tunnelblick on macOS using the VPN profiles located in `${XDG_CONFIG_HOME:-$HOME/.config}/vpn`
-
       #     * For the Tunnelblick integration, ensure the username / password is populated from the `OVPN_USERNAME` and `OVPN_PASSWORD` variables
-
       #
-
       #     ## Links
-
       #
-
       #     * [VPN profile folder](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/vpn)
-
       #     * [VPN profile documentation](https://install.doctor/docs/customization/secrets#vpn-profiles)
-
-
       # TODO - Populate Tunnelblick on macOS using the .ovpn profiles located in $HOME/.config/vpn (execpt in the `openvpn` entry of software.yml)
-
       # along with the secrets for the protonVPN OpenVPN (check vpn-linux.tmpl)
-
-
       ### Backs up previous network settings to `/Library/Preferences/com.apple.networkextension.plist.old` before applying new VPN profiles
-
       if [ -f /Library/Preferences/com.apple.networkextension.plist ] && [ ! -f "/Library/Preferences/com.apple.networkextension.plist.old" ]; then
-
         logg info 'Backing up /Library/Preferences/com.apple.networkextension.plist to /Library/Preferences/com.apple.networkextension.plist.old'
         sudo cp -f /Library/Preferences/com.apple.networkextension.plist /Library/Preferences/com.apple.networkextension.plist.old
       else
-
         logg info 'The /Library/Preferences/com.apple.networkextension.plist does not exist or is already backed up to com.apple.networkextension.plist.old'
       fi
-
-
       ### Ensures the `/etc/wireguard` directory exists and has the lowest possible permission-level
-
       if [ ! -d /etc/wireguard ]; then
-
         logg info 'Creating /etc/wireguard since it does not exist yet'
         sudo mkdir -p /etc/wireguard
         sudo chmod 600 /etc/wireguard
       fi
-
-
       ### TODO - Should adding the .conf files to /etc/wireguard only be done on macOS or is this useful on Linux as well?
-
       ### Cycles through the `*.conf` files in `${XDG_CONFIG_HOME:-$HOME/.config}/vpn` and adds them to the `/etc/wireguard` folder
-
       find "${XDG_CONFIG_HOME:-$HOME/.config}/vpn" -mindepth 1 -maxdepth 1 -type f -name "*.conf" | while read WG_CONF; do
-
         WG_FILE="$(basename "$WG_CONF")"
         logg info 'Adding '"$WG_FILE"' to /etc/wireguard'
         sudo cp -f "$WG_CONF" "/etc/wireguard/$WG_FILE"
       done
-
     _short: "WireGuard Tools is a set of utilities for configuring and managing the WireGuard VPN protocol.                                                                                                            "
     apk: wireguard-tools
     apt: wireguard
@@ -15643,30 +14551,20 @@ softwarePackages:
     scoop: extras/youtube-music
     script:darwin: >
       DL_URL="https://github.com/th-ch/youtube-music/releases/download/v1.20.0/YouTube-Music-1.20.0.dmg"
-
       if [ $(arch) = 'arm64' ]; then
-
         DL_URL="https://github.com/th-ch/youtube-music/releases/download/v1.20.0/YouTube-Music-1.20.0-arm64.dmg"
       fi
-
       echo "Downloading YouTube Music" && curl -sSL "$DL_URL" > /tmp/YouTube-Music.dmg
-
       echo "Attaching volume" && sudo hdiutil attach /tmp/YouTube-Music.dmg
-
       echo "Copying to /Applications"
-
       if [ -d "/Volumes/YouTube Music 1.20.0" ]; then
-
         sudo cp -R "/Volumes/YouTube Music 1.20.0/YouTube Music.app" /Applications
         echo "Detaching" && sudo hdiutil detach "/Volumes/YouTube Music 1.20.0"
       elif [ -d "/Volumes/YouTube Music 1.20.0-arm64" ]; then
-
         sudo cp -R "/Volumes/YouTube Music 1.20.0-arm64/YouTube Music.app" /Applications
         echo "Detaching" && sudo hdiutil detach "/Volumes/YouTube Music 1.20.0-arm64"
       fi
-
       echo "Removing /tmp/YouTube-Music.dmg" && rm -f /tmp/YouTube-Music.dmg
-
     winget: th-ch.YouTubeMusic
     yay: youtube-music-bin
   yq:
