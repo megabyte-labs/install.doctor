@@ -1,13 +1,13 @@
 #!/usr/bin/env zx
 import osInfo from 'linux-os-info'
 
-// $.verbose = false
+$.verbose = false
 
 let installOrder, osArch, osId, osType, pkgs, sysType
 const cacheDir = os.homedir() + '/.cache/installx'
 
 function log(message) {
-    console.log(`${chalk.cyanBright('instx->')} ${message}`)
+    process.env.DEBUG && console.log(`${chalk.cyanBright('instx->')} ${message}`)
 }
 
 async function getOsInfo() {
@@ -27,15 +27,27 @@ function execPromise(command) {
 }
 
 async function runSilentCommand(command) {
-    require('child_process').execSync(`${command}`, { stdio: 'inherit', shell: true })
+    try {
+        require('child_process').execSync(`${command}`, { stdio: 'inherit', shell: true })
+    } catch (e) {
+        console.error('Failed to run silent command', e)
+    }
 }
 
 async function runScript(key, script) {
+    log(`Running script..`)
     fs.writeFileSync(`${cacheDir}/${key}`, script)
-    const file = await $`cat ${cacheDir}/${key} | ( grep "^# @file" || [ "$?" == "1" ] ) | sed 's/^# @file //'`
-    const brief = await $`cat ${cacheDir}/${key} | ( grep "^# @brief" || [ "$?" == "1" ] ) | sed 's/^# @brief //'`
-    fs.writeFileSync(`${cacheDir}/${key}-glow`, '```sh\n' + (file.stdout ? (!file.stdout && !brief.stdout ? '```sh' : '') + `# ${file.stdout}\n` : '') + (brief.stdout ? `> ${brief.stdout}\n` : '') + (file.stdout || brief.stdout ? '```sh\n' : '') + script + "\n```")
-    runSilentCommand(`glow "${cacheDir}/${key}-glow" && bash "${cacheDir}/${key}"`)
+    const [ templatedScript, file, brief ] = await Promise.all([
+        $`cat ${cacheDir}/${key} | chezmoi execute-template`,
+        $`cat ${cacheDir}/${key} | ( grep "^# @file" || [ "$?" == "1" ] ) | sed 's/^# @file //'`,
+        $`cat ${cacheDir}/${key} | ( grep "^# @brief" || [ "$?" == "1" ] ) | sed 's/^# @brief //'`
+    ])
+    fs.writeFileSync(`${cacheDir}/${key}-glow`, (file.stdout ? `# ${file.stdout}\n\n` : '') + (brief.stdout ? `> ${brief.stdout}\n\n` : '') + '```sh\n' + templatedScript + "\n```")
+    try {
+        runSilentCommand(`glow --width 140 "${cacheDir}/${key}-glow" && bash "${cacheDir}/${key}"`)
+    } catch (e) {
+        console.error(`Failed to run script associated with ${key}`, e)
+    }
 }
 
 function getPkgData(pref, pkg, installer) {
@@ -57,7 +69,7 @@ function getPkgData(pref, pkg, installer) {
         } else if (pkg[`${pref}:${osType}:${installer}`]) {
             return `${pref}:${osType}:${installer}` // Handles case like `_bin:darwin:pipx:`
         } else if (pkg[`${pref}:${installer}`]) {
-            return `${pref}` // Handles case like `_bin:pipx:`
+            return `${pref}:${installer}` // Handles case like `_bin:pipx:`
         } else if (pkg[`${pref}`]) {
             return `${pref}` // Handles case like `_bin:`
         } else {
@@ -217,7 +229,6 @@ async function installPackages(pkgInstructions) {
     const promises = []
     log(`Populating install order lists`)
     for (const option of installOrder[sysType]) {
-        console.log(installOrder[sysType])
         const instructions = pkgInstructions.filter(x => x.installType === option)
         if (instructions.length) {
             combined[option] = instructions
@@ -237,7 +248,7 @@ async function installPackages(pkgInstructions) {
                 break
             case 'apk':
                 promises.push($`sudo ${key} add ${combined[key].flatMap(x => x.installList).split(' ')}`)
-                break    
+                break
             case 'appimage':
                 promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => {
                     if (x.substring(0, 4) === 'http') {
@@ -309,7 +320,7 @@ async function installPackages(pkgInstructions) {
             case 'sbopkg': // TODO
                 break
             case 'script':
-                promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => runScript(i))))
+                promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => runScript(x.listKey, i))))
                 break
             case 'whalebrew': // TODO
                 break
@@ -320,12 +331,12 @@ async function installPackages(pkgInstructions) {
                 promises.push($`yay -Sy --noconfirm --needed ${combined[key].flatMap(x => x.installList).join(' ')}`)
                 break
             default:
-                console.log(`Unable to find install key instructions for ${key}`)
+                log(`Unable to find install key instructions for ${key}`)
         }
     }
     const installs = await Promise.allSettled(promises)
     log(`All of the installations have finished`)
-    console.log('Installs:', installs)
+    process.env.DEBUG && console.log('Installs:', installs)
     await postInstall(combined)
 }
 
@@ -334,7 +345,7 @@ async function postInstall(combined) {
     const promises = []
     Object.keys(combined).includes('flatpak') && promises.push(createFlatpakLinks())
     const postInstalls = await Promise.allSettled(promises)
-    console.log('Post installs:', postInstalls)
+    process.env.DEBUG && console.log('Post installs:', postInstalls)
 }
 
 async function acquireManagerList(type, command) {
@@ -395,7 +406,7 @@ async function main() {
     installOrder = initData[1].installerPreference
     log(`Populating lists of pre-installed packages`)
     const lists = [
-        acquireManagerList('apt', `dpkg -l`),
+        acquireManagerList('apt', `if command -v dpkg; then dpkg -l; fi`),
         acquireManagerList('brew', `brew list -1`),
         acquireManagerList('cargo', `cargo install --list | awk '/^[[:alnum:]]/ {print $1}'`),
         acquireManagerList('dnf', `rpm -qa`),
@@ -405,7 +416,7 @@ async function main() {
         acquireManagerList('pacman', `pacman -Qs`),
         acquireManagerList('pip3', `pip3 list | awk '{print $1}'`),
         acquireManagerList('pipx', `pipx list --short | awk '{print $1}'`),
-        acquireManagerList('snap', `snap list`),
+        acquireManagerList('snap', `if command -v snapd; then snap list; fi`),
         acquireManagerList('zap', `zap list`)
     ]
     const managerLists = {
@@ -473,13 +484,13 @@ async function main() {
             }
             return true
         })
-    console.log(installInstructions)
     log(`Running installation routine`)
     await installPackages(installInstructions)
     log(`Running post-install scripts`)
     const postScripts = installData
         .flatMap(x => {
             const postField = getPkgData('_post', x, x.installType)
+            log(`Running post-install script for ${x.listKey}`)
             return (postField && runScript(x.listKey, x[postField])) || Promise.resolve()
         })
     await Promise.all(postScripts)
