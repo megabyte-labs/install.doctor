@@ -472,11 +472,13 @@ ensurePipUpdated() {
   ### python3.10 pip update
   if command -v python3.10 > /dev/null; then
     logg info 'Ensuring python3.10 pip is updated' && python3.10 -m pip install --upgrade pip > /dev/null &
+    logg info 'Ensuring python3.10 setuptools is updated' && python3.10 -m pip install --upgrade setuptools > /dev/null &
   fi
 
   ### python3.11 pip update
   if command -v python3.11 > /dev/null; then
     logg info 'Ensuring python3.11 pip is updated' && python3.11 -m pip install --upgrade pip > /dev/null &
+    logg info 'Ensuring python3.11 setuptools is updated' && python3.11 -m pip install --upgrade setuptools > /dev/null &
   fi
 
   ### python3.12 pip update

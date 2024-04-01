@@ -6744,11 +6744,12 @@ softwarePackages:
         logg info 'The keybase executable is not available'
       fi
 
-    _post:cask: >
+    _post:cask: |
       #!/usr/bin/env bash
-
-      if [ ! -f /usr/local/bin/keybase ] && [ -f /Applications/Keybase.app/Contents/SharedSupport/bin/keybase ]; then echo "Fixing missing keybase executable symlink permission issue" && sudo ln -s /Applications/Keybase.app/Contents/SharedSupport/bin/keybase /usr/local/bin/keybase; fi
-
+      if [ ! -f /usr/local/bin/keybase ] && [ -f /Applications/Keybase.app/Contents/SharedSupport/bin/keybase ]; then
+        logg info "Fixing missing keybase executable symlink permission issue"
+        sudo ln -s /Applications/Keybase.app/Contents/SharedSupport/bin/keybase /usr/local/bin/keybase
+      fi
     _short: "Keybase Client is an open-source security app that offers encrypted messaging, file sharing, and identity verification services.                                                                          "
     _when:ansible: "! test -f /opt/keybase/Keybase"
     ansible: professormanhattan.keybase
