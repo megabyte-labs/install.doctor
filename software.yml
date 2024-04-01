@@ -2640,7 +2640,8 @@ softwarePackages:
     _github: https://github.com/christian-korneck/docker-pushrm
     _name: Docker PushRM
     _short: "docker-pushrm is a tool that simplifies pushing Docker images to AWS Elastic Container Registry (ECR) with reduced manual steps.                                                                          "
-    script: >
+    script: |
+      #!/usr/bin/env bash
       if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm" ]; then
         logg info 'Acquiring release information for Docker push-rm'
         RELEASE_TAG="$(curl -sSL https://api.github.com/repos/christian-korneck/docker-pushrm/releases/latest | jq -r '.tag_name')"
@@ -4609,7 +4610,7 @@ softwarePackages:
         logg info "The GitHub Actions runner installation is not present at ${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
       fi
     _short: "GitHub Actions Runner is a tool that allows you to run GitHub Actions workflows on your own infrastructure.                                                                                               "
-    script: >
+    script: |
       #!/usr/bin/env bash
       if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh" ]; then
         source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh"
@@ -11549,7 +11550,7 @@ softwarePackages:
     _github: https://github.com/sdkman/sdkman-cli
     _name: SDKMan
     _short: "sdkman-cli is a command-line tool for managing software development kits (SDKs) on Unix-based systems. It simplifies the installation, management, and switching between different SDK versions for       \nlanguages like Java, Kotlin, and more.                                                                                                                                                                    "
-    script: >
+    script: |
       #!/usr/bin/env bash
       # @file SDKMAN Install
       # @brief Ensures SDKMAN is installed.
