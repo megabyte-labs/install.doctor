@@ -2596,7 +2596,7 @@ softwarePackages:
       # @brief Logs into DockerHub for Docker Desktop
       # @description
       #     This script logs into DockerHub so that Docker Desktop is pre-authenticated. This
-      #     functionality requires that the `DOCKERHUB_USER` be passed in as an environment variable (or 
+      #     functionality requires that the `DOCKERHUB_USER` be passed in as an environment variable (or
       #     directly editted in the `~/.config/chezmoi/chezmoi.yaml` file) and that the `DOCKERHUB_TOKEN`
       #     be passed in as a secret (either via the encrypted secret method or passed in as an environment
       #     variable).
@@ -4724,7 +4724,7 @@ softwarePackages:
           ### Populate appropriate token
           case "$OSTYPE" in
             solaris*) echo "TODO" ;;
-            darwin*)  GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_DARWIN")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_DARWIN" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_DARWIN" }}{{ end }}" ;; 
+            darwin*)  GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_DARWIN")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_DARWIN" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_DARWIN" }}{{ end }}" ;;
             linux*)   GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_LINUX")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_LINUX" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_LINUX" }}{{ end }}" ;;
             bsd*)     echo "TODO" ;;
             msys*)    GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_WINDOWS")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_WINDOWS" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_WINDOWS" }}{{ end }}" ;;
@@ -4815,23 +4815,56 @@ softwarePackages:
     _desc: "[git-o-matic](https://github.com/muesli/gitomatic) is a tool to monitor git repositories and automatically pull & push changes"
     _github: https://github.com/muesli/gitomatic
     _name: git-o-matic
-    _post: "#!/usr/bin/env bash
-# @file git-o-matic Configuration
-# @brief Starts service on Linux systems to monitor Git repositories
-# @description
-#     git-o-matic is a tool to monitor git repositories and automatically pull/push changes. Multiple repositories can be
-#     monitored by running multiple instances of `gitomatic`. This script supports SSH Key based authentication only.\n#
-#     If the `gitomatic` program is installed, this script creates and starts a Systemd service to monitor the repositories.
-#     The repositories are cloned if they are not available at the path.\n#
-#     ## Notes
-#     * The author name and email address for commits are the same as `.user.name` and `.user.email` (configured in the `home/.chezmoi.yaml.tmpl` file)
-#     * `gitomatic` automatically pushes and pulls changes. The script does not change this behavior
-#     * `gitomatic` checks for changes every minute. This setting is not changed by this script
-#     * The User's default SSH Key is used for authentication\n#
-#     ## Links\n#
-#     * [gitomatic GitHub repository](https://github.com/muesli/gitomatic/)
-#     * [Systemd Unit file](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/gitomatic/gitomatic.service.tmpl)
-#     * [Helper script](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_local/bin/executable_gitomatic_service.tmpl)\n\nif command -v gitomatic > /dev/null; then\n  ### Copy bin to /usr/local/bin\n  logg info \"Copying $HOME/.local/bin/gitomatic-service to /usr/local/bin/gitomatic-service\" && sudo cp -f \"$HOME/.local/bin/gitomatic-service\" /usr/local/bin/gitomatic-service\n  \n  ### Copy gitomatic to global directory\n  if [ ! -f /usr/local/bin/gitomatic ]; then\n    logg info 'Copying gitomatic executable to /usr/local/bin/gitomatic' && sudo cp -f \"$(which gitomatic)\" /usr/local/bin/gitomatic\n  fi\n\n  if [ -d /Applications ] && [ -d /System ]; then\n    ### macOS\n    logg info 'Copying gitomatic plist file to /Library/LaunchDaemons' && sudo cp -f \"${XDG_CONFIG_HOME:-$HOME/.config}/gitomatic/com.github.muesli.gitomatic.plist\" /Library/LaunchDaemons/com.github.muesli.gitomatic.plist\n    if ! sudo launchctl list | grep 'gitomatic' > /dev/null; then\n      logg info 'Running sudo launchctl load /Library/LaunchDaemons/com.github.muesli.gitomatic.plist' && sudo launchctl load /Library/LaunchDaemons/com.github.muesli.gitomatic.plist\n      logg info 'Running sudo launchctl start /Library/LaunchDaemons/com.github.muesli.gitomatic.plist' && sudo launchctl start /Library/LaunchDaemons/com.github.muesli.gitomatic.plist\n    else\n      logg info \"gitomatic services appear to already be loaded\"\n    fi\n  else\n    ### Linux\n    logg info 'Copying gitomatic systemd unit file to /etc/systemd/system/' && sudo cp -f \"${XDG_CONFIG_HOME:-$HOME/.config}/gitomatic/gitomatic.service\" /etc/systemd/system/gitomatic.service\n    logg info 'Reloading systemd daemon' && sudo systemctl daemon-reload\n    logg info 'Enabling and starting gitomatic service' && sudo systemctl enable --now gitomatic\n  fi\nelse\n  logg info 'gitomatic is not installed or it is not available in PATH'\nfi\n"
+    _post: |
+      #!/usr/bin/env bash
+      # @file git-o-matic Configuration
+      # @brief Starts service on Linux systems to monitor Git repositories
+      # @description
+      #     git-o-matic is a tool to monitor git repositories and automatically pull/push changes. Multiple repositories can be
+      #     monitored by running multiple instances of `gitomatic`. This script supports SSH Key based authentication only.
+      #
+      #     If the `gitomatic` program is installed, this script creates and starts a Systemd service to monitor the repositories.
+      #     The repositories are cloned if they are not available at the path.
+      #
+      #     ## Notes
+      #     * The author name and email address for commits are the same as `.user.name` and `.user.email` (configured in the `home/.chezmoi.yaml.tmpl` file)
+      #     * `gitomatic` automatically pushes and pulls changes. The script does not change this behavior
+      #     * `gitomatic` checks for changes every minute. This setting is not changed by this script
+      #     * The User's default SSH Key is used for authentication
+      #
+      #     ## Links
+      #
+      #     * [gitomatic GitHub repository](https://github.com/muesli/gitomatic/)
+      #     * [Systemd Unit file](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/gitomatic/gitomatic.service.tmpl)
+      #     * [Helper script](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_local/bin/executable_gitomatic_service.tmpl)
+
+      if command -v gitomatic > /dev/null; then
+        ### Copy bin to /usr/local/bin
+        logg info "Copying $HOME/.local/bin/gitomatic-service to /usr/local/bin/gitomatic-service" && sudo cp -f "$HOME/.local/bin/gitomatic-service" /usr/local/bin/gitomatic-service
+
+        ### Copy gitomatic to global directory
+        if [ ! -f /usr/local/bin/gitomatic ]; then
+          logg info 'Copying gitomatic executable to /usr/local/bin/gitomatic' && sudo cp -f "$(which gitomatic)" /usr/local/bin/gitomatic
+        fi
+
+        if [ -d /Applications ] && [ -d /System ]; then
+          ### macOS
+          logg info 'Copying gitomatic plist file to /Library/LaunchDaemons' && sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitomatic/com.github.muesli.gitomatic.plist" /Library/LaunchDaemons/com.github.muesli.gitomatic.plist
+          if ! sudo launchctl list | grep 'gitomatic' > /dev/null; then
+            logg info 'Running sudo launchctl load /Library/LaunchDaemons/com.github.muesli.gitomatic.plist' && sudo launchctl load /Library/LaunchDaemons/com.github.muesli.gitomatic.plist
+            logg info 'Running sudo launchctl start /Library/LaunchDaemons/com.github.muesli.gitomatic.plist' && sudo launchctl start /Library/LaunchDaemons/com.github.muesli.gitomatic.plist
+          else
+            logg info "gitomatic services appear to already be loaded"
+          fi
+        else
+          ### Linux
+          logg info 'Copying gitomatic systemd unit file to /etc/systemd/system/' && sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitomatic/gitomatic.service" /etc/systemd/system/gitomatic.service
+          logg info 'Reloading systemd daemon' && sudo systemctl daemon-reload
+          logg info 'Enabling and starting gitomatic service' && sudo systemctl enable --now gitomatic
+        fi
+      else
+        logg info 'gitomatic is not installed or it is not available in PATH'
+      fi
     _short: "gitomatic is a tool for automatic syncing of Git repositories.                                                                                                                                            "
     ansible: professormanhattan.gitomatic
     github: github.com/muesli/gitomatic
@@ -8342,15 +8375,168 @@ softwarePackages:
       - netdata
     _home: https://www.netdata.cloud/
     _name: Netdata
-    _post: "#!/usr/bin/env bash
-# @file Netdata
-# @brief Connects Netdata with Netdata's free cloud dashboard and applies some system optimizations, if necessary
-# @description
-#     This script connects Netdata with Netdata Cloud if Netdata is installed, the `NETDATA_TOKEN` is provided, and the
-#     `NETDATA_ROOM` is defined. This allows you to graphically browse through system metrics on all your connected devices
-#     from a single free web application.\n#
-#     This script installs additional alerts and enables notifications if Netdata is installed. Email notifications are configured
-#     using the provided primary email address. If the OS is Debian based, Netdata shows the number of CVEs in currently installed packages.\n\nensureNetdataOwnership() {\n  ### Ensure /usr/local/var/lib/netdata/cloud.d is owned by user\n  if [ -d /usr/local/var/lib/netdata ]; then\n    logg info 'Ensuring permissions are correct on /usr/local/var/lib/netdata' && sudo chown -Rf netdata:netdata /usr/local/var/lib/netdata 2> /dev/null || sudo chown -Rf netdata:$(id -g -n) /usr/local/var/lib/netdata\n  elif [ -d /var/lib/netdata ]; then\n    logg info 'Ensuring permissions are correct on /var/lib/netdata' && sudo chown -Rf netdata:netdata /var/lib/netdata 2> /dev/null || sudo chown -Rf netdata:$(id -g -n) /var/lib/netdata\n  elif [ -d \"${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata\" ]; then\n    logg info \"Ensuring permissions are correct on ${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata\" && sudo chown -Rf netdata:netdata \"${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata\" 2> /dev/null || sudo chown -Rf netdata:$(id -g -n) \"${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata\"\n  else\n    logg warn 'No /var/lib/netdata folder found'\n  fi\n}\n\n### Claim the instance with Netdata Cloud\nif command -v netdata-claim.sh > /dev/null; then\n  ### Add user / group with script in ~/.local/bin/add-usergroup, if it is available\n  if command -v add-usergroup > /dev/null; then\n    sudo add-usergroup \"$USER\" netdata\n  fi\n\n  ### Ensure ownership\n  ensureNetdataOwnership\n\n  ### netdata-claim.sh must be run as netdata user\n  sudo -H -u netdata bash -c 'export NETDATA_ROOM=\"{{- if (stat (joinPath .chezmoi.sourceDir \".chezmoitemplates\" \"secrets\" \"NETDATA_ROOM\")) -}}{{- includeTemplate \"secrets/NETDATA_ROOM\" | decrypt | trim -}}{{- else -}}{{- env \"NETDATA_ROOM\" -}}{{- end -}}\" && export NETDATA_TOKEN=\"{{- if (stat (joinPath .chezmoi.sourceDir \".chezmoitemplates\" \"secrets\" \"NETDATA_TOKEN\")) -}}{{- includeTemplate \"secrets/NETDATA_TOKEN\" | decrypt | trim -}}{{- else -}}{{- env \"NETDATA_TOKEN\" -}}{{- end -}}\" && yes | netdata-claim.sh -token=\"$NETDATA_TOKEN\" -rooms=\"$NETDATA_ROOM\" -url=\"https://app.netdata.cloud\"'\n  \n  ### Kernel optimizations\n  # These are mentioned while installing via the kickstart.sh script method. We are using Homebrew for the installation though.\n  # Assuming these optimizations do not cause any harm.\n  if [ -d /Applications ] && [ -d /System ]; then\n    ### macOS\n    logg info 'System is macOS so Netdata kernel optimizations are not required'\n  else\n    ### Linux\n    if [ -d /sys/kernel/mm/ksm ]; then\n      logg info 'Adding Netdata kernel optimization for /sys/kernel/mm/ksm/run'\n      echo 1 | sudo tee /sys/kernel/mm/ksm/run\n      logg info 'Adding Netdata kernel optimization for /sys/kernel/mm/ksm/sleep_millisecs'\n      echo 1000 | sudo tee /sys/kernel/mm/ksm/sleep_millisecs\n    else\n      logg info 'The /sys/kernel/mm/ksm directory does not exist so Netdata kernel optimizations are not being applied'\n    fi\n  fi\n\n  ### Install additional alerts and enable notifications\n  if command -v netdata > /dev/null; then\n    ### Copy the additional alert definitions\n    if [ -d /usr/local/etc/netdata ]; then\n      NETDATA_ETC='/usr/local/etc/netdata/'\n    elif [ -d /etc/netdata ]; then\n      NETDATA_ETC='/etc/netdata'\n    elif [ -d \"${HOMEBREW_PREFIX:-/opt/homebrew}/etc/netdata\" ]; then\n      NETDATA_ETC=\"${HOMEBREW_PREFIX:-/opt/homebrew}/etc/netdata\"\n    else\n      logg error 'No etc location found for netdata' && exit 1\n    fi\n    logg info \"Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/ to $NETDATA_ETC\" && sudo cp -rf \"${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/\" \"$NETDATA_ETC\"\n    \n    if command -v gsed > /dev/null; then\n      SED_UTIL=\"gsed\"\n    else\n      SED_UTIL=\"sed\"\n    fi\n\n    ### Blocky\n    logg info \"Adding Blocky metrics collection to $NETDATA_ETC/go.d/prometheus.conf\"\n    sudo \"$SED_UTIL\" -i \"/jobs:/a\\  - name: blocky_local \\n    url: 'http://127.0.0.1:4000/metrics'\" \"$NETDATA_ETC/go.d/prometheus.conf\"\n    \n    ### SFTPGo\n    logg info \"Adding SFTPGo metrics collection to $NETDATA_ETC/go.d/prometheus.conf\"\n    sudo \"$SED_UTIL\" -i \"/jobs:/a\\  - name: sftpgo_local \\n    url: 'http://127.0.0.1:57500/metrics'\" \"$NETDATA_ETC/go.d/prometheus.conf\"\n\n    # Backup current health alarm configuration and apply new one\n    if [ -d /usr/local/lib/netdata ]; then\n      NETDATA_LIB='/usr/local/lib/netdata'\n    elif [ -d /usr/lib/netdata ]; then\n      NETDATA_LIB='/usr/lib/netdata'\n    elif [ -d \"${HOMEBREW_PREFIX:-/opt/homebrew}/lib/netdata\" ]; then\n      NETDATA_LIB=\"${HOMEBREW_PREFIX:-/opt/homebrew}/lib/netdata\"\n    else\n      logg error 'No lib location found for netdata' && exit 1\n    fi\n    logg info \"Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health_alarm_notify.conf to $NETDATA_LIB/conf.d/health_alarm_notify.conf\" && sudo cp -f \"${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health_alarm_notify.conf\" \"$NETDATA_LIB/conf.d/health_alarm_notify.conf\"\n  else\n    logg warn 'netdata is not available in the PATH or is not installed'\n  fi\n\n  ### Ensure the apt command is available before running `debsecan` logic\n  if command -v apt-get > /dev/null; then\n    ### Configure Netdata to gather information about CVEs in the installed packages\n    if command -v debsecan > /dev/null; then\n      DEBSECAN_GIT=\"${XDG_DATA_HOME:-$HOME/.local/share}/netdata-debsecan\"\n      ### Installing the script to generate report on CVEs in installed packages\n      logg info 'Installing script to generate report on CVEs in installed packages' && sudo cp -f \"$DEBSECAN_GIT/usr_local_bin_debsecan-by-type\" \"/usr/local/bin/debsecan-by-type\"\n      ### Generate initial debsecan reports in /var/log/debsecan/\n      logg info 'Generating initial debsecan reports in /var/log/debsecan/' && debsecan-by-type\n      ### Configure dpkg to refresh the file after each run\n      logg info 'Configuring dpkg to refresh the file after each run' && sudo cp -f \"$DEBSECAN_GIT/etc_apt_apt.conf.d_99debsecan\"  /etc/apt/apt.conf.d/99-debsecan\n      ### Add a cron job to refresh the file every hour\n      logg info 'Adding a cron job to refresh the file every hour' && sudo cp -f \"$DEBSECAN_GIT/etc_cron.d_debsecan\" /etc/cron.d/debsecan\n      ### Install the module/configuration file\n      logg info 'Installing the module and configuration file'\n      sudo \"$DEBSECAN_GIT/debsecan.chart.py\" /usr/libexec/netdata/python.d/debsecan.chart.py\n      sudo \"$DEBSECAN_GIT/debsecan.conf\" /etc/netdata/python.d/debsecan.conf\n    else\n      logg warn 'apt-get is available but debsecan is not available in the PATH or is not installed'\n    fi\n  fi\n\n  ### Ensure / report whether speedtest-cli is installed\n  if ! command -v speedtest-cli > /dev/null; then\n    if command -v pipx > /dev/null; then\n      pipx install speedtest-cli\n    else\n      logg warn 'speedtest-cli not installed and pipx is not available'\n    fi\n  fi\n\n  ### Configure Netdata to gather information about Internet connection speed\n  if command -v speedtest-cli > /dev/null; then\n    ### Installing the script to generate report on Internet connection speed\n    logg info 'Installing script to generate report on Internet connection speed'\n    LIBEXEC_PATH=\"$(netdata -W buildinfo | grep 'Configure' | sed \"s/.*--libexecdir=\\([^ \\']*\\).*/\\1/\")\"\n    if [ -d /usr/libexec/netdata/charts.d ]; then\n      sudo cp -f \"${XDG_DATA_HOME:-$HOME/.local/share}/netdata-speedtest/speedtest.chart.sh\" \"/usr/libexec/netdata/charts.d/speedtest.chart.sh\"\n    elif [ -d \"$LIBEXEC_PATH/netdata/charts.d\" ]; then\n      logg info \"$LIBEXEC_PATH/netdata/charts.d present on system\"\n      cp -f \"${XDG_DATA_HOME:-$HOME/.local/share}/netdata-speedtest/speedtest.chart.sh\" \"$LIBEXEC_PATH/netdata/charts.d/speedtest.chart.sh\"\n    else\n      logg warn \"Failed to find appropriate directory to add Netdata speedtest chart script\"\n    fi\n  else\n    logg warn 'speedtest-cli is not available in the PATH or is not installed'\n  fi\n\n  ### Ensure ownership again\n  ensureNetdataOwnership\n\n  ### Restart Netdata service\n  if command -v systemctl > /dev/null; then\n    logg info 'Enabling netdata service' && sudo systemctl enable netdata\n    logg info 'Restarting netdata service' && sudo systemctl restart netdata\n  elif [ -d /Applications ] && [ -d /System ]; then\n    logg info 'Starting / enabling netdata service' && brew services restart netdata\n  else\n    logg warn 'systemctl is not available'\n  fi\nelse\n  logg info 'netdata-claim.sh is not available in the PATH'\nfi\n"
+    _post: |
+      #!/usr/bin/env bash
+      # @file Netdata
+      # @brief Connects Netdata with Netdata's free cloud dashboard and applies some system optimizations, if necessary
+      # @description
+      #     This script connects Netdata with Netdata Cloud if Netdata is installed, the `NETDATA_TOKEN` is provided, and the
+      #     `NETDATA_ROOM` is defined. This allows you to graphically browse through system metrics on all your connected devices
+      #     from a single free web application.
+      #
+      #     This script installs additional alerts and enables notifications if Netdata is installed. Email notifications are configured
+      #     using the provided primary email address. If the OS is Debian based, Netdata shows the number of CVEs in currently installed packages.
+
+      ensureNetdataOwnership() {
+        ### Ensure /usr/local/var/lib/netdata/cloud.d is owned by user
+        if [ -d /usr/local/var/lib/netdata ]; then
+          logg info 'Ensuring permissions are correct on /usr/local/var/lib/netdata' && sudo chown -Rf netdata:netdata /usr/local/var/lib/netdata 2> /dev/null || sudo chown -Rf netdata:$(id -g -n) /usr/local/var/lib/netdata
+        elif [ -d /var/lib/netdata ]; then
+          logg info 'Ensuring permissions are correct on /var/lib/netdata' && sudo chown -Rf netdata:netdata /var/lib/netdata 2> /dev/null || sudo chown -Rf netdata:$(id -g -n) /var/lib/netdata
+        elif [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata" ]; then
+          logg info "Ensuring permissions are correct on ${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata" && sudo chown -Rf netdata:netdata "${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata" 2> /dev/null || sudo chown -Rf netdata:$(id -g -n) "${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata"
+        else
+          logg warn 'No /var/lib/netdata folder found'
+        fi
+      }
+
+      ### Claim the instance with Netdata Cloud
+      if command -v netdata-claim.sh > /dev/null; then
+        ### Add user / group with script in ~/.local/bin/add-usergroup, if it is available
+        if command -v add-usergroup > /dev/null; then
+          sudo add-usergroup "$USER" netdata
+        fi
+
+        ### Ensure ownership
+        ensureNetdataOwnership
+
+        ### netdata-claim.sh must be run as netdata user
+        sudo -H -u netdata bash -c 'export NETDATA_ROOM="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_ROOM")) -}}{{- includeTemplate "secrets/NETDATA_ROOM" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_ROOM" -}}{{- end -}}" && export NETDATA_TOKEN="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) -}}{{- includeTemplate "secrets/NETDATA_TOKEN" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_TOKEN" -}}{{- end -}}" && yes | netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="https://app.netdata.cloud"'
+
+        ### Kernel optimizations
+        # These are mentioned while installing via the kickstart.sh script method. We are using Homebrew for the installation though.
+        # Assuming these optimizations do not cause any harm.
+        if [ -d /Applications ] && [ -d /System ]; then
+          ### macOS
+          logg info 'System is macOS so Netdata kernel optimizations are not required'
+        else
+          ### Linux
+          if [ -d /sys/kernel/mm/ksm ]; then
+            logg info 'Adding Netdata kernel optimization for /sys/kernel/mm/ksm/run'
+            echo 1 | sudo tee /sys/kernel/mm/ksm/run
+            logg info 'Adding Netdata kernel optimization for /sys/kernel/mm/ksm/sleep_millisecs'
+            echo 1000 | sudo tee /sys/kernel/mm/ksm/sleep_millisecs
+          else
+            logg info 'The /sys/kernel/mm/ksm directory does not exist so Netdata kernel optimizations are not being applied'
+          fi
+        fi
+
+        ### Install additional alerts and enable notifications
+        if command -v netdata > /dev/null; then
+          ### Copy the additional alert definitions
+          if [ -d /usr/local/etc/netdata ]; then
+            NETDATA_ETC='/usr/local/etc/netdata/'
+          elif [ -d /etc/netdata ]; then
+            NETDATA_ETC='/etc/netdata'
+          elif [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/netdata" ]; then
+            NETDATA_ETC="${HOMEBREW_PREFIX:-/opt/homebrew}/etc/netdata"
+          else
+            logg error 'No etc location found for netdata' && exit 1
+          fi
+          logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/ to $NETDATA_ETC" && sudo cp -rf "${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/" "$NETDATA_ETC"
+
+          if command -v gsed > /dev/null; then
+            SED_UTIL="gsed"
+          else
+            SED_UTIL="sed"
+          fi
+
+          ### Blocky
+          logg info "Adding Blocky metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
+          sudo "$SED_UTIL" -i "/jobs:/a\  - name: blocky_local \n    url: 'http://127.0.0.1:4000/metrics'" "$NETDATA_ETC/go.d/prometheus.conf"
+
+          ### SFTPGo
+          logg info "Adding SFTPGo metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
+          sudo "$SED_UTIL" -i "/jobs:/a\  - name: sftpgo_local \n    url: 'http://127.0.0.1:57500/metrics'" "$NETDATA_ETC/go.d/prometheus.conf"
+
+          # Backup current health alarm configuration and apply new one
+          if [ -d /usr/local/lib/netdata ]; then
+            NETDATA_LIB='/usr/local/lib/netdata'
+          elif [ -d /usr/lib/netdata ]; then
+            NETDATA_LIB='/usr/lib/netdata'
+          elif [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/lib/netdata" ]; then
+            NETDATA_LIB="${HOMEBREW_PREFIX:-/opt/homebrew}/lib/netdata"
+          else
+            logg error 'No lib location found for netdata' && exit 1
+          fi
+          logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health_alarm_notify.conf to $NETDATA_LIB/conf.d/health_alarm_notify.conf" && sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health_alarm_notify.conf" "$NETDATA_LIB/conf.d/health_alarm_notify.conf"
+        else
+          logg warn 'netdata is not available in the PATH or is not installed'
+        fi
+
+        ### Ensure the apt command is available before running `debsecan` logic
+        if command -v apt-get > /dev/null; then
+          ### Configure Netdata to gather information about CVEs in the installed packages
+          if command -v debsecan > /dev/null; then
+            DEBSECAN_GIT="${XDG_DATA_HOME:-$HOME/.local/share}/netdata-debsecan"
+            ### Installing the script to generate report on CVEs in installed packages
+            logg info 'Installing script to generate report on CVEs in installed packages' && sudo cp -f "$DEBSECAN_GIT/usr_local_bin_debsecan-by-type" "/usr/local/bin/debsecan-by-type"
+            ### Generate initial debsecan reports in /var/log/debsecan/
+            logg info 'Generating initial debsecan reports in /var/log/debsecan/' && debsecan-by-type
+            ### Configure dpkg to refresh the file after each run
+            logg info 'Configuring dpkg to refresh the file after each run' && sudo cp -f "$DEBSECAN_GIT/etc_apt_apt.conf.d_99debsecan"  /etc/apt/apt.conf.d/99-debsecan
+            ### Add a cron job to refresh the file every hour
+            logg info 'Adding a cron job to refresh the file every hour' && sudo cp -f "$DEBSECAN_GIT/etc_cron.d_debsecan" /etc/cron.d/debsecan
+            ### Install the module/configuration file
+            logg info 'Installing the module and configuration file'
+            sudo "$DEBSECAN_GIT/debsecan.chart.py" /usr/libexec/netdata/python.d/debsecan.chart.py
+            sudo "$DEBSECAN_GIT/debsecan.conf" /etc/netdata/python.d/debsecan.conf
+          else
+            logg warn 'apt-get is available but debsecan is not available in the PATH or is not installed'
+          fi
+        fi
+
+        ### Ensure / report whether speedtest-cli is installed
+        if ! command -v speedtest-cli > /dev/null; then
+          if command -v pipx > /dev/null; then
+            pipx install speedtest-cli
+          else
+            logg warn 'speedtest-cli not installed and pipx is not available'
+          fi
+        fi
+
+        ### Configure Netdata to gather information about Internet connection speed
+        if command -v speedtest-cli > /dev/null; then
+          ### Installing the script to generate report on Internet connection speed
+          logg info 'Installing script to generate report on Internet connection speed'
+          LIBEXEC_PATH="$(netdata -W buildinfo | grep 'Configure' | sed "s/.*--libexecdir=\([^ \']*\).*/\1/")"
+          if [ -d /usr/libexec/netdata/charts.d ]; then
+            sudo cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/netdata-speedtest/speedtest.chart.sh" "/usr/libexec/netdata/charts.d/speedtest.chart.sh"
+          elif [ -d "$LIBEXEC_PATH/netdata/charts.d" ]; then
+            logg info "$LIBEXEC_PATH/netdata/charts.d present on system"
+            cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/netdata-speedtest/speedtest.chart.sh" "$LIBEXEC_PATH/netdata/charts.d/speedtest.chart.sh"
+          else
+            logg warn "Failed to find appropriate directory to add Netdata speedtest chart script"
+          fi
+        else
+          logg warn 'speedtest-cli is not available in the PATH or is not installed'
+        fi
+
+        ### Ensure ownership again
+        ensureNetdataOwnership
+
+        ### Restart Netdata service
+        if command -v systemctl > /dev/null; then
+          logg info 'Enabling netdata service' && sudo systemctl enable netdata
+          logg info 'Restarting netdata service' && sudo systemctl restart netdata
+        elif [ -d /Applications ] && [ -d /System ]; then
+          logg info 'Starting / enabling netdata service' && brew services restart netdata
+        else
+          logg warn 'systemctl is not available'
+        fi
+      else
+        logg info 'netdata-claim.sh is not available in the PATH'
+      fi
     _service: netdata
     _service:brew:
       - name: netdata
