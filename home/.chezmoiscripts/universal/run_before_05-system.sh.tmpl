@@ -704,7 +704,7 @@ setupSnap() {
 }
 
 installYay() {
-  if [ -f /etc/arch-release ] && ! command -v yay > /dev/null
+  if [ -f /etc/arch-release ] && ! command -v yay > /dev/null; then
     sudo rm -rf /usr/local/src/yay
     sudo git clone https://aur.archlinux.org/yay.git /usr/local/src/yay
     cd /usr/local/src/yay
