@@ -45,8 +45,9 @@ if command -v install-program > /dev/null; then
       fi
     fi
     if command -v unbuffer > /dev/null; then
-      logg info 'Running unbuffer install-program'
-      unbuffer install-program {{ $softwareList }}
+      # install-program was refactored into installx
+      # logg info 'Running unbuffer install-program'
+      # unbuffer install-program {{ $softwareList }}
       logg info 'Running unbuffer installx'
       unbuffer installx {{ $softwareList }}
     else
