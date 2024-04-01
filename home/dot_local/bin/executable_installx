@@ -27,24 +27,26 @@ function execPromise(command) {
 }
 
 async function runSilentCommand(command) {
-    try {
-        require('child_process').execSync(`${command}`, { stdio: 'inherit', shell: true })
-    } catch (e) {
-        console.error('Failed to run silent command', e)
-    }
+    return require('child_process').execSync(`${command}`, { stdio: 'inherit', shell: true })
 }
 
 async function runScript(key, script) {
     log(`Running script..`)
-    fs.writeFileSync(`${cacheDir}/${key}`, script)
+    fs.writeFileSync(`${cacheDir}/${key}-raw`, script)
     const [ templatedScript, file, brief ] = await Promise.all([
-        $`cat ${cacheDir}/${key} | chezmoi execute-template`,
-        $`cat ${cacheDir}/${key} | ( grep "^# @file" || [ "$?" == "1" ] ) | sed 's/^# @file //'`,
-        $`cat ${cacheDir}/${key} | ( grep "^# @brief" || [ "$?" == "1" ] ) | sed 's/^# @brief //'`
+        $`cat "${cacheDir}/${key}-raw" | chezmoi execute-template`,
+        $`cat "${cacheDir}/${key}-raw" | ( grep "^# @file" || [ "$?" == "1" ] ) | sed 's/^# @file //'`,
+        $`cat "${cacheDir}/${key}-raw" | ( grep "^# @brief" || [ "$?" == "1" ] ) | sed 's/^# @brief //'`
     ])
-    fs.writeFileSync(`${cacheDir}/${key}-glow`, (file.stdout ? `# ${file.stdout}\n\n` : '') + (brief.stdout ? `> ${brief.stdout}\n\n` : '') + '```sh\n' + templatedScript + "\n```")
+    fs.writeFileSync(`${cacheDir}/${key}-glow`, (file.stdout ? `# ${file.stdout}\n\n` : '') + (brief.stdout ? `> ${brief.stdout}\n\n` : '') + '```sh\n' + templatedScript.stdout + "\n```")
+    fs.writeFileSync(`${cacheDir}/${key}`, templatedScript.stdout)
     try {
-        runSilentCommand(`glow --width 140 "${cacheDir}/${key}-glow" && bash "${cacheDir}/${key}"`)
+        runSilentCommand(`glow --width 140 "${cacheDir}/${key}-glow"`)
+        if (process.env.DEBUG) {
+            runSilentCommand(`bash "${cacheDir}/${key}" || logg error 'Error occurred while processing script for ${key}'`)
+        } else {
+            return $`bash "${cacheDir}/${key}" || logg error 'Error occurred while processing script for ${key}'`.pipe(process.stdout)
+        }
     } catch (e) {
         console.error(`Failed to run script associated with ${key}`, e)
     }
@@ -352,7 +354,7 @@ async function acquireManagerList(type, command) {
     if (which.sync(type, { nothrow: true })) {
         if (fs.existsSync(`${cacheDir}/${type}`)) {
             setTimeout(() => {
-                require('child_process').execSync(`${command} > ${cacheDir}/${type}`)
+                require('child_process').exec(`${command} > ${cacheDir}/${type}`)
             }, 0)
         } else {
             require('child_process').execSync(`${command} > ${cacheDir}/${type}`)
@@ -490,6 +492,7 @@ async function main() {
     const postScripts = installData
         .flatMap(x => {
             const postField = getPkgData('_post', x, x.installType)
+            if (!postField) return Promise.resolve()
             log(`Running post-install script for ${x.listKey}`)
             return (postField && runScript(x.listKey, x[postField])) || Promise.resolve()
         })
