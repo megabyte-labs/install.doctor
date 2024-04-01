@@ -15,6 +15,7 @@ export AVP="$ANSIBLE_VAULT_PASSWORD"
 export ATUIN_EMAIL="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ATUIN_EMAIL")) }}{{ includeTemplate "secrets/ATUIN_EMAIL" | decrypt | trim }}{{ else }}{{ env "ATUIN_EMAIL" }}{{ end }}"
 export ATUIN_PASSWORD="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ATUIN_PASSWORD")) }}{{ includeTemplate "secrets/ATUIN_PASSWORD" | decrypt | trim }}{{ else }}{{ env "ATUIN_PASSWORD" }}{{ end }}"
 export ATUIN_USERNAME="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ATUIN_USERNAME")) }}{{ includeTemplate "secrets/ATUIN_USERNAME" | decrypt | trim }}{{ else }}{{ env "ATUIN_USERNAME" }}{{ end }}"
+export ATUIN_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "ATUIN_KEY")) }}{{ includeTemplate "secrets/ATUIN_KEY" | decrypt | trim }}{{ else }}{{ env "ATUIN_KEY" }}{{ end }}"
 
 ### AWS
 export AWS_ACCESS_KEY_ID="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "AWS_ACCESS_KEY_ID")) }}{{ includeTemplate "secrets/AWS_ACCESS_KEY_ID" | decrypt | trim }}{{ else }}{{ env "AWS_ACCESS_KEY_ID" }}{{ end }}"
