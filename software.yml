@@ -405,9 +405,12 @@ softwarePackages:
     _name: Ansible
     _post:pipx: >
       #!/usr/bin/env bash
-
-      pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
-
+      if [ ! -f "${XDG_CACHE_HOME:-$HOME/.cache}/installx/ansible-post" ]; then
+        pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
+        touch "${XDG_CACHE_HOME:-$HOME/.cache}/installx/ansible-post"
+      else
+        logg info 'Ansible and dependencies already installed'
+      fi
     _short: "Ansible is an open-source automation tool that simplifies IT orchestration, configuration management, and application deployment.                                                                         "
     pipx: ansible
   ansible-lint:
@@ -4740,6 +4743,7 @@ softwarePackages:
     _github: https://github.com/actions/runner
     _home: https://docs.github.com/en/actions/hosting-your-own-runners
     _name: GitHub Runner
+    _when: '! test -d "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"'
     _post: >
       #!/usr/bin/env bash
 
@@ -14920,7 +14924,7 @@ softwarePackages:
     _service:linux: wazuh-agent
     _service:windows: wazuh-agent
     _short: "Wazuh is an open-source security monitoring platform that can be used for threat detection, integrity monitoring, and incident response.                                                                  "
-    _when:darwin: "! test -f /Library/Ossec/bin/agent-auth"
+    _when:darwin: "csrutil status | grep enabled > /dev/null && ! test -f /Library/Ossec/bin/agent-auth"
     _when:linux: "! test -f /var/ossec/bin/agent-auth"
     _when:windows: '! test -f "C:\Program Files (x86)\ossec-agent\agent-auth.exe"'
     choco: wazuh-agent
