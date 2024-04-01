@@ -6507,8 +6507,49 @@ softwarePackages:
     _github: https://github.com/juicedata/juicefs
     _name: JuiceFS
     _post: |
-      #!/usr/bin/env sh
-      . "$HOME/.local/bin/installx/juicefs.sh"
+      #!/usr/bin/env bash
+      # @file JuiceFS
+      # @brief Mounts various S3-backed storage volumes (assuming correct secrets are in place)
+      # @description
+      #     This script handles the mounting of various S3-backed storage volumes via [JuiceFS](https://juicefs.com/en/).
+      #     The script will attempt to mount four different S3 volumes:
+      #
+      #     1. `public-{ { .juicefsVolumeNamePostfix } }`
+      #     2. `private-{ { .juicefsVolumeNamePostfix } }`
+      #     3. `docker-{ { .juicefsVolumeNamePostfix } }`
+      #     4. `user-{ { .juicefsVolumeNamePostfix } }`
+      #
+      #     Where `{ { .juicefsVolumeNamePostfix } }` is replaced with the name stored in `home/.chezmoidata.yaml`.
+      #     When creating the four volumes in the [JuiceFS console](https://juicefs.com/console/), it is important that you name the volumes using
+      #     these four volume names.
+
+      MOUNT_FOLDER="/mnt"
+      UPDATE_FSTAB="--update-fstab"
+      if [ -d /Applications ] && [ -d /System ]; then
+        ### macOS
+        MOUNT_FOLDER="/Volumes"
+        UPDATE_FSTAB=""
+      elif [ -f /snap/juicefs/current/juicefs ]; then
+        logg info 'Symlinking /snap/juicefs/current/juicefs to /snap/bin/juicefs' && sudo ln -s -f /snap/juicefs/current/juicefs /snap/bin/juicefs
+      fi
+
+      logg info "Acquiring juicefsVolumeNamePostfix from ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoidata.yaml"
+      JUICEFS_VOLUME_PREFIX="$(yq '.juicefsVolumeNamePostfix' "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoidata.yaml")"
+      for MOUNT_NAME in "docker" "private" "public" "user"; do
+        if [ "$MOUNT_NAME" == "user" ]; then
+          sudo juicefs mount --enable-xattr -o user_id="$(id -u "$USER")",group_id="$(id -g "$USER")" --conf-dir "${XDG_CONFIG_HOME:-$HOME/.config}/juicefs" -b $UPDATE_FSTAB "${JUICEFS_VOLUME_PREFIX}-${MOUNT_NAME}" "$HOME/.local/jfs"
+        else
+          sudo juicefs mount --enable-xattr --conf-dir /root/.juicefs $UPDATE_FSTAB -b "${JUICEFS_VOLUME_PREFIX}-${MOUNT_NAME}" "${MOUNT_FOLDER}/jfs-${MOUNT_NAME}"
+        fi
+      done
+
+      ### Linux systemd
+      if command -v systemctl > /dev/null; then
+        logg info 'Ensuring /etc/systemd/system/docker.service.d exists as a directory' && sudo mkdir -p /etc/systemd/system/docker.service.d
+        logg info 'Creating /etc/systemd/system/docker.service.d/override.conf which ensures JuiceFS is loaded before Docker starts'
+        echo '[Unit]' | sudo tee /etc/systemd/system/docker.service.d/override.conf
+        echo 'After=network-online.target firewalld.service containerd.service jfs.mount' | sudo tee -a /etc/systemd/system/docker.service.d/override.conf
+      fi
     _short: "JuiceFS is a POSIX-compatible distributed file system for cloud-native environments, designed for scalability and high performance.                                                                       "
     brew: juicefs
     scoop: juicefs
@@ -10222,7 +10263,9 @@ softwarePackages:
     _name: Powershell
     _post:cask: |
       #!/usr/bin/env bash
-      brew install mono-libgdiplus
+      if ! brew list -1 | grep mono-libgdiplus > /dev/null; then
+        brew install mono-libgdiplus
+      fi
     _short: "PowerShell is a cross-platform task automation and configuration management framework.                                                                                                                    "
     ansible: professormanhattan.powershell
     cask: powershell
@@ -13697,8 +13740,9 @@ softwarePackages:
     _name: Vagrant VMWare Utility
     _post:cask: >
       #!/usr/bin/env bash
-
-      sudo ln -s /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility /usr/local/bin/vagrant-vmware-utility
+      if [ ! -f /usr/local/bin/vagrant-vmware-utility ] && [ -f /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility ]; then
+        sudo ln -s /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility /usr/local/bin/vagrant-vmware-utility
+      fi
 
     _short: "vagrant-vmware-desktop is a plugin for Vagrant that allows users to manage VMware Desktop virtual machines.                                                                                               "
     _when:cask: "! test -f /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility"
