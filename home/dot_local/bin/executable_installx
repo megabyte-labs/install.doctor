@@ -42,8 +42,9 @@ async function runScript(key, script) {
     fs.writeFileSync(`${cacheDir}/${key}`, templatedScript.stdout)
     try {
         runSilentCommand(`glow --width 140 "${cacheDir}/${key}-glow"`)
-        if (process.env.DEBUG) {
-            runSilentCommand(`bash "${cacheDir}/${key}" || logg error 'Error occurred while processing script for ${key}'`)
+        // TODO: Set process.env.DEBUG || true here because the asynchronous method is not logging properly / running slow
+        if (process.env.DEBUG || true) {
+            return runSilentCommand(`bash "${cacheDir}/${key}" || logg error 'Error occurred while processing script for ${key}'`)
         } else {
             return $`bash "${cacheDir}/${key}" || logg error 'Error occurred while processing script for ${key}'`.pipe(process.stdout)
         }
