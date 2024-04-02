@@ -1,4 +1,5 @@
 https://github.com/harababurel/gcsf
+https://github.com/seaweedfs/seaweedfs
 [text](https://github.com/gitbito/CLI)
 * Move age decryption higher
 * Add ~/.local/share/sounds was symlink to {{ .host.home }}/.local/share/betelgeuse/share/sounds

@@ -606,9 +606,12 @@ softwareGroups:
     - vlc
     - vscode
   File-System: &File-System
+    - duck
     - glusterfs
     - goofys
     - sshfs
+  File-System-Desktop: &File-System-Desktop
+    - cyberduck
   Finance: &Finance
     - infracost
   Finance-Desktop: &Finance-Desktop
@@ -1423,6 +1426,7 @@ softwareGroups:
     - *Development-Tools-Desktop
     - *E-mail-Desktop
     - *Engineering-Desktop
+    - *File-System-Desktop
     - *Finance-Desktop
     - *Games-Desktop
     - *Git-Desktop
