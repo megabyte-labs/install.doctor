@@ -153,7 +153,6 @@ applyRootConfig() {
     
     ### Copy Autorestic configurations
     logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/autorestic/autorestic-system.yml file to $ROOT_FOLDER/.autorestic.yml" && sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/autorestic/autorestic-system.yml" "$ROOT_FOLDER/.autorestic.yml"
-    logg info "Removing ${XDG_CONFIG_HOME:-$HOME/.config}/autorestic/autorestic-system.yml" && sudo rm -f "${XDG_CONFIG_HOME:-$HOME/.config}/autorestic/autorestic-system.yml"
     logg info "Applying proper permissions to $ROOT_FOLDER/.autorestic.yml" && sudo chmod 600 "$ROOT_FOLDER/.autorestic.yml"
   fi
 }
