@@ -1,3 +1,5 @@
+* Write requirements for `software.yml`
+
 https://github.com/harababurel/gcsf
 https://github.com/seaweedfs/seaweedfs
 [text](https://github.com/gitbito/CLI)
