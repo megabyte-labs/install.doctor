@@ -1,6 +1,7 @@
 https://github.com/harababurel/gcsf
 https://github.com/seaweedfs/seaweedfs
 [text](https://github.com/gitbito/CLI)
+https://github.com/awslabs/mountpoint-s3
 * Move age decryption higher
 * Add ~/.local/share/sounds was symlink to {{ .host.home }}/.local/share/betelgeuse/share/sounds
 xattr -d com.apple.quarantine rclone

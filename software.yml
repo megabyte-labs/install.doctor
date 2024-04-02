@@ -10874,9 +10874,11 @@ softwarePackages:
             sudo cp -f "$HOME/Library/LaunchDaemons/rclone.public.plist" '/Library/LaunchDaemons/rclone.public.plist'
             sudo launchctl load '/Library/LaunchDaemons/rclone.public.plist' && logg success 'launchctl load successful'
           fi
-          if [ -f "$HOME/Library/LaunchDaemons/rclone.user.plist" ] && ! launchctl list | grep 'rclone.user' > /dev/null; then
-            logg info 'Adding ~/Public as S3 bucket mount, enabled at boot'
-            launchctl load "$HOME/Library/LaunchDaemons/rclone.user.plist" && logg success 'user launchctl load successful'
+          if [ -f "$HOME/Library/LaunchDaemons/rclone.user.plist" ] && [ ! -f "/Library/LaunchDaemons/rclone.user.plist" ]; then
+            logg info "Adding /Volumes/User-$USER as S3 bucket mount, enabled at boot"
+            sudo mkdir -p /Library/LaunchDaemons
+            sudo cp -f "$HOME/Library/LaunchDaemons/rclone.user.plist" '/Library/LaunchDaemons/rclone.user.plist'
+            sudo launchctl load '/Library/LaunchDaemons/rclone.user.plist' && logg success 'launchctl load successful'
           fi
         elif [ -d /etc/systemd/system ]; then
           find "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system" -mindepth 1 -maxdepth 1 -type f | while read RCLONE_SERVICE; do
@@ -12059,6 +12061,14 @@ softwarePackages:
     _name: solcjs
     _short: "solc-js is a JavaScript binding for the Solidity compiler, allowing developers to compile Solidity smart contracts within JavaScript applications.                                                        "
     npm: solc
+  spacedrive:
+    _bin: spacedrive
+    _app: Spacedrive.app
+    _github: https://github.com/spacedriveapp/spacedrive
+    _name: Spacedrive
+    appimage: https://www.spacedrive.com/api/releases/desktop/stable/linux/x86_64
+    cask: spacedrive
+    msi: https://www.spacedrive.com/api/releases/desktop/stable/windows/x86_64
   sparkleshare:
     _app: SparkleShare.app
     _bin: sparkleshare

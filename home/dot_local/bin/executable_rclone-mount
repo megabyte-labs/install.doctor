@@ -27,16 +27,21 @@ if [ "$TYPE" = 'user' ]; then
   else
     USER_FOLDER='home'
   fi
-  CACHE_FOLDER="/$USER_FOLDER/$USER/.cache/rclone"
+  CACHE_FOLDER="/var/cache/rclone/$MOUNT"
   CONFIG_FOLDER="/$USER_FOLDER/$USER/.config/rclone"
-  LOG_FOLDER="/$USER_FOLDER/$USER/.local/share/rclone"
-  LOG_FILE="$LOG_FOLDER/$MOUNT.log"
-  MOUNT_PATH="/$USER_FOLDER/$USER/.local/mnt/$MOUNT"
+  LOG_FOLDER="/var/log/rclone"
+  LOG_FILE="$LOG_FOLDER/$MOUNT_LOWERCASE.log"
+  if [ -d /Applications ] && [ -d /System ]; then
+    MNT_FOLDER='Volumes'
+  else
+    MNT_FOLDER='mnt'
+  fi
+  MOUNT_PATH="/$MNT_FOLDER/$MOUNT"
 else
   CACHE_FOLDER="/var/cache/rclone/$MOUNT"
   CONFIG_FOLDER="/etc"
   LOG_FOLDER="/var/log/rclone"
-  LOG_FILE="$LOG_FOLDER/$MOUNT.log"
+  LOG_FILE="$LOG_FOLDER/$MOUNT_LOWERCASE.log"
   if [ -d /Applications ] && [ -d /System ]; then
     MNT_FOLDER='Volumes'
   else
@@ -72,16 +77,16 @@ rclone --config "$CONFIG_FOLDER/rclone.conf" \
   mount \
   --allow-other \
   --buffer-size 4G \
-  --bwlimit 40M \
+  --bwlimit 200M \
   --cache-chunk-path "$CACHE_FOLDER/$MOUNT_REF-chunks" \
   --cache-db-path "$CACHE_FOLDER/$MOUNT_REF-db" \
   --cache-dir "$CACHE_FOLDER/$MOUNT_REF-vfs" \
-  --cache-info-age 5m \
+  --cache-info-age 1m \
   --cache-tmp-upload-path "$CACHE_FOLDER/$MOUNT_REF-upload" \
   --cache-workers 8 \
   --cache-writes \
   --checkers 16 \
-  --dir-cache-time 5m \
+  --dir-cache-time 30s \
   --drive-use-trash \
   --exclude-from "$RCLONE_IGNORE" \
   --log-file "$LOG_FILE" \
@@ -93,7 +98,7 @@ rclone --config "$CONFIG_FOLDER/rclone.conf" \
   --vfs-cache-max-age 1000h \
   --vfs-cache-max-size 5G \
   --vfs-cache-mode full \
-  --vfs-cache-poll-interval 14s \
+  --vfs-cache-poll-interval 15s \
   --vfs-fast-fingerprint \
   --vfs-read-ahead 128M \
   --vfs-read-chunk-size 16M \

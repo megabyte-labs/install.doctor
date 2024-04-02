@@ -9,15 +9,15 @@
 	<key>ProgramArguments</key>
 	<array>
 		<string>/usr/local/bin/rclone-mount</string>
-		<string>user</string>
+		<string>rclone</string>
 		<string>{{ .user.username }}</string>
-		<string>s3</string>
+		<string>User</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
     <key>StandardErrorPath</key>
-	<string>/Users/{{ .user.username }}/.local/share/rclone/user-daemon.error.log</string>
+	<string>/var/log/rclone/user-daemon.error.log</string>
 	<key>StandardOutPath</key>
-	<string>/Users/{{ .user.username }}/.local/share/rclone/user-daemon.debug.log</string>
+	<string>/var/log/rclone/user-daemon.debug.log</string>
 </dict>
 </plist>
