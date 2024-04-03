@@ -14677,6 +14677,13 @@ softwarePackages:
     _name: WordOps
     _short: "WordOps is a high-performance server stack for WordPress sites, designed to simplify and automate server management tasks.                                                                                "
     script:debian: wget -qO wo wops.cc && sudo bash wo
+  wordpresscom:
+    _bin: wordpresscom
+    _github: false
+    _name: WordPress Jetpack Desktop Client
+    _notes: TODO - Add options for Linux installations. A .deb is available officially but was behind login screen on the official website https://wordpress.com/me/get-apps. A .tar.gz is available for other Linux platforms that should be added as a _script.
+    cask: wordpresscom
+    choco: wordpress-com-for-desktop
   wordpressify:
     _bin: wordpressify
     _desc: A build system designed to automate your WordPress development workflow
