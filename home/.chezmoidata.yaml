@@ -403,7 +403,7 @@ softwareGroups:
     - nomino
     - normit
     - nve
-    - obsidian-cli
+    # - obsidian-cli
     - opn-cli
     - pastel
     - peco
@@ -540,7 +540,7 @@ softwareGroups:
   Development-Tools-Desktop: &Development-Tools-Desktop
     - github-desktop
     - intellij-idea-ce
-    - iterm2
+    # - iterm2
     - meld
     - powershell
     - redis-desktop-manager
@@ -603,7 +603,7 @@ softwareGroups:
     - rofi
     - sddm
     - spacedrive
-    - tabby
+    # - tabby
     - vlc
     - vscode
   File-System: &File-System
@@ -763,8 +763,6 @@ softwareGroups:
     - youtube-dl
     - yt-dlp
   Media-Desktop: &Media-Desktop
-    - adobe-creative-cloud
-    # Unnecessary popup on login
     # - airtame
     - audacity
     - balenaetcher
@@ -934,8 +932,8 @@ softwareGroups:
     # - fiscript
     - libreoffice
     - microsoft-office
-    # - notion
-    - obsidian
+    - notion
+    # - obsidian
     - raycast
     - skhd
   Python: &Python
@@ -1082,9 +1080,6 @@ softwareGroups:
     - allure
     - appium
     - molecule
-  Testing-Desktop: &Testing-Desktop
-    - appium-desktop
-    - appium-inspector
   Transfer: &Transfer
     - aria2
     - croc
@@ -1218,7 +1213,7 @@ softwareGroups:
     - yarn
     - zola
   Web-Development-Desktop: &Web-Development-Desktop
-    - altair
+    # - altair
     - betwixt
     - fiddler
     - figma
@@ -1440,7 +1435,6 @@ softwareGroups:
     - *Recording-Desktop
     - *Security-Desktop
     - *Sys-Admin-Desktop
-    - *Testing-Desktop
     - *Transfer-Desktop
     - *Virtualization-Desktop
     - *Web-Development-Desktop
@@ -1508,6 +1502,8 @@ softwareGroups:
   deprecated:
     - pkg: apt-cacher-ng
       note: Deprecated in favor of using Sonatype Nexus apt proxies.
+    - pkg: adobe-creative-cloud
+      note: Creates distracting boot window pop-up
     - pkg: ariang
       note: Not very polished and only available via cask
     - pkg: asdf
