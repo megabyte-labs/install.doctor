@@ -614,7 +614,6 @@ softwareGroups:
   Finance: &Finance
     - infracost
   Finance-Desktop: &Finance-Desktop
-    - manta
     - tradingview
   Games-Desktop: &Games-Desktop
     - mudlet # MUD client
@@ -1552,6 +1551,8 @@ softwareGroups:
       note: Deprecated in favor of using the BitWarden password manager and its related tools.
     - pkg: lsd
       note: Deprecated in favor of using `exa`. `lsd` may be re-introduced when Windows support is added.
+    - pkg: manta
+      note: Replaced by web apps like waveapps.com
     - pkg: masscode # Deprecated in favor of Pieces
       note: Deprecated in favor of [Pieces](https://pieces.app/). The core components of Pieces are not open-source but the functionality is significantly better than massCode.
     - pkg: mcfly
