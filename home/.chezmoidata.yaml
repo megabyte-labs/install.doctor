@@ -648,7 +648,6 @@ softwareGroups:
     - tig
   Git-Desktop: &Git-Desktop
     - github-classroom-assistant
-    - gitdock
     - gitify
     - gitkraken
   Git-Project-Tools: &Git-Project-Tools
@@ -1531,6 +1530,8 @@ softwareGroups:
       note: FileZilla has an offensive user-interface. Absolutely atrocious.
     - pkg: gdu
       note: Deprecated in favor of `duf` which is written in Rust
+    - pkg: gitdock
+      note: Only supports GitLab
     - pkg: git-fuzzy
       note: Installed via dotfiles via git
     - pkg: graphql-playground
