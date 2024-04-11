@@ -249,7 +249,6 @@ softwareGroups:
     - ferdium
     - firefox
     - microsoft-edge
-    - sidekick
     - tor-browser
   CI: &CI
     - act
@@ -536,7 +535,6 @@ softwareGroups:
     - beekeeper-studio
     - medis
     - mongodb-compass
-    - sqlectron
   Development-Tools-Desktop: &Development-Tools-Desktop
     - github-desktop
     - intellij-idea-ce
@@ -1592,8 +1590,12 @@ softwareGroups:
       note: Deprecated in favor of using ASDF.
     - pkg: sdkman-cli
       note: Deprecated in favor of mise
+    - pkg: sidekick
+      note: Not free for all features
     - pkg: standard-notes
       note: Deprecated in favor of Obsidian / Notion
+    - pkg: sqlectron
+      note: beekeeper-studio preferred
     - pkg: stubby
       note: Causes issues when other programs are modifying the DNS resolving endpoint. Might be worth reinvestigating but ideally the DNS should be encrypted on pfSense or use CloudFlare WARP to handle it.
     - pkg: temps
