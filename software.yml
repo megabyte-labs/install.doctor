@@ -11719,6 +11719,8 @@ softwarePackages:
       sudo mv -f $(which sftpgo-plugin-auth) /usr/local/bin/sftpgo-plugin-auth
     _short: "sftpgo-plugin-auth is a plugin for SFTPGo that allows custom authentication methods to be used with the SFTP server.                                                                                      "
     go: github.com/sftpgo/sftpgo-plugin-auth@latest
+    script:darwin: curl -sSf https://github.com/sftpgo/sftpgo-plugin-auth/releases/download/v1.0.4/sftpgo-plugin-auth-darwin-amd64 -o /usr/local/bin/sftpgo-plugin-auth
+    script:linux: curl -sSf https://github.com/sftpgo/sftpgo-plugin-auth/releases/download/v1.0.4/sftpgo-plugin-auth-linux-amd64 -o /usr/local/bin/sftpgo-plugin-auth
   share:
     _bin: share
     _desc: Quickly share files from your command line
