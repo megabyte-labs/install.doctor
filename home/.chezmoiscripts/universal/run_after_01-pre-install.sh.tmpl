@@ -837,6 +837,14 @@ installDockerRclonePlugin() {
   fi
 }
 
+installLocalBinPackageJson() {
+  if [ -f "$HOME/.local/bin/package.json" ]; then
+    logg info 'Installing NPM packages in ~/.local/bin/package.json'
+    cd "$HOME/.local/bin" && npm i --force
+    logg info 'Installed NPM packages in ~/.local/bin'
+  fi
+}
+
 # @description Installs a terminal theme that matches across various terminals by utilizing the `~/.local/bin/install-terminal-theme` script
 installTerminalTheme() {
   if command -v install-terminal-theme > /dev/null; then
@@ -1012,6 +1020,7 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   gnomeExtensionSettings
   grubSettings
   installDockerRclonePlugin
+  installLocalBinPackageJson
   installTerminalTheme
   loadCronjobs
   macOSSettings
@@ -1039,6 +1048,7 @@ else
   gnomeExtensionSettings &
   grubSettings &
   installDockerRclonePlugin &
+  installLocalBinPackageJson &
   installTerminalTheme &
   loadCronjobs &
   macOSSettings &
