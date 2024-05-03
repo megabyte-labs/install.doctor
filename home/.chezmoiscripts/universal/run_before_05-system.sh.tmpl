@@ -504,7 +504,7 @@ installSystemPips() {
   if command -v pip3 > /dev/null; then
     if command -v python3 > /dev/null; then
       if ! python3 -m certifi > /dev/null; then
-        pip3 install certifi
+        pip3 install --break-system-packages certifi
       else
         logg info 'certifi is available to python3'
       fi
@@ -664,7 +664,7 @@ installBrewPackages() {
   ensureBrewPackageInstalled "volta"
   volta install node@latest &
   volta install yarn@latest &
-  npm install -g npm@latest &
+  npm install --no-progress -g npm@latest &
   ensureBrewPackageInstalled "pipx"
   pipx ensurepath &
   ensureBrewPackageInstalled "gh"
@@ -685,6 +685,8 @@ ensureMacportsInstalled() {
       logg info 'Cloning source for macports to /opt/mports/macports-base' && sudo git clone --branch v2.8.0 --depth 1 https://github.com/macports/macports-base.git /opt/mports/macports-base
       cd /opt/mports/macports-base
       logg info 'Building macports' && sudo bash --noprofile --norc -c './configure --enable-readline && make && make install && make distclean'
+      logg info 'Adding /opt/local/bin to PATH because port is installed there'
+      export PATH="/opt/local/bin:$PATH"
       logg info 'Running sudo port selfupdate' && sudo port selfupdate
     fi
   fi
@@ -731,29 +733,31 @@ rustUpInit() {
 }
 
 zapInstall() {
-  if ! command -v zap > /dev/null; then
-    ### Architecture
-    if [ -z ${ARCH+x} ]; then
-	    MACHINE_ARCH="$(uname -m)"
-	    if [ "$MACHINE_ARCH" = "amd64" ]; then
-		    ARCH="amd64"
-      elif [ "$MACHINE_ARCH" = "x86_64" ]; then
-        ARCH="amd64"
-	    elif [ "$MACHINE_ARCH" = "i386" ]; then
-		    ARCH="386"
-	    elif [ "$MACHINE_ARCH" = "i686" ]; then
-		    ARCH="386" # both are 32bit, should be compatible
-	    elif [ "$MACHINE_ARCH" = "aarch64" ]; then
-		    ARCH="arm64"
-	    elif [ "$MACHINE_ARCH" = "arm64" ]; then
-		    ARCH="arm64"
-	    elif [ "$MACHINE_ARCH" = "arm" ]; then
-		    ARCH="arm"
-	    fi
-      export ARCH
+  if [ ! -d /Applications ] && [ ! -d /System ]; then
+    if ! command -v zap > /dev/null; then
+      ### Architecture
+      if [ -z ${ARCH+x} ]; then
+	      MACHINE_ARCH="$(uname -m)"
+	      if [ "$MACHINE_ARCH" = "amd64" ]; then
+	  	    ARCH="amd64"
+        elif [ "$MACHINE_ARCH" = "x86_64" ]; then
+          ARCH="amd64"
+	      elif [ "$MACHINE_ARCH" = "i386" ]; then
+	  	    ARCH="386"
+	      elif [ "$MACHINE_ARCH" = "i686" ]; then
+	  	    ARCH="386" # both are 32bit, should be compatible
+	      elif [ "$MACHINE_ARCH" = "aarch64" ]; then
+	  	    ARCH="arm64"
+	      elif [ "$MACHINE_ARCH" = "arm64" ]; then
+	  	    ARCH="arm64"
+	      elif [ "$MACHINE_ARCH" = "arm" ]; then
+	  	    ARCH="arm"
+	      fi
+        export ARCH
+      fi
+      logg info 'Downloading zap to /usr/local/bin/zap' && sudo curl -sSL --output /usr/local/bin/zap "https://github.com/srevinsaju/zap/releases/download/continuous/zap-${ARCH}"
+      logg info 'Making /usr/local/bin/zap executable' && sudo chmod +x /usr/local/bin/zap
     fi
-    logg info 'Downloading zap to /usr/local/bin/zap' && sudo curl -sSL --output /usr/local/bin/zap "https://github.com/srevinsaju/zap/releases/download/continuous/zap-${ARCH}"
-    logg info 'Making /usr/local/bin/zap executable' && sudo chmod +x /usr/local/bin/zap
   fi
 }
 
@@ -761,6 +765,17 @@ addFlathub() {
   if command -v flatpak > /dev/null; then
     logg info 'Adding flatpak flathub repository' && sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
   fi
+}
+
+setupLinuxHomebrewFonts() {
+  if [ ! -d /Applications ] && [ ! -d /System ]; then
+    logg info 'Tapping homebrew/linux-fonts' && brew tap homebrew/linux-fonts
+    logg info 'Symlinking linuxbrew/share/fonts to /usr/local/share' && sudo ln -s /home/linuxbrew/.linuxbrew/share/fonts -t /usr/local/share
+    if command -v fc-cache > /dev/null; then
+      logg info 'Running sudo fc-cache -fv' && sudo fc-cache -fv
+    else
+      logg warn 'fc-cache binary not available for setting up Linux Homebrew fonts'
+    fi
 }
 
 # TODO - Add install on macOS for macports
@@ -787,6 +802,7 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   setupSnap
   showNotificationCenter
   zapInstall
+  setupLinuxHomebrewFonts
 else
   addFlathub &
   allocateSwap &
@@ -809,6 +825,7 @@ else
   setupSnap &
   showNotificationCenter &
   zapInstall &
+  setupLinuxHomebrewFonts &
   wait
 fi
 

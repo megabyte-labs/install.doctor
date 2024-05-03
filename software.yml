@@ -12619,7 +12619,7 @@ softwarePackages:
         else
           logg info 'Installing Tabby plugins defined in '"${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json"''
           cd "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins"
-          npm install --quiet
+          npm install --quiet --no-progress
           logg success 'Finished installing Tabby plugins'
         fi
       else
@@ -13558,8 +13558,8 @@ softwarePackages:
       #     which should correlate to the Coc extensions defined in `${XDG_CONFIG_HOME:-$HOME/.config}/vim/vimrc`.
       installCocExtensions() {
         if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json" ]; then
-          logg info "Running npm i --no-package-lock in ${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions"
-          cd "${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions" && npm i --no-package-lock
+          logg info "Running npm i --no-progress --no-package-lock in ${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions"
+          cd "${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions" && npm i --no-progress --no-package-lock
           logg info "Running vim +CocUpdateSync +qall" && vim +CocUpdateSync +qall
         else
           logg info "Skipping Coc extension installation because ${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json is missing"
@@ -13980,12 +13980,12 @@ softwarePackages:
         if sudo cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" /package.json; then
           logg info 'Successfully copied linter fallback configurations package.json to /package.json'
           logg info 'Installing system root directory node_modules'
-          cd / && sudo npm i --quiet --no-package-lock || EXIT_CODE=$?
+          cd / && sudo npm i --quiet --no-progress --no-package-lock || EXIT_CODE=$?
         else
           logg warn 'Unable to successfully copy linter fallback configurations package.json to /package.json'
           logg info 'Installing linter fallback configurations node_modules to home directory instead'
           cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" "$HOME/package.json"
-          cd ~ && npm i --quiet --no-package-lock || EXIT_CODE=$?
+          cd ~ && npm i --quiet --no-progress --no-package-lock || EXIT_CODE=$?
         fi
         ### Log message if install failed
         if [ -n "$EXIT_CODE" ]; then

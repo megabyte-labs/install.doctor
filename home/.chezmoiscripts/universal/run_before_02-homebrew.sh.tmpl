@@ -146,6 +146,13 @@ upgradeDarwin() {
       export SUDO_PASSWORD
     fi
 
+    ### Ensure Rosetta 2 is installed
+    if /usr/bin/pgrep -q oahd; then
+      logg info 'Rosetta 2 is already installed'
+    else
+      logg info 'Ensuring Rosetta 2 is installed' && softwareupdate --install-rosetta --agree-to-license
+    fi
+
     ### Run upgrade process
     logg info 'Checking for available OS upgrades'
     UPDATE_CHECK="$(softwareupdate -l 2>&1)"

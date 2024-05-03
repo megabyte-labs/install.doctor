@@ -188,6 +188,11 @@ ensureBasicDeps() {
         XCODE_PKG="$(softwareupdate -l | grep "\*.*Command Line" | tail -n 1 | sed 's/^[^C]* //')"
         logg info "Installing from softwareupdate" && softwareupdate -i "$XCODE_PKG" && logg success "Successfully installed $XCODE_PKG"
       fi
+      if /usr/bin/pgrep -q oahd; then
+        logg info 'Rosetta 2 is already installed'
+      else
+        logg info 'Ensuring Rosetta 2 is installed' && softwareupdate --install-rosetta --agree-to-license
+      fi
     elif [[ "$OSTYPE" == 'cygwin' ]] || [[ "$OSTYPE" == 'msys' ]] || [[ "$OSTYPE" == 'win32' ]]; then
       ### Windows
       logg info 'Running choco install -y curl expect git moreutils rsync' && choco install -y curl expect git moreutils rsync

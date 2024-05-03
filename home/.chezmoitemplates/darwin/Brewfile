@@ -4,6 +4,9 @@
 # Standard Homebrew taps
 tap "homebrew/cask-versions" # Initially added to support "visual-studio" cask
 tap "homebrew/bundle"
+tap "homebrew/autoupdate"
+tap "homebrew/services"
+tap "homebrew/cask-fonts"
 
 if OS.mac?
   brew "coreutils"
@@ -27,6 +30,7 @@ brew "jq"
 brew "moreutils"
 brew "node"
 brew "openssh"
+brew "pinentry-mac"
 brew "pipx"
 brew "pkg-config"
 brew "progress"
@@ -41,5 +45,5 @@ brew "yarn"
 brew "yq"
 brew "zx"
 cask "docker"
-cask "java" unless system "/usr/libexec/java_home --failfast"
+cask "java@beta" unless system "/usr/libexec/java_home --failfast"
 cask "macfuse"
