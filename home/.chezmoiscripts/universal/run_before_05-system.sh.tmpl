@@ -779,6 +779,12 @@ setupLinuxHomebrewFonts() {
   fi
 }
 
+miscMacOs() {
+  if [ ! -d "$HOME/Library/PreferencePanes" ]; then
+    logg info 'Ensuring $HOME/Library/PreferencePanes exists as a folder' && mkdir -p "$HOME/Library/PreferencePanes"
+  fi
+}
+
 # TODO - Add install on macOS for macports
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   logg info 'The DEBUG or DEBUG_MODE environment variable is set so preliminary system tweaks will be run synchronously'
@@ -804,6 +810,7 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   showNotificationCenter
   zapInstall
   setupLinuxHomebrewFonts
+  miscMacOs
 else
   addFlathub &
   allocateSwap &
@@ -827,6 +834,7 @@ else
   showNotificationCenter &
   zapInstall &
   setupLinuxHomebrewFonts &
+  miscMacOs &
   wait
 fi
 
