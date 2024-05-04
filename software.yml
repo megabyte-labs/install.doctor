@@ -7272,7 +7272,7 @@ softwarePackages:
     _github: https://github.com/NativeScript/NativeScript
     _name: NativeScript
     _short: "NativeScript is an open-source framework for building truly native mobile applications using JavaScript.                                                                                                  "
-    npm: nativescript
+    npm: nativescript --ignore-scripts
   nautilus-brasero:
     _github: false
     apt: nautilus-extension-brasero
@@ -13661,7 +13661,7 @@ softwarePackages:
     apt: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/youtube-music_1.19.0_amd64.deb
     exe: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/YouTube-Music-Setup-1.19.0.exe
     scoop: extras/youtube-music
-    script:darwin: >
+    script:darwin: |
       DL_URL="https://github.com/th-ch/youtube-music/releases/download/v1.20.0/YouTube-Music-1.20.0.dmg"
       if [ $(arch) = 'arm64' ]; then
         DL_URL="https://github.com/th-ch/youtube-music/releases/download/v1.20.0/YouTube-Music-1.20.0-arm64.dmg"
