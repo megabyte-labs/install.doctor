@@ -3187,7 +3187,7 @@ softwarePackages:
     _desc: "Fail2ban is an open-source intrusion prevention software that protects servers from brute-force attacks by monitoring logs for malicious activity and dynamically blocking IP addresses that exhibit      \nsuspicious behavior. It works by analyzing log files, detecting patterns of failed login attempts or other malicious activities, and then taking action such as blocking the IP address for a specified   \nperiod. Fail2ban is highly configurable, allowing users to define custom filters and actions. It is commonly used to enhance the security of servers and services like SSH, FTP, and web applications.    "
     _github: https://github.com/fail2ban/fail2ban
     _name: "fail2ban                                                                                                                                                                                                  "
-    _notes: >
+    _notes: |
       fail2ban cannot be installed on Qubes Fedora 36 without messing with the qubes-firewall since firewalld is required.
     _service: fail2ban
     _service:brew:
@@ -5703,7 +5703,7 @@ softwarePackages:
     _github: https://github.com/kasmtech/KasmVNC
     _name: "KasmVNC                                                                                                                                                                                                   "
     _short: "KasmVNC is an open-source VNC server that provides secure remote desktop access through a web browser.                                                                                                    "
-    script:linux: >
+    script:linux: |
       RELEASES=$(curl -sS "https://api.github.com/repos/kasmtech/KasmVNC/releases/latest") || :
       LATEST_VERSION=$(echo $RELEASES | grep -o '"tag_name": "[^"]*' | grep -o '[^"]*$') || :
       if command -v apt-get > /dev/null; then
@@ -6820,7 +6820,7 @@ softwarePackages:
     _name: Microsoft Git (with Git VFS)
     _short: "VFS for Git is a virtual file system extension for Git, designed to improve Git performance on Windows by enabling Git to operate more efficiently with large repositories.                               "
     cask: microsoft/git/microsoft-git
-    script:linux: >
+    script:linux: |
       #!/usr/bin/env bash
       mkdir -p "$HOME/.local/src"
       rm -rf "$HOME/.local/src/microsoft-git"
@@ -9112,10 +9112,10 @@ softwarePackages:
     _post:yay: |
       #!/usr/bin/env bash
       sudo pacman -Syu libappindicator-gtk3 gnome-shell-extension-appindicator
-    _pre:apt: >
+    _pre:apt: |
       #!/usr/bin/env bash
       sudo apt-get install -y https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3_all.deb && sudo apt-get update
-    _pre:dnf: >
+    _pre:dnf: |
       #!/usr/bin/env bash
       sudo dnf install -y https://repo.protonvpn.com/fedora-36-stable/release-packages/protonvpn-stable-release-1.0.1-1.noarch.rpm && sudo dnf update
     _short: "ProtonVPN Linux App is an open-source application that allows users to connect to ProtonVPN servers on Linux systems.                                                                                     "
@@ -9145,7 +9145,7 @@ softwarePackages:
     apt: protonvpn-cli
     dnf: protonvpn-cli
     pacman: protonvpn-cli
-    script:darwin: >
+    script:darwin: |
       sudo rm -rf /usr/local/src/protonvpn-cli
       sudo git clone https://github.com/phx/protonvpn-cli-macos /usr/local/src/protonvpn-cli
       cd /usr/local/src/protonvpn-cli && pip3 install -r requirements.txt
@@ -10181,7 +10181,7 @@ softwarePackages:
     _short: "Sapling is a tool by Facebook for automatically generating code from tree-based models.                                                                                                                   "
     brew: sapling
     pacman: sapling-scm-bin
-    script:windows: >
+    script:windows: |
       curl -sSL https://github.com/facebook/sapling/releases/latest > ~/Downloads/sapling_windows_0.2.20231113-145254+995db0d6_amd64.zip
       Expand-Archive ~/Downloads/sapling_windows_0.2.20231113-145254+995db0d6_amd64.zip 'C:\Program Files'
       setx PATH "$env:PATH;C:\Program Files\Sapling" -m
@@ -12257,7 +12257,7 @@ softwarePackages:
       # TODOFigure out how to get version without Ansible here and download / install the extpack
       wget https://download.virtualbox.org/virtualbox/' + vbox_version + '/Oracle_VM_VirtualBox_Extension_Pack-' + vbox_version + '.vbox-extpack'
       echo y | VBoxManage extpack install --replace ./Oracle_VM_VirtualBox_Extension_Pack.vbox-extpack
-    _pre:dnf: >
+    _pre:dnf: |
       #!/usr/bin/env bash
       . /etc/os-release
       cat <<EOF | sudo tee /etc/yum.repos.d/virtualbox.repo
@@ -12463,7 +12463,7 @@ softwarePackages:
       fi
     ansible: professormanhattan.vmware
     cask: vmware-fusion
-    script:linux: >
+    script:linux: |
       if ! command -v vmware > /dev/null; then
         ### Download VMWare Workstation
         VMWARE_WORKSTATION_URL=https://www.vmware.com/go/getworkstation-linux
