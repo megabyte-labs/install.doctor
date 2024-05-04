@@ -41,7 +41,7 @@ async function runScript(key, script) {
     fs.writeFileSync(`${cacheDir}/${key}-glow`, (file.stdout ? `# ${file.stdout}\n\n` : '') + (brief.stdout ? `> ${brief.stdout}\n\n` : '') + '```sh\n' + templatedScript.stdout + "\n```")
     fs.writeFileSync(`${cacheDir}/${key}`, templatedScript.stdout)
     try {
-        runSilentCommand(`glow --width 140 "${cacheDir}/${key}-glow"`)
+        runSilentCommand(`glow --width 80 "${cacheDir}/${key}-glow"`)
         // TODO: Set process.env.DEBUG || true here because the asynchronous method is not logging properly / running slow
         if (process.env.DEBUG || true) {
             return runSilentCommand(`bash "${cacheDir}/${key}" || logg error 'Error occurred while processing script for ${key}'`)
@@ -143,8 +143,8 @@ function expandDeps(keys) {
     return [...keys]
 }
 
-async function createCaskLinks() {
-    const caskApps = pkgMap(pkgs)
+async function createCaskLinks(caskMap) {
+    const caskApps = caskMap
         .filter(x => {
             // Filter out macOS apps that already have a _app installed
             if (x.installType === 'cask' || (osId === 'darwin' && x._app)) {
@@ -153,14 +153,27 @@ async function createCaskLinks() {
                 const sysDir = fs.existsSync(`/Applications/${x[appField]}`)
                 const homeDir = fs.existsSync(`${os.homedir()}/Applications/${x[appField]}`)
                 const binFile = fs.existsSync(`${os.homedir()}/.local/bin/cask/${x[binField]}`)
-                return (sysDir || homeDir) && !binFile
+                if (sysDir || homeDir) {
+                    return !binFile
+                } else {
+                    return false
+                }
+            } else {
+                return false
             }
-            return false
         })
     caskApps.length && await $`mkdir -p "$HOME/.local/bin/cask"`
     for (const app of caskApps) {
         const appField = getPkgData('_app', app, app.installType)
+        if (!appField) {
+            log(`${app.listKey} is missing an _app definition`)
+            return
+        }
         const binField = getPkgData('_bin', app, app.installType)
+        if (!binField) {
+            log(`${app.listKey} is missing a _bin definition`)
+            return
+        }
         if (fs.existsSync(`${os.homedir()}/Applications/${app[appField]}`)) {
             fs.writeFileSync(`${os.homedir()}/.local/bin/cask/${app[binField]}`, `#!/usr/bin/env bash\nopen "$HOME/Applications/${app[appField]}" $*`)
             await $`chmod +x '${os.homedir()}/.local/bin/cask/${app[binField]}'`
@@ -174,10 +187,10 @@ async function createCaskLinks() {
     caskApps.length && log(`Finished creating Homebrew cask links in ~/.local/bin/cask`)
 }
 
-async function createFlatpakLinks() {
+async function createFlatpakLinks(flatpakMap) {
     const flatpakInstallations = await $`flatpak --installations`
     const flatpakDir = flatpakInstallations.stdout.replace('\n', '')
-    const flatpakApps = pkgMap(pkgs)
+    const flatpakApps = flatpakMap
         .filter(x => {
             if (x.installType === 'flatpak') {
                 const binField = getPkgData('_bin', x, x.installType)
@@ -189,6 +202,10 @@ async function createFlatpakLinks() {
     flatpakApps.length && await $`mkdir -p "$HOME/.local/bin/flatpak"`
     for (const app of flatpakApps) {
         const binField = getPkgData('_bin', app, app.installType)
+        if (!binField) {
+            log(`${app.listKey} is missing a _bin definition`)
+            return
+        }
         if (fs.existsSync(`${flatpakDir}/app/${app.installList[0]}`)) {
             fs.writeFileSync(`${os.homedir()}/.local/bin/flatpak/${app[binField]}`, `#!/usr/bin/env bash\nflatpak run ${app.installList[0]} $*`)
             await $`chmod +x '${os.homedir()}/.local/bin/flatpak/${app[binField]}'`
@@ -199,15 +216,21 @@ async function createFlatpakLinks() {
     flatpakApps.length && log(`Finished creating Flatpak links in ~/.local/bin/flatpak`)
 }
 
-async function bundleInstall(brews, casks) {
+async function bundleInstall(brews, casks, caskMap) {
     try {
         const lines = []
-        log(`Adding following casks to Brewfile for installation: ${casks.join(' ')}`)
+        casks.length && log(`Adding following casks to Brewfile for installation: ${casks.join(' ')}`)
         for (const cask of casks) {
+            if (cask.indexOf('/') !== -1) {
+                lines.push(`tap "${cask.substring(0, cask.lastIndexOf('/'))}"`)
+            }
             lines.push(`cask "${cask}"`)
         }
-        log(`Adding following brews to Brewfile for installation: ${casks.join(' ')}`)
+        brews.length && log(`Adding following brews to Brewfile for installation: ${brews.join(' ')}`)
         for (const brew of brews) {
+            if (brew.indexOf('/') !== -1) {
+                lines.push(`tap "${brew.substring(0, brew.lastIndexOf('/'))}"`)
+            }
             lines.push(`brew "${brew}"`)
         }
         log(`Creating Brewfile to install from`)
@@ -215,8 +238,9 @@ async function bundleInstall(brews, casks) {
         log(`Installing packages via brew bundle`)
         await $`brew bundle --file Brewfile`
         log(`Finished installing via Brewfile`)
-        await createCaskLinks()
+        await createCaskLinks(caskMap)
     } catch (e) {
+        console.log('Error:', e)
         log(`Error occurred while installing via Brewfile`)
     }
 }
@@ -239,7 +263,7 @@ async function installPackages(pkgInstructions) {
     }
     log(`Running Homebrew installation via Brewfile`)
     if ((combined.brew && combined.brew.length) || (combined.cask && combined.cask.length)) {
-        promises.push(bundleInstall(combined.brew ? combined.brew.flatMap(x => x.installList.flatMap(i => i)) : [], combined.cask ? combined.cask.flatMap(x => x.installList.flatMap(i => i)) : []))
+        promises.push(bundleInstall(combined.brew ? combined.brew.flatMap(x => x.installList.flatMap(i => i)) : [], combined.cask ? combined.cask.flatMap(x => x.installList.flatMap(i => i)) : [], combined.cask))
     }
     for (const key of Object.keys(combined)) {
         if (key !== 'script') {
@@ -272,12 +296,14 @@ async function installPackages(pkgInstructions) {
             case 'crew':
             case 'gem':
             case 'go':
-            case 'npm':
             case 'pip':
             case 'pipx':
             case 'scoop': // Maybe needs forEachSeries
             case 'winget': // Maybe needs forEachSeries
                 promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => $`${key} install ${i}`)))
+                break
+            case 'npm':
+                promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => $`${key} install -g ${i}`)))
                 break
             case 'binary':
                 // TODO
@@ -337,16 +363,18 @@ async function installPackages(pkgInstructions) {
                 log(`Unable to find install key instructions for ${key}`)
         }
     }
+    log(`Performing ${promises.length} installations`)
+    process.env.DEBUG && console.log('Queued installs:', promises)
     const installs = await Promise.allSettled(promises)
     log(`All of the installations have finished`)
-    process.env.DEBUG && console.log('Installs:', installs)
+    process.env.DEBUG && console.log('Completed installs:', installs)
     await postInstall(combined)
 }
 
 async function postInstall(combined) {
     log(`Running post-install routine`)
     const promises = []
-    Object.keys(combined).includes('flatpak') && promises.push(createFlatpakLinks())
+    Object.keys(combined).includes('flatpak') && promises.push(createFlatpakLinks(combined.flatpak))
     const postInstalls = await Promise.allSettled(promises)
     process.env.DEBUG && console.log('Post installs:', postInstalls)
 }
@@ -408,7 +436,7 @@ async function main() {
     sysType = initData[2]
     installOrder = initData[1].installerPreference
     log(`Populating lists of pre-installed packages`)
-    const lists = [
+    const listPromises = [
         acquireManagerList('apt', `if command -v dpkg; then dpkg -l; fi`),
         acquireManagerList('brew', `brew list -1`),
         acquireManagerList('cargo', `cargo install --list | awk '/^[[:alnum:]]/ {print $1}'`),
@@ -422,6 +450,7 @@ async function main() {
         acquireManagerList('snap', `if command -v snapd; then snap list; fi`),
         acquireManagerList('zap', `zap list`)
     ]
+    const lists = await Promise.all(listPromises)
     const managerLists = {
         appimage: lists[6],
         apt: lists[0],
@@ -445,30 +474,46 @@ async function main() {
     const installData = pkgMap(installKeys)
     log(`Filtering install instructions`)
     const installInstructions = installData
+        .map(x => {
+            return {
+                ...x,
+                installList: x.installList.filter(y => {
+                    if ((x.installType === 'brew' || x.installType === 'cask') && y.includes('/')) {
+                        return managerLists[x.installType] ? !managerLists[x.installType].includes(y.substring(y.lastIndexOf('/') + 1, y.length)) : true
+                    } else {
+                        return managerLists[x.installType] ? !managerLists[x.installType].includes(y) : true
+                    }
+                })
+            }
+        })
         .filter(x => {
             // Filter out packages already installed by by package managers
-            return !Object.keys(managerLists).includes(x.installType)
+            return x.installList.length
         })
         .filter(x => {
             // Filter out macOS apps that already have a _app installed
             if (x.installType === 'cask' || (osId === 'darwin' && x._app)) {
                 const appField = getPkgData('_app', x, x.installType)
-                return !(fs.existsSync(`/Applications/${x[appField]}`) || fs.existsSync(`${os.homedir()}/Applications/${x[appField]}`))
+                const appCheck = fs.existsSync(`/Applications/${x[appField]}`) || fs.existsSync(`${os.homedir()}/Applications/${x[appField]}`)
+                appCheck && log(`Skipping installation of ${x.listKey} because the application is in an Applications folder`)
+                return !appCheck
+            } else {
+                return true
             }
-            return true
         })
         .filter(x => {
             // Filter out packages that already have a bin in the PATH
             const binField = getPkgData('_bin', x, x.installType)
             const isArray = Array.isArray(x[binField])
             if (typeof x[binField] === 'string' || isArray) {
-                if (isArray) {
-                    log(`_bin field for ${x.listKey} is an array so the first entry will be used to check`)
-                }
-                return !(which.sync(typeof x[binField] === 'string' ? x[binField] : x[binField][0], { nothrow: true }))
+                isArray && log(`_bin field for ${x.listKey} is an array so the first entry will be used to check`)
+                const whichCheck = which.sync(typeof x[binField] === 'string' ? x[binField] : x[binField][0], { nothrow: true })
+                whichCheck && log(`Skipping installation of ${x.listKey} because its binary is available in the PATH`)
+                return !whichCheck
+            } else {
+                log(`Ignoring _bin check because the _bin field for ${x.listKey} is not a string or array`)
+                return true
             }
-            log(`Ignoring _bin check because the _bin field for ${x.listKey} is not a string or array`)
-            return true
         })
         .filter(x => {
             // Filter out packages that do not pass _when check
