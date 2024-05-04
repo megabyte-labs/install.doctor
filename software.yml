@@ -9648,6 +9648,17 @@ softwarePackages:
     _name: Recuva
     choco: recuva
     scoop: extras/recuva
+  redis:
+    _bin: redis-server
+    _desc: Redis is an in-memory database that persists on disk. The data model is key-value, but many different kind of values are supported - Strings, Lists, Sets, Sorted Sets, Hashes, Streams, HyperLogLogs, Bitmaps.
+    _docs: https://redis.io/docs/latest/
+    _github: https://github.com/redis/redis
+    _home: https://redis.io/
+    _name: Redis
+    _service: redis
+    brew: redis
+    choco: redis
+    snap: redis
   redis-desktop-manager:
     _bin: redis-desktop-manager
     _desc: "[Redis Desktop Manager](https://rdm.dev/) is an open source cross-platform Desktop Manager for Redis based on Qt 5."
