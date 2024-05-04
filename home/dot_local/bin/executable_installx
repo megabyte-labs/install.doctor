@@ -7,7 +7,7 @@ let installOrder, osArch, osId, osType, pkgs, sysType
 const cacheDir = os.homedir() + '/.cache/installx'
 
 function log(message) {
-    process.env.DEBUG && console.log(`${chalk.cyanBright('instx->')} ${message}`)
+    console.log(`${chalk.cyanBright('instx->')} ${message}`)
 }
 
 async function getOsInfo() {
