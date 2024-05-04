@@ -224,7 +224,11 @@ async function bundleInstall(brews, casks, caskMap) {
             if (cask.indexOf('/') !== -1) {
                 lines.push(`tap "${cask.substring(0, cask.lastIndexOf('/'))}"`)
             }
-            lines.push(`cask "${cask}"`)
+            if (cask.indexOf(' --no-quarantine') === -1) {
+                lines.push(`cask "${cask}"`)
+            } else {
+                lines.push(`cask "${cask.replace(' --no-quarantine', '')}", args: { "no-quarantine": true }`)
+            }
         }
         brews.length && log(`Adding following brews to Brewfile for installation: ${brews.join(' ')}`)
         for (const brew of brews) {

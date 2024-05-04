@@ -12883,10 +12883,10 @@ softwarePackages:
           if ! pip3 list | grep certifi > /dev/null; then
             if command -v brew > /dev/null; then
               logg info 'Ensuring Python certifi is installed via Homebrew'
-              brew install --quiet python-certifi
+              brew install --quiet certifi
             else
               logg info 'Ensuring certifi is installed globally for Python 3'
-              pip3 install certifibrew link --overwrite python-certifi
+              pip3 install certifi
             fi
           fi
           ### Copy CloudFlare PEM file to Python 3 location
