@@ -242,10 +242,16 @@ async function bundleInstall(brews, casks, caskMap) {
         log(`Installing packages via brew bundle`)
         await $`brew bundle --file Brewfile`
         log(`Finished installing via Brewfile`)
-        await createCaskLinks(caskMap)
     } catch (e) {
         console.log('Error:', e)
         log(`Error occurred while installing via Brewfile`)
+    }
+
+    try {
+        await createCaskLinks(caskMap)
+    } catch (e) {
+        console.log('Error:', e)
+        log(`Error occurred while creating cask bin links`)
     }
 }
 
