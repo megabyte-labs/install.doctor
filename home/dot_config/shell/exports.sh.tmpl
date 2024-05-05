@@ -55,6 +55,7 @@ export PATH="$HOME/.local/bin/firejail:$PATH"
 export PATH="$HOME/.local/bin/flatpak:$PATH"
 export PATH="$HOME/.local/bin/gpt:$PATH"
 export PATH="$HOME/.local/bin/pipx:$PATH"
+export PATH="$HOME/.local/bin/post-installx:$PATH"
 if [ -f /usr/bin/qubes-session ]; then
   export PATH="$HOME/.local/bin/qubes:$PATH"
 fi
@@ -303,6 +304,11 @@ export K9SCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/k9s"
 ### KDE
 export KDEHOME="${XDG_CONFIG_HOME:-$HOME/.config}/kde"
 
+### Keybase
+if [ -f /Applications/Keybase.app/Contents/SharedSupport/bin/keybase ]; then
+  export PATH="/Applications/Keybase.app/Contents/SharedSupport/bin:$PATH"
+fi
+
 ### Kodi
 export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
 
@@ -485,6 +491,9 @@ fi
 export VAGRANT_ALIAS_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/vagrant/aliases"
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
 export VAGRANT_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/vagrant.d"
+if [ -d /opt/vagrant-vmware-desktop/bin ]; then
+  export PATH="/opt/vagrant-vmware-desktop/bin:$PATH"
+fi
 
 ### Visual Studio Code
 export VSCODE_EXTENSIONS="${XDG_DATA_HOME:-$HOME/.local/share}/vscode"

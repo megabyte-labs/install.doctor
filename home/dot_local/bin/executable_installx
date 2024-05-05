@@ -43,7 +43,7 @@ async function runScript(key, script) {
     try {
         runSilentCommand(`glow --width 80 "${cacheDir}/${key}-glow"`)
         // TODO: Set process.env.DEBUG || true here because the asynchronous method is not logging properly / running slow
-        if (process.env.DEBUG || true) {
+        if (process.env.DEBUG) {
             return runSilentCommand(`bash "${cacheDir}/${key}" || logg error 'Error occurred while processing script for ${key}'`)
         } else {
             return $`bash "${cacheDir}/${key}" || logg error 'Error occurred while processing script for ${key}'`.pipe(process.stdout)
@@ -455,7 +455,7 @@ async function main() {
         acquireManagerList('gem', `gem list | awk '{print $1}'`),
         acquireManagerList('npm', `volta list --format plain | awk '{print $2}' | sed 's/@.*//'`),
         acquireManagerList('pacman', `pacman -Qs`),
-        acquireManagerList('pip3', `pip3 list | awk '{print $1}'`),
+        acquireManagerList('pip', `pip3 list | awk '{print $1}'`),
         acquireManagerList('pipx', `pipx list --short | awk '{print $1}'`),
         acquireManagerList('snap', `if command -v snapd; then snap list; fi`),
         acquireManagerList('zap', `zap list`)
@@ -472,7 +472,7 @@ async function main() {
         gem: lists[5],
         npm: lists[6],
         pacman: lists[7],
-        pip3: lists[8],
+        pip: lists[8],
         pipx: lists[9],
         snap: lists[10],
         zap: lists[11]
@@ -499,6 +499,10 @@ async function main() {
         .filter(x => {
             // Filter out packages already installed by by package managers
             return x.installList.length
+        })
+        .filter(x => {
+            // Filter out packages that contain a deprecation note
+            return !x._deprecated
         })
         .filter(x => {
             // Filter out macOS apps that already have a _app installed
@@ -544,7 +548,24 @@ async function main() {
         })
     log(`Running installation routine`)
     await installPackages(installInstructions)
-    log(`Running post-install scripts`)
+    log(`Adding users / groups defined under _groups`)
+    const usersGroupsAdditions = installData
+        .flatMap(x => {
+            const groupsField = getPkgData('_groups', x, x.installType)
+            if (!groupsField) return Promise.resolve()
+            log(`Ensuring user(s) / group(s) created for ${x.listKey}`)
+            if (typeof typeof x[groupsField] !== 'string' && !Array.isArray(x[groupsField])) {
+                log(`Failed to parse _groups for ${x.installKey}. The _groups field must be either a string or string[].`)
+                return Promise.resolve()
+            } else {
+                const groups = typeof x[groupsField] === 'string' ? [x[groupsField]] : x[groupsField]
+                return groups.flatMap(y => {
+                    return $`sudo "${os.homedir()}/.local/bin/add-usergroup" "${process.env.USER}" "${x[]}"`
+                })
+            }
+        })
+    await Promise.allSettled(usersGroupsAdditions)
+    log(`Running post-install inline scripts`)
     const postScripts = installData
         .flatMap(x => {
             const postField = getPkgData('_post', x, x.installType)
@@ -552,7 +573,38 @@ async function main() {
             log(`Running post-install script for ${x.listKey}`)
             return (postField && runScript(x.listKey, x[postField])) || Promise.resolve()
         })
-    await Promise.allSettled(postScripts)
+    log(`Running post-install scripts defined in ~/.local/bin/post-installx`)
+    const postScriptFiles = installData
+        .flatMap(x => {
+            const scriptPath = `${os.homedir()}/.local/bin/post-installx/post-${x.installKey}.sh`
+            const scriptExists = fs.existsSync(scriptPath)
+            if (!scriptExists) return Promise.resolve()
+            log(`Running post-install script defined in ${scriptPath}`)
+            return runScript(`post-${x.listKey}.sh`, fs.readFileSync(scriptPath, 'utf8'))
+        })
+    await Promise.allSettled(...postScripts, ...postScriptFiles)
+    log(`Starting services flagged with _serviceEnabled`)
+    const systemctlInstalled = which.sync('systemctl', { nothrow: true })
+    const brewInstalled = which.sync('brew', { nothrow: true })
+    const servicePromises = installData
+        .filter(x => x._serviceEnabled)
+        .filter(x => x._service)
+        .flatMap(x => {
+            const serviceField = getPkgData('_service', x, x.installType)
+            if (!serviceField) return Promise.resolve()
+            const services = typeof x[serviceField] === 'string' ? [{ name: x[serviceField] }] : (Array.isArray(x[serviceField]) ? x[serviceField] : [{ name: x[serviceField].name, sudo: x[serviceField].sudo }])
+            return services.flatMap(y => {
+                const name = typeof y === 'string' ? y : y.name
+                const sudo = typeof y === 'string' ? null : y.sudo
+                if (osType === 'linux' && x.installType !== 'brew' && x.installType !== 'cask' && systemctlInstalled) {
+                    return sudo !== false ? $`sudo systemctl enable --now ${name}` : $`systemctl enable --now ${name}`
+                } else if (brewInstalled) {
+                    return sudo === true ? $`sudo brew services start ${name}` : $`brew services start ${name}`
+                }
+            })
+        })
+    await Promise.allSettled(servicePromises)
+    log(`Installation process complete!`)
 }
 
 main()

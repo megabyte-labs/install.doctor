@@ -70,10 +70,10 @@ alias curl-impersonate='docker run --rm lwthiker/curl-impersonate:0.5-chrome cur
 #   alias curl='curlie'
 # fi
 
-### exa
-if command -v exa > /dev/null; then
-  alias ls='exa --long --all --color auto --icons --sort=type'
-  alias tree='exa --tree'
+### eza
+if command -v eza > /dev/null; then
+  alias ls='eza --long --all --color auto --icons --sort=type'
+  alias tree='eza --tree'
   alias la='ls -la'
   alias lt='ls --tree --level=2'
 else
@@ -266,11 +266,13 @@ alias ssh-config='${EDITOR:code} ~/.ssh/config'
 # Pastebin
 alias sprunge='curl -F "sprunge=<-" http://sprunge.us'
 
-# Disable Tor for current shell
-alias toroff='source torsocks off'
+if command -v torsocks > /dev/null; then
+  # Disable Tor for current shell
+  alias toroff='source torsocks off'
 
-# Enable Tor for current shell
-alias toron='source torsocks on'
+  # Enable Tor for current shell
+  alias toron='source torsocks on'
+fi
 
 # Test Tor connection
 alias tortest='curl --socks5-hostname 127.0.0.1:9050 --silent https://check.torproject.org/  | head -25'

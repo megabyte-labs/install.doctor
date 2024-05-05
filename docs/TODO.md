@@ -1,9 +1,11 @@
 * Write requirements for `software.yml`
 
 https://github.com/harababurel/gcsf
+https://nixos.wiki/wiki/Nix_Installation_Guide
 https://github.com/seaweedfs/seaweedfs
 [text](https://github.com/gitbito/CLI)
 https://github.com/awslabs/mountpoint-s3
+https://gist.github.com/chadmayfield/ada07e4e506d7acd577a665541a70c9b
 * Move age decryption higher
 * Add ~/.local/share/sounds was symlink to {{ .host.home }}/.local/share/betelgeuse/share/sounds
 xattr -d com.apple.quarantine rclone

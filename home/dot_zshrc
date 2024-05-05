@@ -84,8 +84,8 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 zstyle ':completion:*:git-checkout:*' sort false
 zstyle ':completion:*:descriptions' format '[%d]'
-if command -v fzf > /dev/null && command -v exa > /dev/null; then
-  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+if command -v fzf > /dev/null && command -v eza > /dev/null; then
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
   zstyle ':fzf-tab:*' switch-group ',' '.'
 fi
 
@@ -267,7 +267,7 @@ esac
 [ ! -f "$HOME/.local/scripts/antigen.zsh" ] || source "$HOME/.local/scripts/antigen.zsh"
 
 if command -v antigen > /dev/null; then
-  # Fix for oh-my-zsh overriding exa aliases
+  # Fix for oh-my-zsh overriding eza aliases
   export DISABLE_LS_COLORS=true
   # Official Oh-My-ZSH plugins
   antigen use oh-my-zsh

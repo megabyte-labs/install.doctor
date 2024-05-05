@@ -216,6 +216,7 @@ softwarePackages:
     yay: act
   adobe-creative-cloud:
     _bin: adobe-creative-cloud
+    _deprecated: Creates distracting boot window pop-up
     _github: false
     _name: Adobe Creative Cloud
     _when:cask: '! test -d "/Applications/Adobe Creative Cloud" && ! test -d "$HOME/Applications/Adobe Creative Cloud"'
@@ -293,21 +294,7 @@ softwarePackages:
     _github: https://github.com/allure-framework/allure2
     _home: https://docs.qameta.io/allure-testops/
     _name: Allure
-    _post:binary:darwin: |
-      #!/usr/bin/env bash
-      echo "TODO"
-    _post:binary:linux: |
-      #!/usr/bin/env bash
-      # TODO How to pass the path of the file downloaded in `binary` step? That can replace the `wget` command below
-      mkdir -p /usr/local/share/allure
-      cd /usr/local/share/allure
-      wget https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.20.1/allure-commandline-2.20.1.zip -O /usr/local/share/allure/allure.zip
-      unzip -o allure.zip
-      ln -s /usr/local/share/allure/allure<version>/bin/allure
-    _post:binary:windows: |
-      # TODO
     _short: "Allure2 is a flexible test reporting tool that provides clear and concise test execution reports with rich visual representations.                                                                        "
-    binary: https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.20.1/allure-commandline-2.20.1.zip
     brew: allure
     scoop: allure
     yay: allure
@@ -397,14 +384,7 @@ softwarePackages:
     _github: https://github.com/ansible/ansible
     _home: https://www.ansible.com/
     _name: Ansible
-    _post:pipx: |
-      #!/usr/bin/env bash
-      if [ ! -f "${XDG_CACHE_HOME:-$HOME/.cache}/installx/ansible-post" ]; then
-        pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
-        touch "${XDG_CACHE_HOME:-$HOME/.cache}/installx/ansible-post"
-      else
-        logg info 'Ansible and dependencies already installed'
-      fi
+    _post:pipx: pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
     _short: "Ansible is an open-source automation tool that simplifies IT orchestration, configuration management, and application deployment.                                                                         "
     pipx: ansible
   ansible-lint:
@@ -505,6 +485,7 @@ softwarePackages:
     pipx: apprise
   apt-cacher-ng:
     _bin: null
+    _deprecated: Deprecated in favor of using Sonatype Nexus apt proxies.
     _desc: "[Apt-Cacher-NG](https://wiki.debian.org/AptCacherNg) is a caching proxy server (or apt proxy) for Debian based distributions like Ubuntu, Kubuntu, Xubuntu, Edubuntu, Linux Mint, etc, which is used to cache the downloaded packages locally on your server."
     _docs: https://www.unix-ag.uni-kl.de/~bloch/acng/html/index.html
     _github: https://salsa.debian.org/blade/apt-cacher-ng
@@ -520,20 +501,6 @@ softwarePackages:
     _github: https://github.com/aquaproj/aqua
     _home: https://aquaproj.github.io
     _name: aqua
-    _post: |
-      #!/usr/bin/env bash
-      # @file Aqua Initialization
-      # @brief Updates and installs any Aqua dependencies that are defined in Aqua's configuration file.
-      # @description
-      #     This script updates Aqua and then installs any Aqua dependencies that are defined.
-      if command -v aqua > /dev/null; then
-        logg info 'Updating Aqua'
-        aqua update-aqua
-        logg info 'Installing Aqua dependencies (if any are defined)'
-        aqua install -a
-      else
-        logg info 'Skipping aqua install script because aqua was not installed'
-      fi
     _short: "Aqua is a tool for secure and efficient container image scanning.                                                                                                                                         "
     binary:linux: https://github.com/aquaproj/aqua/releases/download/v2.0.0-0/aqua_linux_amd64.tar.gz
     binary:windows: https://github.com/aquaproj/aqua/releases/download/v2.0.0-0/aqua_windows_amd64.tar.gz
@@ -587,6 +554,7 @@ softwarePackages:
     scoop: aria2
   ariang:
     _app: AriaNg Native.app
+    _deprecated: Not very polished and only available via cask
     _desc: "AriaNg is a lightweight web frontend for the popular download utility Aria2. It provides a clean and intuitive interface for managing downloads through a web browser. Users can add, pause, resume, and  \nremove downloads easily. AriaNg supports multiple languages, customizable themes, and can be accessed from various devices. It is a great tool for remotely managing downloads on a server or personal    \ncomputer.                                                                                                                                                                                                 "
     _github: https://github.com/mayswind/AriaNg
     _name: "AriaNg                                                                                                                                                                                                    "
@@ -619,6 +587,7 @@ softwarePackages:
     pipx: asciinema
   asdf:
     _bin: asdf
+    _deprecated: ASDF is currently installed via a script rather than in the software definitions.
     _desc: "[asdf](https://asdf-vm.com/#/) is a CLI tool that can manage multiple language runtime versions on a per-project basis or globally. It is like gvm, nvm, rbenv, and pyenv all in one. This role installs asdf on Linux or macOS."
     _docs: https://asdf-vm.com/guide/introduction.html
     _github: https://github.com/asdf-vm/asdf
@@ -646,6 +615,7 @@ softwarePackages:
       - python
       - ripgrep
       - tree-sitter
+    _deprecated: AstronVIM is deprecated in favor of NvChad which has more stars and is less troublesome to install (in our experience)
     _desc: "[AstroNvim](https://astronvim.github.io/) is an aesthetic and feature-rich neovim config that is extensible and easy to use with a great set of plugins"
     _docs: https://astronvim.github.io/
     _github: https://github.com/AstroNvim/AstroNvim
@@ -653,6 +623,7 @@ softwarePackages:
     _name: AstroNvim
     _post: |
       #!/usr/bin/env bash
+      # TODO
       echo "Waiting on command that installs nvim plugins"
       # bash -ci "nvim --headless -c 'quitall'"
     _short: "AstroNvim is a plugin for Neovim that provides astronomy-related features and tools for users interested in astronomy while coding.                                                                       "
@@ -661,13 +632,6 @@ softwarePackages:
     _desc: "Atuin is a tool for managing AWS infrastructure using a simple command-line interface. It allows users to create, update, and delete AWS resources like EC2 instances, security groups, and S3 buckets    \nusing a declarative configuration file. Atuin aims to simplify AWS infrastructure management by providing a user-friendly interface and automating common tasks. It is written in Go and is open-source,  \navailable on GitHub at https://github.com/ellie/atuin.                                                                                                                                                    "
     _github: https://github.com/ellie/atuin
     _name: Atuin
-    _post: |
-      #!/usr/bin/env bash
-      source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh"
-      atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$ATUIN_PASSWORD"
-      atuin login -u "$ATUIN_USERNAME" -p "$ATUIN_PASSWORD" -k "$ATUIN_KEY"
-      atuin import auto
-      atuin sync
     _short: "Atuin is a command-line tool for managing macOS windows.                                                                                                                                                  "
     brew: atuin
     cargo: atuin
@@ -1041,6 +1005,7 @@ softwarePackages:
     snap: bw
   bivac:
     _bin: null
+    _deprecated: Deprecated in favor of using the RClone Docker plugin for S3-backed mounts
     _desc: "[Bivac](https://bivac.io/) - Backup Interface for Volumes Attached to Containers - allows to backup Container volumes using Restic"
     _github: https://github.com/camptocamp/bivac
     _home: https://bivac.io/
@@ -1078,18 +1043,6 @@ softwarePackages:
     _desc: "Blocky is a tool available on GitHub at https://github.com/0xERR0R/blocky. It is a Python script designed for managing DNS blacklists. Blocky allows users to easily add, remove, and update domains in   \nvarious blocklists. This tool can be useful for system administrators and network security professionals to control access to specific domains by blocking them at the DNS level. It provides a simple and\nefficient way to manage blacklists for enhanced security and control over network traffic.                                                                                                                "
     _github: https://github.com/0xERR0R/blocky
     _name: Blocky
-    _post:brew: |
-      #!/usr/bin/env bash
-      cp -f "$HOME/.local/etc/blocky/config.yaml" "$(brew --prefix)/etc/blocky/config.yaml"
-    _post:linux: |
-      #!/usr/bin/env bash
-      sudo mkdir -p /usr/local/etc/blocky
-      if [ -d /usr/lib/systemd/system ]; then
-        sudo cp -f "$HOME/.local/etc/blocky/config.yaml" /usr/local/etc/blocky/config.yaml
-        sudo cp -f "$HOME/.local/etc/blocky/blocky.service" /usr/lib/systemd/system/blocky.service
-      else
-        echo "/usr/lib/systemd/system is missing from the file system"
-      fi
     _service: blocky
     _service:brew:
       - name: blocky
@@ -1107,6 +1060,7 @@ softwarePackages:
     brew:darwin: blueutil
   boilr:
     _bin: null
+    _deprecated: Deprecated in favor of using `gomplate`
     _desc: boilerplate template manager that generates files or directories from template repositories
     _github: https://github.com/tmrts/boilr
     _name: boilr
@@ -1166,66 +1120,6 @@ softwarePackages:
     _github: https://github.com/brave/brave-browser
     _home: https://brave.com/
     _name: Brave Browser
-    _post: |
-      #!/usr/bin/env bash
-      # @brief See `google-chrome` `_post` script for more details
-      function chromeSetUp() {
-        ### Ensure Chrome policies directory is present
-        logg info 'Processing policy directories for Chromium based browsers'
-        for POLICY_DIR in "/etc/brave/policies"; do
-          if [ -d "$(dirname "$POLICY_DIR")" ]; then
-            ### Managed policies
-            if [ ! -f "$POLICY_DIR/managed/policies.json" ]; then
-              logg info "Ensuring directory $POLICY_DIR/managed exists"
-              sudo mkdir -p "$POLICY_DIR/managed"
-              logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/chrome/managed.json to $POLICY_DIR/managed/policies.json"
-              sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/managed.json" "$POLICY_DIR/managed/policies.json"
-            fi
-            ### Recommended policies
-            if [ ! -f "$POLICY_DIR/recommended/policies.json" ]; then
-              logg info "Ensuring directory $POLICY_DIR/recommended exists" && sudo mkdir -p "$POLICY_DIR/recommended"
-              logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/chrome/recommended.json to $POLICY_DIR/recommended/policies.json"
-              sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/recommended.json" "$POLICY_DIR/recommended/policies.json"
-            fi
-          else
-            logg info "Skipping extension injection into $POLICY_DIR - create these folders prior to running to create managed configs"
-          fi
-        done
-        ### Add Chrome extension JSON
-        # logg info 'Populating Chrome extension JSON'
-        # for EXTENSION_DIR in "/etc/brave/extensions" "$HOME/Library/Application Support/BraveSoftware/Brave-Browser/External Extensions"; do
-        #   ### Ensure program-type is installed
-        #   if [ -d "$(dirname "$EXTENSION_DIR")" ]; then
-        #     ### Ensure extension directory exists
-        #     if [[ "$EXTENSION_DIR" == '/opt/'* ]] || [[ "$EXTENSION_DIR" == '/etc/'* ]]; then
-        #       if [ ! -d "$EXTENSION_DIR" ]; then
-        #         logg info "Creating directory $EXTENSION_DIR" && sudo mkdir -p "$EXTENSION_DIR"
-        #       fi
-        #     else
-        #       if [ ! -d "$EXTENSION_DIR" ]; then
-        #         logg info "Creating directory $EXTENSION_DIR" && mkdir -p "$EXTENSION_DIR"
-        #       fi
-        #     fi
-        #     ### Add extension JSON
-        #     logg info "Adding Chrome extensions to $EXTENSION_DIR"
-        #     for EXTENSION in { { list (.chromeExtensions | toString | replace "[" "" | replace "]" "") | uniq | join " " } }; do
-        #       logg info "Adding Chrome extension manifest ($EXTENSION)"
-        #       if ! echo "$EXTENSION" | grep 'https://chrome.google.com/webstore/detail/' > /dev/null; then
-        #         EXTENSION="https://chrome.google.com/webstore/detail/$EXTENSION"
-        #       fi
-        #       EXTENSION_ID="$(echo "$EXTENSION" | sed 's/^.*\/\([^\/]*\)$/\1/')"
-        #       if [[ "$EXTENSION_DIR" == '/opt/'* ]] || [[ "$EXTENSION_DIR" == '/etc/'* ]]; then
-        #         sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
-        #       else
-        #         cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
-        #       fi
-        #     done
-        #   else
-        #     logg info "$EXTENSION_DIR does not exist"
-        #   fi
-        # done
-      }
-      chromeSetUp
     _short: "Brave Browser is an open-source web browser that focuses on privacy and security, with built-in ad-blocking and privacy features.                                                                         "
     cask: brave-browser
     choco: brave
@@ -1350,6 +1244,7 @@ softwarePackages:
     npm: "@capacitor/cli"
   captain:
     _bin: captain
+    _deprecated: Unused Docker assistance package
     _desc: Helps manage docker-compose.yml files from anywhere in the file system
     _github: https://github.com/jenssegers/captain
     _name: captain
@@ -1385,16 +1280,19 @@ softwarePackages:
     _bin: catfs
     _deps:
       - fuse
+    _deprecated: CatFS is reportedly in the alpha stage of development and we experienced issues when trying to use it.
     _desc: Cache anything filesystem written in Rust
     _docs: https://github.com/kahing/catfs#usage
     _github: https://github.com/kahing/catfs
     _home: https://github.com/kahing/catfs
     _name: Catfs
+    _notes: After `sudo apt-get install -y fuse libfuse-dev, the following error still shows up error could not find system library 'fuse' required by the 'fuse' crate
     _short: "catfs is a FUSE-based file system that concatenates files and directories from multiple locations into a single virtual directory.                                                                        "
     ansible:linux: professormanhattan.s3filesystem
     cargo:linux: catfs
   catlight:
     _app: Catlight.app
+    _deprecated: Free tier has strict limitations and app is not very polished
     _desc: "CatLight is a tool that provides continuous build status notifications for software development teams. It supports various build servers like Jenkins, TeamCity, Travis CI, and more. CatLight monitors   \nthe build status of projects and displays notifications on different platforms such as Windows, macOS, and Linux. It helps teams stay informed about the status of their builds without having to         \nconstantly check the build server. CatLight also offers features like custom notifications, build history tracking, and integration with popular project management tools like Jira and Trello.           "
     _github: https://github.com/catlightio/CatLight
     _name: Catlight
@@ -1403,6 +1301,7 @@ softwarePackages:
     deb: https://catlight.io/downloads/linux/beta
   ccat:
     _bin: ccat
+    _deprecated: bat can be used instead and has more features
     _desc: "ccat is a tool available on GitHub at https://github.com/owenthereal/ccat that enhances the traditional cat command in Unix-like systems. It adds syntax highlighting for various file types when         \ndisplaying their contents in the terminal. This can make it easier to read and understand code or configuration files. It supports a wide range of languages and file formats, making it a useful tool for\ndevelopers and system administrators working with text files.                                                                                                                                             "
     _github: https://github.com/owenthereal/ccat
     _name: ccat
@@ -1424,7 +1323,8 @@ softwarePackages:
     zypper: cephadm
   cerebro:
     _app: Cerebro.app
-    _bin: null
+    _bin: cerebro
+    _deprecated: macOS system search more native way of providing similar features. Better alternatives are available.
     _desc: Open-source productivity booster with a brain
     _github: https://github.com/cerebroapp/cerebro
     _name: Cerebro
@@ -1440,12 +1340,9 @@ softwarePackages:
     _github: https://github.com/certbot/certbot
     _home: https://certbot.eff.org/
     _name: CertBot
-    _post: |
-      #!/usr/bin/env bash
-      pipx inject certbot certbot-dns-cloudflare
-    _post:windows: |
-      #!/usr/bin/env bash
-      echo "Add method for Windows"
+    _pipx:inject:
+      - certbot-dns-cloudflare
+    _post: pipx inject certbot certbot-dns-cloudflare
     _short: "Certbot is a free, open-source software tool that automates the process of enabling HTTPS on your website by deploying SSL/TLS certificates.                                                              "
     pipx: certbot
   cf-terraforming:
@@ -1488,7 +1385,7 @@ softwarePackages:
     cask: vincelwt-chatgpt
   chatgpt-nofwl:
     _app: NoFWL.app
-    _bin: null
+    _bin: nofwl
     _desc: ChatGPT desktop application (Mac, Windows and Linux)
     _docs: https://app.nofwl.com/docs/chatgpt/config
     _github: https://github.com/lencx/nofwl
@@ -1516,6 +1413,7 @@ softwarePackages:
   chef-workstation:
     _app: Chef Workstation App.app
     _bin: chef-workstation
+    _deprecated: Not utilizing Chef and it automatically adds a top bar menu item that causes load delay
     _desc: "Chef is an open-source configuration management tool written in Ruby and Erlang. It allows you to automate the deployment, configuration, and management of servers and applications. With Chef, you can  \ndefine your infrastructure as code using recipes and cookbooks, which are used to describe how each part of your system should be configured. It supports various operating systems and cloud providers,  \nmaking it a versatile tool for managing infrastructure at scale. Chef follows a client-server architecture where nodes (servers) are managed by a Chef server that stores configuration data and          \ndistributes it to the nodes.                                                                                                                                                                              "
     _github: https://github.com/chef/chef
     _name: Chef Workstation
@@ -1568,71 +1466,12 @@ softwarePackages:
     choco: chrome-remote-desktop-host
   chromium:
     _bin: chromium
+    _deprecated: Deprecated in favor of the regular Chrome.
     _deps:
       - chrome-gnome-shell
     _desc: "Chromium is an open-source web browser project that serves as the foundation for Google Chrome. It provides the source code for the Chromium browser, allowing developers to contribute to its development\nand customize it for their own purposes. The project is maintained by the Chromium team at Google and is known for its speed, stability, and support for modern web standards. Developers can access the  \ncode, report issues, and contribute to the project's ongoing development on GitHub.                                                                                                                       "
     _github: https://github.com/chromium/chromium
     _name: "chromium                                                                                                                                                                                                  "
-    _post: |
-      #!/usr/bin/env bash
-      function chromeSetUp() {
-        ### Ensure Chrome policies directory is present
-        logg info 'Processing policy directories for Chromium based browsers'
-        for POLICY_DIR in "/etc/chromium/policies"; do
-          if [ -d "$(dirname "$POLICY_DIR")" ]; then
-            ### Managed policies
-            if [ ! -f "$POLICY_DIR/managed/policies.json" ]; then
-              logg info "Ensuring directory $POLICY_DIR/managed exists"
-              sudo mkdir -p "$POLICY_DIR/managed"
-              logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/chrome/managed.json to $POLICY_DIR/managed/policies.json"
-              sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/managed.json" "$POLICY_DIR/managed/policies.json"
-            fi
-            ### Recommended policies
-            if [ ! -f "$POLICY_DIR/recommended/policies.json" ]; then
-              logg info "Ensuring directory $POLICY_DIR/recommended exists" && sudo mkdir -p "$POLICY_DIR/recommended"
-              logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/chrome/recommended.json to $POLICY_DIR/recommended/policies.json"
-              sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/recommended.json" "$POLICY_DIR/recommended/policies.json"
-            fi
-          else
-            logg info "Skipping extension injection into $POLICY_DIR - create these folders prior to running to create managed configs"
-          fi
-        done
-        # ### Add Chrome extension JSON
-        # logg info 'Populating Chrome extension JSON'
-        # ### TODO - Find `EXTENSION_DIR` for macOS in Application Support folder like `$HOME/Library/Application Support/Google/Chrome/External Extensions` for Google Chrome
-        # for EXTENSION_DIR in "/etc/chromium/extensions"; do
-        #   ### Ensure program-type is installed
-        #   if [ -d "$(dirname "$EXTENSION_DIR")" ]; then
-        #     ### Ensure extension directory exists
-        #     if [[ "$EXTENSION_DIR" == '/opt/'* ]] || [[ "$EXTENSION_DIR" == '/etc/'* ]]; then
-        #       if [ ! -d "$EXTENSION_DIR" ]; then
-        #         logg info "Creating directory $EXTENSION_DIR" && sudo mkdir -p "$EXTENSION_DIR"
-        #       fi
-        #     else
-        #       if [ ! -d "$EXTENSION_DIR" ]; then
-        #         logg info "Creating directory $EXTENSION_DIR" && mkdir -p "$EXTENSION_DIR"
-        #       fi
-        #     fi
-        #     ### Add extension JSON
-        #     logg info "Adding Chrome extensions to $EXTENSION_DIR"
-        #     for EXTENSION in {{ list (.chromeExtensions | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
-        #       logg info "Adding Chrome extension manifest ($EXTENSION)"
-        #       if ! echo "$EXTENSION" | grep 'https://chrome.google.com/webstore/detail/' > /dev/null; then
-        #         EXTENSION="https://chrome.google.com/webstore/detail/$EXTENSION"
-        #       fi
-        #       EXTENSION_ID="$(echo "$EXTENSION" | sed 's/^.*\/\([^\/]*\)$/\1/')"
-        #       if [[ "$EXTENSION_DIR" == '/opt/'* ]] || [[ "$EXTENSION_DIR" == '/etc/'* ]]; then
-        #         sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
-        #       else
-        #         cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
-        #       fi
-        #     done
-        #   else
-        #     logg info "$EXTENSION_DIR does not exist"
-        #   fi
-        # done
-      }
-      chromeSetUp
     _short: "https://github.com/chromium/chromium is the official repository for the Chromium web browser, an open-source project that serves as the foundation for Google Chrome.                                     "
     apt: chromium
     dnf: chromium
@@ -1654,35 +1493,6 @@ softwarePackages:
     _github: https://github.com/Cisco-Talos/clamav
     _home: https://www.clamav.net/
     _name: ClamAV
-    _post: |
-      #!/usr/bin/env bash
-      ### Add freshclam.conf
-      if [ -f "$HOME/.local/etc/clamav/freshclam.conf" ]; then
-        sudo mkdir -p /usr/local/etc/clamav
-        sudo cp -f "$HOME/.local/etc/clamav/freshclam.conf" /usr/local/etc/clamav/freshclam.conf
-        if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav" ] && [ ! -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/freshclam.conf" ]; then
-          ln -s /usr/local/etc/clamav/freshclam.conf "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/freshclam.conf"
-        fi
-      fi
-      ### Add clamd.conf
-      if [ -f "$HOME/.local/etc/clamav/clamd.conf" ]; then
-        sudo mkdir -p /usr/local/etc/clamav
-        sudo cp -f "$HOME/.local/etc/clamav/clamd.conf" /usr/local/etc/clamav/clamd.conf
-        if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav" ] && [ ! -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/clamd.conf" ]; then
-          ln -s /usr/local/etc/clamav/clamd.conf "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/clamd.conf"
-        fi
-      fi
-      ### Update database
-      freshclam
-      ### Setting up launchd services on macOS
-      if [ -d /Applications ] && [ -d /System ]; then
-        sudo mkdir -p /var/log/clamav
-        # sudo chown $USER /var/log/clamav
-        sudo cp -f "$HOME/.local/etc/clamav/clamdscan.plist.tmpl" /Library/LaunchDaemons/clamdscan.plist
-        sudo cp -f "$HOME/.local/etc/clamav/freshclam.plist.tmpl" /Library/LaunchDaemons/freshclam.plist
-        sudo launchctl load -w /Library/LaunchDaemons/clamdscan.plist
-        sudo launchctl load -w /Library/LaunchDaemons/freshclam.plist
-      fi
     _service:apt: clamav-freshclam
     _service:brew:
       - name: clamav
@@ -1766,89 +1576,6 @@ softwarePackages:
     _desc: "[CloudFlare Argo Tunnel Client](https://developers.cloudflare.com/argo-tunnel/) contains the command-line client for CloudFlare Argo Tunnel, a tunneling daemon that proxies any local webserver through the Cloudflare network."
     _github: https://github.com/cloudflare/cloudflared
     _name: CloudFlared
-    _post: |
-      #!/usr/bin/env bash
-      {{- $registrationToken := "" }}
-      {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "cloudflared" .host.hostname)) -}}
-      {{-   $registrationToken = (includeTemplate (print "cloudflared/" .host.hostname) | decrypt) -}}
-      {{- end }}
-      ### Set up CloudFlare tunnels
-      if command -v cloudflared > /dev/null && [ -d "$HOME/.local/etc/cloudflared" ]; then
-        # Show warning message about ~/.cloudflared already existing
-        if [ -d "$HOME/.cloudflared" ]; then
-          logg warn '~/.cloudflared is already in the home directory - to ensure proper deployment, remove previous tunnel configuration folders'
-        fi
-        ### Ensure /usr/local/etc/cloudflared exists
-        if [ -d /usr/local/etc/cloudflared ]; then
-          logg info 'Creating folder /usr/local/etc/cloudflared'
-          sudo mkdir -p /usr/local/etc/cloudflared
-        fi
-        # Copy over configuration files
-        logg info 'Ensuring /usr/local/etc/cloudflared exists' && sudo mkdir -p /usr/local/etc/cloudflared
-        logg info 'Copying over configuration files from ~/.local/etc/cloudflared to /usr/local/etc/cloudflared'
-        sudo cp -f "$HOME/.local/etc/cloudflared/cert.pem" /usr/local/etc/cloudflared/cert.pem
-        sudo cp -f "$HOME/.local/etc/cloudflared/config.yml" /usr/local/etc/cloudflared/config.yml
-        # Register tunnel (if not already registered)
-        if sudo cloudflared tunnel list | grep "host-{{ .host.hostname }}" > /dev/null; then
-          logg info 'CloudFlare tunnel is already registered'
-        else
-          logg info 'Creating a CloudFlare tunnel to this host'
-          sudo cloudflared tunnel create "host-{{ .host.hostname }}"
-        fi
-        TUNNEL_ID="$(sudo cloudflared tunnel list | grep 'host-{{ .host.hostname }}' | sed 's/ .*//')"
-        logg info "Tunnel ID: $TUNNEL_ID"
-        if [ -f "/usr/local/etc/cloudflared/${TUNNEL_ID}.json" ]; then
-          logg info 'Symlinking tunnel configuration to /usr/local/etc/cloudflared/credentials.json'
-          rm -f /usr/local/etc/cloudflared/credentials.json
-          sudo ln -s "/usr/local/etc/cloudflared/${TUNNEL_ID}.json" /usr/local/etc/cloudflared/credentials.json
-        else
-          logg info 'Handling case where the tunnel registration is not present in /usr/local/etc/cloudflared'
-          {{ if eq $registrationToken "" -}}
-          logg warn 'Registration token is unavailable - you might have to delete the pre-existing tunnel or set up secrets properly'
-          {{- else -}}
-          logg info 'Registration token retrieved from encrypted blob stored at home/.chezmoitemplates/cloudflared/{{ .host.hostname }}'
-          {{ if eq (substr 0 1 $registrationToken) "{" -}}
-          logg info 'Registration token stored in credential file form'
-          echo -n '{{ $registrationToken }}' | sudo tee /usr/local/etc/cloudflared/credentials.json > /dev/null
-          {{ else }}
-          logg info 'Registration token is in token form - it will be used in conjunction with sudo cloudflared service install'
-          {{- end }}
-          {{- end }}
-        fi
-        # Set up service
-        if [ -d /Applications ] && [ -d /System ]; then
-          # System is macOS
-          if [ -f /Library/LaunchDaemons/com.cloudflare.cloudflared.plist ]; then
-            logg info 'cloudflared service is already installed'
-          else
-            logg info 'Running sudo cloudflared service install'
-            sudo cloudflared service install{{ if and (ne $registrationToken "") (eq (substr 0 1 $registrationToken) "{") -}} {{ $registrationToken }}{{ end }}
-          fi
-          logg info 'Ensuring cloudflared service is installed'
-          sudo launchctl start com.cloudflare.cloudflared
-        elif [ -f /etc/os-release ]; then
-          # System is Linux
-          if systemctl --all --type service | grep -q "cloudflared" > /dev/null; then
-            logg info 'cloudflared service is already available as a service'
-          else
-            logg info 'Running sudo cloudflared service install'
-            sudo cloudflared service install{{ if and (ne $registrationToken "") (eq (substr 0 1 $registrationToken) "{") -}} {{ $registrationToken }}{{ end }}
-          fi
-          logg info 'Ensuring cloudflared service is started'
-          sudo systemctl start cloudflared
-          logg info 'Enabling cloudflared as a boot systemctl service'
-          sudo systemctl enable cloudflared
-        else
-          # System is Windows
-          cloudflared service install
-          mkdir C:\Windows\System32\config\systemprofile\.cloudflared
-          # Copy same cert.pem as being used above
-          # copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\systemprofile\.cloudflared\cert.pem
-          # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/windows/
-        fi
-      else
-        logg info 'cloudflared was not installed so CloudFlare Tunnels cannot be enabled. (Or the ~/.local/etc/cloudflared folder is not present)'
-      fi
     _short: "cloudflared is a tool by Cloudflare that allows secure and fast access to the internet.                                                                                                                   "
     ansible: professormanhattan.cloudflared
     binary:linux: https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
@@ -1881,9 +1608,7 @@ softwarePackages:
     _github: https://github.com/cockpit-project/cockpit
     _home: https://cockpit-project.org/
     _name: Cockpit
-    _post: |
-      #!/usr/bin/env bash
-      sudo usermod -a -G libvirtdbus libvirt
+    _post: sudo usermod -a -G libvirtdbus libvirt
     _service:pacman: cockpit.socket
     _short: "Cockpit is a web-based graphical interface for managing Linux servers.                                                                                                                                    "
     _systemd: cockpit
@@ -2082,11 +1807,7 @@ softwarePackages:
     _desc: The Container Structure Tests provide a powerful framework to validate the structure of a container image. These tests can be used to check the output of commands in an image, as well as verify metadata and contents of the filesystem
     _github: https://github.com/GoogleContainerTools/container-structure-test
     _name: Container Structure Tests
-    _post:binary:linux: |
-      #!/usr/bin/env bash
-      echo "TODO"
     _short: "container-structure-test is a tool by GoogleContainerTools for validating container images against a set of tests.                                                                                        "
-    binary:linux: https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
     brew: container-structure-test
     yay: container-structure-test
   cookiecutter:
@@ -2181,6 +1902,7 @@ softwarePackages:
   cumulus:
     _app: Cumulus.app
     _bin: null
+    _deprecated: Unnecessary menu bar widget for SoundCloud.
     _desc: A SoundCloud player that lives in the menubar
     _github: https://github.com/gillesdemey/Cumulus
     _name: Cumulus
@@ -2282,9 +2004,7 @@ softwarePackages:
     _desc: "dagu-dev/dagu                                                                                                                                                                                             \n\nThis is a GitHub repository belonging to the user \"dagu-dev\" named \"dagu.\" It likely contains code, documentation, or other files related to a project called \"dagu.\" Without further information or      \naccess to the repository, it's difficult to provide more details. You can visit the link to explore the contents of the repository and learn more about the project it represents.                        "
     _github: https://github.com/dagu-dev/dagu
     _name: Dagu
-    _post: |
-      #!/usr/bin/env bash
-      sudo mkdir -p /var/log/dagu
+    _post: sudo mkdir -p /var/log/dagu
     _short: "dagu is a GitHub repository for the Dagu project.                                                                                                                                                         "
     brew: yohamta/tap/dagu
   dasel:
@@ -2890,6 +2610,7 @@ softwarePackages:
     port: edex-ui
   editly:
     _bin: editly
+    _deprecated: Errors related to node-gyp during installation
     _desc: Editly is a tool and framework for declarative NLE (non-linear video editing) using Node.js and ffmpeg. Editly allows you to easily and programmatically create a video from a set of clips, images, audio and titles, with smooth transitions and music overlaid.
     _docs: https://github.com/mifi/editly#usage-command-line-video-editor
     _github: https://github.com/mifi/editly
@@ -3032,8 +2753,12 @@ softwarePackages:
     _home: https://github.com/hschmidt/EnvPane
     _name: EnvPane
     _short: "EnvPane is a macOS preference pane for environment variables.                                                                                                                                             "
-    _when:script: '! test -d "$HOME/Library/PreferencePanes/EnvPane.prefPane"'
-    script:darwin: (cd ~/Library/PreferencePanes && rm -rf EnvPane.prefPane && curl -sL https://github.com/hschmidt/EnvPane/releases/download/releases%2F0.8/EnvPane-0.8.tar.bz2 | tar -xjf -)
+    _when:script:darwin: '! test -d "$HOME/Library/PreferencePanes/EnvPane.prefPane"'
+    script:darwin: |
+      mkdir -p ~/Library/PreferencePanes
+      cd ~/Library/PreferencePanes
+      rm -rf EnvPane.prefPane
+      curl -sL https://github.com/hschmidt/EnvPane/releases/download/releases%2F0.8/EnvPane-0.8.tar.bz2 | tar -xjf -
   eslint:
     _bin: eslint
     _desc: "[ESLint](https://eslint.org/) allows you to find and fix problems in your JavaScript code"
@@ -3073,12 +2798,8 @@ softwarePackages:
     _desc: "Espanso is a cross-platform text expander tool that allows users to define abbreviations which expand into longer phrases or sentences. It helps in saving time and increasing productivity by automating \nrepetitive typing tasks. Espanso is highly customizable and supports various features like variables, snippets, and more. It is open-source and actively maintained, making it a popular choice for users \nlooking to streamline their typing workflow.                                                                                                                                                              "
     _github: https://github.com/espanso/espanso
     _name: Espanso
-    _post:appimage: |
-      #!/usr/bin/env bash
-      espanso service register && espanso start
-    _post:snap: |
-      #!/usr/bin/env bash
-      espanso service register && espanso start
+    _post:appimage: espanso service register && espanso start
+    _post:snap: espanso service register && espanso start
     _short: "Espanso is a cross-platform text expander tool that helps you type faster by replacing abbreviations with snippets of text.                                                                               "
     appimage: federico-terzi/espanso
     cask: espanso
@@ -3129,20 +2850,37 @@ softwarePackages:
     mas: 1537133867
   exa:
     _bin: exa
+    _deprecated: Project is no longer maintained. eza is the most popular fork that is maintained.
     _desc: A modern replacement for ls.
     _docs: https://the.exa.website/introduction
     _github: https://github.com/ogham/exa
     _home: https://the.exa.website/
     _name: Exa
     _short: "exa is a modern replacement for ls command with more features and better output formatting.                                                                                                               "
+    _notes: exa was available as a Homebrew package but has been disabled because the Homebrew team flagged the upstream project as outdated. Re-add the brew option when the formula is again available.
     apt: exa
-    brew: exa
     cargo: exa
     dnf: exa
     emerge: sys-apps/exa
     nix: exa
     pacman: exa
     zypper: exa
+  eza:
+    _bin: eza
+    _desc: A modern replacement for ls. Active fork of exa.
+    _docs: https://eza.rocks/
+    _github: https://github.com/eza-community/eza
+    _home: https://eza.rocks/
+    _name: Eza
+    brew: eza
+    cargo: eza
+    emerge: sys-apps/eza
+    nix-env: eza
+    pacman: eza
+    port: eza
+    scoop: eza
+    winget: eza-community.eza
+    xbps-install: eza
   exiftool:
     _bin: exiftool
     _desc: "[exiftool](https://exiftool.org/) is a platform-independent Perl library plus a command-line application for reading, writing and editing meta information in a wide variety of files"
@@ -3367,6 +3105,7 @@ softwarePackages:
   filezilla:
     _app: FileZilla.app
     _bin: filezilla
+    _deprecated: FileZilla has an offensive user-interface. Absolutely atrocious.
     _desc: "[FileZilla](https://filezilla-project.org/) is a free software, cross-platform FTP application, consisting of FileZilla Client and FileZilla Server. Client binaries are available for Windows, Linux, and macOS, server binaries are available for Windows only."
     _docs: https://wiki.filezilla-project.org/Documentation
     _github: https://svn.filezilla-project.org/filezilla/
@@ -3818,14 +3557,12 @@ softwarePackages:
     yay: gdrive
   gdu:
     _bin: gdu
+    _deprecated: Deprecated in favor of `duf` which is written in Rust
     _desc: "gdu is a disk usage analyzer with an ncurses interface for Unix systems. It provides a visual representation of disk space usage, allowing users to quickly identify large files and directories. Users   \ncan navigate through directories, delete files, and drill down into specific folders to manage disk space efficiently. It is a lightweight and fast tool that can be useful for system administrators and \nusers looking to optimize their disk usage.                                                                                                                                                               "
     _github: https://github.com/dundee/gdu
     _name: "gdu                                                                                                                                                                                                       "
-    _post:brew: |
-      #!/usr/bin/env bash
-      brew link --overwrite gdu
+    _post:brew: brew link --overwrite gdu
     _post:snap: |
-      #!/usr/bin/env bash
       sudo snap connect gdu-disk-usage-analyzer:mount-observe :mount-observe
       sudo snap connect gdu-disk-usage-analyzer:system-backup :system-backup
       sudo snap alias gdu-disk-usage-analyzer.gdu gdu
@@ -3880,9 +3617,7 @@ softwarePackages:
     _desc: "[ghorg](https://github.com/gabrie30/ghorg) allows you to quickly clone all of an org's, or user's repositories into a single directory."
     _github: https://github.com/gabrie30/ghorg
     _name: ghorg
-    _post: |
-      #!/usr/bin/env bash
-      ghorg reclone
+    _post: ghorg reclone
     _short: "ghorg is a tool for cloning all repositories of a GitHub organization quickly and easily.                                                                                                                 "
     ansible: professormanhattan.ghorg
     brew: gabrie30/utils/ghorg
@@ -3997,7 +3732,6 @@ softwarePackages:
     _github: https://github.com/git-lfs/git-lfs
     _name: Git LFS
     _post: |
-      #!/usr/bin/env bash
       sudo git lfs install --system
       git lfs install
     _short: "git-lfs is an open-source extension for Git that manages large files by storing them outside the main repository.                                                                                         "
@@ -4058,6 +3792,7 @@ softwarePackages:
   gitdock:
     _app: GitDock.app
     _bin: null
+    _deprecated: Only supports GitLab
     _desc: "[GitDock](https://gitlab.com/mvanremmerden/gitdock) is an app that displays all your GitLab activities in one place. Instead of the GitLab typical project- or group-centric approach, it collects all your information from a user-centric perspective."
     _docs: https://gitlab.com/mvanremmerden/gitdock#how-to-use-gitdock-%EF%B8%8F
     _github: https://gitlab.com/mvanremmerden/gitdock
@@ -4242,9 +3977,7 @@ softwarePackages:
     _desc: "[Glances](https://github.com/nicolargo/glances) is a cross-platform monitoring tool which aims to present a maximum of information in a minimum of space through a curses or a web interface. It can adapt the displayed information depending on the terminal size dynamically. It is a top/htop alternative for Linux, BSD, macOS, and even Windows."
     _github: https://github.com/nicolargo/glances
     _name: Glances
-    _post:pipx: |
-      #!/usr/bin/env bash
-      pipx inject glances glances[all]
+    _post:pipx: pipx inject glances glances[all]
     _short: "Glances is a cross-platform monitoring tool that provides real-time system information in a visually appealing way.                                                                                       "
     ansible: professormanhattan.glances
     apt:ubuntu:
@@ -4690,6 +4423,7 @@ softwarePackages:
   graphql-playground:
     _app: GraphQL Playground.app
     _bin: graphql-playground
+    _deprecated: Altair is more popular and well-maintained on GitHub
     _desc: "GraphQL Playground is an interactive web-based IDE for exploring, testing, and sharing GraphQL APIs. It provides a graphical interface where you can write, validate, and execute GraphQL queries, as well\nas view the results in real-time. It offers features like syntax highlighting, auto-completion, and documentation explorer to make working with GraphQL easier. Additionally, it allows you to save and   \nshare your queries with others. Overall, GraphQL Playground is a powerful tool for developers working with GraphQL APIs to streamline their development workflow.                                         "
     _github: https://github.com/graphql/graphql-playground
     _name: GraphQL Playground
@@ -4790,6 +4524,7 @@ softwarePackages:
     go: github.com/nao1215/gup@latest
   gvm:
     _bin: null
+    _deprecated: Deprecated in favor of using ASDF.
     _desc: "[gvm](https://github.com/moovweb/gvm) lets you manage Go environments and switch between Go versions."
     _github: https://github.com/moovweb/gvm
     _name: rvm
@@ -4969,9 +4704,7 @@ softwarePackages:
     _desc: "hishtory is a tool available on GitHub at https://github.com/ddworken/hishtory. It appears to be a project related to browsing history analysis. The tool likely allows users to analyze and visualize    \ntheir browsing history data, providing insights into their online activities. For more detailed information, you can explore the repository on GitHub.                                                    "
     _github: https://github.com/ddworken/hishtory
     _name: hiSHtory
-    _post: |
-      #!/usr/bin/env bash
-      echo y | hishtory init "$HISHTORY_USER_SECRET"
+    _post: echo y | hishtory init "$HISHTORY_USER_SECRET"
     _short: "hishtory is a tool for tracking and visualizing your command history in the terminal.                                                                                                                     "
     _todo: Check for Homebrew version
     script: curl -sSL --compressed https://hishtory.dev/install.py | python3 -
@@ -5179,7 +4912,8 @@ softwarePackages:
     npm: husky
   hyper:
     _appImageName: Hyper
-    _bin: null
+    _bin: hyper
+    _deprecated: Deprecated in favor of Tabby for a full-featured terminal.
     _desc: "[Hyper](https://hyper.is/) is an electron-based terminal. It is written using web technologies such as HTML, CSS, JavaScript etc. It looks very modern and has lots of customization options."
     _docs: https://hyper.is/blog
     _github: https://github.com/vercel/hyper
@@ -5472,16 +5206,16 @@ softwarePackages:
   iterm2:
     _app: iTerm.app
     _bin: null
+    _deprecated: Deprecated in favor of Tabby / Warp
     _desc: "[iTerm2](https://eugeny.github.io/iterm2/) is a highly configurable terminal emulator, SSH and serial client for Windows, macOS and Linux."
     _docs: https://iterm2.com/documentation.html
     _github: https://github.com/gnachman/iTerm2
     _home: https://iterm2.com/
     _name: iTerm2
     _post:cask: |
-      #!/usr/bin/env bash
       logg info "Setting iTerm2 options location to Install Doctor Chezmoi location" && defaults write com.googlecode.iterm2 PrefsCustomFolder -string "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/Library/Preferences/com.googlecode.iterm2.plist"
       logg info "Setting iTerm2 to automatically sync with managed options" && defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile_selection -int 2
-    _short: "iTerm2 is a popular terminal emulator for macOS with advanced features like split panes, search, autocomplete, and more.                                                                                  "
+    _short: "iTerm2 is a popular terminal emulator for macOS with advanced features like split panes, search, autocomplete, and more."
     ansible:darwin: professormanhattan.iterm2
     cask: iterm2
   java:
@@ -5793,9 +5527,6 @@ softwarePackages:
     _github: https://github.com/keybase/client
     _home: https://keybase.io/
     _name: Keybase
-    _post:cask: |
-      #!/usr/bin/env bash
-      if [ ! -f /usr/local/bin/keybase ] && [ -f /Applications/Keybase.app/Contents/SharedSupport/bin/keybase ]; then echo "Fixing missing keybase executable symlink permission issue" && sudo ln -s /Applications/Keybase.app/Contents/SharedSupport/bin/keybase /usr/local/bin/keybase; fi
     _short: "Keybase Client is an open-source security app that offers encrypted messaging, file sharing, and identity verification services.                                                                          "
     _when:ansible: "! test -f /opt/keybase/Keybase"
     ansible: professormanhattan.keybase
@@ -5817,6 +5548,7 @@ softwarePackages:
     cask: keycastr
   kitty:
     _bin: null
+    _deprecated: Deprecated in favor of using alternative terminals such as iTerm2, Tabby, and bundled Linux terminals.
     _desc: "[KiTTY](https://sw.kovidgoyal.net/kitty/) is designed for power keyboard users. To that end all its controls work with the keyboard (although it fully supports mouse interactions as well). Its configuration is a simple, human editable, single file for easy reproducibility."
     _docs: https://sw.kovidgoyal.net/kitty/quickstart/
     _github: https://github.com/kovidgoyal/kitty
@@ -5852,6 +5584,7 @@ softwarePackages:
   koodo-reader:
     _app: Koodo Reader.app
     _bin: koodo-reader
+    _deprecated: Unneeded and interface is not perfect
     _desc: "Koodo Reader is an open-source ebook reader application available on GitHub. It provides a user-friendly interface for reading ebooks in various formats. The project is actively maintained and allows   \nusers to customize their reading experience with features like different themes, font sizes, and more. It supports EPUB, PDF, and other common ebook formats. Users can contribute to the project by      \nreporting issues, suggesting improvements, or even submitting code changes. Overall, Koodo Reader is a versatile ebook reader that caters to the needs of readers looking for a customizable and          \nfeature-rich reading experience.                                                                                                                                                                          "
     _github: https://github.com/koodo-reader/koodo-reader
     _name: Koodo Reader
@@ -5894,12 +5627,11 @@ softwarePackages:
   ksnip:
     _app: ksnip.app
     _bin: ksnip
+    _deprecated: macOS version was lackluster
     _desc: "ksnip is a feature-rich screenshot tool for macOS that allows users to capture screenshots, annotate them with various tools like arrows, text, and shapes, and easily share or save the edited           \nscreenshots. It supports capturing full screen, specific windows, or custom regions. Users can also upload screenshots directly to services like Imgur. ksnip is open-source and actively maintained,     \nmaking it a popular choice for users looking for a versatile screenshot tool on macOS.                                                                                                                    "
     _github: https://github.com/ksnip/ksnip
     _name: kSnip
-    _post:snap: |
-      #!/usr/bin/env bash
-      sudo snap connect ksnip:network-observe && sudo snap connect ksnip:network-manager-observe && sudo snap connect ksnip:removable-media
+    _post:snap: sudo snap connect ksnip:network-observe && sudo snap connect ksnip:network-manager-observe && sudo snap connect ksnip:removable-media
     _short: "ksnip is a feature-rich screenshot tool for MacOS.                                                                                                                                                        "
     cask: ksnip
     choco: ksnip
@@ -5975,18 +5707,8 @@ softwarePackages:
     _github: https://github.com/instrumenta/kubeval/
     _home: https://www.kubeval.com/
     _name: kubeval
-    _post:binary:darwin: |
-      #!/usr/bin/env bash
-      tar xf kubeval-darwin-amd64.tar.gz
-      sudo cp kubeval /usr/local/bin
-    _post:binary:linux: |
-      #!/usr/bin/env bash
-      tar xf kubeval-linux-amd64.tar.gz
-      sudo cp kubeval /usr/local/bin
     _pre:scoop: scoop bucket add instrumenta https://github.com/instrumenta/scoop-instrumenta
     _short: "kubeval is a tool for validating Kubernetes configuration files against the Kubernetes API schemas.                                                                                                       "
-    binary:darwin: https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-darwin-amd64.tar.gz
-    binary:linux: https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
     go: github.com/instrumenta/kubeval@latest
     scoop: kubeval
   kustomize:
@@ -6059,7 +5781,15 @@ softwarePackages:
     _github: https://github.com/logspace-ai/langflow
     _name: LangFlow
     _short: "langflow is a Python library for natural language processing tasks like text classification, named entity recognition, and sentiment analysis.                                                            "
-    pipx: langflow
+    pip: langflow
+  languagetool:
+    _bin: languagetool-desktop
+    _desc: Style and Grammar Checker for 25+ Languages
+    _github: https://github.com/languagetool-org/languagetool
+    _name: LanguageTool for Desktop
+    _home: https://languagetool.org/
+    cask: languagetool
+    choco: languagetool
   lapce:
     _app: Lapce.app
     _bin: lapce
@@ -6120,6 +5850,7 @@ softwarePackages:
     _app: Lepton.app
     _bin: lepton
     _bin:snap: lepton
+    _deprecated: Deprecated in favor of [Pieces](https://pieces.app/). The core components of Pieces are not open-source but the functionality is significantly better than massCode.
     _desc: Cross-platform snippet manager
     _github: https://github.com/hackjutsu/Lepton
     _home: https://hackjutsu.com/Lepton/
@@ -6132,9 +5863,7 @@ softwarePackages:
     _desc: "[Lexicon](https://github.com/AnalogJ/lexicon) provides a way to manipulate DNS records on multiple DNS providers in a standardized/agnostic way."
     _github: https://github.com/AnalogJ/lexicon
     _name: Lexicon
-    _post:pipx: |
-      #!/usr/bin/env bash
-      pipx inject dns-lexicon dns-lexicon[full]
+    _post:pipx: pipx inject dns-lexicon dns-lexicon[full]
     _short: "Lexicon is a DNS manipulation framework that makes it easy to interact with multiple DNS providers.                                                                                                       "
     ansible: professormanhattan.lexicon
     pipx: dns-lexicon
@@ -6178,6 +5907,7 @@ softwarePackages:
   librewolf:
     _app: LibreWolf.app
     _bin: librewolf
+    _deprecated: Creates ~/.librewolf and Firefox is preferred
     _desc: "LibreWolf is a community-maintained fork of Firefox, focused on privacy, security, and user freedom. It aims to provide a more privacy-respecting browsing experience by disabling telemetry, removing    \nproprietary components, and integrating various privacy-focused extensions by default. The project is open-source and welcomes contributions from the community. It is available for Linux distributions  \nand other platforms. Users concerned about online privacy and security may find LibreWolf to be a compelling alternative to mainstream browsers.                                                          "
     _github: https://github.com/librewolf-community/browser-linux
     _gitlab: https://gitlab.com/librewolf-community/browser/linux
@@ -6324,6 +6054,7 @@ softwarePackages:
     yay: lollypop-stable-git
   loop:
     _bin: loop
+    _deprecated: Encountering error during cargo install
     _desc: "Loop is a tool that allows you to automatically restart a process when files in a directory change. It's particularly useful for web development or any project where you want to see changes reflected   \nimmediately without manually restarting the process. Loop monitors the specified directory for changes and restarts the process automatically, saving you time and effort during development. It's a handy\ntool for streamlining your workflow and ensuring that your project stays up to date with the latest changes.                                                                                              "
     _github: https://github.com/Miserlou/Loop
     _name: Loop
@@ -6333,6 +6064,7 @@ softwarePackages:
     snap: loop-rs --beta
   lpass:
     _bin: null
+    _deprecated: Deprecated in favor of using the BitWarden password manager and its related tools.
     _desc: "[LastPass CLI](https://github.com/lastpass/lastpass-cli) is a user-friendly command-line client for [LastPass](https://www.lastpass.com/). LastPass is a freemium password manager that stores encrypted passwords online. The standard version of LastPass comes with a web interface, but also includes plugins for various web browsers and apps for many smartphones. It also includes support for bookmarklets. It is similar to but not open-source like [Bitwarden](https://gitlab.com/megabyte-labs/ansible-roles/bw)."
     _docs: LastPass command line interface tool
     _github: https://github.com/lastpass/lastpass-cli
@@ -6341,6 +6073,7 @@ softwarePackages:
     ansible: professormanhattan.lpass
   lsd:
     _bin: lsd
+    _deprecated: Deprecated in favor of using `exa`. `lsd` may be re-introduced when Windows support is added.
     _desc: "[LSD](https://github.com/Peltoche/lsd) (LSDeluxe), a clone of ls, is the next gen ls command with colorful output, file type icons, and more."
     _docs: https://github.com/lsd-rs/lsd
     _github: https://github.com/Peltoche/lsd
@@ -6435,9 +6168,7 @@ softwarePackages:
     _desc: "LXD-UI is a web-based graphical user interface for managing LXD containers. It provides a user-friendly way to interact with LXD, a system container manager. With LXD-UI, users can easily create, start,\nstop, and manage containers through a web interface. It offers features like container creation, deletion, and monitoring of container resources. The interface is designed to simplify container         \nmanagement tasks for users who prefer a graphical interface over the command line.                                                                                                                        "
     _github: https://github.com/canonical/lxd-ui
     _name: LXD UI
-    _post: |
-      #!/usr/bin/env bash
-      lxd init && lxc config set core.https_address "[::]:8443"
+    _post: lxd init && lxc config set core.https_address "[::]:8443"
     _short: "lxd-ui is a web-based graphical user interface for managing LXD containers.                                                                                                                               "
     snap: lxd
   lxdc:
@@ -6494,6 +6225,7 @@ softwarePackages:
     pipx: mackup
   macprefs:
     _bin: macprefs
+    _deprecated: Latest version has fatal error
     _desc: "The repository at https://github.com/clintmod/macprefs contains a collection of macOS preferences and settings that can be used to customize and configure a macOS system. It likely includes scripts or  \ninstructions to apply these preferences to a macOS system efficiently. This repository can be useful for users looking to automate the setup or configuration of multiple macOS systems with consistent   \nsettings.                                                                                                                                                                                                 "
     _github: https://github.com/clintmod/macprefs
     _name: MacPrefs
@@ -6588,9 +6320,7 @@ softwarePackages:
     _desc: "Mamba is a fast, reliable, and easy-to-use package manager for the conda package manager ecosystem. It aims to improve the performance of package management operations by utilizing parallel downloading \nand processing. Mamba is compatible with conda packages and environments, making it a suitable alternative for users looking for faster package management on their systems. It is particularly useful for\nmanaging large-scale data science and scientific computing environments efficiently. Mamba can be easily installed alongside conda and used as a drop-in replacement for faster package installations and \nupdates.                                                                                                                                                                                                  "
     _github: https://github.com/mamba-org/mamba
     _name: Mamba Forge
-    _post: |
-      #!/usr/bin/env bash
-      echo y | conda update -n base -c conda-forge conda
+    _post: echo y | conda update -n base -c conda-forge conda
     _short: "mamba is a fast, scalable package manager for data science and scientific computing.                                                                                                                      "
     cask: mambaforge
     choco: mambaforge
@@ -6598,6 +6328,7 @@ softwarePackages:
   manta:
     _app: Manta.app
     _bin: null
+    _deprecated: Replaced by web apps like waveapps.com
     _desc: Flexible invoicing desktop app with beautiful & customizable templates
     _github: https://github.com/hql287/Manta
     _name: Manta
@@ -6692,7 +6423,8 @@ softwarePackages:
     choco: masscan
   masscode:
     _app: massCode.app
-    _bin: null
+    _bin: masscode
+    _deprecated: Deprecated in favor of [Pieces](https://pieces.app/). The core components of Pieces are not open-source but the functionality is significantly better than massCode.
     _desc: A free and open source code snippets manager for developers
     _github: https://github.com/antonreshetov/massCode
     _name: MassCode
@@ -6705,19 +6437,12 @@ softwarePackages:
     _github: https://github.com/minio/mc
     _home: https://min.io/
     _name: mc
-    _post:binary:linux: |
-      #!/usr/bin/env bash
-      # TODO
-    _post:binary:windows: |
-      #!/usr/bin/env bash
-      # TODO
     _short: "MinIO Client (mc): A command-line tool for managing MinIO and Amazon S3 compatible object storage servers.                                                                                                "
-    binary:linux: https://dl.min.io/client/mc/release/linux-amd64/mc
-    binary:windows: https://dl.min.io/client/mc/release/windows-amd64/mc.exe
     brew: minio/stable/mc
     go: github.com/minio/mc@latest
   mcfly:
     _bin: mcfly
+    _deprecated: Deprecated in favor of atuin
     _desc: "[McFly](https://github.com/cantino/mcfly) replaces your default CTRL-r shell history search with an intelligent search engine that takes into account your working directory and the context of recently executed commands. McFly's suggestions are prioritized in real time with a small neural network."
     _github: https://github.com/cantino/mcfly
     _name: McFly
@@ -6780,6 +6505,7 @@ softwarePackages:
     brew: meta-package-manager
     pipx: meta-package-manager
   metasploit:
+    _deprecated: Determine whether or not this will be flagged by management settings
     _desc: "Metasploit Framework                                                                                                                                                                                      \n\nMetasploit Framework is an open-source penetration testing tool developed by Rapid7. It provides information about security vulnerabilities and aids in penetration testing and IDS signature development.\nThe framework includes a suite of tools, including exploits, payloads, auxiliary modules, and post-exploitation modules. It is widely used by security professionals and researchers to test the security \nof networks and applications. The tool is regularly updated with new exploits and features to keep up with the evolving threat landscape.                                                                 "
     _github: https://github.com/rapid7/metasploit-framework
     _name: Metasploit Framework
@@ -6788,12 +6514,11 @@ softwarePackages:
     script: curl -sSL --compressed https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > /tmp/msfinstall && chmod 755 /tmp/msfinstall && sudo /tmp/msfinstall
   micromamba:
     _bin: micromamba
+    _deprecated: Keeps creating .condarc in HOME even when CONDARC is defined (tried other methods as well)
     _desc: "Mamba is a fast, reliable, and easy-to-use package manager for the conda package manager ecosystem. It aims to improve the performance of package management operations by utilizing parallel downloading \nand processing. Mamba is compatible with conda packages and environments, making it a suitable alternative for users looking for faster package management on their systems. It is particularly useful for\nmanaging large-scale data science and scientific computing environments efficiently. Mamba can be easily installed alongside conda and used as a drop-in replacement for faster package installations and \nupdates.                                                                                                                                                                                                  "
     _github: https://github.com/mamba-org/mamba
     _name: MicroMamba
-    _post: |
-      #!/usr/bin/env bash
-      micromamba self-update
+    _post: micromamba config append channels conda-forge && micromamba self-update
     _short: "mamba is a fast, scalable package manager for data science and scientific computing.                                                                                                                      "
     brew: micromamba
   microsoft-edge:
@@ -6861,6 +6586,7 @@ softwarePackages:
   microsoft-todo:
     _app: Ao.app
     _bin:snap: microsoft-todo-unofficial
+    _deprecated: Deprecated in favor of Google Tasks
     _desc: "[Microsoft To Do](https://todo.microsoft.com/tasks/) is a productivity application developed by Microsoft. It lets you create to do lists, reminders, and notes for any purpose. Sync lists across devices and Microsoft 365 accounts to access daily planner and task manager features anywhere."
     _docs: https://support.microsoft.com/en-us/todo
     _github: false
@@ -6891,9 +6617,7 @@ softwarePackages:
     _docs: https://minikube.sigs.k8s.io/docs/
     _github: https://github.com/kubernetes/minikube
     _name: minikube
-    _post: |
-      #!/usr/bin/env bash
-      if command -v hyperkit > /dev/null; then minikube config set driver hyperkit; elif command -v docker > /dev/null; then minikube config set driver docker; elif command -v VBoxManage > /dev/null; then minikube config set driver virtualbox; fi
+    _post: if command -v hyperkit > /dev/null; then minikube config set driver hyperkit; elif command -v docker > /dev/null; then minikube config set driver docker; elif command -v VBoxManage > /dev/null; then minikube config set driver virtualbox; fi
     _short: "Minikube is a tool that enables you to run Kubernetes clusters locally for development and testing purposes.                                                                                              "
     _todo: A full installation of Xcode.app 9.0 is required. Also, hyperkit x86_64 architecture is required for this software. So automate install of Xcode.app 9.0 and add check for x86_64 prior to installing this
     brew: minikube
@@ -6903,13 +6627,6 @@ softwarePackages:
     _desc: "Mise is a tool created by jdx available on GitHub at https://github.com/jdx/mise. It is a simple script that helps in managing macOS system preferences from the command line. With Mise, you can easily  \nset and get various system preferences like dark mode, accent color, wallpaper, and more. It provides a convenient way to automate the customization of macOS settings, making it useful for system       \nadministrators and power users who prefer working with the command line interface.                                                                                                                        "
     _github: https://github.com/jdx/mise
     _name: mise
-    _post: |
-      #!/usr/bin/env bash
-      mise install
-      if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" ]; then
-        sudo mkdir -p /Library/Java/JavaVirtualMachines/openjdk-20.jdk
-        sudo ln -s "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" /Library/Java/JavaVirtualMachines/openjdk-20.jdk/Contents
-      fi
     _short: "Mise is a tool for managing macOS dotfiles.                                                                                                                                                               "
     apk: mise
     brew: mise
@@ -7005,9 +6722,7 @@ softwarePackages:
     _github: https://github.com/ansible-community/molecule
     _home: https://molecule.readthedocs.io/en/latest/
     _name: Ansible Molecule
-    _post:pipx: |
-      #!/usr/bin/env bash
-      pipx inject molecule ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog apache-libcloud gcloud junit-xml molecule-docker molecule-gce molecule-vagrant pycrypto
+    _post:pipx: pipx inject molecule ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog apache-libcloud gcloud junit-xml molecule-docker molecule-gce molecule-vagrant pycrypto
     _short: "Molecule is a tool for testing Ansible roles in multiple scenarios.                                                                                                                                       "
     pipx: molecule
   monero:
@@ -7188,6 +6903,7 @@ softwarePackages:
   mullvad-vpn:
     _app: Mullvad VPN.app
     _bin: null
+    _deprecated: Switched to ProtonVPN exclusively
     _desc: The Mullvad VPN client app for desktop and mobile
     _github: https://github.com/mullvad/mullvadvpn-app
     _name: Mullvad VPN
@@ -7209,17 +6925,14 @@ softwarePackages:
   multipass:
     _app: Multipass.app
     _bin: multipass
+    _deprecated: Opens persistent menu icon on GNOME and has issues that sometimes require switching the virt driver
     _desc: "[Multipass](https://multipass.run/) makes it so that you can get an instant Ubuntu VM with a single command. Multipass can launch and run virtual machines and configure them with cloud-init like a public cloud. It is a product of [Canonical](https://canonical.com/), the same company that publishes Ubuntu."
     _docs: https://multipass.run/docs
     _github: https://github.com/canonical/multipass
     _home: https://multipass.run/
     _name: Multipass
-    _post:cask: |
-      #!/usr/bin/env bash
-      multipass set local.driver=virtualbox
-    _post:choco: |
-      #!/usr/bin/env bash
-      multipass set local.driver=virtualbox
+    _post:cask: multipass set local.driver=virtualbox
+    _post:choco: multipass set local.driver=virtualbox
     _short: "Multipass is a lightweight VM manager for Linux, Windows, and macOS.                                                                                                                                      "
     ansible: professormanhattan.multipass
     cask: multipass
@@ -7230,9 +6943,7 @@ softwarePackages:
     _desc: "Mutagen is an open-source file synchronization and network forwarding tool that simplifies the process of keeping files in sync between multiple machines. It supports bi-directional synchronization,    \nautomatic conflict resolution, and real-time updates. Mutagen can be used for development, deployment, and other scenarios where keeping files in sync is crucial. It works efficiently with large files  \nand is designed to be fast and reliable. The tool is available for various operating systems, including macOS, and can be easily integrated into existing workflows.                                      "
     _github: https://github.com/mutagen-io/mutagen
     _name: Mutagen
-    _post: |
-      #!/usr/bin/env bash
-      mutagen daemon register
+    _post: mutagen daemon register
     _short: "Mutagen is a file synchronization and networking tool for developers, providing fast and efficient file synchronization for local development environments.                                               "
     brew: mutagen-io/mutagen/mutagen
   mycli:
@@ -7412,6 +7123,7 @@ softwarePackages:
   neovide:
     _app: Neovide.app
     _bin: neovide
+    _deprecated: Prefer other IDEs - neovim is good for the terminal though
     _desc: No Nonsense Neovim Client in Rust
     _docs: https://neovide.dev/installation.html
     _github: https://github.com/neovide/neovide
@@ -7622,9 +7334,7 @@ softwarePackages:
     _github: https://github.com/nmap/nmap
     _home: https://nmap.org/
     _name: Nmap
-    _post:snap: |
-      #!/usr/bin/env bash
-      sudo snap connect nmap:network-control
+    _post:snap: sudo snap connect nmap:network-control
     _short: "Nmap is a popular open-source network scanning tool used for network discovery and security auditing.                                                                                                     "
     ansible: professormanhattan.nmap
     apt: nmap
@@ -7697,6 +7407,7 @@ softwarePackages:
     yay: nomino
   nordvpn:
     _bin: null
+    _deprecated: Deprecated in favor of leveraging ProtonVPN as the primary VPN service.
     _desc: "[NordVPN](https://nordvpn.com/) is a virtual private network service provider. It has desktop applications for Windows, macOS, and Linux, mobile apps for Android and iOS, as well as an application for Android TV. Manual setup is available for wireless routers, NAS devices and other platforms."
     _docs: https://support.nordvpn.com/
     _github: https://github.com/jotyGill/openpyn-nordvpn
@@ -7764,18 +7475,6 @@ softwarePackages:
     _desc: "ntfy is a command-line utility that sends desktop notifications when a command finishes. It supports various notification backends like Pushbullet, Pushover, Slack, Telegram, and more. It can be used to\nkeep track of long-running commands or scripts without having to constantly check the terminal. It's easy to install and configure, making it a handy tool for system administrators and developers who   \nwant to stay updated on their command executions.                                                                                                                                                         "
     _github: https://github.com/dschep/ntfy
     _name: NFTY
-    _post: |
-      #!/usr/bin/env bash
-      sudo mkdir -p /usr/local/etc/branding
-      sudo cp -f "$HOME/.local/etc/branding/logo-color-256x256.png" /usr/local/etc/branding/logo-color-256x256.png
-      sudo mkdir -p /usr/local/share/sounds
-      sudo rsync -rtvp "${XDG_DATA_HOME:-$HOME/.local/share}/sounds/" /usr/local/share/sounds
-      if command -v apt-get > /dev/null; then
-        sudo apt install python-dbus
-      fi
-      if command -v termux-setup-storage > /dev/null; then
-        apt install termux-api
-      fi
     _short: "ntfy is a command-line utility that sends notifications when a command finishes.                                                                                                                          "
     pip3: ntfy[emoji,matrix,pid,slack]
   ntl:
@@ -7788,6 +7487,7 @@ softwarePackages:
   nuclear:
     _app: nuclear.app
     _bin: nuclear
+    _deprecated: Music app - UI is horrendous
     _desc: Streaming music player that finds free music
     _github: https://github.com/nukeop/nuclear
     _home: https://nuclear.js.org/
@@ -7894,9 +7594,7 @@ softwarePackages:
     _github: https://github.com/jandedobbeleer/oh-my-posh
     _home: https://ohmyposh.dev/
     _name: oh-my-posh
-    _post:scoop: |
-      #!/usr/bin/env bash
-      clink autorun install
+    _post:scoop: clink autorun install
     _short: "oh-my-posh is a prompt theme engine for PowerShell, providing a customizable and visually appealing prompt for the shell.                                                                                 "
     brew: jandedobbeleer/oh-my-posh/oh-my-posh
     scoop:
@@ -7925,7 +7623,6 @@ softwarePackages:
     _github: https://github.com/trustcrypto/OnlyKey-App
     _name: onlykey
     _post:snap: |
-      #!/usr/bin/env bash
       sudo curl -sSL https://raw.githubusercontent.com/trustcrypto/trustcrypto.github.io/pages/49-onlykey.rules -o /etc/udev/rules.d/49-onlykey.rules
       sudo chmod 644 /etc/udev/rules.d/49-onlykey.rules
       sudo udevadm control --reload-rules
@@ -7957,7 +7654,6 @@ softwarePackages:
   onlykey-cli-deps:
     _github: false
     _post:linux: |
-      #!/usr/bin/env bash
       sudo curl -sSL https://raw.githubusercontent.com/trustcrypto/trustcrypto.github.io/pages/49-onlykey.rules -o /etc/udev/rules.d/49-onlykey.rules
       sudo chmod 644 /etc/udev/rules.d/49-onlykey.rules
       sudo udevadm control --reload-rules
@@ -8096,6 +7792,7 @@ softwarePackages:
   orbstack:
     _app: OrbStack.app
     _bin: orb
+    _deprecated: Faster / better alternative to Docker Desktop on macOS. Deprecated because it does not support Docker Extensions and is only for macOS.
     _desc: "Orbstack is a GitHub repository that appears to be related to a software project named Orbstack. The repository likely contains source code, documentation, and possibly other resources related to the   \nOrbstack project. To get a detailed understanding of what Orbstack is and what the repository contains, you would need to explore the repository further by checking the README file, codebase, and any   \nother available documentation.                                                                                                                                                                            "
     _github: https://github.com/orbstack/orbstack
     _name: OrbStack
@@ -8505,9 +8202,7 @@ softwarePackages:
     _home: https://pieces.app/
     _name: Pieces OS
     _note: Waiting for choco package
-    _post:snap: |
-      #!/usr/bin/env bash
-      sudo snap connect pieces-os:dotnet-runtime-aspnetcore
+    _post:snap: sudo snap connect pieces-os:dotnet-runtime-aspnetcore
     appinstaller: https://builds.pieces.app/stages/production/appinstaller/os_server.appinstaller
     cask: pieces-os
     exe: https://builds.pieces.app/stages/production/os_server/windows-exe/download
@@ -8541,6 +8236,7 @@ softwarePackages:
     flatpak: io.github.fabrialberio.pinapp
   pip:
     _bin: pip
+    _deprecated: The `pip` installation is handled by the `install-program` program bundled with Install Doctor.
     _desc: "[pip](https://pypi.org/project/pip/) is a package-management system written in Python used to install and manage software packages. It connects to an online repository of public and paid-for private packages, called the Python Package Index."
     _docs: https://pip.pypa.io/en/stable/user_guide/
     _github: https://github.com/pypa/pip
@@ -8567,14 +8263,13 @@ softwarePackages:
     yay: pipelight
   pipx:
     _bin: pipx
+    _deprecated: The `pipx` installation is handled by the `install-program` program bundled with Install Doctor.
     _desc: "[pipx](https://pypi.org/project/pipx/) is a tool to help you install and run end-user applications written in Python. It's roughly similar to macOS's brew, JavaScript's npx, and Linux's apt"
     _docs: https://pypa.github.io/pipx/
     _github: https://github.com/pypa/pipx
     _home: https://pypi.org/project/pipx/
     _name: "pipx                                                                                                                                                                                                      "
-    _post:brew: |
-      #!/usr/bin/env bash
-      pipx ensurepath
+    _post:brew: pipx ensurepath
     _short: "pipx is a tool that allows you to install and run Python applications in isolated environments.                                                                                                           "
     brew: pipx
   pkg:
@@ -8870,11 +8565,7 @@ softwarePackages:
     _docs: https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.1
     _github: https://github.com/PowerShell/PowerShell
     _name: Powershell
-    _post:cask: |
-      #!/usr/bin/env bash
-      if ! brew list -1 | grep mono-libgdiplus > /dev/null; then
-        brew install mono-libgdiplus
-      fi
+    _post:cask: brew install mono-libgdiplus
     _short: "PowerShell is a cross-platform task automation and configuration management framework.                                                                                                                    "
     ansible: professormanhattan.powershell
     cask: powershell
@@ -8972,63 +8663,6 @@ softwarePackages:
       - privoxy
     _home: https://www.privoxy.org/
     _name: Privoxy
-    _post: |
-      #!/usr/bin/env bash
-      # @file Privoxy Configuration
-      # @brief This script applies the Privoxy configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config` to the system and then restarts Privoxy
-      # @description
-      #     Privoxy is a web proxy that can be combined with Tor to provide an HTTPS / HTTP proxy that can funnel all traffic
-      #     through Tor. This script:
-      #
-      #     1. Determines the system configuration file location
-      #     2. Applies the configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config`
-      #     3. Enables and restarts the Privoxy service with the new configuration
-      #
-      #     ## Links
-      #
-      #     * [Privoxy configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/privoxy/config)
-      if [ -d /Applications ] && [ -d /System ]; then
-        ### macOS
-        if [ -d "/usr/local/etc/privoxy" ]; then
-          PRIVOXY_CONFIG_DIR=/usr/local/etc/privoxy
-        elif [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/privoxy" ]; then
-          PRIVOXY_CONFIG_DIR="${HOMEBREW_PREFIX:-/opt/homebrew}/etc/privoxy"
-        else
-          logg warn 'Unable to detect Privoxy configuration directory'
-        fi
-      else
-        ### Linux
-        PRIVOXY_CONFIG_DIR=/etc/privoxy
-      fi
-      PRIVOXY_CONFIG="$PRIVOXY_CONFIG_DIR/config"
-      ### Copy Privoxy configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config` to the system location
-      if command -v privoxy > /dev/null; then
-        if [ -d  "$PRIVOXY_CONFIG_DIR" ]; then
-          sudo cp -f "${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config" "$PRIVOXY_CONFIG"
-          sudo chmod 600 "$PRIVOXY_CONFIG"
-          if command -v add-usergroup > /dev/null; then
-            sudo add-usergroup "$USER" privoxy
-          fi
-          sudo chown privoxy:privoxy "$PRIVOXY_CONFIG" 2> /dev/null || sudo chown privoxy:$(id -g -n) "$PRIVOXY_CONFIG"
-          ### Restart Privoxy after configuration is applied
-          if [ -d /Applications ] && [ -d /System ]; then
-            ### macOS
-            brew services restart privoxy
-          else
-            if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
-              ### Linux
-              sudo systemctl enable privoxy
-              sudo systemctl restart privoxy
-            else
-              logg info 'The system is a WSL environment so the Privoxy systemd service will not be enabled / restarted'
-            fi
-          fi
-        else
-          logg warn 'The '"$PRIVOXY_CONFIG_DIR"' directory is missing'
-        fi
-      else
-        logg logg 'privoxy is missing from the PATH - skipping configuration'
-      fi
     _service: privoxy
     _serviceEnabled: true
     _short: "Privoxy is a non-caching web proxy with advanced filtering capabilities for enhancing privacy, modifying web page data, and controlling access.                                                           "
@@ -9106,23 +8740,12 @@ softwarePackages:
     _github: https://github.com/ProtonVPN/linux-app
     _home: https://protonmail.com/
     _name: ProtonVPN
-    _post:dnf:fedora: |
-      #!/usr/bin/env bash
-      sudo dnf install -y python3-pip && pip3 install --user 'dnspython>=1.16.0'
-    _post:yay: |
-      #!/usr/bin/env bash
-      sudo pacman -Syu libappindicator-gtk3 gnome-shell-extension-appindicator
-    _pre:apt: |
-      #!/usr/bin/env bash
-      sudo apt-get install -y https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3_all.deb && sudo apt-get update
-    _pre:dnf: |
-      #!/usr/bin/env bash
-      sudo dnf install -y https://repo.protonvpn.com/fedora-36-stable/release-packages/protonvpn-stable-release-1.0.1-1.noarch.rpm && sudo dnf update
     _short: "ProtonVPN Linux App is an open-source application that allows users to connect to ProtonVPN servers on Linux systems.                                                                                     "
     apt:
-      - gir1.2-appindicator3-0.1
+      - libayatana-appindicator3-1
+      - gir1.2-ayatanaappindicator3-0.1
       - gnome-shell-extension-appindicator
-      - protonvpn
+      - https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3_all.deb
     cask: protonvpn
     choco: protonvpn
     dnf:fedora:
@@ -9130,26 +8753,26 @@ softwarePackages:
       - gnome-shell-extension-appindicator
       - gnome-tweaks
       - libappindicator-gtk3
+      - https://repo.protonvpn.com/fedora-$(cat /etc/fedora-release | cut -d\  -f 3)-stable/protonvpn-stable-release/protonvpn-stable-release-1.0.1-2.noarch.rpm
+      - python3-pip
+    yay:
+      - gnome-shell-extension-appindicator
+      - libappindicator-gtk3
       - protonvpn
-    yay: protonvpn
   protonvpn-cli:
     _bin: protonvpn
-    _deps:script:darwin:
+    _deps:
       - dialog
       - openvpn
+      - python
     _desc: The ProtonVPN CLI official release for Linux along with an unofficial ProtonVPN CLI for macOS
     _github: https://github.com/ProtonVPN/linux-cli
     _name: ProtonVPN CLI
     _short: "ProtonVPN Linux CLI is a command-line interface tool for managing ProtonVPN connections on Linux systems.                                                                                                 "
     _todo: Populate this once the ProtonVPN CLI is released to the package managers
-    apt: protonvpn-cli
-    dnf: protonvpn-cli
+    dnf:fedora: protonvpn-cli
     pacman: protonvpn-cli
-    script:darwin: |
-      sudo rm -rf /usr/local/src/protonvpn-cli
-      sudo git clone https://github.com/phx/protonvpn-cli-macos /usr/local/src/protonvpn-cli
-      cd /usr/local/src/protonvpn-cli && pip3 install -r requirements.txt
-      sudo python3 setup.py install
+    script: sudo pip3 install protonvpn-cli
   provisionql:
     _desc: "ProvisionQL is a Quick Look plugin for macOS that allows you to preview Provisioning Profiles (.mobileprovision files) directly in the Finder with a quick look. This plugin enhances the user experience \nby providing a convenient way to view the details of provisioning profiles without needing to open them in a separate application. It simplifies the process of managing provisioning profiles for        \ndevelopers working on iOS and macOS projects.                                                                                                                                                             "
     _github: https://github.com/ealeksandrov/ProvisionQL
@@ -9226,8 +8849,10 @@ softwarePackages:
     _desc: "Pushpin is an open-source project by Fastly that acts as a reverse proxy server for real-time web services. It helps in managing long-lived connections efficiently, enabling real-time features like     \nchat, live updates, and notifications in web applications. Pushpin works by offloading the handling of long-lived connections from the main application server, reducing its load and improving           \nscalability. It supports various protocols like HTTP streaming, WebSockets, and Server-Sent Events. Pushpin is designed to be lightweight, easy to deploy, and integrates well with existing web          \napplications.                                                                                                                                                                                             "
     _github: https://github.com/fastly/pushpin
     _name: Pushpin
+    _service: pushpin
     _short: "Pushpin is an open-source proxy server for realtime web services.                                                                                                                                         "
     brew: pushpin
+    docker: fanout/pushpin
   pv:
     _bin: pv
     _desc: "pv is a terminal-based tool for monitoring the progress of data through a pipeline. It can be used to track the progress of commands that involve data transfer, such as copying files, archiving data, or\nany other process that involves input/output. pv displays a progress bar, estimated time remaining, current throughput rate, and total data transferred. It is a handy utility for visualizing the flow of\ndata in real-time, allowing users to better understand and manage data transfer processes.                                                                                                                "
@@ -9247,16 +8872,22 @@ softwarePackages:
     _desc: "CPython is the official implementation of the Python programming language. It is written in C and is maintained by the Python Software Foundation. The repository contains the source code for Python     \ninterpreter, standard library, and various tools. Developers can contribute to the project by submitting bug fixes, new features, and improvements. CPython is widely used and serves as a reference      \nimplementation for the Python language specification.                                                                                                                                                     "
     _github: https://github.com/python/cpython
     _name: "cpython                                                                                                                                                                                                   "
-    _post:brew: |
-      #!/usr/bin/env bash
-      python3 -m pip install --upgrade setuptools
-      python3 -m pip install --upgrade pip
+    _post:brew: python3 -m pip install --upgrade setuptools && python3 -m pip install --upgrade pip
     _short: "Official repository for the Python programming language.                                                                                                                                                  "
-    apt: python3-pip
+    apt:
+      - python3-pip
+      - python3-setuptools
     brew: python
-    dnf: python3-pip
-    pacman: python-pip
+    dnf:
+      - python3-pip
+      - python3-setuptools
+    pacman:
+      - python-pip
+      - python-setuptools
     scoop: python
+    zypper:
+      - python3-pip
+      - python3-setuptools
   python2:
     _bin: python2
     _github: false
@@ -9415,6 +9046,7 @@ softwarePackages:
     github: github.com/rancher/cli
     yay: rancher-cli-bin
   rancher-desktop:
+    _deprecated: Conflicts with Docker Desktop
     _desc: "Rancher Desktop is an open-source project hosted on GitHub under the repository https://github.com/rancher-sandbox/rancher-desktop/. It is a tool designed to simplify the setup and management of        \nKubernetes clusters on desktop environments. Rancher Desktop provides a user-friendly interface for creating, running, and interacting with Kubernetes clusters locally. It aims to streamline the        \ndevelopment and testing of containerized applications by offering an easy-to-use solution for running Kubernetes on developers' machines. The project is maintained by Rancher Labs, a company known for  \nits contributions to the Kubernetes ecosystem.                                                                                                                                                            "
     _github: https://github.com/rancher-sandbox/rancher-desktop/
     _name: "rancher-desktop                                                                                                                                                                                           "
@@ -9458,153 +9090,6 @@ softwarePackages:
       - rclone
     _home: https://rclone.org/
     _name: Rclone
-    _post: |
-      #!/usr/bin/env bash
-      # @file Rclone S3 Mounts
-      # @brief This script configures Rclone to provide several S3-compliant mounts by leveraging CloudFlare R2
-      # @description
-      #     Install Doctor leverages Rclone and CloudFlare R2 to provide S3-compliant bucket mounts that allow you to retain stateful files and configurations.
-      #     In general, these buckets are used for backing up files like your browser profiles, Docker backup files, and other files that cannot be stored as
-      #     as code in your Install Doctor fork.
-      #
-      #     This script sets up Rclone to provide several folders that are synchronized with S3-compliant buckets (using CloudFlare R2 by default).
-      #     The script ensures required directories are created and that proper permissions are applied. This script will only run if `rclone` is
-      #     available in the `PATH`. It also requires the user to provide `CLOUDFLARE_R2_ID` and `CLOUDFLARE_R2_SECRET` as either environment variables
-      #     or through the encrypted repository-fork-housed method detailed in the [Secrets documentation](https://install.doctor/docs/customization/secrets).
-      #
-      #     ## Mounts
-      #
-      #     The script will setup five mounts by default and enable / start `systemd` services on Linux systems so that the mounts are available
-      #     whenever the device is turned on. The mounts are:
-      #
-      #     | Mount Location        | Description                                                                                                           |
-      #     |-----------------------|-----------------------------------------------------------------------------------------------------------------------|
-      #     | `/mnt/Private`        | Private system-wide bucket used for any private files that should not be able to be accessed publicly over HTTPS      |
-      #     | `/mnt/Public`         | Public system-wide bucket that can be accessed by anyone over HTTPS with the bucket's URL (provided by CloudFlare R2) |
-      #     | N/A                   | Private system-wide bucket used for storing Docker-related backups / files                                            |
-      #     | N/A                   | Private system-wide bucket similar to `/mnt/Private` but intended for system file backups                             |
-      #     | `$HOME/Public` | Private user-specific bucket (used for backing up application settings)                                               |
-      #
-      #     ## Permissions
-      #
-      #     The system files are all assigned proper permissions and are owned by the user `rclone` with the group `rclone`. The exception to this is the
-      #     user-specific mount which uses the user's user name and user group.
-      #
-      #     ## Samba
-      #
-      #     If Samba is installed, then by default Samba will create two shares that are symlinked to the `/mnt/s3-private` and `/mnt/s3-public`
-      #     buckets. This feature allows you to easily access the two buckets from other devices in your local network. If Rclone buckets are not
-      #     available then the Samba setup script will just create regular empty folders as shares.
-      #
-      #     ## Notes
-      #
-      #     * The mount services all leverage the executable found at `$HOME/.local/bin/rclone-mount` to mount the shares.
-      #
-      #     ## Links
-      #
-      #     * [Rclone mount script](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_local/bin/executable_rclone-mount)
-      #     * [Rclone default configurations](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/rclone)
-      #     * [Rclone documentation](https://rclone.org/docs/)
-      if command -v rclone > /dev/null; then
-        {{- if and (or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID"))) (env "CLOUDFLARE_R2_ID")) (or (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET"))) (env "CLOUDFLARE_R2_SECRET")) (ne .user.cloudflare.r2 "") }}
-        logg info 'Removing ~/.config/rclone/rclone.conf Install Doctor managed block'
-        CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/rclone/rclone.conf"
-        if cat "$CONFIG_FILE" | grep '# INSTALL DOCTOR MANAGED S3 START' > /dev/null; then
-          # TODO: Remove old block
-          START_LINE="$(echo `grep -n -m 1 "# INSTALL DOCTOR MANAGED S3 START" "$CONFIG_FILE" | cut -f1 -d ":"`)"
-          END_LINE="$(echo `grep -n -m 1 "# INSTALL DOCTOR MANAGED S3 END" "$CONFIG_FILE" | cut -f1 -d ":"`)"
-          if command -v gsed > /dev/null; then
-            gsed -i "$START_LINE,${END_LINE}d" "$CONFIG_FILE" > /dev/null
-          else
-            sed -i "$START_LINE,${END_LINE}d" "$CONFIG_FILE" > /dev/null
-          fi
-        fi
-        logg info 'Adding ~/.config/rclone/rclone.conf INSTALL DOCTOR managed block'
-        sudo tee -a "$CONFIG_FILE" > /dev/null <<EOT
-      # INSTALL DOCTOR MANAGED S3 START
-      [User-{{ .user.username}}]
-      access_key_id = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_ID_USER")) }}{{- includeTemplate "secrets/CLOUDFLARE_R2_ID_USER" | decrypt | trim -}}{{ else }}{{- env "CLOUDFLARE_R2_ID_USER" -}}{{ end }}
-      acl = private
-      endpoint = {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com
-      provider = Cloudflare
-      region = auto
-      secret_access_key = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET_USER")) }}{{- includeTemplate "secrets/CLOUDFLARE_R2_SECRET_USER" | decrypt | trim -}}{{ else }}{{- env "CLOUDFLARE_R2_SECRET_USER" -}}{{ end }}
-      type = s3
-      # INSTALL DOCTOR MANAGED S3 END
-      EOT
-        {{- end }}
-        sudo chown -f root "$CONFIG_FILE"
-        sudo chmod -f 600 "$CONFIG_FILE"
-        logg info 'Ensuring /var/cache/rclone exists'
-        sudo mkdir -p /var/cache/rclone
-        sudo chmod 750 /var/cache/rclone
-        ### Add user / group with script in ~/.local/bin/add-usergroup, if it is available
-        if command -v add-usergroup > /dev/null; then
-          sudo add-usergroup "$USER" rclone
-        fi
-        sudo chown -Rf rclone:rclone /var/cache/rclone
-        logg info 'Ensuring /var/log/rclone exists'
-        sudo mkdir -p /var/log/rclone
-        sudo chmod 750 /var/log/rclone
-        sudo chown -Rf rclone:rclone /var/log/rclone
-        logg info 'Adding ~/.local/bin/rclone-mount to /usr/local/bin'
-        sudo cp -f "$HOME/.local/bin/rclone-mount" /usr/local/bin/rclone-mount
-        sudo chmod +x /usr/local/bin/rclone-mount
-        logg info 'Adding ~/.config/rclone/rcloneignore to /etc/rcloneignore'
-        sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/rcloneignore" /etc/rcloneignore
-        sudo chown -Rf rclone:rclone /etc/rcloneignore
-        sudo chmod 640 /etc/rcloneignore
-        logg info 'Adding ~/.config/rclone/system-rclone.conf to /etc/rclone.conf'
-        sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system-rclone.conf" /etc/rclone.conf
-        sudo chown -Rf rclone:rclone /etc/rclone.conf
-        sudo chmod 600 /etc/rclone.conf
-        if [ -d /Applications ] && [ -d /System ]; then
-          ### Enable Rclone mounts
-          logg info 'Ensuring Rclone mount-on-reboot definitions are in place'
-          if [ -f "$HOME/Library/LaunchDaemons/rclone.private.plist" ] && [ ! -f "/Library/LaunchDaemons/rclone.private.plist" ]; then
-            logg info 'Adding /Volumes/Private as S3 bucket mount, enabled at boot'
-            sudo mkdir -p /Library/LaunchDaemons
-            sudo cp -f "$HOME/Library/LaunchDaemons/rclone.private.plist" '/Library/LaunchDaemons/rclone.private.plist'
-            sudo launchctl load '/Library/LaunchDaemons/rclone.private.plist' && logg success 'launchctl load successful'
-          fi
-          if [ -f "$HOME/Library/LaunchDaemons/rclone.public.plist" ] && [ ! -f "/Library/LaunchDaemons/rclone.public.plist" ]; then
-            logg info 'Adding /Volumes/Public as S3 bucket mount, enabled at boot'
-            sudo mkdir -p /Library/LaunchDaemons
-            sudo cp -f "$HOME/Library/LaunchDaemons/rclone.public.plist" '/Library/LaunchDaemons/rclone.public.plist'
-            sudo launchctl load '/Library/LaunchDaemons/rclone.public.plist' && logg success 'launchctl load successful'
-          fi
-          if [ -f "$HOME/Library/LaunchDaemons/rclone.user.plist" ] && [ ! -f "/Library/LaunchDaemons/rclone.user.plist" ]; then
-            logg info "Adding /Volumes/User-$USER as S3 bucket mount, enabled at boot"
-            sudo mkdir -p /Library/LaunchDaemons
-            sudo cp -f "$HOME/Library/LaunchDaemons/rclone.user.plist" '/Library/LaunchDaemons/rclone.user.plist'
-            sudo launchctl load '/Library/LaunchDaemons/rclone.user.plist' && logg success 'launchctl load successful'
-          fi
-        elif [ -d /etc/systemd/system ]; then
-          find "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system" -mindepth 1 -maxdepth 1 -type f | while read RCLONE_SERVICE; do
-            ### Add systemd service file
-            logg info "Adding S3 system mount service defined at $RCLONE_SERVICE"
-            FILENAME="$(basename "$RCLONE_SERVICE")"
-            SERVICE_ID="$(echo "$FILENAME" | sed 's/.service//')"
-            sudo cp -f "$RCLONE_SERVICE" "/etc/systemd/system/$(basename "$RCLONE_SERVICE")"
-            ### Ensure mount folder is created
-            logg info "Ensuring /mnt/$SERVICE_ID is created with proper permissions"
-            sudo mkdir -p "/mnt/$SERVICE_ID"
-            sudo chmod 750 "/mnt/$SERVICE_ID"
-            ### Enable / restart the service
-            logg info "Enabling / restarting the $SERVICE_ID S3 service"
-            sudo systemctl enable "$SERVICE_ID"
-            sudo systemctl restart "$SERVICE_ID"
-          done
-          ### Add user Rclone mount
-          logg info 'Adding user S3 rclone mount (available at ~/.local/mnt/s3)'
-          sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/s3-user.service" "/etc/systemd/system/s3-${USER}.service"
-          logg info 'Enabling / restarting the S3 user mount'
-          sudo systemctl enable "s3-${USER}"
-          sudo systemctl restart "s3-${USER}"
-        fi
-      else
-        logg info 'rclone is not available'
-      fi
     _short: "rclone is a command-line program to manage files on cloud storage.                                                                                                                                        "
     ansible: professormanhattan.rclone
     apt: rclone
@@ -9800,25 +9285,6 @@ softwarePackages:
     _github: false
     _home: https://rkhunter.sourceforge.net/
     _name: rkhunter
-    _notes: The _post script removes an entry for VMware with a space in it that causes rkhunter to hiccup
-    _post: |
-      #!/usr/bin/env bash
-      if [ -d /Applications ] && [ -d /System ]; then
-        ### macOS
-        logg info 'Updating file "$(brew --prefix)/Cellar/rkhunter/1.4.6/etc/rkhunter.conf"' && gsed -i  "s/^#WEB_CMD.*$/WEB_CMD=curl\ -L/" "$(brew --prefix)/Cellar/rkhunter/1.4.6/etc/rkhunter.conf"
-      else
-        ### Linux
-        logg info 'Updating file /etc/rkhunter.conf' && sed -i  "s/^#WEB_CMD.*$/WEB_CMD=curl\ -L/" /etc/rkhunter.conf
-      fi
-      export PATH="$(echo "$PATH" | sed 's/VMware Fusion.app/VMwareFusion.app/')"
-      sudo rkhunter --propupd || RK_PROPUPD_EXIT_CODE=$?
-      if [ -n "$RK_PROPUPD_EXIT_CODE" ]; then
-        echo "FIXME sudo rkhunter --propupd returned non-zero exit code"
-      fi
-      sudo rkhunter --update || RK_UPDATE_EXIT_CODE=$?
-      if [ -n "$RK_UPDATE_EXIT_CODE" ]; then
-        echo "FIXME sudo rkhunter --update returned non-zero exit code"
-      fi
     _service:pacman: cronie
     apt: rkhunter
     brew: rkhunter
@@ -9955,9 +9421,6 @@ softwarePackages:
     _github: https://github.com/rust-lang/rust
     _home: https://www.rust-lang.org/
     _name: Rust
-    _post:snap: |
-      #!/usr/bin/env bash
-      rustup toolchain install stable
     _short: "rust-lang/rust is the official Rust programming language repository on GitHub.                                                                                                                            "
     ansible: professormanhattan.rust
     brew: rust
@@ -10061,98 +9524,6 @@ softwarePackages:
       - sambausers
     _home: https://www.samba.org/
     _name: Samba
-    _post: |
-      #!/usr/bin/env bash
-      # @file Samba Configuration
-      # @brief This script configures Samba by applying the configuration stored in `${XDG_DATA_HOME:-$HOME/.config}/samba/config` if the `smbd` application is available
-      # @description
-      #     This script applies the Samba configuration stored in `${XDG_DATA_HOME:-$HOME/.config}/samba/config` if Samba is installed.
-      #     The script and default configuration set up two Samba shares.
-      #
-      #     ## Security
-      #
-      #     Both shares are configured by default to only accept connections
-      #     from hosts with DNS that ends in `.local.PUBLIC_SERVICES_DOMAIN`, where `PUBLIC_SERVICES_DOMAIN` is an environment variable that
-      #     can be passed into Install Doctor. So, if your `PUBLIC_SERVICES_DOMAIN` environment variable is set to `megabyte.space`, then
-      #     a device with a FQDN of `alpha.local.megabyte.space` pointing to its LAN location will be able to connect but a device
-      #     with a FQDN of `alpha.megabyte.space` will not be able to connect.
-      #
-      #     ## Samba Shares / S3 Backup
-      #
-      #     If CloudFlare R2 credentials are provided, Samba is configured to store its shared files in the Rclone mounts so that your
-      #     Samba shares are synchronized to the S3 buckets. If not, new folders are created. Either way, the folder / symlink that the
-      #     shares host data from are stored at `/mnt/Private` and `/mnt/Public` (*Note: Different paths are used on macOS*).
-      #
-      #     1. The **public** share (named "Public") can be accessed by anyone (including write permissions with the default settings)
-      #     2. The **private** share (named "Private") can be accessed by specifying the PAM credentials of anyone who has an account that is included in the `sambausers` group
-      #
-      #     ## Symlinks
-      #
-      #     Symlinks are disabled for security reasons. This is because, with symlinking enabled, people can create symlinks on the shares and use the symlinks to access system files outside of the
-      #     Samba shares. There are commented-out lines in the default configuration that you can uncomment to enable the symlinks in shares.
-      #
-      #     ## Printers
-      #
-      #     Printer sharing is not enabled by default. There are commented lines in the default configuration that should provide a nice stepping
-      #     stone if you want to use Samba for printer sharing (with CUPS).
-      #
-      #     ## Environment Variables
-      #
-      #     The following chart details some of the environment variables that are used to determine the configuration of the
-      #     Samba shares:
-      #
-      #     | Environment Variable        | Description                                                                                         |
-      #     |-----------------------------|-----------------------------------------------------------------------------------------------------|
-      #     | `PUBLIC_SERVICES_DOMAIN`    | Used to determine which hosts can connect to the Samba share (e.g. `.local.PUBLIC_SERVICES_DOMAIN`) |
-      #     | `SAMBA_NETBIOS_NAME`        | Determines the NetBIOS name (defaults to the `HOSTNAME` environment variable value)                 |
-      #     | `SAMBA_WORKGROUP`           | Controls Samba workgroup name (defaults to "BETELGEUSE")                                            |
-      #
-      #     ## Links
-      #
-      #     * [Default Samba configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_local/samba/config.tmpl)
-      #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
-      ### Configure Samba server
-      if command -v smbd > /dev/null; then
-        # Add user / group with script in ~/.local/bin/add-usergroup, if it is available
-        if command -v add-usergroup > /dev/null; then
-          sudo add-usergroup "$USER" rclone
-        fi
-        ### Define share locations
-        if [ -d /Applications ] && [ -d /System ]; then
-          ### macOS does not have `/mnt` folder so use `/Volumes` location
-          MNT_FOLDER='Volumes'
-        else
-          MNT_FOLDER='mnt'
-        fi
-        PRIVATE_SHARE="/$MNT_FOLDER/Private"
-        PUBLIC_SHARE="/$MNT_FOLDER/Public"
-        logg info "Ensuring $PRIVATE_SHARE is created"
-        sudo mkdir -p "$PRIVATE_SHARE"
-        sudo chmod 750 "$PRIVATE_SHARE"
-        sudo chown -Rf root:rclone "$PRIVATE_SHARE"
-        logg info "Ensuring $PUBLIC_SHARE is created"
-        sudo mkdir -p "$PUBLIC_SHARE"
-        sudo chmod 755 "$PUBLIC_SHARE"
-        sudo chown -Rf root:rclone "$PUBLIC_SHARE"
-        logg info "Ensuring $HOME/Public is created"
-        mkdir -p "$HOME/Public"
-        chmod 755 "$HOME/Public"
-        chown -Rf "$USER":rclone "$HOME/Public"
-        ### Copy the Samba server configuration file
-        if [ -d /Applications ] && [ -d /System ]; then
-          sudo sharing -a "$PRIVATE_SHARE" -S "Private (System)" -n "Private (System)" -g 000 -s 001 -E 1 -R 1 && logg success "Configured $PRIVATE_SHARE as a private Samba share" || logg info 'sharing command failed - it is likely that the share was already set up'
-          sudo sharing -a "$PUBLIC_SHARE" -S "Public (System)" -n "Public (System)" -g 001 -s 001 -E 1 -R 0 && logg success "Configured $PUBLIC_SHARE as a public Samba share" || logg info 'sharing command failed - it is likely that the share was already set up'
-          sudo sharing -a "$HOME/Public" -S "Public (User)" -n "Public (User)" -g 001 -s 001 -E 1 -R 0 && logg success "Configured $HOME/Public as a public Samba share" || logg info 'sharing command failed - it is likely that the share was already set up'
-        else
-          logg info "Copying Samba server configuration to /etc/samba/smb.conf"
-          sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/samba/config" "/etc/samba/smb.conf"
-          ### Reload configuration file changes
-          logg info 'Reloading the smbd config'
-          smbcontrol smbd reload-config
-        fi
-      else
-        logg info "Samba server is not installed"
-      fi
     _service: smbd
     _service:dnf: smb
     _short: "Samba is an open-source software suite that provides file and print services for various Microsoft Windows clients.                                                                                       "
@@ -10259,9 +9630,7 @@ softwarePackages:
     _desc: "SDDM (Simple Desktop Display Manager) is a display manager for X11 and Wayland windowing systems. It is designed to be lightweight, fast, and customizable, making it a popular choice for managing user  \nsessions on Linux desktop environments. SDDM supports multiple user sessions, themes, and greeters, allowing for a personalized login experience. It is written in C++ and QML, making it highly          \ncustomizable and extensible. SDDM is widely used in various Linux distributions as the default display manager due to its simplicity and flexibility.                                                     "
     _github: https://github.com/sddm/sddm
     _name: SDDM
-    _post: |
-      #!/usr/bin/env bash
-      sudo systemctl set-default graphical.target
+    _post: sudo systemctl set-default graphical.target
     _service: sddm
     _short: "sddm is a modern display manager for X11 and Wayland aiming to be fast, simple, and beautiful.                                                                                                            "
     apt: sddm
@@ -10270,6 +9639,7 @@ softwarePackages:
     zypper: sddm
   sdkman-cli:
     _bin: sdk
+    _deprecated: Deprecated in favor of mise
     _desc: "SDKMAN! is a tool that helps with managing software development kits (SDKs) and package dependencies for various programming languages. It simplifies the process of installing, switching between, and   \nmanaging multiple versions of SDKs like Java, Kotlin, Groovy, and more. The SDKMAN! CLI provides commands to install, list, use, and manage SDKs effortlessly. It's a popular choice among developers for \nmaintaining different versions of SDKs on their systems. The project is open-source and actively maintained on GitHub.                                                                                    "
     _github: https://github.com/sdkman/sdkman-cli
     _name: SDKMan
@@ -10391,16 +9761,6 @@ softwarePackages:
     _desc: Fully featured and highly configurable SFTP server with optional HTTP/S, FTP/S and WebDAV support - S3, Google Cloud Storage, Azure Blob
     _github: https://github.com/drakkan/sftpgo
     _name: sftpgo
-    _post: |
-      #!/usr/bin/env bash
-      sudo mkdir -p /usr/local/etc/sftpgo
-      sudo cp -f "$HOME/.local/etc/sftpgo/sftpgo.json" /usr/local/etc/sftpgo/sftpgo.json
-      sudo cp -f "$HOME/.local/etc/sftpgo/banner" /usr/local/etc/sftpgo/banner
-      sudo mkdir -p /usr/local/etc/branding
-      sudo cp -f "$HOME/.local/etc/branding/favicon.ico" /usr/local/etc/branding/favicon.ico
-      sudo cp -f "$HOME/.local/etc/branding/logo-color-256x256.png" /usr/local/etc/branding/logo-color-256x256.png
-      sudo cp -f "$HOME/.local/etc/branding/logo-color-900x900.png" /usr/local/etc/branding/logo-color-900x900.png
-      sudo sftpgo initprovider
     _service: sftpgo
     _service:brew:
       - name: sftpgo
@@ -10417,9 +9777,7 @@ softwarePackages:
     _desc: A plugin for SFTPGo to enable LDAP/Active Directory authentication
     _github: https://github.com/sftpgo/sftpgo-plugin-auth
     _name: SFTPGo Authentication Plugin
-    _post: |
-      #!/usr/bin/env bash
-      sudo mv -f $(which sftpgo-plugin-auth) /usr/local/bin/sftpgo-plugin-auth
+    _post: sudo cp -f $(which sftpgo-plugin-auth) /usr/local/bin/sftpgo-plugin-auth
     _short: "sftpgo-plugin-auth is a plugin for SFTPGo that allows custom authentication methods to be used with the SFTP server.                                                                                      "
     go: github.com/sftpgo/sftpgo-plugin-auth@latest
     script:darwin: curl -sSf https://github.com/sftpgo/sftpgo-plugin-auth/releases/download/v1.0.4/sftpgo-plugin-auth-darwin-amd64 -o /usr/local/bin/sftpgo-plugin-auth
@@ -10586,12 +9944,14 @@ softwarePackages:
   sidekick:
     _app: Sidekick.app
     _bin: sidekick
+    _deprecated: Not free for all features
     _github: false
     _name: Sidekick
     cask: pushplaylabs-sidekick
   signal:
     _app: Signal.app
     _bin: signal
+    _deprecated: Not needed - mostly a phone app
     _desc: Signal is a cross-platform centralized encrypted instant messaging service developed by the non-profit Signal Foundation and its subsidiary, the Signal Messenger LLC. Users can send one-to-one and group messages, which can include files, voice notes, images, and videos.
     _docs: https://support.signal.org/hc/en-us
     _github: https://github.com/signalapp/Signal-Desktop
@@ -10629,9 +9989,7 @@ softwarePackages:
     _github: https://github.com/koekeishiya/skhd
     _home: https://github.com/koekeishiya/skhd
     _name: skhd
-    _post:brew: |
-      #!/usr/bin/env bash
-      skhd --start-service
+    _post:brew: skhd --start-service
     _short: "skhd is a simple hotkey daemon for macOS.                                                                                                                                                                 "
     brew:darwin: koekeishiya/formulae/skhd
   skm:
@@ -10716,6 +10074,7 @@ softwarePackages:
     snap: snapcraft --classic
   snapd:
     _bin: snap
+    _deprecated: Bundled into installer
     _desc: "[Snap](https://snapcraft.io/) is a software packaging and deployment system developed by Canonical for operating systems that use the Linux kernel. The packages, called snaps, and the tool for using them, snapd, work across a range of Linux distributions and allow upstream software developers to distribute their applications directly to users. Snaps are self-contained applications running in a sandbox with mediated access to the host system."
     _github: https://github.com/snapcore/snapd
     _home: https://snapcraft.io/
@@ -10839,6 +10198,7 @@ softwarePackages:
   sqlectron:
     _app: sqlectron.app
     _bin: null
+    _deprecated: beekeeper-studio preferred
     _desc: A simple and lightweight SQL client desktop with cross database and platform support
     _github: https://github.com/sqlectron/sqlectron-gui
     _name: SQLectron
@@ -10962,6 +10322,7 @@ softwarePackages:
   standard-notes:
     _app: Standard Notes.app
     _bin: standard-notes
+    _deprecated: Deprecated in favor of Obsidian / Notion
     _desc: End-to-end encrypted notes app
     _docs: https://standardnotes.com/help
     _github: https://github.com/standardnotes/app
@@ -10981,6 +10342,7 @@ softwarePackages:
     pipx: starred
   starship:
     _bin: null
+    _deprecated: Deprecated in favor of alternative terminal status prompts such as PowerLevel10k.
     _desc: "[Starship](https://starship.rs/) is the minimal, blazing fast, and extremely customizable prompt for any shell! It shows the information you need, while staying sleek and minimal. Unlike most other prompts, it is compatible with nearly every type of terminal. If you want to retain the same look and feel across different terminals, then look no further."
     _github: https://github.com/starship/starship
     _name: Starship
@@ -11011,11 +10373,10 @@ softwarePackages:
     scoop: staticcheck
   stats:
     _app: Stats.app
-    _bin: null
+    _bin: stats
     _desc: System monitor for the menu bar
     _github: https://github.com/exelban/stats
     _name: stats
-    _service: null
     _short: "stats is a command-line tool that provides system statistics in real-time for macOS.                                                                                                                      "
     cask: stats
   steam:
@@ -11062,13 +10423,12 @@ softwarePackages:
     yay: sttr-bin
   stubby:
     _bin: stubby
+    _deprecated: Causes issues when other programs are modifying the DNS resolving endpoint. Might be worth reinvestigating but ideally the DNS should be encrypted on pfSense or use CloudFlare WARP to handle it.
     _desc: DNS privacy enabled stub resolver service based on getdns
     _docs: https://dnsprivacy.org/wiki/display/DP/DNS+Privacy+Daemon+-+Stubby
     _github: https://github.com/getdnsapi/stubby
     _name: Stubby
-    _post:brew:darwin: |
-      #!/usr/bin/env bash
-      bash "$(brew --prefix stubby)/sbin/stubby-setdns-macos.sh"
+    _post:brew:darwin: bash "$(brew --prefix stubby)/sbin/stubby-setdns-macos.sh"
     _service: stubby
     _short: "Stubby is a DNS privacy tool that encrypts DNS queries to enhance online privacy and security.                                                                                                            "
     brew:darwin: stubby
@@ -11289,34 +10649,6 @@ softwarePackages:
     _github: https://github.com/tailscale/tailscale
     _home: https://tailscale.com/
     _name: Tailscale
-    _post: |
-      #!/usr/bin/env bash
-      # @file Tailscale
-      # @brief Connects the Tailscale client with the Tailscale network
-      # @description
-      #     This script ensures the `tailscaled` system daemon is installed on macOS. Then, on both macOS and Linux, it connects to the Tailscale
-      #     network if the `TAILSCALE_AUTH_KEY` variable is provided.
-      ### Install the Tailscale system daemon
-      if [ -d /Applications ] && [ -d System ]; then
-        ### macOS
-        if command -v tailscaled > /dev/null; then
-          logg info 'Ensuring tailscaled system daemon is installed'
-          sudo tailscaled install-system-daemon
-          logg info 'tailscaled system daemon is now installed and will load on boot'
-        else
-          logg info 'tailscaled does not appear to be installed'
-        fi
-      fi
-      ### Connect to Tailscale network
-      if command -v tailscale > /dev/null && [ "$TAILSCALE_AUTH_KEY" != "" ]; then
-        logg info 'Connecting to Tailscale with user-defined authentication key'
-        timeout 14 tailscale up --authkey="$TAILSCALE_AUTH_KEY" --accept-routes || EXIT_CODE=$?
-        if [ -n "$EXIT_CODE" ]; then
-          logg warn 'tailscale up timed out'
-        else
-          logg success 'Connected to Tailscale network'
-        fi
-      fi
     _service:brew: tailscale
     _service:pacman: tailscaled
     _short: "Tailscale is a secure mesh VPN that makes it easy to connect your devices securely.                                                                                                                       "
@@ -11334,7 +10666,7 @@ softwarePackages:
     _github: https://github.com/danthelion/talksheet
     _name: Talksheet
     _short: "talksheet is a tool for creating and managing structured notes in Markdown format, designed for easy organization and sharing on GitHub.                                                                  "
-    pipx: talksheet
+    pip: talksheet
   taplo:
     _bin: taplo
     _desc: A TOML toolkit written in Rust that includes TOML formatting abilities
@@ -11369,6 +10701,7 @@ softwarePackages:
     scoop: task
   taskwarrior:
     _bin: taskwarrior
+    _deprecated: Removed from default install because the binary executable conflicts with go-task's binary executable.
     _desc: "Taskwarrior is an open-source command-line task management tool. It allows users to manage tasks, deadlines, priorities, tags, and more efficiently. Taskwarrior provides features like task scheduling,  \ndue dates, dependencies, and custom reports. It is highly customizable and extensible through various plugins and extensions. Taskwarrior helps users stay organized and focused by providing a simple yet\npowerful interface for managing tasks effectively.                                                                                                                                                        "
     _github: https://github.com/GothenburgBitFactory/taskwarrior
     _name: Task Warrior
@@ -11433,6 +10766,7 @@ softwarePackages:
     github: github.com/tellerops/teller
   temps:
     _bin: null
+    _deprecated: macOS menu bar app for weather. Buggy software.
     _desc: Simple menubar application based on Electron with actual weather information and forecast
     _github: https://github.com/jackd248/temps
     _name: Temps
@@ -11455,15 +10789,14 @@ softwarePackages:
     npm: terminalizer
   termius:
     _bin: termius
+    _deprecated: Deprecated since all the interesting features require a paid subscription.
     _desc: "[Termius](https://www.termius.com/) is the SSH client that works on Desktop and Mobile."
     _github: false
     _home: https://www.termius.com/
     _name: Termius
-    _post:binary:windows: |
-      # TODO
     ansible: professormanhattan.termius
-    binary:windows: https://autoupdate.termius.com/windows/Termius.exe
     brew: termius
+    choco: termius
     pipx: termius
     snap: termius-app
     yay: termius
@@ -11481,7 +10814,6 @@ softwarePackages:
     _github: https://github.com/hashicorp/terraform-ls
     _home: https://github.com/hashicorp/terraform-ls
     _name: terraform-ls
-    _service: false
     _short: "terraform-ls is a language server for Terraform that provides IDE support for editing Terraform configuration files.                                                                                      "
     brew: terraform-ls
   textql:
@@ -11492,8 +10824,7 @@ softwarePackages:
     _home: https://github.com/dinedal/textql
     _name: TextQL
     _short: "textql is a tool that allows you to run SQL queries on structured text data stored in CSV or TSV files.                                                                                                   "
-    brew: textql
-    go: github.com/dinedal/textql@master
+    _deprecated: The Homebrew version of textql has been disabled because it depends on glide (which was also disabled) to build. Additionally, go install github.com/dinedal/textql@master fails.
     yay: textql-git
   tfenv:
     _bin: tfenv
@@ -11596,21 +10927,6 @@ softwarePackages:
     _github: https://github.com/teejee2008/timeshift
     _home: https://teejeetech.com/timeshift/
     _name: Timeshift
-    _post: |
-      #!/usr/bin/env bash
-      # @file Timeshift Configuration
-      # @brief Updates the Timeshift system configuration with the Timeshift configuration stored in the `home/dot_config/timeshift/timeshift.json` location.
-      # @description
-      #     This script applies a Timeshift configuration that defines how Timeshift should maintain system backups.
-      if command -v timeshift > /dev/null; then
-        logg info 'Ensuring /etc/timeshift is a directory'
-        sudo mkdir -p /etc/timeshift
-        TIMESHIFT_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/timeshift/timeshift.json"
-        logg info "Copying $TIMESHIFT_CONFIG to /etc/timeshift/timeshift.json"
-        sudo cp -f "$TIMESHIFT_CONFIG" /etc/timeshift/timeshift.json
-      else
-        logg info 'The timeshift executable is not available'
-      fi
     _short: "Timeshift is a system restore utility for Linux that creates and restores snapshots of the system.                                                                                                        "
     apt: timeshift
     dnf:fedora: timeshift
@@ -11632,7 +10948,6 @@ softwarePackages:
     _desc: Handy command line tool for shrinking PNG images using the TinyPNG API
     _github: https://github.com/websperts/tinypng-cli
     _name: tinypng
-    _service: null
     _short: "tinypng-cli is a command-line interface for compressing images using the TinyPNG service.                                                                                                                 "
     npm: tinypng-cli
   tldr:
@@ -11701,12 +11016,8 @@ softwarePackages:
     _desc: "Apache Tomcat is an open-source implementation of the Java Servlet, JavaServer Pages, Java Expression Language, and WebSocket technologies. It provides a web server environment for Java code to run in, \nallowing developers to serve Java-based web applications. Tomcat is widely used for deploying Java web applications and is known for its reliability and scalability. It is maintained by the Apache      \nSoftware Foundation and is available for free under the Apache License. You can find more information about Apache Tomcat on its GitHub repository: https://github.com/apache/tomcat.                     "
     _github: https://github.com/apache/tomcat
     _name: Tomcat
-    _post:darwin: |
-      #!/usr/bin/env bash
-      sed 's/8080/8180/g' /usr/local/etc/tomcat/server.xml > /usr/local/etc/tomcat/server.xml
-    _post:linux: |
-      #!/usr/bin/env bash
-      sed 's/8080/8180/g' /usr/local/etc/tomcat/server.xml > /usr/local/etc/tomcat/server.xml
+    _post:darwin: sed 's/8080/8180/g' /usr/local/etc/tomcat/server.xml > /usr/local/etc/tomcat/server.xml
+    _post:linux: sed 's/8080/8180/g' /usr/local/etc/tomcat/server.xml > /usr/local/etc/tomcat/server.xml
     _service: tomcat
     _short: "Apache Tomcat is an open-source implementation of the Java Servlet, JavaServer Pages, Java Expression Language, and WebSocket technologies.                                                               "
     apt: tomcat
@@ -11730,56 +11041,6 @@ softwarePackages:
     _github: https://github.com/TheTorProject
     _home: https://www.torproject.org/
     _name: TOR
-    _post: |
-      #!/usr/bin/env bash
-      # @file Tor Configuration
-      # @brief This script applies the Tor configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/tor/torrc` to the system and then restarts Tor
-      # @description
-      #     Tor is a network that uses onion routing, originally published by the US Navy. It is leveraged by privacy enthusiasts
-      #     and other characters that deal with sensitive material, like journalists and people buying drugs on the internet.
-      #     This script:
-      #
-      #     1. Determines the system configuration file location
-      #     2. Applies the configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/tor/torrc`
-      #     3. Enables and restarts the Tor service with the new configuration
-      #
-      #     ## Links
-      #
-      #     * [Tor configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/tor/torrc)
-      ### Determine the Tor configuration location by checking whether the system is macOS or Linux
-      if [ -d /Applications ] && [ -d /System ]; then
-        ### macOS
-        TORRC_CONFIG_DIR=/usr/local/etc/tor
-      else
-        ### Linux
-        TORRC_CONFIG_DIR=/etc/tor
-      fi
-      TORRC_CONFIG="$TORRC_CONFIG_DIR/torrc"
-      ### Apply the configuration if the `torrc` binary is available in the `PATH`
-      if command -v toron > /dev/null; then
-        if [ -d  "$TORRC_CONFIG_DIR" ]; then
-          ### Copy the configuration from `${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc` to the system configuration file location
-          sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc" "$TORRC_CONFIG"
-          sudo chmod 600 "$TORRC_CONFIG"
-          ### Enable and restart the Tor service
-          if [ -d /Applications ] && [ -d /System ]; then
-            ### macOS
-            brew services restart tor
-          else
-            if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
-              ### Linux
-              sudo systemctl enable tor
-              sudo systemctl restart tor
-            else
-              logg info 'Environment is WSL so the Tor systemd service will not be enabled / restarted'
-            fi
-          fi
-        else
-          logg warn 'The '"$TORRC_CONFIG_DIR"' directory is missing'
-        fi
-      else
-        logg warn 'toron is missing from the PATH'
-      fi
     _restricted: true
     _service: tor
     _serviceEnabled: true
@@ -11932,6 +11193,7 @@ softwarePackages:
     npm: typescript-to-lua
   ugm:
     _bin: ugm
+    _deprecated: Error encountered while installing with Go reported [here](https://github.com/ariasmn/ugm/issues/2).
     _desc: A terminal based UNIX user and group browser
     _docs: https://github.com/ariasmn/ugm
     _github: https://github.com/ariasmn/ugm
@@ -11941,6 +11203,7 @@ softwarePackages:
     go: github.com/ariasmn/ugm@latest
   ulauncher:
     _bin: ulauncher
+    _deprecated: Deprecated in favor of alternative app launchers.
     _desc: "[Ulauncher](https://ulauncher.io/) is a software packaging and deployment system developed by Canonical for operating systems that use the Linux kernel. The packages, called ulaunchers, and the tool for using them, ulauncher, work across a range of Linux distributions and allow upstream software developers to distribute their applications directly to users. Ulaunchers are self-contained applications running in a sandbox with mediated access to the host system."
     _docs: https://docs.ulauncher.io/
     _github: https://github.com/Ulauncher/Ulauncher/
@@ -12085,11 +11348,6 @@ softwarePackages:
     _desc: "vagrant-vmware-desktop                                                                                                                                                                                    \n\nThis is a plugin for Vagrant, a tool for building and managing virtual machine environments. The vagrant-vmware-desktop plugin allows Vagrant to work with VMware Fusion and VMware Workstation on macOS. \nIt provides additional functionality and compatibility for using VMware products with Vagrant, enhancing the virtualization capabilities for developers and system administrators working on macOS        \nsystems. This plugin enables users to create and manage VMware virtual machines seamlessly within Vagrant workflows.                                                                                      "
     _github: https://github.com/hashicorp/vagrant-vmware-desktop
     _name: Vagrant VMWare Utility
-    _post:cask: |
-      #!/usr/bin/env bash
-      if [ ! -f /usr/local/bin/vagrant-vmware-utility ] && [ -f /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility ]; then
-        sudo ln -s /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility /usr/local/bin/vagrant-vmware-utility
-      fi
     _short: "vagrant-vmware-desktop is a plugin for Vagrant that allows users to manage VMware Desktop virtual machines.                                                                                               "
     _when:cask: "! test -f /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility"
     ansible: professormanhattan.vmware
@@ -12124,7 +11382,7 @@ softwarePackages:
     _github: https://github.com/pimutils/vdirsyncer
     _name: vdirsyncer
     _short: "vdirsyncer is a command-line tool for synchronizing calendars and address books.                                                                                                                          "
-    _todo: echo "TODO - Implement the following command after automating the process of setting up contact groups / calendars to sync" && echo "vdirsyncer discover contacts" && echo "vdirsyncer sync contacts" && echo "TODO - Add to cron" && echo "*/30 * * * * /usr/local/bin/vdirsyncer sync > /dev/null" && echo "This should be in _post instead of _pre - it is here for testing purposes"
+    _todo: echo "TODO - Implement the following command after automating the process of setting up contact groups / calendars to sync" && echo "vdirsyncer discover contacts" && echo "vdirsyncer sync contacts" && echo "TODO - Add to cron" && echo "*/30 * * * * /usr/local/bin/vdirsyncer sync > /dev/null" && echo "This should be in post instead of _pre - it is here for testing purposes"
     pipx: vdirsyncer
   vector:
     _bin: vector
@@ -12193,21 +11451,6 @@ softwarePackages:
     _github: https://github.com/vim/vim
     _home: https://www.vim.org/
     _name: VIM
-    _post: |
-      #!/usr/bin/env bash
-      logg info "Installing VIM plugins" && vim +'PlugInstall --sync' +qall
-      # @description This script installs the extensions defined in `${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json`
-      #     which should correlate to the Coc extensions defined in `${XDG_CONFIG_HOME:-$HOME/.config}/vim/vimrc`.
-      installCocExtensions() {
-        if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json" ]; then
-          logg info "Running npm i --no-progress --no-package-lock in ${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions"
-          cd "${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions" && npm i --no-progress --no-package-lock
-          logg info "Running vim +CocUpdateSync +qall" && vim +CocUpdateSync +qall
-        else
-          logg info "Skipping Coc extension installation because ${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json is missing"
-        fi
-      }
-      logg info "Updating VIM coc extensions" && installCocExtensions
     _short: "Vim is a highly configurable text editor built for efficiency and speed, with a focus on keyboard shortcuts for navigation and editing.                                                                   "
     ansible: professormanhattan.vim
     apt: vim
@@ -12225,50 +11468,6 @@ softwarePackages:
     _github: https://github.com/mirror/vbox
     _home: https://www.virtualbox.org/
     _name: VirtualBox
-    _post: |
-      #!/usr/bin/env bash
-      # @file VirtualBox Extension Pack
-      # @brief Ensures the VirtualBox extension pack is installed.
-      # @description
-      #     This script ensures the VirtualBox extension pack that corresponds with VirtualBox's version is properly installed.
-      ### Run logic if VirtualBox is installed
-      if command -v VirtualBox > /dev/null; then
-        ### Install VirtualBox extension pack if it is not installed already
-        if [ ! -d /usr/lib/virtualbox/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack ] && [ ! -d /Applications/VirtualBox.app/Contents/MacOS/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack ]; then
-          logg info 'Acquiring VirtualBox version information'
-          VBOX_VERSION="$(VirtualBox --help | head -n 1 | cut -f 6 -d' ')"
-          VBOX_VERSION="${VBOX_VERSION//v}"
-          ### Set up folders
-          # Check for macOS installation before creating ExtensionPacks folder on Linux machines
-          if [ ! -d /Applications/VirtualBox.app ]; then
-            sudo mkdir -p /usr/lib/virtualbox/ExtensionPacks
-          fi
-          mkdir -p /tmp/vbox
-          cd /tmp/vbox
-          ### Download extension pack
-          logg info 'Downloading VirtualBox extension pack'
-          curl -sSL https://download.virtualbox.org/virtualbox/$VBOX_VERSION/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack -o /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack || logg error 'Failed to download the VirtualBox extension pack so the extension pack installation will be skipped'
-          ### Install extension pack
-          if [ -f /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack ]; then
-            logg info 'Installing VirtualBox extension pack'
-            echo 'y' | sudo VBoxManage extpack install --replace /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack
-            logg success 'Successfully installed VirtualBox extension pack'
-          fi
-        else
-          logg info 'VirtualBox Extension pack is already installed'
-        fi
-      else
-        logg info 'VirtualBox is not installed so VirtualBox Extension pack will not be installed'
-      fi
-    _post:choco: |
-      # TODO
-      # TODO
-      # TODO
-      # TODO
-      cd C:/Program Files/Oracle/VirtualBox/
-      # TODOFigure out how to get version without Ansible here and download / install the extpack
-      wget https://download.virtualbox.org/virtualbox/' + vbox_version + '/Oracle_VM_VirtualBox_Extension_Pack-' + vbox_version + '.vbox-extpack'
-      echo y | VBoxManage extpack install --replace ./Oracle_VM_VirtualBox_Extension_Pack.vbox-extpack
     _pre:dnf: |
       #!/usr/bin/env bash
       . /etc/os-release
@@ -12336,143 +11535,6 @@ softwarePackages:
     _github: false
     _home: https://www.vmware.com/
     _name: VMWare
-    _post: |
-      #!/usr/bin/env bash
-      # @file VMWare Configuration
-      # @brief Installs VMWare Workstation Pro on Linux devices, applies a "publicly-retrieved" license key (see disclaimer), and automatically accepts the terms and conditions
-      # @description
-      #     This script ensures the user included `vmware` in their software installation list. It then checks for presence of the `vmware` utility. If it is not present, then the script:
-      #
-      #     1. Downloads the [VMWare Workstation Pro](https://www.vmware.com/content/vmware/vmware-published-sites/us/products/workstation-pro.html.html) Linux installer
-      #     2. Installs VMWare Workstation Pro
-      #     3. Passes options to the installation script that automatically apply a publicly retrived license key and accept the Terms & Conditions
-      #
-      #     This script first checks if `vagrant`, `vmware`, and `vagrant-vmware-utility` are available in the `PATH`. If they are present, then the script
-      #     configures the [`vagrant-vmware-utility`](https://developer.hashicorp.com/vagrant/docs/providers/vmware/vagrant-vmware-utility) by generating the required security certificates and enabling the service.
-      #     This system package enables the capability of controlling both VMWare Workstation and VMWare Fusion with Vagrant.
-      #
-      #     Since this script runs only when `vagrant`, `vmware`, and `vagrant-vmware-utility` are in the `PATH`, this means that it will run
-      #     when you use an installation template that includes all three pieces of software in the software list defined in
-      #     `home/.chezmoidata.yaml`.
-      #
-      #     **DISCLAIMER:** If you plan on using VMWare Workstation for anything but evaluation purposes, then we highly suggest purchasing a copy
-      #     of VMWare Workstation. The "publicly-retrived" license keys are scattered throughout GitHub and we are not exactly
-      #     sure why they work. You can pass in your own key by utilizing the `VMWARE_WORKSTATION_LICENSE_KEY` environment variable. More details on
-      #     using environment variables or repository-housed encrypted secrets can be found in our [Secrets documentation](https://install.doctor/docs/customization/secrets).
-      #
-      #     ## VMWare on macOS
-      #
-      #     This script only installs VMWare Workstation on Linux. The macOS-variant titled VMWare Fusion can be installed using a Homebrew
-      #     cask so a "work-around" script does not have to be used.
-      #
-      #     ## VMWare vs. Parallels vs. VirtualBox vs. KVM vs. Hyper-V
-      #
-      #     There are a handful of VM virtualization providers you can choose from. VMWare is a nice compromise between OS compatibility and performance.
-      #     Parallels, on the hand, might be better for macOS since it is designed specifically for macOS. Finally, VirtualBox is a truly free,
-      #     open-source option that does not come with the same optimizations that VMWare and Parallels provide.
-      #
-      #     Other virtualization options include KVM (Linux / macOS) and Hyper-V (Windows). These options are better used for headless
-      #     systems.
-      #
-      #     ## Links
-      #
-      #     * [VMWare Workstation homepage](https://www.vmware.com/content/vmware/vmware-published-sites/us/products/workstation-pro.html.html)
-      #     * [Vagrant VMWare Utility on GitHub](https://github.com/hashicorp/vagrant-vmware-desktop)
-      #     * [`home/.chezmoidata.yaml`](https://github.com/megabyte-labs/install.doctor/blob/master/home/.chezmoidata.yaml)
-      #     * [Default license key gist](https://gist.github.com/PurpleVibe32/30a802c3c8ec902e1487024cdea26251)
-      ### Run logic if VMware is installed
-      if command -v vmware > /dev/null; then
-        ### Build kernel modules if they are not present
-        if [ ! -f "/lib/modules/$(uname -r)/misc/vmmon.ko" ] || [ ! -f "/lib/modules/$(uname -r)/misc/vmnet.ko" ]; then
-          ### Build VMWare host modules
-          logg info 'Building VMware host modules'
-          if sudo vmware-modconfig --console --install-all; then
-            logg success 'Built VMWare host modules successfully with sudo vmware-modconfig --console --install-all'
-          else
-            logg info 'Acquiring VMware version from CLI'
-            VMW_VERSION="$(vmware --version | cut -f 3 -d' ')"
-            mkdir -p /tmp/vmw_patch
-            cd /tmp/vmw_patch
-            logg info 'Downloading VMware host module patches' && curl -sSL "https://github.com/mkubecek/vmware-host-modules/archive/workstation-$VMW_VERSION.tar.gz" -o /tmp/vmw_patch/workstation.tar.gz
-            tar -xzf /tmp/vmw_patch/workstation.tar.gz
-            cd vmware*
-            logg info 'Running sudo make and sudo make install'
-            sudo make
-            sudo make install
-            logg success 'Successfully configured VMware host module patches'
-          fi
-          ### Sign VMware host modules if Secure Boot is enabled
-          if [ -f /sys/firmware/efi ]; then
-            logg info 'Signing host modules'
-            mkdir -p /tmp/vmware
-            cd /tmp/vmware
-            openssl req -new -x509 -newkey rsa:2048 -keyout MOK.priv -outform DER -out MOK.der -nodes -days 36500 -subj "/CN=VMware/"
-            "/usr/src/linux-headers-$(uname -r)/scripts/sign-file" sha256 ./MOK.priv ./MOK.der "$(modinfo -n vmmon)"
-            "/usr/src/linux-headers-$(uname -r)/scripts/sign-file" sha256 ./MOK.priv ./MOK.der "$(modinfo -n vmnet)"
-            echo '' | mokutil --import MOK.der
-            logg success 'Successfully signed VMware host modules. Reboot the host before powering on VMs'
-          fi
-          ### Patch VMware with Unlocker
-          if [ ! -f /usr/lib/vmware/isoimages/darwin.iso ]; then
-            logg info 'Acquiring VMware Unlocker latest release version'
-            UNLOCKER_URL="$(curl -sSL 'https://api.github.com/repos/DrDonk/unlocker/releases/latest' | jq  -r '.assets[0].browser_download_url')"
-            mkdir -p /tmp/vmware-unlocker
-            cd /tmp/vmware-unlocker
-            logg info 'Downloading unlocker.zip'
-            curl -sSL "$UNLOCKER_URL" -o unlocker.zip
-            unzip unlocker.zip
-            cd linux
-            logg info 'Running the unlocker'
-            echo "y" | sudo ./unlock
-            logg success 'Successfully unlocked VMware for macOS compatibility'
-          else
-            logg info '/usr/lib/vmware/isoimages/darwin.iso is already present on the system so VMware macOS unlocking will not be performed'
-          fi
-          if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
-            ### Start / enable VMWare service
-            logg info 'Ensuring vmware.service is enabled and running'
-            sudo systemctl enable vmware.service
-            sudo systemctl restart vmware.service
-            ### Start / enable VMWare Workstation Server service
-            logg info 'Ensuring vmware-workstation-server.service is enabled and running'
-            sudo systemctl enable vmware-workstation-server.service
-            sudo systemctl restart vmware-workstation-server.service
-            ### Start / enable VMWare USB Arbitrator service
-            if command -v vmware-usbarbitrator.service > /dev/null; then
-              logg info 'Ensuring vmware-usbarbitrator.service is enabled and running'
-              sudo systemctl enable vmware-usbarbitrator.service
-              sudo systemctl restart vmware-usbarbitrator.service
-            else
-              logg warn 'vmware-usbarbitrator does not exist in the PATH'
-            fi
-          fi
-        else
-          logg info 'VMware host modules are present'
-        fi
-      else
-        logg warn 'VMware Workstation is not installed so the VMware Unlocker will not be installed'
-      fi
-      # @description Only run logic if both Vagrant and VMWare are installed
-      if command -v vagrant > /dev/null && command -v vmware-id > /dev/null; then
-        # @description  Vagrant VMWare Utility configuration
-        if command -v vagrant-vmware-utility > /dev/null; then
-          if [ -f /usr/local/bin/certificates/vagrant-utility.key ]; then
-            logg info 'Assuming Vagrant VMWare Utility certificates have been properly generated since /usr/local/bin/certificates/vagrant-utility.key is present'
-          else
-            logg info 'Generating Vagrant VMWare Utility certificates'
-            sudo vagrant-vmware-utility certificate generate
-            logg success 'Generated Vagrant VMWare Utility certificates via vagrant-vmware-utility certificate generate'
-          fi
-          logg info 'Ensuring the Vagrant VMWare Utility service is enabled'
-          sudo vagrant-vmware-utility service install || EXIT_CODE=$?
-          if [ -n "$EXIT_CODE" ]; then
-            logg info 'The Vagrant VMWare Utility command vagrant-vmware-utility service install failed. It is probably already setup.'
-          fi
-        fi
-      else
-        logg info 'Vagrant is not installed so the Vagrant plugins will not be installed'
-        logg info 'Vagrant or VMWare is not installed so the Vagrant VMWare utility will not be configured'
-      fi
     ansible: professormanhattan.vmware
     cask: vmware-fusion
     script:linux: |
@@ -12498,14 +11560,7 @@ softwarePackages:
     _docs: https://docs.volta.sh/
     _github: https://github.com/volta-cli/volta
     _home: https://volta.sh
-    _name: volta-vm
-    _post: |
-      #!/usr/bin/env bash
-      export VOLTA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/volta"
-      export PATH="$VOLTA_HOME/bin:$PATH"
-      volta setup
-      volta install node@latest
-      volta install yarn@latest
+    _name: Volta
     _short: "Volta is a tool for managing JavaScript command-line tools.                                                                                                                                               "
     ansible: professormanhattan.volta
     brew: volta
@@ -12524,121 +11579,6 @@ softwarePackages:
     _github: https://github.com/microsoft/vscode
     _home: https://code.visualstudio.com/
     _name: Visual Studio Code
-    _post: |
-      #!/usr/bin/env bash
-      # @file VSCode Extensions / Global NPM Modules Fallback
-      # @brief Installs all of the Visual Studio Code extensions specified in the [`home/dot_config/Code/User/extensions.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/extensions.json) file and installs NPM packages to the system `/` directory as a catch-all for tools that recursively search upwards for shared NPM configurations.
-      # @description
-      #     This script loops through all the extensions listed in the [`home/dot_config/Code/User/extensions.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/extensions.json)
-      #     file. It installs the extensions when either Visual Studio Code or VSCodium is installed. If both are installed, then both will
-      #     have the plugins automatically installed.
-      #
-      #     The `extensions.json` file is used to house the plugin list so that if you decide to remove this auto-installer script then
-      #     VSCode will retain some functionality from the file. It will show a popover card that recommends installing any plugins in the
-      #     list that are not already installed.
-      #
-      #     ## Plugin Settings
-      #
-      #     Most of the plugin settings have been configured and optimized to work properly with the other default settings
-      #     included by Install Doctor. These settings can be found in the [`home/dot_config/Code/User/settings.json` file](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/settings.json).
-      #     If you manage to come up with an improvement, please open a pull request so other users can benefit from your work.
-      #
-      #     ## Default Extensions
-      #
-      #     The default plugins in the `extensions.json` list are catered mostly towards full-stack web development. The technologies
-      #     that are catered to by the default extensions relate to TypeScript, JavaScript, Go, Python, Rust, and many more technologies.
-      #     Most of the plugins are not language-specific.
-      #
-      #     ## Global NPM Modules Fallback
-      #
-      #     This script makes fallback linter and code auto-fixer configurations globally available. Normally, configurations, like
-      #     the ones used for ESLint, are installed at the project level by specifying the NPM package configuration
-      #     in the `package.json` file (or via an `.eslintrc` file). However, whenever no configuration is present, IDEs like
-      #     Visual Studio Code will recursively search upwards in the directory tree, trying to find an ESLint configuration.
-      #
-      #     This script addresses this issue by installing a set of shared NPM packages that enhance the functionality of tools like ESLint
-      #     by placing a `package.json` with all the necessary settings into the highest directory possible and then installing the package's
-      #     modules. This normally results in a `package.json` file and `node_modules/` folder at the root of the system.
-      #
-      #     ## NPM Packages Included
-      #
-      #     To reduce clutter, all the configurations are mapped out in the `package.json` file. Our default `package.json` file includes
-      #     the following configuration:
-      #
-      #     ```json
-      #     <!-- AUTO-GENERATED:START (REMOTE:url=https://gitlab.com/megabyte-labs/install.doctor/-/raw/master/home/dot_config/Code/User/package.json) -->
-      #     {
-      #       ...
-      #       // Notable dependencies listed below
-      #       "dependencies": {
-      #         "eslint-config-strictlint": "latest",
-      #         "jest-preset-ts": "latest",
-      #         "prettier-config-strictlint": "latest",
-      #         "remark-preset-strictlint": "latest",
-      #         "stylelint-config-strictlint": "latest"
-      #       },
-      #       ...
-      #     }
-      #     <!-- AUTO-GENERATED:END -->
-      #     ```
-      #
-      #     ## Strict Lint
-      #
-      #     More details on the shared configurations can be found at [StrictLint.com](https://strictlint.com).
-      #     Strict Lint is another brand maintained by Megabyte Labs that is home to many of the well-crafted
-      #     shared configurations that are included in our default NPM configuration fallback settings.
-      #
-      #     ## Notes
-      #
-      #     * If the system root directory is not writable (even with `sudo`), then the shared modules are installed to the provisioning user's `$HOME` directory
-      #
-      #     ## Links
-      #
-      #     * [`package.json` configuration file](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/package.json)
-      #     * [StrictLint.com documentation](https://strictlint.com/docs)
-      #     * [Visual Studio Code settings folder](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User)
-      #     * [Visual Studio Code `extensions.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/extensions.json)
-      ### Hides useless error during extension installations
-      # Error looks like:
-      #     (node:53151) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
-      #     (Use `Electron --trace-deprecation ...` to show where the warning was created)
-      export NODE_OPTIONS=--throw-deprecation
-      # @description Install Visual Studio Code extensions if they are not already installed (by checking the `code --list-extensions` output)
-      if command -v code > /dev/null; then
-        EXTENSIONS="$(code --list-extensions)"
-        jq -r '.recommendations[]' "${XDG_CONFIG_HOME:-$HOME/.config}/Code/User/extensions.json" | while read EXTENSION; do
-          if ! echo "$EXTENSIONS" | grep -iF "$EXTENSION" > /dev/null; then
-            logg info 'Installing Visual Studio Code extension '"$EXTENSION"'' && code --install-extension "$EXTENSION"
-            logg success 'Installed '"$EXTENSION"''
-          else
-            logg info ''"$EXTENSION"' already installed'
-          fi
-        done
-      else
-        logg info 'code executable not available - skipping plugin install process for it'
-      fi
-      if command -v code > /dev/null && command -v npm > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" ]; then
-        ### Install linter fallback node_modules / package.json to system or home directory
-        if sudo cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" /package.json; then
-          logg info 'Successfully copied linter fallback configurations package.json to /package.json'
-          logg info 'Installing system root directory node_modules'
-          cd / && sudo npm i --quiet --no-progress --no-package-lock || EXIT_CODE=$?
-        else
-          logg warn 'Unable to successfully copy linter fallback configurations package.json to /package.json'
-          logg info 'Installing linter fallback configurations node_modules to home directory instead'
-          cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" "$HOME/package.json"
-          cd ~ && npm i --quiet --no-progress --no-package-lock || EXIT_CODE=$?
-        fi
-        ### Log message if install failed
-        if [ -n "$EXIT_CODE" ]; then
-          logg warn 'Possible error(s) were detected while installing linter fallback configurations to the home directory.'
-          logg info "Exit code: $EXIT_CODE"
-        else
-          logg info 'Installed linter fallback configuration node_modules'
-        fi
-      else
-        logg info 'Skipping installation of fallback linter configurations because one or more of the dependencies is missing.'
-      fi
     _short: "Visual Studio Code is a free source-code editor made by Microsoft for Windows, Linux, and macOS.                                                                                                          "
     ansible: professormanhattan.vscode
     cask: visual-studio-code
@@ -12649,26 +11589,10 @@ softwarePackages:
   vscodium:
     _app: VSCodium.app
     _bin: codium
+    _deprecated: Not all VSCode plugins work with VSCodium.
     _desc: "VSCodium is a community-driven, freely-licensed binary distribution of Microsoft's Visual Studio Code. It is essentially Visual Studio Code without Microsoft branding, telemetry, and licensing. VSCodium\nprovides a more open-source alternative for developers who prefer a version of Visual Studio Code that is free from Microsoft's proprietary features. Users can find the source code, releases, and       \ndocumentation on the GitHub repository at https://github.com/VSCodium/vscodium.                                                                                                                           "
     _github: https://github.com/VSCodium/vscodium
     _name: "VSCodium                                                                                                                                                                                                  "
-    _post: |
-      #!/usr/bin/env bash
-      # @brief See `_post` entry for `vscode` for a description
-      export NODE_OPTIONS=--throw-deprecation
-      # @description Check for the presence of the `codium` command in the `PATH` and install extensions for VSCodium if it is present
-      if command -v codium > /dev/null; then
-        EXTENSIONS="$(codium --list-extensions)"
-        jq -r '.recommendations[]' "${XDG_CONFIG_HOME:-$HOME/.config}/Code/User/extensions.json" | while read EXTENSION; do
-          if ! echo "$EXTENSIONS" | grep -iF "$EXTENSION" > /dev/null; then
-            logg info 'Installing VSCodium extension '"$EXTENSION"'' && codium --install-extension "$EXTENSION" && logg success 'Installed '"$EXTENSION"''
-          else
-            logg info ''"$EXTENSION"' already installed'
-          fi
-        done
-      else
-        logg info 'codium executable not available - skipping plugin install process for it'
-      fi
     _short: "VSCodium is a community-driven, freely-licensed binary distribution of Microsoft's Visual Studio Code.                                                                                                    "
     appimage: vscodium/vscodium
     cask: vscodium
@@ -12722,243 +11646,6 @@ softwarePackages:
     _github: false
     _home: https://cloudflarewarp.com/
     _name: Cloudflare WARP Client
-    _post: |
-      #!/usr/bin/env bash
-      # @file CloudFlare WARP
-      # @brief Installs CloudFlare WARP, ensures proper security certificates are in place, and connects the device to CloudFlare WARP.
-      # @description
-      #     This script is intended to connect the device to CloudFlare's Zero Trust network with nearly all of its features unlocked.
-      #     Homebrew is used to install the `warp-cli` on macOS. On Linux, it can install `warp-cli` on most Debian systems and some RedHat
-      #     systems. CloudFlare WARP's [download page](https://pkg.cloudflareclient.com/packages/cloudflare-warp) is somewhat barren.
-      #
-      #     ## MDM Configuration
-      #
-      #     If CloudFlare WARP successfully installs, it first applies MDM configurations (managed configurations). If you would like CloudFlare
-      #     WARP to connect completely headlessly (while losing some "user-posture" settings), then you can populate the following three secrets:
-      #
-      #     1. `CLOUDFLARE_TEAMS_CLIENT_ID` - The ID from a CloudFlare Teams service token. See [this article](https://developers.cloudflare.com/cloudflare-one/identity/service-tokens/).
-      #     2. `CLOUDFLARE_TEAMS_CLIENT_SECRET` - The secret from a CloudFlare Teams service token.
-      #     3. `CLOUDFLARE_TEAMS_ORG` - The ID of your Zero Trust organization. This variable must be passed in as an environment variable and is housed in the `home/.chezmoi.yaml.tmpl` file. If you do not want to pass an environment variable, you can change the default value in `home/.chezmoi.yaml.tmpl` on your own fork.
-      #
-      #     The two variables above can be passed in using either of the methods described in the [Secrets documentation](https://install.doctor/docs/customization/secrets).
-      #
-      #     ## Headless CloudFlare WARP Connection
-      #
-      #     Even if you do not provide the two variables mentioned above, the script will still headlessly connect your device to the public CloudFlare WARP
-      #     network, where you will get some of the benefits of a VPN for free. Otherwise, if they were passed in, then the script
-      #     finishes by connecting to CloudFlare Teams.
-      #
-      #     ## Application Certificates
-      #
-      #     This script applies the techniques described on the [CloudFlare Zero Trust Install certificate manually page](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/)
-      #     to configure the following utilities that leverage seperate certificate authorities:
-      #
-      #     * Python
-      #     * NPM
-      #     * Git
-      #     * Google Cloud SDK
-      #     * AWS CLI
-      #     * Google Drive for desktop
-      #
-      #     Settings used to configure Firefox are housed inside of the Firefox configuration files stored as seperate configuration files
-      #     outside of this script. **Note: The scripts that enable CloudFlare certificates for all these programs are currently commented out
-      #     in this script.**
-      #
-      #     ## Notes
-      #
-      #     According to CloudFlare Teams [documentation on MDM deployment](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/),
-      #     on macOS the `com.cloudflare.warp.plist` file gets erased on reboot. Also, according to the documentation, the only way around this is to leverage
-      #     an MDM SaaS provider like JumpCloud.
-      #
-      #     ## Links
-      #
-      #     * [Linux managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/warp/private_mdm.xml.tmpl)
-      #     * [macOS managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/Library/Managed%20Preferences/private_com.cloudflare.warp.plist.tmpl)
-      SSL_CERT_PATH="/etc/ssl/cert.pem"
-      ### Install CloudFlare WARP (on non-WSL *nix systems)
-      if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
-        if [ -d /System ] && [ -d /Applications ]; then
-          ### Install on macOS
-          if [ ! -d "/Applications/Cloudflare WARP.app" ]; then
-            brew install --cask --no-quarantine --quiet cloudflare-warp
-          else
-            logg info 'Cloudflare WARP already installed'
-          fi
-        elif [ '{{ .host.distro.id }}' = 'debian' ]; then
-          ### Add CloudFlare WARP desktop app apt-get source
-          if [ ! -f /etc/apt/sources.list.d/cloudflare-client.list ]; then
-            logg info 'Adding CloudFlare WARP keyring'
-            curl https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
-            logg info 'Adding apt source reference'
-            echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
-          fi
-          ### Update apt-get and install the CloudFlare WARP CLI
-          sudo apt-get update && sudo apt-get install -y cloudflare-warp
-        elif [ '{{ .host.distro.id }}' = 'ubuntu' ]; then
-          ### Add CloudFlare WARP desktop app apt-get source
-          if [ ! -f /etc/apt/sources.list.d/cloudflare-client.list ]; then
-            logg info 'Adding CloudFlare WARP keyring'
-            curl https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
-            logg info 'Adding apt source reference'
-            echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
-          fi
-          ### Update apt-get and install the CloudFlare WARP CLI
-          sudo apt-get update && sudo apt-get install -y cloudflare-warp
-        elif command -v dnf > /dev/null && command -v rpm > /dev/null; then
-          ### This is made for CentOS 8 and works on Fedora 36 (hopefully 36+ as well) with `nss-tools` as a dependency
-          sudo dnf instal -y nss-tools || NSS_TOOL_EXIT=$?
-          if [ -n "$NSS_TOOL_EXIT" ]; then
-            logg warn 'Unable to install nss-tools which was a requirement on Fedora 36 and assumed to be one on other systems as well.'
-          fi
-          ### According to the download site, this is the only version available for RedHat-based systems
-          sudo rpm -ivh https://pkg.cloudflareclient.com/cloudflare-release-el8.rpm || RPM_EXIT_CODE=$?
-          if [ -n "$RPM_EXIT_CODE" ]; then
-            logg error 'Unable to install CloudFlare WARP using RedHat 8 RPM package'
-          fi
-        fi
-      fi
-      ### Ensure certificate is installed
-      # Source: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt
-      # Source: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
-      if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; then
-        ### Ensure certificate installed on macOS
-        if [ -z "$SSH_CONNECTION" ]; then
-          # if [ -z "$HEADLESS_INSTALL" ]; then
-          #     logg info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
-          #     sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
-          # fi
-          logg info 'Updating the OpenSSL CA Store to include the Cloudflare certificate'
-          echo | sudo tee -a "$SSL_CERT_PATH" < "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > /dev/null
-          echo "" | sudo tee -a "$SSL_CERT_PATH"
-        else
-          logg warn 'Session is SSH so adding Cloudflare encryption key to trusted certificates via the security program is being bypassed since it requires Touch ID / Password verification.'
-        fi
-        if [ -f "/usr/local/opt/openssl@3/bin/c_rehash" ]; then
-          # Location on Intel macOS
-          logg info 'Ensuring /usr/local/etc/openssl@3/certs directory exists' && mkdir -p /usr/local/etc/openssl@3/certs
-          logg info 'Adding Cloudflare certificate to /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem'
-          echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem
-          logg info 'Running /usr/local/opt/openssl@3/bin/c_rehash'
-          /usr/local/opt/openssl@3/bin/c_rehash > /dev/null && logg info 'OpenSSL certificate rehash successful'
-        elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash" ]; then
-          # Location on arm64 macOS and custom Homebrew locations
-          logg info "Ensuring ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs directory exists" && mkdir -p "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs"
-          logg info "Adding Cloudflare certificate to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs/Cloudflare_CA.pem"
-          echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs/Cloudflare_CA.pem"
-          logg info "Running ${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash"
-          "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash" > /dev/null && logg info 'OpenSSL certificate rehash successful'
-        else
-          logg warn 'Unable to add Cloudflare_CA.pem because /usr/local/etc/openssl@3/certs and /opt/homebrew/etc/openssl@3/certs do not exist!'
-        fi
-      elif command -v warp-cli > /dev/null; then
-        # System is Linux
-        if command -v dpkg-reconfigure > /dev/null; then
-          if [ -d /usr/local/share/ca-certificates ]; then
-            logg info 'Copying CloudFlare Teams PEM file to /usr/local/share/ca-certificates/Cloudflare_CA.crt'
-            sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /usr/local/share/ca-certificates/Cloudflare_CA.crt
-            logg info 'dpkg-reconfigure executable detected so using Debian/Ubuntu method of updating system trusted certificates to include CloudFlare Teams certificate'
-            sudo dpkg-reconfigure ca-certificates -p high
-            SSL_CERT_PATH="/etc/ssl/certs/ca-certificates.crt"
-          else
-            logg warn 'No /usr/local/share/ca-certificates folder present'
-          fi
-        elif command -v update-ca-trust > /dev/null; then
-          if [ -d /etc/pki/ca-trust/source/anchors ]; then
-            logg info 'Copying CloudFlare Teams certificates to /etc/pki/ca-trust/source/anchors'
-            sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /etc/pki/ca-trust/source/anchors
-            logg info 'update-ca-trust executable detected so using CentOS/Fedora method of updating system trusted certificates to include CloudFlare Teams certificate'
-            sudo update-ca-trust
-            SSL_CERT_PATH="/etc/pki/tls/certs/ca-bundle.crt"
-          else
-            logg warn '/etc/pki/ca-trust/source/anchors does not exist so skipping the system certificate update process'
-          fi
-        fi
-      fi
-      if command -v warp-cli > /dev/null; then
-        ### Application certificate configuration
-        # Application-specific certificate authority modification is currently commented out because
-        # it is merely for traffic inspection and `npm install` fails when configured to use the CloudFlare
-        # certificate and the WARP client is not running.
-        ### Git
-        if command -v git > /dev/null; then
-          logg info "Configuring git to use $SSL_CERT_PATH"
-          git config --global http.sslcainfo "$SSL_CERT_PATH"
-        fi
-        ### NPM
-        if command -v npm > /dev/null; then
-          logg info "Configuring npm to use $SSL_CERT_PATH"
-          npm config set cafile "$SSL_CERT_PATH"
-        fi
-        ### Python
-        if command -v python3 > /dev/null; then
-          ### Ensure Certifi package is available globally
-          if ! pip3 list | grep certifi > /dev/null; then
-            if command -v brew > /dev/null; then
-              logg info 'Ensuring Python certifi is installed via Homebrew'
-              brew install --quiet certifi
-            else
-              logg info 'Ensuring certifi is installed globally for Python 3'
-              pip3 install certifi
-            fi
-          fi
-          ### Copy CloudFlare PEM file to Python 3 location
-          logg info "Configuring python3 / python to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem""
-          echo | cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> $(python3 -m certifi)
-        fi
-        ### Google Cloud SDK
-        if command -v gcloud > /dev/null; then
-          logg info "Configuring gcloud to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" and "$HOME/.local/etc/ssl/gcloud/ca.pem""
-          mkdir -p "$HOME/.local/etc/ssl/gcloud"
-          cat "$HOME/.local/etc/ssl/curl/cacert.pem" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > "$HOME/.local/etc/ssl/gcloud/ca.pem"
-          gcloud config set core/custom_ca_certs_file "$HOME/.local/etc/ssl/gcloud/ca.pem"
-        fi
-        ### Google Drive for desktop (macOS)
-        if [ -d "/Applications/Google Drive.app" ]; then
-          if [ -d "/Applications/Google Drive.app/Contents/Resources" ]; then
-            logg info "Combining Google Drive roots.pem with CloudFlare certificate"
-            mkdir -p "$HOME/.local/etc/ssl/google-drive"
-            cat "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" "/Applications/Google Drive.app/Contents/Resources/roots.pem" >> "$HOME/.local/etc/ssl/google-drive/roots.pem"
-            sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootsCertsFile -string "$HOME/.local/etc/ssl/google-drive/roots.pem"
-          else
-            logg warn 'Google Drive.app installed but roots.pem is not available yet'
-          fi
-        fi
-        ### Ensure MDM settings are applied (deletes after reboot on macOS)
-        ### TODO: Ensure `.plist` can be added to `~/Library/Managed Preferences` and not just `/Library/Managed Preferences`
-        # Source: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/
-        # Source for JumpCloud: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/CloudflareWARP.mobileconfig
-        if [ -d /System ] && [ -d /Applications ]; then
-          sudo cp -f "$HOME/Library/Managed Preferences/com.cloudflare.warp.plist" '/Library/Managed Preferences/com.cloudflare.warp.plist'
-          sudo plutil -convert binary1 '/Library/Managed Preferences/com.cloudflare.warp.plist'
-          ### Enable CloudFlare WARP credentials auto-populate (since file is deleted when not managed with MDM)
-          if [ -f "$HOME/Library/LaunchDaemons/com.cloudflare.warp.plist" ] && [ ! -f "/Library/LaunchDaemons/com.cloudflare.warp.plist" ]; then
-            sudo mkdir -p /Library/LaunchDaemons
-            sudo cp -f "$HOME/Library/LaunchDaemons/com.cloudflare.warp.plist" '/Library/LaunchDaemons/com.cloudflare.warp.plist'
-            sudo launchctl load "/Library/LaunchDaemons/com.cloudflare.warp.plist"
-          fi
-        elif [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/warp/mdm.xml" ]; then
-          sudo mkdir -p /var/lib/cloudflare-warp
-          sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/warp/mdm.xml" /var/lib/cloudflare-warp/mdm.xml
-        fi
-        ### Register CloudFlare WARP
-        if warp-cli --accept-tos status | grep 'Registration missing' > /dev/null; then
-          logg info 'Registering CloudFlare WARP'
-          warp-cli --accept-tos register
-        else
-          logg info 'Either there is a misconfiguration or the device is already registered with CloudFlare WARP'
-        fi
-        ### Connect CloudFlare WARP
-        if warp-cli --accept-tos status | grep 'Disconnected' > /dev/null; then
-          logg info 'Connecting to CloudFlare WARP'
-          warp-cli --accept-tos connect > /dev/null && logg success 'Connected to CloudFlare WARP'
-        else
-          logg info 'Either there is a misconfiguration or the device is already connected with CloudFlare WARP'
-        fi
-      else
-        logg warn 'warp-cli was not installed so CloudFlare WARP cannot be joined'
-      fi
-      # Needs tuning - possibly unrelated, but internet wasn't working on Ubuntu after installing this and removed it during debugging
-      # ansible: professormanhattan.warp
     apt: cloudflare-warp
     cask: cloudflare-warp
     choco: warp
@@ -13037,8 +11724,7 @@ softwarePackages:
     _when:linux: "! test -f /var/ossec/bin/agent-auth"
     _when:windows: '! test -f "C:\Program Files (x86)\ossec-agent\agent-auth.exe"'
     choco: wazuh-agent
-    script:darwin: if ! csrutil status | grep enabled > /dev/null; then cd /tmp && curl -sSL https://packages.wazuh.com/4.x/macos/wazuh-agent-4.4.4-1.pkg > wazuh-agent.pkg && sudo launchctl setenv WAZUH_MANAGER "$WAZUH_MANAGER" && sudo installer -pkg wazuh-agent.pkg -target / && sudo chmod 755 /Library/Ossec && sudo chmod 755 /Library/Ossec/bin && rm /tmp/wazuh-agent.pkg && sudo wazuh-control start; else echo "WARNING - Skipping Wazuh Agent installation because System Integrity Protection is enabled. Disabling it requires booting into recovery and running csrutil disable, installing Wazuh Agent normally, and then re-enabling it again in recovery mode."; fi
-    script:linux: if command -v apt-get > /dev/null; then curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | sudo gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && sudo chmod 644 /usr/share/keyrings/wazuh.gpg && echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | sudo tee -a /etc/apt/sources.list.d/wazuh.list && sudo apt-get update && sudo apt-get install -y wazuh-agent; elif command -v dnf > /dev/null; then echo "[wazuh]" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "gpgcheck=1" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "gpgkey=https://packages.wazuh.com/key/GPG-KEY-WAZUH" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "enabled=1" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "name=EL-\$releasever - Wazuh" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "baseurl=https://packages.wazuh.com/4.x/yum/" | sudo tee -a /etc/yum.repos.d/wazuh.repo && echo "protect=1" | sudo tee -a /etc/yum.repos.d/wazuh.repo && sudo rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH && sudo dnf install -y wazuh-agent; elif command -v zypper > /dev/null; then echo "[wazuh]" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "gpgcheck=1" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "gpgkey=https://packages.wazuh.com/key/GPG-KEY-WAZUH" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "enabled=1" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "name=EL-$releasever - Wazuh" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "baseurl=https://packages.wazuh.com/4.x/yum/" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && echo "protect=1" | sudo tee -a /etc/zypp/repos.d/wazuh.repo && sudo rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH && sudo zypper install -y wazuh-agent; elif command -v apk > /dev/null; then sudo wget -O /etc/apk/keys/alpine-devel@wazuh.com-633d7457.rsa.pub https://packages.wazuh.com/key/alpine-devel%40wazuh.com-633d7457.rsa.pub && echo "https://packages.wazuh.com/4.x/alpine/v3.12/main" | sudo tee -a /etc/apk/repositories && sudo apk update && sudo apk add wazuh-agent; fi
+    script: bash "$HOME/.local/bin/post-installx/post-wazuh.sh"
   web-ext:
     _bin: web-ext
     _desc: "web-ext is a command-line tool provided by Mozilla for developing, testing, and packaging WebExtensions for Firefox. It simplifies the process of creating and testing extensions by providing commands to\nrun, build, and package extensions. It supports features like hot reloading for quick testing, linting for code quality checks, and the ability to run tests in multiple Firefox versions. This tool is   \nuseful for developers working on Firefox extensions as it streamlines the development workflow and helps ensure compatibility with different Firefox versions.                                            "
@@ -13211,50 +11897,6 @@ softwarePackages:
     _desc: "WireGuard Tools Repository                                                                                                                                                                                \n\nThe WireGuard Tools repository is the official collection of tools for the WireGuard VPN protocol. It includes utilities for configuring and managing WireGuard tunnels on various platforms. The tools   \nare designed to be lightweight, secure, and easy to use, making them popular for setting up secure VPN connections. The repository is actively maintained by the WireGuard development team and is open   \nsource, allowing users to contribute, report issues, and stay up to date with the latest developments in the WireGuard ecosystem.                                                                         "
     _github: https://github.com/WireGuard/wireguard-tools
     _name: WireGuard Tools
-    _post: |
-      #!/usr/bin/env bash
-      # @file macOS WireGuard Profiles
-      # @brief Installs WireGuard VPN profiles on macOS devices
-      # @description
-      #     This script installs WireGuard VPN profiles on macOS. It scans `${XDG_CONFIG_HOME:-$HOME/.config}/vpn` for all the `*.conf` files
-      #     and then copies those profiles to `/etc/wireguard`. It also performs a couple preparation tasks like ensuring the target
-      #     WireGuard system configuration file directory exists and is assigned the proper permissions.
-      #
-      #     ## Creating VPN Profiles
-      #
-      #     More details on embedding your VPN profiles into your Install Doctor fork can be found by reading the [Secrets documentation](https://install.doctor/docs/customization/secrets#vpn-profiles).
-      #
-      #     ## TODO
-      #
-      #     * Populate Tunnelblick on macOS using the VPN profiles located in `${XDG_CONFIG_HOME:-$HOME/.config}/vpn`
-      #     * For the Tunnelblick integration, ensure the username / password is populated from the `OVPN_USERNAME` and `OVPN_PASSWORD` variables
-      #
-      #     ## Links
-      #
-      #     * [VPN profile folder](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/vpn)
-      #     * [VPN profile documentation](https://install.doctor/docs/customization/secrets#vpn-profiles)
-      # TODO - Populate Tunnelblick on macOS using the .ovpn profiles located in $HOME/.config/vpn (execpt in the `openvpn` entry of software.yml)
-      # along with the secrets for the protonVPN OpenVPN (check vpn-linux.tmpl)
-      ### Backs up previous network settings to `/Library/Preferences/com.apple.networkextension.plist.old` before applying new VPN profiles
-      if [ -f /Library/Preferences/com.apple.networkextension.plist ] && [ ! -f "/Library/Preferences/com.apple.networkextension.plist.old" ]; then
-        logg info 'Backing up /Library/Preferences/com.apple.networkextension.plist to /Library/Preferences/com.apple.networkextension.plist.old'
-        sudo cp -f /Library/Preferences/com.apple.networkextension.plist /Library/Preferences/com.apple.networkextension.plist.old
-      else
-        logg info 'The /Library/Preferences/com.apple.networkextension.plist does not exist or is already backed up to com.apple.networkextension.plist.old'
-      fi
-      ### Ensures the `/etc/wireguard` directory exists and has the lowest possible permission-level
-      if [ ! -d /etc/wireguard ]; then
-        logg info 'Creating /etc/wireguard since it does not exist yet'
-        sudo mkdir -p /etc/wireguard
-        sudo chmod 600 /etc/wireguard
-      fi
-      ### TODO - Should adding the .conf files to /etc/wireguard only be done on macOS or is this useful on Linux as well?
-      ### Cycles through the `*.conf` files in `${XDG_CONFIG_HOME:-$HOME/.config}/vpn` and adds them to the `/etc/wireguard` folder
-      find "${XDG_CONFIG_HOME:-$HOME/.config}/vpn" -mindepth 1 -maxdepth 1 -type f -name "*.conf" | while read WG_CONF; do
-        WG_FILE="$(basename "$WG_CONF")"
-        logg info 'Adding '"$WG_FILE"' to /etc/wireguard'
-        sudo cp -f "$WG_CONF" "/etc/wireguard/$WG_FILE"
-      done
     _short: "WireGuard Tools is a set of utilities for configuring and managing the WireGuard VPN protocol.                                                                                                            "
     apk: wireguard-tools
     apt: wireguard
@@ -13314,6 +11956,7 @@ softwarePackages:
     pacman: wkhtmltopdf
   wordops:
     _bin: wo
+    _deprecated: Prefer EasyEngine instead
     _desc: Install and manage a high performance WordPress stack with a few keystrokes
     _docs: https://docs.wordops.net/
     _github: https://github.com/WordOps/WordOps
@@ -13397,16 +12040,13 @@ softwarePackages:
   xcode:
     _app: Xcode.app
     _bin: xcode
-    _deps:script:darwin:
-      - xcodeinstall
     _desc: "[Xcode](https://developer.apple.com/xcode/) is Apple's integrated development environment for macOS, used to develop software for macOS, iOS, iPadOS, watchOS, and tvOS."
     _docs: https://developer.apple.com/documentation/xcode
     _github: false
     _home: https://developer.apple.com/xcode/
     _name: XCode
-    _post: |
-      #!/usr/bin/env bash
-      sudo xcodebuild -license accept && sudo xcodebuild -runFirstLaunch
+    _post: sudo xcodebuild -license accept && sudo xcodebuild -runFirstLaunch
+    script:darwin: bash "$HOME/.local/bin/post-installx/post-xcode.sh"
     mas: 497799835
   xcodeinstall:
     _bin: xcodeinstall
@@ -13446,9 +12086,7 @@ softwarePackages:
     _desc: "xdotool is a command-line tool for simulating keyboard input and mouse activity. It allows you to automate tasks by sending keystrokes, mouse clicks, and window manipulation commands. This tool is      \nuseful for scripting repetitive tasks, creating macros, or controlling GUI applications from the command line. It can be particularly handy for automating interactions with graphical user interfaces on \nLinux systems. You can find more information and usage examples on its GitHub page: xdotool on GitHub.                                                                                                    "
     _github: https://github.com/jordansissel/xdotool
     _name: xdotool
-    _post:brew:darwin: |
-      #!/usr/bin/env bash
-      defaults write org.x.X11 enable_test_extensions -boolean true
+    _post:brew:darwin: defaults write org.x.X11 enable_test_extensions -boolean true
     _short: "xdotool is a command-line tool for simulating keyboard input and mouse activity.                                                                                                                          "
     apt: xdotool
     brew: xdotool
@@ -13475,6 +12113,7 @@ softwarePackages:
     scoop: xh
   xhyve:
     _bin: xhyve
+    _deprecated: Disabled on Homebrew because it has not been modified for several years and does not build properly
     _desc: "xhyve is a lightweight virtualization solution for macOS based on the Hypervisor.framework. It allows you to run Linux and other operating systems on a macOS host without the need for a full-fledged    \nvirtual machine software like VirtualBox or VMware. xhyve provides a simple command-line interface for managing virtual machines and supports features like networking, file sharing, and snapshots. It is\ncommonly used by developers and system administrators for testing and development purposes.                                                                                                               "
     _github: https://github.com/machyve/xhyve
     _name: xhyve
@@ -13514,9 +12153,7 @@ softwarePackages:
     _ports:
       - port: 3389
         proto: tcp
-    _post: |
-      #!/usr/bin/env bash
-      sudo adduser xrdp ssl-cert
+    _post: sudo adduser xrdp ssl-cert
     _service: xrdp
     _service:yay:
       - xrdp
@@ -13573,7 +12210,6 @@ softwarePackages:
     _desc: A linter for YAML files. yamllint does not only check for syntax validity, but also for weirdnesses like key repetition and cosmetic problems such as lines length, trailing spaces, indentation, etc.
     _github: https://github.com/adrienverge/yamllint
     _name: yamllint
-    _service: null
     _short: "yamllint is a tool for checking YAML files for syntax errors and adherence to best practices.                                                                                                             "
     brew: yamllint
     pipx: yamllint
@@ -13668,7 +12304,6 @@ softwarePackages:
     _home: https://th-ch.github.io/youtube-music/
     _name: "youtube-music                                                                                                                                                                                             "
     _short: "youtube-music is a command-line tool for downloading music from YouTube.                                                                                                                                  "
-    _todo: Might have to add _post cask xattr -cr /Applications/YouTube\ Music.app to fix permissions
     appimage: th-ch/youtube-music
     apt: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/youtube-music_1.19.0_amd64.deb
     exe: https://github.com/th-ch/youtube-music/releases/download/v1.19.0/YouTube-Music-Setup-1.19.0.exe
@@ -13722,6 +12357,7 @@ softwarePackages:
     winget: yt-dlp
   yubikey-agent:
     _bin: yubikey-agent
+    _deprecated: The OpenSSH library can now create native keys that integrate with the client.
     _desc: "YubiKey Agent is a project on GitHub created by Filippo Valsorda. It is a seamless way to use a YubiKey for SSH authentication without the need for manually handling keys. The agent acts as a bridge    \nbetween your YubiKey and SSH, providing a secure and convenient method for authentication. It supports multiple YubiKeys and can be integrated into your existing SSH setup easily. The project is        \nactively maintained and is a popular choice for enhancing SSH security with YubiKeys.                                                                                                                     "
     _docs: https://github.com/FiloSottile/yubikey-agent
     _github: https://github.com/FiloSottile/yubikey-agent
