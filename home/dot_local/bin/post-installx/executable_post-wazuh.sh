@@ -25,9 +25,6 @@ if [ -d /Applications ] && [ -d /System ]; then
     rm /tmp/wazuh-agent.pkg
     logg info 'Running sudo wazuh-control start'
     sudo wazuh-control start
-    else
-        logg warn "Skipping Wazuh Agent installation because System Integrity Protection is enabled. Disabling it requires booting into recovery and running csrutil disable, installing Wazuh Agent normally, and then re-enabling it again in recovery mode."
-    fi
 else
     if command -v apt-get > /dev/null; then
         logg info 'Importing GPG-KEY-WAZUH'
