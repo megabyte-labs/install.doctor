@@ -1024,7 +1024,6 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   installTerminalTheme
   loadCronjobs
   macOSSettings
-  makeLocalBinExecutable
   symlinkAnsibleRoles
   symlinkPython
   userLogFolders
@@ -1052,7 +1051,6 @@ else
   installTerminalTheme &
   loadCronjobs &
   macOSSettings &
-  makeLocalBinExecutable &
   symlinkAnsibleRoles &
   symlinkPython &
   userLogFolders &
