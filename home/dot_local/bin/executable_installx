@@ -396,12 +396,13 @@ async function acquireManagerList(type, command) {
         if (fs.existsSync(`${cacheDir}/${type}`)) {
             setTimeout(() => {
                 require('child_process').exec(`${command} > ${cacheDir}/${type}`)
-            }, 0)
+            }, 100)
         } else {
             require('child_process').execSync(`${command} > ${cacheDir}/${type}`)
         }
         return fs.readFileSync(`${cacheDir}/${type}`).toString().split('\n')
     } else {
+        log(`${type} is not installed`)
         return []
     }
 }
@@ -537,16 +538,17 @@ async function main() {
             if (x[whenField]) {
                 if (typeof x[whenField] === 'string') {
                     try {
-                        execSync(`${x[whenField]}`)
-                        return false
-                    } catch (e) {
+                        runSilentCommand(`${x[whenField]}`)
                         return true
+                    } catch (e) {
+                        return false
                     }
                 } else {
                     log(`typeof _when for ${x.listKey} must be a string`)
                 }
+            } else {
+                return true
             }
-            return true
         })
     log(`Running installation routine`)
     await installPackages(installInstructions)
