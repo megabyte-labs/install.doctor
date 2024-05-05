@@ -26,7 +26,7 @@ function execPromise(command) {
     })
 }
 
-async function runSilentCommand(command) {
+function runSilentCommand(command) {
     return require('child_process').execSync(`${command}`, { stdio: 'inherit', shell: true })
 }
 
@@ -545,6 +545,7 @@ async function main() {
                     }
                 } else {
                     log(`typeof _when for ${x.listKey} must be a string`)
+                    return true
                 }
             } else {
                 return true
