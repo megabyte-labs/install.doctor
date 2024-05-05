@@ -36,15 +36,17 @@ sudo apt-get install -y bash curl
 
 ### macFUSE Kernel Extensions
 
-macFUSE requires kernel extensions which are not allowed by default. Before provisioning, enable kernel extensions by booting into the recovery environment. You can enable kernel extensions by:
+[macFUSE](https://osxfuse.github.io/) requires kernel extensions which are not allowed by default. macFUSE is required for mounting various data sources as volumes (i.e. allowing you to mount an S3 as a disk). Before provisioning, enable kernel extensions by booting into the recovery environment. You can enable kernel extensions by:
 
 1. Shut down system
 2. Press and hold the Touch ID or power button to launch the Startup Security Utility
-3. In the Startup Security Utility, enable kernel extensions from the Security Policy button
-4. Reboot into the main environment
-5. Open the System Settings
-6. Click on Privacy & Security
-7. Enable relevant System Extensions by clicking on "Enable System Extensions..." (Note: If you enable kernel extensions before installing macFUSE, then the option to enable the extensions will not be available yet. You can either manually install macFUSE before running the provisioning process or revisit the settings page and enable them after the kickstart script installs macFUSE)
+3. Select "Options"
+4. On the top menu bar, select, "Startup Security Utility"
+5. In the Startup Security Utility, enable kernel extensions from the Security Policy button
+6. Reboot into the main environment
+7. Open the System Settings
+8. Click on Privacy & Security
+9. Enable relevant System Extensions by clicking on "Enable System Extensions..." (Note: If you enable kernel extensions before installing macFUSE, then the option to enable the extensions will not be available yet. You can either manually install macFUSE before running the provisioning process or revisit the settings page and enable them after the kickstart script installs macFUSE)
 
 ## Qubes
 
