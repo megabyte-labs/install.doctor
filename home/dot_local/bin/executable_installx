@@ -33,7 +33,7 @@ async function runSilentCommand(command) {
 async function runScript(key, script) {
     log(`Running script..`)
     fs.writeFileSync(`${cacheDir}/${key}-raw`, script)
-    const [ templatedScript, file, brief ] = await Promise.all([
+    const [templatedScript, file, brief] = await Promise.all([
         $`cat "${cacheDir}/${key}-raw" | chezmoi execute-template`,
         $`cat "${cacheDir}/${key}-raw" | ( grep "^# @file" || [ "$?" == "1" ] ) | sed 's/^# @file //'`,
         $`cat "${cacheDir}/${key}-raw" | ( grep "^# @brief" || [ "$?" == "1" ] ) | sed 's/^# @brief //'`
@@ -144,6 +144,7 @@ function expandDeps(keys) {
 }
 
 async function createCaskLinks(caskMap) {
+    if (!caskMap) return
     const caskApps = caskMap
         .filter(x => {
             // Filter out macOS apps that already have a _app installed
@@ -238,6 +239,7 @@ async function bundleInstall(brews, casks, caskMap) {
             lines.push(`brew "${brew}"`)
         }
         log(`Creating Brewfile to install from`)
+        cd(await $`mktemp -d`)
         fs.writeFileSync('Brewfile', lines.join('\n'))
         log(`Installing packages via brew bundle`)
         await $`brew bundle --file Brewfile`
@@ -560,7 +562,7 @@ async function main() {
             } else {
                 const groups = typeof x[groupsField] === 'string' ? [x[groupsField]] : x[groupsField]
                 return groups.flatMap(y => {
-                    return $`sudo "${os.homedir()}/.local/bin/add-usergroup" "${process.env.USER}" "${x[]}"`
+                    return $`sudo "${os.homedir()}/.local/bin/add-usergroup" "${process.env.USER}" "${y}"`
                 })
             }
         })
@@ -576,19 +578,19 @@ async function main() {
     log(`Running post-install scripts defined in ~/.local/bin/post-installx`)
     const postScriptFiles = installData
         .flatMap(x => {
-            const scriptPath = `${os.homedir()}/.local/bin/post-installx/post-${x.installKey}.sh`
+            const scriptPath = `${os.homedir()}/.local/bin/post-installx/post-${x.listKey}.sh`
             const scriptExists = fs.existsSync(scriptPath)
             if (!scriptExists) return Promise.resolve()
             log(`Running post-install script defined in ${scriptPath}`)
             return runScript(`post-${x.listKey}.sh`, fs.readFileSync(scriptPath, 'utf8'))
         })
-    await Promise.allSettled(...postScripts, ...postScriptFiles)
+    await Promise.allSettled(postScripts.concat(postScriptFiles))
     log(`Starting services flagged with _serviceEnabled`)
     const systemctlInstalled = which.sync('systemctl', { nothrow: true })
     const brewInstalled = which.sync('brew', { nothrow: true })
     const servicePromises = installData
-        .filter(x => x._serviceEnabled)
-        .filter(x => x._service)
+        .filter(x => !!x._serviceEnabled)
+        .filter(x => !!x._service)
         .flatMap(x => {
             const serviceField = getPkgData('_service', x, x.installType)
             if (!serviceField) return Promise.resolve()

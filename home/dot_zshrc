@@ -438,6 +438,7 @@ fi
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/goto.sh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/goto.sh"
 
 ### hiSHtory
+# Hishtory Config:
 export PATH="$PATH:${XDG_CONFIG_HOME:-$HOME/.config}/hishtory"
 [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.zsh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.zsh"
 

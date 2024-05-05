@@ -139,6 +139,7 @@ if [ "$BASH_SUPPORT" = 'true' ] && [ -n "$BASH" ]; then
   [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/goto.sh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/goto.sh"
   
   ### hiSHtory
+  # Hishtory Config:
   if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.sh" ]; then
 	  export PATH="$PATH:${XDG_CONFIG_HOME:-$HOME/.config}/hishtory"
 	  source "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.sh"
