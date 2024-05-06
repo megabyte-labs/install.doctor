@@ -44,9 +44,9 @@ async function runScript(key, script) {
         runSilentCommand(`glow --width 80 "${cacheDir}/${key}-glow"`)
         // TODO: Set process.env.DEBUG || true here because the asynchronous method is not logging properly / running slow
         if (process.env.DEBUG) {
-            return runSilentCommand(`bash "${cacheDir}/${key}" || logg error 'Error occurred while processing script for ${key}'`)
+            return await runSilentCommand(`bash "${cacheDir}/${key}" || logg error 'Error occurred while processing script for ${key}'`)
         } else {
-            return $`bash "${cacheDir}/${key}" || logg error 'Error occurred while processing script for ${key}'`.pipe(process.stdout)
+            return await $`bash "${cacheDir}/${key}" || logg error 'Error occurred while processing script for ${key}'`.pipe(process.stdout)
         }
     } catch (e) {
         console.error(`Failed to run script associated with ${key}`, e)
@@ -571,22 +571,22 @@ async function main() {
         })
     await Promise.allSettled(usersGroupsAdditions)
     log(`Running post-install inline scripts`)
-    const postScripts = installData
-        .flatMap(x => {
-            const postField = getPkgData('_post', x, x.installType)
-            if (!postField) return Promise.resolve()
+    for (const x of installData) {
+        const postField = getPkgData('_post', x, x.installType)
+        if (postField) {
             log(`Running post-install script for ${x.listKey}`)
-            return (postField && runScript(x.listKey, x[postField])) || Promise.resolve()
-        })
+            await runScript(x.listKey, x[postField])
+        }
+    }
     log(`Running post-install scripts defined in ~/.local/bin/post-installx`)
-    const postScriptFiles = installData
-        .flatMap(x => {
-            const scriptPath = `${os.homedir()}/.local/bin/post-installx/post-${x.listKey}.sh`
-            const scriptExists = fs.existsSync(scriptPath)
-            if (!scriptExists) return Promise.resolve()
+    for (const x of installData) {
+        const scriptPath = `${os.homedir()}/.local/bin/post-installx/post-${x.listKey}.sh`
+        const scriptExists = fs.existsSync(scriptPath)
+        if (scriptExists) {
             log(`Running post-install script defined in ${scriptPath}`)
-            return runScript(`post-${x.listKey}.sh`, fs.readFileSync(scriptPath, 'utf8'))
-        })
+            await runScript(`post-${x.listKey}.sh`, fs.readFileSync(scriptPath, 'utf8'))
+        }
+    }
     //await Promise.allSettled(postScripts)
     //await Promise.allSettled(postScriptFiles)
     log(`Starting services flagged with _serviceEnabled`)
