@@ -7,7 +7,7 @@ if command -v mise > /dev/null; then
 
     ### Symlink Java on macOS
     if [ -d /Applications ] && [ -d /System ]; then
-        if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" ]; then
+        if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" ] && [ ! -d "/Library/Java/JavaVirtualMachines/openjdk-20.jdk/Contents" ]; then
             sudo mkdir -p /Library/Java/JavaVirtualMachines/openjdk-20.jdk
             sudo ln -s "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" /Library/Java/JavaVirtualMachines/openjdk-20.jdk/Contents
         fi
