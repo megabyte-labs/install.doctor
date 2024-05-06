@@ -767,6 +767,20 @@ addFlathub() {
   fi
 }
 
+installXcode() {
+  if [ -d /Applications ] && [ -d /System ]; then
+    if [ ! -d /Applications/Xcode.app ]; then
+      logg info 'Installing Xcode via mas - the installation will timeout after 40 minutes if Apple account is not signed into'
+      timeout 2400 mas install 497799835 || MAS_EXIT_CODE=$?
+      if [ -n "$MAS_EXIT_CODE" ]; then
+        logg error 'Failed to install Xcode'
+      fi
+    else
+      logg success 'Xcode is already installed'
+    fi
+  fi
+}
+
 setupLinuxHomebrewFonts() {
   if [ ! -d /Applications ] && [ ! -d /System ]; then
     logg info 'Tapping homebrew/linux-fonts' && brew tap homebrew/linux-fonts
@@ -788,6 +802,7 @@ miscMacOs() {
 # TODO - Add install on macOS for macports
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   logg info 'The DEBUG or DEBUG_MODE environment variable is set so preliminary system tweaks will be run synchronously'
+  installXcode
   addFlathub
   allocateSwap
   configureGPG
@@ -812,6 +827,7 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   setupLinuxHomebrewFonts
   miscMacOs
 else
+  installXcode &
   addFlathub &
   allocateSwap &
   configureGPG &

@@ -12047,10 +12047,10 @@ softwarePackages:
     _home: https://developer.apple.com/xcode/
     _name: XCode
     _post: sudo xcodebuild -license accept && sudo xcodebuild -runFirstLaunch
-    script:darwin: bash "$HOME/.local/bin/post-installx/post-xcode.sh"
     mas: 497799835
   xcodeinstall:
     _bin: xcodeinstall
+    _deprecated: The preferred method is to use mas early in the installation since Xcode might be a dependency during the full install
     _desc: "xcodeinstall is a tool available on GitHub at https://github.com/sebsto/xcodeinstall that simplifies the installation and management of Xcode on macOS systems. It allows users to easily download and    \ninstall different versions of Xcode from the command line, which can be useful for developers who need to switch between Xcode versions for compatibility testing or other purposes. The tool provides a  \nconvenient way to automate the process of managing Xcode installations on macOS systems.                                                                                                                  "
     _github: https://github.com/sebsto/xcodeinstall
     _name: Xcode Install
