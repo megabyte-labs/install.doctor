@@ -231,9 +231,9 @@ if command -v warp-cli > /dev/null; then
   fi
 
   ### Register CloudFlare WARP
-  if warp-cli --accept-tos status | grep 'Registration missing' > /dev/null; then
+  if warp-cli --accept-tos status | grep 'Registration Missing' > /dev/null; then
     logg info 'Registering CloudFlare WARP'
-    warp-cli --accept-tos register
+    warp-cli --accept-tos registration new
   else
     logg info 'Either there is a misconfiguration or the device is already registered with CloudFlare WARP'
   fi

@@ -12710,7 +12710,7 @@ softwarePackages:
         fi
 
         ### Register CloudFlare WARP
-        if warp-cli --accept-tos status | grep 'Registration missing' > /dev/null; then
+        if warp-cli --accept-tos status | grep 'Registration Missing' > /dev/null; then
           logg info 'Registering CloudFlare WARP'
           warp-cli --accept-tos register
         else
