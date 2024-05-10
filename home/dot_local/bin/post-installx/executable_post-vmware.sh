@@ -116,7 +116,13 @@ if command -v vmware > /dev/null; then
     logg info 'VMware host modules are present'
   fi
 else
-  logg warn 'VMware Workstation is not installed so the VMware Unlocker will not be installed'
+  if [ -d /Applications ] && [ -d /System ]; then
+    ### macOS
+    logg info 'System is macOS so there is no unlocker or modules that need to be enabled'
+  else
+    ### Linux and VMWare not installed
+    logg warn 'VMware Workstation is not installed so the VMware Unlocker will not be installed'
+  fi
 fi
 
 # @description Only run logic if both Vagrant and VMWare are installed
@@ -133,7 +139,7 @@ if command -v vagrant > /dev/null && command -v vmware-id > /dev/null; then
     logg info 'Ensuring the Vagrant VMWare Utility service is enabled'
     sudo vagrant-vmware-utility service install || EXIT_CODE=$?
     if [ -n "$EXIT_CODE" ]; then
-      logg info 'The Vagrant VMWare Utility command vagrant-vmware-utility service install failed. It is probably already setup.'
+      logg info 'The Vagrant VMWare Utility command vagrant-vmware-utility service. If it was already set up, there should be a notice above.'
     fi
   fi
 else

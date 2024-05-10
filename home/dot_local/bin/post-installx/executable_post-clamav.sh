@@ -11,6 +11,7 @@ if command -v freshclam > /dev/null; then
         ln -s /usr/local/etc/clamav/freshclam.conf "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/freshclam.conf"
       fi
     fi
+
     ### Add clamd.conf
     if [ -f "$HOME/.local/etc/clamav/clamd.conf" ]; then
       sudo mkdir -p /usr/local/etc/clamav
@@ -26,7 +27,16 @@ if command -v freshclam > /dev/null; then
       # sudo chown $USER /var/log/clamav
       sudo cp -f "$HOME/.local/etc/clamav/clamdscan.plist" /Library/LaunchDaemons/clamdscan.plist
       sudo cp -f "$HOME/.local/etc/clamav/freshclam.plist" /Library/LaunchDaemons/freshclam.plist
+      if sudo launchctl list | grep 'clamav.clamdscan' > /dev/null; then
+        logg info 'Unloading previous ClamAV clamdscan configuration'
+        sudo launchctl unload /Library/LaunchDaemons/clamdscan.plist
+      fi
       sudo launchctl load -w /Library/LaunchDaemons/clamdscan.plist
+      if sudo launchctl list | grep 'clamav.freshclam' > /dev/null; then
+        logg info 'Unloading previous ClamAV freshclam configuration'
+        sudo launchctl unload /Library/LaunchDaemons/freshclam.plist
+      fi
+      logg info 'Running sudo launchctl load -w /Library/LaunchDaemons/freshclam.plist'
       sudo launchctl load -w /Library/LaunchDaemons/freshclam.plist
     fi
 

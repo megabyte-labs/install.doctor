@@ -22,13 +22,10 @@
 
 # TODO - Populate Tunnelblick on macOS using the .ovpn profiles located in $HOME/.config/vpn (execpt in the `openvpn` entry of software.yml)
 # along with the secrets for the protonVPN OpenVPN (check vpn-linux.tmpl)
+
 ### Backs up previous network settings to `/Library/Preferences/com.apple.networkextension.plist.old` before applying new VPN profiles
-if [ -f /Library/Preferences/com.apple.networkextension.plist ] && [ ! -f "/Library/Preferences/com.apple.networkextension.plist.old" ]; then
-  logg info 'Backing up /Library/Preferences/com.apple.networkextension.plist to /Library/Preferences/com.apple.networkextension.plist.old'
-  sudo cp -f /Library/Preferences/com.apple.networkextension.plist /Library/Preferences/com.apple.networkextension.plist.old
-else
-  logg info 'The /Library/Preferences/com.apple.networkextension.plist does not exist or is already backed up to com.apple.networkextension.plist.old'
-fi
+logg info 'Backing up /Library/Preferences/com.apple.networkextension.plist to /Library/Preferences/com.apple.networkextension.plist.old'
+sudo cp -f /Library/Preferences/com.apple.networkextension.plist /Library/Preferences/com.apple.networkextension.plist.old
 
 ### Ensures the `/etc/wireguard` directory exists and has the lowest possible permission-level
 if [ ! -d /etc/wireguard ]; then

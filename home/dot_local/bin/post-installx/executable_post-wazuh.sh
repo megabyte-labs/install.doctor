@@ -12,9 +12,10 @@ if [ -d /Applications ] && [ -d /System ]; then
         PKG_URL="https://packages.wazuh.com/4.x/macos/wazuh-agent-4.7.4-1.intel64.pkg"
     fi
     curl -sSL "$PKG_URL" > wazuh-agent.pkg
-    log info 'Setting Wazuh launch parameters in /tmp/wazuh_envs'
+    logg info 'Setting Wazuh launch parameters in /tmp/wazuh_envs'
     # https://documentation.wazuh.com/current/user-manual/agent/deployment-variables/deployment-variables-macos.html
-    echo "WAZUH_MANAGER='$WAZUH_MANAGER'" > /tmp/wazuh_envs
+    echo "WAZUH_MANAGER='$WAZUH_MANAGER' && WAZUH_REGISTRATION_SERVER='$WAZUH_MANAGER' && WAZUH_REGISTRATION_PASSWORD='WazuhRegister' && \
+WAZUH_AGENT_NAME='$WAZUH_AGENT_NAME'" > /tmp/wazuh_envs
     logg info 'Installing the Wazuh agent pkg'
     sudo installer -pkg wazuh-agent.pkg -target /
     sudo chmod 755 /Library/Ossec

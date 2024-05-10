@@ -5,7 +5,7 @@ After = network.target
 
 [Service]
 Type = forking
-ExecStart = /usr/bin/freshclam --daemon --checks 2
+ExecStart =  {{ lookPath "freshclam" }} --daemon --checks 2
 Restart = on-failure
 PrivateTmp = true
 

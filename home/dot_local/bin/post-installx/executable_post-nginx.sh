@@ -12,9 +12,13 @@
 #     * [NGINX Amplify documentation](https://docs.nginx.com/nginx-amplify/#)
 
 if command -v nginx > /dev/null; then
-  logg info 'Downloading the NGINX Amplify installer script'
-  TMP="$(mktemp)"
-  curl -sSL https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh > "$TMP"
-  logg info 'Running the NGINX Amplify setup script'
-  API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NGINX_AMPLIFY_API_KEY")) }}{{- includeTemplate "secrets/NGINX_AMPLIFY_API_KEY" | decrypt | trim -}}{{ else }}{{- env "NGINX_AMPLIFY_API_KEY" -}}{{ end }}" sh "$TMP"
+  if [ -d Applications ] && [ -d /System ]; then
+    logg info 'Skipping installation of NGINX Amplify because macOS is not supported'
+  else
+    logg info 'Downloading the NGINX Amplify installer script'
+    TMP="$(mktemp)"
+    curl -sSL https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh > "$TMP"
+    logg info 'Running the NGINX Amplify setup script'
+    API_KEY="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NGINX_AMPLIFY_API_KEY")) }}{{- includeTemplate "secrets/NGINX_AMPLIFY_API_KEY" | decrypt | trim -}}{{ else }}{{- env "NGINX_AMPLIFY_API_KEY" -}}{{ end }}" sh "$TMP"
+  fi
 fi

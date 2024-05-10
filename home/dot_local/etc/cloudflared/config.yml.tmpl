@@ -1,6 +1,6 @@
-{{- $baseDomain := (join (join .host.hostname ".") .host.domain) -}}
+{{- $baseDomain := printf "%s%s%s" .host.hostname "." .host.domain -}}
 {{- if eq .host.qubes true -}}
-{{-   $baseDomain := (join (join .host.hostname "-qube.") .host.domain) -}}
+{{-   $baseDomain := printf "%s%s%s" .host.hostname "-qube." .host.domain -}}
 {{- end -}}
 ---
 tunnel: {{ if eq .host.qubes true }}qube{{ else }}host{{ end }}-{{ .host.hostname }}
@@ -31,7 +31,7 @@ ingress:
   - hostname: rsyslog.{{ $baseDomain }}
     service: tcp://localhost:514
   - hostname: netdata.{{ $baseDomain }}
-    service: https://localhost:19999
+    service: http://localhost:19999
   - hostname: rundeck.{{ $baseDomain }}
     service: https://localhost:4440
   - hostname: portainer.{{ .host.domain }}

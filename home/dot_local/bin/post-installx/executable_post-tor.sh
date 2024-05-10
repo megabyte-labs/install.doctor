@@ -18,6 +18,7 @@
 if [ -d /Applications ] && [ -d /System ]; then
   ### macOS
   TORRC_CONFIG_DIR=/usr/local/etc/tor
+  sudo mkdir -p "$TORRC_CONFIG_DIR"
 else
   ### Linux
   TORRC_CONFIG_DIR=/etc/tor
