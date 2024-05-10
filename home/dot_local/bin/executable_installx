@@ -31,7 +31,6 @@ function runSilentCommand(command) {
 }
 
 async function runScript(key, script) {
-    log(`Running script..`)
     fs.writeFileSync(`${cacheDir}/${key}-raw`, script)
     const [templatedScript, file, brief] = await Promise.all([
         $`cat "${cacheDir}/${key}-raw" | chezmoi execute-template`,
