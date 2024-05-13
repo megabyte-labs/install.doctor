@@ -99,7 +99,13 @@ if [ -n "$SENDGRID_API_KEY" ] && [ "$SENDGRID_API_KEY" != "" ]; then
         fi
         ### Re-generate the /etc/aliases.db file
         if [ -f /etc/aliases ]; then
-          logg info 'Ensuring proper permissions on the /etc/aliases file' && sudo chown $(stat -c "%U:%G" /etc/sudoers) /etc/aliases
+          if command -v gstat > /dev/null; then
+            logg info 'Ensuring proper permissions on the /etc/aliases file' && sudo chown $(gstat -c "%U:%G" /etc/sudoers) /etc/aliases
+          elif command -v stat > /dev/null; then
+            logg info 'Ensuring proper permissions on the /etc/aliases file' && sudo chown $(stat -c "%U:%G" /etc/sudoers) /etc/aliases
+          else
+            logg info 'Neither the gstat or stat command are available - cannot run sudo chown $(stat/gstat -c "%U:%G" /etc/sudoers) /etc/aliases'
+          fi
           logg info 'Generating Postfix aliases' && sudo postalias /etc/aliases > /dev/null
         else
           logg warn '/etc/aliases is missing which is required for Postfix'
@@ -116,7 +122,11 @@ if [ -n "$SENDGRID_API_KEY" ] && [ "$SENDGRID_API_KEY" != "" ]; then
         if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/com.apple.postfix.master.plist" ] && ! sudo launchctl list | grep 'postfix.master' > /dev/null; then
           logg info 'Copying com.apple.postfix.master.plist'
           sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/com.apple.postfix.master.plist" /System/Library/LaunchDaemons/com.apple.postfix.master.plist
-          sudo launchctl load /System/Library/LaunchDaemons/com.apple.postfix.master.plist && logg success 'launchctl load of com.apple.postfix.master successful'
+          if sudo launchctl list | grep 'com.apple.postfix.master' > /dev/null; then
+            logg info 'Unloading previous Postfix launch configuration'
+            sudo launchctl unload /System/Library/LaunchDaemons/com.apple.postfix.master.plist
+          fi
+          sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.postfix.master.plist && logg success 'launchctl load of com.apple.postfix.master successful'
         fi
         if ! sudo postfix status > /dev/null; then
           logg info 'Starting postfix'
@@ -137,4 +147,6 @@ if [ -n "$SENDGRID_API_KEY" ] && [ "$SENDGRID_API_KEY" != "" ]; then
   else
     logg info 'Skipping Postfix configuration because Postfix is not installed'
   fi
+else
+  logg info 'SENDGRID_API_KEY is undefined so skipping Postfix configuration'
 fi

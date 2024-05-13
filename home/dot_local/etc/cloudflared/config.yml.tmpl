@@ -19,7 +19,7 @@ ingress:
   - hostname: rdp.{{ $baseDomain }}
     service: rdp://localhost:3389
   - hostname: samba.{{ $baseDomain }}
-    service: localhost:8445
+    service: tcp://localhost:8445
   - hostname: sftp.{{ $baseDomain }}
     service: tcp://localhost:2022
   - hostname: sftpgo.{{ $baseDomain }}
