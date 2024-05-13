@@ -15,15 +15,34 @@ if [ -d /Applications ] && [ -d System ]; then
   else
     logg info 'tailscaled does not appear to be installed'
   fi
+
+  ### Open Tailscale.app
+  if [ -d /Applications/Tailscale.app ]; then
+    logg info 'Opening Tailscale.app menu bar widget' && open -a Tailscale
+  else
+    logg info '/Applications/Tailscale.app is missing from the system'
+  fi
 fi
 
 ### Connect to Tailscale network
-if command -v tailscale > /dev/null && [ "$TAILSCALE_AUTH_KEY" != "" ]; then
-  logg info 'Connecting to Tailscale with user-defined authentication key'
-  timeout 14 tailscale up --authkey="$TAILSCALE_AUTH_KEY" --accept-routes || EXIT_CODE=$?
-  if [ -n "$EXIT_CODE" ]; then
-    logg warn 'tailscale up timed out'
+if [ -n "$TAILSCALE_AUTH_KEY" ] && [ "$TAILSCALE_AUTH_KEY" != "" ]; then
+  if [ -f /Applications/Tailscale.app/Contents/MacOS/Tailscale ]; then
+    logg info 'Connecting to Tailscale with user-defined authentication key (TAILSCALE_AUTH_KEY)'
+    timeout 30 /Applications/Tailscale.app/Contents/MacOS/Tailscale up --authkey="$TAILSCALE_AUTH_KEY" --accept-routes || EXIT_CODE=$?
+    if [ -n "$EXIT_CODE" ]; then
+      logg warn '/Applications/Tailscale.app/Contents/MacOS/Tailscale timed out'
+    fi
+  elif command -v tailscale > /dev/null && [ "$TAILSCALE_AUTH_KEY" != "" ]; then
+    logg info 'Connecting to Tailscale with user-defined authentication key (TAILSCALE_AUTH_KEY)'
+    timeout 30 tailscale up --authkey="$TAILSCALE_AUTH_KEY" --accept-routes || EXIT_CODE=$?
+    if [ -n "$EXIT_CODE" ]; then
+      logg warn 'tailscale up timed out'
+    else
+      logg success 'Connected to Tailscale network'
+    fi
   else
-    logg success 'Connected to Tailscale network'
+    logg info 'tailscale does not appear to be installed'
   fi
+else
+  logg info 'TAILSCALE_AUTH_KEY is not defined so not logging into Tailscale network'
 fi
