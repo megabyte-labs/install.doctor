@@ -16,36 +16,38 @@
 ### Configure variables
 if [ -d /Applications ] && [ -d /System ]; then
   ### macOS
-  if [ -d "/usr/local/etc/privoxy" ]; then
-    PRIVOXY_CONFIG_DIR=/usr/local/etc/privoxy
-  elif [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/privoxy" ]; then
-    PRIVOXY_CONFIG_DIR="${HOMEBREW_PREFIX:-/opt/homebrew}/etc/privoxy"
-  else
-    logg warn 'Unable to detect Privoxy configuration directory'
-  fi
+  PRIVOXY_CONFIG_DIR=/usr/local/etc/privoxy
 else
   ### Linux
   PRIVOXY_CONFIG_DIR=/etc/privoxy
 fi
 PRIVOXY_CONFIG="$PRIVOXY_CONFIG_DIR/config"
 
-### Copy Privoxy configuration stored at `${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config` to the system location
 if command -v privoxy > /dev/null; then
-  if [ -d  "$PRIVOXY_CONFIG_DIR" ]; then
+  if [ -f "${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config" ]; then
+    sudo mkdir -p "PRIVOXY_CONFIG_DIR"
+    logg info "Copying ${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config to $PRIVOXY_CONFIG"
     sudo cp -f "${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config" "$PRIVOXY_CONFIG"
+    logg info "Running sudo chmod 600 $PRIVOXY_CONFIG"
     sudo chmod 600 "$PRIVOXY_CONFIG"
     if command -v add-usergroup > /dev/null; then
       sudo add-usergroup "$USER" privoxy
     fi
+    logg info 'Applying proper permissions to Privoxy configuration'
     sudo chown privoxy:privoxy "$PRIVOXY_CONFIG" 2> /dev/null || sudo chown privoxy:$(id -g -n) "$PRIVOXY_CONFIG"
-
+    if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/privoxy" ] && [ ! -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/privoxy/config" ]; then
+      logg info "Symlinking $PRIVOXY_CONFIG to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/privoxy/config"
+      ln -s "$PRIVOXY_CONFIG" "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/privoxy/config"
+    fi
     ### Restart Privoxy after configuration is applied
     if [ -d /Applications ] && [ -d /System ]; then
       ### macOS
+      logg info 'Running brew services restart privoxy'
       brew services restart privoxy
     else
+      ### Linux
       if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
-        ### Linux
+        logg info 'Running sudo systemctl enable / restart privoxy'
         sudo systemctl enable privoxy
         sudo systemctl restart privoxy
       else
@@ -53,8 +55,8 @@ if command -v privoxy > /dev/null; then
       fi
     fi
   else
-    logg warn 'The '"$PRIVOXY_CONFIG_DIR"' directory is missing'
+    logg info "${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config is missing so skipping set up of Privoxy"
   fi
 else
-  logg logg 'privoxy is missing from the PATH - skipping configuration'
+  logg info 'privoxy is not installed or not available in the PATH'
 fi

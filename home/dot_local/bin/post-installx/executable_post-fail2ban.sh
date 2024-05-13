@@ -11,42 +11,35 @@
 #
 #     * [`fail2ban` configuration folder](https://github.com/megabyte-labs/install.doctor/tree/master/home/private_dot_ssh/fail2ban)
 
-### Notify of script start
-logg info 'Configuring fail2ban'
-
-### Restart fail2ban
-function restartFailToBan() {
-  if [ -d /Applications ] && [ -d /System ]; then
-    ### macOS
-    logg info 'Enabling the fail2ban Homebrew service'
-    brew services restart fail2ban
+if command -v fail2ban-client > /dev/null; then
+  if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
+    if [ -f "$HOME/.ssh/fail2ban/jail.local" ]; then
+      ### Linux
+      FAIL2BAN_CONFIG=/etc/fail2ban
+      if [ -d /Applications ] && [ -d /System ]; then
+        ### macOS
+        FAIL2BAN_CONFIG=/usr/local/etc/fail2ban
+      fi
+      sudo mkdir -p "$FAIL2BAN_CONFIG"
+      sudo cp -f "$HOME/.ssh/fail2ban/jail.local" "$FAIL2BAN_CONFIG/jail.local"
+      if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban" ] && [ ! -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban/jail.local" ]; then
+        logg info "Symlinking $FAIL2BAN_CONFIG/jail.local to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban/jail.local"
+        ln -s "$FAIL2BAN_CONFIG/jail.local" "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban/jail.local"
+      fi
+      if [ -d /Applications ] && [ -d /System ]; then
+        ### macOS
+        logg info 'Enabling the fail2ban Homebrew service' && brew services restart fail2ban
+      else
+        ### Linux
+        logg info 'Enabling the fail2ban service' && sudo systemctl enable fail2ban
+        logg info 'Restarting the fail2ban service' && sudo systemctl restart fail2ban
+      fi
+    else
+      logg info "The $HOME/.ssh/fail2ban/jail.local configuration is missing so fail2ban will not be set up"
+    fi
   else
-    # Linux
-    logg info 'Enabling the fail2ban service'
-    sudo systemctl enable fail2ban
-    logg info 'Restarting the fail2ban service'
-    sudo systemctl restart fail2ban
-  fi
-}
-
-### Update the jail.local file if environment is not WSL
-logg info 'Checking if script is being run in WSL environment'
-if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
-  if [ -d /etc/fail2ban ]; then
-    logg info 'Copying ~/.ssh/fail2ban/jail.local to /etc/fail2ban/jail.local'
-    sudo cp -f "$HOME/.ssh/fail2ban/jail.local" /etc/fail2ban/jail.local
-    restartFailToBan
-  elif [ -d /usr/local/etc/fail2ban ]; then
-    logg info 'Copying ~/.ssh/fail2ban/jail.local to /usr/local/etc/fail2ban/jail.local'
-    sudo cp -f "$HOME/.ssh/fail2ban/jail.local" /usr/local/etc/fail2ban/jail.local
-    restartFailToBan
-  elif [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban" ]; then
-    logg info "Copying ~/.ssh/fail2ban/jail.local to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban/jail.local"
-    sudo cp -f "$HOME/.ssh/fail2ban/jail.local" "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban/jail.local"
-    restartFailToBan
-  else
-    logg warn 'The /etc/fail2ban (Linux), the /usr/local/etc/fail2ban, and the ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban (macOS) folder do not exist'
+    logg info 'The environment is a WSL environment so the fail2ban sshd_config will be skipped'
   fi
 else
-  logg info 'Skipping sshd_config application since environment is WSL'
+  logg info 'The fail2ban-client executable is not available on the system so fail2ban configuration will be skipped'
 fi
