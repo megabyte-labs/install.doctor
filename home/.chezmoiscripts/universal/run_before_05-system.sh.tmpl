@@ -643,11 +643,11 @@ showNotificationCenter() {
 installAnsible() {
   if command -v pipx > /dev/null; then
     if [ ! -f "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor/ansible-installed" ]; then
-      logg info 'Running pipx install ansible-core' && pipx install ansible-core
+      logg info 'Running pipx install ansible' && pipx install ansible
       if [ -d /Applications ] && [ -d /System ]; then
-        logg info 'Injecting ansible-core pipx with ansible-core PyObjC PyObjC-core because system is macOS' && pipx inject ansible-core PyObjC PyObjC-core
+        logg info 'Injecting ansible pipx with ansible PyObjC PyObjC-core because system is macOS' && pipx inject ansible PyObjC PyObjC-core
       fi
-      logg info 'Running pipx inject ansible-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog' && pipx inject ansible-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
+      logg info 'Running pipx inject ansible docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog' && pipx inject ansible docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
       mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor"
       touch "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor/ansible-installed"
     else

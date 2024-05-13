@@ -933,13 +933,13 @@ symlinkAnsibleRoles() {
         pipx ensurepath
       fi
       logg info 'Installing ansible-core via pipx'
-      pipx install ansible-core
+      pipx install ansible
       if [ -d /Applications ] && [ -d /System ]; then
         logg info 'Injecting macOS-specific pipx dependencies via pipx'
-        pipx inject ansible-core PyObjC PyObjC-core
+        pipx inject ansible PyObjC PyObjC-core
       fi
       logg info 'Injecting Ansible dependencies via pipx'
-      pipx inject ansible-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
+      pipx inject ansible docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
       mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte-labs"
       touch "${XDG_CACHE_HOME:-$HOME/.cache}/megabyte-labs/ansible-installed"
     fi
