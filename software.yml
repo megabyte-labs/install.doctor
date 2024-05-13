@@ -7259,6 +7259,8 @@ softwarePackages:
     _desc: It also generates sites-enabled proxies using YML configurations. Easter eggs included. [Nginx](https://www.nginx.com/), stylized as NGINX, nginx or NginX, is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache. The software was created by Igor Sysoev and publicly released in 2004. Nginx is free and open-source software, released under the terms of the 2-clause BSD license.
     _docs: https://nginx.org/en/docs/
     _github: https://github.com/nginx/nginx
+    _groups:
+      - www-data
     _home: https://nginx.org/
     _name: NGINX
     _ports:
@@ -7269,7 +7271,6 @@ softwarePackages:
     _service: nginx
     _serviceEnabled: true
     _short: "nginx is a popular open-source web server known for its high performance, stability, and scalability.                                                                                                     "
-    _todo: Check out /opt/homebrew/etc/nginx/nginx.conf / nginx/servers
     ansible: professormanhattan.nginx
     apt: nginx
     brew: nginx
