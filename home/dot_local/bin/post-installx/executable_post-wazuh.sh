@@ -4,26 +4,24 @@
 
 if [ -d /Applications ] && [ -d /System ]; then
     ### macOS
-    cd /tmp
     logg info 'Downloading the macOS Wazuh agent pkg'
     if [[ $(uname -m) == 'arm64' ]]; then
         PKG_URL="https://packages.wazuh.com/4.x/macos/wazuh-agent-4.7.4-1.arm64.pkg"
     else
         PKG_URL="https://packages.wazuh.com/4.x/macos/wazuh-agent-4.7.4-1.intel64.pkg"
     fi
-    curl -sSL "$PKG_URL" > wazuh-agent.pkg
+    wget -q "$PKG_URL" -O /tmp/wazuh-agent.pkg &> /dev/null
     logg info 'Setting Wazuh launch parameters in /tmp/wazuh_envs'
     # https://documentation.wazuh.com/current/user-manual/agent/deployment-variables/deployment-variables-macos.html
-    echo "WAZUH_MANAGER='$WAZUH_MANAGER' && WAZUH_REGISTRATION_SERVER='$WAZUH_MANAGER' && WAZUH_REGISTRATION_PASSWORD='WazuhRegister' && \
-WAZUH_AGENT_NAME='$WAZUH_AGENT_NAME'" > /tmp/wazuh_envs
+    echo "WAZUH_MANAGER="$WAZUH_MANAGER" && WAZUH_REGISTRATION_SERVER="$WAZUH_MANAGER" && WAZUH_REGISTRATION_PASSWORD="WazuhRegister" && WAZUH_AGENT_NAME="$WAZUH_AGENT_NAME"" > /tmp/wazuh_envs
     logg info 'Installing the Wazuh agent pkg'
-    sudo installer -pkg wazuh-agent.pkg -target /
+    sudo installer -pkg /tmp/wazuh-agent.pkg -target /
     sudo chmod 755 /Library/Ossec
     sudo chmod 755 /Library/Ossec/bin
     find "/Library/Ossec/bin" -mindepth 1 -maxdepth 1 -type f | while read BIN_FILE; do
         sudo chmod +x "$BIN_FILE"
     done
-    rm /tmp/wazuh-agent.pkg
+    rm -f /tmp/wazuh-agent.pkg
     logg info 'Running sudo wazuh-control start'
     sudo wazuh-control start
 else

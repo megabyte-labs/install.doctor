@@ -29,17 +29,25 @@ TORRC_CONFIG="$TORRC_CONFIG_DIR/torrc"
 if command -v torify > /dev/null; then
   if [ -d  "$TORRC_CONFIG_DIR" ]; then
     ### Copy the configuration from `${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc` to the system configuration file location
+    logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc to $TORRC_CONFIG"
     sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc" "$TORRC_CONFIG"
     sudo chmod 600 "$TORRC_CONFIG"
     ### Enable and restart the Tor service
     if [ -d /Applications ] && [ -d /System ]; then
       ### macOS
-      brew services restart tor
+      if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor" ] && [ ! -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc" ]; then
+        logg info "Symlinking /usr/local/etc/tor/torrc to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc"
+        ln -s /usr/local/etc/tor/torrc "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc"
+      fi
+      logg info 'Running brew services restart tor'
+      brew services restart tor && logg success 'Tor successfully restarted'
     else
       if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
         ### Linux
+        logg info 'Running sudo systemctl enable / restart tor'
         sudo systemctl enable tor
         sudo systemctl restart tor
+        logg success 'Tor service enabled and restarted'
       else
         logg info 'Environment is WSL so the Tor systemd service will not be enabled / restarted'
       fi
