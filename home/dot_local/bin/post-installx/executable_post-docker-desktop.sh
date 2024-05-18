@@ -15,7 +15,7 @@ if command -v docker > /dev/null; then
     logg info "Found DOCKERHUB_TOKEN in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
     if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" ]; then
       logg info 'Decrypting DOCKERHUB_TOKEN token with Age encryption key'
-      DOCKERHUB_TOKEN="$(cat "$CLOUDFLARED_CERT" | chezmoi decrypt)"
+      DOCKERHUB_TOKEN="$(cat "$DOCKERHUB_TOKEN_FILE" | chezmoi decrypt)"
     else
       logg warn 'Age encryption key is missing from ~/.config/age/chezmoi.txt'
     fi
