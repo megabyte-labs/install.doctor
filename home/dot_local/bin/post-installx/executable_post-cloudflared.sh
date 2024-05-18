@@ -48,7 +48,7 @@ if command -v cloudflared > /dev/null; then
     sudo ln -s /usr/local/etc/cloudflared /etc/cloudflared
   else
     if [ ! -L /etc/cloudflared ]; then
-      logg info '/etc/cloudflared is present (and not symlinked) but files are being modified in /usr/local/etc/cloudflared'
+      logg warn '/etc/cloudflared is present as a regular directory (not symlinked) but files are being modified in /usr/local/etc/cloudflared'
     fi
   fi
 
@@ -60,11 +60,11 @@ if command -v cloudflared > /dev/null; then
       logg info "Setting up $DOMAIN for access through cloudflared"
       sudo cloudflared tunnel route dns -f "$TUNNEL_ID" "$DOMAIN" && logg success "Successfully routed $DOMAIN to this machine's cloudflared Argo tunnel"
     fi
-  done< <(yq '.ingress[].hostname' /usr/local/etc/config.yml)
+  done< <(yq '.ingress[].hostname' /usr/local/etc/cloudflared/config.yml)
 
-  ### Update config.yml
-  logg info 'Updating /usr/local/etc/config.yml to reference tunnel ID'
-  sudo yq eval -i ".tunnel = \"$HOSTNAME_LOWER\"" config.yml
+  ### Update /usr/local/etc/cloudflared/config.yml
+  logg info 'Updating /usr/local/etc/cloudflared/config.yml to reference tunnel ID'
+  sudo yq eval -i ".tunnel = \"$HOSTNAME_LOWER\"" /usr/local/etc/cloudflared/config.yml
 
   ### Set up service
   if [ -d /Applications ] && [ -d /System ]; then
