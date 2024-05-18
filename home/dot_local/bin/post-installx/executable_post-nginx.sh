@@ -12,7 +12,7 @@
 #     * [NGINX Amplify documentation](https://docs.nginx.com/nginx-amplify/#)
 
 if command -v nginx > /dev/null; then
-  if [ -d Applications ] && [ -d /System ]; then
+  if [ -d /Applications ] && [ -d /System ]; then
     ### macOS
     logg info 'Skipping installation of NGINX Amplify because macOS is not supported'
     NGINX_CONFIG_DIR=/usr/local/etc/nginx
