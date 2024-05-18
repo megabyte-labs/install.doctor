@@ -57,7 +57,8 @@ if command -v cloudflared > /dev/null; then
   logg info 'Setting up DNS records for CloudFlare Argo tunnels'
   while read DOMAIN; do
     if [ "$DOMAIN" != 'null' ]; then
-      logg info "Setting up $DOMAIN for access through cloudflared"
+      logg info "Setting up $DOMAIN for access through cloudflared (Tunnel ID: $TUNNEL_ID)"
+      logg info "Running sudo cloudflared tunnel route dns -f "$TUNNEL_ID" "$DOMAIN""
       sudo cloudflared tunnel route dns -f "$TUNNEL_ID" "$DOMAIN" && logg success "Successfully routed $DOMAIN to this machine's cloudflared Argo tunnel"
     fi
   done< <(yq '.ingress[].hostname' /usr/local/etc/cloudflared/config.yml)
