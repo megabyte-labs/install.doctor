@@ -16,6 +16,8 @@ if command -v cloudflared > /dev/null; then
   sudo cp -f "$HOME/.local/etc/cloudflared/cert.pem" /usr/local/etc/cloudflared/cert.pem
   sudo cp -f "$HOME/.local/etc/cloudflared/config.yml" /usr/local/etc/cloudflared/config.yml
 
+  HOSTNAME_LOWER="host-$(hostname -s | tr '[:upper:]' '[:lower:]')"
+
   ### Remove previous tunnels connected to host
   while read TUNNEL_ID; do
     logg info "Deleteing CloudFlared tunnel ID $TUNNEL_ID"
@@ -27,14 +29,14 @@ if command -v cloudflared > /dev/null; then
     else
       logg success "Skipping deletion of $TUNNEL_ID credentials since it is in use"
     fi
-  done< <(sudo cloudflared tunnel list | grep "host-$(hostname -s)" | sed 's/ .*//')
+  done< <(sudo cloudflared tunnel list | grep "$HOSTNAME_LOWER" | sed 's/ .*//')
 
   ### Register tunnel (if not already registered)
-  logg info "Creating CloudFlared tunnel named host-$(hostname -s)"
-  sudo cloudflared tunnel create "host-$(hostname -s)"
+  logg info "Creating CloudFlared tunnel named "$HOSTNAME_LOWER""
+  sudo cloudflared tunnel create "$HOSTNAME_LOWER"
 
   ### Acquire TUNNEL_ID and symlink credentials.json
-  TUNNEL_ID="$(sudo cloudflared tunnel list | grep "host-$(hostname -s)" | sed 's/ .*//')"
+  TUNNEL_ID="$(sudo cloudflared tunnel list | grep "$HOSTNAME_LOWER" | sed 's/ .*//')"
   logg info "Tunnel ID: $TUNNEL_ID"
   logg info "Symlinking /usr/local/etc/cloudflared/$TUNNEL_ID.json to /usr/local/etc/cloudflared/credentials.json"
   sudo rm -f /usr/local/etc/cloudflared/credentials.json
@@ -56,7 +58,11 @@ if command -v cloudflared > /dev/null; then
   while read DOMAIN; do
     logg info "Setting up $DOMAIN for access through cloudflared"
     sudo cloudflared tunnel route dns -f "$TUNNEL_ID" "$DOMAIN" && logg success "Successfully routed $DOMAIN to this machine's cloudflared Argo tunnel"
-  done< <(yq '.ingress[].hostname' config.yml)
+  done< <(yq '.ingress[].hostname' /usr/local/etc/config.yml)
+
+  ### Update config.yml
+  logg info 'Updating /usr/local/etc/config.yml to reference tunnel ID'
+  sudo yq eval -i ".tunnel = \"$HOSTNAME_LOWER\"" config.yml
 
   ### Set up service
   if [ -d /Applications ] && [ -d /System ]; then
