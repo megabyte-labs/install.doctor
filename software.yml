@@ -1373,9 +1373,20 @@ softwarePackages:
     go: github.com/charmbracelet/charm@main
     nix-env: nixpkgs.charm
     pacman: charm
+  chatgpt:
+    _app: ChatGPT.app
+    _bin: chatgpt
+    _desc: Official ChatGPT application for desktop for macOS and fallbacks for ChatGPT desktop on other platforms
+    _home: https://chatgpt.com/
+    _github: false
+    _name: ChatGPT Official Desktop Application
+    cask: chatgpt
+    choco: chatgpt
+    snap: chatgpt-desktop
   chatgpt-menubar:
     _app: Chatgpt.app
     _bin: null
+    _deprecated: Deprecated in favor of the official ChatGPT application
     _desc: ChatGPT for Mac, living in your menubar.
     _docs: https://github.com/vincelwt/chatgpt-mac
     _github: https://github.com/vincelwt/chatgpt-mac
@@ -1386,6 +1397,7 @@ softwarePackages:
   chatgpt-nofwl:
     _app: NoFWL.app
     _bin: nofwl
+    _deprecated: Deprecated in favor of the official ChatGPT application
     _desc: ChatGPT desktop application (Mac, Windows and Linux)
     _docs: https://app.nofwl.com/docs/chatgpt/config
     _github: https://github.com/lencx/nofwl

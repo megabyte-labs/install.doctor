@@ -27,25 +27,33 @@ if command -v cloudflared > /dev/null; then
     else
       logg success "Skipping deletion of $TUNNEL_ID credentials since it is in use"
     fi
-  done< <(sudo cloudflared tunnel list | grep "host-$HOSTNAME" | sed 's/ .*//')
+  done< <(sudo cloudflared tunnel list | grep "host-$(hostname -s)" | sed 's/ .*//')
 
   ### Register tunnel (if not already registered)
-  logg info "Creating CloudFlared tunnel named host-$HOSTNAME"
-  sudo cloudflared tunnel create "host-$HOSTNAME"
+  logg info "Creating CloudFlared tunnel named host-$(hostname -s)"
+  sudo cloudflared tunnel create "host-$(hostname -s)"
 
   ### Acquire TUNNEL_ID and symlink credentials.json
-  TUNNEL_ID="$(sudo cloudflared tunnel list | grep "host-$HOSTNAME" | sed 's/ .*//')"
+  TUNNEL_ID="$(sudo cloudflared tunnel list | grep "host-$(hostname -s)" | sed 's/ .*//')"
   logg info "Tunnel ID: $TUNNEL_ID"
   logg info "Symlinking /usr/local/etc/cloudflared/$TUNNEL_ID.json to /usr/local/etc/cloudflared/credentials.json"
   sudo rm -f /usr/local/etc/cloudflared/credentials.json
   sudo ln -s /usr/local/etc/cloudflared/$TUNNEL_ID.json /usr/local/etc/cloudflared/credentials.json
+
+  ### Symlink /usr/local/etc/cloudflared to /etc/cloudflared
+  if [ ! -d /etc/cloudflared ]; then
+    logg info 'Symlinking /usr/local/etc/cloudflared to /etc/cloudflared'
+    sudo ln -s /usr/local/etc/cloudflared /etc/cloudflared
+  else
+    logg warn '/etc/cloudflared is present but files are being modified in /usr/local/etc/cloudflared'
+  fi
 
   ### Configure DNS
   # Must be deleted manually if no longer used
   logg info 'Setting up DNS records for CloudFlare Argo tunnels'
   while read DOMAIN; do
     logg info "Setting up $DOMAIN for access through cloudflared"
-    sudo cloudflared tunnel route dns "$TUNNEL_ID" "$DOMAIN" && logg success "Successfully routed $DOMAIN to this machine's cloudflared Argo tunnel"
+    sudo cloudflared tunnel route dns -f "$TUNNEL_ID" "$DOMAIN" && logg success "Successfully routed $DOMAIN to this machine's cloudflared Argo tunnel"
   done< <(yq '.ingress[].hostname' config.yml)
 
   ### Set up service
