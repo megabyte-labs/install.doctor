@@ -29,6 +29,10 @@ Host gitlab.com
 Host github.com
     UpdateHostKeys no
     IdentityFile ~/.ssh/id_rsa
+Host macbook-pro
+    User {{ .user.username }}
+    Hostname ssh-macbook-pro.{{ .host.domain }}
+    ProxyCommand /opt/homebrew/bin/cloudflared access ssh --hostname %h
 {{ if (lookPath "fig") -}}
 Match all
   Include ~/.fig/ssh

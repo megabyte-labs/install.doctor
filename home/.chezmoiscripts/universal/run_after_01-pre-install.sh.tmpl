@@ -325,10 +325,20 @@ configureSSHD() {
       ### Restart SSH server
       if [ -d /Applications ] && [ -d /System ]; then
         ### macOS
+        if [ -f /etc/services ]; then
+          logg info 'Updating SSH configuration in /etc/services to point to port {{ .host.ssh.port }}'
+          sudo sed -i.bak 's/ 22\/udp/ {{ .host.ssh.port }}\/udp/' /etc/services
+          sudo sed -i.bak 's/ 22\/tcp/ {{ .host.ssh.port }}\/tcp/' /etc/services
+          sudo rm -f /etc/services.bak
+        fi
         logg info 'Running sudo systemsetup -setremotelogin on' && sudo systemsetup -setremotelogin on > /dev/null
-        logg info 'Running sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist' && sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist 2> /dev/null
-        logg info 'Running sudo launchctl stop com.openssh.sshd' && sudo launchctl stop com.openssh.sshd
-        logg info 'Running sudo launchctl start com.openssh.sshd' && sudo launchctl start com.openssh.sshd && logg info 'Successfully ran launchctl start com.openssh.sshd'
+        if sudo launchctl list | grep 'com.openssh.sshd' > /dev/null; then
+          logg info 'Unloading previous com.openssh.sshd configuration'
+          sudo launchctl unload /System/Library/LaunchDaemons/ssh.plist
+        fi
+        logg info 'Running sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist (Latest)' && sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
+        logg info 'Running sudo launchctl stop com.openssh.sshd (High Sierra - errors muted)' && sudo launchctl stop com.openssh.sshd 2> /dev/null
+        logg info 'Running sudo launchctl start com.openssh.sshd (High Sierra - errors muted)' && sudo launchctl start com.openssh.sshd 2> /dev/null && logg info 'Successfully ran launchctl start com.openssh.sshd'
       else
         ### Linux
         logg info 'Enabling the sshd service'
