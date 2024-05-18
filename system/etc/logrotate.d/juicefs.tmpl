@@ -1,3 +1,4 @@
+{{- if (lookPath "juicefs") -}}
 /var/log/juicefs.log {
     daily
     rotate 7
@@ -7,3 +8,4 @@
     notifempty
     copytruncate
 }
+{{- end -}}

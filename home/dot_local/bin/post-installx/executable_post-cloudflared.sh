@@ -65,8 +65,13 @@ if command -v cloudflared > /dev/null; then
       logg info 'Running sudo cloudflared service install'
       sudo cloudflared service install
     fi
+    sudo cp -f "$HOME/Library/LaunchDaemons/com.cloudflare.cloudflared.plist" /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
     logg info 'Ensuring cloudflared service is started'
-    sudo launchctl start com.cloudflare.cloudflared
+    if sudo launchctl list | grep 'com.cloudflare.cloudflared' > /dev/null; then
+      logg info 'Unloading previous com.cloudflare.cloudflared configuration'
+      sudo launchctl unload /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
+    fi
+    sudo launchctl load -w /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
   elif [ -f /etc/os-release ]; then
     ### Linux
     if systemctl --all --type service | grep -q "cloudflared" > /dev/null; then

@@ -368,11 +368,39 @@ ubuntuDashToDockFix() {
   fi
 }
 
+# @description
+#     Adds auto-update feature to macOS that automatically downloads and installs updates. Also enables
+#     an auto-update feature for Homebrew on macOS.
+enableAutoUpdateDarwin() {
+  if [ -d /Applications ] && [ -d /System ]; then
+    ### Enable automated system updates on macOS
+    if [ -f "/Library/LaunchDaemons/com.apple.automatedupdates.plist" ]; then
+      logg info 'Configuring macOS to automatically apply system updates'
+      sudo mkdir -p /Library/LaunchDaemons
+      logg info 'Loading /Library/LaunchDaemons/com.apple.automatedupdates.plist'
+      if sudo launchctl list | grep 'com.apple.automatedupdates' > /dev/null; then
+        logg info 'Unloading previous com.apple.automatedupdates configuration'
+        sudo launchctl unload /Library/LaunchDaemons/clamdscan.plist
+      fi
+      sudo launchctl load -w /Library/LaunchDaemons/com.apple.automatedupdates.plist
+    else
+      logg warn '/Library/LaunchDaemons/com.apple.automatedupdates.plist is missing!'
+    fi
+
+    ### Enable Homebrew auto-update service
+    if brew autoupdate status | grep 'Autoupdate is not configured.' > /dev/null; then
+      logg info 'Enabling Homebrew auto-update service (every 24 hours)'
+      brew autoupdate start --cleanup --greedy --upgrade
+    fi
+  fi
+}
+
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   logg info 'The DEBUG or DEBUG_MODE environment variable is set so the post-install tasks will be run synchronously'
   bashItPlugins
   candyIconTweaks
   configureVNC
+  enableAutoUpdateDarwin
   moveGnomeAppsToShare
   preloadZsh
   removeShortcutsLinux
@@ -383,6 +411,7 @@ else
   bashItPlugins &
   candyIconTweaks &
   configureVNC &
+  enableAutoUpdateDarwin &
   moveGnomeAppsToShare &
   preloadZsh &
   removeShortcutsLinux &
