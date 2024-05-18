@@ -45,7 +45,9 @@ if command -v cloudflared > /dev/null; then
     logg info 'Symlinking /usr/local/etc/cloudflared to /etc/cloudflared'
     sudo ln -s /usr/local/etc/cloudflared /etc/cloudflared
   else
-    logg warn '/etc/cloudflared is present but files are being modified in /usr/local/etc/cloudflared'
+    if [ -L /etc/cloudflared ]; then
+      logg info '/etc/cloudflared is present (and not symlinked) but files are being modified in /usr/local/etc/cloudflared'
+    fi
   fi
 
   ### Configure DNS
