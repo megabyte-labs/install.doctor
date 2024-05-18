@@ -56,8 +56,10 @@ if command -v cloudflared > /dev/null; then
   # Must be deleted manually if no longer used
   logg info 'Setting up DNS records for CloudFlare Argo tunnels'
   while read DOMAIN; do
-    logg info "Setting up $DOMAIN for access through cloudflared"
-    sudo cloudflared tunnel route dns -f "$TUNNEL_ID" "$DOMAIN" && logg success "Successfully routed $DOMAIN to this machine's cloudflared Argo tunnel"
+    if [ "$DOMAIN" != 'null' ]; then
+      logg info "Setting up $DOMAIN for access through cloudflared"
+      sudo cloudflared tunnel route dns -f "$TUNNEL_ID" "$DOMAIN" && logg success "Successfully routed $DOMAIN to this machine's cloudflared Argo tunnel"
+    fi
   done< <(yq '.ingress[].hostname' /usr/local/etc/config.yml)
 
   ### Update config.yml
@@ -79,6 +81,7 @@ if command -v cloudflared > /dev/null; then
       logg info 'Unloading previous com.cloudflare.cloudflared configuration'
       sudo launchctl unload /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
     fi
+    logg info 'Starting up com.cloudflare.cloudflared configuration'
     sudo launchctl load -w /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
   elif [ -f /etc/os-release ]; then
     ### Linux
