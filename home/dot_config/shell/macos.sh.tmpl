@@ -24,6 +24,11 @@ sudo systemsetup -setremotelogin {{ .macosRemoteLogin }} > /dev/null
 # settings we’re about to change
 osascript -e 'tell application "System Preferences" to quit'
 
+# Change font to Hack for icon support
+osascript -e "tell application \"Terminal\" to set the font name of window 1 to \"Hack Nerd Font\""
+osascript -e "tell application \"Terminal\" to set the font size of window 1 to 12"
+# TODO - Add anti-aliasing
+
 # Keep-alive: update existing `sudo` time stamp until `.macos` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 

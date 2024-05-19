@@ -1841,16 +1841,20 @@ softwarePackages:
     _short: "Apache Cordova is an open-source mobile development framework that allows developers to build mobile applications using web technologies like HTML, CSS, and JavaScript.                                  "
     npm: cordova
   coreutils:
-    _bin:
-      - cat
-      - ls
-      - rm
+    _bin: chown
     _bin:darwin: gchown
     _github: false
     apt: coreutils
     brew: coreutils
     dnf: coreutils
     pacman: coreutils
+  copilot-for-xcode:
+    _app: Copilot for Xcode.app
+    _bin: copilot-for-xcode
+    _desc: The missing GitHub Copilot, Codeium and ChatGPT Xcode Source Editor Extension
+    _github: https://github.com/intitni/CopilotForXcode
+    _name: CoPilot for Xcode
+    cask: copilot-for-xcode
   croc:
     _bin: croc
     _desc: Easily and securely send things from one computer to another
@@ -3286,6 +3290,16 @@ softwarePackages:
     _name: Fleet CLI
     _short: "Fleet is an open-source device management platform for macOS, Windows, and Linux systems.                                                                                                                 "
     npm: fleetctl
+  flipper:
+    _app: Flipper.app
+    _bin: flipper
+    _desc: A desktop debugging platform for mobile developers.
+    _docs: https://fbflipper.com/docs/getting-started/
+    _github: https://github.com/facebook/flipper
+    _home: https://fbflipper.com/
+    _name: Flipper
+    cask: flipper
+    choco: flipper
   flow-launcher:
     _bin: null
     _desc: Quick file search & app launcher for Windows with community-made plugins
