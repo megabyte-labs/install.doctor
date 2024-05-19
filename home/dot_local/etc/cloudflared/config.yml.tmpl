@@ -5,6 +5,10 @@ credentials-file: /usr/local/etc/cloudflared/credentials.json
 warp-routing:
   enabled: true
 
+access:
+  required: true
+  teamName: {{ .host.cloudflare.teamsOrg }}
+
 ingress:
   - hostname: test-{{ .host.hostname | lower }}.{{ .host.domain | lower }}
     service: hello_world
