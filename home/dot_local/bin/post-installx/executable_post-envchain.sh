@@ -16,8 +16,10 @@ if command -v envchain > /dev/null; then
   if [ -f "$HOME/.config/age/chezmoi.txt" ]; then
     logg info 'Importing environment variables into the System keyring'
     for file in {{ joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "*" }}; do
+      logg info "Adding $file to System keyring via envchain"
       cat "$file" | chezmoi decrypt | envchain -s default "$(basename $file)" > /dev/null || logg info 'Importing "$(basename $file)" failed'
     done
+    logg success "Added Chezmoi-managed secrets into System keyring via envchain"
   else
     logg warn 'Unable to import any variables into envchain because ~/.config/age/chezmoi.txt was not created by the secrets encryption process yet'
   fi

@@ -38,6 +38,12 @@ if command -v torify > /dev/null; then
       if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor" ] && [ ! -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc" ]; then
         logg info "Symlinking /usr/local/etc/tor/torrc to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc"
         ln -s /usr/local/etc/tor/torrc "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc"
+      else
+        if [ -L "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc" ]; then
+          logg info ""${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc" symlinked"
+        else
+          logg warn ""${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc" not symlinked!"
+        fi
       fi
       logg info 'Running brew services restart tor'
       brew services restart tor && logg success 'Tor successfully restarted'

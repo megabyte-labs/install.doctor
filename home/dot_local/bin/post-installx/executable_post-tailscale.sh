@@ -56,6 +56,8 @@ if [ -n "$TAILSCALE_AUTH_KEY" ] && [ "$TAILSCALE_AUTH_KEY" != "" ]; then
     if [ -n "$EXIT_CODE" ]; then
       logg warn '/Applications/Tailscale.app/Contents/MacOS/Tailscale timed out'
     fi
+    logg info 'Disabling update check'
+    /Applications/Tailscale.app/Contents/MacOS/Tailscale set --update-check=false
   elif command -v tailscale > /dev/null && [ "$TAILSCALE_AUTH_KEY" != "" ]; then
     logg info 'Connecting to Tailscale with user-defined authentication key (TAILSCALE_AUTH_KEY)'
     timeout 30 tailscale up --authkey="$TAILSCALE_AUTH_KEY" --accept-routes || EXIT_CODE=$?
@@ -64,6 +66,10 @@ if [ -n "$TAILSCALE_AUTH_KEY" ] && [ "$TAILSCALE_AUTH_KEY" != "" ]; then
     else
       logg success 'Connected to Tailscale network'
     fi
+    logg info 'Disabling notifications about updates'
+    tailscale set --update-check=false
+    logg info 'Setting tailscale to auto-update'
+    tailscale set --auto-update
   else
     logg info 'tailscale does not appear to be installed'
   fi

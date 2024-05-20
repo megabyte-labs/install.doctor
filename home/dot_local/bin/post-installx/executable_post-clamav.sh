@@ -31,6 +31,7 @@ if command -v freshclam > /dev/null; then
         logg info 'Unloading previous ClamAV clamdscan configuration'
         sudo launchctl unload /Library/LaunchDaemons/clamdscan.plist
       fi
+      logg info 'Running sudo launchctl load -w /Library/LaunchDaemons/clamdscan.plist'
       sudo launchctl load -w /Library/LaunchDaemons/clamdscan.plist
       if sudo launchctl list | grep 'clamav.freshclam' > /dev/null; then
         logg info 'Unloading previous ClamAV freshclam configuration'
@@ -41,6 +42,7 @@ if command -v freshclam > /dev/null; then
     fi
 
     ### Update database
+    logg info 'Running freshclam to update database'
     freshclam
 else
     logg info 'freshclam is not available in the PATH'

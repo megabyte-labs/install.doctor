@@ -28,7 +28,7 @@ if command -v fail2ban-client > /dev/null; then
       fi
       if [ -d /Applications ] && [ -d /System ]; then
         ### macOS
-        logg info 'Enabling the fail2ban Homebrew service' && brew services restart fail2ban
+        logg info 'Enabling the fail2ban Homebrew service' && sudo brew services restart fail2ban
       else
         ### Linux
         logg info 'Enabling the fail2ban service' && sudo systemctl enable fail2ban
