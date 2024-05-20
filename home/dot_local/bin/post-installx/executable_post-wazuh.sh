@@ -13,7 +13,7 @@ if [ -d /Applications ] && [ -d /System ]; then
     wget -q "$PKG_URL" -O /tmp/wazuh-agent.pkg &> /dev/null
     logg info 'Setting Wazuh launch parameters in /tmp/wazuh_envs'
     # https://documentation.wazuh.com/current/user-manual/agent/deployment-variables/deployment-variables-macos.html
-    echo 'WAZUH_MANAGER="$WAZUH_MANAGER" && WAZUH_REGISTRATION_SERVER="$WAZUH_MANAGER" && WAZUH_REGISTRATION_PASSWORD="WazuhRegister" && WAZUH_AGENT_NAME="$WAZUH_AGENT_NAME"' > /tmp/wazuh_envs
+    echo "WAZUH_MANAGER="$WAZUH_MANAGER" && WAZUH_REGISTRATION_SERVER="$WAZUH_MANAGER" && WAZUH_REGISTRATION_PASSWORD="WazuhRegister" && WAZUH_AGENT_NAME="$WAZUH_AGENT_NAME"" > /tmp/wazuh_envs
     logg info 'Installing the Wazuh agent pkg'
     sudo installer -pkg /tmp/wazuh-agent.pkg -target /
     sudo chmod 755 /Library/Ossec

@@ -10,6 +10,21 @@
 #     cat ~/.bashrc | mail -s "My subject" name@email.com
 #     ```
 
+### Acquire SENDGRID_API_KEY
+SENDGRID_API_KEY_FILE="${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/SENDGRID_API_KEY"
+if [ -f "$SENDGRID_API_KEY_FILE" ]; then
+  logg info "Found SENDGRID_API_KEY in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
+  if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" ]; then
+    logg info 'Decrypting SENDGRID_API_KEY token with Age encryption key'
+    SENDGRID_API_KEY="$(cat "$SENDGRID_API_KEY_FILE" | chezmoi decrypt)"
+  else
+    logg warn 'Age encryption key is missing from ~/.config/age/chezmoi.txt'
+  fi
+else
+  logg warn "SENDGRID_API_KEY is missing from ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
+fi
+
+### Setup Postfix if SENDGRID_API_KEY is retrieved
 if [ -n "$SENDGRID_API_KEY" ] && [ "$SENDGRID_API_KEY" != "" ]; then
   if command -v postfix > /dev/null; then
     ### Ensure dependencies are installed

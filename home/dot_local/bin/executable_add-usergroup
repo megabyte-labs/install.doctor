@@ -40,15 +40,15 @@ if [ -d /Applications ] && [ -d /System ]; then
   fi
 
   # Ensure group exists
-  if ! dscl . read "/Groups/$GROUP" gid &> /dev/null; then
-    MAX_ID_GROUP="$(dscl . -list /Groups gid | awk '{print $2}' | sort -ug | tail -1)"
+  if ! dscl . read "/Groups/$GROUP" PrimaryGroupID &> /dev/null; then
+    MAX_ID_GROUP="$(dscl . -list /Groups PrimaryGroupID | awk '{print $2}' | sort -ug | tail -1)"
     PRIMARY_GROUP_ID="$((MAX_ID_GROUP+1))"
     dscl . create "/Groups/$GROUP"
     # This also sets the PrimaryGroupID
-    sudo dscl . create "/Groups/$GROUP" gid "$PRIMARY_GROUP_ID"
+    sudo dscl . create "/Groups/$GROUP" PrimaryGroupID "$PRIMARY_GROUP_ID"
     sudo dscl . append "/Groups/$GROUP" GroupMembership "$USER"
   else
-    PRIMARY_GROUP_ID="$(dscl . read "/Groups/$GROUP" gid | awk '{print $2}')"
+    PRIMARY_GROUP_ID="$(dscl . read "/Groups/$GROUP" PrimaryGroupID | awk '{print $2}')"
   fi
 
   # Ensure user exists

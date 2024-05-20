@@ -566,20 +566,23 @@ removeLinuxBloatware() {
 #
 #     * [Changing Linux hostname permanently](https://www.tecmint.com/set-hostname-permanently-in-linux/)
 setHostname() {
+  HOSTNAME="{{ (.host.hostname | replace .host.domain "" | replace "." "" | replace " " "") | lower }}.{{ .host.domain | lower }}"
+  LOCAL_HOSTNAME="{{ (.host.hostname | replace .host.domain "" | replace "." "" | replace " " "") | lower }}"
+  COMPUTER_NAME="{{ .host.hostname }}"
   if [ -d /Applications ] && [ -d /System ]; then
     # Source: https://apple.stackexchange.com/questions/287760/set-the-hostname-computer-name-for-macos
     logg info 'Setting macOS hostname / local hostname / computer name'
-    logg info 'Changing HostName to {{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}.{{ .host.domain }}' && sudo scutil --set HostName '{{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}.{{ .host.domain }}' && logg info 'Changed HostName to {{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}.{{ .host.domain }}'
-    logg info 'Changing LocalHostName to {{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}' && sudo scutil --set LocalHostName '{{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}' && logg info 'Changed LocalHostName to {{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}'
-    logg info 'Changing ComputerName to {{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}' && sudo scutil --set ComputerName '{{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}' && logg info 'Changed ComputerName to {{ .host.hostname | replace .host.domain "" | replace "." "" | replace " " "" }}'
+    logg info "Changing HostName to $HOSTNAME" && sudo scutil --set HostName "$HOSTNAME" && logg info "Changed HostName to $HOSTNAME"
+    logg info "Changing LocalHostName to $LOCAL_HOSTNAME" && sudo scutil --set LocalHostName "$LOCAL_HOSTNAME" && logg info "Changed LocalHostName to $LOCAL_HOSTNAME"
+    logg info "Changing ComputerName to $COMPUTER_NAME" && sudo scutil --set ComputerName "$COMPUTER_NAME" && logg info "Changed ComputerName to $COMPUTER_NAME"
     logg info 'Flushing DNS cache'
-    dscacheutil -flushcache
+    sudo dscacheutil -flushcache
   elif [ -f /etc/passwd ]; then
     logg info 'Setting Linux hostname'
-    hostname '{{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}' && logg success 'Changed hostname to {{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}'
+    sudo hostname "$HOSTNAME" && logg success "Changed hostname to $HOSTNAME"
     if command -v hostnamectl > /dev/null; then
       logg info 'Ensuring hostname persists after reboot'
-      sudo hostnamectl set-hostname '{{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}' && logg success 'Permanently changed hostname to {{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}'
+      sudo hostnamectl set-hostname "$HOSTNAME" && logg success "Permanently changed hostname to $HOSTNAME"
     else
       logg warn 'hostnamectl was not available in the PATH - this operating system type might be unsupported'
     fi

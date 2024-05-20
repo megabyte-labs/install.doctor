@@ -1,7 +1,3 @@
-{{- $baseDomain := (join (join .host.hostname ".") .host.domain) -}}
-{{- if eq .host.qubes true -}}
-{{-   $baseDomain := (join (join .host.hostname "-qube.") .host.domain) -}}
-{{- end }}
 # Configuration for alarm notifications
 #
 # This configuration is used by: alarm-notify.sh
@@ -52,7 +48,7 @@
 # If you have an Internet facing netdata (or you have copied the images/ folder
 # of netdata to your web server), set its URL here, to fetch the notification
 # images from it.
-images_base_url="https://netdata.{{ $baseDomain }}"
+images_base_url="https://netdata-{{ .host.hostname | lower }}.{{ .host.domain | lower }}"
 
 
 #------------------------------------------------------------------------------
@@ -363,7 +359,11 @@ DEFAULT_RECIPIENT_PUSHOVER=""
 #                  "user1@email.com user2@mail.com"
 
 # enable/disable sending pushbullet notifications
+{{ if and (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "PUSHBULLET_ACCESS_TOKEN")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "PUSHBULLET_EMAIL")) }}
 SEND_PUSHBULLET="YES"
+{{ else }}
+SEND_PUSHBULLET="NO"
+{{ end }}
 
 # Signup and Login to pushbullet.com
 # To get your Access Token, go to https://www.pushbullet.com/#settings/account
@@ -388,7 +388,11 @@ PUSHBULLET_SOURCE_DEVICE=""
 #                  "+15555555555 +17777777777"
 
 # enable/disable sending twilio SMS
+{{ if and (and (and (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TWILIO_ACCOUNT_SID")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TWILIO_AUTH_TOKEN"))) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TWILIO_FROM_NUMBER"))) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CELL_PHONE_NUMBER")) }}
 SEND_TWILIO="YES"
+{{ else }}
+SEND_TWILIO="NO"
+{{ end }}
 
 # Signup for free trial and select a SMS capable Twilio Number
 # To get your Account SID and Token, go to https://www.twilio.com/console
@@ -453,7 +457,11 @@ DEFAULT_RECIPIENT_KAVENEGAR=""
 #                  "CHAT_ID_1 CHAT_ID_2 ..."
 
 # enable/disable sending telegram messages
+{{ if and (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TELEGRAM_BOT_TOKEN")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TELEGRAM_RECIPIENT_ID")) }}
 SEND_TELEGRAM="YES"
+{{ else }}
+SEND_TELEGRAM="NO"
+{{ end }}
 
 # Contact the bot @BotFather to create a new bot and receive a bot token.
 # Without it, netdata cannot send telegram messages.
@@ -479,7 +487,11 @@ DEFAULT_RECIPIENT_TELEGRAM="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoite
 #                  "RECIPIENT1 RECIPIENT2 ..."
 
 # enable/disable sending slack notifications
+{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SLACK_WEBHOOK_URL")) }}
 SEND_SLACK="YES"
+{{ else }}
+SEND_SLACK="NO"
+{{ end }}
 
 # Login to your slack.com workspace and create an incoming webhook, using the "Incoming Webhooks" App: https://slack.com/apps/A0F7XDUAZ-incoming-webhooks
 # Do not use the instructions in https://api.slack.com/incoming-webhooks#enable_webhooks, as those webhooks work only for a single channel.
@@ -601,7 +613,7 @@ DEFAULT_RECIPIENT_FLOCK=""
 #                  "CHANNEL1 CHANNEL2 ..."
 
 # enable/disable sending discord notifications
-SEND_DISCORD="YES"
+SEND_DISCORD="NO"
 
 # Create a webhook by following the official documentation -
 # https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks
@@ -788,7 +800,7 @@ SYSLOG_FACILITY='local6'
 # For example, to send messages with a 'netdata' prefix to a syslog
 # daemon listening on port 514 on 'loghost' using the daemon facility and
 # notice log level:
-DEFAULT_RECIPIENT_SYSLOG='daemon.notice@rsyslog.{{ $baseDomain }}:514/netdata'
+DEFAULT_RECIPIENT_SYSLOG='daemon.notice@rsyslog.{{ .host.hostname | lower }}.{{ .host.domain | lower }}:514/netdata'
 
 #------------------------------------------------------------------------------
 # iOS Push Notifications
@@ -846,21 +858,21 @@ DEFAULT_RECIPIENT_SMS=""
 #
 
 # enable/disable Matrix notifications
-SEND_MATRIX="YES"
+SEND_MATRIX="NO"
 
 # The url of the Matrix homeserver
 # e.g https://matrix.org:8448
-MATRIX_HOMESERVER="https://matrix-client.matrix.org:8448"
+MATRIX_HOMESERVER="https://matrix.org:8448"
 
 # An access token from a valid Matrix account. Tokens usually don't expire,
 # can be controlled from a Matrix client.
 # See https://matrix.org/docs/guides/client-server.html
-MATRIX_ACCESSTOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "MATRIX_ACCESS_TOKEN")) }}{{- includeTemplate "secrets/MATRIX_ACCESS_TOKEN" | decrypt | trim -}}{{ else }}{{- env "MATRIX_ACCESS_TOKEN" -}}{{ end }}"
+MATRIX_ACCESSTOKEN=""
 
 # Specify the default rooms to receive the notification if no rooms are provided
 # in a role's recipients.
 # The format is !roomid:homeservername
-DEFAULT_RECIPIENT_MATRIX="#install.doctor:matrix.org"
+DEFAULT_RECIPIENT_MATRIX=""
 
 #------------------------------------------------------------------------------
 # ntfy.sh global notification options

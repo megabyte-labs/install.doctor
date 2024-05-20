@@ -4,9 +4,19 @@
 # @description
 #     This script ensures the `tailscaled` system daemon is installed on macOS. Then, on both macOS and Linux, it connects to the Tailscale
 #     network if the `TAILSCALE_AUTH_KEY` variable is provided.
+#
+#     If CloudFlare WARP is also installed, this script will disconnect from it and then reconnect after Tailscale is connected.
+#     This is a quirk and Tailscale has no roadmap for fixing it for use alongside other VPNs. To setup Tailscale to work alongside
+#     CloudFlare WARP, you will have to set up a [split tunnel](https://www.youtube.com/watch?v=eDFs8hm3xWc) for
+#     [Tailscale IP addresses](https://tailscale.com/kb/1105/other-vpns).
+
+### Disconnect from CloudFlare WARP (if connected)
+if command -v warp-cli > /dev/null; then
+  warp-cli disconnect && logg info 'CloudFlare WARP temporarily disconnected while Tailscale connects'
+fi
 
 ### Install the Tailscale system daemon
-if [ -d /Applications ] && [ -d System ]; then
+if [ -d /Applications ] && [ -d /System ]; then
   ### macOS
   if command -v tailscaled > /dev/null; then
     logg info 'Ensuring tailscaled system daemon is installed'
@@ -22,6 +32,20 @@ if [ -d /Applications ] && [ -d System ]; then
   else
     logg info '/Applications/Tailscale.app is missing from the system'
   fi
+fi
+
+### Acquire TAILSCALE_AUTH_KEY
+TAILSCALE_KEY_FILE="${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/TAILSCALE_AUTH_KEY"
+if [ -f "$TAILSCALE_KEY_FILE" ]; then
+  logg info "Found TAILSCALE_AUTH_KEY in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
+  if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" ]; then
+    logg info 'Decrypting TAILSCALE_AUTH_KEY token with Age encryption key'
+    TAILSCALE_AUTH_KEY="$(cat "$TAILSCALE_KEY_FILE" | chezmoi decrypt)"
+  else
+    logg warn 'Age encryption key is missing from ~/.config/age/chezmoi.txt'
+  fi
+else
+  logg warn "TAILSCALE_AUTH_KEY is missing from ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
 fi
 
 ### Connect to Tailscale network
@@ -45,4 +69,23 @@ if [ -n "$TAILSCALE_AUTH_KEY" ] && [ "$TAILSCALE_AUTH_KEY" != "" ]; then
   fi
 else
   logg info 'TAILSCALE_AUTH_KEY is not defined so not logging into Tailscale network'
+fi
+
+### Re-connect CloudFlare WARP after Tailscale is connected
+if command -v warp-cli > /dev/null; then
+  ### Register CloudFlare WARP
+  if warp-cli --accept-tos status | grep 'Registration Missing' > /dev/null; then
+    logg info 'Registering CloudFlare WARP'
+    warp-cli --accept-tos registration new
+  else
+    logg info 'Either there is a misconfiguration or the device is already registered with CloudFlare WARP'
+  fi
+
+  ### Connect CloudFlare WARP
+  if warp-cli --accept-tos status | grep 'Disconnected' > /dev/null; then
+    logg info 'Connecting to CloudFlare WARP'
+    warp-cli --accept-tos connect > /dev/null && logg success 'Connected to CloudFlare WARP'
+  else
+    logg info 'Either there is a misconfiguration or the device is already connected with CloudFlare WARP'
+  fi
 fi

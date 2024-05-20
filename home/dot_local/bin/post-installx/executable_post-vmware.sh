@@ -139,7 +139,7 @@ if command -v vagrant > /dev/null && command -v vmware-id > /dev/null; then
     logg info 'Ensuring the Vagrant VMWare Utility service is enabled'
     sudo vagrant-vmware-utility service install || EXIT_CODE=$?
     if [ -n "$EXIT_CODE" ]; then
-      logg info 'The Vagrant VMWare Utility command vagrant-vmware-utility service. If it was already set up, there should be a notice above.'
+      logg info 'The Vagrant VMWare Utility command vagrant-vmware-utility service install failed. If it was already set up, there should be a notice above.'
     fi
   fi
 else

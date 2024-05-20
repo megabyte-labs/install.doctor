@@ -38,7 +38,7 @@ if command -v nginx > /dev/null; then
   fi
   logg info "Ensuring $NGINX_CONFIG_DIR is present" && sudo mkdir -p "$NGINX_CONFIG_DIR"
   logg info "Copying configuration files from $HOME/.local/etc/nginx to $NGINX_CONFIG_DIR"
-  sudo rsync -av "$HOME/.local/etc/nginx" "$NGINX_CONFIG_DIR"
+  sudo rsync -av "$HOME/.local/etc/nginx/" "$NGINX_CONFIG_DIR"
   if [ -d /Applications ] && [ -d /System ]; then
     ### macOS
     if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/nginx" ] && [ ! -L "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/nginx" ]; then

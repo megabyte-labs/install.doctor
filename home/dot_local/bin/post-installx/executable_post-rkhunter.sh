@@ -6,12 +6,12 @@ if command -v rkhunter > /dev/null; then
     if [ -d /Applications ] && [ -d /System ]; then
       ### macOS
       logg info 'Updating file "$(brew --prefix)/Cellar/rkhunter/1.4.6/etc/rkhunter.conf"' && gsed -i  "s/^#WEB_CMD.*$/WEB_CMD=curl\ -L/" "$(brew --prefix)/Cellar/rkhunter/1.4.6/etc/rkhunter.conf"
+      export PATH="$(echo "$PATH" | gsed 's/VMware Fusion.app/VMwareFusion.app/g')"
+      export PATH="$(echo "$PATH" | gsed 's/IntelliJ IDEA CE.app/IntelliJIDEACE.app/g')"
     else
       ### Linux
       logg info 'Updating file /etc/rkhunter.conf' && sed -i  "s/^#WEB_CMD.*$/WEB_CMD=curl\ -L/" /etc/rkhunter.conf
     fi
-    export PATH="$(echo "$PATH" | sed 's/VMware Fusion.app/VMwareFusion.app/')"
-    export PATH="$(echo "$PATH" | sed 's/IntelliJ IDEA CE.app/IntelliJIDEACE.app/')"
     sudo rkhunter --propupd || RK_PROPUPD_EXIT_CODE=$?
     if [ -n "$RK_PROPUPD_EXIT_CODE" ]; then
       logg error "sudo rkhunter --propupd returned non-zero exit code"

@@ -25,7 +25,7 @@ PRIVOXY_CONFIG="$PRIVOXY_CONFIG_DIR/config"
 
 if command -v privoxy > /dev/null; then
   if [ -f "${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config" ]; then
-    sudo mkdir -p "PRIVOXY_CONFIG_DIR"
+    sudo mkdir -p "$PRIVOXY_CONFIG_DIR"
     logg info "Copying ${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config to $PRIVOXY_CONFIG"
     sudo cp -f "${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config" "$PRIVOXY_CONFIG"
     logg info "Running sudo chmod 600 $PRIVOXY_CONFIG"
