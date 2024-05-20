@@ -314,7 +314,7 @@ async function installPackages(pkgInstructions) {
                 promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => $`${key} install ${i}`)))
                 break
             case 'npm':
-                promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => $`${key} install -g ${i}`)))
+                promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => $`volta install ${i}`)))
                 break
             case 'binary':
                 // TODO
