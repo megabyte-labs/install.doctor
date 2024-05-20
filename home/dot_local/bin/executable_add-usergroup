@@ -3,112 +3,108 @@
 # @brief Add a user and a group with the same name on either Linux or macOS
 # @description
 #     This script is utilized by other scripts to ensure that there is both a user and group
-#     named by the single argument that this executable accepts. It checks whether or not
+#     named by the two arguments that this executable accepts. It checks whether or not
 #     there is already a user / group with the name present on the system before running
-#     any code. On macOS, it assigns the user an ID that equal to the maximum user ID present
-#     on the system plus one.
+#     any code.
 
-# Check if the script is being run as root
+### Check if the script is being run as root
 if [[ $EUID -ne 0 ]]; then
-  if command -v logg > /dev/null; then
-    logg error "This script must be run as root"
-  else
-    echo -e "\e[91mThis script must be run as root\e[0m"
-  fi
+  logg error "This script must be run as root"
   exit 1
 fi
 
-# Check if the correct number of arguments is provided
-if [[ $# -ne 2 ]]; then
-  if command -v logg > /dev/null; then
-    logg info "Usage: $0 <user> <group>"
-  else
-    echo -e "\e[93mUsage: $0 <user> <group>\e[0m"
-  fi
-  exit 1
+### Check if the correct number of arguments is provided
+if [ "$#" -ne 2 ]; then
+    logg error "Usage: $0 <username> <groupname>"
+    exit 1
 fi
 
-USER=$1
-GROUP=$2
+### Assign arguments to variables
+USERNAME="$1"
+GROUPNAME="$2"
 
-# Check if the operating system is macOS
-if [ -d /Applications ] && [ -d /System ]; then
-  if command -v logg > /dev/null; then
-    logg info "Creating group and user ${GROUP} on macOS..."
-  else
-    echo -e "\e[96mCreating group and user ${GROUP} on macOS...\e[0m"
-  fi
+### Function to find the next available system ID on macOS
+find_next_system_id_macos() {
+    local id_type="$1"
+    local id_tag="$2"
+    local current_ids="$(dscl . -list /$id_type "$id_tag" | awk '{print $2}')"
+    local min_id=20  # Start from 20 to avoid conflict with default system users/groups
 
-  # Ensure group exists
-  if ! dscl . read "/Groups/$GROUP" PrimaryGroupID &> /dev/null; then
-    MAX_ID_GROUP="$(dscl . -list /Groups PrimaryGroupID | awk '{print $2}' | sort -ug | tail -1)"
-    PRIMARY_GROUP_ID="$((MAX_ID_GROUP+1))"
-    dscl . create "/Groups/$GROUP"
-    # This also sets the PrimaryGroupID
-    sudo dscl . create "/Groups/$GROUP" PrimaryGroupID "$PRIMARY_GROUP_ID"
-    sudo dscl . append "/Groups/$GROUP" GroupMembership "$USER"
-  else
-    PRIMARY_GROUP_ID="$(dscl . read "/Groups/$GROUP" PrimaryGroupID | awk '{print $2}')"
-  fi
+    for id in $current_ids; do
+        if [ "$id" -ge "$min_id" ] && [ "$id" -lt 500 ]; then
+            min_id="$((id + 1))"
+        fi
+    done
+    echo "$min_id"
+}
 
-  # Ensure user exists
-  if ! dscl . read "/Users/$GROUP" UniqueID &> /dev/null; then
-    MAX_ID_USER="$(dscl . -list /Users UniqueID | sort -nr -k 2 | head -1 | grep -oE "[0-9]+$")"
-    UNIQUE_ID="$((MAX_ID_USER+1))"
-    sudo dscl . create "/Users/$GROUP"
-    sudo dscl . create "/Users/$GROUP" UniqueID "$UNIQUE_ID"
-    sudo dscl . create "/Users/$GROUP" PrimaryGroupID "$PRIMARY_GROUP_ID"
-  else
-    UNIQUE_ID="$(dscl . read "/Users/$GROUP" UniqueID | awk '{print $2}')"
-  fi
+### Detect the operating system
+OS="$(uname)"
 
-  # Add the user to the group
-  sudo dseditgroup -o edit -t user -a "$GROUP" "$GROUP"
-  # Add the current user to the group
-  sudo dseditgroup -o edit -t user -a "$USER" "$GROUP"
-  # Add USER group to the group
-  sudo dseditgroup -o edit -t group -a "$USER" "$GROUP"
+if [ "$OS" == "Darwin" ]; then
+    ### macOS
 
-
-  if command -v logg > /dev/null; then
-    logg info "Group and user ${GROUP} created successfully on macOS"
-  else
-    echo -e "\e[92mGroup and user ${GROUP} created successfully on macOS\e[0m"
-  fi
-elif [[ "$(uname)" == "Linux" ]]; then
-  if command -v logg > /dev/null; then
-    logg info "Creating group and user ${GROUP} on Linux..."
-  else
-    echo -e "\e[96mCreating group and user ${GROUP} on Linux...\e[0m"
-  fi
-
-  # Check if the group already exists
-  if ! grep -qE "^${GROUP}:" /etc/group; then
-    # Create the group
-    groupadd "${GROUP}"
-  else
-    if command -v logg > /dev/null; then
-      logg info "Group ${GROUP} already exists"
+    ### Create the group if it does not exist
+    if ! dscl . -list /Groups | grep -q "^$GROUPNAME\$"; then
+        logg info "Creating system group: $GROUPNAME"
+        SYSTEM_GID="$(find_next_system_id_macos "Groups" "PrimaryGroupID")"
+        logg info "Initializing $GROUPNAME group"
+        sudo dscl . -create "/Groups/$GROUPNAME"
+        logg info "Assigning $SYSTEM_GID PrimaryGroupID to group"
+        sudo dscl . -create "/Groups/$GROUPNAME" PrimaryGroupID "$SYSTEM_GID"
     else
-      echo -e "\e[93mGroup ${GROUP} already exists\e[0m"
+        logg info "Group $GROUPNAME already exists"
+        SYSTEM_GID=$(dscl . -read "/Groups/$GROUPNAME" PrimaryGroupID | awk '{print $2}')
     fi
-  fi
 
-  # Check if the user already exists
-  if ! id -u "${GROUP}" >/dev/null 2>&1; then
-    # Create the user and assign it to the group
-    useradd -g "${GROUP}" "${GROUP}"
-  else
-    if command -v logg > /dev/null; then
-      logg info "User ${GROUP} already exists"
+    ### Create the user if it does not exist
+    if ! id -u "$USERNAME" > /dev/null 2>&1; then
+        logg info "Creating system user: $USERNAME"
+        SYSTEM_UID="$(find_next_system_id_macos "Users" "UniqueID")"
+        logg info "Initializing $USERNAME user"
+        sudo dscl . -create "/Users/$USERNAME"
+        logg info "Assigning $USERNAME user attributes"
+        sudo dscl . -create "/Users/$USERNAME" UserShell /bin/bash
+        sudo dscl . -create "/Users/$USERNAME" RealName "$USERNAME"
+        sudo dscl . -create "/Users/$USERNAME" UniqueID "$SYSTEM_UID"
+        sudo dscl . -create "/Users/$USERNAME" PrimaryGroupID "$SYSTEM_GID"
+        sudo dscl . -create "/Users/$USERNAME" NFSHomeDirectory /var/empty
+        logg info "Finished assigning $USERNAME user attributes"
     else
-      echo -e "\e[93mUser ${GROUP} already exists\e[0m"
+        logg info "User $USERNAME already exists"
     fi
-  fi
 
-  if command -v logg > /dev/null; then
-    logg success "Group and user ${GROUP} created successfully on Linux"
-  else
-    echo -e "\e[92mGroup and user ${GROUP} created successfully on Linux\e[0m"
-  fi
+    ### Add the user to the group
+    logg info "Adding user $USERNAME to group $GROUPNAME"
+    sudo dscl . -append "/Groups/$GROUPNAME" GroupMembership "$USERNAME"
+
+    logg info "System user $USERNAME added to system group $GROUPNAME successfully."
+
+elif [ "$OS" == "Linux" ]; then
+    ### Linux
+
+    ### Create the group if it does not exist
+    if ! getent group "$GROUPNAME" > /dev/null 2>&1; then
+        logg info "Creating system group: $GROUPNAME"
+        sudo groupadd -r "$GROUPNAME"
+    else
+        logg info "Group $GROUPNAME already exists"
+    fi
+
+    ### Create the user if it does not exist
+    if ! id -u "$USERNAME" > /dev/null 2>&1; then
+        logg info "Creating system user: $USERNAME"
+        sudo useradd -r -g "$GROUPNAME" -s /bin/bash -M -N "$USERNAME"
+    else
+        logg info "User $USERNAME already exists"
+    fi
+
+    ### Add the user to the group (redundant on Linux since user is already added to the group during creation)
+    sudo usermod -a -G "$GROUPNAME" "$USERNAME"
+
+    logg info "System user $USERNAME added to system group $GROUPNAME successfully."
+
+else
+    logg info "Unsupported operating system: $OS"
+    exit 1
 fi

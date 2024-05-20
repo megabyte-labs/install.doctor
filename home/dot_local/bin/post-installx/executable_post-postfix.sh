@@ -24,6 +24,19 @@ else
   logg warn "SENDGRID_API_KEY is missing from ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
 fi
 
+### Acquire PUBLIC_SERVICES_DOMAIN and PRIMARY_EMAIL
+if command -v yq > /dev/null; then
+  if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml" ]; then
+    PUBLIC_SERVICES_DOMAIN="$(yq '.data.host.domain' "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml")"
+    PRIMARY_EMAIL="$(yq '.data.user.email' "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml")"
+  else
+    logg warn "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml is missing and is required for acquiring the PUBLIC_SERVICES_DOMAIN and PRIMARY_EMAIL"
+  fi
+else
+  logg warn 'yq is not installed on the system and is required for populating the PUBLIC_SERVICES_DOMAIN and PRIMARY_EMAIL'
+fi
+
+
 ### Setup Postfix if SENDGRID_API_KEY is retrieved
 if [ -n "$SENDGRID_API_KEY" ] && [ "$SENDGRID_API_KEY" != "" ]; then
   if command -v postfix > /dev/null; then
@@ -74,28 +87,40 @@ if [ -n "$SENDGRID_API_KEY" ] && [ "$SENDGRID_API_KEY" != "" ]; then
       else
         logg warn '~/.config/postfix/sasl_passwd file is missing'
       fi
+
       ### Forward root e-mails
-      if [ -d /root ]; then
-        logg info "Forwarding root e-mails to $PRIMARY_EMAIL"
-        echo "$PRIMARY_EMAIL" | sudo tee /root/.forward > /dev/null || logg error 'Failed to set root user .forward file'
-      elif [ -d /var/root ]; then
-        logg info "Forwarding root e-mails to $PRIMARY_EMAIL"
-        echo "$PRIMARY_EMAIL" | sudo tee /var/root/.forward > /dev/null || logg error 'Failed to set root user .forward file'
+      if [ -n "$PRIMARY_EMAIL" ]; then
+        if [ -d /root ]; then
+          logg info "Forwarding root e-mails to $PRIMARY_EMAIL"
+          echo "$PRIMARY_EMAIL" | sudo tee /root/.forward > /dev/null || logg error 'Failed to set root user .forward file'
+        elif [ -d /var/root ]; then
+          logg info "Forwarding root e-mails to $PRIMARY_EMAIL"
+          echo "$PRIMARY_EMAIL" | sudo tee /var/root/.forward > /dev/null || logg error 'Failed to set root user .forward file'
+        else
+          logg warn 'Unable to identify root user home directory'
+        fi
       else
-        logg warn 'Unable to identify root user home directory'
+        logg warn 'PRIMARY_EMAIL is undefined so cannot setup root email forwarding'
       fi
+
       ### Ensure /etc/postfix/header_checks exists
       if [ ! -d /etc/postfix/header_checks ]; then
         logg info 'Creating /etc/postfix/header_checks since it does not exist'
         sudo touch /etc/postfix/header_checks
       fi
+
       ### Re-write header From for SendGrid
-      if ! cat /etc/postfix/header_checks | grep "no-reply@${PUBLIC_SERVICES_DOMAIN}" > /dev/null; then
-        logg info 'Added From REPLACE to /etc/postfix/header_checks'
-        echo "/^From:.*@${PUBLIC_SERVICES_DOMAIN}/ REPLACE From: no-reply@${PUBLIC_SERVICES_DOMAIN}" | sudo tee -a /etc/postfix/header_checks > /dev/null
+      if [ -n "$PUBLIC_SERVICES_DOMAIN" ]; then
+        if ! cat /etc/postfix/header_checks | grep "no-reply@${PUBLIC_SERVICES_DOMAIN}" > /dev/null; then
+          logg info 'Added From REPLACE to /etc/postfix/header_checks'
+          echo "/^From:.*@${PUBLIC_SERVICES_DOMAIN}/ REPLACE From: no-reply@${PUBLIC_SERVICES_DOMAIN}" | sudo tee -a /etc/postfix/header_checks > /dev/null
+        fi
+      else
+        logg warn 'PUBLIC_SERVICES_DOMAIN is undefined'
       fi
+
       ### Update aliases
-      if [ -f /etc/aliases ]; then
+      if [ -f /etc/aliases ] && [ -n "$PRIMARY_EMAIL" ]; then
         logg info "Forward root e-mails to $PRIMARY_EMAIL"
         ALIASES_TMP="$(mktemp)"
         logg info "Setting $PRIMARY_EMAIL as root e-mail in temporary file"
@@ -129,7 +154,7 @@ if [ -n "$SENDGRID_API_KEY" ] && [ "$SENDGRID_API_KEY" != "" ]; then
         # but since we are removing it to ensure proper permissions, this method is commented out.
         # logg info 'Running newaliases to regenerate the alias database' && sudo newaliases
       else
-        logg warn '/etc/aliases does not appear to exist'
+        logg warn '/etc/aliases does not appear to exist or PRIMARY_EMAIL is undefined'
       fi
       if [ -d /Applications ] && [ -d /System ]; then
         ### macOS
