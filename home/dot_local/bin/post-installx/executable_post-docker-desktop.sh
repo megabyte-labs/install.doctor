@@ -43,7 +43,7 @@ fi
 
 ### Symlink on macOS
 if [ -d /Applications ] && [ -d /System ]; then
-  if [ -f "$HOME/Library/Containers/com.docker.docker/Data/docker.raw.sock" ]; then
+  if [ -S "$HOME/Library/Containers/com.docker.docker/Data/docker.raw.sock" ]; then
     logg info 'Symlinking /var/run/docker.sock to macOS Library location' && sudo ln -s "$HOME/Library/Containers/com.docker.docker/Data/docker.raw.sock" /var/run/docker.sock
   else
     logg info "Skipping symlinking /var/run/docker.sock since $HOME/Library/Containers/com.docker.docker/Data/docker.raw.sock is missing"
