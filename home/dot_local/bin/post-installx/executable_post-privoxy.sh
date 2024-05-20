@@ -31,6 +31,7 @@ if command -v privoxy > /dev/null; then
     logg info "Running sudo chmod 600 $PRIVOXY_CONFIG"
     sudo chmod 600 "$PRIVOXY_CONFIG"
     if command -v add-usergroup > /dev/null; then
+      sudo add-usergroup privoxy privoxy
       sudo add-usergroup "$USER" privoxy
     fi
     logg info 'Applying proper permissions to Privoxy configuration'

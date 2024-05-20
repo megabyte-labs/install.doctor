@@ -26,6 +26,7 @@ ensureNetdataOwnership() {
 if command -v netdata-claim.sh > /dev/null; then
   ### Add user / group with script in ~/.local/bin/add-usergroup, if it is available
   if command -v add-usergroup > /dev/null; then
+    sudo add-usergroup netdata netdata
     sudo add-usergroup "$USER" netdata
   fi
   ### Ensure ownership

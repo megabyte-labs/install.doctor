@@ -79,6 +79,7 @@ EOT
   sudo chmod 750 /var/cache/rclone
   ### Add user / group with script in ~/.local/bin/add-usergroup, if it is available
   if command -v add-usergroup > /dev/null; then
+    sudo add-usergroup rclone rclone
     sudo add-usergroup "$USER" rclone
   fi
   sudo chown -Rf rclone:rclone /var/cache/rclone

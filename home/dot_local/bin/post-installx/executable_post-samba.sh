@@ -51,6 +51,7 @@
 if command -v smbd > /dev/null; then
   # Add user / group with script in ~/.local/bin/add-usergroup, if it is available
   if command -v add-usergroup > /dev/null; then
+    sudo add-usergroup rclone rclone
     sudo add-usergroup "$USER" rclone
   fi
   ### Define share locations
