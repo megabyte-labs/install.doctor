@@ -9,6 +9,8 @@
 #     This script installs additional alerts and enables notifications if Netdata is installed. Email notifications are configured
 #     using the provided primary email address. If the OS is Debian based, Netdata shows the number of CVEs in currently installed packages.
 
+set -euo pipefail
+
 ensureNetdataOwnership() {
   ### Ensure /usr/local/var/lib/netdata/cloud.d is owned by user
   if [ -d /usr/local/var/lib/netdata ]; then
@@ -22,6 +24,9 @@ ensureNetdataOwnership() {
   fi
 }
 
+### Ensure secrets are available
+get-secret --exists NETDATA_ROOM NETDATA_TOKEN
+
 ### Claim the instance with Netdata Cloud
 if command -v netdata-claim.sh > /dev/null; then
   ### Add user / group with script in ~/.local/bin/add-usergroup, if it is available
@@ -32,7 +37,7 @@ if command -v netdata-claim.sh > /dev/null; then
   ### Ensure ownership
   ensureNetdataOwnership
   ### netdata-claim.sh must be run as netdata user
-  sudo -H -u netdata bash -c 'export NETDATA_ROOM="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_ROOM")) -}}{{- includeTemplate "secrets/NETDATA_ROOM" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_ROOM" -}}{{- end -}}" && export NETDATA_TOKEN="{{- if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "NETDATA_TOKEN")) -}}{{- includeTemplate "secrets/NETDATA_TOKEN" | decrypt | trim -}}{{- else -}}{{- env "NETDATA_TOKEN" -}}{{- end -}}" && yes | netdata-claim.sh -token="$NETDATA_TOKEN" -rooms="$NETDATA_ROOM" -url="https://app.netdata.cloud"'
+  sudo -H -u netdata bash -c "yes | netdata-claim.sh -token="$(get-secret NETDATA_TOKEN)" -rooms="$(get-secret NETDATA_ROOM)" -url="https://app.netdata.cloud""
   ### Kernel optimizations
   # These are mentioned while installing via the kickstart.sh script method. We are using Homebrew for the installation though.
   # Assuming these optimizations do not cause any harm.

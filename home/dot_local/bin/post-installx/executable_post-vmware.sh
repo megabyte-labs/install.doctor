@@ -42,6 +42,8 @@
 #     * [`home/.chezmoidata.yaml`](https://github.com/megabyte-labs/install.doctor/blob/master/home/.chezmoidata.yaml)
 #     * [Default license key gist](https://gist.github.com/PurpleVibe32/30a802c3c8ec902e1487024cdea26251)
 
+set -euo pipefail
+
 ### Run logic if VMware is installed
 if command -v vmware > /dev/null; then
   ### Build kernel modules if they are not present
@@ -137,9 +139,15 @@ if command -v vagrant > /dev/null && command -v vmware-id > /dev/null; then
       logg success 'Generated Vagrant VMWare Utility certificates via vagrant-vmware-utility certificate generate'
     fi
     logg info 'Ensuring the Vagrant VMWare Utility service is enabled'
-    sudo vagrant-vmware-utility service install || EXIT_CODE=$?
-    if [ -n "$EXIT_CODE" ]; then
-      logg info 'The Vagrant VMWare Utility command vagrant-vmware-utility service install failed. If it was already set up, there should be a notice above.'
+    if VVU_OUTPUT=$(sudo vagrant-vmware-utility service install 2>&1); then
+      logg info 'sudo vagrant-vmware-utility service install successfully ran'
+    else
+      if echo $VVU_OUTPUT | grep 'service is already installed' > /dev/null; then
+        logg info 'Vagrant VMWare Utility is already installed'
+      else
+        logg error 'An error occurred while running sudo vagrant-vmware-utility service install'
+        echo "$VVU_OUTPUT"
+      fi
     fi
   fi
 else

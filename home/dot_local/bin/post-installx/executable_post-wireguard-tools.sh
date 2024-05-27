@@ -20,8 +20,7 @@
 #     * [VPN profile folder](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/vpn)
 #     * [VPN profile documentation](https://install.doctor/docs/customization/secrets#vpn-profiles)
 
-# TODO - Populate Tunnelblick on macOS using the .ovpn profiles located in $HOME/.config/vpn (execpt in the `openvpn` entry of software.yml)
-# along with the secrets for the protonVPN OpenVPN (check vpn-linux.tmpl)
+set -euo pipefail
 
 ### Backs up previous network settings to `/Library/Preferences/com.apple.networkextension.plist.old` before applying new VPN profiles
 logg info 'Backing up /Library/Preferences/com.apple.networkextension.plist to /Library/Preferences/com.apple.networkextension.plist.old'

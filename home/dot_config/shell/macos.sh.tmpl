@@ -29,6 +29,9 @@ osascript -e "tell application \"Terminal\" to set the font name of window 1 to 
 osascript -e "tell application \"Terminal\" to set the font size of window 1 to 12"
 # TODO - Add anti-aliasing
 
+# Hammerspoon
+defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
+
 # Keep-alive: update existing `sudo` time stamp until `.macos` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 

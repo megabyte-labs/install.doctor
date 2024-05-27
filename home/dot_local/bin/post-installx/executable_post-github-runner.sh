@@ -17,6 +17,8 @@
 #
 #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
 
+set -euo pipefail
+
 ### Check if GitHub runner is installed
 if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/github-runnerconfig.sh" ]; then
   if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/.runner" ]; then
@@ -40,10 +42,11 @@ if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/github-runnerconfig.sh" ]; then
       if command -v jq > /dev/null; then
         ### Acquire token
         logg info 'Acquiring runner token'
-        RUNNER_TOKEN="$(curl -sSL -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/{{ .user.github.runnerOrg }}/actions/runners/registration-token | jq -r '.token')"
+        RUNNER_ORG="$(yq '.data.user.github.runnerOrg' "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml")"
+        RUNNER_TOKEN="$(curl -sSL -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/${RUNNER_ORG}/actions/runners/registration-token | jq -r '.token')"
         ### Generate the configuration
-        logg info 'Joining GitHub runner to https://github.com/{{ .user.github.runnerOrg }}'
-        "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/config.sh" --unattended --url https://github.com/{{ .user.github.runnerOrg }} --token "$RUNNER_TOKEN" --labels "$LABELS" || EXIT_CODE=$?
+        logg info "Joining GitHub runner to https://github.com/${RUNNER_ORG}"
+        "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/config.sh" --unattended --url https://github.com/${RUNNER_ORG} --token "$RUNNER_TOKEN" --labels "$LABELS" || EXIT_CODE=$?
         if [ -n "$EXIT_CODE" ]; then
           logg error 'GitHub runner configuration failed' && exit 1
         fi

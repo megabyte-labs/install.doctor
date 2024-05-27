@@ -7,58 +7,18 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
-{{- $softwareGroup := nospace (cat "_" .host.softwareGroup) }}
-{{- $softwareList := list (index .softwareGroups $softwareGroup | toString | replace "[" "" | replace "]" "") | uniq | join " " }}
-
-if command -v install-program > /dev/null; then
+if command -v installx > /dev/null; then
   if command -v zx > /dev/null; then
-    logg info 'Installing packages defined in .chezmoidata.yaml under the .softwareGroups key'
-    logg info 'Installing: {{ $softwareList }}'
-    # Ask for the administrator password upfront
-    logg info 'A sudo password may be required for some of the installations'
-    sudo echo "Sudo access granted."
-    export DEBIAN_FRONTEND=noninteractive
-    export HOMEBREW_NO_ENV_HINTS=true
-    export HOMEBREW_NO_ANALYTICS=1
-    if ! command -v gcc-11; then
-      if command -v gcc; then
-        logg info 'gcc-11 command missing. Symlinking to gcc'
-        sudo ln -s "$(which gcc)" /usr/local/bin/gcc-11
-      else
-        logg warn 'gcc either needs to be added to the PATH or it is missing'
-      fi
-    fi
-    if [ -f "$HOME/.bashrc" ]; then
-      . "$HOME/.bashrc"
-    else
-      logg warn 'No ~/.bashrc file to import before running install-program'
-    fi
-    export LC_ALL="en_US.UTF-8"
-    logg info 'Printing environment variables for GO'
-    env | grep GO
-    logg info 'Printing environment variables for Java'
-    env | grep JAVA
-    env | grep SDKMAN
-    if ! command -v unbuffer > /dev/null; then
-      if command -v brew > /dev/null; then
-        logg info 'Ensuring expect is installed for the unbuffer command' && brew install --quiet expect
-      fi
-    fi
     if command -v unbuffer > /dev/null; then
-      # install-program was refactored into installx
-      # logg info 'Running unbuffer install-program'
-      # unbuffer install-program {{ $softwareList }}
       logg info 'Running unbuffer installx'
-      unbuffer installx {{ $softwareList }}
+      unbuffer installx --all
     else
-      logg info 'Running install-program without unbuffer'
-      install-program {{ $softwareList }}
       logg info 'Running installx'
-      installx {{ $softwareList }}
+      installx --all
     fi
   else
     logg error 'zx is not available'
   fi
 else
-  logg error 'install-program is not in the PATH. It should be located in ~/.local/bin.'
+  logg error 'installx is not in the PATH. It should be located in ~/.local/bin.'
 fi

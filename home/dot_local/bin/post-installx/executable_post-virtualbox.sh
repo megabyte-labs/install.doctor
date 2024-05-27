@@ -4,6 +4,8 @@
 # @description
 #     This script ensures the VirtualBox extension pack that corresponds with VirtualBox's version is properly installed.
 
+set -euo pipefail
+
 ### Run logic if VirtualBox is installed
 if command -v VirtualBox > /dev/null; then
   ### Install VirtualBox extension pack if it is not installed already

@@ -2,12 +2,14 @@
 # @file Atuin Initialization
 # @brief Registers with atuin, logs in, imports command history, and synchronizes
 
+set -euo pipefail
+
 if command -v atuin > /dev/null; then
-    source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh"
+    get-secret --exists ATUIN_USERNAME ATUIN_EMAIL ATUIN_PASSWORD ATUIN_KEY
     logg info 'Registering Atuin account'
-    atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$ATUIN_PASSWORD"
+    atuin register -u "$(get-secret ATUIN_USERNAME)" -e "$(get-secret ATUIN_EMAIL)" -p "$(get-secret ATUIN_PASSWORD)"
     logg info 'Logging into Atuin account'
-    atuin login -u "$ATUIN_USERNAME" -p "$ATUIN_PASSWORD" -k "$ATUIN_KEY"
+    atuin login -u "$(get-secret ATUIN_USERNAME)" -p "$(get-secret ATUIN_PASSWORD)" -k "$(get-secret ATUIN_KEY)"
     logg info 'Running atuin import auto'
     atuin import auto
     logg info 'Running atuin sync'

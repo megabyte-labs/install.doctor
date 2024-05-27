@@ -2,6 +2,8 @@
 # @file Blocky Configuration
 # @brief Copies over configuration (and service file, in the case of Linux) to the appropriate system location
 
+set -euo pipefail
+
 if command -v blocky > /dev/null; then
     if [ -d /Applications ] && [ -d /System ]; then
         ### macOS

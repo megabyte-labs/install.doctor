@@ -2,6 +2,11 @@
 # @file Wazuh Client Install
 # @brief Installs the Wazuh client and connects to the manager if configured to do so through secrets / environment variables
 
+set -euo pipefail
+
+### Ensure secrets
+get-secret --exists WAZUH_MANAGER WAZUH_REGISTRATION_PASSWORD
+
 if [ -d /Applications ] && [ -d /System ]; then
     ### macOS
     logg info 'Downloading the macOS Wazuh agent pkg'
@@ -13,7 +18,7 @@ if [ -d /Applications ] && [ -d /System ]; then
     wget -q "$PKG_URL" -O /tmp/wazuh-agent.pkg &> /dev/null
     logg info 'Setting Wazuh launch parameters in /tmp/wazuh_envs'
     # https://documentation.wazuh.com/current/user-manual/agent/deployment-variables/deployment-variables-macos.html
-    echo "WAZUH_MANAGER="$WAZUH_MANAGER" && WAZUH_REGISTRATION_SERVER="$WAZUH_MANAGER" && WAZUH_REGISTRATION_PASSWORD="WazuhRegister" && WAZUH_AGENT_NAME="$WAZUH_AGENT_NAME"" > /tmp/wazuh_envs
+    echo "WAZUH_MANAGER="$(get-secret WAZUH_MANAGER)" && WAZUH_REGISTRATION_PASSWORD="$(get-secret WAZUH_REGISTRATION_PASSWORD)"" > /tmp/wazuh_envs
     logg info 'Installing the Wazuh agent pkg'
     sudo installer -pkg /tmp/wazuh-agent.pkg -target /
     sudo chmod 755 /Library/Ossec

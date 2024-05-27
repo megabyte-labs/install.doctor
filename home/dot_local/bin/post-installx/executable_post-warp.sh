@@ -50,6 +50,8 @@
 #     * [Linux managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/warp/private_mdm.xml.tmpl)
 #     * [macOS managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/Library/Managed%20Preferences/private_com.cloudflare.warp.plist.tmpl)
 
+set -euo pipefail
+
 SSL_CERT_PATH="/etc/ssl/cert.pem"
 ### Install CloudFlare WARP (on non-WSL *nix systems)
 if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
@@ -60,7 +62,7 @@ if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
     else
       logg info 'Cloudflare WARP already installed'
     fi
-  elif [ '{{ .host.distro.id }}' = 'debian' ]; then
+  elif [ -n "$(uname -a | grep Debian)" ]; then
     ### Add CloudFlare WARP desktop app apt-get source
     if [ ! -f /etc/apt/sources.list.d/cloudflare-client.list ]; then
       logg info 'Adding CloudFlare WARP keyring'
@@ -71,7 +73,7 @@ if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
 
     ### Update apt-get and install the CloudFlare WARP CLI
     sudo apt-get update && sudo apt-get install -y cloudflare-warp
-  elif [ '{{ .host.distro.id }}' = 'ubuntu' ]; then
+  elif [ -n "$(uname -a | grep Ubuntu)" ]; then
     ### Add CloudFlare WARP desktop app apt-get source
     if [ ! -f /etc/apt/sources.list.d/cloudflare-client.list ]; then
       logg info 'Adding CloudFlare WARP keyring'

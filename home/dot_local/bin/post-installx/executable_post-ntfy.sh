@@ -2,6 +2,8 @@
 # @file NTFY Dependencies
 # @brief Ensures branding assets and sound files are in system locations. Also, ensures system dependencies are installed
 
+set -euo pipefail
+
 if command -v ntfy > /dev/null; then
     ### Branding assets
     logg info 'Ensuring branding assets are in expected place for ntfy'

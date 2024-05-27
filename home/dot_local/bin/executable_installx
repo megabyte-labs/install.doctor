@@ -6,6 +6,15 @@ $.verbose = false
 let installOrder, osArch, osId, osType, pkgs, sysType
 const cacheDir = os.homedir() + '/.cache/installx'
 
+const customArgv = minimist(process.argv.slice(3), {
+    boolean: [
+      'all'
+    ],
+    alias: {
+      a: 'all',
+    }
+  })
+
 function log(message) {
     console.log(`${chalk.cyanBright('instx->')} ${message}`)
 }
@@ -483,7 +492,7 @@ async function main() {
     const installKeys = Object.keys(pkgs)
         .filter(i => expandDeps(argv._).includes(i))
     log(`Constructing installation data`)
-    const installData = pkgMap(installKeys)
+    const installData = pkgMap(customArgv.all ? Object.keys(pkgs) : installKeys)
     log(`Filtering install instructions`)
     const installInstructions = installData
         .map(x => {
@@ -602,9 +611,9 @@ async function main() {
                 const name = typeof y === 'string' ? y : y.name
                 const sudo = typeof y === 'string' ? null : y.sudo
                 if (osType === 'linux' && x.installType !== 'brew' && x.installType !== 'cask' && systemctlInstalled) {
-                    return sudo !== false ? $`sudo systemctl enable --now ${name}` : $`systemctl enable --now ${name}`
+                    return sudo === true ? $`sudo systemctl enable --now ${name}` : $`systemctl enable --now ${name}`
                 } else if (brewInstalled) {
-                    return sudo === true ? $`sudo brew services start ${name}` : $`brew services start ${name}`
+                    return sudo === true ? $`sudo brew services restart ${name}` : $`brew services restart ${name}`
                 }
             })
         })

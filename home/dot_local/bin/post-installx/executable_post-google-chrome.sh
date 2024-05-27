@@ -24,6 +24,8 @@
 #     * [`managed.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/chrome/managed.json)
 #     * [`recommended.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/chrome/recommended.json)
 
+set -euo pipefail
+
 function chromeSetUp() {
   ### Ensure Chrome policies directory is present
   logg info 'Processing policy directories for Chromium based browsers'
@@ -63,7 +65,7 @@ function chromeSetUp() {
       fi
       ### Add extension JSON
       logg info "Adding Chrome extensions to $EXTENSION_DIR"
-      for EXTENSION in {{ list (.chromeExtensions | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
+      while read EXTENSION; do
         logg info "Adding Chrome extension manifest ($EXTENSION)"
         if ! echo "$EXTENSION" | grep 'https://chrome.google.com/webstore/detail/' > /dev/null; then
           EXTENSION="https://chrome.google.com/webstore/detail/$EXTENSION"
@@ -74,7 +76,7 @@ function chromeSetUp() {
         else
           cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/extension.json" "$EXTENSION_DIR/${EXTENSION_ID}.json"
         fi
-      done
+      done< <(yq '.chromeExtensions[]' "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoidata.yaml")
     else
       logg info "$EXTENSION_DIR does not exist"
     fi

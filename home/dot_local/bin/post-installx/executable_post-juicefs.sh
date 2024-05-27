@@ -14,6 +14,8 @@
 #     When creating the four volumes in the [JuiceFS console](https://juicefs.com/console/), it is important that you name the volumes using
 #     these four volume names.
 
+set -euo pipefail
+
 MOUNT_FOLDER="/mnt"
 UPDATE_FSTAB="--update-fstab"
 if [ -d /Applications ] && [ -d /System ]; then

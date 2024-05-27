@@ -11,6 +11,8 @@
 #
 #     * [`fail2ban` configuration folder](https://github.com/megabyte-labs/install.doctor/tree/master/home/private_dot_ssh/fail2ban)
 
+set -euo pipefail
+
 if command -v fail2ban-client > /dev/null; then
   if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
     if [ -f "$HOME/.ssh/fail2ban/jail.local" ]; then

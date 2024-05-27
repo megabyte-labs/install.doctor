@@ -47,6 +47,9 @@
 #
 #     * [Default Samba configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_local/samba/config.tmpl)
 #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
+
+set -euo pipefail
+
 ### Configure Samba server
 if command -v smbd > /dev/null; then
   # Add user / group with script in ~/.local/bin/add-usergroup, if it is available
@@ -63,26 +66,67 @@ if command -v smbd > /dev/null; then
   fi
   PRIVATE_SHARE="/$MNT_FOLDER/Private"
   PUBLIC_SHARE="/$MNT_FOLDER/Public"
+
+  ### Private share
   logg info "Ensuring $PRIVATE_SHARE is created"
   sudo mkdir -p "$PRIVATE_SHARE"
   sudo chmod 750 "$PRIVATE_SHARE"
   sudo chown -Rf root:rclone "$PRIVATE_SHARE"
+  
+  ### Public share
   logg info "Ensuring $PUBLIC_SHARE is created"
   sudo mkdir -p "$PUBLIC_SHARE"
   sudo chmod 755 "$PUBLIC_SHARE"
   sudo chown -Rf root:rclone "$PUBLIC_SHARE"
-  logg info "Ensuring $HOME/Public is created"
-  mkdir -p "$HOME/Public"
-  chmod 755 "$HOME/Public"
-  chown -Rf "$USER":rclone "$HOME/Public"
+
+  ### User share
+  logg info "Ensuring $HOME/Shared is created"
+  mkdir -p "$HOME/Shared"
+  chmod 755 "$HOME/Shared"
+  chown -Rf "$USER":rclone "$HOME/Shared"
+  
   ### Copy the Samba server configuration file
   if [ -d /Applications ] && [ -d /System ]; then
-    sudo sharing -a "$PRIVATE_SHARE" -S "Private (System)" -n "Private (System)" -g 000 -s 001 -E 1 -R 1 && logg success "Configured $PRIVATE_SHARE as a private Samba share" || logg info 'sharing command failed - it is likely that the share was already set up'
-    sudo sharing -a "$PUBLIC_SHARE" -S "Public (System)" -n "Public (System)" -g 001 -s 001 -E 1 -R 0 && logg success "Configured $PUBLIC_SHARE as a public Samba share" || logg info 'sharing command failed - it is likely that the share was already set up'
-    sudo sharing -a "$HOME/Public" -S "Public (User)" -n "Public (User)" -g 001 -s 001 -E 1 -R 0 && logg success "Configured $HOME/Public as a public Samba share" || logg info 'sharing command failed - it is likely that the share was already set up'
+    ### System Private Samba Share
+    if SMB_OUTPUT=$(sudo sharing -a "$PRIVATE_SHARE" -S "Private (System)" -n "Private (System)" -g 000 -s 001 -E 1 -R 1); then
+      logg success "Configured $PRIVATE_SHARE as a private Samba share"
+    else
+      if echo $SMB_OUTPUT | grep 'smb name already exists' > /dev/null; then
+        logg info "$PRIVATE_SHARE Samba share already exists"
+      else
+        logg error 'An error occurred while running sudo sharing -a "$PRIVATE_SHARE" -S "Private (System)" -n "Private (System)" -g 000 -s 001 -E 1 -R 1'
+        echo "$SMB_OUTPUT"
+      fi
+    fi
+
+    ### System Public Samba Share
+    if SMB_OUTPUT=$(sudo sharing -a "$PUBLIC_SHARE" -S "Public (System)" -n "Public (System)" -g 001 -s 001 -E 1 -R 0); then
+      logg success "Configured $PUBLIC_SHARE as a system public Samba share"
+    else
+      if echo $SMB_OUTPUT | grep 'smb name already exists' > /dev/null; then
+        logg info "$PUBLIC_SHARE Samba share already exists"
+      else
+        logg error 'An error occurred while running sudo sharing -a "$PUBLIC_SHARE" -S "Public (System)" -n "Public (System)" -g 001 -s 001 -E 1 -R 0'
+        echo "$SMB_OUTPUT"
+      fi
+    fi
+
+    ### User Shared Samba Share
+    if SMB_OUTPUT=$(sudo sharing -a "$HOME/Shared" -S "Shared (User)" -n "Shared (User)" -g 001 -s 001 -E 1 -R 0); then
+      logg success "Configured $HOME/Shared as a user-scoped Samba share"
+    else
+      if echo $SMB_OUTPUT | grep 'smb name already exists' > /dev/null; then
+        logg info "$HOME/Shared Samba share already exists"
+      else
+        logg error 'An error occurred while running sudo sharing -a "$HOME/Shared" -S "Shared (User)" -n "Shared (User)" -g 001 -s 001 -E 1 -R 0'
+        echo "$SMB_OUTPUT"
+      fi
+    fi
   else
+    ### Copy Samba configuration
     logg info "Copying Samba server configuration to /etc/samba/smb.conf"
     sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/samba/config" "/etc/samba/smb.conf"
+
     ### Reload configuration file changes
     logg info 'Reloading the smbd config'
     smbcontrol smbd reload-config

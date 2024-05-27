@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 updateApk() {
   if command -v apk > /dev/null; then
     logg info 'Running sudo apk update' && sudo apk update || logg error 'Failed to run sudo apk update'

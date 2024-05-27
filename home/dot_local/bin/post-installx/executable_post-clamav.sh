@@ -2,12 +2,15 @@
 # @file ClamAV Configuration
 # @brief Applies ClamAV configuration, updates its database, and configures background services
 
+set -euo pipefail
+
 if command -v freshclam > /dev/null; then
     ### Add freshclam.conf
     if [ -f "$HOME/.local/etc/clamav/freshclam.conf" ]; then
       sudo mkdir -p /usr/local/etc/clamav
       sudo cp -f "$HOME/.local/etc/clamav/freshclam.conf" /usr/local/etc/clamav/freshclam.conf
-      if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav" ] && [ ! -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/freshclam.conf" ]; then
+      if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav" ] && [ ! -L "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/freshclam.conf" ]; then
+        sudo rm -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/freshclam.conf"
         ln -s /usr/local/etc/clamav/freshclam.conf "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/freshclam.conf"
       fi
     fi
@@ -16,7 +19,8 @@ if command -v freshclam > /dev/null; then
     if [ -f "$HOME/.local/etc/clamav/clamd.conf" ]; then
       sudo mkdir -p /usr/local/etc/clamav
       sudo cp -f "$HOME/.local/etc/clamav/clamd.conf" /usr/local/etc/clamav/clamd.conf
-      if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav" ] && [ ! -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/clamd.conf" ]; then
+      if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav" ] && [ ! -L "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/clamd.conf" ]; then
+        sudo rm -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/clamd.conf"
         ln -s /usr/local/etc/clamav/clamd.conf "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/clamav/clamd.conf"
       fi
     fi

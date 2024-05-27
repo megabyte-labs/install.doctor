@@ -8,26 +8,18 @@
 #     be passed in as a secret (either via the encrypted secret method or passed in as an environment
 #     variable).
 
+set -euo pipefail
+
 if command -v docker > /dev/null; then
   ### Acquire DOCKERHUB_TOKEN
-  DOCKERHUB_TOKEN_FILE="${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/DOCKERHUB_TOKEN"
-  if [ -f "$DOCKERHUB_TOKEN_FILE" ]; then
-    logg info "Found DOCKERHUB_TOKEN in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
-    if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" ]; then
-      logg info 'Decrypting DOCKERHUB_TOKEN token with Age encryption key'
-      DOCKERHUB_TOKEN="$(cat "$DOCKERHUB_TOKEN_FILE" | chezmoi decrypt)"
-    else
-      logg warn 'Age encryption key is missing from ~/.config/age/chezmoi.txt'
-    fi
-  else
-    logg warn "DOCKERHUB_TOKEN is missing from ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
-  fi
+  get-secret --exists DOCKERHUB_TOKEN || exit 1
 
   ### Acquire DOCKERHUB_USER
   if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml" ]; then
     DOCKERHUB_USER="$(yq '.data.user.docker.username' ~/.config/chezmoi/chezmoi.yaml)"
   else
-    logg info "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml is missing which is required for populating the DOCKERHUB_USER"
+    logg error "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml is missing which is required for populating the DOCKERHUB_USER"
+    exit 1
   fi
 
   ### Launch Docker.app
@@ -36,6 +28,7 @@ if command -v docker > /dev/null; then
   fi
 
   ### Pre-authenticate with DockerHub
+  DOCKERHUB_TOKEN="$(get-secret DOCKERHUB_TOKEN)"
   if [ -n "$DOCKERHUB_TOKEN" ] && [ -n "$DOCKERHUB_USER" ]; then
     logg info 'Headlessly authenticating with DockerHub registry' && echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USER" --password-stdin > /dev/null && logg success 'Successfully authenticated with DockerHub registry'
   fi

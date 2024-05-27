@@ -2,6 +2,8 @@
 # @file rkhunter configuration
 # @brief This script applies the rkhunter integration and updates it as well
 
+set -euo pipefail
+
 if command -v rkhunter > /dev/null; then
     if [ -d /Applications ] && [ -d /System ]; then
       ### macOS

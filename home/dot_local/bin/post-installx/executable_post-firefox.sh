@@ -43,6 +43,8 @@
 #     * [System-wide configurations](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_local/share/firefox) as well as the location of the `profile.ini` and some other configurations
 #     * [User-specific configurations](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/firefox/user.js) added to all profiles except Factory
 
+set -euo pipefail
+
 function installFirefoxProfileConnector() {
   logg info 'Installing the Firefox Profile Connector'
   if command -v apt-get > /dev/null; then
@@ -272,7 +274,7 @@ function firefoxSetup() {
       ### Install Firefox addons (using list declared in .chezmoidata.yaml)
       for SETTINGS_PROFILE in "profile.plugins" "profile.private"; do
         if [ -d "$SETTINGS_DIR/$SETTINGS_PROFILE" ]; then
-          for FIREFOX_PLUGIN in {{ list (.firefoxAddOns | toString | replace "[" "" | replace "]" "") | uniq | join " " }}; do
+          while read FIREFOX_PLUGIN; do
             logg info "Processing the $FIREFOX_PLUGIN Firefox add-on"
             PLUGIN_HTML="$(mktemp)"
             curl --silent "https://addons.mozilla.org/en-US/firefox/addon/$FIREFOX_PLUGIN/" > "$PLUGIN_HTML"
@@ -310,7 +312,7 @@ function firefoxSetup() {
             else
               logg warn 'A null Firefox add-on ID was detected for '"$FIREFOX_PLUGIN"''
             fi
-          done
+          done< <(yq '.firefoxAddOns[]' ~/.local/share/chezmoi/home/.chezmoidata.yaml)
         fi
       done
     fi

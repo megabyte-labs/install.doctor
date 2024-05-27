@@ -2,9 +2,14 @@
 # @file EasyEngine
 # @brief Configures EasyEngine to use the CloudFlare API for configuring Let's Encrypt
 
+set -euo pipefail
+
 if command -v ee > /dev/null; then
-  if [ -n "$CLOUDFLARE_EMAIL" ] && [ -n "$CLOUDFLARE_API_KEY" ]; then
-    ee config set le-mail "$CLOUDFLARE_EMAIL"
-    ee config set cloudflare-api-key "$CLOUDFLARE_API_KEY"
-  fi
+  ### Ensure secrets
+  get-secret --exists CLOUDFLARE_EMAIL CLOUDFLARE_API_KEY
+
+  ### Configure EasyEngine
+  logg info 'Configuring EasyEngine with CloudFlare automatic SSL insuance'
+  ee config set le-mail "$(get-secret CLOUDFLARE_EMAIL)"
+  ee config set cloudflare-api-key "$(get-secret CLOUDFLARE_API_KEY)"
 fi

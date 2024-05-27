@@ -493,7 +493,6 @@ softwarePackages:
     _name: AptCacherNG
     _short: "apt-cacher-ng is a caching proxy for software packages, primarily used in Debian-based systems like Ubuntu. It helps in saving bandwidth and speeding up package installations by caching downloaded      \npackages locally.                                                                                                                                                                                         "
     _systemd: apt-cacher-ng
-    ansible: professormanhattan.aptcacherng
   aqua:
     _bin: aqua
     _desc: "[aqua](https://aquaproj.github.io/) is a Declarative CLI Version manager written in Go. It supports Lazy Install, Registry, and continuous update with Renovate."
@@ -501,7 +500,10 @@ softwarePackages:
     _github: https://github.com/aquaproj/aqua
     _home: https://aquaproj.github.io
     _name: aqua
-    _short: "Aqua is a tool for secure and efficient container image scanning.                                                                                                                                         "
+    _short: "Aqua is a tool for secure and efficient container image scanning."
+    _post: |
+      aqua update-aqua
+      aqua install -a
     binary:linux: https://github.com/aquaproj/aqua/releases/download/v2.0.0-0/aqua_linux_amd64.tar.gz
     binary:windows: https://github.com/aquaproj/aqua/releases/download/v2.0.0-0/aqua_windows_amd64.tar.gz
     brew: aquaproj/aqua/aqua
@@ -544,7 +546,6 @@ softwarePackages:
     _github: https://github.com/aria2/aria2
     _name: Aria2/AriaNg
     _short: "aria2 is a lightweight multi-protocol & multi-source command-line download utility.                                                                                                                       "
-    ansible: professormanhattan.aria
     apt: aria2
     brew: aria2
     choco: aria2
@@ -594,7 +595,6 @@ softwarePackages:
     _home: https://asdf-vm.com/
     _name: asdf-vm
     _short: "asdf is a tool for managing multiple runtime versions like Node.js, Ruby, Python, etc., in a single environment.                                                                                          "
-    ansible: professormanhattan.asdf
   assh:
     _bin: assh
     _desc: "[assh](https://manfred.life/assh) makes your ssh client smarter"
@@ -632,7 +632,7 @@ softwarePackages:
     _desc: "Atuin is a tool for managing AWS infrastructure using a simple command-line interface. It allows users to create, update, and delete AWS resources like EC2 instances, security groups, and S3 buckets    \nusing a declarative configuration file. Atuin aims to simplify AWS infrastructure management by providing a user-friendly interface and automating common tasks. It is written in Go and is open-source,  \navailable on GitHub at https://github.com/ellie/atuin.                                                                                                                                                    "
     _github: https://github.com/ellie/atuin
     _name: Atuin
-    _short: "Atuin is a command-line tool for managing macOS windows.                                                                                                                                                  "
+    _short: "Atuin is a command-line tool for managing macOS windows.                                                                                                                                              "
     brew: atuin
     cargo: atuin
     pacman: atuin
@@ -706,7 +706,6 @@ softwarePackages:
     _home: https://autorestic.vercel.app/
     _name: Autorestic
     _short: "AutoRestic is a tool that simplifies and automates backups using Restic, a fast, secure, and efficient backup program.                                                                                    "
-    ansible: professormanhattan.autorestic
     brew: autorestic
   aws-shell:
     _bin: aws-shell
@@ -726,7 +725,6 @@ softwarePackages:
     _home: https://aws.amazon.com/
     _name: AWS CLI
     _short: "AWS CLI is a unified tool to manage AWS services through the command line.                                                                                                                                "
-    ansible: professormanhattan.awscli
     binary:darwin: https://awscli.amazonaws.com/AWSCLIV2.pkg
     binary:linux: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
     binary:windows: https://awscli.amazonaws.com/AWSCLIV2.msi
@@ -740,7 +738,6 @@ softwarePackages:
     _home: https://docs.ansible.com/automation.html
     _name: AWX CLI
     _short: "AWX is an open-source automation platform that provides a web-based user interface, REST API, and task engine built on top of Ansible.                                                                    "
-    ansible: professormanhattan.awxcli
     pipx: https://releases.ansible.com/ansible-tower/cli/ansible-tower-cli-latest.tar.gz
   axel:
     _bin: axel
@@ -762,7 +759,6 @@ softwarePackages:
     _home: https://azure.microsoft.com/
     _name: Azure CLI
     _short: "Azure CLI is a command-line tool for managing Azure resources.                                                                                                                                            "
-    ansible: professormanhattan.azurecli
     brew: azure-cli
     choco: azure-cli
     winget: Microsoft.AzureCLI
@@ -805,7 +801,6 @@ softwarePackages:
     _github: https://github.com/imsnif/bandwhich
     _name: Bandwhich
     _short: "bandwhich is a terminal bandwidth utilization tool for Linux and macOS.                                                                                                                                   "
-    ansible: professormanhattan.bandwhich
     brew: bandwhich
     github: github.com/imsnif/bandwhich
     pacman: bandwhich
@@ -858,7 +853,6 @@ softwarePackages:
     _github: https://github.com/sharkdp/bat
     _name: bat
     _short: "bat is a cat(1) clone with syntax highlighting and Git integration.                                                                                                                                       "
-    ansible: professormanhattan.bat
     apk: bat
     apt: bat
     brew: bat
@@ -917,7 +911,6 @@ softwarePackages:
     _home: https://beets.io/
     _name: Beets
     _short: "Beets is a music library manager and tagger for organizing your music collection efficiently.                                                                                                             "
-    ansible: professormanhattan.beets
     pipx: beets
   betwixt:
     _app: Betwixt.app
@@ -997,7 +990,6 @@ softwarePackages:
     _home: https://bitwarden.com/
     _name: Bitwarden CLI
     _short: "Bitwarden Clients: Open-source password manager with clients for various platforms including web, desktop, and mobile.                                                                                    "
-    ansible: professormanhattan.bw
     brew: bitwarden-cli
     choco: bitwarden-cli
     npm: "@bitwarden/cli"
@@ -1147,7 +1139,6 @@ softwarePackages:
     _home: https://dystroy.org/broot/
     _name: Broot
     _short: "broot is a command-line interactive tree view tool for navigating directories efficiently.                                                                                                                "
-    ansible: professormanhattan.broot
     apk: broot
     brew: broot
     cargo: broot
@@ -1589,7 +1580,6 @@ softwarePackages:
     _github: https://github.com/cloudflare/cloudflared
     _name: CloudFlared
     _short: "cloudflared is a tool by Cloudflare that allows secure and fast access to the internet.                                                                                                                   "
-    ansible: professormanhattan.cloudflared
     binary:linux: https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
     brew:darwin: cloudflare/cloudflare/cloudflared
     github: github.com/cloudflare/cloudflared
@@ -1753,12 +1743,6 @@ softwarePackages:
     _name: commitlint
     _short: "commitlint is a tool that enforces commit message conventions to ensure consistent and structured commit messages in a project.                                                                           "
     npm: "@commitlint/cli"
-  common:
-    _bin: null
-    _desc: For example, this role sets the timezone, sets the hostname, sets up the swap space, ensures auto-login is either disabled or enabled, and customizes GRUB (on Linux). It also ensures that specified groups are present on the system. On Windows, the role ensures all the available updates are installed, ensures [Scoop](https://scoop.sh/) is installed, and ensures common dependencies like [Bandizip](https://en.bandisoft.com/bandizip/) (a compressed-file manager) are installed.
-    _github: false
-    _name: Common
-    ansible: professormanhattan.common
   composer:
     _bin: composer
     _desc: "[Composer](https://getcomposer.org/) is an application-level package manager for the PHP programming language that provides a standard format for managing dependencies of PHP software and required libraries. It was developed by Nils Adermann and Jordi Boggiano, who continue to manage the project."
@@ -1767,7 +1751,6 @@ softwarePackages:
     _home: https://getcomposer.org/
     _name: Composer
     _short: "Composer is a dependency manager for PHP.                                                                                                                                                                 "
-    ansible: professormanhattan.composer
     brew: composer
     choco: composer
     pacman: composer
@@ -1810,7 +1793,6 @@ softwarePackages:
     _home: https://www.hashicorp.com/
     _name: Consul Template
     _short: "Consul Template is a tool by HashiCorp that renders templates based on Consul data.                                                                                                                       "
-    ansible: professormanhattan.consultemplate
     brew: consul-template
     choco: consul-template
     scoop: main/consul
@@ -1935,7 +1917,6 @@ softwarePackages:
         proto: tcp
     _short: "CUPS (Common UNIX Printing System) is an open-source printing system developed by Apple for Unix-like operating systems.                                                                                  "
     _systemd: smbd
-    ansible: professormanhattan.cups
     apt:
       - avahi-daemon
       - cups
@@ -1960,6 +1941,7 @@ softwarePackages:
     _github: https://github.com/curl/curl
     _home: https://curl.se/
     _name: cURL
+    _preload: true
     _short: "curl is a command-line tool and library for transferring data with URLs.                                                                                                                                  "
     apk: curl
     apt: curl
@@ -2058,12 +2040,6 @@ softwarePackages:
     _name: "dconf-editor                                                                                                                                                                                              "
     _short: "dconf-editor is a graphical editor for the Dconf configuration system used in GNOME.                                                                                                                      "
     flatpak: ca.desrt.dconf-editor
-  debloat:
-    _bin: null
-    _desc: This repository is the home of an Ansible role that Debloats Windows
-    _github: false
-    _name: Debloat Windows
-    ansible: professormanhattan.debloat
   debsecan:
     _bin: debsecan-by-type
     _desc: debsecan analyzes the list of installed packages on the current host and reports vulnerabilities found on the system.
@@ -2072,12 +2048,6 @@ softwarePackages:
     _home: https://wiki.debian.org/DebianSecurity/debsecan
     _name: Debian Security Analyzer
     apt: debsecan
-  defaultbrowser:
-    _bin: null
-    _desc: This role performs the necessary logic to set the default browser on nearly any platform.
-    _github: false
-    _name: Default Browser Setter
-    ansible: professormanhattan.defaultbrowser
   deja-dup:
     _bin: dejadup
     _github: false
@@ -2092,7 +2062,6 @@ softwarePackages:
     _home: https://github.com/dandavison/delta
     _name: Delta
     _short: "Delta is a tool for viewing git diff output with syntax highlighting and line decorations.                                                                                                                "
-    ansible: professormanhattan.delta
     brew: git-delta
     cargo: git-delta
     choco: delta
@@ -2118,7 +2087,6 @@ softwarePackages:
     _home: https://deno.land/
     _name: Deno
     _short: "Deno is a secure runtime for JavaScript and TypeScript.                                                                                                                                                   "
-    ansible: professormanhattan.deno
     brew: deno
     cargo: deno
     choco: deno
@@ -2144,12 +2112,6 @@ softwarePackages:
     _name: Desk
     _short: "desk is a tool for managing your workspace configurations in macOS.                                                                                                                                       "
     brew: desk
-  desktop:
-    _bin: null
-    _desc: This role is essentially the place where all desktop-specific tasks that are substantial enough for their own role are placed.
-    _github: false
-    _name: Desktop
-    ansible: professormanhattan.desktop
   deta:
     _bin: deta
     _desc: Command line interface for managing Deta micros and deployments
@@ -2245,7 +2207,6 @@ softwarePackages:
     _home: https://direnv.net/
     _name: direnv
     _short: "direnv is a tool that helps automate loading and unloading of environment variables based on the current directory.                                                                                       "
-    ansible: professormanhattan.direnv
     apt: direnv
     brew: direnv
     github: github.com/direnv/direnv
@@ -2275,17 +2236,10 @@ softwarePackages:
     _home: https://github.com/wagoodman/dive
     _name: dive
     _short: "Dive is a tool for exploring and analyzing Docker images interactively.                                                                                                                                   "
-    ansible: professormanhattan.dive
     brew: dive
     github: github.com/wagoodman/dive
     go: github.com/wagoodman/dive@latest
     yay: dive
-  dns:
-    _bin: null
-    _desc: This role ensures that DNS requests are encrypted if you supply it the appropriate configuration. It uses systemd on Linux. On macOS/Windows, it installs and configures [Stubby](https://github.com/getdnsapi/stubby).
-    _github: false
-    _name: DNS
-    ansible: professormanhattan.dns
   dnsmasq:
     _bin: dnsmasq
     _desc: "[Dnsmasq](https://wiki.debian.org/dnsmasq) is free software providing Domain Name System caching, a Dynamic Host Configuration Protocol server, router advertisement and network boot features, intended for small computer networks."
@@ -2294,7 +2248,6 @@ softwarePackages:
     _name: dnsmasq
     _service: dnsmasq
     _short: "dnsmasq is a lightweight DNS forwarder and DHCP server.                                                                                                                                                   "
-    ansible: professormanhattan.dnsmasq
     apt: dnsmasq
     brew: dnsmasq
     dnf: dnsmasq
@@ -2564,7 +2517,6 @@ softwarePackages:
     _home: https://github.com/muesli/duf
     _name: duf
     _short: "Duf is a disk usage utility with a modern interface for visualizing disk space usage on your system.                                                                                                      "
-    ansible: professormanhattan.duf
     brew: duf
     choco: duf
     github: github.com/muesli/duf
@@ -2747,7 +2699,6 @@ softwarePackages:
     _github: https://github.com/hashicorp/envconsul
     _name: envconsul
     _short: "Envconsul is a tool by HashiCorp that updates environment variables in running processes from Consul.                                                                                                     "
-    ansible: professormanhattan.envconsul
     brew: envconsul
     github: github.com/hashicorp/envconsul
   envio:
@@ -2757,10 +2708,6 @@ softwarePackages:
     _name: Envio
     _short: "envio is a lightweight command-line tool for sending files securely over the internet using end-to-end encryption.                                                                                        "
     cargo: envio
-  environment:
-    _bin: null
-    _github: false
-    ansible: professormanhattan.environment
   envpane:
     _bin: null
     _desc: An OS X preference pane for environment variables
@@ -2905,7 +2852,6 @@ softwarePackages:
     _home: https://exiftool.org/
     _name: exiftool
     _short: "ExifTool is a powerful command-line tool for reading, writing, and editing metadata in a wide variety of files, including images, videos, and documents.                                                  "
-    ansible: professormanhattan.exiftool
     apt: libimage-exiftool-perl
     brew: exiftool
     choco: exiftool
@@ -2922,12 +2868,6 @@ softwarePackages:
     dnf: expect
     pacman: expect
     port: expect
-  extensions:
-    _bin: null
-    _desc: This role acts as a catch-all for extensions for various system software.
-    _github: false
-    _name: Extensions
-    ansible: professormanhattan.extensions
   fabric:
     _bin: fab
     _desc: "Fabric is a Python library and command-line tool designed for streamlining the process of executing shell commands remotely over SSH. It simplifies the automation of tasks like deploying applications,  \nrunning scripts, and managing servers. Fabric allows you to define tasks in Python scripts and execute them across multiple servers simultaneously. It provides features like parallel execution, error   \nhandling, and output processing. Fabric is commonly used by developers and system administrators to automate repetitive tasks in a more efficient and consistent manner.                                  "
@@ -2990,7 +2930,6 @@ softwarePackages:
     _github: https://github.com/sharkdp/fd
     _name: fd
     _short: "fd is a simple, fast and user-friendly alternative to find command, written in Rust.                                                                                                                      "
-    ansible: professormanhattan.fd
     apk: fd
     apt: fd-find
     brew: fd
@@ -3040,7 +2979,6 @@ softwarePackages:
     _github: https://github.com/FFmpeg/FFmpeg
     _name: FFmpeg
     _short: "FFmpeg is a powerful multimedia framework that can decode, encode, transcode, mux, demux, stream, filter, and play almost anything that humans and machines have created.                                 "
-    ansible: professormanhattan.ffmpeg
     apk: ffmpeg
     apt: ffmpeg
     brew: ffmpeg
@@ -3054,7 +2992,6 @@ softwarePackages:
     _github: https://github.com/timvisee/ffsend
     _name: ffsend
     _short: "ffsend is a command-line tool for securely and easily sharing files from the terminal using Firefox Send.                                                                                                 "
-    ansible: professormanhattan.ffsend
     apk: ffsend
     brew: ffsend
     github: github.com/timvisee/ffsend
@@ -3115,7 +3052,6 @@ softwarePackages:
     _home: https://filebrowser.org/
     _name: File Browser
     _short: "Filebrowser is an open-source, self-hosted web-based file manager with a simple and intuitive interface for managing files on a server.                                                                   "
-    ansible: professormanhattan.filebrowser
     brew: filebrowser/tap/filebrowser
     github: github.com/filebrowser/filebrowser
   filezilla:
@@ -3138,12 +3074,6 @@ softwarePackages:
     _bin: gfind
     _github: false
     brew: findutils
-  finish:
-    _bin: null
-    _desc: This role should be the last role in the playbook.
-    _github: false
-    _name: Finish
-    ansible: professormanhattan.finish
   firebase:
     _bin: firebase
     _desc: The Firebase Command Line Interface (CLI) Tools can be used to test, manage, and deploy your Firebase project from the command line
@@ -3373,7 +3303,6 @@ softwarePackages:
     _github: https://github.com/jordansissel/fpm
     _name: fpm
     _short: "fpm is a tool for building packages in various formats like deb, rpm, and others, making package management easier across different systems.                                                              "
-    ansible: professormanhattan.fpm
     gem: fpm
   fpm:deps:
     _github: false
@@ -3496,8 +3425,8 @@ softwarePackages:
     _github: https://github.com/junegunn/fzf
     _home: https://github.com/junegunn/fzf
     _name: fzf
+    _preload: true
     _short: "fzf is a command-line fuzzy finder for searching and selecting items interactively.                                                                                                                       "
-    ansible: professormanhattan.fzf
     apk: fzf
     apt: fzf
     brew: fzf
@@ -3540,7 +3469,6 @@ softwarePackages:
     _desc: "[Google Cloud SDK](https://cloud.google.com/sdk) includes tools and libraries for interacting with Google Cloud products and services. With it, you can orchestrate virtual machine instances directly from your command line, manage Compute Engine networks/firewalls/disks, simulate Pub/Sub locally, and much more."
     _github: false
     _name: Google Cloud SDK
-    ansible: professormanhattan.googlecloudsdk
     cask: google-cloud-sdk
     choco: gcloudsdk
     snap: google-cloud-sdk --classic
@@ -3625,7 +3553,6 @@ softwarePackages:
     _home: https://cli.github.com/
     _name: Github CLI
     _short: "GitHub CLI is a command-line tool that brings GitHub to your terminal.                                                                                                                                    "
-    ansible: professormanhattan.gh
     brew: gh
     choco: gh
     port: gh
@@ -3645,7 +3572,6 @@ softwarePackages:
     _name: ghorg
     _post: ghorg reclone
     _short: "ghorg is a tool for cloning all repositories of a GitHub organization quickly and easily.                                                                                                                 "
-    ansible: professormanhattan.ghorg
     brew: gabrie30/utils/ghorg
     github: github.com/gabrie30/ghorg
     go: github.com/gabrie30/ghorg@latest
@@ -3672,7 +3598,6 @@ softwarePackages:
     _home: https://www.gimp.org/
     _name: GIMP
     _short: "GIMP is a free and open-source image editor for tasks like photo retouching, image composition, and image authoring.                                                                                      "
-    ansible: professormanhattan.gimp
     apt: gimp
     cask: gimp
     choco: gimp
@@ -3686,7 +3611,6 @@ softwarePackages:
     _github: https://github.com/defunkt/gist
     _name: gist
     _short: "Gist is a tool for sharing code snippets or files easily on GitHub.                                                                                                                                       "
-    ansible: professormanhattan.gist
     gem: gist
   git:
     _bin: git
@@ -3739,7 +3663,6 @@ softwarePackages:
     _github: https://github.com/newren/git-filter-repo
     _name: "git-filter-repo                                                                                                                                                                                           "
     _short: "git-filter-repo is a powerful tool for rewriting Git repository history efficiently and with ease.                                                                                                        "
-    ansible: professormanhattan.gitfilterrepo
     brew: git-filter-repo
     pipx: git-filter-repo
   git-jump:
@@ -3761,7 +3684,6 @@ softwarePackages:
       sudo git lfs install --system
       git lfs install
     _short: "git-lfs is an open-source extension for Git that manages large files by storing them outside the main repository.                                                                                         "
-    ansible: professormanhattan.gitlfs
     brew: git-lfs
     scoop: git-lfs
   git-notify:
@@ -3798,7 +3720,6 @@ softwarePackages:
     _github: https://github.com/IonicaBizau/git-stats
     _name: git-stats
     _short: "git-stats is a tool that provides statistics about a Git repository, such as contributors, commits per author, and more.                                                                                  "
-    ansible: professormanhattan.gitstats
     npm: git-stats
   git-subrepo:
     _bin: git-subrepo
@@ -3896,13 +3817,13 @@ softwarePackages:
     _home: https://www.gitkraken.com/
     _name: GitKraken
     _short: "$'Not open-source' is a string in zsh shell that uses single quotes to interpret escape sequences like \\n for newline.                                                                                    "
-    ansible: professormanhattan.gitkraken
     cask: gitkraken
     choco: gitkraken
     flatpak: com.axosoft.GitKraken
     snap: gitkraken --classic
   gitlab-runner:
     _bin: gitlab-runner
+    _deprecated: Deprecated in favor of GitHub CI/CD
     _desc: "[GitLab Runner](https://docs.gitlab.com/runner/) is an application that works with GitLab CI/CD to run jobs in a pipeline."
     _docs: https://docs.gitlab.com/runner/
     _github: https://github.com/gitlabhq/gitlab-runner
@@ -3911,7 +3832,6 @@ softwarePackages:
     _service: gitlab-runner
     _serviceEnabled: true
     _short: "GitLab Runner is an open-source project that works with GitLab CI/CD to run jobs and send the results back to GitLab.                                                                                     "
-    ansible: professormanhattan.gitlabrunner
     brew: gitlab-runner
     choco: gitlab-runner
     pacman: gitlab-runner
@@ -3950,7 +3870,6 @@ softwarePackages:
     _github: https://github.com/muesli/gitomatic
     _name: git-o-matic
     _short: "gitomatic is a tool for automatic syncing of Git repositories.                                                                                                                                            "
-    ansible: professormanhattan.gitomatic
     github: github.com/muesli/gitomatic
     go: github.com/muesli/gitomatic@latest
     pacman: gitomatic
@@ -4005,7 +3924,6 @@ softwarePackages:
     _name: Glances
     _post:pipx: pipx inject glances glances[all]
     _short: "Glances is a cross-platform monitoring tool that provides real-time system information in a visually appealing way.                                                                                       "
-    ansible: professormanhattan.glances
     apt:ubuntu:
       - python3-dev
       - python3-jinja2
@@ -4215,7 +4133,6 @@ softwarePackages:
     _home: https://go.dev/
     _name: Go
     _short: "The official repository for the Go programming language.                                                                                                                                                  "
-    ansible: professormanhattan.go
     apt: golang-go
     brew: go
     choco: golang
@@ -4331,7 +4248,6 @@ softwarePackages:
     _home: https://www.google.com/chrome/
     _name: Google Chrome
     _short: "$'Not open-source' is a string in zsh shell that uses single quotes to interpret escape sequences like \\n for newline.                                                                                    "
-    ansible: professormanhattan.chrome
     cask: google-chrome
     choco: googlechrome
     flatpak: com.google.Chrome
@@ -4418,7 +4334,6 @@ softwarePackages:
     _github: https://github.com/orf/gping
     _name: gping
     _short: "gping is a modern ping tool that shows a graph of ping responses over time.                                                                                                                               "
-    ansible: professormanhattan.gping
     brew: gping
     cargo: gping
     choco: gping
@@ -4440,7 +4355,6 @@ softwarePackages:
     _home: https://gradle.org/
     _name: Gradle
     _short: "Gradle is a powerful build automation tool that helps manage dependencies and build processes efficiently for software projects.                                                                          "
-    ansible: professormanhattan.gradle
     brew: gradle
     choco: gradle
     port: gradle
@@ -4516,7 +4430,7 @@ softwarePackages:
     _home: https://guacamole.apache.org/
     _name: Guacamole
     _short: "Apache Guacamole is an open-source remote desktop gateway that provides access to desktop environments using a web browser.                                                                               "
-    ansible: professormanhattan.guacamole
+    _todo: Add installer for guacamole
   gulp:
     _bin: gulp
     _desc: "[Gulp](https://gulpjs.com/) is a toolkit to automate & enhance your workflow"
@@ -4548,14 +4462,6 @@ softwarePackages:
     _short: "gup is a tool for updating Git repositories with ease.                                                                                                                                                    "
     brew: nao1215/tap/gup
     go: github.com/nao1215/gup@latest
-  gvm:
-    _bin: null
-    _deprecated: Deprecated in favor of using ASDF.
-    _desc: "[gvm](https://github.com/moovweb/gvm) lets you manage Go environments and switch between Go versions."
-    _github: https://github.com/moovweb/gvm
-    _name: rvm
-    _short: "gvm is a Go Version Manager that allows you to easily install and manage multiple versions of Go on your system.                                                                                          "
-    ansible: professormanhattan.gvm
   hadolint:
     _bin: hadolint
     _desc: A smarter Dockerfile linter that helps you build best practice Docker images. The linter parses the Dockerfile into an AST and performs rules on top of the AST
@@ -4565,6 +4471,14 @@ softwarePackages:
     brew: hadolint
     dnf:fedora: hadolint
     scoop: hadolint
+  hammerspoon:
+    _app: Hammerspoon.app
+    _bin: hs
+    _desc: Staggeringly powerful macOS desktop automation with Lua
+    _docs: https://www.hammerspoon.org/go/
+    _github: https://github.com/Hammerspoon/hammerspoon
+    _name: Hammerspoon
+    cask: hammerspoon
   handbrake:
     _app: HandBrake.app
     _bin: handbrake
@@ -4672,7 +4586,6 @@ softwarePackages:
     _github: https://github.com/heroku/cli
     _name: Heroku CLI
     _short: "Heroku CLI is a command-line tool that allows developers to manage and deploy applications on the Heroku platform easily.                                                                                 "
-    ansible: professormanhattan.heroku
     brew: heroku/brew/heroku
     choco: heroku-cli
     npm: heroku
@@ -4684,7 +4597,6 @@ softwarePackages:
     _github: https://github.com/sharkdp/hexyl
     _name: hexyl
     _short: "Hexyl is a command-line hex viewer designed for speed and ease of use.                                                                                                                                    "
-    ansible: professormanhattan.hexyl
     apt: hexyl
     brew: hexyl
     cargo: hexyl
@@ -4722,7 +4634,6 @@ softwarePackages:
     _github: https://github.com/soywod/himalaya
     _name: Himalaya
     _short: "himalaya is a minimalist and fast static site generator written in Rust.                                                                                                                                  "
-    ansible: professormanhattan.himalaya
     brew: himalaya
     scoop: himalaya
   hishtory:
@@ -4762,17 +4673,6 @@ softwarePackages:
     github: github.com/guumaster/hostctl
     scoop: hostctl
     yay: hostctl
-  hosthomepage:
-    _bin: null
-    _github: false
-    _name: Host Home Page
-    ansible: professormanhattan.hosthomepage
-  hosts:
-    _bin: null
-    _desc: This role is intended to be used with the [main ProfessorManhattan playbook](https://gitlab.com/ProfessorManhattan/Playbooks). It integrates tightly with the configuration variables that come with the playbook.
-    _github: false
-    _name: Hosts
-    ansible: professormanhattan.hosts
   howdoi:
     _bin: howdoi
     _desc: "howdoi is a command-line tool that provides quick answers to programming questions by searching through Stack Overflow. Users can simply type a question related to programming, and howdoi will fetch and\ndisplay relevant answers from Stack Overflow. It's a handy tool for developers looking for quick solutions or explanations without having to manually search through forums. The tool is written in Python\nand is available on GitHub for anyone to use and contribute to.                                                                                                                                           "
@@ -4865,7 +4765,6 @@ softwarePackages:
     _name: HTTPie
     _short: "HTTPie is a command-line HTTP client for making requests with a simple and intuitive syntax.                                                                                                              "
     _todo: Look into https://github.com/httpie/desktop as alternative to Postman and other HTTP request clients
-    ansible: professormanhattan.httpie
     brew: httpie
     choco: httpie
     dnf: httpie
@@ -4947,7 +4846,6 @@ softwarePackages:
     _home: https://hyper.is/
     _name: Hyper
     _short: "Hyper is a customizable terminal built on web technologies.                                                                                                                                               "
-    ansible: professormanhattan.hyper
     appimage: hyper
     brew: hyper
     choco: hyper
@@ -4959,7 +4857,6 @@ softwarePackages:
     _github: https://github.com/sharkdp/hyperfine
     _name: hyperfine
     _short: "hyperfine is a command-line benchmarking tool for measuring the execution time of programs.                                                                                                               "
-    ansible: professormanhattan.hyperfine
     apk: hyperfine
     brew: hyperfine
     cargo: hyperfine
@@ -5074,7 +4971,6 @@ softwarePackages:
     _home: https://inkscape.org
     _name: Inkscape
     _short: "Inkscape is a popular open-source vector graphics editor for creating illustrations, icons, logos, diagrams, and more.                                                                                    "
-    ansible: professormanhattan.inkscape
     apt: inkscape
     cask: inkscape
     choco: inkscape
@@ -5091,7 +4987,6 @@ softwarePackages:
     _home: https://www.jetbrains.com/idea/
     _name: IntelliJ IDEA (CE)
     _short: "intellij-community is an open-source project by JetBrains for IntelliJ IDEA, a popular Java IDE.                                                                                                          "
-    ansible: professormanhattan.intellij
     cask: intellij-idea-ce
     choco: intellijidea-community
     snap: intellij-idea-community --classic
@@ -5254,7 +5149,6 @@ softwarePackages:
     _name: Java
     _short: "nosql-java-sdk is a Java library for interacting with Oracle NoSQL Database.                                                                                                                              "
     _when:cask: "! brew list temurin > /dev/null"
-    ansible: professormanhattan.java
     apt: openjdk-11-jdk
     brew: openjdk
     cask: temurin
@@ -5284,7 +5178,6 @@ softwarePackages:
     _home: https://www.jenv.be/
     _name: jenv
     _short: "jenv is a tool for managing Java environments on your system. It allows you to easily switch between different Java versions and set the Java version on a per-directory basis.                           "
-    ansible: professormanhattan.jenv
     brew: jenv
   jest:
     _bin: jest
@@ -5322,7 +5215,6 @@ softwarePackages:
     _github: https://github.com/jpmens/jo
     _name: jo
     _short: "jo is a command-line utility that creates JSON output from shell commands.                                                                                                                                "
-    ansible: professormanhattan.jo
     apt: jo
     brew: jo
     github: github.com/jpmens/jo
@@ -5360,8 +5252,8 @@ softwarePackages:
     _github: https://github.com/stedolan/jq
     _home: https://stedolan.github.io/jq
     _name: jq
+    _preload: true
     _short: "jq is a lightweight and flexible command-line JSON processor for parsing, manipulating, and formatting JSON data efficiently.                                                                             "
-    ansible: professormanhattan.jq
     apk: jq
     apt: jq
     brew: jq
@@ -5407,7 +5299,6 @@ softwarePackages:
     _home: https://juju.is/
     _name: Juju
     _short: "Juju is an open-source application modeling tool that allows you to deploy, configure, manage, and scale applications in the cloud easily.                                                                "
-    ansible: professormanhattan.juju
     brew: juju
     choco: juju
     snap: juju --classic
@@ -5556,7 +5447,6 @@ softwarePackages:
     _name: Keybase
     _short: "Keybase Client is an open-source security app that offers encrypted messaging, file sharing, and identity verification services.                                                                          "
     _when:ansible: "! test -f /opt/keybase/Keybase"
-    ansible: professormanhattan.keybase
     cask: keybase
     choco: keybase
     pacman:
@@ -5582,7 +5472,6 @@ softwarePackages:
     _home: https://sw.kovidgoyal.net/kitty/
     _name: KiTTY
     _short: "kitty is a fast, feature-rich, and cross-platform terminal emulator.                                                                                                                                      "
-    ansible: professormanhattan.kitty
   kn:
     _bin: kn
     _desc: The Knative CLI (kn) provides a quick and easy interface for creating Knative resources, such as Knative Services and Event Sources
@@ -5601,7 +5490,6 @@ softwarePackages:
     _home: https://kodi.tv/
     _name: Kodi
     _short: "GitHub Repository:                                                                                                                                                                                        \n\n • Name: xbmc/xbmc                                                                                                                                                                                        \n • Description: Open-source media player software                                                                                                                                                         \n • Link: xbmc/xbmc                                                                                                                                                                                        "
-    ansible: professormanhattan.kodi
     apt: kodi
     cask: kodi
     choco: kodi
@@ -5779,7 +5667,6 @@ softwarePackages:
     _name: KVM
     _service: libvirt
     _serviceEnabled: true
-    ansible: professormanhattan.kvm
     apt:
       - bridge-utils
       - libvirt-clients
@@ -5854,7 +5741,6 @@ softwarePackages:
     _home: https://www.ledger.com/ledger-live
     _name: Ledger Live
     _short: "Ledger Live is a desktop application for managing cryptocurrency assets using Ledger hardware wallets.                                                                                                    "
-    ansible: professormanhattan.ledgerlive
     appimage: ledger-live-desktop
     cask: ledger-live
     choco: ledger-live
@@ -5868,7 +5754,6 @@ softwarePackages:
     _home: https://k8slens.dev/
     _name: Lens
     _short: "Lens is an open-source Kubernetes IDE that provides a visual way to work with Kubernetes clusters.                                                                                                        "
-    ansible: professormanhattan.lens
     cask: lens
     choco: lens
     snap: kontena-lens --classic
@@ -5892,7 +5777,6 @@ softwarePackages:
     _name: Lexicon
     _post:pipx: pipx inject dns-lexicon dns-lexicon[full]
     _short: "Lexicon is a DNS manipulation framework that makes it easy to interact with multiple DNS providers.                                                                                                       "
-    ansible: professormanhattan.lexicon
     pipx: dns-lexicon
   libguestfs-tools:
     _bin: guestfish
@@ -6097,7 +5981,6 @@ softwarePackages:
     _github: https://github.com/lastpass/lastpass-cli
     _name: LastPass CLI
     _short: "lastpass-cli is a command line interface for LastPass password manager, allowing users to access and manage their passwords from the terminal.                                                            "
-    ansible: professormanhattan.lpass
   lsd:
     _bin: lsd
     _deprecated: Deprecated in favor of using `exa`. `lsd` may be re-introduced when Windows support is added.
@@ -6247,7 +6130,6 @@ softwarePackages:
     _home: https://github.com/lra/mackup
     _name: mackup
     _short: "Mackup is a tool that syncs application settings across multiple macOS devices using cloud storage services like Dropbox or Google Drive.                                                                 "
-    ansible: professormanhattan.mackup
     brew: mackup
     pipx: mackup
   macprefs:
@@ -6604,7 +6486,6 @@ softwarePackages:
     _desc: "[Microsoft Teams](https://www.microsoft.com/en-us/microsoft-teams/group-chat-software) is a proprietary business communication platform developed by Microsoft, as part of the Microsoft 365 family of products. Teams primarily competes with the similar service Slack, offering workspace chat and videoconferencing, file storage, and application integration."
     _github: false
     _name: Microsoft Teams
-    ansible: professormanhattan.teams
     cask: microsoft-teams
     choco: microsoft-teams
     flatpak: com.microsoft.Teams
@@ -6619,7 +6500,6 @@ softwarePackages:
     _github: false
     _home: https://todo.microsoft.com/tasks/
     _name: Microsoft To-Do
-    ansible: professormanhattan.microsofttodo
     cask: ao
     mas: 1274495053
     snap: microsoft-todo-unofficial
@@ -6669,7 +6549,6 @@ softwarePackages:
     _home: https://mitmproxy.org/
     _name: mitmproxy
     _short: "mitmproxy is an open-source interactive HTTPS proxy.                                                                                                                                                      "
-    ansible: professormanhattan.mitmproxy
     apt: mitmproxy
     cask: mitmproxy
     choco: mitmproxy
@@ -6764,7 +6643,6 @@ softwarePackages:
     _restricted: true
     _service: monero
     _short: "Monero is an open-source cryptocurrency that focuses on privacy, security, and decentralization.                                                                                                          "
-    ansible: professormanhattan.monero
     cask: monero-wallet
     choco: monero
     flatpak: org.getmonero.Monero
@@ -6861,7 +6739,6 @@ softwarePackages:
     _home: https://motrix.app/
     _name: Motrix
     _short: "Motrix is a full-featured download manager that supports downloading HTTP, FTP, BitTorrent, Magnet, and more.                                                                                             "
-    ansible: professormanhattan.motrix
     cask: motrix
     choco: motrix
     flatpak: net.agalwood.Motrix
@@ -6961,7 +6838,6 @@ softwarePackages:
     _post:cask: multipass set local.driver=virtualbox
     _post:choco: multipass set local.driver=virtualbox
     _short: "Multipass is a lightweight VM manager for Linux, Windows, and macOS.                                                                                                                                      "
-    ansible: professormanhattan.multipass
     cask: multipass
     choco: multipass
     snap: multipass
@@ -7061,6 +6937,7 @@ softwarePackages:
     _github: https://github.com/denisidoro/navi
     _home: https://github.com/denisidoro/navi
     _name: Navi
+    _preload: true
     _repology: navi
     _short: "navi is a command-line cheat sheet tool that helps users navigate commands more efficiently.                                                                                                              "
     brew: navi
@@ -7082,7 +6959,6 @@ softwarePackages:
     _home: https://xwmx.github.io/nb
     _name: nb
     _short: "nb is a command-line note-taking, bookmarking, and knowledge base application for developers.                                                                                                             "
-    ansible: professormanhattan.nb
     basher: xwmx/nb
     bpkg: xwmx/nb
     brew: nb
@@ -7241,7 +7117,6 @@ softwarePackages:
         sudo: true
     _serviceEnabled: true
     _short: "Netdata is an open-source real-time performance monitoring tool for system administrators and developers.                                                                                                 "
-    ansible: professormanhattan.netdata
     brew: netdata
     pacman: netdata
     port: netdata
@@ -7298,7 +7173,6 @@ softwarePackages:
     _service: nginx
     _serviceEnabled: true
     _short: "nginx is a popular open-source web server known for its high performance, stability, and scalability.                                                                                                     "
-    ansible: professormanhattan.nginx
     apt: nginx
     brew: nginx
     choco: nginx
@@ -7320,7 +7194,6 @@ softwarePackages:
     _github: false
     _home: https://ngrok.com/)
     _name: Ngrok
-    ansible: professormanhattan.ngrok
     cask: ngrok
     choco: ngrok
     snap: ngrok
@@ -7365,7 +7238,6 @@ softwarePackages:
     _name: Nmap
     _post:snap: sudo snap connect nmap:network-control
     _short: "Nmap is a popular open-source network scanning tool used for network discovery and security auditing.                                                                                                     "
-    ansible: professormanhattan.nmap
     apt: nmap
     brew: nmap
     choco: nmap
@@ -7394,7 +7266,6 @@ softwarePackages:
     _home: https://nodejs.org/en/
     _name: Node.js
     _short: "Node.js is an open-source JavaScript runtime built on Chrome's V8 JavaScript engine.                                                                                                                      "
-    ansible: professormanhattan.nodejs
     brew: node
     scoop: nodejs
   node-prune:
@@ -7421,7 +7292,6 @@ softwarePackages:
     _name: HashiCorp Nomad
     _service: nomad
     _short: "Nomad is a cluster manager and scheduler designed by HashiCorp for deploying and managing containerized and non-containerized applications at scale.                                                      "
-    ansible: professormanhattan.nomad
     brew: nomad
     choco: nomad
     yay: nomad-git
@@ -7434,16 +7304,6 @@ softwarePackages:
     cargo: nomino
     github: github.com/yaa110/nomino
     yay: nomino
-  nordvpn:
-    _bin: null
-    _deprecated: Deprecated in favor of leveraging ProtonVPN as the primary VPN service.
-    _desc: "[NordVPN](https://nordvpn.com/) is a virtual private network service provider. It has desktop applications for Windows, macOS, and Linux, mobile apps for Android and iOS, as well as an application for Android TV. Manual setup is available for wireless routers, NAS devices and other platforms."
-    _docs: https://support.nordvpn.com/
-    _github: https://github.com/jotyGill/openpyn-nordvpn
-    _home: https://nordvpn.com/
-    _name: NordVPN
-    _short: "openpyn-nordvpn is a script that simplifies connecting to NordVPN servers using the OpenVPN protocol on Linux systems.                                                                                    "
-    ansible: professormanhattan.nordvpn
   normit:
     _bin: normit
     _deps:
@@ -7452,7 +7312,6 @@ softwarePackages:
     _github: https://github.com/pawurb/normit
     _name: Normit
     _short: "normit is a command-line tool for translating text using multiple translation engines.                                                                                                                    "
-    ansible: professormanhattan.normit
     npm: normit
   notion:
     _app: Notion.app
@@ -7637,7 +7496,6 @@ softwarePackages:
     _home: https://onionshare.org/
     _name: OnionShare
     _short: "OnionShare is a tool that allows you to securely and anonymously share files over the Tor network.                                                                                                        "
-    ansible: professormanhattan.onionshare
     apt: onionshare
     cask: onionshare
     choco: onionshare
@@ -7881,7 +7739,6 @@ softwarePackages:
     _home: https://www.packer.io/
     _name: Packer
     _short: "Packer is an open-source tool for creating identical machine images for multiple platforms from a single source configuration.                                                                            "
-    ansible: professormanhattan.packer
     apt: packer
     brew: packer
     choco: packer
@@ -7920,7 +7777,6 @@ softwarePackages:
     _home: https://pandoc.org/
     _name: Pandoc
     _short: "Pandoc is a versatile tool for converting between various document formats.                                                                                                                               "
-    ansible: professormanhattan.pandoc
     apt: pandoc
     brew:
       - pandoc
@@ -7999,7 +7855,6 @@ softwarePackages:
     _home: https://peco.github.io/
     _name: Peco
     _short: "Peco is a interactive filtering tool for the command line.                                                                                                                                                "
-    ansible: professormanhattan.peco
     apt: peco
     brew: peco
     choco: peco
@@ -8049,7 +7904,6 @@ softwarePackages:
     _home: https://www.pgcli.com/
     _name: pgcli
     _short: "pgcli is a command-line interface for PostgreSQL with auto-completion and syntax highlighting.                                                                                                            "
-    ansible: professormanhattan.pgcli
     brew: pgcli
     choco: pgcli
     pipx: pgcli
@@ -8065,7 +7919,6 @@ softwarePackages:
     _name: PHP
     _service: php
     _short: "The official repository for the PHP programming language source code.                                                                                                                                     "
-    ansible: professormanhattan.php
     apt: php
     brew: php
     choco: php
@@ -8263,16 +8116,6 @@ softwarePackages:
     _name: "PinApp                                                                                                                                                                                                    "
     _short: "PinApp is a simple command-line tool for pinning applications to the macOS dock.                                                                                                                          "
     flatpak: io.github.fabrialberio.pinapp
-  pip:
-    _bin: pip
-    _deprecated: The `pip` installation is handled by the `install-program` program bundled with Install Doctor.
-    _desc: "[pip](https://pypi.org/project/pip/) is a package-management system written in Python used to install and manage software packages. It connects to an online repository of public and paid-for private packages, called the Python Package Index."
-    _docs: https://pip.pypa.io/en/stable/user_guide/
-    _github: https://github.com/pypa/pip
-    _home: https://pip.pypa.io/en/stable/
-    _name: PIP
-    _short: "pip is a package installer for Python.                                                                                                                                                                    "
-    ansible: professormanhattan.pip
   pipedream-cli:
     _bin: pd
     _desc: Connect APIs, remarkably fast. Free for developers.
@@ -8348,7 +8191,6 @@ softwarePackages:
     _github: false
     _home: https://www.plex.tv/
     _name: Plex
-    ansible: professormanhattan.plex
     cask: plex
     choco: plex
     flatpak: tv.plex.PlexDesktop
@@ -8423,7 +8265,6 @@ softwarePackages:
     _home: https://pnpm.io/
     _name: pnpm
     _short: "pnpm is a fast, disk space-efficient package manager for Node.js projects.                                                                                                                                "
-    ansible: professormanhattan.pnpm
     brew: pnpm
     npm: pnpm
     scoop: pnpm
@@ -8467,7 +8308,6 @@ softwarePackages:
     _home: https://python-poetry.org/
     _name: Poetry
     _short: "Poetry is a Python dependency management and packaging tool that simplifies and streamlines the process of managing Python projects.                                                                      "
-    ansible: professormanhattan.poetry
     brew: poetry
     yay: python-poetry-git
   polybar:
@@ -8571,7 +8411,6 @@ softwarePackages:
     _home: https://www.postman.com/
     _name: Postman
     _short: "postman-app-support is a repository for Postman app support resources.                                                                                                                                    "
-    ansible: professormanhattan.postman
     cask: postman
     choco: postman
     flatpak: com.getpostman.Postman
@@ -8596,7 +8435,6 @@ softwarePackages:
     _name: Powershell
     _post:cask: brew install mono-libgdiplus
     _short: "PowerShell is a cross-platform task automation and configuration management framework.                                                                                                                    "
-    ansible: professormanhattan.powershell
     cask: powershell
     snap: powershell --classic
   pppc-utility:
@@ -8622,11 +8460,6 @@ softwarePackages:
     _name: PrefSniff
     _short: "prefsniff is a tool that monitors and logs changes to macOS system preferences.                                                                                                                           "
     pipx: prefsniff
-  prepare:
-    _bin: null
-    _desc: An Ansible Role that prepares hosts for playbook execution
-    _github: false
-    ansible: professormanhattan.prepare
   prettier:
     _bin: prettier
     _desc: "[Prettier](https://prettier.io/docs/en/index.html) is an opinionated code formatter. It enforces a consistent style by parsing your code and re-printing it with its own rules that take the maximum line length into account, wrapping code when necessary"
@@ -8869,7 +8702,6 @@ softwarePackages:
     _github: https://github.com/ericchiang/pup
     _name: pup
     _short: "pup is a command line tool for parsing HTML.                                                                                                                                                              "
-    ansible: professormanhattan.pup
     brew: pup
     github: github.com/ericchiang/pup
     go: github.com/ericchiang/pup@latest
@@ -8950,7 +8782,6 @@ softwarePackages:
     _home: https://www.qbittorrent.org/
     _name: qBittorrent
     _short: "qBittorrent is an open-source BitTorrent client that aims to be a free alternative to µTorrent.                                                                                                           "
-    ansible: professormanhattan.qbittorrent
     apt: qbittorrent
     cask: qbittorrent
     choco: qbittorrent
@@ -9090,7 +8921,6 @@ softwarePackages:
     _home: https://www.raspberrypi.com/software/
     _name: Raspberry Pi Imager
     _short: "rpi-imager is a tool for easily flashing operating system images onto SD cards for Raspberry Pi devices.                                                                                                  "
-    ansible: professormanhattan.raspberryimager
     cask: raspberry-pi-imager
     choco: rpi-imager
     dnf: rpi-imager
@@ -9120,7 +8950,6 @@ softwarePackages:
     _home: https://rclone.org/
     _name: Rclone
     _short: "rclone is a command-line program to manage files on cloud storage.                                                                                                                                        "
-    ansible: professormanhattan.rclone
     apt: rclone
     brew:linux: rclone
     choco:
@@ -9253,7 +9082,6 @@ softwarePackages:
     _home: https://restic.net/
     _name: Restic
     _short: "restic is an open-source backup program that is fast, secure, and efficient.                                                                                                                              "
-    ansible: professormanhattan.restic
     apk: restic
     apt: restic
     brew: restic
@@ -9281,7 +9109,6 @@ softwarePackages:
     _github: https://github.com/BurntSushi/ripgrep
     _name: ripgrep
     _short: "ripgrep is a fast, line-oriented search tool that recursively searches your current directory for a regex pattern while respecting your gitignore rules.                                                  "
-    ansible: professormanhattan.ripgrep
     apt: ripgrep
     brew: ripgrep
     cargo: ripgrep
@@ -9405,7 +9232,6 @@ softwarePackages:
     _home: https://www.ruby-lang.org/en/
     _name: Ruby
     _short: "Ruby is an open-source programming language known for its simplicity and productivity.                                                                                                                    "
-    ansible: professormanhattan.ruby
     apt: ruby-dev
     brew: ruby
     choco: ruby
@@ -9451,7 +9277,6 @@ softwarePackages:
     _home: https://www.rust-lang.org/
     _name: Rust
     _short: "rust-lang/rust is the official Rust programming language repository on GitHub.                                                                                                                            "
-    ansible: professormanhattan.rust
     brew: rust
     choco: rust
     dnf:
@@ -9512,7 +9337,6 @@ softwarePackages:
     _github: https://github.com/peak/s5cmd
     _name: s5cmd
     _short: "s5cmd is a command-line utility for managing Amazon S3 storage. It provides fast and efficient operations for uploading, downloading, and managing objects in S3 buckets.                                 "
-    ansible: professormanhattan.s5cmd
     brew: peak/tap/s5cmd
     github: github.com/peak/s5cmd
     go: github.com/peak/s5cmd@latest
@@ -9570,7 +9394,6 @@ softwarePackages:
     _name: Sanoid
     _short: "Sanoid is a tool for creating and managing ZFS snapshots.                                                                                                                                                 "
     _when:linux: command -v zfs > /dev/null && ! zfs list
-    ansible:linux: professormanhattan.sanoid
     apt:
       - libcapture-tiny-perl
       - libconfig-inifiles-perl
@@ -9624,7 +9447,6 @@ softwarePackages:
     _github: https://github.com/Genymobile/scrcpy
     _name: scrcpy
     _short: "scrcpy is a free and open-source tool that allows you to display and control Android devices connected via USB or TCP/IP.                                                                                 "
-    ansible: professormanhattan.scrcpy
     apt: scrcpy
     brew: scrcpy
     choco: scrcpy
@@ -9740,12 +9562,6 @@ softwarePackages:
     _name: "Secretive                                                                                                                                                                                                 "
     _short: "Secretive is a macOS app that securely stores and manages your SSH keys in the Secure Enclave of your Mac.                                                                                                "
     cask: secretive
-  security:
-    _bin: null
-    _desc: This role turns on auto-updates and configures sudo, for instance.
-    _github: false
-    _name: Security
-    ansible: professormanhattan.security
   semantic-release:
     _bin: semantic-release
     _desc: "[semantic-release](https://semantic-release.gitbook.io) automates the whole package release workflow including: determining the next version number, generating the release notes, and publishing the package"
@@ -9843,8 +9659,6 @@ softwarePackages:
     _home: https://neurobin.org/projects/softwares/unix/shc/
     _name: shc
     _short: "shc is a shell script compiler that converts shell scripts into C code for faster execution.                                                                                                              "
-    ansible:darwin: professormanhattan.shc
-    ansible:linux: professormanhattan.shc
     brew: shc
     port: shc
   shdoc:
@@ -9855,8 +9669,6 @@ softwarePackages:
     _github: https://github.com/reconquest/shdoc
     _name: shdoc
     _short: "shdoc is a tool for generating documentation from shell scripts.                                                                                                                                          "
-    ansible:darwin: professormanhattan.shdoc
-    ansible:linux: professormanhattan.shdoc
     script:darwin: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install && cd /tmp && sudo rm -rf shdoc
     script:linux: cd /tmp && git clone --recursive https://github.com/reconquest/shdoc && cd shdoc && sudo make install && cd /tmp && sudo rm -rf shdoc
     yay: shdoc-git
@@ -9908,7 +9720,6 @@ softwarePackages:
     _home: https://pkg.go.dev/mvdan.cc/sh/v3
     _name: shfmt
     _short: "mvdan/sh is a shell parser and formatter written in Go.                                                                                                                                                   "
-    ansible: professormanhattan.shfmt
     apk: shfmt
     brew: shfmt
     github: github.com/mvdan/sh
@@ -9934,7 +9745,6 @@ softwarePackages:
     _home: https://shotcut.org/
     _name: Shotcut
     _short: "Shotcut is an open-source video editing software that offers a range of features for creating and editing videos.                                                                                         "
-    ansible: professormanhattan.shotcut
     apt: shotcut
     cask: shotcut
     choco: shotcut
@@ -10006,6 +9816,7 @@ softwarePackages:
     _desc: Skate is a personal key-value store. Use it to save and retrieve anything you’d like—even binary data. It’s fully encrypted, backed up to the cloud (that you can self-host if you want) and can be synced with all your machines
     _github: https://github.com/charmbracelet/skate
     _name: skate
+    _preload: true
     _short: "Skate is a terminal-based visual layout tool for creating interactive user interfaces in Go.                                                                                                              "
     brew: charmbracelet/tap/skate
     go: github.com/charmbracelet/skate@latest
@@ -10039,7 +9850,6 @@ softwarePackages:
     _home: https://www.skype.com/en/
     _name: Skype
     _short: "$'Not open-source' is a string enclosed in single quotes preceded by a dollar sign and is typically used in Unix-like systems to enable escape sequences like \\n for new lines.                           "
-    ansible: professormanhattan.skype
     cask: skype
     choco: skype
     flatpak: com.skype.Client
@@ -10054,7 +9864,6 @@ softwarePackages:
     _home: https://slack.com/
     _name: Slack
     _short: "SlackTextViewController is a library for iOS that provides a chat interface similar to Slack.                                                                                                             "
-    ansible: professormanhattan.slack
     cask: slack
     choco: slack
     flatpak: com.slack.Slack
@@ -10066,7 +9875,6 @@ softwarePackages:
     _github: https://github.com/erroneousboat/slack-term
     _name: slack-term
     _short: "slack-term is a terminal-based Slack client that allows you to chat on Slack from the command line.                                                                                                       "
-    ansible: professormanhattan.slackterm
     go: github.com/erroneousboat/slack-term@latest
   slides:
     _bin: slides
@@ -10242,6 +10050,7 @@ softwarePackages:
     _github: https://github.com/sqlite/sqlite
     _home: https://sqlite.org/index.html
     _name: SQLite
+    _preload: true
     _short: "SQLite is a lightweight, self-contained, serverless, zero-configuration, transactional SQL database engine.                                                                                               "
     apt: sqlite3
     brew: sqlite
@@ -10255,19 +10064,12 @@ softwarePackages:
     _desc: "Squid is a widely-used caching proxy server that supports HTTP, HTTPS, FTP, and more. It helps improve web server performance by caching frequently accessed content, reducing bandwidth usage, and       \nproviding access control features. Squid is open-source and highly configurable, making it popular for improving web browsing speeds and security. It is compatible with various operating systems and is \nknown for its stability and extensibility through plugins. The project is actively maintained and has a large community of users and developers contributing to its ongoing development.                  "
     _github: https://github.com/squid-cache/squid
     _name: Squid
-    _preload: true
     _service: squid
     _short: "Squid is a caching proxy server that supports HTTP, HTTPS, FTP, and more.                                                                                                                                 "
     apt: squid
     brew: squid
     dnf: squid
     pacman: squid
-  ssh:
-    _bin: null
-    _desc: On top of tightening up SSH security settings, this role also installs fail2ban on Linux systems. If provided, the role will also populate all your SSH keys and set their permissions appropriately
-    _github: false
-    _name: SSH
-    ansible: professormanhattan.ssh
   ssh-vault:
     _bin: ssh-vault
     _desc: "[sshvault](https://ssh-vault.com/) lets you encrypt/decrypt using SSH private keys. It is written in Go and the documentation can be read in under a minute."
@@ -10276,7 +10078,6 @@ softwarePackages:
     _home: https://ssh-vault.com/
     _name: ssh-vault
     _short: "ssh-vault is a tool for encrypting and decrypting secrets using SSH keys.                                                                                                                                 "
-    ansible: professormanhattan.sshvault
     brew: ssh-vault
     github: github.com/ssh-vault/ssh-vault
   sshfs:
@@ -10298,6 +10099,7 @@ softwarePackages:
     _github: https://github.com/kevinburke/sshpass
     _home: https://sourceforge.net/projects/sshpass/
     _name: sshpass
+    _preload: true
     _short: "sshpass is a tool that allows non-interactive SSH password authentication.                                                                                                                                "
     apt: sshpass
     brew: hudochenkov/sshpass/sshpass
@@ -10369,14 +10171,6 @@ softwarePackages:
     _name: Starred
     _short: "starred is a tool that helps you manage your starred repositories on GitHub.                                                                                                                              "
     pipx: starred
-  starship:
-    _bin: null
-    _deprecated: Deprecated in favor of alternative terminal status prompts such as PowerLevel10k.
-    _desc: "[Starship](https://starship.rs/) is the minimal, blazing fast, and extremely customizable prompt for any shell! It shows the information you need, while staying sleek and minimal. Unlike most other prompts, it is compatible with nearly every type of terminal. If you want to retain the same look and feel across different terminals, then look no further."
-    _github: https://github.com/starship/starship
-    _name: Starship
-    _short: "Starship is a customizable, fast, and minimal prompt for any shell.                                                                                                                                       "
-    ansible: professormanhattan.starship
   statcode:
     _bin: statcode
     _desc: "statcode is a command-line tool available on GitHub at https://github.com/shobrook/statcode. It allows you to quickly view HTTP status codes and their definitions. By providing a status code as an      \nargument, it returns the corresponding status code along with a brief description. This tool can be handy for developers and system administrators to quickly reference HTTP status codes without needing \nto search online. It simplifies the process of understanding and working with HTTP status codes in a terminal environment.                                                                                "
@@ -10489,14 +10283,6 @@ softwarePackages:
     _short: "SVGO is a tool for optimizing SVG files, reducing their size without affecting quality.                                                                                                                   "
     brew: svgo
     npm: svgo
-  swarm:
-    _bin: null
-    _desc: Docker Swarm is an orchestration management tool that runs Docker applications. It helps in creating and deploying a cluster of Docker nodes
-    _docs: https://docs.docker.com/engine/swarm/
-    _github: https://github.com/moby/swarmkit
-    _name: Docker Swarm
-    _short: "swarmkit is a toolkit for orchestrating distributed systems at any scale.                                                                                                                                 "
-    ansible: professormanhattan.swarm
   swiftbar:
     _app: SwiftBar.app
     _desc: "SwiftBar is a macOS menu bar customization tool that allows users to add custom scripts, widgets, and plugins to their menu bar. It is highly customizable and extensible, enabling users to display      \nvarious information such as system stats, weather, calendar events, and more directly in the menu bar. SwiftBar supports scripting in languages like Shell, Python, Ruby, and JavaScript, making it       \nversatile for users with different scripting preferences. It provides a simple yet powerful way to enhance the functionality and appearance of the macOS menu bar.                                        "
@@ -10540,7 +10326,6 @@ softwarePackages:
     _home: https://swh.app/
     _name: SwitchHosts
     _short: "SwitchHosts is a tool for managing and switching between multiple hosts files on macOS.                                                                                                                   "
-    ansible: professormanhattan.switchhosts
     appimage: oldj/SwitchHosts
     cask: switchhosts
     choco: switchhosts
@@ -10604,7 +10389,6 @@ softwarePackages:
     _home: https://sysdig.com/
     _name: sysdig
     _short: "draios is a GitHub repository belonging to a company that specializes in system monitoring and troubleshooting tools.                                                                                     "
-    ansible: professormanhattan.sysdig
     brew: sysdig
     pacman:
       - sysdig
@@ -10647,7 +10431,6 @@ softwarePackages:
     _home: https://crates.io/crates/t-rec
     _name: t-rec
     _short: "t-rec-rs is a terminal-based screen recorder written in Rust.                                                                                                                                             "
-    ansible: professormanhattan.trec
     brew: t-rec
     cargo: t-rec
     port: t-rec
@@ -10678,10 +10461,10 @@ softwarePackages:
     _github: https://github.com/tailscale/tailscale
     _home: https://tailscale.com/
     _name: Tailscale
+    _preload: true
     _service:brew: tailscale
     _service:pacman: tailscaled
     _short: "Tailscale is a secure mesh VPN that makes it easy to connect your devices securely.                                                                                                                       "
-    ansible: professormanhattan.tailscale
     brew: tailscale
     cask: tailscale
     choco: tailscale
@@ -10722,6 +10505,7 @@ softwarePackages:
     _github: https://github.com/go-task/task
     _home: https://taskfile.dev
     _name: Task
+    _preload: true
     _short: "Task is a simple task runner / build tool for Go projects.                                                                                                                                                "
     brew: go-task
     choco: go-task
@@ -10781,7 +10565,6 @@ softwarePackages:
     _github: https://github.com/gravitational/teleport
     _name: Teleport
     _short: "Teleport is an open-source tool for securely accessing SSH servers and Kubernetes clusters.                                                                                                               "
-    ansible: professormanhattan.teleport
     brew: teleport
     pkg: teleport
     yay: teleport-bin
@@ -10823,7 +10606,6 @@ softwarePackages:
     _github: false
     _home: https://www.termius.com/
     _name: Termius
-    ansible: professormanhattan.termius
     brew: termius
     choco: termius
     pipx: termius
@@ -10862,7 +10644,9 @@ softwarePackages:
     _github: https://github.com/tfutils/tfenv
     _home: https://github.com/tfutils/tfenv
     _name: tfenv
-    _short: "tfenv is a tool for managing multiple versions of Terraform.                                                                                                                                              "
+    _short: tfenv is a tool for managing multiple versions of Terraform.
+    _post: |
+      tfenv use latest
     ansible:darwin: professormanhattan.tfenv
     ansible:linux: professormanhattan.tfenv
     brew: tfenv
@@ -10874,7 +10658,6 @@ softwarePackages:
     _github: https://github.com/terraform-linters/tflint
     _name: tflint
     _short: "tflint is a Terraform linter that helps in detecting errors in Terraform configurations.                                                                                                                  "
-    ansible: professormanhattan.tflint
     brew: tflint
     choco: tflint
     github: github.com/terraform-linters/tflint
@@ -11010,7 +10793,6 @@ softwarePackages:
     _github: https://github.com/tmux/tmux
     _name: tmux
     _short: "tmux is a terminal multiplexer for Unix-like operating systems that allows multiple terminal sessions to be accessed and controlled from a single window.                                                 "
-    ansible: professormanhattan.tmux
     apt: tmux
     brew:
       - awk
@@ -11133,7 +10915,6 @@ softwarePackages:
     _github: https://github.com/MrRaindrop/tree-cli
     _name: tree-cli
     _short: "tree-cli is a command-line tool that generates directory trees in a visually appealing way.                                                                                                               "
-    ansible: professormanhattan.tree
     apt: tree
     brew: tree
     choco: tree
@@ -11210,6 +10991,7 @@ softwarePackages:
     _github: https://github.com/microsoft/TypeScript
     _home: https://www.typescriptlang.org/
     _name: TypeScript
+    _preload: true
     _short: "TypeScript is a superset of JavaScript that adds static typing to the language, making it easier to build and maintain large-scale applications.                                                          "
     brew: typescript
     npm: tsc
@@ -11230,16 +11012,6 @@ softwarePackages:
     _name: ugm
     _short: "ugm is a tool for managing Git repositories.                                                                                                                                                              "
     go: github.com/ariasmn/ugm@latest
-  ulauncher:
-    _bin: ulauncher
-    _deprecated: Deprecated in favor of alternative app launchers.
-    _desc: "[Ulauncher](https://ulauncher.io/) is a software packaging and deployment system developed by Canonical for operating systems that use the Linux kernel. The packages, called ulaunchers, and the tool for using them, ulauncher, work across a range of Linux distributions and allow upstream software developers to distribute their applications directly to users. Ulaunchers are self-contained applications running in a sandbox with mediated access to the host system."
-    _docs: https://docs.ulauncher.io/
-    _github: https://github.com/Ulauncher/Ulauncher/
-    _home: https://ulauncher.io/
-    _name: Ulauncher
-    _short: "Ulauncher is a fast application launcher for Linux with a minimal design and customizable features.                                                                                                       "
-    ansible: professormanhattan.ulauncher
   ultra:
     _bin: ultra
     _desc: Ultra fast monorepo script runner and build tool
@@ -11253,6 +11025,7 @@ softwarePackages:
     _bin: unbuffer
     _github: false
     _name: Unbuffer
+    _preload: true
     apt: unbuffer
     brew: expect
     dnf: unbuffer
@@ -11279,7 +11052,6 @@ softwarePackages:
     _github: https://github.com/akavel/up
     _name: Ultimate Plumber (up)
     _short: "up is a tool for writing command-line applications in pure Bash, without external dependencies.                                                                                                           "
-    ansible: professormanhattan.up
     brew: up
     github: github.com/akavel/up
     pkg: up
@@ -11310,7 +11082,6 @@ softwarePackages:
     _home: https://upx.github.io/
     _name: UPX
     _short: "UPX is a versatile executable packer for various platforms.                                                                                                                                               "
-    ansible: professormanhattan.upx
     apt: upx
     brew: upx
     choco: upx
@@ -11353,7 +11124,6 @@ softwarePackages:
     _home: https://www.vagrantup.com/
     _name: Vagrant
     _short: "Vagrant is an open-source tool for building and managing virtual machine environments in a single workflow.                                                                                               "
-    ansible: professormanhattan.vagrant
     apt: vagrant
     brew: hashicorp/tap/vagrant
     cask: vagrant
@@ -11379,7 +11149,6 @@ softwarePackages:
     _name: Vagrant VMWare Utility
     _short: "vagrant-vmware-desktop is a plugin for Vagrant that allows users to manage VMware Desktop virtual machines.                                                                                               "
     _when:cask: "! test -f /opt/vagrant-vmware-desktop/bin/vagrant-vmware-utility"
-    ansible: professormanhattan.vmware
     cask: vagrant-vmware-utility
     choco: vagrant-vmware-utility
     script: rm -rf /tmp/vagrant-vmware-utility_1.0.21_linux_amd64.zip && curl https://releases.hashicorp.com/vagrant-vmware-utility/1.0.21/vagrant-vmware-utility_1.0.21_linux_amd64.zip -o /tmp/vagrant-vmware-utility_1.0.21_linux_amd64.zip && unzip /tmp/vagrant-vmware-utility_1.0.21_linux_amd64.zip && sudo mv -f /tmp/vagrant-vmware-utility /usr/local/bin/vagrant-vmware-utility && sudo chmod +x /usr/local/bin/vagrant-vmware-utility
@@ -11402,7 +11171,6 @@ softwarePackages:
     _service: vault
     _service:brew: hashicorp/tap/vault
     _short: "Vault is a tool for securely accessing secrets.                                                                                                                                                           "
-    ansible: professormanhattan.vault
     brew: hashicorp/tap/vault
     yay: vault-cli
   vdirsyncer:
@@ -11480,8 +11248,8 @@ softwarePackages:
     _github: https://github.com/vim/vim
     _home: https://www.vim.org/
     _name: VIM
+    _preload: true
     _short: "Vim is a highly configurable text editor built for efficiency and speed, with a focus on keyboard shortcuts for navigation and editing.                                                                   "
-    ansible: professormanhattan.vim
     apt: vim
     brew: vim
     choco: vim
@@ -11513,7 +11281,6 @@ softwarePackages:
       sudo dnf -y install kernel-headers kernel-devel dkms elfutils-libelf-devel qt5-qtx11extras
     _short: "mirror/vbox is a mirror of the VirtualBox repository on GitHub.                                                                                                                                           "
     _todo: Add support for arm64 - currently brew install --cask virtualbox requires intel 64 bit
-    ansible: professormanhattan.virtualbox
     apt: virtualbox
     cask: virtualbox
     choco: virtualbox
@@ -11549,7 +11316,6 @@ softwarePackages:
     _home: https://www.videolan.org/vlc/
     _name: VLC Media Player
     _short: "VLC Media Player: Open-source multimedia player that supports various audio and video formats, streaming protocols, and more.                                                                             "
-    ansible: professormanhattan.vlc
     apt: vlc
     cask: vlc
     choco: vlc
@@ -11564,7 +11330,6 @@ softwarePackages:
     _github: false
     _home: https://www.vmware.com/
     _name: VMWare
-    ansible: professormanhattan.vmware
     cask: vmware-fusion
     script:linux: |
       if ! command -v vmware > /dev/null; then
@@ -11590,16 +11355,10 @@ softwarePackages:
     _github: https://github.com/volta-cli/volta
     _home: https://volta.sh
     _name: Volta
+    _preload: true
     _short: "Volta is a tool for managing JavaScript command-line tools.                                                                                                                                               "
-    ansible: professormanhattan.volta
     brew: volta
     scoop: volta
-  vpn:
-    _bin: null
-    _desc: You can populate a configuration to power this role. When configured properly, the system's built-in VPN client will be configured with your desired settings.
-    _github: false
-    _name: System VPN
-    ansible: professormanhattan.vpn
   vscode:
     _app: Visual Studio Code.app
     _bin: code
@@ -11609,7 +11368,6 @@ softwarePackages:
     _home: https://code.visualstudio.com/
     _name: Visual Studio Code
     _short: "Visual Studio Code is a free source-code editor made by Microsoft for Windows, Linux, and macOS.                                                                                                          "
-    ansible: professormanhattan.vscode
     cask: visual-studio-code
     choco: vscode
     flatpak: com.visualstudio.code
@@ -11659,7 +11417,6 @@ softwarePackages:
     _github: https://github.com/wailsapp/wails
     _name: Wails
     _short: "Wails is a framework for building desktop apps using Go and Web technologies.                                                                                                                             "
-    ansible: professormanhattan.wails
     go: github.com/wailsapp/wails/cmd/wails@latest
   wallpaper-cli:
     _bin: wallpaper
@@ -11675,6 +11432,7 @@ softwarePackages:
     _github: false
     _home: https://cloudflarewarp.com/
     _name: Cloudflare WARP Client
+    _preload: true
     apt: cloudflare-warp
     cask: cloudflare-warp
     choco: warp
@@ -11723,7 +11481,6 @@ softwarePackages:
     _github: https://github.com/facebook/watchman
     _name: Watchman
     _short: "Watchman is a tool by Facebook for watching changes in the filesystem.                                                                                                                                    "
-    ansible: professormanhattan.watchman
     brew: watchman
     choco: watchman
     port: watchman
@@ -11736,7 +11493,6 @@ softwarePackages:
     _home: https://www.waypointproject.io/
     _name: HashiCorp Waypoint
     _short: "Waypoint is a tool by HashiCorp for building, deploying, and releasing applications across any platform.                                                                                                  "
-    ansible: professormanhattan.waypoint
     brew: hashicorp/tap/waypoint
     scoop: waypoint
   wazuh:
@@ -11820,7 +11576,7 @@ softwarePackages:
     _github: false
     _home: https://www.gnu.org/software/wget/
     _name: wget
-    ansible: professormanhattan.wget
+    _preload: true
     apk: wget
     apt: wget
     brew: wget
@@ -11926,6 +11682,7 @@ softwarePackages:
     _desc: "WireGuard Tools Repository                                                                                                                                                                                \n\nThe WireGuard Tools repository is the official collection of tools for the WireGuard VPN protocol. It includes utilities for configuring and managing WireGuard tunnels on various platforms. The tools   \nare designed to be lightweight, secure, and easy to use, making them popular for setting up secure VPN connections. The repository is actively maintained by the WireGuard development team and is open   \nsource, allowing users to contribute, report issues, and stay up to date with the latest developments in the WireGuard ecosystem.                                                                         "
     _github: https://github.com/WireGuard/wireguard-tools
     _name: WireGuard Tools
+    _preload: true
     _short: "WireGuard Tools is a set of utilities for configuring and managing the WireGuard VPN protocol.                                                                                                            "
     apk: wireguard-tools
     apt: wireguard
@@ -12044,7 +11801,6 @@ softwarePackages:
     _home: https://github.com/blangel/wrk
     _name: wrk
     _short: "wrk is a modern HTTP benchmarking tool designed for high performance.                                                                                                                                     "
-    ansible: professormanhattan.wrk
     apt: wrk
     brew: wrk
     pacman: wrk
@@ -12055,7 +11811,6 @@ softwarePackages:
     _desc: Sets up Windows Subsystem For Linux
     _github: false
     _name: wsl
-    ansible: professormanhattan.wsl
   x64dbg:
     _bin: x64dbg
     _desc: An open-source user mode debugger for Windows. Optimized for reverse engineering and malware analysis.
@@ -12225,6 +11980,7 @@ softwarePackages:
     _desc: "xz is a compression utility that provides high compression ratios and fast decompression. It supports various compression formats like LZMA and LZMA2, and it can compress single files or whole          \ndirectories. The utility is commonly used to compress files for distribution or archival purposes. It is open-source and available on GitHub at https://github.com/xz-mirror/xz for users to download,    \ncontribute, or report issues.                                                                                                                                                                             "
     _github: https://github.com/xz-mirror/xz
     _name: xz
+    _preload: true
     _short: "xz is a compression utility that provides high compression ratios and fast decompression.                                                                                                                 "
     apk: xz
     apt: xz
@@ -12249,7 +12005,6 @@ softwarePackages:
     _github: https://github.com/mptre/yank
     _name: yank
     _short: "Yank is a tool that allows you to copy text from your terminal to your clipboard.                                                                                                                         "
-    ansible: professormanhattan.yank
     apt: yank
     brew: yank
     choco: win32yank
@@ -12279,7 +12034,6 @@ softwarePackages:
     _name: Yarn
     _preload: true
     _short: "Yarn Berry is a next-generation package manager for JavaScript that aims to improve performance and reliability.                                                                                          "
-    ansible: professormanhattan.yarn
     brew: yarn
     choco: yarn
     npm: yarn
@@ -12322,7 +12076,6 @@ softwarePackages:
     _home: https://youtube-dl.org/
     _name: youtube-dl
     _short: "youtube-dl is a command-line tool for downloading videos from YouTube and other websites.                                                                                                                 "
-    ansible: professormanhattan.youtubedl
     brew: youtube-dl
     pipx: youtube-dl
     port: youtube-dl
@@ -12364,7 +12117,6 @@ softwarePackages:
     _name: yq
     _preload: true
     _short: "yq is a lightweight and portable command-line YAML processor.                                                                                                                                             "
-    ansible: professormanhattan.yq
     apk: yq
     brew: yq
     choco: yq
@@ -12498,7 +12250,6 @@ softwarePackages:
     _home: https://zoom.us/
     _name: Zoom
     _short: "$'Not open-source' is a string enclosed in single quotes preceded by a dollar sign and is a way to represent special characters in zsh shell.                                                             "
-    ansible: professormanhattan.zoom
     cask: zoom
     choco: zoom
     flatpak: us.zoom.Zoom
@@ -12511,7 +12262,6 @@ softwarePackages:
     _name: zoxide
     _preload: true
     _short: "zoxide is a blazing fast replacement for cd, allowing you to navigate your filesystem with ease using fuzzy matching and tracking your most used directories.                                             "
-    ansible: professormanhattan.zoxide
     brew: zoxide
   zsh:
     _bin: zsh
@@ -12531,6 +12281,7 @@ softwarePackages:
     _desc: "zsh-completions is a repository on GitHub maintained by the zsh-users organization. It provides a collection of completion scripts for various commands and utilities to enhance auto-completion          \ncapabilities in the zsh shell. These completion scripts help users by suggesting and completing command options, arguments, and file paths as they type commands in the terminal. The repository is       \nregularly updated to support new commands and improve existing completions, making it a valuable resource for zsh users looking to streamline their command-line experience.                              "
     _github: https://github.com/zsh-users/zsh-completions
     _name: ZSH Completions
+    _preload: true
     _short: "zsh-completions is a repository that provides additional completion definitions for the Zsh shell, enhancing auto-completion capabilities for various commands and utilities.                             "
     brew: zsh-completions
   zx:

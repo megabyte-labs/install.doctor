@@ -15,7 +15,7 @@ bashItPlugins() {
   ### Ensure Powerline is installed
   if ! command -v powerline > /dev/null; then
     logg info 'Installing powerline via install-program'
-    install-program powerline > /dev/null
+    installx powerline
   fi
 
   ### Include Bash It
@@ -380,7 +380,7 @@ enableAutoUpdateDarwin() {
       logg info 'Loading /Library/LaunchDaemons/com.apple.automatedupdates.plist'
       if sudo launchctl list | grep 'com.apple.automatedupdates' > /dev/null; then
         logg info 'Unloading previous com.apple.automatedupdates configuration'
-        sudo launchctl unload /Library/LaunchDaemons/clamdscan.plist
+        sudo launchctl unload /Library/LaunchDaemons/com.apple.automatedupdates.plist
       fi
       sudo launchctl load -w /Library/LaunchDaemons/com.apple.automatedupdates.plist
     else
@@ -395,6 +395,8 @@ enableAutoUpdateDarwin() {
   fi
 }
 
+# Temporary next line for debugging
+export DEBUG=true
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   logg info 'The DEBUG or DEBUG_MODE environment variable is set so the post-install tasks will be run synchronously'
   bashItPlugins

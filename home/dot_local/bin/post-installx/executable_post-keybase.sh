@@ -4,6 +4,8 @@
 # @description
 #     This script ensures Keybase utilizes a configuration that, by default, adds a security fix.
 
+set -euo pipefail
+
 if command -v keybase > /dev/null; then
   KEYBASE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/keybase/config.json"
   if [ -f "$KEYBASE_CONFIG" ]; then

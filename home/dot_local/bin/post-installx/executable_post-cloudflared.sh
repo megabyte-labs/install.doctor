@@ -4,6 +4,8 @@
 # @description
 #     1. Skips the deletion of a tunnel when it is currently in use
 
+set -euo pipefail
+
 if command -v cloudflared > /dev/null; then
   # Show warning message about ~/.cloudflared already existing
   if [ -d "$HOME/.cloudflared" ]; then

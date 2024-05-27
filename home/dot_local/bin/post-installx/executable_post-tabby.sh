@@ -41,6 +41,8 @@
 #     * [Tabby plugins `package.json`](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/tabby/plugins/package.json)
 #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets) which details how to store your Tabby configuration in as an encrypted file
 
+set -euo pipefail
+
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json" ]; then
   if [ -d "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/node_modules" ]; then
     logg info 'Skipping Tabby plugin installation because it looks like the plugins were already installed since node_modules is present in ~/.config/tabby/plugins'

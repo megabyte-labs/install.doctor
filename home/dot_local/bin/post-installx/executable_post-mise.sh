@@ -2,6 +2,8 @@
 # @file Mise Install / Tweaks
 # @brief Performs initial install of mise targets and applies tweaks such as symlinking mise's Java version with the system Java target on macOS
 
+set -euo pipefail
+
 if command -v mise > /dev/null; then
     logg info 'Running mise install' && mise install
 

@@ -4,6 +4,8 @@
 # @description
 #     This script installs Plymouth and then configures it to use our custom Betelgeuse theme.
 
+set -euo pipefail
+
 ### Create /etc/plymouth/plymouthd.conf
 if [ -f /etc/plymouth/plymouthd.conf ]; then
   ### Back up original plymouthd.conf
@@ -14,20 +16,20 @@ if [ -f /etc/plymouth/plymouthd.conf ]; then
   ### Create new plymouthd.conf
   logg info 'Populating the /etc/plymouth/plymouthd.conf file'
   echo "[Daemon]" | sudo tee /etc/plymouth/plymouthd.conf > /dev/null
-  echo "Theme={{ .theme }}" | sudo tee -a /etc/plymouth/plymouthd.conf > /dev/null
+  echo "Theme=Betelgeuse" | sudo tee -a /etc/plymouth/plymouthd.conf > /dev/null
   echo "ShowDelay=1" | sudo tee -a /etc/plymouth/plymouthd.conf > /dev/null
 fi
 
 ### Apply update-alternatives
 if command -v update-alternatives > /dev/null; then
-  if [ -f "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" ]; then
-    sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" 100
+  if [ -f "/usr/local/share/plymouth/themes/Betelgeuse/Betelgeuse.plymouth" ]; then
+    sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth "/usr/local/share/plymouth/themes/Betelgeuse/Betelgeuse.plymouth" 100
     logg success 'Installed default.plymouth'
     # Required sometimes
-    sudo update-alternatives --set default.plymouth "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth"
+    sudo update-alternatives --set default.plymouth "/usr/local/share/plymouth/themes/Betelgeuse/Betelgeuse.plymouth"
     logg success 'Set default.plymouth'
   else
-    logg warn "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth does not exist!"
+    logg warn "/usr/local/share/plymouth/themes/Betelgeuse/Betelgeuse.plymouth does not exist!"
   fi
 else
   logg warn 'update-alternatives is not available'
@@ -47,14 +49,14 @@ fi
 # fi
 
 ### Symlink /usr/local/share/plymouth/themes to /usr/share/plymouth/themes
-if [ ! -d '/usr/share/plymouth/themes/{{ .theme }}' ]; then
-  logg info 'Symlinking /usr/local/share/plymouth/themes/{{ .theme }} to /usr/share/plymouth/themes/{{ .theme }}'
-  sudo ln -s '/usr/local/share/plymouth/themes/{{ .theme }}' '/usr/share/plymouth/themes/{{ .theme }}'
+if [ ! -d '/usr/share/plymouth/themes/Betelgeuse' ]; then
+  logg info 'Symlinking /usr/local/share/plymouth/themes/Betelgeuse to /usr/share/plymouth/themes/Betelgeuse'
+  sudo ln -s '/usr/local/share/plymouth/themes/Betelgeuse' '/usr/share/plymouth/themes/Betelgeuse'
 fi
 
 ### Set default Plymouth theme
 if command -v plymouth-set-default-theme > /dev/null; then
-  sudo plymouth-set-default-theme -R '{{ .theme }}' || EXIT_CODE=$?
+  sudo plymouth-set-default-theme -R 'Betelgeuse' || EXIT_CODE=$?
   if [ -n "$EXIT_CODE" ]; then
     logg warn 'There may have been an issue while setting the Plymouth default theme with plymouth-set-default-theme'
   else
@@ -66,12 +68,12 @@ fi
 
 ### Apply update-alternatives (again - required sometimes)
 if command -v update-alternatives > /dev/null; then
-  if [ -f "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" ]; then
+  if [ -f "/usr/local/share/plymouth/themes/Betelgeuse/Betelgeuse.plymouth" ]; then
     # Required sometimes
-    sudo update-alternatives --set default.plymouth "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth"
+    sudo update-alternatives --set default.plymouth "/usr/local/share/plymouth/themes/Betelgeuse/Betelgeuse.plymouth"
     logg success 'Set default.plymouth (second time is required sometimes)'
   else
-    logg warn "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth does not exist!"
+    logg warn "/usr/local/share/plymouth/themes/Betelgeuse/Betelgeuse.plymouth does not exist!"
   fi
 else
   logg warn 'update-alternatives is not available'

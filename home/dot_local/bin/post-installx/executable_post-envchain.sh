@@ -10,15 +10,21 @@
 #     ## Secrets
 #
 #     For more information about storing secrets like SSH keys and API keys, refer to our [Secrets documentation](https://install.doctor/docs/customization/secrets).
+#
+#     ## TODO
+#
+#     * Create seperate environments based on encrypted secret type (e.g. Allow `envchain cloudflare env` instead of `envchain default env` for everything)
+
+set -euo pipefail
 
 ### Import environment variables into `envchain`
 if command -v envchain > /dev/null; then
   if [ -f "$HOME/.config/age/chezmoi.txt" ]; then
     logg info 'Importing environment variables into the System keyring'
-    for file in {{ joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "*" }}; do
-      logg info "Adding $file to System keyring via envchain"
-      cat "$file" | chezmoi decrypt | envchain -s default "$(basename $file)" > /dev/null || logg info 'Importing "$(basename $file)" failed'
-    done
+    while read ENCRYPTED_FILE; do
+      logg info "Adding $ENCRYPTED_FILE to System keyring via envchain"
+      cat "$ENCRYPTED_FILE" | chezmoi decrypt | envchain -s default "$(basename $ENCRYPTED_FILE)" > /dev/null || logg info "Importing "$(basename $ENCRYPTED_FILE)" failed"
+    done< <(find "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets" -type f -maxdepth 1 -mindepth 1)
     logg success "Added Chezmoi-managed secrets into System keyring via envchain"
   else
     logg warn 'Unable to import any variables into envchain because ~/.config/age/chezmoi.txt was not created by the secrets encryption process yet'

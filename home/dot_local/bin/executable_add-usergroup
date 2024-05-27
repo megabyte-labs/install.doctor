@@ -7,6 +7,8 @@
 #     there is already a user / group with the name present on the system before running
 #     any code.
 
+set -euo pipefail
+
 ### Check if the script is being run as root
 if [[ $EUID -ne 0 ]]; then
   logg error "This script must be run as root"

@@ -13,6 +13,8 @@
 #
 #     * [Privoxy configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/privoxy/config)
 
+set -euo pipefail
+
 ### Configure variables
 if [ -d /Applications ] && [ -d /System ]; then
   ### macOS

@@ -4,6 +4,8 @@
 # @description
 #     This script applies a Timeshift configuration that defines how Timeshift should maintain system backups.
 
+set -euo pipefail
+
 if command -v timeshift > /dev/null; then
   logg info 'Ensuring /etc/timeshift is a directory'
   sudo mkdir -p /etc/timeshift

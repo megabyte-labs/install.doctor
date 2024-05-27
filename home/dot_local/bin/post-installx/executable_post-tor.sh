@@ -14,6 +14,8 @@
 #
 #     * [Tor configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/tor/torrc)
 
+set -euo pipefail
+
 ### Determine the Tor configuration location by checking whether the system is macOS or Linux
 if [ -d /Applications ] && [ -d /System ]; then
   ### macOS
@@ -40,7 +42,7 @@ if command -v torify > /dev/null; then
         ln -s /usr/local/etc/tor/torrc "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc"
       else
         if [ -L "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc" ]; then
-          logg info ""${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc" symlinked"
+          logg info ""${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc" already symlinked to $TORRC_CONFIG"
         else
           logg warn ""${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc" not symlinked!"
         fi
