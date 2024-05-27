@@ -15,11 +15,11 @@ if command -v rkhunter > /dev/null; then
       logg info 'Updating file /etc/rkhunter.conf' && sed -i  "s/^#WEB_CMD.*$/WEB_CMD=curl\ -L/" /etc/rkhunter.conf
     fi
     sudo rkhunter --propupd || RK_PROPUPD_EXIT_CODE=$?
-    if [ -n "$RK_PROPUPD_EXIT_CODE" ]; then
+    if [ -n "${RK_PROPUPD_EXIT_CODE-}" ]; then
       logg error "sudo rkhunter --propupd returned non-zero exit code"
     fi
     sudo rkhunter --update || RK_UPDATE_EXIT_CODE=$?
-    if [ -n "$RK_UPDATE_EXIT_CODE" ]; then
+    if [ -n "${RK_UPDATE_EXIT_CODE-}" ]; then
       logg error "sudo rkhunter --update returned non-zero exit code"
     fi
 else

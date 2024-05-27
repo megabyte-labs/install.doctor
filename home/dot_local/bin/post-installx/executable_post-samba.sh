@@ -88,7 +88,7 @@ if command -v smbd > /dev/null; then
   ### Copy the Samba server configuration file
   if [ -d /Applications ] && [ -d /System ]; then
     ### System Private Samba Share
-    if SMB_OUTPUT=$(sudo sharing -a "$PRIVATE_SHARE" -S "Private (System)" -n "Private (System)" -g 000 -s 001 -E 1 -R 1); then
+    if SMB_OUTPUT=$(sudo sharing -a "$PRIVATE_SHARE" -S "Private (System)" -n "Private (System)" -g 000 -s 001 -E 1 -R 1 2>&1); then
       logg success "Configured $PRIVATE_SHARE as a private Samba share"
     else
       if echo $SMB_OUTPUT | grep 'smb name already exists' > /dev/null; then
@@ -100,7 +100,7 @@ if command -v smbd > /dev/null; then
     fi
 
     ### System Public Samba Share
-    if SMB_OUTPUT=$(sudo sharing -a "$PUBLIC_SHARE" -S "Public (System)" -n "Public (System)" -g 001 -s 001 -E 1 -R 0); then
+    if SMB_OUTPUT=$(sudo sharing -a "$PUBLIC_SHARE" -S "Public (System)" -n "Public (System)" -g 001 -s 001 -E 1 -R 0 2>&1); then
       logg success "Configured $PUBLIC_SHARE as a system public Samba share"
     else
       if echo $SMB_OUTPUT | grep 'smb name already exists' > /dev/null; then
@@ -112,7 +112,7 @@ if command -v smbd > /dev/null; then
     fi
 
     ### User Shared Samba Share
-    if SMB_OUTPUT=$(sudo sharing -a "$HOME/Shared" -S "Shared (User)" -n "Shared (User)" -g 001 -s 001 -E 1 -R 0); then
+    if SMB_OUTPUT=$(sudo sharing -a "$HOME/Shared" -S "Shared (User)" -n "Shared (User)" -g 001 -s 001 -E 1 -R 0 2>&1); then
       logg success "Configured $HOME/Shared as a user-scoped Samba share"
     else
       if echo $SMB_OUTPUT | grep 'smb name already exists' > /dev/null; then

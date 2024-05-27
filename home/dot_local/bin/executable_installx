@@ -276,7 +276,7 @@ async function installPackages(pkgInstructions) {
     const promises = []
     log(`Populating install order lists`)
     for (const option of installOrder[sysType]) {
-        const instructions = pkgInstructions.filter(x => x.installType === option)
+        const instructions = pkgInstructions.filter(x => x.installType === option).filter((value, index, array) => array.indexOf(value) === index)
         if (instructions.length) {
             combined[option] = instructions
         }
@@ -583,7 +583,15 @@ async function main() {
         const postField = getPkgData('_post', x, x.installType)
         if (postField) {
             log(`Running post-install script for ${x.listKey}`)
-            await runScript(x.listKey, x[postField])
+            const binField = getPkgData('_bin', x, x.installType)
+            const isArray = Array.isArray(x[binField])
+            if (typeof x[binField] === 'string' || isArray) {
+                isArray && log(`_bin field for ${x.listKey} is an array so the first entry will be used to check`)
+                const whichCheck = which.sync(typeof x[binField] === 'string' ? x[binField] : x[binField][0], { nothrow: true })
+                whichCheck && await runScript(x.listKey, x[postField])
+            } else {
+                console.error(`${x.listKey}'s _bin field should either be a string or an array of strings`)
+            }
         }
     }
     log(`Running post-install scripts defined in ~/.local/bin/post-installx`)
