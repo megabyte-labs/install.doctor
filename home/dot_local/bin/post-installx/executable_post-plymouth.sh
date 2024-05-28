@@ -4,7 +4,8 @@
 # @description
 #     This script installs Plymouth and then configures it to use our custom Betelgeuse theme.
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 ### Create /etc/plymouth/plymouthd.conf
 if [ -f /etc/plymouth/plymouthd.conf ]; then
@@ -57,7 +58,7 @@ fi
 ### Set default Plymouth theme
 if command -v plymouth-set-default-theme > /dev/null; then
   sudo plymouth-set-default-theme -R 'Betelgeuse' || EXIT_CODE=$?
-  if [ -n "$EXIT_CODE" ]; then
+  if [ -n "${EXIT_CODE:-}" ]; then
     logg warn 'There may have been an issue while setting the Plymouth default theme with plymouth-set-default-theme'
   else
     logg success 'Set Plymouth default theme with plymouth-set-default-theme'

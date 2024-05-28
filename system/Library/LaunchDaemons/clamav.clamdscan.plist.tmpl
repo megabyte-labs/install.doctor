@@ -1,4 +1,3 @@
-{{- if eq .host.distro.family "darwin" -}}
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -7,14 +6,17 @@
   <string>clamav.clamdscan</string>
   <key>ProgramArguments</key>
   <array>
-    <string> {{ lookPath "clamdscan" }}</string>
+    <string>{{ lookPath "clamdscan" }}</string>
+    <string>-i</string>
+    <string>-r</string>
+    <string>--move=/quarantine</string>
     <string>/</string>
   </array>
   <key>StartCalendarInterval</key>
   <array>
     <dict>
       <key>Hour</key>
-      <integer>22</integer>
+      <integer>5</integer>
       <key>Minute</key>
       <integer>0</integer>
     </dict>
@@ -22,9 +24,8 @@
   <key>UserName</key>
   <string>root</string>
   <key>StandardErrorPath</key>
-  <string>/var/log/clamav/clamdscan.error.log</string>
+  <string>/Library/Logs/clamdscan.error.log</string>
   <key>StandardOutPath</key>
-  <string>/var/log/clamav/clamdscan.output.log</string>
+  <string>/Library/Logs/clamdscan.debug.log</string>
 </dict>
 </plist>
-{{- end -}}

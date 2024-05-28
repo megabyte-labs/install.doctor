@@ -2,7 +2,8 @@
 # @file Endlessh Configuration
 # @brief Applies the Endlessh configuration and starts the service on Linux systems
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 function configureEndlessh() {
   ### Update the service configuration file
@@ -25,7 +26,7 @@ if [[ ! "$(test -d proc && grep Microsoft /proc/version > /dev/null)" ]]; then
     if [ -d /etc/endlessh ]; then
       logg info 'Copying ~/.ssh/endlessh/config to /etc/endlessh/config' && sudo cp -f "$HOME/.ssh/endlessh/config" /etc/endlessh/config
       configureEndlessh || CONFIGURE_EXIT_CODE=$?
-      if [ -n "$CONFIGURE_EXIT_CODE" ]; then
+      if [ -n "${CONFIGURE_EXIT_CODE:-}" ]; then
         logg error 'Configuring endlessh service failed' && exit 1
       else
         logg success 'Successfully configured endlessh service'
@@ -33,7 +34,7 @@ if [[ ! "$(test -d proc && grep Microsoft /proc/version > /dev/null)" ]]; then
     elif [ -f /etc/endlessh.conf ]; then
       logg info 'Copying ~/.ssh/endlessh/config to /etc/endlessh.conf' && sudo cp -f "$HOME/.ssh/endlessh/config" /etc/endlessh.conf
       configureEndlessh || CONFIGURE_EXIT_CODE=$?
-      if [ -n "$CONFIGURE_EXIT_CODE" ]; then
+      if [ -n "${CONFIGURE_EXIT_CODE:-}" ]; then
         logg error 'Configuring endlessh service failed' && exit 1
       else
         logg success 'Successfully configured endlessh service'

@@ -42,7 +42,8 @@
 #     * [`home/.chezmoidata.yaml`](https://github.com/megabyte-labs/install.doctor/blob/master/home/.chezmoidata.yaml)
 #     * [Default license key gist](https://gist.github.com/PurpleVibe32/30a802c3c8ec902e1487024cdea26251)
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 ### Run logic if VMware is installed
 if command -v vmware > /dev/null; then

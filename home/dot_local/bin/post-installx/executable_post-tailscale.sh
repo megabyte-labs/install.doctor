@@ -10,7 +10,8 @@
 #     CloudFlare WARP, you will have to set up a [split tunnel](https://www.youtube.com/watch?v=eDFs8hm3xWc) for
 #     [Tailscale IP addresses](https://tailscale.com/kb/1105/other-vpns).
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 ### Disconnect from CloudFlare WARP (if connected)
 if command -v warp-cli > /dev/null; then
@@ -36,32 +37,12 @@ if [ -d /Applications ] && [ -d /System ]; then
   fi
 fi
 
-### Acquire TAILSCALE_AUTH_KEY
-if [ -z "$TAILSCALE_AUTH_KEY" ]; then
-  TAILSCALE_AUTH_KEY_FILE="${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/TAILSCALE_AUTH_KEY"
-  if [ -f "$TAILSCALE_AUTH_KEY_FILE" ]; then
-    logg info "Found TAILSCALE_AUTH_KEY in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
-    if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" ]; then
-      logg info 'Decrypting TAILSCALE_AUTH_KEY token with Age encryption key'
-      TAILSCALE_AUTH_KEY="$(cat "$TAILSCALE_AUTH_KEY_FILE" | chezmoi decrypt)"
-    else
-      logg warn 'Age encryption key is missing from ~/.config/age/chezmoi.txt'
-      exit 1
-    fi
-  else
-    logg warn "TAILSCALE_AUTH_KEY is missing from ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
-    exit 1
-  fi
-else
-  logg info 'TAILSCALE_AUTH_KEY provided as environment variable'
-fi
-
 ### Connect to Tailscale network
 if get-secret --exists TAILSCALE_AUTH_KEY; then
   if [ -f /Applications/Tailscale.app/Contents/MacOS/Tailscale ]; then
     logg info 'Connecting to Tailscale with user-defined authentication key (TAILSCALE_AUTH_KEY)'
     timeout 30 /Applications/Tailscale.app/Contents/MacOS/Tailscale up --authkey="$(get-secret TAILSCALE_AUTH_KEY)" --accept-routes || EXIT_CODE=$?
-    if [ -n "$EXIT_CODE" ]; then
+    if [ -n "${EXIT_CODE:-}" ]; then
       logg warn '/Applications/Tailscale.app/Contents/MacOS/Tailscale timed out'
     fi
     logg info 'Disabling update check'
@@ -69,7 +50,7 @@ if get-secret --exists TAILSCALE_AUTH_KEY; then
   elif command -v tailscale > /dev/null; then
     logg info 'Connecting to Tailscale with user-defined authentication key (TAILSCALE_AUTH_KEY)'
     timeout 30 tailscale up --authkey="$(get-secret TAILSCALE_AUTH_KEY)" --accept-routes || EXIT_CODE=$?
-    if [ -n "$EXIT_CODE" ]; then
+    if [ -n "${EXIT_CODE:-}" ]; then
       logg warn 'tailscale up timed out'
     else
       logg success 'Connected to Tailscale network'

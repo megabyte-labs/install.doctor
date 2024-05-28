@@ -18,9 +18,10 @@ elif command -v ufw > /dev/null; then
     sudo ufw default allow outgoing
     
     ### Allow CloudFlare IPs to connect to port 80 and 443
-    for CF_IP in `curl -sw '\n' https://www.cloudflare.com/ips-v{4,6}`; do
-        sudo ufw allow proto tcp from "$CF_IP" to any port 80,443 comment 'CloudFlare IP'
-    done
+    ### May be useful if cloudflared is not being used
+    # for CF_IP in `curl -sw '\n' https://www.cloudflare.com/ips-v{4,6}`; do
+    #     sudo ufw allow proto tcp from "$CF_IP" to any port 80,443 comment 'CloudFlare IP'
+    # done
 
     ### Enable / reload the firewall
     sudo ufw enable

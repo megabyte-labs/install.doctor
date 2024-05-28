@@ -333,7 +333,7 @@ setDefaultBrowser() {
       brew install --quiet defaultbrowser
     fi
     logg info "Setting default browser to {{ .user.defaultBrowserDarwin }}"
-    osascript "$HOME/Library/Scripts/default-browser.scpt" "{{ .user.defaultBrowserDarwin }}" || EXIT_CODE=$?
+    osascript "$HOME/Library/Scripts/default-browser.applescript" "{{ .user.defaultBrowserDarwin }}" || EXIT_CODE=$?
     if [ -n "$EXIT_CODE" ]; then
       logg error 'Failed to change default browser'
       unset EXIT_CODE

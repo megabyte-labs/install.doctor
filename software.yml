@@ -679,8 +679,6 @@ softwarePackages:
     _home: https://code.google.com/archive/p/autokey/
     _name: Autokey
     _short: "AutoKey is a powerful automation tool for keyboard shortcuts and text expansion on Linux and Unix-like systems.                                                                                           "
-    ansible:linux: professormanhattan.autokey
-    ansible:windows: professormanhattan.autokey
     apt: autokey
     choco: autohotkey
     dnf: autokey
@@ -790,7 +788,6 @@ softwarePackages:
     _home: https://www.balena.io/etcher/
     _name: balenaEtcher
     _short: "Etcher is an open-source tool for burning images to SD cards and USB drives, making it easy to create bootable media for operating systems like Linux distributions or Raspberry Pi OS.                   "
-    ansible:linux: professormanhattan.etcher
     appimage: etcher
     cask: balenaetcher
     choco: etcher
@@ -1279,7 +1276,6 @@ softwarePackages:
     _name: Catfs
     _notes: After `sudo apt-get install -y fuse libfuse-dev, the following error still shows up error could not find system library 'fuse' required by the 'fuse' crate
     _short: "catfs is a FUSE-based file system that concatenates files and directories from multiple locations into a single virtual directory.                                                                        "
-    ansible:linux: professormanhattan.s3filesystem
     cargo:linux: catfs
   catlight:
     _app: Catlight.app
@@ -1374,17 +1370,6 @@ softwarePackages:
     cask: chatgpt
     choco: chatgpt
     snap: chatgpt-desktop
-  chatgpt-menubar:
-    _app: Chatgpt.app
-    _bin: null
-    _deprecated: Deprecated in favor of the official ChatGPT application
-    _desc: ChatGPT for Mac, living in your menubar.
-    _docs: https://github.com/vincelwt/chatgpt-mac
-    _github: https://github.com/vincelwt/chatgpt-mac
-    _home: https://github.com/vincelwt/chatgpt-mac
-    _name: ChatGPT Menubar for macOS
-    _short: "chatGPT-mac is a macOS app that brings OpenAI's GPT-3 powered chatbot to your desktop for easy access and interaction.                                                                                    "
-    cask: vincelwt-chatgpt
   chatgpt-nofwl:
     _app: NoFWL.app
     _bin: nofwl
@@ -1496,21 +1481,31 @@ softwarePackages:
     _github: https://github.com/Cisco-Talos/clamav
     _home: https://www.clamav.net/
     _name: ClamAV
-    _service:apt: clamav-freshclam
+    _groups:
+      - clamav
+    _service:apt:
+      - clamav-daemon
+      - clamav-freshclam
     _service:brew:
       - name: clamav
         sudo: true
-    _service:dnf: clamd-freshclam
-    _service:pacman: clamav-freshclam
+    _service:dnf:
+      - clamav-daemon
+      - clamd-freshclam
+    _service:pacman:
+      - clamav-daemon
+      - clamav-freshclam
     _serviceEnabled: true
     _short: "ClamAV is an open-source antivirus engine for detecting trojans, viruses, malware, and other malicious threats on Unix-like systems.                                                                      "
     apt:
       - clamav
       - clamdscan
+      - clamav-daemon
     brew: clamav
     dnf:
       - clamav
       - clamav-update
+      - clamav-daemon
     pacman: clamav
   clangd:
     _bin: clangd
@@ -1615,7 +1610,6 @@ softwarePackages:
     _short: "Cockpit is a web-based graphical interface for managing Linux servers.                                                                                                                                    "
     _systemd: cockpit
     _systemd:pacman: cockpit.socket
-    ansible:linux: professormanhattan.cockpit
     apt:
       - 389-ds-base
       - cockpit
@@ -1671,7 +1665,6 @@ softwarePackages:
     _home: https://cocoapods.org/
     _name: cocoapods
     _short: "CocoaPods is a dependency manager for Swift and Objective-C projects.                                                                                                                                     "
-    ansible:darwin: professormanhattan.cocoapods
     brew:darwin: cocoapods
     gem:darwin: cocoapods
   cod:
@@ -1721,8 +1714,6 @@ softwarePackages:
     _home: https://cointop.sh/
     _name: Cointop
     _short: "cointop is a fast and lightweight interactive terminal-based cryptocurrency tracker.                                                                                                                      "
-    ansible:darwin: professormanhattan.cointop
-    ansible:linux: professormanhattan.cointop
     brew: cointop
     port: cointop
   commitizen:
@@ -1853,6 +1844,7 @@ softwarePackages:
   crunch:
     _app: Crunch.app
     _bin: crunch
+    _deprecated: Deprecated in favor of ImageOptim which has a more polished interface and can handle files other than PNGs
     _desc: The crunch command line executable is a *nix executable that supports parallel PNG image optimization with local (off of the system PATH) installs of the pngquant and zopflipng project dependencies.
     _docs: https://github.com/chrissimpkins/Crunch
     _github: https://github.com/chrissimpkins/Crunch
@@ -3012,6 +3004,7 @@ softwarePackages:
   fig:
     _app: Fig.app
     _bin: fig
+    _deprecated: Acquired by Amazon and relabeled as CodeWhisperer
     _desc: "[Fig](https://fig.io/) adds autocomplete to your terminal. As you type, Fig pops up subcommands, options, and contextually relevant arguments in your existing terminal."
     _docs: https://fig.io/user-manual
     _github: https://github.com/withfig/autocomplete
@@ -3064,7 +3057,6 @@ softwarePackages:
     _home: https://filezilla-project.org/
     _name: FileZilla
     _short: "This is the URL for the FileZilla project's Subversion repository.                                                                                                                                        "
-    ansible:darwin: professormanhattan.filezilla
     apt: filezilla
     choco: filezilla
     dnf: filezilla
@@ -3399,7 +3391,6 @@ softwarePackages:
     _name: Fuse
     _short: "libfuse is a library for writing filesystems in userspace on Unix-like operating systems.                                                                                                                 "
     _when:cask: '! test -d /usr/local/Caskroom/macfuse && ! test -d "$HOMEBREW_PREFIX/Caskroom/macfuse"'
-    ansible:darwin: professormanhattan.fuse
     apt:
       - fuse
       - libfuse-dev
@@ -3709,8 +3700,6 @@ softwarePackages:
     _home: https://git-secret.io/
     _name: Git Secret
     _short: "git-secret is a tool to store private data securely inside a Git repository. It encrypts files before committing them, allowing you to share repositories without exposing sensitive information.         "
-    ansible:darwin: professormanhattan.gitsecret
-    ansible:linux: professormanhattan.gitsecret
     apt: git-secret
     brew: git-secret
     dnf:fedora: git-secret
@@ -3746,7 +3735,6 @@ softwarePackages:
     _home: https://gitlab.com/mvanremmerden/gitdock
     _name: GitDock
     _short: "gitdock is a GitLab repository belonging to mvanremmerden.                                                                                                                                                "
-    ansible:darwin: professormanhattan.gitdock
     cask: gitdock
   github-classroom-assistant:
     _app: Classroom Assistant.app
@@ -4218,7 +4206,6 @@ softwarePackages:
     _home: https://github.com/kahing/goofys
     _name: Goofys
     _short: "goofys is a Filey System written in Go, allowing you to mount an S3 bucket as a file system.                                                                                                              "
-    ansible:linux: professormanhattan.goofys
     brew:linux: goofys
     go:linux: github.com/kahing/goofys@latest
   google-assistant:
@@ -4719,6 +4706,7 @@ softwarePackages:
     _desc: A lightweight and flexible command-line JSON processor for HTML
     _github: https://github.com/mgdm/htmlq
     _name: htmlq
+    _preload: true
     _short: "htmlq is a command-line tool that allows you to query HTML using CSS selectors.                                                                                                                           "
     brew: htmlq
     cargo: htmlq
@@ -4731,8 +4719,6 @@ softwarePackages:
     _home: https://htop.dev/
     _name: htop
     _short: "htop is a popular interactive process viewer for Unix systems, providing a more user-friendly and feature-rich alternative to the traditional top command.                                                "
-    ansible:darwin: professormanhattan.htop
-    ansible:linux: professormanhattan.htop
     apt: htop
     brew: htop
     dnf: htop
@@ -5138,7 +5124,6 @@ softwarePackages:
       logg info "Setting iTerm2 options location to Install Doctor Chezmoi location" && defaults write com.googlecode.iterm2 PrefsCustomFolder -string "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/Library/Preferences/com.googlecode.iterm2.plist"
       logg info "Setting iTerm2 to automatically sync with managed options" && defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile_selection -int 2
     _short: "iTerm2 is a popular terminal emulator for macOS with advanced features like split panes, search, autocomplete, and more."
-    ansible:darwin: professormanhattan.iterm2
     cask: iterm2
   java:
     _bin: false
@@ -5957,7 +5942,6 @@ softwarePackages:
     _home: https://wiki.gnome.org/Apps/Lollypop
     _name: Lollypop
     _short: "Lollypop is a modern music player for Linux that supports various audio formats and online streaming services.                                                                                            "
-    ansible:linux: professormanhattan.lollypop
     apt: lollypop
     dnf: lollypop
     flatpak: org.gnome.Lollypop
@@ -6071,7 +6055,6 @@ softwarePackages:
     _home: https://linuxcontainers.org/lxd/
     _name: LXDC
     _short: "LXD is a container manager for Linux systems, providing a user-friendly interface to manage containers with a focus on system containers rather than application containers.                              "
-    ansible:linux: professormanhattan.lxdc
     snap: lxd
   lxd-ui:
     _bin: lxd-ui
@@ -6208,6 +6191,19 @@ softwarePackages:
     _name: Majestic
     _short: "Majestic is a GUI for Jest, a JavaScript testing framework.                                                                                                                                               "
     npm: majestic
+  bzip2:
+    _bin:
+      - bzip2
+      - bunzip2
+    _desc: Compression utility for *.bz2 files
+    _home: https://sourceware.org/bzip2/
+    _docs: https://sourceware.org/bzip2/docs.html
+    _github: null
+    _name: bzip2
+    apt: bzip2
+    brew: bzip2
+    dnf: bzip2
+    pacman: bzip2
   makeself:
     _bin: makeself
     _desc: "Makeself is a small shell script that generates a self-extractable compressed archive from a directory. The resulting file acts as a shell script that can extract the original archive. It's commonly    \nused for creating installation packages that can be easily distributed and run on Unix-like systems. Makeself supports various compression formats like gzip, bzip2, and xz. It provides options for      \ncustomizing the self-extracting archive's behavior, such as running commands before or after extraction. Makeself is a handy tool for packaging software or files for distribution in a user-friendly     \nmanner.                                                                                                                                                                                                   "
@@ -6311,7 +6307,6 @@ softwarePackages:
     _github: https://github.com/mas-cli/mas
     _name: MAS CLI
     _short: "mas is a command-line interface for the Mac App Store, allowing users to interact with the App Store from the terminal.                                                                                   "
-    ansible:darwin: professormanhattan.mas
     brew:darwin: mas
     port: mas
   mask:
@@ -6356,8 +6351,6 @@ softwarePackages:
     _github: https://github.com/cantino/mcfly
     _name: McFly
     _short: "McFly is a tool that enhances your command line history search and navigation, making it faster and more efficient.                                                                                       "
-    ansible:darwin: professormanhattan.mcfly
-    ansible:linux: professormanhattan.mcfly
     brew: mcfly
     port: mcfly
     script:darwin: curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | sh -s -- --git cantino/mcfly
@@ -7515,7 +7508,6 @@ softwarePackages:
       sudo udevadm control --reload-rules
       sudo udevadm trigger
     _short: "OnlyKey-App is a secure password manager and two-factor authentication tool developed by TrustCrypto.                                                                                                     "
-    ansible:darwin: professormanhattan.onlykey
     choco: onlykey
     script:darwin: cd /tmp && curl -sSL https://github.com/trustcrypto/OnlyKey-App/releases/download/v5.3.6/OnlyKey.App.5.3.6.dmg > OnlyKey.dmg  && hdiutil attach "/tmp/OnlyKey.dmg" &&  sudo cp -R "/Volumes/OnlyKey App/OnlyKey App.app" /Applications && sudo hdiutil detach "/Volumes/OnlyKey App" && rm -f "/tmp/OnlyKey.dmg"
     snap: onlykey-app
@@ -7806,7 +7798,6 @@ softwarePackages:
     _home: https://www.parallels.com/
     _name: Parallels
     _notes: On macOS, full disk access is required for Terminal. For Homebrew Cask, this requires the terminal to have full disk access
-    ansible:darwin: professormanhattan.parallels
     cask: parallels
     mas: 1085114709
   pass:
@@ -7867,7 +7858,6 @@ softwarePackages:
     _name: Peek
     _rpmFusion: true
     _short: "Peek is a simple screen recorder tool for Linux that allows you to easily capture and record your screen activities.                                                                                      "
-    ansible:linux: professormanhattan.peek
     apt:
       - software-properties-common
       - peek
@@ -8368,8 +8358,6 @@ softwarePackages:
     _name: Portmaster
     _short: "Portmaster is a tool for managing network connections on MacOS, allowing users to control which apps can access the internet.                                                                             "
     _when:linux: "! test -f /opt/safing/portmaster/portmaster-start"
-    ansible:linux: professormanhattan.portmaster
-    ansible:windows: professormanhattan.portmaster
     apt: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.deb
     choco: portmaster
     dnf: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.rpm
@@ -8845,26 +8833,21 @@ softwarePackages:
     _docs: https://github.com/quasar/Quasar/wiki
     _github: https://github.com/quasar/Quasar
     _home: https://github.com/quasar/Quasar
-    _name: Quasar
-    _short: "Quasar is a Vue.js framework for building responsive websites, PWAs, SSR apps, mobile apps, and more.                                                                                                     "
+    _name: Quasar                                                                                                    "
     ansible:windows: professormanhattan.quasar
   quickemu:
     _bin: quickemu
     _desc: "Quickemu is a project hosted on GitHub that provides a simple script to set up and run virtual machines using QEMU on Linux. It aims to make running virtual machines quick and easy by automating the    \nprocess of creating and launching VMs. Users can specify various options like disk size, memory, CPU cores, and more in a configuration file. Quickemu simplifies the setup of virtual machines for       \ntesting, development, or any other purpose where virtualization is needed.                                                                                                                                "
     _github: https://github.com/quickemu-project/quickemu
     _name: "quickemu                                                                                                                                                                                                  "
-    _pre: |
-      #!/usr/bin/env bash
-      sudo apt-add-repository ppa:flexiondotorg/quickemu && sudo apt update
+    _pre:ubuntu: sudo apt-add-repository ppa:flexiondotorg/quickemu && sudo apt update
     _short: "quickemu is a tool for running virtual machines quickly and easily on Linux using QEMU and KVM.                                                                                                           "
     apt:ubuntu: quickemu
   quickgui:
     _desc: "quickgui is a graphical user interface (GUI) for quickemu, a tool that simplifies managing virtual machines using QEMU on Linux. quickgui provides a user-friendly way to create, manage, and run virtual \nmachines without needing to use the command line. It offers features like creating new VMs, editing existing ones, and launching VMs with various options. This GUI makes it easier for users to interact \nwith quickemu and manage their virtual machines efficiently.                                                                                                                                              "
     _github: https://github.com/quickemu-project/quickgui
     _name: "quickgui                                                                                                                                                                                                  "
-    _pre: |
-      #!/usr/bin/env bash
-      sudo add-apt-repository ppa:yannick-mauray/quickgui && sudo apt update
+    _pre:ubuntu: sudo add-apt-repository ppa:yannick-mauray/quickgui && sudo apt update
     _short: "quickgui is a graphical user interface for QuickEMU, a tool that simplifies running virtual machines on Linux using QEMU.                                                                                 "
     apt:ubuntu: quickgui
   quicklook-json:
@@ -8912,6 +8895,36 @@ softwarePackages:
     _name: "rancher-desktop                                                                                                                                                                                           "
     _short: "Rancher Desktop is a tool that simplifies running Kubernetes and containerized applications on your local machine.                                                                                        "
     cask: rancher
+  cabextract:
+    _bin: cabextract
+    _desc: Compression utility for managing EXE files
+    _github: https://github.com/kyz/libmspack/
+    _home: https://www.cabextract.org.uk/
+    _docs: https://www.cabextract.org.uk/#usage
+    _name: CabExtract
+    apt: cabextract
+    brew: cabextract
+    dnf: cabextract
+    pacman: cabextract
+  rar:
+    _bin:
+      - rar
+      - unrar
+    _desc: Provides the ability to use rar compression
+    _docs: null
+    _github: null
+    _home: null
+    _name: RAR
+    apt:
+      - rar
+      - unrar
+    brew: rar
+    dnf:
+      - rar
+      - unrar
+    pacman:
+      - rar
+      - unrar
   raspberry-pi-imager:
     _app: Raspberry Pi Imager.app
     _bin: rpi-imager
@@ -8980,7 +8993,6 @@ softwarePackages:
     _name: RecoverPy
     _short: "RecoverPy is a Python script that helps recover deleted files from a storage device.                                                                                                                      "
     _when: echo '! pip3 list | grep recoverpy > /dev/null' | bash
-    ansible:linux: professormanhattan.recoverpy
     script:linux: python3 -m pip install recoverpy
   recuva:
     _bin: recuva
@@ -9011,7 +9023,6 @@ softwarePackages:
     _home: https://resp.app/
     _name: Redis Desktop Manager
     _short: "RedisDesktopManager is a cross-platform GUI tool for managing Redis databases.                                                                                                                            "
-    ansible:linux: professormanhattan.rdm
     flatpak: app.resp.RESP
     snap: redis-desktop-manager
   redis-insight:
@@ -9642,7 +9653,6 @@ softwarePackages:
     _home: https://getsharex.com/
     _name: ShareX
     _short: "ShareX is an open-source tool for screen capture, file sharing, and productivity on Windows.                                                                                                              "
-    ansible:windows: professormanhattan.sharex
     choco: sharex
   sharp:
     _bin: sharp
@@ -9759,7 +9769,6 @@ softwarePackages:
     _home: https://wiki.gnome.org/Apps/Shotwell
     _name: Shotwell
     _short: "Shotwell is an open-source photo manager for Linux systems, developed by GNOME.                                                                                                                           "
-    ansible:linux: professormanhattan.shotwell
     apt: shotwell
     dnf: shotwell
     flatpak: org.gnome.Shotwell
@@ -10439,6 +10448,7 @@ softwarePackages:
   tabby:
     _app: Tabby.app
     _bin: tabby
+    _deprecated: Deprecated in favor of Warp terminal
     _desc: "[Tabby](https://eugeny.github.io/tabby/) is a highly configurable terminal emulator, SSH and serial client for Windows, macOS and Linux."
     _docs: https://openbase.com/js/tabby/documentation
     _github: https://github.com/Eugeny/tabby
@@ -10446,7 +10456,6 @@ softwarePackages:
     _name: Tabby
     _notes: TODO Update the direct links periodically and keep eye out for Snap / Flatpak
     _short: "Tabby is a terminal-based table viewer for MacOS.                                                                                                                                                         "
-    ansible:linux: professormanhattan.tabby
     apt: https://github.com/Eugeny/tabby/releases/download/v1.0.188/tabby-1.0.188-linux-x64.deb
     cask: tabby
     choco: tabby
@@ -10541,7 +10550,6 @@ softwarePackages:
     _home: https://www.teamviewer.com/en-us/
     _name: TeamViewer
     _short: "$'Not open-source' is a string enclosed in single quotes preceded by a dollar sign and is typically used in Unix-like systems to enable escape sequences like \\n for new lines.                           "
-    ansible:linux: professormanhattan.teamviewer
     apt: https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
     cask: teamviewer
     choco: teamviewer
@@ -10647,8 +10655,6 @@ softwarePackages:
     _short: tfenv is a tool for managing multiple versions of Terraform.
     _post: |
       tfenv use latest
-    ansible:darwin: professormanhattan.tfenv
-    ansible:linux: professormanhattan.tfenv
     brew: tfenv
     port: tfenv
     yay: tfenv
@@ -10856,7 +10862,6 @@ softwarePackages:
     _service: tor
     _serviceEnabled: true
     _short: "TheTorProject is a nonprofit organization that develops privacy tools to help people stay safe online, including the Tor Browser for anonymous web browsing.                                              "
-    ansible:linux: professormanhattan.tor
     apt: tor
     brew: tor
     dnf: tor
@@ -10896,8 +10901,6 @@ softwarePackages:
     _github: https://github.com/soimort/translate-shell
     _name: Translate Shell
     _short: "translate-shell is a command-line tool for translating text using various translation services like Google Translate.                                                                                     "
-    ansible:darwin: professormanhattan.translate
-    ansible:linux: professormanhattan.translate
     apt:ubuntu: translate-shell
     brew: translate-shell
     dnf: translate-shell
@@ -11057,13 +11060,14 @@ softwarePackages:
     pkg: up
     yay: up
   upscayl:
+    _app: Upscayl.app
     _bin: upscayl
     _desc: "upscayl is a GitHub repository belonging to the user upscayl. Without further details or access to the repository, it is not possible to provide a detailed description of its contents. To learn more    \nabout the repository, you can visit the link provided and explore the code, documentation, and any other resources available there.                                                                       "
     _github: https://github.com/upscayl/upscayl
     _name: Upscayl
     _short: "upscayl is a GitHub repository.                                                                                                                                                                           "
-    _todo: Recheck for Homebrew Cask
     appimage: Upscayl
+    cask: upscayl
     choco: upscayl
     flatpak: org.upscayl.Upscayl
     snap: upscayl
@@ -11304,7 +11308,6 @@ softwarePackages:
     _home: https://visualstudio.microsoft.com/
     _name: Visual Studio
     _short: "$'Not open-source' is a string enclosed in single quotes preceded by a dollar sign and is typically used in Unix-like systems to enable escape sequences like \\n for new lines.                           "
-    ansible:windows: professormanhattan.visualstudio
     cask: visual-studio
     choco: visualstudio2022community
   vlc:
@@ -11620,7 +11623,6 @@ softwarePackages:
     _github: false
     _home: https://learn.microsoft.com/en-us/windows-hardware/get-started/adk-install
     _name: Windows ADK
-    ansible:windows: professormanhattan.windowsadk
     choco: windows-adk
   windows-admin-center:
     _bin: null
@@ -11629,7 +11631,6 @@ softwarePackages:
     _github: false
     _home: https://www.microsoft.com/en-us/windows-server/windows-admin-center
     _name: Windows Admin Center
-    ansible:windows: professormanhattan.windowsadmincenter
     choco: windows-admin-center
   windows-power-toys:
     _bin: null
@@ -11639,7 +11640,6 @@ softwarePackages:
     _home: https://learn.microsoft.com/en-us/windows/powertoys/
     _name: Microsoft PowerToys
     _short: "PowerToys is a set of utilities for power users to tune and streamline their Windows experience.                                                                                                          "
-    ansible:windows: professormanhattan.windowspowertoys
     choco: powertoys
     scoop: powertoys
   winrm-cli:
@@ -11773,8 +11773,6 @@ softwarePackages:
     _home: https://wp-cli.org/
     _name: WP-CLI
     _short: "WP-CLI is a command-line interface for WordPress, allowing users to manage WordPress installations from the terminal.                                                                                     "
-    ansible:darwin: professormanhattan.wpcli
-    ansible:linux: professormanhattan.wpcli
     brew: wp-cli
   wpfui:
     _desc: "lepoco/wpfui is a GitHub repository that contains code for a WPF (Windows Presentation Foundation) UI library. It likely includes components, styles, and utilities for building user interfaces in WPF   \napplications. The repository may provide pre-built UI elements or templates to help developers create visually appealing and functional interfaces for their WPF projects. It's a resource that can save  \ntime and effort in designing and implementing UI elements in WPF applications.                                                                                                                            "
@@ -11975,8 +11973,70 @@ softwarePackages:
     brew: xxh
     pipx: xxh-xxh
     port: xxh
+  unace:
+    _bin: unace
+    _desc: Uncompresses *.ace files
+    _name: unace
+    _github: null
+    apt: unace
+    dnf: unace
+    pacman: unace
+  zstd:
+    _bin: zstd
+    _desc: Decompresses *.zst files
+    _github: https://github.com/facebook/zstd
+    _name: Facebook zstd
+    _home: https://facebook.github.io/zstd/
+    apt: zstd
+    brew: zstd
+    dnf: zstd
+    pacman: zstd
+    zypper: zstd
+  qpdf:
+    _bin: zlib-flate
+    _desc: Decompresses *.zlib files
+    _github: https://github.com/qpdf/qpdf
+    _name: qpdf
+    _home: https://qpdf.sourceforge.io/
+    apt: qpdf
+    brew: qpdf
+    dnf: qpdf
+    pacman: qpdf
+  the-unarchiver:
+    _app: The Unarchiver.app
+    _bin: the-unarchiver
+    _desc: Multi-purpose compressed archive extractor for macOS
+    _github: null
+    _home: https://theunarchiver.com/
+    _name: The Unarchiver
+    cask: the-unarchiver
+  unar:
+    _bin: unar
+    _desc: Tool for extracting the contents of archive files
+    _name: unar
+    _github:
+    _home: https://theunarchiver.com/command-line
+    apt: unar
+    brew: unar
+    dnf: unar
+    pacman: unar
+    zypper: unar
+  zpaq:
+    _bin: zpaq
+    _desc: Uncompresses *.zpaq files
+    _github: https://github.com/zpaq/zpaq
+    _home: https://mattmahoney.net/dc/zpaq.html
+    _name: zpaq
+    apt: zpaq
+    brew: zpaq
+    dnf: zpaq
+    pacman: zpaq
   xz:
-    _bin: xz
+    _bin:
+      - lzma
+      - xz
+      - unlzma
+      - unxz
     _desc: "xz is a compression utility that provides high compression ratios and fast decompression. It supports various compression formats like LZMA and LZMA2, and it can compress single files or whole          \ndirectories. The utility is commonly used to compress files for distribution or archival purposes. It is open-source and available on GitHub at https://github.com/xz-mirror/xz for users to download,    \ncontribute, or report issues.                                                                                                                                                                             "
     _github: https://github.com/xz-mirror/xz
     _name: xz
@@ -12196,7 +12256,6 @@ softwarePackages:
     _name: Zap
     _preload: true
     _short: "Zap is a fast and lightweight cross-platform package manager for macOS.                                                                                                                                   "
-    ansible:linux: professormanhattan.zap
     binary:linux: https://github.com/srevinsaju/zap/releases/download/continuous/zap-amd64
     script:linux: curl https://raw.githubusercontent.com/srevinsaju/zap/main/install.sh | sudo bash -s
   zaproxy:
@@ -12270,8 +12329,6 @@ softwarePackages:
     _name: Zsh
     _preload: true
     _short: "zsh is a powerful shell for Unix-like operating systems, offering advanced features and customization options for command-line users.                                                                     "
-    ansible:darwin: professormanhattan.zsh
-    ansible:linux: professormanhattan.zsh
     apt: zsh
     brew: zsh
     dnf: zsh

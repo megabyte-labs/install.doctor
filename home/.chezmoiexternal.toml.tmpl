@@ -52,15 +52,6 @@
 #    type = "git-repo"
 #    url = "https://github.com/ohmybash/oh-my-bash.git"
 
-
-{{- if eq .host.distro.id "darwin" }}
-### Crunch
-[".local/share/crunch"]
-    type = "git-repo"
-    url = "https://github.com/chrissimpkins/Crunch.git"
-    {{ $gitArgs }}
-{{- end }}
-
 ### Ansible Roles / Playbook
 # TODO: Remove all Gas Station references
 [".local/share/gas-station"]

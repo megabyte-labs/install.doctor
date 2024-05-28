@@ -1,5 +1,4 @@
 {{- if lookPath "warp-cli" -}}
-{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_TEAMS_CLIENT_ID")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_TEAMS_CLIENT_SECRET")) -}}
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -18,5 +17,4 @@
 	<string>{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_TEAMS_CLIENT_SECRET")) -}}{{- includeTemplate "secrets/CLOUDFLARE_TEAMS_CLIENT_SECRET" | decrypt | trim -}}{{- else -}}{{- env "CLOUDFLARE_TEAMS_CLIENT_SECRET" -}}{{- end -}}</string>
 </dict>
 </plist>
-{{- end -}}
 {{- end -}}

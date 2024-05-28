@@ -14,7 +14,8 @@
 #
 #     * [Tor configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/tor/torrc)
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 ### Determine the Tor configuration location by checking whether the system is macOS or Linux
 if [ -d /Applications ] && [ -d /System ]; then

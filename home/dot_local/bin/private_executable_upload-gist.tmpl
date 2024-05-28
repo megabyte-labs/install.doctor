@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-echo "{{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITHUB_GIST_TOKEN")) }}{{ includeTemplate "secrets/GITHUB_GIST_TOKEN" | decrypt | trim }}{{ else }}{{ env "GITHUB_GIST_TOKEN" }}{{ end }}" > ~/.gist
-gist $*
-rm -f ~/.gist

@@ -8,12 +8,10 @@
 #     be passed in as a secret (either via the encrypted secret method or passed in as an environment
 #     variable).
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 if command -v docker > /dev/null; then
-  ### Acquire DOCKERHUB_TOKEN
-  get-secret --exists DOCKERHUB_TOKEN || exit 1
-
   ### Acquire DOCKERHUB_USER
   if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml" ]; then
     DOCKERHUB_USER="$(yq '.data.user.docker.username' ~/.config/chezmoi/chezmoi.yaml)"
@@ -27,18 +25,19 @@ if command -v docker > /dev/null; then
     logg info 'Ensuring Docker.app is open' && open --background -a Docker --args --accept-license --unattended
   fi
 
-  ### Pre-authenticate with DockerHub
-  DOCKERHUB_TOKEN="$(get-secret DOCKERHUB_TOKEN)"
-  if [ -n "$DOCKERHUB_TOKEN" ] && [ -n "$DOCKERHUB_USER" ]; then
-    logg info 'Headlessly authenticating with DockerHub registry' && echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USER" --password-stdin > /dev/null && logg success 'Successfully authenticated with DockerHub registry'
-  fi
-fi
+  ### Ensure DOCKERHUB_TOKEN is available
+  get-secret --exists DOCKERHUB_TOKEN
 
-### Symlink on macOS
-if [ -d /Applications ] && [ -d /System ]; then
-  if [ -S "$HOME/Library/Containers/com.docker.docker/Data/docker.raw.sock" ]; then
-    logg info 'Symlinking /var/run/docker.sock to macOS Library location' && sudo ln -s "$HOME/Library/Containers/com.docker.docker/Data/docker.raw.sock" /var/run/docker.sock
+  ### Pre-authenticate with DockerHub
+  if get-secret --exists DOCKERHUB_TOKEN; then
+    if [ "$DOCKERHUB_USER" != 'null' ]; then
+      logg info 'Headlessly authenticating with DockerHub registry'
+      echo "$(get-secret DOCKERHUB_TOKEN)" | docker login -u "$DOCKERHUB_USER" --password-stdin > /dev/null
+      logg success 'Successfully authenticated with DockerHub registry'
+    else
+      logg info 'Skipping logging into DockerHub because DOCKERHUB_USER is undefined'
+    fi
   else
-    logg info "Skipping symlinking /var/run/docker.sock since $HOME/Library/Containers/com.docker.docker/Data/docker.raw.sock is missing"
+    logg info 'Skipping logging into DockerHub because DOCKERHUB_TOKEN is undefined'
   fi
 fi

@@ -2,7 +2,8 @@
 # @file Volta initialization
 # @brief This script initializes Volta and ensures the latest version of node and yarn are installed
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 export VOLTA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/volta"
 export PATH="$VOLTA_HOME/bin:$PATH"

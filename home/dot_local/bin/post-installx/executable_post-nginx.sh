@@ -11,7 +11,8 @@
 #     * [NGINX Amplify login](https://amplify.nginx.com/login)
 #     * [NGINX Amplify documentation](https://docs.nginx.com/nginx-amplify/#)
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 if command -v nginx > /dev/null; then
   if [ -d /Applications ] && [ -d /System ]; then

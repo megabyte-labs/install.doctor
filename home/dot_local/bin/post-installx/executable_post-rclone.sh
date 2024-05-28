@@ -45,94 +45,15 @@
 #     * [Rclone default configurations](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/rclone)
 #     * [Rclone documentation](https://rclone.org/docs/)
 
-set -euo pipefail
-
-### Acquire CLOUDFLARE_R2_ID
-if [ -z "$CLOUDFLARE_R2_ID" ]; then
-  CLOUDFLARE_R2_ID_FILE="${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/CLOUDFLARE_R2_ID"
-  if [ -f "$CLOUDFLARE_R2_ID_FILE" ]; then
-    logg info "Found CLOUDFLARE_R2_ID in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
-    if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" ]; then
-      logg info 'Decrypting CLOUDFLARE_R2_ID token with Age encryption key'
-      CLOUDFLARE_R2_ID="$(cat "$CLOUDFLARE_R2_ID_FILE" | chezmoi decrypt)"
-    else
-      logg warn 'Age encryption key is missing from ~/.config/age/chezmoi.txt'
-      exit 1
-    fi
-  else
-    logg warn "CLOUDFLARE_R2_ID is missing from ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
-    exit 1
-  fi
-else
-  logg info 'CLOUDFLARE_R2_ID provided as environment variable'
-fi
-
-### Acquire CLOUDFLARE_R2_SECRET
-if [ -z "$CLOUDFLARE_R2_SECRET" ]; then
-  CLOUDFLARE_R2_SECRET_FILE="${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/CLOUDFLARE_R2_SECRET"
-  if [ -f "$CLOUDFLARE_R2_SECRET_FILE" ]; then
-    logg info "Found CLOUDFLARE_R2_SECRET in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
-    if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" ]; then
-      logg info 'Decrypting CLOUDFLARE_R2_SECRET token with Age encryption key'
-      CLOUDFLARE_R2_SECRET="$(cat "$CLOUDFLARE_R2_SECRET_FILE" | chezmoi decrypt)"
-    else
-      logg warn 'Age encryption key is missing from ~/.config/age/chezmoi.txt'
-      exit 1
-    fi
-  else
-    logg warn "CLOUDFLARE_R2_SECRET is missing from ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
-    exit 1
-  fi
-else
-  logg info 'CLOUDFLARE_R2_SECRET provided as environment variable'
-fi
-
-### Acquire CLOUDFLARE_R2_ID_USER
-if [ -z "$CLOUDFLARE_R2_ID_USER" ]; then
-  CLOUDFLARE_R2_ID_USER_FILE="${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/CLOUDFLARE_R2_ID_USER"
-  if [ -f "$CLOUDFLARE_R2_ID_USER_FILE" ]; then
-    logg info "Found CLOUDFLARE_R2_ID_USER in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
-    if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" ]; then
-      logg info 'Decrypting CLOUDFLARE_R2_ID_USER token with Age encryption key'
-      CLOUDFLARE_R2_ID_USER="$(cat "$CLOUDFLARE_R2_ID_USER_FILE" | chezmoi decrypt)"
-    else
-      logg warn 'Age encryption key is missing from ~/.config/age/chezmoi.txt'
-      exit 1
-    fi
-  else
-    logg warn "CLOUDFLARE_R2_ID_USER is missing from ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
-    exit 1
-  fi
-else
-  logg info 'CLOUDFLARE_R2_ID_USER provided as environment variable'
-fi
-
-### Acquire CLOUDFLARE_R2_SECRET_USER
-if [ -z "$CLOUDFLARE_R2_SECRET_USER" ]; then
-  CLOUDFLARE_R2_SECRET_USER_FILE="${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets/CLOUDFLARE_R2_SECRET_USER"
-  if [ -f "$CLOUDFLARE_R2_SECRET_USER_FILE" ]; then
-    logg info "Found CLOUDFLARE_R2_SECRET_USER in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
-    if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/age/chezmoi.txt" ]; then
-      logg info 'Decrypting CLOUDFLARE_R2_SECRET_USER token with Age encryption key'
-      CLOUDFLARE_R2_SECRET_USER="$(cat "$CLOUDFLARE_R2_SECRET_USER_FILE" | chezmoi decrypt)"
-    else
-      logg warn 'Age encryption key is missing from ~/.config/age/chezmoi.txt'
-      exit 1
-    fi
-  else
-    logg warn "CLOUDFLARE_R2_SECRET_USER is missing from ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets"
-    exit 1
-  fi
-else
-  logg info 'CLOUDFLARE_R2_SECRET_USER provided as environment variable'
-fi
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 ### Begin configuration
 if command -v rclone > /dev/null; then
   R2_ENDPOINT="$(yq '.data.user.cloudflare.r2' "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml")"
-  if [ "$R2_ENDPOINT" != 'null' ]; then
+  CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/rclone/rclone.conf"
+  if [ "$R2_ENDPOINT" != 'null' ] && get-secret --exists CLOUDFLARE_R2_ID_USER CLOUDFLARE_R2_SECRET_USER; then
     logg info 'Removing ~/.config/rclone/rclone.conf Install Doctor managed block'
-    CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/rclone/rclone.conf"
     if cat "$CONFIG_FILE" | grep '# INSTALL DOCTOR MANAGED S3 START' > /dev/null; then
       # TODO: Remove old block
       START_LINE="$(echo `grep -n -m 1 "# INSTALL DOCTOR MANAGED S3 START" "$CONFIG_FILE" | cut -f1 -d ":"`)"
@@ -147,12 +68,12 @@ if command -v rclone > /dev/null; then
     tee -a "$CONFIG_FILE" > /dev/null <<EOT
 # INSTALL DOCTOR MANAGED S3 START
 [User-$USER]
-access_key_id = ${CLOUDFLARE_R2_ID_USER}
+access_key_id = $(get-secret CLOUDFLARE_R2_ID_USER)
 acl = private
 endpoint = ${R2_ENDPOINT}.r2.cloudflarestorage.com
 provider = Cloudflare
 region = auto
-secret_access_key = ${CLOUDFLARE_R2_SECRET_USER}
+secret_access_key = $(get-secret CLOUDFLARE_R2_SECRET_USER)
 type = s3
 # INSTALL DOCTOR MANAGED S3 END
 EOT
@@ -165,8 +86,10 @@ EOT
   fi
 
   ### User config file permissions
-  sudo chmod -f 600 "$CONFIG_FILE"
-  sudo chown -f "$USER:rclone" "$CONFIG_FILE"
+  if get-secret --exists CLOUDFLARE_R2_ID_USER CLOUDFLARE_R2_SECRET_USER; then
+    sudo chmod -f 600 "$CONFIG_FILE"
+    sudo chown -f "$USER:rclone" "$CONFIG_FILE"
+  fi
 
   ### Setup /var/cache/rclone
   logg info 'Ensuring /var/cache/rclone exists'
@@ -202,60 +125,47 @@ EOT
     logg info 'Ensuring Rclone mount-on-reboot definitions are in place'
     sudo mkdir -p /Library/LaunchDaemons
 
-    ### rclone.private.plist
-    sudo cp -f "$HOME/Library/LaunchDaemons/rclone.private.plist" '/Library/LaunchDaemons/rclone.private.plist'
-    logg info 'Ensuring rclone.private.plist service is started'
-    if sudo launchctl list | grep 'rclone.private.plist' > /dev/null; then
-      logg info 'Unloading previous rclone.private.plist configuration'
-      sudo launchctl unload /Library/LaunchDaemons/rclone.private.plist
-    fi
-    logg info 'Starting up rclone.private.plist configuration'
-    sudo launchctl load -w /Library/LaunchDaemons/rclone.private.plist
+    if get-secret --exists CLOUDFLARE_R2_ID CLOUDFLARE_R2_SECRET; then
+      ### rclone.private.plist
+      load-service rclone.private
 
-    ### rclone.public.plist
-    sudo cp -f "$HOME/Library/LaunchDaemons/rclone.public.plist" '/Library/LaunchDaemons/rclone.public.plist'
-    logg info 'Ensuring rclone.public.plist service is started'
-    if sudo launchctl list | grep 'rclone.public.plist' > /dev/null; then
-      logg info 'Unloading previous rclone.public.plist configuration'
-      sudo launchctl unload /Library/LaunchDaemons/rclone.public.plist
+      ### rclone.public.plist
+      load-service rclone.public
     fi
-    logg info 'Starting up rclone.public.plist configuration'
-    sudo launchctl load -w /Library/LaunchDaemons/rclone.public.plist
 
-    ### rclone.user.plist
-    sudo cp -f "$HOME/Library/LaunchDaemons/rclone.user.plist" '/Library/LaunchDaemons/rclone.user.plist'
-    logg info 'Ensuring rclone.user.plist service is started'
-    if sudo launchctl list | grep 'rclone.user.plist' > /dev/null; then
-      logg info 'Unloading previous rclone.user.plist configuration'
-      sudo launchctl unload /Library/LaunchDaemons/rclone.user.plist
+    if get-secret --exists CLOUDFLARE_R2_ID_USER CLOUDFLARE_R2_SECRET_USER; then
+      ### rclone.user.plist
+      load-service rclone.user
     fi
-    logg info 'Starting up rclone.user.plist configuration'
-    sudo launchctl load -w "$HOME/Library/LaunchDaemons/rclone.user.plist"
   elif [ -d /etc/systemd/system ]; then
-    find "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system" -mindepth 1 -maxdepth 1 -type f | while read RCLONE_SERVICE; do
-      ### Add systemd service file
-      logg info "Adding S3 system mount service defined at $RCLONE_SERVICE"
-      FILENAME="$(basename "$RCLONE_SERVICE")"
-      SERVICE_ID="$(echo "$FILENAME" | sed 's/.service//')"
-      sudo cp -f "$RCLONE_SERVICE" "/etc/systemd/system/$(basename "$RCLONE_SERVICE")"
+    if get-secret --exists CLOUDFLARE_R2_ID CLOUDFLARE_R2_SECRET; then
+      find "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system" -mindepth 1 -maxdepth 1 -type f | while read RCLONE_SERVICE; do
+        ### Add systemd service file
+        logg info "Adding S3 system mount service defined at $RCLONE_SERVICE"
+        FILENAME="$(basename "$RCLONE_SERVICE")"
+        SERVICE_ID="$(echo "$FILENAME" | sed 's/.service//')"
+        sudo cp -f "$RCLONE_SERVICE" "/etc/systemd/system/$(basename "$RCLONE_SERVICE")"
 
-      ### Ensure mount folder is created
-      logg info "Ensuring /mnt/$SERVICE_ID is created with proper permissions"
-      sudo mkdir -p "/mnt/$SERVICE_ID"
-      sudo chmod 750 "/mnt/$SERVICE_ID"
+        ### Ensure mount folder is created
+        logg info "Ensuring /mnt/$SERVICE_ID is created with proper permissions"
+        sudo mkdir -p "/mnt/$SERVICE_ID"
+        sudo chmod 750 "/mnt/$SERVICE_ID"
 
-      ### Enable / restart the service
-      logg info "Enabling / restarting the $SERVICE_ID S3 service"
-      sudo systemctl enable "$SERVICE_ID"
-      sudo systemctl restart "$SERVICE_ID"
-    done
+        ### Enable / restart the service
+        logg info "Enabling / restarting the $SERVICE_ID S3 service"
+        sudo systemctl enable "$SERVICE_ID"
+        sudo systemctl restart "$SERVICE_ID"
+      done
+    fi
 
     ### Add user Rclone mount
-    logg info 'Adding user S3 rclone mount (available at ~/Cloud/User and /Volumes/User)'
-    sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/s3-user.service" "/etc/systemd/system/s3-${USER}.service"
-    logg info 'Enabling / restarting the S3 user mount'
-    sudo systemctl enable "s3-${USER}"
-    sudo systemctl restart "s3-${USER}"
+    if get-secret --exists CLOUDFLARE_R2_ID_USER CLOUDFLARE_R2_SECRET_USER; then
+      logg info 'Adding user S3 rclone mount (available at ~/Cloud/User and /Volumes/User)'
+      sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/s3-user.service" "/etc/systemd/system/s3-${USER}.service"
+      logg info 'Enabling / restarting the S3 user mount'
+      sudo systemctl enable "s3-${USER}"
+      sudo systemctl restart "s3-${USER}"
+    fi
   fi
 else
   logg info 'rclone is not available'

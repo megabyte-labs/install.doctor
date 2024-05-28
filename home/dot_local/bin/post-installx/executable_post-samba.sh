@@ -48,7 +48,8 @@
 #     * [Default Samba configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_local/samba/config.tmpl)
 #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 ### Configure Samba server
 if command -v smbd > /dev/null; then

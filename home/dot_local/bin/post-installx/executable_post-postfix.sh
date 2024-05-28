@@ -10,7 +10,8 @@
 #     cat ~/.bashrc | mail -s "My subject" name@email.com
 #     ```
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 ### Acquire PUBLIC_SERVICES_DOMAIN and PRIMARY_EMAIL
 if command -v yq > /dev/null; then
@@ -37,7 +38,7 @@ if get-secret --exists SENDGRID_API_KEY; then
     elif command -v yum > /dev/null; then
       sudo yum install -y cyrus-sasl-plain || EXIT_CODE=$?
     fi
-    if [ -n "$EXIT_CODE" ]; then
+    if [ -n "${EXIT_CODE:-}" ]; then
       logg warn 'There was an error ensuring the Postfix-SendGrid dependencies were installed'
     fi
     if [ -d /etc/postfix ]; then

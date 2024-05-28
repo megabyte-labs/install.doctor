@@ -20,29 +20,32 @@
 #     * [Systemd Unit file](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/gitomatic/gitomatic.service.tmpl)
 #     * [Helper script](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_local/bin/executable_gitomatic_service.tmpl
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 if command -v gitomatic > /dev/null; then
-  ### Copy bin to /usr/local/bin
-  logg info "Copying $HOME/.local/bin/gitomatic-service to /usr/local/bin/gitomatic-service" && sudo cp -f "$HOME/.local/bin/gitomatic-service" /usr/local/bin/gitomatic-servic
+  ### Copy gitomatic-service to /usr/local/bin
+  logg info "Copying $HOME/.local/bin/gitomatic-service to /usr/local/bin/gitomatic-service"
+  sudo cp -f "$HOME/.local/bin/gitomatic-service" /usr/local/bin/gitomatic-servic
+  
   ### Copy gitomatic to global directory
   if [ ! -f /usr/local/bin/gitomatic ]; then
-    logg info 'Copying gitomatic executable to /usr/local/bin/gitomatic' && sudo cp -f "$(which gitomatic)" /usr/local/bin/gitomatic
-  f
+    logg info 'Copying gitomatic executable to /usr/local/bin/gitomatic'
+    sudo cp -f "$(which gitomatic)" /usr/local/bin/gitomatic
+  fi
+
   if [ -d /Applications ] && [ -d /System ]; then
     ### macOS
-    logg info 'Copying gitomatic plist file to /Library/LaunchDaemons' && sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitomatic/com.github.muesli.gitomatic.plist" /Library/LaunchDaemons/com.github.muesli.gitomatic.plist
-    if ! sudo launchctl list | grep 'gitomatic' > /dev/null; then
-      logg info 'Running sudo launchctl load /Library/LaunchDaemons/com.github.muesli.gitomatic.plist' && sudo launchctl load /Library/LaunchDaemons/com.github.muesli.gitomatic.plist
-      logg info 'Running sudo launchctl start /Library/LaunchDaemons/com.github.muesli.gitomatic.plist' && sudo launchctl start /Library/LaunchDaemons/com.github.muesli.gitomatic.plist
-    else
-      logg info "gitomatic services appear to already be loaded"
-    fi
+    logg info 'Enabling the com.github.muesli.gitomatic LaunchDaemon'
+    load-service com.github.muesli.gitomatic
   else
     ### Linux
-    logg info 'Copying gitomatic systemd unit file to /etc/systemd/system/' && sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitomatic/gitomatic.service" /etc/systemd/system/gitomatic.service
-    logg info 'Reloading systemd daemon' && sudo systemctl daemon-reload
-    logg info 'Enabling and starting gitomatic service' && sudo systemctl enable --now gitomatic
+    logg info 'Copying gitomatic systemd unit file to /etc/systemd/system/'
+    sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitomatic/gitomatic.service" /etc/systemd/system/gitomatic.service
+    logg info 'Reloading systemd daemon'
+    sudo systemctl daemon-reload
+    logg info 'Enabling and starting gitomatic service'
+    sudo systemctl enable --now gitomatic
   fi
 else
   logg info 'gitomatic is not installed or it is not available in PATH'

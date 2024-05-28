@@ -72,7 +72,8 @@
 #     * [Visual Studio Code settings folder](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User)
 #     * [Visual Studio Code `extensions.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/extensions.json)
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 ### Hides useless error during extension installations
 # Error looks like:
@@ -109,7 +110,7 @@ if command -v code > /dev/null && command -v npm > /dev/null && [ -f "${XDG_DATA
   fi
 
   ### Log message if install failed
-  if [ -n "$EXIT_CODE" ]; then
+  if [ -n "${EXIT_CODE:-}" ]; then
     logg warn 'Possible error(s) were detected while installing linter fallback configurations to the home directory.'
     logg info "Exit code: $EXIT_CODE"
   else

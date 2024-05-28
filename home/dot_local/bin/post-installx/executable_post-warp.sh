@@ -50,7 +50,8 @@
 #     * [Linux managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/warp/private_mdm.xml.tmpl)
 #     * [macOS managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/Library/Managed%20Preferences/private_com.cloudflare.warp.plist.tmpl)
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 SSL_CERT_PATH="/etc/ssl/cert.pem"
 ### Install CloudFlare WARP (on non-WSL *nix systems)
@@ -87,13 +88,13 @@ if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
   elif command -v dnf > /dev/null && command -v rpm > /dev/null; then
     ### This is made for CentOS 8 and works on Fedora 36 (hopefully 36+ as well) with `nss-tools` as a dependency
     sudo dnf instal -y nss-tools || NSS_TOOL_EXIT=$?
-    if [ -n "$NSS_TOOL_EXIT" ]; then
+    if [ -n "${NSS_TOOL_EXIT:-}" ]; then
       logg warn 'Unable to install nss-tools which was a requirement on Fedora 36 and assumed to be one on other systems as well.'
     fi
 
     ### According to the download site, this is the only version available for RedHat-based systems
     sudo rpm -ivh https://pkg.cloudflareclient.com/cloudflare-release-el8.rpm || RPM_EXIT_CODE=$?
-    if [ -n "$RPM_EXIT_CODE" ]; then
+    if [ -n "${RPM_EXIT_CODE:-}" ]; then
       logg error 'Unable to install CloudFlare WARP using RedHat 8 RPM package'
     fi
   fi

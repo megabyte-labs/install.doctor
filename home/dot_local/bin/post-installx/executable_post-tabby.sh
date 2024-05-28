@@ -41,7 +41,8 @@
 #     * [Tabby plugins `package.json`](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/tabby/plugins/package.json)
 #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets) which details how to store your Tabby configuration in as an encrypted file
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json" ]; then
   if [ -d "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/node_modules" ]; then

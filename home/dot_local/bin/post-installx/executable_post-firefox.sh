@@ -43,7 +43,8 @@
 #     * [System-wide configurations](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_local/share/firefox) as well as the location of the `profile.ini` and some other configurations
 #     * [User-specific configurations](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/firefox/user.js) added to all profiles except Factory
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 function installFirefoxProfileConnector() {
   logg info 'Installing the Firefox Profile Connector'
@@ -68,6 +69,7 @@ function firefoxSetup() {
       sudo rsync -artvu "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/" "$FIREFOX_DIR" > /dev/null
     fi
   done
+
   ### Loop through various Firefox profile locations
   for SETTINGS_DIR in "$HOME/snap/firefox/common/.mozilla/firefox" "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox" "$HOME/Library/Application Support/Firefox/Profiles" "$HOME/.mozilla/firefox"; do
     ### Determine executable to use
@@ -115,6 +117,7 @@ function firefoxSetup() {
           logg info 'Ensuring Firefox Profile Switcher is installed'
           brew install --quiet null-dev/firefox-profile-switcher/firefox-profile-switcher-connector
         fi
+
         ### Ensure Firefox Profile Switcher configuration is symlinked
         if [ ! -d "/Library/Application Support/Mozilla/NativeMessagingHosts/ax.nd.profile_switcher_ff.json" ]; then
           logg info 'Ensuring Firefox Profile Switcher is configured'
@@ -139,6 +142,7 @@ function firefoxSetup() {
         BIN_INSTALL_DIR="$BASE_DIR/firefoxprofileswitcher-install"
         MANIFEST_INSTALL_DIR="$BASE_DIR/.mozilla/native-messaging-hosts"
         DOWNLOAD_URL="https://github.com/null-dev/firefox-profile-switcher-connector/releases/latest/download/linux-x64.deb"
+
         ### Ensure Firefox Profile Switcher is not already installed
         if [ ! -f "$BIN_INSTALL_DIR/usr/bin/ff-pswitch-connector" ] || [ ! -f "$MANIFEST_INSTALL_DIR/ax.nd.profile_switcher_ff.json" ]; then
           ### Download profile switcher
@@ -148,6 +152,7 @@ function firefoxSetup() {
           curl -sSL "$DOWNLOAD_URL" -o "$TMP_FILE"
           ar p "$TMP_FILE" data.tar.xz | tar xfJ - --strip-components=2 -C "$BIN_INSTALL_DIR" usr/bin/ff-pswitch-connector
           rm -f "$TMP_FILE"
+
           ### Create manifest
           logg info 'Copying profile switcher configuration to manifest directory'
           mkdir -p "$MANIFEST_INSTALL_DIR"
@@ -173,6 +178,7 @@ function firefoxSetup() {
         fi
       fi
     fi
+
     ### Initiatize Firefox default profiles
     logg info "Processing executable located at $FIREFOX_EXE"
     if command -v "$FIREFOX_EXE" > /dev/null; then
@@ -180,18 +186,24 @@ function firefoxSetup() {
       logg info "Firefox executable set to $FIREFOX_EXE"
       if [ ! -d "$SETTINGS_DIR" ]; then
         logg info 'Running Firefox (or its derivative) headlessly to generate default profiles'
-        timeout 14 "$FIREFOX_EXE" --headless
+        timeout 14 "$FIREFOX_EXE" --headless || EXIT_CODE=$?
         logg info 'Finished running Firefox headlessly'
       elif [ -d /Applications ] && [ -d /System ] && [ ! -f "$SETTINGS_DIR/../installs.ini" ]; then
         logg info 'Running Firefox (or its derivative) headlessly to generate default profiles because install.ini is not at the macOS default location.'
-        timeout 14 "$FIREFOX_EXE" --headless
+        timeout 14 "$FIREFOX_EXE" --headless || EXIT_CODE=$?
         logg info 'Finished running Firefox headlessly (while fixing the missing macOS installs.ini issue)'
       fi
+
+      if [ -n "${EXIT_CODE:-}" ]; then
+        logg info 'Encountered error while headlessly warming up Firefox - error does not seem to impact functionality'
+      fi
+
       ### Ensure settings directory exists (since the application was brought up temporarily headlessly)
       if [ ! -d "$SETTINGS_DIR" ]; then
         logg warn "The settings directory located at $SETTINGS_DIR failed to be populated by running the browser headlessly"
         continue
       fi
+
       ### Add the populated profiles.ini
       logg info "Copying "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" to profile directory"
       logg info "The settings directory is $SETTINGS_DIR"
@@ -206,6 +218,7 @@ function firefoxSetup() {
         cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/profiles.ini" "$SETTINGS_DIR/profiles.ini"
         SETTINGS_INI="$SETTINGS_DIR/installs.ini"
       fi
+
       ### Default profile (created by launching Firefox headlessly)
       DEFAULT_RELEASE_PROFILE="$(find "$SETTINGS_DIR" -mindepth 1 -maxdepth 1 -name "*.default" -not -name "profile.default")"
       if [ -n "$DEFAULT_RELEASE_PROFILE" ]; then
@@ -214,6 +227,7 @@ function firefoxSetup() {
       else
         logg warn 'Unable to sync default Mozilla Firefox profile'
       fi
+
       ### Ensure original installs.ini is removed
       if [ -f "$SETTINGS_INI" ]; then
         # DEFAULT_PROFILE_PROFILE="$SETTINGS_DIR/$(cat "$SETTINGS_INI" | grep 'Default=' | sed 's/.*Profiles\///')"
@@ -222,6 +236,7 @@ function firefoxSetup() {
       else
         logg info 'installs.ini was not present in the Mozilla Firefox settings folder'
       fi
+
       ### Miscellaneous default profiles
       for NEW_PROFILE in "automation" "development" "miscellaneous"; do
         if [ ! -d "$SETTINGS_DIR/profile.${NEW_PROFILE}" ] && [ -d "$SETTINGS_DIR/profile.default" ]; then
@@ -231,6 +246,7 @@ function firefoxSetup() {
           cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/user.js" "$SETTINGS_DIR/profile.${NEW_PROFILE}"
         fi
       done
+
       ### Public git profile
       if [ -d "$SETTINGS_DIR/profile.git" ]; then
         logg info 'Resetting the Firefox git profile'
@@ -241,10 +257,12 @@ function firefoxSetup() {
         git pull origin master
       else
         logg info 'Cloning the public Firefox git profile'
-        cd "$SETTINGS_DIR" && git clone "$FIREFOX_PUBLIC_PROFILE" profile.git
+        cd "$SETTINGS_DIR" && git clone "$(yq '.firefoxPublicProfile' "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoidata.yaml")" profile.git
       fi
+
       ### Copy user.js to profile.git profile
       cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/user.js" "$SETTINGS_DIR/profile.git"
+
       ### Git profile w/ plugins installed (installation happens below)
       if [ ! -d "$SETTINGS_DIR/profile.plugins" ]; then
         logg info "Syncing $SETTINGS_DIR/profile.git to $SETTINGS_DIR/profile.plugins"
@@ -252,6 +270,7 @@ function firefoxSetup() {
         rsync -a "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/" "$SETTINGS_DIR/profile.plugins"
         cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/user.js" "$SETTINGS_DIR/profile.plugins"
       fi
+
       ### Private hosted profile
       # Deprecated in favor of using the Restic profile tasks saved in `~/.config/task/Taskfile.yml`
       # if [ ! -d "$SETTINGS_DIR/profile.private" ]; then
@@ -271,6 +290,7 @@ function firefoxSetup() {
       #         logg error 'Failed to decrypt the private Firefox profile'
       #     fi
       # fi
+
       ### Install Firefox addons (using list declared in .chezmoidata.yaml)
       for SETTINGS_PROFILE in "profile.plugins" "profile.private"; do
         if [ -d "$SETTINGS_DIR/$SETTINGS_PROFILE" ]; then

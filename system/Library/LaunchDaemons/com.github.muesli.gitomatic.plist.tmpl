@@ -1,4 +1,3 @@
-{{- if eq .host.distro.family "darwin" -}}
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -14,9 +13,8 @@
     <key>UserName</key>
     <string>root</string>
     <key>StandardErrorPath</key>
-    <string>/var/log/com.github.muesli.gitomatic.error.log</string>
+    <string>/Library/Logs/com.github.muesli.gitomatic.error.log</string>
     <key>StandardOutPath</key>
-    <string>/var/log/com.github.muesli.gitomatic.debug.log</string>
+    <string>/Library/Logs/com.github.muesli.gitomatic.debug.log</string>
 </dict>
 </plist>
-{{- end -}}

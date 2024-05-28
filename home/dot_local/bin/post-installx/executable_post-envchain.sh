@@ -15,20 +15,41 @@
 #
 #     * Create seperate environments based on encrypted secret type (e.g. Allow `envchain cloudflare env` instead of `envchain default env` for everything)
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Import environment variables into `envchain`
 if command -v envchain > /dev/null; then
   if [ -f "$HOME/.config/age/chezmoi.txt" ]; then
-    logg info 'Importing environment variables into the System keyring'
+    gum log -sl info 'Importing environment variables into the system keyring'
+    ANSWERS=""
+    KEY_NAMES=""
     while read ENCRYPTED_FILE; do
-      logg info "Adding $ENCRYPTED_FILE to System keyring via envchain"
-      cat "$ENCRYPTED_FILE" | chezmoi decrypt | envchain -s default "$(basename $ENCRYPTED_FILE)" > /dev/null || logg info "Importing "$(basename $ENCRYPTED_FILE)" failed"
+      gum log -sl info "Preparing secret for injection into system keyring via envchain" file "$(basename "$ENCRYPTED_FILE")"
+      ### Populate token key ID
+      KEY_NAME="$(basename "$ENCRYPTED_FILE")"
+      if [ "$KEY_NAMES" == '' ]; then
+        KEY_NAMES="$KEY_NAME"
+      else
+        KEY_NAMES="$KEY_NAMES $KEY_NAME"
+      fi
+
+      ### Populate token secret
+      ANSWER="$(cat "$ENCRYPTED_FILE" | chezmoi decrypt)"
+      if [ "$ANSWERS" == '' ]; then
+        ANSWERS="$ANSWER"
+      else
+        ANSWERS="$ANSWERS $ANSWER"
+      fi
     done< <(find "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoitemplates/secrets" -type f -maxdepth 1 -mindepth 1)
-    logg success "Added Chezmoi-managed secrets into System keyring via envchain"
+
+    ### Import keys into system keychain
+    gum log -sl info "Importing secrets into keychain under the 'default' namespace (e.g. Use envchain default env to print all the tokens)"
+    printf '%s\n' $ANSWERS | envchain --set default $KEY_NAMES
+    gum log -sl info "Added Chezmoi-managed secrets into System keyring via envchain"
   else
-    logg warn 'Unable to import any variables into envchain because ~/.config/age/chezmoi.txt was not created by the secrets encryption process yet'
+    gum log -sl warn 'Unable to import any variables into envchain because ~/.config/age/chezmoi.txt was not created by the secrets encryption process yet'
   fi
 else
-  logg info 'envchain is not installed or it is not available in the PATH'
+  gum log -sl warn 'envchain is not installed or it is not available in the PATH'
 fi

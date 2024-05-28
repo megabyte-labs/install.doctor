@@ -9,7 +9,8 @@
 #     This script installs additional alerts and enables notifications if Netdata is installed. Email notifications are configured
 #     using the provided primary email address. If the OS is Debian based, Netdata shows the number of CVEs in currently installed packages.
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 ensureNetdataOwnership() {
   ### Ensure /usr/local/var/lib/netdata/cloud.d is owned by user
@@ -34,10 +35,18 @@ if command -v netdata-claim.sh > /dev/null; then
     sudo add-usergroup netdata netdata
     sudo add-usergroup "$USER" netdata
   fi
+
   ### Ensure ownership
   ensureNetdataOwnership
+
+  ### cd /tmp attempts to resolve - job-working-directory: error retrieving current directory: getcwd: cannot access parent directories: Permission denied
+  cd /tmp
+
   ### netdata-claim.sh must be run as netdata user
-  sudo -H -u netdata bash -c "yes | netdata-claim.sh -token="$(get-secret NETDATA_TOKEN)" -rooms="$(get-secret NETDATA_ROOM)" -url="https://app.netdata.cloud""
+  if sudo -H -u netdata bash -c "yes | netdata-claim.sh -token="$(get-secret NETDATA_TOKEN)" -rooms="$(get-secret NETDATA_ROOM)" -url="https://app.netdata.cloud""; then
+    logg success 'Successfully added device to Netdata Cloud account'
+  fi
+
   ### Kernel optimizations
   # These are mentioned while installing via the kickstart.sh script method. We are using Homebrew for the installation though.
   # Assuming these optimizations do not cause any harm.
@@ -68,7 +77,8 @@ if command -v netdata-claim.sh > /dev/null; then
     else
       logg error 'No etc location found for netdata' && exit 1
     fi
-    logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/ to $NETDATA_ETC" && sudo cp -rf "${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/" "$NETDATA_ETC"
+    logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/ to $NETDATA_ETC"
+    sudo cp -rf "${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health.d/" "$NETDATA_ETC"
     if command -v gsed > /dev/null; then
       SED_UTIL="gsed"
     else
@@ -76,12 +86,14 @@ if command -v netdata-claim.sh > /dev/null; then
     fi
 
     ### Blocky
-    logg info "Adding Blocky metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
-    sudo "$SED_UTIL" -i "/jobs:/a\  - name: blocky_local \n    url: 'http://127.0.0.1:4000/metrics'" "$NETDATA_ETC/go.d/prometheus.conf"
+    # TODO - Add this configuration to appropriate configuration file
+    # logg info "Adding Blocky metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
+    # sudo "$SED_UTIL" -i "/jobs:/a\  - name: blocky_local \n    url: 'http://127.0.0.1:4000/metrics'" "$NETDATA_ETC/go.d/prometheus.conf"
     
     ### SFTPGo
-    logg info "Adding SFTPGo metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
-    sudo "$SED_UTIL" -i "/jobs:/a\  - name: sftpgo_local \n    url: 'http://127.0.0.1:57500/metrics'" "$NETDATA_ETC/go.d/prometheus.conf"
+    # TODO - Add this configuration to appropriate configuration file
+    # logg info "Adding SFTPGo metrics collection to $NETDATA_ETC/go.d/prometheus.conf"
+    # sudo "$SED_UTIL" -i "/jobs:/a\  - name: sftpgo_local \n    url: 'http://127.0.0.1:57500/metrics'" "$NETDATA_ETC/go.d/prometheus.conf"
     
     # Backup current health alarm configuration and apply new one
     if [ -d /usr/local/lib/netdata ]; then
@@ -93,7 +105,8 @@ if command -v netdata-claim.sh > /dev/null; then
     else
       logg error 'No lib location found for netdata' && exit 1
     fi
-    logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health_alarm_notify.conf to $NETDATA_LIB/conf.d/health_alarm_notify.conf" && sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health_alarm_notify.conf" "$NETDATA_LIB/conf.d/health_alarm_notify.conf"
+    logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health_alarm_notify.conf to $NETDATA_LIB/conf.d/health_alarm_notify.conf"
+    sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/netdata/health_alarm_notify.conf" "$NETDATA_LIB/conf.d/health_alarm_notify.conf"
   else
     logg warn 'netdata is not available in the PATH or is not installed'
   fi
@@ -104,13 +117,21 @@ if command -v netdata-claim.sh > /dev/null; then
     if command -v debsecan > /dev/null; then
       DEBSECAN_GIT="${XDG_DATA_HOME:-$HOME/.local/share}/netdata-debsecan"
       ### Installing the script to generate report on CVEs in installed packages
-      logg info 'Installing script to generate report on CVEs in installed packages' && sudo cp -f "$DEBSECAN_GIT/usr_local_bin_debsecan-by-type" "/usr/local/bin/debsecan-by-type"
+      logg info 'Installing script to generate report on CVEs in installed packages'
+      sudo cp -f "$DEBSECAN_GIT/usr_local_bin_debsecan-by-type" "/usr/local/bin/debsecan-by-type"
+
       ### Generate initial debsecan reports in /var/log/debsecan/
-      logg info 'Generating initial debsecan reports in /var/log/debsecan/' && debsecan-by-type
+      logg info 'Generating initial debsecan reports in /var/log/debsecan/'
+      debsecan-by-type
+
       ### Configure dpkg to refresh the file after each run
-      logg info 'Configuring dpkg to refresh the file after each run' && sudo cp -f "$DEBSECAN_GIT/etc_apt_apt.conf.d_99debsecan"  /etc/apt/apt.conf.d/99-debsecan
+      logg info 'Configuring dpkg to refresh the file after each run'
+      sudo cp -f "$DEBSECAN_GIT/etc_apt_apt.conf.d_99debsecan"  /etc/apt/apt.conf.d/99-debsecan
+
       ### Add a cron job to refresh the file every hour
-      logg info 'Adding a cron job to refresh the file every hour' && sudo cp -f "$DEBSECAN_GIT/etc_cron.d_debsecan" /etc/cron.d/debsecan
+      logg info 'Adding a cron job to refresh the file every hour'
+      sudo cp -f "$DEBSECAN_GIT/etc_cron.d_debsecan" /etc/cron.d/debsecan
+
       ### Install the module/configuration file
       logg info 'Installing the module and configuration file'
       sudo "$DEBSECAN_GIT/debsecan.chart.py" /usr/libexec/netdata/python.d/debsecan.chart.py

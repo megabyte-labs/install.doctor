@@ -16,8 +16,8 @@
 	<key>RunAtLoad</key>
 	<true/>
     <key>StandardErrorPath</key>
-	<string>/var/log/rclone/user-daemon.error.log</string>
+	<string>/Library/Logs/user-{{ .user.username }}-daemon.error.log</string>
 	<key>StandardOutPath</key>
-	<string>/var/log/rclone/user-daemon.debug.log</string>
+	<string>/Library/Logs/user-{{ .user.username }}-daemon.debug.log</string>
 </dict>
 </plist>

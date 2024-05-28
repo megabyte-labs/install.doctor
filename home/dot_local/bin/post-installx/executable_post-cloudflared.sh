@@ -4,7 +4,8 @@
 # @description
 #     1. Skips the deletion of a tunnel when it is currently in use
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 if command -v cloudflared > /dev/null; then
   # Show warning message about ~/.cloudflared already existing
@@ -25,7 +26,7 @@ if command -v cloudflared > /dev/null; then
     logg info "Deleteing CloudFlared tunnel ID $TUNNEL_ID"
     unset TUNNEL_EXIT_CODE
     sudo cloudflared tunnel delete "$TUNNEL_ID" || TUNNEL_EXIT_CODE=$?
-    if [ -z "$TUNNEL_EXIT_CODE" ]; then
+    if [ -z "${TUNNEL_EXIT_CODE:-}" ]; then
       logg info "Removing credentials for $TUNNEL_ID which is not in use"
       sudo rm -f "/usr/local/etc/cloudflared/${TUNNEL_ID}.json"
     else
@@ -35,7 +36,10 @@ if command -v cloudflared > /dev/null; then
 
   ### Register tunnel (if not already registered)
   logg info "Creating CloudFlared tunnel named "$HOSTNAME_LOWER""
-  sudo cloudflared tunnel create "$HOSTNAME_LOWER"
+  sudo cloudflared tunnel create "$HOSTNAME_LOWER" || EXIT_CODE=$?
+  if [ -n "${EXIT_CODE:-}" ]; then
+    logg info 'Failed to create tunnel - it probably already exists'
+  fi
 
   ### Acquire TUNNEL_ID and symlink credentials.json
   TUNNEL_ID="$(sudo cloudflared tunnel list | grep "$HOSTNAME_LOWER" | sed 's/ .*//')"

@@ -13,15 +13,21 @@ Host *
     ServerAliveCountMax 30
     IdentitiesOnly yes
     IdentityAgent none
+    {{ if eq .host.hostname "automation" -}}
     IdentityFile ~/.ssh/ssh-13147527
-    IdentityFile ~/.ssh/ssh-13196452
+    {{- else if eq .host.hostname "macbook-pro" -}}
     IdentityFile ~/.ssh/ssh-5c-nano-laptop
+    {{- else if eq .host.hostname "reserved" -}}
     IdentityFile ~/.ssh/ssh-5c-nano-green
+    {{- else if eq .host.hostname "workstation" -}}
     IdentityFile ~/.ssh/ssh-5c-green
+    {{- else -}}
+    IdentityFile ~/.ssh/ssh-13196452
     IdentityFile ~/.ssh/ssh-5-nano
     IdentityFile ~/.ssh/ssh-5-nfc-green
     IdentityFile ~/.ssh/ssh-5-nfc-red
     IdentityFile ~/.ssh/ssh-5-nfc-yellow
+    {{- end -}}
     IdentityFile ~/.ssh/id_rsa
 Host gitlab.com
     UpdateHostKeys no
@@ -29,11 +35,19 @@ Host gitlab.com
 Host github.com
     UpdateHostKeys no
     IdentityFile ~/.ssh/id_rsa
+Host automation
+    User {{ .user.username }}
+    Hostname ssh-automation.{{ .host.domain }}
+    ProxyCommand /opt/homebrew/bin/cloudflared access ssh --hostname %h
 Host macbook-pro
     User {{ .user.username }}
     Hostname ssh-macbook-pro.{{ .host.domain }}
     ProxyCommand /opt/homebrew/bin/cloudflared access ssh --hostname %h
-{{ if (lookPath "fig") -}}
-Match all
-  Include ~/.fig/ssh
-{{- end -}}
+Host reserved
+    User {{ .user.username }}
+    Hostname ssh-reserved.{{ .host.domain }}
+    ProxyCommand /opt/homebrew/bin/cloudflared access ssh --hostname %h
+Host workstation
+    User {{ .user.username }}
+    Hostname ssh-workstation.{{ .host.domain }}
+    ProxyCommand /opt/homebrew/bin/cloudflared access ssh --hostname %h

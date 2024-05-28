@@ -2,7 +2,8 @@
 # @file VIM Plugins AOT Installation
 # @brief This script triggers VIM to pre-install plugins so that VIM loads into the desired state the first time it is invoked
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 logg info "Installing VIM plugins" && vim +'PlugInstall --sync' +qall
 

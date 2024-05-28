@@ -20,7 +20,8 @@
 #     * [VPN profile folder](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/vpn)
 #     * [VPN profile documentation](https://install.doctor/docs/customization/secrets#vpn-profiles)
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 ### Backs up previous network settings to `/Library/Preferences/com.apple.networkextension.plist.old` before applying new VPN profiles
 logg info 'Backing up /Library/Preferences/com.apple.networkextension.plist to /Library/Preferences/com.apple.networkextension.plist.old'

@@ -24,7 +24,8 @@
 #     * [`managed.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/chrome/managed.json)
 #     * [`recommended.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/chrome/recommended.json)
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 function chromeSetUp() {
   ### Ensure Chrome policies directory is present
@@ -38,6 +39,7 @@ function chromeSetUp() {
         logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/chrome/managed.json to $POLICY_DIR/managed/policies.json"
         sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrome/managed.json" "$POLICY_DIR/managed/policies.json"
       fi
+
       ### Recommended policies
       if [ ! -f "$POLICY_DIR/recommended/policies.json" ]; then
         logg info "Ensuring directory $POLICY_DIR/recommended exists" && sudo mkdir -p "$POLICY_DIR/recommended"
@@ -48,6 +50,7 @@ function chromeSetUp() {
       logg info "Skipping extension injection into $POLICY_DIR - create these folders prior to running to create managed configs"
     fi
   done
+
   ### Add Chrome extension JSON
   logg info 'Populating Chrome extension JSON'
   for EXTENSION_DIR in "/opt/google/chrome/extensions" "$HOME/Library/Application Support/Google/Chrome/External Extensions"; do
@@ -63,6 +66,7 @@ function chromeSetUp() {
           logg info "Creating directory $EXTENSION_DIR" && mkdir -p "$EXTENSION_DIR"
         fi
       fi
+
       ### Add extension JSON
       logg info "Adding Chrome extensions to $EXTENSION_DIR"
       while read EXTENSION; do

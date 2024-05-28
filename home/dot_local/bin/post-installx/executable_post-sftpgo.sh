@@ -2,7 +2,8 @@
 # @file sftpgo configuration
 # @brief This script copies over the required configuration files for sftpgo and then initializes sftpgo
 
-set -euo pipefail
+set -Eeuo pipefail
+trap "logg error 'Script encountered an error!'" ERR
 
 if command -v sftpgo > /dev/null; then
     ### Copy configuration file
