@@ -1496,6 +1496,13 @@ softwarePackages:
       - clamav-daemon
       - clamav-freshclam
     _serviceEnabled: true
+    _post: |
+      if [ -d /Applications ] && [ -d /System ]; then
+        load-service clamav.clamdscan
+        load-service clamav.freshclam
+        load-service clamav.notification
+      fi
+      freshclam
     _short: "ClamAV is an open-source antivirus engine for detecting trojans, viruses, malware, and other malicious threats on Unix-like systems.                                                                      "
     apt:
       - clamav
@@ -2329,7 +2336,7 @@ softwarePackages:
         mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins"
         gum log -sl info 'Downloading Docker push-rm' && curl https://github.com/christian-korneck/docker-pushrm/releases/download/$RELEASE_TAG/docker-pushrm_darwin_amd64 -o "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm"
         chmod +x "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm"
-        logg success 'Added Docker push-rm'
+        gum log -sl info 'Added Docker push-rm'
       else
         gum log -sl info 'Docker push-rm already added'
       fi
@@ -2554,6 +2561,9 @@ softwarePackages:
     _home: https://easyengine.io/
     _name: EasyEngine
     _short: "EasyEngine is a command-line tool for setting up and managing WordPress sites on Linux servers efficiently.                                                                                               "
+    _post: |
+      ee config set le-mail "$(get-secret CLOUDFLARE_EMAIL)"
+      ee config set cloudflare-api-key "$(get-secret CLOUDFLARE_API_KEY)"
     brew: easyengine
     script:linux: wget -qO ee rt.cx/ee4 && sudo bash ee
   edex-ui:
@@ -9617,6 +9627,8 @@ softwarePackages:
     _desc: Fully featured and highly configurable SFTP server with optional HTTP/S, FTP/S and WebDAV support - S3, Google Cloud Storage, Azure Blob
     _github: https://github.com/drakkan/sftpgo
     _name: sftpgo
+    _post: |
+      sudo sftpgo initprovider
     _service: sftpgo
     _service:brew:
       - name: sftpgo
@@ -11347,7 +11359,7 @@ softwarePackages:
         else
           gum log -sl info 'Agreeing to VMWare Workstation Pro license (without serial number)' && sudo "$VMWARE_WORKSTATION_DIR/tryworkstation-linux-64.sh" --eulas-agreed --console --required
         fi
-        logg success 'VMware Workstation installed successfully'
+        gum log -sl info 'VMware Workstation installed successfully'
       else
         gum log -sl info 'VMware Workstation is already installed'
       fi

@@ -4,7 +4,7 @@ After=network-online.target
 
 [Service]
 User=blocky
-ExecStart=/usr/local/bin/blocky --config /usr/local/etc/blocky/config.yaml
+ExecStart={{- lookPath "blocky" -}} --config /usr/local/etc/blocky/config.yml
 Restart=on-failure
 AmbientCapabilities=CAP_NET_BIND_SERVICE
 

@@ -186,7 +186,7 @@ ensureBasicDeps() {
         ### This temporary file prompts the 'softwareupdate' utility to list the Command Line Tools
         touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
         XCODE_PKG="$(softwareupdate -l | grep "\*.*Command Line" | tail -n 1 | sed 's/^[^C]* //')"
-        logg info "Installing from softwareupdate" && softwareupdate -i "$XCODE_PKG" && logg success "Successfully installed $XCODE_PKG"
+        logg info "Installing from softwareupdate" && softwareupdate -i "$XCODE_PKG" && gum log -sl info "Successfully installed $XCODE_PKG"
       fi
       if /usr/bin/pgrep -q oahd; then
         logg info 'Rosetta 2 is already installed'
@@ -365,7 +365,7 @@ ensureFullDiskAccess() {
       fi
       exit 0
     else
-      logg success 'Current terminal has full disk access'
+      gum log -sl info 'Current terminal has full disk access'
       if [ -f "$HOME/.zshrc" ]; then
         if command -v gsed > /dev/null; then
           sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
@@ -396,7 +396,7 @@ importCloudFlareCert() {
     security verify-cert -c "$CRT_TMP" > /dev/null 2>&1
     if [ $? != 0 ]; then
       logg info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
-      sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_TMP" && logg success 'Successfully imported Cloudflare_CA.crt into System.keychain'
+      sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_TMP" && gum log -sl info 'Successfully imported Cloudflare_CA.crt into System.keychain'
     fi
 
     ### Remove temporary file, if necessary
@@ -428,7 +428,7 @@ ensureWarpDisconnected() {
   if [ -z "$DEBUG" ]; then
     if command -v warp-cli > /dev/null; then
       if warp-cli status | grep 'Connected' > /dev/null; then
-        logg info "Disconnecting from WARP" && warp-cli disconnect && logg success "Disconnected WARP to prevent conflicts"
+        logg info "Disconnecting from WARP" && warp-cli disconnect && gum log -sl info "Disconnected WARP to prevent conflicts"
       fi
     fi
   fi
@@ -713,7 +713,7 @@ runChezmoi() {
   if [ -n "$CHEZMOI_EXIT_CODE" ]; then
     logg error "Chezmoi encountered an error and exitted with an exit code of $CHEZMOI_EXIT_CODE"
   else
-    logg success 'Finished provisioning the system'
+    gum log -sl info 'Finished provisioning the system'
   fi
 }
 
@@ -728,7 +728,7 @@ removePasswordlessSudo() {
 
 # @description Render the `docs/terminal/post-install.md` file to the terminal at the end of the provisioning process
 postProvision() {
-  logg success 'Provisioning complete!'
+  gum log -sl info 'Provisioning complete!'
   if command -v glow > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/terminal/post-install.md" ]; then
     glow "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/docs/terminal/post-install.md"
   fi

@@ -28,7 +28,7 @@ if command -v VirtualBox > /dev/null; then
     if [ -f /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack ]; then
       gum log -sl info 'Installing VirtualBox extension pack'
       echo 'y' | sudo VBoxManage extpack install --replace /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack
-      logg success 'Successfully installed VirtualBox extension pack'
+      gum log -sl info 'Successfully installed VirtualBox extension pack'
     fi
   else
     gum log -sl info 'VirtualBox Extension pack is already installed'

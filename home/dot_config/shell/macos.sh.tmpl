@@ -925,6 +925,6 @@ defaults write com.tapbots.TweetbotMac OpenURLsDirectly -bool true
 # Set Drift as default screen saver
 defaults -currentHost write com.apple.screensaver moduleDict -dict moduleName Brooklyn path "/System/Library/Screen Savers/Drift.saver"
 
-logg success 'Done applying macOS settings'
+gum log -sl info 'Done applying macOS settings'
 gum log -sl info 'Some of these changes  may require a logout/restart to take effect'
 {{ end -}}

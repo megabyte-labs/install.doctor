@@ -17,7 +17,7 @@ importCloudFlareCert() {
     security verify-cert -c "$CRT_TMP" > /dev/null 2>&1
     if [ $? != 0 ]; then
       logg info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
-      sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_TMP" && logg success 'Successfully imported Cloudflare_CA.crt into System.keychain'
+      sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_TMP" && gum log -sl info 'Successfully imported Cloudflare_CA.crt into System.keychain'
     fi
 
     ### Remove temporary file, if necessary

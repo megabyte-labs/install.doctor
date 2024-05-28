@@ -22,18 +22,15 @@ if command -v docker > /dev/null; then
 
   ### Launch Docker.app
   if [ -d "/Applications/Docker.app" ] || [ -d "$HOME/Applications/Docker.app" ]; then
-    gum log -sl info 'Ensuring Docker.app is open' && open --background -a Docker --args --accept-license --unattended
+    gum log -sl info 'Ensuring Docker.app is running' && open --background -a Docker --args --accept-license --unattended
   fi
-
-  ### Ensure DOCKERHUB_TOKEN is available
-  get-secret --exists DOCKERHUB_TOKEN
 
   ### Pre-authenticate with DockerHub
   if get-secret --exists DOCKERHUB_TOKEN; then
     if [ "$DOCKERHUB_USER" != 'null' ]; then
       gum log -sl info 'Headlessly authenticating with DockerHub registry'
       echo "$(get-secret DOCKERHUB_TOKEN)" | docker login -u "$DOCKERHUB_USER" --password-stdin > /dev/null
-      logg success 'Successfully authenticated with DockerHub registry'
+      gum log -sl info 'Successfully authenticated with DockerHub registry'
     else
       gum log -sl info 'Skipping logging into DockerHub because DOCKERHUB_USER is undefined'
     fi

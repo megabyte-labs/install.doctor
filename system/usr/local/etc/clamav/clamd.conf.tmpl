@@ -20,12 +20,13 @@ PidFile /var/run/clamav/clamd.pid
 User clamav
 VirusEvent /usr/local/etc/clamav/clamav-email
 
+ExcludePath ^/quarantine/
+ExcludePath ^/opt/quarantine/
+
 {{- if eq .host.distro.id "darwin" -}}
 ### macOS
 ExcludePath ^/Volumes/([^M]|M([^a]|a([^c]|c([^i]|i([^n]|n([^t]|t([^o]|o([^s]|s([^h]|h([^ ]|[ ]([^H]|H([^D]|D([^/])|$)|$)|$)|$)|$)|$)|$)|$)|$)|$)|$))[^/]{0,240}/
 ExcludePath ^/Network/
-ExcludePath ^/Quarantine/
-ExcludePath ^/opt/Quarantine/
 ExcludePath ^/private/var/db/
 ExcludePath ^/private/var/folders/
 ExcludePath ^/dev/

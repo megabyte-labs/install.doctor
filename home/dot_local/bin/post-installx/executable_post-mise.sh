@@ -11,7 +11,7 @@ if command -v mise > /dev/null; then
     ### Symlink Java on macOS
     if [ -d /Applications ] && [ -d /System ]; then
         if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" ] && [ ! -d "/Library/Java/JavaVirtualMachines/openjdk-20.jdk/Contents" ]; then
-            gum log -sl info "Symlinking ${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents to /Library/Java/JavaVirtualMachines/openjdk-20.jdk/Contents"
+            gum log -sl info "Symlinking system Java to mise-installed Java" target "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" symlink "/Library/Java/JavaVirtualMachines/openjdk-20.jdk/Contents"
             sudo mkdir -p /Library/Java/JavaVirtualMachines/openjdk-20.jdk
             sudo ln -s "${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs/java/openjdk-20/Contents" /Library/Java/JavaVirtualMachines/openjdk-20.jdk/Contents
         fi

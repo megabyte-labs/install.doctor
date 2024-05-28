@@ -29,7 +29,7 @@ if [[ ! "$(test -d proc && grep Microsoft /proc/version > /dev/null)" ]]; then
       if [ -n "${CONFIGURE_EXIT_CODE:-}" ]; then
         gum log -sl error 'Configuring endlessh service failed' && exit 1
       else
-        logg success 'Successfully configured endlessh service'
+        gum log -sl info 'Successfully configured endlessh service'
       fi
     elif [ -f /etc/endlessh.conf ]; then
       gum log -sl info 'Copying ~/.ssh/endlessh/config to /etc/endlessh.conf' && sudo cp -f "$HOME/.ssh/endlessh/config" /etc/endlessh.conf
@@ -37,7 +37,7 @@ if [[ ! "$(test -d proc && grep Microsoft /proc/version > /dev/null)" ]]; then
       if [ -n "${CONFIGURE_EXIT_CODE:-}" ]; then
         gum log -sl error 'Configuring endlessh service failed' && exit 1
       else
-        logg success 'Successfully configured endlessh service'
+        gum log -sl info 'Successfully configured endlessh service'
       fi
     else
       gum log -sl warn 'Neither the /etc/endlessh folder nor the /etc/endlessh.conf file exist'

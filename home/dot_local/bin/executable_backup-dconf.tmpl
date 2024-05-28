@@ -19,7 +19,7 @@ find "${XDG_CONFIG_HOME:-$HOME/.config}/dconf/settings" -mindepth 1 -maxdepth 1 
   DCONF_SETTINGS_ID="/$(basename "$DCONF_CONFIG_FILE" | sed 's/\./\//g')/"
   gum log -sl info 'Dumping '"$DCONF_SETTINGS_ID"' to '"$DCONF_CONFIG_FILE"
   dconf dump "$DCONF_SETTINGS_ID" > "$DCONF_CONFIG_FILE"
-  logg success 'Saved new configuration to '"$DCONF_CONFIG_FILE"
+  gum log -sl info 'Saved new configuration to '"$DCONF_CONFIG_FILE"
   gum log -sl info 'Printing diff for '"$DCONF_CONFIG_FILE"
   chezmoi diff "$DCONF_CONFIG_FILE" || true
 done

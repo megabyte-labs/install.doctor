@@ -52,7 +52,7 @@ if command -v vmware > /dev/null; then
     ### Build VMWare host modules
     gum log -sl info 'Building VMware host modules'
     if sudo vmware-modconfig --console --install-all; then
-      logg success 'Built VMWare host modules successfully with sudo vmware-modconfig --console --install-all'
+      gum log -sl info 'Built VMWare host modules successfully with sudo vmware-modconfig --console --install-all'
     else
       gum log -sl info 'Acquiring VMware version from CLI'
       VMW_VERSION="$(vmware --version | cut -f 3 -d' ')"
@@ -64,7 +64,7 @@ if command -v vmware > /dev/null; then
       gum log -sl info 'Running sudo make and sudo make install'
       sudo make
       sudo make install
-      logg success 'Successfully configured VMware host module patches'
+      gum log -sl info 'Successfully configured VMware host module patches'
     fi
 
     ### Sign VMware host modules if Secure Boot is enabled
@@ -76,7 +76,7 @@ if command -v vmware > /dev/null; then
       "/usr/src/linux-headers-$(uname -r)/scripts/sign-file" sha256 ./MOK.priv ./MOK.der "$(modinfo -n vmmon)"
       "/usr/src/linux-headers-$(uname -r)/scripts/sign-file" sha256 ./MOK.priv ./MOK.der "$(modinfo -n vmnet)"
       echo '' | mokutil --import MOK.der
-      logg success 'Successfully signed VMware host modules. Reboot the host before powering on VMs'
+      gum log -sl info 'Successfully signed VMware host modules. Reboot the host before powering on VMs'
     fi
 
     ### Patch VMware with Unlocker
@@ -91,7 +91,7 @@ if command -v vmware > /dev/null; then
       cd linux
       gum log -sl info 'Running the unlocker'
       echo "y" | sudo ./unlock
-      logg success 'Successfully unlocked VMware for macOS compatibility'
+      gum log -sl info 'Successfully unlocked VMware for macOS compatibility'
     else
       gum log -sl info '/usr/lib/vmware/isoimages/darwin.iso is already present on the system so VMware macOS unlocking will not be performed'
     fi
@@ -137,7 +137,7 @@ if command -v vagrant > /dev/null && command -v vmware-id > /dev/null; then
     else
       gum log -sl info 'Generating Vagrant VMWare Utility certificates'
       sudo vagrant-vmware-utility certificate generate
-      logg success 'Generated Vagrant VMWare Utility certificates via vagrant-vmware-utility certificate generate'
+      gum log -sl info 'Generated Vagrant VMWare Utility certificates via vagrant-vmware-utility certificate generate'
     fi
     gum log -sl info 'Ensuring the Vagrant VMWare Utility service is enabled'
     if VVU_OUTPUT=$(sudo vagrant-vmware-utility service install 2>&1); then

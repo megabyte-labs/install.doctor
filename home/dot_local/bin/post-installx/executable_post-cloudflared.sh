@@ -8,17 +8,12 @@ set -Eeuo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 if command -v cloudflared > /dev/null; then
-  # Show warning message about ~/.cloudflared already existing
+  ### Show error message about ~/.cloudflared already existing
   if [ -d "$HOME/.cloudflared" ]; then
-    gum log -sl warn '~/.cloudflared is already in the home directory - to ensure proper deployment, remove previous tunnel configuration folders'
+    gum log -sl error '~/.cloudflared is already in the home directory - to ensure proper deployment, remove the ~/.cloudflared configuration folder' && exit 1
   fi
 
-  # Copy over configuration files
-  gum log -sl info 'Ensuring /usr/local/etc/cloudflared exists' && sudo mkdir -p /usr/local/etc/cloudflared
-  gum log -sl info 'Copying over configuration files from ~/.local/etc/cloudflared to /usr/local/etc/cloudflared'
-  sudo cp -f "$HOME/.local/etc/cloudflared/cert.pem" /usr/local/etc/cloudflared/cert.pem
-  sudo cp -f "$HOME/.local/etc/cloudflared/config.yml" /usr/local/etc/cloudflared/config.yml
-
+  ### Use lowercased hostname / tunnel ID
   HOSTNAME_LOWER="host-$(hostname -s | tr '[:upper:]' '[:lower:]')"
 
   ### Remove previous tunnels connected to host
@@ -30,16 +25,13 @@ if command -v cloudflared > /dev/null; then
       gum log -sl info "Removing credentials for $TUNNEL_ID which is not in use"
       sudo rm -f "/usr/local/etc/cloudflared/${TUNNEL_ID}.json"
     else
-      logg success "Skipping deletion of $TUNNEL_ID credentials since it is in use"
+      gum log -sl info "Skipping deletion of $TUNNEL_ID credentials since it is in use"
     fi
   done< <(sudo cloudflared tunnel list | grep "$HOSTNAME_LOWER" | sed 's/ .*//')
 
   ### Register tunnel (if not already registered)
   gum log -sl info "Creating CloudFlared tunnel named "$HOSTNAME_LOWER""
-  sudo cloudflared tunnel create "$HOSTNAME_LOWER" || EXIT_CODE=$?
-  if [ -n "${EXIT_CODE:-}" ]; then
-    gum log -sl info 'Failed to create tunnel - it probably already exists'
-  fi
+  sudo cloudflared tunnel create "$HOSTNAME_LOWER" || true
 
   ### Acquire TUNNEL_ID and symlink credentials.json
   TUNNEL_ID="$(sudo cloudflared tunnel list | grep "$HOSTNAME_LOWER" | sed 's/ .*//')"
@@ -48,24 +40,15 @@ if command -v cloudflared > /dev/null; then
   sudo rm -f /usr/local/etc/cloudflared/credentials.json
   sudo ln -s /usr/local/etc/cloudflared/$TUNNEL_ID.json /usr/local/etc/cloudflared/credentials.json
 
-  ### Symlink /usr/local/etc/cloudflared to /etc/cloudflared
-  if [ ! -d /etc/cloudflared ]; then
-    gum log -sl info 'Symlinking /usr/local/etc/cloudflared to /etc/cloudflared'
-    sudo ln -s /usr/local/etc/cloudflared /etc/cloudflared
-  else
-    if [ ! -L /etc/cloudflared ]; then
-      gum log -sl warn '/etc/cloudflared is present as a regular directory (not symlinked) but files are being modified in /usr/local/etc/cloudflared'
-    fi
-  fi
-
   ### Configure DNS
-  # Must be deleted manually if no longer used
+  ### Note: The DNS records that are added via cloudflared must be deleted manually if no longer used
   gum log -sl info 'Setting up DNS records for CloudFlare Argo tunnels'
   while read DOMAIN; do
     if [ "$DOMAIN" != 'null' ]; then
       gum log -sl info "Setting up $DOMAIN for access through cloudflared (Tunnel ID: $TUNNEL_ID)"
       gum log -sl info "Running sudo cloudflared tunnel route dns -f "$TUNNEL_ID" "$DOMAIN""
-      sudo cloudflared tunnel route dns -f "$TUNNEL_ID" "$DOMAIN" && logg success "Successfully routed $DOMAIN to this machine's cloudflared Argo tunnel"
+      sudo cloudflared tunnel route dns -f "$TUNNEL_ID" "$DOMAIN"
+      gum log -sl info "Successfully routed $DOMAIN to this machine's cloudflared Argo tunnel"
     fi
   done< <(yq '.ingress[].hostname' /usr/local/etc/cloudflared/config.yml)
 
@@ -82,14 +65,9 @@ if command -v cloudflared > /dev/null; then
       gum log -sl info 'Running sudo cloudflared service install'
       sudo cloudflared service install
     fi
-    sudo cp -f "$HOME/Library/LaunchDaemons/com.cloudflare.cloudflared.plist" /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
-    gum log -sl info 'Ensuring cloudflared service is started'
-    if sudo launchctl list | grep 'com.cloudflare.cloudflared' > /dev/null; then
-      gum log -sl info 'Unloading previous com.cloudflare.cloudflared configuration'
-      sudo launchctl unload /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
-    fi
-    gum log -sl info 'Starting up com.cloudflare.cloudflared configuration'
-    sudo launchctl load -w /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
+
+    ### Apply patched version of the LaunchDaemon
+    load-service com.cloudflare.cloudflared
   elif [ -f /etc/os-release ]; then
     ### Linux
     if systemctl --all --type service | grep -q "cloudflared" > /dev/null; then
@@ -98,6 +76,8 @@ if command -v cloudflared > /dev/null; then
       gum log -sl info 'Running sudo cloudflared service install'
       sudo cloudflared service install
     fi
+
+    ### Start / enabled the systemd service
     gum log -sl info 'Ensuring cloudflared service is started'
     sudo systemctl start cloudflared
     gum log -sl info 'Enabling cloudflared as a boot systemctl service'

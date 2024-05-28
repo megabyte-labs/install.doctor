@@ -87,7 +87,7 @@ if command -v code > /dev/null; then
   jq -r '.recommendations[]' "${XDG_CONFIG_HOME:-$HOME/.config}/Code/User/extensions.json" | while read EXTENSION; do
     if ! echo "$EXTENSIONS" | grep -iF "$EXTENSION" > /dev/null; then
       gum log -sl info 'Installing Visual Studio Code extension '"$EXTENSION"'' && code --install-extension "$EXTENSION"
-      logg success 'Installed '"$EXTENSION"''
+      gum log -sl info 'Installed '"$EXTENSION"''
     else
       gum log -sl info ''"$EXTENSION"' already installed'
     fi

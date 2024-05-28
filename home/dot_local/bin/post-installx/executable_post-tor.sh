@@ -49,14 +49,14 @@ if command -v torify > /dev/null; then
         fi
       fi
       gum log -sl info 'Running brew services restart tor'
-      brew services restart tor && logg success 'Tor successfully restarted'
+      brew services restart tor && gum log -sl info 'Tor successfully restarted'
     else
       if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
         ### Linux
         gum log -sl info 'Running sudo systemctl enable / restart tor'
         sudo systemctl enable tor
         sudo systemctl restart tor
-        logg success 'Tor service enabled and restarted'
+        gum log -sl info 'Tor service enabled and restarted'
       else
         gum log -sl info 'Environment is WSL so the Tor systemd service will not be enabled / restarted'
       fi

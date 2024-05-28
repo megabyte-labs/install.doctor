@@ -6,14 +6,11 @@ set -Eeuo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 if command -v ntfy > /dev/null; then
-    ### Branding assets
-    gum log -sl info 'Ensuring branding assets are in expected place for ntfy'
-    sudo mkdir -p /usr/local/etc/branding
-    sudo cp -f "$HOME/.local/etc/branding/logo-color-256x256.png" /usr/local/etc/branding/logo-color-256x256.png
 
     ### Sound files
     gum log -sl info 'Ensuring shared sound files are synced to system location'
     sudo mkdir -p /usr/local/share/sounds
+    ### /usr/share/sounds is ideal spot
     sudo rsync -rtvp "${XDG_DATA_HOME:-$HOME/.local/share}/sounds/" /usr/local/share/sounds
     
     ### Debian dependency

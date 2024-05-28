@@ -61,10 +61,10 @@ if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/config.sh" ]; then
         ### Install / start the service
         gum log -sl info 'Configuring runner service'
         "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/svc.sh" install
-        logg success 'Successfully installed the GitHub Actions runner service'
+        gum log -sl info 'Successfully installed the GitHub Actions runner service'
         gum log -sl info 'Starting runner service'
         "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/svc.sh" start
-        logg success 'Started the GitHub Actions runner service'
+        gum log -sl info 'Started the GitHub Actions runner service'
       else
         gum log -sl warn 'jq is required by the GitHub runner configuration script'
       fi

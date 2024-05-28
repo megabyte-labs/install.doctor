@@ -53,7 +53,7 @@ if get-secret --exists TAILSCALE_AUTH_KEY; then
     if [ -n "${EXIT_CODE:-}" ]; then
       gum log -sl warn 'tailscale up timed out'
     else
-      logg success 'Connected to Tailscale network'
+      gum log -sl info 'Connected to Tailscale network'
     fi
     gum log -sl info 'Disabling notifications about updates'
     tailscale set --update-check=false
@@ -79,7 +79,7 @@ if command -v warp-cli > /dev/null; then
   ### Connect CloudFlare WARP
   if warp-cli --accept-tos status | grep 'Disconnected' > /dev/null; then
     gum log -sl info 'Connecting to CloudFlare WARP'
-    warp-cli --accept-tos connect > /dev/null && logg success 'Connected to CloudFlare WARP'
+    warp-cli --accept-tos connect > /dev/null && gum log -sl info 'Connected to CloudFlare WARP'
   else
     gum log -sl info 'Either there is a misconfiguration or the device is already connected with CloudFlare WARP'
   fi

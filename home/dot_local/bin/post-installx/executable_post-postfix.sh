@@ -154,7 +154,7 @@ if get-secret --exists SENDGRID_API_KEY; then
             gum log -sl info 'Unloading previous Postfix launch configuration'
             sudo launchctl unload /System/Library/LaunchDaemons/com.apple.postfix.master.plist
           fi
-          sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.postfix.master.plist && logg success 'launchctl load of com.apple.postfix.master successful'
+          sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.postfix.master.plist && gum log -sl info 'launchctl load of com.apple.postfix.master successful'
         fi
         if ! sudo postfix status > /dev/null; then
           gum log -sl info 'Starting postfix'

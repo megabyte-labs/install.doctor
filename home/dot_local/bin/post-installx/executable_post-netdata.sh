@@ -44,7 +44,7 @@ if command -v netdata-claim.sh > /dev/null; then
 
   ### netdata-claim.sh must be run as netdata user
   if sudo -H -u netdata bash -c "yes | netdata-claim.sh -token="$(get-secret NETDATA_TOKEN)" -rooms="$(get-secret NETDATA_ROOM)" -url="https://app.netdata.cloud""; then
-    logg success 'Successfully added device to Netdata Cloud account'
+    gum log -sl info 'Successfully added device to Netdata Cloud account'
   fi
 
   ### Kernel optimizations

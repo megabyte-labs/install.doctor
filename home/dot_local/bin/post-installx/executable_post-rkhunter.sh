@@ -15,14 +15,8 @@ if command -v rkhunter > /dev/null; then
       ### Linux
       gum log -sl info 'Updating file /etc/rkhunter.conf' && sed -i  "s/^#WEB_CMD.*$/WEB_CMD=curl\ -L/" /etc/rkhunter.conf
     fi
-    sudo rkhunter --propupd || RK_PROPUPD_EXIT_CODE=$?
-    if [ -n "${RK_PROPUPD_EXIT_CODE:-}" ]; then
-      gum log -sl error "sudo rkhunter --propupd returned non-zero exit code"
-    fi
-    sudo rkhunter --update || RK_UPDATE_EXIT_CODE=$?
-    if [ -n "${RK_UPDATE_EXIT_CODE:-}" ]; then
-      gum log -sl error "sudo rkhunter --update returned non-zero exit code"
-    fi
+    sudo rkhunter --propupd || gum log -sl warn "sudo rkhunter --propupd returned non-zero exit code"
+    sudo rkhunter --update || gum log -sl warn "sudo rkhunter --update returned non-zero exit code"
 else
     gum log -sl info 'rkhunter is not installed'
 fi

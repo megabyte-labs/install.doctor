@@ -283,7 +283,7 @@ function firefoxSetup() {
       #         rm -f profile.private.tar.gz.age
       #         gum log -sl info 'Decompressing the Firefox private profile'
       #         tar -xzf profile.private.tar.gz
-      #         logg success 'The Firefox private profile was successfully installed'
+      #         gum log -sl info 'The Firefox private profile was successfully installed'
       #         cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/user.js" "$SETTINGS_DIR/profile.private"
       #         gum log -sl info 'Copied ~/.config/firefox/user.js to profile.private profile'
       #     else
@@ -324,7 +324,7 @@ function firefoxSetup() {
                   # to the user profile.
                   # gum log -sl info 'Unzipping '"$PLUGIN_FILENAME"' ('"$FIREFOX_PLUGIN"')'
                   # unzip "$SETTINGS_DIR/$SETTINGS_PROFILE/extensions/$PLUGIN_FILENAME" -d "$SETTINGS_DIR/$SETTINGS_PROFILE/extensions/$PLUGIN_FOLDER"
-                  logg success 'Installed '"$FIREFOX_PLUGIN"''
+                  gum log -sl info 'Installed '"$FIREFOX_PLUGIN"''
                 fi
               else
                 gum log -sl warn 'A null Firefox add-on filename was detected for '"$FIREFOX_PLUGIN"''

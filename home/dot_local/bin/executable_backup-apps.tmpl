@@ -32,7 +32,7 @@ if command -v mackup > /dev/null; then
   rm -f ~/.mackup.cfg
 
   ### Print success message
-  logg success 'Successfully ran backup-apps'
+  gum log -sl info 'Successfully ran backup-apps'
 else
   gum log -sl error 'mackup is not installed' && exit 1
 fi

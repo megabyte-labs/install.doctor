@@ -51,7 +51,7 @@ if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json" ]; then
     gum log -sl info 'Installing Tabby plugins defined in '"${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json"''
     cd "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins"
     npm install --quiet --no-progress
-    logg success 'Finished installing Tabby plugins'
+    gum log -sl info 'Finished installing Tabby plugins'
   fi
 else
   gum log -sl info 'Skipping Tabby plugin installation because is not present'

@@ -2436,7 +2436,7 @@ softwarePackages:
     _github: https://github.com/docker/compose
     _home: https://www.docker.com/
     _name: Docker Desktop
-    _post: "#!/usr/bin/env bash\n# @file DockerHub Login\n# @brief Logs into DockerHub for Docker Desktop\n# @description\n#     This script logs into DockerHub so that Docker Desktop is pre-authenticated. This\n#     functionality requires that the `DOCKERHUB_USER` be passed in as an environment variable (or \n#     directly editted in the `~/.config/chezmoi/chezmoi.yaml` file) and that the `DOCKERHUB_TOKEN`\n#     be passed in as a secret (either via the encrypted secret method or passed in as an environment\n#     variable).\n\n### Login to DockerHub\nif command -v docker > /dev/null; then\n  DOCKERHUB_TOKEN=\"{{ if (stat (joinPath .chezmoi.sourceDir \".chezmoitemplates\" \"secrets\" \"DOCKERHUB_TOKEN\")) }}{{- includeTemplate \"secrets/DOCKERHUB_TOKEN\" | decrypt | trim -}}{{ else }}{{- env \"DOCKERHUB_TOKEN\" -}}{{ end }}\"\n  DOCKERHUB_USER=\"{{ .user.docker.username }}\"\n  if [ -d \"/Applications/Docker.app\" ] || [ -d \"$HOME/Applications/Docker.app\" ]; then\n    gum log -sl info 'Ensuring Docker.app is open' && open --background -a Docker --args --accept-license --unattended\n  fi\n  gum log -sl info 'Headlessly authenticating with DockerHub registry' && echo \"$DOCKERHUB_TOKEN\" | docker login -u \"$DOCKERHUB_USER\" --password-stdin > /dev/null && logg success 'Successfully authenticated with DockerHub registry'\nfi\n\n### Symlink on macOS\nif [ -f \"$HOME/Library/Containers/com.docker.docker/Data/docker.raw.sock\" ]; then\n  gum log -sl info 'Symlinking /var/run/docker.sock to macOS Library location' && sudo ln -s \"$HOME/Library/Containers/com.docker.docker/Data/docker.raw.sock\" /var/run/docker.sock\nfi\n"
+    _post: "#!/usr/bin/env bash\n# @file DockerHub Login\n# @brief Logs into DockerHub for Docker Desktop\n# @description\n#     This script logs into DockerHub so that Docker Desktop is pre-authenticated. This\n#     functionality requires that the `DOCKERHUB_USER` be passed in as an environment variable (or \n#     directly editted in the `~/.config/chezmoi/chezmoi.yaml` file) and that the `DOCKERHUB_TOKEN`\n#     be passed in as a secret (either via the encrypted secret method or passed in as an environment\n#     variable).\n\n### Login to DockerHub\nif command -v docker > /dev/null; then\n  DOCKERHUB_TOKEN=\"{{ if (stat (joinPath .chezmoi.sourceDir \".chezmoitemplates\" \"secrets\" \"DOCKERHUB_TOKEN\")) }}{{- includeTemplate \"secrets/DOCKERHUB_TOKEN\" | decrypt | trim -}}{{ else }}{{- env \"DOCKERHUB_TOKEN\" -}}{{ end }}\"\n  DOCKERHUB_USER=\"{{ .user.docker.username }}\"\n  if [ -d \"/Applications/Docker.app\" ] || [ -d \"$HOME/Applications/Docker.app\" ]; then\n    gum log -sl info 'Ensuring Docker.app is open' && open --background -a Docker --args --accept-license --unattended\n  fi\n  gum log -sl info 'Headlessly authenticating with DockerHub registry' && echo \"$DOCKERHUB_TOKEN\" | docker login -u \"$DOCKERHUB_USER\" --password-stdin > /dev/null && gum log -sl info 'Successfully authenticated with DockerHub registry'\nfi\n\n### Symlink on macOS\nif [ -f \"$HOME/Library/Containers/com.docker.docker/Data/docker.raw.sock\" ]; then\n  gum log -sl info 'Symlinking /var/run/docker.sock to macOS Library location' && sudo ln -s \"$HOME/Library/Containers/com.docker.docker/Data/docker.raw.sock\" /var/run/docker.sock\nfi\n"
     apt: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.16.2-amd64.deb
     cask: docker
     choco: docker-desktop
@@ -2468,7 +2468,7 @@ softwarePackages:
         mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins"
         gum log -sl info 'Downloading Docker push-rm' && curl https://github.com/christian-korneck/docker-pushrm/releases/download/$RELEASE_TAG/docker-pushrm_darwin_amd64 -o "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm"
         chmod +x "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm"
-        logg success 'Added Docker push-rm'
+        gum log -sl info 'Added Docker push-rm'
       else
         gum log -sl info 'Docker push-rm already added'
       fi
@@ -2803,7 +2803,7 @@ softwarePackages:
             if [ -n "$CONFIGURE_EXIT_CODE" ]; then
               gum log -sl error 'Configuring endlessh service failed' && exit 1
             else
-              logg success 'Successfully configured endlessh service'
+              gum log -sl info 'Successfully configured endlessh service'
             fi
           elif [ -f /etc/endlessh.conf ]; then
             gum log -sl info 'Copying ~/.ssh/endlessh/config to /etc/endlessh.conf' && sudo cp -f "$HOME/.ssh/endlessh/config" /etc/endlessh.conf
@@ -2812,7 +2812,7 @@ softwarePackages:
             if [ -n "$CONFIGURE_EXIT_CODE" ]; then
               gum log -sl error 'Configuring endlessh service failed' && exit 1
             else
-              logg success 'Successfully configured endlessh service'
+              gum log -sl info 'Successfully configured endlessh service'
             fi
           else
             gum log -sl warn 'Neither the /etc/endlessh folder nor the /etc/endlessh.conf file exist'
@@ -3575,7 +3575,7 @@ softwarePackages:
             #         rm -f profile.private.tar.gz.age
             #         gum log -sl info 'Decompressing the Firefox private profile'
             #         tar -xzf profile.private.tar.gz
-            #         logg success 'The Firefox private profile was successfully installed'
+            #         gum log -sl info 'The Firefox private profile was successfully installed'
             #         cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/firefox/user.js" "$SETTINGS_DIR/profile.private"
             #         gum log -sl info 'Copied ~/.config/firefox/user.js to profile.private profile'
             #     else
@@ -3616,7 +3616,7 @@ softwarePackages:
                         # to the user profile.
                         # gum log -sl info 'Unzipping '"$PLUGIN_FILENAME"' ('"$FIREFOX_PLUGIN"')'
                         # unzip "$SETTINGS_DIR/$SETTINGS_PROFILE/extensions/$PLUGIN_FILENAME" -d "$SETTINGS_DIR/$SETTINGS_PROFILE/extensions/$PLUGIN_FOLDER"
-                        logg success 'Installed '"$FIREFOX_PLUGIN"''
+                        gum log -sl info 'Installed '"$FIREFOX_PLUGIN"''
                       fi
                     else
                       gum log -sl warn 'A null Firefox add-on filename was detected for '"$FIREFOX_PLUGIN"''
@@ -4277,9 +4277,9 @@ softwarePackages:
               fi
               ### Install / start the service
               gum log -sl info 'Configuring runner service'
-              "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/svc.sh" install && logg success 'Successfully installed the GitHub Actions runner service'
+              "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/svc.sh" install && gum log -sl info 'Successfully installed the GitHub Actions runner service'
               gum log -sl info 'Starting runner service'
-              "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/svc.sh" start && logg success 'Started the GitHub Actions runner service'
+              "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/svc.sh" start && gum log -sl info 'Started the GitHub Actions runner service'
             else
               gum log -sl warn 'jq is required by the GitHub runner configuration script'
             fi
@@ -8554,10 +8554,10 @@ softwarePackages:
       if command -v update-alternatives > /dev/null; then
         if [ -f "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" ]; then
           sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" 100
-          logg success 'Installed default.plymouth'
+          gum log -sl info 'Installed default.plymouth'
           # Required sometimes
           sudo update-alternatives --set default.plymouth "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth"
-          logg success 'Set default.plymouth'
+          gum log -sl info 'Set default.plymouth'
         else
           gum log -sl warn "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth does not exist!"
         fi
@@ -8590,7 +8590,7 @@ softwarePackages:
         if [ -n "$EXIT_CODE" ]; then
           gum log -sl warn 'There may have been an issue while setting the Plymouth default theme with plymouth-set-default-theme'
         else
-          logg success 'Set Plymouth default theme with plymouth-set-default-theme'
+          gum log -sl info 'Set Plymouth default theme with plymouth-set-default-theme'
         fi
       else
         gum log -sl warn 'Could not apply default Plymouth theme because plymouth-set-default-theme is missing'
@@ -8601,7 +8601,7 @@ softwarePackages:
         if [ -f "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth" ]; then
           # Required sometimes
           sudo update-alternatives --set default.plymouth "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth"
-          logg success 'Set default.plymouth (second time is required sometimes)'
+          gum log -sl info 'Set default.plymouth (second time is required sometimes)'
         else
           gum log -sl warn "/usr/local/share/plymouth/themes/{{ .theme }}/{{ .theme }}.plymouth does not exist!"
         fi
@@ -8615,11 +8615,11 @@ softwarePackages:
         if command -v update-initramfs > /dev/null; then
           gum log -sl info 'Running sudo update-initramfs -u'
           sudo update-initramfs -u
-          logg success 'Updated kernel / initrd images for Plymouth'
+          gum log -sl info 'Updated kernel / initrd images for Plymouth'
         elif command -v dracut > /dev/null; then
           gum log -sl info 'Running sudo dracut --regenerate-all -f'
           sudo dracut --regenerate-all -f
-          logg success 'Updated kernel / initrd images for Plymouth'
+          gum log -sl info 'Updated kernel / initrd images for Plymouth'
         else
           gum log -sl warn 'Unable to update kernel / initrd images because neither update-initramfs or dracut are available'
         fi
@@ -8883,7 +8883,7 @@ softwarePackages:
               if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/com.apple.postfix.master.plist" ] && ! sudo launchctl list | grep 'postfix.master' > /dev/null; then
                 gum log -sl info 'Copying com.apple.postfix.master.plist'
                 sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/postfix/com.apple.postfix.master.plist" /System/Library/LaunchDaemons/com.apple.postfix.master.plist
-                sudo launchctl load /System/Library/LaunchDaemons/com.apple.postfix.master.plist && logg success 'launchctl load of com.apple.postfix.master successful'
+                sudo launchctl load /System/Library/LaunchDaemons/com.apple.postfix.master.plist && gum log -sl info 'launchctl load of com.apple.postfix.master successful'
               fi
               if ! sudo postfix status > /dev/null; then
                 gum log -sl info 'Starting postfix'
@@ -9520,17 +9520,17 @@ softwarePackages:
             gum log -sl info 'Adding /Volumes/Private as S3 bucket mount, enabled at boot'
             sudo mkdir -p /Library/LaunchDaemons
             sudo cp -f "$HOME/Library/LaunchDaemons/rclone.private.plist" '/Library/LaunchDaemons/rclone.private.plist'
-            sudo launchctl load '/Library/LaunchDaemons/rclone.private.plist' && logg success 'launchctl load successful'
+            sudo launchctl load '/Library/LaunchDaemons/rclone.private.plist' && gum log -sl info 'launchctl load successful'
           fi
           if [ -f "$HOME/Library/LaunchDaemons/rclone.public.plist" ] && [ ! -f "/Library/LaunchDaemons/rclone.public.plist" ]; then
             gum log -sl info 'Adding /Volumes/Public as S3 bucket mount, enabled at boot'
             sudo mkdir -p /Library/LaunchDaemons
             sudo cp -f "$HOME/Library/LaunchDaemons/rclone.public.plist" '/Library/LaunchDaemons/rclone.public.plist'
-            sudo launchctl load '/Library/LaunchDaemons/rclone.public.plist' && logg success 'launchctl load successful'
+            sudo launchctl load '/Library/LaunchDaemons/rclone.public.plist' && gum log -sl info 'launchctl load successful'
           fi
           if [ -f "$HOME/Library/LaunchDaemons/rclone.user.plist" ] && ! launchctl list | grep 'rclone.user' > /dev/null; then
             gum log -sl info 'Adding ~/Public as S3 bucket mount, enabled at boot'
-            launchctl load "$HOME/Library/LaunchDaemons/rclone.user.plist" && logg success 'user launchctl load successful'
+            launchctl load "$HOME/Library/LaunchDaemons/rclone.user.plist" && gum log -sl info 'user launchctl load successful'
           fi
         elif [ -d /etc/systemd/system ]; then
           find "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system" -mindepth 1 -maxdepth 1 -type f | while read RCLONE_SERVICE; do
@@ -10050,9 +10050,9 @@ softwarePackages:
 
         ### Copy the Samba server configuration file
         if [ -d /Applications ] && [ -d /System ]; then
-          sudo sharing -a "$PRIVATE_SHARE" -S "Private (System)" -n "Private (System)" -g 000 -s 001 -E 1 -R 1 && logg success "Configured $PRIVATE_SHARE as a private Samba share" || gum log -sl info 'sharing command failed - it is likely that the share was already set up'
-          sudo sharing -a "$PUBLIC_SHARE" -S "Public (System)" -n "Public (System)" -g 001 -s 001 -E 1 -R 0 && logg success "Configured $PUBLIC_SHARE as a public Samba share" || gum log -sl info 'sharing command failed - it is likely that the share was already set up'
-          sudo sharing -a "$HOME/Public" -S "Public (User)" -n "Public (User)" -g 001 -s 001 -E 1 -R 0 && logg success "Configured $HOME/Public as a public Samba share" || gum log -sl info 'sharing command failed - it is likely that the share was already set up'
+          sudo sharing -a "$PRIVATE_SHARE" -S "Private (System)" -n "Private (System)" -g 000 -s 001 -E 1 -R 1 && gum log -sl info "Configured $PRIVATE_SHARE as a private Samba share" || gum log -sl info 'sharing command failed - it is likely that the share was already set up'
+          sudo sharing -a "$PUBLIC_SHARE" -S "Public (System)" -n "Public (System)" -g 001 -s 001 -E 1 -R 0 && gum log -sl info "Configured $PUBLIC_SHARE as a public Samba share" || gum log -sl info 'sharing command failed - it is likely that the share was already set up'
+          sudo sharing -a "$HOME/Public" -S "Public (User)" -n "Public (User)" -g 001 -s 001 -E 1 -R 0 && gum log -sl info "Configured $HOME/Public as a public Samba share" || gum log -sl info 'sharing command failed - it is likely that the share was already set up'
         else
           gum log -sl info "Copying Samba server configuration to /etc/samba/smb.conf"
           sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/samba/config" "/etc/samba/smb.conf"
@@ -11106,7 +11106,7 @@ softwarePackages:
           gum log -sl info 'Installing Tabby plugins defined in '"${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json"''
           cd "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins"
           npm install --quiet
-          logg success 'Finished installing Tabby plugins'
+          gum log -sl info 'Finished installing Tabby plugins'
         fi
       else
         gum log -sl info 'Skipping Tabby plugin installation because is not present'
@@ -11153,7 +11153,7 @@ softwarePackages:
         if [ -n "$EXIT_CODE" ]; then
           gum log -sl warn 'tailscale up timed out'
         else
-          logg success 'Connected to Tailscale network'
+          gum log -sl info 'Connected to Tailscale network'
         fi
       fi
     _service:brew: tailscale
@@ -12008,7 +12008,7 @@ softwarePackages:
           if [ -f /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack ]; then
             gum log -sl info 'Installing VirtualBox extension pack'
             echo 'y' | sudo VBoxManage extpack install --replace /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack
-            logg success 'Successfully installed VirtualBox extension pack'
+            gum log -sl info 'Successfully installed VirtualBox extension pack'
           fi
         else
           gum log -sl info 'VirtualBox Extension pack is already installed'
@@ -12142,7 +12142,7 @@ softwarePackages:
           ### Build VMWare host modules
           gum log -sl info 'Building VMware host modules'
           if sudo vmware-modconfig --console --install-all; then
-            logg success 'Built VMWare host modules successfully with sudo vmware-modconfig --console --install-all'
+            gum log -sl info 'Built VMWare host modules successfully with sudo vmware-modconfig --console --install-all'
           else
             gum log -sl info 'Acquiring VMware version from CLI'
             VMW_VERSION="$(vmware --version | cut -f 3 -d' ')"
@@ -12154,7 +12154,7 @@ softwarePackages:
             gum log -sl info 'Running sudo make and sudo make install'
             sudo make
             sudo make install
-            logg success 'Successfully configured VMware host module patches'
+            gum log -sl info 'Successfully configured VMware host module patches'
           fi
 
           ### Sign VMware host modules if Secure Boot is enabled
@@ -12166,7 +12166,7 @@ softwarePackages:
             "/usr/src/linux-headers-$(uname -r)/scripts/sign-file" sha256 ./MOK.priv ./MOK.der "$(modinfo -n vmmon)"
             "/usr/src/linux-headers-$(uname -r)/scripts/sign-file" sha256 ./MOK.priv ./MOK.der "$(modinfo -n vmnet)"
             echo '' | mokutil --import MOK.der
-            logg success 'Successfully signed VMware host modules. Reboot the host before powering on VMs'
+            gum log -sl info 'Successfully signed VMware host modules. Reboot the host before powering on VMs'
           fi
 
           ### Patch VMware with Unlocker
@@ -12181,7 +12181,7 @@ softwarePackages:
             cd linux
             gum log -sl info 'Running the unlocker'
             echo "y" | sudo ./unlock
-            logg success 'Successfully unlocked VMware for macOS compatibility'
+            gum log -sl info 'Successfully unlocked VMware for macOS compatibility'
           else
             gum log -sl info '/usr/lib/vmware/isoimages/darwin.iso is already present on the system so VMware macOS unlocking will not be performed'
           fi
@@ -12222,7 +12222,7 @@ softwarePackages:
           else
             gum log -sl info 'Generating Vagrant VMWare Utility certificates'
             sudo vagrant-vmware-utility certificate generate
-            logg success 'Generated Vagrant VMWare Utility certificates via vagrant-vmware-utility certificate generate'
+            gum log -sl info 'Generated Vagrant VMWare Utility certificates via vagrant-vmware-utility certificate generate'
           fi
           gum log -sl info 'Ensuring the Vagrant VMWare Utility service is enabled'
           sudo vagrant-vmware-utility service install || EXIT_CODE=$?
@@ -12249,7 +12249,7 @@ softwarePackages:
         else
           gum log -sl info 'Agreeing to VMWare Workstation Pro license (without serial number)' && sudo "$VMWARE_WORKSTATION_DIR/tryworkstation-linux-64.sh" --eulas-agreed --console --required
         fi
-        logg success 'VMware Workstation installed successfully'
+        gum log -sl info 'VMware Workstation installed successfully'
       else
         gum log -sl info 'VMware Workstation is already installed'
       fi
@@ -12371,7 +12371,7 @@ softwarePackages:
         jq -r '.recommendations[]' "${XDG_CONFIG_HOME:-$HOME/.config}/Code/User/extensions.json" | while read EXTENSION; do
           if ! echo "$EXTENSIONS" | grep -iF "$EXTENSION" > /dev/null; then
             gum log -sl info 'Installing Visual Studio Code extension '"$EXTENSION"'' && code --install-extension "$EXTENSION"
-            logg success 'Installed '"$EXTENSION"''
+            gum log -sl info 'Installed '"$EXTENSION"''
           else
             gum log -sl info ''"$EXTENSION"' already installed'
           fi
@@ -12422,7 +12422,7 @@ softwarePackages:
         EXTENSIONS="$(codium --list-extensions)"
         jq -r '.recommendations[]' "${XDG_CONFIG_HOME:-$HOME/.config}/Code/User/extensions.json" | while read EXTENSION; do
           if ! echo "$EXTENSIONS" | grep -iF "$EXTENSION" > /dev/null; then
-            gum log -sl info 'Installing VSCodium extension '"$EXTENSION"'' && codium --install-extension "$EXTENSION" && logg success 'Installed '"$EXTENSION"''
+            gum log -sl info 'Installing VSCodium extension '"$EXTENSION"'' && codium --install-extension "$EXTENSION" && gum log -sl info 'Installed '"$EXTENSION"''
           else
             gum log -sl info ''"$EXTENSION"' already installed'
           fi
@@ -12720,7 +12720,7 @@ softwarePackages:
         ### Connect CloudFlare WARP
         if warp-cli --accept-tos status | grep 'Disconnected' > /dev/null; then
           gum log -sl info 'Connecting to CloudFlare WARP'
-          warp-cli --accept-tos connect > /dev/null && logg success 'Connected to CloudFlare WARP'
+          warp-cli --accept-tos connect > /dev/null && gum log -sl info 'Connected to CloudFlare WARP'
         else
           gum log -sl info 'Either there is a misconfiguration or the device is already connected with CloudFlare WARP'
         fi

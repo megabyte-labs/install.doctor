@@ -2,6 +2,8 @@
 import osInfo from 'linux-os-info'
 
 $.verbose = false
+// Preserves color from subshells
+process.env.CLICOLOR_FORCE = 3
 
 let installOrder, osArch, osId, osType, pkgs, sysType
 const cacheDir = os.homedir() + '/.cache/installx'
@@ -16,7 +18,7 @@ const customArgv = minimist(process.argv.slice(3), {
 })
 
 function log(message) {
-    console.log(`${chalk.cyanBright('instx->')} ${message}`)
+    console.log(`${chalk.greenBright.bold('installx ❯')} ${message}`)
 }
 
 async function getOsInfo() {

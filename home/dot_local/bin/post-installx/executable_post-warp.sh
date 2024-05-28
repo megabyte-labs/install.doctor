@@ -244,7 +244,7 @@ if command -v warp-cli > /dev/null; then
   ### Connect CloudFlare WARP
   if warp-cli --accept-tos status | grep 'Disconnected' > /dev/null; then
     gum log -sl info 'Connecting to CloudFlare WARP'
-    warp-cli --accept-tos connect > /dev/null && logg success 'Connected to CloudFlare WARP'
+    warp-cli --accept-tos connect > /dev/null && gum log -sl info 'Connected to CloudFlare WARP'
   else
     gum log -sl info 'Either there is a misconfiguration or the device is already connected with CloudFlare WARP'
   fi

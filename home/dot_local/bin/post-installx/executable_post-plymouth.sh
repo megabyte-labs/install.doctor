@@ -25,10 +25,10 @@ fi
 if command -v update-alternatives > /dev/null; then
   if [ -f "/usr/local/share/plymouth/themes/Betelgeuse/Betelgeuse.plymouth" ]; then
     sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth "/usr/local/share/plymouth/themes/Betelgeuse/Betelgeuse.plymouth" 100
-    logg success 'Installed default.plymouth'
+    gum log -sl info 'Installed default.plymouth'
     # Required sometimes
     sudo update-alternatives --set default.plymouth "/usr/local/share/plymouth/themes/Betelgeuse/Betelgeuse.plymouth"
-    logg success 'Set default.plymouth'
+    gum log -sl info 'Set default.plymouth'
   else
     gum log -sl warn "/usr/local/share/plymouth/themes/Betelgeuse/Betelgeuse.plymouth does not exist!"
   fi
@@ -61,7 +61,7 @@ if command -v plymouth-set-default-theme > /dev/null; then
   if [ -n "${EXIT_CODE:-}" ]; then
     gum log -sl warn 'There may have been an issue while setting the Plymouth default theme with plymouth-set-default-theme'
   else
-    logg success 'Set Plymouth default theme with plymouth-set-default-theme'
+    gum log -sl info 'Set Plymouth default theme with plymouth-set-default-theme'
   fi
 else
   gum log -sl warn 'Could not apply default Plymouth theme because plymouth-set-default-theme is missing'
@@ -72,7 +72,7 @@ if command -v update-alternatives > /dev/null; then
   if [ -f "/usr/local/share/plymouth/themes/Betelgeuse/Betelgeuse.plymouth" ]; then
     # Required sometimes
     sudo update-alternatives --set default.plymouth "/usr/local/share/plymouth/themes/Betelgeuse/Betelgeuse.plymouth"
-    logg success 'Set default.plymouth (second time is required sometimes)'
+    gum log -sl info 'Set default.plymouth (second time is required sometimes)'
   else
     gum log -sl warn "/usr/local/share/plymouth/themes/Betelgeuse/Betelgeuse.plymouth does not exist!"
   fi
@@ -86,11 +86,11 @@ if [ "$DEBUG_MODE" != 'true' ]; then
   if command -v update-initramfs > /dev/null; then
     gum log -sl info 'Running sudo update-initramfs -u'
     sudo update-initramfs -u
-    logg success 'Updated kernel / initrd images for Plymouth'
+    gum log -sl info 'Updated kernel / initrd images for Plymouth'
   elif command -v dracut > /dev/null; then
     gum log -sl info 'Running sudo dracut --regenerate-all -f'
     sudo dracut --regenerate-all -f
-    logg success 'Updated kernel / initrd images for Plymouth'
+    gum log -sl info 'Updated kernel / initrd images for Plymouth'
   else
     gum log -sl warn 'Unable to update kernel / initrd images because neither update-initramfs or dracut are available'
   fi

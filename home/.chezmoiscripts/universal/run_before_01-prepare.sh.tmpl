@@ -67,7 +67,7 @@ ensureFullDiskAccess() {
       fi
       exit 0
     else
-      logg success 'Current terminal has full disk access'
+      gum log -sl info 'Current terminal has full disk access'
       if [ -f "$HOME/.zshrc" ]; then
         if command -v gsed > /dev/null; then
           sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || gum log -sl warn "Failed to remove kickstart script from .zshrc"
@@ -98,7 +98,7 @@ importCloudFlareCert() {
     security verify-cert -c "$CRT_TMP" > /dev/null 2>&1
     if [ $? != 0 ]; then
       gum log -sl info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
-      sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_TMP" && logg success 'Successfully imported Cloudflare_CA.crt into System.keychain'
+      sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_TMP" && gum log -sl info 'Successfully imported Cloudflare_CA.crt into System.keychain'
     fi
 
     ### Remove temporary file, if necessary

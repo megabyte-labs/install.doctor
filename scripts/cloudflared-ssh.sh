@@ -153,7 +153,7 @@ ensureBasicDeps() {
         ### This temporary file prompts the 'softwareupdate' utility to list the Command Line Tools
         touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
         XCODE_PKG="$(softwareupdate -l | grep "\*.*Command Line" | tail -n 1 | sed 's/^[^C]* //')"
-        logg info "Installing from softwareupdate" && softwareupdate -i "$XCODE_PKG" && logg success "Successfully installed $XCODE_PKG"
+        logg info "Installing from softwareupdate" && softwareupdate -i "$XCODE_PKG" && gum log -sl info "Successfully installed $XCODE_PKG"
       fi
       if /usr/bin/pgrep -q oahd; then
         logg info 'Rosetta 2 is already installed'

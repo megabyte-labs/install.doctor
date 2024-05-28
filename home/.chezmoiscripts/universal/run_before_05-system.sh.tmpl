@@ -91,7 +91,7 @@ configureGPG() {
     if ! gpg --list-secret-keys --keyid-format=long | grep "$KEYID_TRIMMED" > /dev/null; then
       if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/private_public/private_${KEYID}.asc" ]; then
         gum log -sl info "Importing GPG key stored in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/private_public/private_${KEYID}.asc since its name matches the GPG key ID in .chezmoi.yaml.tmpl"
-        gpg --import "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/private_public/private_${KEYID}.asc" && logg success 'Successfully imported master GPG key'
+        gpg --import "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/private_dot_gnupg/private_public/private_${KEYID}.asc" && gum log -sl info 'Successfully imported master GPG key'
       else
         gum log -sl info 'Attempting to download the specified public GPG key ({{ .user.gpg.id }}) from public keyservers'
         gpg --keyserver https://pgp.mit.edu --recv "$KEYID" || EXIT_CODE=$?
@@ -101,7 +101,7 @@ configureGPG() {
           if [ -n "$EXIT_CODE" ]; then
             gum log -sl info 'Non-zero exit code received when trying to retrieve public user GPG key on hkps://pgp.mit.edu'
           else
-            logg success 'Successfully imported configured public user GPG key'
+            gum log -sl info 'Successfully imported configured public user GPG key'
           fi
         fi
       fi
@@ -424,13 +424,13 @@ installDocker() {
           if [ -n "$SOURCE_EXIT_CODE" ]; then
             gum log -sl error 'All gVisor installation methods failed' && exit 1
           else
-            logg success 'gVisor installed via source'
+            gum log -sl info 'gVisor installed via source'
           fi
         else
-          logg success 'gVisor installed via Go fallback method'
+          gum log -sl info 'gVisor installed via Go fallback method'
         fi
       else
-        logg success 'gVisor installed from pre-built Google-provided binaries'
+        gum log -sl info 'gVisor installed from pre-built Google-provided binaries'
       fi
     else
       gum log -sl info 'runsc is installed'
@@ -531,27 +531,27 @@ removeLinuxBloatware() {
       elif command -v apt-get > /dev/null; then
         if dpkg -l "$PKG" | grep -E '^ii' > /dev/null; then
           sudo apt-get remove -y "$PKG"
-          logg success 'Removed '"$PKG"' via apt-get'
+          gum log -sl info 'Removed '"$PKG"' via apt-get'
         fi
       elif command -v dnf > /dev/null; then
         if rpm -qa | grep "$PKG" > /dev/null; then
           sudo dnf remove -y "$PKG"
-          logg success 'Removed '"$PKG"' via dnf'
+          gum log -sl info 'Removed '"$PKG"' via dnf'
         fi
       elif command -v yum > /dev/null; then
         if rpm -qa | grep "$PKG" > /dev/null; then
           sudo yum remove -y "$PKG"
-          logg success 'Removed '"$PKG"' via yum'
+          gum log -sl info 'Removed '"$PKG"' via yum'
         fi
       elif command -v pacman > /dev/null; then
         if pacman -Qs "$PKG" > /dev/null; then
           sudo pacman -R "$PKG"
-          logg success 'Removed '"$PKG"' via pacman'
+          gum log -sl info 'Removed '"$PKG"' via pacman'
         fi
       elif command -v zypper > /dev/null; then
         if rpm -qa | grep "$PKG" > /dev/null; then
           sudo zypper remove -y "$PKG"
-          logg success 'Removed '"$PKG"' via zypper'
+          gum log -sl info 'Removed '"$PKG"' via zypper'
         fi
       fi
     done
@@ -579,10 +579,10 @@ setHostname() {
     sudo dscacheutil -flushcache
   elif [ -f /etc/passwd ]; then
     gum log -sl info 'Setting Linux hostname'
-    sudo hostname "$HOSTNAME" && logg success "Changed hostname to $HOSTNAME"
+    sudo hostname "$HOSTNAME" && gum log -sl info "Changed hostname to $HOSTNAME"
     if command -v hostnamectl > /dev/null; then
       gum log -sl info 'Ensuring hostname persists after reboot'
-      sudo hostnamectl set-hostname "$HOSTNAME" && logg success "Permanently changed hostname to $HOSTNAME"
+      sudo hostnamectl set-hostname "$HOSTNAME" && gum log -sl info "Permanently changed hostname to $HOSTNAME"
     else
       gum log -sl warn 'hostnamectl was not available in the PATH - this operating system type might be unsupported'
     fi
@@ -677,7 +677,7 @@ installBrewPackages() {
   ensureBrewPackageInstalled "zx"
   ensureBrewPackageInstalled "whalebrew"
   wait
-  logg success 'Finished installing auxilary Homebrew packages'
+  gum log -sl info 'Finished installing auxilary Homebrew packages'
   gum log -sl info 'Ensuring Ansible is installed (with plugins)' && installAnsible
 }
 
@@ -779,7 +779,7 @@ installXcode() {
         gum log -sl error 'Failed to install Xcode'
       fi
     else
-      logg success 'Xcode is already installed'
+      gum log -sl info 'Xcode is already installed'
     fi
   fi
 }
@@ -857,4 +857,4 @@ else
   wait
 fi
 
-logg success 'Successfully applied preliminary system tweaks'
+gum log -sl info 'Successfully applied preliminary system tweaks'
