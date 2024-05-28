@@ -5,16 +5,16 @@
 #     This script ensures Keybase utilizes a configuration that, by default, adds a security fix.
 
 set -Eeuo pipefail
-trap "logg error 'Script encountered an error!'" ERR
+trap "gum log -sl error 'Script encountered an error!'" ERR
 
 if command -v keybase > /dev/null; then
   KEYBASE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/keybase/config.json"
   if [ -f "$KEYBASE_CONFIG" ]; then
-    logg info 'Ensuring /etc/keybase is a directory' && sudo mkdir -p /etc/keybase
-    logg info "Copying $KEYBASE_CONFIG to /etc/keybase/config.json" && sudo cp -f "$KEYBASE_CONFIG" /etc/keybase/config.json
+    gum log -sl info 'Ensuring /etc/keybase is a directory' && sudo mkdir -p /etc/keybase
+    gum log -sl info "Copying $KEYBASE_CONFIG to /etc/keybase/config.json" && sudo cp -f "$KEYBASE_CONFIG" /etc/keybase/config.json
   else
-    logg warn "No Keybase config located at $KEYBASE_CONFIG"
+    gum log -sl warn "No Keybase config located at $KEYBASE_CONFIG"
   fi
 else
-  logg info 'The keybase executable is not available'
+  gum log -sl info 'The keybase executable is not available'
 fi

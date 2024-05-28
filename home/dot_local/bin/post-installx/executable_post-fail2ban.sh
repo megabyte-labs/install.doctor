@@ -12,7 +12,7 @@
 #     * [`fail2ban` configuration folder](https://github.com/megabyte-labs/install.doctor/tree/master/home/private_dot_ssh/fail2ban)
 
 set -Eeuo pipefail
-trap "logg error 'Script encountered an error!'" ERR
+trap "gum log -sl error 'Script encountered an error!'" ERR
 
 if command -v fail2ban-client > /dev/null; then
   if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
@@ -26,23 +26,23 @@ if command -v fail2ban-client > /dev/null; then
       sudo mkdir -p "$FAIL2BAN_CONFIG"
       sudo cp -f "$HOME/.ssh/fail2ban/jail.local" "$FAIL2BAN_CONFIG/jail.local"
       if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban" ] && [ ! -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban/jail.local" ]; then
-        logg info "Symlinking $FAIL2BAN_CONFIG/jail.local to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban/jail.local"
+        gum log -sl info "Symlinking $FAIL2BAN_CONFIG/jail.local to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban/jail.local"
         ln -s "$FAIL2BAN_CONFIG/jail.local" "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/fail2ban/jail.local"
       fi
       if [ -d /Applications ] && [ -d /System ]; then
         ### macOS
-        logg info 'Enabling the fail2ban Homebrew service' && sudo brew services restart fail2ban
+        gum log -sl info 'Enabling the fail2ban Homebrew service' && sudo brew services restart fail2ban
       else
         ### Linux
-        logg info 'Enabling the fail2ban service' && sudo systemctl enable fail2ban
-        logg info 'Restarting the fail2ban service' && sudo systemctl restart fail2ban
+        gum log -sl info 'Enabling the fail2ban service' && sudo systemctl enable fail2ban
+        gum log -sl info 'Restarting the fail2ban service' && sudo systemctl restart fail2ban
       fi
     else
-      logg info "The $HOME/.ssh/fail2ban/jail.local configuration is missing so fail2ban will not be set up"
+      gum log -sl info "The $HOME/.ssh/fail2ban/jail.local configuration is missing so fail2ban will not be set up"
     fi
   else
-    logg info 'The environment is a WSL environment so the fail2ban sshd_config will be skipped'
+    gum log -sl info 'The environment is a WSL environment so the fail2ban sshd_config will be skipped'
   fi
 else
-  logg info 'The fail2ban-client executable is not available on the system so fail2ban configuration will be skipped'
+  gum log -sl info 'The fail2ban-client executable is not available on the system so fail2ban configuration will be skipped'
 fi

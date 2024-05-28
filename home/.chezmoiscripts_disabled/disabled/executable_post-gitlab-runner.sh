@@ -44,18 +44,18 @@ if command -v docker > /dev/null && docker run --rm hello-world > /dev/null; the
   HAS_DOCKER=1
 else
   HAS_DOCKER=0
-  logg warn 'Docker is not installed or it is not operational'
+  gum log -sl warn 'Docker is not installed or it is not operational'
 fi
 ### Check if VirtualBox is installed and operational so VirtualBox executor(s) can be registered
 if command -v VirtualBox > /dev/null; then
   HAS_VIRTUALBOX=1
 else
   HAS_VIRTUALBOX=0
-  logg warn 'VirtualBox is not installed'
+  gum log -sl warn 'VirtualBox is not installed'
 fi
 ### Configure runners if Docker or VirtualBox is installed
 if [ $HAS_DOCKER -eq 0 ] && [ $HAS_VIRTUALBOX -eq 0 ]; then
-  logg warn 'Docker and VirtualBox are not installed. Not registering runner(s).'
+  gum log -sl warn 'Docker and VirtualBox are not installed. Not registering runner(s).'
 else
   ### Run logic if gitlab-runner is installed
   if command -v gitlab-runner > /dev/null; then
@@ -77,7 +77,7 @@ else
         --token $GITLAB_RUNNER_TOKEN \` }}
       ### Register Docker based runners if Docker is installed and operational
       if [ $HAS_DOCKER -eq 1 ]; then
-        logg info 'Registering GitLab Runner(s) that use Docker executor'
+        gum log -sl info 'Registering GitLab Runner(s) that use Docker executor'
         {{- range .host.gitlabRunners }}
         {{- if index . "runnerImage" }}
         {{- $cmd }}
@@ -92,7 +92,7 @@ else
       fi
       ### Register VirtualBox based runners if VirtualBox is installed
       if [ $HAS_VIRTUALBOX -eq 1 ]; then
-        logg info 'Registering GitLab Runner(s) that use VirtualBox executor'
+        gum log -sl info 'Registering GitLab Runner(s) that use VirtualBox executor'
         {{- range .host.gitlabRunners }}
         {{- if index . "baseVM" }}
         {{- $cmd }}
@@ -106,9 +106,9 @@ else
         {{ end }}
       fi
     else
-      logg warn 'GITLAB_RUNNER_TOKEN is not set. Not registering runner(s)'
+      gum log -sl warn 'GITLAB_RUNNER_TOKEN is not set. Not registering runner(s)'
     fi
   else
-    logg warn 'gitlab-runner is not installed or is not available in PATH'
+    gum log -sl warn 'gitlab-runner is not installed or is not available in PATH'
   fi
 fi

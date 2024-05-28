@@ -51,7 +51,7 @@
 #     * [macOS managed configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/Library/Managed%20Preferences/private_com.cloudflare.warp.plist.tmpl)
 
 set -Eeuo pipefail
-trap "logg error 'Script encountered an error!'" ERR
+trap "gum log -sl error 'Script encountered an error!'" ERR
 
 SSL_CERT_PATH="/etc/ssl/cert.pem"
 ### Install CloudFlare WARP (on non-WSL *nix systems)
@@ -61,14 +61,14 @@ if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
     if [ ! -d "/Applications/Cloudflare WARP.app" ]; then
       brew install --cask --no-quarantine --quiet cloudflare-warp
     else
-      logg info 'Cloudflare WARP already installed'
+      gum log -sl info 'Cloudflare WARP already installed'
     fi
   elif [ -n "$(uname -a | grep Debian)" ]; then
     ### Add CloudFlare WARP desktop app apt-get source
     if [ ! -f /etc/apt/sources.list.d/cloudflare-client.list ]; then
-      logg info 'Adding CloudFlare WARP keyring'
+      gum log -sl info 'Adding CloudFlare WARP keyring'
       curl https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
-      logg info 'Adding apt source reference'
+      gum log -sl info 'Adding apt source reference'
       echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
     fi
 
@@ -77,9 +77,9 @@ if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
   elif [ -n "$(uname -a | grep Ubuntu)" ]; then
     ### Add CloudFlare WARP desktop app apt-get source
     if [ ! -f /etc/apt/sources.list.d/cloudflare-client.list ]; then
-      logg info 'Adding CloudFlare WARP keyring'
+      gum log -sl info 'Adding CloudFlare WARP keyring'
       curl https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
-      logg info 'Adding apt source reference'
+      gum log -sl info 'Adding apt source reference'
       echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
     fi
 
@@ -89,13 +89,13 @@ if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
     ### This is made for CentOS 8 and works on Fedora 36 (hopefully 36+ as well) with `nss-tools` as a dependency
     sudo dnf instal -y nss-tools || NSS_TOOL_EXIT=$?
     if [ -n "${NSS_TOOL_EXIT:-}" ]; then
-      logg warn 'Unable to install nss-tools which was a requirement on Fedora 36 and assumed to be one on other systems as well.'
+      gum log -sl warn 'Unable to install nss-tools which was a requirement on Fedora 36 and assumed to be one on other systems as well.'
     fi
 
     ### According to the download site, this is the only version available for RedHat-based systems
     sudo rpm -ivh https://pkg.cloudflareclient.com/cloudflare-release-el8.rpm || RPM_EXIT_CODE=$?
     if [ -n "${RPM_EXIT_CODE:-}" ]; then
-      logg error 'Unable to install CloudFlare WARP using RedHat 8 RPM package'
+      gum log -sl error 'Unable to install CloudFlare WARP using RedHat 8 RPM package'
     fi
   fi
 fi
@@ -107,54 +107,54 @@ if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; th
   ### Ensure certificate installed on macOS
   if [ -z "$SSH_CONNECTION" ]; then
     # if [ -z "$HEADLESS_INSTALL" ]; then
-    #     logg info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
+    #     gum log -sl info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
     #     sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
     # fi
-    logg info 'Updating the OpenSSL CA Store to include the Cloudflare certificate'
+    gum log -sl info 'Updating the OpenSSL CA Store to include the Cloudflare certificate'
     echo | sudo tee -a "$SSL_CERT_PATH" < "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > /dev/null
     echo "" | sudo tee -a "$SSL_CERT_PATH"
   else
-    logg warn 'Session is SSH so adding Cloudflare encryption key to trusted certificates via the security program is being bypassed since it requires Touch ID / Password verification.'
+    gum log -sl warn 'Session is SSH so adding Cloudflare encryption key to trusted certificates via the security program is being bypassed since it requires Touch ID / Password verification.'
   fi
 
   if [ -f "/usr/local/opt/openssl@3/bin/c_rehash" ]; then
     # Location on Intel macOS
-    logg info 'Ensuring /usr/local/etc/openssl@3/certs directory exists' && mkdir -p /usr/local/etc/openssl@3/certs
-    logg info 'Adding Cloudflare certificate to /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem'
+    gum log -sl info 'Ensuring /usr/local/etc/openssl@3/certs directory exists' && mkdir -p /usr/local/etc/openssl@3/certs
+    gum log -sl info 'Adding Cloudflare certificate to /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem'
     echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem
-    logg info 'Running /usr/local/opt/openssl@3/bin/c_rehash'
-    /usr/local/opt/openssl@3/bin/c_rehash > /dev/null && logg info 'OpenSSL certificate rehash successful'
+    gum log -sl info 'Running /usr/local/opt/openssl@3/bin/c_rehash'
+    /usr/local/opt/openssl@3/bin/c_rehash > /dev/null && gum log -sl info 'OpenSSL certificate rehash successful'
   elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash" ]; then
     # Location on arm64 macOS and custom Homebrew locations
-    logg info "Ensuring ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs directory exists" && mkdir -p "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs"
-    logg info "Adding Cloudflare certificate to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs/Cloudflare_CA.pem"
+    gum log -sl info "Ensuring ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs directory exists" && mkdir -p "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs"
+    gum log -sl info "Adding Cloudflare certificate to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs/Cloudflare_CA.pem"
     echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs/Cloudflare_CA.pem"
-    logg info "Running ${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash"
-    "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash" > /dev/null && logg info 'OpenSSL certificate rehash successful'
+    gum log -sl info "Running ${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash"
+    "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash" > /dev/null && gum log -sl info 'OpenSSL certificate rehash successful'
   else
-    logg warn 'Unable to add Cloudflare_CA.pem because /usr/local/etc/openssl@3/certs and /opt/homebrew/etc/openssl@3/certs do not exist!'
+    gum log -sl warn 'Unable to add Cloudflare_CA.pem because /usr/local/etc/openssl@3/certs and /opt/homebrew/etc/openssl@3/certs do not exist!'
   fi
 elif command -v warp-cli > /dev/null; then
   # System is Linux
   if command -v dpkg-reconfigure > /dev/null; then
     if [ -d /usr/local/share/ca-certificates ]; then
-      logg info 'Copying CloudFlare Teams PEM file to /usr/local/share/ca-certificates/Cloudflare_CA.crt'
+      gum log -sl info 'Copying CloudFlare Teams PEM file to /usr/local/share/ca-certificates/Cloudflare_CA.crt'
       sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /usr/local/share/ca-certificates/Cloudflare_CA.crt
-      logg info 'dpkg-reconfigure executable detected so using Debian/Ubuntu method of updating system trusted certificates to include CloudFlare Teams certificate'
+      gum log -sl info 'dpkg-reconfigure executable detected so using Debian/Ubuntu method of updating system trusted certificates to include CloudFlare Teams certificate'
       sudo dpkg-reconfigure ca-certificates -p high
       SSL_CERT_PATH="/etc/ssl/certs/ca-certificates.crt"
     else
-      logg warn 'No /usr/local/share/ca-certificates folder present'
+      gum log -sl warn 'No /usr/local/share/ca-certificates folder present'
     fi
   elif command -v update-ca-trust > /dev/null; then
     if [ -d /etc/pki/ca-trust/source/anchors ]; then
-      logg info 'Copying CloudFlare Teams certificates to /etc/pki/ca-trust/source/anchors'
+      gum log -sl info 'Copying CloudFlare Teams certificates to /etc/pki/ca-trust/source/anchors'
       sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /etc/pki/ca-trust/source/anchors
-      logg info 'update-ca-trust executable detected so using CentOS/Fedora method of updating system trusted certificates to include CloudFlare Teams certificate'
+      gum log -sl info 'update-ca-trust executable detected so using CentOS/Fedora method of updating system trusted certificates to include CloudFlare Teams certificate'
       sudo update-ca-trust
       SSL_CERT_PATH="/etc/pki/tls/certs/ca-bundle.crt"
     else
-      logg warn '/etc/pki/ca-trust/source/anchors does not exist so skipping the system certificate update process'
+      gum log -sl warn '/etc/pki/ca-trust/source/anchors does not exist so skipping the system certificate update process'
     fi
   fi
 fi
@@ -166,13 +166,13 @@ if command -v warp-cli > /dev/null; then
   # certificate and the WARP client is not running.
   ### Git
   if command -v git > /dev/null; then
-    logg info "Configuring git to use $SSL_CERT_PATH"
+    gum log -sl info "Configuring git to use $SSL_CERT_PATH"
     git config --global http.sslcainfo "$SSL_CERT_PATH"
   fi
 
   ### NPM
   if command -v npm > /dev/null; then
-    logg info "Configuring npm to use $SSL_CERT_PATH"
+    gum log -sl info "Configuring npm to use $SSL_CERT_PATH"
     npm config set cafile "$SSL_CERT_PATH"
   fi
 
@@ -181,22 +181,22 @@ if command -v warp-cli > /dev/null; then
     ### Ensure Certifi package is available globally
     if ! pip3 list | grep certifi > /dev/null; then
       if command -v brew > /dev/null; then
-        logg info 'Ensuring Python certifi is installed via Homebrew'
+        gum log -sl info 'Ensuring Python certifi is installed via Homebrew'
         brew install --quiet certifi
       else
-        logg info 'Ensuring certifi is installed globally for Python 3'
+        gum log -sl info 'Ensuring certifi is installed globally for Python 3'
         pip3 install certifi
       fi
     fi
 
     ### Copy CloudFlare PEM file to Python 3 location
-    logg info "Configuring python3 / python to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem""
+    gum log -sl info "Configuring python3 / python to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem""
     echo | cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> $(python3 -m certifi)
   fi
 
   ### Google Cloud SDK
   if command -v gcloud > /dev/null; then
-    logg info "Configuring gcloud to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" and "$HOME/.local/etc/ssl/gcloud/ca.pem""
+    gum log -sl info "Configuring gcloud to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" and "$HOME/.local/etc/ssl/gcloud/ca.pem""
     mkdir -p "$HOME/.local/etc/ssl/gcloud"
     cat "$HOME/.local/etc/ssl/curl/cacert.pem" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > "$HOME/.local/etc/ssl/gcloud/ca.pem"
     gcloud config set core/custom_ca_certs_file "$HOME/.local/etc/ssl/gcloud/ca.pem"
@@ -205,12 +205,12 @@ if command -v warp-cli > /dev/null; then
   ### Google Drive for desktop (macOS)
   if [ -d "/Applications/Google Drive.app" ]; then
     if [ -d "/Applications/Google Drive.app/Contents/Resources" ]; then
-      logg info "Combining Google Drive roots.pem with CloudFlare certificate"
+      gum log -sl info "Combining Google Drive roots.pem with CloudFlare certificate"
       mkdir -p "$HOME/.local/etc/ssl/google-drive"
       cat "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" "/Applications/Google Drive.app/Contents/Resources/roots.pem" >> "$HOME/.local/etc/ssl/google-drive/roots.pem"
       sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootsCertsFile -string "$HOME/.local/etc/ssl/google-drive/roots.pem"
     else
-      logg warn 'Google Drive.app installed but roots.pem is not available yet'
+      gum log -sl warn 'Google Drive.app installed but roots.pem is not available yet'
     fi
   fi
 
@@ -235,19 +235,19 @@ if command -v warp-cli > /dev/null; then
 
   ### Register CloudFlare WARP
   if warp-cli --accept-tos status | grep 'Registration Missing' > /dev/null; then
-    logg info 'Registering CloudFlare WARP'
+    gum log -sl info 'Registering CloudFlare WARP'
     warp-cli --accept-tos registration new
   else
-    logg info 'Either there is a misconfiguration or the device is already registered with CloudFlare WARP'
+    gum log -sl info 'Either there is a misconfiguration or the device is already registered with CloudFlare WARP'
   fi
 
   ### Connect CloudFlare WARP
   if warp-cli --accept-tos status | grep 'Disconnected' > /dev/null; then
-    logg info 'Connecting to CloudFlare WARP'
+    gum log -sl info 'Connecting to CloudFlare WARP'
     warp-cli --accept-tos connect > /dev/null && logg success 'Connected to CloudFlare WARP'
   else
-    logg info 'Either there is a misconfiguration or the device is already connected with CloudFlare WARP'
+    gum log -sl info 'Either there is a misconfiguration or the device is already connected with CloudFlare WARP'
   fi
 else
-  logg warn 'warp-cli was not installed so CloudFlare WARP cannot be joined'
+  gum log -sl warn 'warp-cli was not installed so CloudFlare WARP cannot be joined'
 fi

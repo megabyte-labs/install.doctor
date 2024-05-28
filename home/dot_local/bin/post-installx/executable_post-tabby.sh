@@ -42,17 +42,17 @@
 #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets) which details how to store your Tabby configuration in as an encrypted file
 
 set -Eeuo pipefail
-trap "logg error 'Script encountered an error!'" ERR
+trap "gum log -sl error 'Script encountered an error!'" ERR
 
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json" ]; then
   if [ -d "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/node_modules" ]; then
-    logg info 'Skipping Tabby plugin installation because it looks like the plugins were already installed since node_modules is present in ~/.config/tabby/plugins'
+    gum log -sl info 'Skipping Tabby plugin installation because it looks like the plugins were already installed since node_modules is present in ~/.config/tabby/plugins'
   else
-    logg info 'Installing Tabby plugins defined in '"${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json"''
+    gum log -sl info 'Installing Tabby plugins defined in '"${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins/package.json"''
     cd "${XDG_CONFIG_HOME:-$HOME/.config}/tabby/plugins"
     npm install --quiet --no-progress
     logg success 'Finished installing Tabby plugins'
   fi
 else
-  logg info 'Skipping Tabby plugin installation because is not present'
+  gum log -sl info 'Skipping Tabby plugin installation because is not present'
 fi

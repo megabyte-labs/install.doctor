@@ -18,7 +18,7 @@
 if command -v certbot > /dev/null; then
   ### Ensure configuration files are in place
   if [ -f "$HOME/.local/etc/letsencrypt/dns-cloudflare.ini" ] && [ -f "$HOME/.local/etc/letsencrypt/letsencryptcli.ini" ]; then
-    logg info 'Copying Lets Encrypt / Certbot configurations to /etc/letsencrypt'
+    gum log -sl info 'Copying Lets Encrypt / Certbot configurations to /etc/letsencrypt'
     sudo mkdir -p /etc/letsencrypt
     sudo cp -f "$HOME/.local/etc/letsencrypt/dns-cloudflare.ini" /etc/letsencrypt/dns-cloudflare.ini
     sudo cp -f "$HOME/.local/etc/letsencrypt/letsencryptcli.ini" /etc/letsencrypt/letsencryptcli.ini
@@ -26,9 +26,9 @@ if command -v certbot > /dev/null; then
 
   ### Ensure certificate is present
   if [ -f '/etc/letsencrypt/live/{{ .host.domain }}/cert.pem' ]; then
-    logg info 'LetsEncrypt SSL certificate is already available'
+    gum log -sl info 'LetsEncrypt SSL certificate is already available'
   else
-    logg info 'Acquiring certbot LetsEncrypt SSL certificates'
+    gum log -sl info 'Acquiring certbot LetsEncrypt SSL certificates'
     certbot certonly --noninteractive --dns-cloudflare --agree-tos --email '{{ .user.cloudflare.username }}' --dns-cloudflare-propagation-seconds 14 -d '*.{{ .host.domain }},*.lab.{{ .host.domain }},*.{{ .host.hostname | replace .host.domain "" | replace "." "" }}.{{ .host.domain }}'
   fi
 
@@ -36,9 +36,9 @@ if command -v certbot > /dev/null; then
   if ! sudo crontab -l | grep "$(which certbot) renew --quiet" > /dev/null; then
     TMP="$(mktemp)"
     echo "30 3 * * * $(which certbot) renew --quiet" > "$TMP"
-    logg info 'Adding certbot renew entry to crontab'
+    gum log -sl info 'Adding certbot renew entry to crontab'
     sudo crontab < "$TMP"
   fi
 else
-  logg warn 'certbot is not available. SSL certificate issuance cannot be run without it.'
+  gum log -sl warn 'certbot is not available. SSL certificate issuance cannot be run without it.'
 fi

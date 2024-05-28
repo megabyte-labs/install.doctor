@@ -14,25 +14,25 @@
 
 if command -v gcloud > /dev/null; then
   if [ -f "${$XDG_CONFIG_HOME:-$HOME/.config}/gcloud/s3-client-secret.json" ]; then
-    logg info 'Authenticating with gcloud S3 service account'
+    gum log -sl info 'Authenticating with gcloud S3 service account'
     echo Y | gcloud auth login --cred-file=s3-gcp.json
-    if gcloud config get-value account > /dev/null && logg info 'gcloud is authenticated'; then
-      logg info 'Disabling usage reporting' && gcloud config set disable_usage_reporting true
+    if gcloud config get-value account > /dev/null && gum log -sl info 'gcloud is authenticated'; then
+      gum log -sl info 'Disabling usage reporting' && gcloud config set disable_usage_reporting true
       BUCKETS="$(gcloud storage buckets list | grep 'storage_url:')"
       for BUCKET in "docker" "private" "public" "system" "user"; do
-        if logg info "Checking for $BUCKET S3 presence on GCP" && ! echo "$BUCKETS" | grep "gs://${BUCKET}.s3.{{ .host.domain }}" > /dev/null; then
-          logg info "Creating gs://${BUCKET}.s3.{{ .host.domain }}" && gcloud storage buckets create "gs://${BUCKET}.s3.{{ .host.domain }}"
+        if gum log -sl info "Checking for $BUCKET S3 presence on GCP" && ! echo "$BUCKETS" | grep "gs://${BUCKET}.s3.{{ .host.domain }}" > /dev/null; then
+          gum log -sl info "Creating gs://${BUCKET}.s3.{{ .host.domain }}" && gcloud storage buckets create "gs://${BUCKET}.s3.{{ .host.domain }}"
         fi
       done
-      logg info 'Finished ensuring S3 buckets on gcloud are created'
+      gum log -sl info 'Finished ensuring S3 buckets on gcloud are created'
     else
-      logg error 'gcloud is not authenticated'
+      gum log -sl error 'gcloud is not authenticated'
     fi
   else
-    logg info 'No client secret available for gcloud S3 service account'
+    gum log -sl info 'No client secret available for gcloud S3 service account'
   fi
 else
-  logg error 'The gcloud executable is not available'
+  gum log -sl error 'The gcloud executable is not available'
 fi
 
 {{ end -}}

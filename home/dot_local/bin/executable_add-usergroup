@@ -11,13 +11,13 @@ set -euo pipefail
 
 ### Check if the script is being run as root
 if [[ $EUID -ne 0 ]]; then
-  logg error "This script must be run as root"
+  gum log -sl error "This script must be run as root"
   exit 1
 fi
 
 ### Check if the correct number of arguments is provided
 if [ "$#" -ne 2 ]; then
-    logg error "Usage: $0 <username> <groupname>"
+    gum log -sl error "Usage: $0 <username> <groupname>"
     exit 1
 fi
 
@@ -48,65 +48,65 @@ if [ "$OS" == "Darwin" ]; then
 
     ### Create the group if it does not exist
     if ! dscl . -list /Groups | grep -q "^$GROUPNAME\$"; then
-        logg info "Creating system group: $GROUPNAME"
+        gum log -sl info "Creating system group: $GROUPNAME"
         SYSTEM_GID="$(find_next_system_id_macos "Groups" "PrimaryGroupID")"
-        logg info "Initializing $GROUPNAME group"
+        gum log -sl info "Initializing $GROUPNAME group"
         sudo dscl . -create "/Groups/$GROUPNAME"
-        logg info "Assigning $SYSTEM_GID PrimaryGroupID to group"
+        gum log -sl info "Assigning $SYSTEM_GID PrimaryGroupID to group"
         sudo dscl . -create "/Groups/$GROUPNAME" PrimaryGroupID "$SYSTEM_GID"
     else
-        logg info "Group $GROUPNAME already exists"
+        gum log -sl info "Group $GROUPNAME already exists"
         SYSTEM_GID=$(dscl . -read "/Groups/$GROUPNAME" PrimaryGroupID | awk '{print $2}')
     fi
 
     ### Create the user if it does not exist
     if ! id -u "$USERNAME" > /dev/null 2>&1; then
-        logg info "Creating system user: $USERNAME"
+        gum log -sl info "Creating system user: $USERNAME"
         SYSTEM_UID="$(find_next_system_id_macos "Users" "UniqueID")"
-        logg info "Initializing $USERNAME user"
+        gum log -sl info "Initializing $USERNAME user"
         sudo dscl . -create "/Users/$USERNAME"
-        logg info "Assigning $USERNAME user attributes"
+        gum log -sl info "Assigning $USERNAME user attributes"
         sudo dscl . -create "/Users/$USERNAME" UserShell /bin/bash
         sudo dscl . -create "/Users/$USERNAME" RealName "$USERNAME"
         sudo dscl . -create "/Users/$USERNAME" UniqueID "$SYSTEM_UID"
         sudo dscl . -create "/Users/$USERNAME" PrimaryGroupID "$SYSTEM_GID"
         sudo dscl . -create "/Users/$USERNAME" NFSHomeDirectory /var/empty
-        logg info "Finished assigning $USERNAME user attributes"
+        gum log -sl info "Finished assigning $USERNAME user attributes"
     else
-        logg info "User $USERNAME already exists"
+        gum log -sl info "User $USERNAME already exists"
     fi
 
     ### Add the user to the group
-    logg info "Adding user $USERNAME to group $GROUPNAME"
+    gum log -sl info "Adding user $USERNAME to group $GROUPNAME"
     sudo dscl . -append "/Groups/$GROUPNAME" GroupMembership "$USERNAME"
 
-    logg info "System user $USERNAME added to system group $GROUPNAME successfully."
+    gum log -sl info "System user $USERNAME added to system group $GROUPNAME successfully."
 
 elif [ "$OS" == "Linux" ]; then
     ### Linux
 
     ### Create the group if it does not exist
     if ! getent group "$GROUPNAME" > /dev/null 2>&1; then
-        logg info "Creating system group: $GROUPNAME"
+        gum log -sl info "Creating system group: $GROUPNAME"
         sudo groupadd -r "$GROUPNAME"
     else
-        logg info "Group $GROUPNAME already exists"
+        gum log -sl info "Group $GROUPNAME already exists"
     fi
 
     ### Create the user if it does not exist
     if ! id -u "$USERNAME" > /dev/null 2>&1; then
-        logg info "Creating system user: $USERNAME"
+        gum log -sl info "Creating system user: $USERNAME"
         sudo useradd -r -g "$GROUPNAME" -s /bin/bash -M -N "$USERNAME"
     else
-        logg info "User $USERNAME already exists"
+        gum log -sl info "User $USERNAME already exists"
     fi
 
     ### Add the user to the group (redundant on Linux since user is already added to the group during creation)
     sudo usermod -a -G "$GROUPNAME" "$USERNAME"
 
-    logg info "System user $USERNAME added to system group $GROUPNAME successfully."
+    gum log -sl info "System user $USERNAME added to system group $GROUPNAME successfully."
 
 else
-    logg info "Unsupported operating system: $OS"
+    gum log -sl info "Unsupported operating system: $OS"
     exit 1
 fi

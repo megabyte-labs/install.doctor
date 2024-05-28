@@ -2324,14 +2324,14 @@ softwarePackages:
     script: |
       #!/usr/bin/env bash
       if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm" ]; then
-        logg info 'Acquiring release information for Docker push-rm'
+        gum log -sl info 'Acquiring release information for Docker push-rm'
         RELEASE_TAG="$(curl -sSL https://api.github.com/repos/christian-korneck/docker-pushrm/releases/latest | jq -r '.tag_name')"
         mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins"
-        logg info 'Downloading Docker push-rm' && curl https://github.com/christian-korneck/docker-pushrm/releases/download/$RELEASE_TAG/docker-pushrm_darwin_amd64 -o "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm"
+        gum log -sl info 'Downloading Docker push-rm' && curl https://github.com/christian-korneck/docker-pushrm/releases/download/$RELEASE_TAG/docker-pushrm_darwin_amd64 -o "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm"
         chmod +x "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-pushrm"
         logg success 'Added Docker push-rm'
       else
-        logg info 'Docker push-rm already added'
+        gum log -sl info 'Docker push-rm already added'
       fi
   docker-slim:
     _bin: slim
@@ -5121,8 +5121,8 @@ softwarePackages:
     _home: https://iterm2.com/
     _name: iTerm2
     _post:cask: |
-      logg info "Setting iTerm2 options location to Install Doctor Chezmoi location" && defaults write com.googlecode.iterm2 PrefsCustomFolder -string "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/Library/Preferences/com.googlecode.iterm2.plist"
-      logg info "Setting iTerm2 to automatically sync with managed options" && defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile_selection -int 2
+      gum log -sl info "Setting iTerm2 options location to Install Doctor Chezmoi location" && defaults write com.googlecode.iterm2 PrefsCustomFolder -string "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/Library/Preferences/com.googlecode.iterm2.plist"
+      gum log -sl info "Setting iTerm2 to automatically sync with managed options" && defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile_selection -int 2
     _short: "iTerm2 is a popular terminal emulator for macOS with advanced features like split panes, search, autocomplete, and more."
     cask: iterm2
   java:
@@ -9515,7 +9515,7 @@ softwarePackages:
       #     website](https://sdkman.io/).
       ### Re-source ~/.bashrc
       if [ -z "$SDKMAN_DIR" ]; then
-        logg info 'SDKMAN_DIR is undefined so ~/.bashrc is being re-sourced' && source ~/.bashrc
+        gum log -sl info 'SDKMAN_DIR is undefined so ~/.bashrc is being re-sourced' && source ~/.bashrc
       fi
       ### SDKMan ~/.bashrc settings
       if command -v brew > /dev/null && command -v sdkman-cli > /dev/null; then
@@ -9529,22 +9529,22 @@ softwarePackages:
       fi
       ### Ensure SDKMan is installed (https://sdkman.io/)
       if [ ! -d "$SDKMAN_DIR" ]; then
-        logg info 'Installing SDKMan via curl -s https://get.sdkman.io?rcupdate=false'
-        logg info "Install directory: $SDKMAN_DIR"
+        gum log -sl info 'Installing SDKMan via curl -s https://get.sdkman.io?rcupdate=false'
+        gum log -sl info "Install directory: $SDKMAN_DIR"
         curl -s "https://get.sdkman.io?rcupdate=false" | bash
         if [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
           . "$SDKMAN_DIR/bin/sdkman-init.sh"
-          logg info 'Running sdk install java' && sdk install java
+          gum log -sl info 'Running sdk install java' && sdk install java
         else
-          logg warn 'SDKMAN_DIR/bin/sdkman-init.sh is missing'
+          gum log -sl warn 'SDKMAN_DIR/bin/sdkman-init.sh is missing'
         fi
       else
-        logg info 'SDKMan appears to already be installed.'
-        logg info 'Running sdk update'
+        gum log -sl info 'SDKMan appears to already be installed.'
+        gum log -sl info 'Running sdk update'
         if command -v sdk > /dev/null; then
           sdk update
         else
-          logg warn 'Unable to run sdk update because the sdk command is unavailable'
+          gum log -sl warn 'Unable to run sdk update because the sdk command is unavailable'
         fi
       fi
   seafile-client:
@@ -11340,16 +11340,16 @@ softwarePackages:
         VMWARE_WORKSTATION_URL=https://www.vmware.com/go/getworkstation-linux
         VMWARE_WORKSTATION_DIR=/tmp/workstation-downloads
         mkdir -p "$VMWARE_WORKSTATION_DIR"
-        logg info 'Downloading VMware Workstation Installer' && curl -sSLA "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20220101 Firefox/102.0" "$VMWARE_WORKSTATION_URL" -o "$VMWARE_WORKSTATION_DIR/tryworkstation-linux-64.sh"
+        gum log -sl info 'Downloading VMware Workstation Installer' && curl -sSLA "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20220101 Firefox/102.0" "$VMWARE_WORKSTATION_URL" -o "$VMWARE_WORKSTATION_DIR/tryworkstation-linux-64.sh"
         ### Register product key / license
         if [ -n "$VMWARE_WORKSTATION_LICENSE_KEY" ]; then
-          logg info 'Registering VMware Workstation Pro license with serial number' && sudo "$VMWARE_WORKSTATION_DIR/tryworkstation-linux-64.sh" --eulas-agreed --console --required --set-setting vmware-workstation serialNumber "$VMWARE_WORKSTATION_LICENSE_KEY"
+          gum log -sl info 'Registering VMware Workstation Pro license with serial number' && sudo "$VMWARE_WORKSTATION_DIR/tryworkstation-linux-64.sh" --eulas-agreed --console --required --set-setting vmware-workstation serialNumber "$VMWARE_WORKSTATION_LICENSE_KEY"
         else
-          logg info 'Agreeing to VMWare Workstation Pro license (without serial number)' && sudo "$VMWARE_WORKSTATION_DIR/tryworkstation-linux-64.sh" --eulas-agreed --console --required
+          gum log -sl info 'Agreeing to VMWare Workstation Pro license (without serial number)' && sudo "$VMWARE_WORKSTATION_DIR/tryworkstation-linux-64.sh" --eulas-agreed --console --required
         fi
         logg success 'VMware Workstation installed successfully'
       else
-        logg info 'VMware Workstation is already installed'
+        gum log -sl info 'VMware Workstation is already installed'
       fi
   volta:
     _bin: volta

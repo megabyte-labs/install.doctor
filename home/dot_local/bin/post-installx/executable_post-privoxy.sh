@@ -14,7 +14,7 @@
 #     * [Privoxy configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/privoxy/config)
 
 set -Eeuo pipefail
-trap "logg error 'Script encountered an error!'" ERR
+trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Configure variables
 if [ -d /Applications ] && [ -d /System ]; then
@@ -29,38 +29,38 @@ PRIVOXY_CONFIG="$PRIVOXY_CONFIG_DIR/config"
 if command -v privoxy > /dev/null; then
   if [ -f "${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config" ]; then
     sudo mkdir -p "$PRIVOXY_CONFIG_DIR"
-    logg info "Copying ${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config to $PRIVOXY_CONFIG"
+    gum log -sl info "Copying ${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config to $PRIVOXY_CONFIG"
     sudo cp -f "${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config" "$PRIVOXY_CONFIG"
-    logg info "Running sudo chmod 600 $PRIVOXY_CONFIG"
+    gum log -sl info "Running sudo chmod 600 $PRIVOXY_CONFIG"
     sudo chmod 600 "$PRIVOXY_CONFIG"
     if command -v add-usergroup > /dev/null; then
       sudo add-usergroup privoxy privoxy
       sudo add-usergroup "$USER" privoxy
     fi
-    logg info 'Applying proper permissions to Privoxy configuration'
+    gum log -sl info 'Applying proper permissions to Privoxy configuration'
     sudo chown privoxy:privoxy "$PRIVOXY_CONFIG" 2> /dev/null || sudo chown privoxy:$(id -g -n) "$PRIVOXY_CONFIG"
     if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/privoxy" ] && [ ! -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/privoxy/config" ]; then
-      logg info "Symlinking $PRIVOXY_CONFIG to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/privoxy/config"
+      gum log -sl info "Symlinking $PRIVOXY_CONFIG to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/privoxy/config"
       ln -s "$PRIVOXY_CONFIG" "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/privoxy/config"
     fi
     ### Restart Privoxy after configuration is applied
     if [ -d /Applications ] && [ -d /System ]; then
       ### macOS
-      logg info 'Running brew services restart privoxy'
+      gum log -sl info 'Running brew services restart privoxy'
       brew services restart privoxy
     else
       ### Linux
       if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
-        logg info 'Running sudo systemctl enable / restart privoxy'
+        gum log -sl info 'Running sudo systemctl enable / restart privoxy'
         sudo systemctl enable privoxy
         sudo systemctl restart privoxy
       else
-        logg info 'The system is a WSL environment so the Privoxy systemd service will not be enabled / restarted'
+        gum log -sl info 'The system is a WSL environment so the Privoxy systemd service will not be enabled / restarted'
       fi
     fi
   else
-    logg info "${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config is missing so skipping set up of Privoxy"
+    gum log -sl info "${XDG_CONFIG_HOME:-HOME/.config}/privoxy/config is missing so skipping set up of Privoxy"
   fi
 else
-  logg info 'privoxy is not installed or not available in the PATH'
+  gum log -sl info 'privoxy is not installed or not available in the PATH'
 fi

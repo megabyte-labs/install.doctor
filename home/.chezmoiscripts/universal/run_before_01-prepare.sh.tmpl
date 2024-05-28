@@ -30,7 +30,7 @@ EOF
 disconnectWarp() {
   if command -v warp-cli > /dev/null; then
     if warp-cli status | grep 'Connected' > /dev/null; then
-      logg info 'Disconnecting from CloudFlare Teams / WARP due to Volta ignoring CA specified in NPM configuration'
+      gum log -sl info 'Disconnecting from CloudFlare Teams / WARP due to Volta ignoring CA specified in NPM configuration'
       warp-cli disconnect
     fi
   fi
@@ -61,7 +61,7 @@ ensureFullDiskAccess() {
     if ! plutil -lint /Library/Preferences/com.apple.TimeMachine.plist > /dev/null ; then
       printFullDiskAccessNotice
       logg star 'Opening Full Disk Access preference pane.. Grant full-disk access for the terminal you would like to run the provisioning process with.' && open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
-      logg info 'You may have to force quit the terminal and have it reload.'
+      gum log -sl info 'You may have to force quit the terminal and have it reload.'
       if [ ! -f "$HOME/.zshrc" ] || ! cat "$HOME/.zshrc" | grep '# TEMPORARY FOR INSTALL DOCTOR MACOS' > /dev/null; then
         echo 'bash <(curl -sSL https://install.doctor/start) # TEMPORARY FOR INSTALL DOCTOR MACOS' >> "$HOME/.zshrc"
       fi
@@ -70,9 +70,9 @@ ensureFullDiskAccess() {
       logg success 'Current terminal has full disk access'
       if [ -f "$HOME/.zshrc" ]; then
         if command -v gsed > /dev/null; then
-          sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+          sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || gum log -sl warn "Failed to remove kickstart script from .zshrc"
         else
-          sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+          sudo sed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || gum log -sl warn "Failed to remove kickstart script from .zshrc"
         fi
       fi
     fi
@@ -87,7 +87,7 @@ importCloudFlareCert() {
   if [ -d /Applications ] && [ -d /System ] && [ -z "$HEADLESS_INSTALL" ]; then
     ### Acquire certificate
     if [ ! -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" ]; then
-      logg info 'Downloading Cloudflare_CA.crt from https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt to determine if it is already in the System.keychain'
+      gum log -sl info 'Downloading Cloudflare_CA.crt from https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt to determine if it is already in the System.keychain'
       CRT_TMP="$(mktemp)"
       curl -sSL https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt > "$CRT_TMP"
     else
@@ -97,7 +97,7 @@ importCloudFlareCert() {
     ### Validate / import certificate
     security verify-cert -c "$CRT_TMP" > /dev/null 2>&1
     if [ $? != 0 ]; then
-      logg info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
+      gum log -sl info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
       sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_TMP" && logg success 'Successfully imported Cloudflare_CA.crt into System.keychain'
     fi
 
@@ -113,7 +113,7 @@ addTemporaryIncludes
 . /tmp/tmp-profile
 ensureFullDiskAccess
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
-  logg info 'The DEBUG or DEBUG_MODE environment variable is set so the prepare tasks will be run synchronously'
+  gum log -sl info 'The DEBUG or DEBUG_MODE environment variable is set so the prepare tasks will be run synchronously'
   importCloudFlareCert
   disconnectWarp
 else

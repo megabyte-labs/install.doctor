@@ -14,7 +14,7 @@
 bashItPlugins() {
   ### Ensure Powerline is installed
   if ! command -v powerline > /dev/null; then
-    logg info 'Installing powerline via install-program'
+    gum log -sl info 'Installing powerline via install-program'
     installx powerline
   fi
 
@@ -22,14 +22,14 @@ bashItPlugins() {
   export BASH_IT="${XDG_DATA_HOME:-$HOME/.local/share}/bash_it"
   export BASH_IT_THEME="powerline"
   if command -v powerline-daemon > /dev/null && [ -f "$BASH_IT/bash_it.sh" ] && ! command -v bash-it; then
-    logg info "Sourcing the bash_it.sh script"
+    gum log -sl info "Sourcing the bash_it.sh script"
     . "$BASH_IT/bash_it.sh"
   fi
 
   ### Ensure ble.sh installed
   if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/src" ]; then
-    logg info 'Make installing blesh'
-    make -C "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/src" install > /dev/null && logg info "Installed ble.sh" || logg error "Error running make -C "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/src" install"
+    gum log -sl info 'Make installing blesh'
+    make -C "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/src" install > /dev/null && gum log -sl info "Installed ble.sh" || gum log -sl error "Error running make -C "${XDG_DATA_HOME:-$HOME/.local/share}/blesh/src" install"
   fi
 
   ### Bash-it completions / plugins
@@ -37,43 +37,43 @@ bashItPlugins() {
     if [ -d "$BASH_IT" ]; then
       ### Ensure bash-it is installed
       if ! command -v bash-it > /dev/null; then
-        logg info 'Installing bash-it since it is not available yet as a command'
+        gum log -sl info 'Installing bash-it since it is not available yet as a command'
         bash "$BASH_IT/install.sh" --silent --no-modify-config
       else
-        logg info 'bash-it already available'
+        gum log -sl info 'bash-it already available'
       fi
 
       ### Ensure completions are enabled
       if [ ! -d "$BASH_IT/enabled" ]; then
-        logg info "Creating the $BASH_IT/enabled directory" && mkdir -p "$BASH_IT/enabled"
+        gum log -sl info "Creating the $BASH_IT/enabled directory" && mkdir -p "$BASH_IT/enabled"
       fi
-      logg info "Changing directory to $BASH_IT/enabled" && cd "$BASH_IT/enabled"
-      logg info 'Enabling bash-it completions'
+      gum log -sl info "Changing directory to $BASH_IT/enabled" && cd "$BASH_IT/enabled"
+      gum log -sl info 'Enabling bash-it completions'
       # TODO: Move these plugins to the .chezmoidata.yaml
       for COMPLETION in defaults dirs docker docker-compose export git makefile ng ssh system vagrant; do
         if ls "$BASH_IT/enabled" | grep "$COMPLETION" > /dev/null; then
-          rm -f "$BASH_IT/enabled/"*"$COMPLETION"* > /dev/null && logg info "Removed old $COMPLETION bash-it completion symlink" || logg error "Failed to remove $COMPLETION bash-it completion symlink"
+          rm -f "$BASH_IT/enabled/"*"$COMPLETION"* > /dev/null && gum log -sl info "Removed old $COMPLETION bash-it completion symlink" || gum log -sl error "Failed to remove $COMPLETION bash-it completion symlink"
         fi
-        yes | bash-it enable completion "$COMPLETION" > /dev/null && logg info "Enabled the bash-it $COMPLETION completion plugin" || logg error "Failed to install the $COMPLETION bash-it completion plugin"
+        yes | bash-it enable completion "$COMPLETION" > /dev/null && gum log -sl info "Enabled the bash-it $COMPLETION completion plugin" || gum log -sl error "Failed to install the $COMPLETION bash-it completion plugin"
       done
 
       ### Ensure plugins are enabled
-      logg info 'Enabling bash-it plugins'
+      gum log -sl info 'Enabling bash-it plugins'
       # TODO: Move these plugins to the .chezmoidata.yaml
       for PLUGIN in base blesh browser cht-sh dirs gitstatus powerline sudo xterm; do
         if ls "$BASH_IT/enabled" | grep "$PLUGIN" > /dev/null; then
-          rm -f "$BASH_IT/enabled/"*"$PLUGIN"* > /dev/null && logg info "Removed old $PLUGIN bash-it plugin symlink" || logg error "Failed to remove $PLUGIN bash-it plugin symlink"
+          rm -f "$BASH_IT/enabled/"*"$PLUGIN"* > /dev/null && gum log -sl info "Removed old $PLUGIN bash-it plugin symlink" || gum log -sl error "Failed to remove $PLUGIN bash-it plugin symlink"
         fi
-        yes | bash-it enable plugin "$PLUGIN" > /dev/null && logg info "Enabled the bash-it $PLUGIN plugin" || logg error "Failed to install the $PLUGIN bash-it plugin"
+        yes | bash-it enable plugin "$PLUGIN" > /dev/null && gum log -sl info "Enabled the bash-it $PLUGIN plugin" || gum log -sl error "Failed to install the $PLUGIN bash-it plugin"
       done
     else
-      logg warn 'The path specified by BASH_IT does not exist yet'
+      gum log -sl warn 'The path specified by BASH_IT does not exist yet'
     fi
   else
     if ! command -v powerline > /dev/null; then
-      logg warn 'powerline is not available'
+      gum log -sl warn 'powerline is not available'
     else
-      logg warn '~/.bashrc is missing'
+      gum log -sl warn '~/.bashrc is missing'
     fi
   fi
 }
@@ -86,17 +86,17 @@ candyIconTweaks() {
       if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/candy-icons" ] && [ -d /usr/local/share/icons/Candy ]; then
         sudo rsync --chown=root:root --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r -artu --inplace --exclude .git/ "${XDG_DATA_HOME:-$HOME/.local/share}/candy-icons/" "/usr/local/share/icons/Candy/"
       else
-        logg warn 'Skipping synchronization of Candy icons since either the target or destination folder is not present'
+        gum log -sl warn 'Skipping synchronization of Candy icons since either the target or destination folder is not present'
       fi
     else
-      logg warn 'rsync is missing from the system!'
+      gum log -sl warn 'rsync is missing from the system!'
     fi
 
     ### Additional icons
     SOURCE_DIR="/usr/local/share/icons/Candy/apps/scalable"
     TARGET_DIR="/usr/local/share/icons/Candy/apps/scalable"
     if [ -d "$SOURCE_DIR" ] && [ -d "$TARGET_DIR" ]; then
-      logg info 'Adding similar substitutes for some apps in the Candy icons theme'
+      gum log -sl info 'Adding similar substitutes for some apps in the Candy icons theme'
       if [ -f "$SOURCE_DIR/youtube-dl-gui.svg" ] && [ ! -f "$TARGET_DIR/com.github.Johnn3y.Forklift.svg" ]; then
         sudo cp -f "$SOURCE_DIR/youtube-dl-gui.svg" "$TARGET_DIR/com.github.Johnn3y.Forklift.svg"
       fi
@@ -174,19 +174,19 @@ candyIconTweaks() {
       DESKTOP_FILE_BASE="$(basename "$DESKTOP_FILE" | sed 's/.desktop$//')"
       SNAP_ICON_BASE="$(echo "$DESKTOP_FILE_BASE" | sed 's/^[^_]*_//')"
       if [ -f "/usr/local/share/icons/Candy/apps/scalable/${DESKTOP_FILE_BASE}.svg" ] || [ -f "/usr/local/share/icons/Candy/apps/scalable/${SNAP_ICON_BASE}.svg" ]; then
-        logg info "Found matching Candy icon theme icon for $DESKTOP_FILE"
+        gum log -sl info "Found matching Candy icon theme icon for $DESKTOP_FILE"
         if [ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/applications/${DESKTOP_FILE_BASE}.desktop" ]; then
           cp "$DESKTOP_FILE" "${XDG_DATA_HOME:-$HOME/.local/share}/applications"
-          logg info "Copied the .desktop shortcut to ${XDG_DATA_HOME:-$HOME/.local/share}/applications"
+          gum log -sl info "Copied the .desktop shortcut to ${XDG_DATA_HOME:-$HOME/.local/share}/applications"
           if [ -f "/usr/local/share/icons/Candy/apps/scalable/${SNAP_ICON_BASE}.svg" ]; then
             SNAP_ICON="${SNAP_ICON_BASE}"
           else
             SNAP_ICON="${DESKTOP_FILE_BASE}"
           fi
-          logg info 'Setting the .desktop shortcut Icon value equal to '"$SNAP_ICON"''
+          gum log -sl info 'Setting the .desktop shortcut Icon value equal to '"$SNAP_ICON"''
           sed -i 's/^Icon=.*$/Icon='"$SNAP_ICON"'/' "${XDG_DATA_HOME:-$HOME/.local/share}/applications/${DESKTOP_FILE_BASE}.desktop"
         else
-          logg info "${XDG_DATA_HOME:-$HOME/.local/share}/applications/${DESKTOP_FILE_BASE}.desktop already exists!"
+          gum log -sl info "${XDG_DATA_HOME:-$HOME/.local/share}/applications/${DESKTOP_FILE_BASE}.desktop already exists!"
         fi
       fi
     done
@@ -210,22 +210,22 @@ configureVNC() {
     # Source: https://apple.stackexchange.com/questions/30238/how-to-enable-os-x-screen-sharing-vnc-through-ssh
     # To disable, run: sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -configure -access -off
     # Only enable when computer is not a corporate / work computer
-    logg info 'Enabling VNC using the VNC_PASSWORD variable which is vncpass when nothing is specified'
-    sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -allowAccessFor -specifiedUsers -clientopts -setreqperm -reqperm yes -setvnclegacy -vnclegacy yes -setvncpw -vncpw "{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VNC_PASSWORD")) }}{{ includeTemplate "secrets/VNC_PASSWORD" | decrypt | trim }}{{ else }}{{ default "vncpass" (env "VNC_PASSWORD") }}{{ end }}" -restart -agent -privs -all -users "$USER" && logg info 'Finished running the macOS Remote Management kickstart executable'
+    gum log -sl info 'Enabling VNC using the VNC_PASSWORD variable which is vncpass when nothing is specified'
+    sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -allowAccessFor -specifiedUsers -clientopts -setreqperm -reqperm yes -setvnclegacy -vnclegacy yes -setvncpw -vncpw "{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VNC_PASSWORD")) }}{{ includeTemplate "secrets/VNC_PASSWORD" | decrypt | trim }}{{ else }}{{ default "vncpass" (env "VNC_PASSWORD") }}{{ end }}" -restart -agent -privs -all -users "$USER" && gum log -sl info 'Finished running the macOS Remote Management kickstart executable'
   else
     ### Linux
     ### VNC set-up / configuration
     # KasmVNC / TigerVNC (or alternative VNC program) is installed
     if command -v kasmvncpasswd > /dev/null; then
-      logg info 'Copying VNC configuration files from ~/.config/vnc/etc/kasmvnc/ to /etc/'
+      gum log -sl info 'Copying VNC configuration files from ~/.config/vnc/etc/kasmvnc/ to /etc/'
       sudo cp -Rf "${XDG_CONFIG_HOME:-$HOME/.config}/vnc/etc/kasmvnc/" /etc/
-      logg info 'Adding VNC full-control password to ~/.config/vnc/kasmpasswd'
+      gum log -sl info 'Adding VNC full-control password to ~/.config/vnc/kasmpasswd'
       echo -e "{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VNC_PASSWORD")) }}{{ includeTemplate "secrets/VNC_PASSWORD" | decrypt | trim }}{{ else }}{{ default "vncpass" (env "VNC_PASSWORD") }}{{ end }}\n{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VNC_PASSWORD")) }}{{ includeTemplate "secrets/VNC_PASSWORD" | decrypt | trim }}{{ else }}{{ default "vncpass" (env "VNC_PASSWORD") }}{{ end }}" | kasmvncpasswd -u {{ .user.name }} -rwo
-      logg info 'Adding VNC read-only password to ~/.config/vnc/kasmpasswd for user readonly'
+      gum log -sl info 'Adding VNC read-only password to ~/.config/vnc/kasmpasswd for user readonly'
       echo -e "{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VNC_READ_PASSWORD")) }}{{ includeTemplate "secrets/VNC_READ_PASSWORD" | decrypt | trim }}{{ else }}{{ default "readonly" (env "VNC_READ_PASSWORD") }}{{ end }}\n{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VNC_READ_PASSWORD")) }}{{ includeTemplate "secrets/VNC_READ_PASSWORD" | decrypt | trim }}{{ else }}{{ default "readonly" (env "VNC_READ_PASSWORD") }}{{ end }}" | kasmvncpasswd -u guest -r
-      logg info 'Reloading the systemctl configuration files since a new one for VNC may have been added'
+      gum log -sl info 'Reloading the systemctl configuration files since a new one for VNC may have been added'
       sudo systemctl daemon-reload
-      logg info 'Enabling / starting the VNC service for the current user / display 1'
+      gum log -sl info 'Enabling / starting the VNC service for the current user / display 1'
       sudo systemctl start vncserver@1
       sudo systemctl enable vncserver@1
       if command -v update-alternatives > /dev/null; then
@@ -238,19 +238,19 @@ configureVNC() {
       if [ ! -d "${XDG_CONFIG_HOME:-$HOME/.config}/vnc" ]; then
         mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/vnc"
       fi
-      logg info 'Copying VNC configuration files from ~/.config/vnc/etc/tigervnc/ to /etc/'
+      gum log -sl info 'Copying VNC configuration files from ~/.config/vnc/etc/tigervnc/ to /etc/'
       sudo cp -Rf "${XDG_CONFIG_HOME:-$HOME/.config}/vnc/etc/tigervnc/" /etc/
-      logg info 'Adding VNC full-control password to ~/.config/vnc/passwd'
+      gum log -sl info 'Adding VNC full-control password to ~/.config/vnc/passwd'
       echo -n "{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VNC_PASSWORD")) }}{{ includeTemplate "secrets/VNC_PASSWORD" | decrypt | trim }}{{ else }}{{ default "vncpass" (env "VNC_PASSWORD") }}{{ end }}" | tigervncpasswd -f > "${XDG_CONFIG_HOME:-$HOME/.config}/vnc/passwd"
-      logg info 'Adding VNC read-only password to ~/.config/vnc/passwd'
+      gum log -sl info 'Adding VNC read-only password to ~/.config/vnc/passwd'
       echo -n "{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "VNC_READ_PASSWORD")) }}{{ includeTemplate "secrets/VNC_READ_PASSWORD" | decrypt | trim }}{{ else }}{{ default "readonly" (env "VNC_READ_PASSWORD") }}{{ end }}" | tigervncpasswd -f >> "${XDG_CONFIG_HOME:-$HOME/.config}/vnc/passwd"
-      logg info 'Reloading the systemctl configuration files since a new one for VNC may have been added'
+      gum log -sl info 'Reloading the systemctl configuration files since a new one for VNC may have been added'
       sudo systemctl daemon-reload
-      logg info 'Enabling / starting the VNC service for the current user / display 1'
+      gum log -sl info 'Enabling / starting the VNC service for the current user / display 1'
       sudo systemctl start vncserver@1
       sudo systemctl enable vncserver@1
     else
-      logg info 'Skipping VNC setup since the tightvncserver package is not present on the system'
+      gum log -sl info 'Skipping VNC setup since the tightvncserver package is not present on the system'
     fi
   fi
 }
@@ -262,11 +262,11 @@ moveGnomeAppsToShare() {
       mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/applications"
     fi
     find "$HOME/.gnome/apps" -mindepth 1 -maxdepth 1 -type f | while read DESKTOP_FILE; do
-      logg info "Moving $DESKTOP_FILE to ${XDG_DATA_HOME:-$HOME/.local/share}/applications/$(basename "$DESKTOP_FILE")"
+      gum log -sl info "Moving $DESKTOP_FILE to ${XDG_DATA_HOME:-$HOME/.local/share}/applications/$(basename "$DESKTOP_FILE")"
       mv "$DESKTOP_FILE" "${XDG_DATA_HOME:-$HOME/.local/share}/applications/$(basename "$DESKTOP_FILE")"
       chmod 755 "${XDG_DATA_HOME:-$HOME/.local/share}/applications/$(basename "$DESKTOP_FILE")"
     done
-    logg info 'Removing ~/.gnome/apps'
+    gum log -sl info 'Removing ~/.gnome/apps'
     rm -rf "$HOME/.gnome/apps"
   fi
 }
@@ -278,9 +278,9 @@ moveGnomeAppsToShare() {
 preloadZsh() {
   ### Initialize ZSH so plugin bootstrap process is done ahead of time
   if command -v zsh > /dev/null; then
-    logg info 'Bootstrapping ZSH by running exec zsh'
+    gum log -sl info 'Bootstrapping ZSH by running exec zsh'
     exec zsh &
-    logg info 'Waiting for exec zsh to finish'
+    gum log -sl info 'Waiting for exec zsh to finish'
     wait
   fi
 }
@@ -290,7 +290,7 @@ preloadZsh() {
 #     desktop shortcuts that have been deemed to be unnecessary or obtrusive.
 removeShortcutsLinux() {
   if [ "{{ .host.distro.family }}" = "linux" ]; then
-    logg info 'Processing remove shortcuts step for Linux machines'
+    gum log -sl info 'Processing remove shortcuts step for Linux machines'
 
     ### Remove unnecessary desktop shortcuts
     for DESKTOP_ICON in {{ join " " .removeLinuxShortcuts }}; do
@@ -311,7 +311,7 @@ removeShortcutsLinux() {
 # @description Remove Ubuntu logo branding from GDM lock screen
 removeUbuntuLogoBranding() {
   if [ '{{ .whiteLabel }}' == 'true' ] && [ -f /usr/share/plymouth/ubuntu-logo.png ]; then
-    logg info 'Renaming /usr/share/plymouth/ubuntu-logo.png to /usr/share/plymouth/ubuntu-logo.png.bak since the whiteLabel setting is true'
+    gum log -sl info 'Renaming /usr/share/plymouth/ubuntu-logo.png to /usr/share/plymouth/ubuntu-logo.png.bak since the whiteLabel setting is true'
     sudo mv /usr/share/plymouth/ubuntu-logo.png /usr/share/plymouth/ubuntu-logo.png.bak
   fi
 }
@@ -329,25 +329,25 @@ removeUbuntuLogoBranding() {
 setDefaultBrowser() {
   if [ -d /Applications ] && [ -d /System ]; then
     if ! command -v defaultbrowser > /dev/null; then
-      logg info 'Installing defaultbrowser via Homebrew which is the preferred way of configuring the default browser'
+      gum log -sl info 'Installing defaultbrowser via Homebrew which is the preferred way of configuring the default browser'
       brew install --quiet defaultbrowser
     fi
-    logg info "Setting default browser to {{ .user.defaultBrowserDarwin }}"
+    gum log -sl info "Setting default browser to {{ .user.defaultBrowserDarwin }}"
     osascript "$HOME/Library/Scripts/default-browser.applescript" "{{ .user.defaultBrowserDarwin }}" || EXIT_CODE=$?
     if [ -n "$EXIT_CODE" ]; then
-      logg error 'Failed to change default browser'
+      gum log -sl error 'Failed to change default browser'
       unset EXIT_CODE
     fi
   else
-    logg info 'Setting default browser for text/html to {{ .user.defaultBrowser }}'
+    gum log -sl info 'Setting default browser for text/html to {{ .user.defaultBrowser }}'
     xdg-mime default {{ .user.defaultBrowser }}.desktop text/html
-    logg info 'Setting default browser for x-scheme-handler/http to {{ .user.defaultBrowser }}'
+    gum log -sl info 'Setting default browser for x-scheme-handler/http to {{ .user.defaultBrowser }}'
     xdg-mime default {{ .user.defaultBrowser }}.desktop x-scheme-handler/http
-    logg info 'Setting default browser for x-scheme-handler/https to {{ .user.defaultBrowser }}'
+    gum log -sl info 'Setting default browser for x-scheme-handler/https to {{ .user.defaultBrowser }}'
     xdg-mime default {{ .user.defaultBrowser }}.desktop x-scheme-handler/https
-    logg info 'Setting default browser for x-scheme-handler/about to {{ .user.defaultBrowser }}'
+    gum log -sl info 'Setting default browser for x-scheme-handler/about to {{ .user.defaultBrowser }}'
     xdg-mime default {{ .user.defaultBrowser }}.desktop x-scheme-handler/about
-    logg info 'Setting default browser with xdg-settings to {{ .user.defaultBrowser }}'
+    gum log -sl info 'Setting default browser with xdg-settings to {{ .user.defaultBrowser }}'
     xdg-settings set default-web-browser {{ .user.defaultBrowser }}.desktop
   fi
 }
@@ -359,10 +359,10 @@ ubuntuDashToDockFix() {
       if [ -d '/usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com' ]; then
         if [ ! -d /usr/share/gnome-shell/extensions/disabled ]; then
           sudo mkdir /usr/share/gnome-shell/extensions/disabled
-          logg info 'Created /usr/share/gnome-shell/extensions/disabled for GNOME extensions that have issues'
+          gum log -sl info 'Created /usr/share/gnome-shell/extensions/disabled for GNOME extensions that have issues'
         fi
         sudo mv '/usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com' '/usr/share/gnome-shell/extensions/disabled/ubuntu-dock@ubuntu.com'
-        logg info 'Moved ubuntu-dock@ubuntu.com to the disabled extension folder'
+        gum log -sl info 'Moved ubuntu-dock@ubuntu.com to the disabled extension folder'
       fi
     fi
   fi
@@ -375,21 +375,21 @@ enableAutoUpdateDarwin() {
   if [ -d /Applications ] && [ -d /System ]; then
     ### Enable automated system updates on macOS
     if [ -f "/Library/LaunchDaemons/com.apple.automatedupdates.plist" ]; then
-      logg info 'Configuring macOS to automatically apply system updates'
+      gum log -sl info 'Configuring macOS to automatically apply system updates'
       sudo mkdir -p /Library/LaunchDaemons
-      logg info 'Loading /Library/LaunchDaemons/com.apple.automatedupdates.plist'
+      gum log -sl info 'Loading /Library/LaunchDaemons/com.apple.automatedupdates.plist'
       if sudo launchctl list | grep 'com.apple.automatedupdates' > /dev/null; then
-        logg info 'Unloading previous com.apple.automatedupdates configuration'
+        gum log -sl info 'Unloading previous com.apple.automatedupdates configuration'
         sudo launchctl unload /Library/LaunchDaemons/com.apple.automatedupdates.plist
       fi
       sudo launchctl load -w /Library/LaunchDaemons/com.apple.automatedupdates.plist
     else
-      logg warn '/Library/LaunchDaemons/com.apple.automatedupdates.plist is missing!'
+      gum log -sl warn '/Library/LaunchDaemons/com.apple.automatedupdates.plist is missing!'
     fi
 
     ### Enable Homebrew auto-update service
     if brew autoupdate status | grep 'Autoupdate is not configured.' > /dev/null; then
-      logg info 'Enabling Homebrew auto-update service (every 24 hours)'
+      gum log -sl info 'Enabling Homebrew auto-update service (every 24 hours)'
       brew autoupdate start --cleanup --greedy --upgrade
     fi
   fi
@@ -398,7 +398,7 @@ enableAutoUpdateDarwin() {
 # Temporary next line for debugging
 export DEBUG=true
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
-  logg info 'The DEBUG or DEBUG_MODE environment variable is set so the post-install tasks will be run synchronously'
+  gum log -sl info 'The DEBUG or DEBUG_MODE environment variable is set so the post-install tasks will be run synchronously'
   bashItPlugins
   candyIconTweaks
   configureVNC

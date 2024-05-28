@@ -49,7 +49,7 @@
 #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
 
 set -Eeuo pipefail
-trap "logg error 'Script encountered an error!'" ERR
+trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Configure Samba server
 if command -v smbd > /dev/null; then
@@ -69,19 +69,19 @@ if command -v smbd > /dev/null; then
   PUBLIC_SHARE="/$MNT_FOLDER/Public"
 
   ### Private share
-  logg info "Ensuring $PRIVATE_SHARE is created"
+  gum log -sl info "Ensuring $PRIVATE_SHARE is created"
   sudo mkdir -p "$PRIVATE_SHARE"
   sudo chmod 750 "$PRIVATE_SHARE"
   sudo chown -Rf root:rclone "$PRIVATE_SHARE"
   
   ### Public share
-  logg info "Ensuring $PUBLIC_SHARE is created"
+  gum log -sl info "Ensuring $PUBLIC_SHARE is created"
   sudo mkdir -p "$PUBLIC_SHARE"
   sudo chmod 755 "$PUBLIC_SHARE"
   sudo chown -Rf root:rclone "$PUBLIC_SHARE"
 
   ### User share
-  logg info "Ensuring $HOME/Shared is created"
+  gum log -sl info "Ensuring $HOME/Shared is created"
   mkdir -p "$HOME/Shared"
   chmod 755 "$HOME/Shared"
   chown -Rf "$USER":rclone "$HOME/Shared"
@@ -93,9 +93,9 @@ if command -v smbd > /dev/null; then
       logg success "Configured $PRIVATE_SHARE as a private Samba share"
     else
       if echo $SMB_OUTPUT | grep 'smb name already exists' > /dev/null; then
-        logg info "$PRIVATE_SHARE Samba share already exists"
+        gum log -sl info "$PRIVATE_SHARE Samba share already exists"
       else
-        logg error 'An error occurred while running sudo sharing -a "$PRIVATE_SHARE" -S "Private (System)" -n "Private (System)" -g 000 -s 001 -E 1 -R 1'
+        gum log -sl error 'An error occurred while running sudo sharing -a "$PRIVATE_SHARE" -S "Private (System)" -n "Private (System)" -g 000 -s 001 -E 1 -R 1'
         echo "$SMB_OUTPUT"
       fi
     fi
@@ -105,9 +105,9 @@ if command -v smbd > /dev/null; then
       logg success "Configured $PUBLIC_SHARE as a system public Samba share"
     else
       if echo $SMB_OUTPUT | grep 'smb name already exists' > /dev/null; then
-        logg info "$PUBLIC_SHARE Samba share already exists"
+        gum log -sl info "$PUBLIC_SHARE Samba share already exists"
       else
-        logg error 'An error occurred while running sudo sharing -a "$PUBLIC_SHARE" -S "Public (System)" -n "Public (System)" -g 001 -s 001 -E 1 -R 0'
+        gum log -sl error 'An error occurred while running sudo sharing -a "$PUBLIC_SHARE" -S "Public (System)" -n "Public (System)" -g 001 -s 001 -E 1 -R 0'
         echo "$SMB_OUTPUT"
       fi
     fi
@@ -117,21 +117,21 @@ if command -v smbd > /dev/null; then
       logg success "Configured $HOME/Shared as a user-scoped Samba share"
     else
       if echo $SMB_OUTPUT | grep 'smb name already exists' > /dev/null; then
-        logg info "$HOME/Shared Samba share already exists"
+        gum log -sl info "$HOME/Shared Samba share already exists"
       else
-        logg error 'An error occurred while running sudo sharing -a "$HOME/Shared" -S "Shared (User)" -n "Shared (User)" -g 001 -s 001 -E 1 -R 0'
+        gum log -sl error 'An error occurred while running sudo sharing -a "$HOME/Shared" -S "Shared (User)" -n "Shared (User)" -g 001 -s 001 -E 1 -R 0'
         echo "$SMB_OUTPUT"
       fi
     fi
   else
     ### Copy Samba configuration
-    logg info "Copying Samba server configuration to /etc/samba/smb.conf"
+    gum log -sl info "Copying Samba server configuration to /etc/samba/smb.conf"
     sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/samba/config" "/etc/samba/smb.conf"
 
     ### Reload configuration file changes
-    logg info 'Reloading the smbd config'
+    gum log -sl info 'Reloading the smbd config'
     smbcontrol smbd reload-config
   fi
 else
-  logg info "Samba server is not installed"
+  gum log -sl info "Samba server is not installed"
 fi

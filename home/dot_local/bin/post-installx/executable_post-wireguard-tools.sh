@@ -21,15 +21,15 @@
 #     * [VPN profile documentation](https://install.doctor/docs/customization/secrets#vpn-profiles)
 
 set -Eeuo pipefail
-trap "logg error 'Script encountered an error!'" ERR
+trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Backs up previous network settings to `/Library/Preferences/com.apple.networkextension.plist.old` before applying new VPN profiles
-logg info 'Backing up /Library/Preferences/com.apple.networkextension.plist to /Library/Preferences/com.apple.networkextension.plist.old'
+gum log -sl info 'Backing up /Library/Preferences/com.apple.networkextension.plist to /Library/Preferences/com.apple.networkextension.plist.old'
 sudo cp -f /Library/Preferences/com.apple.networkextension.plist /Library/Preferences/com.apple.networkextension.plist.old
 
 ### Ensures the `/etc/wireguard` directory exists and has the lowest possible permission-level
 if [ ! -d /etc/wireguard ]; then
-  logg info 'Creating /etc/wireguard since it does not exist yet'
+  gum log -sl info 'Creating /etc/wireguard since it does not exist yet'
   sudo mkdir -p /etc/wireguard
   sudo chmod 600 /etc/wireguard
 fi
@@ -38,6 +38,6 @@ fi
 ### Cycles through the `*.conf` files in `${XDG_CONFIG_HOME:-$HOME/.config}/vpn` and adds them to the `/etc/wireguard` folder
 find "${XDG_CONFIG_HOME:-$HOME/.config}/vpn" -mindepth 1 -maxdepth 1 -type f -name "*.conf" | while read WG_CONF; do
   WG_FILE="$(basename "$WG_CONF")"
-  logg info 'Adding '"$WG_FILE"' to /etc/wireguard'
+  gum log -sl info 'Adding '"$WG_FILE"' to /etc/wireguard'
   sudo cp -f "$WG_CONF" "/etc/wireguard/$WG_FILE"
 done

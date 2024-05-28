@@ -10,15 +10,15 @@
 if command -v installx > /dev/null; then
   if command -v zx > /dev/null; then
     if command -v unbuffer > /dev/null; then
-      logg info 'Running unbuffer installx'
+      gum log -sl info 'Running unbuffer installx'
       unbuffer installx --all
     else
-      logg info 'Running installx'
+      gum log -sl info 'Running installx'
       installx --all
     fi
   else
-    logg error 'zx is not available'
+    gum log -sl error 'zx is not available'
   fi
 else
-  logg error 'installx is not in the PATH. It should be located in ~/.local/bin.'
+  gum log -sl error 'installx is not in the PATH. It should be located in ~/.local/bin.'
 fi

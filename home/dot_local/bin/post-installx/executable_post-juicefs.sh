@@ -15,7 +15,7 @@
 #     these four volume names.
 
 set -Eeuo pipefail
-trap "logg error 'Script encountered an error!'" ERR
+trap "gum log -sl error 'Script encountered an error!'" ERR
 
 MOUNT_FOLDER="/mnt"
 UPDATE_FSTAB="--update-fstab"
@@ -24,10 +24,10 @@ if [ -d /Applications ] && [ -d /System ]; then
   MOUNT_FOLDER="/Volumes"
   UPDATE_FSTAB=""
 elif [ -f /snap/juicefs/current/juicefs ]; then
-  logg info 'Symlinking /snap/juicefs/current/juicefs to /snap/bin/juicefs' && sudo ln -s -f /snap/juicefs/current/juicefs /snap/bin/juicefs
+  gum log -sl info 'Symlinking /snap/juicefs/current/juicefs to /snap/bin/juicefs' && sudo ln -s -f /snap/juicefs/current/juicefs /snap/bin/juicefs
 fi
 
-logg info "Acquiring juicefsVolumeNamePostfix from ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoidata.yaml"
+gum log -sl info "Acquiring juicefsVolumeNamePostfix from ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoidata.yaml"
 JUICEFS_VOLUME_PREFIX="$(yq '.juicefsVolumeNamePostfix' "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/.chezmoidata.yaml")"
 for MOUNT_NAME in "docker" "private" "public" "user"; do
   if [ "$MOUNT_NAME" == "user" ]; then
@@ -39,8 +39,8 @@ done
 
 ### Linux systemd
 if command -v systemctl > /dev/null; then
-  logg info 'Ensuring /etc/systemd/system/docker.service.d exists as a directory' && sudo mkdir -p /etc/systemd/system/docker.service.d
-  logg info 'Creating /etc/systemd/system/docker.service.d/override.conf which ensures JuiceFS is loaded before Docker starts'
+  gum log -sl info 'Ensuring /etc/systemd/system/docker.service.d exists as a directory' && sudo mkdir -p /etc/systemd/system/docker.service.d
+  gum log -sl info 'Creating /etc/systemd/system/docker.service.d/override.conf which ensures JuiceFS is loaded before Docker starts'
   echo '[Unit]' | sudo tee /etc/systemd/system/docker.service.d/override.conf
   echo 'After=network-online.target firewalld.service containerd.service jfs.mount' | sudo tee -a /etc/systemd/system/docker.service.d/override.conf
 fi

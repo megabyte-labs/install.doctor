@@ -11,7 +11,7 @@
 
 ### Enables sys-gui-gpu
 enableSysGUIGPU() {
-  logg info 'Enabling sys-gui-gpu'
+  gum log -sl info 'Enabling sys-gui-gpu'
   qubesctl top.enable qvm.sys-gui-gpu
   qubesctl top.enable qvm.sys-gui-gpu pillar=True
   qubesctl --all state.highstate
@@ -20,16 +20,16 @@ enableSysGUIGPU() {
 
 ### Enable appropriate sys-gui
 if qvm-pci list | grep 'VGA compatible controller' | grep 'Intel'; else
-  logg info 'An Intel GPU was detected'
+  gum log -sl info 'An Intel GPU was detected'
   enableSysGUIGPU
-  logg info 'Attaching Intel GPU PCI devices to sys-gui-gpu'
+  gum log -sl info 'Attaching Intel GPU PCI devices to sys-gui-gpu'
   qubesctl state.sls qvm.sys-gui-gpu-attach-gpu
 elif qvm-pci list | grep 'VGA compatible controller' | grep 'NVIDIA'; then
-  logg info 'An NVIDIA GPU was detected'
+  gum log -sl info 'An NVIDIA GPU was detected'
   enableSysGUIGPU
-  logg info 'Attaching NVIDIA GPU PCI devices to sys-gui-gpu'
+  gum log -sl info 'Attaching NVIDIA GPU PCI devices to sys-gui-gpu'
   for ID of "$(qvm-pci list | grep 'NVIDIA' | sed 's/^\([^ ]*\).*/\1/')"; do
-    logg info "Attaching PCI device with ID of $ID"
+    gum log -sl info "Attaching PCI device with ID of $ID"
     qvm-pci attach sys-gui-gpu "$ID" --persistent -o permissive=true
   done
 fi

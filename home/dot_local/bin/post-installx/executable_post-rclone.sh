@@ -46,14 +46,14 @@
 #     * [Rclone documentation](https://rclone.org/docs/)
 
 set -Eeuo pipefail
-trap "logg error 'Script encountered an error!'" ERR
+trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Begin configuration
 if command -v rclone > /dev/null; then
   R2_ENDPOINT="$(yq '.data.user.cloudflare.r2' "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml")"
   CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/rclone/rclone.conf"
   if [ "$R2_ENDPOINT" != 'null' ] && get-secret --exists CLOUDFLARE_R2_ID_USER CLOUDFLARE_R2_SECRET_USER; then
-    logg info 'Removing ~/.config/rclone/rclone.conf Install Doctor managed block'
+    gum log -sl info 'Removing ~/.config/rclone/rclone.conf Install Doctor managed block'
     if cat "$CONFIG_FILE" | grep '# INSTALL DOCTOR MANAGED S3 START' > /dev/null; then
       # TODO: Remove old block
       START_LINE="$(echo `grep -n -m 1 "# INSTALL DOCTOR MANAGED S3 START" "$CONFIG_FILE" | cut -f1 -d ":"`)"
@@ -64,7 +64,7 @@ if command -v rclone > /dev/null; then
         sed -i "$START_LINE,${END_LINE}d" "$CONFIG_FILE" > /dev/null
       fi
     fi
-    logg info 'Adding ~/.config/rclone/rclone.conf INSTALL DOCTOR managed block'
+    gum log -sl info 'Adding ~/.config/rclone/rclone.conf INSTALL DOCTOR managed block'
     tee -a "$CONFIG_FILE" > /dev/null <<EOT
 # INSTALL DOCTOR MANAGED S3 START
 [User-$USER]
@@ -92,37 +92,37 @@ EOT
   fi
 
   ### Setup /var/cache/rclone
-  logg info 'Ensuring /var/cache/rclone exists'
+  gum log -sl info 'Ensuring /var/cache/rclone exists'
   sudo mkdir -p /var/cache/rclone
   sudo chmod 750 /var/cache/rclone
   sudo chown -Rf rclone:rclone /var/cache/rclone
 
   ### Setup /var/log/rclone
-  logg info 'Ensuring /var/log/rclone exists'
+  gum log -sl info 'Ensuring /var/log/rclone exists'
   sudo mkdir -p /var/log/rclone
   sudo chmod 750 /var/log/rclone
   sudo chown -Rf rclone:rclone /var/log/rclone
 
   ### Add rclone-mount to /usr/local/bin
-  logg info 'Adding ~/.local/bin/rclone-mount to /usr/local/bin'
+  gum log -sl info 'Adding ~/.local/bin/rclone-mount to /usr/local/bin'
   sudo cp -f "$HOME/.local/bin/rclone-mount" /usr/local/bin/rclone-mount
   sudo chmod +x /usr/local/bin/rclone-mount
 
   ### Setup /etc/rcloneignore
-  logg info 'Adding ~/.config/rclone/rcloneignore to /etc/rcloneignore'
+  gum log -sl info 'Adding ~/.config/rclone/rcloneignore to /etc/rcloneignore'
   sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/rcloneignore" /etc/rcloneignore
   sudo chown -Rf rclone:rclone /etc/rcloneignore
   sudo chmod 640 /etc/rcloneignore
 
   ### Setup /etc/rclone.conf
-  logg info 'Adding ~/.config/rclone/system-rclone.conf to /etc/rclone.conf'
+  gum log -sl info 'Adding ~/.config/rclone/system-rclone.conf to /etc/rclone.conf'
   sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system-rclone.conf" /etc/rclone.conf
   sudo chown -Rf rclone:rclone /etc/rclone.conf
   sudo chmod 600 /etc/rclone.conf
 
   if [ -d /Applications ] && [ -d /System ]; then
     ### Enable Rclone mounts
-    logg info 'Ensuring Rclone mount-on-reboot definitions are in place'
+    gum log -sl info 'Ensuring Rclone mount-on-reboot definitions are in place'
     sudo mkdir -p /Library/LaunchDaemons
 
     if get-secret --exists CLOUDFLARE_R2_ID CLOUDFLARE_R2_SECRET; then
@@ -141,18 +141,18 @@ EOT
     if get-secret --exists CLOUDFLARE_R2_ID CLOUDFLARE_R2_SECRET; then
       find "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system" -mindepth 1 -maxdepth 1 -type f | while read RCLONE_SERVICE; do
         ### Add systemd service file
-        logg info "Adding S3 system mount service defined at $RCLONE_SERVICE"
+        gum log -sl info "Adding S3 system mount service defined at $RCLONE_SERVICE"
         FILENAME="$(basename "$RCLONE_SERVICE")"
         SERVICE_ID="$(echo "$FILENAME" | sed 's/.service//')"
         sudo cp -f "$RCLONE_SERVICE" "/etc/systemd/system/$(basename "$RCLONE_SERVICE")"
 
         ### Ensure mount folder is created
-        logg info "Ensuring /mnt/$SERVICE_ID is created with proper permissions"
+        gum log -sl info "Ensuring /mnt/$SERVICE_ID is created with proper permissions"
         sudo mkdir -p "/mnt/$SERVICE_ID"
         sudo chmod 750 "/mnt/$SERVICE_ID"
 
         ### Enable / restart the service
-        logg info "Enabling / restarting the $SERVICE_ID S3 service"
+        gum log -sl info "Enabling / restarting the $SERVICE_ID S3 service"
         sudo systemctl enable "$SERVICE_ID"
         sudo systemctl restart "$SERVICE_ID"
       done
@@ -160,13 +160,13 @@ EOT
 
     ### Add user Rclone mount
     if get-secret --exists CLOUDFLARE_R2_ID_USER CLOUDFLARE_R2_SECRET_USER; then
-      logg info 'Adding user S3 rclone mount (available at ~/Cloud/User and /Volumes/User)'
+      gum log -sl info 'Adding user S3 rclone mount (available at ~/Cloud/User and /Volumes/User)'
       sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/s3-user.service" "/etc/systemd/system/s3-${USER}.service"
-      logg info 'Enabling / restarting the S3 user mount'
+      gum log -sl info 'Enabling / restarting the S3 user mount'
       sudo systemctl enable "s3-${USER}"
       sudo systemctl restart "s3-${USER}"
     fi
   fi
 else
-  logg info 'rclone is not available'
+  gum log -sl info 'rclone is not available'
 fi

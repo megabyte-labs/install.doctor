@@ -12,40 +12,40 @@
 #     * [NGINX Amplify documentation](https://docs.nginx.com/nginx-amplify/#)
 
 set -Eeuo pipefail
-trap "logg error 'Script encountered an error!'" ERR
+trap "gum log -sl error 'Script encountered an error!'" ERR
 
 if command -v nginx > /dev/null; then
   if [ -d /Applications ] && [ -d /System ]; then
     ### macOS
-    logg info 'Skipping installation of NGINX Amplify because macOS is not supported'
+    gum log -sl info 'Skipping installation of NGINX Amplify because macOS is not supported'
     NGINX_CONFIG_DIR=/usr/local/etc/nginx
   else
     ### Linux
     NGINX_CONFIG_DIR=/etc/nginx
     if get-secret --exists NGINX_AMPLIFY_API_KEY; then
       ### Download NGINX Amplify script
-      logg info 'Downloading the NGINX Amplify installer script'
+      gum log -sl info 'Downloading the NGINX Amplify installer script'
       TMP="$(mktemp)"
       curl -sSL https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh > "$TMP"
     
       ### NGINX Amplify registration
-      logg info 'Running the NGINX Amplify setup script'
+      gum log -sl info 'Running the NGINX Amplify setup script'
       API_KEY="$(get-secret NGINX_AMPLIFY_API_KEY)" sh "$TMP"
     else
-      logg warn "Skipping NGINX Amplify setup because the NGINX_AMPLIFY_API_KEY was unavailable"
+      gum log -sl warn "Skipping NGINX Amplify setup because the NGINX_AMPLIFY_API_KEY was unavailable"
     fi
   fi
-  logg info "Ensuring $NGINX_CONFIG_DIR is present" && sudo mkdir -p "$NGINX_CONFIG_DIR"
-  logg info "Copying configuration files from $HOME/.local/etc/nginx to $NGINX_CONFIG_DIR"
+  gum log -sl info "Ensuring $NGINX_CONFIG_DIR is present" && sudo mkdir -p "$NGINX_CONFIG_DIR"
+  gum log -sl info "Copying configuration files from $HOME/.local/etc/nginx to $NGINX_CONFIG_DIR"
   sudo rsync -av "$HOME/.local/etc/nginx/" "$NGINX_CONFIG_DIR"
   if [ -d /Applications ] && [ -d /System ]; then
     ### macOS
     if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/nginx" ] && [ ! -L "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/nginx" ]; then
-      logg info "Removing ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/nginx directory and its contents in favor of symlink to /usr/local/etc/nginx"
+      gum log -sl info "Removing ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/nginx directory and its contents in favor of symlink to /usr/local/etc/nginx"
       rm -rf "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/nginx"
       ln -s /usr/local/etc/nginx "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/nginx"
     else
-      logg info "Skipping symlinking of /usr/local/etc/nginx to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/nginx because directory symlink already appears to be there"
+      gum log -sl info "Skipping symlinking of /usr/local/etc/nginx to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/nginx because directory symlink already appears to be there"
     fi
   fi
 fi

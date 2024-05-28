@@ -16,27 +16,27 @@
 {{ includeTemplate "universal/logg-before" }}
 
 ### Configure dom0 repos
-logg info 'Updating dom0 repos to include auxilary branches'
+gum log -sl info 'Updating dom0 repos to include auxilary branches'
 sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/qubes/qubes-templates.repo" /etc/qubes/repo-templates/qubes-templates.repo
 sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/qubes/qubes-dom0.repo" /etc/yum.repos.d/qubes-dom0.repo
 
 ### Update dom0
-logg info 'Updating dom0 via qubesctl'
+gum log -sl info 'Updating dom0 via qubesctl'
 sudo qubesctl --show-output state.sls update.qubes-dom0
-logg info 'Updating dom0 via qubes-dom0-update'
+gum log -sl info 'Updating dom0 via qubes-dom0-update'
 sudo qubes-dom0-update --clean -y
 
 ### Install qubes-repo-contrib
-logg info "Installing qubes-repo-contrib"
+gum log -sl info "Installing qubes-repo-contrib"
 sudo qubes-dom0-update -y qubes-repo-contrib
 
 ### Install dependencies
 for PACKAGE of {{ .qubes.dom0Packages | toString | replace "[" "" | replace "]" "" }}; do
-  logg info "Installing $PACKAGE"
+  gum log -sl info "Installing $PACKAGE"
   sudo qubes-dom0-update -y "$PACKAGE" || true
 done
 
 ### Ensure sys-whonix is running
-logg info 'Ensuring sys-whonix is running'
+gum log -sl info 'Ensuring sys-whonix is running'
 qvm-start sys-whonix --skip-if-running
 {{ end -}}

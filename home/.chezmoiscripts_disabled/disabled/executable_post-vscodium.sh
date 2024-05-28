@@ -9,11 +9,11 @@ if command -v codium > /dev/null; then
   EXTENSIONS="$(codium --list-extensions)"
   jq -r '.recommendations[]' "${XDG_CONFIG_HOME:-$HOME/.config}/Code/User/extensions.json" | while read EXTENSION; do
     if ! echo "$EXTENSIONS" | grep -iF "$EXTENSION" > /dev/null; then
-      logg info 'Installing VSCodium extension '"$EXTENSION"'' && codium --install-extension "$EXTENSION" && logg success 'Installed '"$EXTENSION"''
+      gum log -sl info 'Installing VSCodium extension '"$EXTENSION"'' && codium --install-extension "$EXTENSION" && logg success 'Installed '"$EXTENSION"''
     else
-      logg info ''"$EXTENSION"' already installed'
+      gum log -sl info ''"$EXTENSION"' already installed'
     fi
   done
 else
-  logg info 'codium executable not available - skipping plugin install process for it'
+  gum log -sl info 'codium executable not available - skipping plugin install process for it'
 fi

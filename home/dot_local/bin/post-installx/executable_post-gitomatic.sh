@@ -21,32 +21,32 @@
 #     * [Helper script](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_local/bin/executable_gitomatic_service.tmpl
 
 set -Eeuo pipefail
-trap "logg error 'Script encountered an error!'" ERR
+trap "gum log -sl error 'Script encountered an error!'" ERR
 
 if command -v gitomatic > /dev/null; then
   ### Copy gitomatic-service to /usr/local/bin
-  logg info "Copying $HOME/.local/bin/gitomatic-service to /usr/local/bin/gitomatic-service"
+  gum log -sl info "Copying $HOME/.local/bin/gitomatic-service to /usr/local/bin/gitomatic-service"
   sudo cp -f "$HOME/.local/bin/gitomatic-service" /usr/local/bin/gitomatic-servic
   
   ### Copy gitomatic to global directory
   if [ ! -f /usr/local/bin/gitomatic ]; then
-    logg info 'Copying gitomatic executable to /usr/local/bin/gitomatic'
+    gum log -sl info 'Copying gitomatic executable to /usr/local/bin/gitomatic'
     sudo cp -f "$(which gitomatic)" /usr/local/bin/gitomatic
   fi
 
   if [ -d /Applications ] && [ -d /System ]; then
     ### macOS
-    logg info 'Enabling the com.github.muesli.gitomatic LaunchDaemon'
+    gum log -sl info 'Enabling the com.github.muesli.gitomatic LaunchDaemon'
     load-service com.github.muesli.gitomatic
   else
     ### Linux
-    logg info 'Copying gitomatic systemd unit file to /etc/systemd/system/'
+    gum log -sl info 'Copying gitomatic systemd unit file to /etc/systemd/system/'
     sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitomatic/gitomatic.service" /etc/systemd/system/gitomatic.service
-    logg info 'Reloading systemd daemon'
+    gum log -sl info 'Reloading systemd daemon'
     sudo systemctl daemon-reload
-    logg info 'Enabling and starting gitomatic service'
+    gum log -sl info 'Enabling and starting gitomatic service'
     sudo systemctl enable --now gitomatic
   fi
 else
-  logg info 'gitomatic is not installed or it is not available in PATH'
+  gum log -sl info 'gitomatic is not installed or it is not available in PATH'
 fi

@@ -3,7 +3,7 @@
 # @brief Applies ClamAV configuration, updates its database, and configures background services
 
 set -Eeuo pipefail
-trap "logg error 'Script encountered an error!'" ERR
+trap "gum log -sl error 'Script encountered an error!'" ERR
 
 if command -v freshclam > /dev/null; then
     ### Add freshclam.conf
@@ -36,8 +36,8 @@ if command -v freshclam > /dev/null; then
     fi
 
     ### Update database
-    logg info 'Running freshclam to update database'
+    gum log -sl info 'Running freshclam to update database'
     freshclam
 else
-    logg info 'freshclam is not available in the PATH'
+    gum log -sl info 'freshclam is not available in the PATH'
 fi

@@ -64,7 +64,7 @@ In another more complex example, a script that ensures fonts are added to the ap
 find "$HOME/.local/share/fonts" -type f | while read FONT_FILE; do
   BASENAME="$(basename "$FONT_FILE")"
   if [ ! -f "$HOME/Library/Fonts/$BASENAME" ] || [ "$(openssl sha256 "$HOME/Library/Fonts/$BASENAME" | sed 's/.*= //')" != "$(openssl sha256 "$FONT_FILE" | sed 's/.*= //')" ]; then
-    logg info 'Adding '"$BASENAME"' to ~/Library/Fonts'
+    gum log -sl info 'Adding '"$BASENAME"' to ~/Library/Fonts'
     cp "$FONT_FILE" "$HOME/Library/Fonts/$BASENAME"
   fi
 done

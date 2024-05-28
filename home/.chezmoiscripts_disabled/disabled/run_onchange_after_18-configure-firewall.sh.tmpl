@@ -9,11 +9,11 @@
 
 if [ -d /Applications ] && [ -d /System ]; then
     # System is macOS
-    logg info 'Enabling macOS firewall'
+    gum log -sl info 'Enabling macOS firewall'
 elif command -v firewall-cmd > /dev/null; then
     # System is Linux and has firewall-cmd present in PATH
-    logg info 'Setting up firewall using firewall-cmd'
+    gum log -sl info 'Setting up firewall using firewall-cmd'
 elif command -v ufw > /dev/null; then
     # System is Linux and has ufw present in PATH
-    logg info 'Setting up firewall using ufw'
+    gum log -sl info 'Setting up firewall using ufw'
 fi

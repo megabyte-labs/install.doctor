@@ -73,7 +73,7 @@
 #     * [Visual Studio Code `extensions.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/extensions.json)
 
 set -Eeuo pipefail
-trap "logg error 'Script encountered an error!'" ERR
+trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Hides useless error during extension installations
 # Error looks like:
@@ -86,36 +86,36 @@ if command -v code > /dev/null; then
   EXTENSIONS="$(code --list-extensions)"
   jq -r '.recommendations[]' "${XDG_CONFIG_HOME:-$HOME/.config}/Code/User/extensions.json" | while read EXTENSION; do
     if ! echo "$EXTENSIONS" | grep -iF "$EXTENSION" > /dev/null; then
-      logg info 'Installing Visual Studio Code extension '"$EXTENSION"'' && code --install-extension "$EXTENSION"
+      gum log -sl info 'Installing Visual Studio Code extension '"$EXTENSION"'' && code --install-extension "$EXTENSION"
       logg success 'Installed '"$EXTENSION"''
     else
-      logg info ''"$EXTENSION"' already installed'
+      gum log -sl info ''"$EXTENSION"' already installed'
     fi
   done
 else
-  logg info 'code executable not available - skipping plugin install process for it'
+  gum log -sl info 'code executable not available - skipping plugin install process for it'
 fi
 
 if command -v code > /dev/null && command -v npm > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" ]; then
   ### Install linter fallback node_modules / package.json to system or home directory
   if sudo cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" /package.json; then
-    logg info 'Successfully copied linter fallback configurations package.json to /package.json'
-    logg info 'Installing system root directory node_modules'
+    gum log -sl info 'Successfully copied linter fallback configurations package.json to /package.json'
+    gum log -sl info 'Installing system root directory node_modules'
     cd / && sudo npm i --quiet --no-progress --no-package-lock || EXIT_CODE=$?
   else
-    logg warn 'Unable to successfully copy linter fallback configurations package.json to /package.json'
-    logg info 'Installing linter fallback configurations node_modules to home directory instead'
+    gum log -sl warn 'Unable to successfully copy linter fallback configurations package.json to /package.json'
+    gum log -sl info 'Installing linter fallback configurations node_modules to home directory instead'
     cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/vscode/package.json" "$HOME/package.json"
     cd ~ && npm i --quiet --no-progress --no-package-lock || EXIT_CODE=$?
   fi
 
   ### Log message if install failed
   if [ -n "${EXIT_CODE:-}" ]; then
-    logg warn 'Possible error(s) were detected while installing linter fallback configurations to the home directory.'
-    logg info "Exit code: $EXIT_CODE"
+    gum log -sl warn 'Possible error(s) were detected while installing linter fallback configurations to the home directory.'
+    gum log -sl info "Exit code: $EXIT_CODE"
   else
-    logg info 'Installed linter fallback configuration node_modules'
+    gum log -sl info 'Installed linter fallback configuration node_modules'
   fi
 else
-  logg info 'Skipping installation of fallback linter configurations because one or more of the dependencies is missing.'
+  gum log -sl info 'Skipping installation of fallback linter configurations because one or more of the dependencies is missing.'
 fi

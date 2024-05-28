@@ -10,14 +10,14 @@
 
 cleanAptGet() {
   if command -v apt-get > /dev/null; then
-    logg info 'Running sudo apt-get autoclean' && sudo apt-get autoclean
-    logg info 'Running sudo apt-get -y autoremove' && sudo apt-get -y autoremove
+    gum log -sl info 'Running sudo apt-get autoclean' && sudo apt-get autoclean
+    gum log -sl info 'Running sudo apt-get -y autoremove' && sudo apt-get -y autoremove
   fi
 }
 
 cleanupBrew() {
   if command -v brew > /dev/null; then
-    logg info 'Running brew cleanup' && brew cleanup
+    gum log -sl info 'Running brew cleanup' && brew cleanup
   fi
 }
 
@@ -53,7 +53,7 @@ fi
 if [ -d /Applications ] && [ -d /System ]; then
     ### Empty trash
     if command -v m > /dev/null; then
-        logg info 'Emptying trash' && m trash clean
+        gum log -sl info 'Emptying trash' && m trash clean
     fi
 fi
 

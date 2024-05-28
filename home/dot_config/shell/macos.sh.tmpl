@@ -6,10 +6,10 @@
 #     This script houses a wide range of macOS system tweaks that are intended to improve the developer experience on macOS,
 #     as well as improve security. Some of the tweaks include modifying default settings for various applications.
 
-logg info 'Applying optimized macOS settings'
+gum log -sl info 'Applying optimized macOS settings'
 
 # Ask for the administrator password upfront
-logg info 'A sudo password is required to apply some of the macOS optimizations.'
+gum log -sl info 'A sudo password is required to apply some of the macOS optimizations.'
 sudo echo "Sudo access granted."
 
 # Log commands
@@ -926,5 +926,5 @@ defaults write com.tapbots.TweetbotMac OpenURLsDirectly -bool true
 defaults -currentHost write com.apple.screensaver moduleDict -dict moduleName Brooklyn path "/System/Library/Screen Savers/Drift.saver"
 
 logg success 'Done applying macOS settings'
-logg info 'Some of these changes  may require a logout/restart to take effect'
+gum log -sl info 'Some of these changes  may require a logout/restart to take effect'
 {{ end -}}

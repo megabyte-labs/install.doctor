@@ -3,29 +3,29 @@
 ### Load AWS secrets
 if [ -d /Applications ] && [ -d /System ] && [ ! -d /Applications/Xcode.app ]; then
     ### Remove old files
-    logg info 'Removing old ~/.xcodeinstall folder' && rm -rf ~/.xcodeinstall
+    gum log -sl info 'Removing old ~/.xcodeinstall folder' && rm -rf ~/.xcodeinstall
 
     ### Ensure xcodeinstall installed
     if ! command -v xcodeinstall > /dev/null; then
-        logg info 'Installing xcodeinstall'
+        gum log -sl info 'Installing xcodeinstall'
         brew install sebsto/macos/xcodeinstall
     fi
 
     ### Authenticate
-    logg info 'Authenticating with AWS via xcodeinstall'
+    gum log -sl info 'Authenticating with AWS via xcodeinstall'
     xcodeinstall authenticate -s "$AWS_DEFAULT_REGION"
 
     ### Download files
     while read XCODE_DOWNLOAD_ITEM; do
       if [[ "$XCODE_DOWNLOAD_ITEM" != *"Command Line Tools"* ]]; then
         DOWNLOAD_ID="$(echo "$XCODE_DOWNLOAD_ITEM" | sed 's/^\[\(.*\)\] .*/\1/')"
-        logg info "Downloading $XCODE_DOWNLOAD_ITEM"
+        gum log -sl info "Downloading $XCODE_DOWNLOAD_ITEM"
         echo "$DOWNLOAD_ID" | xcodeinstall download -s "$AWS_DEFAULT_REGION"
       fi
     done < <(xcodeinstall list -s "$AWS_DEFAULT_REGION" | grep --invert-match 'Release Candidate' | grep --invert-match ' beta ' | grep ' Xcode \d\d ')
     
     ### Install Xcode
-    logg info 'Installing Xcode'
+    gum log -sl info 'Installing Xcode'
     xcodeinstall install --name "$(basename "$(find ~/.xcodeinstall/download -maxdepth 1 -name "*.xip")")"
 
     ### Install Command Line Tools
@@ -33,7 +33,7 @@ if [ -d /Applications ] && [ -d /System ] && [ ! -d /Applications/Xcode.app ]; t
     # xcodeinstall install --name "$(basename "$(find ~/.xcodeinstall/download -maxdepth 1 -name "*Command Line Tools*")")"
 
     ### Install Additional Tools
-    logg info 'Installing Additional Tools'
+    gum log -sl info 'Installing Additional Tools'
     while read ADDITIONAL_TOOLS; do
       hdiutil attach "$ADDITIONAL_TOOLS"
       rm -rf "/Applications/Additional Tools"
@@ -42,7 +42,7 @@ if [ -d /Applications ] && [ -d /System ] && [ ! -d /Applications/Xcode.app ]; t
     done < <(find ~/.xcodeinstall/download -name "Additional Tools*")
 
     ### Install Font Tools
-    logg info 'Installing Font Tools'
+    gum log -sl info 'Installing Font Tools'
     while read FONT_TOOLS; do
       hdiutil attach "$FONT_TOOLS"
       cd "$(find /Volumes -maxdepth 1 -name "*Font Tools*")"

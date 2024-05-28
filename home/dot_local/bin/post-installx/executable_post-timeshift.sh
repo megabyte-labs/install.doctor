@@ -5,14 +5,14 @@
 #     This script applies a Timeshift configuration that defines how Timeshift should maintain system backups.
 
 set -Eeuo pipefail
-trap "logg error 'Script encountered an error!'" ERR
+trap "gum log -sl error 'Script encountered an error!'" ERR
 
 if command -v timeshift > /dev/null; then
-  logg info 'Ensuring /etc/timeshift is a directory'
+  gum log -sl info 'Ensuring /etc/timeshift is a directory'
   sudo mkdir -p /etc/timeshift
   TIMESHIFT_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/timeshift/timeshift.json"
-  logg info "Copying $TIMESHIFT_CONFIG to /etc/timeshift/timeshift.json"
+  gum log -sl info "Copying $TIMESHIFT_CONFIG to /etc/timeshift/timeshift.json"
   sudo cp -f "$TIMESHIFT_CONFIG" /etc/timeshift/timeshift.json
 else
-  logg info 'The timeshift executable is not available'
+  gum log -sl info 'The timeshift executable is not available'
 fi

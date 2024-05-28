@@ -15,7 +15,7 @@
 #     * [Tor configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/tor/torrc)
 
 set -Eeuo pipefail
-trap "logg error 'Script encountered an error!'" ERR
+trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Determine the Tor configuration location by checking whether the system is macOS or Linux
 if [ -d /Applications ] && [ -d /System ]; then
@@ -32,38 +32,38 @@ TORRC_CONFIG="$TORRC_CONFIG_DIR/torrc"
 if command -v torify > /dev/null; then
   if [ -d  "$TORRC_CONFIG_DIR" ]; then
     ### Copy the configuration from `${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc` to the system configuration file location
-    logg info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc to $TORRC_CONFIG"
+    gum log -sl info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc to $TORRC_CONFIG"
     sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc" "$TORRC_CONFIG"
     sudo chmod 600 "$TORRC_CONFIG"
     ### Enable and restart the Tor service
     if [ -d /Applications ] && [ -d /System ]; then
       ### macOS
       if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor" ] && [ ! -f "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc" ]; then
-        logg info "Symlinking /usr/local/etc/tor/torrc to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc"
+        gum log -sl info "Symlinking /usr/local/etc/tor/torrc to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc"
         ln -s /usr/local/etc/tor/torrc "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc"
       else
         if [ -L "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc" ]; then
-          logg info ""${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc" already symlinked to $TORRC_CONFIG"
+          gum log -sl info ""${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc" already symlinked to $TORRC_CONFIG"
         else
-          logg warn ""${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc" not symlinked!"
+          gum log -sl warn ""${HOMEBREW_PREFIX:-/opt/homebrew}/etc/tor/torrc" not symlinked!"
         fi
       fi
-      logg info 'Running brew services restart tor'
+      gum log -sl info 'Running brew services restart tor'
       brew services restart tor && logg success 'Tor successfully restarted'
     else
       if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
         ### Linux
-        logg info 'Running sudo systemctl enable / restart tor'
+        gum log -sl info 'Running sudo systemctl enable / restart tor'
         sudo systemctl enable tor
         sudo systemctl restart tor
         logg success 'Tor service enabled and restarted'
       else
-        logg info 'Environment is WSL so the Tor systemd service will not be enabled / restarted'
+        gum log -sl info 'Environment is WSL so the Tor systemd service will not be enabled / restarted'
       fi
     fi
   else
-    logg warn 'The '"$TORRC_CONFIG_DIR"' directory is missing'
+    gum log -sl warn 'The '"$TORRC_CONFIG_DIR"' directory is missing'
   fi
 else
-  logg warn 'torify is missing from the PATH'
+  gum log -sl warn 'torify is missing from the PATH'
 fi
