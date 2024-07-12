@@ -623,9 +623,7 @@ softwarePackages:
     _name: AstroNvim
     _post: |
       #!/usr/bin/env bash
-      # TODO
-      echo "Waiting on command that installs nvim plugins"
-      # bash -ci "nvim --headless -c 'quitall'"
+      bash -ci "nvim --headless +q"
     _short: "AstroNvim is a plugin for Neovim that provides astronomy-related features and tools for users interested in astronomy while coding.                                                                       "
   atuin:
     _bin: atuin
