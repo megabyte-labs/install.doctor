@@ -312,6 +312,8 @@ alias wget="wget --hsts-file ~/.local/wget-hsts"
 ### Yarn
 alias yarn='yarn --use-yarnrc "${XDG_CONFIG_HOME:-$HOME/.config}/yarn/config"'
 
+alias yt-dl-audio='yt-dlp --ignore-errors --output "%(title)s.%(ext)s" --extract-audio --audio-format mp3'
+
 # Running this will update GPG to point to the current YubiKey
 alias yubi-stub='gpg-connect-agent "scd serialno" "learn --force" /bye'
 
