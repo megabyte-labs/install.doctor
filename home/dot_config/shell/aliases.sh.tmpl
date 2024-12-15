@@ -296,6 +296,9 @@ fi
 # Recursively encrypts files using Ansible Vault
 alias vault-dir='find . -type f -printf "%h/\"%f\" " | xargs ansible-vault encrypt'
 
+# Removes audio from a video
+alias removeaudio='ffmpeg -i "$1" -an -c:v copy "${1%.*}_noaudio.${1##*.}"'
+
 # Reverse engineer Dockerfiles from containers
 alias whaler="docker run -t --rm -v /var/run/docker.sock:/var/run/docker.sock:ro pegleg/whaler"
 
