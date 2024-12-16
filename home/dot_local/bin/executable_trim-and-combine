@@ -2,16 +2,15 @@
 
 # ==============================================
 # Script Name: trim_and_combine.sh
-# Description: This script trims the first and last minute from a video (MP4)
-#              and combines it with an audio file (WEBM), ensuring the video
-#              matches the audio's length. The output is QuickTime-compatible.
+# Description: Trims the first and last minute of an MP4 video,
+#              combines it with an audio WEBM file, and outputs a
+#              QuickTime-compatible MP4 file.
 # Usage:       ./trim_and_combine.sh <input_video.mp4> <input_audio.webm> [output_video.mp4]
 # ==============================================
 
-# Ensure the script exits on any error
-set -e
+set -e  # Exit immediately on any error
 
-# Display usage information
+# Function to display usage instructions
 usage() {
     echo "Usage: $0 <input_video.mp4> <input_audio.webm> [output_video.mp4]"
     echo "  - input_video.mp4: Path to the input MP4 video file."
@@ -20,7 +19,7 @@ usage() {
     exit 1
 }
 
-# Validate arguments
+# Check for correct number of arguments
 if [ "$#" -lt 2 ] || [ "$#" -gt 3 ]; then
     usage
 fi
@@ -30,7 +29,7 @@ INPUT_VIDEO=$1
 INPUT_AUDIO=$2
 OUTPUT_VIDEO=${3:-output.mp4}  # Default to "output.mp4" if no third argument is provided
 
-# Ensure input files exist
+# Check if input files exist
 if [ ! -f "$INPUT_VIDEO" ]; then
     echo "Error: Video file '$INPUT_VIDEO' not found!" >&2
     exit 1
@@ -61,17 +60,18 @@ VIDEO_END_TIME=$(awk "BEGIN {print $AUDIO_DURATION - 60}")
 echo "Processing video..."
 ffmpeg -i "$INPUT_VIDEO" -i "$INPUT_AUDIO" \
     -ss 00:01:00 -to "$VIDEO_END_TIME" \
-    -c:v libx264 -preset fast -crf 23 \
-    -c:a aac -b:a 128k -movflags +faststart \
+    -c:v libx264 -preset slow -crf 23 -profile:v high -level:v 4.0 -pix_fmt yuv420p \
+    -c:a aac -b:a 160k -movflags +faststart \
     -shortest "$OUTPUT_VIDEO"
 
-# Check if output file was created successfully
+# Check if the output file was created successfully
 if [ -f "$OUTPUT_VIDEO" ]; then
     echo "Successfully created output file: $OUTPUT_VIDEO"
+    echo "The output video is now compatible with QuickTime."
 else
     echo "Error: Failed to create the output video." >&2
     exit 1
 fi
 
 # Final message
-echo "Done! Output video is QuickTime-compatible."
+echo "Done! Output video has been optimized for QuickTime playback."
