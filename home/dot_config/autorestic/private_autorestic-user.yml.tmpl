@@ -134,33 +134,33 @@ locations:
             curl -m 10 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} SUCCESS / Host: ${HOST} / User: ${USER} / Home: ${HOME}" "https://health.{{ .host.domain }}/ping/${HEALTHCHECK_UUID}"
           }
           healthcheck &
-  home-s3:
-    from: ~/
-    to: home-s3
-    cron: '0 */12 * * *'
-    <<: *user
-    hooks:
-      before:
-        - |
-          healthcheck() {
-            HEALTHCHECK_UUID="$(curl https://health.{{ .host.domain }}/api/v1/checks/ --header "X-Api-Key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "HEALTHCHECKS_API_KEY")) }}{{ includeTemplate "secrets/HEALTHCHECKS_API_KEY" | decrypt | trim }}{{ else }}{{ default "" (env "HEALTHCHECKS_API_KEY") }}{{ end }}" --data "{\"name\": \"Autorestic Home Directory Backup - Location / ${AUTORESTIC_LOCATION} / Host {{ .host.hostname }} / User {{ .user.username }})\", \"channels\": \"*\", \"schedule\": \"0 * * * *\", \"tags\": \"host-{{ .host.hostname }} user-{{ .user.username }} location-${AUTORESTIC_LOCATION} home-directory\", \"tz\": \"{{ .user.timezone }}\", \"desc\": \"The user folder location (${AUTORESTIC_LOCATION}) for {{ .user.username }} on {{ .host.hostname }}\", \"grace\": 3600}" | jq -r '.ping_url' | sed 's/.*\///')"
-            curl -m 10 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} BEFORE / Host: ${HOST} / User: ${USER} / Home: ${HOME}" "https://health.{{ .host.domain }}/ping/${HEALTHCHECK_UUID}/start"
-          }
-          healthcheck &
-      failure:
-        - |
-          healthcheck() {
-            HEALTHCHECK_UUID="$(curl https://health.{{ .host.domain }}/api/v1/checks/ --header "X-Api-Key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "HEALTHCHECKS_API_KEY")) }}{{ includeTemplate "secrets/HEALTHCHECKS_API_KEY" | decrypt | trim }}{{ else }}{{ default "" (env "HEALTHCHECKS_API_KEY") }}{{ end }}" --data "{\"name\": \"Autorestic Home Directory Backup - Location / ${AUTORESTIC_LOCATION} / Host {{ .host.hostname }} / User {{ .user.username }})\", \"channels\": \"*\", \"schedule\": \"0 * * * *\", \"tags\": \"host-{{ .host.hostname }} user-{{ .user.username }} location-${AUTORESTIC_LOCATION} home-directory\", \"tz\": \"{{ .user.timezone }}\", \"desc\": \"The user folder location (${AUTORESTIC_LOCATION}) for {{ .user.username }} on {{ .host.hostname }}\", \"grace\": 3600}" | jq -r '.ping_url' | sed 's/.*\///')"
-            curl -m 10 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} FAILURE / Host: ${HOST} / User: ${USER} / Home: ${HOME}" "https://health.{{ .host.domain }}/ping/${HEALTHCHECK_UUID}/fail"
-          }
-          healthcheck &
-      success:
-        - |
-          healthcheck() {
-            HEALTHCHECK_UUID="$(curl https://health.{{ .host.domain }}/api/v1/checks/ --header "X-Api-Key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "HEALTHCHECKS_API_KEY")) }}{{ includeTemplate "secrets/HEALTHCHECKS_API_KEY" | decrypt | trim }}{{ else }}{{ default "" (env "HEALTHCHECKS_API_KEY") }}{{ end }}" --data "{\"name\": \"Autorestic Home Directory Backup - Location / ${AUTORESTIC_LOCATION} / Host {{ .host.hostname }} / User {{ .user.username }})\", \"channels\": \"*\", \"schedule\": \"0 * * * *\", \"tags\": \"host-{{ .host.hostname }} user-{{ .user.username }} location-${AUTORESTIC_LOCATION} home-directory\", \"tz\": \"{{ .user.timezone }}\", \"desc\": \"The user folder location (${AUTORESTIC_LOCATION}) for {{ .user.username }} on {{ .host.hostname }}\", \"grace\": 3600}" | jq -r '.ping_url' | sed 's/.*\///')"
-            curl -m 10 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} SUCCESS / Host: ${HOST} / User: ${USER} / Home: ${HOME}" "https://health.{{ .host.domain }}/ping/${HEALTHCHECK_UUID}"
-          }
-          healthcheck &
+  # home-s3:
+  #   from: ~/
+  #   to: home-s3
+  #   cron: '0 */12 * * *'
+  #   <<: *user
+  #   hooks:
+  #     before:
+  #       - |
+  #         healthcheck() {
+  #           HEALTHCHECK_UUID="$(curl https://health.{{ .host.domain }}/api/v1/checks/ --header "X-Api-Key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "HEALTHCHECKS_API_KEY")) }}{{ includeTemplate "secrets/HEALTHCHECKS_API_KEY" | decrypt | trim }}{{ else }}{{ default "" (env "HEALTHCHECKS_API_KEY") }}{{ end }}" --data "{\"name\": \"Autorestic Home Directory Backup - Location / ${AUTORESTIC_LOCATION} / Host {{ .host.hostname }} / User {{ .user.username }})\", \"channels\": \"*\", \"schedule\": \"0 * * * *\", \"tags\": \"host-{{ .host.hostname }} user-{{ .user.username }} location-${AUTORESTIC_LOCATION} home-directory\", \"tz\": \"{{ .user.timezone }}\", \"desc\": \"The user folder location (${AUTORESTIC_LOCATION}) for {{ .user.username }} on {{ .host.hostname }}\", \"grace\": 3600}" | jq -r '.ping_url' | sed 's/.*\///')"
+  #           curl -m 10 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} BEFORE / Host: ${HOST} / User: ${USER} / Home: ${HOME}" "https://health.{{ .host.domain }}/ping/${HEALTHCHECK_UUID}/start"
+  #         }
+  #         healthcheck &
+  #     failure:
+  #       - |
+  #         healthcheck() {
+  #           HEALTHCHECK_UUID="$(curl https://health.{{ .host.domain }}/api/v1/checks/ --header "X-Api-Key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "HEALTHCHECKS_API_KEY")) }}{{ includeTemplate "secrets/HEALTHCHECKS_API_KEY" | decrypt | trim }}{{ else }}{{ default "" (env "HEALTHCHECKS_API_KEY") }}{{ end }}" --data "{\"name\": \"Autorestic Home Directory Backup - Location / ${AUTORESTIC_LOCATION} / Host {{ .host.hostname }} / User {{ .user.username }})\", \"channels\": \"*\", \"schedule\": \"0 * * * *\", \"tags\": \"host-{{ .host.hostname }} user-{{ .user.username }} location-${AUTORESTIC_LOCATION} home-directory\", \"tz\": \"{{ .user.timezone }}\", \"desc\": \"The user folder location (${AUTORESTIC_LOCATION}) for {{ .user.username }} on {{ .host.hostname }}\", \"grace\": 3600}" | jq -r '.ping_url' | sed 's/.*\///')"
+  #           curl -m 10 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} FAILURE / Host: ${HOST} / User: ${USER} / Home: ${HOME}" "https://health.{{ .host.domain }}/ping/${HEALTHCHECK_UUID}/fail"
+  #         }
+  #         healthcheck &
+  #     success:
+  #       - |
+  #         healthcheck() {
+  #           HEALTHCHECK_UUID="$(curl https://health.{{ .host.domain }}/api/v1/checks/ --header "X-Api-Key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "HEALTHCHECKS_API_KEY")) }}{{ includeTemplate "secrets/HEALTHCHECKS_API_KEY" | decrypt | trim }}{{ else }}{{ default "" (env "HEALTHCHECKS_API_KEY") }}{{ end }}" --data "{\"name\": \"Autorestic Home Directory Backup - Location / ${AUTORESTIC_LOCATION} / Host {{ .host.hostname }} / User {{ .user.username }})\", \"channels\": \"*\", \"schedule\": \"0 * * * *\", \"tags\": \"host-{{ .host.hostname }} user-{{ .user.username }} location-${AUTORESTIC_LOCATION} home-directory\", \"tz\": \"{{ .user.timezone }}\", \"desc\": \"The user folder location (${AUTORESTIC_LOCATION}) for {{ .user.username }} on {{ .host.hostname }}\", \"grace\": 3600}" | jq -r '.ping_url' | sed 's/.*\///')"
+  #           curl -m 10 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} SUCCESS / Host: ${HOST} / User: ${USER} / Home: ${HOME}" "https://health.{{ .host.domain }}/ping/${HEALTHCHECK_UUID}"
+  #         }
+  #         healthcheck &
 
 backends:
   apps-local:
