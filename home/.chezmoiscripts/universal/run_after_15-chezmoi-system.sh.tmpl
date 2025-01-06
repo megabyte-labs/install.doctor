@@ -4,4 +4,6 @@
 # @description
 #     This script applies the `system/` Chezmoi directory to the root of the system.
 
-gum log -sl info 'TODO - Implement system configuration apply'
+gum log -sl info 'Running sudo chezmoi --source "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/system" --destination / apply'
+sudo chezmoi --source "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/system" --destination / apply
+gum log -sl info 'Finished applying system configuration files'
