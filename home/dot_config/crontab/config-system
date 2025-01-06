@@ -1,6 +1,6 @@
 PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:/opt/homebrew/bin
 
-*/5 * * * *      command -v autorestic > /dev/null && autorestic --ci cron > /tmp/autorestic-system.log 2>&1
+*/30 * * * *      command -v autorestic > /dev/null && autorestic --ci cron > /tmp/autorestic-system.log 2>&1
 
 # * * * * * command to be executed
 # ┯ ┯ ┯ ┯ ┯

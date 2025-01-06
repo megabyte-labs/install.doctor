@@ -36,7 +36,7 @@ allocateSwap() {
       else
         SWAP_SPACE="$MEMORY_IN_GB"
       fi
-  
+
       ### Create /swapfile
       FS_TYPE="$(df -Th | grep ' /$' | sed 's/[^ ]*\s*\([^ ]*\).*/\1/')"
       if [ "$FS_TYPE" == 'btrfs' ]; then
@@ -499,7 +499,7 @@ installSystemPips() {
     gum log -sl info 'Ensuring macOS system python3 has latest version of pip'
     /Library/Developer/CommandLineTools/usr/bin/python3 -m pip install --upgrade pip
   fi
-  
+
   ### Python 3
   if command -v pip3 > /dev/null; then
     if command -v python3 > /dev/null; then

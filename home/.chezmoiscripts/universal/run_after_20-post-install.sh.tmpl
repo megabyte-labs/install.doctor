@@ -124,7 +124,7 @@ candyIconTweaks() {
     # sudo cp -f "$SOURCE_DIR/github-desktop.svg" "$TARGET_DIR/io.github.shiftey.Desktop"
     # sudo cp -f "$SOURCE_DIR/inkscape.svg" "$TARGET_DIR/inkscape_inkscape.desktop"
     # sudo cp -f "$SOURCE_DIR/cutter.svg" "$TARGET_DIR/re.rizin.cutter.svg"
-    # sudo cp -f "$SOURCE_DIR/arduino.svg" "$TARGET_DIR/cc.arduino.IDE2.svg"    
+    # sudo cp -f "$SOURCE_DIR/arduino.svg" "$TARGET_DIR/cc.arduino.IDE2.svg"
     # sudo cp -f "$SOURCE_DIR/intellij.svg" "$TARGET_DIR/intellij-idea-community_intellij-idea-community.svg"
     # sudo cp -f "$SOURCE_DIR/google-chrome.svg" "$TARGET_DIR/com.google.Chrome.svg"
     # sudo cp -f "$SOURCE_DIR/firefox.svg" "$TARGET_DIR/org.mozilla.firefox.svg"
@@ -140,7 +140,7 @@ candyIconTweaks() {
     ### Missing icons
     # The following applications are missing icons after using the "Full" installer. The application name
     # is listed. To the right of each hyphen is the name of the `.desktop` file.
-    # Webkit Font Generator - 
+    # Webkit Font Generator -
     # Lepton - lepton_lepton
     # scrcpygui
     # scrcpy - scrcpy_scrcpy
@@ -395,6 +395,21 @@ enableAutoUpdateDarwin() {
   fi
 }
 
+ensureAutoresticLocation() {
+  ### User
+  if [ ! -d /var/local/backups/user ]; then
+    sudo mkdir -p /var/local/backups/user
+  fi
+  sudo find /var/local/backups/user -type d -exec chmod 755 {} \;
+  sudo find /var/local/backups/user -type f -exec chmod 644 {} \;
+  sudo chown -Rf "$USER" /var/local/backups/user
+
+  ### Docker
+  if [ ! -d /var/local/backups/docker ]; then
+    sudo mkdir -p /var/local/backups/docker
+  fi
+}
+
 # Temporary next line for debugging
 export DEBUG=true
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
@@ -409,6 +424,7 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   removeUbuntuLogoBranding
   setDefaultBrowser
   ubuntuDashToDockFix
+  ensureAutoresticLocation
 else
   bashItPlugins &
   candyIconTweaks &
@@ -420,6 +436,7 @@ else
   removeUbuntuLogoBranding &
   setDefaultBrowser &
   ubuntuDashToDockFix &
+  ensureAutoresticLocation &
   wait
 fi
 
