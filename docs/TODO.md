@@ -288,3 +288,8 @@ The following items have been reviewed but need to be revisited due to complexit
 
 ## Referral Links
 https://www.visible.com/get/?3JMZG3W
+
+
+Configure freshclam for clamav to send emails to .user.email when findings are reported
+
+Also, optimize other settings

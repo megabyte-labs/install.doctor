@@ -338,15 +338,15 @@ tasks:
       start: Installing the "Development Tools" group
       success: Successfully installed the "Development Tools" group
     cmds:
-      - mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/bodega"
+      - mkdir -p "$HOME/.config/bodega"
       - |
-        if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}HOME:-$HOME/.config}/bodega/yum-devtools-check-ran" ]; then
+        if [ ! -f "$HOME/.config/bodega/yum-devtools-check-ran" ]; then
           if type dnf &> /dev/null; then
-            dnf groupinfo 'Development Tools' &> "${XDG_CONFIG_HOME:-$HOME/.config}/bodega/dnf-devtools-check-ran"
+            dnf groupinfo 'Development Tools' &> "$HOME/.config/bodega/dnf-devtools-check-ran"
           else
-            yum grouplist 'Development Tools' &> "${XDG_CONFIG_HOME:-$HOME/.config}/bodega/yum-devtools-check-ran"
+            yum grouplist 'Development Tools' &> "$HOME/.config/bodega/yum-devtools-check-ran"
           fi
-          DEV_TOOLS_NOT_INSTALLED="$(grep 'No groups match' < "${XDG_CONFIG_HOME:-$HOME/.config}/bodega/yum-devtools-check-ran" > /dev/null)"
+          DEV_TOOLS_NOT_INSTALLED="$(grep 'No groups match' < "$HOME/.config/bodega/yum-devtools-check-ran" > /dev/null)"
           if [[ "$DEV_TOOLS_NOT_INSTALLED" == '0' ]]; then
             if type sudo &> /dev/null; then
               if type dnf &> /dev/null; then
@@ -362,7 +362,7 @@ tasks:
               fi
             fi
           fi
-          touch "${XDG_CONFIG_HOME:-$HOME/.config}/bodega/yum-devtools-check-ran"
+          touch "$HOME/.config/bodega/yum-devtools-check-ran"
         fi
 
   common:linux:redhat:fedora:

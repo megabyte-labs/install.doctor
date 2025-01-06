@@ -14,13 +14,13 @@ if [ -d /Applications ] && [ -d /System ]; then
   export FIREFOX_APPDATA="$HOME/Library/Application Support/Firefox/Profiles"
   export GOOGLE_CHROME_APPDATA="$HOME/Library/Application Support/Google/Chrome/Default"
   export LOGI_OPTIONS_PLUS_APPDATA="$HOME/Library/Application Support/LogiOptionsPlus"
-  export MAILSPRING_APPDATA="$HOME/Library/Application Support/Mailspring"
   export MARK_TEXT_APPDATA="$HOME/Library/Application Support/marktext"
   export MICROSOFT_EDGE_APPDATA="$HOME/Library/Application Support/Microsoft Edge/Default"
   export NOTION_APPDATA="$HOME/Library/Application Support/Notion"
   export PIECES_OS_APPDATA="$HOME/Library/Application Support/com.pieces.os"
   export RAYCAST_APPDATA="$HOME/Library/Application Support/com.raycast.macos"
   # export REMMINA_APPDATA - Remmina not available on macOS
+  export SPACEDRIVE_APPDATA="$HOME/Library/Application Support/spacedrive"
   export TOR_BROWSER_APPDATA="$HOME/Library/Application Support/TorBrowser-Data/Tor"
   export WARP_TERMINAL_APPDATA="$HOME/Library/Application Support/dev.warp.Warp-Stable"
 else
@@ -38,6 +38,7 @@ else
   # export NOTION_APPDATA - Notion does not have a Linux app
   export PIECES_OS_APPDATA="$HOME/snap/pieces-os/current"
   export REMMINA_APPDATA="$HOME/.var/app/org.remmina.Remmina/config/remmina/remmina.pref"
+  export SPACEDRIVE_APPDATA="$HOME/.var/app/TODO"
   export TOR_BROWSER_APPDATA="$HOME/.var/app/com.github.micahflee.torbrowser-launcher/data/torbrowser/tbb/x86_64/tor-browser/Browser/TorBrowser/Data/"
   export WARP_TERMINAL_APPDATA="$HOME/.local/state/warp-terminal/warp.sqlite"
 fi

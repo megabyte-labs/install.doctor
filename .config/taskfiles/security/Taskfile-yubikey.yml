@@ -319,5 +319,5 @@ tasks:
       A new method is detailed here: https://www.yubico.com/blog/github-now-supports-ssh-security-keys/
       It may be worth migrating to that approach.
     cmds:
-      - brew services restart yubikey-agent
+      - brew services start yubikey-agent
       - yubikey-agent -setup

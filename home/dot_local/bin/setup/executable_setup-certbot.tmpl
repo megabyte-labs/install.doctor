@@ -16,14 +16,6 @@
 # TODO: Replace templated logic with live calls using yq
 
 if command -v certbot > /dev/null; then
-  ### Ensure configuration files are in place
-  if [ -f "$HOME/.local/etc/letsencrypt/dns-cloudflare.ini" ] && [ -f "$HOME/.local/etc/letsencrypt/letsencryptcli.ini" ]; then
-    gum log -sl info 'Copying Lets Encrypt / Certbot configurations to /etc/letsencrypt'
-    sudo mkdir -p /etc/letsencrypt
-    sudo cp -f "$HOME/.local/etc/letsencrypt/dns-cloudflare.ini" /etc/letsencrypt/dns-cloudflare.ini
-    sudo cp -f "$HOME/.local/etc/letsencrypt/letsencryptcli.ini" /etc/letsencrypt/letsencryptcli.ini
-  fi
-
   ### Ensure certificate is present
   if [ -f '/etc/letsencrypt/live/{{ .host.domain }}/cert.pem' ]; then
     gum log -sl info 'LetsEncrypt SSL certificate is already available'
