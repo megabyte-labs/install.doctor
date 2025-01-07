@@ -602,10 +602,6 @@ setHostname() {
 setNtpServer() {
   if command -v m > /dev/null; then
     ### macOS
-    gum log -sl info 'Copying ~/.local/etc/ntp.conf to /etc/ntp.conf'
-    sudo cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/dot_local/etc/ntp.conf" /etc/ntp.conf
-    gum log -sl info 'Copying ~/.local/etc/ntp.conf to /private/etc/ntp.conf'
-    sudo cp -f "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/dot_local/etc/ntp.conf" /private/etc/ntp.conf
     gum log -sl info 'Turning off setusingnetworktime for 2 seconds' && sudo systemsetup -setusingnetworktime off 2>/dev/null 1>&2
     sleep 2
     gum log -sl info 'Re-enabling setusingnetworktime' && sudo systemsetup -setusingnetworktime on 2>/dev/null 1>&2
