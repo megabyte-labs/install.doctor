@@ -12,8 +12,7 @@ if command -v VirtualBox > /dev/null; then
   ### Install VirtualBox extension pack if it is not installed already
   if [ ! -d /usr/lib/virtualbox/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack ] && [ ! -d /Applications/VirtualBox.app/Contents/MacOS/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack ]; then
     gum log -sl info 'Acquiring VirtualBox version information'
-    VBOX_VERSION="$(VirtualBox --help | head -n 1 | cut -f 6 -d' ')"
-    VBOX_VERSION="${VBOX_VERSION//v}"
+    VBOX_VERSION="$(VirtualBox --help | head -n 1 | sed -n 's/.*v\([0-9]\+\.[0-9]\+\.[0-9]\+\).*/\1/p')"
     ### Set up folders
     # Check for macOS installation before creating ExtensionPacks folder on Linux machines
     if [ ! -d /Applications/VirtualBox.app ]; then

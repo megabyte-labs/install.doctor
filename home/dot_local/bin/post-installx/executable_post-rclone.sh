@@ -95,7 +95,7 @@ EOT
   gum log -sl info 'Ensuring /var/cache/rclone exists'
   sudo mkdir -p /var/cache/rclone
   sudo chmod 750 /var/cache/rclone
-  sudo chown -Rf rclone:rclone /var/cache/rclone
+  sudo chown -Rf :rclone /var/cache/rclone
 
   ### Setup /var/log/rclone
   gum log -sl info 'Ensuring /var/log/rclone exists'

@@ -110,7 +110,7 @@ create_macos_user() {
         USER_ID="$(find_next_system_id_macos "Users" "UniqueID")"
         gum log -sl info "Initializing $USERNAME user with ID $USER_ID"
         sudo dscl . -create "/Users/$USERNAME"
-        sudo dscl . -create "/Users/$USERNAME" UserShell /bin/bash
+        sudo dscl . -create "/Users/$USERNAME" UserShell /usr/bin/false
         sudo dscl . -create "/Users/$USERNAME" RealName "$USERNAME"
         sudo dscl . -create "/Users/$USERNAME" UniqueID "$USER_ID"
         sudo dscl . -create "/Users/$USERNAME" PrimaryGroupID "$GROUPNAME"

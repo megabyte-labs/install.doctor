@@ -144,10 +144,10 @@ data:
     headless: {{ $headless }}
     home: "{{ .chezmoi.homeDir }}"
     homeParentFolder: "{{ if eq .chezmoi.os "linux" }}/home{{ else if eq .chezmoi.os "darwin" }}/Users{{ else }}C:\Users{{ end }}"
-    hostname: "{{ $hostname | lower -}}"
+    hostname: "{{ $hostname | lower | trim -}}"
     noReplyEmail: no-reply@megabyte.space
     samba:
-      netbiosName: "{{ $sambaNetBiosName | lower -}}"
+      netbiosName: "{{ $sambaNetBiosName | lower | trim -}}"
       workgroup: "{{ $sambaWorkGroupName }}"
     smtp:
       from: automation@megabyte.space

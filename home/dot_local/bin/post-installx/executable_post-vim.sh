@@ -2,9 +2,6 @@
 # @file VIM Plugins AOT Installation
 # @brief This script triggers VIM to pre-install plugins so that VIM loads into the desired state the first time it is invoked
 
-set -Eeo pipefail
-trap "gum log -sl error 'Script encountered an error!'" ERR
-
 # @description This script installs the extensions defined in `${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json`
 #     which should correlate to the Coc extensions defined in `${XDG_CONFIG_HOME:-$HOME/.config}/vim/vimrc`.
 installCocExtensions() {
