@@ -846,11 +846,20 @@ softwarePackages:
     _name: Basictex
     _when: "! test -d /Library/TeX"
     cask: basictex
+  code2prompt:
+    _bin: code2prompt
+    _desc: Converts git repository or folder to LLM digestible markdown file
+    _github: https://github.com/mufeedvh/code2prompt
+    _name: code2prompt
+    cargo: code2prompt
+    yay: code2prompt
+    nix-env: nixpkgs.code2prompt
   bat:
     _bin: bat
     _desc: "[bat](https://github.com/sharkdp/bat) is a cat(1) clone with syntax highlighting and Git integration."
     _github: https://github.com/sharkdp/bat
     _name: bat
+    _preload: true
     _short: "bat is a cat(1) clone with syntax highlighting and Git integration.                                                                                                                                       "
     apk: bat
     apt: bat
