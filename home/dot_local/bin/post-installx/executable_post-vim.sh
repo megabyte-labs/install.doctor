@@ -20,7 +20,7 @@ installCocExtensions() {
 }
 
 ### Install VIM plugins
-gum log -sl info "Installing VIM plugins" && vim +'PlugInstall --sync' +qall
+gum log -sl info "Installing VIM plugins" && vim -E -s +'PlugInstall --sync' +qall
 
 ### Install VIM coc plugins
 gum log -sl info "Updating VIM coc extensions" && installCocExtensions
