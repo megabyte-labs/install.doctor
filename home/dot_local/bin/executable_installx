@@ -604,12 +604,13 @@ async function main() {
             } else {
                 const groups = typeof x[groupsField] === 'string' ? [x[groupsField]] : x[groupsField]
                 return groups.flatMap(y => {
-                    return $`sudo "${os.homedir()}/.local/bin/add-usergroup" "${y}" "${y}" && sudo "${os.homedir()}/.local/bin/add-usergroup" "${process.env.USER}" "${y}"`
+                    return `sudo "${os.homedir()}/.local/bin/add-usergroup" "${y}" "${y}" && sudo "${os.homedir()}/.local/bin/add-usergroup" "${process.env.USER}" "${y}"`
                 })
             }
         })
     for (const userGroup of usersGroupsAdditions.filter(x => x)) {
-        await userGroup
+        log(`Adding user to group`)
+        execSync(`${userGroup}`, { stdio: 'inherit' })
     }
     // await Promise.allSettled(usersGroupsAdditions)
     log(`Running post-install inline scripts`)
