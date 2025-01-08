@@ -11,7 +11,7 @@ const customArgv = minimist(process.argv.slice(3), {
   }
 })
 
-const serviceDir = `${os.homedir()}/.local/share/chezmoi/home/Library/LaunchDaemons`
+const serviceDir = `${os.homedir()}/Library/LaunchDaemons`
 
 function runSyncCommand(command) {
     return require('child_process').execSync(`${command}`, { stdio: 'inherit', shell: true })
