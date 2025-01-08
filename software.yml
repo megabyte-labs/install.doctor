@@ -10522,6 +10522,11 @@ softwarePackages:
     _name: Storybook
     _short: "Storybook is a tool for developing UI components in isolation for React, Vue, and Angular. It helps in building and testing components independently from the rest of the application.                    "
     npm: storybook
+  visual-studio:
+    _bin: visual-studio
+    _app: TODO.app
+    _name: Visual Studio
+    cask: visual-studio
   sttr:
     _bin: sttr
     _desc: Cross-platform, CLI app to perform various operations on string
@@ -11233,6 +11238,15 @@ softwarePackages:
     _name: trellis
     _short: "Trellis CLI is a command-line interface tool for managing WordPress sites using the Trellis stack.                                                                                                        "
     brew: roots/tap/trellis-cli
+  vagrant:
+    _bin: vagrant
+    _github: https://github.com/hashicorp/vagrant
+    _home: https://www.vagrantup.com/
+    _desc: Vagrant is a tool for building and distributing development environments.
+    _name: Vagrant
+    _preload: true
+    brew:darwin: hashicorp/tap/vagrant
+    choco: vagrant
   trivy:
     _bin: trivy
     _desc: Scanner for vulnerabilities in container images, file systems, and Git repositories, as well as for configuration issues
