@@ -2040,7 +2040,6 @@ softwarePackages:
     _desc: "dagu-dev/dagu                                                                                                                                                                                             \n\nThis is a GitHub repository belonging to the user \"dagu-dev\" named \"dagu.\" It likely contains code, documentation, or other files related to a project called \"dagu.\" Without further information or      \naccess to the repository, it's difficult to provide more details. You can visit the link to explore the contents of the repository and learn more about the project it represents.                        "
     _github: https://github.com/dagu-dev/dagu
     _name: Dagu
-    _post: sudo mkdir -p /var/log/dagu
     _short: "dagu is a GitHub repository for the Dagu project.                                                                                                                                                         "
     brew: yohamta/tap/dagu
   dasel:
@@ -3568,23 +3567,6 @@ softwarePackages:
     port: gdrive
     scoop: gdrive
     yay: gdrive
-  gdu:
-    _bin: gdu
-    _deprecated: Deprecated in favor of `duf` which is written in Rust
-    _desc: "gdu is a disk usage analyzer with an ncurses interface for Unix systems. It provides a visual representation of disk space usage, allowing users to quickly identify large files and directories. Users   \ncan navigate through directories, delete files, and drill down into specific folders to manage disk space efficiently. It is a lightweight and fast tool that can be useful for system administrators and \nusers looking to optimize their disk usage.                                                                                                                                                               "
-    _github: https://github.com/dundee/gdu
-    _name: "gdu                                                                                                                                                                                                       "
-    _post:brew: brew link --overwrite gdu
-    _post:snap: |
-      sudo snap connect gdu-disk-usage-analyzer:mount-observe :mount-observe
-      sudo snap connect gdu-disk-usage-analyzer:system-backup :system-backup
-      sudo snap alias gdu-disk-usage-analyzer.gdu gdu
-    _short: "gdu is a disk usage analyzer with a terminal interface for MacOS.                                                                                                                                         "
-    apt:debian: gdu
-    brew: gdu
-    go: github.com/dundee/gdu/v5/cmd/gdu@latest
-    pacman: gdu
-    snap: gdu-disk-usage-analyzer
   generator-ngx-rocket:
     _bin: ngx
     _desc: "ngx-rocket/generator-ngx-rocket is a Yeoman generator for Angular applications. It provides a scaffolding tool to quickly set up and generate Angular projects with best practices, including a modular   \narchitecture, lazy loading, and more. This generator helps streamline the process of creating Angular applications by providing a solid foundation and structure to build upon. It is a useful tool for   \ndevelopers looking to kickstart their Angular projects efficiently.                                                                                                                                       "
