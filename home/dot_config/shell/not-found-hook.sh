@@ -157,6 +157,8 @@ handle_command_not_found() {
 }
 
 # Main hook: invoked when a command is not found
-if [[ -n "$1" ]]; then
-  handle_command_not_found "$1"
+if [ ${#1} -gt 1 ]; then
+  if [[ -n "$1" ]]; then
+    handle_command_not_found "$1"
+  fi
 fi
