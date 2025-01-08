@@ -478,20 +478,22 @@ softwarePlugins:
       - https://github.com/ravimashru/obsidian-show-file-path
       - https://github.com/sbquinlan/obsidian-handlebars
       - https://github.com/scambier/obsidian-omnisearch
-      - https://github.com/shabegom/buttons
-      - https://github.com/snezhig/obsidian-front-matter-title
+      # - https://github.com/shabegom/buttons
+      - https://github.com/mProjectsCode/obsidian-meta-bind-plugin
+      # - https://github.com/snezhig/obsidian-front-matter-title
       - https://github.com/tadashi-aikawa/obsidian-various-complements-plugin
       - https://github.com/trashhalo/obsidian-webhooks
       - https://github.com/twentytwokhz/language-translator
       - https://github.com/twibiral/obsidian-execute-code
       - https://github.com/Vinzent03/find-unlinked-files
       - https://github.com/Vinzent03/obsidian-advanced-uri
-      - https://github.com/weichenw/obsidian-hypothesis-plugin
+      # - https://github.com/weichenw/obsidian-hypothesis-plugin
       - https://github.com/xryul/obsidian-image-converter
       - https://github.com/YukiGasai/obsidian-google-calendar
       - https://github.com/YukiGasai/obsidian-google-tasks
-      - https://github.com/zsviczian/excalibrain
-      - https://github.com/zsviczian/obsidian-excalidraw-plugin
+      # - https://github.com/zsviczian/excalibrain
+      # - https://github.com/zsviczian/obsidian-excalidraw-plugin
+      - https://github.com/qgrail/obsidian-ai-assistant
   # raycast: Manually install Raycast extensions - no CLI method
   steampipe:
     cmd: bash -c 'if [ ! -f /tmp/steampipe-plugin-list ]; then steampipe plugin list > /tmp/steampipe-plugin-list; fi && if ! cat /tmp/steampipe-plugin-list | grep "{PLUGIN}" > /dev/null; then steampipe plugin install "{PLUGIN}"; fi'
