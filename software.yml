@@ -2767,9 +2767,11 @@ softwarePackages:
     _desc: "envio is a GitHub repository created by humblepenguinn. Unfortunately, without further context or access to the repository, I can't provide specific details about its contents. Typically, repositories  \non GitHub contain code, documentation, or other resources related to a project. If you're interested in learning more about envio, you can visit the GitHub link provided to explore its contents, read   \nthe README file, check the code, and see if there are any issues or pull requests associated with it.                                                                                                     "
     _github: https://github.com/humblepenguinn/envio
     _name: Envio
-    _preload: true
     _short: "envio is a lightweight command-line tool for sending files securely over the internet using end-to-end encryption.                                                                                        "
     cargo: envio
+    brew: envio-cli/tap/envio
+    yay: envio
+    nix-env: envio
   envpane:
     _bin: null
     _desc: An OS X preference pane for environment variables
@@ -3557,7 +3559,6 @@ softwarePackages:
     _desc: "gcsf is a FUSE file system that allows you to mount your Google Drive account as a local file system for easy access and manipulation of your files. It uses Google Drive API to interact with your Google\nDrive account securely. With gcsf, you can perform various file operations like browsing, uploading, downloading, and deleting files on your Google Drive directly from your terminal. It provides a      \nconvenient way to work with your Google Drive files without needing a web browser.                                                                                                                        "
     _github: https://github.com/harababurel/gcsf
     _name: GCSF
-    _preload: true
     _short: "gcsf is a FUSE file system that allows you to mount your Google Drive account as a local file system.                                                                                                     "
     cargo: gcsf
   gdbgui:
@@ -4602,9 +4603,7 @@ softwarePackages:
     _github: https://github.com/chmln/handlr
     _home: https://github.com/chmln/handlr
     _name: Handlr
-    _preload: true
     _short: "handlr is a command-line tool for managing URL handlers on macOS.                                                                                                                                         "
-    cargo: handlr --locked
     yay: handlr-bin
   haproxy:
     _bin: haproxy
