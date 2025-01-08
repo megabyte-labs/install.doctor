@@ -15,7 +15,7 @@
 #
 #     * Create seperate environments based on encrypted secret type (e.g. Allow `envchain cloudflare env` instead of `envchain default env` for everything)
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Import environment variables into `envchain`

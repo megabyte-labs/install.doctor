@@ -2,7 +2,7 @@
 # @file NTFY Dependencies
 # @brief Eensures system dependencies are installed
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 if command -v ntfy > /dev/null; then

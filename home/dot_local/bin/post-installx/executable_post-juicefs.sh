@@ -14,7 +14,7 @@
 #     When creating the four volumes in the [JuiceFS console](https://juicefs.com/console/), it is important that you name the volumes using
 #     these four volume names.
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 MOUNT_FOLDER="/mnt"

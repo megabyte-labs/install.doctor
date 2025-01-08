@@ -2,7 +2,7 @@
 # @file Atuin Initialization
 # @brief Registers with atuin, logs in, imports command history, and synchronizes
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 if command -v atuin > /dev/null; then

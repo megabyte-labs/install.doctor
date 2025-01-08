@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "rm -f ~/.gist" ERR
 
 ### Load GITHUB_GIST_TOKEN using envchain

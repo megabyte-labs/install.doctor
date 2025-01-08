@@ -2,7 +2,7 @@
 # @file Endlessh Configuration
 # @brief Applies the Endlessh configuration and starts the service on Linux systems
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 function configureEndlessh() {

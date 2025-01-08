@@ -24,7 +24,7 @@
 #     * [`managed.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/chrome/managed.json)
 #     * [`recommended.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/chrome/recommended.json)
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 function chromeSetUp() {

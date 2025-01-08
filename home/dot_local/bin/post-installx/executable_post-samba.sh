@@ -48,7 +48,7 @@
 #     * [Default Samba configuration](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_local/samba/config.tmpl)
 #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Configure Samba server

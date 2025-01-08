@@ -17,7 +17,7 @@
 #
 #     * [Secrets / Environment variables documentation](https://install.doctor/docs/customization/secrets)
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Check if GitHub runner is installed

@@ -2,7 +2,7 @@
 # @file Wazuh Client Install
 # @brief Installs the Wazuh client and connects to the manager if configured to do so through secrets / environment variables
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Ensure secrets

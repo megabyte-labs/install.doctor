@@ -10,7 +10,7 @@
 #     CloudFlare WARP, you will have to set up a [split tunnel](https://www.youtube.com/watch?v=eDFs8hm3xWc) for
 #     [Tailscale IP addresses](https://tailscale.com/kb/1105/other-vpns).
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Disconnect from CloudFlare WARP (if connected)

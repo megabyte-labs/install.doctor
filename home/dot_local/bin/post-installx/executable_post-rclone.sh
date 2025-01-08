@@ -45,7 +45,7 @@
 #     * [Rclone default configurations](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_config/rclone)
 #     * [Rclone documentation](https://rclone.org/docs/)
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Begin configuration

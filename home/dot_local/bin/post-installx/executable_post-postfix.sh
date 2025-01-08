@@ -10,7 +10,7 @@
 #     cat ~/.bashrc | mail -s "My subject" name@email.com
 #     ```
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Acquire PUBLIC_SERVICES_DOMAIN and PRIMARY_EMAIL

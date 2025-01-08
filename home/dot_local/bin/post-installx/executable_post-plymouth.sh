@@ -4,7 +4,7 @@
 # @description
 #     This script installs Plymouth and then configures it to use our custom Betelgeuse theme.
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Create /etc/plymouth/plymouthd.conf

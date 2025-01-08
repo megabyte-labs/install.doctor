@@ -72,7 +72,7 @@
 #     * [Visual Studio Code settings folder](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User)
 #     * [Visual Studio Code `extensions.json`](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/Code/User/extensions.json)
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Hides useless error during extension installations
@@ -86,7 +86,7 @@ if command -v code > /dev/null; then
   EXTENSIONS="$(code --list-extensions)"
   jq -r '.recommendations[]' "${XDG_CONFIG_HOME:-$HOME/.config}/Code/User/extensions.json" | while read EXTENSION; do
     if ! echo "$EXTENSIONS" | grep -iF "$EXTENSION" > /dev/null; then
-      gum log -sl info 'Installing Visual Studio Code extension '"$EXTENSION"'' && code --install-extension "$EXTENSION"
+      gum log -sl info 'Installing Visual Studio Code extension '"$EXTENSION"'' && code --install-extension "$EXTENSION" || gum log -sl error "Failed to install VSCode extension: $EXTENSION"
       gum log -sl info 'Installed '"$EXTENSION"''
     else
       gum log -sl info ''"$EXTENSION"' already installed'

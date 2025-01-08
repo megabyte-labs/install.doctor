@@ -2,7 +2,7 @@
 # @file rkhunter configuration
 # @brief This script applies the rkhunter integration and updates it as well
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 if command -v rkhunter > /dev/null; then

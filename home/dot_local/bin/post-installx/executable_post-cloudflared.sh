@@ -4,7 +4,7 @@
 # @description
 #     1. Skips the deletion of a tunnel when it is currently in use
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 if command -v cloudflared > /dev/null; then

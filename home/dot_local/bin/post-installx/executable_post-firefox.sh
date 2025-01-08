@@ -43,7 +43,7 @@
 #     * [System-wide configurations](https://github.com/megabyte-labs/install.doctor/tree/master/home/dot_local/share/firefox) as well as the location of the `profile.ini` and some other configurations
 #     * [User-specific configurations](https://github.com/megabyte-labs/install.doctor/blob/master/home/dot_config/firefox/user.js) added to all profiles except Factory
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 function installFirefoxProfileConnector() {

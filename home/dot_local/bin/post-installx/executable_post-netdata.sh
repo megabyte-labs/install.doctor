@@ -9,7 +9,7 @@
 #     This script installs additional alerts and enables notifications if Netdata is installed. Email notifications are configured
 #     using the provided primary email address. If the OS is Debian based, Netdata shows the number of CVEs in currently installed packages.
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ensureNetdataOwnership() {

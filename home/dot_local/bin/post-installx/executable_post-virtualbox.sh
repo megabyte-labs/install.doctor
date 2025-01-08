@@ -4,7 +4,7 @@
 # @description
 #     This script ensures the VirtualBox extension pack that corresponds with VirtualBox's version is properly installed.
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Run logic if VirtualBox is installed

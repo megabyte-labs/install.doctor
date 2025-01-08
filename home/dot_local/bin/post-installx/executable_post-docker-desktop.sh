@@ -8,7 +8,7 @@
 #     be passed in as a secret (either via the encrypted secret method or passed in as an environment
 #     variable).
 
-set -Eeuo pipefail
+set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 if command -v docker > /dev/null; then
