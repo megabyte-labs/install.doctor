@@ -67,13 +67,6 @@ elif [ -f "$COMPLETION_DIR/fzf.bash" ]; then
   rm -f "$COMPLETION_DIR/fzf-key-bindings.bash"
 fi
 
-### fuck
-if command -v fuck > /dev/null; then
-  thefuck --alias > "$COMPLETION_DIR/thefuck.bash"
-elif [ -f "$COMPLETION_DIR/thefuck.bash" ]; then
-  rm -f "$COMPLETION_DIR/thefuck.bash"
-fi
-
 ### gh
 if command -v gh > /dev/null; then
   gh completion -s bash > "$COMPLETION_DIR/gh.bash"

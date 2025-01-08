@@ -137,7 +137,7 @@ if [ "$BASH_SUPPORT" = 'true' ] && [ -n "$BASH" ]; then
 
   ### Goto
   [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/goto.sh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/goto.sh"
-  
+
   ### hiSHtory
   # Hishtory Config:
   if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/hishtory/config.sh" ]; then
@@ -164,6 +164,9 @@ if [ "$BASH_SUPPORT" = 'true' ] && [ -n "$BASH" ]; then
 
   ### ntfy
   ! command -v ntfy > /dev/null || eval "$(ntfy shell-integration)"
+
+  ### pay-respects
+  ! command -v pay-respects > /dev/null || eval "$(pay-respects bash --alias)"
 
   ### pkgx
   ! command -v pkgx > /dev/null || eval "$(pkgx --shellcode)"

@@ -462,6 +462,9 @@ fi
 ### Fig
 [ ! -f "$HOME/.fig/shell/zshrc.post.zsh" ] || source "$HOME/.fig/shell/zshrc.post.zsh"
 
+### pay-respects
+! command -v pay-respects > /dev/null || eval "$(pay-respects zsh --alias)"eval "$(pay-respects bash --alias)"
+
 ### pkgx
 ! command -v pkgx > /dev/null || source <(pkgx --shellcode)
 
