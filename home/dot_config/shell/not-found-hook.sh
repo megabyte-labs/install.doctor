@@ -157,5 +157,6 @@ if [[ -n "$1" ]]; then
   handle_command_not_found "$1"
 else
   gum log -sl error "No command provided for $1."
+  gum log -sl info "Command executed was $COMMAND"
   exit 0
 fi
