@@ -608,8 +608,7 @@ async function main() {
                 })
             }
         })
-    for (const userGroup of usersGroupsAdditions) {
-        console.log(userGroup)
+    for (const userGroup of usersGroupsAdditions.filter(x => x)) {
         await execPromise(userGroup)
     }
     // await Promise.allSettled(usersGroupsAdditions)
