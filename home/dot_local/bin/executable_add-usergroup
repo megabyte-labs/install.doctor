@@ -115,7 +115,6 @@ create_macos_user() {
         sudo dscl . -create "/Users/$USERNAME" UniqueID "$USER_ID"
         sudo dscl . -create "/Users/$USERNAME" PrimaryGroupID "$GROUPNAME"
         if [ "$USERNAME" = 'netdata' ]; then
-            sudo mkdir -p /var/lib/netdata
             sudo dscl . -create "/Users/netdata" NFSHomeDirectory /var/lib/netdata
         elif [ "$USERNAME" = 'clamav' ]; then
             sudo dscl . -create "/Users/clamav" NFSHomeDirectory /var/lib/clamav

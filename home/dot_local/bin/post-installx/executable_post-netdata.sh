@@ -14,12 +14,20 @@ trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ensureNetdataOwnership() {
   ### Ensure /usr/local/var/lib/netdata/cloud.d is owned by user
-  if [ -d /usr/local/var/lib/netdata ]; then
-    gum log -sl info 'Ensuring permissions are correct on /usr/local/var/lib/netdata' && sudo chown -Rf netdata:netdata /usr/local/var/lib/netdata 2> /dev/null || sudo chown -Rf netdata:$(id -g -n) /usr/local/var/lib/netdata
-  elif [ -d /var/lib/netdata ]; then
+  if [ -d /var/lib/netdata ]; then
     gum log -sl info 'Ensuring permissions are correct on /var/lib/netdata' && sudo chown -Rf netdata:netdata /var/lib/netdata 2> /dev/null || sudo chown -Rf netdata:$(id -g -n) /var/lib/netdata
+  elif [ -d /usr/local/var/lib/netdata ]; then
+    gum log -sl info 'Ensuring permissions are correct on /usr/local/var/lib/netdata' && sudo chown -Rf netdata:netdata /usr/local/var/lib/netdata 2> /dev/null || sudo chown -Rf netdata:$(id -g -n) /usr/local/var/lib/netdata
+    if [ ! -d /var/lib/netdata ]; then
+      sudo mkdir -p /var/lib
+      sudo ln -s /usr/local/var/lib/netdata /var/lib/netdata
+    fi
   elif [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata" ]; then
     gum log -sl info "Ensuring permissions are correct on ${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata" && sudo chown -Rf netdata:netdata "${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata" 2> /dev/null || sudo chown -Rf netdata:$(id -g -n) "${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata"
+    if [ ! -d /var/lib/netdata ]; then
+      sudo mkdir -p /var/lib
+      sudo ln -s "${HOMEBREW_PREFIX:-/opt/homebrew}/var/lib/netdata" /var/lib/netdata
+    fi
   else
     gum log -sl warn 'No /var/lib/netdata folder found'
   fi
