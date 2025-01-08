@@ -9848,7 +9848,7 @@ softwarePackages:
     _desc: A plugin for SFTPGo to enable LDAP/Active Directory authentication
     _github: https://github.com/sftpgo/sftpgo-plugin-auth
     _name: SFTPGo Authentication Plugin
-    _post: sudo cp -f $(which sftpgo-plugin-auth) /usr/local/bin/sftpgo-plugin-auth || gum log -sl info "The /usr/local/bin/sftpgo-plugin-auth file already exists"
+    _post: sudo cp -f $(which sftpgo-plugin-auth) /usr/local/bin/sftpgo-plugin-auth || true
     _preload: true
     _short: "sftpgo-plugin-auth is a plugin for SFTPGo that allows custom authentication methods to be used with the SFTP server.                                                                                      "
     go: github.com/sftpgo/sftpgo-plugin-auth@latest

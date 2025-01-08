@@ -10,11 +10,11 @@ access:
   teamName: {{ .host.cloudflare.teamsOrg }}
 
 ingress:
-  - hostname: test-{{ .host.hostname | lower }}.{{ .host.domain | lower }}
+  - hostname: test-{{- .host.hostname | lower -}}.{{- .host.domain | lower }}
     service: hello_world
-  - hostname: ssh-{{ .host.hostname | lower }}.{{ .host.domain | lower }}
-    service: ssh://localhost:{{ .host.ssh.port }}
-  - hostname: netdata-{{ .host.hostname | lower }}.{{ .host.domain | lower }}
+  - hostname: ssh-{{- .host.hostname | lower -}}.{{- .host.domain | lower }}
+    service: ssh://localhost:{{- .host.ssh.port }}
+  - hostname: netdata-{{- .host.hostname | lower -}}.{{- .host.domain | lower }}
     service: http://localhost:19999
   - service: http_status:404
   # - hostname: {{ .host.domain }}
