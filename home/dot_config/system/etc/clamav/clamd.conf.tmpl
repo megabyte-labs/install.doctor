@@ -18,7 +18,7 @@ OnAccessMountPath /{{- if eq .host.distro.id "darwin" -}}Users{{- else -}}home{{
 OnAccessPrevention yes
 PidFile /var/run/clamav/clamd.pid
 User clamav
-VirusEvent /usr/local/etc/clamav/clamav-email
+VirusEvent /etc/clamav/clamav-email
 
 ExcludePath ^/quarantine/
 ExcludePath ^/opt/quarantine/
