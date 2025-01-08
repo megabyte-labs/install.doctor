@@ -745,6 +745,10 @@ runChezmoi() {
 
 # @description Ensure temporary passwordless sudo privileges are removed from `/etc/sudoers`
 removePasswordlessSudo() {
+  if [ -d /Applications ] && [ -d /System ]; then
+    logg info "Ensuring $USER is still an admin"
+    sudo dscl . -merge /Groups/admin GroupMembership "$USER"
+  fi
   if command -v gsed > /dev/null; then
     sudo gsed -i '/# TEMPORARY FOR INSTALL DOCTOR/d' /etc/sudoers || logg warn 'Failed to remove passwordless sudo from the /etc/sudoers file'
   else
