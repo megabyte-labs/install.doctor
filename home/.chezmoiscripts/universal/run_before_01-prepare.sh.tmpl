@@ -10,10 +10,6 @@
 #     It is included as a temporary external file to aid in debugging since if the included files were inlined in scripts
 #     the scripts would be verbose when debugging.
 
-if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
-  set -x
-fi
-
 addTemporaryIncludes() {
     ### Ensure /tmp/tmp-profile is created
     # Add pre-scaffolding profile to /tmp/tmp-profile so it's easier to navigate through scripts
@@ -124,6 +120,7 @@ addTemporaryIncludes
 . /tmp/tmp-profile
 ensureFullDiskAccess
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
+  which gum
   gum log -sl info 'The DEBUG or DEBUG_MODE environment variable is set so the prepare tasks will be run synchronously'
   importCloudFlareCert
   disconnectWarp
