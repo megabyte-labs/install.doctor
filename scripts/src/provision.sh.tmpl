@@ -276,6 +276,18 @@ ensureHomebrewDeps() {
 # @description Ensure the `${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi` directory is cloned and up-to-date using the previously
 #     set `START_REPO` as the source repository.
 cloneChezmoiSourceRepo() {
+  ### Accept licenses (only necessary if other steps fail)
+  if [ -d /Applications ] && [ -d /System ]; then
+    if command -v xcodebuild > /dev/null; then
+      logg info 'Running xcodebuild -license accept'
+      sudo xcodebuild -license accept
+      logg info 'Running sudo xcodebuild -runFirstLaunch'
+      sudo xcodebuild -runFirstLaunch
+    else
+      logg warn 'xcodebuild is not available'
+    fi
+  fi
+
   if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/.git" ]; then
     logg info "Changing directory to ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi" && cd "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
     if ! git config --get http.postBuffer > /dev/null; then
