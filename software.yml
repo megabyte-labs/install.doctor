@@ -1368,7 +1368,7 @@ softwarePackages:
     _github: https://github.com/cloudflare/cf-terraforming
     _name: CloudFlare Terraforming
     _short: "cf-terraforming is a tool by Cloudflare that helps automate the creation of Terraform configurations for Cloudflare resources.                                                                            "
-    cask: cloudflare/cloudflare/cf-terraforming
+    brew: cloudflare/cloudflare/cf-terraforming
   cfssl:
     _bin: cfssl
     _desc: "[CFSSL](https://cfssl.org/) is CloudFlare's PKI/TLS swiss army knife. It is both a command line tool and an HTTP API server for signing, verifying, and bundling TLS certificates"
@@ -2060,16 +2060,6 @@ softwarePackages:
     _short: "dat is a decentralized data sharing tool for efficiently syncing and versioning files across multiple devices.                                                                                            "
     github: github.com/dat-ecosystem-archive/dat
     npm: dat@next
-  dat-desktop:
-    _app: Dat Desktop.app
-    _bin: dat-desktop
-    _desc: Peer to peer data syncronization
-    _github: https://github.com/datproject/dat-desktop
-    _name: Dat Desktop
-    _short: "dat-desktop is a desktop application for sharing and syncing files using the Dat protocol.                                                                                                                "
-    appimage: dat-ecosystem-archive/dat-desktop
-    cask: dat
-    exe: https://github.com/dat-ecosystem-archive/dat-desktop/releases/download/v3.0.1/Dat-Desktop-Setup-3.0.1.exe
   dconf-editor:
     _bin: dconf-editor
     _desc: "The link provided is for the GNOME dconf-editor repository on GitHub. dconf-editor is a graphical editor for the dconf configuration system used in GNOME. It allows users to view and edit settings that \nare stored in a simple key-value format. The repository contains the source code for the dconf-editor application, which is written in C and uses GTK for the graphical interface. Users can contribute to\nthe development of dconf-editor by submitting issues, feature requests, or pull requests on this repository.                                                                                              "
@@ -2623,18 +2613,6 @@ softwarePackages:
       ee config set cloudflare-api-key "$(get-secret CLOUDFLARE_API_KEY)"
     brew: easyengine
     script:linux: wget -qO ee rt.cx/ee4 && sudo bash ee
-  edex-ui:
-    _app: eDEX-UI.app
-    _bin: edex-ui
-    _desc: A cross-platform, customizable science fiction terminal emulator with advanced monitoring & touchscreen support.
-    _docs: https://github.com/GitSquared/edex-ui
-    _github: https://github.com/GitSquared/edex-ui
-    _home: https://github.com/GitSquared/edex-ui
-    _name: EDEX UI
-    _short: "edex-ui is a sci-fi inspired terminal emulator and system monitor.                                                                                                                                        "
-    appimage: edex-ui
-    cask: edex-ui
-    port: edex-ui
   editly:
     _bin: editly
     _deprecated: Errors related to node-gyp during installation
@@ -3835,17 +3813,6 @@ softwarePackages:
     _name: GitDock
     _short: "gitdock is a GitLab repository belonging to mvanremmerden.                                                                                                                                                "
     cask: gitdock
-  github-classroom-assistant:
-    _app: Classroom Assistant.app
-    _bin: github-classroom-assistant
-    _desc: "GitHub Classroom Assistant is a tool designed to help teachers and students manage assignments and repositories in GitHub Classroom. It automates the process of creating student repositories, cloning   \nthem to the local machine, and submitting assignments back to GitHub. This tool simplifies the workflow for both instructors and students by providing a streamlined way to manage coding assignments and \nprojects within the GitHub ecosystem. It is a valuable resource for educational institutions looking to leverage GitHub for teaching programming and version control.                                     "
-    _github: https://github.com/education/classroom-assistant
-    _name: GitHub Classroom Assistant
-    _short: "GitHub Classroom Assistant is a tool designed to help teachers and students manage assignments and grading on GitHub.                                                                                     "
-    apt: https://github.com/education/classroom-assistant/releases/download/v2.0.4/classroom-assistant_2.0.4_amd64.deb
-    cask: classroom-assistant
-    dnf: https://github.com/education/classroom-assistant/releases/download/v2.0.4/classroom-assistant-2.0.4-1.x86_64.rpm
-    exe: https://github.com/education/classroom-assistant/releases/download/v2.0.4/Classroom.Assistant-2.0.4.Setup.exe
   github-desktop:
     _app: GitHub Desktop.app
     _bin: github
@@ -6547,7 +6514,7 @@ softwarePackages:
     _name: "meld                                                                                                                                                                                                      "
     _preload: true
     _short: "Meld is a visual diff and merge tool for developers.                                                                                                                                                      "
-    cask: meld
+    cask: dehesselle-meld
     choco: meld
     flatpak: org.gnome.meld
   meta:
@@ -8766,7 +8733,8 @@ softwarePackages:
     _home: https://github.com/ProfileCreator/ProfileCreator
     _name: Profile Creator
     _short: "ProfileCreator is a tool for creating configuration profiles on macOS and iOS devices.                                                                                                                    "
-    cask: profilecreator
+    __cask: profilecreator - disabled - ideally, wait for rerelease and add cask again
+    dmg: https://github.com/ProfileCreator/ProfileCreator/releases/download/0.3.7/ProfileCreator-0.3.7.dmg
     mas: 2141249187
   progress:
     _bin: progress
@@ -9028,7 +8996,6 @@ softwarePackages:
       - qlstephen
       - qlvideo
       - quicklook-json
-      - quicklookapk
       - webpquicklook
     _github: false
     _preload: true
@@ -9090,7 +9057,7 @@ softwarePackages:
     _name: QLAPK
     _short: "QuickLookAPK is a plugin for macOS that allows you to preview Android APK files using Quick Look.                                                                                                         "
     _when:cask: '! test -d "$HOME/Library/QuickLook/QuickLookAPK.qlgenerator"'
-    cask: quicklookapk
+    __cask: quicklookapk
   quicktype:
     _bin: quicktype
     _desc: "Quicktype is an open-source tool available on GitHub that helps developers generate types and serialization code from JSON, JSON Schema, and GraphQL queries. It supports multiple programming languages  \nlike TypeScript, Java, C#, and more. Quicktype aims to simplify the process of working with complex data formats by automatically generating code that accurately represents the data structure. It is    \nparticularly useful for projects where dealing with data serialization and deserialization is a common task. The tool is actively maintained and has a growing community of users contributing to its     \ndevelopment.                                                                                                                                                                                              "
@@ -9149,7 +9116,7 @@ softwarePackages:
     apt:
       - rar
       - unrar
-    brew: rar
+    cask: rar
     dnf:
       - rar
       - unrar
@@ -11599,7 +11566,7 @@ softwarePackages:
     pipx: virtualenv
   visual-studio:
     _app: Visual Studio.app
-    _bin: null
+    _bin: visual-studio
     _desc: "[Microsoft Visual Studio](https://visualstudio.microsoft.com/) is an integrated development environment from Microsoft. It is used to develop computer programs, as well as websites, web apps, web services and mobile apps."
     _docs: https://docs.microsoft.com/en-us/visualstudio/windows/?view=vs-2022
     _github: Not open-source
@@ -12036,6 +12003,7 @@ softwarePackages:
     yay: wishlist-bin
   wkhtmltopdf:
     _bin: wkhtmltopdf
+    _deprecated: Disabled by Homebrew
     _desc: "[wkhtmltopdf](https://github.com/wkhtmltopdf/wkhtmltopdf) is a command line tool to render HTML into PDF and various image formats using the QT Webkit rendering engine."
     _github: https://github.com/wkhtmltopdf/wkhtmltopdf
     _name: wkhtmltopdf

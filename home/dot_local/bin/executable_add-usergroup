@@ -2,111 +2,202 @@
 # @file ~/.local/bin/add-usergroup
 # @brief Add a user and a group with the same name on either Linux or macOS
 # @description
-#     This script is utilized by other scripts to ensure that there is both a user and group
-#     named by the two arguments that this executable accepts. It checks whether or not
-#     there is already a user / group with the name present on the system before running
-#     any code.
+#     This script ensures that a user and a group, named by the two arguments provided,
+#     exist on the system. If either the user or the group does not exist, it will be created.
+#     If the user or group already exists, the script will simply add the user to the existing group.
+#     The script supports both macOS and Linux systems.
+#     The script requires root privileges to execute.
+#
+#     It performs the following tasks:
+#     1. Verifies that the script is run as root.
+#     2. Ensures the correct number of arguments are provided.
+#     3. Creates a group and user with the same name if they do not exist.
+#     4. Adds the user to the group if needed.
+#     5. Handles errors gracefully with informative logs.
 
 set -euo pipefail
+trap 'gum log -sl error "An error occurred. Exiting." && exit 1' ERR
 
-### Check if the script is being run as root
-if [[ $EUID -ne 0 ]]; then
-  gum log -sl error "This script must be run as root"
-  exit 1
-fi
-
-### Check if the correct number of arguments is provided
-if [ "$#" -ne 2 ]; then
-    gum log -sl error "Usage: $0 <username> <groupname>"
-    exit 1
-fi
-
-### Assign arguments to variables
-USERNAME="$1"
-GROUPNAME="$2"
-
-### Function to find the next available system ID on macOS
-find_next_system_id_macos() {
-    local id_type="$1"
-    local id_tag="$2"
-    local current_ids="$(dscl . -list /$id_type "$id_tag" | awk '{print $2}')"
-    local min_id=20  # Start from 20 to avoid conflict with default system users/groups
-
-    for id in $current_ids; do
-        if [ "$id" -ge "$min_id" ] && [ "$id" -lt 500 ]; then
-            min_id="$((id + 1))"
-        fi
-    done
-    echo "$min_id"
+# @function check_root
+# @brief Ensure the script is being run as root
+# @description
+#     This function checks if the script is being executed with root privileges.
+#     If not, it will log an error message and exit with a non-zero status.
+check_root() {
+    if [[ $EUID -ne 0 ]]; then
+        gum log -sl error "This script must be run as root."
+        exit 1
+    fi
 }
 
-### Detect the operating system
-OS="$(uname)"
+# @function check_arguments
+# @brief Check if the correct number of arguments is provided
+# @description
+#     This function ensures that the script is called with exactly two arguments:
+#     the username and the groupname. If the arguments are missing or incorrect,
+#     it logs an error and exits.
+check_arguments() {
+    if [ "$#" -ne 2 ]; then
+        gum log -sl error "Usage: $0 <username> <groupname>"
+        exit 1
+    fi
+}
 
-if [ "$OS" == "Darwin" ]; then
-    ### macOS
+# @function validate_name
+# @brief Ensure the username and groupname are valid
+# @description
+#     This function checks that the username and groupname conform to valid naming conventions,
+#     including length restrictions and avoiding special characters that could break system commands.
+validate_name() {
+    local NAME="$1"
+    if [[ ! "$NAME" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+        gum log -sl error "Invalid name: $NAME. Only alphanumeric characters, hyphens, and underscores are allowed."
+        exit 1
+    fi
+}
 
-    ### Create the group if it does not exist
+# @function find_next_system_id_macos
+# @brief Find the next available system ID on macOS
+# @description
+#     This function generates the next available system ID for creating a user or group
+#     on macOS. It starts from ID 20 and ensures that the ID is unique and falls within
+#     a valid system range (below 500).
+find_next_system_id_macos() {
+    local ID_TYPE="$1"
+    local ID_TAG="$2"
+    local CURRENT_IDS
+    CURRENT_IDS="$(dscl . -list /"$ID_TYPE" "$ID_TAG" | awk '{print $2}')"
+    local MIN_ID=20  # Start from 20 to avoid conflict with default system users/groups
+
+    for ID in $CURRENT_IDS; do
+        if [ "$ID" -ge "$MIN_ID" ] && [ "$ID" -lt 500 ]; then
+            MIN_ID=$((ID + 1))
+        fi
+    done
+    echo "$MIN_ID"
+}
+
+# @function create_macos_group
+# @brief Create a group on macOS if it doesn't exist
+# @description
+#     This function creates a system group with the specified name on macOS if it doesn't exist.
+#     It will also assign the group a valid PrimaryGroupID.
+create_macos_group() {
+    local GROUPNAME="$1"
     if ! dscl . -list /Groups | grep -q "^$GROUPNAME\$"; then
         gum log -sl info "Creating system group: $GROUPNAME"
-        SYSTEM_GID="$(find_next_system_id_macos "Groups" "PrimaryGroupID")"
-        gum log -sl info "Initializing $GROUPNAME group"
+        local GROUP_ID
+        GROUP_ID="$(find_next_system_id_macos "Groups" "PrimaryGroupID")"
+        gum log -sl info "Initializing $GROUPNAME group with ID $GROUP_ID"
         sudo dscl . -create "/Groups/$GROUPNAME"
-        gum log -sl info "Assigning $SYSTEM_GID PrimaryGroupID to group"
-        sudo dscl . -create "/Groups/$GROUPNAME" PrimaryGroupID "$SYSTEM_GID"
+        sudo dscl . -create "/Groups/$GROUPNAME" PrimaryGroupID "$GROUP_ID"
     else
         gum log -sl info "Group $GROUPNAME already exists"
-        SYSTEM_GID=$(dscl . -read "/Groups/$GROUPNAME" PrimaryGroupID | awk '{print $2}')
     fi
+}
 
-    ### Create the user if it does not exist
+# @function create_macos_user
+# @brief Create a user on macOS if it doesn't exist
+# @description
+#     This function creates a system user with the specified username on macOS if it doesn't exist.
+#     It assigns the user necessary attributes such as a shell, RealName, UniqueID, etc.
+create_macos_user() {
+    local USERNAME="$1"
+    local GROUPNAME="$2"
     if ! id -u "$USERNAME" > /dev/null 2>&1; then
         gum log -sl info "Creating system user: $USERNAME"
-        SYSTEM_UID="$(find_next_system_id_macos "Users" "UniqueID")"
-        gum log -sl info "Initializing $USERNAME user"
+        local USER_ID
+        USER_ID="$(find_next_system_id_macos "Users" "UniqueID")"
+        gum log -sl info "Initializing $USERNAME user with ID $USER_ID"
         sudo dscl . -create "/Users/$USERNAME"
-        gum log -sl info "Assigning $USERNAME user attributes"
         sudo dscl . -create "/Users/$USERNAME" UserShell /bin/bash
         sudo dscl . -create "/Users/$USERNAME" RealName "$USERNAME"
-        sudo dscl . -create "/Users/$USERNAME" UniqueID "$SYSTEM_UID"
-        sudo dscl . -create "/Users/$USERNAME" PrimaryGroupID "$SYSTEM_GID"
+        sudo dscl . -create "/Users/$USERNAME" UniqueID "$USER_ID"
+        sudo dscl . -create "/Users/$USERNAME" PrimaryGroupID "$GROUPNAME"
         sudo dscl . -create "/Users/$USERNAME" NFSHomeDirectory /var/empty
-        gum log -sl info "Finished assigning $USERNAME user attributes"
     else
         gum log -sl info "User $USERNAME already exists"
     fi
+}
 
-    ### Add the user to the group
+# @function add_user_to_group
+# @brief Add a user to a group on macOS or Linux
+# @description
+#     This function adds the specified user to the group. If the user is already part of the group,
+#     it ensures no duplicates are added.
+add_user_to_group() {
+    local USERNAME="$1"
+    local GROUPNAME="$2"
     gum log -sl info "Adding user $USERNAME to group $GROUPNAME"
-    sudo dscl . -append "/Groups/$GROUPNAME" GroupMembership "$USERNAME"
+    if [ "$(uname)" == "Darwin" ]; then
+        sudo dscl . -append "/Groups/$GROUPNAME" GroupMembership "$USERNAME"
+    else
+        sudo usermod -a -G "$GROUPNAME" "$USERNAME"
+    fi
+}
 
-    gum log -sl info "System user $USERNAME added to system group $GROUPNAME successfully."
-
-elif [ "$OS" == "Linux" ]; then
-    ### Linux
-
-    ### Create the group if it does not exist
+# @function create_linux_group
+# @brief Create a group on Linux if it doesn't exist
+# @description
+#     This function creates a system group with the specified name on Linux if it doesn't exist.
+create_linux_group() {
+    local GROUPNAME="$1"
     if ! getent group "$GROUPNAME" > /dev/null 2>&1; then
         gum log -sl info "Creating system group: $GROUPNAME"
         sudo groupadd -r "$GROUPNAME"
     else
         gum log -sl info "Group $GROUPNAME already exists"
     fi
+}
 
-    ### Create the user if it does not exist
+# @function create_linux_user
+# @brief Create a user on Linux if it doesn't exist
+# @description
+#     This function creates a system user with the specified username on Linux if it doesn't exist.
+#     It ensures the user is added to the specified group.
+create_linux_user() {
+    local USERNAME="$1"
+    local GROUPNAME="$2"
     if ! id -u "$USERNAME" > /dev/null 2>&1; then
         gum log -sl info "Creating system user: $USERNAME"
         sudo useradd -r -g "$GROUPNAME" -s /bin/bash -M -N "$USERNAME"
     else
         gum log -sl info "User $USERNAME already exists"
     fi
+}
 
-    ### Add the user to the group (redundant on Linux since user is already added to the group during creation)
-    sudo usermod -a -G "$GROUPNAME" "$USERNAME"
+### Main script logic
 
+# Check root privileges
+check_root
+
+# Validate script arguments
+check_arguments "$@"
+
+# Validate user and group names
+USERNAME="$1"
+GROUPNAME="$2"
+validate_name "$USERNAME"
+validate_name "$GROUPNAME"
+
+# Detect the operating system
+OS="$(uname)"
+
+if [ "$OS" == "Darwin" ]; then
+    # macOS specific logic
+    create_macos_group "$GROUPNAME"
+    create_macos_user "$USERNAME" "$GROUPNAME"
+    add_user_to_group "$USERNAME" "$GROUPNAME"
+    gum log -sl info "System user $USERNAME added to system group $GROUPNAME successfully."
+
+elif [ "$OS" == "Linux" ]; then
+    # Linux specific logic
+    create_linux_group "$GROUPNAME"
+    create_linux_user "$USERNAME" "$GROUPNAME"
+    add_user_to_group "$USERNAME" "$GROUPNAME"
     gum log -sl info "System user $USERNAME added to system group $GROUPNAME successfully."
 
 else
-    gum log -sl info "Unsupported operating system: $OS"
+    gum log -sl error "Unsupported operating system: $OS"
     exit 1
 fi

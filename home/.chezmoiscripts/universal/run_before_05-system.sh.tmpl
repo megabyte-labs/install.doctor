@@ -504,8 +504,13 @@ installSystemPips() {
   if command -v pip3 > /dev/null; then
     if command -v python3 > /dev/null; then
       if ! python3 -m certifi > /dev/null; then
-        gum log -sl info 'Installing Python 3 certifi package'
-        pip3 install --break-system-packages certifi
+        if command -v brew > /dev/null; then
+          gum log -sl info 'Installing certifi via Homebrew to avoid brew link errors'
+          brew install certifi
+        else
+          gum log -sl info 'Installing Python 3 certifi package'
+          pip3 install --break-system-packages certifi
+        fi
       else
         gum log -sl info 'certifi is available to python3'
       fi
