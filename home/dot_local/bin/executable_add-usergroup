@@ -67,10 +67,10 @@ find_next_system_id_macos() {
     local ID_TAG="$2"
     local CURRENT_IDS
     CURRENT_IDS="$(dscl . -list /"$ID_TYPE" "$ID_TAG" | awk '{print $2}')"
-    local MIN_ID=20  # Start from 20 to avoid conflict with default system users/groups
+    local MIN_ID=690  # Start from 690 to avoid conflict with default system users/groups
 
     for ID in $CURRENT_IDS; do
-        if [ "$ID" -ge "$MIN_ID" ] && [ "$ID" -lt 500 ]; then
+        if [ "$ID" -ge "$MIN_ID" ] && [ "$ID" -lt 1000 ]; then
             MIN_ID=$((ID + 1))
         fi
     done
@@ -114,7 +114,14 @@ create_macos_user() {
         sudo dscl . -create "/Users/$USERNAME" RealName "$USERNAME"
         sudo dscl . -create "/Users/$USERNAME" UniqueID "$USER_ID"
         sudo dscl . -create "/Users/$USERNAME" PrimaryGroupID "$GROUPNAME"
-        sudo dscl . -create "/Users/$USERNAME" NFSHomeDirectory /var/empty
+        if [ "$USERNAME" = 'netdata' ]; then
+            sudo mkdir -p /var/lib/netdata
+            sudo dscl . -create "/Users/netdata" NFSHomeDirectory /var/lib/netdata
+        elif [ "$USERNAME" = 'clamav' ]; then
+            sudo dscl . -create "/Users/clamav" NFSHomeDirectory /var/lib/clamav
+        else
+            sudo dscl . -create "/Users/$USERNAME" NFSHomeDirectory /var/empty
+        fi
     else
         gum log -sl info "User $USERNAME already exists"
     fi

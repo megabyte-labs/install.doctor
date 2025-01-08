@@ -596,7 +596,7 @@ async function main() {
         })
         .flatMap(x => {
             const groupsField = getPkgData('_groups', x, x.installType)
-            if (!groupsField) return Promise.resolve()
+            if (!groupsField) return ''
             log(`Ensuring user(s) / group(s) created for ${x.listKey}`)
             if (typeof typeof x[groupsField] !== 'string' && !Array.isArray(x[groupsField])) {
                 log(`Failed to parse _groups for ${x.installKey}. The _groups field must be either a string or string[].`)
