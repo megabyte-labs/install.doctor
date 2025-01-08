@@ -36,6 +36,10 @@ install_via_brew() {
     # If it's an array, loop through and install each package
     for PKG in $(echo "$BREW_KEY" | tr ',' '\n'); do
       # Suppress output of brew install to keep the script clean
+      if [ ! -d "$HOME/.local/var/log/install.doctor" ]; then
+        mkdir -p "$HOME/.local/var/log/install.doctor"
+      fi
+      echo "$PKG" >> "$HOME/.local/var/log/install.doctor/id-not-found-hook-items"
       if ! brew install "$PKG" &>/dev/null; then
         gum log -sl error "Failed to install $PKG via brew."
         return 1
@@ -155,8 +159,4 @@ handle_command_not_found() {
 # Main hook: invoked when a command is not found
 if [[ -n "$1" ]]; then
   handle_command_not_found "$1"
-else
-  gum log -sl error "No command provided for $1."
-  gum log -sl info "Command executed was $COMMAND"
-  exit 0
 fi
