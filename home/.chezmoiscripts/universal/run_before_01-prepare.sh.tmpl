@@ -9,6 +9,7 @@
 #     This script pipes environment variables and a logger function to a temporary file that is included by other scripts.
 #     It is included as a temporary external file to aid in debugging since if the included files were inlined in scripts
 #     the scripts would be verbose when debugging.
+set +x
 addTemporaryIncludes() {
     ### Ensure /tmp/tmp-profile is created
     # Add pre-scaffolding profile to /tmp/tmp-profile so it's easier to navigate through scripts
