@@ -53,7 +53,7 @@ if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/config.sh" ]; then
 
         ### Generate the configuration
         gum log -sl info "Joining GitHub runner to https://github.com/${RUNNER_ORG}"
-        "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/config.sh" --unattended --url https://github.com/${RUNNER_ORG} --token "$RUNNER_TOKEN" --labels "$LABELS" || EXIT_CODE=$?
+        "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/config.sh" --unattended --url https://github.com/${RUNNER_ORG} --token "$RUNNER_TOKEN" --labels $LABELS || EXIT_CODE=$?
         if [ -n "${EXIT_CODE:-}" ]; then
           gum log -sl error 'GitHub runner configuration failed' && exit 1
         fi
