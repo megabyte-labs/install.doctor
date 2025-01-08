@@ -522,7 +522,7 @@ async function main() {
         .filter(x => {
             // Only install casks or flatpaks and items with `_preload: true` in the `software.yml` file
             if (customArgv.lazy) {
-                if (x.cask || x.flatpak || x._serviceEnabled) {
+                if (x._app || x.flatpak || x._serviceEnabled) {
                     return true
                 } else {
                     return !!x._preload
@@ -585,7 +585,7 @@ async function main() {
         .filter(x => {
             // Only install casks or flatpaks and items with `_preload: true` in the `software.yml` file
             if (customArgv.lazy) {
-                if (x.cask || x.flatpak || x._serviceEnabled) {
+                if (x._app || x.flatpak || x._serviceEnabled) {
                     return true
                 } else {
                     return !!x._preload
@@ -617,7 +617,7 @@ async function main() {
         .filter(x => {
             // Only install casks or flatpaks and items with `_preload: true` in the `software.yml` file
             if (customArgv.lazy) {
-                if (x.cask || x.flatpak || x._serviceEnabled) {
+                if (x._app || x.flatpak || x._serviceEnabled) {
                     return true
                 } else {
                     return !!x._preload
