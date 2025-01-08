@@ -2,6 +2,7 @@ key.txt.age
 .chezmoiscripts/**/*
 !.chezmoiscripts/{{ .host.distro.id }}/**/*
 !.chezmoiscripts/{{ .host.distro.family }}/**/*
+.DS_Store
 
 {{- if ne .host.distro.id "windows" }}
 !.chezmoiscripts/_universal/**/*

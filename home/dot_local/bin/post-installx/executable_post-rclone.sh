@@ -67,7 +67,7 @@ if command -v rclone > /dev/null; then
     gum log -sl info 'Adding ~/.config/rclone/rclone.conf INSTALL DOCTOR managed block'
     tee -a "$CONFIG_FILE" > /dev/null <<EOT
 # INSTALL DOCTOR MANAGED S3 START
-[User-$USER]
+[$USER-s3]
 access_key_id = $(get-secret CLOUDFLARE_R2_ID_USER)
 acl = private
 endpoint = ${R2_ENDPOINT}.r2.cloudflarestorage.com

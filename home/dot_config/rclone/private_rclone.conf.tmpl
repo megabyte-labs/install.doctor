@@ -9,4 +9,4 @@ region = auto
 secret_access_key = {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CLOUDFLARE_R2_SECRET_USER")) }}{{- includeTemplate "secrets/CLOUDFLARE_R2_SECRET" | decrypt | trim -}}{{ else }}{{- env "CLOUDFLARE_R2_SECRET" -}}{{ end }}
 type = s3
 # INSTALL DOCTOR MANAGED S3 END
-{{- end -}}
+{{ end -}}

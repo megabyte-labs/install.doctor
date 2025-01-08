@@ -987,6 +987,12 @@ userLogFolders() {
   done
 }
 
+applyBasePlists() {
+  find "$HOME/Library/Preferences/base" -mindepth 1 -maxdepth 1 -type f | while read BASE_PLIST; do
+    cp -f "$BASE_PLIST" "$HOME/Library/Preferences/$(basename "$BASE_PLIST")"
+  done
+}
+
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   gum log -sl info 'The DEBUG or DEBUG_MODE environment variable is set so the post-dotfile-application routine tasks will be run synchronously'
   addZshEnv
@@ -1014,6 +1020,7 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   symlinkAnsibleRoles
   symlinkPython
   userLogFolders
+  applyBasePlists
 else
   addZshEnv &
   applyFontsToSystem &
@@ -1040,6 +1047,7 @@ else
   symlinkAnsibleRoles &
   symlinkPython &
   userLogFolders &
+  applyBasePlists &
   wait
 fi
 

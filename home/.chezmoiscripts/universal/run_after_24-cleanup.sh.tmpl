@@ -21,6 +21,13 @@ cleanupBrew() {
   fi
 }
 
+removeDotVolta() {
+  if [ -d "$HOME/.volta" ]; then
+    gum log -sl info "Removing $HOME/.volta folder (its tucked away in ~/.local/share now)"
+    sudo rm -rf "$HOME/.volta"
+  fi
+}
+
 ### Remove meta sudo file
 if [ -f "$HOME/.sudo_as_admin_successful" ]; then
     rm -f "$HOME/.sudo_as_admin_successful"
@@ -57,6 +64,7 @@ if [ -d /Applications ] && [ -d /System ]; then
     fi
 fi
 
+removeDotVolta &
 cleanAptGet &
 cleanupBrew &
 wait
