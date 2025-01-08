@@ -594,25 +594,25 @@ async function main() {
                 return true
             }
         })
-        .flatMap(async x => {
+        .flatMap(x => {
             const groupsField = getPkgData('_groups', x, x.installType)
             if (!groupsField) return Promise.resolve()
             log(`Ensuring user(s) / group(s) created for ${x.listKey}`)
             if (typeof typeof x[groupsField] !== 'string' && !Array.isArray(x[groupsField])) {
                 log(`Failed to parse _groups for ${x.installKey}. The _groups field must be either a string or string[].`)
-                return Promise.resolve()
+                return ''
             } else {
                 const groups = typeof x[groupsField] === 'string' ? [x[groupsField]] : x[groupsField]
-                const addUserGroups = groups.flatMap(y => {
+                return groups.flatMap(y => {
                     return `sudo "${os.homedir()}/.local/bin/add-usergroup" "${y}" "${y}" && sudo "${os.homedir()}/.local/bin/add-usergroup" "${process.env.USER}" "${y}"`
                 })
-                for (const addUserCommand of addUserGroups) {
-                    await $`${addUserCommand}`
-                }
-                return Promise.resolve()
             }
         })
-    await Promise.allSettled(usersGroupsAdditions)
+    for (const userGroup of usersGroupsAdditions) {
+        console.log(userGroup)
+        await execPromise(userGroup)
+    }
+    // await Promise.allSettled(usersGroupsAdditions)
     log(`Running post-install inline scripts`)
     for (const x of installData.filter(x => {
         // Filter out packages that contain a deprecation note
