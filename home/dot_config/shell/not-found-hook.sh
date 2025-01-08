@@ -156,6 +156,6 @@ handle_command_not_found() {
 if [[ -n "$1" ]]; then
   handle_command_not_found "$1"
 else
-  gum log -sl error "No command provided."
+  gum log -sl error "No command provided for $1."
   exit 1
 fi
