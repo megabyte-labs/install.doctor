@@ -205,3 +205,12 @@ if [ "$BASH_SUPPORT" = 'true' ] && [ -n "$BASH" ]; then
   # Loaded with bash-it
   # [[ ${BLE_VERSION-} ]] && ble-attach
 fi
+
+# Check if the script exists and source it for command_not_found_handle
+if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/not-found-hook.sh" ]]; then
+  source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/not-found-hook.sh"
+  command_not_found_handle() {
+    # Call the custom hook when a command is not found
+    handle_command_not_found "$1"
+  }
+fi

@@ -463,7 +463,7 @@ fi
 [ ! -f "$HOME/.fig/shell/zshrc.post.zsh" ] || source "$HOME/.fig/shell/zshrc.post.zsh"
 
 ### pay-respects
-! command -v pay-respects > /dev/null || eval "$(pay-respects zsh --alias)"eval "$(pay-respects bash --alias)"
+! command -v pay-respects > /dev/null || eval "$(pay-respects zsh --alias)"
 
 ### pkgx
 ! command -v pkgx > /dev/null || source <(pkgx --shellcode)
@@ -500,4 +500,13 @@ if command -v zoxide > /dev/null; then
 	eval "$(zoxide init zsh)"
 else
 	alias z='cd'
+fi
+
+# Check if the script exists and source it for command_not_found_handler
+if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/not-found-hook.sh" ]]; then
+  source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/not-found-hook.sh"
+  command_not_found_handler() {
+    # Call the custom hook when a command is not found
+    handle_command_not_found "$1"
+  }
 fi

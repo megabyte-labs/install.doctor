@@ -10,10 +10,12 @@ const cacheDir = os.homedir() + '/.cache/installx'
 
 const customArgv = minimist(process.argv.slice(3), {
     boolean: [
-        'all'
+        'all',
+        'lazy'
     ],
     alias: {
         a: 'all',
+        l: 'lazy'
     }
 })
 
@@ -516,6 +518,18 @@ async function main() {
         .filter(x => {
             // Filter out packages that contain a deprecation note
             return !x._deprecated
+        })
+        .filter(x => {
+          // Only install casks or flatpaks and items with `_preload: true` in the `software.yml` file
+          if (customArgv.lazy) {
+            if (x.cask || x.flatpak) {
+              return true
+            } else {
+              return x._preload
+            }
+          } else {
+            return true
+          }
         })
         .filter(x => {
             // Filter out macOS apps that already have a _app installed

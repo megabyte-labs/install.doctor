@@ -11,10 +11,10 @@ if command -v installx > /dev/null; then
   if command -v zx > /dev/null; then
     if command -v unbuffer > /dev/null; then
       gum log -sl info 'Running unbuffer installx'
-      unbuffer installx --all
+      unbuffer installx --all --lazy
     else
       gum log -sl info 'Running installx'
-      installx --all
+      installx --all --lazy
     fi
   else
     gum log -sl error 'zx is not available'

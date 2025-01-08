@@ -226,6 +226,7 @@ softwarePackages:
     _desc: "The repository at https://github.com/BuilderIO/ai-shell appears to be related to a project called \"ai-shell\" by BuilderIO. It seems to be a shell script that provides various AI-related functionalities \nor tools. Without further details or examining the repository, it's likely designed to assist with tasks related to artificial intelligence within a shell environment. For more specific information, you\nmay want to explore the repository's documentation, code, and README file.                                                                                                                                "
     _github: https://github.com/BuilderIO/ai-shell
     _name: AI Shell
+    _preload: true
     _short: "ai-shell is a tool that enhances your shell with AI capabilities, allowing for intelligent auto-completions and suggestions while working in the terminal.                                                "
     npm: "@builder.io/ai-shell"
   aiac:
@@ -241,6 +242,7 @@ softwarePackages:
     _desc: "The repository at https://github.com/Nutlope/aicommits appears to be a project related to artificial intelligence commits. It likely contains code, documentation, or resources related to AI development \nor version control of AI projects. To get a more detailed understanding, you can explore the repository's contents, such as the README file, code files, and any documentation provided.                  "
     _github: https://github.com/Nutlope/aicommits
     _name: AI Commits
+    _preload: true
     _short: "aicommits is a tool for analyzing and visualizing AI-related commits on GitHub.                                                                                                                           "
     brew: aicommits
     npm: aicommits
@@ -376,6 +378,7 @@ softwarePackages:
     _github: https://github.com/angular/angular
     _home: https://angular.io
     _name: Angular
+    _preload: true
     _short: "Angular is an open-source web application framework maintained by Google for building dynamic single-page applications.                                                                                   "
     brew: angular-cli
     npm: "@angular/cli"
@@ -386,6 +389,7 @@ softwarePackages:
     _github: https://github.com/ansible/ansible
     _home: https://www.ansible.com/
     _name: Ansible
+    _preload: true
     _post:pipx: pipx inject ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog
     _short: "Ansible is an open-source automation tool that simplifies IT orchestration, configuration management, and application deployment.                                                                         "
     pipx: ansible
@@ -423,6 +427,7 @@ softwarePackages:
     _bin: ansifilter
     _github: false
     _name: Ansifilter
+    _preload: true
     brew: ansifilter
     choco: ansifilter
     port: ansifilter
@@ -484,6 +489,7 @@ softwarePackages:
     _desc: "Apprise is a Python library that simplifies the process of sending notifications to multiple messaging services. It supports various notification services like Slack, Discord, Telegram, and more. With  \nApprise, you can easily integrate notifications into your scripts or applications by providing a unified interface to interact with different messaging platforms. It's a convenient tool for developers  \nand system administrators to streamline their notification workflows.                                                                                                                                     "
     _github: https://github.com/caronc/apprise
     _name: Apprise
+    _preload: true
     _short: "Apprise is a Python library that simplifies sending notifications to multiple messaging services.                                                                                                         "
     dnf: apprise
     pipx: apprise
@@ -504,6 +510,7 @@ softwarePackages:
     _github: https://github.com/aquaproj/aqua
     _home: https://aquaproj.github.io
     _name: aqua
+    _preload: true
     _short: "Aqua is a tool for secure and efficient container image scanning."
     _post: |
       aqua update-aqua
@@ -634,6 +641,7 @@ softwarePackages:
     _desc: "Atuin is a tool for managing AWS infrastructure using a simple command-line interface. It allows users to create, update, and delete AWS resources like EC2 instances, security groups, and S3 buckets    \nusing a declarative configuration file. Atuin aims to simplify AWS infrastructure management by providing a user-friendly interface and automating common tasks. It is written in Go and is open-source,  \navailable on GitHub at https://github.com/ellie/atuin.                                                                                                                                                    "
     _github: https://github.com/ellie/atuin
     _name: Atuin
+    _preload: true
     _short: "Atuin is a command-line tool for managing macOS windows.                                                                                                                                              "
     brew: atuin
     cargo: atuin
@@ -643,6 +651,7 @@ softwarePackages:
   audacity:
     _app: Audacity.app
     _bin: audacity
+    _deprecated: Unneeded
     _desc: An open-source audio editor
     _docs: https://support.audacityteam.org/
     _github: https://github.com/audacity/audacity
@@ -705,6 +714,7 @@ softwarePackages:
     _github: https://github.com/cupcakearmy/autorestic/
     _home: https://autorestic.vercel.app/
     _name: Autorestic
+    _preload: true
     _short: "AutoRestic is a tool that simplifies and automates backups using Restic, a fast, secure, and efficient backup program.                                                                                    "
     brew: autorestic
   aws-shell:
@@ -829,6 +839,7 @@ softwarePackages:
     _docs: https://docs.brew.sh/Shell-Completion
     _github: https://github.com/scop/bash-completion
     _name: Bash Completion Formula
+    _preload: true
     _short: "bash-completion is a tool for enhancing tab completion in the Bash shell.                                                                                                                                 "
     apt: bash-completion
     brew: bash-completion@2
@@ -876,6 +887,7 @@ softwarePackages:
     _desc: "bat-extras is a collection of additional scripts and utilities that extend the functionality of the bat command-line tool. These extras include features like syntax highlighting for more file types,    \nintegration with version control systems like Git, and additional customization options. It enhances the user experience when viewing and working with files in the terminal using bat. You can find more \ndetails and installation instructions on the GitHub repository: bat-extras.                                                                                                                               "
     _github: https://github.com/eth-p/bat-extras
     _name: Bat Extras
+    _preload: true
     _short: "bat-extras is a collection of additional scripts and functions for the bat command-line tool, enhancing its functionality on Unix-like systems.                                                           "
     brew: bat-extras
     emerge: sys-apps/bat-extras
@@ -997,6 +1009,7 @@ softwarePackages:
     _github: https://github.com/bitwarden/clients
     _home: https://bitwarden.com/
     _name: Bitwarden CLI
+    _preload: true
     _short: "Bitwarden Clients: Open-source password manager with clients for various platforms including web, desktop, and mobile.                                                                                    "
     brew: bitwarden-cli
     choco: bitwarden-cli
@@ -1049,6 +1062,7 @@ softwarePackages:
       - name: blocky
         sudo: true
     _serviceEnabled: true
+    _preload: true
     _short: "blocky is a tool for managing and monitoring multiple blockchain nodes easily.                                                                                                                            "
     brew: blocky
     go: github.com/0xERR0R/blocky@mastergithub.com/0xERR0R/blocky@master
@@ -1093,6 +1107,7 @@ softwarePackages:
     _github: https://github.com/ClementTsang/bottom
     _home: https://clementtsang.github.io/
     _name: bottom
+    _preload: true
     _short: "bottom is a cross-platform graphical process/system monitor with a customizable interface, written in Rust.                                                                                               "
     brew: bottom
     pacman: bottom
@@ -1114,10 +1129,10 @@ softwarePackages:
     _docs: https://support.brave.com/hc/en-us/articles/360035410812-Quickstart-guide-New-to-Brave-Start-here-
     _env:
       BRAVE_BROWSER_APPDATA:
-        cask: $HOME/Library/Application Support/BraveSoftware/Brave-Browser/Default
-        choco: "%APPDATA%/Local/BraveSoftware/Brave-Browser/User Data"
-        flatpak: $HOME/.var/app/com.brave.Browser/config/BraveSoftware/Brave-Browser/Default
-        snap: $HOME/snap/brave/current/.config/BraveSoftware/Brave-Browser/Default
+        cask: $HOME/Library/Application Support/BraveSoftware/Brave-Browser
+        choco: "%APPDATA%/Local/BraveSoftware/Brave-Browser"
+        flatpak: $HOME/.var/app/com.brave.Browser/config/BraveSoftware/Brave-Browser
+        snap: $HOME/snap/brave/current/.config/BraveSoftware/Brave-Browser
     _github: https://github.com/brave/brave-browser
     _home: https://brave.com/
     _name: Brave Browser
@@ -1131,6 +1146,7 @@ softwarePackages:
     _desc: "brew-gem is a tool that allows you to install Ruby gems as Homebrew formulae on macOS. This simplifies managing Ruby gems by integrating them into Homebrew, a popular package manager for macOS. By using\nbrew-gem, you can easily install, update, and remove Ruby gems using Homebrew commands, providing a more streamlined approach to managing Ruby dependencies on your system. It helps in keeping your Ruby \nenvironment organized and easily maintainable.                                                                                                                                                            "
     _github: https://github.com/sportngin/brew-gem
     _name: Homebrew RubyGems
+    _preload: true
     _short: "brew-gem is a Homebrew tap for installing Ruby gems as formulae.                                                                                                                                          "
     brew: brew-gem
   brew-pkg:
@@ -1431,6 +1447,7 @@ softwarePackages:
     _github: https://github.com/twpayne/chezmoi
     _home: https://www.chezmoi.io/
     _name: Chezmoi
+    _preload: true
     _short: "Chezmoi is a tool that helps manage dotfiles across multiple machines using a version control system like Git.                                                                                            "
     apk: chezmoi
     brew: chezmoi
@@ -1510,6 +1527,7 @@ softwarePackages:
       - clamav-daemon
       - clamav-freshclam
     _serviceEnabled: true
+    _preload: true
     _post: |
       if [ -d /Applications ] && [ -d /System ]; then
         load-service clamav.clamdscan
@@ -1588,6 +1606,7 @@ softwarePackages:
     _desc: "cloudflare-cli is a command-line interface tool available on GitHub at https://github.com/danielpigott/cloudflare-cli. This tool allows users to interact with Cloudflare's API directly from the command \nline, enabling tasks such as managing DNS records, configuring security settings, and more. It provides a convenient way to automate Cloudflare-related tasks and integrate them into scripts or          \nworkflows. The tool is written in Python and offers a range of functionalities to streamline Cloudflare management from the terminal.                                                                     "
     _github: https://github.com/danielpigott/cloudflare-cli
     _name: CloudFlare CLI
+    _preload: true
     _short: "cloudflare-cli is a command-line interface tool for interacting with Cloudflare services directly from the terminal.                                                                                      "
     npm: cloudflare-cli
   cloudflared:
@@ -1595,6 +1614,7 @@ softwarePackages:
     _desc: "[CloudFlare Argo Tunnel Client](https://developers.cloudflare.com/argo-tunnel/) contains the command-line client for CloudFlare Argo Tunnel, a tunneling daemon that proxies any local webserver through the Cloudflare network."
     _github: https://github.com/cloudflare/cloudflared
     _name: CloudFlared
+    _preload: true
     _short: "cloudflared is a tool by Cloudflare that allows secure and fast access to the internet.                                                                                                                   "
     binary:linux: https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
     brew:darwin: cloudflare/cloudflare/cloudflared
@@ -1606,6 +1626,7 @@ softwarePackages:
     _github: https://github.com/Kitware/CMake
     _home: https://cmake.org/
     _name: Chezmoi
+    _preload: true
     _short: "CMake is an open-source cross-platform build system designed to build, test, and package software.                                                                                                        "
     brew: cmake
     choco: cmake
@@ -1626,6 +1647,7 @@ softwarePackages:
     _github: https://github.com/cockpit-project/cockpit
     _home: https://cockpit-project.org/
     _name: Cockpit
+    _preload: true
     _post: sudo usermod -a -G libvirtdbus libvirt
     _service:pacman: cockpit.socket
     _short: "Cockpit is a web-based graphical interface for managing Linux servers.                                                                                                                                    "
@@ -1695,6 +1717,7 @@ softwarePackages:
     _github: https://github.com/dim-an/cod
     _home: https://github.com/dim-an/cod
     _name: Cod
+    _preload: true
     _short: "cod is a lightweight, fast, and powerful code editor designed for macOS.                                                                                                                                  "
     _todo: Check for brew install later on (5/14/2023)
     go: github.com/dim-an/cod@master
@@ -1930,6 +1953,7 @@ softwarePackages:
         proto: tcp
     _short: "CUPS (Common UNIX Printing System) is an open-source printing system developed by Apple for Unix-like operating systems.                                                                                  "
     _systemd: smbd
+    _preload: true
     apt:
       - avahi-daemon
       - cups
@@ -2038,7 +2062,7 @@ softwarePackages:
     npm: dat@next
   dat-desktop:
     _app: Dat Desktop.app
-    _bin: null
+    _bin: dat-desktop
     _desc: Peer to peer data syncronization
     _github: https://github.com/datproject/dat-desktop
     _name: Dat Desktop
@@ -2075,6 +2099,7 @@ softwarePackages:
     _github: https://github.com/dandavison/delta
     _home: https://github.com/dandavison/delta
     _name: Delta
+    _preload: true
     _short: "Delta is a tool for viewing git diff output with syntax highlighting and line decorations.                                                                                                                "
     brew: git-delta
     cargo: git-delta
@@ -2100,6 +2125,7 @@ softwarePackages:
     _github: https://github.com/denoland/deno
     _home: https://deno.land/
     _name: Deno
+    _preload: true
     _short: "Deno is a secure runtime for JavaScript and TypeScript.                                                                                                                                                   "
     brew: deno
     cargo: deno
@@ -2210,6 +2236,7 @@ softwarePackages:
     _github: https://github.com/Wilfred/difftastic
     _home: https://difftastic.wilfred.me.uk/
     _name: Difftastic
+    _preload: true
     _short: "Difftastic is a tool for visually comparing text files in a terminal environment.                                                                                                                         "
     brew: difftastic
     cargo: difftastic
@@ -2220,6 +2247,7 @@ softwarePackages:
     _github: https://github.com/direnv/direnv
     _home: https://direnv.net/
     _name: direnv
+    _preload: true
     _short: "direnv is a tool that helps automate loading and unloading of environment variables based on the current directory.                                                                                       "
     apt: direnv
     brew: direnv
@@ -2262,6 +2290,7 @@ softwarePackages:
     _github: https://github.com/imp/dnsmasq
     _name: dnsmasq
     _service: dnsmasq
+    _preload: true
     _short: "dnsmasq is a lightweight DNS forwarder and DHCP server.                                                                                                                                                   "
     apt: dnsmasq
     brew: dnsmasq
@@ -2275,6 +2304,7 @@ softwarePackages:
     _desc: "The GitHub repository at https://github.com/microsoft/docker is maintained by Microsoft and is related to Docker, a popular platform for developing, shipping, and running applications using             \ncontainerization technology. The repository likely contains code, documentation, and resources related to Microsoft's involvement with Docker, such as tools, extensions, or integrations. It could also  \ninclude projects aimed at improving Docker's functionality on Microsoft platforms like Windows or Azure. For specific details, exploring the repository directly would provide more insights.             "
     _github: https://github.com/microsoft/docker
     _name: Docker CLI
+    _preload: true
     _short: "microsoft/docker is a GitHub repository maintained by Microsoft for Docker-related projects.                                                                                                              "
     apt:
       - containerd.io
@@ -2325,6 +2355,7 @@ softwarePackages:
   docker-images:
     _desc: This entry is used to trigger a post-installation docker image pre-load. See the `docker-images` entry in `.chezmoidata.yaml`.
     _github: false
+    _preload: true
     script: echo "Enabling docker-images pre-load"
   docker-langserver:
     _bin: docker-langserver
@@ -2333,16 +2364,19 @@ softwarePackages:
     _github: https://github.com/rcjsuen/dockerfile-language-server-nodejs
     _home: https://github.com/rcjsuen/dockerfile-language-server-nodejs
     _name: Docker Language Server
+    _preload: true
     _short: "dockerfile-language-server-nodejs is a language server for Dockerfiles, written in Node.js.                                                                                                               "
     npm: dockerfile-language-server-nodejs
   docker-plugins:
     _desc: This entry is used to trigger a post-installation Docker plugin installation. See `docker-plugins` entry in `.chezmoidata.yaml`.
     _github: false
+    _preload: true
   docker-pushrm:
     _bin: docker-pushrm
     _desc: "The repository at https://github.com/christian-korneck/docker-pushrm appears to be a tool or script related to Docker. The name \"docker-pushrm\" suggests it might be related to pushing Docker images to a\nregistry. To get more details, you can check the repository's README file or explore the code to understand its functionality, usage, and any specific requirements or dependencies it might have.        "
     _github: https://github.com/christian-korneck/docker-pushrm
     _name: Docker PushRM
+    _preload: true
     _short: "docker-pushrm is a tool that simplifies pushing Docker images to AWS Elastic Container Registry (ECR) with reduced manual steps.                                                                          "
     script: |
       #!/usr/bin/env bash
@@ -2363,6 +2397,7 @@ softwarePackages:
     _github: https://github.com/docker-slim/docker-slim
     _home: https://dockersl.im/
     _name: Docker Slim
+    _preload: true
     _short: "docker-slim is a tool to create smaller and more secure Docker images by analyzing and optimizing them.                                                                                                   "
     brew: docker-slim
     dnf:fedora: golang-github-docker-slim
@@ -2451,6 +2486,7 @@ softwarePackages:
     _desc: "dotenv-vault is a tool developed by the dotenv-org organization on GitHub. It is designed to securely manage secrets in a .env file using HashiCorp Vault. This tool allows you to fetch secrets from     \nVault and inject them into your application's environment variables, providing a secure way to manage sensitive information. By integrating Vault with your .env file, you can ensure that your           \napplication secrets are stored and accessed in a secure manner.                                                                                                                                           "
     _github: https://github.com/dotenv-org/dotenv-vault
     _name: Dotenv Vault
+    _preload: true
     _short: "dotenv-vault is a tool that loads environment variables from HashiCorp Vault into your application.                                                                                                       "
     brew: dotenv-org/brew/dotenv-vault
     npm: dotenv-vault
@@ -2516,6 +2552,7 @@ softwarePackages:
     _desc: "dua-cli is a command-line tool available on GitHub at https://github.com/Byron/dua-cli. It is used for finding and cleaning up unnecessary or duplicate files in a directory. The tool helps in reclaiming\ndisk space by identifying redundant files based on their content. It provides options to review and delete these files efficiently. It is written in Rust and offers a fast and efficient way to manage   \ndisk space usage. Users can customize the tool's behavior through various command-line options.                                                                                                           "
     _github: https://github.com/Byron/dua-cli
     _name: "dua-cli                                                                                                                                                                                                   "
+    _preload: true
     _short: "dua-cli is a fast, interactive disk usage analyzer with a colorful interface for the command line.                                                                                                        "
     brew: dua-cli
     cargo: dua-cli
@@ -2532,6 +2569,7 @@ softwarePackages:
     _github: https://github.com/muesli/duf
     _home: https://github.com/muesli/duf
     _name: duf
+    _preload: true
     _short: "Duf is a disk usage utility with a modern interface for visualizing disk space usage on your system.                                                                                                      "
     brew: duf
     choco: duf
@@ -2546,6 +2584,7 @@ softwarePackages:
     _github: https://github.com/bootandy/dust
     _home: https://github.com/bootandy/dust
     _name: dust
+    _preload: true
     _short: "Dust is a modern alternative to du command, providing a more intuitive visualization of disk usage in a terminal.                                                                                         "
     apk: dust
     brew:darwin: dust
@@ -2688,6 +2727,7 @@ softwarePackages:
     _home: https://github.com/skeeto/endlessh
     _name: Endlessh
     _service: endlessh
+    _preload: true
     _short: "endlessh is a tool that generates endless SSH honeypot noise to frustrate and slow down attackers.                                                                                                        "
     apt: endlessh
     dnf:fedora: endlessh
@@ -2710,6 +2750,7 @@ softwarePackages:
     _github: https://github.com/sorah/envchain
     _home: https://github.com/sorah/envchain
     _name: envchain
+    _preload: true
     _short: "envchain is a tool that securely stores and manages environment variables for command-line applications.                                                                                                  "
     brew: envchain
     github: github.com/sorah/envchain
@@ -2726,6 +2767,7 @@ softwarePackages:
     _desc: "envio is a GitHub repository created by humblepenguinn. Unfortunately, without further context or access to the repository, I can't provide specific details about its contents. Typically, repositories  \non GitHub contain code, documentation, or other resources related to a project. If you're interested in learning more about envio, you can visit the GitHub link provided to explore its contents, read   \nthe README file, check the code, and see if there are any issues or pull requests associated with it.                                                                                                     "
     _github: https://github.com/humblepenguinn/envio
     _name: Envio
+    _preload: true
     _short: "envio is a lightweight command-line tool for sending files securely over the internet using end-to-end encryption.                                                                                        "
     cargo: envio
   envpane:
@@ -2749,6 +2791,7 @@ softwarePackages:
     _github: https://github.com/eslint/eslint
     _home: https://eslint.org/
     _name: ESLint
+    _preload: true
     _short: "ESLint is a popular JavaScript linting tool that helps developers maintain code quality and adhere to coding standards.                                                                                   "
     brew: eslint
     npm: eslint
@@ -2801,6 +2844,7 @@ softwarePackages:
     _github: https://github.com/etcd-io/etcd
     _name: etcd
     _service: etcd
+    _preload: true
     _serviceEnabled: true
     _short: "etcd is a distributed key-value store used for shared configuration and service discovery in distributed systems.                                                                                         "
     apt: etcd
@@ -2822,7 +2866,7 @@ softwarePackages:
     pacman: ettercap
   eul:
     _app: eul.app
-    _bin: null
+    _bin: eul
     _desc: Menu bar application that shows system stats like CPU, RAM, and disk usage on macOS
     _docs: https://github.com/gao-sun/eul
     _github: https://github.com/gao-sun/eul
@@ -2854,6 +2898,7 @@ softwarePackages:
     _docs: https://eza.rocks/
     _github: https://github.com/eza-community/eza
     _home: https://eza.rocks/
+    _preload: true
     _name: Eza
     brew: eza
     cargo: eza
@@ -2871,6 +2916,7 @@ softwarePackages:
     _github: https://github.com/exiftool/exiftool
     _home: https://exiftool.org/
     _name: exiftool
+    _preload: true
     _short: "ExifTool is a powerful command-line tool for reading, writing, and editing metadata in a wide variety of files, including images, videos, and documents.                                                  "
     apt: libimage-exiftool-perl
     brew: exiftool
@@ -2883,6 +2929,7 @@ softwarePackages:
     _bin: expect
     _github: false
     _name: Expect
+    _preload: true
     apt: expect
     brew: expect
     dnf: expect
@@ -2904,6 +2951,7 @@ softwarePackages:
     _notes: |
       fail2ban cannot be installed on Qubes Fedora 36 without messing with the qubes-firewall since firewalld is required.
     _service: fail2ban
+    _preload: true
     _service:brew:
       - name: fail2ban
         sudo: true
@@ -2939,6 +2987,7 @@ softwarePackages:
     _github: https://github.com/Svetlitski/fcp
     _home: https://github.com/Svetlitski/fcp
     _name: fcp
+    _preload: true
     _short: "fcp is a tool for copying files with progress bars in the terminal.                                                                                                                                       "
     brew: fcp
     cargo: fcp
@@ -2949,6 +2998,7 @@ softwarePackages:
     _desc: "[fd](https://github.com/sharkdp/fd) is a program that can search for files on your filesystem. It is a simple, fast, and user-friendly alternative to find. While it does not aim to support all of find's powerful functionality, it provides sensible (opinionated) defaults for a majority of use cases."
     _github: https://github.com/sharkdp/fd
     _name: fd
+    _preload: true
     _short: "fd is a simple, fast and user-friendly alternative to find command, written in Rust.                                                                                                                      "
     apk: fd
     apt: fd-find
@@ -2998,6 +3048,7 @@ softwarePackages:
     _desc: "[FFmpeg](https://www.ffmpeg.org/) is the leading multimedia framework. It is able to decode, encode, transcode, mux, demux, stream, filter and play pretty much anything that humans and machines have created. It supports the most obscure ancient formats up to the cutting edge."
     _github: https://github.com/FFmpeg/FFmpeg
     _name: FFmpeg
+    _preload: true
     _short: "FFmpeg is a powerful multimedia framework that can decode, encode, transcode, mux, demux, stream, filter, and play almost anything that humans and machines have created.                                 "
     apk: ffmpeg
     apt: ffmpeg
@@ -3011,6 +3062,7 @@ softwarePackages:
     _desc: "[ffsend](https://github.com/timvisee/ffsend) (formerly [Firefox Send](https://support.mozilla.org/en-US/kb/what-happened-firefox-send)) allows you to easily and securely share files and directories from the command line through a safe, private and encrypted link using a single simple command. Files are shared using the [Send](https://send.vis.ee/) service and may be up to 1GB. Others are able to download these files with this tool, or through their web browser."
     _github: https://github.com/timvisee/ffsend
     _name: ffsend
+    _preload: true
     _short: "ffsend is a command-line tool for securely and easily sharing files from the terminal using Firefox Send.                                                                                                 "
     apk: ffsend
     brew: ffsend
@@ -3054,7 +3106,7 @@ softwarePackages:
     zypper: figlet
   figma:
     _app: Figma.app
-    _bin: null
+    _bin: figma
     _desc: Collaborative team software
     _docs: https://help.figma.com/hc/en-us
     _github: false
@@ -3093,12 +3145,14 @@ softwarePackages:
   findutils:
     _bin: gfind
     _github: false
+    _preload: true
     brew: findutils
   firebase:
     _bin: firebase
     _desc: The Firebase Command Line Interface (CLI) Tools can be used to test, manage, and deploy your Firebase project from the command line
     _github: https://github.com/firebase/firebase-tools
     _name: "firebase-tools                                                                                                                                                                                            "
+    _preload: true
     _short: "firebase-tools is a command-line interface for Firebase services, allowing developers to deploy and manage Firebase projects from the terminal.                                                           "
     npm: firebase-tools
   firefox:
@@ -3188,6 +3242,7 @@ softwarePackages:
     _desc: Fabulously kill processes. Cross-platform
     _github: https://github.com/sindresorhus/fkill
     _name: fkill
+    _preload: true
     _short: "fkill is a command-line tool for macOS that helps you easily kill processes by name or port.                                                                                                              "
     npm: fkill-cli
   flake8:
@@ -3288,6 +3343,7 @@ softwarePackages:
     _desc: Terminal file manager
     _github: https://github.com/mistakenelf/fm
     _name: fm
+    _preload: true
     _short: "fm is a simple file manager for the terminal.                                                                                                                                                             "
     github: github.com/mistakenelf/fm
     go: github.com/mistakenelf/fm@latest
@@ -3401,6 +3457,7 @@ softwarePackages:
     _github: https://github.com/sgarciac/fuego
     _home: https://github.com/sgarciac/fuego
     _name: Fuego
+    _preload: true
     _short: "Fuego is a lightweight and fast web framework for Go.                                                                                                                                                     "
     brew: fuego-firestore
     go: github.com/sgarciac/fuego@latest
@@ -3463,6 +3520,7 @@ softwarePackages:
     _desc: An implementation of the AWK programming language
     _docs: https://www.gnu.org/software/gawk/manual/
     _github: false
+    _preload: true
     _home: https://www.gnu.org/software/gawk/
     _name: gawk
     apt: gawk
@@ -3477,6 +3535,7 @@ softwarePackages:
     _desc: "The link https://github.com/gcc-mirror/gcc leads to the official mirror of the GNU Compiler Collection (GCC) on GitHub. GCC is a widely used compiler for programming languages like C, C++, and Fortran. \nThis repository contains the source code for GCC, allowing developers to contribute to its development, report issues, and access the latest updates. It's a valuable resource for anyone interested in   \nunderstanding or modifying the inner workings of this essential compiler tool.                                                                                                                            "
     _github: https://github.com/gcc-mirror/gcc
     _name: GCC
+    _preload: true
     _short: "The gcc-mirror/gcc repository on GitHub is a mirror of the official GCC (GNU Compiler Collection) repository.                                                                                             "
     apt: gcc
     brew: gcc
@@ -3487,6 +3546,7 @@ softwarePackages:
     _bin: gcloud
     _desc: "[Google Cloud SDK](https://cloud.google.com/sdk) includes tools and libraries for interacting with Google Cloud products and services. With it, you can orchestrate virtual machine instances directly from your command line, manage Compute Engine networks/firewalls/disks, simulate Pub/Sub locally, and much more."
     _github: false
+    _preload: true
     _name: Google Cloud SDK
     cask: google-cloud-sdk
     choco: gcloudsdk
@@ -3497,6 +3557,7 @@ softwarePackages:
     _desc: "gcsf is a FUSE file system that allows you to mount your Google Drive account as a local file system for easy access and manipulation of your files. It uses Google Drive API to interact with your Google\nDrive account securely. With gcsf, you can perform various file operations like browsing, uploading, downloading, and deleting files on your Google Drive directly from your terminal. It provides a      \nconvenient way to work with your Google Drive files without needing a web browser.                                                                                                                        "
     _github: https://github.com/harababurel/gcsf
     _name: GCSF
+    _preload: true
     _short: "gcsf is a FUSE file system that allows you to mount your Google Drive account as a local file system.                                                                                                     "
     cargo: gcsf
   gdbgui:
@@ -3572,6 +3633,7 @@ softwarePackages:
     _github: https://github.com/cli/cli
     _home: https://cli.github.com/
     _name: Github CLI
+    _preload: true
     _short: "GitHub CLI is a command-line tool that brings GitHub to your terminal.                                                                                                                                    "
     brew: gh
     choco: gh
@@ -3590,6 +3652,7 @@ softwarePackages:
     _desc: "[ghorg](https://github.com/gabrie30/ghorg) allows you to quickly clone all of an org's, or user's repositories into a single directory."
     _github: https://github.com/gabrie30/ghorg
     _name: ghorg
+    _preload: true
     _post: ghorg reclone
     _short: "ghorg is a tool for cloning all repositories of a GitHub organization quickly and easily.                                                                                                                 "
     brew: gabrie30/utils/ghorg
@@ -3630,6 +3693,7 @@ softwarePackages:
     _desc: "[gist](https://github.com/defunkt/gist) provides a command that you can use from your terminal to upload content to https://gist.github.com/. This role will optionally set up a dotfile that handles authentication if you pass the appropriate configuration."
     _github: https://github.com/defunkt/gist
     _name: gist
+    _preload: true
     _short: "Gist is a tool for sharing code snippets or files easily on GitHub.                                                                                                                                       "
     gem: gist
   git:
@@ -3637,6 +3701,7 @@ softwarePackages:
     _desc: "git/git is the official repository for the Git version control system. It contains the source code for Git, along with documentation, release notes, and other resources. Users can contribute to Git by  \nsubmitting pull requests, reporting issues, and participating in discussions. The repository is maintained by the Git community and serves as the central hub for all things related to the development   \nand improvement of Git.                                                                                                                                                                                   "
     _github: https://github.com/git/git
     _name: "git                                                                                                                                                                                                       "
+    _preload: true
     _short: "git/git is the official repository for the Git version control system.                                                                                                                                    "
     apk: git
     apt: git
@@ -3672,6 +3737,7 @@ softwarePackages:
     _github: https://github.com/tj/git-extras
     _name: git-extras
     _short: "git-extras is a collection of useful Git utilities.                                                                                                                                                       "
+    _preload: true
     ansible:windows: professormanhattan.gitextras
     apt: git-extras
     brew: git-extras
@@ -3682,6 +3748,7 @@ softwarePackages:
     _desc: "[gitfilterrepo](https://github.com/newren/git-filter-repo) is a versatile tool for rewriting history"
     _github: https://github.com/newren/git-filter-repo
     _name: "git-filter-repo                                                                                                                                                                                           "
+    _preload: true
     _short: "git-filter-repo is a powerful tool for rewriting Git repository history efficiently and with ease.                                                                                                        "
     brew: git-filter-repo
     pipx: git-filter-repo
@@ -3700,6 +3767,7 @@ softwarePackages:
     _desc: Git LFS (Large File Storage) replaces large files such as audio samples, videos, datasets, and graphics with text pointers inside Git, while storing the file contents on a remote server like GitHub.com or GitHub Enterprise.
     _github: https://github.com/git-lfs/git-lfs
     _name: Git LFS
+    _preload: true
     _post: |
       sudo git lfs install --system
       git lfs install
@@ -3744,6 +3812,7 @@ softwarePackages:
     _desc: "git-subrepo is a tool that allows you to manage subrepositories within a Git repository. It enables you to include external repositories as subdirectories within your main repository, making it easier  \nto work with multiple repositories as a single project. This tool simplifies the process of managing dependencies and keeping them in sync with your main project. It provides commands to add, update,   \nand push changes to subrepositories, making it a useful tool for managing complex projects with multiple dependencies.                                                                                    "
     _github: https://github.com/ingydotnet/git-subrepo
     _name: Git Sub Repo
+    _preload: true
     _short: "git-subrepo is a tool that allows you to manage subrepositories within a Git repository, enabling you to include external repositories as subdirectories in your main repository.                         "
     brew: git-subrepo
   git-town:
@@ -3794,6 +3863,7 @@ softwarePackages:
     _github: https://github.com/actions/runner
     _home: https://docs.github.com/en/actions/hosting-your-own-runners
     _name: GitHub Runner
+    _preload: true
     _when: '! test -d "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"'
     _short: "GitHub Actions Runner is a tool that allows you to run GitHub Actions workflows on your own infrastructure.                                                                                               "
     script: |
@@ -3849,7 +3919,6 @@ softwarePackages:
     _home: https://gitlab.com/gitlab-org/gitlab-runner
     _name: Gitlab Runner
     _service: gitlab-runner
-    _serviceEnabled: true
     _short: "GitLab Runner is an open-source project that works with GitLab CI/CD to run jobs and send the results back to GitLab.                                                                                     "
     brew: gitlab-runner
     choco: gitlab-runner
@@ -3888,6 +3957,7 @@ softwarePackages:
     _desc: "[git-o-matic](https://github.com/muesli/gitomatic) is a tool to monitor git repositories and automatically pull & push changes"
     _github: https://github.com/muesli/gitomatic
     _name: git-o-matic
+    _preload: true
     _short: "gitomatic is a tool for automatic syncing of Git repositories.                                                                                                                                            "
     github: github.com/muesli/gitomatic
     go: github.com/muesli/gitomatic@latest
@@ -3941,6 +4011,7 @@ softwarePackages:
     _desc: "[Glances](https://github.com/nicolargo/glances) is a cross-platform monitoring tool which aims to present a maximum of information in a minimum of space through a curses or a web interface. It can adapt the displayed information depending on the terminal size dynamically. It is a top/htop alternative for Linux, BSD, macOS, and even Windows."
     _github: https://github.com/nicolargo/glances
     _name: Glances
+    _preload: true
     _post:pipx: pipx inject glances glances[all]
     _short: "Glances is a cross-platform monitoring tool that provides real-time system information in a visually appealing way.                                                                                       "
     apt:ubuntu:
@@ -3979,6 +4050,7 @@ softwarePackages:
     _desc: Glow is a terminal based markdown reader designed from the ground up to bring out the beauty—and power—of the CLI
     _github: https://github.com/charmbracelet/glow
     _name: glow
+    _preload: true
     _short: "Glow is a terminal markdown viewer for Unix systems.                                                                                                                                                      "
     brew: glow
     github: github.com/charmbracelet/glow
@@ -3992,6 +4064,7 @@ softwarePackages:
     _github: https://github.com/gluster/glusterfs
     _home: https://www.gluster.org/
     _name: GlusterFS
+    _preload: true
     _service: glusterd
     _short: "GlusterFS is an open-source distributed file system that can scale out in building-block fashion to store multiple petabytes of data.                                                                     "
     apt: glusterfs-server
@@ -4128,20 +4201,25 @@ softwarePackages:
       - gnutls
       - grep
     _github: false
+    _preload: true
   gnu-indent:
     _bin: gindent
     _github: false
+    _preload: true
     brew: gnu-indent
   gnu-sed:
     _bin: gsed
     _github: false
+    _preload: true
     brew: gnu-sed
   gnu-tar:
     _bin: gtar
     _github: false
+    _preload: true
     brew: gnu-tar
   gnutls:
     _bin: gnutls-certtool
+    _preload: true
     _github: false
     brew: gnutls
   go:
@@ -4151,6 +4229,7 @@ softwarePackages:
     _github: https://github.com/golang/go
     _home: https://go.dev/
     _name: Go
+    _preload: true
     _short: "The official repository for the Go programming language.                                                                                                                                                  "
     apt: golang-go
     brew: go
@@ -4180,6 +4259,7 @@ softwarePackages:
     _docs: https://goaccess.io/get-started
     _github: https://github.com/allinurl/goaccess
     _home: https://goaccess.io/
+    _preload: true
     _name: GoAccess
     _short: "GoAccess is a real-time web log analyzer and interactive viewer that runs in a terminal.                                                                                                                  "
     apt: goaccess
@@ -4221,6 +4301,7 @@ softwarePackages:
     _docs: https://docs.gomplate.ca/
     _github: https://github.com/hairyhenderson/gomplate
     _home: https://gomplate.ca/
+    _preload: true
     _name: Gomplate
     _short: "gomplate is a versatile command-line tool for manipulating text templates with data.                                                                                                                      "
     apk: gomplate
@@ -4260,8 +4341,8 @@ softwarePackages:
     _docs: https://developer.chrome.com/docs/extensions/reference/
     _env:
       GOOGLE_CHROME_APPDATA:
-        cask: $HOME/Library/Application Support/Google/Chrome/Default
-        flatpak: $HOME/.var/app/com.google.Chrome/config/google-chrome/Default
+        cask: $HOME/Library/Application Support/Google/Chrome
+        flatpak: $HOME/.var/app/com.google.Chrome/config/google-chrome
     _github: Not open-source
     _home: https://www.google.com/chrome/
     _name: Google Chrome
@@ -4343,6 +4424,7 @@ softwarePackages:
     _github: https://github.com/gilesknap/gphotos-sync
     _home: https://gilesknap.github.io/gphotos-sync/main/index.html
     _name: Google Photos Sync
+    _preload: true
     _short: "gphotos-sync is a tool for syncing Google Photos to a local directory.                                                                                                                                    "
     pacman: gphotos-sync
     pipx: gphotos-sync
@@ -4351,6 +4433,7 @@ softwarePackages:
     _desc: "[gping](https://github.com/orf/gping) is like the regular ping command except it also displays a chart labeled with response timing statistics."
     _github: https://github.com/orf/gping
     _name: gping
+    _preload: true
     _short: "gping is a modern ping tool that shows a graph of ping responses over time.                                                                                                                               "
     brew: gping
     cargo: gping
@@ -4363,6 +4446,7 @@ softwarePackages:
     _desc: "The GitHub repository https://github.com/AntonOsika/gpt-engineer appears to be a project related to GPT (Generative Pre-trained Transformer) technology for engineers. It likely contains code,           \ndocumentation, or resources for utilizing GPT models in engineering-related tasks. Without further exploration, it seems to be a tool or framework tailored towards engineers looking to leverage GPT for \ntheir projects. For detailed insights, exploring the repository's contents, README file, and documentation would provide a clearer understanding of its purpose and functionality.                        "
     _github: https://github.com/AntonOsika/gpt-engineer
     _name: GPT Engineer
+    _preload: true
     _short: "gpt-engineer is a tool for generating code using GPT-3.                                                                                                                                                   "
     pipx: gpt-engineer
   gradle:
@@ -4392,6 +4476,7 @@ softwarePackages:
   grep:
     _bin: grep
     _github: false
+    _preload: true
     apt: grep
     brew: grep
     dnf: grep
@@ -4447,6 +4532,7 @@ softwarePackages:
     _github: https://github.com/apache/guacamole-client
     _home: https://guacamole.apache.org/
     _name: Guacamole
+    _preload: true
     _short: "Apache Guacamole is an open-source remote desktop gateway that provides access to desktop environments using a web browser.                                                                               "
     _todo: Add installer for guacamole
   gulp:
@@ -4456,6 +4542,7 @@ softwarePackages:
     _github: https://github.com/gulpjs/gulp
     _home: https://gulpjs.com/
     _name: Gulp
+    _preload: true
     _short: "Gulp is a popular JavaScript task runner that helps automate repetitive tasks in web development workflows.                                                                                               "
     npm: gulp
   gum:
@@ -4465,6 +4552,7 @@ softwarePackages:
     _github: https://github.com/charmbracelet/gum
     _home: https://charm.sh/
     _name: Gum
+    _preload: true
     _short: "gum is a terminal framework for Go that helps in building rich and interactive command-line applications.                                                                                                 "
     apk: gum
     brew: gum
@@ -4514,6 +4602,7 @@ softwarePackages:
     _github: https://github.com/chmln/handlr
     _home: https://github.com/chmln/handlr
     _name: Handlr
+    _preload: true
     _short: "handlr is a command-line tool for managing URL handlers on macOS.                                                                                                                                         "
     cargo: handlr --locked
     yay: handlr-bin
@@ -4543,6 +4632,7 @@ softwarePackages:
     _desc: This is a CLI tool to render handlebars templates, with the ability to require in Partials, Helpers and JSON Data
     _github: https://github.com/keithamus/hbs-cli
     _name: "hbs-cli                                                                                                                                                                                                   "
+    _preload: true
     _short: "hbs-cli is a command-line tool for Handlebars templating.                                                                                                                                                 "
     npm: hbs-cli
   hclq:
@@ -4561,6 +4651,7 @@ softwarePackages:
     _home: https://helix-editor.com/
     _name: Helix Editor
     _repology: helix
+    _preload: true
     _short: "Helix is a modern text editor for terminal-based systems, designed for speed and ease of use.                                                                                                             "
     brew: helix
     choco: helix
@@ -4638,6 +4729,7 @@ softwarePackages:
   hiddenbar:
     _app: Hidden Bar.app
     _bin: null
+    _deprecated: Unneeded
     _desc: macOS menu bar application that allows you to add menu bar items to a hideable drawer
     _docs: https://github.com/dwarvesf/hidden
     _github: https://github.com/dwarvesf/hidden
@@ -4669,6 +4761,7 @@ softwarePackages:
     _desc: "Hoard is a tool available on GitHub at https://github.com/Hyde46/hoard. It is a simple shell script designed to help users manage their dotfiles by storing them in a Git repository. Dotfiles are        \nconfiguration files for various programs in Unix-like systems. Hoard simplifies the process of backing up and syncing these files across multiple machines. Users can easily add, commit, and push changes\nto their dotfiles repository using this tool. It provides a convenient way to keep configurations consistent across different environments.                                                               "
     _github: https://github.com/Hyde46/hoard
     _name: Hoard
+    _preload: true
     _short: "Hoard is a tool for managing secrets securely in macOS keychain.                                                                                                                                          "
     cargo: hoard-rs
     nix-env: hoard
@@ -4749,6 +4842,7 @@ softwarePackages:
     _github: https://github.com/htop-dev/htop
     _home: https://htop.dev/
     _name: htop
+    _preload: true
     _short: "htop is a popular interactive process viewer for Unix systems, providing a more user-friendly and feature-rich alternative to the traditional top command.                                                "
     apt: htop
     brew: htop
@@ -4804,6 +4898,7 @@ softwarePackages:
     _desc: Add GitHub support to git on the command-line
     _github: https://hub.github.com/
     _name: "hub                                                                                                                                                                                                       "
+    _preload: true
     _short: "GitHub CLI (https://hub.github.com/) is a command-line tool that brings GitHub to your terminal.                                                                                                          "
     apt: hub
     brew: hub
@@ -4836,6 +4931,7 @@ softwarePackages:
     _desc: "Hurl is an open-source command-line tool for making HTTP requests with a simple and human-readable syntax. It allows users to easily test APIs, inspect HTTP responses, and automate API testing. Hurl    \nsupports various HTTP methods, headers, query parameters, and request bodies. It is designed to be lightweight, fast, and easy to use, making it a handy tool for developers and testers working with     \nAPIs. The tool is actively maintained by the Orange Open Source community and is available for use on various platforms.                                                                                  "
     _github: https://github.com/Orange-OpenSource/hurl
     _name: "hurl                                                                                                                                                                                                      "
+    _preload: true
     _short: "Hurl is a command-line tool for making HTTP requests with a simple and intuitive syntax.                                                                                                                  "
     brew: hurl
     cargo: hurl
@@ -4849,6 +4945,7 @@ softwarePackages:
     _bin: husky
     _desc: Husky improves your commits and more
     _github: https://github.com/typicode/husky
+    _preload: true
     _home: https://typicode.github.io/husky/
     _name: Husky
     _short: "Husky is a tool that helps to set up Git hooks easily in a project.                                                                                                                                       "
@@ -4889,6 +4986,7 @@ softwarePackages:
     _desc: "HyperKit is a lightweight hypervisor built on top of the Hypervisor.framework in macOS. It is used in Docker for Mac to run a Linux VM for Docker containers. HyperKit provides a way to run Docker       \ncontainers natively on macOS without the need for VirtualBox or VMware Fusion. It offers a secure and efficient environment for running containers by leveraging macOS's native virtualization framework. \nHyperKit is open-source and maintained by the Moby project, which is the open-source project behind Docker.                                                                                               "
     _github: https://github.com/moby/hyperkit
     _name: HyperKit
+    _preload: true
     _short: "HyperKit is a lightweight hypervisor for macOS that allows you to run Docker containers natively on macOS.                                                                                                "
     brew:darwin: hyperkit
   ideviceinstaller:
@@ -4896,6 +4994,7 @@ softwarePackages:
     _desc: "ideviceinstaller is a command-line tool that allows you to interact with iOS devices using the libimobiledevice library. It enables you to install, uninstall, and manage apps on iOS devices from the    \nterminal. This tool is particularly useful for developers and system administrators who need to automate app installations or manage apps on multiple iOS devices. It provides a convenient way to work   \nwith iOS devices without needing to use iTunes or Xcode.                                                                                                                                                  "
     _github: https://github.com/libimobiledevice/ideviceinstaller
     _name: "ideviceinstaller                                                                                                                                                                                          "
+    _preload: true
     _short: "ideviceinstaller is a command-line tool for installing, managing, and removing apps on iOS devices.                                                                                                       "
     brew:darwin: ideviceinstaller
   iina:
@@ -4913,6 +5012,7 @@ softwarePackages:
     _desc: "ImageMagick is an open-source software suite used for creating, editing, composing, or converting bitmap images. It supports a wide range of image formats and includes tools for image manipulation, such\nas resizing, cropping, and applying filters. The software can be accessed via command line or through various programming languages like C++, Python, and Perl. It is widely used in web development,     \ngraphic design, and scientific applications for its versatility and powerful image processing capabilities. The GitHub repository for ImageMagick contains the source code, documentation, and community  \ncontributions related to the project.                                                                                                                                                                     "
     _github: https://github.com/ImageMagick/ImageMagick
     _name: "ImageMagick                                                                                                                                                                                               "
+    _preload: true
     _short: "ImageMagick is an open-source software suite for creating, editing, composing, or converting bitmap images.                                                                                               "
     apk: imagemagick
     apt:
@@ -4939,6 +5039,7 @@ softwarePackages:
     _github: https://github.com/ImageOptim/ImageOptim
     _home: https://imageoptim.com/mac
     _name: "ImageOptim                                                                                                                                                                                                "
+    _preload: true
     _short: "ImageOptim is an open-source tool for optimizing images to reduce file size without losing quality.                                                                                                       "
     brew:darwin-x86_64: imageoptim-cli
     npm:darwin: imageoptim-cli
@@ -4983,6 +5084,7 @@ softwarePackages:
   inkscape:
     _app: Inkscape.app
     _bin: inkscape
+    _deprecated: Uneeded
     _desc: "[Inkscape](https://inkscape.org/) is a free and open-source vector graphics editor used to create vector images, primarily in Scalable Vector Graphics format. Other formats can be imported and exported. Inkscape can render primitive vector shapes and text. This role installs Inkscape on nearly any platform."
     _docs: https://inkscape.org/*docs/
     _github: https://github.com/inkscape/inkscape
@@ -4999,6 +5101,7 @@ softwarePackages:
   intellij-idea-ce:
     _app: IntelliJ IDEA CE.app
     _bin: intellij-idea-community
+    _deprecated: Unneeded
     _desc: "[IntelliJ IDEA](https://www.jetbrains.com/idea/) is an integrated development environment written in Java for developing computer software. It is developed by JetBrains, and is available as an Apache 2 Licensed community edition, and in a proprietary commercial edition. Both can be used for commercial development."
     _docs: https://www.jetbrains.com/help/
     _github: https://github.com/JetBrains/intellij-community
@@ -5023,6 +5126,7 @@ softwarePackages:
     _github: https://github.com/ionic-team/ionic-cli
     _home: https://ionicframework.com/
     _name: Ionic Framework
+    _preload: true
     _short: "Ionic CLI is a command-line interface for building Ionic apps with ease.                                                                                                                                  "
     npm: "@ionic/cli"
   ios-deploy:
@@ -5164,6 +5268,7 @@ softwarePackages:
     _github: https://github.com/oracle/nosql-java-sdk
     _home: https://www.java.com/en/
     _name: Java
+    _preload: true
     _short: "nosql-java-sdk is a Java library for interacting with Oracle NoSQL Database.                                                                                                                              "
     _when:cask: "! brew list temurin > /dev/null"
     apt: openjdk-11-jdk
@@ -5194,6 +5299,7 @@ softwarePackages:
     _github: https://github.com/jenv/jenv
     _home: https://www.jenv.be/
     _name: jenv
+    _preload: true
     _short: "jenv is a tool for managing Java environments on your system. It allows you to easily switch between different Java versions and set the Java version on a per-directory basis.                           "
     brew: jenv
   jest:
@@ -5256,6 +5362,7 @@ softwarePackages:
     _desc: "jpegoptim is a command-line utility for optimizing JPEG files. It allows you to compress JPEG images without losing quality, reducing their file size and making them load faster on websites. By removing\nunnecessary data and adjusting the compression settings, jpegoptim helps to improve the performance of websites by reducing bandwidth usage. It supports various optimization options like lossless and   \nlossy compression, adjusting image quality, stripping metadata, and more. It's a handy tool for web developers and system administrators looking to optimize their JPEG images efficiently.               "
     _github: https://github.com/tjko/jpegoptim
     _name: JPEGOptim
+    _preload: true
     _short: "jpegoptim is a command-line utility that optimizes JPEG images to reduce their file size without affecting image quality.                                                                                 "
     apt: jpegoptim
     brew: jpegoptim
@@ -5304,6 +5411,7 @@ softwarePackages:
     _desc: "JuiceFS is a distributed POSIX file system built for cloud-native environments. It is designed to provide scalable and reliable file storage for Kubernetes clusters and other cloud platforms. JuiceFS   \nsupports features like snapshots, encryption, and data deduplication. It aims to simplify data management for applications running in cloud environments by offering a familiar file system interface.    \nUsers can access JuiceFS through FUSE or a native API. It is open-source and actively maintained by the community.                                                                                        "
     _github: https://github.com/juicedata/juicefs
     _name: JuiceFS
+    _preload: true
     _short: "JuiceFS is a POSIX-compatible distributed file system for cloud-native environments, designed for scalability and high performance.                                                                       "
     brew: juicefs
     scoop: juicefs
@@ -5372,6 +5480,7 @@ softwarePackages:
     _desc: "KasmVNC is an open-source project available on GitHub developed by Kasm Technologies. It is a web-based VNC (Virtual Network Computing) client that allows users to remotely access and control their     \ndesktop environment through a web browser. This tool provides a secure and efficient way to connect to remote systems without the need for additional software installations. KasmVNC supports various    \nplatforms and offers features like session recording, file transfer, and multi-monitor support. It is a useful tool for remote troubleshooting, collaboration, and accessing systems from anywhere with an\ninternet connection.                                                                                                                                                                                      "
     _github: https://github.com/kasmtech/KasmVNC
     _name: "KasmVNC                                                                                                                                                                                                   "
+    _preload: true
     _short: "KasmVNC is an open-source VNC server that provides secure remote desktop access through a web browser.                                                                                                    "
     script:linux: |
       RELEASES=$(curl -sS "https://api.github.com/repos/kasmtech/KasmVNC/releases/latest") || :
@@ -5458,6 +5567,7 @@ softwarePackages:
   keybase:
     _app: Keybase.app
     _bin: null
+    _deprecated: Unused
     _desc: "[Keybase](https://keybase.io/) is secure messaging and file-sharing. Keybase uses public key cryptography to ensure your messages stay private. Keybase works for families, roommates, clubs, and groups of friends. Keybase connects to public identities, too. You can connect with communities from Twitter, Reddit, and elsewhere."
     _docs: https://book.keybase.io/docs
     _github: https://github.com/keybase/client
@@ -5718,6 +5828,7 @@ softwarePackages:
     _short: "langflow is a Python library for natural language processing tasks like text classification, named entity recognition, and sentiment analysis.                                                            "
     pip: langflow
   languagetool:
+    _app: TODO.app
     _bin: languagetool-desktop
     _desc: Style and Grammar Checker for 25+ Languages
     _github: https://github.com/languagetool-org/languagetool
@@ -5796,6 +5907,7 @@ softwarePackages:
     _desc: "[Lexicon](https://github.com/AnalogJ/lexicon) provides a way to manipulate DNS records on multiple DNS providers in a standardized/agnostic way."
     _github: https://github.com/AnalogJ/lexicon
     _name: Lexicon
+    _preload: true
     _post:pipx: pipx inject dns-lexicon dns-lexicon[full]
     _short: "Lexicon is a DNS manipulation framework that makes it easy to interact with multiple DNS providers.                                                                                                       "
     pipx: dns-lexicon
@@ -5886,6 +5998,7 @@ softwarePackages:
   linkliar:
     _app: LinkLiar.app
     _bin: null
+    _deprecated: Unneeded
     _desc: Menu bar application for macOS that allows you to spoof your MAC address
     _docs: https://halo.github.io/LinkLiar/usage.html
     _github: https://github.com/halo/LinkLiar
@@ -5926,6 +6039,7 @@ softwarePackages:
     _github: https://github.com/localtunnel/localtunnel
     _home: https://theboroer.github.io/localtunnel-www/
     _name: localtunnel
+    _preload: true
     _short: "LocalTunnel is a tool that exposes your localhost to the web securely.                                                                                                                                    "
     brew: localtunnel
     npm: localtunnel
@@ -6111,6 +6225,7 @@ softwarePackages:
     _github: https://github.com/rgcr/m-cli
     _home: https://github.com/rgcr/m-cli
     _name: m-cli
+    _preload: true
     _short: "m-cli is a command-line tool for interacting with macOS system settings and features, providing a convenient way to manage various aspects of a Mac system through the terminal.                          "
     brew:darwin: m-cli
   maas:
@@ -6147,6 +6262,7 @@ softwarePackages:
     _github: https://github.com/lra/mackup
     _home: https://github.com/lra/mackup
     _name: mackup
+    _preload: true
     _short: "Mackup is a tool that syncs application settings across multiple macOS devices using cloud storage services like Dropbox or Google Drive.                                                                 "
     brew: mackup
     pipx: mackup
@@ -6236,6 +6352,7 @@ softwarePackages:
     _home: https://sourceware.org/bzip2/
     _docs: https://sourceware.org/bzip2/docs.html
     _github: null
+    _preload: true
     _name: bzip2
     apt: bzip2
     brew: bzip2
@@ -6294,6 +6411,7 @@ softwarePackages:
   mark-text:
     _app: MarkText.app
     _bin: marktext
+    _deprecated: Deprecated in favor of web UIs
     _desc: A simple and elegant markdown editor, available for Linux, macOS and Windows
     _env:
       MARK_TEXT_APPDATA:
@@ -6344,6 +6462,7 @@ softwarePackages:
     _desc: "[MAS CLI](https://github.com/mas-cli/mas) is a simple command line interface for the Mac App Store. Designed for scripting and automation."
     _github: https://github.com/mas-cli/mas
     _name: MAS CLI
+    _preload: true
     _short: "mas is a command-line interface for the Mac App Store, allowing users to interact with the App Store from the terminal.                                                                                   "
     brew:darwin: mas
     port: mas
@@ -6379,6 +6498,7 @@ softwarePackages:
     _github: https://github.com/minio/mc
     _home: https://min.io/
     _name: mc
+    _preload: true
     _short: "MinIO Client (mc): A command-line tool for managing MinIO and Amazon S3 compatible object storage servers.                                                                                                "
     brew: minio/stable/mc
     go: github.com/minio/mc@latest
@@ -6426,6 +6546,7 @@ softwarePackages:
     _desc: "Meld is a visual diff and merge tool that allows users to compare files, directories, and version-controlled projects. It provides a side-by-side view to easily identify differences and merge changes.  \nMeld supports various version control systems like Git, Mercurial, Bazaar, and SVN. It is written in Python and is available for Linux, Windows, and macOS platforms. Meld is a popular tool among        \ndevelopers and system administrators for managing code changes and resolving conflicts efficiently.                                                                                                       "
     _github: https://github.com/GNOME/meld
     _name: "meld                                                                                                                                                                                                      "
+    _preload: true
     _short: "Meld is a visual diff and merge tool for developers.                                                                                                                                                      "
     cask: meld
     choco: meld
@@ -6469,7 +6590,7 @@ softwarePackages:
     _docs: https://docs.microsoft.com/en-us/microsoft-edge/
     _env:
       MICROSOFT_EDGE_APPDATA:
-        cask: $HOME/Library/Application Support/Microsoft Edge/Default
+        cask: $HOME/Library/Application Support/Microsoft Edge
         choco: TODO
         flatpak: TODO
     _github: false
@@ -6639,6 +6760,7 @@ softwarePackages:
     _github: https://github.com/charmbracelet/mods
     _home: https://charm.sh/
     _name: Mods
+    _preload: true
     _short: "mods is a collection of terminal utilities for building modern CLI applications in Go.                                                                                                                    "
     brew: charmbracelet/tap/mods
     go: github.com/charmbracelet/mods@latest
@@ -6661,6 +6783,7 @@ softwarePackages:
     _github: https://github.com/ansible-community/molecule
     _home: https://molecule.readthedocs.io/en/latest/
     _name: Ansible Molecule
+    _preload: true
     _post:pipx: pipx inject molecule ansible PyObjC PyObjC-core docker lxml netaddr pexpect python-vagrant pywinrm requests-credssp watchdog apache-libcloud gcloud junit-xml molecule-docker molecule-gce molecule-vagrant pycrypto
     _short: "Molecule is a tool for testing Ansible roles in multiple scenarios.                                                                                                                                       "
     pipx: molecule
@@ -6785,6 +6908,7 @@ softwarePackages:
     _github: false
     _home: https://mpg123.org/
     _name: mpg123
+    _preload: true
     apt: mpg123
     brew: mpg123
     choco: mpg123
@@ -6993,6 +7117,7 @@ softwarePackages:
     _github: https://github.com/xwmx/nb
     _home: https://xwmx.github.io/nb
     _name: nb
+    _preload: true
     _short: "nb is a command-line note-taking, bookmarking, and knowledge base application for developers.                                                                                                             "
     basher: xwmx/nb
     bpkg: xwmx/nb
@@ -7011,6 +7136,7 @@ softwarePackages:
     _desc: "ndb is a tool developed by Google Chrome Labs for debugging Node.js applications. It provides an improved debugging experience by offering features like advanced code navigation, real-time code         \nexecution, and integrated debugging tools. With ndb, developers can easily inspect and debug their Node.js applications in a more efficient and user-friendly manner. It is particularly useful for       \ntroubleshooting complex Node.js projects and identifying issues quickly. The tool is open-source and available on GitHub for developers to use and contribute to.                                         "
     _github: https://github.com/GoogleChromeLabs/ndb
     _name: ndb
+    _preload: true
     _short: "ndb is a tool for debugging Node.js applications, developed by Google Chrome Labs.                                                                                                                        "
     npm: ndb
   nebula:
@@ -7024,7 +7150,6 @@ softwarePackages:
     _service:brew:
       - name: nebula
         sudo: true
-    _serviceEnabled: true
     _short: "Nebula is an open-source, scalable overlay networking tool for connecting and securing services across different infrastructures.                                                                         "
     brew: nebula
     dnf: nebula
@@ -7043,6 +7168,7 @@ softwarePackages:
     _desc: "Neofetch is a command-line tool that displays system information in a visually appealing way. It gathers details about your system, including the operating system, kernel version, CPU, GPU, memory, and \nmore, and presents it in a customizable ASCII art or image. Neofetch supports various Linux distributions, macOS, and other Unix-like systems. It is highly customizable through configuration files and  \ncommand-line options, allowing users to personalize the output to suit their preferences. Neofetch is popular among users who like to display system information in a stylish and informative manner.     "
     _github: https://github.com/dylanaraps/neofetch
     _name: NeoFetch
+    _preload: true
     _short: "Neofetch is a command-line system information tool that displays information about your system in a visually appealing way.                                                                               "
     apk:
       - ncurses
@@ -7082,6 +7208,7 @@ softwarePackages:
     _docs: https://neovim.io/doc/general/
     _github: https://github.com/neovim/neovim
     _home: https://neovim.io/
+    _preload: true
     _name: neovim
     _short: "Neovim is a highly extensible text editor based on Vim, with improved performance and features for modern development workflows.                                                                          "
     apk: neovim
@@ -7109,6 +7236,7 @@ softwarePackages:
       - python3-neovim
   neovim-node-host:
     _bin: neovim-node-host
+    _preload: true
     _desc: "The neovim/node-client repository on GitHub is a Node.js client for Neovim, a highly extensible text editor. This client allows developers to interact with Neovim programmatically using JavaScript. It  \nprovides a way to communicate with Neovim's API, enabling users to create plugins, extensions, and automation scripts for Neovim using Node.js. The repository contains code, documentation, and examples \nto help developers integrate Neovim functionality into their Node.js applications.                                                                                                                        "
     _github: https://github.com/neovim/node-client
     _name: Neovim Node Host
@@ -7120,12 +7248,14 @@ softwarePackages:
     _docs: https://docs.nestjs.com/cli/overview
     _github: https://github.com/nestjs/nest-cli
     _name: nest
+    _preload: true
     _short: "nestjs/nest-cli is a command-line interface tool for NestJS applications, providing features for generating components, modules, and more to streamline development.                                      "
     npm: "@nestjs/cli"
   netcat:
     _bin: netcat
     _desc: netcat (often abbreviated to nc) is a computer networking utility for reading from and writing to network connections using TCP or UDP.
     _github: false
+    _preload: true
     _home: https://nc110.sourceforge.io/
     _name: netcat
     apt: netcat
@@ -7147,6 +7277,7 @@ softwarePackages:
     _home: https://www.netdata.cloud/
     _name: Netdata
     _service: netdata
+    _preload: true
     _service:brew:
       - name: netdata
         sudo: true
@@ -7207,6 +7338,7 @@ softwarePackages:
         proto: tcp
     _service: nginx
     _serviceEnabled: true
+    _preload: true
     _short: "nginx is a popular open-source web server known for its high performance, stability, and scalability.                                                                                                     "
     apt: nginx
     brew: nginx
@@ -7229,6 +7361,7 @@ softwarePackages:
     _github: false
     _home: https://ngrok.com/)
     _name: Ngrok
+    _preload: true
     cask: ngrok
     choco: ngrok
     snap: ngrok
@@ -7272,6 +7405,7 @@ softwarePackages:
     _github: https://github.com/nmap/nmap
     _home: https://nmap.org/
     _name: Nmap
+    _preload: true
     _post:snap: sudo snap connect nmap:network-control
     _short: "Nmap is a popular open-source network scanning tool used for network discovery and security auditing.                                                                                                     "
     apt: nmap
@@ -7301,6 +7435,7 @@ softwarePackages:
     _github: https://github.com/nodejs/node
     _home: https://nodejs.org/en/
     _name: Node.js
+    _preload: true
     _short: "Node.js is an open-source JavaScript runtime built on Chrome's V8 JavaScript engine.                                                                                                                      "
     brew: node
     scoop: nodejs
@@ -7399,6 +7534,7 @@ softwarePackages:
     _desc: "ntfy is a command-line utility that sends desktop notifications when a command finishes. It supports various notification backends like Pushbullet, Pushover, Slack, Telegram, and more. It can be used to\nkeep track of long-running commands or scripts without having to constantly check the terminal. It's easy to install and configure, making it a handy tool for system administrators and developers who   \nwant to stay updated on their command executions.                                                                                                                                                         "
     _github: https://github.com/dschep/ntfy
     _name: NFTY
+    _preload: true
     _short: "ntfy is a command-line utility that sends notifications when a command finishes.                                                                                                                          "
     pip3: ntfy[emoji,matrix,pid,slack]
   ntl:
@@ -7459,6 +7595,7 @@ softwarePackages:
     _desc: "Nx is a set of extensible dev tools for monorepos, which helps in managing multiple projects within a single repository. It provides tools for building, testing, and sharing code between projects       \nefficiently. Nx supports various frontend frameworks like Angular, React, and Vue, along with backend technologies like Node.js. It promotes best practices like code sharing, consistent project         \nstructure, and efficient dependency management. Nx also offers features like code generation, dependency graph visualization, and CI/CD integration, making it a powerful tool for large-scale development\nprojects.                                                                                                                                                                                                 "
     _github: https://github.com/nrwl/nx
     _name: NX
+    _preload: true
     _short: "nx is a set of extensible dev tools for monorepos in Angular, React, and Node.js.                                                                                                                         "
     npm: nx
   obs-studio:
@@ -7519,6 +7656,7 @@ softwarePackages:
     _github: https://github.com/jandedobbeleer/oh-my-posh
     _home: https://ohmyposh.dev/
     _name: oh-my-posh
+    _preload: true
     _post:scoop: clink autorun install
     _short: "oh-my-posh is a prompt theme engine for PowerShell, providing a customizable and visually appealing prompt for the shell.                                                                                 "
     brew: jandedobbeleer/oh-my-posh/oh-my-posh
@@ -7563,6 +7701,7 @@ softwarePackages:
     _desc: "onlykey-agent is a software tool available on GitHub developed by TrustCrypto. It is designed to work with OnlyKey, a hardware security key that provides two-factor authentication, password management, \nand encryption. The agent facilitates communication between the OnlyKey device and the computer, allowing users to securely manage their passwords and cryptographic keys. It supports various platforms  \nand provides a command-line interface for interacting with the OnlyKey device. The agent enhances security by keeping sensitive information on the hardware device rather than on the computer.           "
     _github: https://github.com/trustcrypto/onlykey-agent
     _name: OnlyKey Agent
+    _preload: true
     _short: "onlykey-agent is a GitHub repository that contains code for the OnlyKey agent, a program used for managing OnlyKey devices, which are hardware security keys for encryption and authentication purposes.  "
     brew: onlykey-agent
     pipx: onlykey-agent
@@ -7573,10 +7712,12 @@ softwarePackages:
     _desc: "The repository https://github.com/trustcrypto/python-onlykey is a Python library for interacting with the OnlyKey, a hardware security key developed by Trust Digital. This library provides functions to \ncommunicate with the OnlyKey device, enabling users to manage encryption keys, generate OTPs (One-Time Passwords), and perform other security-related tasks. It allows developers to integrate OnlyKey    \nfunctionality into their Python applications, enhancing security measures by leveraging the features of the OnlyKey device.                                                                               "
     _github: https://github.com/trustcrypto/python-onlykey
     _name: OnlyKey CLI
+    _preload: true
     _short: "python-onlykey is a Python library for interacting with the OnlyKey hardware device, providing secure key storage and cryptographic operations.                                                           "
     pipx: onlykey
   onlykey-cli-deps:
     _github: false
+    _preload: true
     _post:linux: |
       sudo curl -sSL https://raw.githubusercontent.com/trustcrypto/trustcrypto.github.io/pages/49-onlykey.rules -o /etc/udev/rules.d/49-onlykey.rules
       sudo chmod 644 /etc/udev/rules.d/49-onlykey.rules
@@ -7616,6 +7757,8 @@ softwarePackages:
     _github: https://github.com/di-sukharev/opencommit
     _home: https://www.npmjs.com/package/opencommit
     _name: OpenCommit
+    _preload: true
+    _todo: TODO Choose between this and aic
     _short: "opencommit is a tool that helps automate the process of opening GitHub issues based on commit messages.                                                                                                   "
     npm: opencommit
   openinterminal:
@@ -7635,6 +7778,7 @@ softwarePackages:
     _github: https://github.com/openjdk/jdk
     _home: https://openjdk.org/
     _name: OpenJDK
+    _preload: true
     _short: "The https://github.com/openjdk/jdk repository contains the source code for the OpenJDK project, which is an open-source implementation of the Java Platform, Standard Edition.                            "
     apt: default-jdk
     brew: openjdk
@@ -7654,6 +7798,7 @@ softwarePackages:
   openssh-server:
     _github: false
     _service: sshd
+    _preload: true
     _when: test -f /proc/version && ! grep Microsoft /proc/version > /dev/null && ! test -d /Applications'
     apt: openssh-server
     dnf: openssh-server
@@ -7661,6 +7806,7 @@ softwarePackages:
   openssl:
     _bin: openssl
     _github: false
+    _preload: true
     _name: OpenSSL
     apt: openssl
     brew: openssl
@@ -7674,6 +7820,7 @@ softwarePackages:
     _desc: "openssl-osx-ca is a script that simplifies managing a local certificate authority on macOS using OpenSSL. It helps in creating and managing SSL certificates for local development environments. This     \nscript automates the process of generating a CA certificate and key, and then using them to sign server certificates. It also provides commands to install the CA certificate in the macOS system keychain\nfor trusted SSL connections. This tool is useful for developers working on projects that require SSL certificates for local testing and development purposes.                                             "
     _github: https://github.com/raggi/openssl-osx-ca
     _name: OpenSSL macOS CA
+    _preload: true
     _service:brew:darwin:
       - name: openssl-osx-ca
         sudo: true
@@ -7685,6 +7832,7 @@ softwarePackages:
     _desc: "OpenVPN is an open-source virtual private network (VPN) software that allows you to create secure point-to-point or site-to-site connections. It uses custom security protocols to ensure confidentiality,\nintegrity, and authenticity of data transmitted over the network. OpenVPN is widely used for remote access to private networks, bypassing censorship, and enhancing online security and privacy. The      \nGitHub repository contains the source code, documentation, and community contributions for the OpenVPN project.                                                                                           "
     _github: https://github.com/OpenVPN/openvpn
     _name: OpenVPN
+    _preload: true
     _service: openvpn
     _service:brew:
       - name: openvpn
@@ -7747,6 +7895,7 @@ softwarePackages:
     _github: https://github.com/sniptt-official/ots
     _home: https://ots.sniptt.com/
     _name: ots
+    _preload: true
     _short: "ots is a command-line tool for securely sharing secrets using one-time URLs.                                                                                                                              "
     brew: ots
     github: github.com/sniptt-official/ots
@@ -7756,6 +7905,7 @@ softwarePackages:
     _desc: "p7zip is a port of the command-line version of the 7-Zip file archiver to Unix-like operating systems. It supports a wide range of archive formats and provides high compression ratios. The project is   \nhosted on GitHub at https://github.com/p7zip-project/p7zip. Users can download, compile, and use p7zip to create, extract, and manage compressed files efficiently from the terminal. It is a popular tool\nfor managing archives on Unix-based systems.                                                                                                                                                              "
     _github: https://github.com/p7zip-project/p7zip
     _name: p7zip
+    _preload: true
     _short: "p7zip is a high compression ratio file archiver with support for various archive formats, including 7z, ZIP, and TAR. It is a command-line tool available on multiple platforms, including MacOS.         "
     apt: p7zip
     brew: p7zip
@@ -7891,6 +8041,7 @@ softwarePackages:
     _github: https://github.com/peco/peco
     _home: https://peco.github.io/
     _name: Peco
+    _preload: true
     _short: "Peco is a interactive filtering tool for the command line.                                                                                                                                                "
     apt: peco
     brew: peco
@@ -7947,6 +8098,7 @@ softwarePackages:
   apctest:
     _bin: apctest
     _name: APC Test
+    _preload: true
     brew: apcupsd
     pacman: apcupsd
     apt: apcupsd
@@ -7963,6 +8115,7 @@ softwarePackages:
     _home: https://www.php.net/
     _name: PHP
     _service: php
+    _preload: true
     _short: "The official repository for the PHP programming language source code.                                                                                                                                     "
     apt: php
     brew: php
@@ -7975,6 +8128,7 @@ softwarePackages:
     _deps:
       - postgresql
     _github: false
+    _preload: true
     _name: PHP Extensions
     _note: Needs testing
     apt:
@@ -8114,6 +8268,7 @@ softwarePackages:
     _desc: Pieces is a first-in-kind productivity suite that optimizes developer tools and eliminates the chaos of context switching.
     _docs: https://docs.pieces.app/
     _github: false
+    _preload: true
     _home: https://pieces.app/
     _name: Pieces CLI
     cask: pieces-cli
@@ -8187,6 +8342,7 @@ softwarePackages:
     _home: https://pypi.org/project/pipx/
     _name: "pipx                                                                                                                                                                                                      "
     _post:brew: pipx ensurepath
+    _preload: true
     _short: "pipx is a tool that allows you to install and run Python applications in isolated environments.                                                                                                           "
     brew: pipx
   pkg:
@@ -8311,6 +8467,7 @@ softwarePackages:
     _github: https://github.com/pnpm/pnpm
     _home: https://pnpm.io/
     _name: pnpm
+    _preload: true
     _short: "pnpm is a fast, disk space-efficient package manager for Node.js projects.                                                                                                                                "
     brew: pnpm
     npm: pnpm
@@ -8354,6 +8511,7 @@ softwarePackages:
     _github: https://github.com/python-poetry/poetry
     _home: https://python-poetry.org/
     _name: Poetry
+    _preload: true
     _short: "Poetry is a Python dependency management and packaging tool that simplifies and streamlines the process of managing Python projects.                                                                      "
     brew: poetry
     yay: python-poetry-git
@@ -8390,6 +8548,7 @@ softwarePackages:
     _github: https://github.com/SpatiumPortae/portal
     _home: https://portal.spatiumportae.com/
     _name: Portal
+    _preload: true
     _short: "portal is a project on GitHub by SpatiumPortae.                                                                                                                                                           "
     brew: portal
     scoop: portal
@@ -8413,6 +8572,7 @@ softwarePackages:
     _github: https://github.com/safing/portmaster
     _home: https://safing.io/
     _name: Portmaster
+    _todo: Wait for macOS version to be released
     _short: "Portmaster is a tool for managing network connections on MacOS, allowing users to control which apps can access the internet.                                                                             "
     _when:linux: "! test -f /opt/safing/portmaster/portmaster-start"
     apt: https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.deb
@@ -8466,6 +8626,7 @@ softwarePackages:
     _desc: "Powerline is a statusline plugin for various applications, including Vim, zsh, bash, tmux, and more. It provides improved visual feedback for prompts, status messages, and other information in your     \nterminal. Powerline enhances the look and functionality of your shell prompt by displaying information like the current working directory, git branch, exit codes, and more. It supports various themes   \nand customization options to tailor the appearance to your preferences. Overall, Powerline is a popular choice for users looking to enhance their terminal experience with a stylish and informative      \nstatusline.                                                                                                                                                                                               "
     _github: https://github.com/powerline/powerline
     _name: "powerline                                                                                                                                                                                                 "
+    _preload: true
     _short: "Powerline is a statusline plugin for vim, and provides statuslines and prompts for several other applications, including zsh, bash, tmux, and more.                                                       "
     apt: powerline
     dnf: powerline
@@ -8512,6 +8673,7 @@ softwarePackages:
     _github: https://github.com/prettier/prettier
     _home: https://prettier.io/
     _name: Prettier
+    _preload: true
     _short: "Prettier is a code formatter that enforces a consistent style in your codebase.                                                                                                                           "
     brew: prettier
     npm: prettier
@@ -8549,6 +8711,7 @@ softwarePackages:
     _github: https://github.com/Barre/privaxy
     _home: false
     _name: Privaxy
+    _preload: true
     _short: "privaxy is a tool for managing privacy settings on macOS.                                                                                                                                                 "
     appimage: barre/privaxy
     apt: https://github.com/Barre/privaxy/releases/download/v0.5.2/privaxy_0.5.2_amd64.deb
@@ -8570,6 +8733,7 @@ softwarePackages:
       - privoxy
     _home: https://www.privoxy.org/
     _name: Privoxy
+    _preload: true
     _service: privoxy
     _serviceEnabled: true
     _short: "Privoxy is a non-caching web proxy with advanced filtering capabilities for enhancing privacy, modifying web page data, and controlling access.                                                           "
@@ -8583,6 +8747,7 @@ softwarePackages:
     _desc: A modern replacement for ps written in Rust
     _github: https://github.com/dalance/procs
     _name: procs
+    _preload: true
     _short: "procs is a command-line tool for macOS that displays information about processes in a convenient and user-friendly way.                                                                                   "
     apk: procs
     brew: procs
@@ -8677,6 +8842,7 @@ softwarePackages:
     _desc: The ProtonVPN CLI official release for Linux along with an unofficial ProtonVPN CLI for macOS
     _github: https://github.com/ProtonVPN/linux-cli
     _name: ProtonVPN CLI
+    _todo: Get this once official macOS version is released
     _short: "ProtonVPN Linux CLI is a command-line interface tool for managing ProtonVPN connections on Linux systems.                                                                                                 "
     _todo: Populate this once the ProtonVPN CLI is released to the package managers
     dnf:fedora: protonvpn-cli
@@ -8726,6 +8892,7 @@ softwarePackages:
     _github: https://github.com/Nukesor/pueue
     _name: Pueue
     _service: pueue
+    _preload: true
     _short: "Pueue is a command-line task queue manager for handling long-running processes.                                                                                                                           "
     apk: pueue
     apt: pueue
@@ -8780,6 +8947,7 @@ softwarePackages:
     _desc: "CPython is the official implementation of the Python programming language. It is written in C and is maintained by the Python Software Foundation. The repository contains the source code for Python     \ninterpreter, standard library, and various tools. Developers can contribute to the project by submitting bug fixes, new features, and improvements. CPython is widely used and serves as a reference      \nimplementation for the Python language specification.                                                                                                                                                     "
     _github: https://github.com/python/cpython
     _name: "cpython                                                                                                                                                                                                   "
+    _preload: true
     _post:brew: python3 -m pip install --upgrade setuptools && python3 -m pip install --upgrade pip
     _short: "Official repository for the Python programming language.                                                                                                                                                  "
     apt:
@@ -8799,6 +8967,7 @@ softwarePackages:
   python2:
     _bin: python2
     _github: false
+    _preload: true
     apt: python2
     choco: python2
     dnf: python2
@@ -8863,6 +9032,7 @@ softwarePackages:
       - quicklookapk
       - webpquicklook
     _github: false
+    _preload: true
     _name: null
   qlstephen:
     _desc: "QLStephen is a Quick Look plugin for macOS that allows you to view plain text files without a file extension. It enables you to preview files like README, CHANGELOG, or any text file that doesn't have a\nrecognized extension directly in the Quick Look feature of macOS. This plugin enhances the usability of Quick Look by providing support for a wider range of file types, making it easier to quickly      \nglance through text-based files without needing to open them in a separate application.                                                                                                                   "
@@ -8936,6 +9106,7 @@ softwarePackages:
     _github: https://github.com/raine/ramda-cli
     _home: https://github.com/raine/ramda-cli
     _name: Ramda
+    _preload: true
     _short: "ramda-cli is a command-line interface for Ramda, a functional programming library for JavaScript. It allows you to use Ramda functions directly in the terminal.                                          "
     npm: ramda-cli
   rancher-cli:
@@ -8974,6 +9145,7 @@ softwarePackages:
     _docs: null
     _github: null
     _home: null
+    _preload: true
     _name: RAR
     apt:
       - rar
@@ -9022,6 +9194,7 @@ softwarePackages:
       - rclone
     _home: https://rclone.org/
     _name: Rclone
+    _preload: true
     _short: "rclone is a command-line program to manage files on cloud storage.                                                                                                                                        "
     apt: rclone
     brew:linux: rclone
@@ -9072,6 +9245,7 @@ softwarePackages:
     _name: Redis
     _service: redis
     _serviceEnabled: true
+    _preload: true
     brew: redis
     choco: redis
     snap: redis
@@ -9151,6 +9325,7 @@ softwarePackages:
     _docs: https://restic.readthedocs.io/en/latest/
     _github: https://github.com/restic/restic
     _home: https://restic.net/
+    _preload: true
     _name: Restic
     _short: "restic is an open-source backup program that is fast, secure, and efficient.                                                                                                                              "
     apk: restic
@@ -9179,6 +9354,7 @@ softwarePackages:
     _desc: "[ripgrep](https://github.com/BurntSushi/ripgrep) is a line-oriented search tool that recursively searches your current directory for a regex pattern. By default, ripgrep will respect your .gitignore and automatically skip hidden files/directories and binary files. This role also installs ripgrep-all. [ripgrep-all](https://github.com/phiresky/ripgrep-all) is just like ripgrep except it also searches in PDFs, E-Books, Office documents, zip, tar.gz, etc."
     _github: https://github.com/BurntSushi/ripgrep
     _name: ripgrep
+    _preload: true
     _short: "ripgrep is a fast, line-oriented search tool that recursively searches your current directory for a regex pattern while respecting your gitignore rules.                                                  "
     apt: ripgrep
     brew: ripgrep
@@ -9196,6 +9372,7 @@ softwarePackages:
     _desc: rga is a line-oriented search tool that allows you to look for a regex in a multitude of file types. rga wraps the awesome ripgrep and enables it to search in pdf, docx, sqlite, jpg, movie subtitles (mkv, mp4), etc.
     _github: https://github.com/phiresky/ripgrep-all
     _name: "ripgrep-all                                                                                                                                                                                               "
+    _preload: true
     _short: "ripgrep-all is a tool that combines the power of ripgrep and fd to search files in a directory tree. It's fast, efficient, and highly customizable for searching text content.                            "
     brew:
       - ffmpeg
@@ -9210,6 +9387,7 @@ softwarePackages:
     _bin: rkhunter
     _desc: rkhunter is a Unix-based tool that scans for rootkits, backdoors and possible local exploits
     _github: false
+    _preload: true
     _home: https://rkhunter.sourceforge.net/
     _name: rkhunter
     _service:pacman: cronie
@@ -9227,6 +9405,7 @@ softwarePackages:
     _github: https://github.com/nivekuil/rip
     _home: https://github.com/nivekuil/rip
     _name: rip (Rm ImProved)
+    _preload: true
     _short: "rip is a tool for macOS that simplifies the process of uninstalling applications.                                                                                                                         "
     brew: rm-improved
     cargo: rm-improved
@@ -9261,6 +9440,7 @@ softwarePackages:
     _docs: https://rsync.samba.org/documentation.html
     _github: https://github.com/WayneD/rsync
     _home: https://rsync.samba.org/
+    _preload: true
     _name: rsync
     _short: "rsync is a fast and versatile file synchronization tool for Unix-like systems.                                                                                                                            "
     apt: rsync
@@ -9276,6 +9456,7 @@ softwarePackages:
       - port: 514
         proto: tcp
     _service: rsyslog
+    _preload: true
     _short: "rsyslog is an open-source logging software that provides a flexible and scalable solution for processing and managing log messages in Unix and Unix-like systems.                                         "
     apt: rsyslog
     brew: rsyslog
@@ -9302,6 +9483,7 @@ softwarePackages:
     _github: https://github.com/ruby/ruby
     _home: https://www.ruby-lang.org/en/
     _name: Ruby
+    _preload: true
     _short: "Ruby is an open-source programming language known for its simplicity and productivity.                                                                                                                    "
     apt: ruby-dev
     brew: ruby
@@ -9347,6 +9529,7 @@ softwarePackages:
     _github: https://github.com/rust-lang/rust
     _home: https://www.rust-lang.org/
     _name: Rust
+    _preload: true
     _short: "rust-lang/rust is the official Rust programming language repository on GitHub.                                                                                                                            "
     brew: rust
     choco: rust
@@ -9446,6 +9629,7 @@ softwarePackages:
     _github: https://github.com/alajmo/sake
     _home: https://sakecli.com/
     _name: Sake
+    _preload: true
     _short: "Sake is a simple task runner for Swift projects.                                                                                                                                                          "
     brew: alajmo/sake/sake
     go: github.com/alajmo/sake@latest
@@ -10464,7 +10648,6 @@ softwarePackages:
     _github: https://github.com/syncthing/syncthing
     _name: Syncthing
     _service: syncthing
-    _serviceEnabled: true
     _short: "Syncthing is an open-source continuous file synchronization program.                                                                                                                                      "
     brew: syncthing
     choco: syncthing

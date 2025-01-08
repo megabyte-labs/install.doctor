@@ -640,6 +640,18 @@ showNotificationCenter() {
   fi
 }
 
+installShellGPT() {
+  if command -v pipx > /dev/null; then
+    if command -v sgpt > /dev/null; then
+      gum log -sl info "sgpt is already installed"
+    else
+      gum log -sl info "Installing sgpt via pipx" && pipx install shell-gpt
+    fi
+  else
+    gum log -sl warn "Unable to install sgpt because pipx is unavailable"
+  fi
+}
+
 installAnsible() {
   if command -v pipx > /dev/null; then
     if [ ! -f "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor/ansible-installed" ]; then
@@ -824,9 +836,11 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   setupSnap
   showNotificationCenter
   zapInstall
+  installShellGPT
   setupLinuxHomebrewFonts
   miscMacOs
 else
+  installBrewPackages
   installXcode &
   addFlathub &
   allocateSwap &
@@ -836,9 +850,9 @@ else
   ensureMacportsInstalled &
   ensureUserGroup &
   increaseMapCount &
-  installBrewPackages &
   installDocker &
   installJumpCloud &
+  installShellGPT &
   installSystemPips &
   installYay &
   removeLinuxBloatware &
