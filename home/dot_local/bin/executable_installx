@@ -520,16 +520,16 @@ async function main() {
             return !x._deprecated
         })
         .filter(x => {
-          // Only install casks or flatpaks and items with `_preload: true` in the `software.yml` file
-          if (customArgv.lazy) {
-            if (x.cask || x.flatpak || x._serviceEnabled) {
-              return true
+            // Only install casks or flatpaks and items with `_preload: true` in the `software.yml` file
+            if (customArgv.lazy) {
+                if (x.cask || x.flatpak || x._serviceEnabled) {
+                    return true
+                } else {
+                    return !!x._preload
+                }
             } else {
-              return !!x._preload
+                return true
             }
-          } else {
-            return true
-          }
         })
         .filter(x => {
             // Filter out macOS apps that already have a _app installed
@@ -578,7 +578,22 @@ async function main() {
     log(`Running installation routine`)
     await installPackages(installInstructions)
     log(`Adding users / groups defined under _groups`)
-    const usersGroupsAdditions = installData
+    const usersGroupsAdditions = installData.filter(x => {
+        // Filter out packages that contain a deprecation note
+        return !x._deprecated
+    })
+        .filter(x => {
+            // Only install casks or flatpaks and items with `_preload: true` in the `software.yml` file
+            if (customArgv.lazy) {
+                if (x.cask || x.flatpak || x._serviceEnabled) {
+                    return true
+                } else {
+                    return !!x._preload
+                }
+            } else {
+                return true
+            }
+        })
         .flatMap(x => {
             const groupsField = getPkgData('_groups', x, x.installType)
             if (!groupsField) return Promise.resolve()
@@ -595,7 +610,22 @@ async function main() {
         })
     await Promise.allSettled(usersGroupsAdditions)
     log(`Running post-install inline scripts`)
-    for (const x of installData) {
+    for (const x of installData.filter(x => {
+        // Filter out packages that contain a deprecation note
+        return !x._deprecated
+    })
+        .filter(x => {
+            // Only install casks or flatpaks and items with `_preload: true` in the `software.yml` file
+            if (customArgv.lazy) {
+                if (x.cask || x.flatpak || x._serviceEnabled) {
+                    return true
+                } else {
+                    return !!x._preload
+                }
+            } else {
+                return true
+            }
+        })) {
         const postField = getPkgData('_post', x, x.installType)
         if (postField) {
             log(`Running post-install script for ${x.listKey}`)
