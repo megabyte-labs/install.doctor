@@ -16,7 +16,10 @@
 #
 #     Install Doctor relies on Homebrew for many tools that are currently only available via Homebrew. Removing the dependency
 #     would be a nice-to-have but there are currently no plans for supporting systems without Homebrew installed.
-set +x
+
+if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
+  set -x
+fi
 
 # @description This script ensures all the system utilities necessary to install Homebrew are present on the system.
 ensureHomebrewDeps() {
