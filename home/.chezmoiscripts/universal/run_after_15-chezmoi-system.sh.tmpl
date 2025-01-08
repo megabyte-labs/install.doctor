@@ -1,9 +1,28 @@
 #!/usr/bin/env bash
-# @file Chezmoi System Apply
-# @brief Applies the Chezmoi files defined in the `system/` directory of the Install Doctor project to the root of the system (for locations outside the user's home directory)
+# @file System Files
+# @brief Applies the files stored at `${XDG_CONFIG_HOME:-$HOME/.config}/system` to the base file system
 # @description
-#     This script applies the `system/` Chezmoi directory to the root of the system.
+#     This script applies the files stored at `${XDG_CONFIG_HOME:-$HOME/.config}/system` to the
+#     base file system. This way, you can store your system files in your `~/.config` folder.
 
-gum log -sl info 'Running sudo chezmoi --source "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/system" --destination / apply'
-sudo chezmoi --source "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/system" --destination / apply
+gum log -sl info 'Running sudo rsync -av --progress "${XDG_CONFIG_HOME:-$HOME/.config}/system/" /'
+sudo rsync -av --progress "${XDG_CONFIG_HOME:-$HOME/.config}/system/" /
 gum log -sl info 'Finished applying system configuration files'
+
+# @description
+#     Applies appropriate and minimal permissions to clamav folders
+clamAVPermissions() {
+  sudo find /etc/clamav -type f -exec chmod 600 {} \;
+  sudo find /etc/clamav -type f -exec chown clamav:wheel {} \;
+  sudo chmod u+x /etc/clamav/clamav-email
+  sudo find /var/log/clamav -type f -exec chmod 600 {} \;
+  sudo find /var/log/clamav -type f -exec chown clamav:wheel {} \;
+}
+
+if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
+  gum log -sl info 'The DEBUG or DEBUG_MODE environment variable is set so the chezmoi-system tasks will be run synchronously'
+  clamAVPermissions
+else
+  clamAVPermissions &
+  wait
+fi

@@ -387,6 +387,12 @@ enableAutoUpdateDarwin() {
       gum log -sl warn '/Library/LaunchDaemons/com.apple.automatedupdates.plist is missing!'
     fi
 
+    ### Address error `Error: /Users/Apple/Library/LaunchAgents does not exist.`
+    if [ ! -d "$HOME/Library/LaunchAgents" ]; then
+      gum log -sl info "Creating $HOME/Library/LaunchAgents"
+      mkdir -p "$HOME/Library/LaunchAgents"
+    fi
+
     ### Enable Homebrew auto-update service
     if brew autoupdate status | grep 'Autoupdate is not configured.' > /dev/null; then
       gum log -sl info 'Enabling Homebrew auto-update service (every 24 hours)'
