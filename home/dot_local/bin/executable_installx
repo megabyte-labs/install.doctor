@@ -603,8 +603,8 @@ async function main() {
                 return Promise.resolve()
             } else {
                 const groups = typeof x[groupsField] === 'string' ? [x[groupsField]] : x[groupsField]
-                return groups.flatMap(y => {
-                    return $`sudo "${os.homedir()}/.local/bin/add-usergroup" "${y}" "${y}" && sudo "${os.homedir()}/.local/bin/add-usergroup" "${process.env.USER}" "${y}"`
+                return groups.flatMap(async y => {
+                    await $`sudo "${os.homedir()}/.local/bin/add-usergroup" "${y}" "${y}" && sudo "${os.homedir()}/.local/bin/add-usergroup" "${process.env.USER}" "${y}"`
                 })
             }
         })
