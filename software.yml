@@ -9441,6 +9441,7 @@ softwarePackages:
     _name: Samba
     _service: smbd
     _service:dnf: smb
+    _preload: true
     _short: "Samba is an open-source software suite that provides file and print services for various Microsoft Windows clients.                                                                                       "
     apt: samba
     brew: samba
@@ -9462,6 +9463,7 @@ softwarePackages:
       - libdata-dump-perl
       - sanoid
   santa:
+    _todo: Add _app for Santa
     _bin: santactl
     _desc: A binary authorization system for MacOS (santa) role is a daemon that makes execution decisions based on the contents of a local database, a GUI agent that notifies the user in case of a block decision and a command-line utility for managing the system and synchronizing the database with a server.
     _docs: https://santa.dev/
@@ -9614,6 +9616,7 @@ softwarePackages:
     _desc: "search-gpt is a GitHub repository created by Tobias Bueschel. It appears to be a project related to utilizing GPT (Generative Pre-trained Transformer) models for search-related tasks. The repository    \nlikely contains code, documentation, and possibly pre-trained models for implementing and experimenting with GPT-based search functionalities. For more detailed information, you can explore the         \nrepository directly on GitHub.                                                                                                                                                                            "
     _github: https://github.com/tobiasbueschel/search-gpt
     _name: Search GPT
+    _preload: true
     _short: "search-gpt is a tool that allows you to search through a large corpus of text using GPT models for natural language processing.                                                                           "
     npm: search-gpt
   secretive:
@@ -9649,6 +9652,7 @@ softwarePackages:
     _desc: serve helps you serve a static site, single page application or just a static file (no matter if on your device or on the local network). It also provides a neat interface for listing the directory's contents
     _github: https://github.com/vercel/serve
     _name: serve
+    _preload: true
     _short: "vercel/serve is a simple, zero-configuration command-line tool to serve static sites quickly.                                                                                                             "
     npm: serve
   serverless:
@@ -9675,6 +9679,7 @@ softwarePackages:
       - name: sftpgo
         sudo: true
     _serviceEnabled: true
+    _preload: true
     _short: "sftpgo is an open-source SFTP server written in Go.                                                                                                                                                       "
     brew: sftpgo
     choco: sftpgo
@@ -9687,6 +9692,7 @@ softwarePackages:
     _github: https://github.com/sftpgo/sftpgo-plugin-auth
     _name: SFTPGo Authentication Plugin
     _post: sudo cp -f $(which sftpgo-plugin-auth) /usr/local/bin/sftpgo-plugin-auth
+    _preload: true
     _short: "sftpgo-plugin-auth is a plugin for SFTPGo that allows custom authentication methods to be used with the SFTP server.                                                                                      "
     go: github.com/sftpgo/sftpgo-plugin-auth@latest
     script:darwin: curl -sSf https://github.com/sftpgo/sftpgo-plugin-auth/releases/download/v1.0.4/sftpgo-plugin-auth-darwin-amd64 -o /usr/local/bin/sftpgo-plugin-auth
@@ -9696,6 +9702,7 @@ softwarePackages:
     _desc: Quickly share files from your command line
     _github: https://github.com/marionebl/share-cli
     _name: share
+    _preload: true
     _short: "share-cli is a command-line tool for sharing files and directories securely using a temporary URL.                                                                                                        "
     npm: share-cli
   sharex:
@@ -9712,6 +9719,7 @@ softwarePackages:
     _desc: CLI for sharp (a Node.js image processing module)
     _github: https://github.com/vseventer/sharp-cli
     _name: sharp
+    _preload: true
     _short: "sharp-cli is a command-line interface for the popular image processing module Sharp in Node.js.                                                                                                           "
     npm: sharp-cli
   shc:
@@ -9741,6 +9749,7 @@ softwarePackages:
     _desc: "Sheldon is a command-line tool for managing macOS preferences. It allows users to easily view, set, and remove macOS system and application preferences using a simple command-line interface. With       \nSheldon, users can manage preferences for various system components like Dock, Finder, Safari, and more, making it convenient for system administrators and power users to customize and automate macOS   \nsettings. It simplifies the process of managing preferences without needing to navigate through multiple settings menus, providing a more efficient way to handle macOS configurations.                   "
     _github: https://github.com/rossmacarthur/sheldon
     _name: Sheldon
+    _preload: true
     _short: "sheldon is a macOS shell configuration framework that aims to make your shell experience more efficient and enjoyable.                                                                                    "
     brew: sheldon
     cargo: sheldon
@@ -9749,6 +9758,7 @@ softwarePackages:
     _desc: "The repository at https://github.com/TheR1D/shell_gpt appears to be a project related to a ShellGPT, which is likely a shell-based implementation of OpenAI's GPT (Generative Pre-trained Transformer)    \nmodel. It seems to be a tool or script that leverages the power of GPT for shell scripting purposes. The README file in the repository might provide more detailed information on how to use it and what  \nfunctionalities it offers.                                                                                                                                                                                "
     _github: https://github.com/TheR1D/shell_gpt
     _name: Shell GPT
+    _notes: Figure out best ChatGPT command line plugin
     _short: "shell_gpt is a repository containing scripts and tools for enhancing shell productivity and automation.                                                                                                   "
     pipx: shell-gpt
   shellcheck:
@@ -9759,6 +9769,7 @@ softwarePackages:
     _github: https://github.com/koalaman/shellcheck
     _home: https://www.shellcheck.net/
     _name: Shellcheck
+    _preload: true
     _short: "ShellCheck is a static analysis tool for shell scripts, helping to identify and fix common issues and improve script quality.                                                                             "
     apt: shellcheck
     brew: shellcheck
@@ -9782,6 +9793,7 @@ softwarePackages:
     _github: https://github.com/mvdan/sh
     _home: https://pkg.go.dev/mvdan.cc/sh/v3
     _name: shfmt
+    _preload: true
     _short: "mvdan/sh is a shell parser and formatter written in Go.                                                                                                                                                   "
     apk: shfmt
     brew: shfmt
@@ -9922,6 +9934,7 @@ softwarePackages:
   slack:
     _app: Slack.app
     _bin: slack
+    _deprecated: Deprecated in favor of web app
     _desc: "[Slack](https://slack.com/) is a proprietary business communication platform developed by American software company Slack Technologies. Slack offers many IRC-style features, including persistent chat rooms organized by topic, private groups, and direct messaging."
     _docs: https://api.slack.com/docs
     _github: https://github.com/slackhq/SlackTextViewController
@@ -10097,6 +10110,7 @@ softwarePackages:
     _github: https://github.com/joe-re/sql-language-server
     _home: https://github.com/joe-re/sql-language-server
     _name: SQL Language Server
+    _preload: true
     _short: "sql-language-server is a GitHub repository maintained by joe-re that provides a language server for SQL.                                                                                                  "
     brew: sql-language-server
     npm: sql-language-server
@@ -10153,6 +10167,7 @@ softwarePackages:
     _desc: "SSHFS (SSH File System) is a network file system that allows you to mount remote directories over an SSH connection. It enables you to access and interact with files on a remote server as if they were  \nlocal files on your own system. This tool is particularly useful for securely accessing and transferring files between systems over a secure SSH connection. The GitHub repository                        \nhttps://github.com/libfuse/sshfs contains the source code for SSHFS, which is built on top of FUSE (Filesystem in Userspace) to provide a seamless file system integration.                               "
     _github: https://github.com/libfuse/sshfs
     _name: SSHFS
+    _preload: true
     _short: "SSHFS is a file system client based on the SSH File Transfer Protocol. It allows you to mount remote directories over an SSH connection as if they were local.                                            "
     apt: sshfs
     brew:linux: sshfs
@@ -10283,6 +10298,7 @@ softwarePackages:
     _desc: "Steampipe is an open-source DevOps tool that allows you to query, analyze, and interact with cloud infrastructure using SQL. It provides a unified way to access and manage data across multiple cloud    \nproviders like AWS, Azure, Google Cloud, and more. With Steampipe, you can write SQL queries to retrieve information about your cloud resources, automate compliance checks, and perform various tasks    \nefficiently. It offers a plugin-based architecture, making it easy to extend its functionality to support different cloud services and custom use cases.                                                  "
     _github: https://github.com/turbot/steampipe
     _name: Steampipe
+    _preload: true
     _short: "Steampipe is an open-source DevOps tool that allows you to query, analyze, and monitor cloud infrastructure using SQL.                                                                                    "
     brew: turbot/tap/steampipe
   stegcloak:
@@ -10567,6 +10583,7 @@ softwarePackages:
     _desc: "Tart is a tool developed by Cirrus Labs that allows you to run shell commands in a Docker container. It provides a simple way to isolate and execute commands in a controlled environment, which can be   \nuseful for testing, building, or running commands without affecting your local system. Tart simplifies the process of running commands in a consistent environment, making it easier to reproduce results \nacross different systems. It can be particularly handy for tasks that require specific dependencies or configurations that may not be present on your local machine.                                      "
     _github: https://github.com/cirruslabs/tart
     _name: "tart                                                                                                                                                                                                      "
+    _preload: true
     _short: "Tart is a tool for running shell commands in parallel.                                                                                                                                                    "
     _todo: Verify that this installs properly (error on arm64 macOS)
     brew:darwin: cirruslabs/cli/gitlab-tart-executor
@@ -10662,6 +10679,7 @@ softwarePackages:
     _desc: "Terminal Notifier is a command-line tool for sending macOS notifications. It allows you to display notifications from the terminal or scripts, providing a way to alert users about events or tasks. It   \nsupports customizing notification titles, messages, icons, and more. This tool is useful for automating tasks, creating reminders, or providing feedback to users in a non-intrusive way. It's a handy    \ntool for developers, system administrators, or anyone looking to enhance their macOS workflow with notifications.                                                                                         "
     _github: https://github.com/julienXX/terminal-notifier
     _name: Terminal Notifier
+    _preload: true
     _short: "terminal-notifier is a command-line tool for sending macOS notifications.                                                                                                                                 "
     brew:darwin: terminal-notifier
   terminalizer:
@@ -10746,6 +10764,7 @@ softwarePackages:
     _desc: "tgpt is a GitHub repository created by user aandrew-me. It likely contains code related to a Transformer-based Generative Pre-trained Transformer (GPT) model. The repository may include scripts for     \ntraining, fine-tuning, or using the model for text generation tasks. To get more detailed information about the contents and purpose of the repository, you can visit the GitHub link provided.           "
     _github: https://github.com/aandrew-me/tgpt
     _name: Terminal GPT
+    _todo: Find best ChatGPT terminal extension
     _short: "tgpt is a GitHub repository for a text-based AI model trained on the GPT architecture by the user aandrew-me.                                                                                             "
     go: github.com/aandrew-me/tgpt/v2@latest
     scoop: https://raw.githubusercontent.com/aandrew-me/tgpt/main/tgpt.json
@@ -10757,6 +10776,7 @@ softwarePackages:
     _github: https://github.com/nvbn/thefuck
     _home: https://github.com/nvbn/thefuck
     _name: The Fuck
+    _preload: true
     _short: "thefuck is a command-line tool that corrects your previous console command typos.                                                                                                                         "
     brew: thefuck
     crew: thefuck
@@ -10864,6 +10884,7 @@ softwarePackages:
     _docs: https://github.com/tmux/tmux/wiki
     _github: https://github.com/tmux/tmux
     _name: tmux
+    _preload: true
     _short: "tmux is a terminal multiplexer for Unix-like operating systems that allows multiple terminal sessions to be accessed and controlled from a single window.                                                 "
     apt: tmux
     brew:
@@ -10924,6 +10945,7 @@ softwarePackages:
     _github: https://github.com/TheTorProject
     _home: https://www.torproject.org/
     _name: TOR
+    _preload: true
     _restricted: true
     _service: tor
     _serviceEnabled: true
@@ -10983,6 +11005,7 @@ softwarePackages:
     _desc: "[tree-cli](https://github.com/MrRaindrop/tree-cli) is a recursive directory listing program that produces a depth indented listing of files. With no arguments, tree lists the files in the current directory. When directory arguments are given, tree lists all the files and/or directories found in the given directories each in turn. Upon completion of listing all files/directories found, tree returns the total number of files and/or directories listed."
     _github: https://github.com/MrRaindrop/tree-cli
     _name: tree-cli
+    _preload: true
     _short: "tree-cli is a command-line tool that generates directory trees in a visually appealing way.                                                                                                               "
     apt: tree
     brew: tree
@@ -10994,6 +11017,7 @@ softwarePackages:
     _desc: CLI tool for creating and testing tree-sitter parsers
     _github: https://github.com/tree-sitter/tree-sitter-cli
     _name: tree-sitter-cli
+    _preload: true
     _short: "tree-sitter-cli is a command-line interface for interacting with the Tree-sitter parsing library.                                                                                                         "
     cargo: tree-sitter-cli
   trellis:
@@ -11130,4 +11154,4 @@ softwarePackages:
     _bin: upscayl
     _desc: "upscayl is a GitHub repository belonging to the user upscayl. Without further"
     cask: upscayl
---persist $HOME/.config/chezmoi/root.chezmoi.boltdb
+
