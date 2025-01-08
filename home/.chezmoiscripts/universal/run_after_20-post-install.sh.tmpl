@@ -376,7 +376,6 @@ enableAutoUpdateDarwin() {
     ### Enable automated system updates on macOS
     if [ -f "/Library/LaunchDaemons/com.apple.automatedupdates.plist" ]; then
       gum log -sl info 'Configuring macOS to automatically apply system updates'
-      sudo mkdir -p /Library/LaunchDaemons
       gum log -sl info 'Loading /Library/LaunchDaemons/com.apple.automatedupdates.plist'
       if sudo launchctl list | grep 'com.apple.automatedupdates' > /dev/null; then
         gum log -sl info 'Unloading previous com.apple.automatedupdates configuration'
