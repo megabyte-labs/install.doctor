@@ -609,7 +609,7 @@ async function main() {
             }
         })
     for (const userGroup of usersGroupsAdditions.filter(x => x)) {
-        await execPromise(userGroup)
+        await $`${userGroup}`
     }
     // await Promise.allSettled(usersGroupsAdditions)
     log(`Running post-install inline scripts`)
