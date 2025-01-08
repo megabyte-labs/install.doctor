@@ -104,6 +104,9 @@ installerPreference:
 
 ### Full Example
 
+**Note: The softwarePackages method is no longer being used. You will have to modify software.yml to change the default software installations. However, almost all of the
+software is lazy-loaded on the fly so unless you want software pre-loaded, there should not be an issue so you can skip this section in the documentation.**
+
 If you wanted to customize the *Standard* install (mentioned above) to also include a package named `mypackage` and then automatically install that group of software on devices with the hostname of `sirius`, you would first create the package manager instruction file in `software-custom.yml` which would look like this:
 
 ```yaml

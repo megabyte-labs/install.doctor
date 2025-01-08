@@ -7487,6 +7487,7 @@ softwarePackages:
   notion:
     _app: Notion.app
     _bin: null
+    _deprecated: Deprecated in favor of Obsidian
     _desc: Notion is the connected workspace where better, faster work happens.
     _docs: https://www.notion.so/help/guides/category/documentation
     _env:
@@ -7611,7 +7612,6 @@ softwarePackages:
   obsidian:
     _app: Obsidian.app
     _bin: null
-    _deprecated: Deprecated in favor of Notion since plugins aren't totally polished
     _desc: Obsidian is the private and flexible note‑taking app that adapts to the way you think.
     _docs: https://help.obsidian.md/Home
     _github: false
@@ -7628,6 +7628,7 @@ softwarePackages:
     _desc: "obsidian-cli is a command-line interface tool for managing Obsidian notes. It allows users to create, edit, and search notes directly from the terminal. With obsidian-cli, you can quickly access and    \nmanipulate your Obsidian vault without needing to open the Obsidian app. This tool provides a convenient way to interact with your notes using commands, making it easier to perform various tasks        \nefficiently. It is a useful utility for Obsidian users who prefer working in a terminal environment or need to automate note-related tasks.                                                               "
     _github: https://github.com/Yakitrak/obsidian-cli
     _name: Obsidian CLI
+    _preload: true
     _pre:scoop: scoop bucket add scoop-yakitrak https://github.com/yakitrak/scoop-yakitrak.git
     _short: "obsidian-cli is a command-line interface for managing Obsidian notes.                                                                                                                                     "
     brew: megabyte-labs/tap/obs-cli

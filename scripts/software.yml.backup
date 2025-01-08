@@ -13138,6 +13138,7 @@ softwarePackages:
     _name: XCode
     _post: |
       #!/usr/bin/env bash
+      Setting git http.postBuffer value high for large source repository
       sudo xcodebuild -license accept && sudo xcodebuild -runFirstLaunch
     mas: 497799835
     #script:darwin: |

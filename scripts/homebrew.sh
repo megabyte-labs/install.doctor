@@ -123,6 +123,14 @@ ensureBasicDeps() {
         touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
         XCODE_PKG="$(softwareupdate -l | grep "\*.*Command Line" | tail -n 1 | sed 's/^[^C]* //')"
         logg info "Installing from softwareupdate" && softwareupdate -i "$XCODE_PKG" && gum log -sl info "Successfully installed $XCODE_PKG"
+        if command -v xcodebuild > /dev/null; then
+          logg info 'Running xcodebuild -license accept'
+          sudo xcodebuild -license accept
+          logg info 'Running sudo xcodebuild -runFirstLaunch'
+          sudo xcodebuild -runFirstLaunch
+        else
+          logg warn 'xcodebuild is not available'
+        fi
       fi
       if /usr/bin/pgrep -q oahd; then
         logg info 'Rosetta 2 is already installed'
