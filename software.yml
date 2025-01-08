@@ -11809,7 +11809,7 @@ softwarePackages:
     _name: Wazuh
     _service:linux: wazuh-agent
     _service:windows: wazuh-agent
-    _preload: true
+    _todo: Add in with proper env variables
     _short: "Wazuh is an open-source security monitoring platform that can be used for threat detection, integrity monitoring, and incident response.                                                                  "
     _when:darwin: "csrutil status | grep enabled > /dev/null && ! test -f /Library/Ossec/bin/agent-auth"
     _when:linux: "! test -f /var/ossec/bin/agent-auth"
