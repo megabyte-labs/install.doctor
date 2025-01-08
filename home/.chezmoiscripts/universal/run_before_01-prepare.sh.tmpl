@@ -121,6 +121,7 @@ addTemporaryIncludes
 ensureFullDiskAccess
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   which gum
+  gum log -sl info 'Installing coreutils via Homebrew WHHHATTTTTT'
   gum log -sl info 'The DEBUG or DEBUG_MODE environment variable is set so the prepare tasks will be run synchronously'
   importCloudFlareCert
   disconnectWarp
