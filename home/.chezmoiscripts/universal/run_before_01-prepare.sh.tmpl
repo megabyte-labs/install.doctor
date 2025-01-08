@@ -75,10 +75,10 @@ ensureFullDiskAccess() {
         else
           if [ -d /Applications ] && [ -d /System ]; then
             ### macOS
-            sed -i '' '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+            sed -i '' '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || gum log -sl warn "Failed to remove kickstart script from .zshrc"
           else
             ### Linux
-            sed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || logg warn "Failed to remove kickstart script from .zshrc"
+            sed -i '/# TEMPORARY FOR INSTALL DOCTOR MACOS/d' "$HOME/.zshrc" || gum log -sl warn "Failed to remove kickstart script from .zshrc"
           fi
         fi
       fi
@@ -124,9 +124,6 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   importCloudFlareCert
   disconnectWarp
 else
-  which gum
-  logg info 'Installing creds'
-  gum log -sl info 'Installing coreutils via Homebrew'
   importCloudFlareCert &
   disconnectWarp &
   wait
