@@ -60,6 +60,7 @@ if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/config.sh" ]; then
 
         ### Install / start the service
         gum log -sl info 'Configuring runner service'
+        cd "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
         "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner/svc.sh" install
         gum log -sl info 'Successfully installed the GitHub Actions runner service'
         gum log -sl info 'Starting runner service'

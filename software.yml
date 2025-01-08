@@ -1535,7 +1535,12 @@ softwarePackages:
         load-service clamav.freshclam
         load-service clamav.notification
       fi
-      freshclam
+      chown -Rf clamav:clamav /etc/clamav
+      sudo mkdir -p /var/lib/clamav
+      sudo chown -Rf clamav:clamav /var/lib/clamav
+      sudo mkdir -p /var/log/clamav
+      sudo chown -Rf clamav:clamav /var/log/clamav
+      sudo -u clamav freshclam
     _short: "ClamAV is an open-source antivirus engine for detecting trojans, viruses, malware, and other malicious threats on Unix-like systems.                                                                      "
     apt:
       - clamav
@@ -4934,7 +4939,6 @@ softwarePackages:
     _desc: "HyperKit is a lightweight hypervisor built on top of the Hypervisor.framework in macOS. It is used in Docker for Mac to run a Linux VM for Docker containers. HyperKit provides a way to run Docker       \ncontainers natively on macOS without the need for VirtualBox or VMware Fusion. It offers a secure and efficient environment for running containers by leveraging macOS's native virtualization framework. \nHyperKit is open-source and maintained by the Moby project, which is the open-source project behind Docker.                                                                                               "
     _github: https://github.com/moby/hyperkit
     _name: HyperKit
-    _preload: true
     _short: "HyperKit is a lightweight hypervisor for macOS that allows you to run Docker containers natively on macOS.                                                                                                "
     brew:darwin: hyperkit
   ideviceinstaller:
@@ -4942,7 +4946,6 @@ softwarePackages:
     _desc: "ideviceinstaller is a command-line tool that allows you to interact with iOS devices using the libimobiledevice library. It enables you to install, uninstall, and manage apps on iOS devices from the    \nterminal. This tool is particularly useful for developers and system administrators who need to automate app installations or manage apps on multiple iOS devices. It provides a convenient way to work   \nwith iOS devices without needing to use iTunes or Xcode.                                                                                                                                                  "
     _github: https://github.com/libimobiledevice/ideviceinstaller
     _name: "ideviceinstaller                                                                                                                                                                                          "
-    _preload: true
     _short: "ideviceinstaller is a command-line tool for installing, managing, and removing apps on iOS devices.                                                                                                       "
     brew:darwin: ideviceinstaller
   iina:
@@ -9208,7 +9211,7 @@ softwarePackages:
     flatpak: app.resp.RESP
     snap: redis-desktop-manager
   redis-insight:
-    _app: RedisInsight.app
+    _app: Redis Insight.app
     _bin: redis-insight
     _desc: "RedisInsight is a graphical user interface (GUI) tool for Redis, a popular in-memory data structure store. It provides a user-friendly way to interact with Redis databases, allowing users to visualize  \nand manage their data easily. RedisInsight offers features like real-time monitoring, data exploration, and performance analysis, making it a valuable tool for developers and administrators working with\nRedis databases. It is open-source and actively maintained by the Redis community, providing a powerful solution for working with Redis data.                                                             "
     _github: https://github.com/RedisInsight/RedisInsight
@@ -9845,7 +9848,7 @@ softwarePackages:
     _desc: A plugin for SFTPGo to enable LDAP/Active Directory authentication
     _github: https://github.com/sftpgo/sftpgo-plugin-auth
     _name: SFTPGo Authentication Plugin
-    _post: sudo cp -f $(which sftpgo-plugin-auth) /usr/local/bin/sftpgo-plugin-auth
+    _post: sudo cp -f $(which sftpgo-plugin-auth) /usr/local/bin/sftpgo-plugin-auth || gum log -sl info "The /usr/local/bin/sftpgo-plugin-auth file already exists"
     _preload: true
     _short: "sftpgo-plugin-auth is a plugin for SFTPGo that allows custom authentication methods to be used with the SFTP server.                                                                                      "
     go: github.com/sftpgo/sftpgo-plugin-auth@latest
