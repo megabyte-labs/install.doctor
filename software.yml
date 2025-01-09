@@ -116,6 +116,7 @@ installerPreference:
 softwarePackages:
   _envchain:deps:
     _github: false
+    _preload: true
     apt:
       - gnome-keyring
       - gcc
@@ -4289,7 +4290,7 @@ softwarePackages:
     winget: g-assist
   google-chrome:
     _app: Google Chrome.app
-    _bin: null
+    _bin: google-chrome
     _deps:
       - chrome-gnome-shell
     _desc: "[Google Chrome](https://www.google.com/chrome/) is a cross-platform web browser developed by Google. It was first released in 2008 for Microsoft Windows, and was later ported to Linux, macOS, iOS, and Android where it is the default browser built into the OS."
@@ -8394,6 +8395,7 @@ softwarePackages:
     exe: https://github.com/streamdal/plumber/releases/latest/download/plumber-windows.exe
   plymouth:
     _github: false
+    _preload: true
     apt:
       - libplymouth5
       - plymouth
@@ -8540,12 +8542,11 @@ softwarePackages:
     _github: https://github.com/vdukhovni/postfix
     _home: https://www.postfix.org/
     _name: Postfix
+    _preload: true
     _short: "Postfix is a popular open-source mail transfer agent (MTA) known for its security features and ease of configuration.                                                                                     "
     apt: postfix
     dnf: postfix
     pacman: postfix
-    port: postfix
-    script:darwin: echo "Postfix is included by macOS already"
   postgresql:
     _bin: postgresql
     _desc: "The link https://github.com/postgres/postgres leads to the official GitHub repository for the PostgreSQL database management system. PostgreSQL is a powerful, open-source relational database system     \nknown for its reliability, robust feature set, and extensibility. The repository contains the source code, documentation, issue tracker, and community contributions related to PostgreSQL development.   \nIt's a central hub for developers, users, and contributors to collaborate, report bugs, suggest enhancements, and stay updated on the latest developments in PostgreSQL.                                  "
