@@ -3,7 +3,7 @@ import osInfo from 'linux-os-info'
 
 $.verbose = false
 // Preserves color from subshells
-process.env.CLICOLOR_FORCE = 3
+//process.env.CLICOLOR_FORCE = 3
 
 let installOrder, osArch, osId, osType, pkgs, sysType
 const cacheDir = os.homedir() + '/.cache/installx'
