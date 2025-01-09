@@ -91,6 +91,7 @@ create_macos_group() {
         gum log -sl info "Initializing $GROUPNAME group with ID $GROUP_ID"
         sudo dscl . -create "/Groups/_$GROUPNAME"
         sudo dscl . -create "/Groups/_$GROUPNAME" PrimaryGroupID "$GROUP_ID"
+        sudo dscl . -append "/Groups/_$GROUPNAME" GroupMembership "_$GROUPNAME"
     else
         gum log -sl info "Group $GROUPNAME already exists"
     fi
