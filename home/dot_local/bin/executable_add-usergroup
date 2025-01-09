@@ -60,14 +60,14 @@ validate_name() {
 # @brief Find the next available system ID on macOS
 # @description
 #     This function generates the next available system ID for creating a user or group
-#     on macOS. It starts from ID 20 and ensures that the ID is unique and falls within
+#     on macOS. It starts from ID 240 and ensures that the ID is unique and falls within
 #     a valid system range (below 500).
 find_next_system_id_macos() {
     local ID_TYPE="$1"
     local ID_TAG="$2"
     local CURRENT_IDS
-    CURRENT_IDS="$(dscl . -list /"$ID_TYPE" "$ID_TAG" | awk '{print $2}')"
-    local MIN_ID=250  # Start from 690 to avoid conflict with default system users/groups
+    CURRENT_IDS="$(dscl . -list "/$ID_TYPE" "$ID_TAG" | awk '{print $2}')"
+    local MIN_ID=240  # Start from 240 to avoid conflict with default system users/groups
 
     for ID in $CURRENT_IDS; do
         if [ "$ID" -ge "$MIN_ID" ] && [ "$ID" -lt 500 ]; then
@@ -84,14 +84,13 @@ find_next_system_id_macos() {
 #     It will also assign the group a valid PrimaryGroupID.
 create_macos_group() {
     local GROUPNAME="$1"
-    if ! dscl . -list /Groups | grep "$GROUPNAME"; then
+    if ! dscl . -list /Groups | grep "$GROUPNAME" > /dev/null; then
         gum log -sl info "Creating system group: $GROUPNAME"
         local GROUP_ID
         GROUP_ID="$(find_next_system_id_macos "Groups" "PrimaryGroupID")"
         gum log -sl info "Initializing $GROUPNAME group with ID $GROUP_ID"
-        sudo dscl . -create "/Groups/_$GROUPNAME"
-        sudo dscl . -create "/Groups/_$GROUPNAME" PrimaryGroupID "$GROUP_ID"
-        sudo dscl . -append "/Groups/_$GROUPNAME" GroupMembership "_$GROUPNAME"
+        sudo dscl . -create "/Groups/$GROUPNAME"
+        sudo dscl . -create "/Groups/$GROUPNAME" PrimaryGroupID "$GROUP_ID"
     else
         gum log -sl info "Group $GROUPNAME already exists"
     fi
@@ -107,19 +106,23 @@ create_macos_user() {
     local GROUPNAME="$2"
     if ! id -u "$USER_NAME" > /dev/null 2>&1; then
         gum log -sl info "Creating system user: $USER_NAME"
+        local PRIMARY_GROUP_ID
+        PRIMARY_GROUP_ID="$(dscl . -read "/Groups/$USER_NAME" PrimaryGroupID | awk '{print $2}')"
         local USER_ID
-        USER_ID="$(dscl . -read "/Groups/_$USER_NAME" PrimaryGroupID | awk '{print $2}')"
+        USER_ID="$(find_next_system_id_macos "Users" "UniqueID")"
         gum log -sl info "Initializing $USER_NAME user with ID $USER_ID"
-        sudo dscl . -create "/Users/_$USER_NAME"
-        sudo dscl . -create "/Users/_$USER_NAME" UserShell /usr/bin/false
-        sudo dscl . -create "/Users/_$USER_NAME" RealName "$USER_NAME"
-        sudo dscl . -create "/Users/_$USER_NAME" UniqueID "$USER_ID"
-        sudo dscl . -create "/Users/_$USER_NAME" PrimaryGroupID "$USER_ID"
-        sudo dscl . -create "/Users/_$USER_NAME" IsHidden 1
+        sudo dscl . -create "/Users/$USER_NAME"
+        sudo dscl . -create "/Users/$USER_NAME" UserShell /usr/bin/false
+        sudo dscl . -create "/Users/$USER_NAME" RealName "$USER_NAME"
+        sudo dscl . -create "/Users/$USER_NAME" UniqueID "$USER_ID"
+        sudo dscl . -create "/Users/$USER_NAME" PrimaryGroupID "$PRIMARY_GROUP_ID"
+        sudo dscl . -create "/Users/$USER_NAME" IsHidden 1
         if [ "$USER_NAME" = 'netdata' ]; then
-            sudo dscl . -create "/Users/_netdata" NFSHomeDirectory /var/lib/netdata
+            sudo dscl . -create "/Users/netdata" NFSHomeDirectory /var/lib/netdata
+        elif [ "$USER_NAME" = 'nginx' ]; then
+            sudo dscl . -create "/Users/nginx" NFSHomeDirectory /var/www
         else
-            sudo dscl . -create "/Users/_$USER_NAME" NFSHomeDirectory /var/empty
+            sudo dscl . -create "/Users/$USER_NAME" NFSHomeDirectory /var/empty
         fi
     else
         gum log -sl info "User $USER_NAME already exists"
@@ -136,7 +139,7 @@ add_user_to_group() {
     local GROUPNAME="$2"
     gum log -sl info "Adding user $USER_NAME to group $GROUPNAME"
     if [ "$(uname)" == "Darwin" ]; then
-        sudo dscl . -append "/Groups/_$GROUPNAME" GroupMembership "_$USER_NAME"
+        sudo dscl . -append "/Groups/$GROUPNAME" GroupMembership "$USER_NAME"
     else
         sudo usermod -a -G "$GROUPNAME" "$USER_NAME"
     fi
