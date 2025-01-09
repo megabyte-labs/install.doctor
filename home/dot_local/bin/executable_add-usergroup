@@ -67,10 +67,10 @@ find_next_system_id_macos() {
     local ID_TAG="$2"
     local CURRENT_IDS
     CURRENT_IDS="$(dscl . -list /"$ID_TYPE" "$ID_TAG" | awk '{print $2}')"
-    local MIN_ID=690  # Start from 690 to avoid conflict with default system users/groups
+    local MIN_ID=250  # Start from 690 to avoid conflict with default system users/groups
 
     for ID in $CURRENT_IDS; do
-        if [ "$ID" -ge "$MIN_ID" ] && [ "$ID" -lt 1000 ]; then
+        if [ "$ID" -ge "$MIN_ID" ] && [ "$ID" -lt 500 ]; then
             MIN_ID=$((ID + 1))
         fi
     done
@@ -89,8 +89,8 @@ create_macos_group() {
         local GROUP_ID
         GROUP_ID="$(find_next_system_id_macos "Groups" "PrimaryGroupID")"
         gum log -sl info "Initializing $GROUPNAME group with ID $GROUP_ID"
-        sudo dscl . -create "/Groups/$GROUPNAME"
-        sudo dscl . -create "/Groups/$GROUPNAME" PrimaryGroupID "$GROUP_ID"
+        sudo dscl . -create "/Groups/_$GROUPNAME"
+        sudo dscl . -create "/Groups/_$GROUPNAME" PrimaryGroupID "$GROUP_ID"
     else
         gum log -sl info "Group $GROUPNAME already exists"
     fi
@@ -102,27 +102,26 @@ create_macos_group() {
 #     This function creates a system user with the specified username on macOS if it doesn't exist.
 #     It assigns the user necessary attributes such as a shell, RealName, UniqueID, etc.
 create_macos_user() {
-    local USERNAME="$1"
+    local USER_NAME="$1"
     local GROUPNAME="$2"
-    if ! id -u "$USERNAME" > /dev/null 2>&1; then
-        gum log -sl info "Creating system user: $USERNAME"
+    if ! id -u "$USER_NAME" > /dev/null 2>&1; then
+        gum log -sl info "Creating system user: $USER_NAME"
         local USER_ID
-        USER_ID="$(find_next_system_id_macos "Users" "UniqueID")"
-        gum log -sl info "Initializing $USERNAME user with ID $USER_ID"
-        sudo dscl . -create "/Users/$USERNAME"
-        sudo dscl . -create "/Users/$USERNAME" UserShell /usr/bin/false
-        sudo dscl . -create "/Users/$USERNAME" RealName "$USERNAME"
-        sudo dscl . -create "/Users/$USERNAME" UniqueID "$USER_ID"
-        sudo dscl . -create "/Users/$USERNAME" PrimaryGroupID "$GROUPNAME"
-        if [ "$USERNAME" = 'netdata' ]; then
-            sudo dscl . -create "/Users/netdata" NFSHomeDirectory /var/lib/netdata
-        elif [ "$USERNAME" = 'clamav' ]; then
-            sudo dscl . -create "/Users/clamav" NFSHomeDirectory /var/lib/clamav
+        USER_ID="$(dscl . -read "/Groups/_$USER_NAME" PrimaryGroupID | awk '{print $2}')"
+        gum log -sl info "Initializing $USER_NAME user with ID $USER_ID"
+        sudo dscl . -create "/Users/_$USER_NAME"
+        sudo dscl . -create "/Users/_$USER_NAME" UserShell /usr/bin/false
+        sudo dscl . -create "/Users/_$USER_NAME" RealName "$USER_NAME"
+        sudo dscl . -create "/Users/_$USER_NAME" UniqueID "$USER_ID"
+        sudo dscl . -create "/Users/_$USER_NAME" PrimaryGroupID "$USER_ID"
+        sudo dscl . -create "/Users/_$USER_NAME" IsHidden 1
+        if [ "$USER_NAME" = 'netdata' ]; then
+            sudo dscl . -create "/Users/_netdata" NFSHomeDirectory /var/lib/netdata
         else
-            sudo dscl . -create "/Users/$USERNAME" NFSHomeDirectory /var/empty
+            sudo dscl . -create "/Users/_$USER_NAME" NFSHomeDirectory /var/empty
         fi
     else
-        gum log -sl info "User $USERNAME already exists"
+        gum log -sl info "User $USER_NAME already exists"
     fi
 }
 
@@ -132,13 +131,13 @@ create_macos_user() {
 #     This function adds the specified user to the group. If the user is already part of the group,
 #     it ensures no duplicates are added.
 add_user_to_group() {
-    local USERNAME="$1"
+    local USER_NAME="$1"
     local GROUPNAME="$2"
-    gum log -sl info "Adding user $USERNAME to group $GROUPNAME"
+    gum log -sl info "Adding user $USER_NAME to group $GROUPNAME"
     if [ "$(uname)" == "Darwin" ]; then
-        sudo dscl . -append "/Groups/$GROUPNAME" GroupMembership "$USERNAME"
+        sudo dscl . -append "/Groups/_$GROUPNAME" GroupMembership "_$USER_NAME"
     else
-        sudo usermod -a -G "$GROUPNAME" "$USERNAME"
+        sudo usermod -a -G "$GROUPNAME" "$USER_NAME"
     fi
 }
 
@@ -162,13 +161,13 @@ create_linux_group() {
 #     This function creates a system user with the specified username on Linux if it doesn't exist.
 #     It ensures the user is added to the specified group.
 create_linux_user() {
-    local USERNAME="$1"
+    local USER_NAME="$1"
     local GROUPNAME="$2"
-    if ! id -u "$USERNAME" > /dev/null 2>&1; then
-        gum log -sl info "Creating system user: $USERNAME"
-        sudo useradd -r -g "$GROUPNAME" -s /bin/bash -M -N "$USERNAME"
+    if ! id -u "$USER_NAME" > /dev/null 2>&1; then
+        gum log -sl info "Creating system user: $USER_NAME"
+        sudo useradd -r -g "$GROUPNAME" -s /bin/bash -M -N "$USER_NAME"
     else
-        gum log -sl info "User $USERNAME already exists"
+        gum log -sl info "User $USER_NAME already exists"
     fi
 }
 
@@ -181,9 +180,9 @@ check_root
 check_arguments "$@"
 
 # Validate user and group names
-USERNAME="$1"
+USER_NAME="$1"
 GROUPNAME="$2"
-validate_name "$USERNAME"
+validate_name "$USER_NAME"
 validate_name "$GROUPNAME"
 
 # Detect the operating system
@@ -192,16 +191,16 @@ OS="$(uname)"
 if [ "$OS" == "Darwin" ]; then
     # macOS specific logic
     create_macos_group "$GROUPNAME"
-    create_macos_user "$USERNAME" "$GROUPNAME"
-    add_user_to_group "$USERNAME" "$GROUPNAME"
-    gum log -sl info "System user $USERNAME added to system group $GROUPNAME successfully."
+    create_macos_user "$USER_NAME" "$GROUPNAME"
+    add_user_to_group "$USER_NAME" "$GROUPNAME"
+    gum log -sl info "System user $USER_NAME added to system group $GROUPNAME successfully."
 
 elif [ "$OS" == "Linux" ]; then
     # Linux specific logic
     create_linux_group "$GROUPNAME"
-    create_linux_user "$USERNAME" "$GROUPNAME"
-    add_user_to_group "$USERNAME" "$GROUPNAME"
-    gum log -sl info "System user $USERNAME added to system group $GROUPNAME successfully."
+    create_linux_user "$USER_NAME" "$GROUPNAME"
+    add_user_to_group "$USER_NAME" "$GROUPNAME"
+    gum log -sl info "System user $USER_NAME added to system group $GROUPNAME successfully."
 
 else
     gum log -sl error "Unsupported operating system: $OS"
