@@ -53,7 +53,7 @@ async function runScript(key, script) {
     fs.writeFileSync(`${cacheDir}/${key}-glow`, (file.stdout ? `# ${file.stdout}\n\n` : '') + (brief.stdout ? `> ${brief.stdout}\n\n` : '') + '```sh\n' + templatedScript.stdout + "\n```")
     fs.writeFileSync(`${cacheDir}/${key}`, templatedScript.stdout)
     try {
-        runSilentCommand(`glow --width 120 "${cacheDir}/${key}-glow"`)
+        process.env.DEBUG && require('child_process').execSync(`glow --width 120 "${cacheDir}/${key}-glow"`)
         // TODO: Set process.env.DEBUG || true here because the asynchronous method is not logging properly / running slow
         if (process.env.DEBUG) {
             return await runSilentCommand(`bash "${cacheDir}/${key}" || gum log -sl error 'Error occurred while processing script for ${key}'`)
