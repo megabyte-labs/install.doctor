@@ -84,7 +84,7 @@ find_next_system_id_macos() {
 #     It will also assign the group a valid PrimaryGroupID.
 create_macos_group() {
     local GROUPNAME="$1"
-    if ! dscl . -list /Groups | grep -q "^$GROUPNAME\$"; then
+    if ! dscl . -list /Groups | grep "$GROUPNAME"; then
         gum log -sl info "Creating system group: $GROUPNAME"
         local GROUP_ID
         GROUP_ID="$(find_next_system_id_macos "Groups" "PrimaryGroupID")"
