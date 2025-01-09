@@ -610,7 +610,7 @@ async function main() {
         })
     for (const userGroup of usersGroupsAdditions.filter(x => x)) {
         log(`Adding user to group`)
-        require('child_process').execSync(`${userGroup}`, { stdio: 'inherit' })
+        require('child_process').execSync(`${userGroup}`, { stdio: 'inherit', shell: true })
     }
     // await Promise.allSettled(usersGroupsAdditions)
     log(`Running post-install inline scripts`)
