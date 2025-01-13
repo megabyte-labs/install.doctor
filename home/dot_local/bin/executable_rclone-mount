@@ -71,6 +71,7 @@ chmod -f 600 "$CONFIG_FOLDER/rclone.conf"
 ### Mount
 unset AWS_CA_BUNDLE
 export PATH="$PATH:/usr/local/bin:/usr/bin"
+
 # TODO: Only launch with --rc-web-gui if the servers hostname is the {{ .kubernetesHost }}
 # TODO: Add more secure authentication method
 rclone --config "$CONFIG_FOLDER/rclone.conf" \
