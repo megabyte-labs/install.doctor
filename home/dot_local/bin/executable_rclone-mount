@@ -76,6 +76,10 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 rclone --config "$CONFIG_FOLDER/rclone.conf" \
   mount \
   --allow-other \
+  --uid "$(id -g netdata)" \
+  --guid "$(gid -g netdata) \
+  --file-perms 0660 \
+  --dir-perms 0770 \
   --buffer-size 4G \
   --bwlimit 200M \
   --cache-chunk-path "$CACHE_FOLDER/$MOUNT_REF-chunks" \
