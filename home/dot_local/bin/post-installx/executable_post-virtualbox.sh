@@ -22,11 +22,11 @@ if command -v VirtualBox > /dev/null; then
     cd /tmp/vbox
     ### Download extension pack
     gum log -sl info 'Downloading VirtualBox extension pack'
-    curl -sSL https://download.virtualbox.org/virtualbox/$VBOX_VERSION/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack -o /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack || gum log -sl error 'Failed to download the VirtualBox extension pack so the extension pack installation will be skipped'
+    curl -sSL "https://download.virtualbox.org/virtualbox/$VBOX_VERSION/Oracle_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack" -o "/tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack" || gum log -sl error 'Failed to download the VirtualBox extension pack so the extension pack installation will be skipped'
     ### Install extension pack
-    if [ -f /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack ]; then
+    if [ -f "/tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack" ]; then
       gum log -sl info 'Installing VirtualBox extension pack'
-      echo 'y' | sudo VBoxManage extpack install --replace /tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack
+      echo 'y' | sudo VBoxManage extpack install --replace "/tmp/vbox/Oracle_VM_VirtualBox_Extension_Pack-$VBOX_VERSION.vbox-extpack"
       gum log -sl info 'Successfully installed VirtualBox extension pack'
     fi
   else

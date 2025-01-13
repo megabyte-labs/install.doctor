@@ -795,7 +795,7 @@ softwarePackages:
   balenaetcher:
     _app: balenaEtcher.app
     _appImageName: balenaEtcher.AppImage
-    _bin: null
+    _bin: balena-etcher
     _desc: "[balenaEtcher](https://www.balena.io/etcher/) is a powerful OS image flasher built with web technologies to ensure flashing an SDCard or USB drive is a pleasant and safe experience. It protects from accidentally writing to hard-drives, ensures every byte of data was written correctly, and much more. It can also directly flash Raspberry Pi devices that support USB device boot mode. It will run on any platform officially supported by Electron."
     _docs: https://www.balena.io/docs/learn/welcome/introduction/
     _github: https://github.com/balena-io/etcher
@@ -836,7 +836,7 @@ softwarePackages:
     choco: barrier
     flatpak: com.github.debauchee.barrier
   bash-completion:
-    _bin: null
+    _bin: bash-completion
     _desc: "bash-completion is a project on GitHub that provides programmable completion for the Bash shell. It offers completion scripts for various commands, making it easier for users to quickly and accurately  \ncomplete command line inputs. These scripts enhance the usability of the Bash shell by providing suggestions and auto-completion for commands, options, and arguments. The project is actively maintained \nand allows users to contribute their own completion scripts for different commands and utilities. It's a useful tool for improving productivity and efficiency when working in a Bash environment.        "
     _docs: https://docs.brew.sh/Shell-Completion
     _github: https://github.com/scop/bash-completion
@@ -936,7 +936,7 @@ softwarePackages:
     pipx: beets
   betwixt:
     _app: Betwixt.app
-    _bin: null
+    _bin: betwixt
     _desc: Web Debugging Proxy based on Chrome DevTools Network panel
     _docs: https://github.com/kdzwinel/betwixt
     _github: https://github.com/kdzwinel/betwixt
@@ -1904,16 +1904,6 @@ softwarePackages:
     _short: "Crunch is a tool for creating wordlists based on character sets.                                                                                                                                          "
     cask: crunch
     script: cd /tmp && rm -rf Crunch && git clone https://github.com/chrissimpkins/Crunch.git && make build-dependencies && make install-executable && cd /tmp && rm -rf Crunch && rm -rf ~/zopfli && rm -rf ~/pngquant && echo "TODO WARNING - The ~/zopfli and ~/pngquant directories were deleted and may be required (but were removed due to HOME directory pollution)"
-  crunch-app:
-    _app: Crunch.app
-    _bin: null
-    _desc: The macOS companion app for the crunch CLI tool that compresses PNG images.
-    _docs: https://github.com/chrissimpkins/Crunch/blob/master/docs/MACOSGUI.md
-    _github: https://github.com/chrissimpkins/Crunch
-    _home: https://github.com/chrissimpkins/Crunch
-    _name: Crunch macOS App
-    _short: "Crunch is a tool for creating wordlists based on character sets.                                                                                                                                          "
-    cask: crunch
   cryptomator:
     _app: Cryptomator.app
     _bin: cryptomator
@@ -2349,6 +2339,7 @@ softwarePackages:
     dnf: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.16.2-x86_64.rpm
     pacman: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.16.2-x86_64.pkg.tar.zst
   docker-images:
+    _bin: docker-images
     _desc: This entry is used to trigger a post-installation docker image pre-load. See the `docker-images` entry in `.chezmoidata.yaml`.
     _github: false
     _preload: true
@@ -3812,37 +3803,9 @@ softwarePackages:
     cask: github
     choco: github-desktop
     flatpak: io.github.shiftey.Desktop
-  github-runner:
-    _bin: github-runner
-    _desc: "[GitHub Runner](https://docs.github.com/en/actions/hosting-your-own-runners) is a system that you deploy and manage to execute jobs from GitHub Actions on GitHub.com."
-    _docs: https://docs.github.com/en/actions/hosting-your-own-runners
-    _github: https://github.com/actions/runner
-    _home: https://docs.github.com/en/actions/hosting-your-own-runners
-    _name: GitHub Runner
-    _preload: true
-    _when: '! test -d "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"'
-    _short: "GitHub Actions Runner is a tool that allows you to run GitHub Actions workflows on your own infrastructure.                                                                                               "
-    script: |
-      #!/usr/bin/env bash
-      if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh" ]; then
-        source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/private.sh"
-      fi
-      if [ -n "$GITHUB_TOKEN" ]; then
-        RELEASES="$(curl -sSL --compressed --header "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/actions/runner/releases/latest")"
-      else
-        RELEASES="$(curl -sSL --compressed "https://api.github.com/repos/actions/runner/releases/latest")"
-      fi
-      LATEST_VERSION="$(echo "$RELEASES" | grep -o '"tag_name": "[^"]*' | grep -o '[^"]*$')"
-      ARCHITECTURE="$(uname -m | sed 's/86_//' | sed 's/v7l//')"
-      OS_FAMILY="$(test -d /Applications && echo osx || echo linux)"
-      curl -sSL "https://github.com/actions/runner/releases/download/$LATEST_VERSION/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz" > "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz"
-      mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
-      tar xzf "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz" -C "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
-      chown -Rf "$USER" "${XDG_DATA_HOME:-$HOME/.local/share}/github-runner"
-      rm -f "/tmp/actions-runner-${OS_FAMILY}-${ARCHITECTURE}-${LATEST_VERSION:1}.tar.gz"
   gitify:
     _app: Gitify.app
-    _bin: null
+    _bin: gitify
     _desc: "Gitify is a macOS desktop application that provides a streamlined interface for managing GitHub notifications. It allows users to stay updated on their GitHub activities without needing to keep a       \nbrowser tab open. With Gitify, users can receive notifications, view unread notifications, mark notifications as read, and easily access their GitHub repositories. It offers a convenient way for GitHub \nusers to stay organized and informed about their projects and collaborations.                                                                                                                             "
     _description: GitHub notifications on the menu bar
     _github: https://github.com/manosim/gitify
@@ -4815,6 +4778,7 @@ softwarePackages:
     pipx: http-prompt
   http-toolkit:
     _app: HTTP Toolkit.app
+    _bin: https://github.com/httptoolkit/httptoolkit-desktop/releases/download/v1.14.8/HttpToolkit-1.14.8.deb
     _desc: "HTTP Toolkit is an open-source tool for debugging, testing, and intercepting HTTP and HTTPS. It allows you to inspect, debug, and mock HTTP traffic between your applications and the internet. With HTTP \nToolkit, you can view and modify requests and responses, simulate network conditions, and test how your application behaves in different scenarios. It provides a user-friendly interface for monitoring  \nand analyzing HTTP traffic, making it a valuable tool for developers and system administrators working with web applications.                                                                             "
     _github: https://github.com/httptoolkit/httptoolkit
     _name: HTTP Toolkit
@@ -4951,7 +4915,7 @@ softwarePackages:
     brew:darwin: ideviceinstaller
   iina:
     _app: iina.app
-    _bin: null
+    _bin: iina
     _desc: The modern video player for macOS.
     _docs: https://iina.io/
     _github: https://github.com/iina/iina
@@ -4976,7 +4940,7 @@ softwarePackages:
     scoop: imagemagick
   imageoptim:
     _app: ImageOptim.app
-    _bin: null
+    _bin: imageoptim-app
     _desc: Image compressor that utilizes other applications like ImageOptim under the hood
     _github: https://github.com/ImageOptim/ImageOptim
     _home: https://imageoptim.com/mac
@@ -5122,7 +5086,7 @@ softwarePackages:
     npm: ipfs-deploy
   ipfs-desktop:
     _app: IPFS Desktop.app
-    _bin: null
+    _bin: ipfs-desktop
     _desc: An unobtrusive and user-friendly desktop application for IPFS on Windows, Mac and Linux.
     _docs: https://docs.ipfs.tech/install/ipfs-desktop/
     _github: https://github.com/ipfs/ipfs-desktop
@@ -5214,7 +5178,7 @@ softwarePackages:
     _short: "iTerm2 is a popular terminal emulator for macOS with advanced features like split panes, search, autocomplete, and more."
     cask: iterm2
   java:
-    _bin: false
+    _bin: null
     _desc: "[Java](https://www.java.com/en/) is a class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible."
     _docs: https://docs.oracle.com/en/cloud/paas/nosql-cloud/index.html
     _github: https://github.com/oracle/nosql-java-sdk
@@ -5668,7 +5632,7 @@ softwarePackages:
     brew: kubekey
   kubenav:
     _app: kubenav.app
-    _bin: null
+    _bin: kubenav
     _desc: kubenav is the navigator for your Kubernetes clusters right in your pocket
     _docs: https://github.com/kubenav/kubenav
     _github: https://github.com/kubenav/kubenav
@@ -6483,7 +6447,7 @@ softwarePackages:
     npm: "@medusajs/medusa-cli"
   meetingbar:
     _app: MeetingBar.app
-    _bin: null
+    _bin: meetingbar
     _desc: Meeting menu bar application that shows calendar event details on macOS
     _docs: https://github.com/leits/MeetingBar
     _github: https://github.com/leits/MeetingBar
@@ -6570,7 +6534,7 @@ softwarePackages:
     winget: microsoft.git
   microsoft-office:
     _app: Microsoft Word.app
-    _bin: null
+    _bin: microsoft-office
     _desc: "[Microsoft Office](https://www.microsoft.com/en-us/microsoft-365/microsoft-office), or simply Office, is a family of client software, server software, and services developed by Microsoft."
     _docs: https://docs.microsoft.com/en-us/microsoft-365/?view=o365-worldwide
     _github: false
@@ -6660,8 +6624,13 @@ softwarePackages:
     choco: mitmproxy
     pacman: mitmproxy
   mjml:
+    _bin: mjml
+    _github: https://github.com/mjmlio/mjml
+    _name: MJML
+    npm: mjml
+  mjml-app:
     _app: MJML.app
-    _bin:npm: mjml
+    _bin: mjml-app
     _desc: The desktop app for MJML
     _docs: https://documentation.mjml.io/
     _github: https://github.com/mjmlio/mjml-app
@@ -6670,7 +6639,6 @@ softwarePackages:
     _short: "MJML App is a desktop application that allows users to create responsive email templates using the MJML framework.                                                                                        "
     cask: mjml
     github: github.com/mjmlio/mjml-app
-    npm: mjml
   mkcert:
     _bin: mkcert
     _desc: A simple zero-config tool to make locally trusted development certificates with any names
@@ -6800,7 +6768,7 @@ softwarePackages:
     dnf: https://downloads.mongodb.com/compass/mongodb-compass-1.38.0.x86_64.rpm
   monitorcontrol:
     _app: MonitorControl.app
-    _bin: null
+    _bin: monitorcontrol
     _desc: Menu bar application for macOS that allows you to control the screen brightness and volume
     _docs: https://github.com/MonitorControl/MonitorControl
     _github: https://github.com/MonitorControl/MonitorControl
@@ -7564,7 +7532,7 @@ softwarePackages:
     flatpak: com.obsproject.Studio
   obsidian:
     _app: Obsidian.app
-    _bin: null
+    _bin: obsidian
     _desc: Obsidian is the private and flexible note‑taking app that adapts to the way you think.
     _docs: https://help.obsidian.md/Home
     _github: false
@@ -7717,7 +7685,7 @@ softwarePackages:
     npm: opencommit
   openinterminal:
     _app: OpenInTerminal.app
-    _bin: null
+    _bin: openinterminal
     _desc: Finder Toolbar app for macOS to open the current directory in Terminal, iTerm, Hyper or Alacritty
     _docs: https://github.com/Ji4n1ng/OpenInTerminal
     _github: https://github.com/Ji4n1ng/OpenInTerminal
@@ -8255,7 +8223,7 @@ softwarePackages:
     pacman: pigz
   pika:
     _app: Pika.app
-    _bin: null
+    _bin: pika
     _desc: An open-source colour picker app for macOS
     _docs: https://github.com/superhighfives/pika
     _github: https://github.com/superhighfives/pika
@@ -8437,7 +8405,7 @@ softwarePackages:
     npm: pnpm-lock-export
   pock:
     _app: Pock.app
-    _bin: null
+    _bin: pock
     _desc: Widgets manager for MacBook Touch Bar
     _docs: https://github.com/pock/pock
     _github: https://github.com/pock/pock
@@ -8660,6 +8628,7 @@ softwarePackages:
   privaxy:
     _app: Privaxy.app
     _bin: privaxy
+    _depcreated: No cask available
     _desc: Privaxy is the next generation tracker and advertisement blocker. It blocks ads and trackers by MITMing HTTP(s) traffic.
     _docs: false
     _github: https://github.com/Barre/privaxy
@@ -9127,7 +9096,7 @@ softwarePackages:
     yay: rpi-imager
   raycast:
     _app: Raycast.app
-    _bin: null
+    _bin: raycast
     _desc: Everything you need to extend Raycast (the search provider for macOS)
     _docs: https://developers.raycast.com/
     _env:
@@ -9150,7 +9119,7 @@ softwarePackages:
     _preload: true
     _short: "rclone is a command-line program to manage files on cloud storage.                                                                                                                                        "
     apt: rclone
-    brew:linux: rclone
+    brew: rclone
     choco:
       - rclone
       - winfsp
@@ -9159,12 +9128,6 @@ softwarePackages:
     pacman: rclone
     port: rclone
     scoop: rclone
-    script:darwin: |
-      #!/usr/bin/env bash
-      TMP="$(mktemp)"
-      curl https://rclone.org/install.sh > "$TMP"
-      sudo bash "$TMP"
-      rm -f "$TMP"
   recoverpy:
     _bin: recoverpy
     _deps:
@@ -9264,7 +9227,7 @@ softwarePackages:
     pacman: repo
   responsively:
     _app: ResponsivelyApp.app
-    _bin: null
+    _bin: responsively
     _desc: A modified web browser that helps in responsive web development
     _github: https://github.com/responsively-org/responsively-app
     _name: Responsively
@@ -9466,7 +9429,7 @@ softwarePackages:
     go: bdd.fi/x/runitor/cmd/runitor@latest
   runjs:
     _app: RunJS.app
-    _bin: null
+    _bin: runjs
     _desc: A JavaScript playground that auto-evaluates as you type
     _github: https://github.com/lukehaas/RunJS
     _name: RunJS
@@ -9780,7 +9743,7 @@ softwarePackages:
     npm: search-gpt
   secretive:
     _app: Secretive.app
-    _bin: null
+    _bin: secretive
     _desc: Store SSH keys in the Secure Enclave
     _github: https://github.com/maxgoedjen/secretive
     _name: "Secretive                                                                                                                                                                                                 "
@@ -10127,7 +10090,7 @@ softwarePackages:
     yay: slides
   sloth:
     _app: Sloth.app
-    _bin: null
+    _bin: sloth
     _desc: Mac app that shows all open files, directories, sockets, pipes and devices in use by all running processes. Nice GUI for lsof.
     _docs: https://github.com/sveinbjornt/Sloth
     _github: https://github.com/sveinbjornt/Sloth
@@ -10156,6 +10119,7 @@ softwarePackages:
     _short: "snapd is a package manager for Linux distributions, developed by Canonical.                                                                                                                               "
   snitch:
     _app: Little Snitch.app
+    _bin: snitch
     _desc: "[Little Snitch](https://www.obdev.at/products/littlesnitch/index.html) (macOS) and [OpenSnitch](https://github.com/evilsocket/opensnitch) (Linux) are application firewalls that make Internet connections visible. You can then configure which applications can access the internet (or LAN) as well as monitor the traffic patterns of applications."
     _docs: https://www.obdev.at/products/littlesnitch/getting-started.html
     _github: https://github.com/evilsocket/opensnitch
@@ -10172,6 +10136,7 @@ softwarePackages:
     pipx: social-analyzer
   soduto:
     _app: Soduto.app
+    _bin: soduto
     _desc: "Soduto is a GitHub repository that contains the source code for the Soduto app. This app allows users to easily share Wi-Fi passwords with their contacts. It provides a convenient way to share Wi-Fi    \nnetwork details securely. The repository likely includes code for the app's functionality, user interface, and any other related components. Users can contribute to the project, report issues, or       \nsuggest improvements through the repository on GitHub.                                                                                                                                                    "
     _github: https://github.com/soduto/Soduto
     _name: Soduto
@@ -10528,6 +10493,7 @@ softwarePackages:
     npm: svgo
   swiftbar:
     _app: SwiftBar.app
+    _bin: swiftbar
     _desc: "SwiftBar is a macOS menu bar customization tool that allows users to add custom scripts, widgets, and plugins to their menu bar. It is highly customizable and extensible, enabling users to display      \nvarious information such as system stats, weather, calendar events, and more directly in the menu bar. SwiftBar supports scripting in languages like Shell, Python, Ruby, and JavaScript, making it       \nversatile for users with different scripting preferences. It provides a simple yet powerful way to enhance the functionality and appearance of the macOS menu bar.                                        "
     _github: https://github.com/swiftbar/SwiftBar
     _name: SwiftBar
@@ -11221,6 +11187,7 @@ softwarePackages:
     npm: ts2c
   tunnelblick:
     _app: Tunnelblick.app
+    _bin: tunnelblick
     _desc: Tunnelblick is a macOS menubar tray application that helps you control OpenVPN.
     _docs: https://tunnelblick.net/documents.html
     _github: https://github.com/Tunnelblick/Tunnelblick
@@ -11387,7 +11354,7 @@ softwarePackages:
     scoop: vagrant
   vagrant-manager:
     _app: Vagrant Manager.app
-    _bin: null
+    _bin: vagrant-manager
     _desc: Status bar menu application that allows you to manage Vagrant available on macOS and Windows
     _docs: https://github.com/lanayotech/vagrant-manager
     _github: https://github.com/lanayotech/vagrant-manager
@@ -11397,7 +11364,6 @@ softwarePackages:
     cask: vagrant-manager
     choco: vagrant-manager
   vagrant-vmware-utility:
-    _bin: false
     _desc: "vagrant-vmware-desktop                                                                                                                                                                                    \n\nThis is a plugin for Vagrant, a tool for building and managing virtual machine environments. The vagrant-vmware-desktop plugin allows Vagrant to work with VMware Fusion and VMware Workstation on macOS. \nIt provides additional functionality and compatibility for using VMware products with Vagrant, enhancing the virtualization capabilities for developers and system administrators working on macOS        \nsystems. This plugin enables users to create and manage VMware virtual machines seamlessly within Vagrant workflows.                                                                                      "
     _github: https://github.com/hashicorp/vagrant-vmware-desktop
     _name: Vagrant VMWare Utility
@@ -12110,7 +12076,7 @@ softwarePackages:
     brew:darwin: xcodesorg/made/xcodes
   xcodes-app:
     _app: Xcodes.app
-    _bin: null
+    _bin: xcodes-app
     _desc: macOS desktop app that allows you to download, install, and switch to alternate versions of Xcode
     _docs: https://github.com/XcodesOrg/XcodesApp
     _github: https://github.com/XcodesOrg/XcodesApp
@@ -12605,6 +12571,7 @@ softwarePackages:
     pacman: zsh
     port: zsh
   zsh-completions:
+    _bin: zsh-completions
     _desc: "zsh-completions is a repository on GitHub maintained by the zsh-users organization. It provides a collection of completion scripts for various commands and utilities to enhance auto-completion          \ncapabilities in the zsh shell. These completion scripts help users by suggesting and completing command options, arguments, and file paths as they type commands in the terminal. The repository is       \nregularly updated to support new commands and improve existing completions, making it a valuable resource for zsh users looking to streamline their command-line experience.                              "
     _github: https://github.com/zsh-users/zsh-completions
     _name: ZSH Completions

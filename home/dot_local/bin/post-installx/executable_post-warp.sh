@@ -219,15 +219,9 @@ if command -v warp-cli > /dev/null; then
   # Source: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/
   # Source for JumpCloud: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/CloudflareWARP.mobileconfig
   if [ -d /System ] && [ -d /Applications ]; then
-    sudo mkdir -p "/Library/Managed Preferences"
-    sudo cp -f "$HOME/Library/Managed Preferences/com.cloudflare.warp.plist" '/Library/Managed Preferences/com.cloudflare.warp.plist'
     sudo plutil -convert binary1 '/Library/Managed Preferences/com.cloudflare.warp.plist'
     ### Enable CloudFlare WARP credentials auto-populate (since file is deleted when not managed with MDM)
-    if [ -f "$HOME/Library/LaunchDaemons/com.cloudflare.warp.plist" ] && [ ! -f "/Library/LaunchDaemons/com.cloudflare.warp.plist" ]; then
-      sudo mkdir -p /Library/LaunchDaemons
-      sudo cp -f "$HOME/Library/LaunchDaemons/com.cloudflare.warp.plist" '/Library/LaunchDaemons/com.cloudflare.warp.plist'
-      sudo launchctl load "/Library/LaunchDaemons/com.cloudflare.warp.plist"
-    fi
+    sudo launchctl load "/Library/LaunchDaemons/com.cloudflare.warp.plist"
   elif [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/warp/mdm.xml" ]; then
     sudo mkdir -p /var/lib/cloudflare-warp
     sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/warp/mdm.xml" /var/lib/cloudflare-warp/mdm.xml

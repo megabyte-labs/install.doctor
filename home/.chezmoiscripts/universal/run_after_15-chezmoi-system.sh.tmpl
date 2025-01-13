@@ -5,9 +5,13 @@
 #     This script applies the files stored at `${XDG_CONFIG_HOME:-$HOME/.config}/system` to the
 #     base file system. This way, you can store your system files in your `~/.config` folder.
 
-gum log -sl info 'Running sudo rsync -av --progress "${XDG_CONFIG_HOME:-$HOME/.config}/system/" /'
-sudo rsync -av --progress "${XDG_CONFIG_HOME:-$HOME/.config}/system/" /
-gum log -sl info 'Finished applying system configuration files'
+# @description
+#     Copies system files over to root file system
+systemFiles() {
+  gum log -sl info 'Running sudo rsync -av --progress "${XDG_CONFIG_HOME:-$HOME/.config}/system/" /'
+  sudo rsync -av --progress "${XDG_CONFIG_HOME:-$HOME/.config}/system/" /
+  gum log -sl info 'Finished applying system configuration files'
+}
 
 # @description
 #     Applies appropriate and minimal permissions to clamav folders

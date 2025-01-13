@@ -7,6 +7,15 @@
 {{ includeTemplate "universal/profile" }}
 {{ includeTemplate "universal/logg" }}
 
+# @description Copies system files over to the root file system
+systemFiles() {
+  gum log -sl info 'Running sudo rsync -av --progress "${XDG_CONFIG_HOME:-$HOME/.config}/system/" /'
+  sudo rsync -av --progress "${XDG_CONFIG_HOME:-$HOME/.config}/system/" /
+  gum log -sl info 'Finished applying system configuration files'
+}
+
+systemFiles
+
 if command -v installx > /dev/null; then
   if command -v zx > /dev/null; then
     if command -v unbuffer > /dev/null; then
