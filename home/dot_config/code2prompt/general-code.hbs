@@ -28,10 +28,21 @@ When reviewing the code, look for opportunities to improve:
 - Formatting and whitespace
 - Comments and documentation
 - Comments should be in shdoc format for shell scripts and in jsdoc syntax for JavaScript/TypeScript files
+- Comments using the shdoc format and all shell scripts in general should start with `#!/usr/bin/env bash` followed by shdoc comments describing the entire file in the following format:
+
+```
+# @file .local/bin/improve-code
+# @brief The brief should be a short description of the file
+# @description
+#     This section should include an in-depth comment that describes the particulars
+#     of the entire script / file.
+```
+
 - All function names should be in camel case
 - In shell scripts, the variables should be in uppercase
 - In shell scripts, for log statements, instead of echo, use `gum log -sl info` for info statements, `gum log -sl warn` for warning statements, and `gum log -sl error` for error statements
 - In shell scripts and Chezmoi shell template scripts ending in `.tmpl`, the code should pass all of the shellcheck recommendations
+- Tabs should equal 2 spaces in the final code
 
 Make sure your changes don't alter existing behavior (except perhaps for improved error handling). Try to infer the original intent as much as possible, and refactor towards that intent.
 
