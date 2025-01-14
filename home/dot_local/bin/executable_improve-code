@@ -41,6 +41,16 @@ main() {
         exit 1
     fi
 
+    # Remove ` marks in response
+    gum log -sl info "Cleaning up response"
+    if command -v gsed > /dev/null; then
+      gsed -i '/^```$/d;$ { /^```$/d }' "$SGPT_OUTPUT"
+    elif command -v sed > /dev/null; then
+      sed -i '/^```$/d;$ { /^```$/d }' "$SGPT_OUTPUT"
+    else
+      gum log -sl warn "Both sed and gsed are missing from the PATH"
+    fi
+
     # Replace the content of the input file
     gum log -sl info "Replacing content of the input file with improvements..."
     if ! mv "$SGPT_OUTPUT" "$INPUT_FILE"; then
