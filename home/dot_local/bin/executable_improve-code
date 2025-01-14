@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+TMP_OUTPUT="$(mktemp)"
+SGPT_OUTPUT="$(mktemp)"
+code2prompt "$1" --output "$TMP_OUTPUT" -t "$HOME/.config/code2prompt/general-code.hbs"
+sgpt "$TMP_OUTPUT" > "$SGPT_OUTPUT"
+cp -f "$SGPT_OUTPUT" "$1"
+
+# @description Always run no matter what to clean up artifacts
+rm -f "$TMP_OUTPUT"
