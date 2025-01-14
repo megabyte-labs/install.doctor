@@ -71,21 +71,21 @@ if command -v smbd > /dev/null; then
   ### Private share
   gum log -sl info "Ensuring $PRIVATE_SHARE is created"
   sudo mkdir -p "$PRIVATE_SHARE"
-  sudo chmod 750 "$PRIVATE_SHARE"
-  sudo chown -Rf root:rclone "$PRIVATE_SHARE"
-  
+  sudo chmod 770 "$PRIVATE_SHARE"
+  sudo chown -Rf rclone:rclone "$PRIVATE_SHARE"
+
   ### Public share
   gum log -sl info "Ensuring $PUBLIC_SHARE is created"
   sudo mkdir -p "$PUBLIC_SHARE"
-  sudo chmod 755 "$PUBLIC_SHARE"
-  sudo chown -Rf root:rclone "$PUBLIC_SHARE"
+  sudo chmod 775 "$PUBLIC_SHARE"
+  sudo chown -Rf rclone:rclone "$PUBLIC_SHARE"
 
   ### User share
   gum log -sl info "Ensuring $HOME/Shared is created"
   mkdir -p "$HOME/Shared"
   chmod 755 "$HOME/Shared"
   chown -Rf "$USER":rclone "$HOME/Shared"
-  
+
   ### Copy the Samba server configuration file
   if [ -d /Applications ] && [ -d /System ]; then
     ### System Private Samba Share
@@ -124,10 +124,6 @@ if command -v smbd > /dev/null; then
       fi
     fi
   else
-    ### Copy Samba configuration
-    gum log -sl info "Copying Samba server configuration to /etc/samba/smb.conf"
-    sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/samba/config" "/etc/samba/smb.conf"
-
     ### Reload configuration file changes
     gum log -sl info 'Reloading the smbd config'
     smbcontrol smbd reload-config

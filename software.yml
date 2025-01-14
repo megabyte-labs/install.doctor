@@ -9552,7 +9552,9 @@ softwarePackages:
     script:darwin: curl -sfL https://raw.githubusercontent.com/alajmo/sake/main/install.sh | sh
     script:linux: curl -sfL https://raw.githubusercontent.com/alajmo/sake/main/install.sh | sh
   samba:
-    _bin: smbd
+    _bin:
+      - smbcontrol
+      - smbd
     _bin:dnf: smb
     _desc: "[Samba](https://www.samba.org/) is a free and open-source software that allows files to be shared across Windows and Linux systems simply and easily. To be exact, it is an open-source implementation of the SMB/CIFS protocol."
     _docs: https://www.samba.org/samba/docs/
