@@ -123,10 +123,6 @@ if command -v smbd > /dev/null; then
         echo "$SMB_OUTPUT"
       fi
     fi
-  else
-    ### Reload configuration file changes
-    gum log -sl info 'Reloading the smbd config'
-    smbcontrol smbd reload-config
   fi
 else
   gum log -sl info "Samba server is not installed"
