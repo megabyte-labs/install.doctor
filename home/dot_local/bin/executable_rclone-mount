@@ -1,112 +1,156 @@
 #!/usr/bin/env bash
-# @file RClone Mount
-# @brief Helper utility to aid with mounting RClone S3 buckets to the file system
+# @file Secure RClone Mount
+# @brief Secure helper utility for mounting RClone S3 buckets
 # @description
-#     This script is a helper utility to assist a system service that ensures various
-#     RClone S3 mounts are mounted properly. For more information, take a look at the
-#     RClone files stored in `~/.config/rclone`.
+#     This script securely assists a system service to ensure RClone S3 mounts are managed safely.
+#     It validates user inputs, sets up necessary folder structures with secure permissions,
+#     verifies RClone configurations, and mounts S3 buckets with optimal and secure settings.
+#     The script is modular, handles errors gracefully, logs operations, and supports configurability for
+#     easier customization and multi-user/multi-mount scenarios.
 
-### Variables
-TYPE="$1"
-USER="$2"
-MOUNT="$3"
+set -euo pipefail
 
-### Mount variables
-if [ "$TYPE" = 'user' ]; then
-  MOUNT_REF="User-$USER"
-  MOUNT_LOWERCASE="user/$USER-$MOUNT"
-else
-  MOUNT_REF="$MOUNT"
-  MOUNT_LOWERCASE="$(echo "$MOUNT" | tr "[:upper:]" "[:lower:]")"
-fi
+LOG_FILE="/var/log/rclone-mount-script.log"
+DRY_RUN=false
 
-### Path definitions
-if [ "$TYPE" = 'user' ]; then
-  if [ -d /Applications ] && [ -d /System ]; then
-    USER_FOLDER='Users'
-  else
-    USER_FOLDER='home'
-  fi
-  CACHE_FOLDER="/var/cache/rclone/$MOUNT"
-  CONFIG_FOLDER="/$USER_FOLDER/$USER/.config/rclone"
-  LOG_FOLDER="/var/log/rclone"
-  LOG_FILE="$LOG_FOLDER/$MOUNT_LOWERCASE.log"
-  if [ -d /Applications ] && [ -d /System ]; then
-    MNT_FOLDER='Volumes'
-  else
-    MNT_FOLDER='mnt'
-  fi
-  MOUNT_PATH="/$MNT_FOLDER/$MOUNT"
-else
-  CACHE_FOLDER="/var/cache/rclone/$MOUNT"
-  CONFIG_FOLDER="/etc"
-  LOG_FOLDER="/var/log/rclone"
-  LOG_FILE="$LOG_FOLDER/$MOUNT_LOWERCASE.log"
-  if [ -d /Applications ] && [ -d /System ]; then
-    MNT_FOLDER='Volumes'
-  else
-    MNT_FOLDER='mnt'
-  fi
-  MOUNT_PATH="/$MNT_FOLDER/$MOUNT"
-fi
+### Functions
 
-### Ensure folders exist
-for FOLDER in "$CACHE_FOLDER" "$CONFIG_FOLDER" "$LOG_FOLDER" "$MOUNT_PATH"; do
-    if [ ! -d "$FOLDER" ]; then
-        mkdir -p "$FOLDER"
-        chmod 750 "$FOLDER"
-        chown -f "$USER:rclone" "$FOLDER"
+# @description Log messages with timestamps
+log() {
+    gum log -sl info "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
+}
+
+# @description Validate input arguments
+validateInputs() {
+    if [[ $# -lt 3 || $# -gt 4 ]]; then
+        gum log -sl error "Invalid usage"
+        gum log -sl info "Usage: $0 <type> <user> <mount> [--dry-run]" >&2
+        exit 1
     fi
-done
 
-### Define rcloneignore location
-RCLONE_IGNORE="$CONFIG_FOLDER/rcloneignore"
-if [ ! -f "$RCLONE_IGNORE" ] && [ -f "/etc/rcloneignore" ]; then
-  RCLONE_IGNORE='/etc/rcloneignore'
-fi
+    # Handle dry-run flag
+    if [[ "$4" == "--dry-run" ]]; then
+        DRY_RUN=true
+    fi
 
-chown -f "$USER:rclone" "$CONFIG_FOLDER/rclone.conf"
-chmod -f 600 "$CONFIG_FOLDER/rclone.conf"
+    # Sanitize inputs
+    TYPE=$(echo "$1" | grep -E "^[a-zA-Z0-9_-]+$" || { gum log -sl error "Invalid type: $1" >&2; exit 1; })
+    USER=$(echo "$2" | grep -E "^[a-zA-Z0-9_]+$" || { gum log -sl error "Invalid user: $2" >&2; exit 1; })
+    MOUNT=$(echo "$3" | grep -E "^[a-zA-Z0-9_-]+$" || { gum log -sl error "Invalid mount: $3" >&2; exit 1; })
+}
 
-### Mount
-unset AWS_CA_BUNDLE
-export PATH="$PATH:/usr/local/bin:/usr/bin"
+# @description Define mount-related variables
+setMountVariables() {
+    if [[ "$TYPE" == "user" ]]; then
+        MOUNT_REF="User-$USER"
+        MOUNT_LOWERCASE="user/$USER-$MOUNT"
+    else
+        MOUNT_REF="$MOUNT"
+        MOUNT_LOWERCASE="$(echo "$MOUNT" | tr "[:upper:]" "[:lower:]")"
+    fi
 
-# TODO: Only launch with --rc-web-gui if the servers hostname is the {{ .kubernetesHost }}
-# TODO: Add more secure authentication method
-rclone --config "$CONFIG_FOLDER/rclone.conf" \
-  mount \
-  --allow-other \
-  --uid "$(id -g rclone)" \
-  --gid "$(gid -g rclone)" \
-  --file-perms 0660 \
-  --dir-perms 0770 \
-  --buffer-size 1G \
-  --bwlimit 200M \
-  --cache-chunk-path "$CACHE_FOLDER/$MOUNT_REF-chunks" \
-  --cache-db-path "$CACHE_FOLDER/$MOUNT_REF-db" \
-  --cache-dir "$CACHE_FOLDER/$MOUNT_REF-vfs" \
-  --cache-info-age 1m \
-  --cache-tmp-upload-path "$CACHE_FOLDER/$MOUNT_REF-upload" \
-  --cache-workers 8 \
-  --cache-writes \
-  --checkers 16 \
-  --dir-cache-time 30s \
-  --drive-use-trash \
-  --exclude-from "$RCLONE_IGNORE" \
-  --log-file "$LOG_FILE" \
-  --log-level INFO \
-  --no-modtime \
-  --noapplexattr \
-  --poll-interval 15s \
-  --stats 0 \
-  --vfs-cache-max-age 1000h \
-  --vfs-cache-max-size 2G \
-  --vfs-cache-mode full \
-  --vfs-cache-poll-interval 15s \
-  --vfs-fast-fingerprint \
-  --vfs-read-ahead 128M \
-  --vfs-read-chunk-size 16M \
-  --vfs-read-chunk-size-limit 128M \
-  --volname "$MOUNT_REF" \
-  "$MOUNT_REF":"$MOUNT_LOWERCASE" "$MOUNT_PATH"
+    if [[ "$TYPE" == "user" ]]; then
+        USER_FOLDER=$( [[ -d /Applications && -d /System ]] && echo "Users" || echo "home" )
+        CACHE_FOLDER="/var/cache/rclone/$MOUNT"
+        CONFIG_FOLDER="/$USER_FOLDER/$USER/.config/rclone"
+        LOG_FOLDER="/var/log/rclone"
+        MOUNT_PATH="/$USER_FOLDER/$USER/mnt/$MOUNT"
+    else
+        CACHE_FOLDER="/var/cache/rclone/$MOUNT"
+        CONFIG_FOLDER="/etc/rclone"
+        LOG_FOLDER="/var/log/rclone"
+        MOUNT_PATH="/mnt/$MOUNT"
+    fi
+}
+
+# @description Ensure necessary folders and permissions
+ensureFolders() {
+    for FOLDER in "$CACHE_FOLDER" "$LOG_FOLDER" "$MOUNT_PATH"; do
+        if [[ ! -d "$FOLDER" ]]; then
+            log "Creating folder: $FOLDER"
+            if [[ "$DRY_RUN" == false ]]; then
+                mkdir -p "$FOLDER"
+                chmod 700 "$FOLDER"
+                chown "$USER:rclone" "$FOLDER"
+            fi
+        fi
+    done
+}
+
+# @description Validate and secure rclone configuration
+validateRcloneConfig() {
+    RCLONE_CONF="$CONFIG_FOLDER/rclone.conf"
+    if [[ ! -f "$RCLONE_CONF" ]]; then
+        gum log -sl error "RClone configuration file not found: $RCLONE_CONF" >&2
+        exit 1
+    fi
+
+    log "Securing RClone configuration file: $RCLONE_CONF"
+    if [[ "$DRY_RUN" == false ]]; then
+        chmod 600 "$RCLONE_CONF"
+        chown "$USER:rclone" "$RCLONE_CONF"
+    fi
+
+    RCLONE_IGNORE="$CONFIG_FOLDER/rcloneignore"
+    if [[ ! -f "$RCLONE_IGNORE" && -f "/etc/rcloneignore" ]]; then
+        RCLONE_IGNORE="/etc/rcloneignore"
+    fi
+}
+
+# @description Mount the RClone bucket securely
+mountRclone() {
+    unset AWS_CA_BUNDLE
+    export PATH="$PATH:/usr/local/bin:/usr/bin"
+
+    log "Mounting RClone bucket: $MOUNT_REF to $MOUNT_PATH"
+    if [[ "$DRY_RUN" == false ]]; then
+        rclone --config "$RCLONE_CONF" \
+          mount \
+          --allow-other=false \
+          --uid "$(id -u rclone)" \
+          --gid "$(id -g rclone)" \
+          --file-perms 0660 \
+          --dir-perms 0770 \
+          --buffer-size 1G \
+          --bwlimit 200M \
+          --cache-chunk-path "$CACHE_FOLDER/$MOUNT_REF-chunks" \
+          --cache-db-path "$CACHE_FOLDER/$MOUNT_REF-db" \
+          --cache-dir "$CACHE_FOLDER/$MOUNT_REF-vfs" \
+          --cache-info-age 1m \
+          --cache-tmp-upload-path "$CACHE_FOLDER/$MOUNT_REF-upload" \
+          --cache-workers 8 \
+          --cache-writes \
+          --checkers 16 \
+          --dir-cache-time 30s \
+          --drive-use-trash=false \
+          --exclude-from "$RCLONE_IGNORE" \
+          --log-file "$LOG_FOLDER/$MOUNT_LOWERCASE.log" \
+          --log-level INFO \
+          --no-modtime \
+          --noapplexattr \
+          --poll-interval 15s \
+          --stats 0 \
+          --vfs-cache-max-age 1000h \
+          --vfs-cache-max-size 2G \
+          --vfs-cache-mode full \
+          --vfs-cache-poll-interval 15s \
+          --vfs-fast-fingerprint \
+          --vfs-read-ahead 128M \
+          --vfs-read-chunk-size 16M \
+          --vfs-read-chunk-size-limit 128M \
+          --volname "$MOUNT_REF" \
+          "$MOUNT_REF":"$MOUNT_LOWERCASE" "$MOUNT_PATH"
+    fi
+}
+
+# @description Main script execution
+main() {
+    validateInputs "$@"
+    setMountVariables
+    ensureFolders
+    validateRcloneConfig
+    mountRclone
+}
+
+# Run the script
+main "$@"
