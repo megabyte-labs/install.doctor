@@ -35,7 +35,7 @@ main() {
 
     # Get recommendations from ChatGPT
     gum log -sl info "Fetching recommendations from ChatGPT..."
-    if ! sgpt "$TMP_OUTPUT" > "$SGPT_OUTPUT"; then
+    if ! cat "$TMP_OUTPUT" < sgpt > "$SGPT_OUTPUT"; then
         gum log -sl error "Failed to fetch recommendations from ChatGPT."
         cleanup
         exit 1
