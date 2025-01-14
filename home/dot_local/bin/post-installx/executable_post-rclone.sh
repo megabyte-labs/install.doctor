@@ -116,22 +116,21 @@ EOT
   sudo chmod 640 /etc/rcloneignore
 
   ### Setup /etc/rclone.conf
-  gum log -sl info 'Adding ~/.config/rclone/system-rclone.conf to /etc/rclone.conf'
-  sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system-rclone.conf" /etc/rclone.conf
+  gum log -sl info 'Setting permissions on /etc/rclone.conf'
   sudo chown -Rf rclone:rclone /etc/rclone.conf
   sudo chmod 600 /etc/rclone.conf
 
   if [ -d /Applications ] && [ -d /System ]; then
-    ### Enable Rclone mounts
-    gum log -sl info 'Ensuring Rclone mount-on-reboot definitions are in place'
-    sudo mkdir -p /Library/LaunchDaemons
-
     if get-secret --exists CLOUDFLARE_R2_ID CLOUDFLARE_R2_SECRET; then
+      ### Enable Rclone mounts
+      gum log -sl info 'Ensuring Rclone mount-on-reboot definitions are in place'
+      sudo mkdir -p /Library/LaunchDaemons
+
       ### rclone.private.plist
-      load-service rclone.private
+      sudo load-service rclone.private
 
       ### rclone.public.plist
-      load-service rclone.public
+      sudo load-service rclone.public
     fi
 
     if get-secret --exists CLOUDFLARE_R2_ID_USER CLOUDFLARE_R2_SECRET_USER; then
@@ -140,32 +139,32 @@ EOT
     fi
   elif [ -d /etc/systemd/system ]; then
     if get-secret --exists CLOUDFLARE_R2_ID CLOUDFLARE_R2_SECRET; then
-      find "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/system" -mindepth 1 -maxdepth 1 -type f | while read RCLONE_SERVICE; do
-        ### Add systemd service file
-        gum log -sl info "Adding S3 system mount service defined at $RCLONE_SERVICE"
-        FILENAME="$(basename "$RCLONE_SERVICE")"
-        SERVICE_ID="$(echo "$FILENAME" | sed 's/.service//')"
-        sudo cp -f "$RCLONE_SERVICE" "/etc/systemd/system/$(basename "$RCLONE_SERVICE")"
+      ### Ensure mount folder is created
+      gum log -sl info "Ensuring /mnt/s3-private is created with proper permissions"
+      sudo mkdir -p "/mnt/s3-private"
+      sudo chmod 750 "/mnt/s3-private"
 
-        ### Ensure mount folder is created
-        gum log -sl info "Ensuring /mnt/$SERVICE_ID is created with proper permissions"
-        sudo mkdir -p "/mnt/$SERVICE_ID"
-        sudo chmod 750 "/mnt/$SERVICE_ID"
+      ### Ensure mount folder is created
+      gum log -sl info "Ensuring /mnt/s3-public is created with proper permissions"
+      sudo mkdir -p "/mnt/s3-public"
+      sudo chmod 750 "/mnt/s3-public"
 
-        ### Enable / restart the service
-        gum log -sl info "Enabling / restarting the $SERVICE_ID S3 service"
-        sudo systemctl enable "$SERVICE_ID"
-        sudo systemctl restart "$SERVICE_ID"
-      done
+      ### Enable / restart the service
+      gum log -sl info "Enabling / restarting the s3-private S3 service"
+      sudo systemctl enable s3-private
+      sudo systemctl restart s3-private
+
+      ### Enable / restart the service
+      gum log -sl info "Enabling / restarting the s3-public S3 service"
+      sudo systemctl enable s3-public
+      sudo systemctl restart s3-public
     fi
 
     ### Add user Rclone mount
     if get-secret --exists CLOUDFLARE_R2_ID_USER CLOUDFLARE_R2_SECRET_USER; then
-      gum log -sl info 'Adding user S3 rclone mount (available at ~/Cloud/User and /Volumes/User)'
-      sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/s3-user.service" "/etc/systemd/system/s3-${USER}.service"
       gum log -sl info 'Enabling / restarting the S3 user mount'
-      sudo systemctl enable "s3-${USER}"
-      sudo systemctl restart "s3-${USER}"
+      sudo systemctl enable s3-user
+      sudo systemctl restart s3-user
     fi
   fi
 else

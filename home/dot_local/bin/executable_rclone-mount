@@ -77,11 +77,11 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 rclone --config "$CONFIG_FOLDER/rclone.conf" \
   mount \
   --allow-other \
-  --uid "$(id -g netdata)" \
-  --guid "$(gid -g netdata)" \
+  --uid "$(id -g rclone)" \
+  --gid "$(gid -g rclone)" \
   --file-perms 0660 \
   --dir-perms 0770 \
-  --buffer-size 4G \
+  --buffer-size 1G \
   --bwlimit 200M \
   --cache-chunk-path "$CACHE_FOLDER/$MOUNT_REF-chunks" \
   --cache-db-path "$CACHE_FOLDER/$MOUNT_REF-db" \
@@ -101,7 +101,7 @@ rclone --config "$CONFIG_FOLDER/rclone.conf" \
   --poll-interval 15s \
   --stats 0 \
   --vfs-cache-max-age 1000h \
-  --vfs-cache-max-size 5G \
+  --vfs-cache-max-size 2G \
   --vfs-cache-mode full \
   --vfs-cache-poll-interval 15s \
   --vfs-fast-fingerprint \
