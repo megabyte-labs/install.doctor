@@ -51,7 +51,7 @@ setMountVariables() {
         MOUNT_PATH="/$USER_FOLDER/$USER/Cloud/$MOUNT"
     else
         CACHE_FOLDER="/var/cache/rclone/$MOUNT_REF"
-        CONFIG_FOLDER="/etc/rclone"
+        CONFIG_FOLDER="/etc"
         LOG_FOLDER="/var/log/rclone"
         MOUNT_PATH="/$( [[ -d /Applications && -d /System ]] && echo "Volumes" || echo "mnt" )/$MOUNT"
     fi
