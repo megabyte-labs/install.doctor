@@ -9572,6 +9572,13 @@ softwarePackages:
     dnf: samba
     pacman: samba
     port: samba4
+  homeassistant-cli:
+    _bin: hass-cli
+    _github: https://github.com/home-assistant-ecosystem/home-assistant-cli
+    _name: Home Assistant CLI
+    brew: homeassistant-cli
+    dnf: home-assistant-cli
+    pipx: homeassistant-cli
   sanoid:
     _bin: sanoid
     _deps:
