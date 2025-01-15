@@ -9,15 +9,10 @@ installCocExtensions() {
     gum log -sl info "Running npm i --no-progress --no-package-lock in ${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions"
     cd "${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions"
     npm i --no-progress --no-package-lock
-    gum log -sl info "Running vim +CocUpdateSync +qall"
-    vim +CocUpdateSync +qall
   else
     gum log -sl info "Skipping Coc extension installation because ${XDG_CONFIG_HOME:-$HOME/.config}/coc/extensions/package.json is missing"
   fi
 }
-
-### Install VIM plugins
-gum log -sl info "Installing VIM plugins" && vim -E -s +'PlugInstall --sync' +qall
 
 ### Install VIM coc plugins
 gum log -sl info "Updating VIM coc extensions" && installCocExtensions

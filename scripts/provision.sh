@@ -764,6 +764,16 @@ postProvision() {
   fi
 }
 
+# @description Installs VIM plugins (outside of Chezmoi because of terminal GUI issues)
+vimPlugins() {
+  if command -v vim > /dev/null; then
+    logg info 'Running vim +CocUpdateSync +qall' && vim +CocUpdateSync +qall
+    logg info "Installing VIM plugins with vim -E -s +'PlugInstall --sync' +qall" && vim -E -s +'PlugInstall --sync' +qall
+  else
+    logg info 'VIM not in PATH'
+  fi
+}
+
 # @description The `provisionLogic` function is used to define the order of the script. All of the functions it relies on are defined
 #     above.
 provisionLogic() {
@@ -785,6 +795,7 @@ provisionLogic() {
   logg info "Handling pre-provision logic" && initChezmoiAndPrompt
   logg info "Running the Chezmoi provisioning" && runChezmoi
   logg info "Ensuring temporary passwordless sudo is removed" && removePasswordlessSudo
+  logg info "Running post-install VIM plugin installations" && vimPlugins
   logg info "Determing whether or not reboot" && handleRequiredReboot
   logg info "Handling post-provision logic" && postProvision
 }
