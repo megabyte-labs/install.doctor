@@ -1063,7 +1063,7 @@ softwarePackages:
     _service:brew:
       - name: blocky
         sudo: true
-    _serviceEnabled: true
+    _serviceEnabled: false
     _preload: true
     _short: "blocky is a tool for managing and monitoring multiple blockchain nodes easily.                                                                                                                            "
     brew: blocky
@@ -2747,20 +2747,6 @@ softwarePackages:
     brew: envio-cli/tap/envio
     yay: envio
     nix-env: envio
-  envpane:
-    _bin: null
-    _desc: An OS X preference pane for environment variables
-    _docs: https://github.com/hschmidt/EnvPane
-    _github: https://github.com/hschmidt/EnvPane
-    _home: https://github.com/hschmidt/EnvPane
-    _name: EnvPane
-    _short: "EnvPane is a macOS preference pane for environment variables.                                                                                                                                             "
-    _when:script:darwin: '! test -d "$HOME/Library/PreferencePanes/EnvPane.prefPane"'
-    script:darwin: |
-      mkdir -p ~/Library/PreferencePanes
-      cd ~/Library/PreferencePanes
-      rm -rf EnvPane.prefPane
-      curl -sL https://github.com/hschmidt/EnvPane/releases/download/releases%2F0.8/EnvPane-0.8.tar.bz2 | tar -xjf -
   eslint:
     _bin: eslint
     _desc: "[ESLint](https://eslint.org/) allows you to find and fix problems in your JavaScript code"
@@ -8406,6 +8392,7 @@ softwarePackages:
   pock:
     _app: Pock.app
     _bin: pock
+    _deprecated: New Macbook Pro does not include touch slider bar
     _desc: Widgets manager for MacBook Touch Bar
     _docs: https://github.com/pock/pock
     _github: https://github.com/pock/pock
@@ -9082,6 +9069,7 @@ softwarePackages:
   raspberry-pi-imager:
     _app: Raspberry Pi Imager.app
     _bin: rpi-imager
+    _deprecated: Unneeded - can load on demand, when needed
     _desc: "[Raspberry Pi Imager](https://www.raspberrypi.org/software/) is the quick and easy way to install Raspberry Pi OS and other operating systems to a microSD card, ready to use with your Raspberry Pi."
     _docs: https://www.raspberrypi.com/documentation/computers/getting-started.html
     _github: https://github.com/raspberrypi/rpi-imager
@@ -10503,6 +10491,7 @@ softwarePackages:
   swiftbar:
     _app: SwiftBar.app
     _bin: swiftbar
+    _deprecated: Replaced by Shortcuts.app
     _desc: "SwiftBar is a macOS menu bar customization tool that allows users to add custom scripts, widgets, and plugins to their menu bar. It is highly customizable and extensible, enabling users to display      \nvarious information such as system stats, weather, calendar events, and more directly in the menu bar. SwiftBar supports scripting in languages like Shell, Python, Ruby, and JavaScript, making it       \nversatile for users with different scripting preferences. It provides a simple yet powerful way to enhance the functionality and appearance of the macOS menu bar.                                        "
     _github: https://github.com/swiftbar/SwiftBar
     _name: SwiftBar
@@ -11364,6 +11353,7 @@ softwarePackages:
   vagrant-manager:
     _app: Vagrant Manager.app
     _bin: vagrant-manager
+    _deprecated: Unneeded and UI is not so polished
     _desc: Status bar menu application that allows you to manage Vagrant available on macOS and Windows
     _docs: https://github.com/lanayotech/vagrant-manager
     _github: https://github.com/lanayotech/vagrant-manager

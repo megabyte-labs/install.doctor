@@ -51,12 +51,12 @@ setMountVariables() {
 
     if [[ "$TYPE" == "user" ]]; then
         USER_FOLDER=$( [[ -d /Applications && -d /System ]] && echo "Users" || echo "home" )
-        CACHE_FOLDER="/var/cache/rclone/$MOUNT"
+        CACHE_FOLDER="/var/cache/rclone/$MOUNT_REF"
         CONFIG_FOLDER="/$USER_FOLDER/$USER/.config/rclone"
         LOG_FOLDER="/var/log/rclone"
-        MOUNT_PATH="/$USER_FOLDER/$USER/mnt/$MOUNT"
+        MOUNT_PATH="/$USER_FOLDER/$USER/Cloud/$MOUNT"
     else
-        CACHE_FOLDER="/var/cache/rclone/$MOUNT"
+        CACHE_FOLDER="/var/cache/rclone/$MOUNT_REF"
         CONFIG_FOLDER="/etc/rclone"
         LOG_FOLDER="/var/log/rclone"
         MOUNT_PATH="/mnt/$MOUNT"
@@ -97,6 +97,22 @@ validateRcloneConfig() {
     fi
 }
 
+# @description Handles conditional logic for setting file permissions
+setPermissions() {
+  if [ "$TYPE" = 'user' ]; then
+    FILE_PERMS="0600"
+    DIR_PERMS="0700"
+  elif [ "$TYPE" = 'volume' ]; then
+    if [ "$MOUNT" = 'Private' ]; then
+      FILE_PERMS="0600"
+      DIR_PERMS="0700"
+    elif [ "$MOUNT" = 'Public' ]; then
+      FILE_PERMS="0644"
+      DIR_PERMS="0755"
+    fi
+  fi
+}
+
 # @description Mount the RClone bucket securely
 mountRclone() {
     unset AWS_CA_BUNDLE
@@ -107,10 +123,10 @@ mountRclone() {
         rclone --config "$RCLONE_CONF" \
           mount \
           --allow-other=false \
-          --uid "$(id -u rclone)" \
+          --uid "$(id -u "$USER")" \
           --gid "$(id -g rclone)" \
-          --file-perms 0660 \
-          --dir-perms 0770 \
+          --file-perms "$FILE_PERMS" \
+          --dir-perms "$DIR_PERMS"" \
           --buffer-size 1G \
           --bwlimit 200M \
           --cache-chunk-path "$CACHE_FOLDER/$MOUNT_REF-chunks" \
@@ -149,6 +165,7 @@ main() {
     setMountVariables
     ensureFolders
     validateRcloneConfig
+    setPermissions
     mountRclone
 }
 

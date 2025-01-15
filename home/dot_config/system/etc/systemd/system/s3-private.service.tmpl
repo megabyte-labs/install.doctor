@@ -5,7 +5,7 @@ After=network-online.target
 [Service]
 Type=simple
 User=rclone
-ExecStart=/usr/local/bin/rclone-mount "rclone" "rclone" "Private"
+ExecStart=/usr/local/bin/rclone-mount "volume" "root" "Private"
 ExecStop=/bin/fusermount -u "/mnt/Private"
 Restart=always
 RestartSec=10

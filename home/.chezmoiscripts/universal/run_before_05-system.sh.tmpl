@@ -820,12 +820,6 @@ setupLinuxHomebrewFonts() {
   fi
 }
 
-miscMacOs() {
-  if [ ! -d "$HOME/Library/PreferencePanes" ]; then
-    gum log -sl info 'Ensuring $HOME/Library/PreferencePanes exists as a folder' && mkdir -p "$HOME/Library/PreferencePanes"
-  fi
-}
-
 # TODO - Add install on macOS for macports
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   gum log -sl info 'The DEBUG or DEBUG_MODE environment variable is set so preliminary system tweaks will be run synchronously'
