@@ -104,11 +104,6 @@ EOT
   sudo chmod 750 /var/log/rclone
   sudo chown -Rf rclone:rclone /var/log/rclone
 
-  ### Add rclone-mount to /usr/local/bin
-  gum log -sl info 'Adding ~/.local/bin/rclone-mount to /usr/local/bin'
-  sudo cp -f "$HOME/.local/bin/rclone-mount" /usr/local/bin/rclone-mount
-  sudo chmod +x /usr/local/bin/rclone-mount
-
   ### Setup /etc/rcloneignore
   gum log -sl info 'Adding ~/.config/rclone/rcloneignore to /etc/rcloneignore'
   sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/rclone/rcloneignore" /etc/rcloneignore
