@@ -114,7 +114,7 @@ mountRclone() {
       --uid "$(id -u "$USER")" \
       --gid "$(id -g rclone)" \
       --file-perms "$FILE_PERMS" \
-      --dir-perms "$DIR_PERMS"" \
+      --dir-perms "$DIR_PERMS" \
       --buffer-size 1G \
       --bwlimit 200M \
       --cache-chunk-path "$CACHE_FOLDER/$MOUNT_REF-chunks" \
