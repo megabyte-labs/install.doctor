@@ -11,7 +11,6 @@
 set -euo pipefail
 
 LOG_FILE="/var/log/rclone-mount-script.log"
-DRY_RUN=false
 
 ### Functions
 
@@ -24,13 +23,8 @@ log() {
 validateInputs() {
     if [[ $# -lt 3 || $# -gt 4 ]]; then
         gum log -sl error "Invalid usage"
-        gum log -sl info "Usage: $0 <type> <user> <mount> [--dry-run]" >&2
+        gum log -sl info "Usage: $0 <type> <user> <mount>" >&2
         exit 1
-    fi
-
-    # Handle dry-run flag
-    if [[ "$4" == "--dry-run" ]]; then
-        DRY_RUN=true
     fi
 
     # Sanitize inputs
@@ -67,12 +61,9 @@ setMountVariables() {
 ensureFolders() {
     for FOLDER in "$CACHE_FOLDER" "$LOG_FOLDER" "$MOUNT_PATH"; do
         if [[ ! -d "$FOLDER" ]]; then
-            log "Creating folder: $FOLDER"
-            if [[ "$DRY_RUN" == false ]]; then
-                mkdir -p "$FOLDER"
-                chmod 700 "$FOLDER"
-                chown "$USER:rclone" "$FOLDER"
-            fi
+            mkdir -p "$FOLDER"
+            chmod 700 "$FOLDER"
+            chown "$USER:rclone" "$FOLDER"
         fi
     done
 }
@@ -86,10 +77,8 @@ validateRcloneConfig() {
     fi
 
     log "Securing RClone configuration file: $RCLONE_CONF"
-    if [[ "$DRY_RUN" == false ]]; then
-        chmod 600 "$RCLONE_CONF"
-        chown "$USER:rclone" "$RCLONE_CONF"
-    fi
+    chmod 600 "$RCLONE_CONF"
+    chown "$USER:rclone" "$RCLONE_CONF"
 
     RCLONE_IGNORE="$CONFIG_FOLDER/rcloneignore"
     if [[ ! -f "$RCLONE_IGNORE" && -f "/etc/rcloneignore" ]]; then
@@ -119,44 +108,42 @@ mountRclone() {
     export PATH="$PATH:/usr/local/bin:/usr/bin"
 
     log "Mounting RClone bucket: $MOUNT_REF to $MOUNT_PATH"
-    if [[ "$DRY_RUN" == false ]]; then
-        rclone --config "$RCLONE_CONF" \
-          mount \
-          --allow-other=false \
-          --uid "$(id -u "$USER")" \
-          --gid "$(id -g rclone)" \
-          --file-perms "$FILE_PERMS" \
-          --dir-perms "$DIR_PERMS"" \
-          --buffer-size 1G \
-          --bwlimit 200M \
-          --cache-chunk-path "$CACHE_FOLDER/$MOUNT_REF-chunks" \
-          --cache-db-path "$CACHE_FOLDER/$MOUNT_REF-db" \
-          --cache-dir "$CACHE_FOLDER/$MOUNT_REF-vfs" \
-          --cache-info-age 1m \
-          --cache-tmp-upload-path "$CACHE_FOLDER/$MOUNT_REF-upload" \
-          --cache-workers 8 \
-          --cache-writes \
-          --checkers 16 \
-          --dir-cache-time 30s \
-          --drive-use-trash=false \
-          --exclude-from "$RCLONE_IGNORE" \
-          --log-file "$LOG_FOLDER/$MOUNT_LOWERCASE.log" \
-          --log-level INFO \
-          --no-modtime \
-          --noapplexattr \
-          --poll-interval 15s \
-          --stats 0 \
-          --vfs-cache-max-age 1000h \
-          --vfs-cache-max-size 2G \
-          --vfs-cache-mode full \
-          --vfs-cache-poll-interval 15s \
-          --vfs-fast-fingerprint \
-          --vfs-read-ahead 128M \
-          --vfs-read-chunk-size 16M \
-          --vfs-read-chunk-size-limit 128M \
-          --volname "$MOUNT_REF" \
-          "$MOUNT_REF":"$MOUNT_LOWERCASE" "$MOUNT_PATH"
-    fi
+    rclone --config "$RCLONE_CONF" \
+      mount \
+      --allow-other=false \
+      --uid "$(id -u "$USER")" \
+      --gid "$(id -g rclone)" \
+      --file-perms "$FILE_PERMS" \
+      --dir-perms "$DIR_PERMS"" \
+      --buffer-size 1G \
+      --bwlimit 200M \
+      --cache-chunk-path "$CACHE_FOLDER/$MOUNT_REF-chunks" \
+      --cache-db-path "$CACHE_FOLDER/$MOUNT_REF-db" \
+      --cache-dir "$CACHE_FOLDER/$MOUNT_REF-vfs" \
+      --cache-info-age 1m \
+      --cache-tmp-upload-path "$CACHE_FOLDER/$MOUNT_REF-upload" \
+      --cache-workers 8 \
+      --cache-writes \
+      --checkers 16 \
+      --dir-cache-time 30s \
+      --drive-use-trash=false \
+      --exclude-from "$RCLONE_IGNORE" \
+      --log-file "$LOG_FOLDER/$MOUNT_LOWERCASE.log" \
+      --log-level INFO \
+      --no-modtime \
+      --noapplexattr \
+      --poll-interval 15s \
+      --stats 0 \
+      --vfs-cache-max-age 1000h \
+      --vfs-cache-max-size 2G \
+      --vfs-cache-mode full \
+      --vfs-cache-poll-interval 15s \
+      --vfs-fast-fingerprint \
+      --vfs-read-ahead 128M \
+      --vfs-read-chunk-size 16M \
+      --vfs-read-chunk-size-limit 128M \
+      --volname "$MOUNT_REF" \
+      "$MOUNT_REF":"$MOUNT_LOWERCASE" "$MOUNT_PATH"
 }
 
 # @description Main script execution
