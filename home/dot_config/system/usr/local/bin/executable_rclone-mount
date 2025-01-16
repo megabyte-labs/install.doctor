@@ -93,11 +93,11 @@ setPermissions() {
     DIR_PERMS="0700"
   elif [ "$TYPE" = 'volume' ]; then
     if [ "$MOUNT" = 'Private' ]; then
-      FILE_PERMS="0600"
-      DIR_PERMS="0700"
+      FILE_PERMS="0660"
+      DIR_PERMS="0770"
     elif [ "$MOUNT" = 'Public' ]; then
-      FILE_PERMS="0644"
-      DIR_PERMS="0755"
+      FILE_PERMS="0664"
+      DIR_PERMS="0775"
     fi
   fi
 }
@@ -113,8 +113,8 @@ mountRclone() {
       --allow-other=false \
       --uid "$(id -u "$USER")" \
       --gid "$(id -g rclone)" \
-      --file-perms "$FILE_PERMS" \
-      --dir-perms "$DIR_PERMS" \
+      --file-perms $FILE_PERMS \
+      --dir-perms $DIR_PERMS \
       --buffer-size 1G \
       --bwlimit 200M \
       --cache-chunk-path "$CACHE_FOLDER/$MOUNT_REF-chunks" \
