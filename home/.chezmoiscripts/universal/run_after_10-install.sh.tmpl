@@ -9,6 +9,10 @@
 
 # @description Copies system files over to the root file system
 systemFiles() {
+  if [ -f /etc/profile ]; then
+    gum log -sl info 'Ensuring /etc/profile is writable by root user'
+    sudo chmod +w /etc/profile
+  fi
   gum log -sl info 'Running sudo rsync -av --progress "${XDG_CONFIG_HOME:-$HOME/.config}/system/" /'
   sudo rsync -av --progress "${XDG_CONFIG_HOME:-$HOME/.config}/system/" /
   gum log -sl info 'Finished applying system configuration files'
