@@ -45,9 +45,9 @@ setMountVariables() {
 
     if [[ "$TYPE" == "user" ]]; then
         USER_FOLDER=$( [[ -d /Applications && -d /System ]] && echo "Users" || echo "home" )
-        CACHE_FOLDER="/var/cache/rclone/$MOUNT_REF"
+        CACHE_FOLDER="${XDG_CACHE_HOME:-$HOME/.cache}/rclone/$MOUNT_REF"
         CONFIG_FOLDER="/$USER_FOLDER/$USER/.config/rclone"
-        LOG_FOLDER="/var/log/rclone"
+        LOG_FOLDER="$HOME/.local/var/log/rclone"
         MOUNT_PATH="/$USER_FOLDER/$USER/Cloud/$MOUNT"
     else
         CACHE_FOLDER="/var/cache/rclone/$MOUNT_REF"
