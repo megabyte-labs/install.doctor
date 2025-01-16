@@ -40,9 +40,6 @@ export ADOTDIR="${XDG_DATA_HOME:-$HOME/.local/share}/antigen"
 ### Powerline
 [[ ! -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] || source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 
-### Fig
-[ ! -f "$HOME/.fig/shell/zshrc.pre.zsh" ] || source "$HOME/.fig/shell/zshrc.pre.zsh"
-
 # --------------------------------- SETTINGS ----------------------------------
 setopt AUTO_CD
 setopt BEEP
@@ -458,9 +455,6 @@ fi
 
 ### ntfy
 ! command -v ntfy > /dev/null || eval "$(ntfy shell-integration)"
-
-### Fig
-[ ! -f "$HOME/.fig/shell/zshrc.post.zsh" ] || source "$HOME/.fig/shell/zshrc.post.zsh"
 
 ### pay-respects
 ! command -v pay-respects > /dev/null || eval "$(pay-respects zsh --alias)"

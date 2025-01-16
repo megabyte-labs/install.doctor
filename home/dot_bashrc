@@ -66,9 +66,6 @@ if [ "$BASH_SUPPORT" = 'true' ] && [ -n "$BASH" ]; then
   # Source: https://github.com/mrzool/bash-sensible
   [ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/shell/sensible.bash" ] || source "${XDG_DATA_HOME:-$HOME/.local/share}/shell/sensible.bash"
 
-  ### Fig / LC_ALL
-  [ ! -f "$HOME/.fig/shell/bashrc.pre.bash" ] || source "$HOME/.fig/shell/bashrc.pre.bash"
-
   # Prompt (on bash only)
   if [[ "$(hostname)" != *'-minimal' ]]; then
     ### Styled Terminal
@@ -152,9 +149,6 @@ if [ "$BASH_SUPPORT" = 'true' ] && [ -n "$BASH" ]; then
 
   ### iTerm2
   [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/iterm/iterm2.bash" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/iterm/iterm2.bash"
-
-  ### Fig
-  [ ! -f "$HOME/.fig/shell/bashrc.post.bash" ] || . "$HOME/.fig/shell/bashrc.post.bash"
 
   ### mise
   ! command -v mise > /dev/null || eval "$(mise activate bash)"
