@@ -62,7 +62,7 @@ ensureFolders() {
     for FOLDER in "$CACHE_FOLDER" "$LOG_FOLDER" "$MOUNT_PATH"; do
         if [[ ! -d "$FOLDER" ]]; then
             mkdir -p "$FOLDER"
-            chmod 700 "$FOLDER"
+            chmod 755 "$FOLDER"
             chown "$USER:rclone" "$FOLDER"
         fi
     done
