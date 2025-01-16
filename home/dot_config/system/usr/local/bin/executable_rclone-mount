@@ -10,13 +10,11 @@
 
 set -euo pipefail
 
-LOG_FILE="/var/log/rclone-mount-script.log"
-
 ### Functions
 
 # @description Log messages with timestamps
 log() {
-    gum log -sl info "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
+    gum log -sl info "$(date '+%Y-%m-%d %H:%M:%S') - $1"
 }
 
 # @description Validate input arguments
