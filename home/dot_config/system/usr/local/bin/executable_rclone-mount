@@ -87,8 +87,8 @@ validateRcloneConfig() {
 # @description Handles conditional logic for setting file permissions
 setPermissions() {
   if [ "$TYPE" = 'user' ]; then
-    FILE_PERMS="0600"
-    DIR_PERMS="0700"
+    FILE_PERMS="0660"
+    DIR_PERMS="0770"
   elif [ "$TYPE" = 'volume' ]; then
     if [ "$MOUNT" = 'Private' ]; then
       FILE_PERMS="0660"
