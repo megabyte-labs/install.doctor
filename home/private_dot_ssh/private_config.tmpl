@@ -7,6 +7,7 @@ Host *
     ForwardX11 no
     ForwardX11Trusted no
     GSSAPIAuthentication no
+    Port 22
     PreferredAuthentications publickey
     Protocol 2
     ServerAliveInterval 60
@@ -33,6 +34,7 @@ Host gitlab.com
     UpdateHostKeys no
     IdentityFile ~/.ssh/id_rsa
 Host github.com
+    Hostname github.com
     UpdateHostKeys no
     IdentityFile ~/.ssh/id_rsa
 Host automation

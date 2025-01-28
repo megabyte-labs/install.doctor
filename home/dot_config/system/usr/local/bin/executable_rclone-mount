@@ -34,8 +34,9 @@ validateInputs() {
 # @description Define mount-related variables
 setMountVariables() {
     if [[ "$TYPE" == "user" ]]; then
-        MOUNT_REF="User-$USER"
-        MOUNT_LOWERCASE="user/$USER-$MOUNT"
+        MOUNT_REF="$USER-s3"
+        MOUNT_LOWERCASE="User"
+        VOL_NAME="User"
     else
         MOUNT_REF="$MOUNT"
         MOUNT_LOWERCASE="$(echo "$MOUNT" | tr "[:upper:]" "[:lower:]")"
@@ -46,6 +47,7 @@ setMountVariables() {
         CACHE_FOLDER="${XDG_CACHE_HOME:-$HOME/.cache}/rclone/$MOUNT_REF"
         CONFIG_FOLDER="/$USER_FOLDER/$USER/.config/rclone"
         LOG_FOLDER="$HOME/.local/var/log/rclone"
+        mkdir -p "$LOG_FOLDER/user"
         MOUNT_PATH="/$USER_FOLDER/$USER/Cloud/$MOUNT"
     else
         CACHE_FOLDER="/var/cache/rclone/$MOUNT_REF"
@@ -140,7 +142,7 @@ mountRclone() {
       --vfs-read-ahead 128M \
       --vfs-read-chunk-size 16M \
       --vfs-read-chunk-size-limit 128M \
-      --volname "$MOUNT_REF" \
+      --volname "${VOL_NAME:-$MOUNT_REF}" \
       "$MOUNT_REF":"$MOUNT_LOWERCASE" "$MOUNT_PATH"
 }
 
