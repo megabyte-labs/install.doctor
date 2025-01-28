@@ -84,7 +84,7 @@ handle_command_not_found() {
     # Check for the 'brew:darwin' key for macOS-specific packages
     if [[ "$OSTYPE" == "darwin"* ]]; then
       local BREW_DARWIN_KEY
-      BREW_DARWIN_KEY=$(yq e ".softwarePackages[] | select(._bin == \"$COMMAND\") | .brew:darwin" "$SOFTWARE_FILE")
+      BREW_DARWIN_KEY=$(yq e ".softwarePackages[] | select(._bin == \"$COMMAND\") | .\"brew:darwin\"" "$SOFTWARE_FILE")
       if [[ -n "$BREW_DARWIN_KEY" ]]; then
         # Install via Homebrew using the macOS-specific key
         if install_via_brew "$BREW_DARWIN_KEY" "$COMMAND"; then
