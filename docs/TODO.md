@@ -14,9 +14,7 @@ pw="$(osascript -e 'Tell application "System Events" to display dialog "Password
 https://github.com/Shougo/ddc.vim
 [text](https://instill.tech/chill/models)
 https://github.com/harababurel/gcsf
-https://github.com/awslabs/mountpoint-s3 / https://github.com/s3fs-fuse/s3fs-fuse
-https://github.com/superfly/litefs
-https://github.com/Qihoo360/QConf
+https://github.com/s3fs-fuse/s3fs-fuse
 https://github.com/ossec/ossec-hids
 [text](https://github.com/invoke-ai/InvokeAI)
 https://github.com/search?q=system&type=repositories&s=stars&o=desc&p=59
@@ -101,10 +99,6 @@ The following items are things we would like to include into the Install Doctor 
 - Revisit https://github.com/Disassembler0/Win10-Initial-Setup-Script for initial setup of Windows
 - Revisit Resilio - seems like they have tools useful for synchronizing VMs
 - Consider switching license to [Polyform License Example](https://github.com/dosyago/DiskerNet/blob/fun/LICENSE.md)
-- Look into tile managers
-- https://github.com/joelbarmettlerUZH/auto-tinder
-- https://github.com/hfreire/get-me-a-date
-- Keep eye on fig.io for release to Linux and new AI features
 - Monitor https://moonrepo.dev/moon as possible mono-repo manager
 - Determine whether or not https://webinstall.dev/vim-gui/ will add value to the VIM experience
 - Wait for packages to be available for GitHub Actions https://github.com/actions/runner
