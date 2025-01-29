@@ -282,9 +282,11 @@ configureNetworkManagerVPNProfiles() {
           WG_FILENAME="$(basename "$WG_FILE")"
           cat "$WG_FILE" | chezmoi decrypt > "$TMP_CONF/$WG_FILENAME"
           WG_FILE="$TMP_CONF/$WG_FILENAME"
+          gum log -sl info "Importing wireguard configuration"
           nmcli connection import type wireguard file "$WG_FILE"
 
           ### Set permissions and reload NetworkManager
+          gum log -sl info "Applying permissions to file"
           sudo chmod 600 "/etc/NetworkManager/system-connections/$WG_FILENAME"
           sudo chown root:root "/etc/NetworkManager/system-connections/$WG_FILENAME"
           sudo systemctl reload NetworkManager

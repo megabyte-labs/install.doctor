@@ -298,7 +298,7 @@ async function installPackages(pkgInstructions) {
                 promises.push(forEachSeries(combined[key].flatMap(x => x.installList.flatMap(i => $`${key} 127.0.0.1 -v${process.env.DEBUG && 'vv'} -e '{ ansible_connection: "local", ansible_become_user: "root", ansible_user: "${process.env.USER}", ansible_family: "${osId.charAt(0).toUpperCase() + osId.slice(1)}", install_homebrew: False }' -m include_role -a name=${i}`))))
                 break
             case 'apk':
-                promises.push($`sudo ${key} add ${combined[key].flatMap(x => x.installList).split(' ')}`)
+                promises.push($`sudo ${key} add ${combined[key].flatMap(x => x.installList).join(' ')}`)
                 break
             case 'appimage':
                 promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => {
@@ -312,7 +312,7 @@ async function installPackages(pkgInstructions) {
                 })))
                 break
             case 'apt':
-                promises.push($`DEBIAN_FRONTEND=noninteractive sudo apt-get -o DPkg::Options::=--force-confdef install -y ${combined[key].flatMap(x => x.installList).split(' ')}`)
+                promises.push($`DEBIAN_FRONTEND=noninteractive sudo apt-get -o DPkg::Options::=--force-confdef install -y ${combined[key].flatMap(x => x.installList).join(' ')}`)
                 break
             case 'basher':
             case 'baulk':
@@ -493,8 +493,6 @@ async function main() {
         zap: lists[11]
     }
     log(`Acquiring installation keys`)
-    console.log('pkgs')
-    console.log(pkgs)
     const installKeys = Object.keys(pkgs)
         .filter(i => expandDeps(argv._).includes(i))
     log(`Constructing installation data`)
