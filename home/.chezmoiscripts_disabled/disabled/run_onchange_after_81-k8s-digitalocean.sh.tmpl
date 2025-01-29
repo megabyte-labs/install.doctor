@@ -12,7 +12,7 @@
 {{ includeTemplate "universal/logg" }}
 
 ### Ensure `DIGITALOCEAN_ACCESS_TOKEN` is defined (used for headlessly connecting to the k8s cluster)
-export DIGITALOCEAN_ACCESS_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "DIGITALOCEAN_ACCESS_TOKEN")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "DIGITALOCEAN_ACCESS_TOKEN") | decrypt | trim }}{{ else }}{{ env "DIGITALOCEAN_ACCESS_TOKEN" }}{{ end }}"
+export DIGITALOCEAN_ACCESS_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "DIGITALOCEAN_ACCESS_TOKEN")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/DIGITALOCEAN_ACCESS_TOKEN") | decrypt | trim }}{{ else }}{{ env "DIGITALOCEAN_ACCESS_TOKEN" }}{{ end }}"
 
 if [ -n "$DIGITALOCEAN_ACCESS_TOKEN" ] && [ -n '{{ .user.digitalOceanClusterId }}' ]; then
     ### Ensure DigitalOcean CLI is instaled

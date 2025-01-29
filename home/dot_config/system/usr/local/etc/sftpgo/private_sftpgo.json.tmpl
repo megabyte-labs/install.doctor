@@ -408,7 +408,7 @@
     "port": {{ .host.smtp.port }},
     "from": "{{ .host.smtp.from }}",
     "user": "{{ .host.smtp.user }}",
-    "password": "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "SENDGRID_API_KEY")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "SENDGRID_API_KEY") | decrypt | trim }}{{ else }}{{ env "SENDGRID_API_KEY" }}{{ end }}",
+    "password": "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "SENDGRID_API_KEY")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/SENDGRID_API_KEY") | decrypt | trim }}{{ else }}{{ env "SENDGRID_API_KEY" }}{{ end }}",
     "auth_type": 0,
     "encryption": 1,
     "domain": "",
@@ -424,9 +424,9 @@
       "args": [
         "serve",
         "--ldap-url=ldap://ldap.jumpcloud.com:389",
-        "--ldap-base-dn=ou=Users,o={{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_ORG_ID")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_ORG_ID") | decrypt | trim }}{{ else }}{{ env "JUMPCLOUD_ORG_ID" }}{{ end }},dc=jumpcloud,dc=com",
-        "--ldap-bind-dn=uid={{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_BINDDN_USER")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_BINDDN_USER") | decrypt | trim }}{{ else }}{{ env "JUMPCLOUD_BINDDN_USER" }}{{ end }},ou=Users,o={{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_ORG_ID")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_ORG_ID") | decrypt | trim }}{{ else }}{{ env "JUMPCLOUD_ORG_ID" }}{{ end }},dc=jumpcloud,dc=com",
-        "--ldap-password={{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_BINDDN_PASSWORD")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_BINDDN_PASSWORD") | decrypt | trim }}{{ else }}{{ env "JUMPCLOUD_BINDDN_PASSWORD" }}{{ end }}",
+        "--ldap-base-dn=ou=Users,o={{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_ORG_ID")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/JUMPCLOUD_ORG_ID") | decrypt | trim }}{{ else }}{{ env "JUMPCLOUD_ORG_ID" }}{{ end }},dc=jumpcloud,dc=com",
+        "--ldap-bind-dn=uid={{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_BINDDN_USER")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/JUMPCLOUD_BINDDN_USER") | decrypt | trim }}{{ else }}{{ env "JUMPCLOUD_BINDDN_USER" }}{{ end }},ou=Users,o={{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_ORG_ID")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/JUMPCLOUD_ORG_ID") | decrypt | trim }}{{ else }}{{ env "JUMPCLOUD_ORG_ID" }}{{ end }},dc=jumpcloud,dc=com",
+        "--ldap-password={{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_BINDDN_PASSWORD")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/JUMPCLOUD_BINDDN_PASSWORD") | decrypt | trim }}{{ else }}{{ env "JUMPCLOUD_BINDDN_PASSWORD" }}{{ end }}",
         "--ldap-search-query=(objectClass=inetOrgPerson)"
       ],
       "auto_mtls": true

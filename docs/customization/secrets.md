@@ -441,7 +441,7 @@ If you want to expand the capabilities of your fork beyond what we have provided
 Ideally, whenever possible, the user should be able to pass in a variable as either an environment variable or as a secret included in the fork. In the `~/.config/shell/private.sh` file which houses private keys for cloud APIs that the user may want to source by running `. "~/.config/shell/private.sh"`, the DockerHub token is defined with:
 
 ```shell
-export DOCKERHUB_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "key-DOCKERHUB_TOKEN")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "key-DOCKERHUB_TOKEN") }}{{ else }}{{ env "DOCKERHUB_TOKEN" }}{{ end }}"
+export DOCKERHUB_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "key-DOCKERHUB_TOKEN")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/key-DOCKERHUB_TOKEN") }}{{ else }}{{ env "DOCKERHUB_TOKEN" }}{{ end }}"
 export DOCKERHUB_REGISTRY_PASSWORD="$DOCKERHUB_TOKEN"
 ```
 
@@ -455,7 +455,7 @@ For encrypted files, you should mark the file as a templated file by ending the 
 
 ```shell
 {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "ssh-id-rsa")) -}}
-{{   includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "ssh-id-rsa") | decrypt -}}
+{{   includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/ssh-id-rsa") | decrypt -}}
 {{ end -}}
 ```
 

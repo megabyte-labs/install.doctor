@@ -282,7 +282,7 @@
   "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
   "vsicons.dontShowNewVersionMessage": true,
   "vscode-kubernetes.helm-path": "/usr/local/bin/helm",
-  "wakatime.apiKey": "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "WAKATIME_API_KEY")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "WAKATIME_API_KEY") | decrypt | trim }}{{ else }}{{ env "WAKATIME_API_KEY" }}{{ end }}",
+  "wakatime.apiKey": "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "WAKATIME_API_KEY")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/WAKATIME_API_KEY") | decrypt | trim }}{{ else }}{{ env "WAKATIME_API_KEY" }}{{ end }}",
   "vscord.status.buttons.button1.active.enabled": true,
   "wallaby.codeLensFeature.runTest": true,
   "wallaby.compactMessageOutput": true,

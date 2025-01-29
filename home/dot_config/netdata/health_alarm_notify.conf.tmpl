@@ -374,8 +374,8 @@ SEND_PUSHBULLET="NO"
 # to that address instead.
 
 # Without an access token, netdata cannot send pushbullet notifications.
-PUSHBULLET_ACCESS_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "PUSHBULLET_ACCESS_TOKEN")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "PUSHBULLET_ACCESS_TOKEN") | decrypt | trim -}}{{ else }}{{- env "PUSHBULLET_ACCESS_TOKEN" -}}{{ end }}"
-DEFAULT_RECIPIENT_PUSHBULLET="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "PUSHBULLET_EMAIL")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "PUSHBULLET_EMAIL") | decrypt | trim -}}{{ else }}{{- env "PUSHBULLET_EMAIL" -}}{{ end }}"
+PUSHBULLET_ACCESS_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "PUSHBULLET_ACCESS_TOKEN")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/PUSHBULLET_ACCESS_TOKEN") | decrypt | trim -}}{{ else }}{{- env "PUSHBULLET_ACCESS_TOKEN" -}}{{ end }}"
+DEFAULT_RECIPIENT_PUSHBULLET="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "PUSHBULLET_EMAIL")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/PUSHBULLET_EMAIL") | decrypt | trim -}}{{ else }}{{- env "PUSHBULLET_EMAIL" -}}{{ end }}"
 
 # Device iden of the sending device. Optional.
 PUSHBULLET_SOURCE_DEVICE=""
@@ -401,10 +401,10 @@ SEND_TWILIO="NO"
 # The trial account is only allowed to use the number specified when set up.
 
 # Without an account sid and token, netdata cannot send Twilio text messages.
-TWILIO_ACCOUNT_SID="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TWILIO_ACCOUNT_SID")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "TWILIO_ACCOUNT_SID") | decrypt | trim -}}{{ else }}{{- env "TWILIO_ACCOUNT_SID" -}}{{ end }}"
-TWILIO_ACCOUNT_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TWILIO_AUTH_TOKEN")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "TWILIO_AUTH_TOKEN") | decrypt | trim -}}{{ else }}{{- env "TWILIO_AUTH_TOKEN" -}}{{ end }}"
-TWILIO_NUMBER="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TWILIO_FROM_NUMBER")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "TWILIO_FROM_NUMBER") | decrypt | trim -}}{{ else }}{{- env "TWILIO_FROM_NUMBER" -}}{{ end }}"
-DEFAULT_RECIPIENT_TWILIO="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "CELL_PHONE_NUMBER")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "CELL_PHONE_NUMBER") | decrypt | trim -}}{{ else }}{{- env "CELL_PHONE_NUMBER" -}}{{ end }}"
+TWILIO_ACCOUNT_SID="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TWILIO_ACCOUNT_SID")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/TWILIO_ACCOUNT_SID") | decrypt | trim -}}{{ else }}{{- env "TWILIO_ACCOUNT_SID" -}}{{ end }}"
+TWILIO_ACCOUNT_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TWILIO_AUTH_TOKEN")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/TWILIO_AUTH_TOKEN") | decrypt | trim -}}{{ else }}{{- env "TWILIO_AUTH_TOKEN" -}}{{ end }}"
+TWILIO_NUMBER="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TWILIO_FROM_NUMBER")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/TWILIO_FROM_NUMBER") | decrypt | trim -}}{{ else }}{{- env "TWILIO_FROM_NUMBER" -}}{{ end }}"
+DEFAULT_RECIPIENT_TWILIO="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "CELL_PHONE_NUMBER")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/CELL_PHONE_NUMBER") | decrypt | trim -}}{{ else }}{{- env "CELL_PHONE_NUMBER" -}}{{ end }}"
 
 
 #------------------------------------------------------------------------------
@@ -465,7 +465,7 @@ SEND_TELEGRAM="NO"
 
 # Contact the bot @BotFather to create a new bot and receive a bot token.
 # Without it, netdata cannot send telegram messages.
-TELEGRAM_BOT_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TELEGRAM_BOT_TOKEN")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "TELEGRAM_BOT_TOKEN") | decrypt | trim -}}{{ else }}{{- env "TELEGRAM_BOT_TOKEN" -}}{{ end }}"
+TELEGRAM_BOT_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TELEGRAM_BOT_TOKEN")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/TELEGRAM_BOT_TOKEN") | decrypt | trim -}}{{ else }}{{- env "TELEGRAM_BOT_TOKEN" -}}{{ end }}"
 
 # If an API limit error is returned on sending a message, Netdata will retry this number of times before giving up.
 # Setting the number to 0 makes Netdata do no retries (which is the default).
@@ -477,7 +477,7 @@ TELEGRAM_RETRIES_ON_LIMIT="0"
 # bot that will be sending notifications.
 # If a role's recipients are not configured, a message will be sent to
 # this chat id (empty = do not send a notification for unconfigured roles):
-DEFAULT_RECIPIENT_TELEGRAM="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TELEGRAM_RECIPIENT_ID")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "TELEGRAM_RECIPIENT_ID") | decrypt | trim -}}{{ else }}{{- env "TELEGRAM_RECIPIENT_ID" -}}{{ end }}"
+DEFAULT_RECIPIENT_TELEGRAM="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TELEGRAM_RECIPIENT_ID")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/TELEGRAM_RECIPIENT_ID") | decrypt | trim -}}{{ else }}{{- env "TELEGRAM_RECIPIENT_ID" -}}{{ end }}"
 
 
 #------------------------------------------------------------------------------
@@ -497,7 +497,7 @@ SEND_SLACK="NO"
 # Do not use the instructions in https://api.slack.com/incoming-webhooks#enable_webhooks, as those webhooks work only for a single channel.
 # You need only one for all your netdata servers (or you can have one for each of your netdata).
 # Without the app and a webhook, netdata cannot send slack notifications.
-SLACK_WEBHOOK_URL="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "SLACK_WEBHOOK_URL")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "SLACK_WEBHOOK_URL") | decrypt | trim -}}{{ else }}{{- env "SLACK_WEBHOOK_URL" -}}{{ end }}"
+SLACK_WEBHOOK_URL="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "SLACK_WEBHOOK_URL")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/SLACK_WEBHOOK_URL") | decrypt | trim -}}{{ else }}{{- env "SLACK_WEBHOOK_URL" -}}{{ end }}"
 
 # if a role's recipients are not configured, a notification will be send to:
 # - A slack channel (syntax: '#channel' or 'channel')
