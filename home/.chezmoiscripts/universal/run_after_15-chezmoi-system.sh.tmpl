@@ -18,11 +18,19 @@ systemFiles() {
 clamAVPermissions() {
   sudo mkdir -p /etc/clamav
   sudo find /etc/clamav -type f -exec chmod 600 {} \;
-  sudo find /etc/clamav -type f -exec chown clamav:wheel {} \;
+  if [ -d /Applications ] && [ -d /System ]; then
+    sudo find /etc/clamav -type f -exec chown clamav:wheel {} \;
+  else
+    sudo find /etc/clamav -type f -exec chown clamav:root {} \;
+  fi
   sudo chmod u+x /etc/clamav/clamav-email
   sudo mkdir -p /var/log/clamav
   sudo find /var/log/clamav -type f -exec chmod 600 {} \;
-  sudo find /var/log/clamav -type f -exec chown clamav:wheel {} \;
+  if [ -d /Applications ] && [ -d /System ]; then
+    sudo find /var/log/clamav -type f -exec chown clamav:wheel {} \;
+  else
+    sudo find /var/log/clamav -type f -exec chown clamav:root {} \;
+  fi
 }
 
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
