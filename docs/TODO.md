@@ -6,15 +6,8 @@ https://github.com/seaweedfs/seaweedfs
 [text](https://github.com/gitbito/CLI)
 https://github.com/awslabs/mountpoint-s3
 https://gist.github.com/chadmayfield/ada07e4e506d7acd577a665541a70c9b
-* Move age decryption higher
 * Add ~/.local/share/sounds was symlink to {{ .host.home }}/.local/share/betelgeuse/share/sounds
-xattr -d com.apple.quarantine rclone
-Create issue about setting up completions - https://github.com/rsteube/lazycomplete
-pw="$(osascript -e 'Tell application "System Events" to display dialog "Password:" default answer "" with hidden answer' -e 'text returned of result' 2>/dev/null)" && echo "$pw"
-https://github.com/Shougo/ddc.vim
 [text](https://instill.tech/chill/models)
-https://github.com/harababurel/gcsf
-https://github.com/s3fs-fuse/s3fs-fuse
 https://github.com/ossec/ossec-hids
 [text](https://github.com/invoke-ai/InvokeAI)
 https://github.com/search?q=system&type=repositories&s=stars&o=desc&p=59
@@ -41,23 +34,19 @@ adobe-creative-cloud curl: (18) HTTP/2 stream 1 was reset
 - [`git-credential-manager` for WSL](https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/wsl.md)
 - Configure Navi to automatically download and use the best cheat repositories
 - Google Drive index on Cloudflare https://github.com/menukaonline/goindex-extended
-- Go through https://github.com/jaywcjlove/awesome-mac
 - https://codesandbox.io/ https://github.com/firecracker-microvm/firecracker
 - (https://www.kolide.com/features/checks/mac-firewall)
 - Create IP set for CloudFlare [Title](https://firewalld.org/documentation/man-pages/firewalld.ipset.html)
-- https://chainner.app/
 - https://github.com/kyrolabs/awesome-langchain
 - Create seed for Lulu
 - https://github.com/essandess/macOS-Fortress
 - https://wakatime.com/plugins
 - https://github.com/containers/toolbox consider for p10k.zsh file
 - Figure out where Vector service fits in
-- Figure out if Squid can be used to improve web surfing speed
 - Consider leveraging a CLI builder powered by structured data like [https://github.com/mumoshu/variant](Variant) and / or [https://github.com/mumoshu/variant2](Variant2)
 - Consider implementing a tool like [https://github.com/marshyski/quick-secure](QuickSecure) that will ensure proper permissions on boot
 - https://www.haskell.org/ghcup/install/#how-to-install
-- https://github.com/psychic-api/psychic
-
+- https://github.com/browserless/browserless
 - Consider integrating [LocalAI](https://github.com/go-skynet/LocalAI) which can be used in combination with mods to generate ChatGPT responses locally
 - Revisit Resilio - seems like they have tools useful for synchronizing VMs
 - Consider switching license to [Polyform License Example](https://github.com/dosyago/DiskerNet/blob/fun/LICENSE.md)
@@ -69,11 +58,6 @@ adobe-creative-cloud curl: (18) HTTP/2 stream 1 was reset
 The following items are Docker containers that we may want to include as default containers deployed in our system.
 
 - https://github.com/Infisical/infisical
-- https://github.com/highlight/highlight
-- https://github.com/jitsi/jitsi-videobridge
-- https://github.com/gitlabhq/gitlabhq
-- https://github.com/opf/openproject
-- https://github.com/mastodon/mastodon
 - https://github.com/formbricks/formbricks
 - https://github.com/chatwoot/chatwoot- https://docs.rundeck.com/docs/administration/install/installing-rundeck.html - Rundeck (Self-Service Desk)
 - https://github.com/activepieces/activepieces - SaaS Automations
