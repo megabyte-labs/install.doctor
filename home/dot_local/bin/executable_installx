@@ -519,6 +519,7 @@ async function main() {
   log(`Constructing installation data`)
   const installData = pkgMap(customArgv.all ? Object.keys(pkgs) : installKeys)
   log(`Filtering install instructions`)
+  process.env.DEBUG && console.log('Headless session detected?', isHeadless)
   const installInstructions = installData
     .filter(x => !!x.installList)
     .map(x => {
