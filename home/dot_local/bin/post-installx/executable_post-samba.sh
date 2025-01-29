@@ -72,13 +72,11 @@ if command -v smbd > /dev/null; then
   gum log -sl info "Ensuring $PRIVATE_SHARE is created"
   sudo mkdir -p "$PRIVATE_SHARE"
   sudo chmod 770 "$PRIVATE_SHARE"
-  sudo chown -Rf rclone:rclone "$PRIVATE_SHARE"
 
   ### Public share
   gum log -sl info "Ensuring $PUBLIC_SHARE is created"
   sudo mkdir -p "$PUBLIC_SHARE"
   sudo chmod 775 "$PUBLIC_SHARE"
-  sudo chown -Rf rclone:rclone "$PUBLIC_SHARE"
 
   ### User share
   gum log -sl info "Ensuring $HOME/Shared is created"

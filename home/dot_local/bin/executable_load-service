@@ -35,12 +35,12 @@ if (!customArgv.exists && (!customArgv._.length || customArgv._.length > 1)) {
 async function reloadDarwinService(serviceName, servicePath, systemServicePath) {
   try {
     if (serviceName === 'rclone.user') {
-      runSyncCommand(`if launchctl list | grep '${serviceName}' > /dev/null; then launchctl unload "${servicePath}"; fi && sudo launchctl load -w "${servicePath}"`)
+      runSyncCommand(`if launchctl list | grep '${serviceName}' > /dev/null; then launchctl unload "${servicePath}"; fi && launchctl load -w "${servicePath}"`)
     } else {
       runSyncCommand(`sudo cp -f "${servicePath}" "${systemServicePath}" && if sudo launchctl list | grep '${serviceName}' > /dev/null; then sudo launchctl unload "${systemServicePath}"; fi && sudo launchctl load -w "${systemServicePath}"`)
     }
   } catch (e) {
-    console.error(`Failed to copy service file and reload with launchctl`, e)
+    console.error(`Failed to reload launchctl service`, e)
     process.exit(1)
   }
 }
