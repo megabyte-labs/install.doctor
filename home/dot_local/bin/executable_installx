@@ -458,6 +458,7 @@ function pkgMap(pkgDefs) {
 
 async function checkIfHeadless() {
   try {
+    process.env.DEBUG && console.log('Checking if session is headless')
     runSilentCommand(`if [ -d /System ] && [ -d /Applications ]; then system_profiler SPDisplaysDataType > /dev/null; else xrandr --listmonitors > /dev/null; fi`)
     return true
   } catch (e) {
@@ -548,6 +549,7 @@ async function main() {
     })
     .filter(x => {
       console.log(x)
+
       // Only install casks or flatpaks and items with `_preload: true` in the `software.yml` file
       if (customArgv.lazy) {
         console.log(x)
