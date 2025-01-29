@@ -493,11 +493,15 @@ async function main() {
         zap: lists[11]
     }
     log(`Acquiring installation keys`)
+    console.log('pkgs')
+    console.log(pkgs)
     const installKeys = Object.keys(pkgs)
         .filter(i => expandDeps(argv._).includes(i))
     log(`Constructing installation data`)
     const installData = pkgMap(customArgv.all ? Object.keys(pkgs) : installKeys)
     log(`Filtering install instructions`)
+    console.log('installData')
+    console.log(installData)
     const installInstructions = installData
         .map(x => {
             return {

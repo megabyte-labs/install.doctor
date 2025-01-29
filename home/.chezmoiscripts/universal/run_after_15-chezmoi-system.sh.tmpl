@@ -16,9 +16,11 @@ systemFiles() {
 # @description
 #     Applies appropriate and minimal permissions to clamav folders
 clamAVPermissions() {
+  sudo mkdir -p /etc/clamav
   sudo find /etc/clamav -type f -exec chmod 600 {} \;
   sudo find /etc/clamav -type f -exec chown clamav:wheel {} \;
   sudo chmod u+x /etc/clamav/clamav-email
+  sudo mkdir -p /var/log/clamav
   sudo find /var/log/clamav -type f -exec chmod 600 {} \;
   sudo find /var/log/clamav -type f -exec chown clamav:wheel {} \;
 }
