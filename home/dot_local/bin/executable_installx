@@ -323,7 +323,7 @@ async function installPackages(pkgInstructions) {
         })))
         break
       case 'apt':
-        promises.push($`DEBIAN_FRONTEND=noninteractive sudo apt-get -o DPkg::Options::=--force-confdef install -y ${combined[key].flatMap(x => x.installList).join(' ')}`)
+        promises.push($`DEBIAN_FRONTEND=noninteractive sudo apt-get -o DPkg::Options::=--force-confdef install -y ` + combined[key].flatMap(x => x.installList).join(' '))
         break
       case 'basher':
       case 'baulk':
@@ -365,7 +365,27 @@ async function installPackages(pkgInstructions) {
       case 'pkgin':
       case 'port':
       case 'snap': // TODO - snap testing.. combine with snap-classic and add appropriate logic
-        promises.push($`sudo ${key === 'pkg-freebsd' || key === 'pkg-termux' ? 'pkg' : key} install ${combined[key].flatMap(x => x.installList).join(' ')}`)
+        const command = `sudo ${key === 'pkg-freebsd' || key === 'pkg-termux' ? 'pkg' : key} install ${combined[key].flatMap(x => x.installList).join(' ')}`
+        const items = command.split(/;| /)
+        let classicInstall = []
+        let regularInstall = []
+        // Temporary variable to track if the next item is --classic
+        let nextIsClassic = false
+        items.forEach(item => {
+          if (item === '--classic') {
+            nextIsClassic = true
+          } else if (nextIsClassic) {
+            classicInstall.push(item)
+            nextIsClassic = false
+          } else if (item.startsWith("--")) {
+            // Skip flags other than --classic
+            return
+          } else {
+            regularInstall.push(item)
+          }
+        })
+        promises.push($`sudo snap install ${classicInstall.join(' ')} --classic`)
+        promises.push($`sudo snap install ${regularInstall.join(' ')}`)
         break
       case 'flatpak':
         promises.push(forEachSeries(combined[key].flatMap(x => x.installList.flatMap(i => $`sudo ${key} install -y flathub ${i}`))))
@@ -399,7 +419,6 @@ async function installPackages(pkgInstructions) {
     }
   }
   log(`Performing ${promises.length} installations`)
-  process.env.DEBUG && console.log('Queued installs:', promises)
   const installs = await Promise.allSettled(promises)
   log(`All of the installations have finished`)
   process.env.DEBUG && console.log('Completed installs:', installs)
