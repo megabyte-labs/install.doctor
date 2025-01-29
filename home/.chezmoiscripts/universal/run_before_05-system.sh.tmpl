@@ -485,9 +485,9 @@ installDocker() {
 #     * [JumpCloud device management requirements](https://support.jumpcloud.com/support/s/article/jumpcloud-agent-compatibility-system-requirements-and-impacts1)
 installJumpCloud() {
   if [ "{{ .host.distro.family }}" = "linux" ]; then
-    if [ "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_CONNECT_KEY")) }}{{- includeTemplate "secrets/JUMPCLOUD_CONNECT_KEY" | decrypt | trim -}}{{ else }}{{- env "JUMPCLOUD_CONNECT_KEY" -}}{{ end }}" != "" ]; then
+    if [ "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_CONNECT_KEY")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_CONNECT_KEY") | decrypt | trim -}}{{ else }}{{- env "JUMPCLOUD_CONNECT_KEY" -}}{{ end }}" != "" ]; then
       gum log -sl info 'Enrolling device with JumpCloud by running the kickstart script'
-      curl --tlsv1.2 --silent --show-error --header 'x-connect-key: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_CONNECT_KEY")) }}{{- includeTemplate "secrets/JUMPCLOUD_CONNECT_KEY" | decrypt | trim -}}{{ else }}{{- env "JUMPCLOUD_CONNECT_KEY" -}}{{ end }}' https://kickstart.jumpcloud.com/Kickstart | sudo bash
+      curl --tlsv1.2 --silent --show-error --header 'x-connect-key: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_CONNECT_KEY")) }}{{- includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "JUMPCLOUD_CONNECT_KEY") | decrypt | trim -}}{{ else }}{{- env "JUMPCLOUD_CONNECT_KEY" -}}{{ end }}' https://kickstart.jumpcloud.com/Kickstart | sudo bash
     fi
   fi
 }

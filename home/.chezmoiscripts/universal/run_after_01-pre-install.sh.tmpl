@@ -212,12 +212,12 @@ configureNetworkManagerVPNProfiles() {
   if [ "{{ .host.distro.family }}" = "linux" ]; then
     {{ $ovpnUsername := (env "OVPN_USERNAME") }}
     {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "OVPN_USERNAME")) }}
-    {{   $ovpnUsername := (includeTemplate "secrets/OVPN_USERNAME" | decrypt | trim) }}
+    {{   $ovpnUsername := (includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "OVPN_USERNAME") | decrypt | trim) }}
     {{ end }}
 
     {{ $ovpnPassword := (env "OVPN_PASSWORD") }}
     {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "OVPN_PASSWORD")) }}
-    {{   $ovpnPassword := (includeTemplate "secrets/OVPN_PASSWORD" | decrypt | trim) }}
+    {{   $ovpnPassword := (includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "OVPN_PASSWORD") | decrypt | trim) }}
     {{ end }}
 
     RESTART_NM=false

@@ -15,7 +15,7 @@ smtp:
   host: {{ .host.smtp.host }}
   port: {{ .host.smtp.port }}
   username: {{ .host.smtp.user }}
-  password: "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "SENDGRID_API_KEY")) }}{{ includeTemplate "secrets/SENDGRID_API_KEY" | decrypt | trim }}{{ else }}{{ env "SENDGRID_API_KEY" }}{{ end }}"
+  password: "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "SENDGRID_API_KEY")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "SENDGRID_API_KEY") | decrypt | trim }}{{ else }}{{ env "SENDGRID_API_KEY" }}{{ end }}"
 
 ### Error mail configuration
 errorMail:
