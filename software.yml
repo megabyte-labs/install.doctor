@@ -277,6 +277,7 @@ softwarePackages:
   airtame:
     _app: Airtame.app
     _bin: airtame
+    _deprecated: Requires fancy hardware
     _github: false
     _name: Airtame
     cask: airtame
@@ -1746,6 +1747,7 @@ softwarePackages:
   codeedit:
     _app: CodeEdit.app
     _bin: codeedit
+    _deprecated: Deprecated in favor of AI-augmented editors
     _desc: "CodeEdit is a GitHub repository for an application called CodeEdit. It likely contains the source code, documentation, and possibly other resources related to the CodeEdit application. Without further  \ndetails or access to the repository, it's difficult to provide a more in-depth description. If you need specific information or details about the project, you may want to explore the repository directly\non GitHub.                                                                                                                                                                                                "
     _github: https://github.com/CodeEditApp/CodeEdit
     _name: CodeEdit
@@ -1879,6 +1881,7 @@ softwarePackages:
   copilot-for-xcode:
     _app: Copilot for Xcode.app
     _bin: copilot-for-xcode
+    _deprecated: Deprecated since not using Copilot with Xcode
     _desc: The missing GitHub Copilot, Codeium and ChatGPT Xcode Source Editor Extension
     _github: https://github.com/intitni/CopilotForXcode
     _name: CoPilot for Xcode
@@ -2179,6 +2182,7 @@ softwarePackages:
   devtoys:
     _app: DevToys.app
     _bin: devtoys
+    _deprecated: Easily replaced by task-specific web-apps
     _desc: "DevToysMac is a collection of development tools for macOS created by ObuchiYuki. It includes various utilities and scripts that can aid developers in their daily tasks. Some of the tools included are   \nfor managing Xcode projects, generating Swift code, working with Git repositories, and more. It aims to streamline development workflows and improve productivity on the macOS platform. Users can explore\nthe repository on GitHub to find detailed information about each tool and how to use them effectively.                                                                                                    "
     _github: https://github.com/ObuchiYuki/DevToysMac
     _name: "DevToysMac                                                                                                                                                                                                "
@@ -2633,7 +2637,6 @@ softwarePackages:
     _short: "EJS is a simple templating language that lets you generate HTML markup with plain JavaScript.                                                                                                             "
     npm: ejs
   electron:
-    _app: Electron.app
     _bin: electron
     _desc: "[Electron](https://www.electronjs.org/) allows you to build cross-platform desktop apps with JavaScript, HTML, and CSS"
     _docs: https://www.electronjs.org/docs/latest/
@@ -2641,12 +2644,12 @@ softwarePackages:
     _home: https://www.electronjs.org/
     _name: Electron
     _short: "Electron is a framework that allows you to build cross-platform desktop applications using web technologies like HTML, CSS, and JavaScript.                                                               "
-    cask: electron
     choco: electron
     npm: electron
   element:
     _app: Element.app
     _bin: element
+    _deprecated: Deprecated in favor of web-app
     _desc: "Element Web is an open-source web-based messaging application developed by Vector.im. It is built using the Matrix open network for secure, decentralized communication. Element Web allows users to chat,\nmake voice and video calls, share files, and collaborate in rooms. It supports end-to-end encryption for secure conversations. The platform is highly customizable and extensible, making it suitable for \npersonal and business use. It is actively maintained and updated by the developer community on GitHub.                                                                                                    "
     _github: https://github.com/vector-im/element-web
     _name: Element
@@ -3262,6 +3265,7 @@ softwarePackages:
   flipper:
     _app: Flipper.app
     _bin: flipper
+    _deprecated: Deprecated in favor of Cordova development / on-demand installation
     _desc: A desktop debugging platform for mobile developers.
     _docs: https://fbflipper.com/docs/getting-started/
     _github: https://github.com/facebook/flipper
@@ -4490,6 +4494,7 @@ softwarePackages:
   hammerspoon:
     _app: Hammerspoon.app
     _bin: hs
+    _deprecated: Uses LUA as scripting language
     _desc: Staggeringly powerful macOS desktop automation with Lua
     _docs: https://www.hammerspoon.org/go/
     _github: https://github.com/Hammerspoon/hammerspoon
@@ -4498,6 +4503,7 @@ softwarePackages:
   handbrake:
     _app: HandBrake.app
     _bin: handbrake
+    _deprecated: Rarely needed so deprecated in favor of loading on demand
     _desc: "HandBrake is an open-source video transcoder software available at https://github.com/HandBrake/HandBrake. It allows users to convert video files into various formats, making it compatible with         \ndifferent devices. HandBrake supports a wide range of input formats and offers features like batch encoding, chapter markers, and subtitles. It is popular for its ease of use and efficiency in          \nconverting videos while maintaining good quality. The project is actively maintained by a community of developers and contributors.                                                                       "
     _github: https://github.com/HandBrake/HandBrake
     _name: "HandBrake                                                                                                                                                                                                 "
@@ -5074,6 +5080,7 @@ softwarePackages:
   ipfs-desktop:
     _app: IPFS Desktop.app
     _bin: ipfs-desktop
+    _deprecated: Unneeded
     _desc: An unobtrusive and user-friendly desktop application for IPFS on Windows, Mac and Linux.
     _docs: https://docs.ipfs.tech/install/ipfs-desktop/
     _github: https://github.com/ipfs/ipfs-desktop
@@ -5383,6 +5390,8 @@ softwarePackages:
     _github: https://github.com/kasmtech/KasmVNC
     _name: "KasmVNC                                                                                                                                                                                                   "
     _preload: true
+    _groups:
+      - kasmvnc-cert
     _short: "KasmVNC is an open-source VNC server that provides secure remote desktop access through a web browser.                                                                                                    "
     script:linux: |
       RELEASES=$(curl -sS "https://api.github.com/repos/kasmtech/KasmVNC/releases/latest") || :
@@ -5403,6 +5412,8 @@ softwarePackages:
         jammy )
           wget "https://github.com/kasmtech/KasmVNC/releases/download/$LATEST_VERSION/kasmvncserver_jammy_${LATEST_VERSION:1}_amd64.deb" || :
           ;;
+        noble )
+          wget "https://github.com/kasmtech/KasmVNC/releases/download/$LATEST_VERSION/kasmvncserver_noble_${LATEST_VERSION:1}_amd64.deb" || :
         * )
           ;;
         esac
@@ -5417,6 +5428,7 @@ softwarePackages:
         wget "https://github.com/kasmtech/KasmVNC/releases/download/$LATEST_VERSION/kasmvnc.alpine_317_x86_64.tgz" || :
         if ls kasmvncserver*.rpm > /dev/null 2>&1; then sudo tar -xzf "./kasmvnc.alpine_317_x86_64.tgz" -C /; fi
       fi
+    script:darwin:
     yay: kasmvncserver-bin
   kcpassword:
     _bin: kcpassword
@@ -5743,6 +5755,7 @@ softwarePackages:
   lapce:
     _app: Lapce.app
     _bin: lapce
+    _deprecated: Deprecated in favor of AI-augmented code editors like Cursor
     _desc: Lightning-fast and Powerful Code Editor written in Rust
     _docs: https://docs.lapce.dev/
     _github: https://github.com/lapce/lapce
@@ -6744,6 +6757,7 @@ softwarePackages:
   mongodb-compass:
     _app: MongoDB Compass.app
     _bin: mongodb-compass
+    _deprecated: Not needed
     _desc: "MongoDB Compass is a graphical user interface (GUI) for MongoDB, designed to make working with MongoDB databases more intuitive and efficient. It allows users to visually explore their data, run ad-hoc \nqueries, and perform CRUD operations without needing to write complex commands. Compass provides features like schema visualization, real-time server statistics, and an aggregation pipeline builder. It \nsupports both SQL and MongoDB query languages, making it a versatile tool for developers and database administrators. Overall, MongoDB Compass simplifies database management tasks and enhances the user \nexperience when working with MongoDB databases.                                                                                                                                                           "
     _github: https://github.com/mongodb-js/compass
     _name: MongoDB Compass
@@ -6848,6 +6862,7 @@ softwarePackages:
   mudlet:
     _app: mudlet.app
     _bin: mudlet
+    _deprecated: No longer play
     _desc: A full-featured cross-OS MUD client
     _docs: https://wiki.mudlet.org/?pk_vid=b53bfe5eba0aac5a1685341616dc4f27
     _github: https://github.com/Mudlet/Mudlet
@@ -7659,6 +7674,7 @@ softwarePackages:
   openinterminal:
     _app: OpenInTerminal.app
     _bin: openinterminal
+    _deprecated: Similar feature set available from lighter-weight solutions
     _desc: Finder Toolbar app for macOS to open the current directory in Terminal, iTerm, Hyper or Alacritty
     _docs: https://github.com/Ji4n1ng/OpenInTerminal
     _github: https://github.com/Ji4n1ng/OpenInTerminal
@@ -10373,9 +10389,24 @@ softwarePackages:
     _name: stats
     _short: "stats is a command-line tool that provides system statistics in real-time for macOS.                                                                                                                      "
     cask: stats
+  clop:
+    _app: Clop.app
+    _bin: clop
+    _desc: Automatic optimization of copied images
+    _github: https://github.com/FuzzyIdeas/Clop
+    _home: https://lowtechguys.com/clop/
+    _name: Clop
+    cask: clop
+  volum:
+    _app: Volum.app
+    _bin: volum
+    _desc: Home controls from macOS desktop
+    _home: https://lowtechguys.com/volum/
+    mas: 1601814648
   steam:
     _app: Steam.app
     _bin: steam
+    _deprecated: No games :(
     _github: false
     _name: steam
     cask: steam

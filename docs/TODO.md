@@ -6,6 +6,7 @@ https://nixos.wiki/wiki/Nix_Installation_Guide
 - https://nginxui.com/
 - Barrier config
 - Integrate Sheldon
+- https://github.com/koekeishiya/yabai
 - Add and test import of nmcli for wireguard profiles
 - Come up with some sensible defaults for https://espanso.org/
 - `git-credential-manager configure`

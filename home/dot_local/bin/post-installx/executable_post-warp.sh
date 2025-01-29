@@ -101,17 +101,15 @@ if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
 fi
 
 ### Ensure certificate is installed
-# Source: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt
-# Source: https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
 if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; then
   ### Ensure certificate installed on macOS
   if [ -z "$SSH_CONNECTION" ]; then
     # if [ -z "$HEADLESS_INSTALL" ]; then
     #     gum log -sl info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
-    #     sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
+    #     sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$HOME/.local/etc/ssl/cloudflare/cloudflare.crt"
     # fi
     gum log -sl info 'Updating the OpenSSL CA Store to include the Cloudflare certificate'
-    echo | sudo tee -a "$SSL_CERT_PATH" < "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > /dev/null
+    echo | sudo tee -a "$SSL_CERT_PATH" < "$HOME/.local/etc/ssl/cloudflare/cloudflare.pem" > /dev/null
     echo "" | sudo tee -a "$SSL_CERT_PATH"
   else
     gum log -sl warn 'Session is SSH so adding Cloudflare encryption key to trusted certificates via the security program is being bypassed since it requires Touch ID / Password verification.'
@@ -120,26 +118,26 @@ if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; th
   if [ -f "/usr/local/opt/openssl@3/bin/c_rehash" ]; then
     # Location on Intel macOS
     gum log -sl info 'Ensuring /usr/local/etc/openssl@3/certs directory exists' && mkdir -p /usr/local/etc/openssl@3/certs
-    gum log -sl info 'Adding Cloudflare certificate to /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem'
-    echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> /usr/local/etc/openssl@3/certs/Cloudflare_CA.pem
+    gum log -sl info 'Adding Cloudflare certificate to /usr/local/etc/openssl@3/certs/cloudflare.pem'
+    echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/cloudflare.pem" >> /usr/local/etc/openssl@3/certs/cloudflare.pem
     gum log -sl info 'Running /usr/local/opt/openssl@3/bin/c_rehash'
     /usr/local/opt/openssl@3/bin/c_rehash > /dev/null && gum log -sl info 'OpenSSL certificate rehash successful'
   elif [ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash" ]; then
     # Location on arm64 macOS and custom Homebrew locations
     gum log -sl info "Ensuring ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs directory exists" && mkdir -p "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs"
-    gum log -sl info "Adding Cloudflare certificate to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs/Cloudflare_CA.pem"
-    echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs/Cloudflare_CA.pem"
+    gum log -sl info "Adding Cloudflare certificate to ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs/cloudflare.pem"
+    echo | sudo cat - "$HOME/.local/etc/ssl/cloudflare/cloudflare.pem" >> "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/openssl@3/certs/cloudflare.pem"
     gum log -sl info "Running ${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash"
     "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/openssl@3/bin/c_rehash" > /dev/null && gum log -sl info 'OpenSSL certificate rehash successful'
   else
-    gum log -sl warn 'Unable to add Cloudflare_CA.pem because /usr/local/etc/openssl@3/certs and /opt/homebrew/etc/openssl@3/certs do not exist!'
+    gum log -sl warn 'Unable to add cloudflare.pem because /usr/local/etc/openssl@3/certs and /opt/homebrew/etc/openssl@3/certs do not exist!'
   fi
 elif command -v warp-cli > /dev/null; then
   # System is Linux
   if command -v dpkg-reconfigure > /dev/null; then
     if [ -d /usr/local/share/ca-certificates ]; then
-      gum log -sl info 'Copying CloudFlare Teams PEM file to /usr/local/share/ca-certificates/Cloudflare_CA.crt'
-      sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /usr/local/share/ca-certificates/Cloudflare_CA.crt
+      gum log -sl info 'Copying CloudFlare Teams PEM file to /usr/local/share/ca-certificates/cloudflare.crt'
+      sudo cp -f "$HOME/.local/etc/ssl/cloudflare/cloudflare.pem" /usr/local/share/ca-certificates/cloudflare.crt
       gum log -sl info 'dpkg-reconfigure executable detected so using Debian/Ubuntu method of updating system trusted certificates to include CloudFlare Teams certificate'
       sudo dpkg-reconfigure ca-certificates -p high
       SSL_CERT_PATH="/etc/ssl/certs/ca-certificates.crt"
@@ -149,7 +147,7 @@ elif command -v warp-cli > /dev/null; then
   elif command -v update-ca-trust > /dev/null; then
     if [ -d /etc/pki/ca-trust/source/anchors ]; then
       gum log -sl info 'Copying CloudFlare Teams certificates to /etc/pki/ca-trust/source/anchors'
-      sudo cp -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" /etc/pki/ca-trust/source/anchors
+      sudo cp -f "$HOME/.local/etc/ssl/cloudflare/cloudflare.crt" "$HOME/.local/etc/ssl/cloudflare/cloudflare.pem" /etc/pki/ca-trust/source/anchors
       gum log -sl info 'update-ca-trust executable detected so using CentOS/Fedora method of updating system trusted certificates to include CloudFlare Teams certificate'
       sudo update-ca-trust
       SSL_CERT_PATH="/etc/pki/tls/certs/ca-bundle.crt"
@@ -190,15 +188,15 @@ if command -v warp-cli > /dev/null; then
     fi
 
     ### Copy CloudFlare PEM file to Python 3 location
-    gum log -sl info "Configuring python3 / python to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem""
-    echo | cat - "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" >> $(python3 -m certifi)
+    gum log -sl info "Configuring python3 / python to use "$HOME/.local/etc/ssl/cloudflare/cloudflare.pem""
+    echo | cat - "$HOME/.local/etc/ssl/cloudflare/cloudflare.pem" >> $(python3 -m certifi)
   fi
 
   ### Google Cloud SDK
   if command -v gcloud > /dev/null; then
-    gum log -sl info "Configuring gcloud to use "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" and "$HOME/.local/etc/ssl/gcloud/ca.pem""
+    gum log -sl info "Configuring gcloud to use "$HOME/.local/etc/ssl/cloudflare/cloudflare.pem" and "$HOME/.local/etc/ssl/gcloud/ca.pem""
     mkdir -p "$HOME/.local/etc/ssl/gcloud"
-    cat "$HOME/.local/etc/ssl/curl/cacert.pem" "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" > "$HOME/.local/etc/ssl/gcloud/ca.pem"
+    cat "$HOME/.local/etc/ssl/curl/cacert.pem" "$HOME/.local/etc/ssl/cloudflare/cloudflare.pem" > "$HOME/.local/etc/ssl/gcloud/ca.pem"
     gcloud config set core/custom_ca_certs_file "$HOME/.local/etc/ssl/gcloud/ca.pem"
   fi
 
@@ -207,7 +205,7 @@ if command -v warp-cli > /dev/null; then
     if [ -d "/Applications/Google Drive.app/Contents/Resources" ]; then
       gum log -sl info "Combining Google Drive roots.pem with CloudFlare certificate"
       mkdir -p "$HOME/.local/etc/ssl/google-drive"
-      cat "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" "/Applications/Google Drive.app/Contents/Resources/roots.pem" >> "$HOME/.local/etc/ssl/google-drive/roots.pem"
+      cat "$HOME/.local/etc/ssl/cloudflare/cloudflare.pem" "/Applications/Google Drive.app/Contents/Resources/roots.pem" >> "$HOME/.local/etc/ssl/google-drive/roots.pem"
       sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootsCertsFile -string "$HOME/.local/etc/ssl/google-drive/roots.pem"
     else
       gum log -sl warn 'Google Drive.app installed but roots.pem is not available yet'

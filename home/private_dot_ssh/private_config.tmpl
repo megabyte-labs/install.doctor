@@ -32,11 +32,15 @@ Host *
     IdentityFile ~/.ssh/id_rsa
 Host gitlab.com
     UpdateHostKeys no
-    IdentityFile ~/.ssh/id_rsa
+    {{ if eq .host.distro.id "darwin" -}}
+    IdentityAgent /Users/apple/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
+    {{- end }}
 Host github.com
     Hostname github.com
     UpdateHostKeys no
-    IdentityFile ~/.ssh/id_rsa
+    {{ if eq .host.distro.id "darwin" -}}
+    IdentityAgent /Users/apple/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
+    {{- end }}
 Host automation
     User {{ .user.username }}
     Hostname ssh-automation.{{ .host.domain }}

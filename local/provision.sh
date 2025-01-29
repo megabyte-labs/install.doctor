@@ -398,24 +398,17 @@ ensureFullDiskAccess() {
 importCloudFlareCert() {
   if [ -d /Applications ] && [ -d /System ] && [ -z "$HEADLESS_INSTALL" ]; then
     ### Acquire certificate
-    if [ ! -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" ]; then
-      logg info 'Downloading Cloudflare_CA.crt from https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt to determine if it is already in the System.keychain'
-      CRT_TMP="$(mktemp)"
-      curl -sSL https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt > "$CRT_TMP"
+    if [ -f "$HOME/.local/etc/ssl/cloudflare/certificate.crt" ]; then
+      CRT_TMP="$HOME/.local/etc/ssl/cloudflare/certificate.crt"
     else
-      CRT_TMP="$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
+      logg warn "$HOME/.local/etc/ssl/cloudflare/certificate.crt is missing"
     fi
 
     ### Validate / import certificate
     security verify-cert -c "$CRT_TMP" > /dev/null 2>&1
     if [ $? != 0 ]; then
       logg info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
-      sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_TMP" && logg info 'Successfully imported Cloudflare_CA.crt into System.keychain'
-    fi
-
-    ### Remove temporary file, if necessary
-    if [ ! -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" ]; then
-      rm -f "$CRT_TMP"
+      sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_TMP" && logg info 'Successfully imported cloudflare.crt into System.keychain'
     fi
   fi
 }

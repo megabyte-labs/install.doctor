@@ -128,8 +128,8 @@ export PATH="${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua
 ### AWS CLI
 export AWS_SHARED_CREDENTIALS_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/aws/credentials"
 export AWS_CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/aws/config"
-if [ -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt" ]; then
-  export AWS_CA_BUNDLE="$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
+if [ -f "$HOME/.local/etc/ssl/cloudflare/cloudflare.crt" ]; then
+  export AWS_CA_BUNDLE="$HOME/.local/etc/ssl/cloudflare/cloudflare.crt"
 fi
 
 ### Azure CLI
@@ -373,7 +373,7 @@ export NAVI_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/navi/config.yaml"
 
 ### Nix
 # TODO: Fix this
-# export NIX_SSL_CERT_FILE="$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.crt"
+# export NIX_SSL_CERT_FILE="$HOME/.local/etc/ssl/cloudflare/cloudflare.crt"
 
 ### nnn
 if command -v nnn > /dev/null; then
@@ -386,8 +386,8 @@ fi
 
 ### Node.js
 export NODE_REPL_HISTORY="${XDG_DATA_HOME:-$HOME/.local/share}/node_repl_history"
-if [ -f "$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem" ]; then
-  export NODE_EXTRA_CA_CERTS="$HOME/.local/etc/ssl/cloudflare/Cloudflare_CA.pem"
+if [ -f "$HOME/.local/etc/ssl/cloudflare/cloudflare.pem" ]; then
+  export NODE_EXTRA_CA_CERTS="$HOME/.local/etc/ssl/cloudflare/cloudflare.pem"
 fi
 
 ### NPM
