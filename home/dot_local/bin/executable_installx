@@ -310,7 +310,7 @@ async function installPackages(pkgInstructions) {
         break
       case 'appimage':
         promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => {
-          console.log('AppImage', x)
+          process.env.DEBUG && console.log('AppImage', x)
           if (typeof x === 'string') {
             if (x.substring(0, 4) === 'http') {
               return $`zap install --select-first -q --from ${i}`
@@ -460,9 +460,9 @@ async function checkIfHeadless() {
   try {
     process.env.DEBUG && console.log('Checking if session is headless')
     runSilentCommand(`if [ -d /System ] && [ -d /Applications ]; then system_profiler SPDisplaysDataType > /dev/null; else xrandr --listmonitors > /dev/null; fi`)
-    return true
-  } catch (e) {
     return false
+  } catch (e) {
+    return true
   }
 }
 
@@ -483,8 +483,7 @@ async function main() {
   pkgs = initData[1].softwarePackages
   sysType = initData[2]
   chezmoiConfig = initData[3]
-  isHeadless = !initData[4]
-  process.env.DEBUG && console.log('Is headless', isHeadless)
+  isHeadless = initData[4]
   installOrder = initData[1].installerPreference
   log(`Populating lists of pre-installed packages`)
   const listPromises = [
