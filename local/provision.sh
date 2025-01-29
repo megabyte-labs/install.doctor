@@ -774,10 +774,74 @@ vimPlugins() {
   fi
 }
 
+# @description Creates apple user if user is running this script as root and continues the script execution with the new `apple` user
+#     by creating the `apple` user with a password equal to the `SUDO_PASSWORD` environment variable or "bananas" if no `SUDO_PASSWORD`
+#     variable is present.
+function ensureAppleUser() {
+  # Check if the script is running as root
+  if [ "$(id -u)" -eq 0 ]; then
+    logg info "You are running as root. Proceeding with user creation."
+
+    # Check if SUDO_PASSWORD is set, if not, set it to "bananas" and export
+    if [ -z "$SUDO_PASSWORD" ]; then
+      logg info "SUDO_PASSWORD is not set. Setting it to 'bananas'."
+      export SUDO_PASSWORD="bananas"
+    fi
+
+    # Check if 'apple' user exists
+    if id "apple" &>/dev/null; then
+      logg info "User 'apple' already exists. Skipping creation."
+    else
+      # Create a new user 'apple'
+      logg info "Creating user 'apple'..."
+      if command -v useradd &>/dev/null; then
+        # For Linux distributions
+        useradd -m -s /bin/bash apple
+      elif command -v dscl &>/dev/null; then
+        # For macOS
+        dscl . -create /Users/apple
+        dscl . -create /Users/apple UserShell /bin/bash
+        dscl . -create /Users/apple UniqueID "$(dscl . -list /Users UniqueID | awk '{print $2}' | sort -n | tail -1 | xargs -I{} echo {} + 1)"
+        dscl . -create /Users/apple PrimaryGroupID 20
+        dscl . -create /Users/apple NFSHomeDirectory /Users/apple
+        mkdir -p /Users/apple
+        chown -R apple:staff /Users/apple
+      else
+        logg info "Unsupported system. Exiting."
+        exit 1
+      fi
+
+      # Set the password for 'apple'
+      logg info "Setting a password for 'apple'..."
+      echo "apple:$SUDO_PASSWORD" | chpasswd 2>/dev/null || \
+      (echo "$SUDO_PASSWORD" | passwd --stdin apple 2>/dev/null || \
+      (echo "$SUDO_PASSWORD" | dscl . -passwd /Users/apple $SUDO_PASSWORD 2>/dev/null))
+
+      # Grant sudo privileges to 'apple'
+      logg info "Granting sudo privileges to 'apple'..."
+      if command -v usermod &>/dev/null; then
+        usermod -aG sudo apple
+      elif command -v dseditgroup &>/dev/null; then
+        dseditgroup -o edit -a apple -t user admin
+      else
+        logg info "Unable to grant sudo privileges. Continuing anyway."
+      fi
+    fi
+
+    # Switch to 'apple' user to continue the script
+    logg info "Switching to 'apple' user to continue the script..."
+    su - apple -c "bash -c \"$0\""
+    exit 0
+  else
+    logg info "You are not running as root. Proceeding with the current user."
+  fi
+}
+
 # @description The `provisionLogic` function is used to define the order of the script. All of the functions it relies on are defined
 #     above.
 provisionLogic() {
-  loadHomebrew
+  logg info "Ensuring script is not run with root" && ensureAppleUser
+  logg info "Attempting to load Homebrew" && loadHomebrew
   logg info "Setting environment variables" && setEnvironmentVariables
   logg info "Handling CI variables" && setCIEnvironmentVariables
   logg info "Ensuring WARP is disconnected" && ensureWarpDisconnected
