@@ -1,5 +1,5 @@
 {
-    "user_secret": "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "HISHTORY_USER_SECRET")) }}{{ includeTemplate "secrets/HISHTORY_USER_SECRET" | decrypt | trim }}{{ else }}{{ env "HISHTORY_USER_SECRET" }}{{ end }}",
+    "user_secret": "{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "HISHTORY_USER_SECRET")) }}{{ includeTemplate "secrets/HISHTORY_USER_SECRET" | decrypt | trim }}{{ else }}{{ env "HISHTORY_USER_SECRET" }}{{ end }}",
     "is_enabled": true,
     "last_saved_history_line": "",
     "have_missed_uploads": false,

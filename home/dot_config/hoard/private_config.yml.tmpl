@@ -24,5 +24,5 @@ parameter_token: "#"
 parameter_ending_token: "!"
 read_from_current_directory: true
 sync_server_url: "https://troveserver.herokuapp.com/"
-api_token: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "HOARD_API_TOKEN")) }}{{ includeTemplate "secrets/HOARD_API_TOKEN" | decrypt | trim }}{{ else }}{{ env "HOARD_API_TOKEN" }}{{ end }}
-gpt_api_key: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "OPENAI_API_KEY")) }}{{ includeTemplate "secrets/OPENAI_API_KEY" | decrypt | trim }}{{ else }}{{ env "OPENAI_API_KEY" }}{{ end }}
+api_token: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "HOARD_API_TOKEN")) }}{{ includeTemplate "secrets/HOARD_API_TOKEN" | decrypt | trim }}{{ else }}{{ env "HOARD_API_TOKEN" }}{{ end }}
+gpt_api_key: {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "OPENAI_API_KEY")) }}{{ includeTemplate "secrets/OPENAI_API_KEY" | decrypt | trim }}{{ else }}{{ env "OPENAI_API_KEY" }}{{ end }}

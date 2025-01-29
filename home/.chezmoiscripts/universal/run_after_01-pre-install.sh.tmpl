@@ -150,7 +150,7 @@ applyRootConfig() {
     gum log -sl info "Copying ~/.zshrc to $ROOT_FOLDER/.zshrc" && sudo cp -f "$HOME/.zshrc" "$ROOT_FOLDER/.zshrc"
     gum log -sl info "Ensuring ~/.config folder exists" && sudo mkdir -p "$ROOT_FOLDER/.config"
     gum log -sl info "Copying ~/.config/shell to $ROOT_FOLDER/.config/shell" && sudo mkdir -p "$ROOT_FOLDER/.config" && sudo rm -rf "$ROOT_FOLDER/.config/shell" && sudo cp -rf "$HOME/.config/shell" "$ROOT_FOLDER/.config/shell"
-    
+
     ### Copy Autorestic configurations
     gum log -sl info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/autorestic/autorestic-system.yml file to $ROOT_FOLDER/.autorestic.yml" && sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/autorestic/autorestic-system.yml" "$ROOT_FOLDER/.autorestic.yml"
     gum log -sl info "Applying proper permissions to $ROOT_FOLDER/.autorestic.yml" && sudo chmod 600 "$ROOT_FOLDER/.autorestic.yml"
@@ -211,12 +211,12 @@ ensureNetworkConfigs() {
 configureNetworkManagerVPNProfiles() {
   if [ "{{ .host.distro.family }}" = "linux" ]; then
     {{ $ovpnUsername := (env "OVPN_USERNAME") }}
-    {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "OVPN_USERNAME")) }}
+    {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "OVPN_USERNAME")) }}
     {{   $ovpnUsername := (includeTemplate "secrets/OVPN_USERNAME" | decrypt | trim) }}
     {{ end }}
 
     {{ $ovpnPassword := (env "OVPN_PASSWORD") }}
-    {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "OVPN_PASSWORD")) }}
+    {{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "OVPN_PASSWORD")) }}
     {{   $ovpnPassword := (includeTemplate "secrets/OVPN_PASSWORD" | decrypt | trim) }}
     {{ end }}
 

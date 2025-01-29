@@ -1,5 +1,5 @@
 # wego configuration
-# 
+#
 # This config has https://github.com/schachmat/ingo syntax.
 # Empty lines or lines starting with # will be ignored.
 # All other lines must look like "KEY=VALUE" (without the quotes).
@@ -39,7 +39,7 @@ location={{ .user.weatherZipCode }}
 md-coords=false
 
 # openweathermap backend: the api KEY to use (default )
-owm-api-key={{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "OPENWEATHERMAP_API_KEY")) }}{{ includeTemplate "secrets/OPENWEATHERMAP_API_KEY" | decrypt | trim }}{{ else }}{{ env "OPENWEATHERMAP_API_KEY" }}{{ end }}
+owm-api-key={{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "OPENWEATHERMAP_API_KEY")) }}{{ includeTemplate "secrets/OPENWEATHERMAP_API_KEY" | decrypt | trim }}{{ else }}{{ env "OPENWEATHERMAP_API_KEY" }}{{ end }}
 
 # openweathermap backend: print raw requests and responses (default false)
 owm-debug=false

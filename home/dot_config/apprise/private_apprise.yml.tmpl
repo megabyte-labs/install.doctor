@@ -22,7 +22,7 @@ tag: all
 
 urls:
   {{- $gmailAppPassword := (default "" (env "GMAIL_PASSWORD")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GMAIL_PASSWORD")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "GMAIL_PASSWORD")) -}}
   {{-   $gmailAppPassword = includeTemplate "secrets/GMAIL_PASSWORD" | decrypt | trim -}}
   {{- end -}}
   {{- if ne $gmailAppPassword "" -}}
@@ -35,7 +35,7 @@ urls:
   {{ end }}
 
   {{- $iftttWebhookId := (default "" (env "IFTTT_WEBHOOK_ID")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "IFTTT_WEBHOOK_ID")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "IFTTT_WEBHOOK_ID")) -}}
   {{-   $iftttWebhookId = includeTemplate "secrets/IFTTT_WEBHOOK_ID" | decrypt | trim -}}
   {{- end -}}
   {{- if ne $iftttWebhookId "" -}}
@@ -47,11 +47,11 @@ urls:
   {{ end }}
 
   {{- $matrixPassword := (default "" (env "MATRIX_PASSWORD")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "MATRIX_PASSWORD")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "MATRIX_PASSWORD")) -}}
   {{-   $matrixPassword = includeTemplate "secrets/MATRIX_PASSWORD" | decrypt | trim -}}
   {{- end -}}
   {{- $matrixUsername := (default "" (env "MATRIX_USERNAME")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "MATRIX_USERNAME")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "MATRIX_USERNAME")) -}}
   {{-   $matrixUsername = includeTemplate "secrets/MATRIX_USERNAME" | decrypt | trim -}}
   {{- end -}}
   {{- if and (ne $matrixPassword "") (ne $matrixUsername "") -}}
@@ -71,19 +71,19 @@ urls:
   # Note: Microsoft Teams currently requires paid subscriptions of Office 365 for a custom organization
 
   {{- $redditAppId := (default "" (env "REDDIT_APP_ID")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "REDDIT_APP_ID")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "REDDIT_APP_ID")) -}}
   {{-   $redditAppId = includeTemplate "secrets/REDDIT_APP_ID" | decrypt | trim -}}
   {{- end -}}
   {{- $redditAppSecret := (default "" (env "REDDIT_APP_SECRET")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "REDDIT_APP_SECRET")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "REDDIT_APP_SECRET")) -}}
   {{-   $redditAppSecret = includeTemplate "secrets/REDDIT_APP_SECRET" | decrypt | trim -}}
   {{- end -}}
   {{- $redditPassword := (default "" (env "REDDIT_PASSWORD")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "REDDIT_PASSWORD")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "REDDIT_PASSWORD")) -}}
   {{-   $redditPassword = includeTemplate "secrets/REDDIT_PASSWORD" | decrypt | trim -}}
   {{- end -}}
   {{- $redditUsername := (default "" (env "REDDIT_USERNAME")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "REDDIT_USERNAME")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "REDDIT_USERNAME")) -}}
   {{-   $redditUsername = includeTemplate "secrets/REDDIT_USERNAME" | decrypt | trim -}}
   {{- end -}}
   {{- if and (ne $redditAppId "") (ne $redditAppSecret "") (ne $redditPassword "") (ne $redditUsername "") -}}
@@ -100,7 +100,7 @@ urls:
     - tag: rsyslog, log
 
   {{- $sendGridApiKey := (default "" (env "SENDGRID_API_KEY")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SENDGRID_API_KEY")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "SENDGRID_API_KEY")) -}}
   {{-   $sendGridApiKey = includeTemplate "secrets/SENDGRID_API_KEY" | decrypt | trim -}}
   {{- end -}}
   {{- if ne $sendGridApiKey "" -}}
@@ -113,7 +113,7 @@ urls:
   {{ end }}
 
   {{- $slackBotToken := (default "" (env "SLACK_BOT_USER_OAUTH_TOKEN")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SLACK_BOT_USER_OAUTH_TOKEN")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "SLACK_BOT_USER_OAUTH_TOKEN")) -}}
   {{-   $slackBotToken = includeTemplate "secrets/SLACK_BOT_USER_OAUTH_TOKEN" | decrypt | trim -}}
   {{- end -}}
   {{- if ne $slackBotToken "" -}}
@@ -125,11 +125,11 @@ urls:
   {{ end }}
 
   {{- $telegramBotToken := (default "" (env "TELEGRAM_BOT_TOKEN")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TELEGRAM_BOT_TOKEN")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TELEGRAM_BOT_TOKEN")) -}}
   {{-   $telegramBotToken = includeTemplate "secrets/TELEGRAM_BOT_TOKEN" | decrypt | trim -}}
   {{- end -}}
   {{- $telegramRecipient := (default "" (env "TELEGRAM_RECIPIENT_ID")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TELEGRAM_RECIPIENT_ID")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TELEGRAM_RECIPIENT_ID")) -}}
   {{-   $telegramRecipient = includeTemplate "secrets/TELEGRAM_RECIPIENT_ID" | decrypt | trim -}}
   {{- end -}}
   {{- if and (ne $telegramBotToken "") (ne $telegramRecipient "") -}}
@@ -139,19 +139,19 @@ urls:
   {{ end }}
 
   {{- $twilioAccountSid := (default "" (env "TWILIO_ACCOUNT_SID")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TWILIO_ACCOUNT_SID")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TWILIO_ACCOUNT_SID")) -}}
   {{-   $twilioAccountSid = includeTemplate "secrets/TWILIO_ACCOUNT_SID" | decrypt | trim -}}
   {{- end -}}
   {{- $twilioAuthToken := (default "" (env "TWILIO_AUTH_TOKEN")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TWILIO_AUTH_TOKEN")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TWILIO_AUTH_TOKEN")) -}}
   {{-   $twilioAuthToken = includeTemplate "secrets/TWILIO_AUTH_TOKEN" | decrypt | trim -}}
   {{- end -}}
   {{- $twilioFromNumber := (default "" (env "TWILIO_FROM_NUMBER")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TWILIO_FROM_NUMBER")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TWILIO_FROM_NUMBER")) -}}
   {{-   $twilioFromNumber = includeTemplate "secrets/TWILIO_FROM_NUMBER" | decrypt | trim -}}
   {{- end -}}
   {{- $cellPhoneNumber := (default "" (env "CELL_PHONE_NUMBER")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "CELL_PHONE_NUMBER")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "CELL_PHONE_NUMBER")) -}}
   {{-   $cellPhoneNumber = includeTemplate "secrets/CELL_PHONE_NUMBER" | decrypt | trim -}}
   {{- end -}}
   {{- if and (ne $twilioAccountSid "") (ne $twilioAuthToken "") (ne $twilioFromNumber "") (ne $cellPhoneNumber "") -}}
@@ -163,19 +163,19 @@ urls:
   {{ end }}
 
   {{- $twitterApiKey := (default "" (env "TWITTER_API_KEY")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TWITTER_API_KEY")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TWITTER_API_KEY")) -}}
   {{-   $twitterApiKey = includeTemplate "secrets/TWITTER_API_KEY" | decrypt | trim -}}
   {{- end -}}
   {{- $twitterApiKeySecret := (default "" (env "TWITTER_API_KEY_SECRET")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TWITTER_API_KEY_SECRET")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TWITTER_API_KEY_SECRET")) -}}
   {{-   $twitterApiKeySecret = includeTemplate "secrets/TWITTER_API_KEY_SECRET" | decrypt | trim -}}
   {{- end -}}
   {{- $twitterAccessToken := (default "" (env "TWITTER_ACCESS_TOKEN")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TWITTER_ACCESS_TOKEN")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TWITTER_ACCESS_TOKEN")) -}}
   {{-   $twitterAccessToken = includeTemplate "secrets/TWITTER_ACCESS_TOKEN" | decrypt | trim -}}
   {{- end -}}
   {{- $twitterAccessTokenSecret := (default "" (env "TWITTER_ACCESS_TOKEN_SECRET")) -}}
-  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "TWITTER_ACCESS_TOKEN_SECRET")) -}}
+  {{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "TWITTER_ACCESS_TOKEN_SECRET")) -}}
   {{-   $twitterAccessTokenSecret = includeTemplate "secrets/TWITTER_ACCESS_TOKEN_SECRET" | decrypt | trim -}}
   {{- end -}}
   {{- if and (ne $twitterApiKey "") (ne $twitterApiKeySecret "") (ne $twitterAccessToken "") (ne $twitterAccessTokenSecret "") -}}
@@ -201,4 +201,4 @@ urls:
     - tag: macos, system
 
   ### Windows
-  # Source: 
+  # Source:

@@ -62,11 +62,11 @@ else
     ### Populate appropriate token
     case "$OSTYPE" in
       solaris*) echo "TODO" ;;
-      darwin*)  GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_DARWIN")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_DARWIN" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_DARWIN" }}{{ end }}" ;;
-      linux*)   GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_LINUX")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_LINUX" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_LINUX" }}{{ end }}" ;;
+      darwin*)  GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "GITLAB_RUNNER_TOKEN_DARWIN")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_DARWIN" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_DARWIN" }}{{ end }}" ;;
+      linux*)   GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "GITLAB_RUNNER_TOKEN_LINUX")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_LINUX" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_LINUX" }}{{ end }}" ;;
       bsd*)     echo "TODO" ;;
-      msys*)    GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_WINDOWS")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_WINDOWS" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_WINDOWS" }}{{ end }}" ;;
-      cygwin*)  GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "GITLAB_RUNNER_TOKEN_WINDOWS")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_WINDOWS" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_WINDOWS" }}{{ end }}" ;;
+      msys*)    GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "GITLAB_RUNNER_TOKEN_WINDOWS")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_WINDOWS" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_WINDOWS" }}{{ end }}" ;;
+      cygwin*)  GITLAB_RUNNER_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "GITLAB_RUNNER_TOKEN_WINDOWS")) }}{{ includeTemplate "secrets/GITLAB_RUNNER_TOKEN_WINDOWS" | decrypt | trim }}{{ else }}{{ env "GITLAB_RUNNER_TOKEN_WINDOWS" }}{{ end }}" ;;
       *)        echo "unknown: $OSTYPE" ;;
     esac
     ### Check if Runner Token value is present before attempting to register runner(s)

@@ -136,7 +136,7 @@ upgradeDarwin() {
 
     ### Attempt to populate SUDO_PASSWORD from secrets
     if [ -z "$SUDO_PASSWORD" ]; then
-      SUDO_PASSWORD="{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "SUDO_PASSWORD")) -}}{{- includeTemplate "secrets/SUDO_PASSWORD" | decrypt | trim -}}{{- end -}}"
+      SUDO_PASSWORD="{{- if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "SUDO_PASSWORD")) -}}{{- includeTemplate "secrets/SUDO_PASSWORD" | decrypt | trim -}}{{- end -}}"
       export SUDO_PASSWORD
     fi
 

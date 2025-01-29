@@ -1,4 +1,4 @@
-{{- if (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "DIGITALOCEAN_ACCESS_TOKEN")) (env "DIGITALOCEAN_ACCESS_TOKEN")) -}}
+{{- if (and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "DIGITALOCEAN_ACCESS_TOKEN")) (env "DIGITALOCEAN_ACCESS_TOKEN")) -}}
 #!/usr/bin/env bash
 # @file DigitalOcean Kubernetes
 # @brief Connects to DigitalOcean Kubernetes cluster
@@ -12,7 +12,7 @@
 {{ includeTemplate "universal/logg" }}
 
 ### Ensure `DIGITALOCEAN_ACCESS_TOKEN` is defined (used for headlessly connecting to the k8s cluster)
-export DIGITALOCEAN_ACCESS_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "secrets" "DIGITALOCEAN_ACCESS_TOKEN")) }}{{ includeTemplate "secrets/DIGITALOCEAN_ACCESS_TOKEN" | decrypt | trim }}{{ else }}{{ env "DIGITALOCEAN_ACCESS_TOKEN" }}{{ end }}"
+export DIGITALOCEAN_ACCESS_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "DIGITALOCEAN_ACCESS_TOKEN")) }}{{ includeTemplate "secrets/DIGITALOCEAN_ACCESS_TOKEN" | decrypt | trim }}{{ else }}{{ env "DIGITALOCEAN_ACCESS_TOKEN" }}{{ end }}"
 
 if [ -n "$DIGITALOCEAN_ACCESS_TOKEN" ] && [ -n '{{ .user.digitalOceanClusterId }}' ]; then
     ### Ensure DigitalOcean CLI is instaled
