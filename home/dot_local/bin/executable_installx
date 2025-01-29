@@ -310,12 +310,14 @@ async function installPackages(pkgInstructions) {
         break
       case 'appimage':
         promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => {
-          if (x.substring(0, 4) === 'http') {
-            return $`zap install --select-first -q --from ${i}`
-          } else if ((x.match(/\//g) || []).length === 1) {
-            return $`zap install --select-first -q --github --from ${i}`
-          } else {
-            return $`zap install --select-first -q ${i}`
+          if (x) {
+            if (x.substring(0, 4) === 'http') {
+              return $`zap install --select-first -q --from ${i}`
+            } else if ((x.match(/\//g) || []).length === 1) {
+              return $`zap install --select-first -q --github --from ${i}`
+            } else {
+              return $`zap install --select-first -q ${i}`
+            }
           }
         })))
         break
@@ -547,7 +549,7 @@ async function main() {
       // Only install casks or flatpaks and items with `_preload: true` in the `software.yml` file
       if (customArgv.lazy) {
         if (isHeadless) {
-          if (x._app || x.flatpak) {
+          if (x._app || x.flatpak || x.appimage) {
             return false
           } else if (x._serviceEnabled) {
             return true

@@ -1715,7 +1715,6 @@ softwarePackages:
     _github: https://github.com/dim-an/cod
     _home: https://github.com/dim-an/cod
     _name: Cod
-    _preload: true
     _short: "cod is a lightweight, fast, and powerful code editor designed for macOS.                                                                                                                                  "
     _todo: Check for brew install later on (5/14/2023)
     go: github.com/dim-an/cod@master
@@ -2460,7 +2459,6 @@ softwarePackages:
     _desc: "dotenv-vault is a tool developed by the dotenv-org organization on GitHub. It is designed to securely manage secrets in a .env file using HashiCorp Vault. This tool allows you to fetch secrets from     \nVault and inject them into your application's environment variables, providing a secure way to manage sensitive information. By integrating Vault with your .env file, you can ensure that your           \napplication secrets are stored and accessed in a secure manner.                                                                                                                                           "
     _github: https://github.com/dotenv-org/dotenv-vault
     _name: Dotenv Vault
-    _preload: true
     _short: "dotenv-vault is a tool that loads environment variables from HashiCorp Vault into your application.                                                                                                       "
     brew: dotenv-org/brew/dotenv-vault
     npm: dotenv-vault
@@ -3016,7 +3014,6 @@ softwarePackages:
     github: github.com/timvisee/ffsend
     pkg: ffsend
     scoop: ffsend
-    snap: ffsend
     yay: ffsend
   fiddler:
     _bin: fiddler
@@ -3408,7 +3405,6 @@ softwarePackages:
     _short: "Fuego is a lightweight and fast web framework for Go.                                                                                                                                                     "
     brew: fuego-firestore
     go: github.com/sgarciac/fuego@latest
-    snap: fuego
   fury:
     _bin: fury
     _desc: "Gemfury is a service that provides private package repositories for RubyGems, Python packages, NPM modules, and more. It allows developers to securely host and distribute their private code and         \ndependencies. Gemfury supports continuous integration tools like Travis CI and Jenkins, making it easy to integrate into existing workflows. It also offers features like team collaboration, access      \ncontrol, and detailed analytics. Overall, Gemfury is a convenient solution for managing and sharing private packages across different programming languages.                                              "
@@ -4757,7 +4753,6 @@ softwarePackages:
     _github: https://github.com/httptoolkit/httptoolkit
     _name: HTTP Toolkit
     _short: "httptoolkit is a tool for debugging, testing, and intercepting HTTP and HTTPS traffic.                                                                                                                    "
-    apt: https://github.com/httptoolkit/httptoolkit-desktop/releases/download/v1.14.8/HttpToolkit-1.14.8.deb
     cask: http-toolkit
     winget: HTTPToolKit.HTTPToolKit
     yay: httptoolkit
@@ -6728,10 +6723,8 @@ softwarePackages:
     _github: https://github.com/mongodb-js/compass
     _name: MongoDB Compass
     _short: "MongoDB Compass is a graphical user interface for MongoDB, allowing users to explore and manipulate their data visually.                                                                                  "
-    apt: https://downloads.mongodb.com/compass/mongodb-compass_1.38.0_amd64.deb
     cask: mongodb-compass
     choco: mongodb-compass
-    dnf: https://downloads.mongodb.com/compass/mongodb-compass-1.38.0.x86_64.rpm
   monitorcontrol:
     _app: MonitorControl.app
     _bin: monitorcontrol
@@ -8582,7 +8575,7 @@ softwarePackages:
   privaxy:
     _app: Privaxy.app
     _bin: privaxy
-    _depcreated: No cask available
+    _deprecated: No cask available
     _desc: Privaxy is the next generation tracker and advertisement blocker. It blocks ads and trackers by MITMing HTTP(s) traffic.
     _docs: false
     _github: https://github.com/Barre/privaxy
@@ -8692,20 +8685,8 @@ softwarePackages:
     _home: https://protonmail.com/
     _name: ProtonVPN
     _short: "ProtonVPN Linux App is an open-source application that allows users to connect to ProtonVPN servers on Linux systems.                                                                                     "
-    apt:
-      - libayatana-appindicator3-1
-      - gir1.2-ayatanaappindicator3-0.1
-      - gnome-shell-extension-appindicator
-      - https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3_all.deb
     cask: protonvpn
     choco: protonvpn
-    dnf:fedora:
-      - gnome-extensions-app
-      - gnome-shell-extension-appindicator
-      - gnome-tweaks
-      - libappindicator-gtk3
-      - https://repo.protonvpn.com/fedora-$(cat /etc/fedora-release | cut -d\  -f 3)-stable/protonvpn-stable-release/protonvpn-stable-release-1.0.1-2.noarch.rpm
-      - python3-pip
     yay:
       - gnome-shell-extension-appindicator
       - libappindicator-gtk3
@@ -9420,13 +9401,10 @@ softwarePackages:
     _home: https://rustdesk.com/
     _name: RustDesk
     _short: "RustDesk is an open-source remote desktop software written in Rust.                                                                                                                                       "
-    apt: https://github.com/rustdesk/rustdesk/releases/download/1.1.9/rustdesk-1.1.9.deb
     cask: rustdesk
     choco: rustdesk
-    dnf: https://github.com/rustdesk/rustdesk/releases/download/1.1.9/rustdesk-1.1.9-fedora28-centos8.rpm
     pacman: rustdesk
     scoop: rustdesk
-    zypper: https://github.com/rustdesk/rustdesk/releases/download/1.1.9/rustdesk-1.1.9-suse.rpm
   rustscan:
     _bin: rustscan
     _desc: An Nmap-based port scanner that scans all 65k ports in 3 seconds
@@ -9967,7 +9945,6 @@ softwarePackages:
     _desc: Skate is a personal key-value store. Use it to save and retrieve anything you’d like—even binary data. It’s fully encrypted, backed up to the cloud (that you can self-host if you want) and can be synced with all your machines
     _github: https://github.com/charmbracelet/skate
     _name: skate
-    _preload: true
     _short: "Skate is a terminal-based visual layout tool for creating interactive user interfaces in Go.                                                                                                              "
     brew: charmbracelet/tap/skate
     go: github.com/charmbracelet/skate@latest
