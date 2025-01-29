@@ -223,9 +223,8 @@ configureNetworkManagerVPNProfiles() {
     RESTART_NM=false
 
     ### Ensure `NetworkManager` plugins are
-    # NOTE: By default, all the NetworkManager plugins are installed.
     if command -v apt-get > /dev/null; then
-      sudo apt-get install -y network-manager*
+      sudo apt-get install -y network-manager* openvpn
     elif command -v dnf > /dev/null; then
       sudo dnf install -y openvpn NetworkManager*
     elif command -v pacman > /dev/null; then
@@ -239,23 +238,26 @@ configureNetworkManagerVPNProfiles() {
       ### Sets up OpenVPN profiles
       if [ '{{ $ovpnUsername }}' != '' ] && [ '{{ $ovpnPassword }}' != '' ]; then
         find "${XDG_CONFIG_HOME:-$HOME/.config}/vpn" -type f -name "*.ovpn" | while read OVPN_FILE; do
-          ### Adds the OpenVPN profiles by importing the `*.ovpn` files in `${XDG_CONFIG_HOME:-$HOME/.config}/vpn` and then applying the OpenVPN username and password
+          ### Adds the OpenVPN profiles by importing the `*.ovpn` files
+          TMP_OVPN="$(mktemp)"
+          cat "$OVPN_FILE" | chezmoi decrypt > "$TMP_OVPN"
+          OVPN_FILE="$TMP_OVPN"
           gum log -sl info "Adding $OVPN_FILE to NetworkManager OpenVPN profiles"
           OVPN_NAME="$(basename "$OVPN_FILE" | sed 's/.ovpn$//')"
           nmcli connection import type openvpn file "$OVPN_FILE"
-          nmcli connection modify "$OVPN_NAME" +vpn.data 'username={{- $ovpnUsername }}'
-          nmcli connection modify "$OVPN_NAME" vpn.secrets 'password={{- $ovpnPassword }}'
+          nmcli connection modify "$OVPN_NAME" +vpn.data "username={{ $ovpnUsername }}"
+          nmcli connection modify "$OVPN_NAME" vpn.secrets "password={{ $ovpnPassword }}"
           nmcli connection modify "$OVPN_NAME" +vpn.data password-flags=0
 
           ### Register the excluded subnets in the routeadd / routedel files
           for EXCLUDED_SUBNET in '{{ join "' '" .host.vpn.excludedSubnets }}'; do
-            ensureNetworkConfigs
             sudo mkdir -p /etc/network/if-up.d
             nmcli connection modify "$OVPN_NAME" +ipv4.routes "$EXCLUDED_SUBNET" | sudo tee -a /etc/network/if-up.d/routeadd
             sudo mkdir -p /etc/network/if-post-down.d
             nmcli connection modify "$OVPN_NAME" -ipv4.routes "$EXCLUDED_SUBNET" | sudo tee -a /etc/network/if-post-down.d/routedel
           done
           RESTART_NM=true
+          rm -f "$TMP_OVPN"
         done
       else
         gum log -sl info 'Either the OpenVPN username or password is undefined.'
@@ -265,26 +267,38 @@ configureNetworkManagerVPNProfiles() {
       {{ if (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) }}
       ### Setup WireGuard profiles
       if [ -d /etc/NetworkManager/system-connections ]; then
-        find "${XDG_CONFIG_HOME:-$HOME/.config}/vpn" -type f -name "*.nmconnection" | while read WG_FILE; do
+        find "${XDG_CONFIG_HOME:-$HOME/.config}/vpn" -type f -name "*.conf" | while read WG_FILE; do
           ### Ensure the WireGuard NetworkManager plugin is available
-          if [ ! -d /usr/lib/NetworkManager/nm-wireguard-service ]; then
+          if ! command -v network-manager-wireguard > /dev/null; then
             gum log -sl info 'The nm-wireguard-service is not present'
             gum log -sl info 'Installing the nm-wireguard-service'
+            sudo apt-get install -y network-manager-wireguard
           fi
+
+          TMP_CONF="$(mktemp -d)"
 
           ### Add the WireGuard profiles
           gum log -sl info "Adding $WG_FILE to /etc/NetworkManager/system-connections"
           WG_FILENAME="$(basename "$WG_FILE")"
-          chezmoi decrypt "$WG_FILE" | sudo tee "/etc/NetworkManager/system-connections/$WG_FILENAME" > /dev/null
+          cat "$WG_FILE" | chezmoi decrypt > "$TMP_CONF/$WG_FILENAME"
+          WG_FILE="$TMP_CONF/$WG_FILENAME"
+          nmcli connection import type wireguard file "$WG_FILE"
 
-          ### Register the excluded subnets in the routeadd / routedel files
+          ### Set permissions and reload NetworkManager
+          sudo chmod 600 "/etc/NetworkManager/system-connections/$WG_FILENAME"
+          sudo chown root:root "/etc/NetworkManager/system-connections/$WG_FILENAME"
+          sudo systemctl reload NetworkManager
+
+          ### Extract the connection ID and modify it
+          WG_PROFILE_NAME=$(grep -oP '(?<=^id=).*' "$WG_FILE")
           for EXCLUDED_SUBNET in '{{ join "' '" .host.vpn.excludedSubnets }}'; do
-            ensureNetworkConfigs
-            WG_PROFILE_NAME="$(echo "$WG_FILENAME" | sed 's/.nmconnection$//')"
+            sudo mkdir -p /etc/network/if-up.d
             nmcli connection modify "$WG_PROFILE_NAME" +ipv4.routes "$EXCLUDED_SUBNET" | sudo tee -a /etc/network/if-up.d/routeadd
+            sudo mkdir -p /etc/network/if-post-down.d
             nmcli connection modify "$WG_PROFILE_NAME" -ipv4.routes "$EXCLUDED_SUBNET" | sudo tee -a /etc/network/if-post-down.d/routedel
           done
           RESTART_NM=true
+          rm -f "$WG_FILE"
         done
       else
         gum log -sl warn '/etc/NetworkManager/system-connections is not a directory!'
@@ -292,9 +306,9 @@ configureNetworkManagerVPNProfiles() {
       {{ end -}}
 
       ### Restart NetworkManager if changes were made and environment is not WSL
-      if [ "$RESTART_NM" == 'true' ] && [[ ! "$(test -d proc && grep Microsoft /proc/version > /dev/null)" ]]; then
+      if [ "$RESTART_NM" == 'true' ] && [[ ! "$(grep Microsoft /proc/version 2>/dev/null)" ]]; then
         gum log -sl info 'Restarting NetworkManager since VPN profiles were updated'
-        sudo service NetworkManager restart
+        sudo systemctl restart NetworkManager
       fi
     else
       gum log -sl warn 'nmcli is unavailable'
