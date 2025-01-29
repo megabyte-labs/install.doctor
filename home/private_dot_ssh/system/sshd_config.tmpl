@@ -31,7 +31,10 @@ AllowUsers {{ .host.ssh.allowUsers }}
 MaxAuthTries 3
 #MaxSessions 10
 
+# Source: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/
+PubkeyAuthentication yes
 AuthenticationMethods publickey
+TrustedUserCAKeys /etc/ssh/ca.pub
 
 # The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2
 # but this is overridden so installations will only check .ssh/authorized_keys
