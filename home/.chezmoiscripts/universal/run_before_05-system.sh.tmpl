@@ -847,7 +847,6 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   zapInstall
   installShellGPT
   setupLinuxHomebrewFonts
-  miscMacOs
 else
   installBrewPackages
   installXcode &
@@ -873,7 +872,6 @@ else
   showNotificationCenter &
   zapInstall &
   setupLinuxHomebrewFonts &
-  miscMacOs &
   wait
 fi
 
