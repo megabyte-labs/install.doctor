@@ -1,35 +1,18 @@
 * Write requirements for `software.yml`
 
-https://github.com/harababurel/gcsf
 https://nixos.wiki/wiki/Nix_Installation_Guide
-https://github.com/seaweedfs/seaweedfs
-[text](https://github.com/gitbito/CLI)
-https://github.com/awslabs/mountpoint-s3
-https://gist.github.com/chadmayfield/ada07e4e506d7acd577a665541a70c9b
 * Add ~/.local/share/sounds was symlink to {{ .host.home }}/.local/share/betelgeuse/share/sounds
 [text](https://instill.tech/chill/models)
-https://github.com/ossec/ossec-hids
-[text](https://github.com/invoke-ai/InvokeAI)
-https://github.com/search?q=system&type=repositories&s=stars&o=desc&p=59
-- https://github.com/nats-io/nats-server
 - [Title](https://github.com/albfan/miraclecast)
 - [Title](https://gitlab.gnome.org/GNOME/gnome-network-displays)
-Use minimum permissions / IAM for https://iosexample.com/a-command-line-tool-to-download-and-install-apples-xcode/
-https://github.com/tiiiecherle/osx_install_config/blob/master/03_homebrew_casks_and_mas/3b_homebrew_casks_and_mas_install/6_mas_appstore.sh
-virtualbox blocked by C
-adobe-creative-cloud curl: (18) HTTP/2 stream 1 was reset
 * Wazuh requires booting into recovery, running csrutil disable, installing agent normally, and then re-enabling it again in recovery mode
-- https://app.warp.dev/referral/7PMXRV Warp referral
 * NGINX /opt/homebrew/etc/nginx/nginx.conf, on port 8080 so no sudo required, nginx will load all files in /opt/homebrew/etc/nginx/servers/, brew services might require sudo if port 443 is used, Docroot /opt/homebrew/var/www
 - https://github.com/linuxserver/docker-webtop
 - https://nginxui.com/
 
 - Barrier config
 - Integrate Sheldon
-- Look at Flipper Zero
 - Come up with some sensible defaults for https://espanso.org/
-- https://containertoolbx.org/install/
-- [IP Fire](https://www.ipfire.org/) - Consider as alternative to pfSense on Qubes.
 - `git-credential-manager configure`
 - [`git-credential-manager` for WSL](https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/wsl.md)
 - Configure Navi to automatically download and use the best cheat repositories
@@ -38,14 +21,10 @@ adobe-creative-cloud curl: (18) HTTP/2 stream 1 was reset
 - (https://www.kolide.com/features/checks/mac-firewall)
 - Create IP set for CloudFlare [Title](https://firewalld.org/documentation/man-pages/firewalld.ipset.html)
 - https://github.com/kyrolabs/awesome-langchain
-- Create seed for Lulu
-- https://github.com/essandess/macOS-Fortress
 - https://wakatime.com/plugins
-- https://github.com/containers/toolbox consider for p10k.zsh file
 - Figure out where Vector service fits in
 - Consider leveraging a CLI builder powered by structured data like [https://github.com/mumoshu/variant](Variant) and / or [https://github.com/mumoshu/variant2](Variant2)
 - Consider implementing a tool like [https://github.com/marshyski/quick-secure](QuickSecure) that will ensure proper permissions on boot
-- https://www.haskell.org/ghcup/install/#how-to-install
 - https://github.com/browserless/browserless
 - Consider integrating [LocalAI](https://github.com/go-skynet/LocalAI) which can be used in combination with mods to generate ChatGPT responses locally
 - Revisit Resilio - seems like they have tools useful for synchronizing VMs
