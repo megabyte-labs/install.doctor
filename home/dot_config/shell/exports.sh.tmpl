@@ -429,6 +429,9 @@ export PATH="$PATH:$PNPM_HOME"
 # Specify location of the default Prettierd configuration
 # export PRETTIERD_DEFAULT_CONFIG=""
 
+### Proto
+export PROTO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/proto"
+
 ### Python / CA Certificate
 # Used by Python, cURL, and other tools
 if [ -f "$HOME/.local/etc/ssl/curl/cacert.pem" ]; then

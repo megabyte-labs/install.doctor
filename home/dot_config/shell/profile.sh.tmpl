@@ -78,10 +78,16 @@ if [ "$BASH_SUPPORT" = 'true' ]; then
     export OS_ICON
   fi
 
+  ### pkgx / dev
+  if command -v pkgx > /dev/null; then
+    eval "$(pkgx --quiet dev --shellcode)"
+  fi
+
   ### Directory Colors
   if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/lscolors.sh" ]; then
     . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/lscolors.sh"
   fi
+
 
   ### fzf-git
   # if [ -f "${$XDG_DATA_HOME:-$HOME/.local/share}/fzf/fzf-git.bash" ]; then

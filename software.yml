@@ -4182,6 +4182,20 @@ softwarePackages:
     brew: gojq
     github: github.com/itchyny/gojq
     go: github.com/itchyny/gojq@latest
+  moon:
+    _bin: moon
+    _github: https://github.com/moonrepo/moon
+    _name: Moon
+    _desc: Multi-language mono-repo task system
+    _home: https://moonrepo.dev/moon
+    brew: moon
+  proto:
+    _bin: proto
+    _github: https://github.com/moonrepo/proto
+    _home: https://moonrepo.dev/proto
+    _name: Proto
+    _desc: Proto is a pluggable version manager, a unified toolchain.
+    brew: proto
   golangci-lint:
     _bin: golangci-lint
     _desc: Fast linters Runner for Go
@@ -8267,8 +8281,10 @@ softwarePackages:
     _github: https://github.com/pkgxdev/pkgx
     _home: https://pkgx.sh/
     _name: pkgx
+    _post: pkgx dev integrate
     _short: "pkgx is a tool that simplifies package management for Go projects by providing a centralized configuration file to manage dependencies.                                                                   "
-    brew: pkgxdev/made/pkgx
+    brew: pkgx
+    cargo: pkgx
   platformio:
     _bin: platformio
     _desc: "PlatformIO Core is an open-source ecosystem for IoT development with a focus on embedded systems. It provides a unified development platform that supports multiple microcontroller architectures,        \nframeworks, and IDEs. PlatformIO Core offers a command-line interface for building, managing libraries, and uploading firmware to devices. It simplifies the development process by abstracting hardware  \ncomplexities and providing a consistent workflow across different platforms. It is highly extensible with support for various development platforms and tools, making it a versatile choice for embedded  \nsystems development.                                                                                                                                                                                      "
