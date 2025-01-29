@@ -1,9 +1,5 @@
 * Write requirements for `software.yml`
 https://nixos.wiki/wiki/Nix_Installation_Guide
-* Add ~/.local/share/sounds was symlink to {{ .host.home }}/.local/share/betelgeuse/share/sounds
-[text](https://instill.tech/chill/models)
-- [Title](https://github.com/albfan/miraclecast)
-- [Title](https://gitlab.gnome.org/GNOME/gnome-network-displays)
 * Wazuh requires booting into recovery, running csrutil disable, installing agent normally, and then re-enabling it again in recovery mode
 * NGINX /opt/homebrew/etc/nginx/nginx.conf, on port 8080 so no sudo required, nginx will load all files in /opt/homebrew/etc/nginx/servers/, brew services might require sudo if port 443 is used, Docroot /opt/homebrew/var/www
 - https://github.com/linuxserver/docker-webtop
@@ -15,7 +11,7 @@ https://nixos.wiki/wiki/Nix_Installation_Guide
 - [`git-credential-manager` for WSL](https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/wsl.md)
 - Configure Navi to automatically download and use the best cheat repositories
 - Google Drive index on Cloudflare https://github.com/menukaonline/goindex-extended
-- https://codesandbox.io/ https://github.com/firecracker-microvm/firecracker
+- https://codesandbox.io/
 - (https://www.kolide.com/features/checks/mac-firewall)
 - Create IP set for CloudFlare [Title](https://firewalld.org/documentation/man-pages/firewalld.ipset.html)
 - https://github.com/kyrolabs/awesome-langchain
