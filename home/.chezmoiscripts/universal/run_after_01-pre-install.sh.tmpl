@@ -250,7 +250,9 @@ configureNetworkManagerVPNProfiles() {
           ### Register the excluded subnets in the routeadd / routedel files
           for EXCLUDED_SUBNET in '{{ join "' '" .host.vpn.excludedSubnets }}'; do
             ensureNetworkConfigs
+            sudo mkdir -p /etc/network/if-up.d
             nmcli connection modify "$OVPN_NAME" +ipv4.routes "$EXCLUDED_SUBNET" | sudo tee -a /etc/network/if-up.d/routeadd
+            sudo mkdir -p /etc/network/if-post-down.d
             nmcli connection modify "$OVPN_NAME" -ipv4.routes "$EXCLUDED_SUBNET" | sudo tee -a /etc/network/if-post-down.d/routedel
           done
           RESTART_NM=true
@@ -273,7 +275,7 @@ configureNetworkManagerVPNProfiles() {
           ### Add the WireGuard profiles
           gum log -sl info "Adding $WG_FILE to /etc/NetworkManager/system-connections"
           WG_FILENAME="$(basename "$WG_FILE")"
-          chezmoi decrypt "$WG_FILE" | sudo tee "/etc/NetworkManager/system-connections/$WG_FILENAME"
+          chezmoi decrypt "$WG_FILE" | sudo tee "/etc/NetworkManager/system-connections/$WG_FILENAME" > /dev/null
 
           ### Register the excluded subnets in the routeadd / routedel files
           for EXCLUDED_SUBNET in '{{ join "' '" .host.vpn.excludedSubnets }}'; do

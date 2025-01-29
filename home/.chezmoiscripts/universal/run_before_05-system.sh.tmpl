@@ -811,7 +811,12 @@ installXcode() {
 setupLinuxHomebrewFonts() {
   if [ ! -d /Applications ] && [ ! -d /System ]; then
     gum log -sl info 'Tapping homebrew/linux-fonts' && brew tap homebrew/linux-fonts
-    gum log -sl info 'Symlinking linuxbrew/share/fonts to /usr/local/share' && sudo ln -s /home/linuxbrew/.linuxbrew/share/fonts -t /usr/local/share
+    if [ ! -L "/usr/local/share/fonts" ]; then
+      gum log -sl info 'Symlinking linuxbrew/share/fonts to /usr/local/share'
+      sudo ln -s /home/linuxbrew/.linuxbrew/share/fonts -t /usr/local/share
+    else
+      gum log -sl info '/home/linuxbrew/.linuxbrew/share/fonts already symlinked to /usr/local/share'
+    fi
     if command -v fc-cache > /dev/null; then
       gum log -sl info 'Running sudo fc-cache -fv' && sudo fc-cache -fv
     else
