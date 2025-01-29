@@ -141,6 +141,10 @@ export BAT_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/bat/config"
 ### Cargo
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export PATH="$PATH:$CARGO_HOME/bin"
+if [ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/rustup/bin" ]; then
+  export PATH="${HOMEBREW_PREFIX:-/opt/homebrew}/opt/rustup/bin:$PATH"
+fi
+export RUSTUP_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/rustup"
 
 ### Composer
 export COMPOSER_BIN_DIR="$HOME/.local/bin/composer"
@@ -476,9 +480,6 @@ export GEM_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/gems"
 export GEM_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/gems"
 export GEM_SPEC_CACHE="$GEM_HOME/specs"
 export PATH="$PATH:$GEM_HOME/bin"
-
-### Rustup
-export RUSTUP_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/rustup"
 
 ### SDKMan
 export SDKMAN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/sdkman"

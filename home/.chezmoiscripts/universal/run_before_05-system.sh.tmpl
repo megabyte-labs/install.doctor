@@ -747,6 +747,9 @@ rustUpInit() {
   if command -v rustup-init > /dev/null && ! command -v rustc > /dev/null; then
     gum log -sl info 'Running rustup-init -y' && rustup-init -y
   fi
+  if command -v rustup > /dev/null; then
+    gum log -sl info 'Running rustup default stable' && rustup default stable
+  fi
 }
 
 zapInstall() {

@@ -369,21 +369,19 @@ async function installPackages(pkgInstructions) {
         const items = command.split(/;| /)
         let classicInstall = []
         let regularInstall = []
-        // Temporary variable to track if the next item is --classic
-        let nextIsClassic = false
+        // Split the command into individual items
+        let previousItem = "";
         items.forEach(item => {
           if (item === '--classic') {
-            nextIsClassic = true
-          } else if (nextIsClassic) {
-            classicInstall.push(item)
-            nextIsClassic = false
-          } else if (item.startsWith("--")) {
-            // Skip flags other than --classic
-            return
-          } else {
-            regularInstall.push(item)
+            classicInstall.push(previousItem);
+          } else if (!item.startsWith("--")) {
+            // Add non-flag items to regularInstall temporarily
+            regularInstall.push(item);
           }
-        })
+          previousItem = item;
+        });
+        // Filter out items that were moved to classicInstall from regularInstall
+        regularInstall = regularInstall.filter(item => !classicInstall.includes(item));
         process.env.DEBUG && log(`DEBUG: sudo snap install ${classicInstall.join(' ')} --classic`)
         promises.push($`sudo snap install ${classicInstall.join(' ')} --classic`)
         process.env.DEBUG && log(`DEBUG: sudo snap install ${regularInstall.join(' ')}`)
@@ -663,7 +661,7 @@ async function main() {
       } else {
         const groups = typeof x[groupsField] === 'string' ? [x[groupsField]] : x[groupsField]
         return groups.flatMap(y => {
-          return `sudo -E "${os.homedir()}/.local/bin/add-usergroup" "${y}" "${y}" > /dev/null && sudo "${os.homedir()}/.local/bin/add-usergroup" "${process.env.USER}" "${y}" > /dev/null`
+          return `sudo "${os.homedir()}/.local/bin/add-usergroup" "${y}" "${y}" > /dev/null && sudo "${os.homedir()}/.local/bin/add-usergroup" "${process.env.USER}" "${y}" > /dev/null`
         })
       }
     })
