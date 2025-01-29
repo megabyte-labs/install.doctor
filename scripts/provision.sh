@@ -829,8 +829,12 @@ function ensureAppleUser() {
     fi
 
     # Switch to 'apple' user to continue the script
-    logg info "Switching to 'apple' user to continue the script..."
-    su - apple -c "bash -c \"$0\""
+    # Use a temporary copy of the script to avoid /dev/fd issues
+    TEMP_SCRIPT=$(mktemp)
+    cp "$0" "$TEMP_SCRIPT"
+    chmod +x "$TEMP_SCRIPT"
+    su - apple -c "$TEMP_SCRIPT"
+    rm -f "$TEMP_SCRIPT"
     exit 0
   else
     logg info "You are not running as root. Proceeding with the current user."
