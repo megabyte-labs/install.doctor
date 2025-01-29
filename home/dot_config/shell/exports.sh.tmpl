@@ -261,7 +261,13 @@ export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 export GO111MODULE=on
 export PATH="$PATH:${GOPATH}/bin"
 if command -v go > /dev/null && command -v brew > /dev/null; then
-  GOROOT="$(brew --prefix go)/libexec"
+  if [ -d "$(brew --prefix go)/libexec" ]; then
+    GOROOT="$(brew --prefix go)/libexec"
+  elif [ -f /usr/bin/go ] && [ -d /usr/lib/go ]; then
+    GOROOT="/usr/lib/go"
+  else
+    GOROOT="/usr/lib/go"
+  fi
   export GOROOT
   export PATH="$PATH:${GOROOT}/bin"
 fi
