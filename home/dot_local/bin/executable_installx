@@ -480,6 +480,7 @@ async function main() {
   sysType = initData[2]
   chezmoiConfig = initData[3]
   isHeadless = initData[4]
+  process.env.DEBUG && console.log('Is headless', isHeadless)
   installOrder = initData[1].installerPreference
   log(`Populating lists of pre-installed packages`)
   const listPromises = [
