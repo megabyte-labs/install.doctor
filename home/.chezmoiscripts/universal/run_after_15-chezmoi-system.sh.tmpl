@@ -13,30 +13,10 @@ systemFiles() {
   gum log -sl info 'Finished applying system configuration files'
 }
 
-# @description
-#     Applies appropriate and minimal permissions to clamav folders
-clamAVPermissions() {
-  sudo mkdir -p /etc/clamav
-  sudo find /etc/clamav -type f -exec chmod 600 {} \;
-  if [ -d /Applications ] && [ -d /System ]; then
-    sudo find /etc/clamav -type f -exec chown clamav:wheel {} \;
-  else
-    sudo find /etc/clamav -type f -exec chown clamav:root {} \;
-  fi
-  sudo chmod u+x /etc/clamav/clamav-email
-  sudo mkdir -p /var/log/clamav
-  sudo find /var/log/clamav -type f -exec chmod 600 {} \;
-  if [ -d /Applications ] && [ -d /System ]; then
-    sudo find /var/log/clamav -type f -exec chown clamav:wheel {} \;
-  else
-    sudo find /var/log/clamav -type f -exec chown clamav:root {} \;
-  fi
-}
-
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   gum log -sl info 'The DEBUG or DEBUG_MODE environment variable is set so the chezmoi-system tasks will be run synchronously'
-  clamAVPermissions
+  systemFiles
 else
-  clamAVPermissions &
+  systemFiles &
   wait
 fi

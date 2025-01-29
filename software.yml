@@ -1054,10 +1054,10 @@ softwarePackages:
     _desc: "Blocky is a tool available on GitHub at https://github.com/0xERR0R/blocky. It is a Python script designed for managing DNS blacklists. Blocky allows users to easily add, remove, and update domains in   \nvarious blocklists. This tool can be useful for system administrators and network security professionals to control access to specific domains by blocking them at the DNS level. It provides a simple and\nefficient way to manage blacklists for enhanced security and control over network traffic.                                                                                                                "
     _github: https://github.com/0xERR0R/blocky
     _name: Blocky
-    _service: blocky
-    _service:brew:
+    _service:
       - name: blocky
         sudo: true
+        pkg: brew
     _serviceEnabled: false
     _short: "blocky is a tool for managing and monitoring multiple blockchain nodes easily.                                                                                                                            "
     brew: blocky
@@ -1508,19 +1508,32 @@ softwarePackages:
     _name: ClamAV
     _groups:
       - clamav
-    _service:apt:
-      - clamav-daemon
-      - clamav-freshclam
-    _service:brew:
+    _service:
       - name: clamav
         sudo: true
-    _service:dnf:
-      - clamav-daemon
-      - clamd-freshclam
-    _service:pacman:
-      - clamav-daemon
-      - clamav-freshclam
+        pkg: brew
+      - name: clamav-daemon
+        sudo: true
+        pkg: apt
+      - name: clamav-freshclam
+        sudo: true
+        pkg: apt
+      - name: clamav-daemon
+        sudo: true
+        pkg: dnf
+      - name: clamd-freshclam
+        sudo: true
+        pkg: dnf
+      - name: clamav-daemon
+        sudo: true
+        pkg: pacman
+      - name: clamav-freshclam
+        sudo: true
+        pkg: pacman
     _serviceEnabled: true
+    _folders:
+      - /var/log/clamav
+      - /etc/clamav
     _preload: true
     _post: |
       if [ -d /Applications ] && [ -d /System ]; then
@@ -1647,10 +1660,11 @@ softwarePackages:
     _name: Cockpit
     _preload: true
     _post: sudo usermod -a -G libvirtdbus libvirt
-    _service:pacman: cockpit.socket
+    _service:
+      - name: cockpit.socket
+        sudo: true
+        pkg: pacman
     _short: "Cockpit is a web-based graphical interface for managing Linux servers.                                                                                                                                    "
-    _systemd: cockpit
-    _systemd:pacman: cockpit.socket
     apt:
       - 389-ds-base
       - cockpit
@@ -2683,7 +2697,14 @@ softwarePackages:
     _github: https://github.com/skeeto/endlessh
     _home: https://github.com/skeeto/endlessh
     _name: Endlessh
-    _service: endlessh
+    _service:
+      - name: endlessh
+        sudo: true
+        pkg: apt
+      - name: endlessh
+        sudo: true
+        pkg: dnf
+    _serviceEnabled: true
     _preload: true
     _short: "endlessh is a tool that generates endless SSH honeypot noise to frustrate and slow down attackers.                                                                                                        "
     apt: endlessh
@@ -2895,9 +2916,8 @@ softwarePackages:
     _name: "fail2ban                                                                                                                                                                                                  "
     _notes: |
       fail2ban cannot be installed on Qubes Fedora 36 without messing with the qubes-firewall since firewalld is required.
-    _service: fail2ban
     _preload: true
-    _service:brew:
+    _service:
       - name: fail2ban
         sudo: true
     _serviceEnabled: true
@@ -5678,7 +5698,9 @@ softwarePackages:
       - libvirt
     _home: https://www.linux-kvm.org/page/Main_Page
     _name: KVM
-    _service: libvirt
+    _service:
+      - name: libvirt
+        sudo: true
     _serviceEnabled: true
     apt:
       - bridge-utils
@@ -6701,8 +6723,11 @@ softwarePackages:
     _desc: "MongoDB is an open-source, document-oriented NoSQL database program. It uses a flexible, JSON-like document data model, making it easy to store and manage data. MongoDB is designed for scalability, high\navailability, and performance. The GitHub repository contains the source code, documentation, and resources related to MongoDB. It is actively maintained by the MongoDB community and developers         \nworldwide.                                                                                                                                                                                                "
     _github: https://github.com/mongodb/mongo
     _name: MongoDB
-    _service: mongodb
-    _service:brew: mongodb-community
+    _service:
+      - name: mongodb
+        pkg: choco
+      - name: mongodb-community
+        pkg: brew
     _short: "MongoDB is an open-source NoSQL database program that uses a document-oriented data model.                                                                                                                "
     brew: mongodb/brew/mongodb-community
     choco: mongodb
@@ -7024,8 +7049,7 @@ softwarePackages:
     _github: https://github.com/slackhq/nebula
     _home: https://github.com/slackhq/nebula
     _name: nebula
-    _service: nebula
-    _service:brew:
+    _service:
       - name: nebula
         sudo: true
     _short: "Nebula is an open-source, scalable overlay networking tool for connecting and securing services across different infrastructures.                                                                         "
@@ -7153,11 +7177,10 @@ softwarePackages:
       - netdata
     _home: https://www.netdata.cloud/
     _name: Netdata
-    _service: netdata
-    _preload: true
-    _service:brew:
+    _service:
       - name: netdata
         sudo: true
+    _preload: true
     _serviceEnabled: true
     _short: "Netdata is an open-source real-time performance monitoring tool for system administrators and developers.                                                                                                 "
     brew: netdata
@@ -7213,7 +7236,9 @@ softwarePackages:
         proto: tcp
       - port: 443
         proto: tcp
-    _service: nginx
+    _service:
+      - name: nginx
+        sudo: true
     _serviceEnabled: true
     _preload: true
     _short: "nginx is a popular open-source web server known for its high performance, stability, and scalability.                                                                                                     "
@@ -7691,7 +7716,7 @@ softwarePackages:
     _github: https://github.com/raggi/openssl-osx-ca
     _name: OpenSSL macOS CA
     _preload: true
-    _service:brew:darwin:
+    _service:
       - name: openssl-osx-ca
         sudo: true
     _serviceEnabled: true
@@ -7704,9 +7729,6 @@ softwarePackages:
     _name: OpenVPN
     _preload: true
     _service: openvpn
-    _service:brew:
-      - name: openvpn
-        sudo: true
     _short: "OpenVPN is an open-source virtual private network (VPN) software that allows secure remote access to networks.                                                                                            "
     apt: openvpn
     brew: openvpn
@@ -8469,7 +8491,6 @@ softwarePackages:
     _github: https://github.com/postgres/postgres
     _name: PostgreSQL
     _service: postgresql
-    _service:brew: postgresql@14
     _short: "PostgreSQL is an open-source relational database management system known for its reliability and robust features.                                                                                         "
     apt: postgresql
     brew: postgresql
@@ -9239,7 +9260,10 @@ softwarePackages:
     _preload: true
     _home: https://rkhunter.sourceforge.net/
     _name: rkhunter
-    _service:pacman: cronie
+    _service:
+      - name: cronie
+        sudo: true
+        pkg: pacman
     apt: rkhunter
     brew: rkhunter
     dnf: rkhunter
@@ -9492,8 +9516,16 @@ softwarePackages:
       - sambausers
     _home: https://www.samba.org/
     _name: Samba
-    _service: smbd
-    _service:dnf: smb
+    _service:
+      - name: smbd
+        sudo: true
+        pkg: apt
+      - name: smb
+        sudo: true
+        pkg: dnf
+      - name: smbd
+        sudo: true
+        pkg: pacman
     _preload: true
     _short: "Samba is an open-source software suite that provides file and print services for various Microsoft Windows clients.                                                                                       "
     apt: samba
@@ -9732,8 +9764,7 @@ softwarePackages:
     _name: sftpgo
     _post: |
       sudo sftpgo initprovider
-    _service: sftpgo
-    _service:brew:
+    _service:
       - name: sftpgo
         sudo: true
     _serviceEnabled: true
@@ -10046,7 +10077,10 @@ softwarePackages:
     _github: https://github.com/snapcore/snapd
     _home: https://snapcraft.io/
     _name: Snap
-    _service: snapd
+    _service:
+      - name: snapd
+        sudo: true
+        pkg: snap
     _short: "snapd is a package manager for Linux distributions, developed by Canonical.                                                                                                                               "
   snitch:
     _app: Little Snitch.app
@@ -10604,8 +10638,10 @@ softwarePackages:
     _home: https://tailscale.com/
     _name: Tailscale
     _preload: true
-    _service:brew: tailscale
-    _service:pacman: tailscaled
+    _service:
+      - name: tailscaled
+        sudo: true
+        pkg: pacman
     _short: "Tailscale is a secure mesh VPN that makes it easy to connect your devices securely.                                                                                                                       "
     brew: tailscale
     cask: tailscale
@@ -11316,8 +11352,11 @@ softwarePackages:
     _github: https://github.com/hashicorp/vault
     _home: https://vaultproject.io/
     _name: HashiCorp Vault
-    _service: vault
-    _service:brew: hashicorp/tap/vault
+    _service:
+      - name: hashicorp/tap/vault
+        pkg: brew
+      - name: vault
+        pkg: yay
     _short: "Vault is a tool for securely accessing secrets.                                                                                                                                                           "
     brew: hashicorp/tap/vault
     yay: vault-cli
@@ -11653,8 +11692,9 @@ softwarePackages:
     _github: https://github.com/wazuh/wazuh
     _home: https://wazuh.com/
     _name: Wazuh
-    _service:linux: wazuh-agent
-    _service:windows: wazuh-agent
+    _service:
+      - name: wazuh-agent
+        sudo: true
     _todo: Add in with proper env variables
     _short: "Wazuh is an open-source security monitoring platform that can be used for threat detection, integrity monitoring, and incident response.                                                                  "
     _when:darwin: "csrutil status | grep enabled > /dev/null && ! test -f /Library/Ossec/bin/agent-auth"
@@ -12090,10 +12130,19 @@ softwarePackages:
       - port: 3389
         proto: tcp
     _post: sudo adduser xrdp ssl-cert
-    _service: xrdp
-    _service:yay:
-      - xrdp
-      - xrdp-sesman
+    _service:
+      - name: xrdp
+        pkg: apt
+      - name: xrdp
+        pkg: dnf
+      - name: xrdp
+        pkg: pacman
+      - name: xrdp
+        pkg: yay
+      - name: xrdp-sesman
+        pkg: yay
+      - name: xrdp
+        pkg: zypper
     _short: "xrdp is an open-source remote desktop protocol (RDP) server for Linux.                                                                                                                                    "
     apt: xrdp
     dnf: xrdp
