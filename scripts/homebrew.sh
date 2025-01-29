@@ -167,7 +167,7 @@ loadHomebrew() {
     elif [ -d "$HOME/.linuxbrew" ]; then
       logg info "Using $HOME/.linuxbrew/bin/brew" && eval "$("$HOME/.linuxbrew/bin/brew" shellenv)"
     elif [ -d "/home/linuxbrew/.linuxbrew" ]; then
-      logg info 'Using /home/linuxbrew/.linuxbrew/bin/brew' && eval "(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+      logg info 'Using /home/linuxbrew/.linuxbrew/bin/brew' && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     else
       logg info 'Could not find Homebrew installation'
     fi
