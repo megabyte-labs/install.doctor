@@ -364,8 +364,8 @@ async function installPackages(pkgInstructions) {
       case 'pkg-termux':
       case 'pkgin':
       case 'port':
-      case 'snap': // TODO - snap testing.. combine with snap-classic and add appropriate logic
-        const command = `sudo ${key === 'pkg-freebsd' || key === 'pkg-termux' ? 'pkg' : key} install ${combined[key].flatMap(x => x.installList).join(' ')}`
+      case 'snap':
+        const command = `${combined[key].flatMap(x => x.installList).join(' ')}`
         const items = command.split(/;| /)
         let classicInstall = []
         let regularInstall = []
@@ -384,7 +384,9 @@ async function installPackages(pkgInstructions) {
             regularInstall.push(item)
           }
         })
+        process.env.DEBUG && log(`DEBUG: sudo snap install ${classicInstall.join(' ')} --classic`)
         promises.push($`sudo snap install ${classicInstall.join(' ')} --classic`)
+        process.env.DEBUG && log(`DEBUG: sudo snap install ${regularInstall.join(' ')}`)
         promises.push($`sudo snap install ${regularInstall.join(' ')}`)
         break
       case 'flatpak':
@@ -477,8 +479,8 @@ function pkgMap(pkgDefs) {
 
 async function checkIfHeadless() {
   try {
-    process.env.DEBUG && console.log('Checking if session is headless')
-    runSilentCommand(`if [ -d /System ] && [ -d /Applications ]; then system_profiler SPDisplaysDataType > /dev/null; else xrandr --listmonitors > /dev/null; fi`)
+    process.env.DEBUG && log('Checking if session is headless')
+    runSilentCommand(`if [ -d /System ] && [ -d /Applications ]; then system_profiler SPDisplaysDataType > /dev/null 2>&1; else xrandr --listmonitors > /dev/null 2>&1; fi`)
     return false
   } catch (e) {
     return true
@@ -542,7 +544,7 @@ async function main() {
   log(`Constructing installation data`)
   const installData = pkgMap(customArgv.all ? Object.keys(pkgs) : installKeys)
   log(`Filtering install instructions`)
-  process.env.DEBUG && console.log('Headless session detected?', isHeadless)
+  process.env.DEBUG && log(`Headless session detected: ${isHeadless}`)
   const installInstructions = installData
     .filter(x => !!x.installList)
     .map(x => {
