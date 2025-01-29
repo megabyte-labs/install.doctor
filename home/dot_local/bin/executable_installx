@@ -119,15 +119,15 @@ async function getSystemType() {
     if (process.platform === "win32") {
         return "windows"
     } else if (process.platform === "linux") {
-        if (which.sync('apk')) {
+        if (which.sync('apk', { nothrow: true })) {
             return "apk"
-        } else if (which.sync('apt-get')) {
+        } else if (which.sync('apt-get', { nothrow: true })) {
             return "apt"
-        } else if (which.sync('dnf')) {
+        } else if (which.sync('dnf', { nothrow: true })) {
             return "dnf"
-        } else if (which.sync('pacman')) {
+        } else if (which.sync('pacman', { nothrow: true })) {
             return "pacman"
-        } else if (which.sync('zypper')) {
+        } else if (which.sync('zypper', { nothrow: true })) {
             return "zypper"
         } else {
             return "linux"
