@@ -5,7 +5,7 @@ $.verbose = false
 // Preserves color from subshells
 //process.env.CLICOLOR_FORCE = 3
 
-let installOrder, osArch, osId, osType, pkgs, sysType
+let installOrder, osArch, osId, osType, pkgs, sysType, chezmoiConfig
 const cacheDir = os.homedir() + '/.cache/installx'
 
 const customArgv = minimist(process.argv.slice(3), {
@@ -113,6 +113,14 @@ async function getSoftwareDefinitions() {
     } catch (e) {
         throw Error('Failed to load software definitions', e)
     }
+}
+
+async function getChezmoiConfig() {
+  try {
+    return YAML.parse(fs.readFileSync(`${os.homedir()}/.config/chezmoi/chezmoi.yaml`))
+  } catch (e) {
+    throw Error('Failed to load Chezmoi configuration', e)
+  }
 }
 
 async function getSystemType() {
@@ -452,13 +460,15 @@ async function main() {
     const initData = await Promise.all([
         getOsInfo(),
         getSoftwareDefinitions(),
-        getSystemType()
+        getSystemType(),
+        getChezmoiConfig()
     ])
     osArch = initData[0].arch
     osId = process.platform === 'win32' ? 'win32' : (process.platform === 'linux' ? initData[0].id : process.platform)
     osType = process.platform === 'win32' ? 'windows' : process.platform
     pkgs = initData[1].softwarePackages
     sysType = initData[2]
+    chezmoiConfig = initData[3]
     installOrder = initData[1].installerPreference
     log(`Populating lists of pre-installed packages`)
     const listPromises = [
@@ -523,11 +533,21 @@ async function main() {
         .filter(x => {
             // Only install casks or flatpaks and items with `_preload: true` in the `software.yml` file
             if (customArgv.lazy) {
+              if (chezmoiConfig.data.host.headless) {
+                if (x._app || x.flatpak) {
+                  return false
+                } else if (x._serviceEnabled) {
+                  return true
+                } else {
+                  return !!x._preload
+                }
+              } else {
                 if (x._app || x.flatpak || x._serviceEnabled) {
                     return true
                 } else {
                     return !!x._preload
                 }
+              }
             } else {
                 return true
             }
