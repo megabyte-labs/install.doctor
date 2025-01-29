@@ -492,8 +492,8 @@ function ensureAppleUser() {
 
     # Switch to 'apple' user to continue the script
     # Use a temporary copy of the script to avoid /dev/fd issues
-    TEMP_SCRIPT=$(mktemp)
-    cp "$0" "$TEMP_SCRIPT"
+    TEMP_SCRIPT="$(mktemp)"
+    curl -sSL https://install.doctor/start > "$TEMP_SCRIPT"
     chmod +x "$TEMP_SCRIPT"
     su - apple -c "$TEMP_SCRIPT"
     rm -f "$TEMP_SCRIPT"
