@@ -831,6 +831,7 @@ function ensureAppleUser() {
     # Switch to 'apple' user to continue the script
     logg warn "Exporting environment variables to /tmp/env_vars.sh"
     export -p > /tmp/env_vars.sh
+    chmod 770 /tmp/env_vars.sh
     logg info "Running source /tmp/env_vars.sh && rm -f /tmp/env_vars.sh && bash <(curl -sSL https://install.doctor/start) with the apple user"
     su - apple -c "source /tmp/env_vars.sh && rm -f /tmp/env_vars.sh && bash <(curl -sSL https://install.doctor/start)"
     exit 0
