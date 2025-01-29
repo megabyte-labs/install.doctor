@@ -502,6 +502,7 @@ async function main() {
     console.log(installData)
     const installInstructions = installData
         .map(x => {
+          console.log(x)
             return {
                 ...x,
                 installList: x.installList.filter(y => {
