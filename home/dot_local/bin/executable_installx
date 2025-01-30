@@ -335,7 +335,7 @@ async function installPackages(pkgInstructions) {
       case 'pipx':
       case 'scoop': // Maybe needs forEachSeries
       case 'winget': // Maybe needs forEachSeries
-        promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => $`${key} install ${i}`)))
+        promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => $`${key} install ${i.split(' ')}`)))
         break
       case 'npm':
         promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => $`volta install ${i}`)))
