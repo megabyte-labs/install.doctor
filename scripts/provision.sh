@@ -703,25 +703,29 @@ runChezmoi() {
   fi
 
   ### Run chezmoi apply
-  if command -v unbuffer > /dev/null; then
-    if command -v caffeinate > /dev/null; then
-      logg info "Running: unbuffer -p caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
-      unbuffer -p caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
-    else
-      logg info "Running: unbuffer -p chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
-      unbuffer -p chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
-    fi
-    logg info "Unbuffering log file $LOG_FILE"
-    UNBUFFER_TMP="$(mktemp)"
-    unbuffer cat "$LOG_FILE" > "$UNBUFFER_TMP"
-    mv -f "$UNBUFFER_TMP" "$LOG_FILE"
+  if [ ! -e /dev/tty ]; then
+    chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER || CHEZMOI_EXIT_CODE=$?
   else
-    if command -v caffeinate > /dev/null; then
-      logg info "Running: caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
-      caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
+    if command -v unbuffer > /dev/null; then
+      if command -v caffeinate > /dev/null; then
+        logg info "Running: unbuffer -p caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+        unbuffer -p caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
+      else
+        logg info "Running: unbuffer -p chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+        unbuffer -p chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
+      fi
+      logg info "Unbuffering log file $LOG_FILE"
+      UNBUFFER_TMP="$(mktemp)"
+      unbuffer cat "$LOG_FILE" > "$UNBUFFER_TMP"
+      mv -f "$UNBUFFER_TMP" "$LOG_FILE"
     else
-      logg info "Running: chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
-      chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
+      if command -v caffeinate > /dev/null; then
+        logg info "Running: caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+        caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
+      else
+        logg info "Running: chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
+        chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER 2>&1 | tee /dev/tty | ts '[%Y-%m-%d %H:%M:%S]' > "$LOG_FILE" || CHEZMOI_EXIT_CODE=$?
+      fi
     fi
   fi
 
