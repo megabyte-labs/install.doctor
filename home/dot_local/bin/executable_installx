@@ -386,17 +386,14 @@ async function installPackages(pkgInstructions) {
         // Filter out items that were moved to classicInstall from regularInstall
         regularInstall = regularInstall.filter(item => !classicInstall.includes(item));
 
-        if (classicInstall.length) {
-          process.env.DEBUG && log(`DEBUG: sudo snap install ${classicInstall.join(' ')} --classic`)
-          process.env.DEBUG && console.log(classicInstall)
-          const CMD = `sudo snap install ${classicInstall.join(' ')} --classic`
-          promises.push($`${CMD}`)
+        if (classicInstall.length > 0) {
+          process.env.DEBUG && log(`DEBUG: sudo snap install ${classicInstall.join(' ')} --classic`);
+          promises.push($`sudo snap install ${['--classic', ...classicInstall]}`);
         }
-        if (regularInstall.length) {
-          process.env.DEBUG && log(`DEBUG: sudo snap install ${regularInstall.join(' ')}`)
-          process.env.DEBUG && console.log(regularInstall)
-          const CMD = `sudo snap install ${regularInstall.join(' ')}`
-          promises.push($`${CMD}`)
+
+        if (regularInstall.length > 0) {
+          process.env.DEBUG && log(`DEBUG: sudo snap install ${regularInstall.join(' ')}`);
+          promises.push($`sudo snap install ${regularInstall}`);
         }
         break
       case 'flatpak':
