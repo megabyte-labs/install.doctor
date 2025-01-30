@@ -1013,9 +1013,11 @@ userLogFolders() {
 }
 
 applyBasePlists() {
-  find "$HOME/Library/Preferences/base" -mindepth 1 -maxdepth 1 -type f | while read BASE_PLIST; do
-    cp -f "$BASE_PLIST" "$HOME/Library/Preferences/$(basename "$BASE_PLIST")"
-  done
+  if [ -d /System ] && [ -d /Applications ]; then
+    find "$HOME/Library/Preferences/base" -mindepth 1 -maxdepth 1 -type f | while read BASE_PLIST; do
+      cp -f "$BASE_PLIST" "$HOME/Library/Preferences/$(basename "$BASE_PLIST")"
+    done
+  fi
 }
 
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
