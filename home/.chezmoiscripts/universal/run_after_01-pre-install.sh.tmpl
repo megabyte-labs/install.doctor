@@ -548,6 +548,12 @@ gnomeExtensionSettings() {
       rm -f /tmp/install-gnome-extensions.txt
     fi
 
+    ### Ensure yq installed
+    if ! command -v yq > /dev/null; then
+      gum log -sl info 'Installing yq'
+      brew install yq
+    fi
+
     ### Register temporary file for gnome.yml JSON
     if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/desktop/gnome.yml" ]; then
       TMP_YQ="$(mktemp)"
