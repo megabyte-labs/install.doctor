@@ -606,13 +606,15 @@ setHostname() {
 #     ### Error:-99 File:/AppleInternal/Library/BuildRoots/0032d1ee-80fd-11ee-8227-6aecfccc70fe/Library/Caches/com.apple.xbs/Sources/Admin/InternetServices.m Line:379
 #     ```
 setNtpServer() {
-  if command -v m > /dev/null; then
-    ### macOS
-    gum log -sl info 'Turning off setusingnetworktime for 2 seconds' && sudo systemsetup -setusingnetworktime off 2>/dev/null 1>&2
-    sleep 2
-    gum log -sl info 'Re-enabling setusingnetworktime' && sudo systemsetup -setusingnetworktime on 2>/dev/null 1>&2
-  else
-    gum log -sl warn 'Skipped setting the NTP server'
+  if [ -d /Applications ] && [ -d /System ]; then
+    if command -v m > /dev/null; then
+      ### macOS
+      gum log -sl info 'Turning off setusingnetworktime for 2 seconds' && sudo systemsetup -setusingnetworktime off 2>/dev/null 1>&2
+      sleep 2
+      gum log -sl info 'Re-enabling setusingnetworktime' && sudo systemsetup -setusingnetworktime on 2>/dev/null 1>&2
+    else
+      gum log -sl warn 'Skipped setting the NTP server'
+    fi
   fi
 }
 
