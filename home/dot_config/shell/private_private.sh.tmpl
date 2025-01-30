@@ -67,6 +67,9 @@ export HISHTORY_USER_SECRET="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoit
 export HASS_SERVER="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "HASS_SERVER")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/HASS_SERVER") | decrypt | trim }}{{ else }}{{ env "HASS_SERVER" }}{{ end }}"
 export HASS_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "HASS_TOKEN")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/HASS_TOKEN") | decrypt | trim }}{{ else }}{{ env "HASS_TOKEN" }}{{ end }}"
 
+### Ionic
+export IONIC_TOKEN="{{ if (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "IONIC_TOKEN")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/IONIC_TOKEN") | decrypt | trim }}{{ else }}{{ env "IONIC_TOKEN" }}{{ end }}"
+
 ### Install Doctor
 # TODO: Replace HEADLESS_INSTALL with {{ .host.headless }} data source once headless install detection is implemented
 # export HEADLESS_INSTALL={{ .host.headless }}
