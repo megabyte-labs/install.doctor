@@ -366,7 +366,9 @@ async function installPackages(pkgInstructions) {
       case 'port':
       case 'snap':
         const command = `${combined[key].flatMap(x => x.installList).join(' ')}`
-        const items = command.split(/;| /)
+        process.env.DEBUG && console.log(command)
+        const items = command.match(/\S+/g) || [];
+        process.env.DEBUG && console.log(items)
         let classicInstall = []
         let regularInstall = []
         // Split the command into individual items
@@ -380,12 +382,20 @@ async function installPackages(pkgInstructions) {
           }
           previousItem = item;
         });
+        
         // Filter out items that were moved to classicInstall from regularInstall
         regularInstall = regularInstall.filter(item => !classicInstall.includes(item));
-        process.env.DEBUG && log(`DEBUG: sudo snap install ${classicInstall.join(' ')} --classic`)
-        promises.push($`sudo snap install ${classicInstall.join(' ')} --classic`)
-        process.env.DEBUG && log(`DEBUG: sudo snap install ${regularInstall.join(' ')}`)
-        promises.push($`sudo snap install ${regularInstall.join(' ')}`)
+
+        if (classicInstall.length) {
+          process.env.DEBUG && log(`DEBUG: sudo snap install ${classicInstall.join(' ')} --classic`)
+          process.env.DEBUG && console.log(classicInstall)
+          promises.push($`sudo snap install ${classicInstall.join(' ')} --classic`)
+        }
+        if (regularInstall.length) {
+          process.env.DEBUG && log(`DEBUG: sudo snap install ${regularInstall.join(' ')}`)
+          process.env.DEBUG && console.log(regularInstall)
+          promises.push($`sudo snap install ${regularInstall.join(' ')}`)
+        }
         break
       case 'flatpak':
         promises.push(forEachSeries(combined[key].flatMap(x => x.installList.flatMap(i => $`sudo ${key} install -y flathub ${i}`))))

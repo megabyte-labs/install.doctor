@@ -813,6 +813,13 @@ installXcode() {
   fi
 }
 
+rustUpFix() {
+  if command -v rustup > /dev/null; then
+    logg info 'Running rustup default stable because unsure which Rust library are used on some systems'
+    rustup default stable
+  fi
+}
+
 setupLinuxHomebrewFonts() {
   if [ ! -d /Applications ] && [ ! -d /System ]; then
     gum log -sl info 'Tapping homebrew/linux-fonts' && brew tap homebrew/linux-fonts
@@ -857,6 +864,7 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   zapInstall
   installShellGPT
   setupLinuxHomebrewFonts
+  rustUpFix
 else
   installBrewPackages
   installXcode &
@@ -882,6 +890,7 @@ else
   showNotificationCenter &
   zapInstall &
   setupLinuxHomebrewFonts &
+  rustUpFix &
   wait
 fi
 
