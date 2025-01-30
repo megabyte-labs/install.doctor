@@ -698,9 +698,20 @@ runChezmoi() {
   fi
 
   ### Run chezmoi apply
-  if [ ! -e /dev/tty ]; then
-    chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER || CHEZMOI_EXIT_CODE=$?
+  if [ -d /System ] && [ -d /Applications ]; then
+    # macOS: Check if display information is available
+    system_profiler SPDisplaysDataType > /dev/null 2>&1
   else
+    # Linux: Check if xrandr can list monitors
+    xrandr --listmonitors > /dev/null 2>&1
+  fi
+
+  # Check if the last command failed
+  if [ $? -ne 0 ]; then
+    logg info "Fallback: Running in headless mode"
+    chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER
+  else
+    logg info "Running with a display"
     if command -v unbuffer > /dev/null; then
       if command -v caffeinate > /dev/null; then
         logg info "Running: unbuffer -p caffeinate chezmoi apply $COMMON_MODIFIERS $DEBUG_MODIFIER $KEEP_GOING_MODIFIER $FORCE_MODIFIER"
