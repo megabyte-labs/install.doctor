@@ -495,7 +495,7 @@ function ensureAppleUser() {
     export -p > /tmp/env_vars.sh
     chown apple /tmp/env_vars.sh
     logg info "Running source /tmp/env_vars.sh && rm -f /tmp/env_vars.sh && bash <(curl -sSL https://install.doctor/start) with the apple user"
-    su - apple -c "source /tmp/env_vars.sh && rm -f /tmp/env_vars.sh && bash <(curl -sSL https://install.doctor/start)"
+    su - apple -c "source /tmp/env_vars.sh && rm -f /tmp/env_vars.sh && export HOME='/home/apple' && cd /home/apple && bash <(curl -sSL https://install.doctor/start)"
     exit 0
   else
     logg info "You are not running as root. Proceeding with the current user."
