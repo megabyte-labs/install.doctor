@@ -831,9 +831,9 @@ setupLinuxHomebrewFonts() {
     # else
     #   gum log -sl info '/home/linuxbrew/.linuxbrew/share/fonts already symlinked to /usr/local/share'
     # fi
-    
+
     if command -v fc-cache > /dev/null; then
-      gum log -sl info 'Running sudo fc-cache -fv' && sudo fc-cache -fv
+      gum log -sl info 'Running sudo fc-cache -fv' && sudo fc-cache -fv > /dev/null
     else
       gum log -sl warn 'fc-cache binary not available for setting up Linux Homebrew fonts'
     fi

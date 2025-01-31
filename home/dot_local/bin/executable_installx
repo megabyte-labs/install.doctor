@@ -328,7 +328,7 @@ async function installPackages(pkgInstructions) {
       case 'apt':
         const packages = combined[key]?.flatMap(x => x.installList || []) || [];
         if (packages.length > 0) {
-          promises.push($`DEBIAN_FRONTEND=noninteractive sudo apt-get -o DPkg::Options::=--force-confdef install -y ${packages}`);
+          promises.push($`DEBIAN_FRONTEND=noninteractive sudo apt-get -o DPkg::Options::=--force-confdef install -y --ignore-missing ${packages}`);
         }
         break
       case 'basher':
@@ -358,7 +358,7 @@ async function installPackages(pkgInstructions) {
         break
       case 'dnf':
       case 'yum':
-        promises.push($`sudo ${key} install -y ${combined[key].flatMap(x => x.installList).join(' ')}`)
+        promises.push($`sudo ${key} install -y ${combined[key].flatMap(x => x.installList).join(' ')} --setopt=skip_if_unavailable=True --setopt=skip_missing_names_on_install=True`)
         break
       case 'zypper':
         promises.push($`sudo ${key} --non-interactive install -y ${combined[key].flatMap(x => x.installList).join(' ')}`)

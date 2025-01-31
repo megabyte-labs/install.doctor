@@ -170,11 +170,13 @@ applyWallpaper() {
   ksetwallpaper --file /usr/local/share/wallpapers/Betelgeuse/contents/images/3440x1440.jpg
   {{ else -}}
   ### Set macOS wallpaper
-  if command -v m > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/betelgeuse/share/wallpapers/Betelgeuse-macOS/contents/source.png" ]; then
-    gum log -sl info 'Setting macOS wallpaper with m'
-    m wallpaper "${XDG_DATA_HOME:-$HOME/.local/share}/betelgeuse/share/wallpapers/Betelgeuse-macOS/contents/source.png"
-  else
-    gum log -sl warn 'Either m or the macOS default wallpaper is missing.'
+  if [ -d /Applications ] && [ -d /System ]; then
+    if command -v m > /dev/null && [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/betelgeuse/share/wallpapers/Betelgeuse-macOS/contents/source.png" ]; then
+      gum log -sl info 'Setting macOS wallpaper with m'
+      m wallpaper "${XDG_DATA_HOME:-$HOME/.local/share}/betelgeuse/share/wallpapers/Betelgeuse-macOS/contents/source.png"
+    else
+      gum log -sl warn 'Either m or the macOS default wallpaper is missing.'
+    fi
   fi
   {{ end -}}
 }
