@@ -240,9 +240,10 @@ configureNetworkManagerVPNProfiles() {
       if [ '{{ $ovpnUsername }}' != '' ] && [ '{{ $ovpnPassword }}' != '' ]; then
         find "${XDG_CONFIG_HOME:-$HOME/.config}/vpn" -type f -name "*.ovpn" | while read OVPN_FILE; do
           ### Adds the OpenVPN profiles by importing the `*.ovpn` files
-          TMP_OVPN="$(mktemp)"
-          cat "$OVPN_FILE" | chezmoi decrypt > "$TMP_OVPN"
-          OVPN_FILE="$TMP_OVPN"
+          # TMP_OVPN="$(mktemp)"
+          # cat "$OVPN_FILE" | chezmoi decrypt > "$TMP_OVPN"
+          # cat "$OVPN_FILE" > "$TMP_OVPN"
+          # OVPN_FILE="$TMP_OVPN"
           gum log -sl info "Adding $OVPN_FILE to NetworkManager OpenVPN profiles"
           OVPN_NAME="$(basename "$OVPN_FILE" | sed 's/.ovpn$//')"
           nmcli connection import type openvpn file "$OVPN_FILE"
@@ -445,33 +446,10 @@ dconfSettings() {
 }
 
 # @description
-#     This script decrypts the SSH key files that are housed in the `home/.chezmoitemplates/ssh` section of the repository.
-#     It loops through all the files in `home/.chezmoitemplates/ssh` and stores them to the `~/.ssh` folder
-#     when they are successfully decrypted.
-#
 #     This script generates a pair of default `id_rsa` and `id_rsa.pub` keys if one is not already present
 #     on the system after the Install Doctor provisioning process completes. It also ensures the private
 #     key is only readable and writable the provisioning user.
-decryptSSHKeys() {
-  ### Unpack existing encrypted keys
-  gum log -sl info 'Decrypting SSH keys stored in the home/.chezmoitemplates/ssh folder of the Install Doctor repo / fork.'
-  find "{{ .chezmoi.sourceDir }}/.chezmoitemplates/ssh" -type f | while read SSH_FILE; do
-    ### Decrypt SSH file with Chezmoi
-    gum log -sl info "Decrypting the $(basename "$SSH_FILE") encrypted SSH file"
-    chezmoi decrypt "$SSH_FILE" > "$HOME/.ssh/$(basename "$SSH_FILE")" || EXIT_CODE=$?
-
-    ### Handle failed decryption with warning log message
-    if [ -n "$EXIT_CODE" ]; then
-      gum log -sl warn "Unable to decrypt the file stored in $SSH_FILE"
-    fi
-
-    ### Apply appropriate permission to decrypted ~/.ssh file
-    if [ -f "$HOME/.ssh/$(basename "$SSH_FILE")" ]; then
-      gum log -sl info "Applying appropriate permissions on $HOME/.ssh/$(basename "$SSH_FILE")"
-      chmod 600 "$HOME/.ssh/$(basename "$SSH_FILE")"
-    fi
-  done
-
+ensureSSHKey() {
   ### Ensure id_rsa is present and create one if it does not exist
   if [ ! -f "$HOME/.ssh/id_rsa" ]; then
     logg 'Generating missing default private key / public key (~/.ssh/id_rsa)'
@@ -1052,7 +1030,7 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   configureNetworkManagerVPNProfiles
   configureSSHD
   dconfSettings
-  decryptSSHKeys
+  ensureSSHKey
   emscriptenInstall
   ensureQtStyleOverride
   ensurePipUpdated
@@ -1079,7 +1057,7 @@ else
   configureNetworkManagerVPNProfiles &
   configureSSHD &
   dconfSettings &
-  decryptSSHKeys &
+  ensureSSHKey &
   emscriptenInstall &
   ensureQtStyleOverride &
   ensurePipUpdated &

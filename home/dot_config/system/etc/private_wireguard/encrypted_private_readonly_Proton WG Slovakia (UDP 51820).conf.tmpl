@@ -1,3 +1,4 @@
+{{- if (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) -}}
 -----BEGIN AGE ENCRYPTED FILE-----
 YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBwbDQ3UDRmSzNUdkljbXU1
 V2lXRUV4YU9jcHRKL2R0Q05NYU5xYy8xaWpRCmFuTDloSjd2MkUwL0ZsRGtPNVo1
@@ -12,3 +13,4 @@ f3rPITm5ZoklRjPZ7LnGfQaaoLwwYUYUW9YU4SfykTNxKap0XADsAtwO/DsdRL3c
 xSkUlCaadi9csisKCjb/AhQSKc/sDTRNlKF28CFUqorcgw8K6Qi79tYgxBuN0V/Z
 UmQr
 -----END AGE ENCRYPTED FILE-----
+{{- end -}}
