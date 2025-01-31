@@ -328,7 +328,7 @@ async function installPackages(pkgInstructions) {
       case 'apt':
         const packages = combined[key]?.flatMap(x => x.installList || []) || [];
         if (packages.length > 0) {
-          promises.push($`DEBIAN_FRONTEND=noninteractive sudo apt-get -o DPkg::Options::=--force-confdef install -y ${packages.join(' ')}`);
+          promises.push($`DEBIAN_FRONTEND=noninteractive sudo apt-get -o DPkg::Options::=--force-confdef install -y ${packages}`);
         }
         break
       case 'basher':
