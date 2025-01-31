@@ -9122,12 +9122,18 @@ softwarePackages:
     choco: recuva
     scoop: extras/recuva
   redis:
-    _bin: redis-server
+    _bin:
+      - redis-cli
+      - redis-server
     _desc: Redis is an in-memory database that persists on disk. The data model is key-value, but many different kind of values are supported - Strings, Lists, Sets, Sorted Sets, Hashes, Streams, HyperLogLogs, Bitmaps.
     _docs: https://redis.io/docs/latest/
     _github: https://github.com/redis/redis
     _home: https://redis.io/
     _name: Redis
+    _post: |
+      if command -v snap > /dev/null && command -v redis.cli > /dev/null && ! command -v redis-cli > /dev/null; then
+        sudo snap alias redis.cli redis-cli
+      fi
     _service: redis
     _serviceEnabled: true
     _preload: true

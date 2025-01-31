@@ -306,7 +306,10 @@ async function installPackages(pkgInstructions) {
         promises.push(forEachSeries(combined[key].flatMap(x => x.installList.flatMap(i => $`${key} 127.0.0.1 -v${process.env.DEBUG && 'vv'} -e '{ ansible_connection: "local", ansible_become_user: "root", ansible_user: "${process.env.USER}", ansible_family: "${osId.charAt(0).toUpperCase() + osId.slice(1)}", install_homebrew: False }' -m include_role -a name=${i}`))))
         break
       case 'apk':
-        promises.push($`sudo ${key} add ${combined[key].flatMap(x => x.installList).join(' ')}`)
+        const apkPackages = combined[key]?.flatMap(x => x.installList || []) || [];
+        if (apkPackages.length > 0) {
+          promises.push($`sudo ${key} add ${apkPackages.join(' ')}`);
+        }
         break
       case 'appimage':
         promises.push(...combined[key].flatMap(x => x.installList.flatMap(i => {
@@ -323,7 +326,10 @@ async function installPackages(pkgInstructions) {
         })))
         break
       case 'apt':
-        promises.push($`DEBIAN_FRONTEND=noninteractive sudo apt-get -o DPkg::Options::=--force-confdef install -y ` + combined[key].flatMap(x => x.installList).join(' '))
+        const packages = combined[key]?.flatMap(x => x.installList || []) || [];
+        if (packages.length > 0) {
+          promises.push($`DEBIAN_FRONTEND=noninteractive sudo apt-get -o DPkg::Options::=--force-confdef install -y ${packages.join(' ')}`);
+        }
         break
       case 'basher':
       case 'baulk':
@@ -352,8 +358,10 @@ async function installPackages(pkgInstructions) {
         break
       case 'dnf':
       case 'yum':
-      case 'zypper':
         promises.push($`sudo ${key} install -y ${combined[key].flatMap(x => x.installList).join(' ')}`)
+        break
+      case 'zypper':
+        promises.push($`sudo ${key} --non-interactive install -y ${combined[key].flatMap(x => x.installList).join(' ')}`)
         break
       case 'emerge':
       case 'pkg_add':

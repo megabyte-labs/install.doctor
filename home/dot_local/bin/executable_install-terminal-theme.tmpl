@@ -37,14 +37,6 @@ export FOREGROUND_COLOR="#C3C7D1"   # Foreground Color (text)
 export CURSOR_COLOR="$FOREGROUND_COLOR" # Cursor color
 export PROFILE_NAME="Betelgeuse"
 
-if [ ! -e gconftool-2 ] && [ -f /etc/debian_version ]; then
-  logg 'Running sudo apt-get update'
-  sudo apt-get update
-  logg 'Running sudo apt-get install -y gconf2 || true'
-  logg 'This may only be required on older versions of OSes that use apt-get'
-  sudo apt-get install -y gconf2 || true
-fi
-
 # |
 # | Early pre-requisites check
 # | ===========================================

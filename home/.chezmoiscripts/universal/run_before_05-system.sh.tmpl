@@ -258,6 +258,8 @@ function gVisorPreBuilt() {
   rm -f *.sha512
   chmod a+rx runsc containerd-shim-runsc-v1
   sudo mv runsc containerd-shim-runsc-v1 /usr/local/bin
+  sudo chown root: /usr/local/bin/runsc
+  sudo chown root: /usr/local/bin/containerd-shim-runsc-v1
 }
 
 # @description Helper function for installDocker that installs gVisor using alternate Go method described on the GitHub page
