@@ -66,7 +66,7 @@ function firefoxSetup() {
   for FIREFOX_DIR in '/usr/lib/firefox' '/usr/lib/firefox-esr' '/etc/firefox' '/etc/firefox-esr' '/Applications/Firefox.app/Contents/Resources'; do
     if [ -d "$FIREFOX_DIR" ] && [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/firefox" ] && command -v rsync > /dev/null; then
       gum log -sl info "Syncing enterprise profiles from ${XDG_DATA_HOME:-$HOME/.local/share}/firefox to $FIREFOX_DIR"
-      sudo rsync -artvu "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/" "$FIREFOX_DIR" > /dev/null
+      sudo rsync -artuE --chown=root:root --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rwX,Fg=rX,Fo=rX --inplace --exclude .git/ "${XDG_DATA_HOME:-$HOME/.local/share}/firefox/" "$FIREFOX_DIR" > /dev/null
     fi
   done
 

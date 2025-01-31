@@ -22,18 +22,18 @@ applyFontsToSystem() {
     FONT_DIR='/Library/Fonts'
     ### ~/Library/Fonts
     if [ -d "$HOME/Library/Fonts" ]; then
-      gum log -sl info "Syncing $HOME/Library/Fonts to $FONT_DIR" && sudo rsync -artuE --chown=root:root --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r --inplace --exclude .git/ "$HOME/Library/Fonts/" "$FONT_DIR"
+      gum log -sl info "Syncing $HOME/Library/Fonts to $FONT_DIR" && sudo rsync -artuE --chown=root:root --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r --inplace --exclude .git/ "$HOME/Library/Fonts/" "$FONT_DIR" > /dev/null
     fi
     ### ~/.local/share/fonts
     if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/fonts" ]; then
-      gum log -sl info "Syncing ${XDG_DATA_HOME:-$HOME/.local/share}/fonts to $FONT_DIR" && sudo rsync -artuE --chown=root:root --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r --inplace --exclude .git/ "${XDG_DATA_HOME:-$HOME/.local/share}/fonts/" "$FONT_DIR"
+      gum log -sl info "Syncing ${XDG_DATA_HOME:-$HOME/.local/share}/fonts to $FONT_DIR" && sudo rsync -artuE --chown=root:root --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r --inplace --exclude .git/ "${XDG_DATA_HOME:-$HOME/.local/share}/fonts/" "$FONT_DIR" > /dev/null
     fi
   else
     ### Linux
     ### Copy fonts
     gum log -sl info 'Copying fonts from ~/.local/share/fonts to /usr/local/share/fonts to make them available globally'
     FONT_DIR='/usr/local/share/fonts'
-    sudo rsync -artuE --chown=root:root --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rwX,Fg=rX,Fo=rX --inplace --exclude .git/ "${XDG_DATA_HOME:-$HOME/.local/share}/fonts/" "$FONT_DIR"
+    sudo rsync -artuE --chown=root:root --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rwX,Fg=rX,Fo=rX --inplace --exclude .git/ "${XDG_DATA_HOME:-$HOME/.local/share}/fonts/" "$FONT_DIR" > /dev/null
 
     ### Configure system font properties
     if [ -d /etc/fonts ]; then
