@@ -404,7 +404,7 @@ runChezmoi() {
   fi
 
   ### Handle exit codes in log
-  if cat "$LOG_FILE" | grep 'chezmoi: exit status 140' > /dev/null; then
+  if [ -f "$LOG_FILE" ] && cat "$LOG_FILE" | grep 'chezmoi: exit status 140' > /dev/null; then
     beforeRebootDarwin
     logg info "Chezmoi signalled that a reboot is necessary to apply a system update"
     logg info "Running softwareupdate with the reboot flag"

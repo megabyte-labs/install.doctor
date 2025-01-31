@@ -361,9 +361,30 @@ configureSSHD() {
       else
         ### Linux
         gum log -sl info 'Enabling the sshd service'
-        sudo systemctl enable sshd
-        gum log -sl info 'Restarting the sshd service'
-        sudo systemctl restart sshd && gum log -sl info 'Successfully ran sudo systemctl restart sshd'
+        if [[ -f /etc/os-release ]]; then
+          . /etc/os-release
+          case "$ID" in
+            debian|ubuntu|raspbian|pop|linuxmint)
+              SERVICE_NAME="ssh"
+              ;;
+            rhel|centos|rocky|almalinux|fedora|arch|opensuse|gentoo|alpine)
+              SERVICE_NAME="sshd"
+              ;;
+            *)
+              SERVCE_NAME="unknown"
+              ;;
+          esac
+        else
+          SERVICE_NAME="unknown"
+        fi
+
+        if [ "$SERVICE_NAME" != 'unknown' ]; then
+          sudo systemctl enable "$SERVICE_NAME" --now
+          gum log -sl info 'Restarting the sshd service'
+          sudo systemctl restart "$SERVICE_NAME" && gum log -sl info 'Successfully ran sudo systemctl restart sshd'
+        else
+          gum log -sl error 'Unknown Linux operating system - cannot determine how to configure SSH'
+        fi
       fi
     else
       gum log -sl warn 'The /etc/ssh folder does not exist'

@@ -109,10 +109,15 @@ manageService() {
     fi
 
     if [[ "$SERVICE_MANAGER" == "systemctl" ]]; then
+      if brew services | grep -q "^$SERVICE_NAME"; then
+        gum log -sl info "$SERVICE_NAME is a Homebrew package - starting using brew services"
+        brew services start "$SERVICE_NAME"
+      else
         local CMD="systemctl enable --now $SERVICE_NAME"
         [[ "$REQUIRES_SUDO" == "true" ]] && CMD="sudo $CMD"
         gum log -sl info "Executing: $CMD"
         eval "$CMD"
+      fi
     elif [[ "$SERVICE_MANAGER" == "brew" ]]; then
         local CMD="brew services start $SERVICE_NAME"
         [[ "$REQUIRES_SUDO" == "true" ]] && CMD="sudo $CMD"
