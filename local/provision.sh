@@ -694,7 +694,7 @@ runChezmoi() {
   DEBUG_MODIFIER=""
   if [ -n "$DEBUG_MODE" ] || [ -n "$DEBUG" ]; then
     logg info "Either DEBUG_MODE or DEBUG environment variables were set so Chezmoi will be run in debug mode"
-    export DEBUG_MODIFIER="-vvvvv --debug --verbose"
+    export DEBUG_MODIFIER="-vvv --debug --verbose"
   fi
 
   ### Run chezmoi apply
