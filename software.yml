@@ -1542,6 +1542,7 @@ softwarePackages:
         load-service clamav.freshclam
         load-service clamav.notification
       fi
+      sudo add-usergroup clamav clamav
       chown -Rf clamav:clamav /etc/clamav
       sudo mkdir -p /var/lib/clamav
       sudo chown -Rf clamav:clamav /var/lib/clamav
