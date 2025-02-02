@@ -2611,6 +2611,22 @@ softwarePackages:
       ee config set cloudflare-api-key "$(get-secret CLOUDFLARE_API_KEY)"
     brew: easyengine
     script:linux: wget -qO ee rt.cx/ee4 && sudo bash ee
+  sail:
+    _bin: sail
+    _desc: WordPress orchestration CLI built by Digital Ocean
+    _name: Sail
+    _github: https://github.com/kovshenin/sail
+    _home: https://sailed.io/
+    brew: sail
+    pipx: sailed.io
+  local:
+    _app: Local.app
+    _bin: localwp
+    _home: https://localwp.com/
+    _github: false
+    _desc: Tool that helps with local WordPress development
+    cask: local
+    choco: local
   editly:
     _bin: editly
     _deprecated: Errors related to node-gyp during installation
@@ -9465,7 +9481,7 @@ softwarePackages:
     _github: https://github.com/iffse/pay-respects
     _home: https://codeberg.org/iff/pay-respects
     _preload: true
-    brew: timescam/homebrew-tap/pay-respects
+    _brew: timescam/homebrew-tap/pay-respects
     nix-env: nixos.pay-respects
     pacman: pay-respects
     cargo:

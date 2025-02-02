@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Other steps
+#
+# 1. Add domain to https://www.google.com/recaptcha/admin/site/694216568/settings
+
+export SITE_TITLE='NY Folding Box Company'
+export SITE_TAGLINE='Boxes like Mike Tyson'
+export SITE_DESCRIPTION=''
+export SITE_URL='nyfoldingbox.com'
+export SITE_PHONE_NUMBER=''
+export FIRST_NAME='Ryan'
+export TWITTER_USER=''
+export FACEBOOK_APP_ID=''
+export FACEBOOK_PAGE_URL=''
+export INSTAGRAM_URL=''
+export LINKEDIN_URL=''
+export PINTEREST_URL=''
+export YOUTUBE_URL=''
+
+### Sail
+sail config provider-token "$(get-secret DIGITALOCEAN_ACCESS_TOKEN)"
+sail config email "$(yq '.data.user.email' "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml")"
+
+### Misc
+sail wp search-replace 'Megabyte Labs Site Title' "$SITE_TITLE"
+sail wp search-replace 'Megabyte Labs Site Tagline' "$SITE_TAGLINE"
+sail wp search-replace 'http://megabyte-labs.local' "https://$SITE_URL"
+sail wp search-replace 'megabyte-labs.local' "$SITE_URL"
+sail wp search-replace 'Authenticator App Title' "$SITE_TITLE"
+sail wp search-replace 'sender-email@megabyte-labs.local' "help@${SITE_URL}"
+sail wp search-replace 'sender-name@megabyte-labs.local' "$SITE_TITLE"
+sail wp search-replace '___REPORT_TO_ADDRESS_FIRST_NAME' "$FIRST_NAME"
+sail wp search-replace 'SECURITY NOTICE FIRST NAME' "$FIRST_NAME"
+
+### Meta
+sail wp search-replace '___TWITTER_URL' "https://x.com/$TWITTER_USER"
+sail wp search-replace '___TWITTER_USERNAME' "$TWITTER_USER"
+sail wp search-replace '___FACEBOOK_APP_ID' "$FACEBOOK_APP_ID"
+sail wp search-replace '___FACEBOOK_PAGE_URL' "$FACEBOOK_PAGE_URL"
+sail wp search-replace '___INSTAGRAM_URL' "$INSTAGRAM_URL"
+sail wp search-replace '___LINKEDIN_URL' "$LINKEDIN_URL"
+sail wp search-replace '___PINTEREST_URL' "$PINTEREST_URL"
+sail wp search-replace '___YOUTUBE_URL' "$YOUTUBE_URL"
+sail wp search-replace '___ORGANIZATION_NAME' "$SITE_TITLE"
+sail wp search-replace '___ORGANIZATION_DESCRIPTION' "$SITE_DESCRIPTION"
+sail wp search-replace '___CUSTOMER_SUPPORT_PHONE_NUMBER' "$SITE_PHONE_NUMBER"
+sail wp search-replace '___MAIL_URL' "mailto:help@${SITE_URL}"
