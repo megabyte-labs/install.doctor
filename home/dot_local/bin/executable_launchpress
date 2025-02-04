@@ -2,24 +2,43 @@
 # Other steps
 #
 # 1. Add domain to https://www.google.com/recaptcha/admin/site/694216568/settings
-
+# 2. Add domain to Google Maps API https://console.cloud.google.com/google/maps-apis/credentials?utm_source=Docs_CreateAPIKey&utm_content=Docs_maps-backend&pli=1&inv=1&invt=Aboj0w&project=megabyte-labs
+export COMPANY_LLC_NAME="NY Folding Box Company"
 export SITE_TITLE='NY Folding Box Company'
-export SITE_TAGLINE='Boxes like Mike Tyson'
-export SITE_DESCRIPTION=''
+export SITE_TAGLINE='Smart, Sturdy, and Sustainable Packaging Solutions!'
+export SITE_DESCRIPTION='NY Folding Box provides high-quality, custom folding cartons and packaging solutions for businesses of all sizes. With durable materials, innovative designs, and sustainable options, we help bring your brand to life. Contact us for premium packaging solutions tailored to your needs!'
 export SITE_URL='nyfoldingbox.com'
-export SITE_PHONE_NUMBER=''
+export SITE_PHONE_NUMBER='+19733476932'
 export FIRST_NAME='Ryan'
-export TWITTER_USER=''
+export TWITTER_USER='nyfoldingbox'
 export FACEBOOK_APP_ID=''
-export FACEBOOK_PAGE_URL=''
-export INSTAGRAM_URL=''
-export LINKEDIN_URL=''
-export PINTEREST_URL=''
+export FACEBOOK_PAGE_URL='https://www.facebook.com/nyfoldingbox'
+export INSTAGRAM_URL='https://www.instagram.com/nyfoldingbox/'
+export LINKEDIN_URL='https://www.linkedin.com/company/new-york-folding-box-co-inc/'
+export PINTEREST_URL='https://pinterest.com/nyfoldingbox'
 export YOUTUBE_URL=''
 
 ### Sail
 sail config provider-token "$(get-secret DIGITALOCEAN_ACCESS_TOKEN)"
 sail config email "$(yq '.data.user.email' "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml")"
+
+HOSTNAME="$(sail info | grep 'Hostname' | awk '{print $2}')"
+if [ ! -f .wp-config.local.php ]; then
+  cp wp-config.php .wp-config.local.php
+fi
+
+if cat .wp-config.local.php | grep 'Load local development configuration' > /dev/null; then
+
+fi
+cp wp-config.php .wp-config.local.php
+sail init --force
+
+### URL
+sail domain add "$SITE_URL"
+sail domain add "www.$SITE_URL"
+sail domain make-https "$SITE_URL"
+sail domain make-https "www.$SITE_URL"
+sail domain make-primary "$SITE_URL"
 
 ### Misc
 sail wp search-replace 'Megabyte Labs Site Title' "$SITE_TITLE"
@@ -45,3 +64,20 @@ sail wp search-replace '___ORGANIZATION_NAME' "$SITE_TITLE"
 sail wp search-replace '___ORGANIZATION_DESCRIPTION' "$SITE_DESCRIPTION"
 sail wp search-replace '___CUSTOMER_SUPPORT_PHONE_NUMBER' "$SITE_PHONE_NUMBER"
 sail wp search-replace '___MAIL_URL' "mailto:help@${SITE_URL}"
+sail wp search-replace '___COMPANY_LLC_NAME' "$COMPANY_LLC_NAME"
+
+### Disabled (since clone handles re-implementing logic)
+if false; then
+
+  REPLACEMENT="<?php\n// Load local development configuration file\nif ( file_exists( __DIR__ . '/.wp-config.local.php' ) ) {\n    require_once( __DIR__ . '/.wp-config.local.php' );\n    return;\n}"
+  TMP=$(mktemp)
+  { echo "$REPLACEMENT"; tail -n +2 wp-config.php; } > "$TMP"
+  mv -f "$TMP" wp-config.php
+
+  REPLACEMENT="if ( ! defined( "WP_CLI" ) ) {\n    require_once ABSPATH . "wp-settings.php";\n}"
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    sed -i '' '/require_once ABSPATH . '\''wp-settings.php'\'';/c\ '"$REPLACEMENT" wp-config.php
+  else
+    sed -i '/require_once ABSPATH . '\''wp-settings.php'\'';/c\ '"$REPLACEMENT" wp-config.php
+  fi
+fi
