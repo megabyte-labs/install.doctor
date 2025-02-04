@@ -162,9 +162,6 @@ if [ "$BASH_SUPPORT" = 'true' ] && [ -n "$BASH" ]; then
   ### pay-respects
   ! command -v pay-respects > /dev/null || eval "$(pay-respects bash --alias)"
 
-  ### pkgx
-  ! command -v pkgx > /dev/null || eval "$(pkgx --shellcode)"
-
   ### RTX
   ! command -v rtx > /dev/null || eval "$(rtx activate bash)"
 

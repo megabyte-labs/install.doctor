@@ -18,26 +18,63 @@ export LINKEDIN_URL='https://www.linkedin.com/company/new-york-folding-box-co-in
 export PINTEREST_URL='https://pinterest.com/nyfoldingbox'
 export YOUTUBE_URL=''
 
+### Copy base files / clean up existing cloned files
+if gum confirm "Overwrite .wp-config.prod.php / .wp-config.local.php and delete .sail/ / /backups/?"; then
+  cp wp-config.php .wp-config.prod.php
+  cp wp-config.php .wp-config.local.php
+  rm -rf .sail
+  rm -rf .backups
+fi
+
+### Ensure local configuration referenced
+if ! cat wp-config.php | grep 'Load local development configuration' > /dev/null; then
+  gum log -sl info "Ensuring local .wp-config.local.php is used in wp-config.php"
+  REPLACEMENT="<?php\n// Load local development configuration file\nif ( file_exists( __DIR__ . '/.wp-config.local.php' ) ) {\n    require_once( __DIR__ . '/.wp-config.local.php' );\n    return;\n}"
+  TMP=$(mktemp)
+  { echo "$REPLACEMENT"; tail -n +2 wp-config.php; } > "$TMP"
+  mv -f "$TMP" wp-config.php
+fi
+
+### Ensure WP-CLI fix is implemented
+if cat wp-config.php | grep 'defined( "WP_CLI" )' > /dev/null; then
+  gum log -sl info "Ensuring WP-CLI fix is enabled"
+  REPLACEMENT="if ( ! defined( 'WP_CLI' ) ) {\n    require_once ABSPATH . 'wp-settings.php';\n}"
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    sed -i '' "/require_once ABSPATH . 'wp-settings.php';/c\if ( ! defined( \"WP_CLI\" ) ) { require_once ABSPATH . \"wp-settings.php\"; }" wp-config.php
+  else
+    sed -i "/require_once ABSPATH . 'wp-settings.php';/c\if ( ! defined( \"WP_CLI\" ) ) { require_once ABSPATH . \"wp-settings.php\"; }" wp-config.php
+  fi
+fi
+
 ### Sail
+gum log -sl info 'Loading Sail config secrets'
 sail config provider-token "$(get-secret DIGITALOCEAN_ACCESS_TOKEN)"
 sail config email "$(yq '.data.user.email' "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml")"
 
-HOSTNAME="$(sail info | grep 'Hostname' | awk '{print $2}')"
-if [ ! -f .wp-config.local.php ]; then
-  cp wp-config.php .wp-config.local.php
+if gum confirm "Run sail init --force?"; then
+  gum log -sl info 'Running sail init --force'
+  sail init --force
 fi
 
-if cat .wp-config.local.php | grep 'Load local development configuration' > /dev/null; then
-
+if gum confirm "Apply CloudFlare DNS settings?"; then
+  gum log -sl info 'Acquiring hostname'
+  HOSTNAME="$(sail info | grep 'Hostname' | awk '{print $2}')"
+  export CF_API_DOMAIN="$SITE_URL"
+  gum log -sl info "Adding root CNAME pointing to $SITE_URL"
+  cfcli -a -t CNAME add @ "$HOSTNAME"
+  gum log -sl info "Adding dev.$SITE_URL"
+  cfcli -a -t CNAME add dev "$HOSTNAME"
+  gum log -sl info "Adding www.$SITE_URL"
+  cfcli -a -t CNAME add www "$HOSTNAME"
 fi
-cp wp-config.php .wp-config.local.php
-sail init --force
 
 ### URL
 sail domain add "$SITE_URL"
 sail domain add "www.$SITE_URL"
+sail domain add "dev.$SITE_URL"
 sail domain make-https "$SITE_URL"
 sail domain make-https "www.$SITE_URL"
+sail domain make-https "dev.$SITE_URL"
 sail domain make-primary "$SITE_URL"
 
 ### Misc
@@ -65,19 +102,3 @@ sail wp search-replace '___ORGANIZATION_DESCRIPTION' "$SITE_DESCRIPTION"
 sail wp search-replace '___CUSTOMER_SUPPORT_PHONE_NUMBER' "$SITE_PHONE_NUMBER"
 sail wp search-replace '___MAIL_URL' "mailto:help@${SITE_URL}"
 sail wp search-replace '___COMPANY_LLC_NAME' "$COMPANY_LLC_NAME"
-
-### Disabled (since clone handles re-implementing logic)
-if false; then
-
-  REPLACEMENT="<?php\n// Load local development configuration file\nif ( file_exists( __DIR__ . '/.wp-config.local.php' ) ) {\n    require_once( __DIR__ . '/.wp-config.local.php' );\n    return;\n}"
-  TMP=$(mktemp)
-  { echo "$REPLACEMENT"; tail -n +2 wp-config.php; } > "$TMP"
-  mv -f "$TMP" wp-config.php
-
-  REPLACEMENT="if ( ! defined( "WP_CLI" ) ) {\n    require_once ABSPATH . "wp-settings.php";\n}"
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    sed -i '' '/require_once ABSPATH . '\''wp-settings.php'\'';/c\ '"$REPLACEMENT" wp-config.php
-  else
-    sed -i '/require_once ABSPATH . '\''wp-settings.php'\'';/c\ '"$REPLACEMENT" wp-config.php
-  fi
-fi

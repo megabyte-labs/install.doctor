@@ -306,9 +306,9 @@ async function installPackages(pkgInstructions) {
         promises.push(forEachSeries(combined[key].flatMap(x => x.installList.flatMap(i => $`${key} 127.0.0.1 -v${process.env.DEBUG && 'vv'} -e '{ ansible_connection: "local", ansible_become_user: "root", ansible_user: "${process.env.USER}", ansible_family: "${osId.charAt(0).toUpperCase() + osId.slice(1)}", install_homebrew: False }' -m include_role -a name=${i}`))))
         break
       case 'apk':
-        const apkPackages = combined[key]?.flatMap(x => x.installList || []) || [];
+        const apkPackages = combined[key]?.flatMap(x => x.installList || []) || []
         if (apkPackages.length > 0) {
-          promises.push($`sudo ${key} add ${apkPackages.join(' ')}`);
+          promises.push($`sudo ${key} add ${apkPackages.join(' ')}`)
         }
         break
       case 'appimage':
@@ -326,9 +326,9 @@ async function installPackages(pkgInstructions) {
         })))
         break
       case 'apt':
-        const packages = combined[key]?.flatMap(x => x.installList || []) || [];
+        const packages = combined[key]?.flatMap(x => x.installList || []) || []
         if (packages.length > 0) {
-          promises.push($`DEBIAN_FRONTEND=noninteractive sudo apt-get -o DPkg::Options::=--force-confdef install -y --ignore-missing ${packages}`);
+          promises.push($`DEBIAN_FRONTEND=noninteractive sudo apt-get -o DPkg::Options::=--force-confdef install -y --ignore-missing ${packages}`)
         }
         break
       case 'basher':
@@ -375,33 +375,33 @@ async function installPackages(pkgInstructions) {
       case 'snap':
         const command = `${combined[key].flatMap(x => x.installList).join(' ')}`
         process.env.DEBUG && console.log(command)
-        const items = command.match(/\S+/g) || [];
+        const items = command.match(/\S+/g) || []
         process.env.DEBUG && console.log(items)
         let classicInstall = []
         let regularInstall = []
         // Split the command into individual items
-        let previousItem = "";
+        let previousItem = ""
         items.forEach(item => {
           if (item === '--classic') {
-            classicInstall.push(previousItem);
+            classicInstall.push(previousItem)
           } else if (!item.startsWith("--")) {
             // Add non-flag items to regularInstall temporarily
-            regularInstall.push(item);
+            regularInstall.push(item)
           }
-          previousItem = item;
-        });
+          previousItem = item
+        })
 
         // Filter out items that were moved to classicInstall from regularInstall
-        regularInstall = regularInstall.filter(item => !classicInstall.includes(item));
+        regularInstall = regularInstall.filter(item => !classicInstall.includes(item))
 
         if (classicInstall.length > 0) {
-          process.env.DEBUG && log(`DEBUG: sudo snap install ${classicInstall.join(' ')} --classic`);
-          promises.push($`sudo snap install ${['--classic', ...classicInstall]}`);
+          process.env.DEBUG && log(`DEBUG: sudo snap install ${classicInstall.join(' ')} --classic`)
+          promises.push($`sudo snap install ${['--classic', ...classicInstall]}`)
         }
 
         if (regularInstall.length > 0) {
-          process.env.DEBUG && log(`DEBUG: sudo snap install ${regularInstall.join(' ')}`);
-          promises.push($`sudo snap install ${regularInstall}`);
+          process.env.DEBUG && log(`DEBUG: sudo snap install ${regularInstall.join(' ')}`)
+          promises.push($`sudo snap install ${regularInstall}`)
         }
         break
       case 'flatpak':

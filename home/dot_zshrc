@@ -459,9 +459,6 @@ fi
 ### pay-respects
 ! command -v pay-respects > /dev/null || eval "$(pay-respects zsh --alias)"
 
-### pkgx
-! command -v pkgx > /dev/null || source <(pkgx --shellcode)
-
 ### Powerline
 [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/p10k.zsh" ] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/p10k.zsh"
 
