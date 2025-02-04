@@ -19,9 +19,17 @@ export PINTEREST_URL='https://pinterest.com/nyfoldingbox'
 export YOUTUBE_URL=''
 
 ### Copy base files / clean up existing cloned files
-if gum confirm "Overwrite .wp-config.prod.php / .wp-config.local.php and delete .sail/ / /backups/?"; then
-  cp wp-config.php .wp-config.prod.php
+if [ -f .wp-config.local.php ]; then
+  gum log -sl info 'The .wp-config.local.php exists'
+else
+  gum log -sl info 'The .wp-config.local.php file does not exist'
+fi
+
+if gum confirm "Copy wp-config to .wp-config.local.php?"; then
   cp wp-config.php .wp-config.local.php
+fi
+
+if gum confirm "Remove .sail/ and .backups/?"; then
   rm -rf .sail
   rm -rf .backups
 fi
@@ -36,15 +44,17 @@ if ! cat wp-config.php | grep 'Load local development configuration' > /dev/null
 fi
 
 ### Ensure WP-CLI fix is implemented
-if cat wp-config.php | grep 'defined( "WP_CLI" )' > /dev/null; then
-  gum log -sl info "Ensuring WP-CLI fix is enabled"
-  REPLACEMENT="if ( ! defined( 'WP_CLI' ) ) {\n    require_once ABSPATH . 'wp-settings.php';\n}"
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    sed -i '' "/require_once ABSPATH . 'wp-settings.php';/c\if ( ! defined( \"WP_CLI\" ) ) { require_once ABSPATH . \"wp-settings.php\"; }" wp-config.php
-  else
-    sed -i "/require_once ABSPATH . 'wp-settings.php';/c\if ( ! defined( \"WP_CLI\" ) ) { require_once ABSPATH . \"wp-settings.php\"; }" wp-config.php
+for CONFIG_FILE in "wp-config.php" ".wp-config.local.php"; do
+  if cat "$CONFIG_FILE" | grep 'defined( "WP_CLI" )' > /dev/null; then
+    gum log -sl info "Ensuring WP-CLI fix is enabled for $CONFIG_FILE"
+    REPLACEMENT="if ( ! defined( \"WP_CLI\" ) ) {\n    require_once ABSPATH . 'wp-settings.php';\n}"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+      gsed -i "/require_once ABSPATH . 'wp-settings.php';/c\if ( ! defined( \"WP_CLI\" ) ) { require_once ABSPATH . \"wp-settings.php\"; }" "$CONFIG_FILE"
+    else
+      sed -i "/require_once ABSPATH . 'wp-settings.php';/c\if ( ! defined( \"WP_CLI\" ) ) { require_once ABSPATH . \"wp-settings.php\"; }" "$CONFIG_FILE"
+    fi
   fi
-fi
+done
 
 ### Sail
 gum log -sl info 'Loading Sail config secrets'
@@ -69,36 +79,42 @@ if gum confirm "Apply CloudFlare DNS settings?"; then
 fi
 
 ### URL
-sail domain add "$SITE_URL"
-sail domain add "www.$SITE_URL"
-sail domain add "dev.$SITE_URL"
-sail domain make-https "$SITE_URL"
-sail domain make-https "www.$SITE_URL"
-sail domain make-https "dev.$SITE_URL"
-sail domain make-primary "$SITE_URL"
+if gum confirm "Configure Sail DNS and HTTPS?"; then
+  sail domain add "$SITE_URL"
+  sail domain add "www.$SITE_URL"
+  sail domain add "dev.$SITE_URL"
+  sail domain make-https "$SITE_URL"
+  sail domain make-https "www.$SITE_URL"
+  sail domain make-https "dev.$SITE_URL"
+  sail domain make-primary "$SITE_URL"
+fi
 
-### Misc
-sail wp search-replace 'Megabyte Labs Site Title' "$SITE_TITLE"
-sail wp search-replace 'Megabyte Labs Site Tagline' "$SITE_TAGLINE"
-sail wp search-replace 'http://megabyte-labs.local' "https://$SITE_URL"
-sail wp search-replace 'megabyte-labs.local' "$SITE_URL"
-sail wp search-replace 'Authenticator App Title' "$SITE_TITLE"
-sail wp search-replace 'sender-email@megabyte-labs.local' "help@${SITE_URL}"
-sail wp search-replace 'sender-name@megabyte-labs.local' "$SITE_TITLE"
-sail wp search-replace '___REPORT_TO_ADDRESS_FIRST_NAME' "$FIRST_NAME"
-sail wp search-replace 'SECURITY NOTICE FIRST NAME' "$FIRST_NAME"
+searchAndReplace() {
+  gum log -sl info "Replacing $1 with $2"
+  wp search-replace "$1" "$2"
+}
 
-### Meta
-sail wp search-replace '___TWITTER_URL' "https://x.com/$TWITTER_USER"
-sail wp search-replace '___TWITTER_USERNAME' "$TWITTER_USER"
-sail wp search-replace '___FACEBOOK_APP_ID' "$FACEBOOK_APP_ID"
-sail wp search-replace '___FACEBOOK_PAGE_URL' "$FACEBOOK_PAGE_URL"
-sail wp search-replace '___INSTAGRAM_URL' "$INSTAGRAM_URL"
-sail wp search-replace '___LINKEDIN_URL' "$LINKEDIN_URL"
-sail wp search-replace '___PINTEREST_URL' "$PINTEREST_URL"
-sail wp search-replace '___YOUTUBE_URL' "$YOUTUBE_URL"
-sail wp search-replace '___ORGANIZATION_NAME' "$SITE_TITLE"
-sail wp search-replace '___ORGANIZATION_DESCRIPTION' "$SITE_DESCRIPTION"
-sail wp search-replace '___CUSTOMER_SUPPORT_PHONE_NUMBER' "$SITE_PHONE_NUMBER"
-sail wp search-replace '___MAIL_URL' "mailto:help@${SITE_URL}"
-sail wp search-replace '___COMPANY_LLC_NAME' "$COMPANY_LLC_NAME"
+if gum confirm "Run search and replace?"; then
+  searchAndReplace 'Megabyte Labs Site Title' "$SITE_TITLE"
+  searchAndReplace 'Megabyte Labs Site Tagline' "$SITE_TAGLINE"
+  searchAndReplace 'sender-email@megabyte-labs.local' "help@${SITE_URL}"
+  searchAndReplace 'sender-name@megabyte-labs.local' "$SITE_TITLE"
+  searchAndReplace 'http://megabyte-labs.local' "https://$SITE_URL"
+  searchAndReplace 'megabyte-labs.local' "$SITE_URL"
+  searchAndReplace 'Authenticator App Title' "$SITE_TITLE"
+  searchAndReplace 'SECURITY NOTICE FIRST NAME' "$FIRST_NAME"
+  searchAndReplace '___REPORT_TO_ADDRESS_FIRST_NAME' "$FIRST_NAME"
+  searchAndReplace '___TWITTER_URL' "https://x.com/$TWITTER_USER"
+  searchAndReplace '___TWITTER_USERNAME' "$TWITTER_USER"
+  searchAndReplace '___FACEBOOK_APP_ID' "$FACEBOOK_APP_ID"
+  searchAndReplace '___FACEBOOK_PAGE_URL' "$FACEBOOK_PAGE_URL"
+  searchAndReplace '___INSTAGRAM_URL' "$INSTAGRAM_URL"
+  searchAndReplace '___LINKEDIN_URL' "$LINKEDIN_URL"
+  searchAndReplace '___PINTEREST_URL' "$PINTEREST_URL"
+  searchAndReplace '___YOUTUBE_URL' "$YOUTUBE_URL"
+  searchAndReplace '___ORGANIZATION_NAME' "$SITE_TITLE"
+  searchAndReplace '___ORGANIZATION_DESCRIPTION' "$SITE_DESCRIPTION"
+  searchAndReplace '___CUSTOMER_SUPPORT_PHONE_NUMBER' "$SITE_PHONE_NUMBER"
+  searchAndReplace '___MAIL_URL' "mailto:help@${SITE_URL}"
+  searchAndReplace '___COMPANY_LLC_NAME' "$COMPANY_LLC_NAME"
+fi
