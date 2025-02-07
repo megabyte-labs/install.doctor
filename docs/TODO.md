@@ -78,3 +78,11 @@ The following items have been reviewed but need to be revisited due to complexit
 * Ensure freshclam and clamav send virus notifications to specified e-mail
 ## Definitely
 * https://github.com/ConvoyPanel/panel
+
+https://github.com/Pythagora-io/gpt-pilot
+    https://github.com/Aider-AI/aider
+    https://follow.is/
+    https://github.com/gitroomhq/postiz-app
+    https://github.com/activepieces/activepieces
+https://github.com/n8n-io/n8n
+https://github.com/AppFlowy-IO/AppFlowy
