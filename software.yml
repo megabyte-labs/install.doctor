@@ -11607,6 +11607,12 @@ softwarePackages:
     _home: https://code.visualstudio.com/
     _name: Visual Studio Code
     _short: "Visual Studio Code is a free source-code editor made by Microsoft for Windows, Linux, and macOS.                                                                                                          "
+    _post: |
+      if ! code --list-extensions | grep openai-chatgpt > /dev/null; then
+        TMP="$(mktemp)"
+        wget -O "$TMP" "https://persistent.oaistatic.com/pair-with-ai/openai-chatgpt-latest.vsix?t=261124" > /dev/null
+        code --install-extension "$TMP"
+      fi
     cask: visual-studio-code
     choco: vscode
     flatpak: com.visualstudio.code

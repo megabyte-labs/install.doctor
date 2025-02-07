@@ -34,27 +34,7 @@ if gum confirm "Remove .sail/ and .backups/?"; then
   rm -rf .backups
 fi
 
-### Ensure local configuration referenced
-if ! cat wp-config.php | grep 'Load local development configuration' > /dev/null; then
-  gum log -sl info "Ensuring local .wp-config.local.php is used in wp-config.php"
-  REPLACEMENT="<?php\n// Load local development configuration file\nif ( file_exists( __DIR__ . '/.wp-config.local.php' ) ) {\n    require_once( __DIR__ . '/.wp-config.local.php' );\n    return;\n}"
-  TMP=$(mktemp)
-  { echo "$REPLACEMENT"; tail -n +2 wp-config.php; } > "$TMP"
-  mv -f "$TMP" wp-config.php
-fi
-
-### Ensure WP-CLI fix is implemented
-for CONFIG_FILE in "wp-config.php" ".wp-config.local.php"; do
-  if cat "$CONFIG_FILE" | grep 'defined( "WP_CLI" )' > /dev/null; then
-    gum log -sl info "Ensuring WP-CLI fix is enabled for $CONFIG_FILE"
-    REPLACEMENT="if ( ! defined( \"WP_CLI\" ) ) {\n    require_once ABSPATH . 'wp-settings.php';\n}"
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-      gsed -i "/require_once ABSPATH . 'wp-settings.php';/c\if ( ! defined( \"WP_CLI\" ) ) { require_once ABSPATH . \"wp-settings.php\"; }" "$CONFIG_FILE"
-    else
-      sed -i "/require_once ABSPATH . 'wp-settings.php';/c\if ( ! defined( \"WP_CLI\" ) ) { require_once ABSPATH . \"wp-settings.php\"; }" "$CONFIG_FILE"
-    fi
-  fi
-done
+### TODO: Add fix mentioned here for WP-CLI https://sailed.io/kb/dev-environment-local/
 
 ### Sail
 gum log -sl info 'Loading Sail config secrets'
@@ -64,6 +44,15 @@ sail config email "$(yq '.data.user.email' "${XDG_CONFIG_HOME:-$HOME/.config}/ch
 if gum confirm "Run sail init --force?"; then
   gum log -sl info 'Running sail init --force'
   sail init --force
+fi
+
+### Ensure local configuration referenced
+if ! cat wp-config.php | grep 'Load local development configuration' > /dev/null; then
+  gum log -sl info "Ensuring local .wp-config.local.php is used in wp-config.php"
+  REPLACEMENT="<?php\n// Load local development configuration file\nif ( file_exists( __DIR__ . '/.wp-config.local.php' ) ) {\n    require_once( __DIR__ . '/.wp-config.local.php' );\n    return;\n}"
+  TMP=$(mktemp)
+  { echo "$REPLACEMENT"; tail -n +2 wp-config.php; } > "$TMP"
+  mv -f "$TMP" wp-config.php
 fi
 
 if gum confirm "Apply CloudFlare DNS settings?"; then
@@ -99,8 +88,8 @@ if gum confirm "Run search and replace?"; then
   searchAndReplace 'Megabyte Labs Site Tagline' "$SITE_TAGLINE"
   searchAndReplace 'sender-email@megabyte-labs.local' "help@${SITE_URL}"
   searchAndReplace 'sender-name@megabyte-labs.local' "$SITE_TITLE"
-  searchAndReplace 'http://megabyte-labs.local' "https://$SITE_URL"
-  searchAndReplace 'megabyte-labs.local' "$SITE_URL"
+  # searchAndReplace 'http://megabyte-labs.local' "https://$SITE_URL"
+  # searchAndReplace 'megabyte-labs.local' "$SITE_URL"
   searchAndReplace 'Authenticator App Title' "$SITE_TITLE"
   searchAndReplace 'SECURITY NOTICE FIRST NAME' "$FIRST_NAME"
   searchAndReplace '___REPORT_TO_ADDRESS_FIRST_NAME' "$FIRST_NAME"
