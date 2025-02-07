@@ -501,3 +501,5 @@ if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/not-found-hook.sh" ]]; then
     handle_command_not_found "$1"
   }
 fi
+
+printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh"}}\x9c'
