@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+#!/usr/bin/env bash
+# @file Provision Qubes
+# @brief Provisions Qubes
+# @description
+#     Provisions Qubes.
 
 set -euo pipefail
 
