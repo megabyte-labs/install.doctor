@@ -93,10 +93,10 @@ ensureFullDiskAccess() {
 importCloudFlareCert() {
   if [ -d /Applications ] && [ -d /System ] && [ -z "$HEADLESS_INSTALL" ]; then
     ### Acquire certificate
-    if [ -f "$HOME/.local/etc/ssl/cloudflare/certificate.crt" ]; then
-      CRT_TMP="$HOME/.local/etc/ssl/cloudflare/certificate.crt"
+    if [ -f "$HOME/.local/etc/ssl/cloudflare/cloudflare.crt" ]; then
+      CRT_TMP="$HOME/.local/etc/ssl/cloudflare/cloudflare.crt"
     else
-      logg warn "$HOME/.local/etc/ssl/cloudflare/certificate.crt is missing"
+      logg warn "$HOME/.local/etc/ssl/cloudflare/cloudflare.crt is missing"
     fi
 
     ### Validate / import certificate
