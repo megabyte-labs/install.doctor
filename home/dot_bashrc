@@ -206,4 +206,7 @@ if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/not-found-hook.sh" ]]; then
   }
 fi
 
-printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "bash"}}\x9c'
+### Warpify support
+if [ "$TERM_PROGRAM" = 'WarpTerminal' ]; then
+  printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "bash"}}\x9c'
+fi
