@@ -95,7 +95,7 @@ main() {
     PACKAGES=$(yq ".softwarePackages | keys[]" "$SOFTWARE_YAML")
 
     for PACKAGE in $PACKAGES; do
-      if [ -n "$DEBUG" ]; then
+      if [ -n "${DEBUG:-}" ]; then
         gum log -sl info "Processing package: $PACKAGE"
         processPostScripts "$PACKAGE"
       fi
