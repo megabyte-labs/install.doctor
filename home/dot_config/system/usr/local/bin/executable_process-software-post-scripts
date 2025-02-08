@@ -95,8 +95,10 @@ main() {
     PACKAGES=$(yq ".softwarePackages | keys[]" "$SOFTWARE_YAML")
 
     for PACKAGE in $PACKAGES; do
-        [ -n "$DEBUG" ] && gum log -sl info "Processing package: $PACKAGE"
+      if [ -n "$DEBUG" ]; then
+        gum log -sl info "Processing package: $PACKAGE"
         processPostScripts "$PACKAGE"
+      fi
     done
 
     wait # Ensure all background scripts complete

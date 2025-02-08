@@ -111,8 +111,10 @@ main() {
     PACKAGES=$(yq ".softwarePackages | keys[]" "$SOFTWARE_YAML")
 
     for PACKAGE in $PACKAGES; do
-        [ -n "$DEBUG" ] && gum log -sl info "Processing package: $PACKAGE"
+      if [ -n "$DEBUG" ]; then
+        gum log -sl info "Processing package: $PACKAGE"
         processSoftwarePackage "$PACKAGE"
+      fi
     done
 
     gum log -sl info "Software package processing completed."
