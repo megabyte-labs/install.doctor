@@ -107,6 +107,17 @@ importCloudFlareCert() {
   fi
 }
 
+# @description This symlinks the `~/.local/share/chezmoi/home/.chezmoitemplates/secrets`
+#     to `~/.local/share/chezmoi/home/.chezmoitemplates/secrets-${HOSTNAME}`, if appropriate
+symlinkMissingSecrets() {
+  HOSTID="{{ .chezmoi.hostname }}"
+  SOURCE="{{ .chezmoi.sourceDir }}/.chezmoitemplates/secrets"
+  TARGET="{{ .chezmoi.sourceDir }}/.chezmoitemplates/secrets-{{ .chezmoi.hostname }}"
+  if [ -d "$SOURCE" ] && [ ! -d "$TARGET" ]; then
+    ln -s "$SOURCE" "$TARGET"
+  fi
+}
+
 addTemporaryIncludes
 . /tmp/tmp-logg
 . /tmp/tmp-profile
@@ -115,8 +126,10 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   gum log -sl info 'The DEBUG or DEBUG_MODE environment variable is set so the prepare tasks will be run synchronously'
   importCloudFlareCert
   disconnectWarp
+  symlinkMissingSecrets
 else
   importCloudFlareCert &
   disconnectWarp &
+  symlinkMissingSecrets &
   wait
 fi
