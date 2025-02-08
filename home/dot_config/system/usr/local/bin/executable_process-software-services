@@ -137,10 +137,10 @@ main() {
     PACKAGES=$(yq ".softwarePackages | with_entries(select(.value._serviceEnabled == true)) | keys[]" "$SOFTWARE_YAML")
 
     for PACKAGE in $PACKAGES; do
-      if [ -z "${DEBUG:-}" ]; then
+      if [ -n "${DEBUG:-}" ]; then
         gum log -sl info "Processing service for package: $PACKAGE"
-        processServiceManagement "$PACKAGE" &
       fi
+      processServiceManagement "$PACKAGE" &
     done
 
     wait # Ensure all background processes complete
