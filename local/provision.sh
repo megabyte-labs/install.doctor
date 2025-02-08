@@ -400,15 +400,14 @@ importCloudFlareCert() {
     ### Acquire certificate
     if [ -f "$HOME/.local/etc/ssl/cloudflare/cloudflare.crt" ]; then
       CRT_TMP="$HOME/.local/etc/ssl/cloudflare/cloudflare.crt"
+      ### Validate / import certificate
+      security verify-cert -c "$CRT_TMP" > /dev/null 2>&1
+      if [ $? != 0 ]; then
+        logg info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
+        sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_TMP" && logg info 'Successfully imported cloudflare.crt into System.keychain'
+      fi
     else
       logg warn "$HOME/.local/etc/ssl/cloudflare/cloudflare.crt is missing"
-    fi
-
-    ### Validate / import certificate
-    security verify-cert -c "$CRT_TMP" > /dev/null 2>&1
-    if [ $? != 0 ]; then
-      logg info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
-      sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_TMP" && logg info 'Successfully imported cloudflare.crt into System.keychain'
     fi
   fi
 }

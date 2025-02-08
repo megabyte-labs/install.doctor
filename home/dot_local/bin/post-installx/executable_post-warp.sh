@@ -108,9 +108,13 @@ if [ -d /System ] && [ -d /Applications ] && command -v warp-cli > /dev/null; th
     #     gum log -sl info '**macOS Manual Security Permission** Requesting security authorization for Cloudflare trusted certificate'
     #     sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$HOME/.local/etc/ssl/cloudflare/cloudflare.crt"
     # fi
-    gum log -sl info 'Updating the OpenSSL CA Store to include the Cloudflare certificate'
-    echo | sudo tee -a "$SSL_CERT_PATH" < "$HOME/.local/etc/ssl/cloudflare/cloudflare.pem" > /dev/null
-    echo "" | sudo tee -a "$SSL_CERT_PATH"
+    if [ -f "$HOME/.local/etc/ssl/cloudflare/cloudflare.pem" ]; then
+      gum log -sl info 'Updating the OpenSSL CA Store to include the Cloudflare certificate'
+      echo | sudo tee -a "$SSL_CERT_PATH" < "$HOME/.local/etc/ssl/cloudflare/cloudflare.pem" > /dev/null
+      echo "" | sudo tee -a "$SSL_CERT_PATH"
+    else
+      gum log -sl warn "$HOME/.local/etc/ssl/cloudflare/cloudflare.pem is missing so not importing into to master pem"
+    fi
   else
     gum log -sl warn 'Session is SSH so adding Cloudflare encryption key to trusted certificates via the security program is being bypassed since it requires Touch ID / Password verification.'
   fi
