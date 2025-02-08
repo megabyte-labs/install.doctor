@@ -84,7 +84,7 @@ candyIconTweaks() {
     ### Merge latest Candy icons into the Betelgeuse icon theme
     if command -v rsync > /dev/null; then
       if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/candy-icons" ] && [ -d /usr/local/share/icons/Candy ]; then
-        sudo rsync --chown=root:root --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r -artu --inplace --exclude .git/ "${XDG_DATA_HOME:-$HOME/.local/share}/candy-icons/" "/usr/local/share/icons/Candy/"
+        sudo rsync --chown=root: --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r -artu --inplace --exclude .git/ "${XDG_DATA_HOME:-$HOME/.local/share}/candy-icons/" "/usr/local/share/icons/Candy/"
       else
         gum log -sl warn 'Skipping synchronization of Candy icons since either the target or destination folder is not present'
       fi

@@ -8,8 +8,8 @@
 # @description
 #     Copies system files over to root file system
 systemFiles() {
-  gum log -sl info 'Running sudo rsync -artuE --chown=root:root --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rwX,Fg=rX,Fo=rX \ --inplace --exclude .git/ "${XDG_CONFIG_HOME:-$HOME/.config}/system/" /'
-  sudo rsync -artuE --chown=root:root --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rwX,Fg=rX,Fo=rX --inplace --exclude .git/ "${XDG_CONFIG_HOME:-$HOME/.config}/system/" / > /dev/null
+  gum log -sl info 'Running sudo rsync -artuE --chown=root: --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rwX,Fg=rX,Fo=rX \ --inplace --exclude .git/ "${XDG_CONFIG_HOME:-$HOME/.config}/system/" /'
+  sudo rsync -artuE --chown=root: --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rwX,Fg=rX,Fo=rX --inplace --exclude .git/ "${XDG_CONFIG_HOME:-$HOME/.config}/system/" / > /dev/null
   gum log -sl info 'Finished applying system configuration files'
 }
 
