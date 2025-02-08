@@ -37,8 +37,8 @@ processPostScripts() {
     local BIN_LIST
     local POST_SCRIPTS
 
-    BIN_LIST=$(yq ".softwarePackages.$NAME._bin" "$SOFTWARE_YAML")
-    POST_SCRIPTS=$(yq ".softwarePackages.$NAME._post[]" "$SOFTWARE_YAML" 2>/dev/null || true)
+    BIN_LIST=$(yq '(.softwarePackages["'"$NAME"'"])._bin' "$SOFTWARE_YAML")
+    POST_SCRIPTS=$(yq '(.softwarePackages["'"$NAME"'"])._post[]' "$SOFTWARE_YAML" 2>/dev/null || true)
 
     if [[ "$BIN_LIST" == "null" ]]; then
         gum log -sl warn "No binaries defined for $NAME. Skipping."
@@ -74,8 +74,6 @@ processPostScripts() {
         if [[ -x "$CUSTOM_SCRIPT" ]]; then
             gum log -sl info "Executing custom script for $NAME: $CUSTOM_SCRIPT"
             "$CUSTOM_SCRIPT" &
-        else
-            gum log -sl warn "No custom script found for $NAME in $POST_INSTALL_DIR."
         fi
     else
         gum log -sl warn "$NAME binary not found in PATH. Skipping post-installation tasks."
@@ -97,7 +95,7 @@ main() {
     PACKAGES=$(yq ".softwarePackages | keys[]" "$SOFTWARE_YAML")
 
     for PACKAGE in $PACKAGES; do
-        gum log -sl info "Processing package: $PACKAGE"
+        [ -n "$DEBUG" ] && gum log -sl info "Processing package: $PACKAGE"
         processPostScripts "$PACKAGE"
     done
 

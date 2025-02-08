@@ -47,9 +47,9 @@ processServiceManagement() {
     local SERVICES
     local SERVICE_ENABLED
 
-    BIN_LIST=$(yq ".softwarePackages.$NAME._bin" "$SOFTWARE_YAML")
-    SERVICES=$(yq ".softwarePackages.$NAME._service" "$SOFTWARE_YAML" 2>/dev/null || true)
-    SERVICE_ENABLED=$(yq ".softwarePackages.$NAME._serviceEnabled" "$SOFTWARE_YAML" 2>/dev/null || echo "false")
+    BIN_LIST=$(yq '(.softwarePackages["'"$NAME"'"])._bin' "$SOFTWARE_YAML")
+    SERVICES=$(yq '(.softwarePackages["'"$NAME"'"])._service' "$SOFTWARE_YAML" 2>/dev/null || true)
+    SERVICE_ENABLED=$(yq '(.softwarePackages["'"$NAME"'"])._serviceEnabled' "$SOFTWARE_YAML" 2>/dev/null || echo "false")
 
     if [[ "$SERVICE_ENABLED" == "true" && "$BIN_LIST" == "null" ]]; then
         gum log -sl warn "$NAME has _serviceEnabled set to true but no _bin is defined. Skipping."

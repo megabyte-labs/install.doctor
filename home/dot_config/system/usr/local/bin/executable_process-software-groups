@@ -34,11 +34,11 @@ processSoftwarePackage() {
     local NAME="$1"
     local BIN_LIST
     local FOLDERS
-    local GROUPS
+    local SOFTWARE_GROUPS
 
-    BIN_LIST=$(yq ".softwarePackages.$NAME._bin" "$SOFTWARE_YAML")
-    FOLDERS=$(yq ".softwarePackages.$NAME._folders[]" "$SOFTWARE_YAML" 2>/dev/null || true)
-    GROUPS=$(yq ".softwarePackages.$NAME._groups[]" "$SOFTWARE_YAML" 2>/dev/null || true)
+    BIN_LIST=$(yq '(.softwarePackages["'"$NAME"'"])._bin' "$SOFTWARE_YAML")
+    FOLDERS=$(yq '(.softwarePackages["'"$NAME"'"])._folders[]' "$SOFTWARE_YAML" 2>/dev/null || true)
+    SOFTWARE_GROUPS=$(yq '(.softwarePackages["'"$NAME"'"])_groups[]' "$SOFTWARE_YAML" 2>/dev/null || true)
 
     if [[ "$BIN_LIST" == "null" ]]; then
         gum log -sl warn "No binaries defined for $NAME. Skipping."
@@ -60,8 +60,8 @@ processSoftwarePackage() {
     fi
 
     # Handle case when binaries are found but no folders are defined
-    if [[ "$BIN_FOUND" == true && "$FOLDERS" == "null" && "$GROUPS" != "null" ]]; then
-        for GROUP_NAME in $GROUPS; do
+    if [[ "$BIN_FOUND" == true && "$FOLDERS" == "null" && "$SOFTWARE_GROUPS" != "null" ]]; then
+        for GROUP_NAME in $SOFTWARE_GROUPS; do
             gum log -sl info "Adding group $GROUP_NAME"
             sudo add-usergroup "$GROUP_NAME" "$GROUP_NAME"
         done
@@ -69,9 +69,9 @@ processSoftwarePackage() {
     fi
 
     if [[ "$BIN_FOUND" == true ]]; then
-        if [[ "$GROUPS" != "null" ]]; then
+        if [[ "$SOFTWARE_GROUPS" != "null" ]]; then
             local GROUP_NAME
-            GROUP_NAME=$(echo "$GROUPS" | head -n 1)
+            GROUP_NAME=$(echo "$SOFTWARE_GROUPS" | head -n 1)
             for FOLDER in $FOLDERS; do
                 gum log -sl info "Assigning $FOLDER to $GROUP_NAME"
                 sudo own-folder "$FOLDER" "$GROUP_NAME" "$GROUP_NAME"
@@ -91,8 +91,8 @@ processSoftwarePackage() {
         fi
     else
         gum log -sl warn "$NAME binary not found in PATH. Managing groups instead."
-        if [[ "$GROUPS" != "null" ]]; then
-            for GROUP_NAME in $GROUPS; do
+        if [[ "$SOFTWARE_GROUPS" != "null" ]]; then
+            for GROUP_NAME in $SOFTWARE_GROUPS; do
                 gum log -sl info "Creating or ensuring group $GROUP_NAME exists"
                 sudo add-usergroup "$GROUP_NAME" "$GROUP_NAME"
             done
