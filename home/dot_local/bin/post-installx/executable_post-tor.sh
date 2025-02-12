@@ -29,12 +29,12 @@ fi
 TORRC_CONFIG="$TORRC_CONFIG_DIR/torrc"
 
 ### Apply the configuration if the `torrc` binary is available in the `PATH`
-if command -v torify > /dev/null; then
-  if [ -d  "$TORRC_CONFIG_DIR" ]; then
+if command -v torify >/dev/null; then
+  if [ -d "$TORRC_CONFIG_DIR" ]; then
     ### Copy the configuration from `${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc` to the system configuration file location
     gum log -sl info "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc to $TORRC_CONFIG"
     sudo cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/tor/torrc" "$TORRC_CONFIG"
-    sudo chmod 600 "$TORRC_CONFIG"
+    sudo chmod 644 "$TORRC_CONFIG"
     ### Enable and restart the Tor service
     if [ -d /Applications ] && [ -d /System ]; then
       ### macOS
@@ -51,7 +51,7 @@ if command -v torify > /dev/null; then
       gum log -sl info 'Running brew services restart tor'
       brew services restart tor && gum log -sl info 'Tor successfully restarted'
     else
-      if [[ ! "$(test -d /proc && grep Microsoft /proc/version > /dev/null)" ]]; then
+      if [[ ! "$(test -d /proc && grep Microsoft /proc/version >/dev/null)" ]]; then
         ### Linux
         gum log -sl info 'Running sudo systemctl enable / restart tor'
         sudo systemctl enable tor
