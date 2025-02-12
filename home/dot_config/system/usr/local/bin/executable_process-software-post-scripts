@@ -66,9 +66,13 @@ processPostScripts() {
     gum log -sl info "Binaries for $NAME found. Running post-installation tasks."
 
     # Run all _post scripts asynchronously
-    if [[ "$POST_SCRIPTS" != "null" ]]; then
-      for SCRIPT in $POST_SCRIPTS; do
-        echo "$SCRIPT" | bash &
+    if [[ "${POST_SCRIPTS}" != "null" ]]; then
+      for SCRIPT in ${POST_SCRIPTS}; do
+        if [[ -n "${DEBUG:-}" ]]; then
+          echo "${SCRIPT}" | bash
+        else
+          echo "${SCRIPT}" | bash &
+        fi
       done
     fi
 
