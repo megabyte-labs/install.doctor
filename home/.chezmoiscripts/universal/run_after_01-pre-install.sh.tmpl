@@ -1021,6 +1021,7 @@ applyBasePlists() {
   fi
 }
 
+# @description Applies appropriate permissions to the `~/.ssh` folder
 sshPermissions() {
   gum log -sl info "Applying permissions to ~/.ssh folder"
   chmod 700 "${HOME}/.ssh"
