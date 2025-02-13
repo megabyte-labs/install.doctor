@@ -417,7 +417,6 @@ ensureAutoresticLocation() {
 }
 
 # Temporary next line for debugging
-export DEBUG=true
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   gum log -sl info 'The DEBUG or DEBUG_MODE environment variable is set so the post-install tasks will be run synchronously'
   bashItPlugins

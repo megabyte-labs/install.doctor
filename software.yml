@@ -446,7 +446,9 @@ softwarePackages:
     _github: https://github.com/appium/appium
     _home: https://appium.io/
     _name: Appium
-    _service: appium
+    _service:
+      - name: appium
+        sudo: false
     _short: "Appium is an open-source automation tool for testing mobile, web, and hybrid applications.                                                                                                                "
     brew: appium
     npm: appium
@@ -1057,7 +1059,6 @@ softwarePackages:
     _name: Blocky
     _service:
       - name: blocky
-        sudo: true
         pkg: brew
     _serviceEnabled: false
     _short: "blocky is a tool for managing and monitoring multiple blockchain nodes easily.                                                                                                                            "
@@ -1225,7 +1226,9 @@ softwarePackages:
     _desc: "Caddy is an open-source web server with automatic HTTPS capability built in. It is known for its simplicity and ease of use, making it popular for serving websites securely. Caddy's configuration is    \ndone using a Caddyfile, which simplifies the process compared to traditional web servers. It supports features like virtual hosting, reverse proxy, static file serving, and more. Caddy is written in Go \nand is actively maintained by the community. It is a great choice for those looking for a modern, secure, and easy-to-configure web server solution.                                                      "
     _github: https://github.com/caddyserver/caddy
     _name: Caddy
-    _service: caddy
+    _service:
+      - name: caddy
+        sudo: false
     _short: "Caddy is a lightweight, open-source web server with automatic HTTPS.                                                                                                                                      "
     brew: caddy
     choco: caddy
@@ -1828,7 +1831,9 @@ softwarePackages:
     _github: https://www.github.com/hashicorp/consul
     _home: https://www.consul.io/
     _name: Consul
-    _service: consul
+    _service:
+      - name: consul
+        sudo: false
     _short: "Consul is a tool for service discovery, configuration, and orchestration by HashiCorp.                                                                                                                    "
     apt: consul
     brew: consul
@@ -2282,7 +2287,9 @@ softwarePackages:
     _docs: https://thekelleys.org.uk/dnsmasq/docs/dnsmasq-man.html
     _github: https://github.com/imp/dnsmasq
     _name: dnsmasq
-    _service: dnsmasq
+    _service:
+      - name: dnsmasq
+        sudo: false
     _short: "dnsmasq is a lightweight DNS forwarder and DHCP server.                                                                                                                                                   "
     apt: dnsmasq
     brew: dnsmasq
@@ -2829,7 +2836,9 @@ softwarePackages:
     _desc: Distributed reliable key-value store for the most critical data of a distributed system
     _github: https://github.com/etcd-io/etcd
     _name: etcd
-    _service: etcd
+    _service:
+      - name: etcd
+        sudo: false
     _preload: true
     _serviceEnabled: true
     _short: "etcd is a distributed key-value store used for shared configuration and service discovery in distributed systems.                                                                                         "
@@ -3192,7 +3201,9 @@ softwarePackages:
     _pre: |
       #!/usr/bin/env bash
       if command -v ufw > /dev/null; then sudo ufw disable; fi
-    _service: firewalld
+    _service:
+      - name: firewalld
+        sudo: false
     _short: "firewalld is a dynamic firewall management tool for Linux systems.                                                                                                                                        "
     apt: firewalld
     dnf: firewalld
@@ -3839,7 +3850,9 @@ softwarePackages:
     _github: https://github.com/gitlabhq/gitlab-runner
     _home: https://gitlab.com/gitlab-org/gitlab-runner
     _name: Gitlab Runner
-    _service: gitlab-runner
+    _service:
+      - name: gitlab-runner
+        sudo: false
     _short: "GitLab Runner is an open-source project that works with GitLab CI/CD to run jobs and send the results back to GitLab.                                                                                     "
     brew: gitlab-runner
     choco: gitlab-runner
@@ -3986,7 +3999,9 @@ softwarePackages:
     _home: https://www.gluster.org/
     _name: GlusterFS
     _preload: true
-    _service: glusterd
+    _service:
+      - name: glusterd
+        sudo: false
     _short: "GlusterFS is an open-source distributed file system that can scale out in building-block fashion to store multiple petabytes of data.                                                                     "
     apt: glusterfs-server
     dnf:fedora: glusterfs-server
@@ -4541,7 +4556,9 @@ softwarePackages:
     _desc: "HAProxy is a widely-used open-source software that provides high availability, load balancing, and proxying for TCP and HTTP-based applications. It is known for its efficiency, reliability, and         \nflexibility in handling traffic across servers. HAProxy can be used to distribute incoming traffic to multiple servers to ensure optimal performance and reliability. It is commonly used in web hosting, \ne-commerce, and other high-traffic websites to improve scalability and fault tolerance. The GitHub repository contains the source code, documentation, and community contributions for the HAProxy        \nproject.                                                                                                                                                                                                  "
     _github: https://github.com/haproxy/haproxy
     _name: HAProxy
-    _service: haproxy
+    _service:
+      - name: haproxy
+        sudo: false
     _short: "HAProxy is a reliable, high-performance TCP/HTTP load balancer.                                                                                                                                           "
     apk: haproxy
     apt: haproxy
@@ -5076,7 +5093,9 @@ softwarePackages:
     _github: https://github.com/ipfs/ipfs
     _home: https://ipfs.tech/
     _name: IPFS
-    _service: ipfs
+    _service:
+      - name: ipfs
+        sudo: false
     _short: "IPFS is a peer-to-peer hypermedia protocol designed to create a content-addressable, peer-to-peer method of storing and sharing hypermedia in a distributed file system.                                  "
     brew: ipfs
     choco: go-ifps
@@ -5727,7 +5746,7 @@ softwarePackages:
     _name: KVM
     _service:
       - name: libvirt
-        sudo: true
+        sudo: false
     _serviceEnabled: true
     apt:
       - bridge-utils
@@ -6134,7 +6153,9 @@ softwarePackages:
     _github: https://github.com/lxc/lxc
     _home: https://linuxcontainers.org/lxc/
     _name: LXC
-    _service: lxc
+    _service:
+      - name: lxc
+        sudo: false
     _short: "LXC (Linux Containers):                                                                                                                                                                                   \nOpen-source container technology for running multiple isolated Linux systems on a single host.                                                                                                            "
     apt: lxc
     brew: lxc
@@ -6249,7 +6270,9 @@ softwarePackages:
     _desc: "MailCatcher is a simple SMTP server that catches any email sent from your application and displays it in a web interface. It's useful for testing email functionality during development without actually \nsending emails to real addresses. With MailCatcher, you can view sent emails, inspect their content, and make sure your email templates are rendering correctly. It's a handy tool for debugging and      \ntesting email-related features in your applications. You can find more details and installation instructions on its GitHub page: MailCatcher on GitHub.                                                   "
     _github: https://github.com/sj26/mailcatcher
     _name: Mail Catcher
-    _service: mailcatcher
+    _service:
+      - name: mailcatcher
+        sudo: false
     _short: "Mailcatcher is a simple SMTP server that catches all your outgoing emails during development, allowing you to view them in a web interface instead of sending them out.                                   "
     brew: mailcatcher
     gem: mailcatcher
@@ -6346,7 +6369,9 @@ softwarePackages:
     _bin: mariadb
     _github: false
     _name: MariaDB
-    _service: mariadb
+    _service:
+      - name: mariadb
+        sudo: false
     apk: mariadb-server
     apt: mariadb-server
     brew: mariadb
@@ -6746,7 +6771,9 @@ softwarePackages:
     _home: https://www.getmonero.org/
     _name: Monero
     _restricted: true
-    _service: monero
+    _service:
+      - name: monero
+        sudo: false
     _short: "Monero is an open-source cryptocurrency that focuses on privacy, security, and decentralization.                                                                                                          "
     cask: monero-wallet
     choco: monero
@@ -7300,7 +7327,9 @@ softwarePackages:
     _desc: "NGINX Unit is an open-source application server that supports multiple languages and frameworks, allowing you to run web applications written in Python, PHP, Go, Perl, and more. It provides a flexible  \nand scalable solution for hosting web applications with its modular architecture. NGINX Unit can be configured dynamically without needing to restart the server, making it ideal for microservices and   \ncontainerized environments. It offers features like process isolation, automatic application updates, and detailed logging. NGINX Unit is actively maintained by NGINX, Inc. and is available for various \nUnix-like operating systems.                                                                                                                                                                              "
     _github: https://github.com/nginx/unit
     _name: NGINX Unit
-    _service: unit
+    _service:
+      - name: unit
+        sudo: false
     _short: "nginx/unit is an open-source web application server that supports multiple languages and frameworks, providing a flexible and scalable solution for hosting web applications.                             "
     brew: nginx/unit/unit
   ngrok:
@@ -7407,7 +7436,9 @@ softwarePackages:
     _github: https://github.com/hashicorp/nomad
     _home: https://www.nomadproject.io/
     _name: HashiCorp Nomad
-    _service: nomad
+    _service:
+      - name: nomad
+        sudo: false
     _short: "Nomad is a cluster manager and scheduler designed by HashiCorp for deploying and managing containerized and non-containerized applications at scale.                                                      "
     brew: nomad
     choco: nomad
@@ -7739,7 +7770,9 @@ softwarePackages:
     choco: openshift-cli
   openssh-server:
     _github: false
-    _service: sshd
+    _service:
+      - name: sshd
+        sudo: false
     _preload: true
     _when: test -f /proc/version && ! grep Microsoft /proc/version > /dev/null && ! test -d /Applications'
     apt: openssh-server
@@ -7764,8 +7797,7 @@ softwarePackages:
     _name: OpenSSL macOS CA
     _preload: true
     _service:
-      - name: openssl-osx-ca
-        sudo: true
+      - openssl-osx-ca
     _serviceEnabled: true
     _short: "openssl-osx-ca is a script that simplifies managing SSL certificates on MacOS by using the system's keychain.                                                                                             "
     brew:darwin: raggi/ale/openssl-osx-ca
@@ -7775,7 +7807,9 @@ softwarePackages:
     _github: https://github.com/OpenVPN/openvpn
     _name: OpenVPN
     _preload: true
-    _service: openvpn
+    _service:
+      - name: openvpn
+        sudo: false
     _short: "OpenVPN is an open-source virtual private network (VPN) software that allows secure remote access to networks.                                                                                            "
     apt: openvpn
     brew: openvpn
@@ -8050,7 +8084,9 @@ softwarePackages:
     _github: https://github.com/php/php-src
     _home: https://www.php.net/
     _name: PHP
-    _service: php
+    _service:
+      - name: php
+        sudo: false
     _short: "The official repository for the PHP programming language source code.                                                                                                                                     "
     apt: php
     brew: php
@@ -8537,7 +8573,9 @@ softwarePackages:
     _desc: "The link https://github.com/postgres/postgres leads to the official GitHub repository for the PostgreSQL database management system. PostgreSQL is a powerful, open-source relational database system     \nknown for its reliability, robust feature set, and extensibility. The repository contains the source code, documentation, issue tracker, and community contributions related to PostgreSQL development.   \nIt's a central hub for developers, users, and contributors to collaborate, report bugs, suggest enhancements, and stay updated on the latest developments in PostgreSQL.                                  "
     _github: https://github.com/postgres/postgres
     _name: PostgreSQL
-    _service: postgresql
+    _service:
+      - name: postgresql
+        sudo: false
     _short: "PostgreSQL is an open-source relational database management system known for its reliability and robust features.                                                                                         "
     apt: postgresql
     brew: postgresql
@@ -8672,7 +8710,9 @@ softwarePackages:
     _home: https://www.privoxy.org/
     _name: Privoxy
     _preload: true
-    _service: privoxy
+    _service:
+      - name: privoxy
+        sudo: false
     _serviceEnabled: true
     _short: "Privoxy is a non-caching web proxy with advanced filtering capabilities for enhancing privacy, modifying web page data, and controlling access.                                                           "
     apt: privoxy
@@ -8816,7 +8856,9 @@ softwarePackages:
     _desc: "Pueue is a command-line task queue manager that allows you to manage long-running tasks efficiently. It provides a simple interface to add, remove, and monitor tasks, making it easier to handle multiple\ntasks simultaneously. With Pueue, you can prioritize tasks, view logs, and control the execution of tasks easily from the terminal. It is a useful tool for managing complex workflows and automating     \ntasks in a systematic manner.                                                                                                                                                                             "
     _github: https://github.com/Nukesor/pueue
     _name: Pueue
-    _service: pueue
+    _service:
+      - name: pueue
+        sudo: false
     _short: "Pueue is a command-line task queue manager for handling long-running processes.                                                                                                                           "
     apk: pueue
     apt: pueue
@@ -8848,7 +8890,9 @@ softwarePackages:
     _desc: "Pushpin is an open-source project by Fastly that acts as a reverse proxy server for real-time web services. It helps in managing long-lived connections efficiently, enabling real-time features like     \nchat, live updates, and notifications in web applications. Pushpin works by offloading the handling of long-lived connections from the main application server, reducing its load and improving           \nscalability. It supports various protocols like HTTP streaming, WebSockets, and Server-Sent Events. Pushpin is designed to be lightweight, easy to deploy, and integrates well with existing web          \napplications.                                                                                                                                                                                             "
     _github: https://github.com/fastly/pushpin
     _name: Pushpin
-    _service: pushpin
+    _service:
+      - name: pushpin
+        sudo: false
     _short: "Pushpin is an open-source proxy server for realtime web services.                                                                                                                                         "
     brew: pushpin
     docker: fanout/pushpin
@@ -9165,7 +9209,9 @@ softwarePackages:
       if command -v snap > /dev/null && command -v redis.cli > /dev/null && ! command -v redis-cli > /dev/null; then
         sudo snap alias redis.cli redis-cli
       fi
-    _service: redis
+    _service:
+      - name: redis
+        sudo: false
     _serviceEnabled: true
     _preload: true
     brew: redis
@@ -9380,7 +9426,9 @@ softwarePackages:
     _ports:
       - port: 514
         proto: tcp
-    _service: rsyslog
+    _service:
+      - name: rsyslog
+        sudo: true
     _preload: true
     _short: "rsyslog is an open-source logging software that provides a flexible and scalable solution for processing and managing log messages in Unix and Unix-like systems.                                         "
     apt: rsyslog
@@ -9690,7 +9738,9 @@ softwarePackages:
     _github: https://github.com/sddm/sddm
     _name: SDDM
     _post: sudo systemctl set-default graphical.target
-    _service: sddm
+    _service:
+      - name: sddm
+        sudo: true
     _short: "sddm is a modern display manager for X11 and Wayland aiming to be fast, simple, and beautiful.                                                                                                            "
     apt: sddm
     dnf: sddm
@@ -10287,7 +10337,9 @@ softwarePackages:
     _desc: "Squid is a widely-used caching proxy server that supports HTTP, HTTPS, FTP, and more. It helps improve web server performance by caching frequently accessed content, reducing bandwidth usage, and       \nproviding access control features. Squid is open-source and highly configurable, making it popular for improving web browsing speeds and security. It is compatible with various operating systems and is \nknown for its stability and extensibility through plugins. The project is actively maintained and has a large community of users and developers contributing to its ongoing development.                  "
     _github: https://github.com/squid-cache/squid
     _name: Squid
-    _service: squid
+    _service:
+      - name: squid
+        sudo: false
     _short: "Squid is a caching proxy server that supports HTTP, HTTPS, FTP, and more.                                                                                                                                 "
     apt: squid
     brew: squid
@@ -10490,7 +10542,9 @@ softwarePackages:
     _github: https://github.com/getdnsapi/stubby
     _name: Stubby
     _post:brew:darwin: bash "$(brew --prefix stubby)/sbin/stubby-setdns-macos.sh"
-    _service: stubby
+    _service:
+      - name: stubby
+        sudo: true
     _short: "Stubby is a DNS privacy tool that encrypts DNS queries to enhance online privacy and security.                                                                                                            "
     brew:darwin: stubby
   supervisor:
@@ -10498,7 +10552,9 @@ softwarePackages:
     _desc: "Supervisor is a client/server system that allows its users to monitor and control a number of processes on UNIX-like operating systems. It is written in Python and provides an easy way to manage        \nprocesses, such as starting, stopping, and restarting them. Supervisor also offers a web-based interface for monitoring the processes it manages. It is commonly used to manage processes in production   \nenvironments to ensure they are running smoothly.                                                                                                                                                         "
     _github: https://github.com/Supervisor/supervisor
     _name: Supervisor
-    _service: supervisor
+    _service:
+      - name: supervisor
+        sudo: true
     _short: "Supervisor is a client/server system that allows its users to monitor and control a number of processes on UNIX-like operating systems.                                                                   "
     apt: supervisor
     brew: supervisor
@@ -10597,7 +10653,9 @@ softwarePackages:
     _desc: "Syncthing is an open-source continuous file synchronization program that allows you to securely sync files between multiple devices. It is designed to be decentralized, giving you control over your data\nwithout relying on a central server. Syncthing uses end-to-end encryption to ensure your files are transferred securely. It supports various operating systems, including Darwin/MacOS, making it a       \nversatile solution for keeping your files in sync across different devices. You can find more information about Syncthing on its GitHub page: Syncthing GitHub Repository.                                "
     _github: https://github.com/syncthing/syncthing
     _name: Syncthing
-    _service: syncthing
+    _service:
+      - name: syncthing
+        sudo: false
     _short: "Syncthing is an open-source continuous file synchronization program.                                                                                                                                      "
     brew: syncthing
     choco: syncthing
@@ -11077,7 +11135,9 @@ softwarePackages:
     _name: Tomcat
     _post:darwin: sed 's/8080/8180/g' /usr/local/etc/tomcat/server.xml > /usr/local/etc/tomcat/server.xml
     _post:linux: sed 's/8080/8180/g' /usr/local/etc/tomcat/server.xml > /usr/local/etc/tomcat/server.xml
-    _service: tomcat
+    _service:
+      - name: tomcat
+        sudo: false
     _short: "Apache Tomcat is an open-source implementation of the Java Servlet, JavaServer Pages, Java Expression Language, and WebSocket technologies.                                                               "
     apt: tomcat
     brew: tomcat
@@ -11102,7 +11162,9 @@ softwarePackages:
     _name: TOR
     _preload: true
     _restricted: true
-    _service: tor
+    _service:
+      - name: tor
+        sudo: false
     _serviceEnabled: true
     _short: "TheTorProject is a nonprofit organization that develops privacy tools to help people stay safe online, including the Tor Browser for anonymous web browsing.                                              "
     apt: tor
@@ -11421,6 +11483,7 @@ softwarePackages:
     _name: HashiCorp Vault
     _service:
       - name: hashicorp/tap/vault
+        sudo: false
         pkg: brew
       - name: vault
         pkg: yay
@@ -11442,7 +11505,9 @@ softwarePackages:
     _github: https://github.com/vectordotdev/vector
     _home: https://vector.dev/
     _name: Vector
-    _service: vector
+    _service:
+      - name: vector
+        sudo: false
     _short: "Vector is an open-source observability data router.                                                                                                                                                       "
     brew: vectordotdev/brew/vector
     helm: https://helm.vector.dev
@@ -12490,7 +12555,9 @@ softwarePackages:
     _github: https://github.com/FiloSottile/yubikey-agent
     _home: https://github.com/FiloSottile/yubikey-agent
     _name: OpenSSL
-    _service: yubikey-agent
+    _service:
+      - name: yubikey-agent
+        sudo: false
     _short: "yubikey-agent is a minimalistic PIV/GPG agent for YubiKeys on macOS.                                                                                                                                      "
     _todo: Experiment with this to see if it is worthwhile adding to the stack
     brew: yubikey-agent
