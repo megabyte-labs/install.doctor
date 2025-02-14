@@ -193,7 +193,7 @@ upgradeDarwin() {
         fi
 
         ### Reboot
-        gum log -sl info 'Reboot required' && exit 140
+        gum log -sl warn 'Reboot required'
       else
         gum log -sl info 'No reboot required for softwareupdate'
       fi
