@@ -86,6 +86,16 @@ ensureFullDiskAccess() {
   fi
 }
 
+# @description Install the mobileconfig files from `~/.config/macos/mobileconfig`
+importSettingsMobileConfig() {
+  if [ -d /Applications ] && [ -d /System ]; then
+    for FILE in "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/dot_config/macos/mobileconfig/"*.mobileconfig; do
+      gum log -sl info "Installing $FILE"
+      sudo profiles install -type configuration -path "$FILE"
+    done
+  fi
+}
+
 # @description Applies changes that require input from the user such as using Touch ID on macOS when
 #     importing certificates into the system keychain.
 #
@@ -121,6 +131,7 @@ symlinkMissingSecrets() {
 addTemporaryIncludes
 . /tmp/tmp-logg
 . /tmp/tmp-profile
+importSettingsMobileConfig
 ensureFullDiskAccess
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   gum log -sl info 'The DEBUG or DEBUG_MODE environment variable is set so the prepare tasks will be run synchronously'

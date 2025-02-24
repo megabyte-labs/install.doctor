@@ -116,7 +116,7 @@ handle_command_not_found() {
     local BREW_PACKAGE_NAME
     BREW_PACKAGE_NAME=$(echo "$BREW_EXPLAIN_OUTPUT" | grep -oE "brew install [^\s]+" | awk '{print $3}')
     if [[ -n "$BREW_PACKAGE_NAME" ]]; then
-      if brew install "$BREW_PACKAGE_NAME" &>/dev/null; then
+      if gum spin --spinner dot --title "Installing $BREW_PACKAGE_NAME with Homebrew.." -- brew install "$BREW_PACKAGE_NAME" &>/dev/null; then
         "$COMMAND" # Run the command after installation
         return 0
       else
@@ -134,8 +134,7 @@ handle_command_not_found() {
 
   # If nothing found, call sgpt to generate install code
   gum log -sl warn "Command not found."
-  gum log -sl info "Querying ChatGPT for possible solution..."
-  SGPT_RESPONSE=$(sgpt "The \`$COMMAND\` command was not found. The system is macOS. Homebrew is already installed. Print the code that would be required to make the command available. Only print the code in the response.")
+  gum spin --spinner dot --title "Querying ChatGPT for possible solution.." -- SGPT_RESPONSE="$(sgpt "The \`$COMMAND\` command was not found. The system is macOS. Homebrew is already installed. Print the code that would be required to make the command available. Only print the code in the response.")"
 
   # Print the markdown response using glow
   echo "$SGPT_RESPONSE" | glow -
