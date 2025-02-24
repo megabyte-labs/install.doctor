@@ -27,6 +27,22 @@ fi
 
 if gum confirm "Copy wp-config to .wp-config.local.php?"; then
   cp wp-config.php .wp-config.local.php
+  # FILE="wp-config.php"
+  # # Define the required last three lines
+  # REQUIRED_LINES=$'\nif ( ! defined( \'WP_CLI\' ) ) {\n    require_once ABSPATH . \'wp-settings.php\';\n}'
+  # # Determine the correct `sed` command for Linux or macOS
+  # if [[ "$(uname)" == "Darwin" ]]; then
+  #   SED_CMD="gsed" # macOS requires an empty argument for `-i`
+  # else
+  #   SED_CMD="sed" # Linux works with `-i` directly
+  # fi
+  # # Remove any existing occurrences of the block
+  # $SED_CMD -i '/if ( ! defined( .WP_CLI. ) ) {/,/require_once ABSPATH . .wp-settings.php.;/d' "$FILE"
+  # # Ensure the file ends with a newline (compatible with both OSes)
+  # echo "" >>"$FILE"
+  # # Append the required lines
+  # echo -e "$REQUIRED_LINES" >>"$FILE"
+  # gum log -sl info "Updated $FILE to ensure the last three lines are set correctly."
 fi
 
 if gum confirm "Remove .sail/ and .backups/?"; then
@@ -47,22 +63,36 @@ if gum confirm "Run sail init --force?"; then
 fi
 
 ### Ensure local configuration referenced
-if ! cat wp-config.php | grep 'Load local development configuration' > /dev/null; then
+if ! cat wp-config.php | grep 'Load local development configuration' >/dev/null; then
   gum log -sl info "Ensuring local .wp-config.local.php is used in wp-config.php"
-  REPLACEMENT="<?php\n// Load local development configuration file\nif ( file_exists( __DIR__ . '/.wp-config.local.php' ) ) {\n    require_once( __DIR__ . '/.wp-config.local.php' );\n    return;\n}"
-  TMP=$(mktemp)
-  { echo "$REPLACEMENT"; tail -n +2 wp-config.php; } > "$TMP"
+  REPLACEMENT=$'<?php\n// Load local development configuration file\nif ( file_exists( __DIR__ . "/.wp-config.local.php" ) ) {\n    require_once( __DIR__ . "/.wp-config.local.php" );\n    return;\n}'
+  # Create a temporary file
+  TMP=$(mktemp) || exit 1
+  # Preserve the existing wp-config.php (excluding the first line)
+  {
+    echo "$REPLACEMENT"
+    tail -n +2 wp-config.php
+  } >"$TMP"
+  # Replace the original file
   mv -f "$TMP" wp-config.php
 fi
 
-if gum confirm "Apply CloudFlare DNS settings?"; then
+### CloudFlare (development)
+if gum confirm "Apply CloudFlare DNS settings for dev.$SITE_URL?"; then
+  gum log -sl info 'Acquiring hostname'
+  HOSTNAME="$(sail info | grep 'Hostname' | awk '{print $2}')"
+  export CF_API_DOMAIN="$SITE_URL"
+  gum log -sl info "Adding dev.$SITE_URL"
+  cfcli -a -t CNAME add dev "$HOSTNAME"
+fi
+
+### CloudFlare (production)
+if gum confirm "Apply CloudFlare DNS settings for $SITE_URL and www.$SITE_URL?"; then
   gum log -sl info 'Acquiring hostname'
   HOSTNAME="$(sail info | grep 'Hostname' | awk '{print $2}')"
   export CF_API_DOMAIN="$SITE_URL"
   gum log -sl info "Adding root CNAME pointing to $SITE_URL"
   cfcli -a -t CNAME add @ "$HOSTNAME"
-  gum log -sl info "Adding dev.$SITE_URL"
-  cfcli -a -t CNAME add dev "$HOSTNAME"
   gum log -sl info "Adding www.$SITE_URL"
   cfcli -a -t CNAME add www "$HOSTNAME"
 fi
@@ -106,4 +136,10 @@ if gum confirm "Run search and replace?"; then
   searchAndReplace '___CUSTOMER_SUPPORT_PHONE_NUMBER' "$SITE_PHONE_NUMBER"
   searchAndReplace '___MAIL_URL' "mailto:help@${SITE_URL}"
   searchAndReplace '___COMPANY_LLC_NAME' "$COMPANY_LLC_NAME"
+fi
+
+if gum confirm "Deploy local files to production (i.e. sail deploy --with-uploads)?"; then
+  sail deploy --with-uploads
+  SQL_FILE="$(wp db export | grep -oE "'[^']+\.sql'" | sed "s/'//g")"
+  sail db import "$SQL_FILE"
 fi

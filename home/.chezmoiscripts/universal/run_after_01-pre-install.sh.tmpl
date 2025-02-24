@@ -1021,6 +1021,13 @@ applyBasePlists() {
   fi
 }
 
+# @description Applies appropriate permissions to the `~/.ssh` folder
+sshPermissions() {
+  gum log -sl info "Applying permissions to ~/.ssh folder"
+  chmod 700 "${HOME}/.ssh"
+  find "${HOME}/.ssh" -type f -exec chmod 600 {} \;
+}
+
 if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   gum log -sl info 'The DEBUG or DEBUG_MODE environment variable is set so the post-dotfile-application routine tasks will be run synchronously'
   addZshEnv
@@ -1049,6 +1056,7 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   symlinkPython
   userLogFolders
   applyBasePlists
+  sshPermissions
 else
   addZshEnv &
   applyFontsToSystem &
@@ -1076,6 +1084,7 @@ else
   symlinkPython &
   userLogFolders &
   applyBasePlists &
+  sshPermissions &
   wait
 fi
 

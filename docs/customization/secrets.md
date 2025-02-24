@@ -287,7 +287,6 @@ After that, your `id_rsa` file will be encrypted in your fork and you can safely
 VPN profiles can be stored in encrypted format into your fork by placing `*.ovpn`, `*.conf` (WireGuard for macOS), and `*.nmconnection` (WireGuard for Linux) files into the `home/dot_config/vpn/` folder. Before committing the encrypted configurations into your source, you should encrypt the files with `chezmoi encrypt` and then add the following Go template logic to make sure that the files are only decrypted when the decryption key is present:
 
 ```text
-{{- if (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) -}}
 -----BEGIN AGE ENCRYPTED FILE-----
 YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAraUZ1dkFITlJMbmdhbXUx
 ekQ2SjRhaE5uT3J1czh0V09hSkZuanYvUTJvCklTcHZ6RFBrUGx0VlhqQytEb01a

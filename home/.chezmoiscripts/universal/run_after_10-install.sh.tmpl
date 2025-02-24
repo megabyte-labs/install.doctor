@@ -38,6 +38,6 @@ else
   exit 1
 fi
 
-gum log -sl info "Processing groups and permissions defined in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/software.yml" && sudo process-software-groups
-gum log -sl info "Running post scripts" && sudo process-software-post-scripts
-gum log -sl info "Starting enabled services" && sudo process-software-services
+gum log -sl info "Processing groups and permissions defined in ${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/software.yml" && process-software-groups
+gum log -sl info "Running post scripts" && process-software-post-scripts
+gum log -sl info "Starting enabled services" && process-software-services

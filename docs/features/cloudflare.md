@@ -35,8 +35,7 @@ Each computer instance (e.g. operating system, VM, container) provisioned with I
 2. Sign into CloudFlare with the browser that automatically pops up
 3. Select a domain you want to associate the `cert.pem` file with
 4. Generate an encrypted version of the `cert.pem` to store in your fork by running `cat ~/.cloudflared/cert.pem | chezmoi encrypt` (which requires [setting up encryption](/docs/customization/secrets#creating-an-age-key-password-protected))
-5. Copy / paste the encrypted blob to the file that is stored under `home/.chezmoitemplates/files/cloudflared.pem`
-6. Push the changes to your fork
+5. Push the changes to your fork
 
 ### Saving Registration Tokens
 
