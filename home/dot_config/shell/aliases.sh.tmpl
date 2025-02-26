@@ -91,7 +91,8 @@ fi
 if command -v gping > /dev/null; then
   alias ping='gping'
 fi
-
+sudo chown -R root:docker /var/lib/docker-plugins/rclone
+sudo chmod -R 755 /var/lib/docker-plugins/rclone
 ### safe-rm
 # TODO: Integrate this so it fails gracefully if folder does not exist (i.e. safe-rm -rf ~/Crunch should not return an error)
 # if command -v safe-rm > /dev/null; then

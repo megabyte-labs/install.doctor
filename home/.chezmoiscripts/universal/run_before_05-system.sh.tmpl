@@ -468,6 +468,19 @@ installDocker() {
       fi
     fi
   fi
+
+  ### Docker rclone Volume Plugin
+  if [ -d /Applications ] && [ -d /System ]; then
+    gum log -sl info "Ensuring /private/var/lib/docker-plugins/rclone/cache exists as a directory" && sudo mkdir -p /private/var/lib/docker-plugins/rclone/cache
+    gum log -sl info "Ensuring /private/var/lib/docker-plugins/rclone/config is removed" && sudo rm -rf /private/var/lib/docker-plugins/rclone/config
+    gum log -sl info "Symlinking user rclone config to /private/var/lib/docker-plugins/rclone/config" && sudo ln -s "${XDG_CONFIG_HOME:-$HOME/.config}/rclone" /private/var/lib/docker-plugins/rclone/config
+    gum log -sl info "Installing rclone/docker-volume plugin" && docker plugin install rclone/docker-volume-rclone:$(uname -m) args="-v" --alias rclone --grant-all-permissions config="/private/var/lib/docker-plugins/rclone/config" cache="/private/var/lib/docker-plugins/rclone/cache"
+  else
+    gum log -sl info "Ensuring /var/lib/docker-plugins/rclone/cache exists as a directory" && sudo mkdir -p /var/lib/docker-plugins/rclone/cache
+    gum log -sl info "Ensuring /var/lib/docker-plugins/rclone/config is removed" && sudo rm -rf /var/lib/docker-plugins/rclone/config
+    gum log -sl info "Symlinking user rclone config to /var/lib/docker-plugins/rclone/config" && sudo ln -s "${XDG_CONFIG_HOME:-$HOME/.config}/rclone" /var/lib/docker-plugins/rclone/config
+    gum log -sl info "Installing docker-volume-rclone plugin" && docker plugin install rclone/docker-volume-rclone:$(uname -m) args="-v" --alias rclone --grant-all-permissions
+  fi
 }
 
 # @description
