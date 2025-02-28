@@ -49,24 +49,24 @@ set -Eeo pipefail
 trap "gum log -sl error 'Script encountered an error!'" ERR
 
 ### Begin configuration
-if command -v rclone > /dev/null; then
+if command -v rclone >/dev/null; then
   R2_ENDPOINT="$(yq '.data.user.cloudflare.r2' "${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.yaml")"
   CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/rclone/rclone.conf"
   gum log -sl info 'Ensuring proper permissions on user rclone.conf file' && sudo chown -Rf apple:staff "$CONFIG_FILE"
   if [ "$R2_ENDPOINT" != 'null' ] && get-secret --exists CLOUDFLARE_R2_ID_USER CLOUDFLARE_R2_SECRET_USER; then
     gum log -sl info 'Removing ~/.config/rclone/rclone.conf Install Doctor managed block'
-    if cat "$CONFIG_FILE" | grep '# INSTALL DOCTOR MANAGED S3 START' > /dev/null; then
+    if cat "$CONFIG_FILE" | grep '# INSTALL DOCTOR MANAGED S3 START' >/dev/null; then
       # TODO: Remove old block
-      START_LINE="$(echo `grep -n -m 1 "# INSTALL DOCTOR MANAGED S3 START" "$CONFIG_FILE" | cut -f1 -d ":"`)"
-      END_LINE="$(echo `grep -n -m 1 "# INSTALL DOCTOR MANAGED S3 END" "$CONFIG_FILE" | cut -f1 -d ":"`)"
-      if command -v gsed > /dev/null; then
-        gsed -i "$START_LINE,${END_LINE}d" "$CONFIG_FILE" > /dev/null
+      START_LINE="$(echo $(grep -n -m 1 "# INSTALL DOCTOR MANAGED S3 START" "$CONFIG_FILE" | cut -f1 -d ":"))"
+      END_LINE="$(echo $(grep -n -m 1 "# INSTALL DOCTOR MANAGED S3 END" "$CONFIG_FILE" | cut -f1 -d ":"))"
+      if command -v gsed >/dev/null; then
+        gsed -i "$START_LINE,${END_LINE}d" "$CONFIG_FILE" >/dev/null
       else
-        sed -i "$START_LINE,${END_LINE}d" "$CONFIG_FILE" > /dev/null
+        sed -i "$START_LINE,${END_LINE}d" "$CONFIG_FILE" >/dev/null
       fi
     fi
     gum log -sl info 'Adding ~/.config/rclone/rclone.conf INSTALL DOCTOR managed block'
-    tee -a "$CONFIG_FILE" > /dev/null <<EOT
+    tee -a "$CONFIG_FILE" >/dev/null <<EOT
 # INSTALL DOCTOR MANAGED S3 START
 [$USER-s3]
 access_key_id = $(get-secret CLOUDFLARE_R2_ID_USER)
@@ -81,7 +81,7 @@ EOT
   fi
 
   ### Add user / group with script in ~/.local/bin/add-usergroup, if it is available
-  if command -v add-usergroup > /dev/null; then
+  if command -v add-usergroup >/dev/null; then
     sudo add-usergroup rclone rclone
     sudo add-usergroup "$USER" rclone
   fi
@@ -128,10 +128,10 @@ EOT
       sudo load-service rclone.public
     fi
 
-    if get-secret --exists CLOUDFLARE_R2_ID_USER CLOUDFLARE_R2_SECRET_USER; then
-      ### rclone.user.plist
-      load-service rclone.user
-    fi
+    # if get-secret --exists CLOUDFLARE_R2_ID_USER CLOUDFLARE_R2_SECRET_USER; then
+    #   ### rclone.user.plist
+    #   load-service rclone.user
+    # fi
   elif [ -d /etc/systemd/system ]; then
     if get-secret --exists CLOUDFLARE_R2_ID CLOUDFLARE_R2_SECRET; then
       ### Ensure mount folder is created
@@ -156,11 +156,11 @@ EOT
     fi
 
     ### Add user Rclone mount
-    if get-secret --exists CLOUDFLARE_R2_ID_USER CLOUDFLARE_R2_SECRET_USER; then
-      gum log -sl info 'Enabling / restarting the S3 user mount'
-      sudo systemctl enable s3-user
-      sudo systemctl restart s3-user
-    fi
+    # if get-secret --exists CLOUDFLARE_R2_ID_USER CLOUDFLARE_R2_SECRET_USER; then
+    #   gum log -sl info 'Enabling / restarting the S3 user mount'
+    #   sudo systemctl enable s3-user
+    #   sudo systemctl restart s3-user
+    # fi
   fi
 else
   gum log -sl info 'rclone is not available'

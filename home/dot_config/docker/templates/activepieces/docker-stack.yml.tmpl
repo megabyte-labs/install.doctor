@@ -1,0 +1,48 @@
+---
+version: '3.7'
+
+services:
+  activepieces:
+    image: ghcr.io/activepieces/activepieces:0.45.1
+    container_name: activepieces
+    restart: unless-stopped
+    ## Enable the following line if you already use AP_EXECUTION_MODE with SANDBOXED or old activepieces, checking the breaking change documentation for more info.
+    ## privileged: true
+    ports:
+      - '8080:80'
+    depends_on:
+      - postgres
+      - redis
+    env_file: .env
+    volumes:
+      - ./cache:/usr/src/app/cache
+    networks:
+      - activepieces
+  postgres:
+    image: 'postgres:14.4'
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      - 'POSTGRES_DB=${AP_POSTGRES_DATABASE}'
+      - 'POSTGRES_PASSWORD=${AP_POSTGRES_PASSWORD}'
+      - 'POSTGRES_USER=${AP_POSTGRES_USERNAME}'
+    volumes:
+      - activepieces_postgres:/var/lib/postgresql/data
+    networks:
+      - activepieces
+  redis:
+    image: 'redis:7.0.7'
+    container_name: redis
+    restart: unless-stopped
+    volumes:
+      - activepieces_redis:/data
+    networks:
+      - activepieces
+volumes:
+  activepieces_postgres:
+    name: activepieces_postgres
+  activepieces_redis:
+    name: activepieces_redis
+
+networks:
+  activepieces:

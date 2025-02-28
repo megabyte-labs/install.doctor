@@ -63,52 +63,17 @@ extras:
         keep-yearly: 2
 
 locations:
-  android-studio:
-    from: "{{ default "" (env "ANDROID_STUDIO_APPDATA") }}"
+  {{ $softwarePath := (or (index . "XDG_DATA_HOME") (printf "%s/.local/share" .HOME)) | printf "%s/chezmoi/software.yml" -}}
+  {{- $softwareData := (datasource "yaml" $softwarePath) -}}
+
+  {{- range $key, $value := $softwareData.softwarePackages -}}
+    {{- $envKey := printf "%s_APPDATA" (upper $key) -}}
+    {{- if and (index $value "_env") (index $.env $envKey) -}}
+  {{- $key }}:
+    from: "{{ default "" (env $envKey) }}"
     <<: *app
-  brave-browser:
-    from: "{{ default "" (env "BRAVE_BROWSER_APPDATA") }}"
-    <<: *app
-  ferdium:
-    from: "{{ default "" (env "FERDIUM_APPDATA") }}"
-    <<: *app
-  firefox:
-    from: "{{ default "" (env "FIREFOX_APPDATA") }}"
-    <<: *app
-  google-chrome:
-    from: "{{ default "" (env "GOOGLE_CHROME_APPDATA") }}"
-    <<: *app
-  logi-options-plus:
-    from: "{{ default "" (env "LOGI_OPTIONS_PLUS_APPDATA") }}"
-    <<: *app
-  mark-text:
-    from: "{{ default "" (env "MARK_TEXT_APPDATA") }}"
-    <<: *app
-  microsoft-edge:
-    from: "{{ default "" (env "MICROSOFT_EDGE_APPDATA") }}"
-    <<: *app
-  notion:
-    from: "{{ default "" (env "NOTION_APPDATA") }}"
-    <<: *app
-  pieces-os:
-    from: "{{ default "" (env "PIECES_OS_APPDATA") }}"
-    <<: *app
-  raycast:
-    from: "{{ default "" (env "RAYCAST_APPDATA") }}"
-  {{ if eq .chezmoi.os "linux" -}}
-  remmina:
-    from: "{{ default "" (env "REMMINA_APPDATA") }}"
-    <<: *app
+    {{- end -}}
   {{- end }}
-  spacedrive:
-    from: "{{ default "" (env "SPACEDRIVE_APPDATA") }}"
-    <<: *app
-  tor-browser:
-    from: "{{ default "" (env "TOR_BROWSER_APPDATA") }}"
-    <<: *app
-  warp-terminal:
-    from: "{{ default "" (env "WARP_TERMINAL_APPDATA") }}"
-    <<: *app
   home-local:
     from: ~/
     to: home-local
@@ -136,33 +101,33 @@ locations:
             curl -m 10 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} SUCCESS / Host: ${HOST} / User: ${USER} / Home: ${HOME}" "https://health.{{ .host.domain }}/ping/${HEALTHCHECK_UUID}"
           }
           healthcheck &
-  # home-s3:
-  #   from: ~/
-  #   to: home-s3
-  #   cron: '0 */12 * * *'
-  #   <<: *user
-  #   hooks:
-  #     before:
-  #       - |
-  #         healthcheck() {
-  #           HEALTHCHECK_UUID="$(curl https://health.{{ .host.domain }}/api/v1/checks/ --header "X-Api-Key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "HEALTHCHECKS_API_KEY")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/HEALTHCHECKS_API_KEY") | decrypt | trim }}{{ else }}{{ default "" (env "HEALTHCHECKS_API_KEY") }}{{ end }}" --data "{\"name\": \"Autorestic Home Directory Backup - Location / ${AUTORESTIC_LOCATION} / Host {{ .host.hostname }} / User {{ .user.username }})\", \"channels\": \"*\", \"schedule\": \"0 * * * *\", \"tags\": \"host-{{ .host.hostname }} user-{{ .user.username }} location-${AUTORESTIC_LOCATION} home-directory\", \"tz\": \"{{ .user.timezone }}\", \"desc\": \"The user folder location (${AUTORESTIC_LOCATION}) for {{ .user.username }} on {{ .host.hostname }}\", \"grace\": 3600}" | jq -r '.ping_url' | sed 's/.*\///')"
-  #           curl -m 10 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} BEFORE / Host: ${HOST} / User: ${USER} / Home: ${HOME}" "https://health.{{ .host.domain }}/ping/${HEALTHCHECK_UUID}/start"
-  #         }
-  #         healthcheck &
-  #     failure:
-  #       - |
-  #         healthcheck() {
-  #           HEALTHCHECK_UUID="$(curl https://health.{{ .host.domain }}/api/v1/checks/ --header "X-Api-Key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "HEALTHCHECKS_API_KEY")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/HEALTHCHECKS_API_KEY") | decrypt | trim }}{{ else }}{{ default "" (env "HEALTHCHECKS_API_KEY") }}{{ end }}" --data "{\"name\": \"Autorestic Home Directory Backup - Location / ${AUTORESTIC_LOCATION} / Host {{ .host.hostname }} / User {{ .user.username }})\", \"channels\": \"*\", \"schedule\": \"0 * * * *\", \"tags\": \"host-{{ .host.hostname }} user-{{ .user.username }} location-${AUTORESTIC_LOCATION} home-directory\", \"tz\": \"{{ .user.timezone }}\", \"desc\": \"The user folder location (${AUTORESTIC_LOCATION}) for {{ .user.username }} on {{ .host.hostname }}\", \"grace\": 3600}" | jq -r '.ping_url' | sed 's/.*\///')"
-  #           curl -m 10 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} FAILURE / Host: ${HOST} / User: ${USER} / Home: ${HOME}" "https://health.{{ .host.domain }}/ping/${HEALTHCHECK_UUID}/fail"
-  #         }
-  #         healthcheck &
-  #     success:
-  #       - |
-  #         healthcheck() {
-  #           HEALTHCHECK_UUID="$(curl https://health.{{ .host.domain }}/api/v1/checks/ --header "X-Api-Key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "HEALTHCHECKS_API_KEY")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/HEALTHCHECKS_API_KEY") | decrypt | trim }}{{ else }}{{ default "" (env "HEALTHCHECKS_API_KEY") }}{{ end }}" --data "{\"name\": \"Autorestic Home Directory Backup - Location / ${AUTORESTIC_LOCATION} / Host {{ .host.hostname }} / User {{ .user.username }})\", \"channels\": \"*\", \"schedule\": \"0 * * * *\", \"tags\": \"host-{{ .host.hostname }} user-{{ .user.username }} location-${AUTORESTIC_LOCATION} home-directory\", \"tz\": \"{{ .user.timezone }}\", \"desc\": \"The user folder location (${AUTORESTIC_LOCATION}) for {{ .user.username }} on {{ .host.hostname }}\", \"grace\": 3600}" | jq -r '.ping_url' | sed 's/.*\///')"
-  #           curl -m 10 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} SUCCESS / Host: ${HOST} / User: ${USER} / Home: ${HOME}" "https://health.{{ .host.domain }}/ping/${HEALTHCHECK_UUID}"
-  #         }
-  #         healthcheck &
+  home-s3:
+    from: ~/
+    to: home-s3
+    cron: '0 0 * * 0'
+    <<: *user
+    hooks:
+      before:
+        - |
+          healthcheck() {
+            HEALTHCHECK_UUID="$(curl https://health.{{ .host.domain }}/api/v1/checks/ --header "X-Api-Key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "HEALTHCHECKS_API_KEY")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/HEALTHCHECKS_API_KEY") | decrypt | trim }}{{ else }}{{ default "" (env "HEALTHCHECKS_API_KEY") }}{{ end }}" --data "{\"name\": \"Autorestic Home Directory Backup - Location / ${AUTORESTIC_LOCATION} / Host {{ .host.hostname }} / User {{ .user.username }})\", \"channels\": \"*\", \"schedule\": \"0 * * * *\", \"tags\": \"host-{{ .host.hostname }} user-{{ .user.username }} location-${AUTORESTIC_LOCATION} home-directory\", \"tz\": \"{{ .user.timezone }}\", \"desc\": \"The user folder location (${AUTORESTIC_LOCATION}) for {{ .user.username }} on {{ .host.hostname }}\", \"grace\": 3600}" | jq -r '.ping_url' | sed 's/.*\///')"
+            curl -m 10 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} BEFORE / Host: ${HOST} / User: ${USER} / Home: ${HOME}" "https://health.{{ .host.domain }}/ping/${HEALTHCHECK_UUID}/start"
+          }
+          healthcheck &
+      failure:
+        - |
+          healthcheck() {
+            HEALTHCHECK_UUID="$(curl https://health.{{ .host.domain }}/api/v1/checks/ --header "X-Api-Key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "HEALTHCHECKS_API_KEY")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/HEALTHCHECKS_API_KEY") | decrypt | trim }}{{ else }}{{ default "" (env "HEALTHCHECKS_API_KEY") }}{{ end }}" --data "{\"name\": \"Autorestic Home Directory Backup - Location / ${AUTORESTIC_LOCATION} / Host {{ .host.hostname }} / User {{ .user.username }})\", \"channels\": \"*\", \"schedule\": \"0 * * * *\", \"tags\": \"host-{{ .host.hostname }} user-{{ .user.username }} location-${AUTORESTIC_LOCATION} home-directory\", \"tz\": \"{{ .user.timezone }}\", \"desc\": \"The user folder location (${AUTORESTIC_LOCATION}) for {{ .user.username }} on {{ .host.hostname }}\", \"grace\": 3600}" | jq -r '.ping_url' | sed 's/.*\///')"
+            curl -m 10 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} FAILURE / Host: ${HOST} / User: ${USER} / Home: ${HOME}" "https://health.{{ .host.domain }}/ping/${HEALTHCHECK_UUID}/fail"
+          }
+          healthcheck &
+      success:
+        - |
+          healthcheck() {
+            HEALTHCHECK_UUID="$(curl https://health.{{ .host.domain }}/api/v1/checks/ --header "X-Api-Key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "HEALTHCHECKS_API_KEY")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/HEALTHCHECKS_API_KEY") | decrypt | trim }}{{ else }}{{ default "" (env "HEALTHCHECKS_API_KEY") }}{{ end }}" --data "{\"name\": \"Autorestic Home Directory Backup - Location / ${AUTORESTIC_LOCATION} / Host {{ .host.hostname }} / User {{ .user.username }})\", \"channels\": \"*\", \"schedule\": \"0 * * * *\", \"tags\": \"host-{{ .host.hostname }} user-{{ .user.username }} location-${AUTORESTIC_LOCATION} home-directory\", \"tz\": \"{{ .user.timezone }}\", \"desc\": \"The user folder location (${AUTORESTIC_LOCATION}) for {{ .user.username }} on {{ .host.hostname }}\", \"grace\": 3600}" | jq -r '.ping_url' | sed 's/.*\///')"
+            curl -m 10 -X POST -H "Content-Type: text/plain" --data "Autorestic User Home Folder ${AUTORESTIC_LOCATION} SUCCESS / Host: ${HOST} / User: ${USER} / Home: ${HOME}" "https://health.{{ .host.domain }}/ping/${HEALTHCHECK_UUID}"
+          }
+          healthcheck &
 
 backends:
   apps-local:
@@ -171,7 +136,7 @@ backends:
     key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "RESTIC_PASSWORD")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/RESTIC_PASSWORD") | decrypt | trim }}{{ else }}{{ default "" (env "RESTIC_PASSWORD") }}{{ end }}
   apps-s3:
     type: s3
-    path: {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com/user/{{ .user.username }}/Backups/apps
+    path: {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com/autorestic-user/{{ .user.username }}/apps
     key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "RESTIC_PASSWORD")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/RESTIC_PASSWORD") | decrypt | trim }}{{ else }}{{ default "" (env "RESTIC_PASSWORD") }}{{ end }}
     env:
       AWS_ACCESS_KEY_ID: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "CLOUDFLARE_R2_ID_USER")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/CLOUDFLARE_R2_ID_USER") | decrypt | trim }}{{ else }}{{ default "" (env "CLOUDFLARE_R2_ID_USER") }}{{ end }}
@@ -180,10 +145,10 @@ backends:
     type: local
     path: /var/local/backups/user/{{ .user.username }}/home
     key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "RESTIC_PASSWORD")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/RESTIC_PASSWORD") | decrypt | trim }}{{ else }}{{ default "" (env "RESTIC_PASSWORD") }}{{ end }}
-  # home-s3:
-  #   type: s3
-  #   path: {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com/user/{{ .user.username }}/Backups/home
-  #   key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "RESTIC_PASSWORD")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/RESTIC_PASSWORD") | decrypt | trim }}{{ else }}{{ default "" (env "RESTIC_PASSWORD") }}{{ end }}
-  #   env:
-  #     AWS_ACCESS_KEY_ID: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "CLOUDFLARE_R2_ID_USER")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/CLOUDFLARE_R2_ID_USER") | decrypt | trim }}{{ else }}{{ default "" (env "CLOUDFLARE_R2_ID_USER") }}{{ end }}
-  #     AWS_SECRET_ACCESS_KEY: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "CLOUDFLARE_R2_SECRET_USER")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/CLOUDFLARE_R2_SECRET_USER") | decrypt | trim }}{{ else }}{{ default "" (env "CLOUDFLARE_R2_SECRET_USER") }}{{ end }}
+  home-s3:
+    type: s3
+    path: {{ .user.cloudflare.r2 }}.r2.cloudflarestorage.com/autorestic-user/{{ .user.username }}/home
+    key: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "RESTIC_PASSWORD")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/RESTIC_PASSWORD") | decrypt | trim }}{{ else }}{{ default "" (env "RESTIC_PASSWORD") }}{{ end }}
+    env:
+      AWS_ACCESS_KEY_ID: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "CLOUDFLARE_R2_ID_USER")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/CLOUDFLARE_R2_ID_USER") | decrypt | trim }}{{ else }}{{ default "" (env "CLOUDFLARE_R2_ID_USER") }}{{ end }}
+      AWS_SECRET_ACCESS_KEY: {{ if and (stat (joinPath .host.home ".config" "age" "chezmoi.txt")) (stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" (printf "%s%s" "secrets-" .chezmoi.hostname) "CLOUDFLARE_R2_SECRET_USER")) }}{{ includeTemplate (printf "%s%s" (printf "%s%s" "secrets-" .chezmoi.hostname) "/CLOUDFLARE_R2_SECRET_USER") | decrypt | trim }}{{ else }}{{ default "" (env "CLOUDFLARE_R2_SECRET_USER") }}{{ end }}

@@ -830,6 +830,9 @@ softwarePackages:
     _desc: "Barrier is an open-source software that allows you to share your mouse and keyboard between multiple computers with different operating systems. It enables you to control multiple machines with a single\nset of input devices seamlessly. Barrier supports Windows, macOS, and Linux operating systems, making it a versatile tool for users who work across different platforms. It is a convenient solution for  \nstreamlining workflows and improving productivity by eliminating the need for multiple sets of input devices.                                                                                             "
     _github: https://github.com/debauchee/barrier
     _name: Barrier
+    _env:
+      BARRIER_APPDATA:
+        cask: "$HOME/Library/Application Support/barrier"
     _short: "Barrier is an open-source software that allows you to share your mouse and keyboard between multiple computers.                                                                                           "
     _todo: TODO
     cask: barrier
@@ -1038,6 +1041,9 @@ softwarePackages:
     _desc: The desktop vault (Windows, macOS, & Linux)
     _github: https://github.com/bitwarden/desktop
     _name: BitWarden
+    _env:
+      BITWARDEN_APPDATA:
+        cask: "$HOME/Library/Application Support/Bitwarden"
     _short: "bitwarden/desktop is a secure and open-source password manager for desktop platforms.                                                                                                                     "
     cask: bitwarden
     choco: bitwarden
@@ -1176,6 +1182,7 @@ softwarePackages:
     _github: https://github.com/brave/brave-browser
     _home: https://brave.com/
     _name: Brave Browser
+    _deprecated: Deprecated in favor of Vivaldi
     _short: "Brave Browser is an open-source web browser that focuses on privacy and security, with built-in ad-blocking and privacy features.                                                                         "
     cask: brave-browser
     choco: brave
@@ -1438,6 +1445,9 @@ softwarePackages:
     _home: https://chatgpt.com/
     _github: false
     _name: ChatGPT Official Desktop Application
+    _env:
+      CHATGPT_APPDATA:
+        cask: "$HOME/Library/Application Support/com.openai.chat"
     cask: chatgpt
     choco: chatgpt
     snap: chatgpt-desktop
@@ -2388,6 +2398,9 @@ softwarePackages:
     _github: https://github.com/docker/compose
     _home: https://www.docker.com/
     _name: Docker Desktop
+    _env:
+      DOCKER_DESKTOP_APPDATA:
+        cask: "$HOME/Library/Application Support/Docker Desktop"
     _short: "Docker Compose is a tool for defining and running multi-container Docker applications.                                                                                                                    "
     apt: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.16.2-amd64.deb
     cask: docker
@@ -3065,7 +3078,7 @@ softwarePackages:
   ferdium:
     _app: Ferdium.app
     _bin: ferdium
-    _desc: I'm unable to access external websites directly. Could you provide me with a brief description or any specific details you would like to know about the https://github.com/ferdium/ferdium-app repository?
+    _deprecated: Deprecated in favor of Chrome / extensions
     _env:
       FERDIUM_APPDATA:
         cask: $HOME/Library/Application Support/Ferdium
@@ -3193,14 +3206,12 @@ softwarePackages:
   firefox:
     _app: Firefox.app
     _bin: firefox
-    _deps:
-      - htmlq
     _desc: "[Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/), or simply Firefox, is a free and open-source web browser developed by the Mozilla Foundation and its subsidiary, the Mozilla Corporation. Firefox uses the Gecko layout engine to render web pages, which implements current and anticipated web standards."
     _docs: https://developer.mozilla.org/en-US/
     _env:
       FIREFOX_APPDATA:
         apt: $HOME/.mozilla/firefox
-        cask: $HOME/Library/Application Support/Firefox/Profiles
+        cask: $HOME/Library/Application Support/Firefox
         choco: TODO
         dnf: $HOME/.mozilla/firefox
         flatpak: $HOME/.var/app/org.mozilla.firefox/.mozilla/firefox
@@ -4270,6 +4281,41 @@ softwarePackages:
     _name: Proto
     _desc: Proto is a pluggable version manager, a unified toolchain.
     brew: proto
+  langchain:
+    _bin: langchain
+    _github: https://github.com/langchain-ai/langchain
+    _home: https://python.langchain.com/docs/introduction/
+    _name: LangChain
+    pipx: langchain
+  langgraph-cli:
+    _bin: langgraph
+    _github: https://github.com/langchain-ai/langgraph
+    _home: https://langchain-ai.github.io/langgraph/
+    _name: LangGraph CLI
+    brew: langgraph-cli
+    pipx: langgraph-cli[inmem]
+  langgraph-studio:
+    _app: LangGraph Studio.app
+    _bin: langgraph-studio
+    _github: https://github.com/langchain-ai/langgraph-studio
+    _home: https://studio.langchain.com
+    _name: LangGraph Studio
+    cask: langgraph-studio
+  airtable:
+    _bin: airtable
+    _app: Airtable.app
+    _name: Airtable
+    _github: https://github.com/Airtable/airtable.js
+    _home: https://www.airtable.com
+    cask: airtable
+  logitech-presentation:
+    _bin: logitech-presentation
+    _home: https://support.logi.com/hc/en-au/articles/360023300194-Getting-Started-Spotlight-Presentation-Remote
+    _name: Logitech Presentation
+    _notes: |
+      Cask logitech-presentation only provides a manual installer. To run it and complete the installation:
+      open /opt/homebrew/Caskroom/logitech-presentation/2.10.276/LogiPresentation\ Installer.app
+    cask: logitech-presentation
   golangci-lint:
     _bin: golangci-lint
     _desc: Fast linters Runner for Go
@@ -5235,20 +5281,51 @@ softwarePackages:
     _short: "isort is a Python utility that sorts imports alphabetically within Python code files.                                                                                                                     "
     brew: isort
     pipx: isort
+  amazon-q:
+    _bin: amazon-q
+    _app: Amazon Q.app
+    _docs: https://aws.amazon.com/q/developer/getting-started/
+    _github: https://github.com/aws/amazon-q-developer-cli
+    _name: Amazon Q
+    _home: https://aws.amazon.com/q/developer/
+    cask: amazon-q
+    choco: amazon-q
+  block-goose:
+    _bin: block-goose
+    _app: Goose.app
+    _name: Goose
+    _github: https://github.com/block/goose
+    _home: https://block.github.io/goose/
+    cask: block-goose
+  msty:
+    _app: Msty.app
+    _bin: msty
+    _home: https://msty.app
+    _github: false
+    _name: Msty
+    cask: msty
+  fixkey:
+    _app: fixkey.app
+    _bin: fixkey
+    _home: https://www.fixkey.ai
+    _github: false
+    _name: Fixkey
+    cask: fixkey
   iterm2:
     _app: iTerm.app
-    _bin: null
-    _deprecated: Deprecated in favor of Tabby / Warp
+    _bin: iterm2
     _desc: "[iTerm2](https://eugeny.github.io/iterm2/) is a highly configurable terminal emulator, SSH and serial client for Windows, macOS and Linux."
     _docs: https://iterm2.com/documentation.html
     _github: https://github.com/gnachman/iTerm2
     _home: https://iterm2.com/
     _name: iTerm2
-    _post:cask: |
+    _post: |
       gum log -sl info "Setting iTerm2 options location to Install Doctor Chezmoi location" && defaults write com.googlecode.iterm2 PrefsCustomFolder -string "${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi/home/Library/Preferences/com.googlecode.iterm2.plist"
       gum log -sl info "Setting iTerm2 to automatically sync with managed options" && defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile_selection -int 2
-    _short: "iTerm2 is a popular terminal emulator for macOS with advanced features like split panes, search, autocomplete, and more."
-    cask: iterm2
+    _short: iTerm2 is a popular terminal emulator for macOS with advanced features like split panes, search, autocomplete, and more.
+    cask:
+      - iterm2
+      - itermai
   java:
     _bin: null
     _desc: "[Java](https://www.java.com/en/) is a class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible."
@@ -5836,13 +5913,43 @@ softwarePackages:
     _github: https://github.com/Mintplex-Labs/anything-llm
     _short: Private desktop AI chat application and eco-system
     _app: AnythingLLM.app
+    _env:
+      ANYTHINGLLM_APPDATA:
+        cask: "$HOME/Library/Application Support/anythingllm-desktop"
     cask: anythingllm
+  limitless:
+    _app: Limitless.app
+    _bin: limitless
+    _github: false
+    _home: https://www.limitless.ai
+    _name: Limitless
+    cask: limitless
+  trae:
+    _app: Trae.app
+    _bin: trae
+    _github: https://github.com/Trae-AI/Trae
+    _name: Trae
+    _home: https://www.trae.ai
+    cask: trae
+    choco: trae
+  rivet:
+    _app: Rivet.app
+    _bin: rivet
+    _github: https://github.com/Ironclad/rivet
+    _home: https://rivet.ironcladapp.com
+    _name: Rivet
+    cask: rivet
+    choco: rivet
   cursor:
     _app: Cursor.app
     _bin: cursor
-    _desc: AI-enhanced text editor
+    _deprecated: Deprecated in favor of Trae
+    _desc: AI-enhanced text editor forked from VSCode and compatible with VSCode plugins
     _github: https://github.com/getcursor/cursor
     _name: Cursor
+    _env:
+      CURSOR_APPDATA:
+        cask: "$HOME/Library/Application Support/Cursor"
     _home: https://www.cursor.com
     cask: cursor
   lapce:
@@ -5854,6 +5961,9 @@ softwarePackages:
     _github: https://github.com/lapce/lapce
     _home: https://lapce.dev/
     _name: Lapce
+    _env:
+      LAPCE_APPDATA:
+        cask: "$HOME/Library/Application Support/dev.lapce.Lapce-Stable"
     _short: "Lapce is a lightweight and fast text editor for programmers, designed for ease of use and customization.                                                                                                  "
     cask: lapce
     emerge: app-editors/lapce
@@ -7635,6 +7745,14 @@ softwarePackages:
     cask: obs
     choco: obs-studio
     flatpak: com.obsproject.Studio
+  prompt-declaration-language:
+    _bin: pdl
+    _desc: Declarative prompt programming language
+    _github: https://github.com/IBM/prompt-declaration-language
+    _name: Prompt Declaration Language
+    _home: https://ibm.github.io/prompt-declaration-language/
+    _docs: https://ibm.github.io/prompt-declaration-language/api_reference/
+    pipx: prompt-declaration-language
   obsidian:
     _app: Obsidian.app
     _bin: obsidian
@@ -7643,6 +7761,9 @@ softwarePackages:
     _github: false
     _home: https://obsidian.md/
     _name: Obsidian
+    _env:
+      OBSIDIAN_APPDATA:
+        cask: $HOME/Library/Application Support/obsidian
     appimage: Obsidian
     cask: obsidian
     choco: obsidian
@@ -8506,6 +8627,13 @@ softwarePackages:
     _name: "pnpm-lock-export                                                                                                                                                                                          "
     _short: "pnpm-lock-export is a tool that converts a pnpm lockfile to an npm-compatible package-lock.json file.                                                                                                     "
     npm: pnpm-lock-export
+  windows-app:
+    _bin: windows-app
+    _app: Windows App.app
+    _github: false
+    _home: https://adoption.microsoft.com/en-us/windows-app/
+    _name: Windows App
+    cask: windows-app
   pock:
     _app: Pock.app
     _bin: pock
@@ -8619,6 +8747,17 @@ softwarePackages:
     apt: postfix
     dnf: postfix
     pacman: postfix
+  ollama:
+    _app: Ollama.app
+    _bin: ollama
+    _desc: Get up and running with Llama 3.3, DeepSeek-R1, Phi-4, Gemma 2, and other large language models.
+    _github: https://github.com/ollama/ollama
+    _name: Ollama
+    _home: https://ollama.com
+    _deprecated: Deprecated in favor of AnythingLLM
+    brew: ollama
+    cask: ollama
+    choco: ollama
   postgresql:
     _bin: postgresql
     _desc: "The link https://github.com/postgres/postgres leads to the official GitHub repository for the PostgreSQL database management system. PostgreSQL is a powerful, open-source relational database system     \nknown for its reliability, robust feature set, and extensibility. The repository contains the source code, documentation, issue tracker, and community contributions related to PostgreSQL development.   \nIt's a central hub for developers, users, and contributors to collaborate, report bugs, suggest enhancements, and stay updated on the latest developments in PostgreSQL.                                  "
@@ -10535,7 +10674,15 @@ softwarePackages:
     _github: https://github.com/FuzzyIdeas/Clop
     _home: https://lowtechguys.com/clop/
     _name: Clop
-    cask: clop
+    cask:
+  gitfs:
+    _bin: gitfs
+    _name: GitFS
+    _preload: true
+    _home: https://www.presslabs.com/news/gitfs-everywhere/
+    _github: https://github.com/presslabs/gitfs
+    brew: gitfs
+    pipx: gitfs
   volum:
     _app: Volum.app
     _bin: volum
@@ -10699,6 +10846,16 @@ softwarePackages:
     _name: Syncpack
     _short: "syncpack is a tool that keeps dependencies in sync between multiple package.json files in a project.                                                                                                      "
     npm: syncpack
+  vivaldi:
+    _bin: vivaldi
+    _app: Vivaldi.app
+    _desc: Chromium-based browser with emphasis on customizability
+    _home: https://vivaldi.com/
+    _github: https://github.com/ric2b/Vivaldi-browser
+    _name: Vivaldi
+    cask: vivaldi
+    choco: vivaldi
+    flatpak: com.vivaldi.Vivaldi
   syncthing:
     _bin: syncthing
     _desc: "Syncthing is an open-source continuous file synchronization program that allows you to securely sync files between multiple devices. It is designed to be decentralized, giving you control over your data\nwithout relying on a central server. Syncthing uses end-to-end encryption to ensure your files are transferred securely. It supports various operating systems, including Darwin/MacOS, making it a       \nversatile solution for keeping your files in sync across different devices. You can find more information about Syncthing on its GitHub page: Syncthing GitHub Repository.                                "
@@ -10707,7 +10864,11 @@ softwarePackages:
     _service:
       - name: syncthing
         sudo: false
+    _serviceEnabled: true
     _short: "Syncthing is an open-source continuous file synchronization program.                                                                                                                                      "
+    _env:
+      SYNCTHING_APPDATA:
+        cask: "$HOME/Library/Application Support/Cursor"
     brew: syncthing
     choco: syncthing
     port: syncthing
@@ -11821,7 +11982,7 @@ softwarePackages:
     _docs: https://docs.warp.dev/getting-started/readme
     _env:
       WARP_TERMINAL_APPDATA:
-        cask: $HOME/Library/Application Support/dev.warp.Warp-Stable
+        cask: "$HOME/Library/Application Support/dev.warp.Warp-Stable"
     _github: https://github.com/warpdotdev/Warp
     _home: https://www.warp.dev/
     _name: Warp Terminal

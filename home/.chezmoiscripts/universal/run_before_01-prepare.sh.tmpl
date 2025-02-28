@@ -112,7 +112,7 @@ importCloudFlareCert() {
         sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_TMP" && gum log -sl info 'Successfully imported cloudflare.crt into System.keychain'
       fi
     else
-      logg warn "$HOME/.local/etc/ssl/cloudflare/cloudflare.crt is missing"
+      gum log -sl warn "$HOME/.local/etc/ssl/cloudflare/cloudflare.crt is missing"
     fi
   fi
 }

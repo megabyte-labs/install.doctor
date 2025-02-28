@@ -1,11 +1,12 @@
-* Write requirements for `software.yml`
 https://nixos.wiki/wiki/Nix_Installation_Guide
 * Wazuh requires booting into recovery, running csrutil disable, installing agent normally, and then re-enabling it again in recovery mode
 * NGINX /opt/homebrew/etc/nginx/nginx.conf, on port 8080 so no sudo required, nginx will load all files in /opt/homebrew/etc/nginx/servers/, brew services might require sudo if port 443 is used, Docroot /opt/homebrew/var/www
 - https://github.com/linuxserver/docker-webtop
 - https://nginxui.com/
 - Barrier config
+- Goose CLI
 - Integrate Sheldon
+https://github.com/presslabs/gitfs?tab=readme-ov-file
 - https://github.com/koekeishiya/yabai
 - Add and test import of nmcli for wireguard profiles
 - Come up with some sensible defaults for https://espanso.org/
@@ -32,7 +33,6 @@ The following items are Docker containers that we may want to include as default
 - https://github.com/Infisical/infisical
 - https://github.com/formbricks/formbricks
 - https://github.com/chatwoot/chatwoot- https://docs.rundeck.com/docs/administration/install/installing-rundeck.html - Rundeck (Self-Service Desk)
-- https://github.com/activepieces/activepieces - SaaS Automations
 - https://github.com/anse-app/anse - ChatGPT interface
 - https://supabase.com/ - Firebase alternative
 - https://github.com/pawelmalak/flame - Start page
