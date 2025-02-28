@@ -128,9 +128,6 @@ export PATH="${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua
 ### AWS CLI
 export AWS_SHARED_CREDENTIALS_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/aws/credentials"
 export AWS_CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/aws/config"
-if [ -f "$HOME/.local/etc/ssl/cloudflare/cloudflare.crt" ]; then
-  export AWS_CA_BUNDLE="$HOME/.local/etc/ssl/cloudflare/cloudflare.crt"
-fi
 
 ### Azure CLI
 export AZURE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/azure"

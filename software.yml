@@ -333,6 +333,7 @@ softwarePackages:
   amethyst:
     _app: Amethyst.app
     _bin: amethyst
+    _deprecated: Replaced by AeroSpace which has better reviews from developers
     _desc: "Amethyst is a tiling window manager for macOS that allows users to organize and manage their windows efficiently. It enables users to resize and arrange windows using keyboard shortcuts, improving      \nproductivity by eliminating the need to manually adjust window sizes. Amethyst supports multiple layouts and customizable key bindings, providing a flexible window management solution for macOS users.  \nIt is open-source and available on GitHub at https://github.com/ianyh/Amethyst.                                                                                                                           "
     _github: https://github.com/ianyh/Amethyst
     _name: Amethyst
@@ -941,6 +942,48 @@ softwarePackages:
     _github: https://github.com/kdzwinel/betwixt
     _home: https://github.com/kdzwinel/betwixt
     _name: Betwixt
+    _post: |
+      CRT_PATH="/Users/apple/Library/Application Support/betwixt/ssl/certs/ca.pem"
+      ### TODO: Add location for Linux / Windows ca.pem
+
+      if [ ! -f "$CRT_PATH" ]; then
+        gum log -sl error "$CRT_PATH is missing"
+        return 1
+      fi
+
+      if [ -d /Applications ] && [ -d /System ] && [ -z "$HEADLESS_INSTALL" ]; then
+        # macOS Certificate Import
+        security verify-cert -c "$CRT_PATH" > /dev/null 2>&1
+        if [ $? != 0 ]; then
+          gum log -sl info '**macOS Manual Security Permission** Requesting security authorization for Betwixt MITM proxy'
+          sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CRT_PATH" && gum log -sl info 'Successfully imported cloudflare.crt into System.keychain'
+        fi
+      elif [ "$(uname)" = "Linux" ]; then
+        # Linux Certificate Import
+        gum log -sl info "Adding Cloudflare certificate to system trust store"
+
+        if command -v update-ca-certificates > /dev/null 2>&1; then
+          # Debian-based (Ubuntu, Debian)
+          sudo mkdir -p /usr/local/share/ca-certificates
+          sudo cp "$CRT_PATH" /usr/local/share/ca-certificates/cloudflare.crt
+          sudo update-ca-certificates && gum log -sl info "Certificate imported using update-ca-certificates"
+        elif command -v trust > /dev/null 2>&1; then
+          # Fedora-based
+          sudo mkdir -p /etc/pki/ca-trust/source/anchors
+          sudo cp "$CRT_PATH" /etc/pki/ca-trust/source/anchors/cloudflare.crt
+          sudo update-ca-trust && gum log -sl info "Certificate imported using update-ca-trust"
+        elif [ -d /etc/ssl/certs ]; then
+          # Generic method
+          sudo cp "$CRT_PATH" /etc/ssl/certs/cloudflare.crt
+          sudo openssl rehash /etc/ssl/certs && gum log -sl info "Certificate imported using OpenSSL rehash"
+        else
+          gum log -sl warn "Unsupported Linux distribution. Please install the certificate manually."
+          return 1
+        fi
+      else
+        gum log -sl error "Unsupported operating system"
+        return 1
+      fi
     _short: "Betwixt is a web debugging proxy based on Chrome DevTools Network panel with a focus on simplicity and ease of use.                                                                                       "
     cask: betwixt
   bfg:
@@ -7108,6 +7151,14 @@ softwarePackages:
     _short: "ncc is a tool by Vercel for compiling Node.js projects into a single file.                                                                                                                                "
     brew: ncc
     npm: "@vercel/ncc"
+  aerospace:
+    _bin: aerospace
+    _app: AeroSpace.app
+    _home: https://nikitabobko.github.io/AeroSpace/guide
+    _name: AeroSpace
+    _github: https://github.com/nikitabobko/AeroSpace
+    _docs: https://nikitabobko.github.io/AeroSpace/guide
+    cask: nikitabobko/tap/aerospace
   ndb:
     _bin: ndb
     _desc: "ndb is a tool developed by Google Chrome Labs for debugging Node.js applications. It provides an improved debugging experience by offering features like advanced code navigation, real-time code         \nexecution, and integrated debugging tools. With ndb, developers can easily inspect and debug their Node.js applications in a more efficient and user-friendly manner. It is particularly useful for       \ntroubleshooting complex Node.js projects and identifying issues quickly. The tool is open-source and available on GitHub for developers to use and contribute to.                                         "
