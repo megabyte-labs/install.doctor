@@ -4,8 +4,11 @@ https://nixos.wiki/wiki/Nix_Installation_Guide
 - https://github.com/linuxserver/docker-webtop
 - https://nginxui.com/
 - Barrier config
+- https://github.com/qltysh/qlty
+- https://github.com/BuilderIO/figma-html
 - Goose CLI
 - Integrate Sheldon
+- https://github.com/kanidm/kanidm
 https://github.com/presslabs/gitfs?tab=readme-ov-file
 - https://github.com/koekeishiya/yabai
 - Add and test import of nmcli for wireguard profiles

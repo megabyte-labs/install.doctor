@@ -2349,6 +2349,13 @@ softwarePackages:
     dnf: dnsmasq
     pacman: dnsmasq
     port: dnsmasq
+  appflowy:
+    _app: AppFlowy.app
+    _bin: appflowy
+    _github: https://github.com/AppFlowy-IO/AppFlowy
+    _home: https://appflowy.com/
+    _name: AppFlowy
+    cask: appflowy
   docker:
     _bin: docker
     _deps:
@@ -5477,7 +5484,8 @@ softwarePackages:
     _name: JuiceFS
     _preload: true
     _short: "JuiceFS is a POSIX-compatible distributed file system for cloud-native environments, designed for scalability and high performance.                                                                       "
-    brew: juicefs
+    _brew: juicefs # Installs really old version (version 1 when latest is 5)
+    script: sudo curl -L https://juicefs.com/static/juicefs -o /usr/local/bin/juicefs && sudo chmod +x /usr/local/bin/juicefs
     scoop: juicefs
     snap: juicefs
     yay: juicefs
@@ -7625,7 +7633,7 @@ softwarePackages:
   notion:
     _app: Notion.app
     _bin: null
-    _deprecated: Deprecated in favor of Obsidian
+    _deprecated: Deprecated in favor of Obsidian / AppFlowy
     _desc: Notion is the connected workspace where better, faster work happens.
     _docs: https://www.notion.so/help/guides/category/documentation
     _env:
@@ -10849,6 +10857,7 @@ softwarePackages:
   vivaldi:
     _bin: vivaldi
     _app: Vivaldi.app
+    _deprecated: Deprecated in favor of Arc
     _desc: Chromium-based browser with emphasis on customizability
     _home: https://vivaldi.com/
     _github: https://github.com/ric2b/Vivaldi-browser
@@ -12351,6 +12360,15 @@ softwarePackages:
     _desc: Sets up Windows Subsystem For Linux
     _github: false
     _name: wsl
+  sanctum:
+    _bin: sanctum
+    _app: Sanctum.app
+    _desc: Run LLMs locally
+    _home: https://sanctum.ai
+    _github: false
+    _name: Sanctum
+    _deprecated: Unneeded at this time
+    cask: sanctum
   arc:
     _app: Arc.app
     _bin: arc
