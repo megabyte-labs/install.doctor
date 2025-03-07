@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-  <dict>
+<dict>
     <key>Label</key>
-    <string>com.juicefs.home</string>
+    <string>com.juicefs.home.mount</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/usr/local/bin/juicefs</string>
-      <string>mount</string>
-      <string>private</string>
-      <string>{{ .host.homeParentFolder }}/{{ .user.name }}</string>
+        <string>/bin/bash</string>
+        <string>/usr/local/bin/juicefs-home-mount</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
     <key>KeepAlive</key>
     <true/>
     <key>StandardOutPath</key>
-    <string>/tmp/juicefs_setup.log</string>
+    <string>/Library/Logs/juicefs-home-mount.log</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/juicefs_setup.err</string>
-  </dict>
+    <string>/Library/Logs/juicefs-home-mount.log</string>
+</dict>
 </plist>

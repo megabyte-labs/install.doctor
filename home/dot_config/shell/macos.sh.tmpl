@@ -35,6 +35,9 @@ defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/i
 # Keep-alive: update existing `sudo` time stamp until `.macos` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+# Enable text selection in QuickLook views.
+defaults write com.apple.finder QLEnableTextSelection -bool TRUE
+
 ###############################################################################
 # General UI/UX                                                               #
 ###############################################################################

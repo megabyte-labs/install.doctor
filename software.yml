@@ -1630,6 +1630,15 @@ softwarePackages:
     dnf: clang-tools-extra
     pacman: clang
     scoop: llvm
+  sharewifi:
+    _bin: sharewifi
+    _preload: true
+    _name: ShareWiFi
+    _desc: CLI tool that integrates with Espanso to show WiFi password when typing :sharewifi
+    _github: https://github.com/bradyjoslin/sharewifi
+    brew: bradyjoslin/sharewifi/sharewifi
+    npm: sharewifi
+    cargo: --git https://github.com/bradyjoslin/sharewifi
   clipboard:
     _bin: cb
     _desc: "The repository at https://github.com/Slackadays/Clipboard.git appears to be a Git repository hosted on GitHub. Without further details or access to the repository, I can't provide specific information  \nabout its contents. If you need more information, you may want to clone the repository locally and explore its files and commit history using Git commands.                                               "
@@ -2349,6 +2358,28 @@ softwarePackages:
     dnf: dnsmasq
     pacman: dnsmasq
     port: dnsmasq
+  follow:
+    _app: Follow.app
+    _bin: follow
+    _name: Follow
+    _home: https://follow.is/
+    _github: https://github.com/RSSNext/follow
+    cask: follow
+  syntax-highlight:
+    _app: Syntax Highlight.app
+    _bin: syntax_highlight_cli
+    _name: Syntax Highlight Quicklook Plugin
+    _desc: Syntax highlighting
+    _github: https://github.com/sbarex/SourceCodeSyntaxHighlight
+    cask: syntax-highlight
+  dagger:
+    _desc: From the creators of Docker
+    _bin: dagger
+    _name: Dagger
+    _github: https://github.com/dagger/dagger
+    _home: https://dagger.io/
+    _docs: https://docs.dagger.io/
+    brew: dagger/tap/dagger
   appflowy:
     _app: AppFlowy.app
     _bin: appflowy
@@ -2924,6 +2955,7 @@ softwarePackages:
   eul:
     _app: eul.app
     _bin: eul
+    _deprecated: Says app is using significant battery
     _desc: Menu bar application that shows system stats like CPU, RAM, and disk usage on macOS
     _docs: https://github.com/gao-sun/eul
     _github: https://github.com/gao-sun/eul
@@ -9194,10 +9226,36 @@ softwarePackages:
       - qlstephen
       - qlvideo
       - quicklook-json
+      - quicklook-csv
       - webpquicklook
+      - syntax-highlight
+      - qlprettypatch
+      - webpquicklook
+      - avifquicklook
     _github: false
     _preload: true
     _name: null
+  avifquicklook:
+    _github: https://github.com/dreampiggy/AVIFQuickLook
+    _name: AVIFQuickLook
+    _when:cask: 'test -d "$HOME/Library/QuickLook/AVIFQuickLook.qlgenerator"'
+    cask: avifquicklook
+  webpquicklook:
+    _github: https://github.com/emin/WebPQuickLook
+    _name: WebPQuickLook
+    _when:cask: '! test -d "$HOME/Library/QuickLook/WebpQuickLook.qlgenerator"'
+    cask: webpquicklook
+  qlprettypatch:
+    _github: https://github.com/atnan/QLPrettyPatch
+    _name: QLPrettyPatch
+    _when:cask: '! test -d "$HOME/Library/QuickLook/QLPrettyPatch.qlgenerator"'
+    cask: qlprettypatch
+  quicklook-csv:
+    _desc: Quick Look plugin for macOS that aids with CSV files
+    _github: https://github.com/p2/quicklook-csv
+    _name: Quicklook CSV
+    _when:cask: '! test -d "$HOME/Library/QuickLook/QuickLookCSV.qlgenerator"'
+    cask: quicklook-csv
   qlstephen:
     _desc: "QLStephen is a Quick Look plugin for macOS that allows you to view plain text files without a file extension. It enables you to preview files like README, CHANGELOG, or any text file that doesn't have a\nrecognized extension directly in the Quick Look feature of macOS. This plugin enhances the usability of Quick Look by providing support for a wider range of file types, making it easier to quickly      \nglance through text-based files without needing to open them in a separate application.                                                                                                                   "
     _github: https://github.com/whomwah/qlstephen
@@ -11438,6 +11496,16 @@ softwarePackages:
     _name: Trayscale
     _short: "trayscale is a tool for adjusting the brightness of external monitors on macOS.                                                                                                                           "
     flatpak: dev.deedles.Trayscale
+  i3:
+    _bin: i3
+    _preload: true
+    _desc: Window tiling manager with similar keybindings as Ameythst which is installed on macOS
+    _github: https://github.com/i3/i3
+    _home: https://i3wm.org/
+    _name: i3
+    apt: i3
+    dnf: i3
+    pacman: i3
   tree:
     _bin: tree
     _desc: "[tree-cli](https://github.com/MrRaindrop/tree-cli) is a recursive directory listing program that produces a depth indented listing of files. With no arguments, tree lists the files in the current directory. When directory arguments are given, tree lists all the files and/or directories found in the given directories each in turn. Upon completion of listing all files/directories found, tree returns the total number of files and/or directories listed."

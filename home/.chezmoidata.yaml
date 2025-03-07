@@ -37,8 +37,6 @@ docker:
   wireguard:
     serverUrl: megabyte.space
     internalSubnet: 10.93.92.0
-# All JuiceFS volumes should be postfixed with "manhattan" so you should create private-manhattan, public-manhattan, user-manhattan, and docker-manhattan
-juicefsVolumeNamePostfix: manhattan
 kubernetesHost: kochab
 macosRemoteLogin: 'on'
 themeparkTheme: aquamarine
@@ -277,6 +275,22 @@ softwarePlugins:
       - microsoft.cst.attacksurfaceanalyzer.cli
       - dotnet-format
       - git-credential-manager
+  espanso:
+    cmd: espanso install {PLUGIN}
+    plugins:
+      - base64-encoder-decoder
+      - basic-emojis
+      - common-phrases
+      - espanso-fractions
+      - foreign-thanks
+      - frontend-snippets
+      - gitmojis
+      - lorem
+      - mac-symbols
+      - numeronyms
+      - rand-tools
+      - sharewifi
+      - typofixer-en
   gcloud:
     cmd: bash -c 'if ! gcloud components list | grep "^..Installed.*{PLUGIN}" > /dev/null; then echo "Installing.." && gcloud components install --quiet "{PLUGIN}"; fi'
     plugins:
