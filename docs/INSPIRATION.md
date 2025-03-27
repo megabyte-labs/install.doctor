@@ -14,12 +14,8 @@
 ## Website
 
 - https://webcontainers.io/
-- https://github.com/zulip/zulip
 - https://github.com/coder/coder
-- https://github.com/rigoneri/syte
-- https://github.com/rigoneri/Syte3
 - https://github.com/UPC/ravada
-- https://github.com/otoyo/astro-notion-blog
 - https://github.com/cloudflare/next-on-pages
 - https://envshare.dev/
 - https://vercel.com/templates/next.js/nextjs-ai-chatbot - chatbot
