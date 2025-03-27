@@ -1,7 +1,6 @@
 ## CLI
 
 - https://github.com/tauri-apps/tauri
-- https://github.com/pocketbase/pocketbase
 - https://github.com/vadimdemedes/ink
 - https://cliffy.io/docs@v0.25.7
 - https://github.com/typicode/lowdb
@@ -14,10 +13,8 @@
 
 ## Website
 
-- https://github.com/Mintplex-Labs/anything-llm
 - https://webcontainers.io/
 - https://github.com/zulip/zulip
-- https://github.com/ConvoyPanel/panel
 - https://github.com/coder/coder
 - https://github.com/rigoneri/syte
 - https://github.com/rigoneri/Syte3
@@ -38,16 +35,9 @@
 - https://github.com/makeplane/plane
 - https://github.com/knadh/listmonk
 - https://github.com/payloadcms/payload
-- https://github.com/AmruthPillai/Reactive-Resume
-- https://pocketbase.io/
 - https://github.com/rustdesk/rustdesk-server
 - https://github.com/sorry-cypress/sorry-cypress
-- https://github.com/MauriceNino/dashdot
-- https://github.com/coralproject/talk
-- https://github.com/ijjk/notion-blog
-- https://github.com/NodeBB/NodeBB
 - https://github.com/ToolJet/ToolJet
-- https://github.com/pouchdb/pouchdb
 - https://uppy.io/docs/dashboard/
 - https://unkey.dev/
 - [Title](https://github.com/vercel-labs/ai-chatbot)
@@ -74,5 +64,4 @@
 
 ## OS
 
-https://github.com/skift-org/skift
 https://github.com/MikeMcQuaid/strap/tree/main
