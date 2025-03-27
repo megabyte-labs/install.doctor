@@ -798,6 +798,18 @@ zapInstall() {
   fi
 }
 
+# @description Download and run the NixOS installation script.
+# @exitcode 0 If installation succeeded.
+# @exitcode 1 If installation failed.
+installNixOS() {
+    if [ -n "${CI:-}" ]; then
+        curl -L https://nixos.org/nix/install | sh
+    else
+        sh <(curl -L https://nixos.org/nix/install)
+    fi
+    gum log -sl info "NixOS installation script executed."
+}
+
 addFlathub() {
   if command -v flatpak > /dev/null; then
     gum log -sl info 'Adding flatpak flathub repository' && sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -881,6 +893,7 @@ if [ -n "$DEBUG" ] || [ -n "$DEBUG_MODE" ]; then
   installShellGPT
   setupLinuxHomebrewFonts
   rustUpFix
+  installNixOS
 else
   installBrewPackages
   installXcode &
@@ -894,6 +907,7 @@ else
   increaseMapCount &
   installDocker &
   installJumpCloud &
+  installNixOS &
   installShellGPT &
   installSystemPips &
   installYay &

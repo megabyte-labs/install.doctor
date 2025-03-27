@@ -42,6 +42,7 @@ macosRemoteLogin: 'on'
 themeparkTheme: aquamarine
 figmaAddons:
   - https://www.figma.com/community/plugin/1037309320238203168/DhiWise---Figma-to-Code
+  - https://www.figma.com/community/plugin/1220512233196109878/github
   - https://www.figma.com/community/plugin/1056467900248561542/Locofy-FREE-BETA---Figma-to-React%2C-React-Native%2C-HTML%2FCSS%2C-Next.js%2C-Gatsby
 chromeExtensionsDisabled:
   - buster-captcha-solver-for/mpbjkejclgfgadiemmefgebjfooflfhl
@@ -58,7 +59,7 @@ chromeExtensions:
   - ai-based-grammar-checker/oldceeleldhonbafppcapldpdifcinji
   - bitly-powerful-short-link/iabeihobmhlgpkcgjiloemdbofjbdcic
   - bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb
-  - briskine-email-templates/lmcngpkjkplipamgflhioabnhnopeabf
+  - builderio/cfldfgibklhmjhnkfighkbafbkbfcmij
   # - buffer/noojglkidnpfjbincgijbaiedldjfbhh
   - chrome-remote-desktop/inomeogfingihgjfjlpeplalcfajhgai
   - desktop-app-for-google-ta/lpofefdiokgmcdnnaigddelnfamkkghi
@@ -71,9 +72,8 @@ chromeExtensions:
   - json-resume-exporter/caobgmmcpklomkcckaenhjlokpmfbdec
   - json-viewer-pro/eifflpmocdbdmepbjaopkkhbfmdgijcc
   - markdown-here/elifhakcjgalahccnjkneoccemfahfoa
-  - metamask/nkbihfbeogaeaoehlefnkodbefgpgknn
+  # - metamask/nkbihfbeogaeaoehlefnkodbefgpgknn
   - octotree-github-code-tree/bkhaagjahfmjljalopjnoealnfndnagc
-  - pieces-save-code-snippets/igbgibhbfonhmjlechmeefimncpekepm
   - postman-interceptor/aicmkgpgakddgnaphhhpliifpcfhicfo
   - rakuten-get-cash-back-for/chhjbpecpncaggjpdakmflnfcopglcmi
   - refined-github/hlepfoohegkhhmjieoechaddaejaokhf
@@ -110,7 +110,6 @@ firefoxAddOns:
   - medium-unlimited-read-for-free
   - multi-account-containers
   # - notion-web-clipper
-  - pieces-save-code-from-the-web
   - private-relay
   - profile-switcher
   - refined-github-
@@ -314,7 +313,6 @@ softwarePlugins:
     cmd: bash -c 'if [ ! -f "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor/intellij-idea-ce" ] || ! cat "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor/intellij-idea-ce" | grep "${PLUGIN}" &> /dev/null; then idea installPlugins "{PLUGIN}" && mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor" && echo "{PLUGIN}" >> "${XDG_CACHE_HOME:-$HOME/.cache}/install.doctor/intellij-idea-ce"; fi'
     plugins:
       - AngularJS
-      - app.pieces.plugins.jetbrains
       - com.dmarcotte.handlebars
       - com.github.copilot
       - com.github.masahirosuzuka.PhoneGapIntelliJPlugin
@@ -339,6 +337,12 @@ softwarePlugins:
       - org.jetbrains.plugins.go-template
   helm:
     cmd: bash -c '{PLUGIN}'
+    _todo:
+      - https://github.com/spacecloud-io/space-cloud
+      - https://infisical.com/docs/self-hosting/deployment-options/kubernetes-helm
+      - helm repo add appsmith-ee https://helm-ee.appsmith.com
+      - https://github.com/kubevirt/kubevirt
+      - https://github.com/meilisearch/meilisearch
     plugins:
       - if ! helm plugin list | grep "Preview helm upgrade changes as a diff" > /dev/null; then helm plugin install https://github.com/databus23/helm-diff; fi
       - if ! helm plugin list | grep "Query at a given interval a Prometheus, ElasticSearch or Sentry instance." > /dev/null; then helm plugin install https://github.com/ContainerSolutions/helm-monitor; fi
@@ -465,8 +469,6 @@ softwarePlugins:
       - https://github.com/ozntel/file-tree-alternative
       - https://github.com/phibr0/obsidian-charts
       - https://github.com/phibr0/obsidian-dictionary
-      - https://github.com/pieces-app/obsidian-pieces
-      - https://github.com/pieces-app/obsidian-pieces.git
       - https://github.com/platers/obsidian-linter
       - https://github.com/polyipseity/obsidian-terminal
       - https://github.com/ravimashru/obsidian-show-file-path
@@ -542,11 +544,6 @@ softwarePlugins:
       - theapsgroup/vault
       - twitter
     update: steampipe plugin update --all
-  teams:
-    cmd: echo "Teams plugins are installed via the Teams app"
-    plugins:
-      - name: Pieces
-        plugin: https://teams.microsoft.com/l/app/789f23b3-d882-45ca-b3a3-de7f850656ea
   vagrant:
     cmd: bash -c 'if ! vagrant plugin list | grep "{PLUGIN}" > /dev/null; then vagrant plugin install "{PLUGIN}"; fi'
     plugins:
