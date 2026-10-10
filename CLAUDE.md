@@ -171,6 +171,7 @@ Ranked by impact ÷ effort. `[S]` <1hr, `[M]` half-day, `[L]` multi-day. Each an
 | Secrets | `home/.chezmoitemplates/secrets/<NAME>` (age-encrypted) |
 | Provisioning entry | `start.sh` → `scripts/provision.sh:provisionLogic()` |
 | Bulk installer | `home/dot_local/bin/executable_installx` (zx-based, p-limit 4) |
+| Website / docs site | `site/` (Ionic Stencil — absorbed from the now-retired `install.doctor-site` repo; builds + deploys via `.github/workflows/site-deploy.yml` → Firebase project `install-doctor`) |
 
 ---
 
