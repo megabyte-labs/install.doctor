@@ -145,6 +145,7 @@ Ranked by impact ÷ effort. `[S]` <1hr, `[M]` half-day, `[L]` multi-day. Each an
 18. **Cross-machine deploy hook** `[S]` — `task ssh:deploy <host>` runs `chezmoi git push` locally + SSH'd `chezmoi update --apply --force` on the target.
 19. **`MIGRATION.md` + `troubleshooting.md` per-OS** `[S]` — Per-OS columns for every error → fix mapping. Errors map differently per OS.
 20. **Loki-on-Coolify observability** `[M]` — Each `chezmoi apply` emits JSON events to `~/.local/var/log/install.doctor/events.ndjson`; Promtail forwards via Tailscale to a Coolify Loki+Grafana stack.
+21. **Re-add Firebase deploy secret** `[S]` — The standalone `install.doctor-site` repo was absorbed into `site/` and deleted; its `FIREBASE_SERVICE_ACCOUNT_INSTALL_DOCTOR` secret was write-only and could not be copied. `.github/workflows/site-deploy.yml` fires on `site/**` pushes and will FAIL until the secret is re-added: `gh secret set FIREBASE_SERVICE_ACCOUNT_INSTALL_DOCTOR -R heymegabyte/install.doctor < service-account.json`. Full-history backup at `~/backups/repos/install.doctor-site-*.bundle`.
 
 ---
 
